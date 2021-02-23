@@ -7,8 +7,8 @@ Get the `document.title` property of the page that is currently active.
 ## Syntax
 
 ```javascript
-cy.title()
-cy.title(options)
+cy.title();
+cy.title(options);
 ```
 
 ### Usage
@@ -16,19 +16,19 @@ cy.title(options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.title()    // Yields the documents title as a string
+cy.title(); // Yields the documents title as a string
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.title()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.title()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.title()` to resolve before [timing out](#Timeouts)                  |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -41,7 +41,7 @@ Option | Default | Description
 #### Assert that the document's title is "My Awesome Application"
 
 ```javascript
-cy.title().should('eq', 'My Awesome Application')
+cy.title().should("eq", "My Awesome Application");
 ```
 
 ## Rules
@@ -60,10 +60,10 @@ cy.title().should('eq', 'My Awesome Application')
 
 ## Command Log
 
-***Assert that the document's title includes 'New User'***
+**_Assert that the document's title includes 'New User'_**
 
 ```javascript
-cy.title().should('include', 'New User')
+cy.title().should("include", "New User");
 ```
 
 The commands above will display in the Command Log as:
@@ -76,11 +76,10 @@ When clicking on `title` within the command log, the console outputs the followi
 
 ## History
 
-Version | Changes
---- | ---
-[< 0.3.3](/guides/references/changelog#0-3-3) | `cy.title()` command added
+| Version                                       | Changes                    |
+| --------------------------------------------- | -------------------------- |
+| [< 0.3.3](/guides/references/changelog#0-3-3) | `cy.title()` command added |
 
 ## See also
 
 - [`cy.document()`](/api/commands/document)
-

@@ -6,7 +6,6 @@ Get the children of each DOM element within a set of DOM elements.
 
 <Alert type="info">
 
-
 The querying behavior of this command matches exactly how [`.children()`](http://api.jquery.com/children) works in jQuery.
 
 </Alert>
@@ -25,30 +24,30 @@ The querying behavior of this command matches exactly how [`.children()`](http:/
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('nav').children()     // Yield children of nav
+cy.get("nav").children(); // Yield children of nav
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.children()                // Errors, cannot be chained off 'cy'
-cy.location().children()     // Errors, 'location' does not yield DOM element
+cy.children(); // Errors, cannot be chained off 'cy'
+cy.location().children(); // Errors, 'location' does not yield DOM element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> selector**  ***(String selector)***
+**<Icon name="angle-right"></Icon> selector** **_(String selector)_**
 
 A selector used to filter matching DOM elements.
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.children()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.children()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.children()` to resolve before [timing out](#Timeouts)                 |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -63,7 +62,8 @@ Option | Default | Description
 ```html
 <ul>
   <li>About</li>
-  <li>Services
+  <li>
+    Services
     <ul class="secondary-nav">
       <li class="services-1">Web Design</li>
       <li class="services-2">Logo Design</li>
@@ -87,7 +87,7 @@ Option | Default | Description
 //  <li class="services-2">Logo Design</li>,
 //  <li class="services-3">Print Design</li>
 // ]
-cy.get('ul.secondary-nav').children()
+cy.get("ul.secondary-nav").children();
 ```
 
 ### Selector
@@ -107,7 +107,7 @@ cy.get('ul.secondary-nav').children()
 // yields [
 //  <li class="active">Unit Testing</li>
 // ]
-cy.get('ul').children('.active')
+cy.get("ul").children(".active");
 ```
 
 ## Rules
@@ -126,10 +126,10 @@ cy.get('ul').children('.active')
 
 ## Command Log
 
-***Assert that there should be 8 children elements in a nav***
+**_Assert that there should be 8 children elements in a nav_**
 
 ```javascript
-cy.get('.left-nav>.nav').children().should('have.length', 8)
+cy.get(".left-nav>.nav").children().should("have.length", 8);
 ```
 
 The commands above will display in the Command Log as:
@@ -146,4 +146,3 @@ When clicking on the `children` command within the command log, the console outp
 - [`.parent()`](/api/commands/parent)
 - [`.parents()`](/api/commands/parents)
 - [`.siblings()`](/api/commands/siblings)
-

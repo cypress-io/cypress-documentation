@@ -12,7 +12,7 @@ Plugins are a "seam" for you to write your own custom code that executes during 
 
 <Alert type="info">
 
- <strong class="alert-header">This is a brief overview</strong>
+<strong class="alert-header">This is a brief overview</strong>
 
 If you want more details about how to write a plugin, we've written API docs that show you how to work with each plugin event.
 
@@ -42,7 +42,7 @@ The event `file:preprocessor` is used to customize how your test code is transpi
 
 You can use the `file:preprocessor` event to do things like:
 
-- Add the latest ES* support.
+- Add the latest ES\* support.
 - Write your test code in ClojureScript.
 - Customize the Babel settings to add your own plugins.
 - Customize the options for compiling TypeScript.
@@ -142,7 +142,7 @@ The [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) 
 };
 ```
 
-> *<Icon name="github"></Icon> Source: [cypress/plugins/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/plugins/index.ts)*
+> _<Icon name="github"></Icon> Source: [cypress/plugins/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/plugins/index.ts)_
 
 Check out the [Real World App test suites](https://github.com/cypress-io/cypress-realworld-app/tree/develop/cypress/tests/ui) to see these tasks in action.
 
@@ -172,7 +172,6 @@ cypress/plugins/index.js
 
 <Alert type="info">
 
-
 By default Cypress seeds this file for new projects, but if you have an existing project create this file yourself.
 
 </Alert>
@@ -185,11 +184,10 @@ Inside of this file, you will export a function. Cypress will call this function
 // export a function
 module.exports = (on, config) => {
   // bind to the event we care about
-  on('<event>', (arg1, arg2) => {
+  on("<event>", (arg1, arg2) => {
     // plugin stuff here
-  })
-}
+  });
+};
 ```
 
 For more information on writing plugins, please [check out our API docs here](/api/plugins/writing-a-plugin).
-

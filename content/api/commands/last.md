@@ -6,7 +6,6 @@ Get the last DOM element within a set of DOM elements.
 
 <Alert type="info">
 
-
 The querying behavior of this command matches exactly how [`.last()`](http://api.jquery.com/last) works in jQuery.
 
 </Alert>
@@ -23,26 +22,26 @@ The querying behavior of this command matches exactly how [`.last()`](http://api
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('nav a').last()     // Yield last link in nav
+cy.get("nav a").last(); // Yield last link in nav
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.last()                  // Errors, cannot be chained off 'cy'
-cy.getCookies().last()     // Errors, 'getCookies' does not yield DOM element
+cy.last(); // Errors, cannot be chained off 'cy'
+cy.getCookies().last(); // Errors, 'getCookies' does not yield DOM element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.last()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.last()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.last()` to resolve before [timing out](#Timeouts)                     |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -65,7 +64,7 @@ Option | Default | Description
 
 ```javascript
 // yields <li class="four">Knick knack on my door</li>
-cy.get('li').last()
+cy.get("li").last();
 ```
 
 ## Rules
@@ -84,10 +83,10 @@ cy.get('li').last()
 
 ## Command Log
 
-***Find the last button in the form***
+**_Find the last button in the form_**
 
 ```javascript
-cy.get('form').find('button').last()
+cy.get("form").find("button").last();
 ```
 
 The commands above will display in the Command Log as:
@@ -102,4 +101,3 @@ When clicking on `last` within the command log, the console outputs the followin
 
 - [`.eq()`](/api/commands/eq)
 - [`.first()`](/api/commands/first)
-

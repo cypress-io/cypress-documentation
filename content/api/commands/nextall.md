@@ -6,7 +6,6 @@ Get all following siblings of each DOM element in a set of matched DOM elements.
 
 <Alert type="info">
 
-
 The querying behavior of this command matches exactly how [`.nextAll()`](http://api.jquery.com/nextAll) works in jQuery.
 
 </Alert>
@@ -25,30 +24,30 @@ The querying behavior of this command matches exactly how [`.nextAll()`](http://
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('.active').nextAll() // Yield all links next to `.active`
+cy.get(".active").nextAll(); // Yield all links next to `.active`
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.nextAll()                // Errors, cannot be chained off 'cy'
-cy.getCookies().nextAll()   // Errors, 'getCookies' does not yield DOM element
+cy.nextAll(); // Errors, cannot be chained off 'cy'
+cy.getCookies().nextAll(); // Errors, 'getCookies' does not yield DOM element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> selector**  ***(String selector)***
+**<Icon name="angle-right"></Icon> selector** **_(String selector)_**
 
 A selector used to filter matching DOM elements.
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.nextAll()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.nextAll()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.nextAll()` to resolve before [timing out](#Timeouts)                  |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -72,7 +71,7 @@ Option | Default | Description
 
 ```javascript
 // yields [<li>bananas</li>, <li>pineapples</li>, <li>grapes</li>]
-cy.get('.second').nextAll()
+cy.get(".second").nextAll();
 ```
 
 ### Selector
@@ -91,7 +90,7 @@ cy.get('.second').nextAll()
 
 ```javascript
 // yields <li>pineapples</li>
-cy.get('li').nextAll('.selected')
+cy.get("li").nextAll(".selected");
 ```
 
 ## Rules
@@ -110,10 +109,10 @@ cy.get('li').nextAll('.selected')
 
 ## Command Log
 
-***Find all elements following the `.active` li***
+**_Find all elements following the `.active` li_**
 
 ```javascript
-cy.get('.left-nav').find('li.active').nextAll()
+cy.get(".left-nav").find("li.active").nextAll();
 ```
 
 The commands above will display in the Command Log as:
@@ -129,4 +128,3 @@ When clicking on `nextAll` within the command log, the console outputs the follo
 - [`.next()`](/api/commands/next)
 - [`.nextUntil()`](/api/commands/nextuntil)
 - [`.prevAll()`](/api/commands/prevall)
-

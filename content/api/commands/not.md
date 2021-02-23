@@ -6,13 +6,11 @@ Filter DOM element(s) from a set of DOM elements.
 
 <Alert type="info">
 
-
 Opposite of [`.filter()`](/api/commands/filter)
 
 </Alert>
 
 <Alert type="info">
-
 
 The querying behavior of this command matches exactly how [`.not()`](http://api.jquery.com/not) works in jQuery.
 
@@ -30,30 +28,30 @@ The querying behavior of this command matches exactly how [`.not()`](http://api.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('input').not('.required') // Yield all inputs without class '.required'
+cy.get("input").not(".required"); // Yield all inputs without class '.required'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.not('.icon')      // Errors, cannot be chained off 'cy'
-cy.location().not()  // Errors, 'location' does not yield DOM element
+cy.not(".icon"); // Errors, cannot be chained off 'cy'
+cy.location().not(); // Errors, 'location' does not yield DOM element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> selector**  ***(String selector)***
+**<Icon name="angle-right"></Icon> selector** **_(String selector)_**
 
 A selector used to remove matching DOM elements.
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.not()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.not()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.not()` to resolve before [timing out](#Timeouts)                      |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -68,7 +66,7 @@ Option | Default | Description
 ```html
 <ul>
   <li>Home</li>
-  <li class='active'>About</li>
+  <li class="active">About</li>
   <li>Services</li>
   <li>Pricing</li>
   <li>Contact</li>
@@ -76,7 +74,7 @@ Option | Default | Description
 ```
 
 ```javascript
-cy.get('ul>li').not('.active').should('have.length', 4) // true
+cy.get("ul>li").not(".active").should("have.length", 4); // true
 ```
 
 ## Rules
@@ -95,10 +93,10 @@ cy.get('ul>li').not('.active').should('have.length', 4) // true
 
 ## Command Log
 
-***Find all buttons that are not of type submit***
+**_Find all buttons that are not of type submit_**
 
 ```javascript
-cy.get('form').find('button').not('[type="submit"]')
+cy.get("form").find("button").not('[type="submit"]');
 ```
 
 The commands above will display in the Command Log as:
@@ -112,4 +110,3 @@ When clicking on `not` within the command log, the console outputs the following
 ## See also
 
 - [`.filter()`](/api/commands/filter)
-

@@ -4,7 +4,6 @@ title: Writing Your First Test
 
 <Alert type="info">
 
-
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
 - How to start testing a new project in Cypress.
@@ -35,7 +34,6 @@ Even though we haven't written any tests yet - that's okay - let's click on `sam
 
 <Alert type="info">
 
-
 Cypress opens the test in a browser installed on your system. You can read more about how we do this in [Launching Browsers](/guides/guides/launching-browsers).
 
 </Alert>
@@ -45,7 +43,6 @@ Cypress opens the test in a browser installed on your system. You can read more 
 We are now officially in the [Cypress Test Runner](/guides/core-concepts/test-runner). This is where we will spend the majority of your time testing.
 
 <Alert type="warning">
-
 
 Notice Cypress displays the message that it couldn't find any tests. This is normal - we haven't written any tests! Sometimes you'll also see this message if there was an error parsing your test file. You can always open your **Dev Tools** to inspect the Console for any syntax or parsing errors that prevented Cypress from reading your tests.
 
@@ -64,11 +61,11 @@ As we continue to save our new test file we'll see the browser auto reloading in
 Open up your favorite IDE and add the code below to our `sample_spec.js` test file.
 
 ```js
-describe('My First Test', () => {
-  it('Does not do much!', () => {
-    expect(true).to.equal(true)
-  })
-})
+describe("My First Test", () => {
+  it("Does not do much!", () => {
+    expect(true).to.equal(true);
+  });
+});
 ```
 
 Once you save this file you should see the browser reload.
@@ -81,7 +78,6 @@ Over in the [Command Log](/guides/core-concepts/test-runner#Command-Log) you'll 
 
 <Alert type="info">
 
-
 Notice Cypress displays a message about this being the default page [on the righthand side](/guides/core-concepts/test-runner#Application-Under-Test). Cypress assumes you'll want to go out and [visit](/api/commands/visit) a URL on the internet - but it can also work just fine without that.
 
 </Alert>
@@ -89,11 +85,11 @@ Notice Cypress displays a message about this being the default page [on the righ
 Now let's write our first failing test.
 
 ```js
-describe('My First Test', () => {
-  it('Does not do much!', () => {
-    expect(true).to.equal(false)
-  })
-})
+describe("My First Test", () => {
+  it("Does not do much!", () => {
+    expect(true).to.equal(false);
+  });
+});
 ```
 
 Once you save again, you'll see Cypress display the failing test in red since `true` does not equal `false`.
@@ -117,26 +113,26 @@ Cypress provides a nice [Test Runner](/guides/core-concepts/test-runner) that gi
 
 <Alert type="info">
 
- <strong class="alert-header">What are describe, it, and expect?</strong>
+<strong class="alert-header">What are describe, it, and expect?</strong>
 
 All of these functions come from [Bundled Tools](/guides/references/bundled-tools) that Cypress bakes in.
 
 - `describe` and `it` come from [Mocha](https://mochajs.org)
 - `expect` comes from [Chai](http://www.chaijs.com)
 
-Cypress builds on these popular tools and frameworks that you *hopefully* already have some familiarity and knowledge of. If not, that's okay too.
+Cypress builds on these popular tools and frameworks that you _hopefully_ already have some familiarity and knowledge of. If not, that's okay too.
 
 </Alert>
 
 <Alert type="success">
 
- <strong class="alert-header">Using ESlint?</strong>
+<strong class="alert-header">Using ESlint?</strong>
 
 Check out our [Cypress ESLint plugin](https://github.com/cypress-io/eslint-plugin-cypress).
 
 </Alert>
 
-## Write a *real* test
+## Write a _real_ test
 
 **A solid test generally covers 3 phases:**
 
@@ -160,11 +156,11 @@ First, let's visit a web page. We will visit our [Kitchen Sink](/examples/exampl
 We can pass the URL we want to visit to [`cy.visit()`](/api/commands/visit). Let's replace our previous test with the one below that actually visits a page:
 
 ```js
-describe('My First Test', () => {
-  it('Visits the Kitchen Sink', () => {
-    cy.visit('https://example.cypress.io')
-  })
-})
+describe("My First Test", () => {
+  it("Visits the Kitchen Sink", () => {
+    cy.visit("https://example.cypress.io");
+  });
+});
 ```
 
 Save the file and switch back over to the Cypress Test Runner. You might notice a few things:
@@ -180,7 +176,7 @@ Had this request come back with a non `2xx` status code such as `404` or `500`, 
 
 <Alert type="danger">
 
- <strong class="alert-header">Only Test Apps You Control</strong>
+<strong class="alert-header">Only Test Apps You Control</strong>
 
 Although in this guide we are testing our example application: [`https://example.cypress.io`](https://example.cypress.io) - you **shouldn't** test applications you **don't control**. Why?
 
@@ -204,13 +200,13 @@ To find this element by its contents, we'll use [cy.contains()](/api/commands/co
 Let's add it to our test and see what happens:
 
 ```js
-describe('My First Test', () => {
+describe("My First Test", () => {
   it('finds the content "type"', () => {
-    cy.visit('https://example.cypress.io')
+    cy.visit("https://example.cypress.io");
 
-    cy.contains('type')
-  })
-})
+    cy.contains("type");
+  });
+});
 ```
 
 Our test should now display `CONTAINS` in the [Command Log](/guides/core-concepts/test-runner#Command-Log) and still be green.
@@ -235,7 +231,7 @@ describe('My First Test', () => {
 
 <Alert type="warning">
 
- <strong class="alert-header">Error Messages</strong>
+<strong class="alert-header">Error Messages</strong>
 
 We've taken care at Cypress to write hundreds of custom error messages that attempt to clearly explain what went wrong. In this case, Cypress **timed out retrying** to find the content `hype` within the entire page. To read more about the error's display, read about [Debugging Errors](/guides/guides/debugging#Errors).
 
@@ -250,13 +246,13 @@ Before we add another command - let's get this test back to passing. Replace `hy
 Ok, now we want to click on the link we found. How do we do that? Add a [.click()](/api/commands/click) command to the end of the previous command, like so:
 
 ```js
-describe('My First Test', () => {
+describe("My First Test", () => {
   it('clicks the link "type"', () => {
-    cy.visit('https://example.cypress.io')
+    cy.visit("https://example.cypress.io");
 
-    cy.contains('type').click()
-  })
-})
+    cy.contains("type").click();
+  });
+});
 ```
 
 You can almost read it like a little story! Cypress calls this "chaining" and we chain together commands to build tests that really express what the app does in a declarative way.
@@ -269,7 +265,6 @@ Now we can assert something about this new page!
 
 <Alert type="info">
 
-
 <Icon name="magic"></Icon> You can see IntelliSense in your spec files by adding a single special comment line. Read about [Intelligent Code Completion](/guides/tooling/IDE-integration#Triple-slash-directives).
 
 </Alert>
@@ -281,16 +276,16 @@ Let's make an assertion about something on the new page we clicked into. Perhaps
 Here's what that looks like:
 
 ```js
-describe('My First Test', () => {
+describe("My First Test", () => {
   it('clicking "type" navigates to a new url', () => {
-    cy.visit('https://example.cypress.io')
+    cy.visit("https://example.cypress.io");
 
-    cy.contains('type').click()
+    cy.contains("type").click();
 
     // Should be on a new URL which includes '/commands/actions'
-    cy.url().should('include', '/commands/actions')
-  })
-})
+    cy.url().should("include", "/commands/actions");
+  });
+});
 ```
 
 #### Adding more commands and assertions
@@ -302,21 +297,21 @@ We can continue the interactions and assertions in this test by adding another c
 We can use [cy.get()](/api/commands/get) to select an element based on a CSS class. Then we can use the [.type()](/api/commands/type) command to enter text into the selected input. Finally, we can verify that the value of the input reflects the text that was typed with another [.should()](/api/commands/should).
 
 ```js
-describe('My First Test', () => {
-  it('Gets, types and asserts', () => {
-    cy.visit('https://example.cypress.io')
+describe("My First Test", () => {
+  it("Gets, types and asserts", () => {
+    cy.visit("https://example.cypress.io");
 
-    cy.contains('type').click()
+    cy.contains("type").click();
 
     // Should be on a new URL which includes '/commands/actions'
-    cy.url().should('include', '/commands/actions')
+    cy.url().should("include", "/commands/actions");
 
     // Get an input, type into it and verify that the value has been updated
-    cy.get('.action-email')
-      .type('fake@email.com')
-      .should('have.value', 'fake@email.com')
-  })
-})
+    cy.get(".action-email")
+      .type("fake@email.com")
+      .should("have.value", "fake@email.com");
+  });
+});
 ```
 
 And there you have it: a short test in Cypress that visits a page, finds and clicks a link, verifies the URL and then verifies the behavior of an element on the new page. If we read it out loud, it might sound like:
@@ -335,16 +330,16 @@ Or in the Given, When, Then syntax:
 > 1. Given a user visits `https://example.cypress.io`
 > 2. When they click the link labeled `type`
 > 3. And they type "fake@email.com" into the `.action-email` input
-> 3. Then the URL should include `/commands/actions`
-> 4. And the `.action-email` input has "fake@email.com" as its value
+> 4. Then the URL should include `/commands/actions`
+> 5. And the `.action-email` input has "fake@email.com" as its value
 
-And hey, this is a very clean test! We didn't have to say anything about *how* things work, just that we'd like to verify a particular series of events and outcomes.
+And hey, this is a very clean test! We didn't have to say anything about _how_ things work, just that we'd like to verify a particular series of events and outcomes.
 
 <DocsVideo src="/img/snippets/first-test-assertions-30fps.mp4"></DocsVideo>
 
 <Alert type="info">
 
- <strong class="alert-header">Page Transitions</strong>
+<strong class="alert-header">Page Transitions</strong>
 
 Worth noting is that this test transitioned across two different pages.
 
@@ -429,13 +424,12 @@ Cypress prints several pieces of information when an error occurs during a Cypre
 1. **Error name**: This is the type of the error (e.g. AssertionError, CypressError)
 1. **Error message**: This generally tells you what went wrong. It can vary in length. Some are short like in the example, while some are long, and may tell you exactly how to fix the error. Some also contain a **Learn more** link that will take you to relevant Cypress documentation.
 1. **Learn more:** Some error messages contain a Learn more link that will take you to relevant Cypress documentation.
-1. **Code frame file**: This is usually the top line of the stack trace and it shows the file, line number, and column number that is highlighted in the code frame below. Clicking on this link will open the file in your  [preferred file opener](https://on.cypress.io/IDE-integration#File-Opener-Preference) and highlight the line and column in editors that support it.
+1. **Code frame file**: This is usually the top line of the stack trace and it shows the file, line number, and column number that is highlighted in the code frame below. Clicking on this link will open the file in your [preferred file opener](https://on.cypress.io/IDE-integration#File-Opener-Preference) and highlight the line and column in editors that support it.
 1. **Code frame**: This shows a snippet of code where the failure occurred, with the relevant line and column highlighted.
 1. **View stack trace**: Clicking this toggles the visibility of the stack trace. Stack traces vary in length. Clicking on a blue file path will open the file in your [preferred file opener](https://on.cypress.io/IDE-integration#File-Opener-Preference).
 1. **Print to console button**: Click this to print the full error to your DevTools console. This will usually allow you to click on lines in the stack trace and open files in your DevTools.
 
 <DocsImage src="/img/guides/command-failure-error.png" alt="example command failure error" ></DocsImage>
-
 
 ### Page events
 
@@ -479,23 +473,23 @@ For instance there is:
 Let's add a [cy.pause()](/api/commands/pause) to our test code and see what happens.
 
 ```js
-describe('My First Test', () => {
+describe("My First Test", () => {
   it('clicking "type" shows the right headings', () => {
-    cy.visit('https://example.cypress.io')
+    cy.visit("https://example.cypress.io");
 
-    cy.pause()
+    cy.pause();
 
-    cy.contains('type').click()
+    cy.contains("type").click();
 
     // Should be on a new URL which includes '/commands/actions'
-    cy.url().should('include', '/commands/actions')
+    cy.url().should("include", "/commands/actions");
 
     // Get an input, type into it and verify that the value has been updated
-    cy.get('.action-email')
-      .type('fake@email.com')
-      .should('have.value', 'fake@email.com')
-  })
-})
+    cy.get(".action-email")
+      .type("fake@email.com")
+      .should("have.value", "fake@email.com");
+  });
+});
 ```
 
 Now Cypress provides us a UI (similar to debugger) to step forward through each command.
@@ -514,4 +508,3 @@ Now Cypress provides us a UI (similar to debugger) to step forward through each 
 - Search Cypress's documentation to quickly find what you need.
 
 <DocsImage src="/img/guides/search-box.png" alt="Use the search box to find relevant documentation" ></DocsImage>
-

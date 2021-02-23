@@ -68,16 +68,13 @@ To support the community, we provide the Open Source (OSS) plan for public proje
 Follow the following process to request an OSS plan for your project:
 
 1. [Login](https://on.cypress.io/dashboard) to the Cypress Dashboard, or [create an account](https://on.cypress.io/dashboard) if you are a new user.
-  <DocsImage src="/img/dashboard/oss-plan-1-login.png" alt="Login or Create Account"></DocsImage>
+   <DocsImage src="/img/dashboard/oss-plan-1-login.png" alt="Login or Create Account"></DocsImage>
 2. Go the [Organizations page](https://on.cypress.io/dashboard/organizations) to select the organization you want to associate with an OSS plan. If you have no organizations, you can create one by clicking the **+ Add Organization** button.
-> **Note**: Personal organizations cannot be used with an OSS plan.
+   > **Note**: Personal organizations cannot be used with an OSS plan.
 
-  <DocsImage src="/img/dashboard/oss-plan-2-select-org.png" alt="Select or add organization"></DocsImage>
-3. Go to the **Billing & Usage** page, and then click on the **Apply for an open source plan** link at the bottom of the page.
-  <DocsImage src="/img/dashboard/oss-plan-3-billing.png" alt="Click Apply for an open source plan"></DocsImage>
-4. Fill in and submit the OSS plan request form.
-  <DocsImage src="/img/dashboard/oss-plan-4-apply.png" alt="OSS plan request form"></DocsImage>
-5. You'll receive an email confirming your request. The Cypress Team will review your request and, if approved, an OSS plan subscription will be applied to your organization.
+<DocsImage src="/img/dashboard/oss-plan-2-select-org.png" alt="Select or add organization"></DocsImage> 3. Go to the **Billing & Usage** page, and then click on the **Apply for an open source plan** link at the bottom of the page.
+<DocsImage src="/img/dashboard/oss-plan-3-billing.png" alt="Click Apply for an open source plan"></DocsImage> 4. Fill in and submit the OSS plan request form.
+<DocsImage src="/img/dashboard/oss-plan-4-apply.png" alt="OSS plan request form"></DocsImage> 5. You'll receive an email confirming your request. The Cypress Team will review your request and, if approved, an OSS plan subscription will be applied to your organization.
 
 If you have any questions regarding the OSS plan, please feel free [contact us](mailto:hello@cypress.io).
 
@@ -95,7 +92,7 @@ Please see our full documentation for [Slack Integration](/guides/dashboard/slac
 
 <Alert type="info">
 
- <strong class="alert-header">Paid Add-on Integration</strong>
+<strong class="alert-header">Paid Add-on Integration</strong>
 
 Enterprise SSO is available as an add-on to any of our [paid pricing plans](https://www.cypress.io/pricing).
 
@@ -103,7 +100,7 @@ Enterprise SSO is available as an add-on to any of our [paid pricing plans](http
 
 <Alert type="warning">
 
- <strong class="alert-header">Requires Owner Permissions</strong>
+<strong class="alert-header">Requires Owner Permissions</strong>
 
 **All instructions below must be done by an owner of the organization.** If you are not an owner of the organization, coordinate with an owner of the organization to set up SSO.
 
@@ -112,7 +109,7 @@ Enterprise SSO is available as an add-on to any of our [paid pricing plans](http
 #### Enable SSO
 
 1. Log in to the Cypress Dashboard and navigate to the **Integrations** page for your organization.
-  <DocsImage src="/img/dashboard/organizations/integrations-nenu-screenshot.png" alt="Enable SSO" width-600 ></DocsImage>
+   <DocsImage src="/img/dashboard/organizations/integrations-nenu-screenshot.png" alt="Enable SSO" width-600 ></DocsImage>
 2. Scroll down to the **Enterprise SSO** section. Select your SSO provider and take note of the information provided and required. Keep this window open and continue to the [configuration instructions for your specific SSO provider](#SSO-Provider-Configuration) below.
 
 #### SSO Provider Configuration
@@ -128,21 +125,25 @@ Follow the instructions below for your specific SSO provider.
 The Cypress Dashboard can integrate with Okta via SAML. In addition to the documentation below, refer to [Okta’s official documentation for setting up a new SAML application.](https://developer.okta.com/docs/guides/saml-application-setup/overview/)
 
 1. Log into your Okta dashboard and head to the **Admin** section.
-  <DocsImage src="/img/dashboard/organizations/okta-admin-cypress-sso-setup.png" alt="Okta Admin" ></DocsImage>
+   <DocsImage src="/img/dashboard/organizations/okta-admin-cypress-sso-setup.png" alt="Okta Admin" ></DocsImage>
 1. Create a new SAML-based Web application.
-  <DocsImage src="/img/dashboard/organizations/okta-add-application-step1-cypress-sso.png" alt="Create Okta SAML App" ></DocsImage>
-  <DocsImage src="/img/dashboard/organizations/okta-add-application-step3-cypress-sso.png" alt="Create Okta SAML App" width-600 ></DocsImage>  
+   <DocsImage src="/img/dashboard/organizations/okta-add-application-step1-cypress-sso.png" alt="Create Okta SAML App" ></DocsImage>
+   <DocsImage src="/img/dashboard/organizations/okta-add-application-step3-cypress-sso.png" alt="Create Okta SAML App" width-600 ></DocsImage>
 1. Supply the following information requested in the Okta setup wizard:
-  - **App name:** `Cypress Dashboard`
-  - **App logo:** [Cypress logo download](https://on.cypress.io/logo)
-  - **Single sign on URL:** The URL provided in the Cypress Dashboard
-  - **Audience URI:** The URI provided in the Cypress Dashboard
-  - **Attribute statements:** Add the attribute statements described in the Cypress Dashboard
+
+- **App name:** `Cypress Dashboard`
+- **App logo:** [Cypress logo download](https://on.cypress.io/logo)
+- **Single sign on URL:** The URL provided in the Cypress Dashboard
+- **Audience URI:** The URI provided in the Cypress Dashboard
+- **Attribute statements:** Add the attribute statements described in the Cypress Dashboard
+
 1. Click **Next** then select **I’m an Okta customer** and click **Finish**.
 1. Click the **View Setup Instructions** button in the middle of the page. The Cypress Dashboard needs the information provided here:
-  - Copy the Identity Provider Single sign-on URL to the Cypress Dashboard.
-  - Download the certificate and upload that to the Cypress Dashboard.
+
+- Copy the Identity Provider Single sign-on URL to the Cypress Dashboard.
+- Download the certificate and upload that to the Cypress Dashboard.
   <DocsImage src="/img/dashboard/organizations/okta-download-certificate-for-cypress-dashboard.png" alt="Download Certificate" ></DocsImage>
+
 1. Navigate to the **Assignments** tab and grant your users access to the Cypress Dashboard.
 1. [Save and test the configuration](#Save-and-Test).
 
@@ -154,14 +155,16 @@ The Cypress Dashboard can integrate with your identity provider via SAML. In add
 
 1. Log into the admin interface for your identity provider.
 1. Work through the setup wizard supplying the information requested:
-  - **App name:** `Cypress Dashboard`
-  - **App logo:** [Cypress logo download](https://on.cypress.io/logo)
-  - **Single sign on URL:** Collect the URL provided by the Cypress Dashboard
-  - **Audience URI:** Collect the URI provided by the Cypress Dashboard
-  - Add a custom mapping of **AttributeStatements** with the following:
-      - `User.Email`: User’s email
-      - `User.FirstName`: User’s first name
-      - `User.LastName`: User’s last name
+
+- **App name:** `Cypress Dashboard`
+- **App logo:** [Cypress logo download](https://on.cypress.io/logo)
+- **Single sign on URL:** Collect the URL provided by the Cypress Dashboard
+- **Audience URI:** Collect the URI provided by the Cypress Dashboard
+- Add a custom mapping of **AttributeStatements** with the following:
+  - `User.Email`: User’s email
+  - `User.FirstName`: User’s first name
+  - `User.LastName`: User’s last name
+
 1. Collect the sign-on URL and certificate from your identity provider. Supply that to the Cypress Dashboard.
 1. [Save and test the configuration](#Save-and-Test).
 
@@ -171,9 +174,11 @@ The Cypress Dashboard can integrate with your identity provider via Azure AD. In
 
 1. Log into the Azure portal and create a new Application.
 1. Work through the application setup, supplying the following information when requested:
-  - **App name:** `Cypress Dashboard`
-  - **App logo:** [Cypress logo download](https://on.cypress.io/logo)
-  - **Login URL:** Collect the URL provided by the Cypress Dashboard
+
+- **App name:** `Cypress Dashboard`
+- **App logo:** [Cypress logo download](https://on.cypress.io/logo)
+- **Login URL:** Collect the URL provided by the Cypress Dashboard
+
 1. Collect the `Client ID` for your application provided in the Application overview page.
 1. Go to **Certificates and Secrets** in your Azure Application and create a new secret that does not expire. Copy this newly-created secret and paste it in the `Azure Client Secret` field in the Cypress Dashboard.
 1. Under **API Permissions** in Azure AD, ensure the application has access to **User.Read** permissions
@@ -185,4 +190,3 @@ The Cypress Dashboard can integrate with your identity provider via Azure AD. In
 1. Return to the Cypress Dashboard and click **Save and test configuration**. The Cypress Dashboard will attempt to authenticate.
 
 🎉 Your integration is now complete! You can invite all of the users in your organization to sign in through your SSO provider.
-

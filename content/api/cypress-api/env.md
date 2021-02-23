@@ -2,18 +2,17 @@
 title: Cypress.env
 ---
 
-`get` and `set` environment variables *in your tests*.
+`get` and `set` environment variables _in your tests_.
 
 <Alert type="info">
 
-
-The [Environment Variable](/guides/guides/environment-variables) guide explains the other ways you can set them *outside of your tests*.
+The [Environment Variable](/guides/guides/environment-variables) guide explains the other ways you can set them _outside of your tests_.
 
 </Alert>
 
 <Alert type="warning">
 
- <strong class="alert-header">Scope</strong>
+<strong class="alert-header">Scope</strong>
 
 Environment variables set using `Cypress.env` _are only in scope for the current spec file._
 
@@ -23,33 +22,32 @@ Cypress runs each spec file in isolation: the browser is exited between specs. E
 
 <Alert type="warning">
 
- <strong class="alert-header">Difference between OS-level and Cypress environment variables</strong>
+<strong class="alert-header">Difference between OS-level and Cypress environment variables</strong>
 
 In Cypress, "environment variables" are variables that are accessible via `Cypress.env`. These are not the same as OS-level environment variables. However, [it is possible to set Cypress environment variables from OS-level environment variables](/guides/guides/environment-variables.html#Option-3-CYPRESS).
 
 </Alert>
 
-
 ## Syntax
 
 ```javascript
-Cypress.env()
-Cypress.env(name)
-Cypress.env(name, value)
-Cypress.env(object)
+Cypress.env();
+Cypress.env(name);
+Cypress.env(name, value);
+Cypress.env(object);
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> name**  ***(String)***
+**<Icon name="angle-right"></Icon> name** **_(String)_**
 
 The name of the environment variable to get or set.
 
-**<Icon name="angle-right"></Icon> value**  ***(String)***
+**<Icon name="angle-right"></Icon> value** **_(String)_**
 
 The value of the environment variable to set.
 
-**<Icon name="angle-right"></Icon> object**  ***(Object)***
+**<Icon name="angle-right"></Icon> object** **_(Object)_**
 
 Set multiple environment variables with an object literal.
 
@@ -69,7 +67,7 @@ Set multiple environment variables with an object literal.
 ```
 
 ```javascript
-Cypress.env() // => {foo: "bar", baz: "quux"}
+Cypress.env(); // => {foo: "bar", baz: "quux"}
 ```
 
 ### Name
@@ -78,7 +76,7 @@ Cypress.env() // => {foo: "bar", baz: "quux"}
 
 <Alert type="warning">
 
- <strong class="alert-header">Boolean</strong>
+<strong class="alert-header">Boolean</strong>
 
 We automatically normalize both the key and the value when passed via the command line. Cypress will automatically convert values into Number or Boolean.
 
@@ -89,9 +87,9 @@ CYPRESS_HOST=laura.dev CYPRESS_IS_CI=true CYPRESS_MY_ID=123 cypress run
 ```
 
 ```javascript
-Cypress.env('HOST')  // => "laura.dev"
-Cypress.env('IS_CI') // => true
-Cypress.env('MY_ID') // => 123
+Cypress.env("HOST"); // => "laura.dev"
+Cypress.env("IS_CI"); // => true
+Cypress.env("MY_ID"); // => 123
 ```
 
 ### Name and Value
@@ -100,7 +98,7 @@ Cypress.env('MY_ID') // => 123
 
 <Alert type="warning">
 
- <strong class="alert-header">Scope</strong>
+<strong class="alert-header">Scope</strong>
 
 Remember, any changes that you make to environment variables using this API will only be in effect for the remainder of the tests _in the same spec file._
 
@@ -116,9 +114,9 @@ Remember, any changes that you make to environment variables using this API will
 ```
 
 ```javascript
-Cypress.env('host', 'http://server.dev.local')
+Cypress.env("host", "http://server.dev.local");
 
-Cypress.env('host') // => http://server.dev.local
+Cypress.env("host"); // => http://server.dev.local
 ```
 
 ### Object
@@ -137,11 +135,11 @@ Cypress.env('host') // => http://server.dev.local
 
 ```javascript
 Cypress.env({
-  host: 'http://server.dev.local',
-  foo: 'foo'
-})
+  host: "http://server.dev.local",
+  foo: "foo",
+});
 
-Cypress.env() // => {foo: "foo", baz: "quux", host: "http://server.dev.local"}
+Cypress.env(); // => {foo: "foo", baz: "quux", host: "http://server.dev.local"}
 ```
 
 ### From a plugin
@@ -153,27 +151,26 @@ Use this approach to grab the value of an environment variable _once_ before any
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  config.env.sharedSecret = process.env.NODE_ENV === 'qa'
-    ? 'hoop brick tort'
-    : 'sushi cup lemon'
+  config.env.sharedSecret =
+    process.env.NODE_ENV === "qa" ? "hoop brick tort" : "sushi cup lemon";
 
-  return config
-}
+  return config;
+};
 ```
 
 ```js
 // cypress/integration/secrets_spec.js
-describe('Environment variable set in plugin', () => {
-  let sharedSecret
+describe("Environment variable set in plugin", () => {
+  let sharedSecret;
 
   before(() => {
-    sharedSecret = Cypress.env('sharedSecret')
-  })
+    sharedSecret = Cypress.env("sharedSecret");
+  });
 
-  it.only('can be accessed within test.', () => {
-    cy.log(sharedSecret)
-  })
-})
+  it.only("can be accessed within test.", () => {
+    cy.log(sharedSecret);
+  });
+});
 ```
 
 ## Notes
@@ -198,4 +195,3 @@ Since the environment variables added or changed by `Cypress.env` are only in sc
 
 - The [Environment Variable](/guides/guides/environment-variables) guide
 - [configuration](/guides/references/configuration)
-

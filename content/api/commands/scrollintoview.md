@@ -16,29 +16,29 @@ Scroll an element into view.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('footer').scrollIntoView() // Scrolls 'footer' into view
+cy.get("footer").scrollIntoView(); // Scrolls 'footer' into view
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.scrollIntoView('footer')   // Errors, cannot be chained off 'cy'
-cy.window().scrollIntoView()  // Errors, 'window' does not yield DOM element
+cy.scrollIntoView("footer"); // Errors, cannot be chained off 'cy'
+cy.window().scrollIntoView(); // Errors, 'window' does not yield DOM element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.scrollIntoView()`.
 
-Option | Default | Description
---- | --- | ---
-`duration` | `0` | Scrolls over the duration (in ms)
-`easing` | `swing` | Will scroll with the easing animation
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`offset` | `{top: 0, left: 0}` | Amount to scroll after the element has been scrolled into view
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.scrollIntoView()` to resolve before [timing out](#Timeouts)
+| Option     | Default                                                              | Description                                                                              |
+| ---------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `duration` | `0`                                                                  | Scrolls over the duration (in ms)                                                        |
+| `easing`   | `swing`                                                              | Will scroll with the easing animation                                                    |
+| `log`      | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `offset`   | `{top: 0, left: 0}`                                                  | Amount to scroll after the element has been scrolled into view                           |
+| `timeout`  | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.scrollIntoView()` to resolve before [timing out](#Timeouts)           |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -49,8 +49,7 @@ Option | Default | Description
 ### Scrolling
 
 ```javascript
-cy.get('button#checkout').scrollIntoView()
-  .should('be.visible')
+cy.get("button#checkout").scrollIntoView().should("be.visible");
 ```
 
 ### Options
@@ -58,19 +57,19 @@ cy.get('button#checkout').scrollIntoView()
 #### Use linear easing animation to scroll
 
 ```javascript
-cy.get('.next-page').scrollIntoView({ easing: 'linear' })
+cy.get(".next-page").scrollIntoView({ easing: "linear" });
 ```
 
 #### Scroll to element over 2000ms
 
 ```javascript
-cy.get('footer').scrollIntoView({ duration: 2000 })
+cy.get("footer").scrollIntoView({ duration: 2000 });
 ```
 
 #### Scroll 150px below an element
 
 ```js
-cy.get('#nav').scrollIntoView({ offset: { top: 150, left: 0 } })
+cy.get("#nav").scrollIntoView({ offset: { top: 150, left: 0 } });
 ```
 
 ## Notes
@@ -79,7 +78,7 @@ cy.get('#nav').scrollIntoView({ offset: { top: 150, left: 0 } })
 
 #### Snapshots do not reflect scroll behavior
 
-*Cypress does not reflect the accurate scroll positions of any elements within snapshots.* If you want to see the actual scrolling behavior in action, we recommend using [`.pause()`](/api/commands/pause) to walk through each command or [watching the video of the test run](/guides/guides/screenshots-and-videos#Videos).
+_Cypress does not reflect the accurate scroll positions of any elements within snapshots._ If you want to see the actual scrolling behavior in action, we recommend using [`.pause()`](/api/commands/pause) to walk through each command or [watching the video of the test run](/guides/guides/screenshots-and-videos#Videos).
 
 ## Rules
 
@@ -100,8 +99,7 @@ cy.get('#nav').scrollIntoView({ offset: { top: 150, left: 0 } })
 #### Assert element is visible after scrolling it into view
 
 ```javascript
-cy.get('#scroll-horizontal button').scrollIntoView()
-  .should('be.visible')
+cy.get("#scroll-horizontal button").scrollIntoView().should("be.visible");
 ```
 
 The commands above will display in the Command Log as:
@@ -115,4 +113,3 @@ When clicking on the `scrollintoview` command within the command log, the consol
 ## See also
 
 - [`cy.scrollTo()`](/api/commands/scrollto)
-

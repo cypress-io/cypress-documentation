@@ -20,51 +20,51 @@ Click a DOM element.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('.btn').click()          // Click on button
-cy.focused().click()            // Click on el with focus
-cy.contains('Welcome').click()  // Click on first el containing 'Welcome'
+cy.get(".btn").click(); // Click on button
+cy.focused().click(); // Click on el with focus
+cy.contains("Welcome").click(); // Click on first el containing 'Welcome'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.click('.btn')          // Errors, cannot be chained off 'cy'
-cy.window().click()       // Errors, 'window' does not yield DOM element
+cy.click(".btn"); // Errors, cannot be chained off 'cy'
+cy.window().click(); // Errors, 'window' does not yield DOM element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> position** ***(String)***
+**<Icon name="angle-right"></Icon> position** **_(String)_**
 
 The position where the click should be issued. The `center` position is the default position. Valid positions are `topLeft`, `top`, `topRight`, `left`, `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
 <DocsImage src="/img/api/coordinates-diagram.jpg" alt="cypress-command-positions-diagram" ></DocsImage>
 
-**<Icon name="angle-right"></Icon> x** ***(Number)***
+**<Icon name="angle-right"></Icon> x** **_(Number)_**
 
 The distance in pixels from the element's left to issue the click.
 
-**<Icon name="angle-right"></Icon> y** ***(Number)***
+**<Icon name="angle-right"></Icon> y** **_(Number)_**
 
 The distance in pixels from the element's top to issue the click.
 
-**<Icon name="angle-right"></Icon> options** ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.click()`.
 
-Option | Default | Description
---- | --- | ---
-`altKey` | `false` | Activates the alt key (option key for Mac). Aliases: <code>optionKey</code>.
-`animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).
-`ctrlKey` | `false` | Activates the control key. Aliases: <code>controlKey</code>.
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`force` | `false` | Forces the action, disables [waiting for actionability](#Assertions)
-`metaKey` | `false` | Activates the meta key (Windows key or command key for Mac). Aliases: <code>commandKey</code>, <code>cmdKey</code>.
-`multiple` | `false` | Serially click multiple elements
-`scrollBehavior` | [`scrollBehavior`](/guides/references/configuration#Actionability) | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#Scrolling) before executing the command
-`shiftKey` | `false` | Activates the shift key.
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.click()` to resolve before [timing out](#Timeouts)
-`waitForAnimations` | [`waitForAnimations`](/guides/references/configuration#Actionability) | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.
+| Option                       | Default                                                                        | Description                                                                                                                                        |
+| ---------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `altKey`                     | `false`                                                                        | Activates the alt key (option key for Mac). Aliases: <code>optionKey</code>.                                                                       |
+| `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).  |
+| `ctrlKey`                    | `false`                                                                        | Activates the control key. Aliases: <code>controlKey</code>.                                                                                       |
+| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                                                           |
+| `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions)                                                                               |
+| `metaKey`                    | `false`                                                                        | Activates the meta key (Windows key or command key for Mac). Aliases: <code>commandKey</code>, <code>cmdKey</code>.                                |
+| `multiple`                   | `false`                                                                        | Serially click multiple elements                                                                                                                   |
+| `scrollBehavior`             | [`scrollBehavior`](/guides/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#Scrolling) before executing the command |
+| `shiftKey`                   | `false`                                                                        | Activates the shift key.                                                                                                                           |
+| `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.click()` to resolve before [timing out](#Timeouts)                                                                              |
+| `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -77,7 +77,7 @@ Option | Default | Description
 #### Click a link in a nav
 
 ```javascript
-cy.get('.nav > a').click()
+cy.get(".nav > a").click();
 ```
 
 ### Position
@@ -87,7 +87,7 @@ cy.get('.nav > a').click()
 Click the top right corner of the button.
 
 ```javascript
-cy.get('img').click('topRight')
+cy.get("img").click("topRight");
 ```
 
 ### Coordinates
@@ -97,7 +97,7 @@ cy.get('img').click('topRight')
 The click below will be issued inside of the element (15px from the left and 40px from the top).
 
 ```javascript
-cy.get('#top-banner').click(15, 40)
+cy.get("#top-banner").click(15, 40);
 ```
 
 ### Options
@@ -107,20 +107,20 @@ cy.get('#top-banner').click(15, 40)
 Forcing a click overrides the [actionable checks](/guides/core-concepts/interacting-with-elements#Forcing) Cypress applies and will automatically fire the events.
 
 ```javascript
-cy.get('.close').as('closeBtn')
-cy.get('@closeBtn').click({ force: true })
+cy.get(".close").as("closeBtn");
+cy.get("@closeBtn").click({ force: true });
 ```
 
 #### Force a click with position argument
 
 ```javascript
-cy.get('#collapse-sidebar').click('bottomLeft', { force: true })
+cy.get("#collapse-sidebar").click("bottomLeft", { force: true });
 ```
 
 #### Force a click with relative coordinates
 
 ```javascript
-cy.get('#footer .next').click(5, 60, { force: true })
+cy.get("#footer .next").click(5, 60, { force: true });
 ```
 
 #### Click all elements with id starting with 'btn'
@@ -128,7 +128,7 @@ cy.get('#footer .next').click(5, 60, { force: true })
 By default, Cypress will error if you're trying to click multiple elements. By passing `{ multiple: true }` Cypress will iteratively apply the click to each element and will also log to the [Command Log](/guides/core-concepts/test-runner#Command-Log) multiple times.
 
 ```javascript
-cy.get('[id^=btn]').click({ multiple: true })
+cy.get("[id^=btn]").click({ multiple: true });
 ```
 
 #### Click with key combinations
@@ -137,27 +137,26 @@ The `.click()` command may also be fired with key modifiers in order to simulate
 
 <Alert type="info">
 
-
 You can also use key combinations during [.type()](/api/commands/type). This offers options to hold down keys across multiple commands. See [Key Combinations](/api/commands/type#Key-Combinations) for more information.
 
 </Alert>
 
 The following keys can be combined with `.click()` through the `options`.
 
-Option | Notes
---- | ---
-`altKey` | Activates the alt key (option key for Mac). Aliases: <code>optionKey</code>.
-`ctrlKey` | Activates the control key. Aliases: <code>controlKey</code>.
-`metaKey` | Activates the meta key (Windows key or command key for Mac). Aliases: <code>commandKey</code>, <code>cmdKey</code>.
-`shiftKey` | Activates the shift key.
+| Option     | Notes                                                                                                               |
+| ---------- | ------------------------------------------------------------------------------------------------------------------- |
+| `altKey`   | Activates the alt key (option key for Mac). Aliases: <code>optionKey</code>.                                        |
+| `ctrlKey`  | Activates the control key. Aliases: <code>controlKey</code>.                                                        |
+| `metaKey`  | Activates the meta key (Windows key or command key for Mac). Aliases: <code>commandKey</code>, <code>cmdKey</code>. |
+| `shiftKey` | Activates the shift key.                                                                                            |
 
 ##### Shift click
 
 ```js
 // execute a SHIFT + click on the first <li>
-cy.get('li:first').click({
-  shiftKey: true
-})
+cy.get("li:first").click({
+  shiftKey: true,
+});
 ```
 
 ## Notes
@@ -198,10 +197,10 @@ If the mousedown event has its default action prevented (`e.preventDefault()`) t
 
 ## Command Log
 
-***Click the button***
+**_Click the button_**
 
 ```javascript
-cy.get('.action-btn').click()
+cy.get(".action-btn").click();
 ```
 
 The commands above will display in the Command Log as:
@@ -214,10 +213,10 @@ When clicking on `click` within the command log, the console outputs the followi
 
 ## History
 
-Version | Changes
---- | ---
-[6.1.0](/guides/references/changelog#6-1-0) | Added option `scrollBehavior`
-[3.5.0](/guides/references/changelog#3-5-0) | Added sending `mouseover`, `mousemove`, `mouseout`, `pointerdown`, `pointerup`, and `pointermove` during `.click()`
+| Version                                     | Changes                                                                                                             |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| [6.1.0](/guides/references/changelog#6-1-0) | Added option `scrollBehavior`                                                                                       |
+| [3.5.0](/guides/references/changelog#3-5-0) | Added sending `mouseover`, `mousemove`, `mouseout`, `pointerdown`, `pointerup`, and `pointermove` during `.click()` |
 
 ## See also
 
@@ -229,4 +228,3 @@ Version | Changes
 - [`.submit()`](/api/commands/submit)
 - [`.type()`](/api/commands/type)
 - ['When can the test click?' blog](https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/)
-

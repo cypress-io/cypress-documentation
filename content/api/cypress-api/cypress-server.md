@@ -1,10 +1,8 @@
 ---
 title: Cypress.Server
-
 ---
 
 <Alert type="warning">
-
 
 ⚠️ **`cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0**. In a future release, support for `cy.server()` and `cy.route()` will be moved to a plugin. Consider using [`cy.intercept()`](/api/commands/intercept.html) instead.
 
@@ -15,12 +13,12 @@ Permanently change the default options for all [`cy.server()`](/api/commands/ser
 ## Syntax
 
 ```javascript
-Cypress.Server.defaults(options)
+Cypress.Server.defaults(options);
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `Cypress.Server`.
 
@@ -37,8 +35,8 @@ Cypress.Server.defaults({
   force404: false,
   ignore: (xhr) => {
     // handle custom logic for filtering XHR requests
-  }
-})
+  },
+});
 ```
 
 ## Notes
@@ -50,4 +48,3 @@ A great place to put this configuration is in your `cypress/support/index.js` fi
 ## See also
 
 - [`cy.server()`](/api/commands/server)
-

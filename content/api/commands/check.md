@@ -6,7 +6,6 @@ Check checkbox(es) or radio(s).
 
 <Alert type="warning">
 
-
 This element must be an `<input>` with type `checkbox` or `radio`.
 
 </Alert>
@@ -27,39 +26,39 @@ This element must be an `<input>` with type `checkbox` or `radio`.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('[type="checkbox"]').check()       // Check checkbox element
-cy.get('[type="radio"]').first().check()  // Check first radio element
+cy.get('[type="checkbox"]').check(); // Check checkbox element
+cy.get('[type="radio"]').first().check(); // Check first radio element
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.check('[type="checkbox"]') // Errors, cannot be chained off 'cy'
-cy.get('p:first').check()     // Errors, '.get()' does not yield checkbox or radio
+cy.check('[type="checkbox"]'); // Errors, cannot be chained off 'cy'
+cy.get("p:first").check(); // Errors, '.get()' does not yield checkbox or radio
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> value**  ***(String)***
+**<Icon name="angle-right"></Icon> value** **_(String)_**
 
 Value of checkbox or radio that should be checked.
 
-**<Icon name="angle-right"></Icon> values**  ***(Array)***
+**<Icon name="angle-right"></Icon> values** **_(Array)_**
 
 Values of checkboxes or radios that should be checked.
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.check()`.
 
-Option | Default | Description
---- | --- | ---
-`animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`force` | `false` | Forces the action, disables [waiting for actionability](#Assertions)
-`scrollBehavior` | [`scrollBehavior`](/guides/references/configuration#Actionability) | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#Scrolling) before executing the command
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.check()` to resolve before [timing out](#Timeouts)
-`waitForAnimations` | [`waitForAnimations`](/guides/references/configuration#Actionability) | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.
+| Option                       | Default                                                                        | Description                                                                                                                                        |
+| ---------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).  |
+| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                                                           |
+| `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions)                                                                               |
+| `scrollBehavior`             | [`scrollBehavior`](/guides/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#Scrolling) before executing the command |
+| `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.check()` to resolve before [timing out](#Timeouts)                                                                              |
+| `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -72,19 +71,19 @@ Option | Default | Description
 #### Check all checkboxes
 
 ```javascript
-cy.get('[type="checkbox"]').check()
+cy.get('[type="checkbox"]').check();
 ```
 
 #### Select all radios
 
 ```javascript
-cy.get('[type="radio"]').check()
+cy.get('[type="radio"]').check();
 ```
 
 #### Check the element with id of 'saveUserName'
 
 ```javascript
-cy.get('#saveUserName').check()
+cy.get("#saveUserName").check();
 ```
 
 ### Value
@@ -93,15 +92,15 @@ cy.get('#saveUserName').check()
 
 ```html
 <form>
-  <input type="radio" id="ca-country" value="CA">
+  <input type="radio" id="ca-country" value="CA" />
   <label for="ca-country">Canada</label>
-  <input type="radio" id="us-country" value="US">
+  <input type="radio" id="us-country" value="US" />
   <label for="us-country">United States</label>
 </form>
 ```
 
 ```javascript
-cy.get('[type="radio"]').check('US')
+cy.get('[type="radio"]').check("US");
 ```
 
 ### Values
@@ -110,15 +109,15 @@ cy.get('[type="radio"]').check('US')
 
 ```html
 <form>
-  <input type="checkbox" id="subscribe" value="subscribe">
+  <input type="checkbox" id="subscribe" value="subscribe" />
   <label for="subscribe">Subscribe to newsletter?</label>
-  <input type="checkbox" id="acceptTerms" value="accept">
+  <input type="checkbox" id="acceptTerms" value="accept" />
   <label for="acceptTerms">Accept terms and conditions.</label>
 </form>
 ```
 
 ```javascript
-cy.get('form input').check(['subscribe', 'accept'])
+cy.get("form input").check(["subscribe", "accept"]);
 ```
 
 ### Options
@@ -128,8 +127,10 @@ cy.get('form input').check(['subscribe', 'accept'])
 You can ignore Cypress' default behavior of checking that the element is visible, clickable and not disabled by setting `force` to `true` in the options.
 
 ```javascript
-cy.get('.action-checkboxes').should('not.be.visible') // Passes
-  .check({ force: true }).should('be.checked')        // Passes
+cy.get(".action-checkboxes")
+  .should("not.be.visible") // Passes
+  .check({ force: true })
+  .should("be.checked"); // Passes
 ```
 
 ## Notes
@@ -156,10 +157,10 @@ cy.get('.action-checkboxes').should('not.be.visible') // Passes
 
 ## Command Log
 
-***check the element with name of 'emailUser'***
+**_check the element with name of 'emailUser'_**
 
 ```javascript
-cy.get('form').find('[name="emailUser"]').check()
+cy.get("form").find('[name="emailUser"]').check();
 ```
 
 The commands above will display in the Command Log as:
@@ -174,4 +175,3 @@ When clicking on `check` within the command log, the console outputs the followi
 
 - [`.click()`](/api/commands/click)
 - [`.uncheck()`](/api/commands/uncheck)
-

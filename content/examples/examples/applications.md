@@ -5,13 +5,13 @@ containerClass: examples
 
 Below is a list of complete applications tested in Cypress.
 
-Name | JS | Description
---- | --- | ---
-[Kitchen Sink](#Kitchen-Sink) | Vanilla | Showcases every single Cypress command
-[TodoMVC](#TodoMVC) | React | Compares the official TodoMVC Selenium tests to Cypress
-[Realworld](#Realworld) | React | Full end-to-end tests for the [gothinkster/realworld](https://github.com/gothinkster/realworld) "Conduit" app
-[Phonecat](#Phonecat) | Angular 1.x | Compares the official Phonecat Protractor tests to Cypress
-[PieChopper](#PieChopper) | Angular 1.x | Tests a fully featured application with many forms and modals
+| Name                          | JS          | Description                                                                                                   |
+| ----------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------- |
+| [Kitchen Sink](#Kitchen-Sink) | Vanilla     | Showcases every single Cypress command                                                                        |
+| [TodoMVC](#TodoMVC)           | React       | Compares the official TodoMVC Selenium tests to Cypress                                                       |
+| [Realworld](#Realworld)       | React       | Full end-to-end tests for the [gothinkster/realworld](https://github.com/gothinkster/realworld) "Conduit" app |
+| [Phonecat](#Phonecat)         | Angular 1.x | Compares the official Phonecat Protractor tests to Cypress                                                    |
+| [PieChopper](#PieChopper)     | Angular 1.x | Tests a fully featured application with many forms and modals                                                 |
 
 ## Kitchen Sink
 

@@ -6,7 +6,6 @@ Stop `cy` commands from running and allow interaction with the application under
 
 <Alert type="info">
 
-
 This does not set a `debugger` in your code, unlike [`.debug()`](/api/commands/debug)
 
 </Alert>
@@ -26,19 +25,19 @@ cy.pause(options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.pause().getCookie('app') // Pause at the beginning of commands
-cy.get('nav').pause()       // Pause after the 'get' commands yield
+cy.pause().getCookie("app"); // Pause at the beginning of commands
+cy.get("nav").pause(); // Pause after the 'get' commands yield
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.pause()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
+| Option | Default | Description                                                                              |
+| ------ | ------- | ---------------------------------------------------------------------------------------- |
+| `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -51,8 +50,11 @@ Option | Default | Description
 #### Pause after assertion
 
 ```javascript
-cy.get('a').should('have.attr', 'href').and('match', /dashboard/).pause()
-cy.get('button').should('not.be.disabled')
+cy.get("a")
+  .should("have.attr", "href")
+  .and("match", /dashboard/)
+  .pause();
+cy.get("button").should("not.be.disabled");
 ```
 
 ## Rules
@@ -74,7 +76,7 @@ cy.get('button').should('not.be.disabled')
 ### Pause and step through each `.click()` command
 
 ```javascript
-cy.get('#action-canvas')
+cy.get("#action-canvas")
   .click(80, 75)
   .pause()
   .click(170, 75)
@@ -82,7 +84,7 @@ cy.get('#action-canvas')
   .click(100, 185)
   .click(125, 190)
   .click(150, 185)
-  .click(170, 165)
+  .click(170, 165);
 ```
 
 The commands above will display in the Command Log as:
@@ -121,4 +123,3 @@ When clicking on "Next: 'click'" at the top of the Command Log, the Command Log 
 - [`cy.debug()`](/api/commands/debug)
 - [`cy.log()`](/api/commands/log)
 - [`cy.screenshot()`](/api/commands/screenshot)
-

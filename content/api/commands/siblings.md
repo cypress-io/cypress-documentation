@@ -18,31 +18,31 @@ Get sibling DOM elements.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('td').siblings()           // Yield all td's siblings
-cy.get('li').siblings('.active')  // Yield all li's siblings with class '.active'
+cy.get("td").siblings(); // Yield all td's siblings
+cy.get("li").siblings(".active"); // Yield all li's siblings with class '.active'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.siblings('.error')     // Errors, cannot be chained off 'cy'
-cy.location().siblings()  // Errors, 'location' does not yield DOM element
+cy.siblings(".error"); // Errors, cannot be chained off 'cy'
+cy.location().siblings(); // Errors, 'location' does not yield DOM element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> selector**  ***(String selector)***
+**<Icon name="angle-right"></Icon> selector** **_(String selector)_**
 
 A selector used to filter matching DOM elements.
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.siblings()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.siblings()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.siblings()` to resolve before [timing out](#Timeouts)                 |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -65,7 +65,7 @@ Option | Default | Description
 
 ```javascript
 // yields all other li's in list
-cy.get('.active').siblings()
+cy.get(".active").siblings();
 ```
 
 ### Selector
@@ -74,7 +74,7 @@ cy.get('.active').siblings()
 
 ```javascript
 // yields <li class="active">Services</li>
-cy.get('li').siblings('.active')
+cy.get("li").siblings(".active");
 ```
 
 ## Rules
@@ -93,10 +93,10 @@ cy.get('li').siblings('.active')
 
 ## Command Log
 
-***Get the siblings of element with class `active`***
+**_Get the siblings of element with class `active`_**
 
 ```javascript
-cy.get('.left-nav').find('li.active').siblings()
+cy.get(".left-nav").find("li.active").siblings();
 ```
 
 The commands above will display in the Command Log as:
@@ -109,12 +109,11 @@ When clicking on `siblings` within the command log, the console outputs the foll
 
 ## History
 
-Version | Changes
---- | ---
-[< 0.3.3](/guides/references/changelog#0-3-3) | `.siblings()` command added
+| Version                                       | Changes                     |
+| --------------------------------------------- | --------------------------- |
+| [< 0.3.3](/guides/references/changelog#0-3-3) | `.siblings()` command added |
 
 ## See also
 
 - [`.prev()`](/api/commands/prev)
 - [`.next()`](/api/commands/next)
-

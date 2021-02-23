@@ -2,7 +2,7 @@
 title: trigger
 ---
 
-Trigger an event on a DOM element.  
+Trigger an event on a DOM element.
 
 ## Syntax
 
@@ -20,51 +20,51 @@ Trigger an event on a DOM element.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('a').trigger('mousedown') // Trigger mousedown event on link
+cy.get("a").trigger("mousedown"); // Trigger mousedown event on link
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.trigger('touchstart')             // Errors, cannot be chained off 'cy'
-cy.location().trigger('mouseleave')  // Errors, 'location' does not yield DOM element
+cy.trigger("touchstart"); // Errors, cannot be chained off 'cy'
+cy.location().trigger("mouseleave"); // Errors, 'location' does not yield DOM element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> eventName**  ***(String)***
+**<Icon name="angle-right"></Icon> eventName** **_(String)_**
 
 The name of the `event` to be triggered on the DOM element.
 
-**<Icon name="angle-right"></Icon> position** ***(String)***
+**<Icon name="angle-right"></Icon> position** **_(String)_**
 
 The position where the event should be triggered. The `center` position is the default position. Valid positions are `topLeft`, `top`, `topRight`, `left`, `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
 <DocsImage src="/img/api/coordinates-diagram.jpg" alt="cypress-command-positions-diagram" ></DocsImage>
 
-**<Icon name="angle-right"></Icon> x** ***(Number)***
+**<Icon name="angle-right"></Icon> x** **_(Number)_**
 
 The distance in pixels from element's left to trigger the event.
 
-**<Icon name="angle-right"></Icon> y** ***(Number)***
+**<Icon name="angle-right"></Icon> y** **_(Number)_**
 
 The distance in pixels from element's top to trigger the event.
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.trigger()`.
 
-Option | Default | Description
---- | --- | ---
-`animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).
-`bubbles` | `true` | Whether the event bubbles
-`cancelable` | `true` | Whether the event is cancelable
-`eventConstructor` | `Event` | The constructor for creating the event object (e.g. `MouseEvent`, `KeyboardEvent`)
-`force` | `false` | Forces the action, disables [waiting for actionability](#Assertions)
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`scrollBehavior` | [`scrollBehavior`](/guides/references/configuration#Actionability) | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#Scrolling) before executing the command
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.trigger()` to resolve before [timing out](#Timeouts)
-`waitForAnimations` | [`waitForAnimations`](/guides/references/configuration#Actionability) | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.
+| Option                       | Default                                                                        | Description                                                                                                                                        |
+| ---------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).  |
+| `bubbles`                    | `true`                                                                         | Whether the event bubbles                                                                                                                          |
+| `cancelable`                 | `true`                                                                         | Whether the event is cancelable                                                                                                                    |
+| `eventConstructor`           | `Event`                                                                        | The constructor for creating the event object (e.g. `MouseEvent`, `KeyboardEvent`)                                                                 |
+| `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions)                                                                               |
+| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                                                           |
+| `scrollBehavior`             | [`scrollBehavior`](/guides/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#Scrolling) before executing the command |
+| `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.trigger()` to resolve before [timing out](#Timeouts)                                                                            |
+| `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
 You can also include arbitrary event properties (e.g. `clientX`, `shiftKey`) and they will be attached to the event. Passing in coordinate arguments (`clientX`, `pageX`, etc) will override the position coordinates.
 
@@ -81,26 +81,26 @@ You can also include arbitrary event properties (e.g. `clientX`, `shiftKey`) and
 The DOM element must be in an "interactable" state prior to the triggered event happening (it must be visible and not disabled).
 
 ```javascript
-cy.get('button').trigger('mouseover') // yields 'button'
+cy.get("button").trigger("mouseover"); // yields 'button'
 ```
 
 #### Simulate a "long press" event
 
 ```javascript
-cy.get('.target').trigger('mousedown')
-cy.wait(1000)
-cy.get('.target').trigger('mouseleave')
+cy.get(".target").trigger("mousedown");
+cy.wait(1000);
+cy.get(".target").trigger("mouseleave");
 ```
 
 #### Trigger a `mousedown` from a specific mouse button
 
 ```js
 // Main button pressed (usually the left button)
-cy.get('.target').trigger('mousedown', { button: 0 })
+cy.get(".target").trigger("mousedown", { button: 0 });
 // Auxiliary button pressed (usually the middle button)
-cy.get('.target').trigger('mousedown', { button: 1 })
+cy.get(".target").trigger("mousedown", { button: 1 });
 //Secondary button pressed (usually the right button)
-cy.get('.target').trigger('mousedown', { button: 2 })
+cy.get(".target").trigger("mousedown", { button: 2 });
 ```
 
 #### jQuery UI Sortable
@@ -108,16 +108,15 @@ cy.get('.target').trigger('mousedown', { button: 2 })
 To simulate drag and drop using jQuery UI sortable requires `pageX` and `pageY` properties along with `which:1`.
 
 ```javascript
-cy.get('[data-cy=draggable]')
-  .trigger('mousedown', { which: 1, pageX: 600, pageY: 100 })
-  .trigger('mousemove', { which: 1, pageX: 600, pageY: 600 })
-  .trigger('mouseup')
+cy.get("[data-cy=draggable]")
+  .trigger("mousedown", { which: 1, pageX: 600, pageY: 100 })
+  .trigger("mousemove", { which: 1, pageX: 600, pageY: 600 })
+  .trigger("mouseup");
 ```
 
 #### Drag and Drop
 
 <Alert type="info">
-
 
 [Check out our example recipe triggering mouse and drag events to test drag and drop](/examples/examples/recipes#Testing-the-DOM)
 
@@ -135,11 +134,9 @@ Below we invoke jQuery's `val()` method to set the value, then trigger the `chan
 Note that some implementations may rely on the `input` event instead, which is fired as a user moves the slider, but is not supported by some browsers.
 
 ```javascript
-cy.get('input[type=range]').as('range')
-  .invoke('val', 25)
-  .trigger('change')
+cy.get("input[type=range]").as("range").invoke("val", 25).trigger("change");
 
-cy.get('@range').siblings('p').should('have.text', '25')
+cy.get("@range").siblings("p").should("have.text", "25");
 ```
 
 ### Position
@@ -147,7 +144,7 @@ cy.get('@range').siblings('p').should('have.text', '25')
 #### Trigger a `mousedown` on the top right of a button
 
 ```javascript
-cy.get('button').trigger('mousedown', 'topRight')
+cy.get("button").trigger("mousedown", "topRight");
 ```
 
 ### Coordinates
@@ -155,7 +152,7 @@ cy.get('button').trigger('mousedown', 'topRight')
 #### Specify explicit coordinates relative to the top left corner
 
 ```javascript
-cy.get('button').trigger('mouseup', 15, 40)
+cy.get("button").trigger("mouseup", 15, 40);
 ```
 
 ### Options
@@ -165,7 +162,7 @@ cy.get('button').trigger('mouseup', 15, 40)
 By default, the event will bubble up the DOM tree. This will prevent the event from bubbling.
 
 ```javascript
-cy.get('button').trigger('mouseover', { bubbles: false })
+cy.get("button").trigger("mouseover", { bubbles: false });
 ```
 
 #### Specify the exact `clientX` and `clientY` the event should have
@@ -173,17 +170,17 @@ cy.get('button').trigger('mouseover', { bubbles: false })
 This overrides the default auto-positioning based on the element itself. Useful for events like `mousemove` where you need the position to be outside the element itself.
 
 ```javascript
-cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
+cy.get("button").trigger("mousemove", { clientX: 200, clientY: 300 });
 ```
 
 ### Fire other Event types.
 
-By default, `cy.trigger()` fires [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). But you may want to trigger other events like `MouseEvent` or `KeyboardEvent`. 
+By default, `cy.trigger()` fires [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). But you may want to trigger other events like `MouseEvent` or `KeyboardEvent`.
 
 In that case, use the `eventConstructor` option.
 
 ```js
-cy.get('button').trigger('mouseover', { eventConstructor: 'MouseEvent' })
+cy.get("button").trigger("mouseover", { eventConstructor: "MouseEvent" });
 ```
 
 ## Notes
@@ -211,18 +208,18 @@ As you can see the documentation of [`MouseEvent`](https://developer.mozilla.org
 In other words, what's the difference between:
 
 ```javascript
-cy.get('button').trigger('focus')
-cy.get('button').focus()
+cy.get("button").trigger("focus");
+cy.get("button").focus();
 
 // ... or ...
 
-cy.get('button').trigger('click')
-cy.get('button').click()
+cy.get("button").trigger("click");
+cy.get("button").click();
 ```
 
 Both types commands will first verify element actionability, but only the "true" action commands will implement all of the default actions of the browser, and additionally perform low level actions to fulfill what's defined in the spec.
 
-`.trigger()` will *only* fire the corresponding event and do nothing else.
+`.trigger()` will _only_ fire the corresponding event and do nothing else.
 
 That means that your event listener callbacks will be invoked, but don't expect the browser to actually "do" anything for these events. For the most part, it shouldn't matter, which is why `.trigger()` is an excellent stop-gap if the command / event you're looking for hasn't been implemented yet.
 
@@ -242,12 +239,10 @@ That means that your event listener callbacks will be invoked, but don't expect 
 
 ## Command Log
 
-***Trigger a `change` event on input type='range'***
+**_Trigger a `change` event on input type='range'_**
 
 ```javascript
-cy.get('.trigger-input-range')
-  .invoke('val', 25)
-  .trigger('change')
+cy.get(".trigger-input-range").invoke("val", 25).trigger("change");
 ```
 
 The commands above will display in the Command Log as:
@@ -260,11 +255,11 @@ When clicking on `trigger` within the command log, the console outputs the follo
 
 ## History
 
-Version | Changes
---- | ---
-[6.1.0](/guides/references/changelog#6-1-0) | Added option `scrollBehavior`
-[3.5.0](/guides/references/changelog#3-5-0) | Added `screenX` and `screenY` properties to events
-[0.20.0](/guides/references/changelog#0-20-0) | `.trigger()` command added
+| Version                                       | Changes                                            |
+| --------------------------------------------- | -------------------------------------------------- |
+| [6.1.0](/guides/references/changelog#6-1-0)   | Added option `scrollBehavior`                      |
+| [3.5.0](/guides/references/changelog#3-5-0)   | Added `screenX` and `screenY` properties to events |
+| [0.20.0](/guides/references/changelog#0-20-0) | `.trigger()` command added                         |
 
 ## See also
 
@@ -277,4 +272,3 @@ Version | Changes
 - [`.submit()`](/api/commands/submit)
 - [`.type()`](/api/commands/type)
 - [`.uncheck()`](/api/commands/uncheck)
-

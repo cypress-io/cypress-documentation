@@ -6,7 +6,7 @@ By enabling [test retries](/guides/guides/test-retries), the Cypress Dashboard c
 
 <Alert type="info">
 
- <strong class="alert-header">What is a flaky test?</strong>
+<strong class="alert-header">What is a flaky test?</strong>
 
 A test is considered to be **flaky** when it can pass and fail across multiple retry attempts without any code changes.
 
@@ -16,7 +16,7 @@ For example, a test is executed and fails, then the test is executed again, with
 
 <Alert type="info">
 
- <strong class="alert-header">What are test retries?</strong>
+<strong class="alert-header">What are test retries?</strong>
 
 Cypress has the ability to automatically retry failed tests to mitigate flaky tests from failing entire test runs or CI builds.
 
@@ -30,9 +30,9 @@ One way to battle flaky tests is to detect and monitor them as they occur in an 
 
 <Alert type="warning">
 
- <strong class="alert-header">Test Retries & Flake Detection</strong>
+<strong class="alert-header">Test Retries & Flake Detection</strong>
 
-Test retries is the *fundamental mechanism* that enables the detection of flaky tests by the Cypress Dashboard. Therefore, **enabling [test retries](/guides/guides/test-retries#Configure-Test-Retries) is required** to take advantage of any flaky test management feature provided by the Cypress Dashboard.
+Test retries is the _fundamental mechanism_ that enables the detection of flaky tests by the Cypress Dashboard. Therefore, **enabling [test retries](/guides/guides/test-retries#Configure-Test-Retries) is required** to take advantage of any flaky test management feature provided by the Cypress Dashboard.
 
 </Alert>
 
@@ -55,7 +55,7 @@ The flaky tests analytics page provides a birds-eye-view on the state of flake w
 
 <Alert type="info">
 
- <strong class="alert-header">Flake Severity</strong>
+<strong class="alert-header">Flake Severity</strong>
 
 Test flake **severity** is determined by the frequency of flake or the **flake rate** of a given test. Flake severity level can be used to prioritize the work needed to resolve flake issues.
 
@@ -90,7 +90,7 @@ With this concept in mind, it is possible to always have zero final failure rate
 
 <Alert type="success">
 
- <strong class="alert-header">Provide Feedback</strong>
+<strong class="alert-header">Provide Feedback</strong>
 
 Flake detection is new feature of the Cypress Dashboard and is part of our larger effort to minimize flake. [Please provide any feedback within our public roadmap.](https://portal.productboard.com/cypress-io/1-cypress-dashboard/c/19-see-the-flakiest-tests-in-your-test-suite)
 

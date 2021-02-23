@@ -6,7 +6,6 @@ Assign an alias for later use. Reference the alias later within a [`cy.get()`](/
 
 <Alert type="info">
 
-
 **Note:** `.as()` assumes you are already familiar with core concepts such as [aliases](/guides/core-concepts/variables-and-aliases)
 
 </Alert>
@@ -22,21 +21,21 @@ Assign an alias for later use. Reference the alias later within a [`cy.get()`](/
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('.main-nav').find('li').first().as('firstNav') // Alias element as @firstNav
-cy.intercept('PUT', 'users').as('putUser')            // Alias route as @putUser
-cy.stub(api, 'onUnauth').as('unauth')                 // Alias stub as @unauth
-cy.spy(win, 'fetch').as('winFetch')                   // Alias spy as @winFetch
+cy.get(".main-nav").find("li").first().as("firstNav"); // Alias element as @firstNav
+cy.intercept("PUT", "users").as("putUser"); // Alias route as @putUser
+cy.stub(api, "onUnauth").as("unauth"); // Alias stub as @unauth
+cy.spy(win, "fetch").as("winFetch"); // Alias spy as @winFetch
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.as('foo')   // Errors, cannot be chained off 'cy'
+cy.as("foo"); // Errors, cannot be chained off 'cy'
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> aliasName** ***(String)***
+**<Icon name="angle-right"></Icon> aliasName** **_(String)_**
 
 The name of the alias to be referenced later within a [`cy.get()`](/api/commands/get) or [`cy.wait()`](/api/commands/wait) command using an `@` prefix.
 
@@ -51,10 +50,10 @@ The name of the alias to be referenced later within a [`cy.get()`](/api/commands
 Aliasing a DOM element and then using [`cy.get()`](/api/commands/get) to access the aliased element.
 
 ```javascript
-it('disables on click', () => {
-  cy.get('button[type=submit]').as('submitBtn')
-  cy.get('@submitBtn').click().should('be.disabled')
-})
+it("disables on click", () => {
+  cy.get("button[type=submit]").as("submitBtn");
+  cy.get("@submitBtn").click().should("be.disabled");
+});
 ```
 
 ### Route
@@ -62,10 +61,9 @@ it('disables on click', () => {
 Aliasing a route and then using [`cy.wait()`](/api/commands/wait) to wait for the aliased route.
 
 ```javascript
-cy.intercept('PUT', 'users', { fixture: 'user' }).as('putUser')
-cy.get('form').submit()
-cy.wait('@putUser')
-  .its('url').should('contain', 'users')
+cy.intercept("PUT", "users", { fixture: "user" }).as("putUser");
+cy.get("form").submit();
+cy.wait("@putUser").its("url").should("contain", "users");
 ```
 
 ### Fixture
@@ -74,16 +72,15 @@ Aliasing [`cy.fixture()`](/api/commands/fixture) data and then using `this` to a
 
 ```javascript
 beforeEach(() => {
-  cy.fixture('users-admins.json').as('admins')
-})
+  cy.fixture("users-admins.json").as("admins");
+});
 
-it('the users fixture is bound to this.admins', function () {
-  cy.log(`There are ${this.admins.length} administrators.`)
-})
+it("the users fixture is bound to this.admins", function () {
+  cy.log(`There are ${this.admins.length} administrators.`);
+});
 ```
 
 <Alert type="warning">
-
 
 Note the use of the standard function syntax. Using [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) to access aliases via `this` won't work because of [the lexical binding](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#No_separate_this) of `this`.
 
@@ -106,35 +103,33 @@ Because of this you cannot _synchronously_ access anything you have aliased. You
 Here are some further examples of using `.as()` that illustrate the asynchronous behavior.
 
 ```javascript
-describe('A fixture', () => {
-  describe('alias can be accessed', () => {
-    it('via get().', () => {
-      cy.fixture('admin-users.json').as('admins')
-      cy.get('@admins')
-        .then((users) => {
-          cy.log(`There are ${users.length} admins.`)
-        })
-    })
+describe("A fixture", () => {
+  describe("alias can be accessed", () => {
+    it("via get().", () => {
+      cy.fixture("admin-users.json").as("admins");
+      cy.get("@admins").then((users) => {
+        cy.log(`There are ${users.length} admins.`);
+      });
+    });
 
-    it('via then().', function () {
-      cy.fixture('admin-users.json').as('admins')
-      cy.visit('/')
-        .then(() => {
-          cy.log(`There are ${this.admins.length} admins.`)
-        })
-    })
-  })
+    it("via then().", function () {
+      cy.fixture("admin-users.json").as("admins");
+      cy.visit("/").then(() => {
+        cy.log(`There are ${this.admins.length} admins.`);
+      });
+    });
+  });
 
-  describe('aliased in beforeEach()', () => {
+  describe("aliased in beforeEach()", () => {
     beforeEach(() => {
-      cy.fixture('admin-users.json').as('admins')
-    })
+      cy.fixture("admin-users.json").as("admins");
+    });
 
-    it('is bound to this.', function () {
-      cy.log(`There are ${this.admins.length} admins.`)
-    })
-  })
-})
+    it("is bound to this.", function () {
+      cy.log(`There are ${this.admins.length} admins.`);
+    });
+  });
+});
 ```
 
 ## Rules
@@ -153,14 +148,14 @@ describe('A fixture', () => {
 
 ## Command Log
 
-***Alias several routes***
+**_Alias several routes_**
 
 ```javascript
-cy.intercept(/company/).as('companyGet')
-cy.intercept(/roles/).as('rolesGet')
-cy.intercept(/teams/).as('teamsGet')
-cy.intercept(/users\/\d+/).as('userGet')
-cy.intercept('PUT', /^\/users\/\d+/).as('userPut')
+cy.intercept(/company/).as("companyGet");
+cy.intercept(/roles/).as("rolesGet");
+cy.intercept(/teams/).as("teamsGet");
+cy.intercept(/users\/\d+/).as("userGet");
+cy.intercept("PUT", /^\/users\/\d+/).as("userPut");
 ```
 
 Aliases of routes display in the routes instrument panel:
@@ -172,4 +167,3 @@ Aliases of routes display in the routes instrument panel:
 - [`cy.get()`](/api/commands/get)
 - [`cy.wait()`](/api/commands/wait)
 - [Guides: Aliases](/guides/core-concepts/variables-and-aliases)
-

@@ -6,7 +6,7 @@ Cypress has the capability to run tests across multiple browsers. Currently, Cyp
 
 <Alert type="warning">
 
- <strong class="alert-header">Web Security</strong>
+<strong class="alert-header">Web Security</strong>
 
 Tests that require the [`chromeWebSecurity` configuration option to be disabled](/guides/guides/web-security#Disabling-Web-Security) may experience issues in non-Chromium based browsers.
 
@@ -39,7 +39,7 @@ CI strategies will be demonstrated using the [Circle CI Cypress Orb](https://cir
 
 <Alert type="info">
 
- <strong class="alert-header">Docker Images for Testing</strong>
+<strong class="alert-header">Docker Images for Testing</strong>
 
 The CI configuration examples within this guide use [Cypress's Docker images](https://github.com/cypress-io/cypress-docker-images/tree/master/browsers) to provision testing environments with desired versions of Node, Chrome, and Firefox.
 
@@ -51,7 +51,7 @@ Generally, it is desired to run tests with each pushed commit, but it may not be
 
 <Alert type="info">
 
- <strong class="alert-header">Cron Scheduling</strong>
+<strong class="alert-header">Cron Scheduling</strong>
 
 Typically CI providers allow for the scheduling of CI jobs via [cron expressions](https://en.wikipedia.org/wiki/Cron). For example, the expression `0 0 * * *` translates to "everyday at midnight" or nightly. Helpful [online utilities](https://crontab.guru/) are available to assist with creation and translation of cron expressions.
 
@@ -106,14 +106,13 @@ workflows:
 
 ### Subset of Tests
 
-We can choose to only run a subset of tests against a given browser. For example, we can execute only the happy or critical path related test files, or a directory of specific "smoke" test files. It is not always necessary to have both browsers always running *all* tests.
+We can choose to only run a subset of tests against a given browser. For example, we can execute only the happy or critical path related test files, or a directory of specific "smoke" test files. It is not always necessary to have both browsers always running _all_ tests.
 
-In the example below, the Chrome `cypress/run` job runs *all* tests against Chrome and reports results to the [Cypress Dashboard](https://on.cypress.io/dashboard) using a ([group](/guides/guides/parallelization#Grouping-test-runs)) named `chrome`.
+In the example below, the Chrome `cypress/run` job runs _all_ tests against Chrome and reports results to the [Cypress Dashboard](https://on.cypress.io/dashboard) using a ([group](/guides/guides/parallelization#Grouping-test-runs)) named `chrome`.
 
 The Firefox `cypress/run` job runs a subset of tests, defined in the `spec` parameter, against the Firefox browser, and reports the results to the [Cypress Dashboard](https://on.cypress.io/dashboard) under the group `firefox-critical-path`.
 
 <Alert type="info">
-
 
 **Note:** The `name` under each `cypress/run` job which will be shown in the Circle CI workflow UI to distinguish the jobs.
 
@@ -154,7 +153,7 @@ workflows:
 
 Execution of test files can be parallelized on a per [group](/guides/guides/parallelization#Grouping-test-runs) basis, where test files can be grouped by the browser under test. This versatility enables the ability to allocate the desired amount of CI resources towards a browser to either improve test duration or to minimize CI costs.
 
-**You do not have to run all browsers at the same parallelization level.** In the example below, the Chrome dedicated `cypress/run` job runs *all* tests in parallel, across **4 machines**, against Chrome and reports results to the [Cypress Dashboard](https://on.cypress.io/dashboard) under the group name `chrome`. The Firefox dedicated `cypress/run` job runs a *subset* of tests in parallel, across **2 machines**, defined by the `spec` parameter, against the Firefox browser and reports results to the [Cypress Dashboard](https://on.cypress.io/dashboard) under the group named `firefox`.
+**You do not have to run all browsers at the same parallelization level.** In the example below, the Chrome dedicated `cypress/run` job runs _all_ tests in parallel, across **4 machines**, against Chrome and reports results to the [Cypress Dashboard](https://on.cypress.io/dashboard) under the group name `chrome`. The Firefox dedicated `cypress/run` job runs a _subset_ of tests in parallel, across **2 machines**, defined by the `spec` parameter, against the Firefox browser and reports results to the [Cypress Dashboard](https://on.cypress.io/dashboard) under the group named `firefox`.
 
 ```yaml
 version: 2.1
@@ -197,7 +196,7 @@ There may be instances where it can be useful to run or ignore one or more tests
 
 <Alert type="success">
 
- <strong class="alert-header">Tip</strong>
+<strong class="alert-header">Tip</strong>
 
 When considering to ignore or only run a particular test within a given browser, assess the true need for the test to run on multiple browsers.
 
@@ -207,24 +206,25 @@ You can specify a browser to run or exclude by passing a matcher to the suite or
 
 ```js
 // Run the test if Cypress is run via Firefox
-it('Download extension in Firefox', { browser: 'firefox' }, () => {
-  cy.get('#dl-extension')
-    .should('contain', 'Download Firefox Extension')
-})
+it("Download extension in Firefox", { browser: "firefox" }, () => {
+  cy.get("#dl-extension").should("contain", "Download Firefox Extension");
+});
 
 // Run happy path tests if Cypress is run via Firefox
-describe('happy path suite', { browser: 'firefox' }, () => {
-  it('...')
-  it('...')
-  it('...')
-})
+describe("happy path suite", { browser: "firefox" }, () => {
+  it("...");
+  it("...");
+  it("...");
+});
 
 // Ignore test if Cypress is running via Chrome
 // This test is not recorded to the Cypress Dashboard
-it('Show warning outside Chrome', {  browser: '!chrome' }, () => {
-  cy.get('.browser-warning')
-    .should('contain', 'For optimal viewing, use Chrome browser')
-})
+it("Show warning outside Chrome", { browser: "!chrome" }, () => {
+  cy.get(".browser-warning").should(
+    "contain",
+    "For optimal viewing, use Chrome browser"
+  );
+});
 ```
 
 ## See also
@@ -234,4 +234,3 @@ it('Show warning outside Chrome', {  browser: '!chrome' }, () => {
 - [Cypress.isBrowser](/api/cypress-api/isbrowser)
 - [Launching Browsers](/guides/guides/launching-browsers)
 - [Test Configuration](/guides/references/configuration#Test-Configuration)
-

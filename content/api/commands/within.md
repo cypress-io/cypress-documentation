@@ -16,29 +16,29 @@ Scopes all subsequent cy commands to within this element. Useful when working wi
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('.list').within(($list) => {}) // Yield the `.list` and scope all commands within it
+cy.get(".list").within(($list) => {}); // Yield the `.list` and scope all commands within it
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.within(() => {})              // Errors, cannot be chained off 'cy'
-cy.getCookies().within(() => {}) // Errors, 'getCookies' does not yield DOM element
+cy.within(() => {}); // Errors, cannot be chained off 'cy'
+cy.getCookies().within(() => {}); // Errors, 'getCookies' does not yield DOM element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> callbackFn** ***(Function)***
+**<Icon name="angle-right"></Icon> callbackFn** **_(Function)_**
 
 Pass a function that takes the current yielded subject as its first argument.
 
-**<Icon name="angle-right"></Icon> options** ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.within()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
+| Option | Default | Description                                                                              |
+| ------ | ------- | ---------------------------------------------------------------------------------------- |
+| `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -52,23 +52,23 @@ Option | Default | Description
 
 ```html
 <form>
-  <input name="email" type="email">
-  <input name="password" type="password">
+  <input name="email" type="email" />
+  <input name="password" type="password" />
   <button type="submit">Login</button>
 </form>
 ```
 
 ```javascript
-cy.get('form').within(($form) => {
+cy.get("form").within(($form) => {
   // you have access to the found form via
   // the jQuery object $form if you need it
 
   // cy.get() will only search for elements within form,
   // not within the entire document
-  cy.get('input[name="email"]').type('john.doe@email.com')
-  cy.get('input[name="password"]').type('password')
-  cy.root().submit()
-})
+  cy.get('input[name="email"]').type("john.doe@email.com");
+  cy.get('input[name="password"]').type("password");
+  cy.root().submit();
+});
 ```
 
 ### Tables
@@ -88,13 +88,15 @@ cy.get('form').within(($form) => {
 ```
 
 ```javascript
-cy.contains('My first client').parent('tr').within(() => {
-  // all searches are automatically rooted to the found tr element
-  cy.get('td').eq(1).contains('My first project')
-  cy.get('td').eq(2).contains('0')
-  cy.get('td').eq(3).contains('Active')
-  cy.get('td').eq(4).contains('button', 'Edit').click()
-})
+cy.contains("My first client")
+  .parent("tr")
+  .within(() => {
+    // all searches are automatically rooted to the found tr element
+    cy.get("td").eq(1).contains("My first project");
+    cy.get("td").eq(2).contains("0");
+    cy.get("td").eq(3).contains("Active");
+    cy.get("td").eq(4).contains("button", "Edit").click();
+  });
 ```
 
 ## Rules
@@ -113,12 +115,12 @@ cy.contains('My first client').parent('tr').within(() => {
 
 ## Command Log
 
-***Get the input within the form***
+**_Get the input within the form_**
 
 ```javascript
-cy.get('.query-form').within((el) => {
-  cy.get('input:first')
-})
+cy.get(".query-form").within((el) => {
+  cy.get("input:first");
+});
 ```
 
 The commands above will display in the Command Log as:
@@ -131,11 +133,10 @@ When clicking on the `within` command within the command log, the console output
 
 ## History
 
-Version | Changes
---- | ---
-[< 0.3.3](/guides/references/changelog#0-3-3) | `.within()` command added
+| Version                                       | Changes                   |
+| --------------------------------------------- | ------------------------- |
+| [< 0.3.3](/guides/references/changelog#0-3-3) | `.within()` command added |
 
 ## See also
 
 - [`.root()`](/api/commands/root)
-

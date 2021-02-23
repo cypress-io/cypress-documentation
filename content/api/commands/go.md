@@ -7,8 +7,8 @@ Navigate back or forward to the previous or next URL in the browser's history.
 ## Syntax
 
 ```javascript
-cy.go(direction)
-cy.go(direction, options)
+cy.go(direction);
+cy.go(direction, options);
 ```
 
 ### Usage
@@ -16,25 +16,25 @@ cy.go(direction, options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.go('back')
+cy.go("back");
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> direction** ***(String, Number)***
+**<Icon name="angle-right"></Icon> direction** **_(String, Number)_**
 
 The direction to navigate.
 
 You can use `back` or `forward` to go one step back or forward. You could also navigate to a specific history position (`-1` goes back one page, `1` goes forward one page, etc).
 
-**<Icon name="angle-right"></Icon> options** ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.go()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`pageLoadTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.go()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                        | Description                                                                              |
+| --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`pageLoadTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.go()` to resolve before [timing out](#Timeouts)                     |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -47,13 +47,13 @@ Option | Default | Description
 #### Go back in browser's history
 
 ```javascript
-cy.go('back')   // equivalent to clicking back button
+cy.go("back"); // equivalent to clicking back button
 ```
 
 #### Go forward in browser's history
 
 ```javascript
-cy.go('forward') // equivalent to clicking forward button
+cy.go("forward"); // equivalent to clicking forward button
 ```
 
 ### Number
@@ -61,13 +61,13 @@ cy.go('forward') // equivalent to clicking forward button
 #### Go back in browser's history
 
 ```javascript
-cy.go(-1)       // equivalent to clicking back button
+cy.go(-1); // equivalent to clicking back button
 ```
 
 #### Go forward in browser's history
 
 ```javascript
-cy.go(1)        // equivalent to clicking forward button
+cy.go(1); // equivalent to clicking forward button
 ```
 
 ## Notes
@@ -94,12 +94,10 @@ Cypress additionally handles situations where a page load was not caused (such a
 
 ## Command Log
 
-***Go back in browser's history***
+**_Go back in browser's history_**
 
 ```javascript
-cy
-  .visit('http://localhost:8000/folders')
-  .go('back')
+cy.visit("http://localhost:8000/folders").go("back");
 ```
 
 The commands above will display in the Command Log as:
@@ -114,4 +112,3 @@ When clicking on the `go` command within the command log, the console outputs th
 
 - [`cy.reload()`](/api/commands/reload)
 - [`cy.visit()`](/api/commands/visit)
-

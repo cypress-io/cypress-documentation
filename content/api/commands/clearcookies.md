@@ -6,16 +6,15 @@ Clear all browser cookies for current domain and subdomain.
 
 <Alert type="warning">
 
-
-Cypress automatically clears all cookies *before* each test to prevent state from being shared across tests. You shouldn't need to use this command unless you're using it to clear a specific cookie inside a single test.
+Cypress automatically clears all cookies _before_ each test to prevent state from being shared across tests. You shouldn't need to use this command unless you're using it to clear a specific cookie inside a single test.
 
 </Alert>
 
 ## Syntax
 
 ```javascript
-cy.clearCookies()
-cy.clearCookies(options)
+cy.clearCookies();
+cy.clearCookies(options);
 ```
 
 ### Usage
@@ -23,19 +22,19 @@ cy.clearCookies(options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.clearCookies()     // clear all cookies
+cy.clearCookies(); // clear all cookies
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.clearCookies()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.clearCookies()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                        | Description                                                                              |
+| --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.clearCookies()` to resolve before [timing out](#Timeouts)           |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -51,11 +50,11 @@ In this example, on first login our server sends us back a session cookie. After
 
 ```javascript
 // assume we just logged in
-cy.contains('Login').click()
-cy.url().should('include', 'profile')
-cy.clearCookies()
-cy.visit('/dashboard') // we should be redirected back to login
-cy.url().should('include', 'login')
+cy.contains("Login").click();
+cy.url().should("include", "profile");
+cy.clearCookies();
+cy.visit("/dashboard"); // we should be redirected back to login
+cy.url().should("include", "login");
 ```
 
 ## Rules
@@ -72,19 +71,18 @@ cy.url().should('include', 'login')
 
 <List><li>`cy.clearCookies()` should never time out.</li><li><Alert type="warning">
 
-
 Because `cy.clearCookies()` is asynchronous it is technically possible for there to be a timeout while talking to the internal Cypress automation APIs. But for practical purposes it should never happen.
 
 </Alert></li></List>
 
 ## Command Log
 
-***Clear cookies after getting cookies***
+**_Clear cookies after getting cookies_**
 
 ```javascript
-cy.getCookies().should('have.length', 1)
-cy.clearCookies()
-cy.getCookies().should('be.empty')
+cy.getCookies().should("have.length", 1);
+cy.clearCookies();
+cy.getCookies().should("be.empty");
 ```
 
 The commands above will display in the Command Log as:
@@ -102,4 +100,3 @@ When clicking on `clearCookies` within the command log, the console outputs the 
 - [`cy.getCookie()`](/api/commands/getcookie)
 - [`cy.getCookies()`](/api/commands/getcookies)
 - [`cy.setCookie()`](/api/commands/setcookie)
-

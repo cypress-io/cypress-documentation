@@ -4,7 +4,6 @@ title: Interacting with Elements
 
 <Alert type="info">
 
-
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
 - How Cypress calculates visibility
@@ -34,7 +33,7 @@ Prior to issuing any of the commands, we check the current state of the DOM and 
 
 Cypress will wait for the element to pass all of these checks for the duration of the [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) (described in depth in the [Default Assertions](/guides/core-concepts/introduction-to-cypress#Default-Assertions) core concept guide).
 
-***Checks and Actions Performed***
+**_Checks and Actions Performed_**
 
 - [Scroll the element into view.](#Scrolling)
 - [Ensure the element is not hidden.](#Visibility)
@@ -72,7 +71,7 @@ Cypress checks a lot of things to determine an element's visibility. The followi
 
 <Alert type="info">
 
- <strong class="alert-header">Opacity</strong>
+<strong class="alert-header">Opacity</strong>
 
 Elements where the CSS property (or ancestors) is `opacity: 0` are considered hidden when [asserting on the element's visibility directly](/guides/references/assertions#Visibility).
 
@@ -114,12 +113,11 @@ For instance, an element could pass all of the previous checks, but a giant dial
 
 <Alert type="info">
 
-
 When checking to see if the element is covered we always check its center coordinates.
 
 </Alert>
 
-If a *child* of the element is covering it - that's okay. In fact we'll automatically issue the events we fire to that child.
+If a _child_ of the element is covering it - that's okay. In fact we'll automatically issue the events we fire to that child.
 
 Imagine you have a button:
 
@@ -134,10 +132,9 @@ Oftentimes either the `<i>` or `<span>` element is covering the exact coordinate
 
 ### Scrolling
 
-Before interacting with an element, we will *always* scroll it into view (including any of its parent containers). Even if the element was visible without scrolling, we perform the scrolling algorithm in order to reproduce the same behavior every time the command is run.
+Before interacting with an element, we will _always_ scroll it into view (including any of its parent containers). Even if the element was visible without scrolling, we perform the scrolling algorithm in order to reproduce the same behavior every time the command is run.
 
 <Alert type="info">
-
 
 This scrolling logic only applies to [commands that are actionable above](#Actionability). **We do not scroll elements** into view when using DOM commands such as [cy.get()](/api/commands/get) or [.find()](/api/commands/find).
 
@@ -147,7 +144,7 @@ By default, the scrolling algorithm works by scrolling the top, leftmost point o
 
 After scrolling the element, if we determine that it is still being covered up, we will continue to scroll and "nudge" the page until it becomes visible. This most frequently happens when you have `position: fixed` or `position: sticky` navigation elements which are fixed to the top of the page.
 
-Our algorithm *should* always be able to scroll until the element is not covered.
+Our algorithm _should_ always be able to scroll until the element is not covered.
 
 To change the position in the viewport to where we scroll an element, you can use the [`scrollBehavior`](/guides/references/configuration#Actionability) configuration option. This can be useful if the element is covered up when aligned to the top of the viewport, or if you just prefer the element to be centered during scrolling of action commands. Accepted values are `'center'`, `'top'`, `'bottom'`, `'nearest'`, and `false`, with `false` disabling scrolling altogether.
 
@@ -156,7 +153,7 @@ To change the position in the viewport to where we scroll an element, you can us
 After we verify the element is actionable, Cypress will then fire all of the appropriate events and corresponding default actions. Usually these events' coordinates are fired at the center of the element, but most commands enable you to change the position it's fired to.
 
 ```js
-cy.get('button').click({ position: 'topLeft' })
+cy.get("button").click({ position: "topLeft" });
 ```
 
 The coordinates we fired the event at will generally be available when clicking the command in the [Command Log](/guides/core-concepts/test-runner#Command-Log).
@@ -171,11 +168,11 @@ Additionally we'll display a red "hitbox" - which is a dot indicating the coordi
 
 It can be difficult to debug problems when elements are not considered actionable by Cypress.
 
-Although you *should* see a nice error message, nothing beats visually inspecting and poking at the DOM yourself to understand the reason why.
+Although you _should_ see a nice error message, nothing beats visually inspecting and poking at the DOM yourself to understand the reason why.
 
-When you use the [Command Log](/guides/core-concepts/test-runner#Command-Log) to hover over a command, you'll notice that we will always scroll the element the command was applied to into view. Please note that this is *NOT* using the same algorithms that we described above.
+When you use the [Command Log](/guides/core-concepts/test-runner#Command-Log) to hover over a command, you'll notice that we will always scroll the element the command was applied to into view. Please note that this is _NOT_ using the same algorithms that we described above.
 
-In fact we only ever scroll elements into view when actionable commands are running using the above algorithms. We *do not* scroll elements into view on regular DOM commands like [`cy.get()`](/api/commands/get) or [`.find()`](/api/commands/find).
+In fact we only ever scroll elements into view when actionable commands are running using the above algorithms. We _do not_ scroll elements into view on regular DOM commands like [`cy.get()`](/api/commands/get) or [`.find()`](/api/commands/find).
 
 The reason we scroll an element into view when hovering over a snapshot is to help you to see which element(s) were found by that corresponding command. It's a purely visual feature and does not necessarily reflect what your page looked like when the command ran.
 
@@ -191,7 +188,7 @@ You can also [bind to Events](/api/events/catalog-of-events) that Cypress fires 
 
 ```js
 // break on a debugger before the action command
-cy.get('button').debug().click()
+cy.get("button").debug().click();
 ```
 
 ## Forcing
@@ -211,12 +208,12 @@ You can pass `{ force: true }` to most action commands.
 ```js
 // force the click and all subsequent events
 // to fire even if this element isn't considered 'actionable'
-cy.get('button').click({ force: true })
+cy.get("button").click({ force: true });
 ```
 
 <Alert type="info">
 
- <strong class="alert-header">What's the difference?</strong>
+<strong class="alert-header">What's the difference?</strong>
 
 When you force an event to happen we will:
 
@@ -234,16 +231,14 @@ We will NOT perform these:
 - Ensure it is not covered
 - Fire the event at a descendent
 
-
 </Alert>
 
 In summary, `{ force: true }` skips the checks, and it will always fire the event at the desired element.
 
 <Alert type="warning">
 
- <strong class="alert-header">force `.select()` disabled options</strong>
+<strong class="alert-header">force `.select()` disabled options</strong>
 
 Passing `{ force: true }` to [.select()](/api/commands/select) will not override the actionability checks for selecting a disabled `<option>` or an option within a disabled `<optgroup>`. See [this issue](https://github.com/cypress-io/cypress/issues/107) for more detail.
 
 </Alert>
-

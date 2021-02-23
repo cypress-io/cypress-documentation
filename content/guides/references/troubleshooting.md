@@ -11,7 +11,7 @@ There are times when you will encounter errors or unexpected behavior with Cypre
 - Search this documentation (search is in the top right) 😉
 - Search [Stack Overflow](https://stackoverflow.com/questions/tagged/cypress) for relevant answers
 - If your organization signs up for one of our [paid plans](https://www.cypress.io/pricing/), you can get dedicated email support, which gives you one-on-one help from our team.
-- If you still haven't found a solution, [open an issue](https://github.com/cypress-io/cypress/issues/new) *with a reproducible example*.
+- If you still haven't found a solution, [open an issue](https://github.com/cypress-io/cypress/issues/new) _with a reproducible example_.
 
 ## Isolate the Problem
 
@@ -25,8 +25,7 @@ When debugging a failing test, follow these general principles to isolate the pr
 
 ### Download specific Chrome version
 
-The Chrome browser is evergreen - meaning it will automatically update itself, sometimes causing a breaking change in your automated tests. We host [chromium.cypress.io](https://chromium.cypress.io) with links to download a specific released version of Chrome (dev, Canary and stable) for every platform. 
-
+The Chrome browser is evergreen - meaning it will automatically update itself, sometimes causing a breaking change in your automated tests. We host [chromium.cypress.io](https://chromium.cypress.io) with links to download a specific released version of Chrome (dev, Canary and stable) for every platform.
 
 ## Clear Cypress cache
 
@@ -50,7 +49,7 @@ Cypress attempts to [automatically find installed Chrome versions for you](/guid
 
 <Alert type="info">
 
- <strong class="alert-header">Using the `--browser` command line argument</strong>
+<strong class="alert-header">Using the `--browser` command line argument</strong>
 
 You can also supply the `--browser` command line argument to launch a browser from a known filesystem path to bypass browser auto detection. [See 'Launching Browsers' for more information](/guides/guides/launching-browsers#Launching-by-a-path)
 
@@ -66,11 +65,11 @@ Another way to log what is found by Cypress is to run Cypress with the [DEBUG en
 
 On Mac, Cypress attempts to find installed browsers by their bundle identifier. If this does not succeed, it will fall back to the Linux browser detection method.
 
-Browser Name | Expected Bundle Identifier | Expected Executable
---- | --- | ---
-`chrome` | `com.google.Chrome` | `Contents/MacOS/Google Chrome`
-`chromium` | `org.chromium.Chromium` | `Contents/MacOS/Chromium`
-`chrome:canary` | `com.google.Chrome.canary` | `Contents/MacOS/Google Chrome Canary`
+| Browser Name    | Expected Bundle Identifier | Expected Executable                   |
+| --------------- | -------------------------- | ------------------------------------- |
+| `chrome`        | `com.google.Chrome`        | `Contents/MacOS/Google Chrome`        |
+| `chromium`      | `org.chromium.Chromium`    | `Contents/MacOS/Chromium`             |
+| `chrome:canary` | `com.google.Chrome.canary` | `Contents/MacOS/Google Chrome Canary` |
 
 For the current list, see [packages/launcher](https://github.com/cypress-io/cypress/blob/develop/packages/launcher/lib/darwin/index.ts) files.
 
@@ -78,11 +77,11 @@ For the current list, see [packages/launcher](https://github.com/cypress-io/cypr
 
 On Linux, Cypress scans your `PATH` for a number of different binary names. If the browser you are trying to use does not exist under one of the expected binary names, Cypress will not be able to find it.
 
-Browser Name | Expected Binary Name(s)
---- | ---
-`chrome` | `google-chrome`, `chrome`, or `google-chrome-stable`
-`chromium` | `chromium-browser` or `chromium`
-`chrome:canary` | `google-chrome-canary`
+| Browser Name    | Expected Binary Name(s)                              |
+| --------------- | ---------------------------------------------------- |
+| `chrome`        | `google-chrome`, `chrome`, or `google-chrome-stable` |
+| `chromium`      | `chromium-browser` or `chromium`                     |
+| `chrome:canary` | `google-chrome-canary`                               |
 
 These binary names should work for most Linux distributions. If your distribution packages browsers under a different binary name, you can add a symlink using the expected binary name so that Cypress can detect it.
 
@@ -96,11 +95,11 @@ sudo ln `which chrome` /usr/local/bin/google-chrome
 
 On Windows, Cypress scans the following locations to try to find each browser:
 
-Browser Name | Expected Path
---- | ---
-`chrome` | `C:/Program Files (x86)/Google/Chrome/Application/chrome.exe`
-`chromium` | `C:/Program Files (x86)/Google/chrome-win32/chrome.exe`
-`chrome:canary` | `%APPDATA%/../Local/Google/Chrome SxS/Application/chrome.exe`
+| Browser Name    | Expected Path                                                 |
+| --------------- | ------------------------------------------------------------- |
+| `chrome`        | `C:/Program Files (x86)/Google/Chrome/Application/chrome.exe` |
+| `chromium`      | `C:/Program Files (x86)/Google/chrome-win32/chrome.exe`       |
+| `chrome:canary` | `%APPDATA%/../Local/Google/Chrome SxS/Application/chrome.exe` |
 
 For the current list, see [packages/launcher](https://github.com/cypress-io/cypress/blob/develop/packages/launcher/lib/windows/index.ts) files.
 
@@ -139,7 +138,6 @@ If you are running the tests from within a restrictive VPN you will need to allo
 - `https://download.cypress.io` - **CDN download of Cypress binary**
 - `https://on.cypress.io` - **URL shortener for link redirects**
 
-
 ## Clear App Data
 
 Cypress maintains some local application data in order to save user preferences and more quickly start up. Sometimes this data can become corrupted. You may fix an issue you have by clearing this app data.
@@ -150,16 +148,17 @@ Cypress maintains some local application data in order to save user preferences 
 2. Go to `File` -> `View App Data`
 3. This will take you to the directory in your file system where your App Data is stored. If you cannot open Cypress, search your file system for a directory named `cy` whose content should look something like this:
 
-  ```text
-  📂 production
-    📄 all.log
-    📁 browsers
-    📁 bundles
-    📄 cache
-    📁 projects
-    📁 proxy
-    📄 state.json
-  ```
+```text
+📂 production
+  📄 all.log
+  📁 browsers
+  📁 bundles
+  📄 cache
+  📁 projects
+  📁 proxy
+  📄 state.json
+```
+
 4. Delete everything in the `cy` folder
 5. Close Cypress and open it up again
 
@@ -205,24 +204,24 @@ This allows you to isolate the problem a little better
 
 Cypress is built from multiple packages, each responsible for its own logging: server, reporter, driver, command line, etc. Each package writes debug logs under a different source. Here are a few common log sources and when you might want to enable them
 
-Set `DEBUG` to value | To enable debugging
----|---
-`cypress:cli` | The top-level command line parsing problems
-`cypress:server:args` | Incorrect parsed command line arguments
-`cypress:server:specs` | Not finding the expected specs
-`cypress:server:project` | Opening the project
-`cypress:server:browsers` | Finding installed browsers
-`cypress:launcher` | Launching the found browser
-`cypress:server:video` | Video recording
-`cypress:network:*` | Adding network interceptors
-`cypress:net-stubbing*` | Network interception in the proxy layer
-`cypress:server:reporter` | Problems with test reporters
-`cypress:server:preprocessor` | Processing specs
-`cypress:server:plugins` | Running the plugin file and bundling specs
-`cypress:server:socket-e2e` | Watching spec files
-`cypress:server:task` | Invoking the `cy.task` command
-`cypress:webpack` | Bundling specs using webpack
-`cypress:server:fixture` | Loading fixture files
+| Set `DEBUG` to value          | To enable debugging                         |
+| ----------------------------- | ------------------------------------------- |
+| `cypress:cli`                 | The top-level command line parsing problems |
+| `cypress:server:args`         | Incorrect parsed command line arguments     |
+| `cypress:server:specs`        | Not finding the expected specs              |
+| `cypress:server:project`      | Opening the project                         |
+| `cypress:server:browsers`     | Finding installed browsers                  |
+| `cypress:launcher`            | Launching the found browser                 |
+| `cypress:server:video`        | Video recording                             |
+| `cypress:network:*`           | Adding network interceptors                 |
+| `cypress:net-stubbing*`       | Network interception in the proxy layer     |
+| `cypress:server:reporter`     | Problems with test reporters                |
+| `cypress:server:preprocessor` | Processing specs                            |
+| `cypress:server:plugins`      | Running the plugin file and bundling specs  |
+| `cypress:server:socket-e2e`   | Watching spec files                         |
+| `cypress:server:task`         | Invoking the `cy.task` command              |
+| `cypress:webpack`             | Bundling specs using webpack                |
+| `cypress:server:fixture`      | Loading fixture files                       |
 
 You can combine several areas together using the comma character. For example, to debug specs not being found, use:
 
@@ -243,10 +242,10 @@ DEBUG=cypress:server*,-cypress:server:browsers* npx cypress run
 If the problem is seen during `cypress open` you can print debug logs in the browser too. Open the browser's Developer Tools and set a `localStorage` property:
 
 ```javascript
-localStorage.debug = 'cypress*'
+localStorage.debug = "cypress*";
 
 // to disable debug messages
-delete localStorage.debug
+delete localStorage.debug;
 ```
 
 Reload the browser and turn on 'Verbose' logs to see debug messages within the Developer Tools console. You will only see the "cypress:driver" package logs that run in the browser, as you can see below.
@@ -404,37 +403,36 @@ If you're encountering a bug in the current version of Cypress, you can implemen
 1. Install [patch-package](https://github.com/ds300/patch-package).
 2. Add a patch step to your CI configuration after installing your npm packages.
 
-  ```yaml
-  - run: npm ci
-  - run: npx patch-package
-  ```
+```yaml
+- run: npm ci
+- run: npx patch-package
+```
 
-  Alternatively, you can apply the patch during a post-install phase. In your `package.json`, for example, you could add the following:
+Alternatively, you can apply the patch during a post-install phase. In your `package.json`, for example, you could add the following:
 
-  ```json
-  {
-    "scripts": {
-      "postinstall": "patch-package"
-    }
+```json
+{
+  "scripts": {
+    "postinstall": "patch-package"
   }
-  ```
+}
+```
 
-3. Edit the line causing the problem *in your local node_modules folder* within `node_modules/cypress`.
+3. Edit the line causing the problem _in your local node_modules folder_ within `node_modules/cypress`.
 4. Run the `npx patch-package cypress` command. This command will create a new file `patches/cypress+3.4.1.patch`.
 
-  ```shell
-  npx patch-package cypress
-  patch-package 6.1.2
-  • Creating temporary folder
-  • Installing cypress@3.4.1 with npm
-  • Diffing your files with clean files
-  ✔ Created file patches/cypress+3.4.1.patch
-  ```
+```shell
+npx patch-package cypress
+patch-package 6.1.2
+• Creating temporary folder
+• Installing cypress@3.4.1 with npm
+• Diffing your files with clean files
+✔ Created file patches/cypress+3.4.1.patch
+```
 
 5. Commit the new `patches` folder to git.
 
 <Alert type="info">
-
 
 If you find a patch for an error, please add a comment explaining your workaround to the relevant Cypress GitHub issue. It will help us release an official fix faster.
 
@@ -473,4 +471,3 @@ When finished, if necessary, remove the edited Test Runner version and reinstall
 rm -rf /Users/jane/Library/Caches/Cypress/3.3.1
 npm install cypress@3.3.1
 ```
-

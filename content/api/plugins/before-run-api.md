@@ -9,7 +9,6 @@ The event will fire each time `cypress run` executes. As a result, if running yo
 
 <Alert type="warning">
 
-
 <Icon name="exclamation-triangle" color="orange"></Icon> **This is an experimental feature. In order to use it, you must set the [experimentalRunEvents](/guides/references/experiments) configuration option to `true`.**
 
 </Alert>
@@ -17,10 +16,12 @@ The event will fire each time `cypress run` executes. As a result, if running yo
 ## Syntax
 
 ```js
-on('before:run', (details) => { /* ... */ })
+on("before:run", (details) => {
+  /* ... */
+});
 ```
 
-**<Icon name="angle-right"></Icon> details** ***(Object)***
+**<Icon name="angle-right"></Icon> details** **_(Object)_**
 
 Details of the run, including the project config, details about the browser and system, and the specs that will be run.
 
@@ -32,7 +33,7 @@ You can return a promise from the `before:run` event handler and it will be awai
 
 ```javascript
 module.exports = (on, config) => {
-  on('before:run', (details) => {
+  on("before:run", (details) => {
     // details will look something like this:
     // {
     //   config: {
@@ -69,9 +70,14 @@ module.exports = (on, config) => {
     //   tag: 'tag-1'
     // }
 
-    console.log('Running', details.specs.length, 'specs in', details.browser.name)
-  })
-}
+    console.log(
+      "Running",
+      details.specs.length,
+      "specs in",
+      details.browser.name
+    );
+  });
+};
 ```
 
 ## See also
@@ -81,4 +87,3 @@ module.exports = (on, config) => {
 - [After Spec API](/api/plugins/after-spec-api)
 - [Plugins Guide](/guides/tooling/plugins-guide)
 - [Writing a Plugin](/api/plugins/writing-a-plugin)
-

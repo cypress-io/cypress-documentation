@@ -28,7 +28,7 @@ The Cypress Test Runner is a hybrid application/framework/service all rolled int
 
 ### Mocha
 
- Mocha is a testing framework for JavaScript. [Mocha](http://mochajs.org/) gives you the `it`, `describe`, `beforeEach` methods. Cypress isn't **different** from Mocha, it actually **uses** Mocha under the hood. All of your tests will be written on top of Mocha's `bdd` interface.
+Mocha is a testing framework for JavaScript. [Mocha](http://mochajs.org/) gives you the `it`, `describe`, `beforeEach` methods. Cypress isn't **different** from Mocha, it actually **uses** Mocha under the hood. All of your tests will be written on top of Mocha's `bdd` interface.
 
 ### Karma
 
@@ -40,7 +40,7 @@ Cypress essentially replaces Karma because it does all of this already and much 
 
 ### Capybara
 
-The `Ruby` specific tool that allows you to write integration tests for your web application is [Capybara](http://teamcapybara.github.io/capybara/). In the Rails world, this is the *go-to* tool for testing your application. It uses [Sauce Labs](https://SauceLabs.com/) (or another headless driver) to interact with browsers. Its API consists of commands that query for DOM elements, perform user actions, navigate around, etc.
+The `Ruby` specific tool that allows you to write integration tests for your web application is [Capybara](http://teamcapybara.github.io/capybara/). In the Rails world, this is the _go-to_ tool for testing your application. It uses [Sauce Labs](https://SauceLabs.com/) (or another headless driver) to interact with browsers. Its API consists of commands that query for DOM elements, perform user actions, navigate around, etc.
 
 Cypress essentially replaces Capybara because it does all of these things and much more. The difference is that instead of testing your application in a GUI-less console, you would see your application at all times. You'd never have to take a screenshot to debug because all commands instantly provide you the state of your application while they run. Upon any command failing, you'll get a human-readable error explaining why it failed. There's no "guessing" when debugging.
 
@@ -85,7 +85,7 @@ Yes, technically; it's sandboxed and has to follow the same rules as every other
 
 But Cypress is actually way beyond a basic JavaScript application running in the browser. It is also a desktop application and communicates with back end web services.
 
-All of these technologies together are coordinated and enable Cypress to work, which extends its capabilities far outside of the browser sandbox. Without these, Cypress would not work at all. For the vast majority of your web development, Cypress will work fine, and already *does* work.
+All of these technologies together are coordinated and enable Cypress to work, which extends its capabilities far outside of the browser sandbox. Without these, Cypress would not work at all. For the vast majority of your web development, Cypress will work fine, and already _does_ work.
 
 ## <Icon name="angle-right"></Icon> We use WebSockets; will Cypress work with that?
 
@@ -93,34 +93,37 @@ Yes.
 
 ## <Icon name="angle-right"></Icon> We have the most complex most outrageous authentication system ever; will Cypress work with that?
 
-If you're using some complex thumb-print, retinal-scan, time-based, key-changing, microphone, audial, decoding mechanism to log in your users, then no, Cypress won't work with that.  But seriously, Cypress is a *development* tool, which helps you test your web applications. If your application is doing 100x things to make it extremely difficult to access, Cypress won't magically make it any easier.
+If you're using some complex thumb-print, retinal-scan, time-based, key-changing, microphone, audial, decoding mechanism to log in your users, then no, Cypress won't work with that. But seriously, Cypress is a _development_ tool, which helps you test your web applications. If your application is doing 100x things to make it extremely difficult to access, Cypress won't magically make it any easier.
 
-Because Cypress is a development tool, you can always make your application more accessible while in your development environment. If you want, disable complex steps in your authentication systems while you're in your testing environment. After all, that's why we have different environments! Normally you already have a development environment, a testing environment, a staging environment, and a production environment.  So expose the parts of your system you want accessible in each appropriate environment.
+Because Cypress is a development tool, you can always make your application more accessible while in your development environment. If you want, disable complex steps in your authentication systems while you're in your testing environment. After all, that's why we have different environments! Normally you already have a development environment, a testing environment, a staging environment, and a production environment. So expose the parts of your system you want accessible in each appropriate environment.
 
 In doing so, Cypress may not be able to give you 100% coverage without you changing anything, but that's okay. Use different tools to test the less accessible parts of your application, and let Cypress test the other 99%.
 
 Remember, Cypress won't make a non-testable application suddenly testable. It's on your shoulders to architect your code in an accessible manner.
 
 ## <Icon name="angle-right"></Icon> Is it possible to use cypress on `.jspa`?
+
 Yes. Cypress works on anything rendered to a browser.
 
 ## <Icon name="angle-right"></Icon> Can I use Cypress to script user-actions on an external site like `gmail.com`?
 
-No. There are already lots of tools to do that. Using Cypress to test against a 3rd party application is not its intended use. It *may* work but will defeat the purpose of why it was created. You use Cypress *while* you develop your application, it helps you write your tests.
+No. There are already lots of tools to do that. Using Cypress to test against a 3rd party application is not its intended use. It _may_ work but will defeat the purpose of why it was created. You use Cypress _while_ you develop your application, it helps you write your tests.
 
 ## <Icon name="angle-right"></Icon> Is there code coverage?
 
 There is a plugin and detailed documentation on how to get end-to-end, unit and full stack code coverage.
+
 - Read our [Code Coverage guide](https://on.cypress.io/code-coverage)
 - Use the [@cypress/code-coverage](https://github.com/cypress-io/code-coverage) plugin
 
 You may also find the following resources helpful when writing end-to-end tests:
+
 - [element coverage](https://glebbahmutov.com/blog/element-coverage/)
 - [application state coverage](https://glebbahmutov.com/blog/hyperapp-state-machine/)
 
 ## <Icon name="angle-right"></Icon> Are there driver bindings in my language?
 
-Cypress does *not* utilize WebDriver for testing, so it does not use or have any notion of driver bindings. If your language can be somehow transpiled to JavaScript, then you can configure [Cypress webpack preprocessor](https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor) or [Cypress Browserify preprocessor](https://github.com/cypress-io/cypress-browserify-preprocessor) to transpile your tests to JavaScript that Cypress can run.
+Cypress does _not_ utilize WebDriver for testing, so it does not use or have any notion of driver bindings. If your language can be somehow transpiled to JavaScript, then you can configure [Cypress webpack preprocessor](https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor) or [Cypress Browserify preprocessor](https://github.com/cypress-io/cypress-browserify-preprocessor) to transpile your tests to JavaScript that Cypress can run.
 
 ## <Icon name="angle-right"></Icon> What resources do you recommend to learn JavaScript before writing Cypress tests?
 
@@ -149,19 +152,19 @@ With that said - we actually believe the best form of testing in Cypress is a co
 
 We believe unit tests and end-to-end tests have differences that should guide your choice.
 
-| Unit tests | End-to-end tests |
-| --- | ---- |
-| Focus on code | Focus on the features |
-| Should be kept short | Can be long |
+| Unit tests                             | End-to-end tests                                                             |
+| -------------------------------------- | ---------------------------------------------------------------------------- |
+| Focus on code                          | Focus on the features                                                        |
+| Should be kept short                   | Can be long                                                                  |
 | Examine the returned result of actions | Examine side effect of actions: DOM, storage, network, file system, database |
-| Important to developer workflow | Important to end user's workflow |
+| Important to developer workflow        | Important to end user's workflow                                             |
 
 In addition to the above differences, below are a few rules of thumb to decide when to write a unit test and when to write an end-to-end test.
 
 - If the code you are trying to test is called from other code, use a unit test.
 - If the code is going be called from the external system, like a browser, use an end-to-end test.
 - If a unit test requires a lot of mocking and you have to bring tools like `jsdom`, `enzyme`, or `sinon.js` to simulate a real world environment, you may want to rewrite it as an end-to-end test.
-- If an end-to-end test does *not* go through the browser and instead calls the code directly, you probably want to rewrite it as a unit test
+- If an end-to-end test does _not_ go through the browser and instead calls the code directly, you probably want to rewrite it as a unit test
 
 Finally, unit and end-to-end tests are not _that_ different and have common features. Good tests:
 
@@ -180,6 +183,7 @@ First, be honest with yourself - [is Cypress the right tool](/guides/overview/wh
 
 We publish our releases at GitHub and Npm, together with the releases we also publish a changelog with the principal changes, fixes, and updates.
 You can follow through these links:
+
 - [GitHub (Releases & changelog)](https://github.com/cypress-io/cypress/releases)
 - [npm (Releases)](https://www.npmjs.com/package/cypress)
 - [Changelog at Cypress Docs](/guides/references/changelog)

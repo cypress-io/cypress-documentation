@@ -18,35 +18,35 @@ Select an `<option>` within a `<select>`.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('select').select('user-1') // Select the 'user-1' option
+cy.get("select").select("user-1"); // Select the 'user-1' option
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.select('John Adams')  // Errors, cannot be chained off 'cy'
-cy.location().select()   // Errors, 'location' does not yield <select> element
+cy.select("John Adams"); // Errors, cannot be chained off 'cy'
+cy.location().select(); // Errors, 'location' does not yield <select> element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> value**  ***(String)***
+**<Icon name="angle-right"></Icon> value** **_(String)_**
 
 The `value` or text content of the `<option>` to be selected.
 
-**<Icon name="angle-right"></Icon> values**  ***(Array)***
+**<Icon name="angle-right"></Icon> values** **_(Array)_**
 
 An array of `values` or text contents of the `<option>`s to be selected.
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.select()`.
 
-Option | Default | Description
---- | --- | ---
-`force` | `false` | Forces the action, disables [waiting for actionability](#Assertions)
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.select()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `force`   | `false`                                                              | Forces the action, disables [waiting for actionability](#Assertions)                     |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.select()` to resolve before [timing out](#Timeouts)                   |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -68,8 +68,7 @@ Option | Default | Description
 
 ```javascript
 // yields <option value="456">apples</option>
-cy.get('select')
-  .select('apples').should('have.value', '456')
+cy.get("select").select("apples").should("have.value", "456");
 ```
 
 ### Value
@@ -86,8 +85,7 @@ cy.get('select')
 
 ```javascript
 // yields <option value="456">apples</option>
-cy.get('select')
-  .select('456').should('have.value', '456')
+cy.get("select").select("456").should("have.value", "456");
 ```
 
 ### Select multiple options
@@ -103,9 +101,10 @@ cy.get('select')
 ```
 
 ```javascript
-cy.get('select')
-  .select(['apples', 'bananas']).invoke('val')
-  .should('deep.equal', ['456', '458'])
+cy.get("select")
+  .select(["apples", "bananas"])
+  .invoke("val")
+  .should("deep.equal", ["456", "458"]);
 ```
 
 #### Select the options with the values "456" and "457"
@@ -119,9 +118,10 @@ cy.get('select')
 ```
 
 ```javascript
-cy.get('select')
-  .select(['456', '457']).invoke('val')
-  .should('deep.equal', ['456', '457'])
+cy.get("select")
+  .select(["456", "457"])
+  .invoke("val")
+  .should("deep.equal", ["456", "457"]);
 ```
 
 ### Force select
@@ -133,35 +133,39 @@ cy.get('select')
   <optgroup label="Fruits">
     <option value="banana">Banana</option>
     <option value="apple">Apple</option>
-  <optgroup>
+  </optgroup>
+
+  <optgroup></optgroup>
 </select>
 ```
 
 ```javascript
-cy.get('select')
-  .select('banana', { force: true })
-  .invoke('val')
-  .should('eq', 'banana')
+cy.get("select")
+  .select("banana", { force: true })
+  .invoke("val")
+  .should("eq", "banana");
 ```
 
 #### Force select a disabled `<select>`
 
-Passing `{ force: true }` to `.select()` will override the actionability checks for selecting a disabled `<select>`. However, it will not override  the actionability checks for selecting a disabled `<option>` or an option within a disabled `<optgroup>`. See [this issue](https://github.com/cypress-io/cypress/issues/107) for more detail.
+Passing `{ force: true }` to `.select()` will override the actionability checks for selecting a disabled `<select>`. However, it will not override the actionability checks for selecting a disabled `<option>` or an option within a disabled `<optgroup>`. See [this issue](https://github.com/cypress-io/cypress/issues/107) for more detail.
 
 ```html
 <select disabled>
   <optgroup label="Veggies">
     <option value="okra">Okra</option>
     <option value="zucchini">Zucchini</option>
-  <optgroup>
+  </optgroup>
+
+  <optgroup></optgroup>
 </select>
 ```
 
 ```javascript
-cy.get('select')
-  .select('okra', { force: true })
-  .invoke('val')
-  .should('eq', 'okra')
+cy.get("select")
+  .select("okra", { force: true })
+  .invoke("val")
+  .should("eq", "okra");
 ```
 
 ## Notes
@@ -188,10 +192,10 @@ However, passing `{ force: true }` to `.select()` will not override the actionab
 
 ## Command Log
 
-***Select the option with the text "Homer Simpson"***
+**_Select the option with the text "Homer Simpson"_**
 
 ```javascript
-cy.get('select').select('Homer Simpson')
+cy.get("select").select("Homer Simpson");
 ```
 
 The commands above will display in the Command Log as:
@@ -206,4 +210,3 @@ When clicking on `select` within the command log, the console outputs the follow
 
 - Read [Working with Select elements and Select2 widgets in Cypress](https://www.cypress.io/blog/2020/03/20/working-with-select-elements-and-select2-widgets-in-cypress/)
 - [`.click()`](/api/commands/click)
-

@@ -6,7 +6,6 @@ The Plugins API allows you to hook into and extend Cypress behavior.
 
 <Alert type="info">
 
-
 **Note:** This document assumes you have read the [Plugins Guide](/guides/tooling/plugins-guide).
 
 </Alert>
@@ -27,7 +26,7 @@ The plugins file must export a function with the following signature:
 // export a function
 module.exports = (on, config) => {
   // configure plugins here
-}
+};
 ```
 
 The exported function is called whenever a project is opened either with [cypress open](/guides/guides/command-line#cypress-open) or [cypress run](/guides/guides/command-line#cypress-run).
@@ -46,10 +45,10 @@ Registering to listen on an event looks like this:
 
 ```javascript
 module.exports = (on, config) => {
-  on('<event>', (arg1, arg2) => {
+  on("<event>", (arg1, arg2) => {
     // plugin stuff here
-  })
-}
+  });
+};
 ```
 
 Each event documents its own argument signature. To understand how to use them, please [refer to the docs for each one](#List-of-events).
@@ -68,12 +67,11 @@ You can programmatically modify these values and Cypress will then respect these
 
 <Alert type="warning">
 
-
 The `config` object also includes the following extra values that are not part of the standard configuration. **These values are read only and cannot be modified from the plugins file.**
 
-* `configFile`: The absolute path to the config file. By default, this is `<projectRoot>/cypress.json`, but may be a custom path or `false` if using the [`--config-file` flag](/guides/guides/command-line#cypress-open-config-file-lt-config-file-gt).
-* `projectRoot`: The absolute path to the root of the project (e.g. `/Users/me/dev/my-project`)
-* `version`: The version number of Cypress. This can be used to handle breaking changes.
+- `configFile`: The absolute path to the config file. By default, this is `<projectRoot>/cypress.json`, but may be a custom path or `false` if using the [`--config-file` flag](/guides/guides/command-line#cypress-open-config-file-lt-config-file-gt).
+- `projectRoot`: The absolute path to the root of the project (e.g. `/Users/me/dev/my-project`)
+- `version`: The version number of Cypress. This can be used to handle breaking changes.
 
 </Alert>
 
@@ -83,16 +81,16 @@ The `config` object also includes the following extra values that are not part o
 
 #### The following events are available:
 
-Event | Description
---- | ---
-[`after:run`](/api/plugins/after-run-api) | Occurs after the run is finished.
-[`after:screenshot`](/api/plugins/after-screenshot-api) | Occurs after a screenshot is taken.
-[`after:spec`](/api/plugins/after-spec-api) | Occurs after a spec is finished running.
-[`before:browser:launch`](/api/plugins/browser-launch-api) | Occurs immediately before launching a browser.
-[`before:run`](/api/plugins/before-run-api) | Occurs before the run starts.
-[`before:spec`](/api/plugins/before-spec-api) | Occurs when a spec is about to be run.
-[`file:preprocessor`](/api/plugins/preprocessors-api) | Occurs when a spec or spec-related file needs to be transpiled for the browser.
-[`task`](/api/commands/task) | Occurs in conjunction with the `cy.task` command.
+| Event                                                      | Description                                                                     |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| [`after:run`](/api/plugins/after-run-api)                  | Occurs after the run is finished.                                               |
+| [`after:screenshot`](/api/plugins/after-screenshot-api)    | Occurs after a screenshot is taken.                                             |
+| [`after:spec`](/api/plugins/after-spec-api)                | Occurs after a spec is finished running.                                        |
+| [`before:browser:launch`](/api/plugins/browser-launch-api) | Occurs immediately before launching a browser.                                  |
+| [`before:run`](/api/plugins/before-run-api)                | Occurs before the run starts.                                                   |
+| [`before:spec`](/api/plugins/before-spec-api)              | Occurs when a spec is about to be run.                                          |
+| [`file:preprocessor`](/api/plugins/preprocessors-api)      | Occurs when a spec or spec-related file needs to be transpiled for the browser. |
+| [`task`](/api/commands/task)                               | Occurs in conjunction with the `cy.task` command.                               |
 
 ## Execution context
 
@@ -106,7 +104,7 @@ Because of this, this global context and the version of Node is controlled under
 
 <Alert type="warning">
 
- <strong class="alert-header">Node version</strong>
+<strong class="alert-header">Node version</strong>
 
 Keep in mind - code executed in plugins **may** be executed by the Node version that comes bundled in Cypress itself.
 
@@ -141,14 +139,14 @@ You can also `require` local files relative to your project.
 ```js
 // cypress/plugins/index.js
 
-const _ = require('lodash') // yup, dev dependencies
-const path = require('path') // yup, built in node modules
-const debug = require('debug') // yup, dependencies
-const User = require('../../lib/models/user') // yup, relative local modules
+const _ = require("lodash"); // yup, dev dependencies
+const path = require("path"); // yup, built in node modules
+const debug = require("debug"); // yup, dependencies
+const User = require("../../lib/models/user"); // yup, relative local modules
 
-console.log(__dirname) // /Users/janelane/Dev/my-project/cypress/plugins/index.js
+console.log(__dirname); // /Users/janelane/Dev/my-project/cypress/plugins/index.js
 
-console.log(process.cwd()) // /Users/janelane/Dev/my-project
+console.log(process.cwd()); // /Users/janelane/Dev/my-project
 ```
 
 ## Error handling
@@ -157,7 +155,7 @@ Cypress spawns your `pluginsFile` in its own child process so it is isolated awa
 
 If your `pluginsFile` has an uncaught exception, an unhandled rejection from a promise, or a syntax error - we will automatically catch those and display them to you inside of the console and even in the Test Runner itself.
 
-Errors from your plugins *will not crash* Cypress.
+Errors from your plugins _will not crash_ Cypress.
 
 ## File changes
 
@@ -166,4 +164,3 @@ Normally when writing code in Node, you typically have to restart the process af
 With Cypress, we automatically watch your `pluginsFile` and any changes made will take effect immediately. We will read the file in and execute the exported function again.
 
 This enables you to iterate on plugin code even with Cypress already running.
-

@@ -4,7 +4,6 @@ title: Command Line
 
 <Alert type="info">
 
-
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
 - How to run Cypress from the command line
@@ -21,7 +20,6 @@ This guide assumes you've already read our [Installing Cypress](/guides/getting-
 ## How to run commands
 
 <Alert type="info">
-
 
 You can alternatively require and run Cypress as a node module using our [Module API](/guides/guides/module-api).
 
@@ -49,7 +47,7 @@ npx cypress run
 
 You may find it easier to add the cypress command to the `scripts` object in your `package.json` file and call it from an [`npm run` script](https://docs.npmjs.com/cli/run-script.html).
 
-When calling a command using `npm run`, you need to pass the command's arguments using the `--` string. For example, if you have  the following command defined in your `package.json`
+When calling a command using `npm run`, you need to pass the command's arguments using the `--` string. For example, if you have the following command defined in your `package.json`
 
 ```json
 {
@@ -83,28 +81,28 @@ cypress run [options]
 
 #### Options
 
-Option | Description
------- |  ---------
-`--browser`, `-b`  | [Run Cypress in the browser with the given name. If a filesystem path is supplied, Cypress will attempt to use the browser at that path.](#cypress-run-browser-lt-browser-name-or-path-gt)
-`--ci-build-id` | [Specify a unique identifier for a run to enable grouping or parallelization.](#cypress-run-ci-build-id-lt-id-gt)
-`--config`, `-c`  | [Specify configuration](#cypress-run-config-lt-config-gt)
-`--config-file`, `-C`  | [Specify configuration file](#cypress-run-config-file-lt-config-file-gt)
-`--env`, `-e`  | [Specify environment variables](#cypress-run-env-lt-env-gt)
-`--group`  | [Group recorded tests together under a single run](#cypress-run-group-lt-name-gt)
-`--headed`  | [Displays the browser instead of running headlessly (default for Firefox and Chromium-based browsers)](#cypress-run-headed)
-`--headless` | [Hide the browser instead of running headed (default for Electron)](#cypress-run-headless)
-`--help`, `-h`  | Output usage information
-`--key`, `-k`  | [Specify your secret record key](#cypress-run-record-key-lt-record-key-gt)
-`--no-exit` | [Keep Cypress Test Runner open after tests in a spec file run](#cypress-run-no-exit)
-`--parallel` | [Run recorded specs in parallel across multiple machines](#cypress-run-parallel)
-`--port`,`-p`  | [Override default port](#cypress-run-port-lt-port-gt)
-`--project`, `-P` | [Path to a specific project](#cypress-run-project-lt-project-path-gt)
-`--quiet`, `-q` | If passed, Cypress output will not be printed to `stdout`. Only output from the configured [Mocha reporter](/guides/tooling/reporters) will print.
-`--record`  | [Whether to record the test run](#cypress-run-record-key-lt-record-key-gt)
-`--reporter`, `-r`  | [Specify a Mocha reporter](#cypress-run-reporter-lt-reporter-gt)
-`--reporter-options`, `-o`  | [Specify Mocha reporter options](#cypress-run-reporter-lt-reporter-gt)
-`--spec`, `-s`  | [Specify the spec files to run](#cypress-run-spec-lt-spec-gt)
-`--tag`, `-t`  | [Identify a run with a tag or tags](#cypress-run-spec-lt-spec-gt)
+| Option                     | Description                                                                                                                                                                                |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `--browser`, `-b`          | [Run Cypress in the browser with the given name. If a filesystem path is supplied, Cypress will attempt to use the browser at that path.](#cypress-run-browser-lt-browser-name-or-path-gt) |
+| `--ci-build-id`            | [Specify a unique identifier for a run to enable grouping or parallelization.](#cypress-run-ci-build-id-lt-id-gt)                                                                          |
+| `--config`, `-c`           | [Specify configuration](#cypress-run-config-lt-config-gt)                                                                                                                                  |
+| `--config-file`, `-C`      | [Specify configuration file](#cypress-run-config-file-lt-config-file-gt)                                                                                                                   |
+| `--env`, `-e`              | [Specify environment variables](#cypress-run-env-lt-env-gt)                                                                                                                                |
+| `--group`                  | [Group recorded tests together under a single run](#cypress-run-group-lt-name-gt)                                                                                                          |
+| `--headed`                 | [Displays the browser instead of running headlessly (default for Firefox and Chromium-based browsers)](#cypress-run-headed)                                                                |
+| `--headless`               | [Hide the browser instead of running headed (default for Electron)](#cypress-run-headless)                                                                                                 |
+| `--help`, `-h`             | Output usage information                                                                                                                                                                   |
+| `--key`, `-k`              | [Specify your secret record key](#cypress-run-record-key-lt-record-key-gt)                                                                                                                 |
+| `--no-exit`                | [Keep Cypress Test Runner open after tests in a spec file run](#cypress-run-no-exit)                                                                                                       |
+| `--parallel`               | [Run recorded specs in parallel across multiple machines](#cypress-run-parallel)                                                                                                           |
+| `--port`,`-p`              | [Override default port](#cypress-run-port-lt-port-gt)                                                                                                                                      |
+| `--project`, `-P`          | [Path to a specific project](#cypress-run-project-lt-project-path-gt)                                                                                                                      |
+| `--quiet`, `-q`            | If passed, Cypress output will not be printed to `stdout`. Only output from the configured [Mocha reporter](/guides/tooling/reporters) will print.                                         |
+| `--record`                 | [Whether to record the test run](#cypress-run-record-key-lt-record-key-gt)                                                                                                                 |
+| `--reporter`, `-r`         | [Specify a Mocha reporter](#cypress-run-reporter-lt-reporter-gt)                                                                                                                           |
+| `--reporter-options`, `-o` | [Specify Mocha reporter options](#cypress-run-reporter-lt-reporter-gt)                                                                                                                     |
+| `--spec`, `-s`             | [Specify the spec files to run](#cypress-run-spec-lt-spec-gt)                                                                                                                              |
+| `--tag`, `-t`              | [Identify a run with a tag or tags](#cypress-run-spec-lt-spec-gt)                                                                                                                          |
 
 #### `cypress run --browser <browser-name-or-path>`
 
@@ -146,13 +144,12 @@ cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
 
 <Alert type="info">
 
-
 ##### <Icon name="graduation-cap"></Icon> Real World Example
 
 The Cypress [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses `--config` flag to easily specify [viewport](/guides/references/configuration#Viewport) sizes for responsive testing locally and in dedicated CI jobs. Examples:
+
 - <Icon name="github"></Icon> [npm scripts](https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/package.json#L120) to run Cypress in mobile viewport.
 - <Icon name="github"></Icon> [Circle CI job configuration](https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/.circleci/config.yml#L82-L100) for running test suites in mobile viewport.
-
 
 </Alert>
 
@@ -318,7 +315,7 @@ Run tests specifying a single test file to run instead of all tests. The spec pa
 cypress run --spec "cypress/integration/examples/actions.spec.js"
 ```
 
-Run tests within the folder matching the glob *(Note: Using double quotes is strongly recommended)*.
+Run tests within the folder matching the glob _(Note: Using double quotes is strongly recommended)_.
 
 ```shell
 cypress run --spec "cypress/integration/login/**/*"
@@ -428,17 +425,17 @@ cypress open [options]
 
 Options passed to `cypress open` will automatically be applied to the project you open. These persist on all projects until you quit the Cypress Test Runner. These options will also override values in your configuration file (`cypress.json` by default).
 
-Option | Description
------- | ---------
-`--browser`, `-b`  | [Path to a custom browser to be added to the list of available browsers in Cypress](#cypress-open-browser-lt-browser-path-gt)
-`--config`, `-c`  | [Specify configuration](#cypress-open-config-lt-config-gt)
-`--config-file`, `-C`  | [Specify configuration file](#cypress-open-config-file-lt-config-file-gt)
-`--detached`, `-d` | Open Cypress in detached mode
-`--env`, `-e`  | [Specify environment variables](#cypress-open-env-lt-env-gt)
-`--global` | [Run in global mode](#cypress-open-global)
-`--help`, `-h`  | Output usage information
-`--port`, `-p`  | [Override default port](#cypress-open-port-lt-port-gt)
-`--project`, `-P` | [Path to a specific project](#cypress-open-project-lt-project-path-gt)
+| Option                | Description                                                                                                                   |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `--browser`, `-b`     | [Path to a custom browser to be added to the list of available browsers in Cypress](#cypress-open-browser-lt-browser-path-gt) |
+| `--config`, `-c`      | [Specify configuration](#cypress-open-config-lt-config-gt)                                                                    |
+| `--config-file`, `-C` | [Specify configuration file](#cypress-open-config-file-lt-config-file-gt)                                                     |
+| `--detached`, `-d`    | Open Cypress in detached mode                                                                                                 |
+| `--env`, `-e`         | [Specify environment variables](#cypress-open-env-lt-env-gt)                                                                  |
+| `--global`            | [Run in global mode](#cypress-open-global)                                                                                    |
+| `--help`, `-h`        | Output usage information                                                                                                      |
+| `--port`, `-p`        | [Override default port](#cypress-open-port-lt-port-gt)                                                                        |
+| `--project`, `-P`     | [Path to a specific project](#cypress-open-project-lt-project-path-gt)                                                        |
 
 #### `cypress open --browser <browser-path>`
 
@@ -712,9 +709,8 @@ DEBUG=cypress:server:project cypress run
 
 ## History
 
-Version | Changes
---- | ---
-[5.4.0](/guides/references/changelog) | Added `prune` subcommand to `cypress cache`
-[5.4.0](/guides/references/changelog) | Added `--size` flag to `cypress cache list` subcommand
-[4.9.0](/guides/references/changelog) | Added `--quiet` flag to `cypress run`
-
+| Version                               | Changes                                                |
+| ------------------------------------- | ------------------------------------------------------ |
+| [5.4.0](/guides/references/changelog) | Added `prune` subcommand to `cypress cache`            |
+| [5.4.0](/guides/references/changelog) | Added `--size` flag to `cypress cache list` subcommand |
+| [4.9.0](/guides/references/changelog) | Added `--quiet` flag to `cypress run`                  |

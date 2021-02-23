@@ -1,10 +1,8 @@
 ---
 title: end
-
 ---
 
 End a chain of commands.
-
 
 ## Syntax
 
@@ -17,13 +15,13 @@ End a chain of commands.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.contains('ul').end()   // Yield 'null' instead of 'ul' element
+cy.contains("ul").end(); // Yield 'null' instead of 'ul' element
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.end()                  // Does not make sense to chain off 'cy'
+cy.end(); // Does not make sense to chain off 'cy'
 ```
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
@@ -35,17 +33,18 @@ cy.end()                  // Does not make sense to chain off 'cy'
 `.end()` is useful when you want to end a chain of commands and force the next command to not receive what was yielded in the previous command.
 
 ```javascript
-cy
-  .contains('User: Cheryl').click().end() // yield null
-  .contains('User: Charles').click()      // contains looks for content in document now
+cy.contains("User: Cheryl")
+  .click()
+  .end() // yield null
+  .contains("User: Charles")
+  .click(); // contains looks for content in document now
 ```
 
 Alternatively, you can always start a new chain of commands off of `cy`.
 
-
 ```javascript
-cy.contains('User: Cheryl').click()
-cy.contains('User: Charles').click()  // contains looks for content in document now
+cy.contains("User: Cheryl").click();
+cy.contains("User: Charles").click(); // contains looks for content in document now
 ```
 
 ## Rules
@@ -64,10 +63,9 @@ cy.contains('User: Charles').click()  // contains looks for content in document 
 
 ## Command Log
 
-- `.end()` does *not* log in the Command Log
+- `.end()` does _not_ log in the Command Log
 
 ## See also
 
 - [`.root()`](/api/commands/root)
 - [`.within()`](/api/commands/within)
-

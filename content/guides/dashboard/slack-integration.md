@@ -10,7 +10,7 @@ Slack Integration allows you to see your Cypress test results directly in your t
 
 <Alert type="warning">
 
- <strong class="alert-header">Ownership Requirements</strong>
+<strong class="alert-header">Ownership Requirements</strong>
 
 In order to install the Slack Integration, you must be an admin or owner of both your Cypress Dashboard organization and your Slack workspace.
 
@@ -20,9 +20,9 @@ In order to install the Slack Integration, you must be an admin or owner of both
 
 1. Go to the Dashboard [Organizations page](https://dashboard.cypress.io/organizations) or open the organization switcher.
 1. Select the organization you wish to integrate with Slack.
-  <DocsImage src="/img/dashboard/select-cypress-organization.png" alt="Select an organization" width-600 ></DocsImage>
+   <DocsImage src="/img/dashboard/select-cypress-organization.png" alt="Select an organization" width-600 ></DocsImage>
 1. Visit the selected organization's **Integrations** page via the side navigation.
-  <DocsImage src="/img/dashboard/navigate-to-organization-integrations.png" alt="Install Cypress Slack from Integrations" ></DocsImage>
+   <DocsImage src="/img/dashboard/navigate-to-organization-integrations.png" alt="Install Cypress Slack from Integrations" ></DocsImage>
 1. Click the **Install Slack Integration** button.
 1. You'll see a popup window that requests permission for Cypress to access the workspace and allows you to choose your Slack workspace and channel to associate with the installation. Once you've selected a channel and allowed access, the installation is complete! The Cypress Dashboard will post run results for all projects in your organization to the specified Slack channel.
 
@@ -44,8 +44,9 @@ By default, the Cypress Dashboard will post a Slack message to each configured c
 1. Navigate to the **Integrations** page for the organization with the installed Slack integration.
 1. Within the Slack integration, click **Configure**.
 1. Under **Notifications**, select your preference for each Slack channel:
-  - **All runs**: will notify on all runs (including passed)
-  - **Failed runs only**: will only notify on runs with a fail status.
+
+- **All runs**: will notify on all runs (including passed)
+- **Failed runs only**: will only notify on runs with a fail status.
 
 ### Mute a channel
 
@@ -72,11 +73,11 @@ If your organization has multiple teams working on separate projects, you can ta
 You can have the Cypress Dashboard post run results for a specific project to an additional channel.
 
 1. Select your organization in the organization switcher.
-  <DocsImage src="/img/dashboard/select-cypress-organization.png" alt="Select an organization" width-600 ></DocsImage>
+   <DocsImage src="/img/dashboard/select-cypress-organization.png" alt="Select an organization" width-600 ></DocsImage>
 1. Select the project you wish to integrate with Slack.
-  <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project" ></DocsImage>
+   <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project" ></DocsImage>
 1. Go to the project's settings page.
-  <DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings" ></DocsImage>
+   <DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings" ></DocsImage>
 1. Scroll down to the **Slack Integration** section.
 1. Click **Add Slack Channel**.
 1. You'll see a popup window that allows you to choose the channel to associate with the project.
@@ -88,8 +89,9 @@ By default, the Cypress Dashboard will post a Slack message to each configured c
 1. Navigate to the **Integrations** page for the project with the installed Slack integration.
 1. Scroll down to the **Slack Integration** section.
 1. Under **Notifications**, select your preference for each Slack channel:
-  - **All runs**: will notify on all runs (including passed)
-  - **Failed runs only**: will only notify on runs with a fail status.
+
+- **All runs**: will notify on all runs (including passed)
+- **Failed runs only**: will only notify on runs with a fail status.
 
 ### Mute a channel
 
@@ -114,4 +116,3 @@ You can completely remove the Slack Integration from your workspace. This will r
 1. Navigate to the **Integrations** page for the organization with the installed Slack Integration.
 1. Within the Slack Integration, click **Configure**.
 1. Click **Uninstall Slack Integration** to uninstall the Slack Integration.
-

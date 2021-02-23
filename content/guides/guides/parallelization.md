@@ -4,7 +4,6 @@ title: Parallelization
 
 <Alert type="info">
 
-
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
 - How to parallelize test runs
@@ -12,7 +11,6 @@ title: Parallelization
 - Strategies for grouping test runs
 - How load-balancing of tests works
 - What test insights are available on the Dashboard
-
 
 </Alert>
 
@@ -38,15 +36,15 @@ Cypress will assign each spec file to an available machine based on our [balance
 
 2. Once multiple machines are available within your CI environment, you can pass the [--parallel](/guides/guides/command-line#cypress-run-parallel) key to [cypress run](/guides/guides/command-line#cypress-run) to have your recorded tests parallelized.
 
-  ```shell
-  cypress run --record --key=abc123 --parallel
-  ```
+```shell
+cypress run --record --key=abc123 --parallel
+```
 
     <Alert type="info">
 
 
     Running tests in parallel requires the [`--record` flag](/guides/guides/command-line#cypress-run) be passed. This ensures Cypress can properly collect the data needed to parallelize future runs. This also gives you the full benefit of seeing the results of your parallelized tests in our [Dashboard Service](/guides/dashboard/dashboard-introduction). If you have not set up your project to record, check out our [setup guide](/guides/dashboard/projects#Setup).
-    
+
 </Alert>
 
 ## CI parallelization interactions
@@ -79,7 +77,6 @@ As more and more tests are recorded to the Cypress Dashboard, Cypress can better
 With a duration estimation for each spec file of a test run, Cypress can distribute spec files to available CI resources in descending order of spec run duration. In this manner, the most time-consuming specs start first which minimizes the overall test run duration.
 
 <Alert type="info">
-
 
 Duration estimation is done separately for every browser the spec file was tested against. This is helpful since performance characteristics vary by browser, and therefore it is perfectly acceptable to see different duration estimates for each browser a spec file was tested against.
 
@@ -119,7 +116,6 @@ In this example, a single machine runs a job named `1x-electron`, defined in the
 
 <Alert type="info">
 
-
 Notice that when adding up the spec's run times (**0:55**), they add up to less than the total time for the run to complete (**1:51**) . There is extra time in the run for each spec: starting the browser, encoding and uploading the video to the dashboard, requesting the next spec to run.
 
 </Alert>
@@ -155,7 +151,6 @@ Multiple [cypress run](/guides/guides/command-line#cypress-run) calls can be lab
 
 <Alert type="info">
 
-
 For multiple runs to be grouped into a single run, it is required for CI machines to share a common CI build ID environment variable. Typically these CI machines will run in parallel or within the same build workflow or pipeline, but **it is not required to use Cypress parallelization to group runs**. Grouping of runs can be utilized independently of Cypress parallelization.
 
 </Alert>
@@ -164,11 +159,9 @@ For multiple runs to be grouped into a single run, it is required for CI machine
 
 <Alert type="info">
 
-
 ## Cross Browser Testing
 
 Grouping test runs with or without parallelization is a useful mechanism when implementing a CI strategy for cross browser testing. Check out the [Cross Browser Testing guide](/guides/guides/cross-browser-testing) to learn more.
-
 
 </Alert>
 
@@ -188,7 +181,7 @@ You can test your application against different browsers and view the results un
   cypress run --record --group Mac/Chrome-70 --browser chrome
   ```
 
-- The third group can be called `Linux/Electron`. *Electron is the default browser used in Cypress runs*.
+- The third group can be called `Linux/Electron`. _Electron is the default browser used in Cypress runs_.
 
   ```shell
   cypress run --record --group Linux/Electron
@@ -212,10 +205,9 @@ cypress run --record --group 2x-chrome --browser chrome --parallel
 cypress run --record --group 4x-electron --parallel
 ```
 
-The `1x`, `2x`, `4x` group prefix used here is an adopted convention to indicate the level of parallelism for each run, and *is not required or essential*.
+The `1x`, `2x`, `4x` group prefix used here is an adopted convention to indicate the level of parallelism for each run, and _is not required or essential_.
 
 <Alert type="info">
-
 
 The number of machines dedicated for each `cypress run` call is based on your CI configuration for the project.
 
@@ -227,7 +219,7 @@ Labeling these groups in this manner helps up later when we review our test runs
 
 ### Grouping by spec context
 
-Let's say you have an application that has a *customer facing portal*, *guest facing portal* and an *administration facing portal*. You could organize and test these three parts of your application within the same run:
+Let's say you have an application that has a _customer facing portal_, _guest facing portal_ and an _administration facing portal_. You could organize and test these three parts of your application within the same run:
 
 - One group can be called `package/admin`:
 
@@ -261,21 +253,21 @@ A CI build ID is used to associate multiple CI machines to one test run. This id
 
 Cypress currently uses the following CI environment variables to determine a CI build ID for a test run:
 
-Provider  | Environment Variable
---|--
-AppVeyor  | `APPVEYOR_BUILD_NUMBER`
-AWS CodeBuild | `CODEBUILD_INITIATOR`
-Bamboo  | `bamboo_buildNumber`
-Bitbucket  | `BITBUCKET_BUILD_NUMBER`
-Circle  |  `CIRCLE_WORKFLOW_ID`, `CIRCLE_BUILD_NUM`
-Codeship  | `CI_BUILD_NUMBER`
-Codeship Basic  | `CI_BUILD_NUMBER`
-Codeship Pro  | `CI_BUILD_ID`
-Drone  | `DRONE_BUILD_NUMBER`
-GitLab  | `CI_PIPELINE_ID`
-Jenkins  | `BUILD_NUMBER`
-Semaphore | `SEMAPHORE_EXECUTABLE_UUID`
-Travis  | `TRAVIS_BUILD_ID`
+| Provider       | Environment Variable                     |
+| -------------- | ---------------------------------------- |
+| AppVeyor       | `APPVEYOR_BUILD_NUMBER`                  |
+| AWS CodeBuild  | `CODEBUILD_INITIATOR`                    |
+| Bamboo         | `bamboo_buildNumber`                     |
+| Bitbucket      | `BITBUCKET_BUILD_NUMBER`                 |
+| Circle         | `CIRCLE_WORKFLOW_ID`, `CIRCLE_BUILD_NUM` |
+| Codeship       | `CI_BUILD_NUMBER`                        |
+| Codeship Basic | `CI_BUILD_NUMBER`                        |
+| Codeship Pro   | `CI_BUILD_ID`                            |
+| Drone          | `DRONE_BUILD_NUMBER`                     |
+| GitLab         | `CI_PIPELINE_ID`                         |
+| Jenkins        | `BUILD_NUMBER`                           |
+| Semaphore      | `SEMAPHORE_EXECUTABLE_UUID`              |
+| Travis         | `TRAVIS_BUILD_ID`                        |
 
 You can pass a different value to link agents to the same run. For example, if you are using Jenkins and think the environment variable `BUILD_TAG` is more unique than the environment variable `BUILD_NUMBER`, pass the `BUILD_TAG` value via CLI [`--ci-build-id` flag](/guides/guides/command-line#cypress-run-ci-build-id-lt-id-gt).
 
@@ -316,6 +308,7 @@ The Machines View charts spec files by the machines that executed them. This vie
 <DocsImage src="/img/guides/parallelization/machines-view.png" alt="Machines view with parallelization" ></DocsImage>
 
 ## Next Steps
+
 - [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app) runs parallelized CI jobs across multiple operating systems, browsers, and viewport sizes.
 - [Continuous Integration Guide](/guides/guides/continuous-integration)
 - [Cross Browser Testing Guide](/guides/guides/cross-browser-testing)
@@ -323,4 +316,3 @@ The Machines View charts spec files by the machines that executed them. This vie
 - [Blog: Run and group tests the way you want to](https://glebbahmutov.com/blog/run-and-group-tests/)
 - [CI Configurations in Kitchen Sink Example](https://github.com/cypress-io/cypress-example-kitchensink#ci-status)
 - Slides [Cypress Test Parallelization and Grouping](https://slides.com/bahmutov/cy-parallelization) and [Webinar video](https://www.youtube.com/watch?v=FfqD1ExUGlw)
-

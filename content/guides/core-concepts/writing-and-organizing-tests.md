@@ -4,7 +4,6 @@ title: Writing and Organizing Tests
 
 <Alert type="info">
 
-
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
 - How to organize your test and support files.
@@ -16,7 +15,7 @@ title: Writing and Organizing Tests
 
 <Alert type="success">
 
- <strong class="alert-header">Best Practices</strong>
+<strong class="alert-header">Best Practices</strong>
 
 We recently gave a "Best Practices" conference talk at AssertJS (February 2018). This video demonstrates how to approach breaking down your application and organizing your tests.
 
@@ -71,7 +70,7 @@ You can modify the folder configuration in your configuration file. See [configu
 
 <Alert type="info">
 
- <strong class="alert-header">What files should I add to my '.gitignore file' ?</strong>
+<strong class="alert-header">What files should I add to my '.gitignore file' ?</strong>
 
 Cypress will create a [`screenshotsFolder`](/guides/references/configuration#Screenshots) and a [`videosFolder`](/guides/references/configuration#Videos) to store the screenshots and videos taken during the testing of your application. Many users will opt to add these folders to their `.gitignore` file. Additionally, if you are storing sensitive environment variables in your configuration file (`cypress.json` by default) or [`cypress.env.json`](/guides/guides/environment-variables#Option-2-cypress-env-json), these should also be ignored when you check into source control.
 
@@ -90,7 +89,7 @@ Cypress also supports `ES2015` out of the box. You can use either `ES2015 module
 
 <Alert type="info">
 
- <strong class="alert-header">Example Recipe</strong>
+<strong class="alert-header">Example Recipe</strong>
 
 Check out our recipe using [ES2015 and CommonJS modules](/examples/examples/recipes#Fundamentals).
 
@@ -161,12 +160,11 @@ By default Cypress will automatically include the support file `cypress/support/
 
 <Alert type="danger">
 
-
 <Icon name="exclamation-triangle"></Icon> Keep in mind, when clicking "Run all specs" after [cypress open](/guides/guides/command-line#cypress-open), the code in the support file is executed once before all spec files, instead of once before each spec file. See [Execution](#Execution) for more details.
 
 </Alert>
 
-The initial imported support file can be configured to another file or turned off completely using the  [supportFile](/guides/references/configuration#Folders-Files) configuration.
+The initial imported support file can be configured to another file or turned off completely using the [supportFile](/guides/references/configuration#Folders-Files) configuration.
 
 The support file is a great place to put reusable behavior such as [custom commands](/api/cypress-api/custom-commands) or global overrides that you want applied and available to all of your spec files.
 
@@ -178,14 +176,13 @@ You can define behaviors in a `before` or `beforeEach` within any of the `cypres
 
 ```javascript
 beforeEach(() => {
-  cy.log('I run before every test in every spec file!!!!!!')
-})
+  cy.log("I run before every test in every spec file!!!!!!");
+});
 ```
 
 <DocsImage src="/img/guides/global-hooks.png" alt="Global hooks for tests" ></DocsImage>
 
 <Alert type="info">
-
 
 **Note:** This example assumes you are already familiar with Mocha [hooks](/guides/core-concepts/writing-and-organizing-tests#Hooks).
 
@@ -218,7 +215,6 @@ But when you click on "Run all specs" button after [cypress open](/guides/guides
 
 <Alert type="info">
 
-
 Having a single support file when running all specs together might execute `before` and `beforeEach` hooks in ways you may not anticipate. Read [Be careful when running all specs together](https://glebbahmutov.com/blog/run-all-specs/) for examples.
 
 </Alert>
@@ -247,43 +243,43 @@ The test interface, borrowed from [Mocha](/guides/references/bundled-tools#Mocha
 
 ```javascript
 // -- Start: Our Application Code --
-function add (a, b) {
-  return a + b
+function add(a, b) {
+  return a + b;
 }
 
-function subtract (a, b) {
-  return a - b
+function subtract(a, b) {
+  return a - b;
 }
 
-function divide (a, b) {
-  return a / b
+function divide(a, b) {
+  return a / b;
 }
 
-function multiply (a, b) {
-  return a * b
+function multiply(a, b) {
+  return a * b;
 }
 // -- End: Our Application Code --
 
 // -- Start: Our Cypress Tests --
-describe('Unit test our math functions', () => {
-  context('math', () => {
-    it('can add numbers', () => {
-      expect(add(1, 2)).to.eq(3)
-    })
+describe("Unit test our math functions", () => {
+  context("math", () => {
+    it("can add numbers", () => {
+      expect(add(1, 2)).to.eq(3);
+    });
 
-    it('can subtract numbers', () => {
-      expect(subtract(5, 12)).to.eq(-7)
-    })
+    it("can subtract numbers", () => {
+      expect(subtract(5, 12)).to.eq(-7);
+    });
 
-    specify('can divide numbers', () => {
-      expect(divide(27, 9)).to.eq(3)
-    })
+    specify("can divide numbers", () => {
+      expect(divide(27, 9)).to.eq(3);
+    });
 
-    specify('can multiply numbers', () => {
-      expect(multiply(5, 4)).to.eq(20)
-    })
-  })
-})
+    specify("can multiply numbers", () => {
+      expect(multiply(5, 4)).to.eq(20);
+    });
+  });
+});
 // -- End: Our Cypress Tests --
 ```
 
@@ -297,25 +293,25 @@ These are helpful to set conditions that you want to run before a set of tests o
 beforeEach(() => {
   // root-level hook
   // runs before every test
-})
+});
 
-describe('Hooks', () => {
+describe("Hooks", () => {
   before(() => {
     // runs once before all tests in the block
-  })
+  });
 
   beforeEach(() => {
     // runs before each test in the block
-  })
+  });
 
   afterEach(() => {
     // runs after each test in the block
-  })
+  });
 
   after(() => {
     // runs once after all tests in the block
-  })
-})
+  });
+});
 ```
 
 #### The order of hook and test execution is as follows:
@@ -328,13 +324,11 @@ describe('Hooks', () => {
 
 <Alert type="danger">
 
-
 <Icon name="exclamation-triangle"></Icon> Before writing `after()` or `afterEach()` hooks, please see our [thoughts on the anti-pattern of cleaning up state with `after()` or `afterEach()`](/guides/references/best-practices#Using-after-or-afterEach-hooks).
 
 </Alert>
 
 <Alert type="danger">
-
 
 <Icon name="exclamation-triangle"></Icon> Be wary of root-level hooks, as they could execute in a surprising order when clicking the "Run all specs" button. Instead place them inside `describe` or `context` suites for isolation. Read [Be careful when running all specs together](https://glebbahmutov.com/blog/run-all-specs/).
 
@@ -346,51 +340,51 @@ To run a specified suite or test, append `.only` to the function. All nested sui
 
 ```javascript
 // -- Start: Our Application Code --
-function fizzbuzz (num) {
+function fizzbuzz(num) {
   if (num % 3 === 0 && num % 5 === 0) {
-    return 'fizzbuzz'
+    return "fizzbuzz";
   }
 
   if (num % 3 === 0) {
-    return 'fizz'
+    return "fizz";
   }
 
   if (num % 5 === 0) {
-    return 'buzz'
+    return "buzz";
   }
 }
 // -- End: Our Application Code --
 
 // -- Start: Our Cypress Tests --
-describe('Unit Test FizzBuzz', () => {
-  function numsExpectedToEq (arr, expected) {
+describe("Unit Test FizzBuzz", () => {
+  function numsExpectedToEq(arr, expected) {
     // loop through the array of nums and make
     // sure they equal what is expected
     arr.forEach((num) => {
-      expect(fizzbuzz(num)).to.eq(expected)
-    })
+      expect(fizzbuzz(num)).to.eq(expected);
+    });
   }
 
   it.only('returns "fizz" when number is multiple of 3', () => {
-    numsExpectedToEq([9, 12, 18], 'fizz')
-  })
+    numsExpectedToEq([9, 12, 18], "fizz");
+  });
 
   it('returns "buzz" when number is multiple of 5', () => {
-    numsExpectedToEq([10, 20, 25], 'buzz')
-  })
+    numsExpectedToEq([10, 20, 25], "buzz");
+  });
 
   it('returns "fizzbuzz" when number is multiple of both 3 and 5', () => {
-    numsExpectedToEq([15, 30, 60], 'fizzbuzz')
-  })
-})
+    numsExpectedToEq([15, 30, 60], "fizzbuzz");
+  });
+});
 ```
 
 To skip a specified suite or test, append `.skip()` to the function. All nested suites will also be skipped.
 
 ```javascript
 it.skip('returns "fizz" when number is multiple of 3', () => {
-  numsExpectedToEq([9, 12, 18], 'fizz')
-})
+  numsExpectedToEq([9, 12, 18], "fizz");
+});
 ```
 
 ### Test Configuration
@@ -402,10 +396,10 @@ This configuration will take effect during the suite or tests where they are set
 #### Syntax
 
 ```javascript
-describe(name, config, fn)
-context(name, config, fn)
-it(name, config, fn)
-specify(name, config, fn)
+describe(name, config, fn);
+context(name, config, fn);
+it(name, config, fn);
+specify(name, config, fn);
 ```
 
 #### Allowed config values
@@ -426,7 +420,6 @@ specify(name, config, fn)
 - `viewportWidth`
 - `waitForAnimations`
 
-
 #### Suite configuration
 
 If you want to target a suite of tests to run or be excluded when run in a specific browser, you can override the `browser` configuration within the suite configuration. The `browser` option accepts the same arguments as [Cypress.isBrowser()](/api/cypress-api/isbrowser).
@@ -434,48 +427,58 @@ If you want to target a suite of tests to run or be excluded when run in a speci
 The following suite of tests will be skipped if running tests in Chrome browsers.
 
 ```js
-describe('When NOT in Chrome', { browser: '!chrome' }, () => {
-  it('Shows warning', () => {
-    cy.get('.browser-warning')
-      .should('contain', 'For optimal viewing, use Chrome browser')
-  })
+describe("When NOT in Chrome", { browser: "!chrome" }, () => {
+  it("Shows warning", () => {
+    cy.get(".browser-warning").should(
+      "contain",
+      "For optimal viewing, use Chrome browser"
+    );
+  });
 
-  it('Links to browser compatibility doc', () => {
-    cy.get('a.browser-compat')
-      .should('have.attr', 'href')
-      .and('include', 'browser-compatibility')
-  })
-})
+  it("Links to browser compatibility doc", () => {
+    cy.get("a.browser-compat")
+      .should("have.attr", "href")
+      .and("include", "browser-compatibility");
+  });
+});
 ```
 
 The following suite of tests will only execute when running in the Firefox browser. It will overwrite the viewport resolution in one of the tests, and will merge any current environment variables with the provided ones.
 
 ```js
-describe('When in Firefox', {
-  browser: 'firefox',
-  viewportWidth: 1024,
-  viewportHeight: 700,
-  env: {
-    DEMO: true,
-    API: 'http://localhost:9000'
-  }
-}, () => {
-  it('Sets the expected viewport and API url', () => {
-    expect(cy.config('viewportWidth')).to.equal(1024)
-    expect(cy.config('viewportHeight')).to.equal(700)
-    expect(cy.env('API')).to.equal('http://localhost:9000')
-  })
-
-  it('Uses the closest API environment variable', {
+describe(
+  "When in Firefox",
+  {
+    browser: "firefox",
+    viewportWidth: 1024,
+    viewportHeight: 700,
     env: {
-      API: 'http://localhost:3003'
-    }
-  }, () => {
-    expect(cy.env('API')).to.equal('http://localhost:3003')
-    // other environment variables remain unchanged
-    expect(cy.env('DEMO')).to.be.true
-  })
-})
+      DEMO: true,
+      API: "http://localhost:9000",
+    },
+  },
+  () => {
+    it("Sets the expected viewport and API url", () => {
+      expect(cy.config("viewportWidth")).to.equal(1024);
+      expect(cy.config("viewportHeight")).to.equal(700);
+      expect(cy.env("API")).to.equal("http://localhost:9000");
+    });
+
+    it(
+      "Uses the closest API environment variable",
+      {
+        env: {
+          API: "http://localhost:3003",
+        },
+      },
+      () => {
+        expect(cy.env("API")).to.equal("http://localhost:3003");
+        // other environment variables remain unchanged
+        expect(cy.env("DEMO")).to.be.true;
+      }
+    );
+  }
+);
 ```
 
 #### Single test configuration
@@ -500,17 +503,18 @@ it('should redirect unauthenticated user to sign-in page', {
 You can dynamically generate tests using JavaScript.
 
 ```javascript
-describe('if your app uses jQuery', () => {
-  ['mouseover', 'mouseout', 'mouseenter', 'mouseleave'].forEach((event) => {
-    it('triggers event: ' + event, () => {
+describe("if your app uses jQuery", () => {
+  ["mouseover", "mouseout", "mouseenter", "mouseleave"].forEach((event) => {
+    it("triggers event: " + event, () => {
       // if your app uses jQuery, then we can trigger a jQuery
       // event that causes the event callback to fire
-      cy
-        .get('#with-jquery').invoke('trigger', event)
-        .get('#messages').should('contain', 'the event ' + event + 'was fired')
-    })
-  })
-})
+      cy.get("#with-jquery")
+        .invoke("trigger", event)
+        .get("#messages")
+        .should("contain", "the event " + event + "was fired");
+    });
+  });
+});
 ```
 
 The code above will produce a suite with 4 tests:
@@ -528,19 +532,19 @@ The code above will produce a suite with 4 tests:
 Cypress supports both BDD (`expect`/`should`) and TDD (`assert`) style plain assertions. [Read more about plain assertions.](/guides/references/assertions)
 
 ```javascript
-it('can add numbers', () => {
-  expect(add(1, 2)).to.eq(3)
-})
+it("can add numbers", () => {
+  expect(add(1, 2)).to.eq(3);
+});
 
-it('can subtract numbers', () => {
-  assert.equal(subtract(5, 12), -7, 'these numbers are equal')
-})
+it("can subtract numbers", () => {
+  assert.equal(subtract(5, 12), -7, "these numbers are equal");
+});
 ```
 
 The [.should()](/api/commands/should) command and its alias [.and()](/api/commands/and) can also be used to more easily chain assertions off of Cypress commands. [Read more about assertions.](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 ```js
-cy.wrap(add(1, 2)).should('equal', 3)
+cy.wrap(add(1, 2)).should("equal", 3);
 ```
 
 ## Running tests
@@ -558,7 +562,6 @@ You can run all spec files together by clicking the "Run all specs" button. This
 <DocsImage src="/img/guides/core-concepts/run-all-specs.gif" alt="Running all specs" ></DocsImage>
 
 <Alert type="danger">
-
 
 <Icon name="exclamation-triangle"></Icon> Be wary of root-level hooks, as they could execute in a surprising order when clicking the "Run all specs" button. Instead place them inside `describe` or `context` suites for isolation. Read [Be careful when running all specs together](https://glebbahmutov.com/blog/run-all-specs/).
 
@@ -581,7 +584,6 @@ This makes for a productive development experience because you can add and edit 
 
 <Alert type="info">
 
-
 Remember to use [`.only`](/guides/core-concepts/writing-and-organizing-tests#Excluding-and-Including-Tests) to limit which tests are run: this can be especially useful when you've got a lot of tests in a single spec file that you're constantly editing; consider also splitting your tests into smaller files each dealing with logically related behavior.
 
 </Alert>
@@ -603,7 +605,6 @@ The folder, the files within the folder, and all child folders and their files (
 
 <Alert type="info">
 
-
 Those folder paths refer to the [default folder paths](/guides/references/configuration#Folders-Files). If you've configured Cypress to use different folder paths then the folders specific to your configuration will be watched.
 
 </Alert>
@@ -624,7 +625,6 @@ Set the [`watchForFileChanges`](/guides/references/configuration#Global) configu
 
 <Alert type="warning">
 
-
 **Nothing** is watched during [cypress run](/guides/guides/command-line#cypress-run).
 
 The `watchForFileChanges` property is only in effect when running Cypress using [cypress open](/guides/guides/command-line#cypress-open).
@@ -639,4 +639,3 @@ Cypress also ships other [file-watching preprocessors](/plugins/plugins/index); 
 
 - [Cypress Watch Preprocessor](https://github.com/cypress-io/cypress-watch-preprocessor)
 - [Cypress webpack Preprocessor](https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor)
-

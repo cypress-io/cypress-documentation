@@ -6,7 +6,6 @@ If you'd like to try out what we're working on in the [Test Runner](/guides/core
 
 <Alert type="warning">
 
-
 ⚠️ The experimental features might change or ultimately be removed without making it into the core product. Our primary goal for experiments is to collect real-world feedback during their development.
 
 </Alert>
@@ -15,27 +14,26 @@ If you'd like to try out what we're working on in the [Test Runner](/guides/core
 
 You can pass the [configuration](/guides/references/configuration) options below to enable or disable experiments. See our [Configuration Guide](/guides/references/configuration) on how to pass configuration to Cypress.
 
-Option | Default | Description
------ | ---- | ----
-`experimentalComponentTesting` | `false` | Enables component testing using framework-specific adaptors. See [Component Testing](/guides/component-testing/component-testing-introduction) for more detail.
-`experimentalFetchPolyfill` | `false` | Automatically replaces `window.fetch` with a polyfill that Cypress can spy on and stub. Note: `experimentalFetchPolyfill` has been deprecated in Cypress 6.0.0 and will be removed in a future release. Consider using [cy.intercept()](/api/commands/intercept) to intercept `fetch` requests instead.
-`experimentalRunEvents` | `false` | Allows listening to the [before:run](/api/plugins/before-run-api), [after:run](/api/plugins/after-run-api), [before:spec](/api/plugins/before-spec-api), and [after:spec](/api/plugins/after-spec-api) events in the plugins file.
-`experimentalSourceRewriting` | `false` | Enables AST-based JS/HTML rewriting. This may fix issues caused by the existing regex-based JS/HTML replacement algorithm. See [#5273](https://github.com/cypress-io/cypress/issues/5273) for details.
-`experimentalStudio` | `false` | Generate and save commands directly to your test suite by interacting with your app as an end user would. See [Cypress Studio](/guides/core-concepts/cypress-studio) for more details.
+| Option                         | Default | Description                                                                                                                                                                                                                                                                                             |
+| ------------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `experimentalComponentTesting` | `false` | Enables component testing using framework-specific adaptors. See [Component Testing](/guides/component-testing/component-testing-introduction) for more detail.                                                                                                                                         |
+| `experimentalFetchPolyfill`    | `false` | Automatically replaces `window.fetch` with a polyfill that Cypress can spy on and stub. Note: `experimentalFetchPolyfill` has been deprecated in Cypress 6.0.0 and will be removed in a future release. Consider using [cy.intercept()](/api/commands/intercept) to intercept `fetch` requests instead. |
+| `experimentalRunEvents`        | `false` | Allows listening to the [before:run](/api/plugins/before-run-api), [after:run](/api/plugins/after-run-api), [before:spec](/api/plugins/before-spec-api), and [after:spec](/api/plugins/after-spec-api) events in the plugins file.                                                                      |
+| `experimentalSourceRewriting`  | `false` | Enables AST-based JS/HTML rewriting. This may fix issues caused by the existing regex-based JS/HTML replacement algorithm. See [#5273](https://github.com/cypress-io/cypress/issues/5273) for details.                                                                                                  |
+| `experimentalStudio`           | `false` | Generate and save commands directly to your test suite by interacting with your app as an end user would. See [Cypress Studio](/guides/core-concepts/cypress-studio) for more details.                                                                                                                  |
 
 ## History
 
-Version | Changes
---- | ---
-[6.3.0](/guides/references/changelog#6-3-0) | Added support for `experimentalStudio`.
-[6.0.0](/guides/references/changelog#6-0-0) | Removed `experimentalNetworkStubbing` and made it the default behavior when using [cy.intercept()](/api/commands/intercept).
-[6.0.0](/guides/references/changelog#6-0-0) | Deprecated `experimentalFetchPolyfill`.
-[5.2.0](/guides/references/changelog#5-2-0) | Removed `experimentalShadowDomSupport` and made it the default behavior.
-[5.1.0](/guides/references/changelog#5-1-0) | Added support for `experimentalNetworkStubbing`.
-[5.0.0](/guides/references/changelog#5-0-0) | Removed `experimentalGetCookiesSameSite` and made it the default behavior.
-[4.9.0](/guides/references/changelog#4-9-0) | Added support for `experimentalFetchPolyfill`.
-[4.8.0](/guides/references/changelog#4-8-0) | Added support for `experimentalShadowDomSupport`.
-[4.6.0](/guides/references/changelog#4-6-0) | Added support for `experimentalSourceRewriting`.
-[4.5.0](/guides/references/changelog#4-5-0) | Added support for `experimentalComponentTesting`.
-[4.3.0](/guides/references/changelog#4-3-0) | Added support for `experimentalGetCookiesSameSite`.
-
+| Version                                     | Changes                                                                                                                      |
+| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| [6.3.0](/guides/references/changelog#6-3-0) | Added support for `experimentalStudio`.                                                                                      |
+| [6.0.0](/guides/references/changelog#6-0-0) | Removed `experimentalNetworkStubbing` and made it the default behavior when using [cy.intercept()](/api/commands/intercept). |
+| [6.0.0](/guides/references/changelog#6-0-0) | Deprecated `experimentalFetchPolyfill`.                                                                                      |
+| [5.2.0](/guides/references/changelog#5-2-0) | Removed `experimentalShadowDomSupport` and made it the default behavior.                                                     |
+| [5.1.0](/guides/references/changelog#5-1-0) | Added support for `experimentalNetworkStubbing`.                                                                             |
+| [5.0.0](/guides/references/changelog#5-0-0) | Removed `experimentalGetCookiesSameSite` and made it the default behavior.                                                   |
+| [4.9.0](/guides/references/changelog#4-9-0) | Added support for `experimentalFetchPolyfill`.                                                                               |
+| [4.8.0](/guides/references/changelog#4-8-0) | Added support for `experimentalShadowDomSupport`.                                                                            |
+| [4.6.0](/guides/references/changelog#4-6-0) | Added support for `experimentalSourceRewriting`.                                                                             |
+| [4.5.0](/guides/references/changelog#4-5-0) | Added support for `experimentalComponentTesting`.                                                                            |
+| [4.3.0](/guides/references/changelog#4-3-0) | Added support for `experimentalGetCookiesSameSite`.                                                                          |

@@ -6,7 +6,6 @@ Get the first DOM element within a set of DOM elements.
 
 <Alert type="info">
 
-
 The querying behavior of this command matches exactly how [`.first()`](http://api.jquery.com/first) works in jQuery.
 
 </Alert>
@@ -23,26 +22,26 @@ The querying behavior of this command matches exactly how [`.first()`](http://ap
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('nav a').first()     // Yield first link in nav
+cy.get("nav a").first(); // Yield first link in nav
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.first()                  // Errors, cannot be chained off 'cy'
-cy.getCookies().first()     // Errors, 'getCookies' does not yield DOM element
+cy.first(); // Errors, cannot be chained off 'cy'
+cy.getCookies().first(); // Errors, 'getCookies' does not yield DOM element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.first()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.first()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.first()` to resolve before [timing out](#Timeouts)                    |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -65,7 +64,7 @@ Option | Default | Description
 
 ```javascript
 // yields <li class="one">Knick knack on my thumb</li>
-cy.get('li').first()
+cy.get("li").first();
 ```
 
 ## Rules
@@ -84,10 +83,10 @@ cy.get('li').first()
 
 ## Command Log
 
-***Find the first input in the form***
+**_Find the first input in the form_**
 
 ```javascript
-cy.get('form').find('input').first()
+cy.get("form").find("input").first();
 ```
 
 The commands above will display in the Command Log as:
@@ -102,4 +101,3 @@ When clicking on `first` within the command log, the console outputs the followi
 
 - [`.eq()`](/api/commands/eq)
 - [`.last()`](/api/commands/last)
-

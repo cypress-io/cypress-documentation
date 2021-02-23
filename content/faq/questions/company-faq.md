@@ -13,6 +13,6 @@ You can read more about who's behind Cypress on our website [here](https://www.c
 
 Yes! You can check our open positions and apply [here](https://www.cypress.io/jobs/).
 
-## <Icon name="angle-right"></Icon> Why the name *Cypress*?
+## <Icon name="angle-right"></Icon> Why the name _Cypress_?
 
 We believe that tests should always pass -- in other words, should always be green. A cypress is an evergreen tree. So, Cypress! <Icon name="tree" color="green"></Icon>

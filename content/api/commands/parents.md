@@ -9,7 +9,6 @@ Please note that `.parents()` travels multiple levels up the DOM tree as opposed
 
 <Alert type="info">
 
-
 The querying behavior of this command matches exactly how [`.parents()`](http://api.jquery.com/parents) works in jQuery.
 
 </Alert>
@@ -28,30 +27,30 @@ The querying behavior of this command matches exactly how [`.parents()`](http://
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('aside').parents()  // Yield parents of aside
+cy.get("aside").parents(); // Yield parents of aside
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.parents()              // Errors, cannot be chained off 'cy'
-cy.go('back').parents()   // Errors, 'go' does not yield DOM element
+cy.parents(); // Errors, cannot be chained off 'cy'
+cy.go("back").parents(); // Errors, 'go' does not yield DOM element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> selector**  ***(String selector)***
+**<Icon name="angle-right"></Icon> selector** **_(String selector)_**
 
 A selector used to filter matching DOM elements.
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.parents()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.parents()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.parents()` to resolve before [timing out](#Timeouts)                  |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -64,12 +63,13 @@ Option | Default | Description
 #### Get the parents of the active li
 
 ```html
-<ul class='main-nav'>
+<ul class="main-nav">
   <li>Overview</li>
-  <li>Getting started
-    <ul class='sub-nav'>
+  <li>
+    Getting started
+    <ul class="sub-nav">
       <li>Install</li>
-      <li class='active'>Build</li>
+      <li class="active">Build</li>
       <li>Test</li>
     </ul>
   </li>
@@ -78,7 +78,7 @@ Option | Default | Description
 
 ```javascript
 // yields [.sub-nav, li, .main-nav]
-cy.get('li.active').parents()
+cy.get("li.active").parents();
 ```
 
 ### Selector
@@ -87,7 +87,7 @@ cy.get('li.active').parents()
 
 ```javascript
 // yields [.main-nav]
-cy.get('li.active').parents('.main-nav')
+cy.get("li.active").parents(".main-nav");
 ```
 
 ## Rules
@@ -106,10 +106,10 @@ cy.get('li.active').parents('.main-nav')
 
 ## Command Log
 
-***Get the parents of the active `li`***
+**_Get the parents of the active `li`_**
 
 ```javascript
-cy.get('li.active').parents()
+cy.get("li.active").parents();
 ```
 
 <DocsImage src="/img/api/parents/get-all-parents-of-a-dom-element.png" alt="Command Log parents" ></DocsImage>
@@ -123,4 +123,3 @@ When clicking on the `parents` command within the command log, the console outpu
 - [`.children()`](/api/commands/children)
 - [`.parent()`](/api/commands/parent)
 - [`.parentsUntil()`](/api/commands/parentsuntil)
-

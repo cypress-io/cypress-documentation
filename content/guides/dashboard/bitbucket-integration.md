@@ -4,7 +4,6 @@ title: Bitbucket Integration
 
 <Alert type="info">
 
-
 Bitbucket integration is currently in beta.
 
 </Alert>
@@ -13,7 +12,6 @@ The [Cypress Dashboard](https://on.cypress.io/dashboard) can integrate your Cypr
 
 <Alert type="warning">
 
-
 Bitbucket Integration is dependent on your CI environment reliably providing commit SHA data (typically via an environment variable). This is not a problem for most users, but if you are facing Bitbucket integration issues with your CI setup, please make sure the git information is being sent properly by following [these guidelines](/guides/guides/continuous-integration#Git-information). If you are still facing issues after this, please [contact us](mailto:hello@cypress.io).
 
 </Alert>
@@ -21,7 +19,6 @@ Bitbucket Integration is dependent on your CI environment reliably providing com
 ## Installing the Bitbucket integration
 
 <Alert type="warning">
-
 
 Bitbucket OAuth2 applications will allow the Cypress Dashboard to authenticate as the user that registered the application. That means the Cypress will have visibility to every Bitbucket repo you can access. If you want tighter control on the repos that the Cypress will see, consider creating a service account with more limited access in Bitbucket.
 

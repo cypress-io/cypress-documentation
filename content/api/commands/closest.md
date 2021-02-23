@@ -6,7 +6,6 @@ Get the first DOM element that matches the selector (whether it be itself or one
 
 <Alert type="info">
 
-
 The querying behavior of this command matches exactly how [`.closest()`](http://api.jquery.com/closest) works in jQuery.
 
 </Alert>
@@ -23,30 +22,30 @@ The querying behavior of this command matches exactly how [`.closest()`](http://
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('td').closest('.filled') // Yield closest el with class '.filled'
+cy.get("td").closest(".filled"); // Yield closest el with class '.filled'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.closest('.active')  // Errors, cannot be chained off 'cy'
-cy.url().closest()     // Errors, 'url' does not yield DOM element
+cy.closest(".active"); // Errors, cannot be chained off 'cy'
+cy.url().closest(); // Errors, 'url' does not yield DOM element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> selector**  ***(String selector)***
+**<Icon name="angle-right"></Icon> selector** **_(String selector)_**
 
 A selector used to filter matching DOM elements.
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.closest()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.closest()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.closest()` to resolve before [timing out](#Timeouts)                  |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -59,7 +58,7 @@ Option | Default | Description
 #### Find the closest element of the `.error` with the class 'banner'
 
 ```javascript
-cy.get('p.error').closest('.banner')
+cy.get("p.error").closest(".banner");
 ```
 
 ## Rules
@@ -81,7 +80,7 @@ cy.get('p.error').closest('.banner')
 #### Find the closest element of `li.active` with the class 'nav'
 
 ```javascript
-cy.get('li.active').closest('.nav')
+cy.get("li.active").closest(".nav");
 ```
 
 The commands above will display in the Command Log as:
@@ -101,4 +100,3 @@ When clicking on the `closest` command within the command log, the console outpu
 - [`.prev()`](/api/commands/prev)
 - [`.prevAll()`](/api/commands/prevall)
 - [`.prevUntil()`](/api/commands/prevuntil)
-

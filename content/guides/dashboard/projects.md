@@ -10,7 +10,6 @@ You typically want to record when running tests in [Continuous Integration](/gui
 
 <Alert type="info">
 
-
 To set up your project to record, you must use the [Test Runner](/guides/core-concepts/test-runner).
 
 Make sure you [install](/guides/getting-started/installing-cypress) and [open](/guides/getting-started/installing-cypress#Opening-Cypress) it first!
@@ -27,24 +26,30 @@ Make sure you [install](/guides/getting-started/installing-cypress) and [open](/
 4. Fill in the name of your project (this is only for display purposes and can be changed later).
 5. Choose who owns the project. You can personally own it or select an organization you've created. If you do not have any organizations, click **Create organization**. Organizations work just like they do in GitHub. They enable you to separate your personal and work projects. [Read more about organizations](/guides/dashboard/organizations).
 6. Choose whether this project is Public or Private.
-  - **A public project** can have its recordings and runs seen by *anyone*. Typically these are open source projects.
-  - **A private project** restricts its access to *[only users you invite](/guides/dashboard/users)*.
+
+- **A public project** can have its recordings and runs seen by _anyone_. Typically these are open source projects.
+- **A private project** restricts its access to _[only users you invite](/guides/dashboard/users)_.
+
 7. Click **Setup Project**.
 8. Now you should see a view explaining how to record your first run.
 9. After setting up your project, Cypress inserted a unique [projectId](#Identification) into your `cypress.json`. If you're using source control, we recommend that you check your `cypress.json` including the `projectId` into source control.
 10. Within [Continuous Integration](/guides/guides/continuous-integration), or from your local computer's terminal, pass the displayed [Record Key](#Identification) while running the [cypress run](/guides/guides/command-line#cypress-run) command.
-  - Provide record key directly:
-    ```shell
-    cypress run --record --key &lt;record key&gt;
-    ```
 
-  - Or set record key as environment variable
-    ```shell
-    export CYPRESS_RECORD_KEY=&lt;record key&gt;
-    ```
-    ```shell
-    cypress run --record
+- Provide record key directly:
+
+  ```shell
+  cypress run --record --key &lt;record key&gt;
   ```
+
+- Or set record key as environment variable
+  ```shell
+  export CYPRESS_RECORD_KEY=&lt;record key&gt;
+  ```
+  ```shell
+  cypress run --record
+  ```
+
+````
 
 🎉 Your tests are now recording! As soon as tests finish running, you will see them in the [Dashboard](https://on.cypress.io/dashboard) and in the Runs tab of the [Test Runner](/guides/core-concepts/test-runner).
 
@@ -64,9 +69,9 @@ Once you set up your project to record, we generate a unique `projectId` for you
 
 ```json
 {
-  "projectId": "a7bq2k"
+"projectId": "a7bq2k"
 }
-```
+````
 
 This helps us uniquely identify your project. If you manually alter this, **Cypress will no longer be able to identify your project or find the recorded builds for it**.
 
@@ -78,13 +83,13 @@ export CYPRESS_PROJECT_ID={projectId}
 
 ### Record key
 
-The record key is used to authenticate that your project is *allowed* to record tests to the Dashboard Service. As long as your record key stays *private*, nobody will be able to record test runs for your project - even if they have your `projectId`.
+The record key is used to authenticate that your project is _allowed_ to record tests to the Dashboard Service. As long as your record key stays _private_, nobody will be able to record test runs for your project - even if they have your `projectId`.
 
-Think of your record key as the key that enables you to *write and create* runs. However, it has nothing to do with being able to *read or see* runs once they are recorded.
+Think of your record key as the key that enables you to _write and create_ runs. However, it has nothing to do with being able to _read or see_ runs once they are recorded.
 
 <Alert type="warning">
 
- <strong class="alert-header">Exposing a record key</strong>
+<strong class="alert-header">Exposing a record key</strong>
 
 Anyone that has access to both the `projectId` and the record key of a project can record runs to that organization's project in the Dashboard.
 
@@ -97,10 +102,9 @@ If a record key is exposed you should [delete it](#Delete-record-key) and [creat
 
 You can set your record key as an environment variable to help protect it. Learn more [here](/guides/guides/continuous-integration#Environment-variables).
 
-
 </Alert>
 
-Once you're set up to record test runs, we automatically generate a *Record Key* for the project.
+Once you're set up to record test runs, we automatically generate a _Record Key_ for the project.
 
 #### A record key is a GUID that looks like this
 
@@ -112,7 +116,7 @@ You can create multiple Record Keys for a project, or delete existing ones from 
 
 <DocsImage src="/img/dashboard/record-keys-in-project-settings-dashboard.png" alt="Record key in project settings" ></DocsImage>
 
-You can also find your Record Key inside of the *Settings* tab in the Test Runner.
+You can also find your Record Key inside of the _Settings_ tab in the Test Runner.
 
 <DocsImage src="/img/dashboard/record-key-shown-in-desktop-gui-configuration.jpg" alt="Record Key in Configuration Tab" ></DocsImage>
 
@@ -124,22 +128,22 @@ See [Record key](#Record-key) for a full description of how the record keys are 
 
 1. Go to your organization's projects page.
 2. Select the project you want to change access to.
-  <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project" ></DocsImage>
+   <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project" ></DocsImage>
 3. Go to the project's **Settings** page.
-  <DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings" ></DocsImage>
+   <DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings" ></DocsImage>
 4. Here you will see a **Record Keys** section
-  <DocsImage src="/img/dashboard/record-keys-in-project-settings-dashboard.png" alt="Record keys in Dashboard" ></DocsImage>
+   <DocsImage src="/img/dashboard/record-keys-in-project-settings-dashboard.png" alt="Record keys in Dashboard" ></DocsImage>
 5. Click **Create New Key**. A new key will be automatically generated for your project.
 
 ### Delete record key
 
 1. Go to your organization's projects page.
 2. Select the project you want to change access to.
-  <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project" ></DocsImage>
+   <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project" ></DocsImage>
 3. Go to the project's **Settings** page.
-  <DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings" ></DocsImage>
+   <DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings" ></DocsImage>
 4. Here you will see a **Record Keys** section
-  <DocsImage src="/img/dashboard/record-keys-in-project-settings-dashboard.png" alt="Record keys in Dashboard" ></DocsImage>
+   <DocsImage src="/img/dashboard/record-keys-in-project-settings-dashboard.png" alt="Record keys in Dashboard" ></DocsImage>
 5. Click **Delete** beside the record key you want to delete.
 
 ## Parallelization settings
@@ -174,8 +178,10 @@ README badges allow you to increase visibility of your project's test status and
 
 1. In your Cypress Dashboard account, select the project for which you’d like to create a README badge.
 1. On the Project Settings page, scroll down to the README Badges section and click “Configure Badge”.
-  <DocsImage src="/img/dashboard/badges/dashboard-badge-configure-button.png" alt="README Badge configure button" ></DocsImage>
-  - **Note**: README badges are currently only available for public projects.
+   <DocsImage src="/img/dashboard/badges/dashboard-badge-configure-button.png" alt="README Badge configure button" ></DocsImage>
+
+- **Note**: README badges are currently only available for public projects.
+
 1. A configuration modal will appear. The Project ID will be pre-filled with the ID associated with the project you selected. You can choose to designate a specific branch, or leave this field blank to always use the latest build in the project.
 1. Next, style your badge. Flat is the default styling and is most commonly used, but 5 style options are available.
 1. Select the badge type to change the amount and type of information that’s displayed. Simple status will show only whether tests are passing or failing. Detailed status will show the number of tests that were passed, failed, or skipped. Test count will show how many tests are included in your project.
@@ -202,11 +208,11 @@ Visit your project settings to see who has access to your project's runs.
 
 1. Go to your organization's projects page.
 2. Select the project you want to change access to.
-  <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project" ></DocsImage>
+   <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project" ></DocsImage>
 3. Go to the project's **Settings** page.
-  <DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings" ></DocsImage>
+   <DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings" ></DocsImage>
 4. Here you will see a section displaying **Access to Runs**. Choose the appropriate access you'd like to assign for the project here.
-  <DocsImage src="/img/dashboard/access-to-runs.png" alt="access-to-runs" ></DocsImage>
+   <DocsImage src="/img/dashboard/access-to-runs.png" alt="access-to-runs" ></DocsImage>
 
 ## Transfer ownership
 
@@ -216,13 +222,13 @@ You can transfer projects that you own to another [organization](/guides/dashboa
 
 1. Select your organization in the organization switcher.
 2. Select the project you wish to transfer.
-  <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project" ></DocsImage>
+   <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project" ></DocsImage>
 3. Go to the project's **Settings** page.
-  <DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings" ></DocsImage>
+   <DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings" ></DocsImage>
 4. Scroll down to the **Transfer Ownership** section and click **Transfer Ownership**.
-  <DocsImage src="/img/dashboard/transfer-ownership-button.png" alt="Transfer ownership button" ></DocsImage>
+   <DocsImage src="/img/dashboard/transfer-ownership-button.png" alt="Transfer ownership button" ></DocsImage>
 5. Select the user or organization, then click **Transfer**.
-  <DocsImage src="/img/dashboard/transfer-ownership-of-project-dialog.png" alt="Transfer Project dialog" ></DocsImage>
+   <DocsImage src="/img/dashboard/transfer-ownership-of-project-dialog.png" alt="Transfer Project dialog" ></DocsImage>
 
 ### Cancel project transfer
 
@@ -244,10 +250,9 @@ You can delete projects you own. This will also delete all of their recorded tes
 
 1. Select your organization in the organization switcher.
 2. Select the project you want to remove.
-  <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project" ></DocsImage>
+   <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project" ></DocsImage>
 3. Go to the project's **Settings** page.
-  <DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings" ></DocsImage>
+   <DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings" ></DocsImage>
 4. At the very bottom of the Settings page click the **Remove Project** button.
-  <DocsImage src="/img/dashboard/remove-project-dialog.png" alt="Delete project dialog" ></DocsImage>
+   <DocsImage src="/img/dashboard/remove-project-dialog.png" alt="Delete project dialog" ></DocsImage>
 5. Confirm that you want to delete the project by clicking **Yes, Remove Project**.
-

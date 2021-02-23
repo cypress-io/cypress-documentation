@@ -4,7 +4,6 @@ title: The Test Runner
 
 <Alert type="info">
 
-
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
 - The names and purposes of the visual parts of the Cypress Test Runner
@@ -36,7 +35,6 @@ Each command and assertion, when hovered over, restores the Application Under Te
 
 <Alert type="info">
 
-
 By default, Cypress keeps 50 tests worth of snapshots and command data for time traveling. If you are seeing extremely high memory consumption in your browser, you may want to lower the `numTestsKeptInMemory` in your [configuration](/guides/references/configuration#Global).
 
 </Alert>
@@ -54,13 +52,12 @@ Cypress prints several pieces of information when an error occurs during a Cypre
 1. **Error name**: This is the type of the error (e.g. AssertionError, CypressError)
 1. **Error message**: This generally tells you what went wrong. It can vary in length. Some are short like in the example, while some are long, and may tell you exactly how to fix the error. Some also contain a **Learn more** link that will take you to relevant Cypress documentation.
 1. **Learn more:** Some error messages contain a Learn more link that will take you to relevant Cypress documentation.
-1. **Code frame file**: This is usually the top line of the stack trace and it shows the file, line number, and column number that is highlighted in the code frame below. Clicking on this link will open the file in your  [preferred file opener](https://on.cypress.io/IDE-integration#File-Opener-Preference) and highlight the line and column in editors that support it.
+1. **Code frame file**: This is usually the top line of the stack trace and it shows the file, line number, and column number that is highlighted in the code frame below. Clicking on this link will open the file in your [preferred file opener](https://on.cypress.io/IDE-integration#File-Opener-Preference) and highlight the line and column in editors that support it.
 1. **Code frame**: This shows a snippet of code where the failure occurred, with the relevant line and column highlighted.
 1. **View stack trace**: Clicking this toggles the visibility of the stack trace. Stack traces vary in length. Clicking on a blue file path will open the file in your [preferred file opener](https://on.cypress.io/IDE-integration#File-Opener-Preference).
 1. **Print to console button**: Click this to print the full error to your DevTools console. This will usually allow you to click on lines in the stack trace and open files in your DevTools.
 
 <DocsImage src="/img/guides/command-failure-error.png" alt="example command failure error" ></DocsImage>
-
 
 ## Instrument Panel
 
@@ -85,9 +82,9 @@ The righthand side of the Test Runner is used to display the Application Under T
 In the example below, we wrote the following code in our test file:
 
 ```javascript
-cy.visit('https://example.cypress.io')
+cy.visit("https://example.cypress.io");
 
-cy.title().should('include', 'Kitchen Sink')
+cy.title().should("include", "Kitchen Sink");
 ```
 
 In the corresponding Application Preview below, you can see `https://example.cypress.io` is being displayed in the righthand side. Not only is the application visible, but it is fully interactable. You can open your developer tools to inspect elements as you would in your normal application. The DOM is completely available for debugging.
@@ -102,11 +99,11 @@ The image below shows that our application is displaying at `1000px` width, `660
 
 <DocsImage src="/img/guides/viewport-scaling.png" alt="Viewport Scaling" ></DocsImage>
 
-*Note: The righthand side may also be used to display syntax errors in your test file that prevent the tests from running.*
+_Note: The righthand side may also be used to display syntax errors in your test file that prevent the tests from running._
 
 <DocsImage src="/img/guides/errors.png" alt="Errors" ></DocsImage>
 
-*Note: Internally, the AUT renders within an iframe. This can sometimes cause unexpected behaviors [explained here.](/api/commands/window#Cypress-uses-2-different-windows)*
+_Note: Internally, the AUT renders within an iframe. This can sometimes cause unexpected behaviors [explained here.](/api/commands/window#Cypress-uses-2-different-windows)_
 
 ## Selector Playground
 
@@ -135,7 +132,7 @@ By default Cypress will favor:
 
 <Alert type="info">
 
- <strong class="alert-header">This is configurable</strong>
+<strong class="alert-header">This is configurable</strong>
 
 Cypress allows you to control how a selector is determined.
 
@@ -192,18 +189,17 @@ If you would like to interact with your app while the Selector Playground is ope
 
 There are keyboard shortcuts to quickly perform common actions from within the Test Runner.
 
-| Key      | Action |
-| ----------- | ----------- |
-| `r`      | Rerun tests       |
-| `s`      | Stop tests        |
-| `f`      | Bring focus to 'specs' window  |
+| Key | Action                        |
+| --- | ----------------------------- |
+| `r` | Rerun tests                   |
+| `s` | Stop tests                    |
+| `f` | Bring focus to 'specs' window |
 
 <DocsImage src="/img/guides/test-runner/keyboard-shortcuts.png" alt="Tooltips show keyboard shortcuts" ></DocsImage>
 
 ## History
 
-Version | Changes
---- | ---
-[3.5.0](/guides/references/changelog#3-5-0) | Added keyboard shortcuts to Test Runner
-[1.3.0](/guides/references/changelog#1-3-0) | Added Selector Playground
-
+| Version                                     | Changes                                 |
+| ------------------------------------------- | --------------------------------------- |
+| [3.5.0](/guides/references/changelog#3-5-0) | Added keyboard shortcuts to Test Runner |
+| [1.3.0](/guides/references/changelog#1-3-0) | Added Selector Playground               |

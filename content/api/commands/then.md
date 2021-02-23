@@ -6,13 +6,11 @@ Enables you to work with the subject yielded from the previous command.
 
 <Alert type="info">
 
-
 **Note:** `.then()` assumes you are already familiar with core concepts such as [closures](/guides/core-concepts/variables-and-aliases#Closures).
 
 </Alert>
 
 <Alert type="info">
-
 
 **Note:** Prefer [`.should()` with callback](/api/commands/should#Function) over `.then()` for assertions as they are automatically rerun until no assertions throw within it but be aware of [differences](/api/commands/should#Differences).
 
@@ -30,27 +28,27 @@ Enables you to work with the subject yielded from the previous command.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('.nav').then(($nav) => {})  // Yields .nav as first arg
-cy.location().then((loc) => {})   // Yields location object as first arg
+cy.get(".nav").then(($nav) => {}); // Yields .nav as first arg
+cy.location().then((loc) => {}); // Yields location object as first arg
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.then()`.
 
-Option | Default | Description
---- | --- | ---
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.then()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                          |
+| --------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.then()` to resolve before [timing out](#Timeouts) |
 
-**<Icon name="angle-right"></Icon> callbackFn** ***(Function)***
+**<Icon name="angle-right"></Icon> callbackFn** **_(Function)_**
 
 Pass a function that takes the previously yielded subject as its first argument.
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
-`.then()` is modeled identically to the way Promises work in JavaScript.  Whatever is returned from the callback function becomes the new subject and will flow into the next command (with the exception of `undefined`).
+`.then()` is modeled identically to the way Promises work in JavaScript. Whatever is returned from the callback function becomes the new subject and will flow into the next command (with the exception of `undefined`).
 
 Additionally, the result of the last Cypress command in the callback function will be yielded as the new subject and flow into the next command if there is no `return`.
 
@@ -62,7 +60,6 @@ Just like Promises, you can return any compatible "thenable" (anything that has 
 
 <Alert type="info">
 
-
 We have several more examples in our [Core Concepts Guide](/guides/core-concepts/variables-and-aliases) which go into the various ways you can use `.then()` to store, compare, and debug values.
 
 </Alert>
@@ -72,19 +69,21 @@ We have several more examples in our [Core Concepts Guide](/guides/core-concepts
 #### The `button` element is yielded
 
 ```javascript
-cy.get('button').then(($btn) => {
-  const cls = $btn.attr('class')
+cy.get("button").then(($btn) => {
+  const cls = $btn.attr("class");
 
-  cy.wrap($btn).click().should('not.have.class', cls)
-})
+  cy.wrap($btn).click().should("not.have.class", cls);
+});
 ```
 
 #### The number is yielded from previous command
 
 ```js
-cy.wrap(1).then((num) => {
-  cy.wrap(num).should('equal', 1) // true
-}).should('equal', 1) // true
+cy.wrap(1)
+  .then((num) => {
+    cy.wrap(num).should("equal", 1); // true
+  })
+  .should("equal", 1); // true
 ```
 
 ### Change subject
@@ -92,14 +91,15 @@ cy.wrap(1).then((num) => {
 #### The el subject is changed with another command
 
 ```javascript
-cy.get('button').then(($btn) => {
-  const cls = $btn.attr('class')
+cy.get("button")
+  .then(($btn) => {
+    const cls = $btn.attr("class");
 
-  cy.wrap($btn).click().should('not.have.class', cls)
-    .find('i')
+    cy.wrap($btn).click().should("not.have.class", cls).find("i");
     // since there is no explicit return
     // the last Cypress command's yield is yielded
-}).should('have.class', 'spin') // assert on i element
+  })
+  .should("have.class", "spin"); // assert on i element
 ```
 
 #### The number subject is changed with another command
@@ -114,26 +114,30 @@ cy.wrap(1).then((num) => {
 #### The number subject is changed by returning
 
 ```javascript
-cy.wrap(1).then((num) => {
-  cy.wrap(num).should('equal', 1) // true
+cy.wrap(1)
+  .then((num) => {
+    cy.wrap(num).should("equal", 1); // true
 
-  return 2
-}).should('equal', 2) // true
+    return 2;
+  })
+  .should("equal", 2); // true
 ```
 
 #### Returning `undefined` will not modify the yielded subject
 
 ```javascript
-cy.get('form')
-.then(($form) => {
-  console.log('form is:', $form)
-  // undefined is returned here, but $form will be
-  // yielded to allow for continued chaining
-}).find('input').then(($input) => {
-  // we have our $input element here since
-  // our form element was yielded and we called
-  // .find('input') on it
-})
+cy.get("form")
+  .then(($form) => {
+    console.log("form is:", $form);
+    // undefined is returned here, but $form will be
+    // yielded to allow for continued chaining
+  })
+  .find("input")
+  .then(($input) => {
+    // we have our $input element here since
+    // our form element was yielded and we called
+    // .find('input') on it
+  });
 ```
 
 ### Promises
@@ -143,37 +147,43 @@ Cypress waits for Promises to resolve before continuing
 #### Example using Q
 
 ```javascript
-cy.get('button').click().then(($button) => {
-  const p = Q.defer()
+cy.get("button")
+  .click()
+  .then(($button) => {
+    const p = Q.defer();
 
-  setTimeout(() => {
-    p.resolve()
-  }, 1000)
+    setTimeout(() => {
+      p.resolve();
+    }, 1000);
 
-  return p.promise
-})
+    return p.promise;
+  });
 ```
 
 #### Example using bluebird
 
 ```javascript
-cy.get('button').click().then(($button) => {
-  return Promise.delay(1000)
-})
+cy.get("button")
+  .click()
+  .then(($button) => {
+    return Promise.delay(1000);
+  });
 ```
 
 #### Example using jQuery deferred's
 
 ```javascript
-cy.get('button').click().then(($button) => {
-  const df = $.Deferred()
+cy.get("button")
+  .click()
+  .then(($button) => {
+    const df = $.Deferred();
 
-  setTimeout(() => {
-    df.resolve()
-  }, 1000)
+    setTimeout(() => {
+      df.resolve();
+    }, 1000);
 
-  return df
-})
+    return df;
+  });
 ```
 
 ## Notes
@@ -202,14 +212,14 @@ When using a callback function with `.should()` or `.and()`, on the other hand, 
 
 ## Command Log
 
-- `.then()` does *not* log in the Command Log
+- `.then()` does _not_ log in the Command Log
 
 ## History
 
-Version | Changes
---- | ---
-[0.14.0](/guides/references/changelog#0-14-0) | Added `timeout` option
-[< 0.3.3](/guides/references/changelog#0-3-3) | `.then()` command added
+| Version                                       | Changes                 |
+| --------------------------------------------- | ----------------------- |
+| [0.14.0](/guides/references/changelog#0-14-0) | Added `timeout` option  |
+| [< 0.3.3](/guides/references/changelog#0-3-3) | `.then()` command added |
 
 ## See also
 
@@ -221,4 +231,3 @@ Version | Changes
 - [`.spread()`](/api/commands/spread)
 - [Guide: Using Closures to compare values](/guides/core-concepts/variables-and-aliases#Closures)
 - [Guide: Chains of Commands](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-

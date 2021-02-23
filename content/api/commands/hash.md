@@ -6,7 +6,6 @@ Get the current URL hash of the page that is currently active.
 
 <Alert type="info">
 
-
 This is an alias of [`cy.location('hash')`](/api/commands/location)
 
 </Alert>
@@ -14,8 +13,8 @@ This is an alias of [`cy.location('hash')`](/api/commands/location)
 ## Syntax
 
 ```javascript
-cy.hash()
-cy.hash(options)
+cy.hash();
+cy.hash(options);
 ```
 
 ### Usage
@@ -23,21 +22,21 @@ cy.hash(options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.hash()     // Get the url hash
+cy.hash(); // Get the url hash
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.hash()`.
 
-**cy.hash( *options* )**
+**cy.hash( _options_ )**
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.hash()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.hash()` to resolve before [timing out](#Timeouts)                   |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -57,7 +56,7 @@ Option | Default | Description
 
 ```javascript
 // yields #/users/1
-cy.hash().should('eq', '#/users/1') // => true
+cy.hash().should("eq", "#/users/1"); // => true
 ```
 
 #### Assert that the hash matches via RegExp
@@ -71,8 +70,8 @@ cy.hash().should('eq', '#/users/1') // => true
 ```
 
 ```javascript
-cy.get('#users li').find('a').click()
-cy.hash().should('match', /users\/.+$/) // => true
+cy.get("#users li").find("a").click();
+cy.hash().should("match", /users\/.+$/); // => true
 ```
 
 ## Rules
@@ -91,10 +90,10 @@ cy.hash().should('match', /users\/.+$/) // => true
 
 ## Command Log
 
-***Assert that the hash matches `#users/new`***
+**_Assert that the hash matches `#users/new`_**
 
 ```javascript
-cy.hash().should('eq', '#users/new')
+cy.hash().should("eq", "#users/new");
 ```
 
 The commands above will display in the Command Log as:
@@ -109,4 +108,3 @@ When clicking on `hash` within the command log, the console outputs the followin
 
 - [`cy.location()`](/api/commands/location)
 - [`cy.url()`](/api/commands/url)
-

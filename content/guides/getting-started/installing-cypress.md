@@ -4,13 +4,11 @@ title: Installing Cypress
 
 <Alert type="info">
 
-
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
 - How to install Cypress via `npm`
 - How to install Cypress via direct download
 - How to version and run Cypress via `package.json`
-
 
 </Alert>
 
@@ -20,8 +18,8 @@ title: Installing Cypress
 
 Cypress is a desktop application that is installed on your computer. The desktop application supports these operating systems:
 
-- **macOS** 10.9 and above *(64-bit only)*
-- **Linux** Ubuntu 12.04 and above, Fedora 21 and Debian 8 *(64-bit only)*
+- **macOS** 10.9 and above _(64-bit only)_
+- **Linux** Ubuntu 12.04 and above, Fedora 21 and Debian 8 _(64-bit only)_
 - **Windows** 7 and above
 
 #### Node.js
@@ -66,7 +64,6 @@ This will install Cypress locally as a dev dependency for your project.
 
 <Alert type="info">
 
-
 Make sure that you have already run [`npm init`](https://docs.npmjs.com/cli/init) or have a `node_modules` folder or `package.json` file in the root of your project to ensure cypress is installed in the correct directory.
 
 </Alert>
@@ -75,15 +72,13 @@ Make sure that you have already run [`npm init`](https://docs.npmjs.com/cli/init
 
 <Alert type="info">
 
-
 Notice that the Cypress `npm` package is a wrapper around the Cypress binary. The version of the `npm` package determines the version of the binary downloaded. As of version `3.0`, the binary is downloaded to a global cache directory to be used across projects.
 
 </Alert>
 
 <Alert type="success">
 
- <strong class="alert-header">Best Practice</strong>
-
+<strong class="alert-header">Best Practice</strong>
 
 The recommended approach is to install Cypress with `npm` because :
 
@@ -109,7 +104,6 @@ yarn add cypress --dev
 If you're not using Node or `npm` in your project or you want to try Cypress out quickly, you can always [download Cypress directly from our CDN](https://download.cypress.io/desktop).
 
 <Alert type="warning">
-
 
 Recording runs to the Dashboard is not possible from the direct download. This download is only intended as a quick way to try out Cypress. To record tests to the Dashboard, you'll need to install Cypress as an `npm` dependency.
 
@@ -169,11 +163,9 @@ Read [Launching Browsers](/guides/guides/launching-browsers) for more informatio
 
 <Alert type="info">
 
- <strong class="alert-header">Cross Browser Support</strong>
-
+<strong class="alert-header">Cross Browser Support</strong>
 
 Cypress currently supports Firefox and Chrome-family browsers (including Edge and Electron). To run tests optimally across these browsers in CI, check out the strategies demonstrated in the [cross browser Testing](/guides/guides/cross-browser-testing) guide.
-
 
 </Alert>
 
@@ -209,35 +201,29 @@ You can [read more about the CLI here](/guides/guides/command-line).
 
 ### Environment variables
 
-Name | Description
------- |  ---------
-`CYPRESS_INSTALL_BINARY` | [Destination of Cypress binary that's downloaded and installed](#Install-binary)
-`CYPRESS_DOWNLOAD_MIRROR` | [Downloads the Cypress binary though a mirror server](#Mirroring)
-`CYPRESS_CACHE_FOLDER` | [Changes the Cypress binary cache location](#Binary-cache)
-`CYPRESS_RUN_BINARY` | [Location of Cypress binary at run-time](#Run-binary)
-~~CYPRESS_SKIP_BINARY_INSTALL~~ | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY=0` instead
-~~CYPRESS_BINARY_VERSION~~ | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY` instead
+| Name                            | Description                                                                      |
+| ------------------------------- | -------------------------------------------------------------------------------- |
+| `CYPRESS_INSTALL_BINARY`        | [Destination of Cypress binary that's downloaded and installed](#Install-binary) |
+| `CYPRESS_DOWNLOAD_MIRROR`       | [Downloads the Cypress binary though a mirror server](#Mirroring)                |
+| `CYPRESS_CACHE_FOLDER`          | [Changes the Cypress binary cache location](#Binary-cache)                       |
+| `CYPRESS_RUN_BINARY`            | [Location of Cypress binary at run-time](#Run-binary)                            |
+| ~~CYPRESS_SKIP_BINARY_INSTALL~~ | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY=0` instead      |
+| ~~CYPRESS_BINARY_VERSION~~      | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY` instead        |
 
 ### Install binary
 
-Using the `CYPRESS_INSTALL_BINARY` environment variable, you can control how Cypress is installed.  To override what is installed, you set `CYPRESS_INSTALL_BINARY` alongside the `npm install` command.
+Using the `CYPRESS_INSTALL_BINARY` environment variable, you can control how Cypress is installed. To override what is installed, you set `CYPRESS_INSTALL_BINARY` alongside the `npm install` command.
 
 **This is helpful if you want to:**
 
 - Install a version different than the default npm package.
-    ```shell
-CYPRESS_INSTALL_BINARY=2.0.1 npm install cypress@2.0.3
-    ```
+  `shell CYPRESS_INSTALL_BINARY=2.0.1 npm install cypress@2.0.3 `
 - Specify an external URL (to bypass a corporate firewall).
-    ```shell
-CYPRESS_INSTALL_BINARY=https://company.domain.com/cypress.zip npm install cypress
-    ```
+  `shell CYPRESS_INSTALL_BINARY=https://company.domain.com/cypress.zip npm install cypress `
 - Specify a file to install locally instead of using the internet.
-    ```shell
-CYPRESS_INSTALL_BINARY=/local/path/to/cypress.zip npm install cypress
-    ```
+  `shell CYPRESS_INSTALL_BINARY=/local/path/to/cypress.zip npm install cypress `
 
-In all cases, the fact that the binary was installed from a custom location *is not saved in your `package.json` file*. Every repeated installation needs to use the same environment variable to install the same binary.
+In all cases, the fact that the binary was installed from a custom location _is not saved in your `package.json` file_. Every repeated installation needs to use the same environment variable to install the same binary.
 
 #### Skipping installation
 
@@ -271,13 +257,12 @@ Cypress will automatically replace the `~` with the user's home directory. So yo
 
 ```yml
 environment:
-  CYPRESS_CACHE_FOLDER: '~/.cache/Cypress'
+  CYPRESS_CACHE_FOLDER: "~/.cache/Cypress"
 ```
 
 See also [Continuous Integration - Caching](/guides/guides/continuous-integration#Caching) section in the documentation.
 
 <Alert type="warning">
-
 
 `CYPRESS_CACHE_FOLDER` will need to exist every time cypress is launched. To ensure this, consider exporting this environment variable. For example, in a `.bash_profile` (MacOS, Linux), or using `RegEdit` (Windows).
 
@@ -309,7 +294,6 @@ CYPRESS_RUN_BINARY=~/Downloads/Cypress/Cypress.exe cypress run
 
 <Alert type="warning">
 
-
 We recommend **not exporting** the `CYPRESS_RUN_BINARY` environment variable, since it will affect every cypress module installed on your file system.
 
 </Alert>
@@ -331,13 +315,13 @@ Here are the available download URLs:
 
 See [https://download.cypress.io/desktop.json](https://download.cypress.io/desktop.json) for all available platforms.
 
- Method | URL                            | Description
- ------ | ------------------------------ | -------------------------------------------------------------------------
- `GET`  | `/desktop`                     | Download Cypress at latest version (platform auto-detected)
- `GET`  | `/desktop.json`                | Returns JSON containing latest available CDN destinations
- `GET`  | `/desktop?platform=p&arch=a`   | Download Cypress for a specific platform and/or architecture
- `GET`  | `/desktop/:version`            | Download Cypress with a specified version
- `GET`  | `/desktop/:version?platform=p&arch=a` | Download Cypress with a specified version and platform and/or architecture
+| Method | URL                                   | Description                                                                |
+| ------ | ------------------------------------- | -------------------------------------------------------------------------- |
+| `GET`  | `/desktop`                            | Download Cypress at latest version (platform auto-detected)                |
+| `GET`  | `/desktop.json`                       | Returns JSON containing latest available CDN destinations                  |
+| `GET`  | `/desktop?platform=p&arch=a`          | Download Cypress for a specific platform and/or architecture               |
+| `GET`  | `/desktop/:version`                   | Download Cypress with a specified version                                  |
+| `GET`  | `/desktop/:version?platform=p&arch=a` | Download Cypress with a specified version and platform and/or architecture |
 
 **Example of downloading Cypress `3.0.0` for Windows 64-bit:**
 
@@ -399,11 +383,10 @@ If you would like to install a pre-release version of the Test Runner to test ou
 
 1. Open up the list of commits to `develop` on the Cypress repo: [https://github.com/cypress-io/cypress/commits/develop](https://github.com/cypress-io/cypress/commits/develop)
 2. Find the commit that you would like to install the pre-release version of. Click the comment icon (highlighted in red below):
-    <DocsImage src="/img/guides/install/develop-commit-comment-link.png" alt="Example of a commit for which pre-releases are available. Comment link highlighted in red." ></DocsImage>
+   <DocsImage src="/img/guides/install/develop-commit-comment-link.png" alt="Example of a commit for which pre-releases are available. Comment link highlighted in red." ></DocsImage>
 3. You should see several comments from the `cypress-bot` user with instructions for installing Cypress pre-releases. Pick the one that corresponds to your operating system and CPU architecture, and follow the instructions there to install the pre-release.
 
 Notes on pre-releases:
 
 - Cypress pre-releases are only available for about a month after they are built. Do not rely on these being available past one month.
 - If you already have a pre-release or official release installed for a specific version of Cypress, you may need to do `cypress cache clear` before Cypress will install a pre-release. This also applies to installing an official release over a pre-release - if you have a pre-release of Cypress vX.Y.Z installed, the official release of Cypress vX.Y.Z will not install until you do `cypress cache clear`.
-

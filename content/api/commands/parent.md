@@ -8,7 +8,6 @@ Please note that `.parent()` only travels a single level up the DOM tree as oppo
 
 <Alert type="info">
 
-
 The querying behavior of this command matches exactly how [`.parent()`](http://api.jquery.com/parent) works in jQuery.
 
 </Alert>
@@ -27,30 +26,30 @@ The querying behavior of this command matches exactly how [`.parent()`](http://a
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('header').parent() // Yield parent el of `header`
+cy.get("header").parent(); // Yield parent el of `header`
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.parent()            // Errors, cannot be chained off 'cy'
-cy.reload().parent()   // Errors, 'reload' does not yield DOM element
+cy.parent(); // Errors, cannot be chained off 'cy'
+cy.reload().parent(); // Errors, 'reload' does not yield DOM element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> selector**  ***(String selector)***
+**<Icon name="angle-right"></Icon> selector** **_(String selector)_**
 
 A selector used to filter matching DOM elements.
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.parent()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.parent()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.parent()` to resolve before [timing out](#Timeouts)                   |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -63,12 +62,13 @@ Option | Default | Description
 #### Get the parent of the active `li`
 
 ```html
-<ul class='main-nav'>
+<ul class="main-nav">
   <li>Overview</li>
-  <li>Getting started
-    <ul class='sub-nav'>
+  <li>
+    Getting started
+    <ul class="sub-nav">
       <li>Install</li>
-      <li class='active'>Build</li>
+      <li class="active">Build</li>
       <li>Test</li>
     </ul>
   </li>
@@ -77,7 +77,7 @@ Option | Default | Description
 
 ```javascript
 // yields .sub-nav
-cy.get('li.active').parent()
+cy.get("li.active").parent();
 ```
 
 ### Selector
@@ -85,12 +85,13 @@ cy.get('li.active').parent()
 #### Get the parent with class `sub-nav` of all `li` elements
 
 ```html
-<ul class='main-nav'>
+<ul class="main-nav">
   <li>Overview</li>
-  <li>Getting started
-    <ul class='sub-nav'>
+  <li>
+    Getting started
+    <ul class="sub-nav">
       <li>Install</li>
-      <li class='active'>Build</li>
+      <li class="active">Build</li>
       <li>Test</li>
     </ul>
   </li>
@@ -99,7 +100,7 @@ cy.get('li.active').parent()
 
 ```javascript
 // yields .sub-nav
-cy.get('li').parent('.sub-nav')
+cy.get("li").parent(".sub-nav");
 ```
 
 ## Rules
@@ -118,10 +119,10 @@ cy.get('li').parent('.sub-nav')
 
 ## Command Log
 
-***Assert on the parent of the active li***
+**_Assert on the parent of the active li_**
 
 ```javascript
-cy.get('li.active').parent().should('have.class', 'nav')
+cy.get("li.active").parent().should("have.class", "nav");
 ```
 
 The commands above will display in the Command Log as:
@@ -137,4 +138,3 @@ When clicking on the `parent` command within the command log, the console output
 - [`.children()`](/api/commands/children)
 - [`.parents()`](/api/commands/parents)
 - [`.parentsUntil()`](/api/commands/parentsuntil)
-

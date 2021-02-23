@@ -7,8 +7,8 @@ Set a browser cookie.
 ## Syntax
 
 ```javascript
-cy.setCookie(name, value)
-cy.setCookie(name, value, options)
+cy.setCookie(name, value);
+cy.setCookie(name, value, options);
 ```
 
 ### Usage
@@ -16,44 +16,44 @@ cy.setCookie(name, value, options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.setCookie('auth_key', '123key') // Set the 'auth_key' cookie to '123key'
+cy.setCookie("auth_key", "123key"); // Set the 'auth_key' cookie to '123key'
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> name** ***(String)***
+**<Icon name="angle-right"></Icon> name** **_(String)_**
 
 The name of the cookie to set.
 
-**<Icon name="angle-right"></Icon> value** ***(String)***
+**<Icon name="angle-right"></Icon> value** **_(String)_**
 
 The value of the cookie to set.
 
-**<Icon name="angle-right"></Icon> options** ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.setCookie()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`domain` | `window.location.hostname` | The domain the cookie is visible to
-`expiry` | 20 years into the future | When the cookie expires, specified in seconds since [Unix Epoch](https://en.wikipedia.org/wiki/Unix_time).
-`httpOnly` | `false` | Whether the cookie is an HTTP only cookie
-`path` | `/` | The cookie path
-`secure` | `false` | Whether the cookie is a secure cookie
-`timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.setCookie()` to resolve before [timing out](#Timeouts)
-`sameSite` | `undefined` | Cookie's SameSite value. If set, should be one of `lax`, `strict`, or `no_restriction`. Pass `undefined` to use the browser's default. Note: `no_restriction` can only be used if the `secure` flag is set to `true`.
+| Option     | Default                                                        | Description                                                                                                                                                                                                           |
+| ---------- | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `log`      | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                                                                                                                              |
+| `domain`   | `window.location.hostname`                                     | The domain the cookie is visible to                                                                                                                                                                                   |
+| `expiry`   | 20 years into the future                                       | When the cookie expires, specified in seconds since [Unix Epoch](https://en.wikipedia.org/wiki/Unix_time).                                                                                                            |
+| `httpOnly` | `false`                                                        | Whether the cookie is an HTTP only cookie                                                                                                                                                                             |
+| `path`     | `/`                                                            | The cookie path                                                                                                                                                                                                       |
+| `secure`   | `false`                                                        | Whether the cookie is a secure cookie                                                                                                                                                                                 |
+| `timeout`  | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.setCookie()` to resolve before [timing out](#Timeouts)                                                                                                                                           |
+| `sameSite` | `undefined`                                                    | Cookie's SameSite value. If set, should be one of `lax`, `strict`, or `no_restriction`. Pass `undefined` to use the browser's default. Note: `no_restriction` can only be used if the `secure` flag is set to `true`. |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
 `cy.setCookie()` yields a cookie object with the following properties:
 
 - `domain`
-- `expiry` *(if specified)*
+- `expiry` _(if specified)_
 - `httpOnly`
 - `name`
 - `path`
-- `sameSite` *(if specified)*
+- `sameSite` _(if specified)_
 - `secure`
 - `value`
 
@@ -64,9 +64,13 @@ Option | Default | Description
 #### Set a cookie
 
 ```javascript
-cy.getCookies().should('be.empty')
-cy.setCookie('session_id', '189jd09sufh33aaiidhf99d09')
-cy.getCookie('session_id').should('have.property', 'value', '189jd09sufh33aaiidhf99d09')
+cy.getCookies().should("be.empty");
+cy.setCookie("session_id", "189jd09sufh33aaiidhf99d09");
+cy.getCookie("session_id").should(
+  "have.property",
+  "value",
+  "189jd09sufh33aaiidhf99d09"
+);
 ```
 
 ## Rules
@@ -83,7 +87,6 @@ cy.getCookie('session_id').should('have.property', 'value', '189jd09sufh33aaiidh
 
 <List><li>`cy.setCookie()` should never time out.</li><li><Alert type="warning">
 
-
 Because `cy.setCookie()` is asynchronous it is technically possible for there to be a timeout while talking to the internal Cypress automation APIs. But for practical purposes it should never happen.
 
 </Alert></li></List>
@@ -91,9 +94,9 @@ Because `cy.setCookie()` is asynchronous it is technically possible for there to
 ## Command Log
 
 ```javascript
-cy.getCookies().should('be.empty')
-cy.setCookie('fakeCookie1', '123ABC')
-cy.getCookie('fakeCookie1').should('have.property', 'value', '123ABC')
+cy.getCookies().should("be.empty");
+cy.setCookie("fakeCookie1", "123ABC");
+cy.getCookie("fakeCookie1").should("have.property", "value", "123ABC");
 ```
 
 The commands above will display in the Command Log as:
@@ -106,11 +109,11 @@ When clicking on `setCookie` within the command log, the console outputs the fol
 
 ## History
 
-Version | Changes
---- | ---
-[5.0.0](/guides/references/changelog#5-0-0) | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.
-[4.3.0](/guides/references/changelog#4-3-0) | Added `sameSite` property when the [experimentalGetCookiesSameSite](/guides/references/configuration#Experiments) configuration value is `true`.
-[0.16.0](/guides/references/changelog#0-16-0) | `cy.setCookie()` command added
+| Version                                       | Changes                                                                                                                                          |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [5.0.0](/guides/references/changelog#5-0-0)   | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.                                                          |
+| [4.3.0](/guides/references/changelog#4-3-0)   | Added `sameSite` property when the [experimentalGetCookiesSameSite](/guides/references/configuration#Experiments) configuration value is `true`. |
+| [0.16.0](/guides/references/changelog#0-16-0) | `cy.setCookie()` command added                                                                                                                   |
 
 ## See also
 
@@ -119,4 +122,3 @@ Version | Changes
 - [Cypress Cookies API](/api/cypress-api/cookies)
 - [`cy.getCookie()`](/api/commands/getcookie)
 - [`cy.getCookies()`](/api/commands/getcookies)
-

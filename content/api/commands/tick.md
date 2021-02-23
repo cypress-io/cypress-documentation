@@ -6,7 +6,6 @@ Move time after overriding a native time function with [`cy.clock()`](/api/comma
 
 <Alert type="warning">
 
-
 [`cy.clock()`](/api/commands/clock) must be called before `cy.tick()` in order to override native time functions first.
 
 </Alert>
@@ -14,7 +13,7 @@ Move time after overriding a native time function with [`cy.clock()`](/api/comma
 ## Syntax
 
 ```javascript
-cy.tick(milliseconds)
+cy.tick(milliseconds);
 ```
 
 ### Usage
@@ -22,12 +21,12 @@ cy.tick(milliseconds)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.tick(500)
+cy.tick(500);
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> milliseconds** ***(Number)***
+**<Icon name="angle-right"></Icon> milliseconds** **_(Number)_**
 
 The number of `milliseconds` to move the clock. Any timers within the affected range of time will be called.
 
@@ -55,23 +54,22 @@ You can also access the `clock` object via `this.clock` in a [`.then()`](/api/co
 // app code loaded by index.html
 window.addIntro = () => {
   setTimeout(() => {
-    document.getElementById('#header').textContent = 'Hello, World'
-  }, 500)
-}
+    document.getElementById("#header").textContent = "Hello, World";
+  }, 500);
+};
 ```
 
 ```javascript
-cy.clock()
-cy.visit('/index.html')
-cy.window().invoke('addIntro')
-cy.tick(500)
-cy.get('#header').should('have.text', 'Hello, World')
+cy.clock();
+cy.visit("/index.html");
+cy.window().invoke("addIntro");
+cy.tick(500);
+cy.get("#header").should("have.text", "Hello, World");
 ```
 
 #### Using `cy.clock()` with `cy.tick()`
 
 <Alert type="info">
-
 
 [Check out our example recipe testing spying, stubbing and time](/examples/examples/recipes#Stubbing-and-spying)
 
@@ -82,23 +80,23 @@ cy.get('#header').should('have.text', 'Hello, World')
 You can restore the clock and allow your application to resume normally without manipulating native global functions related to time. This is automatically called between tests.
 
 ```javascript
-cy.clock()
-cy.visit('http://localhost:3333')
-cy.get('#search').type('Acme Company')
-cy.tick(1000)
+cy.clock();
+cy.visit("http://localhost:3333");
+cy.get("#search").type("Acme Company");
+cy.tick(1000);
 // more test code here
 
 // restore the clock
 cy.clock().then((clock) => {
-  clock.restore()
-})
+  clock.restore();
+});
 // more test code here
 ```
 
-You could also restore by using [.invoke()](/api/commands/invoke)  to invoke the `restore` function.
+You could also restore by using [.invoke()](/api/commands/invoke) to invoke the `restore` function.
 
 ```js
-cy.clock().invoke('restore')
+cy.clock().invoke("restore");
 ```
 
 ## Rules
@@ -117,11 +115,11 @@ cy.clock().invoke('restore')
 
 ## Command Log
 
-***Create a clock and tick it 1 second***
+**_Create a clock and tick it 1 second_**
 
 ```javascript
-cy.clock()
-cy.tick(1000)
+cy.clock();
+cy.tick(1000);
 ```
 
 The command above will display in the Command Log as:
@@ -134,9 +132,9 @@ When clicking on the `tick` command within the command log, the console outputs 
 
 ## History
 
-Version | Changes
---- | ---
-[0.18.8](/guides/references/changelog#0-18-8) | `cy.tick()` command added
+| Version                                       | Changes                   |
+| --------------------------------------------- | ------------------------- |
+| [0.18.8](/guides/references/changelog#0-18-8) | `cy.tick()` command added |
 
 ## See also
 
@@ -145,4 +143,3 @@ Version | Changes
 - [`cy.stub()`](/api/commands/stub)
 - [Guide: Stubs, Spies and Clocks](/guides/guides/stubs-spies-and-clocks)
 - [Recipe: Stubbing, Spying](/examples/examples/recipes#Stubbing-and-spying)
-

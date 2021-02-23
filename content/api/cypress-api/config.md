@@ -2,11 +2,11 @@
 title: Cypress.config
 ---
 
-`get` and `set` configuration options *in your tests*.
+`get` and `set` configuration options _in your tests_.
 
 <Alert type="info">
 
- <strong class="alert-header">New to Cypress?</strong>
+<strong class="alert-header">New to Cypress?</strong>
 
 [Read about configuration first.](/guides/references/configuration)
 
@@ -14,7 +14,7 @@ title: Cypress.config
 
 <Alert type="warning">
 
- <strong class="alert-header">Scope</strong>
+<strong class="alert-header">Scope</strong>
 
 Configuration set using `Cypress.config` _is only in scope for the current spec file._
 
@@ -24,7 +24,7 @@ Cypress runs each spec file in isolation: the browser is exited between specs. C
 
 <Alert type="warning">
 
- <strong class="alert-header">Note</strong>
+<strong class="alert-header">Note</strong>
 
 Not all configuration values can be changed during runtime. See [Notes](#Notes) below for details.
 
@@ -33,23 +33,23 @@ Not all configuration values can be changed during runtime. See [Notes](#Notes) 
 ## Syntax
 
 ```javascript
-Cypress.config()
-Cypress.config(name)
-Cypress.config(name, value)
-Cypress.config(object)
+Cypress.config();
+Cypress.config(name);
+Cypress.config(name, value);
+Cypress.config(object);
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> name**  ***(String)***
+**<Icon name="angle-right"></Icon> name** **_(String)_**
 
 The name of the configuration to get or set.
 
-**<Icon name="angle-right"></Icon> value**  ***(String)***
+**<Icon name="angle-right"></Icon> value** **_(String)_**
 
 The value of the configuration to set.
 
-**<Icon name="angle-right"></Icon> object**  ***(Object)***
+**<Icon name="angle-right"></Icon> object** **_(Object)_**
 
 Set multiple configuration options with an object literal.
 
@@ -68,8 +68,9 @@ Set multiple configuration options with an object literal.
 <!-- textlint-disable -->
 
 ```javascript
-Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, ...}
+Cypress.config(); // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, ...}
 ```
+
 <!-- textlint-enable -->
 
 ### Name
@@ -83,7 +84,7 @@ Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, ..
 ```
 
 ```javascript
-Cypress.config('pageLoadTimeout') // => 60000
+Cypress.config("pageLoadTimeout"); // => 60000
 ```
 
 ### Name and Value
@@ -92,7 +93,7 @@ Cypress.config('pageLoadTimeout') // => 60000
 
 <Alert type="warning">
 
- <strong class="alert-header">Scope</strong>
+<strong class="alert-header">Scope</strong>
 
 Remember, any changes that you make to configuration using this API will only be in effect for the remainder of the tests _in the same spec file._
 
@@ -106,9 +107,9 @@ Remember, any changes that you make to configuration using this API will only be
 ```
 
 ```javascript
-Cypress.config('viewportWidth', 800)
+Cypress.config("viewportWidth", 800);
 
-Cypress.config('viewportWidth') // => 800
+Cypress.config("viewportWidth"); // => 800
 ```
 
 ### Object
@@ -118,17 +119,17 @@ Cypress.config('viewportWidth') // => 800
 ```json
 {
   "defaultCommandTimeout": 4000,
-  "pageLoadTimeout": 30000,
+  "pageLoadTimeout": 30000
 }
 ```
 
 ```javascript
 Cypress.config({
   defaultCommandTimeout: 10000,
-  viewportHeight: 900
-})
+  viewportHeight: 900,
+});
 
-Cypress.config() // => {defaultCommandTimeout: 10000, viewportHeight: 900, ...}
+Cypress.config(); // => {defaultCommandTimeout: 10000, viewportHeight: 900, ...}
 ```
 
 ## Notes
@@ -153,13 +154,12 @@ Since the configuration added or changed by `Cypress.config` is only in scope fo
 
 ## History
 
-Version | Changes
---- | ---
-0.12.6 | `Cypress.config` added
+| Version | Changes                |
+| ------- | ---------------------- |
+| 0.12.6  | `Cypress.config` added |
 
 ## See also
 
 - [configuration](/guides/references/configuration)
 - The [Environment Variable](/guides/guides/environment-variables) guide
 - [Test Configuration](/guides/references/configuration#Test-Configuration)
-

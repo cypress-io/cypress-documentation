@@ -7,8 +7,8 @@ Get the `window.document` of the page that is currently active.
 ## Syntax
 
 ```javascript
-cy.document()
-cy.document(options)
+cy.document();
+cy.document(options);
 ```
 
 ### Usage
@@ -16,19 +16,19 @@ cy.document(options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.document()     // yield the window.document object
+cy.document(); // yield the window.document object
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.document()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.document()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.document()` to resolve before [timing out](#Timeouts)               |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -43,13 +43,13 @@ Option | Default | Description
 ```javascript
 cy.document().then((doc) => {
   // work with document element
-})
+});
 ```
 
 #### Make an assertion about the document
 
 ```javascript
-cy.document().its('contentType').should('eq', 'text/html')
+cy.document().its("contentType").should("eq", "text/html");
 ```
 
 ## Rules
@@ -68,10 +68,10 @@ cy.document().its('contentType').should('eq', 'text/html')
 
 ## Command Log
 
-***Get the document***
+**_Get the document_**
 
 ```javascript
-cy.document()
+cy.document();
 ```
 
 The command above will display in the Command Log as:
@@ -86,4 +86,3 @@ When clicking on `document` within the command log, the console outputs the foll
 
 - [`cy.window()`](/api/commands/window)
 - [Cypress `should` callback](https://glebbahmutov.com/blog/cypress-should-callback/)
-

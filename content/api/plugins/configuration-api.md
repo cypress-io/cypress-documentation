@@ -11,18 +11,18 @@ To modify configuration, you return an object from your plugins file exported fu
 ```javascript
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  console.log(config) // see what all is in here!
+  console.log(config); // see what all is in here!
 
   // modify config values
-  config.defaultCommandTimeout = 10000
-  config.baseUrl = 'https://staging.acme.com'
+  config.defaultCommandTimeout = 10000;
+  config.baseUrl = "https://staging.acme.com";
 
   // modify env var value
-  config.env.ENVIRONMENT = 'staging'
+  config.env.ENVIRONMENT = "staging";
 
   // return config
-  return config
-}
+  return config;
+};
 ```
 
 Whenever you return an object from your `pluginFile`, Cypress will take this and "diff" it against the original configuration and automatically set the resolved values to point to what you returned.
@@ -31,11 +31,10 @@ If you don't return an object, then configuration will not be modified.
 
 <Alert type="warning">
 
-
 The `config` object also includes the following extra values that are not part of the standard configuration. **These values are read only and cannot be modified from the plugins file.**
 
-* `configFile`: The absolute path to the config file. By default, this is `<projectRoot>/cypress.json`, but may be a custom path or `false` if using the [`--config-file` flag](/guides/guides/command-line#cypress-open-config-file-lt-config-file-gt).
-* `projectRoot`: The absolute path to the root of the project (e.g. `/Users/me/dev/my-project`)
+- `configFile`: The absolute path to the config file. By default, this is `<projectRoot>/cypress.json`, but may be a custom path or `false` if using the [`--config-file` flag](/guides/guides/command-line#cypress-open-config-file-lt-config-file-gt).
+- `projectRoot`: The absolute path to the root of the project (e.g. `/Users/me/dev/my-project`)
 
 </Alert>
 
@@ -54,7 +53,6 @@ Additionally, Cypress will respect and await promises you return. This enables y
 The configuration includes the list of browsers found on your system that are available to Cypress.
 
 <Alert type="info">
-
 
 Read our full guide on [Launching Browsers](/guides/guides/launching-browsers) for more information on how this works.
 
@@ -77,9 +75,9 @@ module.exports = (on, config) => {
   //   majorVersion: 80
   // }
   return {
-    browsers: config.browsers.filter((b) => b.family === 'chromium')
-  }
-}
+    browsers: config.browsers.filter((b) => b.family === "chromium"),
+  };
+};
 ```
 
 When you open the Test Runner in a project that uses the above modifications to your plugins file, only the Chrome browsers found on the system will display in the list of available browsers.
@@ -87,7 +85,6 @@ When you open the Test Runner in a project that uses the above modifications to 
 <DocsImage src="/img/guides/plugins/chrome-browsers-only.png" alt="Filtered list of Chrome browsers" ></DocsImage>
 
 <Alert type="info">
-
 
 If you return an empty list of browsers or `browsers: null`, the default list will be restored automatically.
 
@@ -107,22 +104,22 @@ How you choose to organize your configuration and environment variables is up to
 
 ```javascript
 // promisified fs module
-const fs = require('fs-extra')
-const path = require('path')
+const fs = require("fs-extra");
+const path = require("path");
 
-function getConfigurationByFile (file) {
-  const pathToConfigFile = path.resolve('..', 'config', `${file}.json`)
+function getConfigurationByFile(file) {
+  const pathToConfigFile = path.resolve("..", "config", `${file}.json`);
 
-  return fs.readJson(pathToConfigFile)
+  return fs.readJson(pathToConfigFile);
 }
 
 // plugins file
 module.exports = (on, config) => {
   // accept a configFile value or use development by default
-  const file = config.env.configFile || 'development'
+  const file = config.env.configFile || "development";
 
-  return getConfigurationByFile(file)
-}
+  return getConfigurationByFile(file);
+};
 ```
 
 You could now swap out configuration + environment variables like so:
@@ -130,12 +127,15 @@ You could now swap out configuration + environment variables like so:
 ```shell
 cypress run
 ```
+
 ```shell
 cypress run --env configFile=qa
 ```
+
 ```shell
 cypress run --env configFile=staging
 ```
+
 ```shell
 cypress run --env configFile=production
 ```
@@ -198,4 +198,3 @@ This would enable you to do things like this:
 This is a less complicated example. Remember - you have the full power of Node at your disposal.
 
 How you choose to edit the configuration is up to you. You don't have to read off of the file system - you could store them all in memory inside of your `pluginsFile` if you wanted.
-

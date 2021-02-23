@@ -20,38 +20,38 @@ Uncheck checkbox(es).
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('[type="checkbox"]').uncheck()   // Unchecks checkbox element
+cy.get('[type="checkbox"]').uncheck(); // Unchecks checkbox element
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.uncheck('[type="checkbox"]') // Errors, cannot be chained off 'cy'
-cy.get('p:first').uncheck()     // Errors, '.get()' does not yield checkbox
+cy.uncheck('[type="checkbox"]'); // Errors, cannot be chained off 'cy'
+cy.get("p:first").uncheck(); // Errors, '.get()' does not yield checkbox
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> value**  ***(String)***
+**<Icon name="angle-right"></Icon> value** **_(String)_**
 
 Value of checkbox that should be unchecked.
 
-**<Icon name="angle-right"></Icon> values**  ***(Array)***
+**<Icon name="angle-right"></Icon> values** **_(Array)_**
 
 Values of checkboxes that should be unchecked.
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.uncheck()`.
 
-Option | Default | Description
---- | --- | ---
-`animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).
-`force` | `false` | Forces the action, disables [waiting for actionability](#Assertions)
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`scrollBehavior` | [`scrollBehavior`](/guides/references/configuration#Actionability) | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#Scrolling) before executing the command
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.uncheck()` to resolve before [timing out](#Timeouts)
-`waitForAnimations` | [`waitForAnimations`](/guides/references/configuration#Actionability) | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.
+| Option                       | Default                                                                        | Description                                                                                                                                        |
+| ---------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).  |
+| `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions)                                                                               |
+| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                                                           |
+| `scrollBehavior`             | [`scrollBehavior`](/guides/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#Scrolling) before executing the command |
+| `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.uncheck()` to resolve before [timing out](#Timeouts)                                                                            |
+| `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -64,13 +64,13 @@ Option | Default | Description
 #### Uncheck all checkboxes
 
 ```javascript
-cy.get(':checkbox').uncheck()
+cy.get(":checkbox").uncheck();
 ```
 
 #### Uncheck element with the id 'saveUserName'
 
 ```javascript
-cy.get('#saveUserName').uncheck()
+cy.get("#saveUserName").uncheck();
 ```
 
 ### Value
@@ -78,7 +78,7 @@ cy.get('#saveUserName').uncheck()
 #### Uncheck the checkbox with the value of 'ga'
 
 ```javascript
-cy.get('input[type="checkbox"]').uncheck(['ga'])
+cy.get('input[type="checkbox"]').uncheck(["ga"]);
 ```
 
 ### Values
@@ -86,7 +86,7 @@ cy.get('input[type="checkbox"]').uncheck(['ga'])
 #### Uncheck the checkboxes with the values 'ga' and 'ca'
 
 ```javascript
-cy.get('[type="checkbox"]').uncheck(['ga', 'ca'])
+cy.get('[type="checkbox"]').uncheck(["ga", "ca"]);
 ```
 
 ## Notes
@@ -113,11 +113,14 @@ cy.get('[type="checkbox"]').uncheck(['ga', 'ca'])
 
 ## Command Log
 
-***Uncheck the first checkbox***
+**_Uncheck the first checkbox_**
 
 ```javascript
-cy.get('[data-js="choose-all"]').click()
-  .find('input[type="checkbox"]').first().uncheck()
+cy.get('[data-js="choose-all"]')
+  .click()
+  .find('input[type="checkbox"]')
+  .first()
+  .uncheck();
 ```
 
 The commands above will display in the Command Log as:
@@ -130,14 +133,13 @@ When clicking on `uncheck` within the command log, the console outputs the follo
 
 ## History
 
-Version | Changes
---- | ---
-[6.1.0](/guides/references/changelog#6-1-0) | Added option `scrollBehavior`
-[0.6.12](/guides/references/changelog#0-6-12) | Added option `force`
-[0.3.3](/guides/references/changelog#0-3-3) | `.uncheck()` command added
+| Version                                       | Changes                       |
+| --------------------------------------------- | ----------------------------- |
+| [6.1.0](/guides/references/changelog#6-1-0)   | Added option `scrollBehavior` |
+| [0.6.12](/guides/references/changelog#0-6-12) | Added option `force`          |
+| [0.3.3](/guides/references/changelog#0-3-3)   | `.uncheck()` command added    |
 
 ## See also
 
 - [`.check()`](/api/commands/check)
 - [`.click()`](/api/commands/click)
-

@@ -7,10 +7,10 @@ Get the global `window.location` object of the page that is currently active.
 ## Syntax
 
 ```javascript
-cy.location()
-cy.location(key)
-cy.location(options)
-cy.location(key, options)
+cy.location();
+cy.location(key);
+cy.location(options);
+cy.location(key, options);
 ```
 
 ### Usage
@@ -18,25 +18,25 @@ cy.location(key, options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.location()       // Get location object
-cy.location('host') // Get the host of the location object
-cy.location('port') // Get the port of the location object
+cy.location(); // Get location object
+cy.location("host"); // Get the host of the location object
+cy.location("port"); // Get the port of the location object
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> key** ***(String)***
+**<Icon name="angle-right"></Icon> key** **_(String)_**
 
 A key on the location object. Returns this value instead of the full location object.
 
-**<Icon name="angle-right"></Icon> options** ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.location()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.location()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.location()` to resolve before [timing out](#Timeouts)               |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -64,20 +64,24 @@ Option | Default | Description
 #### Make assertions about every location property
 
 ```javascript
-cy.visit('http://localhost:8000/app/index.html?q=dan#/users/123/edit')
+cy.visit("http://localhost:8000/app/index.html?q=dan#/users/123/edit");
 
 cy.location().should((loc) => {
-  expect(loc.hash).to.eq('#/users/123/edit')
-  expect(loc.host).to.eq('localhost:8000')
-  expect(loc.hostname).to.eq('localhost')
-  expect(loc.href).to.eq('http://localhost:8000/app/index.html?q=dan#/users/123/edit')
-  expect(loc.origin).to.eq('http://localhost:8000')
-  expect(loc.pathname).to.eq('/app/index.html')
-  expect(loc.port).to.eq('8000')
-  expect(loc.protocol).to.eq('http:')
-  expect(loc.search).to.eq('?q=dan')
-  expect(loc.toString()).to.eq('http://localhost:8000/app/index.html?q=brian#/users/123/edit')
-})
+  expect(loc.hash).to.eq("#/users/123/edit");
+  expect(loc.host).to.eq("localhost:8000");
+  expect(loc.hostname).to.eq("localhost");
+  expect(loc.href).to.eq(
+    "http://localhost:8000/app/index.html?q=dan#/users/123/edit"
+  );
+  expect(loc.origin).to.eq("http://localhost:8000");
+  expect(loc.pathname).to.eq("/app/index.html");
+  expect(loc.port).to.eq("8000");
+  expect(loc.protocol).to.eq("http:");
+  expect(loc.search).to.eq("?q=dan");
+  expect(loc.toString()).to.eq(
+    "http://localhost:8000/app/index.html?q=brian#/users/123/edit"
+  );
+});
 ```
 
 #### Check location for query params and pathname
@@ -85,11 +89,11 @@ cy.location().should((loc) => {
 We can yield the location object within a [`.should()`](/api/commands/should) command and work with it directly.
 
 ```javascript
-cy.get('#search').type('niklas{enter}')
+cy.get("#search").type("niklas{enter}");
 cy.location().should((loc) => {
-  expect(loc.search).to.eq('?search=niklas')
-  expect(loc.pathname).to.eq('/users')
-})
+  expect(loc.search).to.eq("?search=niklas");
+  expect(loc.pathname).to.eq("/users");
+});
 ```
 
 ### Key
@@ -99,8 +103,8 @@ cy.location().should((loc) => {
 Grab only the `pathname` and add an assertion.
 
 ```javascript
-cy.visit('http://localhost:3000/admin')
-cy.location('pathname').should('eq', '/login')
+cy.visit("http://localhost:3000/admin");
+cy.location("pathname").should("eq", "/login");
 ```
 
 ## Notes
@@ -117,8 +121,8 @@ When changing properties on the real `window.location` object, it forces the bro
 
 ```javascript
 cy.window().then((win) => {
-  console.log(win.location)
-})
+  console.log(win.location);
+});
 ```
 
 <DocsImage src="/img/api/location/window-location-object-printed-in-console-log.png" alt="Console.log of window.location" ></DocsImage>
@@ -127,8 +131,8 @@ cy.window().then((win) => {
 
 ```javascript
 cy.location().then((loc) => {
-  console.log(loc)
-})
+  console.log(loc);
+});
 ```
 
 <DocsImage src="/img/api/location/special-cypress-location-object-logged-in-console-output.png" alt="Console Log of Cypress location command" ></DocsImage>
@@ -149,12 +153,12 @@ cy.location().then((loc) => {
 
 ## Command Log
 
-***Assert on the location's href***
+**_Assert on the location's href_**
 
 ```javascript
 cy.location().should((loc) => {
-  expect(loc.href).to.include('commands/querying')
-})
+  expect(loc.href).to.include("commands/querying");
+});
 ```
 
 The commands above will display in the Command Log as:
@@ -169,4 +173,3 @@ When clicking on `location` within the command log, the console outputs the foll
 
 - [`cy.hash()`](/api/commands/hash)
 - [`cy.url()`](/api/commands/url)
-

@@ -6,7 +6,6 @@ Submit a form.
 
 <Alert type="warning">
 
-
 The [subject](/guides/core-concepts/introduction-to-cypress#Subject-Management) must be a `<form>`.
 
 </Alert>
@@ -23,26 +22,26 @@ The [subject](/guides/core-concepts/introduction-to-cypress#Subject-Management) 
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('form').submit()   // Submit a form
+cy.get("form").submit(); // Submit a form
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.submit()               // Errors, cannot be chained off 'cy'
-cy.get('input').submit()  // Errors, 'input' does not yield a form
+cy.submit(); // Errors, cannot be chained off 'cy'
+cy.get("input").submit(); // Errors, 'input' does not yield a form
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.submit()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.submit()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.submit()` to resolve before [timing out](#Timeouts)                   |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -56,13 +55,13 @@ Option | Default | Description
 
 ```html
 <form id="contact">
-  <input type="text" name="message">
+  <input type="text" name="message" />
   <button type="submit">Send</button>
 </form>
 ```
 
 ```javascript
-cy.get('#contact').submit()
+cy.get("#contact").submit();
 ```
 
 ## Notes
@@ -95,11 +94,11 @@ If you want the other guarantees of waiting for an element to become actionable,
 
 ## Command Log
 
-***Submit a form***
+**_Submit a form_**
 
 ```javascript
-cy.intercept('POST', '/users', { fixture: 'user' }).as('userSuccess')
-cy.get('form').submit()
+cy.intercept("POST", "/users", { fixture: "user" }).as("userSuccess");
+cy.get("form").submit();
 ```
 
 The commands above will display in the Command Log as:
@@ -112,12 +111,11 @@ When clicking on `submit` within the command log, the console outputs the follow
 
 ## History
 
-Version | Changes
---- | ---
-[< 0.3.3](/guides/references/changelog#0-3-3) | `.submit()` command added
+| Version                                       | Changes                   |
+| --------------------------------------------- | ------------------------- |
+| [< 0.3.3](/guides/references/changelog#0-3-3) | `.submit()` command added |
 
 ## See also
 
 - [`.click()`](/api/commands/click)
 - [`.type()`](/api/commands/type)
-

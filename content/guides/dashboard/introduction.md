@@ -1,21 +1,22 @@
 ---
 title: Introduction
 ---
+
 The [Cypress Dashboard](https://on.cypress.io/dashboard) is a service that gives you access to recorded tests - typically when running Cypress tests from your [CI provider](/guides/guides/continuous-integration). The Dashboard provides you insight into what happened when your tests ran.
 
 <!-- textlint-disable -->
+
 <DocsVideo src="https://youtube.com/embed/ezp60FUnjGg"></DocsVideo>
+
 <!-- textlint-enable -->
 
 <Alert type="info">
 
-
-##### <Icon name="graduation-cap"></Icon> Real World Example <Badge type="success">New</Badge>  
+##### <Icon name="graduation-cap"></Icon> Real World Example <Badge type="success">New</Badge>
 
 The Cypress [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) leverages the [Cypress Dashboard in CI](https://dashboard.cypress.io/projects/7s5okt) to test over 300 test cases in parallel across 25 machines, multiple browsers, multiple device sizes, and multiple operating systems.
 
 Check out the <Icon name="github"></Icon> [Real World App Dashboard](https://dashboard.cypress.io/projects/7s5okt).
-
 
 </Alert>
 
@@ -81,13 +82,13 @@ From the Dashboard you can:
 
 #### See tests runs in the Test Runner
 
-Additionally we've integrated the tests run into the Cypress [Test Runner](/guides/core-concepts/test-runner). This means you can see the tests run in the *Runs* tab from within every project.
+Additionally we've integrated the tests run into the Cypress [Test Runner](/guides/core-concepts/test-runner). This means you can see the tests run in the _Runs_ tab from within every project.
 
 <DocsImage src="/img/dashboard/runs-list-in-desktop-gui.png" alt="Runs List" ></DocsImage>
 
 <Alert type="info">
 
- <strong class="alert-header">Have a question you don't see answered here?</strong>
+<strong class="alert-header">Have a question you don't see answered here?</strong>
 
 [We have answered some common questions about the Dashboard Service in our FAQ.](/faq/questions/dashboard-faq).
 
@@ -104,4 +105,3 @@ Once you log in to the [Dashboard Service](https://on.cypress.io/dashboard) you 
 - [<Icon name="folder-open-o"></Icon> cypress-example-kitchensink](https://dashboard.cypress.io/#/projects/4b7344)
 - [<Icon name="folder-open-o"></Icon> cypress-example-todomvc](https://dashboard.cypress.io/#/projects/245obj)
 - [<Icon name="folder-open-o"></Icon> cypress-example-piechopper](https://dashboard.cypress.io/#/projects/fuduzp)
-

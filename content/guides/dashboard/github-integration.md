@@ -8,13 +8,11 @@ The [Cypress Dashboard](https://on.cypress.io/dashboard) can integrate your Cypr
 
 <Alert type="info">
 
-
 GitHub Enterprise's On-premise platform is currently not supported. If you're interested in an integration with GitHub Enterprise's On-premise platform, please add your interest to our [Dashboard Product Board](https://portal.productboard.com/cypress-io/1-cypress-dashboard).
 
 </Alert>
 
 <Alert type="warning">
-
 
 GitHub Integration is dependent on your CI environment reliably providing commit SHA data (typically via an environment variable). This is not a problem for most users, but if you are facing GitHub integration issues with your CI setup, please make sure the git information is being sent properly by following [these guidelines](/guides/guides/continuous-integration#Git-information). If you are still facing issues after this, please [contact us](mailto:hello@cypress.io).
 
@@ -28,65 +26,63 @@ Before you can enable GitHub integration for your Cypress projects, you must fir
 
 1. Go to the Dashboard [Organizations page](https://dashboard.cypress.io/organizations) or open the organization switcher.
 2. Select the organization you wish to integrate with a GitHub account or GitHub organization.
-  <DocsImage src="/img/dashboard/select-cypress-organization.png" alt="Select an organization" width-600 ></DocsImage>
+   <DocsImage src="/img/dashboard/select-cypress-organization.png" alt="Select an organization" width-600 ></DocsImage>
 3. Visit the selected organization's **Integrations** page via the side navigation.
-  <DocsImage src="/img/dashboard/navigate-to-organization-integrations.png" alt="Install Cypress GitHub from Integrations" ></DocsImage>
+   <DocsImage src="/img/dashboard/navigate-to-organization-integrations.png" alt="Install Cypress GitHub from Integrations" ></DocsImage>
 4. Click the **Install GitHub Integration** button.
 
 ### Install via project settings
 
 1. Select your organization in the organization switcher.
-  <DocsImage src="/img/dashboard/select-cypress-organization.png" alt="Select an organization" width-600 ></DocsImage>
+   <DocsImage src="/img/dashboard/select-cypress-organization.png" alt="Select an organization" width-600 ></DocsImage>
 2. Select the project you wish to integrate with a GitHub repository.
-  <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project" ></DocsImage>
+   <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project" ></DocsImage>
 3. Go to the project's settings page.
-  <DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings" ></DocsImage>
+   <DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings" ></DocsImage>
 4. Scroll down to the **GitHub Integration** section.
 5. Click the **Install the Cypress GitHub App** button.
-  <DocsImage src="/img/dashboard/github-integration/install-github-cypress-app-project-settings.png" alt="Install GitHub Cypress App" ></DocsImage>
+   <DocsImage src="/img/dashboard/github-integration/install-github-cypress-app-project-settings.png" alt="Install GitHub Cypress App" ></DocsImage>
 
 ### Cypress GitHub app installation process
 
 Once you've started the GitHub App installation process [via a Cypress organization's settings](#Install-via-organization-integration-settings) or [a project's settings](#Install-via-project-settings), you will be directed to GitHub.com to complete the installation:
 
 1. Select the desired GitHub organization or account to integrate with your Cypress Dashboard organization.
-<DocsImage src="/img/dashboard/github-integration/select-gh-org.jpg" alt="Select a GitHub organization"  ></DocsImage>
+   <DocsImage src="/img/dashboard/github-integration/select-gh-org.jpg" alt="Select a GitHub organization"  ></DocsImage>
 
 2. Choose to associate **All repositories** or only select GitHub repositories with your Cypress GitHub App installation.
 
-  <DocsImage src="/img/dashboard/github-integration/select-all-gh-repos.jpg" alt="Select All GitHub repositories" ></DocsImage>
+<DocsImage src="/img/dashboard/github-integration/select-all-gh-repos.jpg" alt="Select All GitHub repositories" ></DocsImage>
 
   <Alert type="info">
 
+All current and _future_ repositories will be included with this installation if you choose **All repositories**.
 
-  All current and *future* repositories will be included with this installation if you choose **All repositories**.
-  
 </Alert>
 
-  <DocsImage src="/img/dashboard/github-integration/select-gh-repos.jpg" alt="Select specific GitHub repositories" ></DocsImage>
+<DocsImage src="/img/dashboard/github-integration/select-gh-repos.jpg" alt="Select specific GitHub repositories" ></DocsImage>
 
 3. Click the **Install** button to complete the installation.
 
 ## Enabling GitHub integration for a project
 
-After completing the Cypress GitHub App installation for your organization you can now enable GitHub Integration for *any* Cypress project.
+After completing the Cypress GitHub App installation for your organization you can now enable GitHub Integration for _any_ Cypress project.
 
 1. Go to the project's settings page.
-  <DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings" ></DocsImage>
+   <DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings" ></DocsImage>
 
 2. Scroll down to the GitHub Integration section.
-    <Alert type="info">
+   <Alert type="info">
 
+   You can quickly get to a project's GitHub Integrations settings, by clicking on the **Configure** link of the desired project within an organization's Integrations page:
 
-    You can quickly get to a project's GitHub Integrations settings, by clicking on the **Configure** link of the desired project within an organization's Integrations page:
-    
 </Alert>
 
     <DocsImage src="/img/dashboard/github-integration/org-settings-with-no-enabled-projects.png" alt="Org GitHub Integration settings"></DocsImage>
 
 3. Select a GitHub repository to associate with the project.
 
-  <DocsImage src="/img/dashboard/github-integration/project-settings-repo-selection.png" alt="Associate GitHub repo with Cypress project"></DocsImage>
+<DocsImage src="/img/dashboard/github-integration/project-settings-repo-selection.png" alt="Associate GitHub repo with Cypress project"></DocsImage>
 
 Once a GitHub repository is associated with a Cypress project, the GitHub integration will be immediately enabled:
 <DocsImage src="/img/dashboard/github-integration/project-settings-selected-repo.png" alt="GitHub integration enabled for Cypress project"></DocsImage>
@@ -101,10 +97,10 @@ If status checks are enabled within a project's GitHub integration settings, the
 The Cypress GitHub App reports commit status checks in two separate styles:
 
 - **One check per [run group](/guides/guides/parallelization#Grouping-test-runs).**
-    <DocsImage src="/img/dashboard/github-integration/status-checks-per-group-failed.png" alt="Status checks per group"></DocsImage>
+  <DocsImage src="/img/dashboard/github-integration/status-checks-per-group-failed.png" alt="Status checks per group"></DocsImage>
 
 - **Or one check per spec file.**
-    <DocsImage src="/img/dashboard/github-integration/status-checks-per-spec.png" alt="Status checks per spec"></DocsImage>
+  <DocsImage src="/img/dashboard/github-integration/status-checks-per-spec.png" alt="Status checks per spec"></DocsImage>
 
 Each status check will report the number of test failures or passes, and the associated **Details** link will direct you to the test run's page within the Cypress Dashboard to help you dig deeper into the problem via error messages, stack traces, screenshots, and video recordings:
 <DocsImage src="/img/dashboard/dashboard-fail-tab.png" alt="Cypress Dashboard failure tab" ></DocsImage>
@@ -156,4 +152,3 @@ If you have any insights or feedback on how to improve Cypress GitHub Integratio
 
 - [Cypress GitHub Action + Examples](https://github.com/cypress-io/github-action)
 - [Example project that uses both Cypress GitHub Action and Cypress GitHub Integration](https://github.com/cypress-io/gh-action-and-gh-integration)
-

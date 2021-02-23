@@ -1,6 +1,7 @@
 ---
 title: Analytics
 ---
+
 The Cypress Dashboard provides Analytics to offer insight into metrics like runs over time, run duration and visibility into tests suite size over time.
 
 <DocsImage src="/img/dashboard/analytics/dashboard-analytics-overview.png" alt="Dashboard Analytics Screenshot" ></DocsImage>

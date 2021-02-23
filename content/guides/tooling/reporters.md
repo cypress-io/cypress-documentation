@@ -4,14 +4,14 @@ title: Reporters
 
 Because Cypress is built on top of Mocha, that means any reporter built for Mocha can be used with Cypress. Here is a list of built in Mocha reporters.
 
-* [Mocha's built-in reporters](https://mochajs.org/#reporters)
+- [Mocha's built-in reporters](https://mochajs.org/#reporters)
 
 By default, Cypress uses the `spec` reporter to output information to `STDOUT`.
 
 We've also added the two most common 3rd party reporters for Mocha. These are built into Cypress and you can use them without installing anything.
 
-* [`teamcity`](https://github.com/cypress-io/mocha-teamcity-reporter)
-* [`junit`](https://github.com/michaelleeallen/mocha-junit-reporter)
+- [`teamcity`](https://github.com/cypress-io/mocha-teamcity-reporter)
+- [`junit`](https://github.com/michaelleeallen/mocha-junit-reporter)
 
 Finally, we support creating your own custom reporters or using any kind of 3rd party reporter.
 
@@ -77,7 +77,7 @@ Some reporters accept options that customize their behavior. These can be specif
 
 Reporter options differ depending on the reporter (and may not be supported at all). Refer to the documentation for the reporter you are using for details on which options are supported.
 
-The below configuration will output the JUnit report to `STDOUT` and save it into an XML file. 
+The below configuration will output the JUnit report to `STDOUT` and save it into an XML file.
 
 #### Config file
 
@@ -140,10 +140,10 @@ The below examples were implemented in [https://github.com/cypress-io/cypress-ex
 
 We want to output a `spec` report to `STDOUT`, while saving a JUnit XML file for each spec file.
 
-We need to install additional dependencies:  
+We need to install additional dependencies:
 
-* [`cypress-multi-reporters`](https://github.com/you54f/cypress-multi-reporters): enables multiple reporters
-* [`mocha-junit-reporter`](https://github.com/michaelleeallen/mocha-junit-reporter) the actual junit reporter, as we cannot use the `junit` reporter that comes with Cypress
+- [`cypress-multi-reporters`](https://github.com/you54f/cypress-multi-reporters): enables multiple reporters
+- [`mocha-junit-reporter`](https://github.com/michaelleeallen/mocha-junit-reporter) the actual junit reporter, as we cannot use the `junit` reporter that comes with Cypress
 
 ```shell
 npm install --save-dev cypress-multi-reporters mocha-junit-reporter
@@ -245,7 +245,6 @@ For more information, see [Integrating Mochawesome reporter with Cypress's](http
 
 ## History
 
-Version | Changes
---- | ---
-[4.4.2](/guides/references/changelog) | Custom Mocha reporters updated to use the version of Mocha bundled with Cypress. No need to install `mocha` separately to use custom reporters.
-
+| Version                               | Changes                                                                                                                                         |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| [4.4.2](/guides/references/changelog) | Custom Mocha reporters updated to use the version of Mocha bundled with Cypress. No need to install `mocha` separately to use custom reporters. |

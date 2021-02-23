@@ -7,17 +7,17 @@ Scroll to a specific position.
 ## Syntax
 
 ```javascript
-cy.scrollTo(position)
-cy.scrollTo(x, y)
-cy.scrollTo(position, options)
+cy.scrollTo(position);
+cy.scrollTo(x, y);
+cy.scrollTo(position, options);
 cy.scrollTo(x, y, options)
 
-// ---or---
+  // ---or---
 
-.scrollTo(position)
-.scrollTo(x, y)
-.scrollTo(position, options)
-.scrollTo(x, y, options)
+  .scrollTo(position)
+  .scrollTo(x, y)
+  .scrollTo(position, options)
+  .scrollTo(x, y, options);
 ```
 
 ### Usage
@@ -25,43 +25,43 @@ cy.scrollTo(x, y, options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.scrollTo(0, 500)                     // Scroll the window 500px down
-cy.get('.sidebar').scrollTo('bottom')   // Scroll 'sidebar' to its bottom
+cy.scrollTo(0, 500); // Scroll the window 500px down
+cy.get(".sidebar").scrollTo("bottom"); // Scroll 'sidebar' to its bottom
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.title().scrollTo('My App')  // Errors, 'title' does not yield DOM element
+cy.title().scrollTo("My App"); // Errors, 'title' does not yield DOM element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> position** ***(String)***
+**<Icon name="angle-right"></Icon> position** **_(String)_**
 
 A specified position to scroll the window or element to. Valid positions are `topLeft`, `top`, `topRight`, `left`, `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
 <DocsImage src="/img/api/coordinates-diagram.jpg" alt="cypress-command-positions-diagram" ></DocsImage>
 
-**<Icon name="angle-right"></Icon> x** ***(Number, String)***
+**<Icon name="angle-right"></Icon> x** **_(Number, String)_**
 
 The distance in pixels from window/element's left or percentage of the window/element's width to scroll to.
 
-**<Icon name="angle-right"></Icon> y** ***(Number, String)***
+**<Icon name="angle-right"></Icon> y** **_(Number, String)_**
 
 The distance in pixels from window/element's top or percentage of the window/element's height to scroll to.
 
-**<Icon name="angle-right"></Icon> options** ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.scrollTo()`.
 
-Option | Default | Description
---- | --- | ---
-`duration` | `0` | Scrolls over the duration (in ms)
-`easing` | `swing` | Will scroll with the easing animation
-`ensureScrollable` | `true` | Ensure element is scrollable. Error if element cannot scroll.
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.scrollTo()` to resolve before [timing out](#Timeouts)
+| Option             | Default                                                              | Description                                                                              |
+| ------------------ | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `duration`         | `0`                                                                  | Scrolls over the duration (in ms)                                                        |
+| `easing`           | `swing`                                                              | Will scroll with the easing animation                                                    |
+| `ensureScrollable` | `true`                                                               | Ensure element is scrollable. Error if element cannot scroll.                            |
+| `log`              | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.scrollTo()` to resolve before [timing out](#Timeouts)                 |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -74,13 +74,13 @@ Option | Default | Description
 #### Scroll to the bottom of the window
 
 ```javascript
-cy.scrollTo('bottom')
+cy.scrollTo("bottom");
 ```
 
 #### Scroll to the center of the list
 
 ```javascript
-cy.get('#movies-list').scrollTo('center')
+cy.get("#movies-list").scrollTo("center");
 ```
 
 ### Coordinates
@@ -88,19 +88,19 @@ cy.get('#movies-list').scrollTo('center')
 #### Scroll 500px down the list
 
 ```javascript
-cy.get('#infinite-scroll-list').scrollTo(0, 500)
+cy.get("#infinite-scroll-list").scrollTo(0, 500);
 ```
 
 #### Scroll the window 500px to the right
 
 ```javascript
-cy.scrollTo('500px')
+cy.scrollTo("500px");
 ```
 
 #### Scroll 25% down the element's height
 
 ```javascript
-cy.get('.user-photo').scrollTo('0%', '25%')
+cy.get(".user-photo").scrollTo("0%", "25%");
 ```
 
 ### Options
@@ -108,13 +108,13 @@ cy.get('.user-photo').scrollTo('0%', '25%')
 #### Use linear easing animation to scroll
 
 ```javascript
-cy.get('.documentation').scrollTo('top', { easing: 'linear' })
+cy.get(".documentation").scrollTo("top", { easing: "linear" });
 ```
 
 #### Scroll to the right over 2000ms
 
 ```javascript
-cy.get('#slider').scrollTo('right', { duration: 2000 })
+cy.get("#slider").scrollTo("right", { duration: 2000 });
 ```
 
 #### Do not error if element is not scrollable
@@ -123,8 +123,8 @@ Let's say we do not know whether our `table` element is scrollable. Sometimes th
 
 ```js
 // will move on to next command even if table is not scrollable
-cy.get('table').scrollTo('bottom', { ensureScrollable: false })
-cy.get('table').find('tr:last-child').should('be.visible')
+cy.get("table").scrollTo("bottom", { ensureScrollable: false });
+cy.get("table").find("tr:last-child").should("be.visible");
 ```
 
 ## Notes
@@ -142,7 +142,7 @@ cy.get('table').find('tr:last-child').should('be.visible')
 This scrolls the `window`.
 
 ```javascript
-cy.scrollTo('bottom')
+cy.scrollTo("bottom");
 ```
 
 #### When chained to an existing series of commands:
@@ -150,14 +150,14 @@ cy.scrollTo('bottom')
 This will scroll the `<#checkout-items>` element.
 
 ```javascript
-cy.get('#checkout-items').scrollTo('right')
+cy.get("#checkout-items").scrollTo("right");
 ```
 
 ### Snapshots
 
 #### Snapshots do not reflect scroll behavior
 
-*Cypress does not reflect the accurate scroll positions of any elements within snapshots.* If you want to see the actual scrolling behavior in action, we recommend using [`.pause()`](/api/commands/pause) to walk through each command or [watching the video of the test run](/guides/guides/screenshots-and-videos#Videos).
+_Cypress does not reflect the accurate scroll positions of any elements within snapshots._ If you want to see the actual scrolling behavior in action, we recommend using [`.pause()`](/api/commands/pause) to walk through each command or [watching the video of the test run](/guides/guides/screenshots-and-videos#Videos).
 
 ## Rules
 
@@ -171,11 +171,11 @@ cy.get('#checkout-items').scrollTo('right')
 
 ## Command Log
 
-***Scroll to the bottom of the window then scroll the element to the "right"***
+**_Scroll to the bottom of the window then scroll the element to the "right"_**
 
 ```javascript
-cy.scrollTo('bottom')
-cy.get('#scrollable-horizontal').scrollTo('right')
+cy.scrollTo("bottom");
+cy.get("#scrollable-horizontal").scrollTo("right");
 ```
 
 The commands above will display in the Command Log as:
@@ -188,11 +188,10 @@ When clicking on `scrollTo` within the command log, the console outputs the foll
 
 ## History
 
-Version | Changes
---- | ---
-[4.11.0](/guides/references/changelog#4-11-0) | Added support for `ensureScrollable` option.
+| Version                                       | Changes                                      |
+| --------------------------------------------- | -------------------------------------------- |
+| [4.11.0](/guides/references/changelog#4-11-0) | Added support for `ensureScrollable` option. |
 
 ## See also
 
 - [`.scrollIntoView()`](/api/commands/scrollintoview)
-

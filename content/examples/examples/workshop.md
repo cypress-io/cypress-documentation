@@ -35,7 +35,7 @@ We hope this testing workshop proves itself useful in teaching developers and te
 
 <DocsImage src="/img/examples/reactjsday-course.png" alt="ReactJS Day" ></DocsImage>
 
-This is the [reference repository](https://github.com/NoriSte/reactjsday-2019-testing-course) with all the contents and the examples of the [React Testing 101: component, integration, and end-to-end testing](https://2019.reactjsday.it/workshops/react-testing-101.html)  course for the [ReactJSDay 2019](https://2019.reactjsday.it/) conference.
+This is the [reference repository](https://github.com/NoriSte/reactjsday-2019-testing-course) with all the contents and the examples of the [React Testing 101: component, integration, and end-to-end testing](https://2019.reactjsday.it/workshops/react-testing-101.html) course for the [ReactJSDay 2019](https://2019.reactjsday.it/) conference.
 
 The repository aims to be consumed through [the compiled GitBook](https://noriste.github.io/reactjsday-2019-testing-course/). The course starts from the top of the testing pyramid and goes down instead of following the "standard" testing path, you can [read here](https://noriste.github.io/reactjsday-2019-testing-course/book/top-to-bottom.html) the reason why. [Some introductory slides](https://slides.com/noriste/reactjsday-2019-testing-course) are also included but they're only useful for the teacher. They're a summary of the content presented before the coding session.
 

@@ -6,7 +6,6 @@ Get all previous siblings of each DOM element in a set of matched DOM elements u
 
 <Alert type="info">
 
-
 The querying behavior of this command matches exactly how [`.prevUntil()`](http://api.jquery.com/prevUntil) works in jQuery.
 
 </Alert>
@@ -27,38 +26,38 @@ The querying behavior of this command matches exactly how [`.prevUntil()`](http:
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('p').prevUntil('.intro') // Yield siblings before 'p' until '.intro'
+cy.get("p").prevUntil(".intro"); // Yield siblings before 'p' until '.intro'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.prevUntil()                  // Errors, cannot be chained off 'cy'
-cy.location().prevUntil('path') // Errors, 'location' does not yield DOM element
+cy.prevUntil(); // Errors, cannot be chained off 'cy'
+cy.location().prevUntil("path"); // Errors, 'location' does not yield DOM element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> selector**  ***(String selector)***
+**<Icon name="angle-right"></Icon> selector** **_(String selector)_**
 
 The selector where you want finding previous siblings to stop.
 
-**<Icon name="angle-right"></Icon> element**  ***(DOM node, jQuery Object)***
+**<Icon name="angle-right"></Icon> element** **_(DOM node, jQuery Object)_**
 
 The element where you want finding previous siblings to stop.
 
-**<Icon name="angle-right"></Icon> filter**  ***(String selector)***
+**<Icon name="angle-right"></Icon> filter** **_(String selector)_**
 
 A selector used to filter matching DOM elements.
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.prevUntil()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.prevUntil()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.prevUntil()` to resolve before [timing out](#Timeouts)                |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -89,7 +88,7 @@ Option | Default | Description
 
 ```javascript
 // yields [<li>cucumbers</li>, <li>carrots</li>, <li>corn</li>]
-cy.get('#nuts').prevUntil('#veggies')
+cy.get("#nuts").prevUntil("#veggies");
 ```
 
 ## Rules
@@ -108,10 +107,10 @@ cy.get('#nuts').prevUntil('#veggies')
 
 ## Command Log
 
-***Find all of the element's siblings before `#nuts` until `#veggies`***
+**_Find all of the element's siblings before `#nuts` until `#veggies`_**
 
 ```javascript
-cy.get('#nuts').prevUntil('#veggies')
+cy.get("#nuts").prevUntil("#veggies");
 ```
 
 The commands above will display in the Command Log as:
@@ -128,4 +127,3 @@ When clicking on `prevUntil` within the command log, the console outputs the fol
 - [`.prevAll()`](/api/commands/prevall)
 - [`.parentsUntil()`](/api/commands/parentsuntil)
 - [`.nextUntil()`](/api/commands/nextuntil)
-

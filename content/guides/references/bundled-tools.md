@@ -4,9 +4,7 @@ title: Bundled Tools
 
 <Alert type="info">
 
-
 Cypress relies on many best-of-breed open source testing libraries to lend stability and familiarity to the platform from the get-go. If you've been testing in JavaScript, you'll recognize many old friends in this list. Understand how we exploit them and hit the ground running with Cypress!
-
 
 </Alert>
 
@@ -29,7 +27,6 @@ Cypress has adopted Mocha's `bdd` syntax, which fits perfectly with both integra
 Additionally, Mocha gives us excellent [`async` support](http://mochajs.org/#asynchronous-code). Cypress has extended Mocha, sanding off the rough edges, weird edge cases, bugs, and error messages. These fixes are all completely transparent.
 
 <Alert type="info">
-
 
 [Check out our guide to writing and organizing tests.](/guides/core-concepts/writing-and-organizing-tests)
 
@@ -61,7 +58,6 @@ Cypress also exposes a utility so that `sinon` can be called anywhere inside of 
 
 <Alert type="info">
 
-
 [Check out our guide for working with spies, stubs, and clocks.](/guides/guides/stubs-spies-and-clocks)
 
 </Alert>
@@ -84,4 +80,3 @@ Cypress also bundles the following tools on the `Cypress` object. These can be u
 - [`Cypress.moment`](/api/utilities/moment) (moment.js)
 - [`Cypress.Blob`](/api/utilities/blob) (Blob utils)
 - [`Cypress.Promise`](/api/utilities/promise) (Bluebird)
-

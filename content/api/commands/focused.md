@@ -7,8 +7,8 @@ Get the DOM element that is currently focused.
 ## Syntax
 
 ```javascript
-cy.focused()
-cy.focused(options)
+cy.focused();
+cy.focused(options);
 ```
 
 ### Usage
@@ -16,19 +16,19 @@ cy.focused(options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.focused()    // Yields the element currently in focus
+cy.focused(); // Yields the element currently in focus
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.focused()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.focused()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.focused()` to resolve before [timing out](#Timeouts)                |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -43,19 +43,19 @@ Option | Default | Description
 ```javascript
 cy.focused().then(($el) => {
   // do something with $el
-})
+});
 ```
 
 #### Blur the element with focus
 
 ```javascript
-cy.focused().blur()
+cy.focused().blur();
 ```
 
 #### Make an assertion on the focused element
 
 ```javascript
-cy.focused().should('have.attr', 'name', 'username')
+cy.focused().should("have.attr", "name", "username");
 ```
 
 ## Rules
@@ -74,10 +74,10 @@ cy.focused().should('have.attr', 'name', 'username')
 
 ## Command Log
 
-***Make an assertion on the focused element***
+**_Make an assertion on the focused element_**
 
 ```javascript
-cy.focused().should('have.attr', 'name').and('eq', 'num')
+cy.focused().should("have.attr", "name").and("eq", "num");
 ```
 
 The commands above will display in the Command Log as:
@@ -92,4 +92,3 @@ When clicking on the `focused` command within the command log, the console outpu
 
 - [`.blur()`](/api/commands/blur)
 - [`.focus()`](/api/commands/focus)
-

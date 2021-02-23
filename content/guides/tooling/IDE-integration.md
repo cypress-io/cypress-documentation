@@ -16,8 +16,7 @@ The first time you click a file path, Cypress will prompt you to select which lo
 
 <Alert type="warning">
 
-
-Cypress attempts to find available file editors on your system and display those as options. If your preferred editor is not listed, you can specify the (full) path to it by selecting **Other**. Cypress will make every effort to open the file, *but it is not guaranteed to work with every application*.
+Cypress attempts to find available file editors on your system and display those as options. If your preferred editor is not listed, you can specify the (full) path to it by selecting **Other**. Cypress will make every effort to open the file, _but it is not guaranteed to work with every application_.
 
 </Alert>
 
@@ -100,10 +99,7 @@ Instead of adding triple slash directives to each JavaScript spec file, some IDE
 
 ```json
 {
-  "include": [
-    "./node_modules/cypress",
-    "cypress/**/*.js"
-  ]
+  "include": ["./node_modules/cypress", "cypress/**/*.js"]
 }
 ```
 
@@ -117,13 +113,9 @@ Adding a [`tsconfig.json`](http://www.typescriptlang.org/docs/handbook/tsconfig-
 {
   "compilerOptions": {
     "allowJs": true,
-    "types": [
-      "cypress"
-    ]
+    "types": ["cypress"]
   },
-  "include": [
-    "**/*.*"
-  ]
+  "include": ["**/*.*"]
 }
 ```
 
@@ -151,9 +143,7 @@ To set up in [Visual Studio Code](https://code.visualstudio.com/) you can open `
 {
   "json.schemas": [
     {
-      "fileMatch": [
-        "cypress.json"
-      ],
+      "fileMatch": ["cypress.json"],
       "url": "https://on.cypress.io/cypress.schema.json"
     }
   ]
@@ -169,4 +159,3 @@ Or you can directly add a `$schema` key to your Cypress configuration file, whic
 ### See also
 
 - [Adding custom properties to the global `window` with the right TypeScript type](https://github.com/bahmutov/test-todomvc-using-app-actions#intellisense)
-

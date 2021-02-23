@@ -4,7 +4,6 @@ title: Testing Your App
 
 <Alert type="info">
 
-
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
 - The relationship between Cypress and your back end
@@ -15,7 +14,9 @@ title: Testing Your App
 </Alert>
 
 <!-- textlint-disable terminology -->
+
 <DocsVideo src="https://youtube.com/embed/5XQOK0v_YRE"></DocsVideo>
+
 <!-- textlint-enable -->
 
 ## <Icon name="terminal"></Icon> Step 1: Start your server
@@ -26,7 +27,7 @@ It should look something like **http://localhost:8080**.
 
 <Alert type="warning">
 
- <strong class="alert-header">Anti-Pattern</strong>
+<strong class="alert-header">Anti-Pattern</strong>
 
 Don't try to start a web server from within Cypress scripts. Read about [best practices](/guides/references/best-practices#Web-Servers) here.
 
@@ -34,12 +35,11 @@ Don't try to start a web server from within Cypress scripts. Read about [best pr
 
 <Alert type="info">
 
- <strong class="alert-header">Why start a local development server?</strong>
-
+<strong class="alert-header">Why start a local development server?</strong>
 
 You may be wondering - why can't I just visit my application that's already in production?
 
-While you certainly *can* test an application that's already deployed, that's not really the **sweet spot** of Cypress.
+While you certainly _can_ test an application that's already deployed, that's not really the **sweet spot** of Cypress.
 
 Cypress is built, and optimized around being a tool for your daily local development. In fact, after you start using Cypress for awhile, we believe that you may find it useful to even do **all of your development** in it.
 
@@ -61,7 +61,7 @@ When it's running in development you can:
 
 With that said - you still have the option to have it **both ways**.
 
-Many of our users run the *majority* of their integration tests against a local development server, but then reserve a smaller set of **smoke tests** that run only against a deployed production app.
+Many of our users run the _majority_ of their integration tests against a local development server, but then reserve a smaller set of **smoke tests** that run only against a deployed production app.
 
 </Alert>
 
@@ -88,11 +88,11 @@ Once that file is created, you should see it in the list of spec files.
 Now you'll need to add in the following code in your test file to visit your server:
 
 ```js
-describe('The Home Page', () => {
-  it('successfully loads', () => {
-    cy.visit('http://localhost:8080') // change URL to match your dev URL
-  })
-})
+describe("The Home Page", () => {
+  it("successfully loads", () => {
+    cy.visit("http://localhost:8080"); // change URL to match your dev URL
+  });
+});
 ```
 
 Now click on the `home_page_spec.js` file and watch Cypress open your browser.
@@ -132,7 +132,6 @@ This will automatically **prefix** [`cy.visit()`](/api/commands/visit) and [`cy.
 
 <Alert type="info">
 
-
 Whenever you modify your configuration file, Cypress will automatically reboot itself and kill any open browsers. This is normal. Click on the spec file again to relaunch the browser.
 
 </Alert>
@@ -140,18 +139,18 @@ Whenever you modify your configuration file, Cypress will automatically reboot i
 We can now visit a relative path and omit the hostname and port.
 
 ```js
-describe('The Home Page', () => {
-  it('successfully loads', () => {
-    cy.visit('/')
-  })
-})
+describe("The Home Page", () => {
+  it("successfully loads", () => {
+    cy.visit("/");
+  });
+});
 ```
 
 Great! Everything should still be green.
 
 <Alert type="info">
 
- <strong class="alert-header">Configuration Options</strong>
+<strong class="alert-header">Configuration Options</strong>
 
 Cypress has many more configuration options you can use to customize its behavior. Things like where your tests live, default timeout periods, environment variables, which reporter to use, etc.
 
@@ -190,16 +189,16 @@ To test various page states - like an empty view, or a pagination view, you'd ne
 If you're running `node.js` on your server, you might add a `before` or `beforeEach` hook that executes an `npm` task.
 
 ```js
-describe('The Home Page', () => {
+describe("The Home Page", () => {
   beforeEach(() => {
     // reset and seed the database prior to every test
-    cy.exec('npm run db:reset && npm run db:seed')
-  })
+    cy.exec("npm run db:reset && npm run db:seed");
+  });
 
-  it('successfully loads', () => {
-    cy.visit('/')
-  })
-})
+  it("successfully loads", () => {
+    cy.visit("/");
+  });
+});
 ```
 
 Instead of just executing a system command, you may want more flexibility and could expose a series of routes only when running in a test environment.
@@ -207,33 +206,35 @@ Instead of just executing a system command, you may want more flexibility and co
 **For instance, you could compose several requests together to tell your server exactly the state you want to create.**
 
 ```js
-describe('The Home Page', () => {
+describe("The Home Page", () => {
   beforeEach(() => {
     // reset and seed the database prior to every test
-    cy.exec('npm run db:reset && npm run db:seed')
+    cy.exec("npm run db:reset && npm run db:seed");
 
     // seed a post in the DB that we control from our tests
-    cy.request('POST', '/test/seed/post', {
-      title: 'First Post',
+    cy.request("POST", "/test/seed/post", {
+      title: "First Post",
       authorId: 1,
-      body: '...'
-    })
+      body: "...",
+    });
 
     // seed a user in the DB that we can control from our tests
-    cy.request('POST', '/test/seed/user', { name: 'Jane' }).its('body').as('currentUser')
-  })
+    cy.request("POST", "/test/seed/user", { name: "Jane" })
+      .its("body")
+      .as("currentUser");
+  });
 
-  it('successfully loads', () => {
+  it("successfully loads", () => {
     // this.currentUser will now point to the response
     // body of the cy.request() that we could use
     // to log in or work with in some way
 
-    cy.visit('/')
-  })
-})
+    cy.visit("/");
+  });
+});
 ```
 
-While there's nothing really *wrong* with this approach, it does add a lot of complexity. You will be battling synchronizing the state between your server and your browser - and you'll always need to set up / tear down this state before tests (which is slow).
+While there's nothing really _wrong_ with this approach, it does add a lot of complexity. You will be battling synchronizing the state between your server and your browser - and you'll always need to set up / tear down this state before tests (which is slow).
 
 The good news is that we aren't Selenium, nor are we a traditional e2e testing tool. That means we're not bound to the same restrictions.
 
@@ -247,7 +248,7 @@ While you'll still receive all of the regular HTML / JS / CSS assets from your s
 
 This means that instead of resetting the database, or seeding it with the state we want, you can force the server to respond with **whatever** you want it to. In this way, we not only prevent needing to synchronize the state between the server and browser, but we also prevent mutating state from our tests. That means tests won't build up state that may affect other tests.
 
-Another upside is that this enables you to **build out your application** without needing the *contract* of the server to exist. You can build it the way you want the data to be structured, and even test all of the edge cases, without needing a server.
+Another upside is that this enables you to **build out your application** without needing the _contract_ of the server to exist. You can build it the way you want the data to be structured, and even test all of the edge cases, without needing a server.
 
 However - there is likely still a balance here where **both** strategies are valid (and you should likely do them).
 
@@ -265,7 +266,7 @@ Once you've established it's working you can then use stubs to test all of the e
 
 <Alert type="info">
 
- <strong class="alert-header">Guide: Network Requests</strong>
+<strong class="alert-header">Guide: Network Requests</strong>
 
 Please read our [Guide on Network Requests](/guides/guides/network-requests) for a much more thorough analysis and approach to accomplishing this.
 
@@ -281,44 +282,44 @@ Nothing slows a test suite down like having to log in, but all the good parts of
 
 It's a great idea to get your signup and login flow under test coverage since it is very important to all of your users and you never want it to break.
 
-Logging in is one of those features that are **mission critical** and should likely involve your server.  We recommend you test signup and login using your UI as a real user would:
+Logging in is one of those features that are **mission critical** and should likely involve your server. We recommend you test signup and login using your UI as a real user would:
 
 Here's an example alongside seeding your database:
 
 ```js
-describe('The Login Page', () => {
+describe("The Login Page", () => {
   beforeEach(() => {
     // reset and seed the database prior to every test
-    cy.exec('npm run db:reset && npm run db:seed')
+    cy.exec("npm run db:reset && npm run db:seed");
 
     // seed a user in the DB that we can control from our tests
     // assuming it generates a random password for us
-    cy.request('POST', '/test/seed/user', { username: 'jane.lane' })
-      .its('body')
-      .as('currentUser')
-  })
+    cy.request("POST", "/test/seed/user", { username: "jane.lane" })
+      .its("body")
+      .as("currentUser");
+  });
 
-  it('sets auth cookie when logging in via form submission', function () {
+  it("sets auth cookie when logging in via form submission", function () {
     // destructuring assignment of the this.currentUser object
-    const { username, password } = this.currentUser
+    const { username, password } = this.currentUser;
 
-    cy.visit('/login')
+    cy.visit("/login");
 
-    cy.get('input[name=username]').type(username)
+    cy.get("input[name=username]").type(username);
 
     // {enter} causes the form to submit
-    cy.get('input[name=password]').type(`${password}{enter}`)
+    cy.get("input[name=password]").type(`${password}{enter}`);
 
     // we should be redirected to /dashboard
-    cy.url().should('include', '/dashboard')
+    cy.url().should("include", "/dashboard");
 
     // our auth cookie should be present
-    cy.getCookie('your-session-cookie').should('exist')
+    cy.getCookie("your-session-cookie").should("exist");
 
     // UI should reflect this user being logged in
-    cy.get('h1').should('contain', 'jane.lane')
-  })
-})
+    cy.get("h1").should("contain", "jane.lane");
+  });
+});
 ```
 
 You'll likely also want to test your login UI for:
@@ -336,7 +337,7 @@ Now, once you have your login completely tested - you may be tempted to think:
 
 <Alert type="danger">
 
- <strong class="alert-header">No! Please don\'t.</strong>
+<strong class="alert-header">No! Please don\'t.</strong>
 
 Do not use **your UI** to login before each test.
 
@@ -346,19 +347,19 @@ Let's investigate and tease apart why.
 
 #### Bypassing your UI
 
-When you're writing tests for a very **specific feature**, you *should* use your UI to test it.
+When you're writing tests for a very **specific feature**, you _should_ use your UI to test it.
 
-But when you're testing *another area of the system* that relies on a state from a previous feature: **do not use your UI to set up this state**.
+But when you're testing _another area of the system_ that relies on a state from a previous feature: **do not use your UI to set up this state**.
 
 Here's a more robust example:
 
-Imagine you're testing the functionality of a **Shopping Cart**. To test this, you  need the ability to add products to that cart. Well where do the products come from? Should you use your UI to login to the admin area, and then create all of the products including their descriptions, categories, and images? Once that's done should you then visit each product and add each one to the shopping cart?
+Imagine you're testing the functionality of a **Shopping Cart**. To test this, you need the ability to add products to that cart. Well where do the products come from? Should you use your UI to login to the admin area, and then create all of the products including their descriptions, categories, and images? Once that's done should you then visit each product and add each one to the shopping cart?
 
 No. You shouldn't do that.
 
 <Alert type="warning">
 
- <strong class="alert-header">Anti-Pattern</strong>
+<strong class="alert-header">Anti-Pattern</strong>
 
 Don't use your UI to build up state! It's enormously slow, cumbersome, and unnecessary.
 
@@ -366,7 +367,7 @@ Read about [best practices](/guides/references/best-practices) here.
 
 </Alert>
 
-Using your UI to **log in** is the *exact same scenario* as what we described previously. Logging in is a prerequisite of state that comes before all of your other tests.
+Using your UI to **log in** is the _exact same scenario_ as what we described previously. Logging in is a prerequisite of state that comes before all of your other tests.
 
 Because Cypress isn't Selenium, we can actually take a huge shortcut here and skip needing to use our UI by using [`cy.request()`](/api/commands/request).
 
@@ -375,42 +376,42 @@ Because [`cy.request()`](/api/commands/request) automatically gets and sets cook
 Let's revisit the example from above but assume we're testing some other part of the system.
 
 ```js
-describe('The Dashboard Page', () => {
+describe("The Dashboard Page", () => {
   beforeEach(() => {
     // reset and seed the database prior to every test
-    cy.exec('npm run db:reset && npm run db:seed')
+    cy.exec("npm run db:reset && npm run db:seed");
 
     // seed a user in the DB that we can control from our tests
     // assuming it generates a random password for us
-    cy.request('POST', '/test/seed/user', { username: 'jane.lane' })
-      .its('body')
-      .as('currentUser')
-  })
+    cy.request("POST", "/test/seed/user", { username: "jane.lane" })
+      .its("body")
+      .as("currentUser");
+  });
 
-  it('logs in programmatically without using the UI', function () {
+  it("logs in programmatically without using the UI", function () {
     // destructuring assignment of the this.currentUser object
-    const { username, password } = this.currentUser
+    const { username, password } = this.currentUser;
 
     // programmatically log us in without needing the UI
-    cy.request('POST', '/login', {
+    cy.request("POST", "/login", {
       username,
-      password
-    })
+      password,
+    });
 
     // now that we're logged in, we can visit
     // any kind of restricted route!
-    cy.visit('/dashboard')
+    cy.visit("/dashboard");
 
     // our auth cookie should be present
-    cy.getCookie('your-session-cookie').should('exist')
+    cy.getCookie("your-session-cookie").should("exist");
 
     // UI should reflect this user being logged in
-    cy.get('h1').should('contain', 'jane.lane')
-  })
-})
+    cy.get("h1").should("contain", "jane.lane");
+  });
+});
 ```
 
-Do you see the difference? We were able to login without needing to actually use our UI. This saves an enormous amount of time visiting the login page, filling out the username, password, and waiting for the server to redirect us *before every test*.
+Do you see the difference? We were able to login without needing to actually use our UI. This saves an enormous amount of time visiting the login page, filling out the username, password, and waiting for the server to redirect us _before every test_.
 
 Because we previously tested the login system end-to-end without using any shortcuts, we already have 100% confidence it's working correctly.
 
@@ -418,7 +419,7 @@ Use the methodology above when working with any area of your system that require
 
 <Alert type="info">
 
- <strong class="alert-header">Authentication Recipes</strong>
+<strong class="alert-header">Authentication Recipes</strong>
 
 Logging in can be more complex than what we've just covered.
 
@@ -430,15 +431,14 @@ Feel free to [explore these additional logging in](/examples/examples/recipes) r
 
 ## Get started
 
-Ok, we're done talking.  Now dive in and get started testing your app!
+Ok, we're done talking. Now dive in and get started testing your app!
 
 From here you may want to explore some more of our guides:
 
 - [Tutorial Videos](/examples/examples/tutorials) to watch step-by-step tutorial videos
 - [Cypress API](/api/api/table-of-contents) to learn what commands are available as you work
-- [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress) explains how Cypress *really* works
+- [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress) explains how Cypress _really_ works
 - [Command Line](/guides/guides/command-line) for running all your tests outside via `cypress run`
 - [Continuous Integration](/guides/guides/continuous-integration) for running Cypress in CI
 - [Cross Browser Testing](/guides/guides/cross-browser-testing) for optimally running tests in CI across Firefox and Chrome-family browsers
 - <Icon name="github"></Icon> [Cypress Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) for practical demonstrations of Cypress testing practices, configuration, and strategies in a real-world project.
-

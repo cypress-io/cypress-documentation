@@ -16,12 +16,12 @@ cy.log(message, args...)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.log('created new user')
+cy.log("created new user");
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> message** ***(String)***
+**<Icon name="angle-right"></Icon> message** **_(String)_**
 
 Message to be printed to Cypress Command Log. Accepts a Markdown formatted message.
 
@@ -40,9 +40,9 @@ Additional arguments to be printed to the Cypress Command Log. There is no limit
 #### Print a message to the Command Log.
 
 ```javascript
-cy.click('Login')
-cy.url().should('not.include', 'login')
-cy.log('Login successful')
+cy.click("Login");
+cy.url().should("not.include", "login");
+cy.log("Login successful");
 ```
 
 ### Args
@@ -50,7 +50,7 @@ cy.log('Login successful')
 #### Print a message with arguments to the Command Log.
 
 ```javascript
-cy.log('events triggered', events)
+cy.log("events triggered", events);
 ```
 
 ## Rules
@@ -72,8 +72,8 @@ cy.log('events triggered', events)
 #### Print messages with arguments to the Command Log.
 
 ```javascript
-cy.log('log out any message we want here')
-cy.log('another message', ['one', 'two', 'three'])
+cy.log("log out any message we want here");
+cy.log("another message", ["one", "two", "three"]);
 ```
 
 The commands above will display in the Command Log as:
@@ -89,4 +89,3 @@ When clicking on `log` within the command log, the console outputs the following
 - [`cy.exec()`](/api/commands/exec)
 - [`Cypress.log`](/api/cypress-api/cypress-log)
 - [`cy.task()`](/api/commands/task)
-

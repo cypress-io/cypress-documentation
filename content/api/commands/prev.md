@@ -6,7 +6,6 @@ Get the immediately preceding sibling of each element in a set of the elements.
 
 <Alert type="info">
 
-
 The querying behavior of this command matches exactly how [`.prev()`](http://api.jquery.com/prev) works in jQuery.
 
 </Alert>
@@ -25,30 +24,30 @@ The querying behavior of this command matches exactly how [`.prev()`](http://api
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('tr.highlight').prev() // Yield previous 'tr'
+cy.get("tr.highlight").prev(); // Yield previous 'tr'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.prev()                // Errors, cannot be chained off 'cy'
-cy.getCookies().prev()   // Errors, 'getCookies' does not yield DOM element
+cy.prev(); // Errors, cannot be chained off 'cy'
+cy.getCookies().prev(); // Errors, 'getCookies' does not yield DOM element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> selector**  ***(String selector)***
+**<Icon name="angle-right"></Icon> selector** **_(String selector)_**
 
 A selector used to filter matching DOM elements.
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.prev()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.prev()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.prev()` to resolve before [timing out](#Timeouts)                     |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -72,7 +71,7 @@ Option | Default | Description
 
 ```javascript
 // yields <li>Lorikeets</li>
-cy.get('.active').prev()
+cy.get(".active").prev();
 ```
 
 ### Selector
@@ -91,7 +90,7 @@ cy.get('.active').prev()
 
 ```javascript
 // yields <li>Cockatoos</li>
-cy.get('li').prev('.active')
+cy.get("li").prev(".active");
 ```
 
 ## Rules
@@ -110,10 +109,10 @@ cy.get('li').prev('.active')
 
 ## Command Log
 
-***Find the previous element of the active `li`***
+**_Find the previous element of the active `li`_**
 
 ```javascript
-cy.get('.left-nav').find('li.active').prev()
+cy.get(".left-nav").find("li.active").prev();
 ```
 
 The commands above will display in the Command Log as:
@@ -129,4 +128,3 @@ When clicking on `prev` within the command log, the console outputs the followin
 - [`.next()`](/api/commands/next)
 - [`.prevAll()`](/api/commands/prevall)
 - [`.prevUntil()`](/api/commands/prevuntil)
-

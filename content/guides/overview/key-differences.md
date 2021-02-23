@@ -4,19 +4,17 @@ title: Key Differences
 
 <Alert type="info">
 
-
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
 - What makes Cypress unique
 - How its architecture differs from Selenium
 - New testing approaches not possible before
 
-
 </Alert>
 
 ## Architecture
 
-Most testing tools (like Selenium) operate by running outside of the browser and executing remote commands across the network. *Cypress is the exact opposite.* Cypress is executed in the same run loop as your application.
+Most testing tools (like Selenium) operate by running outside of the browser and executing remote commands across the network. _Cypress is the exact opposite._ Cypress is executed in the same run loop as your application.
 
 Behind Cypress is a Node server process. Cypress and the Node process constantly communicate, synchronize, and perform tasks on behalf of each other. Having access to both parts (front and back) gives us the ability to respond to your application's events in real time, while at the same time work outside of the browser for tasks that require a higher privilege.
 
@@ -24,7 +22,7 @@ Cypress also operates at the network layer by reading and altering web traffic o
 
 Cypress ultimately controls the entire automation process from top to bottom, which puts it in the unique position of being able to understand everything happening in and outside of the browser. This means Cypress is capable of delivering more consistent results than any other testing tool.
 
-Because Cypress is [installed locally](/guides/getting-started/installing-cypress) on your machine, it can additionally tap into the operating system for automation tasks. This makes performing tasks such as [taking screenshots,  recording videos](/guides/guides/screenshots-and-videos), general [file system operations](/api/commands/exec) and [network operations](/api/commands/request) possible.
+Because Cypress is [installed locally](/guides/getting-started/installing-cypress) on your machine, it can additionally tap into the operating system for automation tasks. This makes performing tasks such as [taking screenshots, recording videos](/guides/guides/screenshots-and-videos), general [file system operations](/api/commands/exec) and [network operations](/api/commands/request) possible.
 
 ## Native access
 
@@ -40,7 +38,7 @@ Having ultimate control over your application, the network traffic, and native a
 - Test how your application responds to errors on your server by [modifying response status codes to be 500](/api/commands/route).
 - Modify DOM elements directly - like forcing hidden elements to be shown.
 - Use 3rd party plugins programmatically. Instead of fussing with complex UI widgets like multi selects, autocompletes, drop downs, tree views or calendars, you can call methods directly from your test code to control them.
-- [Prevent Google Analytics from loading *before* any of your application code executes](/guides/references/configuration#blockHosts) when testing.
+- [Prevent Google Analytics from loading _before_ any of your application code executes](/guides/references/configuration#blockHosts) when testing.
 - Get synchronous notifications whenever your application transitions to a new page or when it begins to unload.
 - [Control time by moving forward or backward](/api/commands/clock) so that timers or polls automatically fire without having to wait for the required time in your tests.
 - Add your own event listeners to respond to your application. You could update your application code to behave differently when under tests in Cypress. You can control WebSocket messages from within Cypress, conditionally load 3rd party scripts, or call functions directly on your application.
@@ -76,4 +74,3 @@ You can use the Developer Tools while your tests run, you can see every console 
 While there are many new and powerful capabilities of Cypress - there are also important trade-offs that we've made in making this possible.
 
 If you're interested in understanding more, we've written [an entire guide](/guides/references/trade-offs) on this topic.
-

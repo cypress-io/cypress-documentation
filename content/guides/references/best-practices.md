@@ -5,7 +5,6 @@ layout: toc-top
 
 <Alert type="info">
 
-
 ### <Icon name="graduation-cap"></Icon> Real World Practices
 
 The Cypress team maintains the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app), a full stack example application that demonstrates **best practices and scalable strategies with Cypress in practical and realistic scenarios**.
@@ -14,20 +13,17 @@ The RWA achieves full [code-coverage](/guides/tooling/code-coverage) with end-to
 
 The app is bundled with everything you need, [just clone the repository](https://github.com/cypress-io/cypress-realworld-app) and start testing.
 
-
 </Alert>
 
 ## Organizing Tests, Logging In, Controlling State
 
 <Alert type="danger">
 
-
 <Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Sharing page objects, using your UI to log in, and not taking shortcuts.
 
 </Alert>
 
 <Alert type="success">
-
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Test specs in isolation, programmatically log into your application, and take control of your application's state.
 
@@ -43,13 +39,11 @@ We have several [Logging in recipes](https://github.com/cypress-io/cypress-examp
 
 <Alert type="danger">
 
-
 <Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Using highly brittle selectors that are subject to change.
 
 </Alert>
 
 <Alert type="success">
-
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Use `data-*` attributes to provide context to your selectors and isolate them from CSS or JS changes.
 
@@ -73,20 +67,27 @@ Luckily, it is possible to avoid both of these problems.
 Given a button that we want to interact with:
 
 ```html
-<button id="main" class="btn btn-large" name="submission"
-  role="button" data-cy="submit">Submit</button>
+<button
+  id="main"
+  class="btn btn-large"
+  name="submission"
+  role="button"
+  data-cy="submit"
+>
+  Submit
+</button>
 ```
 
 Let's investigate how we could target it:
 
-Selector | Recommended | Notes
---- | --- | ---
-`cy.get('button').click()` | <Icon name="exclamation-triangle" color="red"></Icon> Never | Worst - too generic, no context.
-`cy.get('.btn.btn-large').click()` | <Icon name="exclamation-triangle" color="red"></Icon> Never | Bad. Coupled to styling. Highly subject to change.
-`cy.get('#main').click()` | <Icon name="exclamation-triangle" color="orange"></Icon> Sparingly | Better. But still coupled to styling or JS event listeners.
-`cy.get('[name=submission]').click()` | <Icon name="exclamation-triangle" color="orange"></Icon> Sparingly | Coupled to the `name` attribute which has HTML semantics.
-`cy.contains('Submit').click()` | <Icon name="check-circle" color="green"></Icon> Depends | Much better. But still coupled to text content that may change.
-`cy.get('[data-cy=submit]').click()` | <Icon name="check-circle" color="green"></Icon> Always | Best. Isolated from all changes.
+| Selector                              | Recommended                                                        | Notes                                                           |
+| ------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------------- |
+| `cy.get('button').click()`            | <Icon name="exclamation-triangle" color="red"></Icon> Never        | Worst - too generic, no context.                                |
+| `cy.get('.btn.btn-large').click()`    | <Icon name="exclamation-triangle" color="red"></Icon> Never        | Bad. Coupled to styling. Highly subject to change.              |
+| `cy.get('#main').click()`             | <Icon name="exclamation-triangle" color="orange"></Icon> Sparingly | Better. But still coupled to styling or JS event listeners.     |
+| `cy.get('[name=submission]').click()` | <Icon name="exclamation-triangle" color="orange"></Icon> Sparingly | Coupled to the `name` attribute which has HTML semantics.       |
+| `cy.contains('Submit').click()`       | <Icon name="check-circle" color="green"></Icon> Depends            | Much better. But still coupled to text content that may change. |
+| `cy.get('[data-cy=submit]').click()`  | <Icon name="check-circle" color="green"></Icon> Always             | Best. Isolated from all changes.                                |
 
 Targeting the element above by `tag`, `class` or `id` is very volatile and highly subject to change. You may swap out the element, you may refactor CSS and update ID's, or you may add or remove classes that affect the style of the element.
 
@@ -98,8 +99,7 @@ Additionally, it makes it clear to everyone that this element is used directly b
 
 <Alert type="info">
 
- <strong class="alert-header">Did you know?</strong>
-
+<strong class="alert-header">Did you know?</strong>
 
 The [Selector Playground](/guides/core-concepts/test-runner#Selector-Playground) automatically follows these best practices.
 
@@ -108,7 +108,6 @@ When determining an unique selector it will automatically prefer elements with:
 - `data-cy`
 - `data-test`
 - `data-testid`
-
 
 </Alert>
 
@@ -131,7 +130,7 @@ Cypress.Commands.add("getBySelLike", (selector, ...args) => {
 });
 ```
 
-> *<Icon name="github"></Icon> Source: [cypress/support/commands.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/support/commands.ts)*
+> _<Icon name="github"></Icon> Source: [cypress/support/commands.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/support/commands.ts)_
 
 ### Text Content:
 
@@ -164,13 +163,11 @@ If the answer is **no** because the text could be changed - then use [`cy.get()`
 
 <Alert type="danger">
 
-
 <Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Trying to assign the return value of Commands with `const`, `let`, or `var`.
 
 </Alert>
 
 <Alert type="success">
-
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Use [closures to access and store](/guides/core-concepts/variables-and-aliases) what Commands yield you.
 
@@ -183,17 +180,17 @@ We see new users commonly write code that looks like this:
 ```js
 // DONT DO THIS. IT DOES NOT WORK
 // THE WAY YOU THINK IT DOES.
-const a = cy.get('a')
+const a = cy.get("a");
 
-cy.visit('https://example.cypress.io')
+cy.visit("https://example.cypress.io");
 
 // nope, fails
-a.first().click()
+a.first().click();
 ```
 
 <Alert type="info">
 
- <strong class="alert-header">Did you know?</strong>
+<strong class="alert-header">Did you know?</strong>
 
 You rarely have to ever use `const`, `let`, or `var` in Cypress. If you're using them, you will want to do some refactoring.
 
@@ -212,13 +209,11 @@ For working with either of these patterns, please read our [Variables and Aliase
 
 <Alert type="danger">
 
-
 <Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Trying to visit or interact with sites or servers you do not control.
 
 </Alert>
 
 <Alert type="success">
-
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Only test what you control. Try to avoid requiring a 3rd party server. When necessary, always use [`cy.request()`](/api/commands/request) to talk to 3rd party servers via their APIs.
 
@@ -260,7 +255,7 @@ Additionally, testing through an OAuth provider is mutable - you will first need
 
 <Alert type="info">
 
- <strong class="alert-header">Recipes</strong>
+<strong class="alert-header">Recipes</strong>
 
 [We have several examples of doing this in our logging in recipes.](/examples/examples/recipes)
 
@@ -289,19 +284,17 @@ Nevertheless, if you **did** want to write a test in Cypress, you already have t
 
 <Alert type="danger">
 
-
 <Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Coupling multiple tests together.
 
 </Alert>
 
 <Alert type="success">
 
-
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Tests should always be able to be run independently from one another **and still pass**.
 
 </Alert>
 
-You only need to do one thing to know whether you've coupled your tests incorrectly,  or if one test is relying on the state of a previous one.
+You only need to do one thing to know whether you've coupled your tests incorrectly, or if one test is relying on the state of a previous one.
 
 Put an `.only` on the test and refresh the browser.
 
@@ -318,23 +311,23 @@ Let's imagine the following test that is filling out the form.
 
 ```javascript
 // an example of what NOT TO DO
-describe('my form', () => {
-  it('visits the form', () => {
-    cy.visit('/users/new')
-  })
+describe("my form", () => {
+  it("visits the form", () => {
+    cy.visit("/users/new");
+  });
 
-  it('requires first name', () => {
-    cy.get('#first').type('Johnny')
-  })
+  it("requires first name", () => {
+    cy.get("#first").type("Johnny");
+  });
 
-  it('requires last name', () => {
-    cy.get('#last').type('Appleseed')
-  })
+  it("requires last name", () => {
+    cy.get("#last").type("Appleseed");
+  });
 
-  it('can submit a valid form', () => {
-    cy.get('form').submit()
-  })
-})
+  it("can submit a valid form", () => {
+    cy.get("form").submit();
+  });
+});
 ```
 
 What's wrong with the above tests? They are all coupled together!
@@ -347,20 +340,20 @@ Here's 2 ways we can fix this:
 
 ```javascript
 // a bit better
-describe('my form', () => {
-  it('can submit a valid form', () => {
-    cy.visit('/users/new')
+describe("my form", () => {
+  it("can submit a valid form", () => {
+    cy.visit("/users/new");
 
-    cy.log('filling out first name') // if you really need this
-    cy.get('#first').type('Johnny')
+    cy.log("filling out first name"); // if you really need this
+    cy.get("#first").type("Johnny");
 
-    cy.log('filling out last name') // if you really need this
-    cy.get('#last').type('Appleseed')
+    cy.log("filling out last name"); // if you really need this
+    cy.get("#last").type("Appleseed");
 
-    cy.log('submitting form') // if you really need this
-    cy.get('form').submit()
-  })
-})
+    cy.log("submitting form"); // if you really need this
+    cy.get("form").submit();
+  });
+});
 ```
 
 Now we can put an `.only` on this test and it will run successfully irrespective of any other test. The ideal Cypress workflow is writing and iterating on a single test at a time.
@@ -368,23 +361,23 @@ Now we can put an `.only` on this test and it will run successfully irrespective
 ### 2. Run shared code before each test
 
 ```javascript
-describe('my form', () => {
+describe("my form", () => {
   beforeEach(() => {
-    cy.visit('/users/new')
-    cy.get('#first').type('Johnny')
-    cy.get('#last').type('Appleseed')
-  })
+    cy.visit("/users/new");
+    cy.get("#first").type("Johnny");
+    cy.get("#last").type("Appleseed");
+  });
 
-  it('displays form validation', () => {
-    cy.get('#first').clear() // clear out first name
-    cy.get('form').submit()
-    cy.get('#errors').should('contain', 'First name is required')
-  })
+  it("displays form validation", () => {
+    cy.get("#first").clear(); // clear out first name
+    cy.get("form").submit();
+    cy.get("#errors").should("contain", "First name is required");
+  });
 
-  it('can submit a valid form', () => {
-    cy.get('form').submit()
-  })
-})
+  it("can submit a valid form", () => {
+    cy.get("form").submit();
+  });
+});
 ```
 
 This above example is ideal because now we are resetting the state between each test and ensuring nothing in previous tests leaks into subsequent ones.
@@ -395,13 +388,11 @@ We're also paving the way to make it less complicated to write multiple tests ag
 
 <Alert type="danger">
 
-
 <Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Acting like you're writing unit tests.
 
 </Alert>
 
 <Alert type="success">
-
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Add multiple assertions and don't worry about it
 
@@ -410,24 +401,24 @@ We're also paving the way to make it less complicated to write multiple tests ag
 We've seen many users writing this kind of code:
 
 ```javascript
-describe('my form', () => {
+describe("my form", () => {
   before(() => {
-    cy.visit('/users/new')
-    cy.get('#first').type('johnny')
-  })
+    cy.visit("/users/new");
+    cy.get("#first").type("johnny");
+  });
 
-  it('has validation attr', () => {
-    cy.get('#first').should('have.attr', 'data-validation', 'required')
-  })
+  it("has validation attr", () => {
+    cy.get("#first").should("have.attr", "data-validation", "required");
+  });
 
-  it('has active class', () => {
-    cy.get('#first').should('have.class', 'active')
-  })
+  it("has active class", () => {
+    cy.get("#first").should("have.class", "active");
+  });
 
-  it('has formatted first name', () => {
-    cy.get('#first').should('have.value', 'Johnny') // capitalized first letter
-  })
-})
+  it("has formatted first name", () => {
+    cy.get("#first").should("have.value", "Johnny"); // capitalized first letter
+  });
+});
 ```
 
 While technically this runs fine - this is really excessive, and not performant.
@@ -450,32 +441,30 @@ It is common for tests in Cypress to issue 30+ commands. Because nearly every co
 How you should rewrite those tests:
 
 ```javascript
-describe('my form', () => {
+describe("my form", () => {
   before(() => {
-    cy.visit('/users/new')
-  })
+    cy.visit("/users/new");
+  });
 
-  it('validates and formats first name', () => {
-    cy.get('#first')
-      .type('johnny')
-      .should('have.attr', 'data-validation', 'required')
-      .and('have.class', 'active')
-      .and('have.value', 'Johnny')
-  })
-})
+  it("validates and formats first name", () => {
+    cy.get("#first")
+      .type("johnny")
+      .should("have.attr", "data-validation", "required")
+      .and("have.class", "active")
+      .and("have.value", "Johnny");
+  });
+});
 ```
 
 ## Using `after` or `afterEach` hooks
 
 <Alert type="danger">
 
-
 <Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Using `after` or `afterEach` hooks to clean up state.
 
 </Alert>
 
 <Alert type="success">
-
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Clean up state **before** tests run.
 
@@ -527,8 +516,8 @@ That is fine - but even if this is the case, it should not go in an `after` or `
 
 ```js
 afterEach(() => {
-  cy.resetDb()
-})
+  cy.resetDb();
+});
 ```
 
 Here is the problem: **there is no guarantee that this code will run.**
@@ -555,8 +544,8 @@ This is also a great opportunity to use [root level hooks in mocha](https://gith
 beforeEach(() => {
   // now this runs prior to every test
   // across all files no matter what
-  cy.resetDb()
-})
+  cy.resetDb();
+});
 ```
 
 ### Is resetting the state necessary?
@@ -579,9 +568,11 @@ beforeEach(function () {
   // ...
 });
 ```
-> *<Icon name="github"></Icon> Source: [cypress/tests/ui/auth.spec.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui/auth.spec.ts)*
+
+> _<Icon name="github"></Icon> Source: [cypress/tests/ui/auth.spec.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui/auth.spec.ts)_
 
 The `db:seed` task is defined within the [plugins file](/guides/core-concepts/writing-and-organizing-tests#Plugin-files) of the project, and in this case sends a request to a dedicated back end API of the app to appropriately re-seed the database.
+
 ```ts
 // cypress/plugins/index.ts
 
@@ -594,7 +585,8 @@ on("task", {
   //...
 });
 ```
-> *<Icon name="github"></Icon> Source: [cypress/plugins/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/plugins/index.ts)*
+
+> _<Icon name="github"></Icon> Source: [cypress/plugins/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/plugins/index.ts)_
 
 The same practice above can be used for any type of database (PostgreSQL, MongoDB, etc.). In this example, a request is sent to a back end API, but you could also interact directly with your database with direct queries, custom libraries, etc. If you already have non-JavaScript methods of handling or interacting with your database, you can use `[cy.exec](/api/commands/exec)`, instead of `[cy.task](/api/commands/task)`, to execute any system command or script.
 
@@ -602,13 +594,11 @@ The same practice above can be used for any type of database (PostgreSQL, MongoD
 
 <Alert type="danger">
 
-
 <Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Waiting for arbitrary time periods using [`cy.wait(Number)`](/api/commands/wait#Time).
 
 </Alert>
 
 <Alert type="success">
-
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Use route aliases or assertions to guard Cypress from proceeding until an explicit condition is met.
 
@@ -623,8 +613,8 @@ Let's imagine the following examples:
 Waiting here is unnecessary since the [`cy.request()`](/api/commands/request) command will not resolve until it receives a response from your server. Adding the wait here only adds 5 seconds after the [`cy.request()`](/api/commands/request) has already resolved.
 
 ```javascript
-cy.request('http://localhost:8080/db/seed')
-cy.wait(5000)     // <--- this is unnecessary
+cy.request("http://localhost:8080/db/seed");
+cy.wait(5000); // <--- this is unnecessary
 ```
 
 ### Unnecessary wait for `cy.visit()`
@@ -632,8 +622,8 @@ cy.wait(5000)     // <--- this is unnecessary
 Waiting for this is unnecessary because the [cy.visit()](/api/commands/visit) resolves once the page fires its `load` event. By that time all of your assets have been loaded including javascript, stylesheets, and html.
 
 ```javascript
-cy.visit('http://localhost/8080')
-cy.wait(5000)     // <--- this is unnecessary
+cy.visit("http://localhost/8080");
+cy.wait(5000); // <--- this is unnecessary
 ```
 
 ### Unnecessary wait for `cy.get()`
@@ -643,32 +633,32 @@ Waiting for the [`cy.get()`](/api/commands/get) below is unnecessary because [`c
 Whenever commands have an assertion they will not resolve until their associated assertions pass. This enables you to describe the state of your application without having to worry about when it gets there.
 
 ```javascript
-cy.intercept('GET', /users/, [{ 'name': 'Maggy' }, { 'name': 'Joan' }])
-cy.get('#fetch').click()
-cy.wait(4000)     // <--- this is unnecessary
-cy.get('table tr').should('have.length', 2)
+cy.intercept("GET", /users/, [{ name: "Maggy" }, { name: "Joan" }]);
+cy.get("#fetch").click();
+cy.wait(4000); // <--- this is unnecessary
+cy.get("table tr").should("have.length", 2);
 ```
 
 Alternatively a better solution to this problem is by waiting explicitly for an aliased route.
 
 ```javascript
-cy.intercept('GET', /users/, [{ 'name': 'Maggy' }, { 'name': 'Joan' }]).as('getUsers')
-cy.get('#fetch').click()
-cy.wait('@getUsers')     // <--- wait explicitly for this route to finish
-cy.get('table tr').should('have.length', 2)
+cy.intercept("GET", /users/, [{ name: "Maggy" }, { name: "Joan" }]).as(
+  "getUsers"
+);
+cy.get("#fetch").click();
+cy.wait("@getUsers"); // <--- wait explicitly for this route to finish
+cy.get("table tr").should("have.length", 2);
 ```
 
 ## Web Servers
 
 <Alert type="danger">
 
-
 <Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Trying to start a web server from within Cypress scripts with [`cy.exec()`](/api/commands/exec) or [`cy.task()`](/api/commands/task).
 
 </Alert>
 
 <Alert type="success">
-
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Start a web server prior to running Cypress.
 
@@ -704,13 +694,11 @@ We have [examples showing you how to start and stop your web server](/guides/gui
 
 <Alert type="danger">
 
-
 <Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Using [cy.visit()](/api/commands/visit) without setting a `baseUrl`.
 
 </Alert>
 
 <Alert type="success">
-
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Set a `baseUrl` in your [configuration file (`cypress.json` by default)](/guides/references/configuration).
 

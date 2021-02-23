@@ -16,26 +16,26 @@ Focus on a DOM element.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('input').first().focus() // Focus on the first input
+cy.get("input").first().focus(); // Focus on the first input
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.focus('#search')  // Errors, cannot be chained off 'cy'
-cy.window().focus()  // Errors, 'window' does not yield DOM element
+cy.focus("#search"); // Errors, cannot be chained off 'cy'
+cy.window().focus(); // Errors, 'window' does not yield DOM element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.focus()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.focus()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.focus()` to resolve before [timing out](#Timeouts)                    |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -48,14 +48,14 @@ Option | Default | Description
 #### Focus on an input
 
 ```javascript
-cy.get('[type="input"]').focus()
+cy.get('[type="input"]').focus();
 ```
 
 #### Focus, type, and blur a textarea
 
 ```javascript
 // yields the <textarea> for further chaining
-cy.get('textarea').focus().type('Nice Product!').blur()
+cy.get("textarea").focus().type("Nice Product!").blur();
 ```
 
 ## Notes
@@ -108,10 +108,10 @@ Internally Cypress does account for this, and will polyfill the blur events when
 
 ## Command Log
 
-***Focus the textarea***
+**_Focus the textarea_**
 
 ```javascript
-cy.get('[name="comment"]').focus()
+cy.get('[name="comment"]').focus();
 ```
 
 The commands above will display in the Command Log as:
@@ -128,4 +128,3 @@ When clicking on the `focus` command within the command log, the console outputs
 - [`.click()`](/api/commands/click)
 - [`cy.focused()`](/api/commands/focused)
 - [`.type()`](/api/commands/type)
-

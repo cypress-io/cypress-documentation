@@ -6,7 +6,6 @@ Get the current URL of the page that is currently active.
 
 <Alert type="info">
 
-
 This is an alias of [`cy.location('href')`](/api/commands/location)
 
 </Alert>
@@ -14,8 +13,8 @@ This is an alias of [`cy.location('href')`](/api/commands/location)
 ## Syntax
 
 ```javascript
-cy.url()
-cy.url(options)
+cy.url();
+cy.url(options);
 ```
 
 ### Usage
@@ -23,21 +22,21 @@ cy.url(options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.url()    // Yields the current URL as a string
+cy.url(); // Yields the current URL as a string
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.url()`.
 
-**cy.url( *options* )**
+**cy.url( _options_ )**
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.url()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.url()` to resolve before [timing out](#Timeouts)                    |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -51,9 +50,9 @@ Option | Default | Description
 
 ```javascript
 // clicking the anchor causes the browser to follow the link
-cy.get('#user-edit a').click()
-cy.url().should('include', '/users/1/edit') // => true
-cy.url().should('eq', 'http://localhost:8000/users/1/edit') // => true
+cy.get("#user-edit a").click();
+cy.url().should("include", "/users/1/edit"); // => true
+cy.url().should("eq", "http://localhost:8000/users/1/edit"); // => true
 ```
 
 ## Notes
@@ -65,8 +64,8 @@ cy.url().should('eq', 'http://localhost:8000/users/1/edit') // => true
 `cy.url()` uses `href` under the hood.
 
 ```javascript
-cy.url()                  // these yield the same string
-cy.location('href')       // these yield the same string
+cy.url(); // these yield the same string
+cy.location("href"); // these yield the same string
 ```
 
 ### Differences
@@ -76,18 +75,18 @@ cy.location('href')       // these yield the same string
 Given the remote URL, `http://localhost:8000/index.html`, all 3 of these assertions are the same.
 
 ```javascript
-cy.location('href').should('include', '/index.html')
+cy.location("href").should("include", "/index.html");
 
-cy.location().its('href').should('include', '/index.html')
+cy.location().its("href").should("include", "/index.html");
 
-cy.url().should('include', '/index.html')
+cy.url().should("include", "/index.html");
 ```
 
 `href` and `toString` come from the `window.location` spec.
 
-But you may be wondering where the URL property comes from.  Per the `window.location` spec, there actually isn't a URL property on the `location` object.
+But you may be wondering where the URL property comes from. Per the `window.location` spec, there actually isn't a URL property on the `location` object.
 
-`cy.url()` exists because it's what most developers naturally assume would return them the full current URL.  We almost never refer to the URL as an `href`.
+`cy.url()` exists because it's what most developers naturally assume would return them the full current URL. We almost never refer to the URL as an `href`.
 
 #### Hardcoded versus using the configuration object
 
@@ -96,14 +95,14 @@ Instead of hardcoding the URL you can use the `baseUrl` of the [Cypress configur
 Given the remote URL, `http://localhost:8000/index.html`, these assertions are the same.
 
 ```javascript
-cy.url().should('eq', 'http://localhost:8000/index.html')
-cy.url().should('eq', Cypress.config().baseUrl + '/index.html') // tests won't fail in case the port changes
+cy.url().should("eq", "http://localhost:8000/index.html");
+cy.url().should("eq", Cypress.config().baseUrl + "/index.html"); // tests won't fail in case the port changes
 ```
 
 #### Assert that the url contains "#users/new"
 
 ```javascript
-cy.url().should('contain', '#users/new')
+cy.url().should("contain", "#users/new");
 ```
 
 ## Rules
@@ -132,12 +131,11 @@ When clicking on URL within the Command Log, the console outputs the following:
 
 ## History
 
-Version | Changes
---- | ---
-[< 0.3.3](/guides/references/changelog#0-3-3) | `cy.url()` command added
+| Version                                       | Changes                  |
+| --------------------------------------------- | ------------------------ |
+| [< 0.3.3](/guides/references/changelog#0-3-3) | `cy.url()` command added |
 
 ## See also
 
 - [`cy.hash()`](/api/commands/hash)
 - [`cy.location()`](/api/commands/location)
-

@@ -16,19 +16,19 @@ Type into a DOM element.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('input').type('Hello, World') // Type 'Hello, World' into the 'input'
+cy.get("input").type("Hello, World"); // Type 'Hello, World' into the 'input'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.type('Welcome')                   // Errors, cannot be chained off 'cy'
-cy.url().type('www.cypress.io')      // Errors, 'url' does not yield DOM element
+cy.type("Welcome"); // Errors, cannot be chained off 'cy'
+cy.url().type("www.cypress.io"); // Errors, 'url' does not yield DOM element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> text**  ***(String)***
+**<Icon name="angle-right"></Icon> text** **_(String)_**
 
 The text to be typed into the DOM element.
 
@@ -36,55 +36,54 @@ Text passed to `.type()` may include any of the special character sequences belo
 
 <Alert type="info">
 
-
 To disable parsing special characters sequences, set the `parseSpecialCharSequences` option to `false`.
 
 </Alert>
 
-Sequence | Notes
---- | ---
-`{{}`| Types the literal `{` key
-`{backspace}` | Deletes character to the left of the cursor
-`{del}` | Deletes character to the right of the cursor
-`{downarrow}` | Moves cursor down
-`{end}` | Moves cursor to the end of the line
-`{enter}` | Types the Enter key
-`{esc}` | Types the Escape key
-`{home}` | Moves cursor to the start of the line
-`{insert}` | Inserts character to the right of the cursor
-`{leftarrow}` | Moves cursor left
-`{movetoend}` | Moves cursor to end of typeable element
-`{movetostart}` | Moves cursor to the start of typeable element
-`{pagedown}` | Scrolls down
-`{pageup}` | Scrolls up
-`{rightarrow}` | Moves cursor right
-`{selectall}` | Selects all text by creating a `selection range`
-`{uparrow}` | Moves cursor up
+| Sequence        | Notes                                            |
+| --------------- | ------------------------------------------------ |
+| `{{}`           | Types the literal `{` key                        |
+| `{backspace}`   | Deletes character to the left of the cursor      |
+| `{del}`         | Deletes character to the right of the cursor     |
+| `{downarrow}`   | Moves cursor down                                |
+| `{end}`         | Moves cursor to the end of the line              |
+| `{enter}`       | Types the Enter key                              |
+| `{esc}`         | Types the Escape key                             |
+| `{home}`        | Moves cursor to the start of the line            |
+| `{insert}`      | Inserts character to the right of the cursor     |
+| `{leftarrow}`   | Moves cursor left                                |
+| `{movetoend}`   | Moves cursor to end of typeable element          |
+| `{movetostart}` | Moves cursor to the start of typeable element    |
+| `{pagedown}`    | Scrolls down                                     |
+| `{pageup}`      | Scrolls up                                       |
+| `{rightarrow}`  | Moves cursor right                               |
+| `{selectall}`   | Selects all text by creating a `selection range` |
+| `{uparrow}`     | Moves cursor up                                  |
 
 Text passed to `.type()` may also include any of these modifier character sequences:
 
-Sequence | Notes
---- | ---
-`{alt}` | Activates the `altKey` modifier. Aliases: `{option}`
-`{ctrl}` | Activates the `ctrlKey` modifier. Aliases: `{control}`
-`{meta}` | Activates the `metaKey` modifier. Aliases: `{command}`, `{cmd}`
-`{shift}` | Activates the `shiftKey` modifier.
+| Sequence  | Notes                                                           |
+| --------- | --------------------------------------------------------------- |
+| `{alt}`   | Activates the `altKey` modifier. Aliases: `{option}`            |
+| `{ctrl}`  | Activates the `ctrlKey` modifier. Aliases: `{control}`          |
+| `{meta}`  | Activates the `metaKey` modifier. Aliases: `{command}`, `{cmd}` |
+| `{shift}` | Activates the `shiftKey` modifier.                              |
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.type()`.
 
-Option | Default | Description
---- | --- | ---
-`animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).
-`delay` | `10` | Delay after each keypress
-`force` | `false` | Forces the action, disables [waiting for actionability](#Assertions)
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`parseSpecialCharSequences` | `true` | Parse special characters for strings surrounded by `{}`, such as `{esc}`. Set to `false` to type the literal characters instead
-`release` | `true` | Keep a modifier activated between commands
-`scrollBehavior` | [`scrollBehavior`](/guides/references/configuration#Actionability) | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#Scrolling) before executing the command
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.type()` to resolve before [timing out](#Timeouts)
-`waitForAnimations` | [`waitForAnimations`](/guides/references/configuration#Actionability) | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.
+| Option                       | Default                                                                        | Description                                                                                                                                        |
+| ---------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).  |
+| `delay`                      | `10`                                                                           | Delay after each keypress                                                                                                                          |
+| `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions)                                                                               |
+| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                                                           |
+| `parseSpecialCharSequences`  | `true`                                                                         | Parse special characters for strings surrounded by `{}`, such as `{esc}`. Set to `false` to type the literal characters instead                    |
+| `release`                    | `true`                                                                         | Keep a modifier activated between commands                                                                                                         |
+| `scrollBehavior`             | [`scrollBehavior`](/guides/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#Scrolling) before executing the command |
+| `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.type()` to resolve before [timing out](#Timeouts)                                                                               |
+| `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -97,13 +96,12 @@ Option | Default | Description
 #### Type into a textarea.
 
 ```javascript
-cy.get('textarea').type('Hello world') // yields <textarea>
+cy.get("textarea").type("Hello world"); // yields <textarea>
 ```
 
 #### Type into a login form
 
 <Alert type="info">
-
 
 [Check out our example recipe of logging in by typing username and password in HTML web forms](/examples/examples/recipes#Logging-In)
 
@@ -114,11 +112,13 @@ cy.get('textarea').type('Hello world') // yields <textarea>
 Each keypress is delayed 10ms by default in order to simulate how a very fast user types!
 
 ```javascript
-cy.get('[contenteditable]').type('some text!')
+cy.get("[contenteditable]").type("some text!");
 ```
 
 #### 'Selecting' an option from datalist
+
 For 'selecting' an option, just type it into the input.
+
 ```html
 <input list="fruit" />
 <datalist id="fruit">
@@ -129,7 +129,7 @@ For 'selecting' an option, just type it into the input.
 ```
 
 ```javascript
-cy.get('input').type('Apple')
+cy.get("input").type("Apple");
 ```
 
 ### Tabindex
@@ -138,14 +138,12 @@ cy.get('input').type('Apple')
 
 ```html
 <body>
-  <div id="el" tabindex="1">
-    This div can receive focus!
-  </div>
+  <div id="el" tabindex="1">This div can receive focus!</div>
 </body>
 ```
 
 ```javascript
-cy.get('#el').type('supercalifragilisticexpialidocious')
+cy.get("#el").type("supercalifragilisticexpialidocious");
 ```
 
 ### Date Inputs
@@ -200,7 +198,6 @@ A `keydown` event is fired when a modifier is activated and a `keyup` event is f
 
 <Alert type="info">
 
-
 You can also use key combinations during [.click()](/api/commands/click#Click-with-key-combinations), [.rightclick()](/api/commands/rightclick#Right-click-with-key-combinations) and [.dblclick()](/api/commands/dblclick#Double-click-with-key-combinations) through their options. See each doc for more information.
 
 </Alert>
@@ -210,7 +207,7 @@ You can also use key combinations during [.click()](/api/commands/click#Click-wi
 ```javascript
 // This is the same as a user holding down SHIFT and ALT, then pressing b
 // The modifiers are released before typing 'hello'
-cy.get('input').type('{shift+alt+b}hello')
+cy.get("input").type("{shift+alt+b}hello");
 ```
 
 When a modifier is specified on its own, it will remain activated for the duration of the `.type()` command, and is released when all subsequent characters are typed. However, [{release: false}](#Options) can be passed as an [option](#Key-Combinations).
@@ -218,7 +215,7 @@ When a modifier is specified on its own, it will remain activated for the durati
 ```javascript
 // This is the same as a user holding down SHIFT and ALT, then typing 'hello'
 // The modifiers are held for the duration of the command.
-cy.get('input').type('{shift}{alt}hello')
+cy.get("input").type("{shift}{alt}hello");
 ```
 
 #### Type literal `{` or `}` characters
@@ -226,9 +223,11 @@ cy.get('input').type('{shift}{alt}hello')
 To disable parsing special characters sequences, set the `parseSpecialCharSequences` option to `false`.
 
 ```js
-cy.get('#code-input')
+cy.get("#code-input")
   // will not escape { } characters
-  .type('function (num) {return num * num;}', { parseSpecialCharSequences: false })
+  .type("function (num) {return num * num;}", {
+    parseSpecialCharSequences: false,
+  });
 ```
 
 #### Hold down modifier key and type a word
@@ -236,7 +235,7 @@ cy.get('#code-input')
 ```javascript
 // all characters after {ctrl} will have 'ctrlKey'
 // set to 'true' on their key events
-cy.get('input').type('{ctrl}test')
+cy.get("input").type("{ctrl}test");
 ```
 
 #### Release behavior
@@ -246,59 +245,61 @@ By default, modifiers are released after each type command.
 ```javascript
 // 'ctrlKey' will be true for each event while 'test' is typed
 // but false while 'everything' is typed
-cy.get('input').type('{ctrl}test').type('everything')
+cy.get("input").type("{ctrl}test").type("everything");
 ```
 
 To keep a modifier activated between commands, specify `{release: false}` in the options.
 
 ```javascript
 // 'altKey' will be true while typing 'foo'
-cy.get('input').type('{alt}foo', { release: false })
+cy.get("input").type("{alt}foo", { release: false });
 // 'altKey' will also be true during 'get' and 'click' commands
-cy.get('button').click()
+cy.get("button").click();
 ```
 
 Modifiers are automatically released between tests, even with `{release: false}`.
 
 ```javascript
-it('has modifiers activated', () => {
+it("has modifiers activated", () => {
   // 'altKey' will be true while typing 'foo'
-  cy.get('input').type('{alt}foo', { release: false })
-})
+  cy.get("input").type("{alt}foo", { release: false });
+});
 
-it('does not have modifiers activated', () => {
+it("does not have modifiers activated", () => {
   // 'altKey' will be false while typing 'bar'
-  cy.get('input').type('bar')
-})
+  cy.get("input").type("bar");
+});
 ```
 
 To manually release modifiers within a test after using `{release: false}`, use another `type` command and the modifier will be released after it.
 
 ```javascript
 // 'altKey' will be true while typing 'foo'
-cy.get('input').type('{alt}foo', { release: false })
+cy.get("input").type("{alt}foo", { release: false });
 // 'altKey' will be true during the 'get' and 'click' commands
-cy.get('button').click()
+cy.get("button").click();
 // 'altKey' will be released after this command
-cy.get('input').type('{alt}')
+cy.get("input").type("{alt}");
 // 'altKey' will be false during the 'get' and 'click' commands
-cy.get('button').click()
+cy.get("button").click();
 ```
 
 ### Global Shortcuts
 
-`.type()` requires a focusable element as the subject, since it's usually intended to type into something that's an input or textarea. Although there *are* a few cases where it's valid to "type" into something other than an input or textarea:
+`.type()` requires a focusable element as the subject, since it's usually intended to type into something that's an input or textarea. Although there _are_ a few cases where it's valid to "type" into something other than an input or textarea:
 
 - Keyboard shortcuts where the listener is on the `document` or `body`.
 - Holding modifier keys and clicking an arbitrary element.
 
-To support this, the `body` can be used as the DOM element to type into (even though it's *not* a focusable element).
+To support this, the `body` can be used as the DOM element to type into (even though it's _not_ a focusable element).
 
 #### Use keyboard shortcuts in body
 
 ```javascript
 // all of the type events are fired on the body
-cy.get('body').type('{uparrow}{uparrow}{downarrow}{downarrow}{leftarrow}{rightarrow}{leftarrow}{rightarrow}ba')
+cy.get("body").type(
+  "{uparrow}{uparrow}{downarrow}{downarrow}{leftarrow}{rightarrow}{leftarrow}{rightarrow}ba"
+);
 ```
 
 #### Do a shift + click
@@ -307,7 +308,7 @@ cy.get('body').type('{uparrow}{uparrow}{downarrow}{downarrow}{leftarrow}{rightar
 // execute a SHIFT + click on the first <li>
 // {release: false} is necessary so that
 // SHIFT will not be released after the type command
-cy.get('body').type('{shift}', { release: false }).get('li:first').click()
+cy.get("body").type("{shift}", { release: false }).get("li:first").click();
 ```
 
 ### Options
@@ -317,7 +318,7 @@ cy.get('body').type('{shift}', { release: false }).get('li:first').click()
 Forcing typing overrides the [actionable checks](/guides/core-concepts/interacting-with-elements#Forcing) Cypress applies and will automatically fire the events.
 
 ```javascript
-cy.get('input[type=text]').type('Test all the things', { force: true })
+cy.get("input[type=text]").type("Test all the things", { force: true });
 ```
 
 ## Notes
@@ -359,7 +360,7 @@ The following events will be fired based on what key was pressed identical to th
 
 - `keydown`
 - `keypress`
-- `beforeinput`*
+- `beforeinput`\*
 - `textInput`
 - `input`
 - `keyup`
@@ -375,9 +376,9 @@ Events that should not fire on non input types such as elements with `tabindex` 
 The following rules have been implemented that match real browser behavior (and the spec):
 
 1. Cypress respects not firing subsequent events if previous ones were canceled.
-2. Cypress will fire `keypress` *only* if that key is supposed to actually fire `keypress`.
-3. Cypress will fire `textInput` *only* if typing that key would have inserted an actual character.
-4. Cypress will fire `input` *only* if typing that key modifies or changes the value of the element.
+2. Cypress will fire `keypress` _only_ if that key is supposed to actually fire `keypress`.
+3. Cypress will fire `textInput` _only_ if typing that key would have inserted an actual character.
+4. Cypress will fire `input` _only_ if typing that key modifies or changes the value of the element.
 
 #### Event Cancellation
 
@@ -386,13 +387,13 @@ Cypress respects all default browser behavior when events are canceled.
 ```javascript
 // prevent the characters from being inserted
 // by canceling keydown, keypress, or textInput
-$('#username').on('keydown', (e) => {
-  e.preventDefault()
-})
+$("#username").on("keydown", (e) => {
+  e.preventDefault();
+});
 
 // Cypress will not insert any characters if keydown, keypress, or textInput
 // are cancelled - which matches the default browser behavior
-cy.get('#username').type('bob@gmail.com').should('have.value', '') // true
+cy.get("#username").type("bob@gmail.com").should("have.value", ""); // true
 ```
 
 #### Preventing `mousedown` does not prevent typing
@@ -403,7 +404,7 @@ In a real browser, preventing `mousedown` on a form field will prevent it from r
 
 Cypress prints out a table of key events that detail the keys that were pressed when clicking on type within the [Command Log](#Command-Log). Each character will contain the `which` character code and the events that happened as a result of that key press.
 
-Events that were `defaultPrevented` may prevent other events from firing and those will show up as empty.  For instance, canceling `keydown` will not fire `keypress` or `textInput` or `input`, but will fire `keyup` (which matches the spec).
+Events that were `defaultPrevented` may prevent other events from firing and those will show up as empty. For instance, canceling `keydown` will not fire `keypress` or `textInput` or `input`, but will fire `keyup` (which matches the spec).
 
 Additionally, events that cause a `change` event to fire (such as typing `{enter}`) will display with the `change` event column as `true`.
 
@@ -429,17 +430,17 @@ Modifiers are simulated by setting their corresponding values to `true` for key 
 
 ```javascript
 // app code
-document.querySelector('input:first').addEventListener('keydown', (e) => {
+document.querySelector("input:first").addEventListener("keydown", (e) => {
   // e.shiftKey will be true
-})
+});
 
 // in test
-cy.get('input:first').type('{shift}a')
+cy.get("input:first").type("{shift}a");
 ```
 
 In the example above, a lowercase `a` will be typed, because that's the literal character specified. To type a capital `A`, you can use `.type('{shift}A')` (or `.type('A')` if you don't care about the `shiftKey` property on any key events).
 
-This holds true for other special key combinations as well (that may be OS-specific). For example, on OSX, typing `ALT + SHIFT + K` creates the special character ``. Like with capitalization, `.type()` will not output ``, but the letter `k`. 
+This holds true for other special key combinations as well (that may be OS-specific). For example, on OSX, typing `ALT + SHIFT + K` creates the special character ``. Like with capitalization, `.type()` will not output ``, but the letter `k`.
 
 Similarly, modifiers will not affect arrow keys or deletion keys. For example `{ctrl}{backspace}` will not delete an entire word. [open an issue](https://github.com/cypress-io/cypress/issues/new) if you need modifier effects to be implemented.
 
@@ -462,8 +463,8 @@ For instance the following will submit the form.
 ```
 
 ```javascript
-cy.get('#username').type('bob@burgers.com')
-cy.get('#password').type('password123{enter}')
+cy.get("#username").type("bob@burgers.com");
+cy.get("#password").type("password123{enter}");
 ```
 
 Because there are multiple `inputs` and one `submit` button, Cypress submits the form (and fires submit events) as well as a synthetic `click` event to the `button`.
@@ -498,7 +499,7 @@ If the form's `submit` event is `preventedDefault` the form will not actually be
 **Type into the input**
 
 ```javascript
-cy.get('input[name=firstName]').type('Jane Lane')
+cy.get("input[name=firstName]").type("Jane Lane");
 ```
 
 The commands above will display in the Command Log as:
@@ -511,22 +512,22 @@ When clicking on `type` within the command log, the console outputs the followin
 
 ## History
 
-Version | Changes
---- | ---
-[6.1.0](/guides/references/changelog#6-1-0) | Added option `scrollBehavior`
-[5.6.0](/guides/references/changelog#5.6.0) | Support single key combination syntax 
-[5.5.0](/guides/references/changelog#5.5.0) | Support `beforeinput` event 
-[3.4.1](/guides/references/changelog#3-4-1) | Added `parseSpecialCharSequences` option
-[3.3.0](/guides/references/changelog#3-3-0) | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences
-[3.2.0](/guides/references/changelog#3-2-0) | Added `{home}` and `{end}` character sequences
-[0.20.0](/guides/references/changelog#0-20-0) | Supports for typing in inputs of type `date`, `time`, `month`, and `week`
-[0.17.1](/guides/references/changelog#0-17-1) | Added `ctrl`, `cmd`, `shift`, and `alt` keyboard modifiers
-[0.16.3](/guides/references/changelog#0-16-3) | Supports for typing in elements with `tabindex` attribute
-[0.16.2](/guides/references/changelog#0-16-2) | Added `{downarrow}` and `{uparrow}` character sequences
-[0.8.0](/guides/references/changelog#0-8-0) | Outputs Key Events Table to console on click
-[0.8.0](/guides/references/changelog#0-8-0) | Added `{selectall}`, `{del}`, `{backspace}`, `{esc}`, `{{}`, `{enter}`, `{leftarrow}`, `{rightarrow}` character sequences
-[0.8.0](/guides/references/changelog#0-8-0) | Added small delay (10ms) between each keystroke during `cy.type()`
-[0.6.12](/guides/references/changelog#0-6-12) | Added option `force`
+| Version                                       | Changes                                                                                                                   |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| [6.1.0](/guides/references/changelog#6-1-0)   | Added option `scrollBehavior`                                                                                             |
+| [5.6.0](/guides/references/changelog#5.6.0)   | Support single key combination syntax                                                                                     |
+| [5.5.0](/guides/references/changelog#5.5.0)   | Support `beforeinput` event                                                                                               |
+| [3.4.1](/guides/references/changelog#3-4-1)   | Added `parseSpecialCharSequences` option                                                                                  |
+| [3.3.0](/guides/references/changelog#3-3-0)   | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences                                                         |
+| [3.2.0](/guides/references/changelog#3-2-0)   | Added `{home}` and `{end}` character sequences                                                                            |
+| [0.20.0](/guides/references/changelog#0-20-0) | Supports for typing in inputs of type `date`, `time`, `month`, and `week`                                                 |
+| [0.17.1](/guides/references/changelog#0-17-1) | Added `ctrl`, `cmd`, `shift`, and `alt` keyboard modifiers                                                                |
+| [0.16.3](/guides/references/changelog#0-16-3) | Supports for typing in elements with `tabindex` attribute                                                                 |
+| [0.16.2](/guides/references/changelog#0-16-2) | Added `{downarrow}` and `{uparrow}` character sequences                                                                   |
+| [0.8.0](/guides/references/changelog#0-8-0)   | Outputs Key Events Table to console on click                                                                              |
+| [0.8.0](/guides/references/changelog#0-8-0)   | Added `{selectall}`, `{del}`, `{backspace}`, `{esc}`, `{{}`, `{enter}`, `{leftarrow}`, `{rightarrow}` character sequences |
+| [0.8.0](/guides/references/changelog#0-8-0)   | Added small delay (10ms) between each keystroke during `cy.type()`                                                        |
+| [0.6.12](/guides/references/changelog#0-6-12) | Added option `force`                                                                                                      |
 
 ## See also
 
@@ -535,4 +536,3 @@ Version | Changes
 - [`.click()`](/api/commands/click)
 - [`.focus()`](/api/commands/focus)
 - [`.submit()`](/api/commands/submit)
-

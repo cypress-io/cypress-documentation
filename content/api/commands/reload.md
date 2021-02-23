@@ -7,10 +7,10 @@ Reload the page.
 ## Syntax
 
 ```javascript
-cy.reload()
-cy.reload(forceReload)
-cy.reload(options)
-cy.reload(forceReload, options)
+cy.reload();
+cy.reload(forceReload);
+cy.reload(options);
+cy.reload(forceReload, options);
 ```
 
 ### Usage
@@ -18,21 +18,21 @@ cy.reload(forceReload, options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.reload()
+cy.reload();
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> forceReload** ***(Boolean)***
+**<Icon name="angle-right"></Icon> forceReload** **_(Boolean)_**
 
 Whether to reload the current page without using the cache. `true` forces the reload without cache.
 
-**<Icon name="angle-right"></Icon> options** ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`pageLoadTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.reload()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                        | Description                                                                              |
+| --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`pageLoadTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.reload()` to resolve before [timing out](#Timeouts)                 |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -45,10 +45,10 @@ Option | Default | Description
 #### Reload the page as if the user clicked 'Refresh'
 
 ```javascript
-cy.visit('http://localhost:3000/admin')
-cy.get('#undo-btn').click().should('not.be.visible')
-cy.reload()
-cy.get('#undo-btn').click().should('not.be.visible')
+cy.visit("http://localhost:3000/admin");
+cy.get("#undo-btn").click().should("not.be.visible");
+cy.reload();
+cy.get("#undo-btn").click().should("not.be.visible");
 ```
 
 ### Force Reload
@@ -56,8 +56,8 @@ cy.get('#undo-btn').click().should('not.be.visible')
 #### Reload the page without using the cache
 
 ```javascript
-cy.visit('http://localhost:3000/admin')
-cy.reload(true)
+cy.visit("http://localhost:3000/admin");
+cy.reload(true);
 ```
 
 ## Rules
@@ -76,10 +76,10 @@ cy.reload(true)
 
 ## Command Log
 
-***Reload the page***
+**_Reload the page_**
 
 ```javascript
-cy.reload()
+cy.reload();
 ```
 
 The commands above will display in the Command Log as:
@@ -94,4 +94,3 @@ When clicking on `reload` within the command log, the console outputs the follow
 
 - [`cy.go()`](/api/commands/go)
 - [`cy.visit()`](/api/commands/visit)
-

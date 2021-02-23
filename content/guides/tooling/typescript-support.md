@@ -35,9 +35,7 @@ We recommend the following configuration in a [`tsconfig.json`](http://www.types
     "lib": ["es5", "dom"],
     "types": ["cypress"]
   },
-  "include": [
-    "**/*.ts"
-  ]
+  "include": ["**/*.ts"]
 }
 ```
 
@@ -45,19 +43,18 @@ The `"types"` will tell the TypeScript compiler to only include type definitions
 
 <Alert type="info">
 
-
 You can find an example of Jest and Cypress installed in the same project using a separate `tsconfig.json` file in the [cypress-io/cypress-and-jest-typescript-example](https://github.com/cypress-io/cypress-and-jest-typescript-example) repo.
 
 </Alert>
 
 <Alert type="warning">
 
-
 You may have to restart your IDE's TypeScript server if the setup above does not appear to work. For example:
 
 VS Code (within a .ts or .js file):
-* Open the command palette (Mac: `cmd+shift+p`, Windows: `ctrl+shift+p`)
-* Type "restart ts" and select the "TypeScript: Restart TS server." option
+
+- Open the command palette (Mac: `cmd+shift+p`, Windows: `ctrl+shift+p`)
+- Type "restart ts" and select the "TypeScript: Restart TS server." option
 
 If that does not work, try restarting the IDE.
 
@@ -71,9 +68,9 @@ For example if you add the command `cy.dataCy` into your [supportFile](/guides/r
 
 ```javascript
 // cypress/support/index.ts
-Cypress.Commands.add('dataCy', (value) => {
-  return cy.get(`[data-cy=${value}]`)
-})
+Cypress.Commands.add("dataCy", (value) => {
+  return cy.get(`[data-cy=${value}]`);
+});
 ```
 
 Then you can add the `dataCy` command to the global Cypress Chainable interface (so called because commands are chained together) by creating a new TypeScript definitions file beside your [supportFile](/guides/references/configuration#Folders-Files), in this case at `cypress/support/index.d.ts`.
@@ -88,14 +85,13 @@ declare namespace Cypress {
     /**
      * Custom command to select DOM element by data-cy attribute.
      * @example cy.dataCy('greeting')
-    */
-    dataCy(value: string): Chainable<Element>
+     */
+    dataCy(value: string): Chainable<Element>;
   }
 }
 ```
 
 <Alert type="info">
-
 
 A nice detailed JSDoc comment above the method type will be really appreciated by any users of your custom command.
 
@@ -108,12 +104,12 @@ Even if your project is JavaScript only, the JavaScript specs can know about the
 ```javascript
 // from your cypress/integration/spec.ts
 /// <reference path="../support/index.d.ts" />
-it('works', () => {
-  cy.visit('/')
+it("works", () => {
+  cy.visit("/");
   // IntelliSense and TS compiler should
   // not complain about unknown method
-  cy.dataCy('greeting')
-})
+  cy.dataCy("greeting");
+});
 ```
 
 #### Examples:
@@ -138,19 +134,16 @@ You can utilize Cypress's type declarations in your [plugins file](/guides/tooli
 /**
  * @type {Cypress.PluginConfig}
  */
-module.exports = (on, config) => {
-
-}
+module.exports = (on, config) => {};
 ```
 
 ## History
 
-Version | Changes
---- | ---
-[5.0.0](/guides/references/changelog#5-0-0) | Raised minimum required TypeScript version from 2.9+ to 3.4+
-[4.4.0](/guides/references/changelog#4-4-0) | Added support for TypeScript without needing your own transpilation through preprocessors.
+| Version                                     | Changes                                                                                    |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| [5.0.0](/guides/references/changelog#5-0-0) | Raised minimum required TypeScript version from 2.9+ to 3.4+                               |
+| [4.4.0](/guides/references/changelog#4-4-0) | Added support for TypeScript without needing your own transpilation through preprocessors. |
 
 ## See also
 
 - [IDE Integration](/guides/tooling/IDE-integration)
-

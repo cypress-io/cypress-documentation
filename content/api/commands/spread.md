@@ -6,7 +6,6 @@ Expand an array into multiple arguments.
 
 <Alert type="info">
 
-
 Identical to [`.then()`](/api/commands/then), but always expects an array-like structure as its subject.
 
 </Alert>
@@ -23,29 +22,29 @@ Identical to [`.then()`](/api/commands/then), but always expects an array-like s
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.getCookies().spread(() => {}) // Yield all cookies
+cy.getCookies().spread(() => {}); // Yield all cookies
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.spread(() => {}) // Errors, cannot be chained off 'cy'
-cy.location().spread()   // Errors, 'location' does not yield an array
+cy.spread(() => {}); // Errors, cannot be chained off 'cy'
+cy.location().spread(); // Errors, 'location' does not yield an array
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> fn** ***(Function)***
+**<Icon name="angle-right"></Icon> fn** **_(Function)_**
 
 Pass a function that expands the array into its arguments.
 
-**<Icon name="angle-right"></Icon> options** ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.spread()`.
 
-Option | Default | Description
---- | --- | ---
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.spread()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                            |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.spread()` to resolve before [timing out](#Timeouts) |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -58,13 +57,14 @@ Option | Default | Description
 #### Expand the array of aliased routes
 
 ```javascript
-cy.intercept('/users/').as('getUsers')
-cy.intercept('/activities/').as('getActivities')
-cy.intercept('/comments/').as('getComments')
-cy.wait(['@getUsers', '@getActivities', '@getComments'])
-  .spread((getUsers, getActivities, getComments) => {
+cy.intercept("/users/").as("getUsers");
+cy.intercept("/activities/").as("getActivities");
+cy.intercept("/comments/").as("getComments");
+cy.wait(["@getUsers", "@getActivities", "@getComments"]).spread(
+  (getUsers, getActivities, getComments) => {
     // each interception is now an individual argument
-  })
+  }
+);
 ```
 
 ### Cookies
@@ -74,7 +74,7 @@ cy.wait(['@getUsers', '@getActivities', '@getComments'])
 ```javascript
 cy.getCookies().spread((cookie1, cookie2, cookie3) => {
   // each cookie is now an individual argument
-})
+});
 ```
 
 ## Rules
@@ -93,16 +93,15 @@ cy.getCookies().spread((cookie1, cookie2, cookie3) => {
 
 ## Command Log
 
-`.spread()` does *not* log in the Command Log
+`.spread()` does _not_ log in the Command Log
 
 ## History
 
-Version | Changes
---- | ---
-[0.5.9](/guides/references/changelog#0-5.9) | `.spread()` command added
+| Version                                     | Changes                   |
+| ------------------------------------------- | ------------------------- |
+| [0.5.9](/guides/references/changelog#0-5.9) | `.spread()` command added |
 
 ## See also
 
 - [`.each()`](/api/commands/each)
 - [`.then()`](/api/commands/then)
-

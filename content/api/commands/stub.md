@@ -6,7 +6,6 @@ Replace a function, record its usage and control its behavior.
 
 <Alert type="info">
 
-
 **Note:** `.stub()` assumes you are already familiar with our guide: [Stubs, Spies, and Clocks](/guides/guides/stubs-spies-and-clocks)
 
 </Alert>
@@ -14,9 +13,9 @@ Replace a function, record its usage and control its behavior.
 ## Syntax
 
 ```javascript
-cy.stub()
-cy.stub(object, method)
-cy.stub(object, method, replacerFn)
+cy.stub();
+cy.stub(object, method);
+cy.stub(object, method, replacerFn);
 ```
 
 ### Usage
@@ -24,26 +23,26 @@ cy.stub(object, method, replacerFn)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.stub(user, 'addFriend')
+cy.stub(user, "addFriend");
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> object** ***(Object)***
+**<Icon name="angle-right"></Icon> object** **_(Object)_**
 
 The `object` that has the `method` to be replaced.
 
-**<Icon name="angle-right"></Icon> method** ***(String)***
+**<Icon name="angle-right"></Icon> method** **_(String)_**
 
 The name of the `method` on the `object` to be wrapped.
 
-**<Icon name="angle-right"></Icon> replacerFn** ***(Function)***
+**<Icon name="angle-right"></Icon> replacerFn** **_(Function)_**
 
 The function used to replace the `method` on the `object`.
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
-Unlike most Cypress commands, `cy.stub()` is *synchronous* and returns a value (the stub) instead of a Promise-like chain-able object.
+Unlike most Cypress commands, `cy.stub()` is _synchronous_ and returns a value (the stub) instead of a Promise-like chain-able object.
 
 `cy.stub()` returns a [Sinon.js stub](http://sinonjs.org). All methods found on [Sinon.js](http://sinonjs.org) spies and stubs are supported.
 
@@ -55,34 +54,34 @@ Unlike most Cypress commands, `cy.stub()` is *synchronous* and returns a value (
 
 ```javascript
 // assume App.start calls util.addListeners
-util.addListeners = cy.stub()
+util.addListeners = cy.stub();
 
-App.start()
-expect(util.addListeners).to.be.called
+App.start();
+expect(util.addListeners).to.be.called;
 ```
 
 #### Replace a method with a stub
 
 ```javascript
 // assume App.start calls util.addListeners
-cy.stub(util, 'addListeners')
+cy.stub(util, "addListeners");
 
-App.start()
-expect(util.addListeners).to.be.called
+App.start();
+expect(util.addListeners).to.be.called;
 ```
 
 #### Replace a method with a function
 
 ```javascript
 // assume App.start calls util.addListeners
-let listenersAdded = false
+let listenersAdded = false;
 
-cy.stub(util, 'addListeners', () => {
-  listenersAdded = true
-})
+cy.stub(util, "addListeners", () => {
+  listenersAdded = true;
+});
 
-App.start()
-expect(listenersAdded).to.be.true
+App.start();
+expect(listenersAdded).to.be.true;
 ```
 
 #### Specify the return value of a stubbed method
@@ -90,29 +89,29 @@ expect(listenersAdded).to.be.true
 ```javascript
 // assume App.start calls util.addListeners, which returns a function
 // that removes the listeners
-const removeStub = cy.stub()
+const removeStub = cy.stub();
 
-cy.stub(util, 'addListeners').returns(removeStub)
+cy.stub(util, "addListeners").returns(removeStub);
 
-App.start()
-App.stop()
-expect(removeStub).to.be.called
+App.start();
+App.stop();
+expect(removeStub).to.be.called;
 ```
 
 #### Replace built-in window methods like prompt
 
 ```javascript
 // assume App.start uses prompt to set the value of an element with class "name"
-cy.visit('http://localhost:3000', {
+cy.visit("http://localhost:3000", {
   onBeforeLoad(win) {
-    cy.stub(win, 'prompt').returns('my custom message')
-  }
-})
+    cy.stub(win, "prompt").returns("my custom message");
+  },
+});
 
-App.start()
+App.start();
 
-cy.window().its('prompt').should('be.called')
-cy.get('.name').should('have.value', 'my custom message')
+cy.window().its("prompt").should("be.called");
+cy.get(".name").should("have.value", "my custom message");
 ```
 
 #### Disable logging to Command Log
@@ -121,15 +120,14 @@ You can chain a `.log(bool)` method to disable `cy.stub()` calls from being show
 
 ```javascript
 const obj = {
-  foo () {}
-}
-const stub = cy.stub(obj, 'foo').log(false)
+  foo() {},
+};
+const stub = cy.stub(obj, "foo").log(false);
 ```
 
 #### More `cy.stub()` examples
 
 <Alert type="info">
-
 
 [Check out our example recipe testing spying, stubbing and time](/examples/examples/recipes#Stubbing-and-spying)
 
@@ -141,14 +139,14 @@ Adding an alias using [`.as()`](/api/commands/as) to stubs makes them easier to 
 
 ```javascript
 const obj = {
-  foo () {}
-}
-const stub = cy.stub(obj, 'foo').as('anyArgs')
-const withFoo = stub.withArgs('foo').as('withFoo')
+  foo() {},
+};
+const stub = cy.stub(obj, "foo").as("anyArgs");
+const withFoo = stub.withArgs("foo").as("withFoo");
 
-obj.foo()
-expect(stub).to.be.called
-expect(withFoo).to.be.called // purposefully failing assertion
+obj.foo();
+expect(stub).to.be.called;
+expect(withFoo).to.be.called; // purposefully failing assertion
 ```
 
 You will see the following in the command log:
@@ -185,16 +183,16 @@ The main difference between `cy.spy()` and [`cy.stub()`](/api/commands/stub) is 
 
 ## Command Log
 
-***Create a stub, alias it, and call it***
+**_Create a stub, alias it, and call it_**
 
 ```javascript
 const obj = {
-  foo () {}
-}
-const stub = cy.stub(obj, 'foo').as('foo')
+  foo() {},
+};
+const stub = cy.stub(obj, "foo").as("foo");
 
-obj.foo('foo', 'bar')
-expect(stub).to.be.called
+obj.foo("foo", "bar");
+expect(stub).to.be.called;
 ```
 
 The command above will display in the Command Log as:
@@ -207,10 +205,10 @@ When clicking on the `(stub-1)` event within the command log, the console output
 
 ## History
 
-Version | Changes
---- | ---
-[0.20.0](/guides/references/changelog#0-20.0) | Added `.log(bool)` method
-[0.18.8](/guides/references/changelog#0-18-8) | `cy.stub()` command added
+| Version                                       | Changes                   |
+| --------------------------------------------- | ------------------------- |
+| [0.20.0](/guides/references/changelog#0-20.0) | Added `.log(bool)` method |
+| [0.18.8](/guides/references/changelog#0-18-8) | `cy.stub()` command added |
 
 ## See also
 
@@ -221,4 +219,3 @@ Version | Changes
 - [Recipe: Stubbing, Spying](/examples/examples/recipes#Stubbing-and-spying)
 - [Recipe: Unit Test - Stubbing Dependencies](/examples/examples/recipes)
 - [Stub navigator API in end-to-end tests](https://glebbahmutov.com/blog/stub-navigator-api/)
-

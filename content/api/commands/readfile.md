@@ -7,10 +7,10 @@ Read a file and yield its contents.
 ## Syntax
 
 ```javascript
-cy.readFile(filePath)
-cy.readFile(filePath, encoding)
-cy.readFile(filePath, options)
-cy.readFile(filePath, encoding, options)
+cy.readFile(filePath);
+cy.readFile(filePath, encoding);
+cy.readFile(filePath, options);
+cy.readFile(filePath, encoding, options);
 ```
 
 ### Usage
@@ -18,39 +18,39 @@ cy.readFile(filePath, encoding, options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.readFile('menu.json')
+cy.readFile("menu.json");
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> filePath** ***(String)***
+**<Icon name="angle-right"></Icon> filePath** **_(String)_**
 
 A path to a file within the project root (the directory that contains the default `cypress.json` configuration file).
 
-**<Icon name="angle-right"></Icon> encoding**  ***(String)***
+**<Icon name="angle-right"></Icon> encoding** **_(String)_**
 
 The encoding to be used when reading the file. The following encodings are supported:
 
-* `ascii`
-* `base64`
-* `binary`
-* `hex`
-* `latin1`
-* `utf8`
-* `utf-8`
-* `ucs2`
-* `ucs-2`
-* `utf16le`
-* `utf-16le`
+- `ascii`
+- `base64`
+- `binary`
+- `hex`
+- `latin1`
+- `utf8`
+- `utf-8`
+- `ucs2`
+- `ucs-2`
+- `utf16le`
+- `utf-16le`
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.readFile()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.readFile()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.readFile()` to resolve before [timing out](#Timeouts)               |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -71,7 +71,7 @@ Hello World
 ```
 
 ```javascript
-cy.readFile('path/to/message.txt').should('eq', 'Hello World') // true
+cy.readFile("path/to/message.txt").should("eq", "Hello World"); // true
 ```
 
 ### JSON
@@ -88,7 +88,7 @@ For JSON, the contents yielded are parsed into JavaScript and returned.
 ```
 
 ```javascript
-cy.readFile('path/to/data.json').its('name').should('eq', 'Eliza') // true
+cy.readFile("path/to/data.json").its("name").should("eq", "Eliza"); // true
 ```
 
 ### YAML
@@ -96,23 +96,20 @@ cy.readFile('path/to/data.json').its('name').should('eq', 'Eliza') // true
 #### Get translation data from a YAML file
 
 ```javascript
-const YAML = require('yamljs')
+const YAML = require("yamljs");
 
-cy
-  .readFile('languages/en.yml')
-  .then((str) => {
-    // parse the string into object literal
-    const english = YAML.parse(str)
+cy.readFile("languages/en.yml").then((str) => {
+  // parse the string into object literal
+  const english = YAML.parse(str);
 
-    cy
-      .get('#sidebar')
-      .find('.sidebar-title')
-      .each(($el, i) => {
-        englishTitle = english.sidebar[i]
+  cy.get("#sidebar")
+    .find(".sidebar-title")
+    .each(($el, i) => {
+      englishTitle = english.sidebar[i];
 
-        expect($el.text()).to.eq(englishTitle)
-      })
-  })
+      expect($el.text()).to.eq(englishTitle);
+    });
+});
 ```
 
 ### Encoding
@@ -120,22 +117,22 @@ cy
 #### Specify the encoding with the second argument
 
 ```javascript
-cy.readFile('path/to/logo.png', 'base64').then((logo) => {
+cy.readFile("path/to/logo.png", "base64").then((logo) => {
   // logo will be encoded as base64
   // and should look something like this:
   // aIJKnwxydrB10NVWqhlmmC+ZiWs7otHotSAAAOw==...
-})
+});
 ```
 
 ### Playing MP3 file
 
 ```javascript
-cy.readFile('audio/sound.mp3', 'base64').then((mp3) => {
-  const uri = 'data:audio/mp3;base64,' + mp3
-  const audio = new Audio(uri)
+cy.readFile("audio/sound.mp3", "base64").then((mp3) => {
+  const uri = "data:audio/mp3;base64," + mp3;
+  const audio = new Audio(uri);
 
-  audio.play()
-})
+  audio.play();
+});
 ```
 
 ## Notes
@@ -148,7 +145,7 @@ By default, `cy.readFile()` asserts that the file exists and will fail if it doe
 
 ```javascript
 // will fail after the defaultCommandTimeout is reached
-cy.readFile('does-not-exist.yaml')
+cy.readFile("does-not-exist.yaml");
 ```
 
 #### Asserting file non-existence
@@ -157,12 +154,12 @@ You can assert that a file does not exist like so:
 
 ```javascript
 // will pass if the file does not exist
-cy.readFile('does-not-exist.yaml').should('not.exist')
+cy.readFile("does-not-exist.yaml").should("not.exist");
 ```
 
 #### Read a file that might not exist
 
-[See our example on using `cy.task()` to read a file that *may* not exist.](/api/commands/task#Read-a-file-that-might-not-exist)
+[See our example on using `cy.task()` to read a file that _may_ not exist.](/api/commands/task#Read-a-file-that-might-not-exist)
 
 ### Retries
 
@@ -173,7 +170,7 @@ cy.readFile('does-not-exist.yaml').should('not.exist')
 ```javascript
 // if this assertion fails cy.readFile will poll the file
 // until it eventually passes its assertions (or times out)
-cy.readFile('some/nested/path/story.txt').should('eq', 'Once upon a time...')
+cy.readFile("some/nested/path/story.txt").should("eq", "Once upon a time...");
 ```
 
 ## Rules
@@ -192,10 +189,10 @@ cy.readFile('some/nested/path/story.txt').should('eq', 'Once upon a time...')
 
 ## Command Log
 
-***List the contents of the default `cypress.json` configuration file***
+**_List the contents of the default `cypress.json` configuration file_**
 
 ```javascript
-cy.readFile('cypress.json')
+cy.readFile("cypress.json");
 ```
 
 The command above will display in the Command Log as:
@@ -212,4 +209,3 @@ When clicking on the `readFile` command within the command log, the console outp
 - [`cy.fixture()`](/api/commands/fixture)
 - [`cy.task()`](/api/commands/task)
 - [`cy.writeFile()`](/api/commands/writefile)
-

@@ -9,9 +9,9 @@ This video by the creator of Cypress Brian Mann shows what we consider the best 
 
 First we'll test our "Login Page", refactor, and then create a [Custom Command](/api/cypress-api/custom-commands). From there we'll use [`cy.request()`](/api/commands/request) to programmatically log in. Finally, we'll discuss approaches for taking shortcuts by controlling your application's state directly, and for writing your tests **in isolation** to prevent specs from being coupled together or having to share knowledge.
 
-| Tutorial | Length | Release date | Cypress version|
-| -- | -- | -- | -- |
-| [Organizing Tests, Logging In, Controlling State](https://www.youtube.com/watch?v=5XQOK0v_YRE) | <Icon name="video-camera"></Icon> 27:21 | <time datetime="2018-02-22T16:00:00.000Z">02-22-2018</time> | 2.1.0 |
+| Tutorial                                                                                       | Length                                  | Release date                                                | Cypress version |
+| ---------------------------------------------------------------------------------------------- | --------------------------------------- | ----------------------------------------------------------- | --------------- |
+| [Organizing Tests, Logging In, Controlling State](https://www.youtube.com/watch?v=5XQOK0v_YRE) | <Icon name="video-camera"></Icon> 27:21 | <time datetime="2018-02-22T16:00:00.000Z">02-22-2018</time> | 2.1.0           |
 
 ## Video playlists
 
@@ -33,19 +33,19 @@ By the end of this tutorial, you will have a feel for what it is like to test yo
 
 We have a lot of ground to cover, so let's get started!
 
-***Contents:***
+**_Contents:_**
 
-| Tutorial | Length | Release date | Cypress version|
-| -- | -- | -- | -- |
-| 1. [Project setup](#1-Project-setup) | <Icon name="video-camera"></Icon> 3:52 | <time datetime="2017-11-01T16:00:00.000Z">11-01-2017</time> | 1.0.2 |
-| 2. [Testing inputs](#2-Text-inputs) | <Icon name="video-camera"></Icon> 7:17 | <time datetime="2017-11-01T16:00:00.000Z">11-01-2017</time> | 1.0.2 |
-| 3. [Form submission and XHRs](#3-Form-submission-and-XHRs) | <Icon name="video-camera"></Icon> 10:21 | <time datetime="2017-11-04T10:45:00.000Z">11-04-2017</time> | 1.0.2 |
-| 4. [Loading data with fixtures](#4-Loading-data-with-fixtures) | <Icon name="video-camera"></Icon> 9:00 | <time datetime="2017-11-08T16:00:00.000Z">11-08-2017</time> | 1.0.2 |
-| 5. [Todo item behavior](#5-Todo-item-behavior) | <Icon name="video-camera"></Icon> 8:19 | <time datetime="2017-11-20T16:00:00.000Z">11-20-2017</time> | 1.0.2 |
-| 6. [Toggling and debugging](#6-Toggling-and-debugging) | <Icon name="video-camera"></Icon> 9:05 | <time datetime="2017-11-20T16:00:00.000Z">11-20-2017</time> | 1.0.2 |
-| 7. [Filters and data-driven tests](#7-Filters-and-data-driven-tests) | <Icon name="video-camera"></Icon> 11:39 | <time datetime="2017-11-29T16:00:00.000Z">11-29-2017</time> | 1.0.2 |
-| 8. [Full end-to-end tests part 1](#8-Full-end-to-end-tests-part-1) | <Icon name="video-camera"></Icon> 8:59 | <time datetime="2017-12-07T16:00:00.000Z">12-07-2017</time> | 1.0.2 |
-| 9. [Full end-to-end tests part 2](#9-Full-end-to-end-tests-part-2) | <Icon name="video-camera"></Icon> 7:04 | <time datetime="2017-12-07T16:00:00.000Z">12-07-2017</time> | 1.0.2 |
+| Tutorial                                                             | Length                                  | Release date                                                | Cypress version |
+| -------------------------------------------------------------------- | --------------------------------------- | ----------------------------------------------------------- | --------------- |
+| 1. [Project setup](#1-Project-setup)                                 | <Icon name="video-camera"></Icon> 3:52  | <time datetime="2017-11-01T16:00:00.000Z">11-01-2017</time> | 1.0.2           |
+| 2. [Testing inputs](#2-Text-inputs)                                  | <Icon name="video-camera"></Icon> 7:17  | <time datetime="2017-11-01T16:00:00.000Z">11-01-2017</time> | 1.0.2           |
+| 3. [Form submission and XHRs](#3-Form-submission-and-XHRs)           | <Icon name="video-camera"></Icon> 10:21 | <time datetime="2017-11-04T10:45:00.000Z">11-04-2017</time> | 1.0.2           |
+| 4. [Loading data with fixtures](#4-Loading-data-with-fixtures)       | <Icon name="video-camera"></Icon> 9:00  | <time datetime="2017-11-08T16:00:00.000Z">11-08-2017</time> | 1.0.2           |
+| 5. [Todo item behavior](#5-Todo-item-behavior)                       | <Icon name="video-camera"></Icon> 8:19  | <time datetime="2017-11-20T16:00:00.000Z">11-20-2017</time> | 1.0.2           |
+| 6. [Toggling and debugging](#6-Toggling-and-debugging)               | <Icon name="video-camera"></Icon> 9:05  | <time datetime="2017-11-20T16:00:00.000Z">11-20-2017</time> | 1.0.2           |
+| 7. [Filters and data-driven tests](#7-Filters-and-data-driven-tests) | <Icon name="video-camera"></Icon> 11:39 | <time datetime="2017-11-29T16:00:00.000Z">11-29-2017</time> | 1.0.2           |
+| 8. [Full end-to-end tests part 1](#8-Full-end-to-end-tests-part-1)   | <Icon name="video-camera"></Icon> 8:59  | <time datetime="2017-12-07T16:00:00.000Z">12-07-2017</time> | 1.0.2           |
+| 9. [Full end-to-end tests part 2](#9-Full-end-to-end-tests-part-2)   | <Icon name="video-camera"></Icon> 7:04  | <time datetime="2017-12-07T16:00:00.000Z">12-07-2017</time> | 1.0.2           |
 
 ### 1. Project setup
 
@@ -145,4 +145,3 @@ We will continue building on our full end-to-end tests, this time seeding the da
 <Icon name="github"></Icon> [Get the completed code for this lesson on GitHub](https://github.com/cypress-io/cypress-tutorial-build-todo/tree/09_smoke_2)
 
 <DocsVideo src="https://vimeo.com/245388948"></DocsVideo>
-

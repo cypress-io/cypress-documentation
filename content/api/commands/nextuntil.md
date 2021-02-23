@@ -6,7 +6,6 @@ Get all following siblings of each DOM element in a set of matched DOM elements 
 
 <Alert type="info">
 
-
 The querying behavior of this command matches exactly how [`.nextUntil()`](http://api.jquery.com/nextUntil) works in jQuery.
 
 </Alert>
@@ -27,38 +26,38 @@ The querying behavior of this command matches exactly how [`.nextUntil()`](http:
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('div').nextUntil('.warning') // Yield siblings after 'div' until '.warning'
+cy.get("div").nextUntil(".warning"); // Yield siblings after 'div' until '.warning'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.nextUntil()                  // Errors, cannot be chained off 'cy'
-cy.location().nextUntil('path') // Errors, 'location' does not yield DOM element
+cy.nextUntil(); // Errors, cannot be chained off 'cy'
+cy.location().nextUntil("path"); // Errors, 'location' does not yield DOM element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> selector**  ***(String selector)***
+**<Icon name="angle-right"></Icon> selector** **_(String selector)_**
 
 The selector where you want finding next siblings to stop.
 
-**<Icon name="angle-right"></Icon> element**  ***(DOM node, jQuery Object)***
+**<Icon name="angle-right"></Icon> element** **_(DOM node, jQuery Object)_**
 
 The element where you want finding next siblings to stop.
 
-**<Icon name="angle-right"></Icon> filter**  ***(String selector)***
+**<Icon name="angle-right"></Icon> filter** **_(String selector)_**
 
 A selector used to filter matching DOM elements.
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.nextUntil()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.nextUntil()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.nextUntil()` to resolve before [timing out](#Timeouts)                |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -89,7 +88,7 @@ Option | Default | Description
 
 ```javascript
 //returns [<li>cucumbers</li>, <li>carrots</li>, <li>corn</li>]
-cy.get('#veggies').nextUntil('#nuts')
+cy.get("#veggies").nextUntil("#nuts");
 ```
 
 ## Rules
@@ -108,10 +107,10 @@ cy.get('#veggies').nextUntil('#nuts')
 
 ## Command Log
 
-***Find all of the element's siblings following `#veggies` until `#nuts`***
+**_Find all of the element's siblings following `#veggies` until `#nuts`_**
 
 ```javascript
-cy.get('#veggies').nextUntil('#nuts')
+cy.get("#veggies").nextUntil("#nuts");
 ```
 
 The commands above will display in the Command Log as:
@@ -128,4 +127,3 @@ When clicking on `nextUntil` within the command log, the console outputs the fol
 - [`.nextAll()`](/api/commands/nextall)
 - [`.parentsUntil()`](/api/commands/parentsuntil)
 - [`.prevUntil()`](/api/commands/prevuntil)
-

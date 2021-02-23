@@ -7,8 +7,8 @@ Get all of the browser cookies.
 ## Syntax
 
 ```javascript
-cy.getCookies()
-cy.getCookies(options)
+cy.getCookies();
+cy.getCookies(options);
 ```
 
 ### Usage
@@ -16,30 +16,30 @@ cy.getCookies(options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.getCookies()    // Get all cookies
+cy.getCookies(); // Get all cookies
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.getCookies()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.getCookies()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                        | Description                                                                              |
+| --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.getCookies()` to resolve before [timing out](#Timeouts)             |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
 `cy.getCookies()` yields an array of cookie objects. Each cookie object has the following properties:
 
 - `domain`
-- `expiry` *(if specified)*
+- `expiry` _(if specified)_
 - `httpOnly`
 - `name`
 - `path`
-- `sameSite` *(if specified)*
+- `sameSite` _(if specified)_
 - `secure`
 - `value`
 
@@ -53,13 +53,13 @@ In this example, on first login our server sends us back a session cookie.
 
 ```javascript
 // assume we just logged in
-cy.contains('Login').click()
-cy.url().should('include', 'profile')
+cy.contains("Login").click();
+cy.url().should("include", "profile");
 cy.getCookies()
-  .should('have.length', 1)
+  .should("have.length", 1)
   .then((cookies) => {
-    expect(cookies[0]).to.have.property('name', 'session_id')
-  })
+    expect(cookies[0]).to.have.property("name", "session_id");
+  });
 ```
 
 ## Rules
@@ -76,7 +76,6 @@ cy.getCookies()
 
 <List><li>`cy.getCookies()` should never time out.</li><li><Alert type="warning">
 
-
 Because `cy.getCookies()` is asynchronous it is technically possible for there to be a timeout while talking to the internal Cypress automation APIs. But for practical purposes it should never happen.
 
 </Alert></li></List>
@@ -84,14 +83,16 @@ Because `cy.getCookies()` is asynchronous it is technically possible for there t
 ## Command Log
 
 ```javascript
-cy.getCookies().should('have.length', 1).then((cookies) => {
-  expect(cookies[0]).to.have.property('name', 'fakeCookie1')
-  expect(cookies[0]).to.have.property('value', '123ABC')
-  expect(cookies[0]).to.have.property('domain')
-  expect(cookies[0]).to.have.property('httpOnly')
-  expect(cookies[0]).to.have.property('path')
-  expect(cookies[0]).to.have.property('secure')
-})
+cy.getCookies()
+  .should("have.length", 1)
+  .then((cookies) => {
+    expect(cookies[0]).to.have.property("name", "fakeCookie1");
+    expect(cookies[0]).to.have.property("value", "123ABC");
+    expect(cookies[0]).to.have.property("domain");
+    expect(cookies[0]).to.have.property("httpOnly");
+    expect(cookies[0]).to.have.property("path");
+    expect(cookies[0]).to.have.property("secure");
+  });
 ```
 
 The commands above will display in the Command Log as:
@@ -104,10 +105,10 @@ When clicking on `getCookies` within the command log, the console outputs the fo
 
 ## History
 
-Version | Changes
---- | ---
-[5.0.0](/guides/references/changelog#5-0-0) | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.
-[4.3.0](/guides/references/changelog#4-3-0) | Added `sameSite` property when the [experimentalGetCookiesSameSite](/guides/references/configuration#Experiments) configuration value is `true`.
+| Version                                     | Changes                                                                                                                                          |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [5.0.0](/guides/references/changelog#5-0-0) | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.                                                          |
+| [4.3.0](/guides/references/changelog#4-3-0) | Added `sameSite` property when the [experimentalGetCookiesSameSite](/guides/references/configuration#Experiments) configuration value is `true`. |
 
 ## See also
 
@@ -116,4 +117,3 @@ Version | Changes
 - [Cypress Cookies API](/api/cypress-api/cookies)
 - [`cy.getCookie()`](/api/commands/getcookie)
 - [`cy.setCookie()`](/api/commands/setcookie)
-

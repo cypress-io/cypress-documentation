@@ -6,7 +6,6 @@ Get the descendent DOM elements of a specific selector.
 
 <Alert type="info">
 
-
 The querying behavior of this command matches exactly how [`.find()`](http://api.jquery.com/find) works in jQuery.
 
 </Alert>
@@ -23,31 +22,31 @@ The querying behavior of this command matches exactly how [`.find()`](http://api
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('.article').find('footer') // Yield 'footer' within '.article'
+cy.get(".article").find("footer"); // Yield 'footer' within '.article'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.find('.progress')          // Errors, cannot be chained off 'cy'
-cy.exec('node start').find()  // Errors, 'exec' does not yield DOM element
+cy.find(".progress"); // Errors, cannot be chained off 'cy'
+cy.exec("node start").find(); // Errors, 'exec' does not yield DOM element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> selector**  ***(String selector)***
+**<Icon name="angle-right"></Icon> selector** **_(String selector)_**
 
 A selector used to filter matching descendent DOM elements.
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.find()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.find()` to resolve before [timing out](#Timeouts)
-`includeShadowDom` | [`includeShadowDom`<br](/> config option value' configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results.
+| Option             | Default                                                               | Description                                                                                                  |
+| ------------------ | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `log`              | `true`                                                                | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                     |
+| `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)  | Time to wait for `.find()` to resolve before [timing out](#Timeouts)                                         |
+| `includeShadowDom` | [`includeShadowDom`<br](/> config option value' configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -68,7 +67,7 @@ Option | Default | Description
 
 ```javascript
 // yields [<li class="first"></li>, <li class="second"></li>]
-cy.get('#parent').find('li')
+cy.get("#parent").find("li");
 ```
 
 ## Rules
@@ -87,10 +86,10 @@ cy.get('#parent').find('li')
 
 ## Command Log
 
-***Find the li's within the nav***
+**_Find the li's within the nav_**
 
 ```javascript
-cy.get('.left-nav>.nav').find('>li')
+cy.get(".left-nav>.nav").find(">li");
 ```
 
 The commands above will display in the Command Log as:
@@ -103,11 +102,10 @@ When clicking on the `find` command within the command log, the console outputs 
 
 ## History
 
-Version | Changes
---- | ---
-[5.2.0](/guides/references/changelog#5-2-0) | Added `includeShadowDom` option.
+| Version                                     | Changes                          |
+| ------------------------------------------- | -------------------------------- |
+| [5.2.0](/guides/references/changelog#5-2-0) | Added `includeShadowDom` option. |
 
 ## See also
 
 - [`cy.get()`](/api/commands/get)
-

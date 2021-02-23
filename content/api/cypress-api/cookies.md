@@ -20,7 +20,7 @@ Cypress.Cookies.defaults(options)
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> enable**  ***(Boolean)***
+**<Icon name="angle-right"></Icon> enable** **_(Boolean)_**
 
 Whether cookie debugging should be enabled.
 
@@ -28,7 +28,7 @@ Whether cookie debugging should be enabled.
 
 Names of cookies to be preserved. Pass an unlimited number of arguments.
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Set defaults for all cookies, such as preserving a set of cookies to bypass being cleared before each test.
 
@@ -38,13 +38,13 @@ Set defaults for all cookies, such as preserving a set of cookies to bypass bein
 
 #### Log when cookie values are created, modified or deleted
 
-By turning on debugging, Cypress will automatically generate logs to the console when it *sets* or *clears* cookie values. This is useful to help you understand how Cypress clears cookies before each test, and is useful to visualize how to handle preserving cookies in between tests.
+By turning on debugging, Cypress will automatically generate logs to the console when it _sets_ or _clears_ cookie values. This is useful to help you understand how Cypress clears cookies before each test, and is useful to visualize how to handle preserving cookies in between tests.
 
 ```javascript
-Cypress.Cookies.debug(true) // now Cypress will log when it alters cookies
+Cypress.Cookies.debug(true); // now Cypress will log when it alters cookies
 
-cy.clearCookie('foo')
-cy.setCookie('foo', 'bar')
+cy.clearCookie("foo");
+cy.setCookie("foo", "bar");
 ```
 
 <DocsImage src="/img/api/cookies/cookies-in-console-log.png" alt="Console log when debugging cookies" ></DocsImage>
@@ -54,7 +54,7 @@ cy.setCookie('foo', 'bar')
 By default Cypress will log the cookie object which allows you to inspect all of its properties. However you may not need that level of detail and you can turn this off.
 
 ```javascript
-Cypress.Cookies.debug(true, { verbose: false })
+Cypress.Cookies.debug(true, { verbose: false });
 ```
 
 Now when Cypress logs cookies they will only include the `name` and `value`.
@@ -64,7 +64,7 @@ Now when Cypress logs cookies they will only include the `name` and `value`.
 Debugging will be turned on until you explicitly turn it off.
 
 ```javascript
-Cypress.Cookies.debug(false) // now debugging is turned off
+Cypress.Cookies.debug(false); // now debugging is turned off
 ```
 
 ### Preserve Once
@@ -77,24 +77,23 @@ By clearing cookies before each test you are guaranteed to always start from a c
 
 <Alert type="info">
 
-
 The most common use case for preserving cookies is to prevent having to log in to your application before each individual test. This is a problem if the majority of each test is spent logging in a user.
 
 </Alert>
 
 You can use `Cypress.Cookies.preserveOnce()` to preserve cookies through multiple tests.
 
-There are *likely* better ways to do this, but this isn't well documented at the moment. Every application is different and there is no one-size-fits-all solution. For the moment, if you're using session-based cookies, this method will work.
+There are _likely_ better ways to do this, but this isn't well documented at the moment. Every application is different and there is no one-size-fits-all solution. For the moment, if you're using session-based cookies, this method will work.
 
 ```javascript
-describe('Dashboard', () => {
+describe("Dashboard", () => {
   before(() => {
     // log in only once before any of the tests run.
     // your app will likely set some sort of session cookie.
     // you'll need to know the name of the cookie(s), which you can find
     // in your Resources -> Cookies panel in the Chrome Dev Tools.
-    cy.login()
-  })
+    cy.login();
+  });
 
   beforeEach(() => {
     // before each test, we can automatically preserve the
@@ -103,21 +102,21 @@ describe('Dashboard', () => {
     //
     // the name of your cookies will likely be different
     // this is an example
-    Cypress.Cookies.preserveOnce('session_id', 'remember_token')
-  })
+    Cypress.Cookies.preserveOnce("session_id", "remember_token");
+  });
 
-  it('displays stats', () => {
+  it("displays stats", () => {
     // ...
-  })
+  });
 
-  it('can do something', () => {
+  it("can do something", () => {
     // ...
-  })
+  });
 
-  it('opens a modal', () => {
+  it("opens a modal", () => {
     // ...
-  })
-})
+  });
+});
 ```
 
 ### Defaults
@@ -129,7 +128,6 @@ You can modify the global defaults and preserve a set of Cookies which will alwa
 Any change you make here will take effect immediately for the remainder of every single test.
 
 <Alert type="info">
-
 
 A great place to put this configuration is in your `cypress/support/index.js` file, since it is loaded before any test files are evaluated.
 
@@ -148,8 +146,8 @@ A great place to put this configuration is in your `cypress/support/index.js` fi
 // now any cookie with the name 'session_id' will
 // not be cleared before each test runs
 Cypress.Cookies.defaults({
-  preserve: 'session_id'
-})
+  preserve: "session_id",
+});
 ```
 
 #### Preserve Array
@@ -158,8 +156,8 @@ Cypress.Cookies.defaults({
 // now any cookie with the name 'session_id' or 'remember_token'
 // will not be cleared before each test runs
 Cypress.Cookies.defaults({
-  preserve: ['session_id', 'remember_token']
-})
+  preserve: ["session_id", "remember_token"],
+});
 ```
 
 #### Preserve RegExp
@@ -168,8 +166,8 @@ Cypress.Cookies.defaults({
 // now any cookie that matches this RegExp
 // will not be cleared before each test runs
 Cypress.Cookies.defaults({
-  preserve: /session|remember/
-})
+  preserve: /session|remember/,
+});
 ```
 
 #### Preserve Function
@@ -181,18 +179,18 @@ Cypress.Cookies.defaults({
     // if the function returns truthy
     // then the cookie will not be cleared
     // before each test runs
-  }
-})
+  },
+});
 ```
 
 ## History
 
-Version | Changes
---- | ---
-[5.0.0](/guides/references/changelog#5-0-0) | Renamed `whitelist` option to `preserve`
-[0.16.1](/guides/references/changelog#0-16-1) | `{verbose: false}` option added
-[0.16.0](/guides/references/changelog#0-16-0) | Removed support for `Cypress.Cookies.get`, `Cypress.Cookies.set` and `Cypress.Cookies.remove`
-[0.12.4](/guides/references/changelog#0-12-4) | `Cypress.Cookies` API added
+| Version                                       | Changes                                                                                       |
+| --------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| [5.0.0](/guides/references/changelog#5-0-0)   | Renamed `whitelist` option to `preserve`                                                      |
+| [0.16.1](/guides/references/changelog#0-16-1) | `{verbose: false}` option added                                                               |
+| [0.16.0](/guides/references/changelog#0-16-0) | Removed support for `Cypress.Cookies.get`, `Cypress.Cookies.set` and `Cypress.Cookies.remove` |
+| [0.12.4](/guides/references/changelog#0-12-4) | `Cypress.Cookies` API added                                                                   |
 
 ## See also
 
@@ -201,4 +199,3 @@ Version | Changes
 - [`cy.getCookie()`](/api/commands/getcookie)
 - [`cy.getCookies()`](/api/commands/getcookies)
 - [`cy.setCookie()`](/api/commands/setcookie)
-

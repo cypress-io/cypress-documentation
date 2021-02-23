@@ -6,7 +6,6 @@ Get A DOM element at a specific index in an array of elements.
 
 <Alert type="info">
 
-
 The querying behavior of this command matches exactly how [`.eq()`](https://api.jquery.com/eq) works in jQuery.
 
 </Alert>
@@ -25,35 +24,35 @@ The querying behavior of this command matches exactly how [`.eq()`](https://api.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('tbody>tr').eq(0)    // Yield first 'tr' in 'tbody'
-cy.get('ul>li').eq(4)       // Yield fifth 'li' in 'ul'
+cy.get("tbody>tr").eq(0); // Yield first 'tr' in 'tbody'
+cy.get("ul>li").eq(4); // Yield fifth 'li' in 'ul'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.eq(0)                  // Errors, cannot be chained off 'cy'
-cy.getCookies().eq(4)     // Errors, 'getCookies' does not yield DOM element
+cy.eq(0); // Errors, cannot be chained off 'cy'
+cy.getCookies().eq(4); // Errors, 'getCookies' does not yield DOM element
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> index**  ***(Number)***
+**<Icon name="angle-right"></Icon> index** **_(Number)_**
 
 A number indicating the index to find the element at within an array of elements. Starts with 0.
 
-**<Icon name="angle-right"></Icon> indexFromEnd**  ***(Number)***
+**<Icon name="angle-right"></Icon> indexFromEnd** **_(Number)_**
 
 A negative number indicating the index position from the end to find the element at within an array of elements.
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.eq()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.eq()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.eq()` to resolve before [timing out](#Timeouts)                       |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -76,7 +75,7 @@ Option | Default | Description
 ```
 
 ```javascript
-cy.get('li').eq(1).should('contain', 'siamese') // true
+cy.get("li").eq(1).should("contain", "siamese"); // true
 ```
 
 #### Make an assertion on the 3rd row of a table
@@ -98,11 +97,12 @@ cy.get('li').eq(1).should('contain', 'siamese') // true
   <tr>
     <td>Persian</td>
     <td>Iran</td>
+  </tr>
 </table>
 ```
 
 ```javascript
-cy.get('tr').eq(2).should('contain', 'Canada')  //true
+cy.get("tr").eq(2).should("contain", "Canada"); //true
 ```
 
 ### Index From End
@@ -120,7 +120,7 @@ cy.get('tr').eq(2).should('contain', 'Canada')  //true
 ```
 
 ```javascript
-cy.get('li').eq(-2).should('contain', 'sphynx') // true
+cy.get("li").eq(-2).should("contain", "sphynx"); // true
 ```
 
 ## Rules
@@ -139,10 +139,10 @@ cy.get('li').eq(-2).should('contain', 'sphynx') // true
 
 ## Command Log
 
-***Find the 4th `<li>` in the navigation***
+**_Find the 4th `<li>` in the navigation_**
 
 ```javascript
-cy.get('.left-nav.nav').find('>li').eq(3)
+cy.get(".left-nav.nav").find(">li").eq(3);
 ```
 
 The commands above will display in the Command Log as:
@@ -159,4 +159,3 @@ When clicking on the `eq` command within the command log, the console outputs th
 - [`.last()`](/api/commands/last)
 - [`.next()`](/api/commands/next)
 - [`.prev()`](/api/commands/prev)
-

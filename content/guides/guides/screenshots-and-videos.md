@@ -4,7 +4,6 @@ title: Screenshots and Videos
 
 <Alert type="info">
 
-
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
 - How Cypress captures screenshots of test failures automatically
@@ -20,7 +19,7 @@ Cypress comes with the ability to take screenshots, whether you are running via 
 
 To take a manual screenshot you can use the [`cy.screenshot()`](/api/commands/screenshot) command.
 
-Additionally, Cypress will automatically capture screenshots when a failure happens during `cypress run`. Screenshots on failure are *not* automatically taken during `cypress open`.
+Additionally, Cypress will automatically capture screenshots when a failure happens during `cypress run`. Screenshots on failure are _not_ automatically taken during `cypress open`.
 
 Capturing of screenshots when a test fails can be turned off entirely by setting [`screenshotOnRunFailure`](/guides/references/configuration#Screenshots) to `false` from within your [configuration](/guides/references/configuration) or by setting `screenshotOnRunFailure` to `false` in the [Cypress.Screenshot.defaults()](/api/cypress-api/screenshot-api).
 
@@ -30,7 +29,7 @@ Cypress clears any existing screenshots before `cypress run`. If you do not want
 
 ## Videos
 
-Cypress records a video for each spec file when running tests during `cypress run`. Videos are *not* automatically recorded during `cypress open`.
+Cypress records a video for each spec file when running tests during `cypress run`. Videos are _not_ automatically recorded during `cypress open`.
 
 Video recording can be turned off entirely by setting [`video`](/guides/references/configuration#Videos) to `false` from within your configuration.
 
@@ -68,7 +67,6 @@ The compression step will be skipped completely, so the video will be large, but
 
 <Alert type="info">
 
-
 If you are an FFmpeg pro and want to see all the settings and debug messages during the encoding, run Cypress with the following environment variable: `DEBUG=cypress:server:video cypress run`
 
 </Alert>
@@ -80,6 +78,7 @@ So you are capturing screenshots and recording videos of your test runs, now wha
 ### Share Them With Your Team
 
 <!-- Line breaks removed to prevent random br elements -->
+
 Something you can take advantage of today is the [Cypress Dashboard Service](/guides/dashboard/dashboard-introduction): our companion enterprise service that stores your artifacts for you and lets you view them from any web browser, as well as share them with your team.
 
 ### Visual Regression Test / Screenshot Diffing
@@ -93,4 +92,3 @@ Another possibility is visual regression testing: comparing screenshots of past 
 - [Dashboard Service](/guides/dashboard/dashboard-introduction)
 - [`cy.screenshot()`](/api/commands/screenshot)
 - [Visual Testing](/guides/tooling/visual-testing)
-

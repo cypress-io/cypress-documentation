@@ -1,6 +1,5 @@
 ---
 title: each
-
 ---
 
 Iterate through an array like structure (arrays or objects with a `length` property).
@@ -30,7 +29,7 @@ cy.location().each(() => {...}) // Errors, 'location' doesn't yield an array
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> callbackFn** ***(Function)***
+**<Icon name="angle-right"></Icon> callbackFn** **_(Function)_**
 
 Pass a function that is invoked with the following arguments:
 
@@ -46,41 +45,39 @@ Pass a function that is invoked with the following arguments:
 
 ### DOM Elements
 
-***Iterate over an array of DOM elements***
+**_Iterate over an array of DOM elements_**
 
 ```javascript
-cy
-  .get('ul>li')
-  .each(($el, index, $list) => {
-    // $el is a wrapped jQuery element
-    if ($el.someMethod() === 'something') {
-      // wrap this element so we can
-      // use cypress commands on it
-      cy.wrap($el).click()
-    } else {
-      // do something else
-    }
-  })
+cy.get("ul>li").each(($el, index, $list) => {
+  // $el is a wrapped jQuery element
+  if ($el.someMethod() === "something") {
+    // wrap this element so we can
+    // use cypress commands on it
+    cy.wrap($el).click();
+  } else {
+    // do something else
+  }
+});
 ```
 
-***The original array is always yielded***
+**_The original array is always yielded_**
 
 No matter what is returned in the callback function, `.each()` will always yield the original array.
 
 ```javascript
-cy
-  .get('li').should('have.length', 3)
+cy.get("li")
+  .should("have.length", 3)
   .each(($li, index, $lis) => {
-    return 'something else'
+    return "something else";
   })
   .then(($lis) => {
-    expect($lis).to.have.length(3) // true
-  })
+    expect($lis).to.have.length(3); // true
+  });
 ```
 
 ### Promises
 
-***Promises are awaited***
+**_Promises are awaited_**
 
 If your callback function returns a `Promise`, it will be awaited before iterating over the next element in the collection.
 
@@ -88,17 +85,17 @@ If your callback function returns a `Promise`, it will be awaited before iterati
 cy.wrap([1, 2, 3]).each((num, i, array) => {
   return new Cypress.Promise((resolve) => {
     setTimeout(() => {
-      resolve()
-    }, num * 100)
-  })
-})
+      resolve();
+    }, num * 100);
+  });
+});
 ```
 
 ## Notes
 
 ### Return early
 
-***Stop `each` prematurely***
+**_Stop `each` prematurely_**
 
 You can stop the `.each()` loop early by returning `false` in the callback function.
 
@@ -118,10 +115,9 @@ You can stop the `.each()` loop early by returning `false` in the callback funct
 
 ## Command Log
 
-- `cy.each()` does *not* log in the Command Log
+- `cy.each()` does _not_ log in the Command Log
 
 ## See also
 
 - [`.spread()`](/api/commands/spread)
 - [`.then()`](/api/commands/then)
-

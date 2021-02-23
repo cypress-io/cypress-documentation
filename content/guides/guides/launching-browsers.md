@@ -29,8 +29,7 @@ Cypress automatically detects available browsers on your OS. You can switch the 
 
 ### Download specific Chrome version
 
-The Chrome browser is evergreen - meaning it will automatically update itself, sometimes causing a breaking change in your automated tests. We host [chromium.cypress.io](https://chromium.cypress.io) with links to download a specific released version of Chrome (dev, Canary and stable) for every platform. 
-
+The Chrome browser is evergreen - meaning it will automatically update itself, sometimes causing a breaking change in your automated tests. We host [chromium.cypress.io](https://chromium.cypress.io) with links to download a specific released version of Chrome (dev, Canary and stable) for every platform.
 
 ### Electron Browser
 
@@ -50,7 +49,7 @@ Because Electron is the default browser - it is typically run in CI. If you are 
 
 ### Chrome Browsers
 
-All Chrome* flavored browsers will be detected and are supported above Chrome 64.
+All Chrome\* flavored browsers will be detected and are supported above Chrome 64.
 
 You can launch Chrome like this:
 
@@ -129,7 +128,7 @@ Cypress will automatically detect the type of browser supplied and launch it for
 
 Sometimes you might want to modify the list of browsers found before running tests.
 
-For example, your web application might *only* be designed to work in a Chrome browser, and not inside the Electron browser.
+For example, your web application might _only_ be designed to work in a Chrome browser, and not inside the Electron browser.
 
 In the plugins file, you can filter the list of browsers passed inside the `config` object and return the list of browsers you want available for selection during `cypress open`.
 
@@ -148,9 +147,9 @@ module.exports = (on, config) => {
   //   majorVersion: 80
   // }
   return {
-    browsers: config.browsers.filter((b) => b.family === 'chromium')
-  }
-}
+    browsers: config.browsers.filter((b) => b.family === "chromium"),
+  };
+};
 ```
 
 When you open the Test Runner in a project that uses the above modifications to your plugins file, only the Chrome browsers found on the system will display in the list of available browsers.
@@ -158,7 +157,6 @@ When you open the Test Runner in a project that uses the above modifications to 
 <DocsImage src="/img/guides/plugins/chrome-browsers-only.png" alt="Filtered list of Chrome browsers" ></DocsImage>
 
 <Alert type="info">
-
 
 If you return an empty list of browsers or `browsers: null`, the default list will be restored automatically.
 
@@ -168,38 +166,38 @@ If you have installed a Chromium-based browser like [Brave](https://brave.com/),
 
 ```javascript
 // cypress/plugins/index.js
-const execa = require('execa')
+const execa = require("execa");
 const findBrowser = () => {
   // the path is hard-coded for simplicity
   const browserPath =
-    '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser'
+    "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser";
 
-  return execa(browserPath, ['--version']).then((result) => {
+  return execa(browserPath, ["--version"]).then((result) => {
     // STDOUT will be like "Brave Browser 77.0.69.135"
     const [, version] = /Brave Browser (\d+\.\d+\.\d+\.\d+)/.exec(
       result.stdout
-    )
-    const majorVersion = parseInt(version.split('.')[0])
+    );
+    const majorVersion = parseInt(version.split(".")[0]);
 
     return {
-      name: 'Brave',
-      channel: 'stable',
-      family: 'chromium',
-      displayName: 'Brave',
+      name: "Brave",
+      channel: "stable",
+      family: "chromium",
+      displayName: "Brave",
       version,
       path: browserPath,
-      majorVersion
-    }
-  })
-}
+      majorVersion,
+    };
+  });
+};
 
 module.exports = (on, config) => {
   return findBrowser().then((browser) => {
     return {
-      browsers: config.browsers.concat(browser)
-    }
-  })
-}
+      browsers: config.browsers.concat(browser),
+    };
+  });
+};
 ```
 
 <DocsImage src="/img/guides/plugins/brave-browser.png" alt="List of browsers includes Brave browser" ></DocsImage>
@@ -216,7 +214,7 @@ Many browsers such as Safari and Internet Explorer are not currently supported. 
 
 ## Browser Environment
 
-Cypress launches the browser in a way that's different from a regular browser environment. But it launches in a way that we believe makes testing *more reliable* and *accessible*.
+Cypress launches the browser in a way that's different from a regular browser environment. But it launches in a way that we believe makes testing _more reliable_ and _accessible_.
 
 ### Launching Browsers
 
@@ -235,7 +233,7 @@ Cypress generates its own isolated profile apart from your normal browser profil
 
 <Alert type="warning">
 
- <strong class="alert-header">Wait, I need my developer extensions!</strong>
+<strong class="alert-header">Wait, I need my developer extensions!</strong>
 
 That's no problem - you have to reinstall them **once** in the Cypress launched browser. We'll continue to use this Cypress testing profile on subsequent launches so all of your configuration will be preserved.
 
@@ -281,4 +279,3 @@ Additionally, in Chrome-based browsers, we've made the browser spawned by Cypres
 ## Troubleshooting
 
 [Having issues launching installed browsers? Read more about troubleshooting browser launching](/guides/references/troubleshooting#Launching-browsers)
-

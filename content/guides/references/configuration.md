@@ -6,7 +6,7 @@ When a project is added to Cypress, a `cypress.json` file is created in the proj
 
 <Alert type="warning">
 
- <strong class="alert-header">Change Configuration File</strong>
+<strong class="alert-header">Change Configuration File</strong>
 
 You can change the configuration file or turn off the use of a configuration file by using the [`--config-file` flag](/guides/guides/command-line#cypress-open-config-file-lt-config-file-gt).
 
@@ -18,111 +18,111 @@ The default behavior of Cypress can be modified by supplying any of the followin
 
 ### Global
 
-Option | Default | Description
------ | ---- | ----
-`baseUrl` | `null` | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL
-`env` | `{}` | Any values to be set as [environment variables](/guides/guides/environment-variables)
-`numTestsKeptInMemory` | `50` | The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.
-`port` | `null` | Port used to host Cypress. Normally this is a randomly generated port
-`reporter` | `spec` | The [reporter](/guides/tooling/reporters) used during `cypress run`
-`reporterOptions` | `null` | The [reporter options](/guides/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.
-`retries` | `{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. See [Test Retries](/guides/guides/test-retries) for more information.
-`watchForFileChanges` | `true` | Whether Cypress will watch and restart tests on test file changes
-`includeShadowDom` | `false` | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get))
+| Option                 | Default                           | Description                                                                                                                                                                                  |
+| ---------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `baseUrl`              | `null`                            | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL                                                                          |
+| `env`                  | `{}`                              | Any values to be set as [environment variables](/guides/guides/environment-variables)                                                                                                        |
+| `numTestsKeptInMemory` | `50`                              | The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.           |
+| `port`                 | `null`                            | Port used to host Cypress. Normally this is a randomly generated port                                                                                                                        |
+| `reporter`             | `spec`                            | The [reporter](/guides/tooling/reporters) used during `cypress run`                                                                                                                          |
+| `reporterOptions`      | `null`                            | The [reporter options](/guides/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                           |
+| `retries`              | `{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. See [Test Retries](/guides/guides/test-retries) for more information. |
+| `watchForFileChanges`  | `true`                            | Whether Cypress will watch and restart tests on test file changes                                                                                                                            |
+| `includeShadowDom`     | `false`                           | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get))                                 |
 
 ### Timeouts
 
 <Alert type="success">
 
- <strong class="alert-header">Core Concept</strong>
+<strong class="alert-header">Core Concept</strong>
 
 [Timeouts are a core concept](/guides/core-concepts/introduction-to-cypress#Timeouts) you should understand well. The default values listed here are meaningful.
 
 </Alert>
 
-Option | Default | Description
------ | ---- | ----
-`defaultCommandTimeout` | `4000` | Time, in milliseconds, to wait until most DOM based commands are considered timed out
-`execTimeout` | `60000` | Time, in milliseconds, to wait for a system command to finish executing during a [`cy.exec()`](/api/commands/exec) command
-`taskTimeout` | `60000` | Time, in milliseconds, to wait for a task to finish executing during a [`cy.task()`](/api/commands/task) command
-`pageLoadTimeout` | `60000` | Time, in milliseconds, to wait for `page transition events` or [`cy.visit()`](/api/commands/visit), [`cy.go()`](/api/commands/go), [`cy.reload()`](/api/commands/reload) commands to fire their page `load` events. Network requests are limited by the underlying operating system, and may still time out if this value is increased.
-`requestTimeout` | `5000` | Time, in milliseconds, to wait for a request to go out in a [`cy.wait()`](/api/commands/wait) command
-`responseTimeout` | `30000` | Time, in milliseconds, to wait until a response in a [`cy.request()`](/api/commands/request), [`cy.wait()`](/api/commands/wait), [`cy.fixture()`](/api/commands/fixture), [`cy.getCookie()`](/api/commands/getcookie), [`cy.getCookies()`](/api/commands/getcookies), [`cy.setCookie()`](/api/commands/setcookie), [`cy.clearCookie()`](/api/commands/clearcookie), [`cy.clearCookies()`](/api/commands/clearcookies), and [`cy.screenshot()`](/api/commands/screenshot) commands
+| Option                  | Default | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ----------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `defaultCommandTimeout` | `4000`  | Time, in milliseconds, to wait until most DOM based commands are considered timed out                                                                                                                                                                                                                                                                                                                                                                                             |
+| `execTimeout`           | `60000` | Time, in milliseconds, to wait for a system command to finish executing during a [`cy.exec()`](/api/commands/exec) command                                                                                                                                                                                                                                                                                                                                                        |
+| `taskTimeout`           | `60000` | Time, in milliseconds, to wait for a task to finish executing during a [`cy.task()`](/api/commands/task) command                                                                                                                                                                                                                                                                                                                                                                  |
+| `pageLoadTimeout`       | `60000` | Time, in milliseconds, to wait for `page transition events` or [`cy.visit()`](/api/commands/visit), [`cy.go()`](/api/commands/go), [`cy.reload()`](/api/commands/reload) commands to fire their page `load` events. Network requests are limited by the underlying operating system, and may still time out if this value is increased.                                                                                                                                           |
+| `requestTimeout`        | `5000`  | Time, in milliseconds, to wait for a request to go out in a [`cy.wait()`](/api/commands/wait) command                                                                                                                                                                                                                                                                                                                                                                             |
+| `responseTimeout`       | `30000` | Time, in milliseconds, to wait until a response in a [`cy.request()`](/api/commands/request), [`cy.wait()`](/api/commands/wait), [`cy.fixture()`](/api/commands/fixture), [`cy.getCookie()`](/api/commands/getcookie), [`cy.getCookies()`](/api/commands/getcookies), [`cy.setCookie()`](/api/commands/setcookie), [`cy.clearCookie()`](/api/commands/clearcookie), [`cy.clearCookies()`](/api/commands/clearcookies), and [`cy.screenshot()`](/api/commands/screenshot) commands |
 
 ### Folders / Files
 
-Option | Default | Description
------ | ---- | ----
-`downloadsFolder`    | `cypress/downloads`    | Path to folder where files downloaded during a test are saved
-`fileServerFolder`    | root project folder    |Path to folder where application files will attempt to be served from
-`fixturesFolder`    | `cypress/fixtures`    | Path to folder containing fixture files (Pass `false` to disable)
-`ignoreTestFiles` | `*.hot-update.js` | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using [https://globster.xyz](https://globster.xyz) to test what files would match.
-`integrationFolder` | `cypress/integration` | Path to folder containing integration test files
-`pluginsFile` | `cypress/plugins/index.js` | Path to plugins file. (Pass `false` to disable)
-`screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from [`cy.screenshot()`](/api/commands/screenshot) command or after a test fails during `cypress run`
-`supportFile` | `cypress/support/index.js` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)
-`testFiles` | `**/*.*` | A String or Array of glob patterns of the test files to load
-`videosFolder`     | `cypress/videos`     | Path to folder where videos will be saved during `cypress run`
+| Option              | Default                    | Description                                                                                                                                                                                                                                                                                |
+| ------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `downloadsFolder`   | `cypress/downloads`        | Path to folder where files downloaded during a test are saved                                                                                                                                                                                                                              |
+| `fileServerFolder`  | root project folder        | Path to folder where application files will attempt to be served from                                                                                                                                                                                                                      |
+| `fixturesFolder`    | `cypress/fixtures`         | Path to folder containing fixture files (Pass `false` to disable)                                                                                                                                                                                                                          |
+| `ignoreTestFiles`   | `*.hot-update.js`          | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using [https://globster.xyz](https://globster.xyz) to test what files would match. |
+| `integrationFolder` | `cypress/integration`      | Path to folder containing integration test files                                                                                                                                                                                                                                           |
+| `pluginsFile`       | `cypress/plugins/index.js` | Path to plugins file. (Pass `false` to disable)                                                                                                                                                                                                                                            |
+| `screenshotsFolder` | `cypress/screenshots`      | Path to folder where screenshots will be saved from [`cy.screenshot()`](/api/commands/screenshot) command or after a test fails during `cypress run`                                                                                                                                       |
+| `supportFile`       | `cypress/support/index.js` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                                                                                                                  |
+| `testFiles`         | `**/*.*`                   | A String or Array of glob patterns of the test files to load                                                                                                                                                                                                                               |
+| `videosFolder`      | `cypress/videos`           | Path to folder where videos will be saved during `cypress run`                                                                                                                                                                                                                             |
 
 ### Screenshots
 
-Option | Default | Description
------ | ---- | ----
-`screenshotOnRunFailure` | `true` | Whether Cypress will take a screenshot when a test fails during `cypress run`.
-`screenshotsFolder`     | `cypress/screenshots`     | Path to folder where screenshots will be saved from [`cy.screenshot()`](/api/commands/screenshot) command or after a test fails during `cypress run`
-`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.
+| Option                   | Default               | Description                                                                                                                                          |
+| ------------------------ | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `screenshotOnRunFailure` | `true`                | Whether Cypress will take a screenshot when a test fails during `cypress run`.                                                                       |
+| `screenshotsFolder`      | `cypress/screenshots` | Path to folder where screenshots will be saved from [`cy.screenshot()`](/api/commands/screenshot) command or after a test fails during `cypress run` |
+| `trashAssetsBeforeRuns`  | `true`                | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.         |
 
 For more options regarding screenshots, view the [Cypress.Screenshot API](/api/cypress-api/screenshot-api).
 
 ### Videos
 
-Option | Default | Description
------ | ---- | ----
-`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.
-`videoCompression` | `32` | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` to disable compression or a value between `0` and `51`, where a lower value results in better quality (at the expense of a higher file size).
-`videosFolder`     | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.
-`video`     | `true`     | Whether Cypress will capture a video of the tests run with `cypress run`.
-`videoUploadOnPasses`     | `true`     | Whether Cypress will process, compress, and upload videos to the [Dashboard](/guides/dashboard/dashboard-introduction) even when all tests in a spec file are passing. This only applies when recording your runs to the Dashboard. Turn this off if you'd like to only upload the spec file's video when there are failing tests.
+| Option                  | Default          | Description                                                                                                                                                                                                                                                                                                                        |
+| ----------------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `trashAssetsBeforeRuns` | `true`           | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.                                                                                                                                                                                       |
+| `videoCompression`      | `32`             | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` to disable compression or a value between `0` and `51`, where a lower value results in better quality (at the expense of a higher file size).                                                                               |
+| `videosFolder`          | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.                                                                                                                                                                                                                                 |
+| `video`                 | `true`           | Whether Cypress will capture a video of the tests run with `cypress run`.                                                                                                                                                                                                                                                          |
+| `videoUploadOnPasses`   | `true`           | Whether Cypress will process, compress, and upload videos to the [Dashboard](/guides/dashboard/dashboard-introduction) even when all tests in a spec file are passing. This only applies when recording your runs to the Dashboard. Turn this off if you'd like to only upload the spec file's video when there are failing tests. |
 
 ### Downloads
 
-Option | Default | Description
------ | ---- | ----
-`downloadsFolder` | `cypress/downloads` | Path to folder where files downloaded during a test are saved
-`trashAssetsBeforeRuns` | `true` | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.
+| Option                  | Default             | Description                                                                                                                                  |
+| ----------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `downloadsFolder`       | `cypress/downloads` | Path to folder where files downloaded during a test are saved                                                                                |
+| `trashAssetsBeforeRuns` | `true`              | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`. |
 
 ### Browser
 
-Option | Default | Description
------ | ---- | ----
-`chromeWebSecurity`    | `true`    | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content. [Read more about Web Security](/guides/guides/web-security).
-`blockHosts` | `null` | A String or Array of hosts that you wish to block traffic for. [Please read the notes for examples on using this.](#blockHosts)
-`firefoxGcInterval` | `{ "runMode": 1, "openMode": null }` | (Firefox 79 and below only) Controls whether Cypress forces Firefox to run garbage collection (GC) cleanup and how frequently. During [cypress run](/guides/guides/command-line#cypress-run), the default value is `1`. During [cypress open](/guides/guides/command-line#cypress-open), the default value is `null`. See full details [here](#firefoxGcInterval).
-`modifyObstructiveCode` | `true` | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. [Please read the notes for more information on this setting.](#modifyObstructiveCode)
-`userAgent` | `null` | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See [User-Agent MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for example user agent values.
+| Option                  | Default                              | Description                                                                                                                                                                                                                                                                                                                                                        |
+| ----------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `chromeWebSecurity`     | `true`                               | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content. [Read more about Web Security](/guides/guides/web-security).                                                                                                                                                                                            |
+| `blockHosts`            | `null`                               | A String or Array of hosts that you wish to block traffic for. [Please read the notes for examples on using this.](#blockHosts)                                                                                                                                                                                                                                    |
+| `firefoxGcInterval`     | `{ "runMode": 1, "openMode": null }` | (Firefox 79 and below only) Controls whether Cypress forces Firefox to run garbage collection (GC) cleanup and how frequently. During [cypress run](/guides/guides/command-line#cypress-run), the default value is `1`. During [cypress open](/guides/guides/command-line#cypress-open), the default value is `null`. See full details [here](#firefoxGcInterval). |
+| `modifyObstructiveCode` | `true`                               | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. [Please read the notes for more information on this setting.](#modifyObstructiveCode)                                                                                                                                                                                   |
+| `userAgent`             | `null`                               | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See [User-Agent MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for example user agent values.              |
 
 ### Viewport
 
-Option | Default | Description
------ | ---- | ----
-`viewportHeight` | `660` | Default height in pixels for the application under tests' viewport (Override with [`cy.viewport()`](/api/commands/viewport) command)
-`viewportWidth` | `1000` | Default width in pixels for the application under tests' viewport. (Override with [`cy.viewport()`](/api/commands/viewport) command)
+| Option           | Default | Description                                                                                                                          |
+| ---------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `viewportHeight` | `660`   | Default height in pixels for the application under tests' viewport (Override with [`cy.viewport()`](/api/commands/viewport) command) |
+| `viewportWidth`  | `1000`  | Default width in pixels for the application under tests' viewport. (Override with [`cy.viewport()`](/api/commands/viewport) command) |
 
 ### Actionability
 
-Option | Default | Description
------ | ---- | ----
-`animationDistanceThreshold` | `5` | The distance in pixels an element must exceed over time to be considered animating
-`waitForAnimations` | `true` | Whether to wait for elements to finish animating before executing commands
-`scrollBehavior` | `top` | Viewport position to which an element should be scrolled before executing commands. Can be `'center'`, `'top'`, `'bottom'`, `'nearest'`, or `false`. `false` disables scrolling.
+| Option                       | Default | Description                                                                                                                                                                      |
+| ---------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `animationDistanceThreshold` | `5`     | The distance in pixels an element must exceed over time to be considered animating                                                                                               |
+| `waitForAnimations`          | `true`  | Whether to wait for elements to finish animating before executing commands                                                                                                       |
+| `scrollBehavior`             | `top`   | Viewport position to which an element should be scrolled before executing commands. Can be `'center'`, `'top'`, `'bottom'`, `'nearest'`, or `false`. `false` disables scrolling. |
 
 For more information, see the docs on [actionability](/guides/core-concepts/interacting-with-elements#Actionability).
 
 ### Node version
 
-Option | Default | Description
------ | ---- | ----
-`nodeVersion` | `bundled` | If set to `system`, Cypress will try to find a Node executable on your path to use when executing your [plugins](/guides/tooling/plugins-guide). Otherwise, Cypress will use the Node version bundled with Cypress.
+| Option        | Default   | Description                                                                                                                                                                                                         |
+| ------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `nodeVersion` | `bundled` | If set to `system`, Cypress will try to find a Node executable on your path to use when executing your [plugins](/guides/tooling/plugins-guide). Otherwise, Cypress will use the Node version bundled with Cypress. |
 
 The Node version printed in the Node.js Version panel is used in Cypress to:
 
@@ -203,7 +203,7 @@ export CYPRESS_VIEWPORT_WIDTH=800
 export CYPRESS_VIEWPORT_HEIGHT=600
 ```
 
-We automatically normalize both the key and the value. Cypress will *strip off* the `CYPRESS_`, camelcase any keys and automatically convert values into `Number` or `Boolean`. Make sure to prefix your environment variables with `CYPRESS_` else they will be ignored.
+We automatically normalize both the key and the value. Cypress will _strip off_ the `CYPRESS_`, camelcase any keys and automatically convert values into `Number` or `Boolean`. Make sure to prefix your environment variables with `CYPRESS_` else they will be ignored.
 
 #### Both options below are valid
 
@@ -217,7 +217,6 @@ export CYPRESS_PAGE_LOAD_TIMEOUT=100000
 
 <Alert type="warning">
 
-
 Environment variables that do not match configuration keys will instead be set as regular environment variables for use in your tests with `Cypress.env()`.
 
 You can [read more about Environment Variables](/guides/guides/environment-variables).
@@ -230,16 +229,16 @@ You can also override configuration values within your test using [`Cypress.conf
 
 <Alert type="warning">
 
- <strong class="alert-header">Scope</strong>
+<strong class="alert-header">Scope</strong>
 
 Configuration set using `Cypress.config` _is only in scope for the current spec file._
 
 </Alert>
 
 ```javascript
-Cypress.config('pageLoadTimeout', 100000)
+Cypress.config("pageLoadTimeout", 100000);
 
-Cypress.config('pageLoadTimeout') // => 100000
+Cypress.config("pageLoadTimeout"); // => 100000
 ```
 
 ### Test Configuration
@@ -264,26 +263,29 @@ The configuration values passed in will only take effect during the suite or tes
 - `viewportWidth`
 - `waitForAnimations`
 
-
 #### Suite configuration
 
 You can configure the number of times to retries a suite of tests if they fail during `cypress run` and `cypress open` separately.
 
 ```js
-describe('login', {
-  retries: {
-    runMode: 3,
-    openMode: 2
-  }
-}, () => {
-  it('should redirect unauthenticated user to sign-in page', () => {
-    // ...
-  })
+describe(
+  "login",
+  {
+    retries: {
+      runMode: 3,
+      openMode: 2,
+    },
+  },
+  () => {
+    it("should redirect unauthenticated user to sign-in page", () => {
+      // ...
+    });
 
-  it('allows user to login', () => {
-    // ...
-  })
-})
+    it("allows user to login", () => {
+      // ...
+    });
+  }
+);
 ```
 
 #### Single test configuration
@@ -291,10 +293,12 @@ describe('login', {
 If you want to target a test to run or be excluded when run in a specific browser, you can override the `browser` configuration within the test configuration. The `browser` option accepts the same arguments as [Cypress.isBrowser()](/api/cypress-api/isbrowser).
 
 ```js
-it('Show warning outside Chrome', {  browser: '!chrome' }, () => {
-  cy.get('.browser-warning')
-    .should('contain', 'For optimal viewing, use Chrome browser')
-})
+it("Show warning outside Chrome", { browser: "!chrome" }, () => {
+  cy.get(".browser-warning").should(
+    "contain",
+    "For optimal viewing, use Chrome browser"
+  );
+});
 ```
 
 ## Resolved Configuration
@@ -327,7 +331,6 @@ To block a host:
 
 <Alert type="info">
 
-
 Not sure what a part of the URL a host is? [Use this guide as a reference.](https://nodejs.org/api/url.html#url_url_strings_and_url_objects)
 
 When blocking a host, we use [`minimatch`](/api/utilities/minimatch) to check the host. When in doubt you can test whether something matches yourself.
@@ -356,7 +359,7 @@ Because `localhost:1234` uses a port other than `80` and `443` it **must be incl
 
 <Alert type="warning">
 
- <strong class="alert-header">Subdomains</strong>
+<strong class="alert-header">Subdomains</strong>
 
 Be cautious for URL's which have no subdomain.
 
@@ -387,7 +390,6 @@ You can turn this option off if the application or site you're testing **does no
 ### firefoxGcInterval
 
 <Alert type="warning">
-
 
 The following section only applies if you are using a version of Firefox older than Firefox 80. `firefoxGcInterval` has no effect if you are using Firefox 80 or newer, since the garbage collection bug was fixed in Firefox 80. It is recommended to upgrade your version of Firefox to avoid this workaround.
 
@@ -462,7 +464,7 @@ Run GC cleanup before every 3rd test during [cypress run](/guides/guides/command
 You can open Cypress in the interactive mode via the `cypress open` command, and in run mode via the `cypress run` command. To detect the mode from your test code you can query the `isInteractive` property on [Cypress.config](/api/cypress-api/config).
 
 ```javascript
-if (Cypress.config('isInteractive')) {
+if (Cypress.config("isInteractive")) {
   // interactive "cypress open" mode!
 } else {
   // "cypress run" mode
@@ -513,19 +515,18 @@ DEBUG=cypress:cli,cypress:server:specs
 
 ## History
 
-Version | Changes
---- | ---
-[6.1.0](/guides/references/changelog#6-1-0) | Added option `scrollBehavior`
-[5.2.0](/guides/references/changelog#5-2-0) | Added `includeShadowDom` option.
-[5.0.0](/guides/references/changelog) | Added `retries` configuration.
-[5.0.0](/guides/references/changelog) | Renamed `blacklistHosts` configuration to `blockHosts`.
-[4.1.0](/guides/references/changelog#4-12-0) | Added `screenshotOnRunFailure` configuration.
-[4.0.0](/guides/references/changelog#4-0-0) | Added `firefoxGcInterval` configuration.
-[3.5.0](/guides/references/changelog#3-5-0) | Added `nodeVersion` configuration.
+| Version                                      | Changes                                                 |
+| -------------------------------------------- | ------------------------------------------------------- |
+| [6.1.0](/guides/references/changelog#6-1-0)  | Added option `scrollBehavior`                           |
+| [5.2.0](/guides/references/changelog#5-2-0)  | Added `includeShadowDom` option.                        |
+| [5.0.0](/guides/references/changelog)        | Added `retries` configuration.                          |
+| [5.0.0](/guides/references/changelog)        | Renamed `blacklistHosts` configuration to `blockHosts`. |
+| [4.1.0](/guides/references/changelog#4-12-0) | Added `screenshotOnRunFailure` configuration.           |
+| [4.0.0](/guides/references/changelog#4-0-0)  | Added `firefoxGcInterval` configuration.                |
+| [3.5.0](/guides/references/changelog#3-5-0)  | Added `nodeVersion` configuration.                      |
 
 ## See also
 
 - [Cypress.config()](/api/cypress-api/config)
 - [Environment variables](/guides/guides/environment-variables)
 - [Environment Variables recipe](/examples/examples/recipes#Fundamentals)
-

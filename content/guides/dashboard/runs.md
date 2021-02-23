@@ -6,7 +6,6 @@ Recorded runs capture the results from your test runs.
 
 <Alert type="info">
 
-
 If you haven't set up your project to record [read here](/guides/dashboard/projects#Setup).
 
 </Alert>
@@ -132,9 +131,8 @@ Runs that have been canceled or are in an errored state can be archived from the
 When looking further into a test runs information, there is a new Test Case History panel. It matches test cases by spec and title and combines it with commit information to provide users insight to:
 
 1. See the history of a test over its lifespan
-1. View the diff of a single test case*
+1. View the diff of a single test case\*
 1. Jump directly to the commit
-1. See the time span between each point in its history 
+1. See the time span between each point in its history
 
 \*_Note: This currently shows the diff of the transpiled code since we are not collecting source maps._
-

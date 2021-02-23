@@ -13,13 +13,11 @@ If you are experiencing any or all of these issues, you may need to configure Cy
 
 <Alert type="warning">
 
-
 Proxy Auto-Configuration (PAC) files are not currently supported. If your organization uses a PAC file, contact a network administrator to ask what HTTP proxy you should be using to access the general Internet, then use that proxy with Cypress.
 
 </Alert>
 
 <Alert type="warning">
-
 
 SOCKS proxies are not currently supported. A workaround is to set up an HTTP proxy locally that points to your SOCKS proxy, then using that HTTP proxy with Cypress. [Read more about forwarding an HTTP proxy through SOCKS.](https://superuser.com/questions/423563/convert-http-requests-to-socks5)
 
@@ -47,8 +45,7 @@ When starting up after being installed, Cypress will attempt to load the proxy c
 
 <Alert type="info">
 
-
-When downloading Cypress for the first time, the `cypress` command line tool *does not* read proxy settings from the Windows registry. If you need to configure a proxy for the installation to work, you must set the appropriate environment variables as described below.
+When downloading Cypress for the first time, the `cypress` command line tool _does not_ read proxy settings from the Windows registry. If you need to configure a proxy for the installation to work, you must set the appropriate environment variables as described below.
 
 </Alert>
 
@@ -74,8 +71,7 @@ setx HTTP_PROXY http://my-company-proxy.com
 
 <Alert type="warning">
 
-
-This section refers to your operating system's environment variables, *not* {% url "Cypress environment variables" guides/guides/environment-variables %}
+This section refers to your operating system's environment variables, _not_ {% url "Cypress environment variables" guides/guides/environment-variables %}
 
 </Alert>
 
@@ -125,17 +121,17 @@ env | grep -i proxy
 
 ### Windows
 
-Setting environment variables in Windows is different depending on if you're using *command prompt* or *Powershell*.
+Setting environment variables in Windows is different depending on if you're using _command prompt_ or _Powershell_.
 
 #### Set an environment variable for current session
 
-*Command prompt:*
+_Command prompt:_
 
 ```shell
 set SOME_VARIABLE=some-value
 ```
 
-*Powershell:*
+_Powershell:_
 
 ```shell
 $env:SOME_VARIABLE = "some-value"
@@ -149,13 +145,13 @@ setx SOME_VARIABLE some-value
 
 #### Unset an environment variable in the current session
 
-*Command prompt:*
+_Command prompt:_
 
 ```shell
 set SOME_VARIABLE=
 ```
 
-*Powershell:*
+_Powershell:_
 
 ```shell
 Remove-Item Env:\SOME_VARIABLE
@@ -163,13 +159,13 @@ Remove-Item Env:\SOME_VARIABLE
 
 #### See all currently set environment variables
 
-*Command prompt:*
+_Command prompt:_
 
 ```shell
 set
 ```
 
-*Powershell:*
+_Powershell:_
 
 ```shell
 Get-ChildItem Env:
@@ -184,4 +180,3 @@ Your current proxy settings can be viewed from within the Cypress Test Runner. F
 3. Click the "Proxy Settings" section to expand it and view the proxy settings that Cypress is currently using.
 
 <DocsImage src="/img/guides/test-runner-settings-proxy-configuration.jpg" alt="Proxy configuration in the Desktop app" ></DocsImage>
-

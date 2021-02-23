@@ -4,7 +4,6 @@ title: Debugging
 
 <Alert type="info">
 
-
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
 - How Cypress runs in the same event loop with your code, keeping debugging less demanding and more understandable
@@ -22,13 +21,13 @@ Your Cypress test code runs in the same run loop as your application. This means
 Based on those statements, you might be tempted to throw a `debugger` into your test, like so:
 
 ```js
-it('let me debug like a fiend', () => {
-  cy.visit('/my/page/path')
+it("let me debug like a fiend", () => {
+  cy.visit("/my/page/path");
 
-  cy.get('.selector-in-question')
+  cy.get(".selector-in-question");
 
-  debugger // Doesn't work
-})
+  debugger; // Doesn't work
+});
 ```
 
 This may not work exactly as you are expecting. As you may remember from the [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress), `cy` commands enqueue an action to be taken later. Can you see what the test above will do given that perspective?
@@ -38,16 +37,15 @@ Both [`cy.visit()`](/api/commands/visit) and [`cy.get()`](/api/commands/get) wil
 Let's use [`.then()`](/api/commands/then) to tap into the Cypress command during execution and add a `debugger` at the appropriate time:
 
 ```js
-it('let me debug when the after the command executes', () => {
-  cy.visit('/my/page/path')
+it("let me debug when the after the command executes", () => {
+  cy.visit("/my/page/path");
 
-  cy.get('.selector-in-question')
-    .then(($selectedElement) => {
-      // Debugger is hit after the cy.visit
-      // and cy.get command have completed
-      debugger
-    })
-})
+  cy.get(".selector-in-question").then(($selectedElement) => {
+    // Debugger is hit after the cy.visit
+    // and cy.get command have completed
+    debugger;
+  });
+});
 ```
 
 Now we're in business! The first time through, [`cy.visit()`](/api/commands/visit) and the [`cy.get()`](/api/commands/get) chain (with its [`.then()`](/api/commands/then) attached) are enqueued for Cypress to execute. The `it` block exits, and Cypress starts its work:
@@ -63,12 +61,11 @@ Now we're in business! The first time through, [`cy.visit()`](/api/commands/visi
 Cypress also exposes a shortcut for debugging commands, [`.debug()`](/api/commands/debug). Let's rewrite the test above using this helper method:
 
 ```js
-it('let me debug like a fiend', () => {
-  cy.visit('/my/page/path')
+it("let me debug like a fiend", () => {
+  cy.visit("/my/page/path");
 
-  cy.get('.selector-in-question')
-    .debug()
-})
+  cy.get(".selector-in-question").debug();
+});
 ```
 
 The current subject that is yielded by the [`cy.get()`](/api/commands/get) is exposed as the variable `subject` within your Developer Tools so that you can interact with it in the console.
@@ -82,11 +79,11 @@ Use [`.debug()`](/api/commands/debug) to quickly inspect any (or many!) part(s) 
 You can run the test command by command using the [`.pause()`](/api/commands/pause) command.
 
 ```javascript
-it('adds items', () => {
-  cy.pause()
-  cy.get('.new-todo')
+it("adds items", () => {
+  cy.pause();
+  cy.get(".new-todo");
   // more commands
-})
+});
 ```
 
 This allows you to inspect the web application, the DOM, the network, and any storage after each command to make sure everything happens as expected.
@@ -96,7 +93,6 @@ This allows you to inspect the web application, the DOM, the network, and any st
 Though Cypress has built out [an excellent Test Runner](/guides/core-concepts/test-runner) to help you understand what is happening in your application and your tests, there's no replacing all the amazing work browser teams have done on their built-in development tools. Once again, we see that Cypress goes _with_ the flow of the modern ecosystem, opting to leverage these tools wherever possible.
 
 <Alert type="info">
-
 
 ### <Icon name="video-camera"></Icon> See it in action!
 
@@ -121,10 +117,10 @@ Sometimes tests fail. Sometimes we want them to fail, just so we know they're te
 Let's take a look at the anatomy of an error and how it is displayed in Cypress, by way of a failing test.
 
 ```js
-it('reroutes on users page', () => {
-  cy.contains('Users').click()
-  cy.url().should('include', 'users')
-})
+it("reroutes on users page", () => {
+  cy.contains("Users").click();
+  cy.url().should("include", "users");
+});
 ```
 
 The center of the `<li>Users</li>` element is hidden from view in our application under test, so the test above will fail. Within Cypress, an error will show on failure that includes the following pieces of information:
@@ -132,13 +128,12 @@ The center of the `<li>Users</li>` element is hidden from view in our applicatio
 1. **Error name**: This is the type of the error (e.g. AssertionError, CypressError)
 1. **Error message**: This generally tells you what went wrong. It can vary in length. Some are short like in the example, while some are long, and may tell you exactly how to fix the error. Some also contain a **Learn more** link that will take you to relevant Cypress documentation.
 1. **Learn more:** Some error messages contain a Learn more link that will take you to relevant Cypress documentation.
-1. **Code frame file**: This is usually the top line of the stack trace and it shows the file, line number, and column number that is highlighted in the code frame below. Clicking on this link will open the file in your  [preferred file opener](https://on.cypress.io/IDE-integration#File-Opener-Preference) and highlight the line and column in editors that support it.
+1. **Code frame file**: This is usually the top line of the stack trace and it shows the file, line number, and column number that is highlighted in the code frame below. Clicking on this link will open the file in your [preferred file opener](https://on.cypress.io/IDE-integration#File-Opener-Preference) and highlight the line and column in editors that support it.
 1. **Code frame**: This shows a snippet of code where the failure occurred, with the relevant line and column highlighted.
 1. **View stack trace**: Clicking this toggles the visibility of the stack trace. Stack traces vary in length. Clicking on a blue file path will open the file in your [preferred file opener](https://on.cypress.io/IDE-integration#File-Opener-Preference).
 1. **Print to console button**: Click this to print the full error to your DevTools console. This will usually allow you to click on lines in the stack trace and open files in your DevTools.
 
 <DocsImage src="/img/guides/command-failure-error.png" alt="example command failure error" ></DocsImage>
-
 
 ### Source maps
 
@@ -174,13 +169,11 @@ Cypress emits multiple events you can listen to as shown below. [Read more about
 If you need to run a Cypress command straight from the Developer Tools console, you can use the internal command `cy.now('command name', ...arguments)`. For example, to run the equivalent of `cy.task('database', 123)` outside the normal execution command chain:
 
 ```javascript
-cy.now('task', 123)
-  .then(console.log)
+cy.now("task", 123).then(console.log);
 // runs cy.task(123) and prints the resolved value
 ```
 
 <Alert type="warning">
-
 
 The `cy.now()` command is an internal command and may change in the future.
 
@@ -203,4 +196,3 @@ Often debugging a failing Cypress test means understanding better how your own a
 - [When Can The Test Click?](https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/)
 - [When Can The Test Log Out?](https://www.cypress.io/blog/2020/06/25/when-can-the-test-log-out/)
 - [Do Not Get Too Detached](https://www.cypress.io/blog/2020/07/22/do-not-get-too-detached/)
-

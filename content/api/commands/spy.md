@@ -6,7 +6,6 @@ Wrap a method in a spy in order to record calls to and arguments of the function
 
 <Alert type="info">
 
-
 **Note:** `.spy()` assumes you are already familiar with our guide: [Stubs, Spies, and Clocks](/guides/guides/stubs-spies-and-clocks)
 
 </Alert>
@@ -14,7 +13,7 @@ Wrap a method in a spy in order to record calls to and arguments of the function
 ## Syntax
 
 ```javascript
-cy.spy(object, method)
+cy.spy(object, method);
 ```
 
 ### Usage
@@ -22,22 +21,22 @@ cy.spy(object, method)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.spy(user, 'addFriend')
+cy.spy(user, "addFriend");
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> object** ***(Object)***
+**<Icon name="angle-right"></Icon> object** **_(Object)_**
 
 The `object` that has the `method` to be wrapped.
 
-**<Icon name="angle-right"></Icon> method** ***(String)***
+**<Icon name="angle-right"></Icon> method** **_(String)_**
 
 The name of the `method` on the `object` to be wrapped.
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
-Unlike most Cypress commands, `cy.spy()` is *synchronous* and returns a value (the spy) instead of a Promise-like chain-able object.
+Unlike most Cypress commands, `cy.spy()` is _synchronous_ and returns a value (the spy) instead of a Promise-like chain-able object.
 
 `cy.spy()` returns a [Sinon.js spy](https://sinonjs.org/releases/v6.1.5/spies/). All methods found on Sinon.JS spies are supported.
 
@@ -49,9 +48,9 @@ Unlike most Cypress commands, `cy.spy()` is *synchronous* and returns a value (t
 
 ```javascript
 // assume App.start calls util.addListeners
-cy.spy(util, 'addListeners')
-App.start()
-expect(util.addListeners).to.be.called
+cy.spy(util, "addListeners");
+App.start();
+expect(util.addListeners).to.be.called;
 ```
 
 #### Disable logging to Command Log
@@ -60,15 +59,14 @@ You can chain a `.log(bool)` method to disable `cy.stub()` calls from being show
 
 ```javascript
 const obj = {
-  foo () {}
-}
-const stub = cy.stub(obj, 'foo').log(false)
+  foo() {},
+};
+const stub = cy.stub(obj, "foo").log(false);
 ```
 
 #### More `cy.spy()` examples
 
 <Alert type="info">
-
 
 [Check out our example recipe testing spying, stubbing and time](/examples/examples/recipes#Stubbing-and-spying)
 
@@ -80,14 +78,14 @@ Adding an alias using [`.as()`](/api/commands/as) to spies makes them easier to 
 
 ```javascript
 const obj = {
-  foo () {}
-}
-const spy = cy.spy(obj, 'foo').as('anyArgs')
-const withFoo = spy.withArgs('foo').as('withFoo')
+  foo() {},
+};
+const spy = cy.spy(obj, "foo").as("anyArgs");
+const withFoo = spy.withArgs("foo").as("withFoo");
 
-obj.foo()
-expect(spy).to.be.called
-expect(withFoo).to.be.called // purposefully failing assertion
+obj.foo();
+expect(spy).to.be.called;
+expect(withFoo).to.be.called; // purposefully failing assertion
 ```
 
 You will see the following in the command log:
@@ -130,16 +128,16 @@ Cypress has also built-in [sinon-chai](/guides/references/bundled-tools#Sinon-Ch
 
 ## Command Log
 
-***Create a spy, alias it, and call it***
+**_Create a spy, alias it, and call it_**
 
 ```javascript
 const obj = {
-  foo () {}
-}
-const spy = cy.spy(obj, 'foo').as('foo')
+  foo() {},
+};
+const spy = cy.spy(obj, "foo").as("foo");
 
-obj.foo('foo', 'bar')
-expect(spy).to.be.called
+obj.foo("foo", "bar");
+expect(spy).to.be.called;
 ```
 
 The command above will display in the Command Log as:
@@ -152,10 +150,10 @@ When clicking on the `spy-1` event within the command log, the console outputs t
 
 ## History
 
-Version | Changes
---- | ---
-[0.20.0](/guides/references/changelog#0-20.0) | Added `.log(bool)` method
-[0.18.8](/guides/references/changelog#0-18-8) | `cy.spy()` command added
+| Version                                       | Changes                   |
+| --------------------------------------------- | ------------------------- |
+| [0.20.0](/guides/references/changelog#0-20.0) | Added `.log(bool)` method |
+| [0.18.8](/guides/references/changelog#0-18-8) | `cy.spy()` command added  |
 
 ## See also
 
@@ -164,4 +162,3 @@ Version | Changes
 - [Guide: Stubs, Spies and Clocks](/guides/guides/stubs-spies-and-clocks)
 - [Recipe: Stubbing, Spying](/examples/examples/recipes#Stubbing-and-spying)
 - [`cy.stub()`](/api/commands/stub)
-

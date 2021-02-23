@@ -14,24 +14,24 @@ The Screenshot API allows you set defaults for how screenshots are captured duri
 ## Syntax
 
 ```javascript
-Cypress.Screenshot.defaults(options)
+Cypress.Screenshot.defaults(options);
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options**  ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 An object containing one or more of the following:
 
-Option | Default | Description
---- | --- | ---
-`blackout` | `[]` | Array of string selectors used to match elements that should be blacked out when the screenshot is taken. Does not apply to `runner` captures.
-`capture` | `'fullPage'` | Which parts of the Test Runner to capture. This value is ignored for element screenshot captures. Valid values are `viewport`, `fullPage`, or `runner`. When `viewport`, your application under test is captured in the current viewport. When `fullPage`, your application under test is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress Command Log, is captured.  For screenshots automatically taken on test failure, capture is always coerced to `runner`.
-`disableTimersAndAnimations` | `true`| When true, prevents JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.
-`scale` | `false` | Whether to scale the app to fit into the browser viewport. This is always coerced to `true` for `runner` captures.
-`screenshotOnRunFailure` | `true` | When true, automatically takes a screenshot when there is a failure during `cypress run`.
-`onBeforeScreenshot` | `null` | A callback before a (non-failure) screenshot is taken. For an element capture, the argument is the element being captured. For other screenshots, the argument is the `$el`.
-`onAfterScreenshot` | `null` | A callback after a (non-failure) screenshot is taken. For an element capture, the first argument is the element being captured. For other screenshots, the first argument is the `$el`. The second argument is properties concerning the screenshot, including the path it was saved to and the dimensions of the saved screenshot.
+| Option                       | Default      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| ---------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `blackout`                   | `[]`         | Array of string selectors used to match elements that should be blacked out when the screenshot is taken. Does not apply to `runner` captures.                                                                                                                                                                                                                                                                                                                                                                                 |
+| `capture`                    | `'fullPage'` | Which parts of the Test Runner to capture. This value is ignored for element screenshot captures. Valid values are `viewport`, `fullPage`, or `runner`. When `viewport`, your application under test is captured in the current viewport. When `fullPage`, your application under test is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress Command Log, is captured. For screenshots automatically taken on test failure, capture is always coerced to `runner`. |
+| `disableTimersAndAnimations` | `true`       | When true, prevents JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.                                                                                                                                                                                                                                                                                                                                                                                        |
+| `scale`                      | `false`      | Whether to scale the app to fit into the browser viewport. This is always coerced to `true` for `runner` captures.                                                                                                                                                                                                                                                                                                                                                                                                             |
+| `screenshotOnRunFailure`     | `true`       | When true, automatically takes a screenshot when there is a failure during `cypress run`.                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| `onBeforeScreenshot`         | `null`       | A callback before a (non-failure) screenshot is taken. For an element capture, the argument is the element being captured. For other screenshots, the argument is the `$el`.                                                                                                                                                                                                                                                                                                                                                   |
+| `onAfterScreenshot`          | `null`       | A callback after a (non-failure) screenshot is taken. For an element capture, the first argument is the element being captured. For other screenshots, the first argument is the `$el`. The second argument is properties concerning the screenshot, including the path it was saved to and the dimensions of the saved screenshot.                                                                                                                                                                                            |
 
 ## Examples
 
@@ -41,8 +41,8 @@ Elements that match the specified selectors will be blacked out from the screens
 
 ```javascript
 Cypress.Screenshot.defaults({
-  blackout: ['.secret-info', '[data-hide=true]']
-})
+  blackout: [".secret-info", "[data-hide=true]"],
+});
 ```
 
 ### Take a screenshot of the entire Test Runner
@@ -51,8 +51,8 @@ By default, [`cy.screenshot()`](/api/commands/screenshot) only captures your app
 
 ```javascript
 Cypress.Screenshot.defaults({
-  capture: 'runner'
-})
+  capture: "runner",
+});
 ```
 
 ### Allow timers and animations to keep running
@@ -61,8 +61,8 @@ By default, JavaScript timers and CSS animations are disabled to try to prevent 
 
 ```javascript
 Cypress.Screenshot.defaults({
-  disableTimersAndAnimations: false
-})
+  disableTimersAndAnimations: false,
+});
 ```
 
 ### Disable screenshots on run failures
@@ -71,8 +71,8 @@ By default, Cypress automatically takes a screenshot when there is a failure whe
 
 ```javascript
 Cypress.Screenshot.defaults({
-  screenshotOnRunFailure: false
-})
+  screenshotOnRunFailure: false,
+});
 ```
 
 ### Scale `viewport` and `fullPage` captures
@@ -81,8 +81,8 @@ By default, scaling the application under test is turned off during when the `ca
 
 ```javascript
 Cypress.Screenshot.defaults({
-  scale: true
-})
+  scale: true,
+});
 ```
 
 ### Change the DOM using `onBeforeScreenshot` and `onAfterScreenshot`
@@ -93,32 +93,31 @@ In this example, imagine there is a clock in your app showing the current time. 
 
 ```javascript
 Cypress.Screenshot.defaults({
-  onBeforeScreenshot ($el) {
-    const $clock = $el.find('.clock')
+  onBeforeScreenshot($el) {
+    const $clock = $el.find(".clock");
 
     if ($clock) {
-      $clock.hide()
+      $clock.hide();
     }
   },
 
-  onAfterScreenshot ($el, props) {
-    const $clock = $el.find('.clock')
+  onAfterScreenshot($el, props) {
+    const $clock = $el.find(".clock");
 
     if ($clock) {
-      $clock.show()
+      $clock.show();
     }
   },
-})
+});
 ```
 
 ### Get properties from the `onAfterScreenshot` callback
 
 ```javascript
 Cypress.Screenshot.defaults({
-  onAfterScreenshot ($el, props) {
+  onAfterScreenshot($el, props) {
     // props has information about the screenshot,
     // including but not limited to the following:
-
     // {
     //   path: '/Users/janelane/project/screenshots/my-screenshot.png',
     //   size: '15 kb',
@@ -131,7 +130,7 @@ Cypress.Screenshot.defaults({
     //   duration: 2300,
     // }
   },
-})
+});
 ```
 
 ## Notes
@@ -146,4 +145,3 @@ A great place to put this configuration is in your [`cypress/support/index.js` f
 - [Dashboard Service](/guides/dashboard/dashboard-introduction)
 - [Screenshots and Videos](/guides/guides/screenshots-and-videos)
 - [Visual Testing](/guides/tooling/visual-testing)
-

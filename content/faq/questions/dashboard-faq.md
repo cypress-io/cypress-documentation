@@ -51,7 +51,7 @@ It doesn't replace or change anything related to CI. You will run Cypress tests 
 
 The difference between our [Dashboard Service](/guides/dashboard/dashboard-introduction) and your CI provider is that your CI provider has no idea what is going on inside of the Cypress process. It's programmed to know whether or not a process failed - based on whether it had an exit code greater than `0`.
 
-Our [Dashboard Service](/guides/dashboard/dashboard-introduction) provides you with the low level details of *what* happened during your run. Using both your CI provider + Cypress together gives the insight required to debug your test runs.
+Our [Dashboard Service](/guides/dashboard/dashboard-introduction) provides you with the low level details of _what_ happened during your run. Using both your CI provider + Cypress together gives the insight required to debug your test runs.
 
 When a run happens and a test fails - instead of going and inspecting your CI provider's `stdout` output, you can log into the [Dashboard](https://on.cypress.io/dashboard), see the `stdout` as well as screenshots and video of the tests running. It should be instantly clear what the problem was.
 
@@ -108,7 +108,7 @@ For reference, here are [the variables](https://github.com/cypress-io/cypress/bl
 
 We are working on implementing run deletion. [Track the issue.](https://github.com/cypress-io/cypress/issues/1839)
 
-**Note:** Deleting the recorded runs would have no effect on the amount of tests recorded and counted as your usage billed  for the month.
+**Note:** Deleting the recorded runs would have no effect on the amount of tests recorded and counted as your usage billed for the month.
 
 ## <Icon name="angle-right"></Icon> Can I delete my Cypress account?
 
@@ -118,7 +118,7 @@ You can delete your Cypress account from [your Dashboard profile](https://dashbo
 
 Downgrading your account will **not** result in loss of access to your Dashboard.
 
-However, it will make your Dashboard subject to the limitations of your new plan. For example, downgrading to the *Seed* plan will limit data retention to 30 days and test recordings to 500 per billing period.
+However, it will make your Dashboard subject to the limitations of your new plan. For example, downgrading to the _Seed_ plan will limit data retention to 30 days and test recordings to 500 per billing period.
 
 ## <Icon name="angle-right"></Icon> What happens once I reach the test recording limit?
 
@@ -147,4 +147,3 @@ If you are running the tests from within a restrictive VPN you will need to allo
 - `https://docs.cypress.io` - **Cypress documentation**
 - `https://download.cypress.io` - **CDN download of Cypress binary**
 - `https://on.cypress.io` - **URL shortener for link redirects**
-

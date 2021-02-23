@@ -4,7 +4,6 @@ title: Code Coverage
 
 <Alert type="info">
 
-
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
 - How to instrument your application code
@@ -14,7 +13,9 @@ title: Code Coverage
 </Alert>
 
 <!-- textlint-disable -->
+
 <DocsVideo src="https://youtube.com/embed/C8g5X4vCZJA"></DocsVideo>
+
 <!-- textlint-enable -->
 
 ## Introduction
@@ -26,9 +27,9 @@ Computing the source code lines that were executed during the test is done throu
 ```javascript
 // add.js
 function add(a, b) {
-  return a + b
+  return a + b;
 }
-module.exports = { add }
+module.exports = { add };
 ```
 
 ...and parses it to find all functions, statements, and branches and then inserts **counters** into the code. For the above code it might look like this:
@@ -36,38 +37,38 @@ module.exports = { add }
 ```javascript
 // this object counts the number of times each
 // function and each statement is executed
-const c = window.__coverage__ = {
+const c = (window.__coverage__ = {
   // "f" counts the number of times each function is called
   // we only have a single function in the source code
   // thus it starts with [0]
   f: [0],
   // "s" counts the number of times each statement is called
   // we have 3 statements and they all start with 0
-  s: [0, 0, 0]
-}
+  s: [0, 0, 0],
+});
 
 // the original code + increment statements
 // uses "c" alias to "window.__coverage__" object
 // the first statement defines the function,
 // let's increment it
-c.s[0]++
+c.s[0]++;
 function add(a, b) {
   // function is called and then the 2nd statement
-  c.f[0]++
-  c.s[1]++
+  c.f[0]++;
+  c.s[1]++;
 
-  return a + b
+  return a + b;
 }
 // 3rd statement is about to be called
-c.s[2]++
-module.exports = { add }
+c.s[2]++;
+module.exports = { add };
 ```
 
 Imagine we load the above instrumented source file from our test spec file. Immediately some counters will be incremented!
 
 ```javascript
 // add.spec.js
-const { add } = require('./add')
+const { add } = require("./add");
 // JavaScript engine has parsed and evaluated "add.js" source code
 // which ran some of the increment statements
 // __coverage__ has now
@@ -80,11 +81,11 @@ We want to make sure every statement and function in the file `add.js` has been 
 
 ```javascript
 // add.spec.js
-const { add } = require('./add')
+const { add } = require("./add");
 
-it('adds numbers', () => {
-  expect(add(2, 3)).to.equal(5)
-})
+it("adds numbers", () => {
+  expect(add(2, 3)).to.equal(5);
+});
 ```
 
 When the test calls `add(2, 3)`, the counter increments inside the "add" function are executed, and the coverage object becomes:
@@ -107,7 +108,6 @@ Once the tests finish, the coverage object can be serialized and saved to disk s
 
 <Alert type="info">
 
-
 If you are unfamiliar with code coverage or want to learn more, take a look at the "Understanding JavaScript Code Coverage" blog post [Part 1](https://www.semantics3.com/blog/understanding-code-coverage-1074e8fccce0/) and [Part 2](https://www.semantics3.com/blog/understanding-javascript-code-coverage-part-2-9aedaa5119e5/).
 
 </Alert>
@@ -117,7 +117,6 @@ This guide explains how to instrument the application source code using common t
 This guide explains how to find what parts of your application code are covered by Cypress tests so you can have 100% confidence that your tests aren't missing crucial parts of your application. The collected information can be sent to external services, automatically run during pull request reviews, and integrated into CI.
 
 <Alert type="info">
-
 
 The full source code for this guide can be found in the [cypress-io/cypress-example-todomvc-redux](https://github.com/cypress-io/cypress-example-todomvc-redux) repository.
 
@@ -143,14 +142,14 @@ We are passing the `--compact=false` flag to generate human-friendly output.
 The instrumentation takes your original code like this fragment...
 
 ```js
-const store = createStore(reducer)
+const store = createStore(reducer);
 
 render(
   <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementById('root')
-)
+  document.getElementById("root")
+);
 ```
 
 ...and wraps each statement with additional counters that keep track of how many times each source line has been executed by the JavaScript runtime.
@@ -158,9 +157,12 @@ render(
 ```javascript
 const store = (cov_18hmhptych.s[0]++, createStore(reducer));
 cov_18hmhptych.s[1]++;
-render(<Provider store={store}>
+render(
+  <Provider store={store}>
     <App />
-  </Provider>, document.getElementById('root'));
+  </Provider>,
+  document.getElementById("root")
+);
 ```
 
 Notice the calls to `cov_18hmhptych.s[0]++` and `cov_18hmhptych.s[1]++` that increment the statement counters. All counters and additional book-keeping information is stored in a single object attached to the browser's `window` object. We can see the counters if we serve the `instrumented` folder instead of `src` and open the application.
@@ -188,7 +190,6 @@ We can now serve the application and get instrumented code without an intermedia
 
 <Alert type="info">
 
-
 Check out [`@cypress/code-coverage#examples`](https://github.com/cypress-io/code-coverage#examples) for full example projects showing different code coverage setups.
 
 </Alert>
@@ -198,7 +199,6 @@ Check out [`@cypress/code-coverage#examples`](https://github.com/cypress-io/code
 A really nice feature of both [nyc](https://github.com/istanbuljs/nyc) and [`babel-plugin-istanbul`](https://github.com/istanbuljs/babel-plugin-istanbul) is that the source maps are generated automatically, allowing us to collect code coverage information, but also interact with the original, non-instrumented code in the Developer Tools. In the screenshot above the bundle (green arrow) has coverage counters, but the source mapped files in the green rectangle show the original code.
 
 <Alert type="info">
-
 
 The `nyc` and `babel-plugin-istanbul` only instrument the application code and not 3rd party dependencies from `node_modules`.
 
@@ -212,7 +212,6 @@ To handle code coverage collected during each test, we created a [`@cypress/code
 
 <Alert type="info">
 
-
 Please consult the [`@cypress/code-coverage`](https://github.com/cypress-io/code-coverage) documentation for up-to-date installation instructions.
 
 </Alert>
@@ -225,19 +224,19 @@ Then add the code below to your [supportFile](/guides/references/configuration#F
 
 ```js
 // cypress/support/index.js
-import '@cypress/code-coverage/support'
+import "@cypress/code-coverage/support";
 ```
 
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  require('@cypress/code-coverage/task')(on, config)
+  require("@cypress/code-coverage/task")(on, config);
   // include any other plugin code...
 
   // It's IMPORTANT to return the config object
   // with any changed environment variables
-  return config
-}
+  return config;
+};
 ```
 
 When you run the Cypress tests now, you should see a few commands after the tests finish. We have highlighted these commands using a green rectangle below.
@@ -263,7 +262,6 @@ Lines        : 81.42% ( 92/113 )
 
 <Alert type="info">
 
-
 **Tip:** store the `coverage` folder as a build artifact on your continuous integration server. Because the report is a static HTML page, some CIs can show it right from their web applications. The screenshot below shows the coverage report stored on CircleCI. Clicking on `index.html` shows the report right in the browser.
 
 </Alert>
@@ -275,24 +273,19 @@ Lines        : 81.42% ( 92/113 )
 Even a single end-to-end test can cover a lot of the application code. For example, let's run the following test that adds a few items, then marks one of them as completed.
 
 ```javascript
-it('adds and completes todos', () => {
-  cy.visit('/')
-  cy.get('.new-todo')
-    .type('write code{enter}')
-    .type('write tests{enter}')
-    .type('deploy{enter}')
+it("adds and completes todos", () => {
+  cy.visit("/");
+  cy.get(".new-todo")
+    .type("write code{enter}")
+    .type("write tests{enter}")
+    .type("deploy{enter}");
 
-  cy.get('.todo').should('have.length', 3)
+  cy.get(".todo").should("have.length", 3);
 
-  cy.get('.todo')
-    .first()
-    .find('.toggle')
-    .check()
+  cy.get(".todo").first().find(".toggle").check();
 
-  cy.get('.todo')
-    .first()
-    .should('have.class', 'completed')
-})
+  cy.get(".todo").first().should("have.class", "completed");
+});
 ```
 
 After running the test and opening the HTML report, we see 76% code coverage in our application.
@@ -322,6 +315,7 @@ If possible, we advise implementing [visual testing](/guides/tooling/visual-test
 ## Combining code coverage from parallel tests
 
 If you execute Cypress tests in [parallel](/guides/guides/parallelization), each machine ends up with a code coverage report that only shows a portion of the code exercised. Typically an external code coverage service would merge such partial reports for you. If you do want to merge the reports yourself:
+
 - on every machine running Cypress tests, copy the produced code coverage report into a common folder under a unique name to avoid overwriting it
 - after all E2E tests finish, combine the reports yourself using `nyc merge` command
 
@@ -341,18 +335,18 @@ Here is our test to confirm that the error is thrown.
 
 ```javascript
 // cypress/integration/selectors-spec.js
-import { getVisibleTodos } from '../../src/selectors'
+import { getVisibleTodos } from "../../src/selectors";
 
-describe('getVisibleTodos', () => {
-  it('throws an error for unknown visibility filter', () => {
+describe("getVisibleTodos", () => {
+  it("throws an error for unknown visibility filter", () => {
     expect(() => {
       getVisibleTodos({
         todos: [],
-        visibilityFilter: 'unknown-filter'
-      })
-    }).to.throw()
-  })
-})
+        visibilityFilter: "unknown-filter",
+      });
+    }).to.throw();
+  });
+});
 ```
 
 The test passes, even if there is no web application visited.
@@ -361,20 +355,20 @@ The test passes, even if there is no web application visited.
 
 Previously we instrumented the application code (either using a build step or inserting a plugin into the Babel pipeline). In the example above, we are NOT loading an application, instead we are only running the test files by themselves.
 
-If we want to collect the code coverage from the unit tests, we need to instrument the source code of *our spec files*. The simplest way to do this is to use the same `.babelrc` with [`babel-plugin-istanbul`](https://github.com/istanbuljs/babel-plugin-istanbul) and tell the Cypress built-in bundler to use `.babelrc` when bundling specs. One can use the [`@cypress/code-coverage`](https://github.com/cypress-io/code-coverage) plugin again to do this by adding the code below to your [pluginsFile](/guides/references/configuration#Folders-Files).
+If we want to collect the code coverage from the unit tests, we need to instrument the source code of _our spec files_. The simplest way to do this is to use the same `.babelrc` with [`babel-plugin-istanbul`](https://github.com/istanbuljs/babel-plugin-istanbul) and tell the Cypress built-in bundler to use `.babelrc` when bundling specs. One can use the [`@cypress/code-coverage`](https://github.com/cypress-io/code-coverage) plugin again to do this by adding the code below to your [pluginsFile](/guides/references/configuration#Folders-Files).
 
 ```javascript
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  require('@cypress/code-coverage/task')(on, config)
+  require("@cypress/code-coverage/task")(on, config);
   // tell Cypress to use .babelrc file
   // and instrument the specs files
   // only the extra application files will be instrumented
   // not the spec files themselves
-  on('file:preprocessor', require('@cypress/code-coverage/use-babelrc'))
+  on("file:preprocessor", require("@cypress/code-coverage/use-babelrc"));
 
-  return config
-}
+  return config;
+};
 ```
 
 For reference, the `.babelrc` file is shared between the example application and the spec files, thus Cypress tests are transpiled the same way the application code is transpiled.
@@ -408,7 +402,6 @@ Are our end-to-end tests that are so effective at covering the web application c
 
 <Alert type="info">
 
-
 The full source code for this section can be found in the [cypress-io/cypress-example-conduit-app](https://github.com/cypress-io/cypress-example-conduit-app) repository.
 
 </Alert>
@@ -427,17 +420,17 @@ You can run your Node server and instrument it using nyc on the fly. Instead of 
 In your server, insert another middleware from `@cypress/code-coverage`. If you use an Express server, include `middleware/express`:
 
 ```javascript
-const express = require('express')
-const app = express()
+const express = require("express");
+const app = express();
 
-require('@cypress/code-coverage/middleware/express')(app)
+require("@cypress/code-coverage/middleware/express")(app);
 ```
 
 If your server uses hapi, include `middleware/hapi`
 
 ```javascript
 if (global.__coverage__) {
-  require('@cypress/code-coverage/middleware/hapi')(server)
+  require("@cypress/code-coverage/middleware/hapi")(server);
 }
 ```
 
@@ -446,7 +439,7 @@ if (global.__coverage__) {
 ```javascript
 /* istanbul ignore next */
 if (global.__coverage__) {
-  require('@cypress/code-coverage/middleware/hapi')(server)
+  require("@cypress/code-coverage/middleware/hapi")(server);
 }
 ```
 
@@ -456,12 +449,12 @@ For any other server type, define a `GET /__coverage__` endpoint and return the 
 if (global.__coverage__) {
   // handle "GET __coverage__" requests
   onRequest = (response) => {
-    response.sendJSON({ coverage: global.__coverage__ })
-  }
+    response.sendJSON({ coverage: global.__coverage__ });
+  };
 }
 ```
 
-In order for the `@cypress/code-coverage` plugin to know that it should request the back end coverage, add the new endpoint to the `cypress.json` environment settings under `env.codeCoverage.url` key. For example, if the application back end is running at port 3000 and we are using the default "GET /__coverage__" endpoint, set the following:
+In order for the `@cypress/code-coverage` plugin to know that it should request the back end coverage, add the new endpoint to the `cypress.json` environment settings under `env.codeCoverage.url` key. For example, if the application back end is running at port 3000 and we are using the default "GET /**coverage**" endpoint, set the following:
 
 ```json
 {
@@ -485,14 +478,16 @@ Even if you only want to measure the back end code coverage Cypress can help. Re
 
 We are currently exploring two additional features for code coverage during end-to-end tests. First, we would like to avoid the "manual" instrumentation step using the Istanbul.js library and instead capture the native code coverage that can be collected by the Chrome browser's V8 engine. You can find a proof-of-concept example in [bahmutov/cypress-native-chrome-code-coverage-example](https://github.com/bahmutov/cypress-native-chrome-code-coverage-example) repository.
 
-Second, we would like to capture the code coverage from *the locally running back end server* that is serving the front end web application and handles the API requests from the web application under test. We believe that E2E tests with additional [API tests](https://www.cypress.io/blog/2017/11/07/add-gui-to-your-e2e-api-tests/) that Cypress can perform can effectively cover a lot of back end code.
+Second, we would like to capture the code coverage from _the locally running back end server_ that is serving the front end web application and handles the API requests from the web application under test. We believe that E2E tests with additional [API tests](https://www.cypress.io/blog/2017/11/07/add-gui-to-your-e2e-api-tests/) that Cypress can perform can effectively cover a lot of back end code.
 
 ## Videos
 
 There is a series of videos we have recorded showing code coverage in Cypress
 
 #### How to instrument react-scripts web application for code coverage
+
 <!-- textlint-disable terminology -->
+
 <DocsVideo src="https://youtube.com/embed/edgeQZ8UpD0"></DocsVideo>
 
 #### Get code coverage reports from Cypress tests
@@ -518,11 +513,13 @@ There is a series of videos we have recorded showing code coverage in Cypress
 #### Checking code coverage on pull request
 
 <DocsVideo src="https://youtube.com/embed/9Eq_gIshK0o"></DocsVideo>
+
 <!-- textlint-enable -->
 
 ## Examples
 
 You can find full examples showing different code coverage setups in the following repositories:
+
 - [cypress-io/cypress-realworld-app](https://github.com/cypress-io/cypress-realworld-app) or RWA is a full stack example application that demonstrates **best practices and scalable strategies with Cypress in practical and realistic scenarios**. The RWA achieves full code coverage with end-to-end tests [across multiple browsers](/guides/guides/cross-browser-testing) and [device sizes](/api/commands/viewport).
 - [cypress-io/cypress-example-todomvc-redux](https://github.com/cypress-io/cypress-example-todomvc-redux) is the example code used in this guide.
 - [cypress-io/cypress-example-conduit-app](https://github.com/cypress-io/cypress-example-conduit-app) shows how to collect the coverage information from both back and front end code and merge it into a single report.
@@ -543,4 +540,3 @@ Find the full list of examples linked in [cypress-io/code-coverage#external-exam
 - [Combined End-to-end and Unit Test Coverage](https://glebbahmutov.com/blog/combined-end-to-end-and-unit-test-coverage/)
 - [Code Coverage by Parcel Bundler](https://glebbahmutov.com/blog/code-coverage-by-parcel/)
 - [Code Coverage for End-to-end Tests](https://glebbahmutov.com/blog/code-coverage-for-e2e-tests/)
-

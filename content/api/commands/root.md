@@ -7,8 +7,8 @@ Get the root DOM element.
 ## Syntax
 
 ```javascript
-cy.root()
-cy.root(options)
+cy.root();
+cy.root(options);
 ```
 
 ### Usage
@@ -16,22 +16,22 @@ cy.root(options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.root()   // Yield root element <html>
-cy.get('nav').within(($nav) => {
-  cy.root()  // Yield root element <nav>
-})
+cy.root(); // Yield root element <html>
+cy.get("nav").within(($nav) => {
+  cy.root(); // Yield root element <nav>
+});
 ```
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** ***(Object)***
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.root()`.
 
-Option | Default | Description
---- | --- | ---
-`log` | `true` | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)
-`timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.root()` to resolve before [timing out](#Timeouts)
+| Option    | Default                                                              | Description                                                                              |
+| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.root()` to resolve before [timing out](#Timeouts)                   |
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
 
@@ -46,7 +46,7 @@ The root element yielded is `<html>` by default. However, when calling `.root()`
 #### Get the root element
 
 ```javascript
-cy.root() // yields <html>
+cy.root(); // yields <html>
 ```
 
 ### Within
@@ -54,11 +54,11 @@ cy.root() // yields <html>
 #### Get the root element in a [`.within()`](/api/commands/within) callback function
 
 ```javascript
-cy.get('form').within(($form) => {
-  cy.get('input[name="email"]').type('john.doe@email.com')
-  cy.get('input[name="password"]').type('password')
-  cy.root().submit() // submits the form yielded from 'within'
-})
+cy.get("form").within(($form) => {
+  cy.get('input[name="email"]').type("john.doe@email.com");
+  cy.get('input[name="password"]').type("password");
+  cy.root().submit(); // submits the form yielded from 'within'
+});
 ```
 
 ## Rules
@@ -80,11 +80,11 @@ cy.get('form').within(($form) => {
 #### Get root element
 
 ```javascript
-cy.root().should('match', 'html')
+cy.root().should("match", "html");
 
-cy.get('.query-ul').within(() => {
-  cy.root().should('have.class', 'query-ul')
-})
+cy.get(".query-ul").within(() => {
+  cy.root().should("have.class", "query-ul");
+});
 ```
 
 The commands above will display in the Command Log as:
@@ -99,4 +99,3 @@ When clicking on the `root` command within the command log, the console outputs 
 
 - [`cy.get()`](/api/commands/get)
 - [`.within()`](/api/commands/within)
-

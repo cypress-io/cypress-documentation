@@ -4,7 +4,6 @@ title: Why Cypress?
 
 <Alert type="info">
 
-
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
 - What Cypress is and why you should use it
@@ -14,7 +13,9 @@ title: Why Cypress?
 </Alert>
 
 <!-- textlint-disable -->
+
 <DocsVideo src="https://youtube.com/embed/LcGHiFnBh3Y"></DocsVideo>
+
 <!-- textlint-enable -->
 
 ## In a nutshell
@@ -48,8 +49,8 @@ Cypress can test anything that runs in a browser.
 
 Cypress consists of a free, [open source](https://github.com/cypress-io/cypress), [locally installed](/guides/getting-started/installing-cypress) Test Runner **and** a Dashboard Service for [recording your tests](/guides/dashboard/dashboard-introduction).
 
-- ***First:*** Cypress helps you set up and start writing tests every day while you build your application locally. *TDD at its best!*
-- ***Later:*** After building up a suite of tests and [integrating Cypress](/guides/guides/continuous-integration) with your CI Provider, our  [Dashboard Service](/guides/dashboard/dashboard-introduction) can record your test runs. You'll never have to wonder: *Why did this fail?*
+- **_First:_** Cypress helps you set up and start writing tests every day while you build your application locally. _TDD at its best!_
+- **_Later:_** After building up a suite of tests and [integrating Cypress](/guides/guides/continuous-integration) with your CI Provider, our [Dashboard Service](/guides/dashboard/dashboard-introduction) can record your test runs. You'll never have to wonder: _Why did this fail?_
 
 ## Our mission
 
@@ -59,7 +60,7 @@ We believe our documentation should be approachable. This means enabling our rea
 
 We want to help developers build a new generation of modern applications faster, better, and without the stress and anxiety associated with managing tests.
 
-We know that in order for us to be successful we must enable, nurture, and foster an ecosystem that thrives on open source. Every line of test code is an investment in **your codebase**, it will never be coupled to us as a paid service or company. Tests will be able to run and work independently, *always*.
+We know that in order for us to be successful we must enable, nurture, and foster an ecosystem that thrives on open source. Every line of test code is an investment in **your codebase**, it will never be coupled to us as a paid service or company. Tests will be able to run and work independently, _always_.
 
 We believe testing needs a lot of <Icon name="heart"></Icon> and we are here to build a tool, a service, and a community that everyone can learn and benefit from. We're solving the hardest pain points shared by every developer working on the web. We believe in this mission and hope that you will join us to make Cypress a lasting ecosystem that makes everyone happy.
 
@@ -111,4 +112,3 @@ To guide the way, the Cypress team has created the <Icon name="github"></Icon> [
 The RWA achieves full [code-coverage](/guides/tooling/code-coverage) with end-to-end tests [across multiple browsers](/guides/guides/cross-browser-testing) and [device sizes](/api/commands/viewport), but also includes [visual regression tests](/guides/tooling/visual-testing), API tests, unit tests, and runs them all in an [efficient CI pipeline](https://dashboard.cypress.io/projects/7s5okt). Use the RWA to **learn, experiment, tinker, and practice** web application testing with Cypress.
 
 The app is bundled with everything you need, [just clone the repository](https://github.com/cypress-io/cypress-realworld-app) and start testing.
-

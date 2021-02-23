@@ -4,7 +4,6 @@ title: Test Retries
 
 <Alert type="info">
 
-
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
 - What are test retries?
@@ -15,7 +14,7 @@ title: Test Retries
 
 ## Introduction
 
-End-to-end (E2E) tests excel at testing complex systems. However, there are still behaviors that are hard to verify and make tests flaky (i.e., unreliable) and fail sometimes due to unpredictable conditions (eg., temporary outages in external dependencies, random network errors, etc.).  Some other common race conditions that could result in unreliable tests include:
+End-to-end (E2E) tests excel at testing complex systems. However, there are still behaviors that are hard to verify and make tests flaky (i.e., unreliable) and fail sometimes due to unpredictable conditions (eg., temporary outages in external dependencies, random network errors, etc.). Some other common race conditions that could result in unreliable tests include:
 
 - Animations
 - API calls
@@ -37,7 +36,6 @@ When each test is run again, the following [hooks](/guides/core-concepts/writing
 - `afterEach`
 
 <Alert type="warning">
-
 
 However, failures in `before` and `after` hooks will not trigger a retry.
 
@@ -111,22 +109,26 @@ If you want to configure retry attempts on a specific test, you can set this by 
 
 ```jsx
 // Customize retry attempts for an individual test
-describe('User sign-up and login', () => {
+describe("User sign-up and login", () => {
   // `it` test block with no custom configuration
-  it('should redirect unauthenticated user to sign-in page', () => {
+  it("should redirect unauthenticated user to sign-in page", () => {
     // ...
-  })
+  });
 
   // `it` test block with custom configuration
-  it('allows user to login', {
-    retries: {
-      runMode: 2,
-      openMode: 1
+  it(
+    "allows user to login",
+    {
+      retries: {
+        runMode: 2,
+        openMode: 1,
+      },
+    },
+    () => {
+      // ...
     }
-  }, () => {
-    // ...
-  })
-})
+  );
+});
 ```
 
 #### Test Suite(s)
@@ -162,28 +164,29 @@ When a test retries, Cypress will continue to take screenshots for each failed a
 With the following test code, you would see the below screenshot filenames when all 3 attempts fail:
 
 ```js
-describe('User Login', () => {
-  it('displays login errors', () => {
-    cy.visit('/')
-    cy.screenshot('user-login-errors')
+describe("User Login", () => {
+  it("displays login errors", () => {
+    cy.visit("/");
+    cy.screenshot("user-login-errors");
     // ...
-  })
-})
+  });
+});
 ```
 
 ```js
 // screenshot filename from cy.screenshot() on 1st attempt
-'user-login-errors.png'
+"user-login-errors.png";
 // screenshot filename on 1st failed attempt
-'user-login-errors (failed).png'
+"user-login-errors (failed).png";
 // screenshot filename from cy.screenshot() on 2nd attempt
-'user-login-errors (attempt 2).png'
+"user-login-errors (attempt 2).png";
 // screenshot filename on 2nd failed attempt
-'user-login-errors (failed) (attempt 2).png'
+"user-login-errors (failed) (attempt 2).png";
 // screenshot filename from cy.screenshot() on 3rd attempt
-'user-login-errors (attempt 3).png'
+"user-login-errors (attempt 3).png";
 // screenshot filename on 3rd failed attempt
-'user-login-errors (failed) (attempt 3).png'
+"user-login-errors (failed) (attempt 3).png";
+
 ```
 
 ## Dashboard
@@ -219,14 +222,14 @@ You can always see how many tests you've recorded from your organization's Billi
 Yes, although ordinarily you would not have to, since this is a low-level detail. But if you want to use the current attempt number and the total allowed attempts you could do the following:
 
 ```javascript
-it('does something differently on retry', { retries: 3 }, () => {
+it("does something differently on retry", { retries: 3 }, () => {
   // cy.state('runnable') returns the current test object
   // we can grab the current attempt and
   // the total allowed attempts from its properties
-  const attempt = cy.state('runnable')._currentRetry
-  const retries = cy.state('runnable')._retries
+  const attempt = cy.state("runnable")._currentRetry;
+  const retries = cy.state("runnable")._retries;
   // use the "attempt" and "retries" values somehow
-})
+});
 ```
 
 The above `attempt` variable will have values 0 through 3 (the first default test execution plus three allowed retries). The `retries` constant in this case is always 3.
@@ -234,11 +237,10 @@ The above `attempt` variable will have values 0 through 3 (the first default tes
 **Tip:** Cypress [bundles Lodash](/api/utilities/_) library. Use its helper methods to safely access a property of an object. Let's make sure the function supports different Cypress versions by falling back to the default values.
 
 ```javascript
-it('does something differently on retry', { retries: 3 }, () => {
+it("does something differently on retry", { retries: 3 }, () => {
   // _.get: if the object or property is missing use the provided default value
-  const attempt = Cypress._.get(cy.state('runnable'), '_currentRetry', 0)
-  const retries = Cypress._.get(cy.state('runnable'), '_retries', 0)
+  const attempt = Cypress._.get(cy.state("runnable"), "_currentRetry", 0);
+  const retries = Cypress._.get(cy.state("runnable"), "_retries", 0);
   // use the "attempt" and "retries" values somehow
-})
+});
 ```
-
