@@ -1,0 +1,69 @@
+{
+  "projects": [
+    {
+      "name": "Redash",
+      "description": "Connect and query your data sources, build dashboards to visualize data and share them with your company.",
+      "url": "https://github.com/getredash/redash"
+    },
+    {
+      "name": "Mermaid.js",
+      "description": "Generation of diagram and flowchart from text in a similar manner as markdown",
+      "url": "https://github.com/mermaid-js/mermaid"
+    },
+    {
+      "name": "Spectrum",
+      "description": "Simple, powerful online communities at spectrum.chat",
+      "url": "https://github.com/withspectrum/spectrum"
+    },
+    {
+      "name": "Vue Storefront",
+      "description": "PWA for eCommerce that is 100% offline, platform agnostic, and headless",
+      "url": "https://github.com/DivanteLtd/vue-storefront"
+    },
+    {
+      "name": "Netlify CMS",
+      "description": "A CMS for Static Site Generators at netlifycms.org",
+      "url": "https://github.com/netlify/netlify-cms"
+    },
+    {
+      "name": "ngx-bootstrap",
+      "description": "Fast and reliable Bootstrap widgets in Angular",
+      "url": "https://github.com/valor-software/ngx-bootstrap"
+    },
+    {
+      "name": "octokit/rest.js",
+      "description": "GitHub REST API client for JavaScript",
+      "url": "https://github.com/octokit/rest.js"
+    },
+    {
+      "name": "For All Beautiful Earth",
+      "description": "End-to-end browser tests for fab.earth using Cypress.io test runner",
+      "url": "https://github.com/forallabeautifulearth/fabe-browser-tests"
+    },
+    {
+      "name": "GraphiQL",
+      "description": "A graphical interactive in-browser GraphQL IDE",
+      "url": "https://github.com/graphql/graphiql/tree/master/packages/graphiql"
+    },
+    {
+      "name": "What Got Done",
+      "description": "An easy, lightweight tool for sharing your weekly progress reports.",
+      "url": "https://github.com/mtlynch/whatgotdone"
+    },
+    {
+      "name": "React Admin",
+      "description": "A frontend Framework for building B2B applications running in the browser on top of REST/GraphQL APIs, using ES6, React and Material Design",
+      "url": "https://github.com/marmelab/react-admin"
+    },
+    {
+      "name": "Webiny",
+      "description": "Serverless CMS (GraphQL + React + Node.js + AWS Lambda)",
+      "url": "https://github.com/webiny/webiny-js"
+    },
+    {
+      "name": "Userbase",
+      "description": "Create secure and private web apps using only static JavaScript, HTML, and CSS.",
+      "url": "https://github.com/encrypted-dev/userbase"
+    }
+  ]
+}

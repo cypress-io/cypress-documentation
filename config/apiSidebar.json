@@ -1,0 +1,73 @@
+[
+  {
+    "category": "API",
+    "children": [
+      {
+        "title": "Table of Contents",
+        "path": "#"
+      }
+    ]
+  },
+  {
+    "category": "Events",
+    "children": [
+      {
+        "title": "Catalog of Events",
+        "path": "#"
+      }
+    ]
+  },
+  {
+    "category": "Assertions",
+    "children": [
+      {
+        "title": "All Assertions",
+        "path": "#"
+      }
+    ]
+  },
+  {
+    "category": "Commands",
+    "children": [
+      {
+        "title": "should",
+        "path": "/api/commands/should"
+      }
+    ]
+  },
+  {
+    "category": "Utilities",
+    "children": [
+      {
+        "title": "_",
+        "path": "#"
+      }
+    ]
+  },
+  {
+    "category": "Cypress API",
+    "children": [
+      {
+        "title": "Commands",
+        "path": "#"
+      },
+      {
+        "title": "Cookies",
+        "path": "#"
+      }
+    ]
+  },
+  {
+    "category": "Plugins",
+    "children": [
+      {
+        "title": "Writing a Plugin",
+        "path": "#"
+      },
+      {
+        "title": "Configuration",
+        "path": "#"
+      }
+    ]
+  }
+]

@@ -1,8 +1,0 @@
-{
-  "MD013": false, # Line length to 80 chars
-  "MD025": false, # no multiple h1 headings
-  "MD026": false, # no trailing punctuation in headings
-  "MD029": false, # no ol prefix (useful for blockquote or indented lists)
-  "MD034": false, # no bare URLs
-  "MD041": false  # first line in file should be h1
-}

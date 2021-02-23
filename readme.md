@@ -1,47 +1,49 @@
-# Cypress Documentation [![Cypress Dashboard](https://img.shields.io/badge/cypress-dashboard-brightgreen.svg)](https://dashboard.cypress.io/#/projects/ma3dkn/runs) [![first-timers-only](http://img.shields.io/badge/first--timers--only-friendly-blue.svg)](https://github.com/cypress-io/cypress-documentation/labels/first-timers-only) [![renovate-app badge][renovate-badge]][renovate-app]
-
-The code for Cypress Documentation including Guides, API, Examples, Dashboard & FAQ found at https://docs.cypress.io.
-
-![Cypress Documentation Preview](https://user-images.githubusercontent.com/5605406/69174503-f6012680-0acf-11ea-933e-6fc2d3a5841c.png)
-
-## CI status
-
-- [![CircleCI](https://circleci.com/gh/cypress-io/cypress-documentation/tree/develop.svg?style=svg)](https://circleci.com/gh/cypress-io/cypress-documentation/tree/develop) `develop` branch
-- [![CircleCI](https://circleci.com/gh/cypress-io/cypress-documentation/tree/master.svg?style=svg)](https://circleci.com/gh/cypress-io/cypress-documentation/tree/master) `master` branch
+# Cypress.io Documentation
 
 ## Getting Started
 
-You should be able to get the documentation site running locally very quickly,
-please see our [Contributing Guideline](/CONTRIBUTING.md).
+Install the dependencies:
 
-Cypress is [first time OSS contributor friendly](http://www.firsttimersonly.com/). See [these issues](https://github.com/cypress-io/cypress-documentation/labels/first-timers-only) to contribute in a meaningful way.
+```sh
+yarn
+```
 
-### Contentful driven data:
+Run the app:
 
-If you need any [Contentful](https://www.contentful.com/) driven data to be parsed before Hexo serve - you need to declare it Circle CI or/and bash. You may need [Contentful](https://www.contentful.com/) environment variables inside your machine or container:
+```sh
+yarn start
+```
 
-- `GATSBY_CONTENTFUL_SPACE_ID`
+You can view the app by visiting [http://localhost:3000/](http://localhost:3000/).
 
-    [Contentful](https://www.contentful.com/) 12 digit key. You can find it (if you have granted access) in [Contentful](https://www.contentful.com/) acc:
+## Building
 
-    Settings → API keys → Master → Space ID
+You can create a statically generated version of the website by running the following:
 
-- `GATSBY_CONTENTFUL_ACCESS_TOKEN`
+```sh
+yarn build
+```
 
-    [Contentful](https://www.contentful.com/) 64 digit token. You can find it (if you have granted access) in [Contentful](https://www.contentful.com/) acc:
+This will generate a `dist` directory that you can serve up.
 
-    Settings → API keys → Master → Content Delivery API - access token
+**Note:** If you want to create and view a statically generated version of the documentation site, you can run the following:
 
- P.S. If you don't have any of this - Hexo will build & serve as usual, but without any 
- [Contentful](https://www.contentful.com/) driven data.
+```
+yarn run start:ci
+```
 
-## Deploying
+You can view the statically generated site at [http://localhost:3000/](http://localhost:3000).
 
-See our [Deploy Guideline](DEPLOY.md).
+### Testing
 
-## License
+We use Cypress itself to test the documentation.
 
-This project is licensed under the terms of the [MIT license](/LICENSE.md).
+Run the tests:
 
-[renovate-badge]: https://img.shields.io/badge/renovate-app-blue.svg
-[renovate-app]: https://renovateapp.com/
+```sh
+yarn test
+```
+
+## Contributing
+
+Refer to the [`CONTRIBUTING.md`](/CONTRIBUTING.md) guide for details.

@@ -1,0 +1,23 @@
+[[redirects]]
+  from = "/guides"
+  to = "/guides/overview/why-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api"
+  to = "/api/table-of-contents"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/examples"
+  to = "/examples/examples/recipes"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/faq"
+  to = "/faq/questions/using-cypress-faq"
+  status = 301
+  force = true

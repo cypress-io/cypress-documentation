@@ -1,0 +1,179 @@
+[
+  {
+    "category": "Introduction",
+    "children": [
+      {
+        "title": "Overview",
+        "path": "#"
+      },
+      {
+        "title": "Why Cypress",
+        "path": "#"
+      },
+      {
+        "title": "Key Features",
+        "path": "#"
+      }
+    ]
+  },
+  {
+    "category": "Getting Started",
+    "children": [
+      {
+        "title": "Installation",
+        "path": "/guides/installing-cypress"
+      },
+      {
+        "title": "Quick Start",
+        "path": "#"
+      },
+      {
+        "title": "Essentials",
+        "path": "#"
+      }
+    ]
+  },
+  {
+    "category": "Guides",
+    "children": [
+      {
+        "title": "Commands",
+        "path": "#"
+      },
+      {
+        "title": "Selecting Elements",
+        "path": "#"
+      },
+      {
+        "title": "Interacting with Elements",
+        "path": "#"
+      },
+      {
+        "title": "Variables and Aliases",
+        "path": "#"
+      },
+      {
+        "title": "Assertions",
+        "path": "#"
+      },
+      {
+        "title": "Fixtures",
+        "path": "#"
+      },
+      {
+        "title": "Network Requests",
+        "path": "#"
+      },
+      {
+        "title": "Stubs, Spies and Clocks",
+        "path": "#"
+      },
+      {
+        "title": "Debugging",
+        "path": "#"
+      },
+      {
+        "title": "Screenshots and Videos",
+        "path": "#"
+      },
+      {
+        "title": "Command Line",
+        "path": "#"
+      },
+      {
+        "title": "Configuration",
+        "path": "#"
+      },
+      {
+        "title": "Cross Browser Testing",
+        "path": "#"
+      },
+      {
+        "title": "Web Security",
+        "path": "#"
+      },
+      {
+        "title": "Module API",
+        "path": "#"
+      }
+    ]
+  },
+  {
+    "category": "Component Testing",
+    "badge": "alpha",
+    "children": [
+      {
+        "title": "Introduction",
+        "path": "#"
+      }
+    ]
+  },
+  {
+    "category": "Continuous Integration",
+    "children": [
+      {
+        "title": "Introduction",
+        "path": "#"
+      },
+      {
+        "title": "Parallelization",
+        "path": "#"
+      },
+      {
+        "title": "CircleCI",
+        "path": "#"
+      }
+    ]
+  },
+  {
+    "category": "Testing Strategies",
+    "children": [
+      {
+        "title": "Best Practices",
+        "path": "#"
+      },
+      {
+        "title": "Test Approaches",
+        "path": "#"
+      },
+      {
+        "title": "Conditional Testing",
+        "path": "#"
+      },
+      {
+        "title": "Authentication",
+        "path": "#"
+      }
+    ]
+  },
+  {
+    "category": "Community",
+    "children": [
+      {
+        "title": "Media",
+        "path": "#"
+      },
+      {
+        "title": "Ambassadors",
+        "path": "#"
+      }
+    ]
+  },
+  {
+    "category": "References",
+    "children": [
+      {
+        "title": "Roadmap",
+        "path": "#"
+      },
+      {
+        "title": "Changelog",
+        "path": "#"
+      },
+      {
+        "title": "Architecture",
+        "path": "#"
+      }
+    ]
+  }
+]
