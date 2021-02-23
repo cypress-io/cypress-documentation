@@ -1,3 +1,10 @@
+[build]
+  publish = "dist/"
+  command = "yarn build"
+
+[context.deploy-preview]
+  publish = "dist/"
+
 [[redirects]]
   from = "/guides"
   to = "/guides/overview/why-cypress"
