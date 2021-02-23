@@ -10,7 +10,7 @@ title: Bitbucket Pipelines
 
 {% endnote %}
 
-With it's integrated {% url "integrated CI/CD, Pipelines" https://bitbucket.org/product/features/pipelines %}, {% url "Bitbucket" https://bitbucket.com %} offers developers "CI/CD where it belongs, right next to your code. No servers to manage, repositories to synchronize, or user management to configure."
+With its integrated {% url "integrated CI/CD, Pipelines" https://bitbucket.org/product/features/pipelines %}, {% url "Bitbucket" https://bitbucket.com %} offers developers "CI/CD where it belongs, right next to your code. No servers to manage, repositories to synchronize, or user management to configure."
 
 Detailed documentation is available in the {% url "Bitbucket Pipelines Documentation" https://support.atlassian.com/bitbucket-cloud/docs/get-started-with-bitbucket-pipelines/ %}.
 
@@ -222,7 +222,7 @@ In the Bitbucket Pipelines configuration we have defined in the previous section
   1. {% url "Recording test results with the `--record` flag" https://on.cypress.io/how-do-i-record-runs %} to the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}:
     - In-depth and shareable {% url "test reports" runs %}.
     - Visibility into test failures via quick access to error messages, stack traces, screenshots, videos, and contextual details.
-    - {% url "Integrating testing with the merge-request process" bitbucket-integration %} via {% url "commit status guards" bitbucket-integration#Status-checks %} and convenient {% url "pull request comments" bitbucket-integration#Pull-Request-comments %}.
+    - {% url "Integrating testing with the pull-request process" bitbucket-integration %} via {% url "commit status check guards" bitbucket-integration#Status-checks %} and convenient {% url "pull request comments" bitbucket-integration#Pull-Request-comments %}.
     - {% url "Detecting flaky tests" flaky-test-management %} and surfacing them via {% url "Slack alerts" flaky-test-management#Slack %} or {% url "Bitbucket PR status checks" bitbucket-integration %}.
 
   2. {% url "Parallelizing test runs" parallelization %} and optimizing their execution via {% url "intelligent load-balancing" parallelization#Balance-strategy %} of test specs across CI machines with the `--parallel` flag.
