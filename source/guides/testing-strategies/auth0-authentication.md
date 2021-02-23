@@ -395,7 +395,7 @@ AUTH0_MGMT_API_TOKEN = 'YOUR-MANAGEMENT-API-TOKEN'
 With this token in place, we can add interaction with the {% url "Auth0 Anomaly remove the blocked IP address endpoint" https://auth0.com/docs/api/management/v2#!/Anomaly/delete_ips_by_id %} to our `loginByAuth0Api` command.  This will send a delete request to {% url "Auth0 Management API" https://auth0.com/docs/api/management/v2 %} anomaly endpoint to unblock an IP that may become blocked during the test run.
 
 {% note info Tip %}
-{% url "icanhazip.com"  %} is a free, hosted service to find a system's current external IP address.
+{% url "icanhazip.com" http://icanhazip.com/ %} is a free, hosted service to find a system's current external IP address.
 {% endnote %}
 
 ```jsx

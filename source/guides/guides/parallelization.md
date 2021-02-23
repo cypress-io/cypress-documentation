@@ -40,14 +40,14 @@ Cypress will assign each spec file to an available machine based on our {% urlHa
   ```
 
     {% note info %}
-    Running tests in parallel requires the {% url "`--record` flag" command-line#cypress-run %} be passed. This ensures Cypress can properly collect the data needed to parallelize future runs. This also gives you the full benefit of seeing the results of your parallelized tests in our {% url "Dashboard Service" dashboard-introduction%}. If you have not set up your project to record, check out our {% url "setup guide" projects#Setup %}.
+    Running tests in parallel requires the {% url "`--record` flag" command-line#cypress-run %} be passed. This ensures Cypress can properly collect the data needed to parallelize future runs. This also gives you the full benefit of seeing the results of your parallelized tests in our {% url "Dashboard Service" dashboard-introduction %}. If you have not set up your project to record, check out our {% url "setup guide" projects#Setup %}.
     {% endnote %}
 
 # CI parallelization interactions
 
-During parallelization mode, the Cypress {% url "Dashboard Service" dashboard-introduction%} interacts with your CI machines to orchestrate the parallelization of a test run via {% urlHash 'load-balancing' Balance-strategy %} of specs across available CI machines by the following process:
+During parallelization mode, the Cypress {% url "Dashboard Service" dashboard-introduction %} interacts with your CI machines to orchestrate the parallelization of a test run via {% urlHash 'load-balancing' Balance-strategy %} of specs across available CI machines by the following process:
 
-1. CI machines contact the Cypress {% url "Dashboard Service" dashboard-introduction%} to indicate which spec files to run in the project.
+1. CI machines contact the Cypress {% url "Dashboard Service" dashboard-introduction %} to indicate which spec files to run in the project.
 2. A machine opts in to receiving a spec file to run by contacting Cypress.
 3. Upon receiving requests from a CI machine, Cypress calculates the estimated duration to test each spec file.
 4. Based on these estimations, Cypress distributes ({% urlHash 'load-balances' Balance-strategy %}) spec files one-by-one to each available machine in a way that minimizes overall test run time.
@@ -274,7 +274,7 @@ This **delay is 60 seconds by default**, but is {% url "configurable within the 
 
 # Visualizing parallelization and groups in the Dashboard
 
-You can see the result of each spec file that ran within the {% url "Dashboard Service" dashboard-introduction%} in the run's **Specs** tab. Specs are visualized within a **Timeline**, **Bar Chart**, and **Machines** view.
+You can see the result of each spec file that ran within the {% url "Dashboard Service" dashboard-introduction %} in the run's **Specs** tab. Specs are visualized within a **Timeline**, **Bar Chart**, and **Machines** view.
 
 ## Timeline View
 
