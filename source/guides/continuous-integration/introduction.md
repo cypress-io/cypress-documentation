@@ -143,7 +143,7 @@ Cypress can record your tests and make the results available in the {% url 'Cypr
 cypress run --record --key=abc123
 ```
 
-{% url 'Read the full guide on the Dashboard Service.' dashboard-introduction%}
+{% url 'Read the full guide on the Dashboard Service.' dashboard-introduction %}
 
 ## Run tests in parallel
 

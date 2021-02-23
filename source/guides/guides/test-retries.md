@@ -182,7 +182,7 @@ describe('User Login', () => {
 
 # Dashboard
 
-If you are using the {% url "Cypress Dashboard" dashboard %}, information related to test retries is displayed on the Test Results tab for a run. Selecting the Flaky filter will show tests that retried and then passed during the run.
+If you are using the {% url "Cypress Dashboard" dashboard-introduction %}, information related to test retries is displayed on the Test Results tab for a run. Selecting the Flaky filter will show tests that retried and then passed during the run.
 
 These tests are also indicated with a "Flaky" badge on the Latest Runs page and Test Results tab on the Run Details page.
 

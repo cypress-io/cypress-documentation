@@ -478,7 +478,7 @@ Check out our {% url "guide on parallelizing runs" parallelization %} and when t
 
 You passed the `--ci-build-id`, {% url "`--group`" command-line#cypress-run-group-lt-name-gt %}, or {% url "`--parallel`" command-line#cypress-run-parallel %} flag without also passing the `--record` flag.
 
-These flags can only be used when recording to the {% url "Dashboard Service" dashboard-introduction%}.
+These flags can only be used when recording to the {% url "Dashboard Service" dashboard-introduction %}.
 
 Please review our {% url "parallelization" parallelization %} documentation to learn more.
 

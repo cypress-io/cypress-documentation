@@ -10,7 +10,7 @@ containerClass: faq
 
 The {% url 'Dashboard' https://on.cypress.io/dashboard %} is a Cypress service that gives you access to tests you've recorded - typically when running Cypress tests from your {% url "CI provider" continuous-integration-introduction %}. The Dashboard provides you insight into what happened during your tests run.
 
-You can read more {% url 'here' dashboard-introduction%}.
+You can read more {% url 'here' dashboard-introduction %}.
 
 ## {% fa fa-angle-right %} How do I record my tests?
 
@@ -49,9 +49,9 @@ Cypress is **complementary** to your {% url "CI provider" continuous-integration
 
 It doesn't replace or change anything related to CI. You will run Cypress tests in your CI provider.
 
-The difference between our {% url 'Dashboard Service' dashboard-introduction%} and your CI provider is that your CI provider has no idea what is going on inside of the Cypress process. It's programmed to know whether or not a process failed - based on whether it had an exit code greater than `0`.
+The difference between our {% url 'Dashboard Service' dashboard-introduction %} and your CI provider is that your CI provider has no idea what is going on inside of the Cypress process. It's programmed to know whether or not a process failed - based on whether it had an exit code greater than `0`.
 
-Our {% url 'Dashboard Service' dashboard-introduction%} provides you with the low level details of *what* happened during your run. Using both your CI provider + Cypress together gives the insight required to debug your test runs.
+Our {% url 'Dashboard Service' dashboard-introduction %} provides you with the low level details of *what* happened during your run. Using both your CI provider + Cypress together gives the insight required to debug your test runs.
 
 When a run happens and a test fails - instead of going and inspecting your CI provider's `stdout` output, you can log into the {% url 'Dashboard' https://on.cypress.io/dashboard %}, see the `stdout` as well as screenshots and video of the tests running. It should be instantly clear what the problem was.
 
