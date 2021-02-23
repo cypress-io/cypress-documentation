@@ -31,7 +31,7 @@ Using GitHub, [create a copy](https://guides.github.com/activities/forking/) (a 
 **Clone your forked repository**
 
 ```shell
-git clone git@github.com:<your username>/docs.git
+git clone git@github.com:<your username>/cypress-documentation.git
 cd docs
 ```
 
