@@ -1,1 +1,1 @@
-module.exports.codify = (content) => `\`${content}\``;
+module.exports.codify = (content) => `\`${content}\``

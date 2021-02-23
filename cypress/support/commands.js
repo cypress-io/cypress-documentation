@@ -33,17 +33,17 @@ import '@percy/cypress'
 // also sets the width and height to the current viewport
 // from: https://github.com/cypress-io/cypress-realworld-app/blob/8d47eb252fd95126e9ce5fce0379fc8486fba86f/cypress/support/commands.ts#L9-L26
 // Enable this command by setting the env var `CYPRESS_VISUAL_SNAPSHOT_TESTING` to `1`
-Cypress.Commands.add("visualSnapshot", (maybeName) => {
+Cypress.Commands.add('visualSnapshot', (maybeName) => {
   if (Number(Cypress.env('VISUAL_SNAPSHOT_TESTING')) !== 1) {
     return
   }
 
-  let snapshotTitle = cy.state("runnable").fullTitle();
+  let snapshotTitle = cy.state('runnable').fullTitle()
   if (maybeName) {
-    snapshotTitle = snapshotTitle + " - " + maybeName;
+    snapshotTitle = snapshotTitle + ' - ' + maybeName
   }
   cy.percySnapshot(snapshotTitle, {
-    widths: [cy.state("viewportWidth")],
-    minHeight: cy.state("viewportHeight"),
-  });
-});
+    widths: [cy.state('viewportWidth')],
+    minHeight: cy.state('viewportHeight'),
+  })
+})
