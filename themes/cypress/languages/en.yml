@@ -46,6 +46,7 @@ sidebar:
     gitlab-ci: GitLab CI
     github-integration: GitHub Integration
     gitlab-integration: GitLab Integration
+    bitbucket-pipelines: Bitbucket Pipelines
     slack-integration: Slack Integration
     analytics: Analytics
     flaky-test-management: Flaky Test Management
