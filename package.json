@@ -17,16 +17,15 @@
     "lint": "yarn lint:js && yarn lint:style",
     "test": "./node_modules/.bin/cypress open",
     "transform": "node scripts/transform.js",
-    "make-empty-commit": "node node_modules/make-empty-github-commit/bin/empty.js --repo cypress-io/docs"
+    "make-empty-commit": "node node_modules/make-empty-github-commit/bin/empty.js --repo cypress-io/docs",
+    "postinstall": "husky install"
   },
   "lint-staged": {
-    "*.{js,vue}": "eslint",
-    "*.{css,vue}": "stylelint"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "*.{js,vue}": "eslint --fix",
+    "*.{css,vue}": "stylelint",
+    "*.js": "eslint --cache --fix",
+    "*.css": "stylelint --fix",
+    "*.md": "prettier --write"
   },
   "dependencies": {
     "@docsearch/css": "^1.0.0-alpha.28",
@@ -43,6 +42,7 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
+    "@cypress/eslint-plugin-dev": "^5.1.0",
     "@fortawesome/free-brands-svg-icons": "^5.14.0",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@nuxtjs/eslint-config": "^3.0.0",
@@ -57,11 +57,13 @@
     "cross-env": "^7.0.3",
     "cypress": "^6.4.0",
     "eslint": "^7.2.0",
-    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-prettier": "^8.0.0",
+    "eslint-plugin-cypress": "^2.11.2",
+    "eslint-plugin-json-format": "^2.0.1",
     "eslint-plugin-nuxt": "^1.0.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "husky": "^4.2.5",
-    "lint-staged": "^10.2.11",
+    "husky": "^5.1.1",
+    "lint-staged": "^10.5.4",
     "make-empty-github-commit": "^1.2.1",
     "netlify-cli": "^3.5.0",
     "node-sass": "^4.14.1",

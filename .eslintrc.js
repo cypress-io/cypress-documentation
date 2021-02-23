@@ -1,11 +1,12 @@
-{
+module.exports = {
   "plugins": [
     "cypress",
     "@cypress/dev"
   ],
   "extends": [
     "plugin:@cypress/dev/general",
-    "plugin:cypress/recommended"
+    "plugin:cypress/recommended",
+    "prettier"
   ],
   "env": {
     "es6": true,

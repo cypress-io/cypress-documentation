@@ -1,0 +1,13 @@
+dist
+.husky
+.vscode
+.circleci
+.github
+assets
+node_modules
+.eslintignore
+.eslintrc-textlint
+.gitignore
+.mergify.yml
+.node-version
+.textlintrc

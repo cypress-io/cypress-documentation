@@ -9,5 +9,6 @@ export const getSidebarItemLink = ({ section, folder, slug }) => {
   if (slug === 'all-assertions') {
     return `/guides/references/assertions`
   }
+
   return `/${section}/${folder ? `${folder}/` : ''}${slug}`
 }
