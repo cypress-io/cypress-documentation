@@ -9,6 +9,7 @@ public/
 support
 !cypress/support
 .idea/
+.eslintcache
 
 themes/cypress/source/css/vendor/
 themes/cypress/source/js/vendor/

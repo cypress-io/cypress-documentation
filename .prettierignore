@@ -6,6 +6,7 @@ dist
 assets
 node_modules
 .eslintignore
+.eslintcache
 .eslintrc-textlint
 .gitignore
 .mergify.yml
