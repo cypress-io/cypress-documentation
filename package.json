@@ -21,9 +21,8 @@
     "postinstall": "husky install"
   },
   "lint-staged": {
-    "*.{js,vue}": "eslint --fix",
+    "*.{js,vue}": "eslint --cache --fix",
     "*.{css,vue}": "stylelint",
-    "*.js": "eslint --cache --fix",
     "*.css": "stylelint --fix",
     "*.md": "prettier --write"
   },
@@ -62,6 +61,7 @@
     "eslint-plugin-json-format": "^2.0.1",
     "eslint-plugin-nuxt": "^1.0.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-vue": "^7.6.0",
     "husky": "^5.1.1",
     "lint-staged": "^10.5.4",
     "make-empty-github-commit": "^1.2.1",

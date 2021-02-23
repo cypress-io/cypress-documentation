@@ -3,7 +3,6 @@ import AppSidebar from '../../components/AppSidebar'
 import TableOfContents from '../../components/TableOfContents'
 import Footer from '../../components/Footer'
 import ApiTableOfContents from '../../components/ApiTableOfContents.vue'
-import sidebarData from '../../config/guideSidebar.json'
 
 export default {
   components: {
@@ -66,7 +65,6 @@ export default {
   },
   data() {
     return {
-      sidebarData,
       isMenuOpen: false,
     }
   },
