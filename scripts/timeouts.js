@@ -7,35 +7,35 @@ const URL_MAP = {
 }
 
 const createAssertionListItem = (cmd) =>
-  `${codify(cmd)} can time out waiting for assertions you've added to pass.`
+  {return `${codify(cmd)} can time out waiting for assertions you've added to pass.`}
 const createPromiseListItem = (cmd) =>
-  `${codify(
+  {return `${codify(
     cmd
-  )} can time out waiting for a promise you've returned to resolve.`
+  )} can time out waiting for a promise you've returned to resolve.`}
 
 const createAssertionsListItems = (cmd) => [createAssertionListItem(cmd)]
 
-const createActionsListItems = (cmd) => [
+const createActionsListItems = (cmd) => {return [
   `${codify(cmd)} can time out waiting for the element to reach an ${
     URL_MAP.action
   }.`,
   createAssertionListItem(cmd),
-]
+]}
 
-const createExistenceListItems = (cmd) => [
+const createExistenceListItems = (cmd) => {return [
   `${codify(cmd)} can time out waiting for the element(s) to ${URL_MAP.exist}.`,
   createAssertionListItem(cmd),
-]
+]}
 
-const createShadowDOMExistenceListItems = (cmd) => [
+const createShadowDOMExistenceListItems = (cmd) => {return [
   `${codify(cmd)} can time out waiting for the element(s) to ${URL_MAP.exist}.`,
   `${codify(
     cmd
   )} can time out waiting for the element(s) to host a shadow root.`,
   createAssertionListItem(cmd),
-]
+]}
 
-const createAutomationListItems = (cmd) => [
+const createAutomationListItems = (cmd) => {return [
   `${codify(cmd)} should never time out.`,
   // TODO
   `{% note warning %}
@@ -43,51 +43,51 @@ Because ${codify(
     cmd
   )} is asynchronous it is technically possible for there to be a timeout while talking to the internal Cypress automation APIs. But for practical purposes it should never happen.
 {% endnote %}`,
-]
+]}
 
-const createItsListItems = (cmd) => [
+const createItsListItems = (cmd) => {return [
   `${codify(cmd)} can time out waiting for the property to exist.`,
   createAssertionListItem(cmd),
-]
+]}
 
-const createExecListItems = (cmd) => [
+const createExecListItems = (cmd) => {return [
   `${codify(cmd)} can time out waiting for the system command to exist.`,
-]
+]}
 
-const createTaskListItems = (cmd) => [
+const createTaskListItems = (cmd) => {return [
   `${codify(cmd)} can time out waiting for the task to end.`,
-]
+]}
 
 const createNoneListItems = (cmd) => [`${codify(cmd)} cannot time out.`]
 
-const createPageListItems = (cmd) => [
+const createPageListItems = (cmd) => {return [
   `${codify(cmd)} can time out waiting for the page to fire its ${codify(
     'load'
   )} event.`,
   createAssertionListItem(cmd),
-]
+]}
 
-const createRequestListItems = (cmd) => [
+const createRequestListItems = (cmd) => {return [
   `${codify(cmd)} can time out waiting for the server to respond.`,
-]
+]}
 
-const createWaitListItems = (cmd) => [
+const createWaitListItems = (cmd) => {return [
   `${codify(cmd)} can time out waiting for the request to go out.`,
   `${codify(cmd)} can time out waiting for the response to return.`,
-]
+]}
 
 const createPromisesListItems = (cmd) => [createPromiseListItem(cmd)]
 
-const createTimeoutsListItems = (cmd) => [
+const createTimeoutsListItems = (cmd) => {return [
   `${codify(cmd)} will continue to ${
     URL_MAP.retry
   } its specified assertions until it times out.`,
-]
+]}
 
-const createInvokeListItems = (cmd) => [
+const createInvokeListItems = (cmd) => {return [
   createAssertionListItem(cmd),
   createPromiseListItem(cmd),
-]
+]}
 
 const CREATE_TIMEOUTS_LIST_ITEMS_MAP = {
   assertions: createAssertionsListItems,
@@ -109,11 +109,14 @@ const CREATE_TIMEOUTS_LIST_ITEMS_MAP = {
 
 module.exports.createTimeoutsListItems = (type, cmd) => {
   const buildTimeoutsListItems = CREATE_TIMEOUTS_LIST_ITEMS_MAP[type]
+
   if (!buildTimeoutsListItems) {
     throw new Error(
       `{% timeouts %} tag helper was provided an invalid option: ${type}`
     )
   }
+
   const executedCmd = `${cmd}()`
+
   return buildTimeoutsListItems(executedCmd)
 }

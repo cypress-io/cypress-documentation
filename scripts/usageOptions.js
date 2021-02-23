@@ -4,24 +4,28 @@ module.exports.createUsageOptions = (option, type) => {
   const blurbs = {
     animationDistanceThreshold: () => {
       const url = `{% url 'considered animating' interacting-with-elements#Animations %}`
+
       return `The distance in pixels an element must exceed over time to be ${url}.`
     },
 
     log: () => {
       /* eslint-disable quotes */
       const url = `{% url 'Command log' test-runner#Command-Log %}`
+
       return `Displays the command in the ${url}`
     },
 
     force: () => {
       /* eslint-disable quotes */
       const url = `{% urlHash 'waiting for actionability' Assertions %}`
+
       return `Forces the action, disables ${url}`
     },
 
     timeout: () => {
       /* eslint-disable quotes */
       const url = `{% urlHash 'timing out' Timeouts %}`
+
       return `Time to wait for ${codify(`${type}()`)} to resolve before ${url}`
     },
 
