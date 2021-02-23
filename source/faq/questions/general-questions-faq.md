@@ -66,7 +66,7 @@ You can read about our currently available browsers {% url "here" launching-brow
 
 ## {% fa fa-angle-right %} Will Cypress work in my CI provider?
 
-Cypress works in any {% url "CI provider" continuous-integration %}.
+Cypress works in any {% url "CI provider" continuous-integration-introduction %}.
 
 ## {% fa fa-angle-right %} Does Cypress require me to change any of my existing code?
 
@@ -168,7 +168,7 @@ Finally, unit and end-to-end tests are not _that_ different and have common feat
 - Focus on and test only one thing.
 - Are flake-free and do not fail randomly.
 - Give you confidence to refactor code and add new features.
-- Are able to run both locally and on a {% url "continuous integration" continuous-integration %} server.
+- Are able to run both locally and on a {% url "continuous integration" continuous-integration-introduction %} server.
 
 Certainly, unit and end-to-end tests are NOT in opposition to each other and are complementary tools in your toolbox.
 
@@ -186,8 +186,12 @@ You can follow through these links:
 
 ## {% fa fa-angle-right %} How often are Cypress Test Runner versions released?
 
-We schedule releases of the Test Runner on Monday every two weeks. This new version includes any bugfixes and/or features that have been completed by that time.
+We schedule releases of the Test Runner on Monday every two weeks. This new version includes any bugfixes and/or features that have been completed by that time. You can see all issues merged into the default code branch but not yet released by looking at the issues with the label {% url 'stage: pending release' https://github.com/cypress-io/cypress/issues?q=label%3A%22stage%3A+pending+release%22+is%3Aclosed %}.
 
 We schedule major releases with breaking changes approximately every 3 months.
 
 If there is a significant bug outside of our release schedule then we release a patch as soon as possible.
+
+## {% fa fa-angle-right %} What information is captured or transmitted when using the Cypress Test Runner?
+
+The Cypress Test Runner runs locally so no data is sent to Cypress aside from exception data, which can be disabled using the instructions {% url "here" https://docs.cypress.io/guides/getting-started/installing-cypress.html#Opt-out-of-sending-exception-data-to-Cypress %}.
