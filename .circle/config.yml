@@ -1,0 +1,88 @@
+version: 2.1
+
+orbs:
+  cypress: cypress-io/cypress@1.26.0
+
+executors:
+  node-executor:
+    docker:
+      - image: cimg/node:14.15.1
+  with-chrome-and-firefox:
+    resource_class: medium+
+    docker:
+      - image: 'cypress/browsers:node12.14.1-chrome85-ff81'
+
+commands:
+  nuxt-build:
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - yarn-cache-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn --frozen-lockfile
+      - save_cache:
+          key: yarn-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+      - run:
+          name: Nuxt Build
+          command: yarn build
+
+jobs:
+  build:
+    executor: node-executor
+    working_directory: ~/repo
+    steps:
+      - nuxt-build
+      - run:
+          name: Netlify Deploy
+          command: ./node_modules/.bin/netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --dir=./dist
+  release:
+    executor: node-executor
+    steps:
+      - nuxt-build
+      - run:
+          name: Netlify Deploy
+          command: curl -X POST -d {} $NETLIFY_BUILD_HOOK_MASTER
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - cypress/install:
+          name: 'Setup Linux'
+          yarn: true
+          install-command: yarn --frozen-lockfile
+          executor: with-chrome-and-firefox
+
+      # Run E2E tests in Chrome
+      - cypress/run:
+          name: 'UI Tests - Chrome'
+          browser: chrome
+          spec: cypress/integration/*
+          executor: with-chrome-and-firefox
+          wait-on: 'http://localhost:3000'
+          command-prefix: npx percy exec --
+          yarn: true
+          start: yarn start:ci
+          record: true
+          parallel: true
+          parallelism: 1
+          ci-build-id: ${CIRCLE_SHA1:0:8}
+          group: 'UI - Chrome'
+          requires:
+            - Setup Linux
+
+      - build:
+          filters:
+            branches:
+              ignore:
+                - master
+
+      - release:
+          filters:
+            branches:
+              only:
+                - master
