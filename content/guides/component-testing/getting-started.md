@@ -4,6 +4,7 @@ containerClass: component-testing
 ---
 
 ⚠️ The Cypress Component Testing library is in still in **Alpha**. We are rapidly developing and expect that the API may undergo breaking changes. Contribute to its development by submitting feature requests or issues [here](https://github.com/cypress-io/cypress/).
+
 **Getting Started with Component Testing**
 
 Welcome to the future of component testing. This document will help you create a basic project you can test in an end to end fashion with the e2e runner, as well as write component tests with the new component test runner.
@@ -12,7 +13,7 @@ If you don’t want to set anything up and just try something out, follow the in
 
 1. **Quick start with a template**
 
-If you just want to see it working but don’t want to write some code, do the following:
+If you just want to see it working but don’t want to write code, do the following:
 
 - Clone the cypress monorepo
 - Get the template: `git checkout ct-quick-setup`
@@ -151,3 +152,5 @@ describe('e2e', () => {
 - Run the webpack dev server: `yarn webpack-dev-server --config my-project/webpack.config.js`
 - Open the E2E runner: `node ../scripts/start.js --project ${PWD}` and choose `e2e.spec.js`
 - It runs the spec as you would expect:
+
+<DocsImage src="/img/guides/component-testing/ct-example2.png" alt="Final Example of Component Testing" />
