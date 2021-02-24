@@ -226,6 +226,7 @@ Set `DEBUG` to value | To enable debugging
 `cypress:server:plugins` | Running the plugin file and bundling specs
 `cypress:server:socket-e2e` | Watching spec files
 `cypress:server:task` | Invoking the `cy.task` command
+`cypress:server:socket-base` | Debugging `cy.request` command
 `cypress:webpack` | Bundling specs using webpack
 `cypress:server:fixture` | Loading fixture files
 
@@ -241,6 +242,32 @@ You can also exclude a log source using `-` character. For example, to see all `
 
 ```shell
 DEBUG=cypress:server*,-cypress:server:browsers* npx cypress run
+```
+
+### Debug log depth
+
+Sometimes the logged object has deeply nested properties and is shown as  `[Object]` instead of the full serialization.
+
+```shell
+DEBUG=cypress:server:socket-base npx cypress run
+
+cypress:server:socket-base backend:request { eventName: 'http:request', args:
+  [ { url: 'http://localhost:7065/echo', method: 'POST', body: [Object], auth: [Object],
+  json: true, encoding: 'utf8', gzip: true, timeout: 30000, followRedirect: true,
+  failOnStatusCode: true, retryOnNetworkFailure: true,
+  retryOnStatusCodeFailure: false } ] } +5ms
+```
+
+You can increase the printed object depth using the `DEBUG_DEPTH` environment variable
+
+```shell
+DEBUG=cypress:server:socket-base DEBUG_DEPTH=3 npx cypress run
+
+cypress:server:socket-base backend:request { eventName: 'http:request', args:
+  [ { url: 'http://localhost:7065/echo', method: 'POST', body: { text: 'ping!' },
+  auth: { username: 'jane.lane', password: 'password123' }, json: true, encoding: 'utf8',
+  gzip: true, timeout: 30000, followRedirect: true, failOnStatusCode: true,
+  retryOnNetworkFailure: true, retryOnStatusCodeFailure: false } ] } +4ms
 ```
 
 ## Debug logs in the browser
