@@ -84,7 +84,8 @@
       "retry-ability": "Retry-ability",
       "visual-testing": "Visual Testing",
       "code-coverage": "Code Coverage",
-      "component-testing-introduction": "Introduction"
+      "component-testing-introduction": "Introduction",
+      "component-testing-getting-started": "Getting Started"
     },
     "api": {
       "api": "API",
