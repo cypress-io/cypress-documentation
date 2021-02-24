@@ -9,6 +9,8 @@ public/
 support
 !cypress/support
 .idea/
+.nuxt/
+static/sw.js
 .eslintcache
 
 themes/cypress/source/css/vendor/
