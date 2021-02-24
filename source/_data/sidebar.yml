@@ -27,8 +27,6 @@ guides:
     slack-integration: slack-integration.html
     analytics: analytics.html
     flaky-test-management: flaky-test-management.html
-  continuous-integration:
-   aws-codebuild: aws-codebuild.html
   guides:
     command-line: command-line.html
     module-api: module-api.html
@@ -51,6 +49,7 @@ guides:
     github-actions: github-actions.html
     gitlab-ci: gitlab-ci.html
     bitbucket-pipelines: bitbucket-pipelines.html
+    aws-codebuild: aws-codebuild.html
   component-testing:
     component-testing-introduction: introduction.html
   tooling:
