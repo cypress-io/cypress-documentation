@@ -34,6 +34,7 @@ describe('Examples', () => {
           const [slug, userFriendlyString] = exampleEntries[i]
 
           const existsInSidebarYml = sidebarItems[slug] !== undefined
+
           if (!existsInSidebarYml) {
             continue
           }
@@ -63,6 +64,7 @@ describe('Examples', () => {
            * content.
            */
           const shouldBePageLink = sidebarExamples[slug] === undefined
+
           if (shouldBePageLink) {
             /**
              * Steps:
@@ -71,11 +73,13 @@ describe('Examples', () => {
              * 3. Assert that the path has changed
              * 4. Capture a snapshot for visual regression testing
              */
-            const existingTitle = cy.title()
+            const existingTitle = cy.title().toString()
+
             cy.get('.app-sidebar')
               .contains(userFriendlyString)
               .click({ force: true })
-            const newTitle = cy.title()
+
+            const newTitle = cy.title().toString()
 
             /**
              * The title won't change if we are already
@@ -83,11 +87,14 @@ describe('Examples', () => {
              * page again.
              */
             const isDefaultPage = i === 0
+
             if (!isDefaultPage) {
               expect(newTitle).to.not.equal(existingTitle)
             }
+
             cy.visualSnapshot(`Examples / ${userFriendlyString}`)
           }
+
           cy.visit(EXAMPLES_URL)
         }
       })

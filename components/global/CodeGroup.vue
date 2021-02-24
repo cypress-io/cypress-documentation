@@ -12,7 +12,7 @@ export default {
     },
   },
   mounted() {
-    this.tabs = this.$slots.default
+    this.tabs = this.$slots.default()
       .filter((slot) => Boolean(slot.componentOptions))
       .map((slot) => {
         return {
@@ -20,6 +20,7 @@ export default {
           elm: slot.elm,
         }
       })
+
     this.$nextTick(this.updateHighlighteUnderlinePosition)
   },
   methods: {
@@ -27,6 +28,7 @@ export default {
       this.tabs.map((tab) => {
         tab.elm.classList.remove('active')
       })
+
       this.tabs[i].elm.classList.add('active')
     },
     updateTabs(i) {
@@ -35,10 +37,13 @@ export default {
     },
     updateHighlighteUnderlinePosition() {
       const activeTab = this.$refs.tabs[this.activeTabIndex]
+
       if (!activeTab) {
         return
       }
+
       const highlightUnderline = this.$refs['highlight-underline']
+
       highlightUnderline.style.left = `${activeTab.offsetLeft}px`
       highlightUnderline.style.width = `${activeTab.clientWidth}px`
     },

@@ -36,10 +36,13 @@ export default {
     },
     formatUrl(absoluteUrl) {
       const { pathname, origin, hash } = new URL(absoluteUrl)
+
       if (location.origin !== origin) {
         return absoluteUrl
       }
+
       const url = pathname.replace(this.settings.url, '/') + hash
+      
       return this.stripTrailingSlash(url)
     },
     initialize(userOptions, code) {

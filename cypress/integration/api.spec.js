@@ -34,6 +34,7 @@ describe('APIs', () => {
           const [slug, userFriendlyString] = apiEntries[i]
 
           const existsInSidebar = sidebarItems[slug] !== undefined
+
           if (!existsInSidebar) {
             continue
           }
@@ -63,6 +64,7 @@ describe('APIs', () => {
            * content.
            */
           const shouldBePageLink = sidebarApi[slug] === undefined
+
           if (shouldBePageLink) {
             /**
              * Steps:
@@ -71,11 +73,13 @@ describe('APIs', () => {
              * 3. Assert that the path has changed
              * 4. Capture a snapshot for visual regression testing
              */
-            const existingTitle = cy.title()
+            const existingTitle = cy.title().toString()
+
             cy.get('.app-sidebar')
               .contains(userFriendlyString)
               .click({ force: true })
-            const newTitle = cy.title()
+
+            const newTitle = cy.title().toString()
 
             /**
              * The title won't change if we are already
@@ -83,11 +87,14 @@ describe('APIs', () => {
              * page again.
              */
             const isDefaultPage = i === 0
+
             if (!isDefaultPage) {
               expect(newTitle).to.not.equal(existingTitle)
             }
+
             cy.visualSnapshot(`API / ${userFriendlyString}`)
           }
+
           cy.visit(API_URL)
         }
       })

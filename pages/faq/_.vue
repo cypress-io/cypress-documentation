@@ -22,7 +22,7 @@ export default {
       sidebar: { faq: userFriendlyNameMap },
     } = await $content('_data/en').fetch()
 
-    const faqSidebarItems = Object.keys(sidebar).map((key) => ({
+    const faqSidebarItems = Object.keys(sidebar).map((key) => {return {
       label: userFriendlyNameMap[key],
       badge: '',
       children: Object.keys(sidebar[key]).map((nestedKey) => {
@@ -32,7 +32,8 @@ export default {
         }
       }),
       folder: key,
-    }))
+    }})
+
     if (!faqItem) {
       return error({ statusCode: 404, message: 'FAQ not found' })
     }
