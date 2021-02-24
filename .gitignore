@@ -10,6 +10,7 @@ support
 !cypress/support
 .idea/
 .nuxt/
+dist/
 static/sw.js
 .eslintcache
 

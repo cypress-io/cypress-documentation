@@ -73,26 +73,25 @@ describe('APIs', () => {
              * 3. Assert that the path has changed
              * 4. Capture a snapshot for visual regression testing
              */
-            const existingTitle = cy.title().toString()
-
-            cy.get('.app-sidebar')
-              .contains(userFriendlyString)
-              .click({ force: true })
-
-            const newTitle = cy.title().toString()
-
-            /**
-             * The title won't change if we are already
-             * on the first page and navigate to the first
-             * page again.
-             */
-            const isDefaultPage = i === 0
-
-            if (!isDefaultPage) {
-              expect(newTitle).to.not.equal(existingTitle)
-            }
-
-            cy.visualSnapshot(`API / ${userFriendlyString}`)
+            cy.title().then(existingTitle => {
+              cy.get('.app-sidebar')
+                .contains(userFriendlyString)
+                .click({ force: true })
+  
+  
+              /**
+               * The title won't change if we are already
+               * on the first page and navigate to the first
+               * page again.
+               */
+              const isDefaultPage = i === 0
+  
+              if (!isDefaultPage) {
+                cy.title().should('equal', existingTitle)
+              }
+  
+              cy.visualSnapshot(`API / ${userFriendlyString}`)
+            })
           }
 
           cy.visit(API_URL)

@@ -73,26 +73,24 @@ describe('Guides', () => {
              * 3. Assert that the path has changed
              * 4. Capture a snapshot for visual regression testing
              */
-            const existingTitle = cy.title().toString()
+            cy.title().then(existingTitle => {
+              cy.get('.app-sidebar')
+                .contains(userFriendlyString)
+                .click({ force: true })
 
-            cy.get('.app-sidebar')
-              .contains(userFriendlyString)
-              .click({ force: true })
+              /**
+               * The title won't change if we are already
+               * on the first page and navigate to the first
+               * page again.
+               */
+              const isDefaultPage = i === 0
 
-            const newTitle = cy.title().toString()
+              if (!isDefaultPage) {
+                cy.title().should('equal', existingTitle)
+              }
 
-            /**
-             * The title won't change if we are already
-             * on the first page and navigate to the first
-             * page again.
-             */
-            const isDefaultPage = i === 0
-
-            if (!isDefaultPage) {
-              expect(newTitle).to.not.equal(existingTitle)
-            }
-
-            cy.visualSnapshot(`Guides / ${userFriendlyString}`)
+              cy.visualSnapshot(`Guides / ${userFriendlyString}`)
+            })
           }
 
           cy.visit(GUIDES_URL)
