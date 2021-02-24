@@ -389,7 +389,7 @@ Cypress doesn't kick off the browser automation magic until the test function ex
 
 Remembering that Cypress commands run asynchronously is important if you are attempting to mix Cypress commands with synchronous code. Synchronous code will execute immediately - not waiting for the Cypress commands above it to execute.
 
-**{% fa fa-warning red %} Incorrect Usage**
+**{% fa fa-warning red %} Incorrect usage**
 
 In the example below, the `el` evaluates immediately, before the `cy.visit()` has executed, so will always evaluate to an empty array.
 
@@ -421,7 +421,7 @@ it('does not work as we expect', () => {
 // Cypress will begin running them in order!
 ```
 
-**{% fa fa-check-circle green %} Correct usage** 
+**{% fa fa-check-circle green %} Correct usage**
 
 Below is one way the code above could be rewritten in order to ensure the commands run as expected.
 
@@ -449,7 +449,7 @@ it('does not work as we expect', () => {
 // Cypress will begin running them in order!
 ```
 
-**{% fa fa-warning red %} Incorrect Usage** 
+**{% fa fa-warning red %} Incorrect usage**
 
 In the example below, the check on the `username` value gets evaluated immediately, before the `cy.visit()` has executed, so will always evaluate to `undefined`.
 
@@ -481,7 +481,7 @@ it('test', () => {
 // Cypress will begin running them in order!
 ```
 
-**{% fa fa-check-circle green %} Correct usage** 
+**{% fa fa-check-circle green %} Correct usage**
 
 Below is one way the code above could be rewritten in order to ensure the commands run as expected.
 
@@ -524,9 +524,80 @@ If you're a modern JS programmer you might hear "asynchronous" and think: **why 
 Cypress's APIs are built very differently from what you're likely used to: but these design patterns are incredibly intentional. We'll go into more detail later in this guide.
 {% endnote %}
 
+### Avoid loops
+
+Using JavaScript loop commands like `while` can have unexpected effects. Let's say our application shows a random number on load.
+
+{% imgTag /img/guides/core-concepts/reload-page.gif "Manually reloading the browser page until the number 7 appears" %}
+
+We want the test to stop when it finds the number 7. If any other number is displayed the test reloads the page and checks again.
+
+**Note:** you can find this application and the correct test in our {% url 'Recipes' https://github.com/cypress-io/cypress-example-recipes#testing-the-dom %}.
+
+**{% fa fa-warning red %} Incorrect test**
+
+The test written below WILL NOT work and most likely will crash your browser.
+
+```js
+let found7 = false
+
+while (!found7) {
+  // this schedules an infinite number
+  // of "cy.get..." commands, eventually crashing
+  // before any of them have a chance to run
+  // and set found7 to true
+  cy.get('#result').should('not.be.empty').invoke('text').then(parseInt)
+  .then((number) => {
+    if (number === 7) {
+      found7 = true
+      cy.log('lucky **7**')
+    } else {
+      cy.reload()
+    }
+  })
+}
+```
+
+The above test keeps adding more `cy.get('#result')` commands to the test chain without executing any! The chain of commands keeps growing, but never executes - since the test function never finishes running. The `while` loop never allows Cypress to start executing even the very first `cy.get(...)` command.
+
+**{% fa fa-check-circle green %} Correct test**
+
+We need to give the test a chance to run a few commands before deciding if it needs to continue. Thus the correct test would use recursion.
+
+```js
+const checkAndReload = () => {
+  // get the element's text, convert into a number
+  cy.get('#result').should('not.be.empty').invoke('text').then(parseInt)
+  .then((number) => {
+    // if the expected number is found
+    // stop adding any more commands
+    if (number === 7) {
+      cy.log('lucky **7**')
+
+      return
+    }
+
+    // otherwise insert more Cypress commands
+    // by calling the function after reload
+    cy.wait(500, { log: false })
+    cy.reload()
+    checkAndReload()
+  })
+}
+
+cy.visit('public/index.html')
+checkAndReload()
+```
+
+The test runs and correctly finishes.
+
+{% imgTag /img/guides/core-concepts/lucky-7.gif "Test reloads the page until the number 7 appears" %}
+
+You can see a short video going through this example at {% url https://www.youtube.com/watch?v=5Z8BaPNDfvA %}.
+
 ## Commands Run Serially
 
-After a test function is finished running, Cypress goes to work executing the commands that were enqueued using the `cy.*` command chains. 
+After a test function is finished running, Cypress goes to work executing the commands that were enqueued using the `cy.*` command chains.
 
 ### Let's take another look at an example
 

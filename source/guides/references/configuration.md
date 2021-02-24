@@ -74,7 +74,7 @@ Option | Default | Description
 `videoCompression` | `32` | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` to disable compression or a value between `0` and `51`, where a lower value results in better quality (at the expense of a higher file size).
 `videosFolder`     | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.
 `video`     | `true`     | Whether Cypress will capture a video of the tests run with `cypress run`.
-`videoUploadOnPasses`     | `true`     | Whether Cypress will process, compress, and upload videos to the {% url "Dashboard" dashboard-introduction%} even when all tests in a spec file are passing. This only applies when recording your runs to the Dashboard. Turn this off if you'd like to only upload the spec file's video when there are failing tests.
+`videoUploadOnPasses`     | `true`     | Whether Cypress will process, compress, and upload videos to the {% url "Dashboard" dashboard-introduction %} even when all tests in a spec file are passing. This only applies when recording your runs to the Dashboard. Turn this off if you'd like to only upload the spec file's video when there are failing tests.
 
 ## Downloads
 
@@ -183,7 +183,7 @@ While this may take a bit more work than other options - it yields you the most 
 
 ## Environment Variables
 
-You can also use {% url 'environment variables' environment-variables %} to override configuration values. This is especially useful in {% url 'Continuous Integration' continuous-integration %} or when working locally. This gives you the ability to change configuration options without modifying any code or build scripts.
+You can also use {% url 'environment variables' environment-variables %} to override configuration values. This is especially useful in {% url 'Continuous Integration' continuous-integration-introduction %} or when working locally. This gives you the ability to change configuration options without modifying any code or build scripts.
 
 By default, any environment variable that matches a corresponding configuration key will override the configuration file (`cypress.json` by default) value.
 
@@ -432,6 +432,44 @@ if (Cypress.config('isInteractive')) {
 ## Intelligent Code Completion
 
 IntelliSense is available for Cypress while editing your configuration file. {% url "Learn how to set up Intelligent Code Completion." IDE-integration#Intelligent-Code-Completion %}
+
+# Common problems
+
+### {% fa fa-angle-right %} `baseUrl` is not set
+
+Make sure you do not accidentally place the <code>baseUrl</code> or another top-level config variable into the <code>env</code> block. The following configuration is <i>incorrect</i> and WILL NOT WORK:
+
+```javascript
+// ⛔️ DOES NOT WORK
+{
+  "env": {
+    "baseUrl": "http://localhost:3030",
+    "FOO": "bar"
+  }
+}
+```
+
+Solution: place the `baseUrl` property at the top level, outside the `env` object.
+
+```javascript
+// ✅ THE CORRECT WAY
+{
+  "baseUrl": "http://localhost:3030",
+  "env": {
+    "FOO": "bar"
+  }
+}
+```
+
+You can also find a few tips on setting the `baseUrl` in this {% url 'short video' https://www.youtube.com/watch?v=f5UaXuAc52c %}.
+
+### {% fa fa-angle-right %} Test files not found when using `spec` parameter
+
+When using the `--spec <path or mask>` argument, make it relative to the project's folder. If the specs are still missing, run Cypress with {% url 'DEBUG logs' troubleshooting#Print-DEBUG-logs %} with the following setting to see how the Test Runner is looking for spec files:
+
+```shell
+DEBUG=cypress:cli,cypress:server:specs
+```
 
 {% history %}
 {% url "6.1.0" changelog#6-1-0 %} | Added option `scrollBehavior`
