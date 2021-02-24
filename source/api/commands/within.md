@@ -97,6 +97,33 @@ cy.contains('My first client').parent('tr').within(() => {
 })
 ```
 
+## Temporarily escape
+
+You can temporarily escape the `.within` context by starting a new command chain with {% url 'cy.root' root %} followed by {% url '.closest' closest %} commands.
+
+```html
+<section class="example">
+  <!-- note the input field outside the form -->
+  <input id="name" type="text">
+  <form>
+    <input name="email" type="email">
+    <input name="password" type="password">
+    <button type="submit">Login</button>
+  </form>
+</section>
+```
+
+```javascript
+cy.get('form').within(($form) => {
+  // temporarily escape the .within context
+  cy.root().closest('.example').find('#name').type('Joe')
+  // continue using the .within context
+  cy.get('input[name="email"]').type('john.doe@email.com')
+  cy.get('input[name="password"]').type('password')
+  cy.root().submit()
+})
+```
+
 # Rules
 
 ## Requirements {% helper_icon requirements %}
