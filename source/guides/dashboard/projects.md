@@ -18,9 +18,9 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
 
 1. Click on the **Runs** tab of your project within the {% url "Test Runner" test-runner %}.
 2. Click **Connect to Dashboard**.
-3. You will need to log in to record your tests, so you'll be prompted to log in to the Cypress Dashboard here if you have not already done so.
+3. You will need to log in to record your tests, so you'll be prompted to log in to the Cypress Dashboard here if you haven't already done so.
 {% imgTag /img/dashboard/projects/setup-a-project-1.png "Connect to Dashboard" "no-border" %}
-4. Choose who owns the project. You can personally own it or select an organization you've created. If you do not have any organizations, click **Create organization**. Organizations work just like they do in GitHub and enable you to separate your personal and work projects. {% url 'Read more about organizations' organizations %}.
+4. Choose who owns the project. You can personally own it or select an organization you're a member of. If you don't have any organizations, click **Create organization**. Organizations work just like they do in GitHub and enable you to separate your personal and work projects. {% url 'Read more about organizations' organizations %}.
 {% imgTag /img/dashboard/projects/setup-a-project-2.png "Choose an Organization" "no-border" %}
 5. If you don't have any existing projects, you'll have the opportunity to create a new one here. If you have existing projects and want to create a new one, you can click "Create new project" to make a new one.
   - Fill in the name of your project (this is only for display purposes and can be changed later).
@@ -35,8 +35,8 @@ Alternatively, if you've already created a project in the Dashboard, you can lin
 7. Click **Setup Project**.
 8. Now you should see a view explaining how to record your first run with your record key.
 {% imgTag /img/dashboard/projects/setup-a-project-5.png "Record Instructions" "no-border" %}
-9. After setting up your project, Cypress inserted a unique {% urlHash "projectId" Identification %} into your `cypress.json`. If you're using source control, we recommend that you check your `cypress.json` including the `projectId` into source control.
-10. Within {% url 'Continuous Integration' continuous-integration-introduction %}, or from your local computer's terminal, pass the displayed {% urlHash "Record Key" Identification %} while running the {% url '`cypress run`' command-line#cypress-run %} command.
+9. After setting up your project, Cypress inserts a unique {% urlHash "projectId" Identification %} into your configuration file, `cypress.json` by default. If you're using source control, we recommend that you check your configuration file, including the `projectId`, into source control.
+10. Within {% url 'Continuous Integration' continuous-integration-introduction %} or from your local computer's terminal pass the displayed {% urlHash "Record Key" Identification %} while running the {% url '`cypress run`' command-line#cypress-run %} command.
   - Provide record key directly:
     ```shell
     cypress run --record --key &lt;record key&gt;
