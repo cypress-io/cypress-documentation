@@ -16,9 +16,16 @@ export default {
       default: '',
     },
   },
+  computed:{
+    realName(){
+      // since github is a branding image,
+      // we needs to precise a prefix for it
+      return this.name === 'github' ? ['fab', 'github'] : this.name
+    }
+  }
 }
 </script>
 
 <template>
-  <font-awesome-icon :icon="name" :class="className" :style="{ color }" />
+  <font-awesome-icon :icon="realName" :class="className" :style="{ color }" />
 </template>
