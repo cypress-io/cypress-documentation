@@ -74,6 +74,21 @@ The images are available in the following {% url "Amazon ECR Public Galleries" h
 
 {% endnote }
 
+
+{% note info %}
+Which image is right for me?
+
+For end-to-end tests on a CI provider like AWS CodeBuild, the {% url "Cypress 'browsers' Amazon ECR Public Gallery" https://gallery.ecr.aws/cypress-io/cypress/browsers %} contains the images to use.
+
+What's the difference in the images?
+
+The `base` Docker images are used by the `browsers` and `included` images for the base operating system and set of initial dependencies, but does not install Cypress or additional browsers.
+
+The `browsers` images extend a `base` image and installs one or more browsers such as Chrome or Firefox.
+
+The `included` images extend a `browsers` image and installs a specific version of Cypress and adds a Docker entrypoint for the `cypress run` command.  These images are for testing a containerized version of Cypress in a project during local development and are not used in CI environments.
+{% endnote %}
+
 ```yaml
 # buildspec.yml
 version: 0.2
