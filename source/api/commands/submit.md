@@ -64,9 +64,7 @@ cy.get('#contact').submit()
 
 # Notes
 
-## Actionability
-
-### Submit is not an action command
+## Submit is not an action command
 
 `.submit()` is not implemented like other action commands, and does not follow the same rules of {% url 'waiting for actionability' interacting-with-elements %}.
 
@@ -75,6 +73,10 @@ cy.get('#contact').submit()
 Oftentimes using `.submit()` directly is more concise and conveys what you're trying to test.
 
 If you want the other guarantees of waiting for an element to become actionable, you should use a different command like {% url `.click()` click %} or {% url `.type()` type %}.
+
+## Submit will fail if there are form validation errors
+
+If the form being submitted includes inputs with {% url 'client-side validation' https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation %} and that validation fails, `.submit()` will fail and list the validation failures.
 
 # Rules
 
