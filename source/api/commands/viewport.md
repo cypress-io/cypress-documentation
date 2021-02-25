@@ -285,5 +285,6 @@ When clicking on `viewport` within the command log, the console outputs the foll
 
 # See also
 
+- Read blog post {% url 'Use meaningful smoke tests' https://www.cypress.io/blog/2019/12/06/use-meaningful-smoke-tests/ %} where we run the same test with different viewport resolutions
 - {% url 'Configuration' configuration %}
 - {% url '`Cypress.config()`' config %}

@@ -19,7 +19,7 @@ If your project has a large number of tests, it can take a long time for tests t
 
 Cypress can run recorded tests in parallel across multiple machines since version {% url "3.1.0" changelog#3-1-0 %}. While parallel tests can also technically run on a single machine, we do not recommend it since this machine would require significant resources to run your tests efficiently.
 
-This guide assumes you already have your project running and {% url "recording" projects#Setup %} within Continuous Integration. If you have not set up your project yet, check out our {% url "Continuous Integration guide" continuous-integration %}. If you are running or planning to run tests across multiple browsers (Firefox, Chrome, or Edge), we also recommend checking out our {% url "Cross Browser Testing guide" cross-browser-testing %} for helpful CI strategies when using parallelization.
+This guide assumes you already have your project running and {% url "recording" projects#Setup %} within Continuous Integration. If you have not set up your project yet, check out our {% url "Continuous Integration guide" continuous-integration-introduction %}. If you are running or planning to run tests across multiple browsers (Firefox, Chrome, or Edge), we also recommend checking out our {% url "Cross Browser Testing guide" cross-browser-testing %} for helpful CI strategies when using parallelization.
 
 {% imgTag /img/guides/parallelization/parallelization-diagram.png "Parallelization Diagram" "no-border" %}
 
@@ -40,14 +40,14 @@ Cypress will assign each spec file to an available machine based on our {% urlHa
   ```
 
     {% note info %}
-    Running tests in parallel requires the {% url "`--record` flag" command-line#cypress-run %} be passed. This ensures Cypress can properly collect the data needed to parallelize future runs. This also gives you the full benefit of seeing the results of your parallelized tests in our {% url "Dashboard Service" dashboard-introduction%}. If you have not set up your project to record, check out our {% url "setup guide" projects#Setup %}.
+    Running tests in parallel requires the {% url "`--record` flag" command-line#cypress-run %} be passed. This ensures Cypress can properly collect the data needed to parallelize future runs. This also gives you the full benefit of seeing the results of your parallelized tests in our {% url "Dashboard Service" dashboard-introduction %}. If you have not set up your project to record, check out our {% url "setup guide" projects#Setup %}.
     {% endnote %}
 
 # CI parallelization interactions
 
-During parallelization mode, the Cypress {% url "Dashboard Service" dashboard-introduction%} interacts with your CI machines to orchestrate the parallelization of a test run via {% urlHash 'load-balancing' Balance-strategy %} of specs across available CI machines by the following process:
+During parallelization mode, the Cypress {% url "Dashboard Service" dashboard-introduction %} interacts with your CI machines to orchestrate the parallelization of a test run via {% urlHash 'load-balancing' Balance-strategy %} of specs across available CI machines by the following process:
 
-1. CI machines contact the Cypress {% url "Dashboard Service" dashboard-introduction%} to indicate which spec files to run in the project.
+1. CI machines contact the Cypress {% url "Dashboard Service" dashboard-introduction %} to indicate which spec files to run in the project.
 2. A machine opts in to receiving a spec file to run by contacting Cypress.
 3. Upon receiving requests from a CI machine, Cypress calculates the estimated duration to test each spec file.
 4. Based on these estimations, Cypress distributes ({% urlHash 'load-balances' Balance-strategy %}) spec files one-by-one to each available machine in a way that minimizes overall test run time.
@@ -251,7 +251,7 @@ Codeship  | `CI_BUILD_NUMBER`
 Codeship Basic  | `CI_BUILD_NUMBER`
 Codeship Pro  | `CI_BUILD_ID`
 Drone  | `DRONE_BUILD_NUMBER`
-Gitlab  | `CI_PIPELINE_ID`
+GitLab  | `CI_PIPELINE_ID`
 Jenkins  | `BUILD_NUMBER`
 Semaphore | `SEMAPHORE_EXECUTABLE_UUID`
 Travis  | `TRAVIS_BUILD_ID`
@@ -274,7 +274,7 @@ This **delay is 60 seconds by default**, but is {% url "configurable within the 
 
 # Visualizing parallelization and groups in the Dashboard
 
-You can see the result of each spec file that ran within the {% url "Dashboard Service" dashboard-introduction%} in the run's **Specs** tab. Specs are visualized within a **Timeline**, **Bar Chart**, and **Machines** view.
+You can see the result of each spec file that ran within the {% url "Dashboard Service" dashboard-introduction %} in the run's **Specs** tab. Specs are visualized within a **Timeline**, **Bar Chart**, and **Machines** view.
 
 ## Timeline View
 
@@ -296,7 +296,7 @@ The Machines View charts spec files by the machines that executed them. This vie
 
 # Next Steps
 - {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %} runs parallelized CI jobs across multiple operating systems, browsers, and viewport sizes.
-- {% url "Continuous Integration Guide" continuous-integration %}
+- {% url "Continuous Integration Guide" continuous-integration-introduction %}
 - {% url "Cross Browser Testing Guide" cross-browser-testing %}
 - {% url "Blog: Run Your End-to-end Tests 10 Times Faster with Automatic Test Parallelization" https://www.cypress.io/blog/2018/09/05/run-end-to-end-tests-on-ci-faster/ %}
 - {% url "Blog: Run and group tests the way you want to" https://glebbahmutov.com/blog/run-and-group-tests/ %}

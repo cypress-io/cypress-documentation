@@ -13,6 +13,31 @@ There are times when you will encounter errors or unexpected behavior with Cypre
 - If your organization signs up for one of our {% url "paid plans" https://www.cypress.io/pricing/ %}, you can get dedicated email support, which gives you one-on-one help from our team.
 - If you still haven't found a solution, {% url "open an issue" https://github.com/cypress-io/cypress/issues/new %} *with a reproducible example*.
 
+## Common GitHub issues
+
+Below are some of common problem topics users experience with a link to the main issue(s) and links to the open and closed issues in the topic. Maybe you can find an open or closed issue matching your problem. Even open issues might suggest a workaround or shed more information on the problem.
+
+Label | Description | Issues
+--- | --- | ---
+browser detection | Local browser is not detected | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20browser%20detection), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+browser+detection%22+is%3Aclosed)
+cross-origin | Getting cross-origin error |[open](https://github.com/cypress-io/cypress/labels/topic%3A%20cross-origin%20%E2%A4%AD), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+cross-origin+%E2%A4%AD%22+is%3Aclosed)
+cy.request | Issues related to {% url 'cy.request' request %} command | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20cy.request), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+cy.request%22+is%3Aclosed)
+fixtures | Fixture loading and usage | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20fixtures), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+fixtures%22+is%3Aclosed)
+hooks | Issues related to hooks | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20hooks%20%E2%86%AA), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+hooks+%E2%86%AA%22+is%3Aclosed)
+iframes | Working with iframes | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20iframes), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+iframes%22+is%3Aclosed)
+installation | Cypress cannot be downloaded or installed | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20installation), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+installation%22+is%3Aclosed)
+network | Controlling network requests | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20network), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+network%22+is%3Aclosed)
+performance | Slow loading, slow network, etc | [open](https://github.com/cypress-io/cypress/labels/type%3A%20performance%20%F0%9F%8F%83%E2%80%8D%E2%99%80%EF%B8%8F), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22type%3A+performance+%F0%9F%8F%83%E2%80%8D%E2%99%80%EF%B8%8F%22+is%3Aclosed)
+screenshots | Taking image screenshots | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20screenshots%20%F0%9F%93%B8), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+screenshots+%F0%9F%93%B8%22+is%3Aclosed)
+scrolling | Scrolling elements into view | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20scrolling%20%E2%86%95%EF%B8%8F), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+scrolling+%E2%86%95%EF%B8%8F%22+is%3Aclosed)
+spec execution | Running all or filtered specs | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20spec%20execution), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+spec+execution%22+is%3Aclosed)
+test execution | Running tests inside a single spec | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20test%20execution), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+test+execution%22+is%3Aclosed)
+TypeScript | Transpiling or bundling TypeScript | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20typescript), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+typescript%22+is%3Aclosed)
+video | Problems with video recordings | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20video%20%F0%9F%93%B9), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+video+%F0%9F%93%B9%22+is%3Aclosed)
+file downloads | File downloads are not working | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20downloads%20%E2%AC%87%EF%B8%8F), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+downloads+%E2%AC%87%EF%B8%8F%22+is%3Aclosed)
+intercept | Network stubbing using {% url 'cy.intercept' intercept %} | [open](https://github.com/cypress-io/cypress/labels/pkg%2Fnet-stubbing), [closed](https://github.com/cypress-io/cypress/issues?q=label%3Apkg%2Fnet-stubbing+is%3Aclosed)
+SIG* errors | Crashes with errors like `SIGSEGV` | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20SIG%20errors), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+SIG+errors%22+is%3Aclosed)
+
 # Isolate the Problem
 
 When debugging a failing test, follow these general principles to isolate the problem:
@@ -180,6 +205,70 @@ DEBUG=cypress:server:config ...
 ```
 
 This allows you to isolate the problem a little better
+
+## Log sources
+
+Cypress is built from multiple packages, each responsible for its own logging: server, reporter, driver, command line, etc. Each package writes debug logs under a different source. Here are a few common log sources and when you might want to enable them
+
+Set `DEBUG` to value | To enable debugging
+---|---
+`cypress:cli` | The top-level command line parsing problems
+`cypress:server:args` | Incorrect parsed command line arguments
+`cypress:server:specs` | Not finding the expected specs
+`cypress:server:project` | Opening the project
+`cypress:server:browsers` | Finding installed browsers
+`cypress:launcher` | Launching the found browser
+`cypress:server:video` | Video recording
+`cypress:network:*` | Adding network interceptors
+`cypress:net-stubbing*` | Network interception in the proxy layer
+`cypress:server:reporter` | Problems with test reporters
+`cypress:server:preprocessor` | Processing specs
+`cypress:server:plugins` | Running the plugin file and bundling specs
+`cypress:server:socket-e2e` | Watching spec files
+`cypress:server:task` | Invoking the `cy.task` command
+`cypress:server:socket-base` | Debugging `cy.request` command
+`cypress:webpack` | Bundling specs using webpack
+`cypress:server:fixture` | Loading fixture files
+
+You can combine several areas together using the comma character. For example, to debug specs not being found, use:
+
+```shell
+# see how CLI arguments were parsed
+# and how Cypress tried to locate spec files
+DEBUG=cypress:cli,cypress:server:specs npx cypress run --spec ...
+```
+
+You can also exclude a log source using `-` character. For example, to see all `cypress:server*` messages without noisy browser messages use:
+
+```shell
+DEBUG=cypress:server*,-cypress:server:browsers* npx cypress run
+```
+
+### Debug log depth
+
+Sometimes the logged object has deeply nested properties and is shown as  `[Object]` instead of the full serialization.
+
+```shell
+DEBUG=cypress:server:socket-base npx cypress run
+
+cypress:server:socket-base backend:request { eventName: 'http:request', args:
+  [ { url: 'http://localhost:7065/echo', method: 'POST', body: [Object], auth: [Object],
+  json: true, encoding: 'utf8', gzip: true, timeout: 30000, followRedirect: true,
+  failOnStatusCode: true, retryOnNetworkFailure: true,
+  retryOnStatusCodeFailure: false } ] } +5ms
+```
+
+You can increase the printed object depth using the `DEBUG_DEPTH` environment variable
+
+```shell
+DEBUG=cypress:server:socket-base DEBUG_DEPTH=3 npx cypress run
+
+cypress:server:socket-base backend:request { eventName: 'http:request', args:
+  [ { url: 'http://localhost:7065/echo', method: 'POST', body: { text: 'ping!' },
+  auth: { username: 'jane.lane', password: 'password123' }, json: true, encoding: 'utf8',
+  gzip: true, timeout: 30000, followRedirect: true, failOnStatusCode: true,
+  retryOnNetworkFailure: true, retryOnStatusCodeFailure: false } ] } +4ms
+```
 
 ## Debug logs in the browser
 

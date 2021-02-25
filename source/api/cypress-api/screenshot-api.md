@@ -143,6 +143,6 @@ A great place to put this configuration is in your {% url "`cypress/support/inde
 # See also
 
 - {% url "`cy.screenshot()`" screenshot %}
-- {% url 'Dashboard Service' dashboard-introduction%}
+- {% url 'Dashboard Service' dashboard-introduction %}
 - {% url 'Screenshots and Videos' screenshots-and-videos %}
 - {% url 'Visual Testing' visual-testing %}

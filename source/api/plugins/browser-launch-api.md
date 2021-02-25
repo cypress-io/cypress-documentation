@@ -280,6 +280,24 @@ module.exports = (on) => {
 {% url 'Check out our example recipe showing how to download and validate CSV and Excel files.' recipes#Testing-the-DOM %}
 {% endnote %}
 
+## Set a Firefox flag
+
+If we need to set a particular Firefox flag, like `browser.send_pings` we can do it via preferences
+
+```js
+module.exports = (on) => {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.family === 'firefox') {
+      launchOptions.preferences['browser.send_pings'] = true
+    }
+
+    return launchOptions
+  })
+}
+```
+
+The above example comes from the blog post {% url 'How to Test Anchor Ping' https://glebbahmutov.com/blog/anchor-ping/ %}.
+
 {% history %}
 {% url "4.0.0" changelog#4-0-0 %} | New `options` object replaces old `args` as second argument to `before:browser:launch`
 {% url "4.0.0" changelog#4-0-0 %} | All Chromium-based browsers, including Electron, have `chromium` set as their `family` property.

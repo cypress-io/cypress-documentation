@@ -71,7 +71,9 @@ it('completes todo', () => {
   // capture the element screenshot and
   // compare to the baseline image
   cy.get('.todoapp').toMatchImageSnapshot({
-    threshold: 0.001,
+    imageConfig: {
+      threshold: 0.001,
+    },
   })
 })
 ```

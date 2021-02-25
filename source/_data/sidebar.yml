@@ -33,7 +33,6 @@ guides:
     debugging: debugging.html
     network-requests: network-requests.html
     test-retries: test-retries.html
-    continuous-integration: continuous-integration.html
     parallelization: parallelization.html
     environment-variables: environment-variables.html
     stubs-spies-and-clocks: stubs-spies-and-clocks.html
@@ -41,6 +40,15 @@ guides:
     launching-browsers: launching-browsers.html
     cross-browser-testing: cross-browser-testing.html
     web-security: web-security.html
+  testing-strategies:
+    auth0-authentication: auth0-authentication.html
+    amazon-cognito-authentication: amazon-cognito-authentication.html
+    okta-authentication: okta-authentication.html
+  continuous-integration:
+    continuous-integration-introduction: introduction.html
+    github-actions: github-actions.html
+    gitlab-ci: gitlab-ci.html
+    bitbucket-pipelines: bitbucket-pipelines.html
   component-testing:
     component-testing-introduction: introduction.html
   tooling:
