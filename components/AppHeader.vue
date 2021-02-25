@@ -22,7 +22,7 @@ export default {
       required: true,
     },
   },
-  data: () => ({
+  data: () => {return {
     navLink: [
       {
         label: 'Guides',
@@ -46,7 +46,7 @@ export default {
       },
     ],
     isMenuOpen: false,
-  }),
+  }},
   methods: {
     getSidebarItemLink,
     toggleMenu() {
@@ -55,6 +55,7 @@ export default {
     isActive(path) {
       // eslint-disable-next-line no-unused-vars
       const [_empty, section, ..._rest] = path.split('/')
+
       return section === this.section
     },
   },

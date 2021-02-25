@@ -48,7 +48,7 @@ export default {
       title = userFriendlyNameMap[filename]
     }
 
-    const items = Object.keys(sidebar).map((key) => ({
+    const items = Object.keys(sidebar).map((key) => {return {
       label: userFriendlyNameMap[key],
       badge: '',
       children: Object.keys(sidebar[key]).map((nestedKey) => {
@@ -67,7 +67,7 @@ export default {
         }
       }),
       folder: key,
-    }))
+    }})
 
     if (!exampleItem) {
       return error({ statusCode: 404, message: 'Example not found' })
@@ -85,10 +85,16 @@ export default {
       path: slug,
     }
   },
+  head() {
+    return {
+      title: this.exampleItem.title,
+    }
+  },
   computed: {
     mediaObjectIsEmpty() {
       const hasNoKeys = Object.keys(this.mediaObject).length === 0
       const isObject = this.mediaObject.constructor === Object
+
       return hasNoKeys && isObject
     },
     isProjects() {
@@ -112,11 +118,6 @@ export default {
     isScreencasts() {
       return this.mediaObject.slug === 'screencasts'
     },
-  },
-  head() {
-    return {
-      title: this.exampleItem.title,
-    }
   },
 }
 </script>

@@ -69,6 +69,7 @@ export default {
   components: {
     Icon,
   },
+  emits: ['focus'],
   data() {
     return {
       q: '',
@@ -85,8 +86,10 @@ export default {
       if (!q) {
         this.searching = false
         this.results = []
+
         return
       }
+
       this.searching = true
       this.results = await this.$content('/', { deep: true })
         .sortBy('position', 'asc')
@@ -94,13 +97,14 @@ export default {
         .limit(12)
         .search(q)
         .fetch()
+
       this.searching = false
     },
   },
   mounted() {
     window.addEventListener('keyup', this.keyup)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     window.removeEventListener('keyup', this.keyup)
   },
   methods: {
@@ -131,8 +135,10 @@ export default {
       if (this.results.length === 0) {
         return
       }
+
       const result =
         this.focusIndex === -1 ? this.results[0] : this.results[this.focusIndex]
+
       this.$router.push(result.path)
       // Unfocus the input and reset the query.
       this.$refs.search.blur()

@@ -1,3 +1,4 @@
+
 export default {
   router: {
     extendRoutes(routes, resolve) {
@@ -61,10 +62,6 @@ export default {
    ** Nuxt.js dev-modules
    */
   buildModules: [
-    // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module',
-    // Doc: https://github.com/nuxt-community/stylelint-module
-    '@nuxtjs/stylelint-module',
     // Doc: https://github.com/nuxt-community/tailwindcss-module
     '@nuxtjs/tailwindcss',
     // Doc: https://github.com/nuxt-community/fontawesome-module

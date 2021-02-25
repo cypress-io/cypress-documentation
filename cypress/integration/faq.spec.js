@@ -18,6 +18,7 @@ describe('FAQ', () => {
 
         for (let i = 0; i < faqEntries.length; i++) {
           const [slug, userFriendlyString] = faqEntries[i]
+
           cy.get('.app-sidebar').contains(userFriendlyString)
 
           /**
@@ -43,6 +44,7 @@ describe('FAQ', () => {
            * content.
            */
           const shouldBePageLink = sidebarFaq[slug] === undefined
+
           if (shouldBePageLink) {
             /**
              * Steps:
@@ -51,23 +53,26 @@ describe('FAQ', () => {
              * 3. Assert that the path has changed
              * 4. Capture a snapshot for visual regression testing
              */
-            const existingTitle = cy.title()
-            cy.get('.app-sidebar')
-              .contains(userFriendlyString)
-              .click({ force: true })
-            const newTitle = cy.title()
+            cy.title().then(existingTitle => {
+              cy.get('.app-sidebar')
+                .contains(userFriendlyString)
+                .click({ force: true })
 
-            /**
-             * The title won't change if we are already
-             * on the first page and navigate to the first
-             * page again.
-             */
-            const isDefaultPage = i === 0
-            if (!isDefaultPage) {
-              expect(newTitle).to.not.equal(existingTitle)
-            }
-            cy.visualSnapshot(`FAQ / ${userFriendlyString}`)
+              /**
+               * The title won't change if we are already
+               * on the first page and navigate to the first
+               * page again.
+               */
+              const isDefaultPage = i === 0
+
+              if (!isDefaultPage) {
+                cy.title().should('equal', existingTitle)
+              }
+
+              cy.visualSnapshot(`FAQ / ${userFriendlyString}`)
+            })
           }
+
           cy.visit(FAQ_URL)
         }
       })

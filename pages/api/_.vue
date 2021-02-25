@@ -22,11 +22,12 @@ export default {
       sidebar: { api: userFriendlyNameMap },
     } = await $content('_data/en').fetch()
 
-    const items = Object.keys(sidebar).map((key) => ({
+    const items = Object.keys(sidebar).map((key) => {return {
       label: userFriendlyNameMap[key],
       badge: '',
       children: Object.keys(sidebar[key]).map((nestedKey) => {
         let slug = nestedKey
+
         // Some slugs might not match the file name exactly.
         // E.g. "dashboard-introduction.md" doesn't exist, but "introduction.md"
         // within the "dashboard" directory does. This checks for instances of
@@ -35,13 +36,14 @@ export default {
         if (nestedKey.includes(key)) {
           slug = nestedKey.replace(`${key}-`, '')
         }
+
         return {
           slug,
           label: userFriendlyNameMap[nestedKey],
         }
       }),
       folder: key === 'api' ? '' : key,
-    }))
+    }})
 
     if (!apiPageContent) {
       return error({
@@ -68,15 +70,15 @@ export default {
       isMenuOpen: false,
     }
   },
-  methods: {
-    onToggleMenu() {
-      this.isMenuOpen = !this.isMenuOpen
-    },
-  },
   head() {
     return {
       title: this.apiPageContent.title,
     }
+  },
+  methods: {
+    onToggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen
+    },
   },
 }
 </script>

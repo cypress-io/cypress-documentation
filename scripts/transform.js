@@ -40,12 +40,13 @@ const unquotify = (content = '') => {
   if (isWrappedWithSingleQuotes || isWrappedWithDoubleQuotes) {
     return unquotify(content.slice(1, content.length - 1))
   }
+
   return content
 }
 
 // Icons
 // https://regexr.com/5l0oj
-const iconTransform = (files) => ({
+const iconTransform = (files) => {return {
   files,
   from: /{% fa\sfa-([a-z-]+)\s+(fa-fw)*\s*([a-z]*)\s*%}/g,
   to: (...match) => {
@@ -67,41 +68,42 @@ const iconTransform = (files) => ({
       className ? ` className="${className}"` : ''
     }${color ? ` color="${color}"` : ''}></Icon>`
   },
-})
+}}
 
 // Url External
 // {% url Chai#expect https://www.chaijs.com/guide/styles/#expect %}
 // [Chai#expect](https://www.chaijs.com/guide/styles/#expect)
 // https://regexr.com/au4u
-const urlExternalTransform = (files) => ({
+const urlExternalTransform = (files) => {return {
   files,
   from: /{%\s*url\s+'*([^{%]*?)'*\s+['"]*(?=http)(.*?)['"]*\s*%}/g,
   to: (...match) => {
     // eslint-disable-next-line no-unused-vars
     const [_hexoTag, content, url] = match
+
     return `[${unquotify(content)}](${url})`
   },
-})
+}}
 
 // Url External without content (only a hyperlink)
 // https://regexr.com/5koa1
-const urlExternalLinkTransform = (files) => ({
+const urlExternalLinkTransform = (files) => {return {
   files,
   from: /{%\s*url\s+'*(?=http)(.*?)'*\s*%}/g,
   to: '[$1]($1)',
-})
+}}
 
 // Url Relative
 // {% url about /about %}
 // [about](/about)
 // https://regexr.com/5kosg
-const urlRelativeTransform = (files) => ({
+const urlRelativeTransform = (files) => {return {
   files,
   from: /{%\s+url\s+'*(.*?)'*\s+(?=\/)([^{%]*?)\s+%}/g,
   to: '[$1]($2)',
-})
+}}
 
-const urlTransform = (files) => ({
+const urlTransform = (files) => {return {
   files,
   // from: /{%\s*url\s+(.*)\s*%}/g,
   from: /{%\s*url\s+[^{%]+\s*%}/g,
@@ -142,6 +144,7 @@ const urlTransform = (files) => ({
       // console.log('filename: ', filename)
 
       let result
+
       // if filename is in path
       if (path.includes(filename)) {
         // console.log('path includes filename')
@@ -149,6 +152,7 @@ const urlTransform = (files) => ({
         // console.log('filename: ', filename)
 
         let pathToAppend = path
+
         // append anchor if present
         if (maybeAnchor) {
           pathToAppend = `${path}#${maybeAnchor}`
@@ -160,6 +164,7 @@ const urlTransform = (files) => ({
         if (maybeAnchor) {
           filename = `${filename}#${maybeAnchor}`
         }
+
         result = `[${tagContent}](/${path}/${filename})`
       }
 
@@ -169,7 +174,7 @@ const urlTransform = (files) => ({
 
     return hexoTag
   },
-})
+}}
 
 // Url Hash
 // {% urlHash 'Set up tests' Setting-up-tests %}
@@ -182,30 +187,30 @@ const urlTransform = (files) => ({
 // [Run tests](#Running-tests)
 // [Debug Tests](Debugging-tests)
 // https://regexr.com/5fgcc
-const urlHashTransform = (files) => ({
+const urlHashTransform = (files) => {return {
   files,
   // eslint-disable-next-line no-useless-escape
   from: /{%\s+urlHash\s+['"`]*(.[^'"`]+)['"`]*\s+['"`]*([a-zA-z0\-]+)['"`]*\s+%}/g,
   to: '[$1](#$2)',
-})
+}}
 
-const urlHashDoubleQuoteTransform = (files) => ({
+const urlHashDoubleQuoteTransform = (files) => {return {
   files,
   from: /{%\s+urlHash\s+"*([^"]+)"*\s+([^'"`]+)\s+%}/g,
   to: '[$1](#$2)',
-})
+}}
 
-const urlHashSingleQuoteTransform = (files) => ({
+const urlHashSingleQuoteTransform = (files) => {return {
   files,
   from: /{%\s+urlHash\s+'*([^']+)'*\s+([^'"`]+)\s+%}/g,
   to: '[$1](#$2)',
-})
+}}
 
 // Url Internal (keyword)
 // {% url `.and()` and %}
 // [`.and()`](/api/commands/and)
 // https://regexr.com/5bdi5
-const urlInternalTransform = (files) => ({
+const urlInternalTransform = (files) => {return {
   files,
   from: /{%\s*url\s+['"`]*([\w-:.()\s]*)['"`]*\s+(.*?)\s*%}/g,
   to: (match, one, two) => {
@@ -216,6 +221,7 @@ const urlInternalTransform = (files) => ({
     const term = two.match(/#/) ? two.split('#')[0] : two
 
     const item = sidebarLookup(term)
+
     // console.log('Lookup: ', term);
     if (item) {
       // console.log('Path: ', item.context.path);
@@ -231,6 +237,7 @@ const urlInternalTransform = (files) => ({
       // console.log('filename: ', filename)
 
       let result
+
       // if filename is in path
       if (path.includes(filename)) {
         // console.log('path includes filename')
@@ -238,6 +245,7 @@ const urlInternalTransform = (files) => ({
         // console.log('filename: ', filename)
 
         let pathToAppend = path
+
         // append anchor if present
         if (two.match(/#/)) {
           pathToAppend = `${path}#${two.split('#')[1]}`
@@ -249,6 +257,7 @@ const urlInternalTransform = (files) => ({
         if (two.match(/#/)) {
           filename = `${filename}#${two.split('#')[1]}`
         }
+
         result = `[${one}](/${path}/${filename})`
       }
 
@@ -258,11 +267,11 @@ const urlInternalTransform = (files) => ({
 
     return match
   },
-})
+}}
 
 // The regex for urlInternalTransform does not match:
 // {% url `.type('{selectall}{backspace}')` type %}
-const urlInternalBacktickTransform = (files) => ({
+const urlInternalBacktickTransform = (files) => {return {
   files,
   from: /{%\s*url\s+`([^`]*)`*\s+(.*?)\s*%}/g,
   to: (match, one, two) => {
@@ -273,6 +282,7 @@ const urlInternalBacktickTransform = (files) => ({
     const term = two.match(/#/) ? two.split('#')[0] : two
 
     const item = sidebarLookup(term)
+
     // console.log('Lookup: ', term);
     if (item) {
       // console.log('Path: ', item.context.path);
@@ -288,6 +298,7 @@ const urlInternalBacktickTransform = (files) => ({
       // console.log('filename: ', filename)
 
       let result
+
       // if filename is in path
       if (path.includes(filename)) {
         // console.log('path includes filename')
@@ -295,6 +306,7 @@ const urlInternalBacktickTransform = (files) => ({
         // console.log('filename: ', filename)
 
         let pathToAppend = path
+
         // append anchor if present
         if (two.match(/#/)) {
           pathToAppend = `${path}#${two.split('#')[1]}`
@@ -306,6 +318,7 @@ const urlInternalBacktickTransform = (files) => ({
         if (two.match(/#/)) {
           filename = `${filename}#${two.split('#')[1]}`
         }
+
         result = `[\`${one}\`](/${path}/${filename})`
       }
 
@@ -315,9 +328,9 @@ const urlInternalBacktickTransform = (files) => ({
 
     return match
   },
-})
+}}
 
-const urlCatchAllTransform = (files) => ({
+const urlCatchAllTransform = (files) => {return {
   files,
   from: /{%\s*url\s+['"]*([^'"]*)['"]*\s+['"]*([^{%]*?)['"]*\s*%}/g,
   to: (match, one, two) => {
@@ -328,6 +341,7 @@ const urlCatchAllTransform = (files) => ({
     const term = two.match(/#/) ? two.split('#')[0] : two
 
     const item = sidebarLookup(term)
+
     // console.log('Lookup: ', term);
     if (item) {
       // console.log('Path: ', item.context.path);
@@ -343,6 +357,7 @@ const urlCatchAllTransform = (files) => ({
       // console.log('filename: ', filename)
 
       let result
+
       // if filename is in path
       if (path.includes(filename)) {
         // console.log('path includes filename')
@@ -350,6 +365,7 @@ const urlCatchAllTransform = (files) => ({
         // console.log('filename: ', filename)
 
         let pathToAppend = path
+
         // append anchor if present
         if (two.match(/#/)) {
           pathToAppend = `${path}#${two.split('#')[1]}`
@@ -361,6 +377,7 @@ const urlCatchAllTransform = (files) => ({
         if (two.match(/#/)) {
           filename = `${filename}#${two.split('#')[1]}`
         }
+
         result = `[${one}](/${path}/${filename})`
       }
 
@@ -370,54 +387,56 @@ const urlCatchAllTransform = (files) => ({
 
     return match
   },
-})
+}}
 
 // Image
 // {% imgTag /img/api/should/should-command-shows-up-as-assert-for-each-assertion.png "Command Log should" %}
 // <DocsImage src="/img/api/should/should-command-shows-up-as-assert-for-each-assertion.png" alt="Command Log should"></DocsImage>
 // https://regexr.com/5b0e8
-const imageTransform = (files) => ({
+const imageTransform = (files) => {return {
   files,
   from: /{%\s*imgTag\s['"]*(?=\/)(.*?)['"]*\s+(.*)\s*%}/g,
   to: (...match) => {
     // eslint-disable-next-line no-unused-vars
     const [_hexoTag, src, alt] = match
+
     return `<DocsImage src="${src}" alt=${alt}></DocsImage>`
   },
-})
+}}
 
-const shortImageTransform = (files) => ({
+const shortImageTransform = (files) => {return {
   files,
   from: /{%\s*imgTag\s['"]*(?=\/)(.*?)['"]*\s*%}/g,
   to: '<DocsImage src="$1"></DocsImage>',
-})
+}}
 
-const imgTagTransform = (files) => ({
+const imgTagTransform = (files) => {return {
   files,
   from: /{%\s*img\s*['"]*(?=\/)(.*?)['"]*\s*%}/g,
   to: '<DocsImage src="$1"></DocsImage>',
-})
+}}
 
 // {% imgTag /img/guides/real-world-app.png  "Cypress Real World App" "no-border" %}
-const imageTransformWithStyles = (files) => ({
+const imageTransformWithStyles = (files) => {return {
   files,
   from: /{%\s+imgTag\s(?=\/)([^"]*?)\s+"([^"]*?)"\s+"([^"]*?)*"\s+%}/g,
   to: (...match) => {
     // eslint-disable-next-line no-unused-vars
     const [_hexoTag, src, alt] = match
+
     return `<DocsImage src="${src}" alt="${alt}"></DocsImage>`
   },
-})
+}}
 
 // Video
 // {% video /videos/api/intro.mp4 %}
 // <DocsVideo path="/videos/api/intro.mp4"></DocsVideo>
 // https://regexr.com/5b0ee
-const videoTransform = (files) => ({
+const videoTransform = (files) => {return {
   files,
   from: /{%\s+video\s(?=\/)(.*?)\s+%}/g,
   to: '<DocsVideo src="$1"></DocsVideo>',
-})
+}}
 
 // Video - YouTube, Vimeo, Local
 //
@@ -429,7 +448,7 @@ const videoTransform = (files) => ({
 // <DocsVideo path="https://vimeo.com/237115455"></DocsVideo>
 // <DocsVideo path="/img/snippets/installing-cli.mp4"></DocsVideo>
 // https://regexr.com/5b0ee
-const videoYTVimeoTransform = (files) => ({
+const videoYTVimeoTransform = (files) => {return {
   files,
   from: /{%\s+video\s+(\byoutube|vimeo|local\b)\s(.*?)\s%}/g,
   to: (match, one, two) => {
@@ -438,15 +457,16 @@ const videoYTVimeoTransform = (files) => ({
     if (one === 'youtube') {
       return `<DocsVideo src="https://youtube.com/embed/${two}"></DocsVideo>`
     }
+
     if (one === 'vimeo') {
       return `<DocsVideo src="https://vimeo.com/${two}"></DocsVideo>`
     }
 
     return result
   },
-})
+}}
 
-const noteOpenTagTransform = (files) => ({
+const noteOpenTagTransform = (files) => {return {
   files,
   from: /{%\s*note\s*.*\s*%}/g,
   to: (...match) => {
@@ -469,6 +489,7 @@ const noteOpenTagTransform = (files) => ({
     }
 
     const subheader = unquotify(subheaderParts.join(' '))
+
     if (subheader) {
       return `<Alert type="${type}">\n\n <strong class="alert-header">${subheader}</strong>\n`
     }
@@ -480,17 +501,17 @@ const noteOpenTagTransform = (files) => ({
     // A type or subheader should always be present, so this is a fallback
     return `<Alert>\n\n`
   },
-})
+}}
 
-const noteCloseTagTransform = (files) => ({
+const noteCloseTagTransform = (files) => {return {
   files,
   from: /{%\s*endnote\s*%}/g,
   to: `\n</Alert>`,
-})
+}}
 
 // {% assertions utility .as %}
 // regexr.com/5fglc
-const assertionTransform = (files) => ({
+const assertionTransform = (files) => {return {
   files,
   from: /{%\s+assertions\s+(.+[^\W])\s+(.*)\s+%}/g,
   to: (...match) => {
@@ -499,16 +520,17 @@ const assertionTransform = (files) => ({
     // console.log('type: ', type, '\n')
     // console.log('cmd: ', cmd, '\n')
     const listItems = createAssertionListItems(type, cmd)
+
     return `<List>${listItems
       .map((content) => `<li>${content}</li>`)
       .join('')}</List>`
   },
-})
+}}
 
 // {% yields sets_subject cy.readFile 'yields the contents of the file' %}
 // {% yields assertion_indeterminate .should %}
 // regexr.com/5fldt
-const yieldsTransform = (files) => ({
+const yieldsTransform = (files) => {return {
   files,
   from: /{%\s+yields\s+(\S+)\s+(\S+)\s+([`|'|"].+[`|'|"]\s)*%}/g,
   to: (...match) => {
@@ -517,11 +539,12 @@ const yieldsTransform = (files) => ({
     // console.log('type: ', type)
     // console.log('cmd: ', cmd)
     const listItems = createYieldsListItems(type, cmd, content)
+
     return `<List>${listItems
       .map((content) => `<li>${content}</li>`)
       .join('')}</List>`
   },
-})
+}}
 
 const HELPER_ICON_LINK_MAP = {
   yields: 'introduction-to-cypress#Subject-Management',
@@ -530,72 +553,78 @@ const HELPER_ICON_LINK_MAP = {
   requirements: 'introduction-to-cypress#Chains-of-Commands',
 }
 
-const helperIconTransform = (files) => ({
+const helperIconTransform = (files) => {return {
   files,
   from: /{%\s+helper_icon\s+(\S*)\s+%}/g,
   to: (...match) => {
     // eslint-disable-next-line no-unused-vars
     const [_hexoTag, type] = match
     const link = HELPER_ICON_LINK_MAP[type]
+
     if (!link) {
       throw new Error(
         `{% helper_icon %} tag helper was provided an invalid type: ${type}`
       )
     }
+
     return `[<Icon name="question-circle"/>](${link})`
   },
-})
+}}
 
 // regexr.com/5fsjg
-const requirementsTransform = (files) => ({
+const requirementsTransform = (files) => {return {
   files,
   from: /{%\srequirements\s+(\S*)\s+(\S*)\s+%}/g,
   to: (...match) => {
     // eslint-disable-next-line no-unused-vars
     const [_hexoTag, type, cmd] = match
     const listItems = createRequirementsListItems(type, cmd)
+
     return `<List>${listItems
       .map((content) => `<li>${content}</li>`)
       .join('')}</List>`
   },
-})
+}}
 
-const timeoutsTransform = (files) => ({
+const timeoutsTransform = (files) => {return {
   files,
   from: /{%\stimeouts\s+(\S*)\s+(\S*)\s+%}/g,
   to: (...match) => {
     // eslint-disable-next-line no-unused-vars
     const [_hexoTag, type, cmd] = match
     const listItems = createTimeoutsListItems(type, cmd)
+
     return `<List>${listItems
       .map((content) => `<li>${content}</li>`)
       .join('')}</List>`
   },
-})
+}}
 
-const shortUsageOptionsTransform = (files) => ({
+const shortUsageOptionsTransform = (files) => {return {
   files,
   from: /{%\susage_options\s+([^{%]*)\s+%}/g,
   to: (...match) => {
     // eslint-disable-next-line no-unused-vars
     const [_hexoTag, option, type] = match
     const blurb = createUsageOptions(option, type)
+
     return blurb
   },
-})
+}}
 
-const usageOptionsTransform = (files) => ({
+const usageOptionsTransform = (files) => {return {
   files,
   from: /{%\susage_options\s+([^{%]*)\s+([^{%]*)\s+%}/g,
   to: (...match) => {
     // eslint-disable-next-line no-unused-vars
     const [_hexoTag, option, type] = match
     const blurb = createUsageOptions(option, type)
+
     return blurb
   },
-})
+}}
 
-const historyTransform = (files) => ({
+const historyTransform = (files) => {return {
   files,
   from: /{%\shistory\s%}\n(.*?)\n{%\sendhistory\s%}/gs,
   to: (...match) => {
@@ -603,56 +632,58 @@ const historyTransform = (files) => ({
     const [_hexoTag, content] = match
     const tableMarkdown = `Version | Changes\n--- | ---\n`
     const table = `${tableMarkdown}${content}`
+
     return `## History\n\n${table}`
   },
-})
+}}
 
-const aliasesTransform = (files) => ({
+const aliasesTransform = (files) => {return {
   files,
   from: /{%\saliases\s+(.*)\s+%}/g,
   to: (...match) => {
     // eslint-disable-next-line no-unused-vars
     const [_hexoTag, aliases] = match
     const aliasList = aliases.split(' ').join(', ')
+
     return `<br><small class="aliases"><strong>Aliases: </strong>${aliasList}</small>`
   },
-})
+}}
 
-const openAnIssueWithArgTransform = (files) => ({
+const openAnIssueWithArgTransform = (files) => {return {
   files,
   from: /{%\s+open_an_issue\s+(.*)\s+%}/g,
   to: () => {
     return `[open an issue](https://github.com/cypress-io/cypress/issues/new)`
   },
-})
+}}
 
-const openAnIssueTransform = (files) => ({
+const openAnIssueTransform = (files) => {return {
   files,
   from: /{%\s+open_an_issue\s+%}/g,
   to: () => {
     return `[open an issue](https://github.com/cypress-io/cypress/issues/new)`
   },
-})
+}}
 
 // {% issue 1234 %}
 // {% issue 7 %}
 // no text after the issue number
-const shortIssueTransform = (files) => ({
+const shortIssueTransform = (files) => {return {
   files,
   from: /{%\s+issue\s+([^{%'"`]*)\s+%}/g,
   to: `[#$1](https://github.com/cypress-io/cypress/issues/$1)`,
-})
+}}
 
 // {% issue 7 '#7' %}
 // includes text after the issue number
 // https://regexr.com/5kokt
-const longIssueTransform = (files) => ({
+const longIssueTransform = (files) => {return {
   files,
   from: /{%\s+issue\s+([^{%]*)\s+['"`]([^{%]*)['"`]\s+%}/g,
   to: `[$2](https://github.com/cypress-io/cypress/issues/$1)`,
-})
+}}
 
-const badgeTransform = (files) => ({
+const badgeTransform = (files) => {return {
   files,
   from: /{%\s+badge\s+(.*)\s+%}/g,
   to: (...match) => {
@@ -663,44 +694,48 @@ const badgeTransform = (files) => ({
     const contentIndex = 3
     const type = splitTag[typeIndex]
     const content = splitTag[contentIndex]
+
     return `<Badge type="${type}">${content}</Badge>`
   },
-})
+}}
 
-const partialTransform = (files) => ({
+const partialTransform = (files) => {return {
   files,
   from: /{%\s+partial\s+(.*)\s+%}/g,
   to: (...match) => {
     // eslint-disable-next-line no-unused-vars
     const [_hexoTag, type] = match
     const partialType = type.toUpperCase()
+
     if (!partials[partialType]) {
       throw new Error(`Unrecognized partial: ${type}`)
     }
+
     return partials[partialType]
   },
-})
+}}
 
-const rawTransform = (files) => ({
+const rawTransform = (files) => {return {
   files,
   from: /{% raw %}/g,
   to: '', // remove it
-})
+}}
 
-const endRawTransform = (files) => ({
+const endRawTransform = (files) => {return {
   files,
   from: /{% endraw %}/g,
   to: '', // remove it
-})
+}}
 
-const pullRequestTransform = (files) => ({
+const pullRequestTransform = (files) => {return {
   files,
   from: /{%\s*PR ([0-9]+)\s*%}/g,
   to: '[#$1](https://github.com/cypress-io/cypress/pull/$1)',
-})
+}}
 
 const main = () => {
   const fileList = glob.sync(path.join(__dirname, '../content', MD_FILES))
+
   try {
     fileList.forEach(demoteAllTitles)
   } catch (error) {

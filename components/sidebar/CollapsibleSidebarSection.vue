@@ -54,10 +54,12 @@ export default {
     },
     scrollToActiveLink() {
       const el = this.$el.getElementsByClassName('active-sidebar-link')[0]
+
       if (el) {
         // delaying the call to scrollIntoView prevents the sidebar from
         // sometimes trying to scroll to the active link too soon.
         const SCROLL_AFTER_MS = 50
+
         setTimeout(() => {
           el.scrollIntoView({ behavior: 'smooth', block: 'center' })
         }, SCROLL_AFTER_MS)
@@ -67,6 +69,7 @@ export default {
       if (path === slug) {
         this.isOpen = true
       }
+
       return path === slug
     },
   },

@@ -5,13 +5,18 @@ const TOC_TYPES = {
 }
 
 export default {
+  data() {
+    return {
+      apiTocList: [],
+    }
+  },
   async fetch() {
     const { api: sidebar } = await this.$content('_data/sidebar').fetch()
     const {
       sidebar: { api: userFriendlyNameMap },
     } = await this.$content('_data/en').fetch()
 
-    const { api, ...rest } = sidebar
+    const { ...rest } = sidebar
 
     /**
      * We want to flatten the `api` section of the `sidebar.json`.
@@ -34,6 +39,7 @@ export default {
               slug === 'all-assertions'
                 ? 'guides/references/assertions'
                 : `${slug}/${nestedSlug}`
+
             return [
               ...allNested,
               {
@@ -49,11 +55,6 @@ export default {
     }, [])
 
     this.apiTocList = apiTocList
-  },
-  data() {
-    return {
-      apiTocList: [],
-    }
   },
 }
 </script>
