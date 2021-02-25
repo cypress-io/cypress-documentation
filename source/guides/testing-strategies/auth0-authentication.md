@@ -168,6 +168,10 @@ The {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realwo
 
 The front end uses the {% url "auth0-react SDK" https://github.com/auth0/auth0-react %} for React Single Page Applications (SPA), which uses the {% url "auth0-spa-js SDK" https://github.com/auth0/auth0-spa-js %} underneath.  The back end uses {% url "express-jwt" https://github.com/auth0/express-jwt %} to validate JWT's against {% url "Auth0" https://auth0.com %}.
 
+{% note info Note %}
+Use the `yarn dev:auth0` command when starting the {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}.
+{% endnote %}
+
 ## Adapting the back end
 
 In order to validate API requests from the frontend, we install [express-jwt](https://github.com/auth0/express-jwt) and [jwks-rsa](https://github.com/auth0/node-jwks-rsa) and configure validation for JWT's from [Auth0](https://auth0.com).
