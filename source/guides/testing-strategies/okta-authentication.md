@@ -259,7 +259,9 @@ const AppOkta: React.FC = () => {
 export default withOktaAuth(AppOkta);
 ```
 
-Note: The full [AppOkta.tsx component](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppOkta.tsx) is in the {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}.
+{% note success %}
+The full [AppOkta.tsx component](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppOkta.tsx) is in the {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}.
+{% endnote %}
 
 Next, we update our entry point (`index.tsx`) to wrap our application with the `<Security>` component from the {% url "Okta React SDK" https://github.com/okta/okta-react %} providing `issuer`, `clientId` from our Okta application, along with a `redirectUri` as props using the `REACT_APP_OKTA` variables are defined in our `.env`.
 

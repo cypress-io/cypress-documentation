@@ -48,6 +48,7 @@ guides:
     continuous-integration-introduction: introduction.html
     github-actions: github-actions.html
     gitlab-ci: gitlab-ci.html
+    bitbucket-pipelines: bitbucket-pipelines.html
   component-testing:
     component-testing-introduction: introduction.html
   tooling:
