@@ -72,7 +72,7 @@ The images are available in the following {% url "Amazon ECR Public Galleries" h
 - https://gallery.ecr.aws/cypress-io/cypress/browsers
 - https://gallery.ecr.aws/cypress-io/cypress/included
 
-{% endnote }
+{% endnote %}
 
 
 {% note info %}
