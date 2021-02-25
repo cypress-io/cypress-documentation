@@ -133,6 +133,9 @@ The {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realwo
 
 The front end uses the {% url "Okta React SDK" https://github.com/okta/okta-react %} for React Single Page Applications (SPA), which uses the {% url "Okta Auth SDK" https://github.com/okta/okta-auth-js %} underneath.  The back end uses the {% url "Okta JWT Verifier for Node.js" https://github.com/okta/okta-oidc-js/tree/master/packages/jwt-verifier %} to validate JWTs from {% url "Okta" https://okta.com %}.
 
+{% note info Note %}
+Use the `yarn dev:okta` command when starting the {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}.
+{% endnote %}
 ## Adapting the back end
 
 In order to validate API requests from the frontend, we install {% url "Okta JWT Verifier for Node.js" https://github.com/okta/okta-oidc-js/tree/master/packages/jwt-verifier %} and configure it using the Okta Domain and Client ID provided after {% url "Creating an Okta application" https://developer.okta.com/docs/guides/sign-into-spa/react/create-okta-application/ %}.
