@@ -75,6 +75,10 @@ Next, run the {% url "amplify push" https://docs.amplify.aws/cli/start/workflows
 amplify push
 ```
 
+{% note info Note %}
+Use the `yarn dev:cogntio` command when starting the {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}.
+{% endnote %}
+
 # Setting Amazon Cognito app credentials in Cypress
 
 First, we need to configure Cypress to use the {% url "AWS Cognito" https://aws.amazon.com/cognito %} environment variables set in `.env` inside of the `cypress/plugins/index.js` file. In addition, we are using the `aws-exports.js` supplied during the {% url "AWS Amplify CLI" https://docs.amplify.aws/CLI %} build process.
