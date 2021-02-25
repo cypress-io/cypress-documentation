@@ -2,6 +2,16 @@
 title: Migration Guide
 ---
 
+# Migrating to Cypress 7.0
+
+This guide details the changes and how to change your code to migrate to Cypress 7.0. {% url "See the full changelog for 7.0" changelog#7-0-0 %}.
+
+## Node.js 12+ support
+
+Cypress comes bundled with it's own {% url "Node.js version" https://github.com/cypress-io/cypress/blob/develop/.node-version %}. However, installing the `cypress` npm package uses the Node.js version installed on your system.
+
+Node.js 10 reached its end of life on Dec 31, 2019 and Node.js 13 reached its end of life on June 1, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 12 or Node.js 14+.
+
 # Migrating `cy.route()` to `cy.intercept()`
 
 This guide details how to change your test code to migrate from `cy.route()` to `cy.intercept()`. `cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0. In a future release, support for `cy.server()` and `cy.route()` will be removed.
