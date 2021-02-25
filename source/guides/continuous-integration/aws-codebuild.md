@@ -68,15 +68,14 @@ The Cypress team has published it's {% url "Docker Images" https://github.com/cy
 
 The images are available in the following {% url "Amazon ECR Public Galleries" https://gallery.ecr.aws %}:
 
-- https://gallery.ecr.aws/cypress-io/cypress/base
-- https://gallery.ecr.aws/cypress-io/cypress/browsers
-- https://gallery.ecr.aws/cypress-io/cypress/included
+- {% url "Cypress 'base' Amazon ECR Public Gallery" https://gallery.ecr.aws/cypress-io/cypress/base %}
+- {% url "Cypress 'browsers' Amazon ECR Public Gallery" https://gallery.ecr.aws/cypress-io/cypress/browsers %}
+- {% url "Cypress 'included' Amazon ECR Public Gallery" https://gallery.ecr.aws/cypress-io/cypress/included %}
 
 {% endnote %}
 
 
-{% note info %}
-Which image is right for me?
+{% note info "Choosing the right Docker Image" %}
 
 For end-to-end tests on a CI provider like AWS CodeBuild, the {% url "Cypress 'browsers' Amazon ECR Public Gallery" https://gallery.ecr.aws/cypress-io/cypress/browsers %} contains the images to use.
 
