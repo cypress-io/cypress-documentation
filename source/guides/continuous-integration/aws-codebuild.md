@@ -42,9 +42,7 @@ phases:
 To try out the example above yourself, fork the {% url "Cypress Kitchen Sink" https://github.com/cypress-io/cypress-example-kitchensink %} example project and place the above {% url "AWS CodeBuild" https://aws.amazon.com/codebuild/ %} configuration in `buildspec.yml`.
 {% endnote %}
 
-**How this action works:**
-
-How this buildspec works:
+**How this buildspec works:**
 
 - On *push* to this repository, this job will provision and start AWS-hosted Amazon Linux instance with Node.js for running the outlined `pre_build` and `build` for the declared commands within the `commands` section of the configuration.
 - {% url "AWS CodeBuild" https://aws.amazon.com/codebuild/ %} will checkout our code from our GitHub repository.
@@ -65,20 +63,31 @@ The {% url "build-list strategy" https://docs.aws.amazon.com/codebuild/latest/us
 
 The Cypress team maintains the official {% url "Docker Images" https://github.com/cypress-io/cypress-docker-images %} for running Cypress locally and in CI, which are built with Google Chrome and Firefox. For example, this allows us to run the tests in Firefox by passing the `--browser firefox` attribute to `cypress run`.
 
+{% note success Cypress Amazon Public ECR }
+The Cypress team has published it's {% url "Docker Images" https://github.com/cypress-io/cypress-docker-images %} for running Cypress locally and in CI in the {% url "Amazon ECR Public Gallery" https://gallery.ecr.aws %}.
+
+The images are available in the following {% url "Amazon ECR Public Galleries" https://gallery.ecr.aws %}:
+
+- https://gallery.ecr.aws/cypress-io/cypress/base
+- https://gallery.ecr.aws/cypress-io/cypress/browsers
+- https://gallery.ecr.aws/cypress-io/cypress/included
+
+{% endnote }
+
 ```yaml
 # buildspec.yml
 version: 0.2
 
 # AWS CodeBuild Batch configuration
 # https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html
-# Define build to run using the "cypress/browsers:node12.14.1-chrome85-ff81" image on DockerHub
+# Define build to run using the "cypress/browsers:node12.14.1-chrome85-ff81" image from the Cypress Amazon ECR Public Gallery
 batch:
   fast-fail: false
   build-list:
     - identifier: cypress-e2e-tests
       env:
         variables:
-          IMAGE: cypress/browsers:node12.14.1-chrome85-ff81
+          IMAGE: public.ecr.aws/cypress-io/cypress/browsers:node12.14.1-chrome85-ff81
 
 phases:
   install:
