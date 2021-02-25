@@ -63,7 +63,7 @@ The {% url "build-list strategy" https://docs.aws.amazon.com/codebuild/latest/us
 
 The Cypress team maintains the official {% url "Docker Images" https://github.com/cypress-io/cypress-docker-images %} for running Cypress locally and in CI, which are built with Google Chrome and Firefox. For example, this allows us to run the tests in Firefox by passing the `--browser firefox` attribute to `cypress run`.
 
-{% note success Cypress Amazon Public ECR }
+{% note success Cypress Amazon Public ECR %}
 The Cypress team has published it's {% url "Docker Images" https://github.com/cypress-io/cypress-docker-images %} for running Cypress locally and in CI in the {% url "Amazon ECR Public Gallery" https://gallery.ecr.aws %}.
 
 The images are available in the following {% url "Amazon ECR Public Galleries" https://gallery.ecr.aws %}:
