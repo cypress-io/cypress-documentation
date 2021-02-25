@@ -1,6 +1,7 @@
 
 export default {
   router: {
+    trailingSlash: false,
     extendRoutes(routes, resolve) {
       routes.push(
         {
