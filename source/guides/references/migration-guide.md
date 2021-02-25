@@ -8,7 +8,7 @@ This guide details the changes and how to change your code to migrate to Cypress
 
 ## Node.js 12+ support
 
-Cypress comes bundled with it's own {% url "Node.js version" https://github.com/cypress-io/cypress/blob/develop/.node-version %}. However, installing the `cypress` npm package uses the Node.js version installed on your system.
+Cypress comes bundled with its own {% url "Node.js version" https://github.com/cypress-io/cypress/blob/develop/.node-version %}. However, installing the `cypress` npm package uses the Node.js version installed on your system.
 
 Node.js 10 reached its end of life on Dec 31, 2019 and Node.js 13 reached its end of life on June 1, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 12 or Node.js 14+.
 
@@ -665,7 +665,7 @@ Cypress 5.0 raises minimum required TypeScript version from 2.9+ to 3.4+. You'll
 
 ## Node.js 10+ support
 
-Cypress comes bundled with it's own {% url "Node.js version" https://github.com/cypress-io/cypress/blob/develop/.node-version %}. However, installing the `cypress` npm package uses the Node.js version installed on your system.
+Cypress comes bundled with its own {% url "Node.js version" https://github.com/cypress-io/cypress/blob/develop/.node-version %}. However, installing the `cypress` npm package uses the Node.js version installed on your system.
 
 Node.js 8 reached its end of life on Dec 31, 2019 and Node.js 11 reached its end of life on June 1, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 10 or Node.js 12+.
 
@@ -1070,7 +1070,7 @@ cy.get('p').contains('hello\nworld') // Pass in 3.x. Fail in 4.0.0.
 
 ## Node.js 8+ support
 
-Cypress comes bundled with it's own {% url "Node.js version" https://github.com/cypress-io/cypress/blob/develop/.node-version %}. However, installing the `cypress` npm package uses the Node.js version installed on your system.
+Cypress comes bundled with its own {% url "Node.js version" https://github.com/cypress-io/cypress/blob/develop/.node-version %}. However, installing the `cypress` npm package uses the Node.js version installed on your system.
 
 Node.js 4 reached its end of life on April 30, 2018 and Node.js 6 reached its end of life on April 30, 2019. {% url "See Node's release schedule" https://github.com/nodejs/Release %}. These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 8.
 
