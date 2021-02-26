@@ -66,14 +66,31 @@ You will be taken to `Step 3 (Configure request to API)`.  Note the returned ref
 
 # Setting Google app credentials in Cypress
 
-With our {% url "Google" https://google.com %} application set up and our refresh token, we need to add environment variables to our [Cypress Real World App][cypressrwa] `.env` with the values from our {% url "Google" https://google.com %} application and for our test user.
+To have access to test user credentials within our tests we need to configure Cypress to use the {% url "Google" https://google.com %} environment variables set in `.env` inside of the `cypress/plugins/index.js` file.
 
 ```jsx
 // .env
-REACT_APP_AUTH_TOKEN_NAME='authAccessToken'
-REACT_APP_GOOGLE_CLIENTID='your-client-id'
-REACT_APP_GOOGLE_CLIENT_SECRET='your-client-secret'
-GOOGLE_REFRESH_TOKEN='your-refresh-token'
+REACT_APP_GOOGLE_CLIENTID = 'your-client-id'
+REACT_APP_GOOGLE_CLIENT_SECRET = 'your-client-secret'
+GOOGLE_REFRESH_TOKEN = 'your-refresh-token'
+```
+
+```jsx
+// cypress/plugins/index.js
+// initial imports ...
+
+dotenv.config()
+
+export default (on, config) => {
+  // ...
+  config.env.googleRefreshToken = process.env.GOOGLE_REFRESH_TOKEN
+  config.env.googleClientId = process.env.REACT_APP_GOOGLE_CLIENTID
+  config.env.googleClientSecret = process.env.REACT_APP_GOOGLE_CLIENT_SECRET
+
+  // plugins code ...
+
+  return config
+}
 ```
 
 # Custom Command for Google Authentication
@@ -82,14 +99,14 @@ Next, we will write a command named `loginByGoogleApi` to perform a programmatic
 
 The `loginByGoogleApi` command will execute the following steps:
 
-1. Use the refresh token from the {% url "Google OAuth 2.0 Playground" https://developers.google.com/oauthplayground %} to perform the programmatic login, exchanging it for an `access_token`
+1. Use the refresh token from the {% url "Google OAuth 2.0 Playground" https://developers.google.com/oauthplayground %} to perform the programmatic login, exchanging the refresh token for an `access_token`.
 2. Use the `access_token` returned to get the Google User profile.
 3. Finally the `oktaCypress` localStorage item is set with the `access token` and user profile.
 
 ```jsx
 // cypress/support/commands.js
 Cypress.Commands.add('loginByGoogleApi', () => {
-  cy.log("Logging in to Google")
+  cy.log('Logging in to Google')
   cy.request({
     method: 'POST',
     url: 'https://www.googleapis.com/oauth2/v4/token',
@@ -101,6 +118,7 @@ Cypress.Commands.add('loginByGoogleApi', () => {
     },
   }).then(({ body }) => {
     const { access_token, id_token } = body
+
     cy.request({
       method: 'GET',
       url: 'https://www.googleapis.com/oauth2/v3/userinfo',
@@ -117,9 +135,10 @@ Cypress.Commands.add('loginByGoogleApi', () => {
           imageUrl: body.picture,
         },
       }
+
       window.localStorage.setItem('googleCypress', JSON.stringify(userItem))
-      cy.visit('/');
+      cy.visit('/')
     })
-  });
+  })
 })
 ```
