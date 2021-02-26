@@ -64,3 +64,62 @@ You will be redirected back to the {% url "Google OAuth 2.0 Playground" https://
 
 You will be taken to `Step 3 (Configure request to API)`.  Note the returned refresh token to be used with testing.
 
+# Setting Google app credentials in Cypress
+
+With our {% url "Google" https://google.com %} application set up and our refresh token, we need to add environment variables to our [Cypress Real World App][cypressrwa] `.env` with the values from our {% url "Google" https://google.com %} application and for our test user.
+
+```jsx
+// .env
+REACT_APP_AUTH_TOKEN_NAME='authAccessToken'
+REACT_APP_GOOGLE_CLIENTID='your-client-id'
+REACT_APP_GOOGLE_CLIENT_SECRET='your-client-secret'
+GOOGLE_REFRESH_TOKEN='your-refresh-token'
+```
+
+# Custom Command for Google Authentication
+
+Next, we will write a command named `loginByGoogleApi` to perform a programmatic login into {% url "Google" https://google.com %} and set an item in localStorage with the authenticated users details, which we will use in our application code to verify we are authenticated under test.
+
+The `loginByGoogleApi` command will execute the following steps:
+
+1. Use the refresh token from the {% url "Google OAuth 2.0 Playground" https://developers.google.com/oauthplayground %} to perform the programmatic login, exchanging it for an `access_token`
+2. Use the `access_token` returned to get the Google User profile.
+3. Finally the `oktaCypress` localStorage item is set with the `access token` and user profile.
+
+```jsx
+// cypress/support/commands.js
+Cypress.Commands.add('loginByGoogleApi', () => {
+  cy.log("Logging in to Google")
+  cy.request({
+    method: 'POST',
+    url: 'https://www.googleapis.com/oauth2/v4/token',
+    body: {
+      grant_type: 'refresh_token',
+      client_id: Cypress.env('googleClientId'),
+      client_secret: Cypress.env('googleClientSecret'),
+      refresh_token: Cypress.env('googleRefreshToken'),
+    },
+  }).then(({ body }) => {
+    const { access_token, id_token } = body
+    cy.request({
+      method: 'GET',
+      url: 'https://www.googleapis.com/oauth2/v3/userinfo',
+      headers: { Authorization: `Bearer ${access_token}` },
+    }).then(({ body }) => {
+      cy.log(body)
+      const userItem = {
+        token: id_token,
+        user: {
+          googleId: body.sub,
+          email: body.email,
+          givenName: body.given_name,
+          familyName: body.family_name,
+          imageUrl: body.picture,
+        },
+      }
+      window.localStorage.setItem('googleCypress', JSON.stringify(userItem))
+      cy.visit('/');
+    })
+  });
+})
+```
