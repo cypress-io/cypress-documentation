@@ -36,13 +36,13 @@ Cypress used to automatically include any scripts in the `supportFolder` before 
 Cypress supports both ES2015 modules and CommonJS modules. You can import/require npm modules as well as local modules:
 
 ```javascript
-import _ from "lodash";
-import util from "./util";
+import _ from 'lodash'
+import util from './util'
 
-it("uses modules", () => {
-  expect(_.kebabCase("FooBar")).to.equal("foo-bar");
-  expect(util.secretCode()).to.equal("1-2-3-4");
-});
+it('uses modules', () => {
+  expect(_.kebabCase('FooBar')).to.equal('foo-bar')
+  expect(util.secretCode()).to.equal('1-2-3-4')
+})
 ```
 
 #### Use supportFile to load scripts before your test code
@@ -68,24 +68,24 @@ This message means you tried to execute one or more Cypress commands outside of 
 Typically this happens accidentally, like in the following situation.
 
 ```javascript
-describe("Some Tests", () => {
-  it("is true", () => {
-    expect(true).to.be.true; // yup, fine
-  });
+describe('Some Tests', () => {
+  it('is true', () => {
+    expect(true).to.be.true // yup, fine
+  })
 
-  it("is false", () => {
-    expect(false).to.be.false; // yup, also fine
-  });
+  it('is false', () => {
+    expect(false).to.be.false // yup, also fine
+  })
 
-  context("some nested tests", () => {
+  context('some nested tests', () => {
     // oops you forgot to write an it(...) here!
     // these cypress commands below
     // are running outside of a test and cypress
     // throws an error
-    cy.visit("http://localhost:8080");
-    cy.get("h1").should("contain", "todos");
-  });
-});
+    cy.visit('http://localhost:8080')
+    cy.get('h1').should('contain', 'todos')
+  })
+})
 ```
 
 Move those Cypress commands into an `it(...)` block and everything will work correctly.
@@ -151,17 +151,17 @@ Let's take a look at an example below.
 #### Application JavaScript
 
 ```javascript
-$("button").click(() => {
+$('button').click(() => {
   // when the <button> is clicked
   // we remove the button from the DOM
-  $(this).remove();
-});
+  $(this).remove()
+})
 ```
 
 #### Test Code causing error
 
 ```javascript
-cy.get("button").click().parent();
+cy.get('button').click().parent()
 ```
 
 We've programmed our application above so that as soon as the `click` event happens, the button is removed from the DOM. When Cypress begins processing the next command ([`.parent()`](/api/commands/parent)) in the test above, it detects that the yielded subject (the button) is detached from the DOM and throws the error.
@@ -171,8 +171,8 @@ We can prevent Cypress from throwing this error by rewriting our test code.
 #### Fixed Test Code
 
 ```javascript
-cy.get("button").click();
-cy.get("#parent");
+cy.get('button').click()
+cy.get('#parent')
 ```
 
 The above example is an oversimplification. Let's look at a more complex example.
@@ -244,7 +244,7 @@ Cypress will continuously attempt to interact with the element until it eventual
 - Pass `{animationDistanceThreshold: 20}` to decrease the sensitivity of detecting if an element is animating. By increasing the threshold this enables your element to move farther on the page without causing Cypress to continuously retry.
 
 ```javascript
-cy.get("#modal button").click({ waitForAnimations: false });
+cy.get('#modal button').click({ waitForAnimations: false })
 ```
 
 You can globally disable animation error checking, or increase the threshold by modifying the [configuration](/guides/references/configuration).
@@ -280,25 +280,25 @@ Even though we return a string in our test, Cypress automatically figures out th
 
 ```javascript
 // This test passes!
-it("Cypress is smart and this does not fail", () => {
-  cy.get("body").children().should("not.contain", "foo"); // <- no return here
+it('Cypress is smart and this does not fail', () => {
+  cy.get('body').children().should('not.contain', 'foo') // <- no return here
 
-  return "foobarbaz"; // <- return here
-});
+  return 'foobarbaz' // <- return here
+})
 ```
 
 The example below will fail because you've forcibly terminated the test early with mocha's `done`.
 
 ```javascript
 // This test errors!
-it("but you can forcibly end the test early which does fail", (done) => {
-  cy.get("body")
+it('but you can forcibly end the test early which does fail', (done) => {
+  cy.get('body')
     .then(() => {
-      done(); // forcibly end test even though there are commands below
+      done() // forcibly end test even though there are commands below
     })
     .children()
-    .should("not.contain", "foo");
-});
+    .should('not.contain', 'foo')
+})
 ```
 
 #### Complex Async Example
@@ -306,34 +306,34 @@ it("but you can forcibly end the test early which does fail", (done) => {
 What's happening in this example is that because we have _NOT_ told Mocha this is an asynchronous test, this test will pass _immediately_ then move onto the next test. Then, when the `setTimeout` callback function runs, new commands will get queued on the wrong test. Cypress will detect this and fail the _next_ test.
 
 ```javascript
-describe("a complex example with async code", function () {
-  it("you can cause commands to bleed into the next test", function () {
+describe('a complex example with async code', function () {
+  it('you can cause commands to bleed into the next test', function () {
     // This test passes...but...
     setTimeout(() => {
-      cy.get("body").children().should("not.contain", "foo");
-    }, 10);
-  });
+      cy.get('body').children().should('not.contain', 'foo')
+    }, 10)
+  })
 
-  it("this test will fail due to the previous poorly written test", () => {
+  it('this test will fail due to the previous poorly written test', () => {
     // This test errors!
-    cy.wait(10);
-  });
-});
+    cy.wait(10)
+  })
+})
 ```
 
 The correct way to write the above test code is using Mocha's `done` to signify it is asynchronous.
 
 ```javascript
-it("does not cause commands to bleed into the next test", (done) => {
+it('does not cause commands to bleed into the next test', (done) => {
   setTimeout(() => {
-    cy.get("body")
+    cy.get('body')
       .children()
-      .should("not.contain", "foo")
+      .should('not.contain', 'foo')
       .then(() => {
-        done();
-      });
-  }, 10);
-});
+        done()
+      })
+  }, 10)
+})
 ```
 
 #### Complex Promise Example
@@ -343,28 +343,28 @@ This also causes the commands to be queued on the wrong test. We will get the er
 
 ```javascript
 describe('another complex example using a forgotten "return"', () => {
-  it("forgets to return a promise", () => {
+  it('forgets to return a promise', () => {
     // This test passes...but...
     Cypress.Promise.delay(10).then(() => {
-      cy.get("body").children().should("not.contain", "foo");
-    });
-  });
+      cy.get('body').children().should('not.contain', 'foo')
+    })
+  })
 
-  it("this test will fail due to the previous poorly written test", () => {
+  it('this test will fail due to the previous poorly written test', () => {
     // This test errors!
-    cy.wait(10);
-  });
-});
+    cy.wait(10)
+  })
+})
 ```
 
 The correct way to write the above test code would be to return our `Promise`:
 
 ```javascript
-it("does not forget to return a promise", () => {
+it('does not forget to return a promise', () => {
   return Cypress.Promise.delay(10).then(() => {
-    return cy.get("body").children().should("not.contain", "foo");
-  });
-});
+    return cy.get('body').children().should('not.contain', 'foo')
+  })
+})
 ```
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` failed because you are attempting to visit a second unique domain
@@ -658,6 +658,8 @@ Here are some potential workarounds:
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> Uncaught exceptions from your application
 
-WIP. We'll be adding more here soon.
+When Cypress detects an uncaught exception in your application, it will fail the currently running test.
 
-For now, please visit the [Catalog of Events](/api/events/catalog-of-events#Uncaught-Exceptions) page for examples how to turn off catching uncaught exceptions.
+You can turn off this behavior globally or conditionally with the `uncaught:exception` event. Please see the [Catalog of Events](/api/events/catalog-of-events#Uncaught-Exceptions) for examples.
+
+On a technical note, Cypress considers uncaught exceptions to be any error that is uncaught by your application, whether they are "standard" errors or unhandled promise rejections. If the error triggers the window's global `error` handler or its `unhandledrejection` handler, Cypress will detect it and fail the test.
