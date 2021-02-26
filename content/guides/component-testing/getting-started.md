@@ -18,7 +18,7 @@ Let's get you set up so you can start testing components.
 
 ## Try it out with an existing project
 
-If you just want to see it working but don’t want to write code, follow this:
+If you just want to see it working but don’t want to write code, follow these steps:
 
 <!-- FIXME: update the url of the example repo we choose -->
 
