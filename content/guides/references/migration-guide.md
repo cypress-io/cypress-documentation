@@ -2,6 +2,16 @@
 title: Migration Guide
 ---
 
+# Migrating to Cypress 7.0
+
+This guide details the changes and how to change your code to migrate to Cypress 7.0. [See the full changelog for 7.0](/guides/references/changelog#7-0-0).
+
+## Node.js 12+ support
+
+Cypress comes bundled with its own [Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version). However, installing the `cypress` npm package uses the Node.js version installed on your system.
+
+Node.js 10 reached its end of life on Dec 31, 2019 and Node.js 13 reached its end of life on June 1, 2019. [See Node's release schedule](https://github.com/nodejs/Release). These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 12 or Node.js 14+.
+
 ## Migrating `cy.route()` to `cy.intercept()`
 
 This guide details how to change your test code to migrate from `cy.route()` to `cy.intercept()`. `cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0. In a future release, support for `cy.server()` and `cy.route()` will be removed.
@@ -16,19 +26,19 @@ In many use cases, you can replace `cy.route()` with [cy.intercept()](/api/comma
 
 ```js
 // Set up XHR listeners using cy.route()
-cy.server();
-cy.route("/users").as("getUsers");
-cy.route("POST", "/project").as("createProject");
-cy.route("PATCH", "/projects/*").as("updateProject");
+cy.server()
+cy.route('/users').as('getUsers')
+cy.route('POST', '/project').as('createProject')
+cy.route('PATCH', '/projects/*').as('updateProject')
 ```
 
 <Badge type="success">After</Badge>
 
 ```js
 // Intercept HTTP requests
-cy.intercept("/users").as("getUsers");
-cy.intercept("POST", "/project").as("createProject");
-cy.intercept("PATCH", "/projects/*").as("updateProject");
+cy.intercept('/users').as('getUsers')
+cy.intercept('POST', '/project').as('createProject')
+cy.intercept('PATCH', '/projects/*').as('updateProject')
 ```
 
 ### Match against `url` and `path`
@@ -39,11 +49,11 @@ The `url` argument to [cy.intercept()](/api/commands/intercept) matches against 
 
 ```js
 // Match XHRs with a path or url of /users
-cy.server();
+cy.server()
 cy.route({
-  method: "POST",
-  url: "/users",
-}).as("getUsers");
+  method: 'POST',
+  url: '/users',
+}).as('getUsers')
 ```
 
 <Badge type="success">After</Badge>
@@ -51,16 +61,16 @@ cy.route({
 ```js
 // Match HTTP requests with a path of /users
 cy.intercept({
-  method: "POST",
-  path: "/users",
-}).as("getUsers");
+  method: 'POST',
+  path: '/users',
+}).as('getUsers')
 
 // OR
 // Match HTTP requests with an exact url of https://example.cypress.io/users
 cy.intercept({
-  method: "POST",
-  url: "https://example.cypress.io/users",
-}).as("getUsers");
+  method: 'POST',
+  url: 'https://example.cypress.io/users',
+}).as('getUsers')
 ```
 
 ### `cy.wait()` object
@@ -71,26 +81,26 @@ The object returned by `cy.wait()` is different from intercepted HTTP requests u
 
 ```js
 // Wait for XHR from cy.route()
-cy.route("POST", "/users").as("createUser");
+cy.route('POST', '/users').as('createUser')
 // ...
-cy.wait("@createUser").then(({ requestBody, responseBody, status }) => {
-  expect(status).to.eq(200);
-  expect(requestBody.firstName).to.eq("Jane");
-  expect(responseBody.firstName).to.eq("Jane");
-});
+cy.wait('@createUser').then(({ requestBody, responseBody, status }) => {
+  expect(status).to.eq(200)
+  expect(requestBody.firstName).to.eq('Jane')
+  expect(responseBody.firstName).to.eq('Jane')
+})
 ```
 
 <Badge type="success">After</Badge>
 
 ```js
 // Wait for intercepted HTTP request
-cy.intercept("POST", "/users").as("createUser");
+cy.intercept('POST', '/users').as('createUser')
 // ...
-cy.wait("@createUser").then(({ request, response }) => {
-  expect(response.statusCode).to.eq(200);
-  expect(request.body.name).to.eq("Jane");
-  expect(response.body.name).to.eq("Jane");
-});
+cy.wait('@createUser').then(({ request, response }) => {
+  expect(response.statusCode).to.eq(200)
+  expect(request.body.name).to.eq('Jane')
+  expect(response.body.name).to.eq('Jane')
+})
 ```
 
 ### Fixtures
@@ -101,16 +111,16 @@ You can stub requests and response with fixture data by defining a `fixture` pro
 
 ```js
 // Stub response with fixture data using cy.route()
-cy.route("GET", "/projects", "fx:projects");
+cy.route('GET', '/projects', 'fx:projects')
 ```
 
 <Badge type="success">After</Badge>
 
 ```js
 // Stub response with fixture data using cy.intercept()
-cy.intercept("GET", "/projects", {
-  fixture: "projects",
-});
+cy.intercept('GET', '/projects', {
+  fixture: 'projects',
+})
 ```
 
 ### Override route matchers
@@ -134,16 +144,16 @@ In previous versions of Cypress, there was a possibility for tests to falsely pa
 For example, in the tests below we want to test that the search dropdown is no longer visible when the search input is blurred because we hide the element in CSS styles. Except in this test, we've mistakenly misspelled one of our selectors.
 
 ```js
-cy.get("input[type=search]").type("Cypress");
-cy.get("#dropdown").should("be.visible");
-cy.get("input[type=search]").blur();
+cy.get('input[type=search]').type('Cypress')
+cy.get('#dropdown').should('be.visible')
+cy.get('input[type=search]').blur()
 
 // below we misspelled "dropdown" in the selector 😞
 // the assertions falsely pass in Cypress < 6.0
 // and will correctly fail in Cypress 6.0 +
-cy.get("#dropdon").should("not.be.visible");
-cy.get("#dropdon").should("not.have.class", "open");
-cy.get("#dropdon").should("not.contain", "Cypress");
+cy.get('#dropdon').should('not.be.visible')
+cy.get('#dropdon').should('not.have.class', 'open')
+cy.get('#dropdon').should('not.contain', 'Cypress')
 ```
 
 <DocsImage src="/img/guides/el-incorrectly-passes-existence-check.png" alt="non-existent element before 6.0"></DocsImage>
@@ -159,24 +169,24 @@ This fix may cause some breaking changes in your tests if you are relying on ass
 <Badge type="danger">Before</Badge> Assert that non existent element was not visible
 
 ```js
-it("test", () => {
+it('test', () => {
   // the .modal element is removed from the DOM on click
-  cy.get(".modal").find(".close").click();
+  cy.get('.modal').find('.close').click()
   // assertions below pass in < 6.0, but properly fail in 6.0+
-  cy.get(".modal").should("not.be.visible");
-  cy.get(".modal").should("not.contain", "Upgrade");
-});
+  cy.get('.modal').should('not.be.visible')
+  cy.get('.modal').should('not.contain', 'Upgrade')
+})
 ```
 
 <Badge type="success">After</Badge> Assert that non existent element does not exist
 
 ```js
-it("test", () => {
+it('test', () => {
   // the .modal element is removed from the DOM on click
-  cy.get(".modal").find(".close").click();
+  cy.get('.modal').find('.close').click()
   // we should instead assert that the element doesn't exist
-  cy.get(".modal").should("not.exist");
-});
+  cy.get('.modal').should('not.exist')
+})
 ```
 
 ### Opacity visibility
@@ -190,21 +200,21 @@ Elements where the CSS property (or ancestors) is `opacity: 0` are still conside
 <Badge type="danger">Before</Badge> Failed assertion that `opacity: 0` element is not visible.
 
 ```js
-it("test", () => {
+it('test', () => {
   // '.hidden' has 'opacity: 0' style.
   // In < 5.0 this assertion would fail
-  cy.get(".hidden").should("not.be.visible");
-});
+  cy.get('.hidden').should('not.be.visible')
+})
 ```
 
 <Badge type="success">After</Badge> Passed assertion that `opacity: 0` element is not visible.
 
 ```js
-it("test", () => {
+it('test', () => {
   // '.hidden' has 'opacity: 0' style.
   // In 6.0 this assertion will pass
-  cy.get(".hidden").should("not.be.visible");
-});
+  cy.get('.hidden').should('not.be.visible')
+})
 ```
 
 #### Perform actions on `opacity: 0` element
@@ -212,13 +222,13 @@ it("test", () => {
 In all versions of Cypress, you can interact with elements that have `opacity: 0` style.
 
 ```js
-it("test", () => {
+it('test', () => {
   // '.hidden' has 'opacity: 0' style.
-  cy.get(".hidden").click(); // ✅ clicks on element
-  cy.get(".hidden").type("hi"); // ✅ types into element
-  cy.get(".hidden").check(); // ✅ checks element
-  cy.get(".hidden").select("yes"); // ✅ selects element
-});
+  cy.get('.hidden').click() // ✅ clicks on element
+  cy.get('.hidden').type('hi') // ✅ types into element
+  cy.get('.hidden').check() // ✅ checks element
+  cy.get('.hidden').select('yes') // ✅ selects element
+})
 ```
 
 ### `cy.wait(alias)` type
@@ -237,7 +247,7 @@ If you need to restore the type behavior prior to 6.0.0 for [cy.wait(alias)](/ap
 declare global {
   namespace Cypress {
     interface Chainable<Subject = any> {
-      wait(alias: string): Chainable<Cypress.WaitXHR>;
+      wait(alias: string): Chainable<Cypress.WaitXHR>
     }
   }
 }
@@ -252,21 +262,21 @@ We now pass `—disable-dev-shm-usage` to the Chrome browser flags by default. I
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  on("before:browser:launch", (browser = {}, launchOptions) => {
-    if (browser.family === "chromium" && browser.name !== "electron") {
-      launchOptions.args.push("--disable-dev-shm-usage");
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
+      launchOptions.args.push('--disable-dev-shm-usage')
     }
 
-    return launchOptions;
-  });
-};
+    return launchOptions
+  })
+}
 ```
 
 <Badge type="success">After</Badge> Remove flag from plugins file.
 
 ```js
 // cypress/plugins/index.js
-module.exports = (on, config) => {};
+module.exports = (on, config) => {}
 ```
 
 #### Restore old behavior
@@ -336,23 +346,23 @@ CYPRESS_RETRIES=2 cypress run
 <Badge type="danger">Before</Badge> Setting retries with `cypress-plugin-retries` via the test
 
 ```js
-it("test", () => {
-  Cypress.currentTest.retries(2);
-});
+it('test', () => {
+  Cypress.currentTest.retries(2)
+})
 ```
 
 <Badge type="success">After</Badge> Setting test retries in Cypress 5.0 via test options
 
 ```js
 it(
-  "allows user to login",
+  'allows user to login',
   {
     retries: 2,
   },
   () => {
     // ...
   }
-);
+)
 ```
 
 - `runMode` allows you to define the number of test retries when running `cypress run`
@@ -360,7 +370,7 @@ it(
 
 ```js
 it(
-  "allows user to login",
+  'allows user to login',
   {
     retries: {
       runMode: 2,
@@ -370,7 +380,7 @@ it(
   () => {
     // ...
   }
-);
+)
 ```
 
 ### Module API results
@@ -488,16 +498,16 @@ The [Cypress.Cookies.defaults()](/api/cypress-api/cookies) `whitelist` option ha
 
 ```js
 Cypress.Cookies.defaults({
-  whitelist: "session_id",
-});
+  whitelist: 'session_id',
+})
 ```
 
 <Badge type="success">After</Badge> `preserve` option
 
 ```js
 Cypress.Cookies.defaults({
-  preserve: "session_id",
-});
+  preserve: 'session_id',
+})
 ```
 
 ### `blacklistHosts` configuration renamed
@@ -531,15 +541,15 @@ The return type of the [Cypress.Blob](/api/utilities/blob) methods `arrayBufferT
 <Badge type="danger">Before</Badge> `Cypress.Blob` methods returned a Promise
 
 ```js
-Cypress.Blob.base64StringToBlob(this.logo, "image/png").then((blob) => {
+Cypress.Blob.base64StringToBlob(this.logo, 'image/png').then((blob) => {
   // work with the returned blob
-});
+})
 ```
 
 <Badge type="success">After</Badge> `Cypress.Blob` methods return a Blob
 
 ```js
-const blob = Cypress.Blob.base64StringToBlob(this.logo, "image/png");
+const blob = Cypress.Blob.base64StringToBlob(this.logo, 'image/png')
 
 // work with the returned blob
 ```
@@ -553,9 +563,9 @@ The [cy.server()](/api/commands/server) `whitelist` option has been renamed to `
 ```js
 cy.server({
   whitelist: (xhr) => {
-    return xhr.method === "GET" && /\.(jsx?|html|css)(\?.*)?$/.test(xhr.url);
+    return xhr.method === 'GET' && /\.(jsx?|html|css)(\?.*)?$/.test(xhr.url)
   },
-});
+})
 ```
 
 <Badge type="success">After</Badge> `ignore` option
@@ -563,9 +573,9 @@ cy.server({
 ```js
 cy.server({
   ignore: (xhr) => {
-    return xhr.method === "GET" && /\.(jsx?|html|css)(\?.*)?$/.test(xhr.url);
+    return xhr.method === 'GET' && /\.(jsx?|html|css)(\?.*)?$/.test(xhr.url)
   },
-});
+})
 ```
 
 ### Cookies `sameSite` property
@@ -577,7 +587,7 @@ If you were using the `experimentalGetCookiesSameSite` configuration to get the 
 <Badge type="danger">Before</Badge> Cookies yielded before had no `sameSite` property.
 
 ```js
-cy.getCookie("token").then((cookie) => {
+cy.getCookie('token').then((cookie) => {
   // cy.getCookie() yields a cookie object
   // {
   //   domain: "localhost",
@@ -588,13 +598,13 @@ cy.getCookie("token").then((cookie) => {
   //   secure: false,
   //   value: "123ABC"
   // }
-});
+})
 ```
 
 <Badge type="success">After</Badge> Cookies yielded now have `sameSite` property if specified.
 
 ```js
-cy.getCookie("token").then((cookie) => {
+cy.getCookie('token').then((cookie) => {
   // cy.getCookie() yields a cookie object
   // {
   //   domain: "localhost",
@@ -606,7 +616,7 @@ cy.getCookie("token").then((cookie) => {
   //   secure: false,
   //   value: "123ABC"
   // }
-});
+})
 ```
 
 ### **dirname / **filename
@@ -617,20 +627,20 @@ The globals `__dirname` and `__filename` no longer include a leading slash.
 
 ```js
 // cypress/integration/app_spec.js
-it("include leading slash < 5.0", () => {
-  expect(__dirname).to.equal("/cypress/integration");
-  expect(__filename).to.equal("/cypress/integration/app_spec.js");
-});
+it('include leading slash < 5.0', () => {
+  expect(__dirname).to.equal('/cypress/integration')
+  expect(__filename).to.equal('/cypress/integration/app_spec.js')
+})
 ```
 
 <Badge type="success">After</Badge> `__dirname` / `__filename`
 
 ```js
 // cypress/integration/app_spec.js
-it("do not include leading slash >= 5.0", () => {
-  expect(__dirname).to.equal("cypress/integration");
-  expect(__filename).to.equal("cypress/integration/app_spec.js");
-});
+it('do not include leading slash >= 5.0', () => {
+  expect(__dirname).to.equal('cypress/integration')
+  expect(__filename).to.equal('cypress/integration/app_spec.js')
+})
 ```
 
 ### Linux dependencies
@@ -661,7 +671,7 @@ Cypress 5.0 raises minimum required TypeScript version from 2.9+ to 3.4+. You'll
 
 ### Node.js 10+ support
 
-Cypress comes bundled with it's own [Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version). However, installing the `cypress` npm package uses the Node.js version installed on your system.
+Cypress comes bundled with its own [Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version). However, installing the `cypress` npm package uses the Node.js version installed on your system.
 
 Node.js 8 reached its end of life on Dec 31, 2019 and Node.js 11 reached its end of life on June 1, 2019. [See Node's release schedule](https://github.com/nodejs/Release). These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 10 or Node.js 12+.
 
@@ -688,22 +698,22 @@ In the meantime, you can fix the error by choosing a single way to signal the en
 <Badge type="danger">Before</Badge> This test has a done callback and a promise
 
 ```javascript
-it("uses invokes done and returns promise", (done) => {
+it('uses invokes done and returns promise', (done) => {
   return codeUnderTest.doSomethingThatReturnsPromise().then((result) => {
     // assertions here
-    done();
-  });
-});
+    done()
+  })
+})
 ```
 
 <Badge type="success">After</Badge> You can remove the `done` callback and return the promise instead:
 
 ```javascript
-it("uses invokes done and returns promise", () => {
+it('uses invokes done and returns promise', () => {
   return codeUnderTest.doSomethingThatReturnsPromise().then((result) => {
     // assertions here
-  });
-});
+  })
+})
 ```
 
 ##### Example #2
@@ -711,27 +721,27 @@ it("uses invokes done and returns promise", () => {
 <Badge type="danger">Before</Badge> Sometimes it might make more sense to use the `done` callback and not return a promise:
 
 ```javascript
-it("uses invokes done and returns promise", (done) => {
-  eventEmitter.on("change", () => {
+it('uses invokes done and returns promise', (done) => {
+  eventEmitter.on('change', () => {
     // assertions
-    done();
-  });
+    done()
+  })
 
-  return eventEmitter.doSomethingThatEmitsChange();
-});
+  return eventEmitter.doSomethingThatEmitsChange()
+})
 ```
 
 <Badge type="success">After</Badge> In this case, you don't need to return the promise:
 
 ```javascript
-it("uses invokes done and returns promise", (done) => {
-  eventEmitter.on("change", () => {
+it('uses invokes done and returns promise', (done) => {
+  eventEmitter.on('change', () => {
     // assertions
-    done();
-  });
+    done()
+  })
 
-  eventEmitter.doSomethingThatEmitsChange();
-});
+  eventEmitter.doSomethingThatEmitsChange()
+})
 ```
 
 ##### Example #3
@@ -741,23 +751,23 @@ Test functions using `async/await` automatically return a promise, so they need 
 <Badge type="danger">Before</Badge> This will cause an overspecified error.
 
 ```javascript
-it("uses async/await", async (done) => {
-  const eventEmitter = await getEventEmitter();
-  eventEmitter.on("change", () => done());
-  eventEmitter.doSomethingThatEmitsChange();
-});
+it('uses async/await', async (done) => {
+  const eventEmitter = await getEventEmitter()
+  eventEmitter.on('change', () => done())
+  eventEmitter.doSomethingThatEmitsChange()
+})
 ```
 
 <Badge type="success">After</Badge> Update to the test code below.
 
 ```javascript
-it("uses async/await", async () => {
-  const eventEmitter = await getEventEmitter();
+it('uses async/await', async () => {
+  const eventEmitter = await getEventEmitter()
   return new Promise((resolve) => {
-    eventEmitter.on("change", () => resolve());
-    eventEmitter.doSomethingThatEmitsChange();
-  });
-});
+    eventEmitter.on('change', () => resolve())
+    eventEmitter.doSomethingThatEmitsChange()
+  })
+})
 ```
 
 #### <Icon name="exclamation-triangle" color="red"></Icon> Tests require a title
@@ -767,7 +777,7 @@ Tests now require a title and will error when not provided one.
 ```javascript
 // Would show as pending in Cypress 3
 // Will throw type error in Cypress 4:
-it(); // Test argument "title" should be a string. Received type "undefined"
+it() // Test argument "title" should be a string. Received type "undefined"
 ```
 
 ### Chai upgrade
@@ -780,10 +790,10 @@ Some assertions will now throw an error if the assertion's target or arguments a
 
 ```javascript
 // These will now throw errors:
-expect(null).to.be.within(0, 1);
-expect(null).to.be.above(10);
+expect(null).to.be.within(0, 1)
+expect(null).to.be.above(10)
 // This will not throw errors:
-expect("string").to.have.a.length.of.at.least(3);
+expect('string').to.have.a.length.of.at.least(3)
 ```
 
 #### <Icon name="exclamation-triangle" color="red"></Icon> Breaking Change: `empty` assertions
@@ -792,8 +802,8 @@ The `.empty` assertion will now throw when it is passed non-string primitives an
 
 ```javascript
 // These will now throw TypeErrors
-expect(Symbol()).to.be.empty;
-expect(() => {}).to.be.empty;
+expect(Symbol()).to.be.empty
+expect(() => {}).to.be.empty
 ```
 
 #### <Icon name="exclamation-triangle" color="red"></Icon> Breaking Change: non-existent properties
@@ -802,7 +812,7 @@ An error will throw when a non-existent property is read. If there are typos in 
 
 ```javascript
 // Would pass in Cypress 3 but will fail correctly in 4
-expect(true).to.be.ture;
+expect(true).to.be.ture
 ```
 
 #### <Icon name="exclamation-triangle" color="red"></Icon> Breaking Change: `include` checks strict equality
@@ -815,13 +825,13 @@ expect(true).to.be.ture;
 // Would pass in Cypress 3 but will fail correctly in 4
 cy.wrap([
   {
-    first: "Jane",
-    last: "Lane",
+    first: 'Jane',
+    last: 'Lane',
   },
-]).should("include", {
-  first: "Jane",
-  last: "Lane",
-});
+]).should('include', {
+  first: 'Jane',
+  last: 'Lane',
+})
 ```
 
 <Badge type="success">After</Badge> Need to specificy `deep.include` for deep equality
@@ -830,13 +840,13 @@ cy.wrap([
 // Specifically check for deep.include to pass in Cypress 4
 cy.wrap([
   {
-    first: "Jane",
-    last: "Lane",
+    first: 'Jane',
+    last: 'Lane',
   },
-]).should("deep.include", {
-  first: "Jane",
-  last: "Lane",
-});
+]).should('deep.include', {
+  first: 'Jane',
+  last: 'Lane',
+})
 ```
 
 ### Sinon.JS upgrade
@@ -849,7 +859,7 @@ An error will throw when trying to stub a non-existent property.
 
 ```javascript
 // Would pass in Cypress 3 but will fail in 4
-cy.stub(obj, "nonExistingProperty");
+cy.stub(obj, 'nonExistingProperty')
 ```
 
 #### <Icon name="exclamation-triangle" color="red"></Icon> Breaking Change: `reset()` replaced by `resetHistory()`
@@ -859,21 +869,21 @@ For spies and stubs, the `reset()` method was replaced by `resetHistory()`.
 <Badge type="danger">Before</Badge> Spies and stubs using `reset()`.
 
 ```javascript
-const spy = cy.spy();
-const stub = cy.stub();
+const spy = cy.spy()
+const stub = cy.stub()
 
-spy.reset();
-stub.reset();
+spy.reset()
+stub.reset()
 ```
 
 <Badge type="success">After</Badge> Update spies and stubs should now use `resetHistory()`.
 
 ```javascript
-const spy = cy.spy();
-const stub = cy.stub();
+const spy = cy.spy()
+const stub = cy.stub()
 
-spy.resetHistory();
-stub.resetHistory();
+spy.resetHistory()
+stub.resetHistory()
 ```
 
 ### Plugin Event `before:browser:launch`
@@ -885,23 +895,23 @@ You can see more examples of the new `launchOptions` in use in the [Browser Laun
 <Badge type="danger">Before</Badge> The second argument is no longer an array.
 
 ```js
-on("before:browser:launch", (browser, args) => {
+on('before:browser:launch', (browser, args) => {
   // will print a deprecation warning telling you
   // to change your code to the new signature
-  args.push("--another-arg");
+  args.push('--another-arg')
 
-  return args;
-});
+  return args
+})
 ```
 
 <Badge type="success">After</Badge> Access the `args` property off `launchOptions`
 
 ```js
-on("before:browser:launch", (browser, launchOptions) => {
-  launchOptions.args.push("--another-arg");
+on('before:browser:launch', (browser, launchOptions) => {
+  launchOptions.args.push('--another-arg')
 
-  return launchOptions;
-});
+  return launchOptions
+})
 ```
 
 ### Electron options in `before:browser:launch`
@@ -913,21 +923,21 @@ Now, you must pass those options as `launchOptions.preferences`:
 <Badge type="danger">Before</Badge> Passing BrowserWindow options on the `launchOptions` object is no longer supported.
 
 ```js
-on("before:browser:launch", (browser, args) => {
-  args.darkTheme = true;
+on('before:browser:launch', (browser, args) => {
+  args.darkTheme = true
 
-  return args;
-});
+  return args
+})
 ```
 
 <Badge type="success">After</Badge> Pass BrowserWindow options on the `options.preferences` object instead.
 
 ```js
-on("before:browser:launch", (browser, launchOptions) => {
-  launchOptions.preferences.darkTheme = true;
+on('before:browser:launch', (browser, launchOptions) => {
+  launchOptions.preferences.darkTheme = true
 
-  return launchOptions;
-});
+  return launchOptions
+})
 ```
 
 ### Launching Chrome Canary with `--browser`
@@ -956,21 +966,21 @@ We updated the [Cypress browser objects](/api/plugins/browser-launch-api) of all
 
 ```js
 module.exports = (on, config) => {
-  on("before:browser:launch", (browser = {}, launchOptions) => {
-    if (browser.family === "electron") {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.family === 'electron') {
       // would match Electron in 3.x
       // will match no browsers in 4.0.0
-      return launchOptions;
+      return launchOptions
     }
 
-    if (browser.family === "chromium") {
+    if (browser.family === 'chromium') {
       // would match no browsers in 3.x
       // will match any Chromium-based browser in 4.0.0
       // ie Chrome, Canary, Chromium, Electron, Edge (Chromium-based)
-      return launchOptions;
+      return launchOptions
     }
-  });
-};
+  })
+}
 ```
 
 #### Example #1 (Finding Electron)
@@ -979,26 +989,26 @@ module.exports = (on, config) => {
 
 ```js
 module.exports = (on, config) => {
-  on("before:browser:launch", (browser = {}, args) => {
-    if (browser.family === "electron") {
+  on('before:browser:launch', (browser = {}, args) => {
+    if (browser.family === 'electron') {
       // run code for Electron browser in 3.x
-      return args;
+      return args
     }
-  });
-};
+  })
+}
 ```
 
 <Badge type="success">After</Badge> Use `browser.name` to check for Electron
 
 ```js
 module.exports = (on, config) => {
-  on("before:browser:launch", (browser = {}, launchOptions) => {
-    if (browser.name === "electron") {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.name === 'electron') {
       // run code for Electron browser in 4.0.0
-      return launchOptions;
+      return launchOptions
     }
-  });
-};
+  })
+}
 ```
 
 #### Example #2 (Finding Chromium-based browsers)
@@ -1007,26 +1017,26 @@ module.exports = (on, config) => {
 
 ```js
 module.exports = (on, config) => {
-  on("before:browser:launch", (browser = {}, args) => {
-    if (browser.family === "chrome") {
+  on('before:browser:launch', (browser = {}, args) => {
+    if (browser.family === 'chrome') {
       // in 4.x, `family` was changed to 'chromium' for all Chromium-based browsers
-      return args;
+      return args
     }
-  });
-};
+  })
+}
 ```
 
 <Badge type="success">After</Badge> Use `browser.name` and `browser.family` to select non-Electron Chromium-based browsers
 
 ```js
 module.exports = (on, config) => {
-  on("before:browser:launch", (browser = {}, launchOptions) => {
-    if (browser.family === "chromium" && browser.name !== "electron") {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
       // pass launchOptions to Chromium-based browsers in 4.0
-      return launchOptions;
+      return launchOptions
     }
-  });
-};
+  })
+}
 ```
 
 ### `cy.writeFile()` yields `null`
@@ -1036,19 +1046,19 @@ module.exports = (on, config) => {
 <Badge type="danger">Before</Badge> This assertion will no longer pass
 
 ```js
-cy.writeFile("path/to/message.txt", "Hello World").then((text) => {
+cy.writeFile('path/to/message.txt', 'Hello World').then((text) => {
   // Would pass in Cypress 3 but will fail in 4
-  expect(text).to.equal("Hello World"); // false
-});
+  expect(text).to.equal('Hello World') // false
+})
 ```
 
 <Badge type="success">After</Badge> Instead read the contents of the file
 
 ```js
-cy.writeFile("path/to/message.txt", "Hello World");
-cy.readFile("path/to/message.txt").then((text) => {
-  expect(text).to.equal("Hello World"); // true
-});
+cy.writeFile('path/to/message.txt', 'Hello World')
+cy.readFile('path/to/message.txt').then((text) => {
+  expect(text).to.equal('Hello World') // true
+})
 ```
 
 ### cy.contains() ignores invisible whitespaces
@@ -1060,13 +1070,13 @@ Browsers ignore leading, trailing, duplicate whitespaces. And Cypress now does t
 ```
 
 ```javascript
-cy.get("p").contains("hello world"); // Fail in 3.x. Pass in 4.0.0.
-cy.get("p").contains("hello\nworld"); // Pass in 3.x. Fail in 4.0.0.
+cy.get('p').contains('hello world') // Fail in 3.x. Pass in 4.0.0.
+cy.get('p').contains('hello\nworld') // Pass in 3.x. Fail in 4.0.0.
 ```
 
 ### Node.js 8+ support
 
-Cypress comes bundled with it's own [Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version). However, installing the `cypress` npm package uses the Node.js version installed on your system.
+Cypress comes bundled with its own [Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version). However, installing the `cypress` npm package uses the Node.js version installed on your system.
 
 Node.js 4 reached its end of life on April 30, 2018 and Node.js 6 reached its end of life on April 30, 2019. [See Node's release schedule](https://github.com/nodejs/Release). These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 8.
 
@@ -1082,9 +1092,9 @@ npm install @cypress/browserify-preprocessor@1.1.2
 
 ```javascript
 // cypress/plugins/index.js
-const browserify = require("@cypress/browserify-preprocessor");
+const browserify = require('@cypress/browserify-preprocessor')
 
 module.exports = (on) => {
-  on("file:preprocessor", browserify());
-};
+  on('file:preprocessor', browserify())
+}
 ```

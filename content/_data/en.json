@@ -185,7 +185,6 @@
       "_": "_",
       "$": "$",
       "minimatch": "minimatch",
-      "moment": "moment",
       "blob": "Blob",
       "promise": "Promise",
       "sinon": "sinon",

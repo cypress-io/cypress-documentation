@@ -22,14 +22,14 @@ The [subject](/guides/core-concepts/introduction-to-cypress#Subject-Management) 
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get("form").submit(); // Submit a form
+cy.get('form').submit() // Submit a form
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.submit(); // Errors, cannot be chained off 'cy'
-cy.get("input").submit(); // Errors, 'input' does not yield a form
+cy.submit() // Errors, cannot be chained off 'cy'
+cy.get('input').submit() // Errors, 'input' does not yield a form
 ```
 
 ### Arguments
@@ -61,14 +61,12 @@ Pass in an options object to change the default behavior of `.submit()`.
 ```
 
 ```javascript
-cy.get("#contact").submit();
+cy.get('#contact').submit()
 ```
 
 ## Notes
 
-### Actionability
-
-#### Submit is not an action command
+### Submit is not an action command
 
 `.submit()` is not implemented like other action commands, and does not follow the same rules of [waiting for actionability](/guides/core-concepts/interacting-with-elements).
 
@@ -77,6 +75,10 @@ cy.get("#contact").submit();
 Oftentimes using `.submit()` directly is more concise and conveys what you're trying to test.
 
 If you want the other guarantees of waiting for an element to become actionable, you should use a different command like [`.click()`](/api/commands/click) or [`.type()`](/api/commands/type).
+
+### Submit will fail if there are form validation errors
+
+If the form being submitted includes inputs with [client-side validation](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation) and that validation fails, `.submit()` will fail and list the validation failures.
 
 ## Rules
 
@@ -97,8 +99,8 @@ If you want the other guarantees of waiting for an element to become actionable,
 **_Submit a form_**
 
 ```javascript
-cy.intercept("POST", "/users", { fixture: "user" }).as("userSuccess");
-cy.get("form").submit();
+cy.intercept('POST', '/users', { fixture: 'user' }).as('userSuccess')
+cy.get('form').submit()
 ```
 
 The commands above will display in the Command Log as:

@@ -22,13 +22,14 @@ The default behavior of Cypress can be modified by supplying any of the followin
 | ---------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `baseUrl`              | `null`                            | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL                                                                          |
 | `env`                  | `{}`                              | Any values to be set as [environment variables](/guides/guides/environment-variables)                                                                                                        |
+| `includeShadowDom`     | `false`                           | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get))                                 |
 | `numTestsKeptInMemory` | `50`                              | The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.           |
 | `port`                 | `null`                            | Port used to host Cypress. Normally this is a randomly generated port                                                                                                                        |
+| `redirectionLimit`     | `20`                              | The number of times that the application under test can redirect before erroring.                                                                                                            |
 | `reporter`             | `spec`                            | The [reporter](/guides/tooling/reporters) used during `cypress run`                                                                                                                          |
 | `reporterOptions`      | `null`                            | The [reporter options](/guides/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                           |
 | `retries`              | `{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. See [Test Retries](/guides/guides/test-retries) for more information. |
 | `watchForFileChanges`  | `true`                            | Whether Cypress will watch and restart tests on test file changes                                                                                                                            |
-| `includeShadowDom`     | `false`                           | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get))                                 |
 
 ### Timeouts
 
@@ -236,9 +237,9 @@ Configuration set using `Cypress.config` _is only in scope for the current spec 
 </Alert>
 
 ```javascript
-Cypress.config("pageLoadTimeout", 100000);
+Cypress.config('pageLoadTimeout', 100000)
 
-Cypress.config("pageLoadTimeout"); // => 100000
+Cypress.config('pageLoadTimeout') // => 100000
 ```
 
 ### Test Configuration
@@ -269,7 +270,7 @@ You can configure the number of times to retries a suite of tests if they fail d
 
 ```js
 describe(
-  "login",
+  'login',
   {
     retries: {
       runMode: 3,
@@ -277,15 +278,15 @@ describe(
     },
   },
   () => {
-    it("should redirect unauthenticated user to sign-in page", () => {
+    it('should redirect unauthenticated user to sign-in page', () => {
       // ...
-    });
+    })
 
-    it("allows user to login", () => {
+    it('allows user to login', () => {
       // ...
-    });
+    })
   }
-);
+)
 ```
 
 #### Single test configuration
@@ -293,12 +294,12 @@ describe(
 If you want to target a test to run or be excluded when run in a specific browser, you can override the `browser` configuration within the test configuration. The `browser` option accepts the same arguments as [Cypress.isBrowser()](/api/cypress-api/isbrowser).
 
 ```js
-it("Show warning outside Chrome", { browser: "!chrome" }, () => {
-  cy.get(".browser-warning").should(
-    "contain",
-    "For optimal viewing, use Chrome browser"
-  );
-});
+it('Show warning outside Chrome', { browser: '!chrome' }, () => {
+  cy.get('.browser-warning').should(
+    'contain',
+    'For optimal viewing, use Chrome browser'
+  )
+})
 ```
 
 ## Resolved Configuration
@@ -464,7 +465,7 @@ Run GC cleanup before every 3rd test during [cypress run](/guides/guides/command
 You can open Cypress in the interactive mode via the `cypress open` command, and in run mode via the `cypress run` command. To detect the mode from your test code you can query the `isInteractive` property on [Cypress.config](/api/cypress-api/config).
 
 ```javascript
-if (Cypress.config("isInteractive")) {
+if (Cypress.config('isInteractive')) {
   // interactive "cypress open" mode!
 } else {
   // "cypress run" mode
@@ -517,10 +518,11 @@ DEBUG=cypress:cli,cypress:server:specs
 
 | Version                                      | Changes                                                 |
 | -------------------------------------------- | ------------------------------------------------------- |
-| [6.1.0](/guides/references/changelog#6-1-0)  | Added option `scrollBehavior`                           |
+| [7.0.0](/guides/references/changelog#7-0-0)  | Added `redirectionLimit` option.                        |
+| [6.1.0](/guides/references/changelog#6-1-0)  | Added `scrollBehavior` option.                          |
 | [5.2.0](/guides/references/changelog#5-2-0)  | Added `includeShadowDom` option.                        |
-| [5.0.0](/guides/references/changelog)        | Added `retries` configuration.                          |
-| [5.0.0](/guides/references/changelog)        | Renamed `blacklistHosts` configuration to `blockHosts`. |
+| [5.0.0](/guides/references/changelog#5-0-0)  | Added `retries` configuration.                          |
+| [5.0.0](/guides/references/changelog#5-0-0)  | Renamed `blacklistHosts` configuration to `blockHosts`. |
 | [4.1.0](/guides/references/changelog#4-12-0) | Added `screenshotOnRunFailure` configuration.           |
 | [4.0.0](/guides/references/changelog#4-0-0)  | Added `firefoxGcInterval` configuration.                |
 | [3.5.0](/guides/references/changelog#3-5-0)  | Added `nodeVersion` configuration.                      |

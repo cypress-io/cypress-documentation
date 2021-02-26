@@ -173,7 +173,6 @@
       "$": "$.html",
       "blob": "blob.html",
       "minimatch": "minimatch.html",
-      "moment": "moment.html",
       "promise": "promise.html",
       "sinon": "sinon.html"
     },
