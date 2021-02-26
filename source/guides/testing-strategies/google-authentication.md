@@ -161,3 +161,19 @@ describe('Google', function () {
 {% note success Try it out %}
 The [runnable version of this test](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui-auth-providers/google.spec.ts) is in the {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}.
 {% endnote %}
+
+# Adapting an Google App for Testing
+
+{% note info Note %}
+The previous sections focused on the recommended Google authentication practice within Cypress tests. To use this practice it is assumed you are testing an app appropriately built or adapted to use Okta.
+
+The following sections provides guidance on building or adapting an app to use Okta authentication.
+{% endnote %}
+
+The {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %} is used and provides configuration and runnable code for both the React SPA and the Express back end.
+
+The front end uses the {% url "react-google-login component" https://github.com/anthonyjgrove/react-google-login %} and the back end uses {% url "express-jwt" https://github.com/auth0/express-jwt %} to validate the JWT provided by {% url "Google" https://google.com %}.
+
+{% note info Note %}
+Use the `yarn dev:google` command when starting the {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}.
+{% endnote %}
