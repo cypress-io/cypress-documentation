@@ -185,8 +185,9 @@ In order to validate API requests from the frontend, we install [express-jwt](ht
 
 ```jsx
 // backend/helpers.ts
-import jwt from "express-jwt"
+import jwt from 'express-jwt'
 import jwksRsa from "jwks-rsa"
+
 dotenv.config()
 const googleJwtConfig = {
   secret: jwksRsa.expressJwtSecret({
@@ -215,7 +216,7 @@ Once this helper is defined, we can use globally to apply to all routes:
 ```jsx
 // backend/app.ts
 // initial imports ...
-import { checkJwt } from "./helpers"
+import { checkJwt } from './helpers'
 
 // ...
 if (process.env.REACT_APP_GOOGLE) {
@@ -278,7 +279,7 @@ export default AppGoogle;
 
 
 {% note info %}
-The full [AppGoogle.tsx component](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppGoogle.tsx) is in the [Cypress Real World App][cypressrwa].
+The full [AppGoogle.tsx component](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppGoogle.tsx) is in the [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
 
 {% endnote %}
 
