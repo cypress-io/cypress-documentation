@@ -21,22 +21,10 @@
     "postinstall": "husky install"
   },
   "lint-staged": {
-    "*.{js,vue}": [
-      "eslint --cache --fix",
-      "git add"
-    ],
-    "*.{css,vue}": [
-      "stylelint",
-      "git add"
-    ],
-    "*.css": [
-      "stylelint --fix",
-      "git add"
-    ],
-    "*.md": [
-      "prettier --write",
-      "git add"
-    ] 
+    "*.{js,vue}": "eslint --cache --fix",
+    "*.{css,vue}": "stylelint",
+    "*.css": "stylelint --fix",
+    "*.md": "prettier --write" 
   },
   "dependencies": {
     "@docsearch/css": "^1.0.0-alpha.28",
