@@ -101,7 +101,7 @@ The `loginByGoogleApi` command will execute the following steps:
 
 1. Use the refresh token from the {% url "Google OAuth 2.0 Playground" https://developers.google.com/oauthplayground %} to perform the programmatic login, exchanging the refresh token for an `access_token`.
 2. Use the `access_token` returned to get the Google User profile.
-3. Finally the `oktaCypress` localStorage item is set with the `access token` and user profile.
+3. Finally the `googleCypress` localStorage item is set with the `access token` and user profile.
 
 ```jsx
 // cypress/support/commands.js
@@ -165,9 +165,9 @@ The [runnable version of this test](https://github.com/cypress-io/cypress-realwo
 # Adapting an Google App for Testing
 
 {% note info Note %}
-The previous sections focused on the recommended Google authentication practice within Cypress tests. To use this practice it is assumed you are testing an app appropriately built or adapted to use Okta.
+The previous sections focused on the recommended Google authentication practice within Cypress tests. To use this practice it is assumed you are testing an app appropriately built or adapted to use Google.
 
-The following sections provides guidance on building or adapting an app to use Okta authentication.
+The following sections provides guidance on building or adapting an app to use Google authentication.
 {% endnote %}
 
 The {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %} is used and provides configuration and runnable code for both the React SPA and the Express back end.
@@ -186,7 +186,7 @@ In order to validate API requests from the frontend, we install [express-jwt](ht
 ```jsx
 // backend/helpers.ts
 import jwt from 'express-jwt'
-import jwksRsa from "jwks-rsa"
+import jwksRsa from 'jwks-rsa'
 
 dotenv.config()
 const googleJwtConfig = {
