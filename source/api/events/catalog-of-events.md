@@ -189,9 +189,9 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 // cypress/support/index.js
 
 Cypress.on('uncaught:exception', (err, runnable) => {
-  // we expect a 3rd party library to error and don't want
-  // it to fail the test so we return false
-  if (err.message.includes('3rd party error')) {
+  // we expect a 3rd party library error with message 'list not defined'
+  // and don't want to fail the test so we return false
+  if (err.message.includes('list not defined')) {
     return false
   }
 
@@ -210,7 +210,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 Cypress.on('uncaught:exception', (err, runnable, promise) => {
   // when the exception originated from an unhandled promise
   // rejection, the promise is provided as a third argument
-  // here, we choose not to fail the test in this case
+  // you can turn off failing the test in this case
   if (promise) {
     return false
   }
