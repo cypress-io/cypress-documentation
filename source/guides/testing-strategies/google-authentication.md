@@ -142,3 +142,22 @@ Cypress.Commands.add('loginByGoogleApi', () => {
   })
 })
 ```
+
+With our Google app setup properly, necessary environment variables in place, and our `loginByGoogleApi` command implemented, we will be able to authenticate with Google while our app is under test.  Below is a test to login as a user via {% url "Google" https://google.com %}, complete the onboarding process and logout.
+
+```jsx
+describe('Google', function () {
+  beforeEach(function () {
+    cy.task('db:seed')
+    cy.loginByGoogleApi()
+  })
+
+  it('shows onboarding', function () {
+    cy.contains('Get Started').should('be.visible')
+  })
+})
+```
+
+{% note success Try it out %}
+The [runnable version of this test](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui-auth-providers/google.spec.ts) is in the {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}.
+{% endnote %}
