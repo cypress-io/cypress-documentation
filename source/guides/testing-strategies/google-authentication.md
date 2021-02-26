@@ -177,3 +177,135 @@ The front end uses the {% url "react-google-login component" https://github.com/
 {% note info Note %}
 Use the `yarn dev:google` command when starting the {% url "Cypress Real World App" https://github.com/cypress-io/cypress-realworld-app %}.
 {% endnote %}
+
+
+## Adapting the back end
+
+In order to validate API requests from the frontend, we install [express-jwt](https://github.com/auth0/express-jwt) and [jwks-rsa](https://github.com/auth0/node-jwks-rsa) and configure validation for JWT's from {% url "Google" https://google.com %}.
+
+```jsx
+// backend/helpers.ts
+import jwt from "express-jwt"
+import jwksRsa from "jwks-rsa"
+dotenv.config()
+const googleJwtConfig = {
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: 'https://www.googleapis.com/oauth2/v3/certs',
+  }),
+  // Validate the audience and the issuer.
+  audience: process.env.REACT_APP_GOOGLE_CLIENTID,
+  issuer: 'accounts.google.com',
+  algorithms: ['RS256'],
+}
+```
+
+Next, we'll define an Express middleware function to be use in our routes to verify the {% url "Google" https://google.com %} JWT sent by the front end API requests as the `Bearer` token.
+
+```jsx
+// backend/helpers.ts
+// ...
+export const checkJwt = jwt(googleJwtConfig).unless({ path: ['/testData/*'] })
+```
+
+Once this helper is defined, we can use globally to apply to all routes:
+
+```jsx
+// backend/app.ts
+// initial imports ...
+import { checkJwt } from "./helpers"
+
+// ...
+if (process.env.REACT_APP_GOOGLE) {
+  app.use(checkJwt)
+}
+// routes ...
+```
+
+## Adapting the front end
+
+We need to update our front end React app to allow for authentication with [Google](https://google.com). As mentioned above, the front end uses the {% url "react-google-login component" https://github.com/anthonyjgrove/react-google-login %} to perform the login.
+
+First, we create a `AppGoogle.tsx` container to render our application as it is authenticated with [Google](https://google.com).  The component is identical to the `App.tsx` component, but has the addition of a `GoogleLogin` component in place of the original Sign Up and Sign In components.
+
+
+A `useGoogleLogin` hook is added to send a `GOOGLE` event with the `user` and `token` objects to work with the existing authentication layer (`authMachine.ts`).
+
+
+```jsx
+// src/containers/AppGoogle.tsx
+// initial imports ...
+import { GoogleLogin, useGoogleLogin } from "react-google-login"
+// ...
+const AppGoogle= () => {
+  // ...
+  useGoogleLogin({
+      clientId: process.env.REACT_APP_GOOGLE_CLIENTID!,
+      onSuccess: (res) => {
+      authService.send("GOOGLE", { user: res.profileObj, token: res.tokenId });
+    },
+    cookiePolicy: "single_host_origin",
+    isSignedIn: true,
+  });
+  // ...
+  const isLoggedIn =
+    isAuthenticated &&
+    (authState.matches("authorized") ||
+      authState.matches("refreshing") ||
+      authState.matches("updating"));
+  return (
+    <div className={classes.root}>
+      // ...
+      {authState.matches("unauthorized") && (
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <div className={classes.paper}>
+            <GoogleLogin
+              clientId={process.env.REACT_APP_GOOGLE_CLIENTID!}
+              buttonText="Login"
+              cookiePolicy={"single_host_origin"}
+            />
+          </div>
+        </Container>
+      )}
+    </div>
+  );
+};
+export default AppGoogle;
+```
+
+
+{% note info %}
+The full [AppGoogle.tsx component](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppGoogle.tsx) is in the [Cypress Real World App][cypressrwa].
+
+{% endnote %}
+
+Next, we update our entry point (`index.tsx`) to conditionally load the `AppGoogle` component if we start the application with the `REACT_APP_GOOGLE` environment variable set to `true`.
+
+```jsx
+// src/index.tsx
+import React from "react";
+import ReactDOM from "react-dom";
+import { Router } from "react-router-dom";
+import { history } from "./utils/historyUtils";
+import App from "./containers/App";
+import AppGoogle from "./containers/AppGoogle";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+const theme = createMuiTheme({
+  palette: {
+    secondary: {
+      main: "#fff",
+    },
+  },
+});
+ReactDOM.render(
+  <Router history={history}>
+    <ThemeProvider theme={theme}>
+      {process.env.REACT_APP_GOOGLE ? <AppGoogle /> : <App />}
+    </ThemeProvider>
+  </Router>,
+  document.getElementById("root")
+);
+```
