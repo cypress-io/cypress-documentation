@@ -26,7 +26,7 @@ Cypress is a desktop application that is installed on your computer. The desktop
 
 If you're using `npm` to install Cypress, we support:
 
-- **Node.js** 10 or 12 and above
+- **Node.js** 12 or 14 and above
 
 #### Linux
 
@@ -257,7 +257,7 @@ Cypress will automatically replace the `~` with the user's home directory. So yo
 
 ```yml
 environment:
-  CYPRESS_CACHE_FOLDER: "~/.cache/Cypress"
+  CYPRESS_CACHE_FOLDER: '~/.cache/Cypress'
 ```
 
 See also [Continuous Integration - Caching](/guides/guides/continuous-integration#Caching) section in the documentation.
