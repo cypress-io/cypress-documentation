@@ -1,5 +1,14 @@
 <template>
   <div>
+    <script>
+      // Ensure backwards compatibility with old-docs URLs
+      if (window.location.hash) {
+        var newHash = window.location.hash.toLowerCase()
+        if (newHash !== window.location.hash) {
+          window.location.replace(newHash);
+        }
+      }
+    </script>
     <div class="app-content">
       <Nuxt />
     </div>
