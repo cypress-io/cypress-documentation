@@ -1,7 +1,7 @@
 
 export default {
   router: {
-    middleware: 'lower-case-url',
+    // middleware: 'lower-case-url',
     trailingSlash: false,
     extendRoutes(routes, resolve) {
       routes.push(
@@ -45,6 +45,9 @@ export default {
       },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script: [
+      { src: '/lower-case-url.js' }
+    ]
   },
   /*
    ** Global CSS
