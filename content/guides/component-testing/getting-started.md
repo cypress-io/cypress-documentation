@@ -41,11 +41,11 @@ This section will show you how to set a project up from scratch that has compone
 
 Before we start testing components let's make sure we everything we need.
 
-<Alert type="info">
+<alert type="info">
 
 If you are using VueJs click on the Vue tab of the code examples.
 
-</Alert>
+</alert>
 
 ### Prerequisites
 
@@ -58,7 +58,7 @@ If you are using VueJs click on the Vue tab of the code examples.
 
 First, run the following command. It will install both the latest version of cypress and the tooling you need to run component testing.
 
-<CodeGroup>
+<code-group>
   <code-block label="react" active>
 
 ```bash
@@ -66,7 +66,6 @@ yarn add cypress @cypress/react @cypress/webpack-dev-server
 ```
 
   </code-block>
-
   <code-block label="vue">
 
 ```bash
@@ -74,7 +73,7 @@ yarn add cypress @cypress/vue @cypress/webpack-dev-server
 ```
 
   </code-block>
-</CodeGroup>
+</code-group>
 
 ### Configuration
 
@@ -96,11 +95,11 @@ Then it is time to fill in the `support.js` file to configure our component serv
 
 Since our project uses webpack, we will be using webpack-dev-server to facilitate the matching of the styling and display rules of component
 
-<Alert type="info">
+<alert type="info">
 
 If you have a dev and a production config, prefer the dev version for now, it will give you better location information using sourceMaps.
 
-</Alert>
+</alert>
 
 ```js
 const { startDevServer } = require('@cypress/webpack-dev-server')
@@ -124,8 +123,8 @@ We assume a `button` component exists.
 - Create a `Button.spec.jsx` file in the same folder
 - Add a test:
 
-<CodeGroup>
-  <code-block label="react" active>
+<code-group>
+  <code-block label="React" active>
 
 ```jsx
 import * as React from 'react'
@@ -139,8 +138,7 @@ it('Button', () => {
 ```
 
   </code-block>
-
-  <code-block label="vue" active>
+  <code-block label="Vue">
 
 ```jsx
 import { mount } from '@cypress/vue'
@@ -153,7 +151,7 @@ it('Button', () => {
 ```
 
   </code-block>
-</CodeGroup>
+</code-group>
 
 - Open Cypress Component Testing
 
