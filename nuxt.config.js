@@ -1,7 +1,7 @@
 
 export default {
-  // ssr: false,
   router: {
+    middleware: 'lower-case-url',
     trailingSlash: false,
     extendRoutes(routes, resolve) {
       routes.push(

@@ -3,7 +3,7 @@
     <script>
       // Ensure backwards compatibility with old-docs URLs
       if (window.location.hash) {
-        var newHref = window.location.hash.toLowerCase()
+        var newHref = window.location.href.toLowerCase()
         if (newHref !== window.location.href) {
           window.location.replace(newHref);
         }

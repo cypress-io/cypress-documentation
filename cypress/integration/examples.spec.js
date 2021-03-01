@@ -1,5 +1,4 @@
-const ORIGIN = 'http://localhost:3000'
-const EXAMPLES_URL = `${ORIGIN}/examples/examples/recipes#Fundamentals`
+const EXAMPLES_URL = '/examples/examples/recipes#Fundamentals'
 const SIDEBAR = './content/_data/sidebar.json'
 const SIDEBAR_EN = './content/_data/en.json'
 

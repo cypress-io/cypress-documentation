@@ -1,12 +1,10 @@
-const ORIGIN = 'http://localhost:3000'
-const GUIDES_URL = `${ORIGIN}/guides/overview/why-cypress`
 const SIDEBAR = './content/_data/sidebar.json'
 const SIDEBAR_EN = './content/_data/en.json'
 
 describe('Guides', () => {
   beforeEach(() => {
     cy.viewport('macbook-15')
-    cy.visit(GUIDES_URL)
+    cy.visit()
   })
 
   it('contains a sidebar', () => {
@@ -93,7 +91,7 @@ describe('Guides', () => {
             })
           }
 
-          cy.visit(GUIDES_URL)
+          cy.visit()
         }
       })
     })
