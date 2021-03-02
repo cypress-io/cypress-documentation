@@ -486,3 +486,4 @@ DEBUG=cypress:cli,cypress:server:specs
 - {% url "`Cypress.config()`" config %}
 - {% url "Environment variables" environment-variables %}
 - {% url "Environment Variables recipe" recipes#Fundamentals %}
+- {% url "Extending the Cypress Config File" https://www.cypress.io/blog/2020/06/18/extending-the-cypress-config-file/ %} blog post and {% url "@bahmutov/cypress-extends" https://github.com/bahmutov/cypress-extends %} package.
