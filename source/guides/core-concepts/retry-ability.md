@@ -451,6 +451,7 @@ Watch the short video below to see this example in action
 
 # See also
 
+- Read our blog posts about fighting {% url "the test flake" https://cypress.io/blog/tag/flake/ %}.
 - You can add retry-ability to your own {% url "custom commands" custom-commands %}; see {% url 'this pull request to cypress-xpath' https://github.com/cypress-io/cypress-xpath/pull/12/files %} for an example.
 - You can retry any function with attached assertions using this 3rd party plugin {% url cypress-pipe https://github.com/NicholasBoll/cypress-pipe %}.
 - See retry-ability examples in the {% url "Cypress should callback" https://glebbahmutov.com/blog/cypress-should-callback/ %} blog post.
