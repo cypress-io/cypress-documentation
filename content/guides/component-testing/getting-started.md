@@ -7,12 +7,14 @@ containerClass: component-testing
 
 ## What is Component Testing
 
-In the context of a web application, we call Component Testing the action of running assertion on a component in isolation. The best example would be a tabs component. It can be done with a node testing framework like `jest` or `mocha` using a completely virtualized browser called [JSDom](https://github.com/jsdom/jsdom). This is the most common way of running tests on your components in isolation.
+_Definition: Running tests on a component in isolation._
 
-With Cypress Component Testing, you achieve the same goal of testing a component in isolation. Though, instead of having your components rendering inside the terminal only, it actually renders in an instance of a real browser. Since you can see the components you are testing, it is easier to know what you want to test. Since the tests are visual, they are easier to debug.
+Usually, we run tests with a node testing framework like `jest` or `mocha`. In the most common way, we render the components in a virtualized browser called [JSDom](https://github.com/jsdom/jsdom).
 
-In practice, Cypress Component Testing diverges very little from its big brother end-to-end testing.
-The two notable differences are:
+With Cypress Component Testing, we achieve the same goal: testing a component in isolation. Though, instead of having our components rendering inside the terminal only, hiding their final form, we actually render them in an instance of a real browser. Since we can see the components we are writing tests for, it is easier to know what we want to test. Since the tests are visual, they are easier to debug when they fail.
+
+Cypress Component Testing is very similar to its big brother end-to-end testing.
+The notable differences are:
 
 - We do not navigate to a page to run the tests against. No need to call `cy.visit()` anymore at the beginning of a test.
 - Instead, Cypress provides a blank canvas where we can `mount` our components in isolation.
@@ -31,10 +33,10 @@ If you want to see it working but don’t want to write code, follow these steps
 
 <DocsImage src="/img/guides/component-testing/first-open.png" alt="Splash Screen of Component Testing" ></DocsImage>
 
-- Click on one of the specs and see it run.
+- Click on one of the specs. You should see it run.
 - Open the spec file by clicking on its name above the command log.
 - Make a change to the spec and see it re-run.
-- Open the component tested and make a change, any change. The test will be re-run automatically.
+- Open the component tested and make a change again. The test will be re-run automatically.
 
 <DocsImage src="/img/guides/component-testing/first-run.png" alt="Splash Screen of Component Testing" ></DocsImage>
 
