@@ -427,7 +427,7 @@ Here are the available properties on `StaticResponse`:
   /**
    * Milliseconds to delay before the response is sent.
    */
-  delay?: number
+  delayMs?: number
   /**
    * Kilobits per second to send 'body'.
    */
@@ -646,9 +646,9 @@ The available functions on `res` are:
     */
   send(): void
   /**
-    * Wait for 'delay' milliseconds before sending the response to the client.
+    * Wait for 'delayMs' milliseconds before sending the response to the client.
     */
-  delay: (delay: number) => IncomingHttpResponse
+  delay: (delayMs: number) => IncomingHttpResponse
   /**
     * Serve the response at 'throttleKbps' kilobytes per second.
     */
@@ -657,6 +657,7 @@ The available functions on `res` are:
 ```
 
 {% history %}
+{% url "7.0.0" changelog#7-0-0 %} | Renamed `delay` property to `delayMs`.
 {% url "7.0.0" changelog#7-0-0 %} | Removed `cy.route2()` alias for `cy.intercept()`.
 {% url "6.4.0" changelog#6-4-0 %} | Renamed `delayMs` property to `delay` (backwards-compatible).
 {% url "6.2.0" changelog#6-2-0 %} | Added `matchUrlAgainstPath` option to `RouteMatcher`.
