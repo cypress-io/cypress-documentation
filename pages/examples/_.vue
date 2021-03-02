@@ -136,7 +136,7 @@ export default {
         :path="path"
       />
       <div v-if="mediaObjectIsEmpty" class="main-content-article-wrapper">
-        <article class="main-content-article">
+        <article class="main-content-article hide-scroll">
           <h1 class="main-content-title">{{ exampleItem.title }}</h1>
           <nuxt-content :document="exampleItem"></nuxt-content>
         </article>
@@ -148,7 +148,7 @@ export default {
 
       <!-- /* Projects */ -->
       <div v-if="isProjects" class="main-content-article-wrapper">
-        <article class="main-content-article nuxt-content">
+        <article class="main-content-article hide-scroll nuxt-content">
           <h1 class="main-content-title">{{ title }}</h1>
           <p>{{ mediaObject.description }}</p>
           <ul>
@@ -169,7 +169,7 @@ export default {
 
       <!-- /* Courses */ -->
       <div v-if="isCourses" class="main-content-article-wrapper">
-        <article class="main-content-article nuxt-content">
+        <article class="main-content-article hide-scroll nuxt-content">
           <h1 class="main-content-title">{{ title }}</h1>
           <p>
             Online courses from that teach end-to-end testing with Cypress over
@@ -209,7 +209,7 @@ export default {
 
       <!-- /* Webinars */ -->
       <div v-if="isWebinars" class="main-content-article-wrapper">
-        <article class="main-content-article nuxt-content">
+        <article class="main-content-article hide-scroll nuxt-content">
           <h1 class="main-content-title">{{ title }}</h1>
           <div class="mb-14">
             <ul>
@@ -253,7 +253,7 @@ export default {
 
       <!-- /* Blogs */ -->
       <div v-if="isBlogs" class="main-content-article-wrapper">
-        <article class="main-content-article nuxt-content">
+        <article class="main-content-article hide-scroll nuxt-content">
           <h1 class="main-content-title">{{ title }}</h1>
           <div class="mb-14">
             <ul>
@@ -301,7 +301,7 @@ export default {
 
       <!-- /* Talks */ -->
       <div v-if="isTalks" class="main-content-article-wrapper">
-        <article class="main-content-article nuxt-content">
+        <article class="main-content-article hide-scroll nuxt-content">
           <h1 class="main-content-title">{{ title }}</h1>
           <div class="mb-14">
             <ul>
@@ -362,7 +362,7 @@ export default {
 
       <!-- /* Podcasts */ -->
       <div v-if="isPodcasts" class="main-content-article-wrapper">
-        <article class="main-content-article nuxt-content">
+        <article class="main-content-article hide-scroll nuxt-content">
           <h1 class="main-content-title">{{ title }}</h1>
           <div class="mb-14">
             <ul>
@@ -417,7 +417,7 @@ export default {
 
       <!-- /* Screencasts */ -->
       <div v-if="isScreencasts" class="main-content-article-wrapper">
-        <article class="main-content-article nuxt-content">
+        <article class="main-content-article hide-scroll nuxt-content">
           <h1 class="main-content-title">{{ title }}</h1>
           <div class="mb-14">
             <ul>

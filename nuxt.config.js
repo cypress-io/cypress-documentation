@@ -1,5 +1,3 @@
-const wait = (ms) => new Promise(res => setTimeout(res, ms))
-
 export default {
   router: {
     // middleware: 'lower-case-url',
@@ -41,11 +39,12 @@ export default {
       if (savedPosition) {
         return savedPosition;
       }
-
-
+  
+      const wait = (ms) => new Promise(res => setTimeout(res, ms))
+  
       const findEl = async (hash, x = 0) => {
         // arbitrarily waiting for nuxt to do its thing on the page
-        await wait(500)
+        await wait(300)
  
         return (
           document.querySelector(hash) ||
@@ -60,7 +59,7 @@ export default {
           })
         );
       };
-
+  
       if (to.hash) {
         let el = await findEl(to.hash);
         // Give the element some breathing room when we scroll it into view
