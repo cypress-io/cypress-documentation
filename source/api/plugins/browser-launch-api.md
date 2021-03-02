@@ -172,7 +172,7 @@ If you are running Cypress tests using a Chromium-based browser, you can see ALL
 When a browser runs headless, there is no physical display. You can override the default screen size of 1280x720 when running headless as shown below. This will affect the size of screenshots and videos taken during the run.
 
 {% note warning %}
-This setting changes the display size of the screen and does not affect the `viewportWidth` and `viewportHeight` set in the {% url "configuration" configuration %}. The `viewportWidth` and `viewportHeight` only affect the size of the application under test displayed inside the Test Runner.
+This setting changes the display size of the screen and does not affect the `viewportWidth` and `viewportHeight` set in the {% url "configuration" configuration %}. The `viewportWidth` and `viewportHeight` only affect the size of the application under test displayed inside the Test Runner. Read the blog post {% url "Generate High-Resolution Videos and Screenshots" https://www.cypress.io/blog/2021/03/01/generate-high-resolution-videos-and-screenshots/ %} for details.
 {% endnote %}
 
 ```js
