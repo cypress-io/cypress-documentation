@@ -42,7 +42,9 @@ This section will show you how to set a project up from scratch that has compone
 Before we start testing components let's make sure we everything we need.
 
 <alert type="info">
-If you are using <a href="https://vuejs.org/">Vue.js</a> click on the Vue tab of the code examples.
+
+If you are using [Vue.js](https://vuejs.org/) click on the Vue tab of the code examples.
+
 </alert>
 
 ### Prerequisites
@@ -57,14 +59,14 @@ If you are using <a href="https://vuejs.org/">Vue.js</a> click on the Vue tab of
 Run the following command. It will install both the latest version of Cypress and the tooling you need to run component testing.
 
 <code-group>
-  <code-block label="react" active>
+  <code-block label="React" active>
 
 ```bash
 npm install cypress @cypress/react @cypress/webpack-dev-server --dev
 ```
 
   </code-block>
-  <code-block label="vue">
+  <code-block label="Vue">
 
 ```bash
 npm install cypress @cypress/vue @cypress/webpack-dev-server --dev
@@ -80,7 +82,9 @@ Now that we have the necessary tools installed let's configure our tests.
 In the same folder as `package.json` create a `cypress.json` file and a `cypress` directory of it does not already exists. In this folder create a plugins directory containing an `index.js` file.
 
 <alert type="info">
+
 If it is your first time using Cypress, just run `npx cypress open` and Cypress will create the directories and files for you.
+
 </alert>
 
 The `cypress.json` file will allow us to configure how component tests are located.
