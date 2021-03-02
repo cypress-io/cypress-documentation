@@ -9,7 +9,7 @@ containerClass: component-testing
 
 _Definition: Running tests on a component in isolation._
 
-Usually, we run tests with a node testing framework like `jest` or `mocha`. In the most common way, we render the components in a virtualized browser called [JSDom](https://github.com/jsdom/jsdom).
+Usually, we run component tests in a node testing framework like `jest` or `mocha`. We render the components we want to test in a virtualized browser called [JSDom](https://github.com/jsdom/jsdom).
 
 With Cypress Component Testing, we achieve the same goal: testing a component in isolation. Though, instead of having our components rendering inside the terminal only, hiding their final form, we actually render them in an instance of a real browser. Since we can see the components we are writing tests for, it is easier to know what we want to test. Since the tests are visual, they are easier to debug when they fail.
 
