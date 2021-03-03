@@ -37,7 +37,7 @@ If you want to see component testing working in an existing project, follow thes
 <DocsImage src="/img/guides/component-testing/first-open.png" alt="Splash Screen of Component Testing" ></DocsImage>
 
 - Click on one of the specs. You should see the tests run.
-- Open the spec file in your [preferred IDE](guides/tooling/IDE-integration#file-opener-preference) by clicking on the spec file's name in the Command Log.
+- Open the spec file in your [preferred IDE](guides/tooling/IDE-integration#file-opener-preference) by clicking on the spec file's name in the sidebar.
 - Make a change and save the spec and see it re-run.
 - Open the tested component and make a change again. The test will be re-run automatically.
 
@@ -109,7 +109,9 @@ You'll also need to configure the component testing framework of your choice by 
 Since your project uses webpack, you'll be using `webpack-dev-server` to facilitate the matching of the styling and display rules of component.
 
 <alert type="info">
-If you have separate webpack configurations for development and production, use the development configuration. It'll give better location information using sourceMaps.
+
+If you have separate webpack configurations for development and production, use the development configuration. It'll give better location information using SourceMaps.
+
 </alert>
 
 ```js
@@ -131,9 +133,9 @@ We are now ready to start testing our components.
 
 This example assumes a `<Button />` component exists.
 
-- Navigate to where you saved this component
-- Create a `Button.spec.jsx` file in the same folder
-- Add a test:
+- Navigate to where this component exists in your code.
+- Create a spec file in the same folder called `Button.spec.jsx`.
+- Write a test in the `Button.spec.jsx` file:
 
 <code-group>
   <code-block label="React" active>
@@ -174,25 +176,30 @@ it('Button', () => {
   </code-block>
 </code-group>
 
-- Open Cypress Component Testing
+- Open Cypress to test components with the command below.
 
-```
+```shell
 npx cypress open-ct
 ```
 
-- Select the spec in the sidebar. You should see the following:
+- Select the spec file in the sidebar. You should see the following:
 
 <DocsImage src="/img/guides/component-testing/one-spec.png" alt="Single Spec file with single test run" ></DocsImage>
 
-- Try modifying the spec, make the test fail, etc. The tests re-run instantly with visual feedback.
+- Try modifying the test in your IDE, make the test fail, etc. The tests re-run instantly with visual feedback.
 
-### Setup CI
+### Set up CI
 
-Sometimes we want to run tests without interactivity and see all results in the terminal.
-To run all tests in one command use `npx cypress run-ct`.
+Sometimes we want to run tests without interactivity and see all results in the terminal, like when we run our tests in continuous integration.
 
-In the project we just built, this command will yield the following results.
+To run all tests in the terminal, run the command below:
+
+```shell
+npx cypress run-ct
+```
+
+In the project we just built, this command will show the following results.
 
 <DocsImage src="/img/guides/component-testing/run-result.png" alt="Result of headless test run" ></DocsImage>
 
-To make the component tests part of your continuous integration pipeline, add a script running `npx cypress run-ct` to your CI configuration.
+To make the component tests part of your [continuous integration](/guides/guides/continuous-integration) pipeline, add a script to run `npx cypress run-ct` to your CI configuration.
