@@ -19,6 +19,14 @@ export default {
         {
           path: '/guides/dashboard/dashboard-introduction',
           redirect: '/guides/dashboard/introduction',
+        },
+        {
+          path: '/guides/component-testing',
+          redirect: '/guides/component-testing/getting-started'
+        },
+        {
+          path: '/guides/component-testing/introduction',
+          redirect: '/guides/component-testing/getting-started'
         }
       )
     },
