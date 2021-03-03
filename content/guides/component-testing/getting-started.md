@@ -9,12 +9,11 @@ containerClass: component-testing
 
 _Definition: Running tests on a component in isolation._
 
-Usually, we run component tests in a node testing framework like `jest` or `mocha`. We render the components we want to test in a virtualized browser called [JSDom](https://github.com/jsdom/jsdom).
+We usually run component tests using a Node.js testing framework like `jest` or `mocha`. We render the components we want to test in a virtualized browser called [JSDom](https://github.com/jsdom/jsdom).
 
-With Cypress Component Testing, we achieve the same goal: testing a component in isolation. Though, instead of having our components rendering inside the terminal only, hiding their final form, we actually render them in an instance of a real browser. Since we can see the components we are writing tests for, it is easier to know what we want to test. Since the tests are visual, they are easier to debug when they fail.
+With Cypress Component Testing, we achieve the same goal: testing a component in isolation. Instead of having our components rendering inside a terminal, we render them in a real browser. Since we can see the components we are writing tests for, it is easier to know what we want to test. Since the tests are visual, they are easier to debug when they fail.
 
-Cypress Component Testing is very similar to its big brother end-to-end testing.
-The notable differences are:
+Cypress Component Testing is very similar to end-to-end testing. The notable differences are:
 
 - We do not navigate to a page to run the tests against. No need to call `cy.visit()` anymore at the beginning of a test.
 - Instead, Cypress provides a blank canvas where we can `mount` our components in isolation.
@@ -28,8 +27,8 @@ If you want to see it working but don’t want to write code, follow these steps
 <!-- FIXME: update the url of the example repo we choose -->
 
 - Clone this repository: https://github.com/elevatebart/calc.git
-- Install dependencies `yarn`
-- Open component testing runner `yarn cy:open`.
+- Install dependencies `npm install`
+- Open the component testing runner with `npx cy:open`.
 
 <DocsImage src="/img/guides/component-testing/first-open.png" alt="Splash Screen of Component Testing" ></DocsImage>
 
@@ -44,11 +43,11 @@ If you want to see it working but don’t want to write code, follow these steps
 
 This section will show you how to set a project up from scratch with component testing running alongside e2e testing.
 
-Before we start testing components, let's make sure we everything we need.
+Before we start testing components, let's make sure we have a project with the required prerequisites.
 
 <alert type="info">
 
-If you are using [Vue.js](https://vuejs.org/), click on the Vue tab of the code examples when available. If there is no Vue tab, the code should be the same.
+If you are using [Vue.js](https://vuejs.org/), click on the Vue tab of the code examples when available. If there is no Vue tab, the code is the same.
 
 </alert>
 
