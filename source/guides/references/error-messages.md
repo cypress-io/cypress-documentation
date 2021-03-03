@@ -5,7 +5,7 @@ title: Error Messages
 
 # Test File Errors
 
-## {% fa fa-exclamation-triangle red %} No tests found in your file
+## {% fa fa-exclamation-triangle red %} No tests found
 
 This message means that Cypress was unable to find tests in the specified file. You'll likely get this message if you have an empty test file and have not yet written any tests.
 
