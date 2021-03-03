@@ -232,8 +232,6 @@ phases:
       - npx cypress run --record --parallel --browser $CY_BROWSER --ci-build-id $CODEBUILD_INITIATOR --group "$CY_GROUP" --spec "$CY_SPEC" --config "$CY_CONFIG"
 ```
 
-{% note info %}
-
 # Using the Cypress Dashboard with AWS CodeBuild
 
 In the AWS CodeBuild configuration we have defined in the previous section, we are leveraging three useful features of the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}:
@@ -246,11 +244,10 @@ In the AWS CodeBuild configuration we have defined in the previous section, we a
 
   2. {% url "Parallelizing test runs" parallelization %} and optimizing their execution via {% url "intelligent load-balancing" parallelization#Balance-strategy %} of test specs across CI machines with the `--parallel` flag.
 
-  3. Organizing and consolidating multiple `cypress run` calls by labeled groups into a single report within the. {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}. In the example above we use the `--group "UI - Chrome"` flag to organize all of UI tests within the Chrome browser within a group labeled "UI - Chrome" within our {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} report.
+  3. Organizing and consolidating multiple `cypress run` calls by labeled groups into a single report within the. {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}. In the example above we use the `--group "UI - Chrome"` flag (for the first group) to organize all UI tests for the Chrome browser into a group labeled "UI - Chrome" inside the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} report.
 
 # Cypress Real World Example with AWS CodeBuild
 
 A complete CI workflow against multiple browsers, viewports and operating systems is available in the {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %}.
 
 Clone the {% fa fa-github %} {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} and refer to the {% url "buildspec.yml" https://github.com/cypress-io/cypress-realworld-app/blob/develop/buildspec.yml %} file.
-{% endnote %}
