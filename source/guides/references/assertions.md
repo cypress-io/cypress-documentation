@@ -277,7 +277,7 @@ cy.get('#loading').should('not.be.visible')
 
 Negative assertions may pass for reasons you weren't expecting. Let's say we want to test that a Todo list app adds a new Todo item after typing the Todo and pressing enter.
 
-**Postitive assertions**
+**Positive assertions**
 
 When adding an element to the list and using a **positive assertion**, the test asserts a specific number of Todo items in our application.
 
