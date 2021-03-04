@@ -3,47 +3,51 @@ title: Getting Started
 containerClass: component-testing
 ---
 
-⚠️ The Cypress Component Testing library is in still in **Alpha**. We are rapidly developing and expect that the API may undergo breaking changes. Contribute to its development by submitting feature requests or issues [here](https://github.com/cypress-io/cypress/).
+<alert type="warning">
+
+⚠️ Cypress component testing is in still in **Alpha**. We are rapidly developing and expect that the API may undergo breaking changes. Contribute to its development by submitting feature requests or issues in the [cypress repo](https://github.com/cypress-io/cypress/).
+
+</alert>
 
 ## What is Component Testing
 
 _Definition: Running tests on a component in isolation._
 
-We usually run component tests using a Node.js testing framework like `jest` or `mocha`. We render the components we want to test in a virtualized browser called [JSDom](https://github.com/jsdom/jsdom).
+Typically component tests are run using a Node.js testing framework like `jest` or `mocha`. Components we want to test are rendered in a virtualized browser called [JSDom](https://github.com/jsdom/jsdom).
 
-With Cypress Component Testing, we achieve the same goal: testing a component in isolation. Instead of having our components rendering inside a terminal, we render them in a real browser. Since we can see the components we are writing tests for, it is easier to know what we want to test. Since the tests are visual, they are easier to debug when they fail.
+With component testing in Cypress, you can achieve the same goal: test a component in isolation. Instead of having components render inside a terminal, Cypress renders components in a real browser. Since the components you are testing are visible in the browser, this makes it easier to test and debug when a test fails.
 
-Cypress Component Testing is very similar to end-to-end testing. The notable differences are:
+Component testing in Cypress is similar to end-to-end testing. The notable differences are:
 
-- We do not navigate to a page to run the tests against. No need to call `cy.visit()` anymore at the beginning of a test.
-- Instead, Cypress provides a blank canvas where we can `mount` our components in isolation.
+- There's no need to navigate to a URL. You don't need to call [`cy.visit()`](/api/commands/visit) in your test.
+- Cypress provides a blank canvas where we can `mount` components in isolation.
 
-Let's get you set up so you can start testing components.
+Let's go through the setup to start testing components.
 
-## Try it out with an existing project
+## Try out with an existing project
 
-If you want to see it working but don’t want to write code, follow these steps:
+If you want to see component testing working in an existing project, follow these steps:
 
 <!-- FIXME: update the url of the example repo we choose -->
 
-- Clone this repository: https://github.com/elevatebart/calc.git
-- Install dependencies `npm install`
-- Open the component testing runner with `npx cy:open`.
+- Clone this https://github.com/elevatebart/calc.git repository.
+- Install dependencies by running `npm install`.
+- Run `npx cy:open` to open Cypress.
 
 <DocsImage src="/img/guides/component-testing/first-open.png" alt="Splash Screen of Component Testing" ></DocsImage>
 
-- Click on one of the specs. You should see it run.
-- Open the spec file by clicking on its name above the command log.
-- Make a change to the spec and see it re-run.
-- Open the component tested and make a change again. The test will be re-run automatically.
+- Click on one of the specs. You should see the tests run.
+- Open the spec file in your [preferred IDE](guides/tooling/IDE-integration#file-opener-preference) by clicking on the spec file's name in the sidebar.
+- Make a change and save the spec and see it re-run.
+- Open the tested component and make a change again. The test will be re-run automatically.
 
 <DocsImage src="/img/guides/component-testing/first-run.png" alt="Splash Screen of Component Testing" ></DocsImage>
 
-## Set it up in your project
+## Set up in your project
 
-This section will show you how to set a project up from scratch with component testing running alongside e2e testing.
+If you want to set up component testing in a project that's already doing end-to-end testing in Cypress, this section will show you how to get setup.
 
-Before we start testing components, let's make sure we have a project with the required prerequisites.
+Before we start testing components, let's make sure our project has the required prerequisites.
 
 <alert type="info">
 
@@ -53,14 +57,14 @@ If you are using [Vue.js](https://vuejs.org/), click on the Vue tab of the code 
 
 ### Prerequisites
 
-- An npm project with a `package.json` file at the root that runs on webpack 4 or 5. Create-react-app runs on webpack. If you are using it, you will be able to use Component Testing. So does [Next.js](https://nextjs.org/) or [Gatsby](https://www.gatsbyjs.com/).
-- A `webpack.config.js` file, or a way to access it. Refer to your framework's documentation.
-- Some components that have a visual part. It could be a date picker, tabs, responsive images - your imagination (and your time) is the limit.
-- A basic knowledge of how to write tests in Cypress
+- A `package.json` file at the root that runs on webpack 4 or 5.
+- A `webpack.config.js` file, or a way to access webpack configuration. Refer to your framework's documentation.
+- Some components that that you want to test that visually display in a browser. It could be a date picker, tabs, responsive images.
+- A basic knowledge of how to write tests in Cypress.
 
 ### Install
 
-Start by running the following command. It will install both the latest version of Cypress and the tooling you need to run component testing.
+Start by running the command below to install dependencies. It will install both the latest version of Cypress and the tooling you need to run component testing.
 
 <code-group>
   <code-block label="React" active>
@@ -87,12 +91,11 @@ In the same folder as your `package.json`, create a `cypress.json` file and a `c
 
 <alert type="info">
 
-If it is your first time using Cypress, just run `npx cypress open` and Cypress will create the directories and files.
+If it's your first time using Cypress, run `npx cypress open` and Cypress will create some example directories and files.
 
 </alert>
 
-The `cypress.json` file will allow us to configure how Cypress will locate components spec files.
-In the following configuration, all components test files are in the `src` directory and match the glob given in the `testFiles` key.
+Now you need to configure how Cypress will locate component spec files from within your configuration file (`cypress.json` by default). In the following configuration, all components test files are in the `src` directory and match the glob given in the `testFiles` key.
 
 ```json
 {
@@ -101,12 +104,14 @@ In the following configuration, all components test files are in the `src` direc
 }
 ```
 
-You also need to configure the component testing framework of your choice by adding the component testing plugin. Read more about plugins in general [here](/guides/tooling/plugins-guide).
+You'll also need to configure the component testing framework of your choice by adding the component testing plugin. Read more about plugins in general in our [plugins guide](/guides/tooling/plugins-guide).
 
-Since our project uses webpack, we will be using webpack-dev-server to facilitate the matching of the styling and display rules of component
+Since your project uses webpack, you'll be using `webpack-dev-server` to facilitate the matching of the styling and display rules of component.
 
 <alert type="info">
-If you have separate webpack configurations for development and production, use the development configuration. It will give you better location information using sourceMaps.
+
+If you have separate webpack configurations for development and production, use the development configuration. It'll give better location information using SourceMaps.
+
 </alert>
 
 ```js
@@ -128,9 +133,9 @@ We are now ready to start testing our components.
 
 This example assumes a `<Button />` component exists.
 
-- Navigate to where you saved this component
-- Create a `Button.spec.jsx` file in the same folder
-- Add a test:
+- Navigate to where this component exists in your code.
+- Create a spec file in the same folder called `Button.spec.jsx`.
+- Write a test in the `Button.spec.jsx` file:
 
 <code-group>
   <code-block label="React" active>
@@ -171,25 +176,30 @@ it('Button', () => {
   </code-block>
 </code-group>
 
-- Open Cypress Component Testing
+- Open Cypress to test components with the command below.
 
-```
+```shell
 npx cypress open-ct
 ```
 
-- Select the spec in the sidebar. You should see the following:
+- Select the spec file in the sidebar. You should see the following:
 
 <DocsImage src="/img/guides/component-testing/one-spec.png" alt="Single Spec file with single test run" ></DocsImage>
 
-- Try modifying the spec, make the test fail, etc. The tests re-run instantly with visual feedback.
+- Try modifying the test in your IDE, make the test fail, etc. The tests re-run instantly with visual feedback.
 
-### Setup CI
+### Set up CI
 
-Sometimes we want to run tests without interactivity and see all results in the terminal.
-To run all tests in one command use `npx cypress run-ct`.
+Sometimes we want to run tests without interactivity and see all results in the terminal, like when we run our tests in continuous integration.
 
-In the project we just built, this command will yield the following results.
+To run all tests in the terminal, run the command below:
+
+```shell
+npx cypress run-ct
+```
+
+In the project we just built, this command will show the following results.
 
 <DocsImage src="/img/guides/component-testing/run-result.png" alt="Result of headless test run" ></DocsImage>
 
-To make the component tests part of your continuous integration pipeline, add a script running `npx cypress run-ct` to your CI configuration.
+To make the component tests part of your [continuous integration](/guides/guides/continuous-integration) pipeline, add a script to run `npx cypress run-ct` to your CI configuration.
