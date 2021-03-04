@@ -4,15 +4,13 @@ const SIDEBAR_EN = './content/_data/en.json'
 describe('Guides', () => {
   beforeEach(() => {
     cy.viewport('macbook-15')
-    cy.visit()
+    cy.visit('/')
   })
 
   it('contains a sidebar', () => {
     cy.readFile(SIDEBAR).then(({ guides: sidebarGuides }) => {
       cy.readFile(SIDEBAR_EN).then(({ sidebar: { guides } }) => {
         const guideEntries = Object.entries(guides)
-
-        // console.log('guideEntries: ', guideEntries)
 
         /**
          * Flattening the sidebar config so it can be used as a lookup
@@ -91,7 +89,7 @@ describe('Guides', () => {
             })
           }
 
-          cy.visit()
+          cy.visit('/')
         }
       })
     })
