@@ -24,7 +24,7 @@
     "*.{js,vue}": "eslint --cache --fix",
     "*.{css,vue}": "stylelint",
     "*.css": "stylelint --fix",
-    "*.md": "prettier --write" 
+    "*.md": "prettier --write"
   },
   "dependencies": {
     "@docsearch/css": "^1.0.0-alpha.28",
@@ -67,7 +67,9 @@
     "node-sass": "^4.14.1",
     "postcss": "^7",
     "prettier": "^2.0.5",
+    "remark": "^13.0.0",
     "sass-loader": "^9.0.3",
+    "strip-markdown": "^4.0.0",
     "stylelint": "^13.6.1",
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-config-standard": "^20.0.0",

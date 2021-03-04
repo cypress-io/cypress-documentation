@@ -3,6 +3,8 @@ import AppSidebar from '@/components/AppSidebar'
 import AppHeader from '@/components/AppHeader'
 import TableOfContents from '@/components/TableOfContents'
 import Badge from '../../components/global/Badge.vue'
+import { getMetaData } from '../../utils/getMetaData'
+import { getMetaDescription } from '../../utils/getMetaDescription'
 
 export default {
   components: {
@@ -76,6 +78,9 @@ export default {
     const paramParts = params.pathMatch.split('/')
     const slug = paramParts[paramParts.length - 1]
 
+    const [rawContent] = await $content({ deep: true, text: true }).where({ path }).fetch()
+    const metaDescription = await getMetaDescription(rawContent.text)
+
     return {
       algoliaSettings,
       exampleItem,
@@ -83,11 +88,20 @@ export default {
       mediaObject,
       title,
       path: slug,
+      metaDescription
     }
   },
   head() {
     return {
       title: this.exampleItem.title,
+      meta: this.meta,
+      link: [
+        {
+          hid: 'canonical',
+          rel: 'canonical',
+          href: `https://docs.cypress.io/examples/${this.$route.params.pathMatch}`
+        }
+      ]
     }
   },
   computed: {
@@ -118,6 +132,16 @@ export default {
     isScreencasts() {
       return this.mediaObject.slug === 'screencasts'
     },
+    meta() {
+      const metaData = {
+        type: 'article',
+        title: this.exampleItem.title,
+        description: this.metaDescription,
+        url: `https://docs.cypress.io/examples/${this.$route.params.pathMatch}`
+      }
+
+      return getMetaData(metaData)
+    }
   },
 }
 </script>
