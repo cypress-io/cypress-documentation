@@ -37,6 +37,7 @@ video | Problems with video recordings | [open](https://github.com/cypress-io/cy
 file downloads | File downloads are not working | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20downloads%20%E2%AC%87%EF%B8%8F), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+downloads+%E2%AC%87%EF%B8%8F%22+is%3Aclosed)
 intercept | Network stubbing using {% url 'cy.intercept' intercept %} | [open](https://github.com/cypress-io/cypress/labels/pkg%2Fnet-stubbing), [closed](https://github.com/cypress-io/cypress/issues?q=label%3Apkg%2Fnet-stubbing+is%3Aclosed)
 SIG* errors | Crashes with errors like `SIGSEGV` | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20SIG%20errors), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+SIG+errors%22+is%3Aclosed)
+environment variables | Parsing and using environment variables | [open](https://github.com/cypress-io/cypress/labels/topic%3A%20environment%20variables), [closed](https://github.com/cypress-io/cypress/issues?q=label%3A%22topic%3A+environment+variables%22+is%3Aclosed)
 
 # Isolate the Problem
 
