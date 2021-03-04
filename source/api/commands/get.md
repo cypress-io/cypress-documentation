@@ -92,6 +92,24 @@ cy.get('[data-test-id="test-example"]').should('have.length', 5)
 cy.get('a[href*="questions"]').click()
 ```
 
+### Find the element with id that starts with "local-"
+
+```javascript
+cy.get('[id^=local-]')
+```
+
+### Find the element with id that ends with "-remote"
+
+```javascript
+cy.get('[id$=-remote]')
+```
+
+### Find the element with id that starts with "local-" and ends with "-remote"
+
+```javascript
+cy.get('[id^=local-][id$=-remote]')
+```
+
 ## Get in `.within()`
 
 ### `cy.get()` in the {% url `.within()` within %} command
