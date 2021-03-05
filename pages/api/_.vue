@@ -90,7 +90,7 @@ export default {
     <main class="main-content">
       <AppSidebar :items="apiSidebar" section="api" :path="path" />
       <div class="main-content-article-wrapper">
-        <article class="main-content-article">
+        <article class="main-content-article hide-scroll">
           <h1 class="main-content-title">{{ apiPageContent.title }}</h1>
           <nuxt-content v-if="!isApiToc" :document="apiPageContent" />
           <ApiTableOfContents v-if="isApiToc" />
