@@ -108,7 +108,7 @@ export default {
             })
           "
           :class="
-            isCurrentPathInSection(path, child.slug)
+            isCurrentPathInSection(path, `${folder}/${child.slug}`)
               ? 'active-sidebar-link text-white bg-cyGreen'
               : 'text-gray-600'
           "
