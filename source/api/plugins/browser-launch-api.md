@@ -172,7 +172,7 @@ If you are running Cypress tests using a Chromium-based browser, you can see ALL
 When a browser runs headless, there is no physical display. You can override the default screen size of 1280x720 when running headless as shown below. This will affect the size of screenshots and videos taken during the run.
 
 {% note warning %}
-This setting changes the display size of the screen and does not affect the `viewportWidth` and `viewportHeight` set in the {% url "configuration" configuration %}. The `viewportWidth` and `viewportHeight` only affect the size of the application under test displayed inside the Test Runner.
+This setting changes the display size of the screen and does not affect the `viewportWidth` and `viewportHeight` set in the {% url "configuration" configuration %}. The `viewportWidth` and `viewportHeight` only affect the size of the application under test displayed inside the Test Runner. Read the blog post {% url "Generate High-Resolution Videos and Screenshots" https://www.cypress.io/blog/2021/03/01/generate-high-resolution-videos-and-screenshots/ %} for details.
 {% endnote %}
 
 ```js
@@ -279,6 +279,24 @@ module.exports = (on) => {
 {% note info %}
 {% url 'Check out our example recipe showing how to download and validate CSV and Excel files.' recipes#Testing-the-DOM %}
 {% endnote %}
+
+## Set a Firefox flag
+
+If we need to set a particular Firefox flag, like `browser.send_pings` we can do it via preferences
+
+```js
+module.exports = (on) => {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.family === 'firefox') {
+      launchOptions.preferences['browser.send_pings'] = true
+    }
+
+    return launchOptions
+  })
+}
+```
+
+The above example comes from the blog post {% url 'How to Test Anchor Ping' https://glebbahmutov.com/blog/anchor-ping/ %}.
 
 {% history %}
 {% url "4.0.0" changelog#4-0-0 %} | New `options` object replaces old `args` as second argument to `before:browser:launch`

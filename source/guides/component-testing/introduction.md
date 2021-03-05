@@ -3,7 +3,7 @@ title: Introduction
 containerClass: component-testing
 ---
 
-⚠️ The Cypress Component Testing library is in still in **Alpha**. We are rapidly developing and expect that the API may undergo breaking changes. Contribute to its development by submitting feature requests or issues [here](https://github.com/cypress-io/cypress/).
+⚠️ The Cypress Component Testing library is still in **Alpha**. We are rapidly developing and expect that the API may undergo breaking changes. Contribute to its development by submitting feature requests or issues [here](https://github.com/cypress-io/cypress/).
 
 
 # What is Cypress Component Testing?
@@ -72,13 +72,13 @@ Examples for testing different Vue applications (containing {% url "Vuex" https:
 ## React
 
 ```sh
-npm install --save-dev cypress cypress-react-unit-test
+npm install --save-dev cypress @cypress/react
 ```
 
 1. Include this plugin from your project's `cypress/support/index.js`
 
 ```js
-require('cypress-react-unit-test/support')
+require('@cypress/react/support')
 ```
 
 2. Tell Cypress how your React application is transpiled or bundled (using Webpack), so Cypress can load your components. For example, if you use `react-scripts` (even after ejecting) do:
@@ -86,10 +86,10 @@ require('cypress-react-unit-test/support')
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  require('cypress-react-unit-test/plugins/react-scripts')(on, config)
-
+  require('@cypress/react/plugins/react-scripts')(on, config)
   // IMPORTANT to return the config object
   // with the any changed environment variables
+
   return config
 }
 ```

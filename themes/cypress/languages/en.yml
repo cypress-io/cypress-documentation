@@ -35,14 +35,20 @@ sidebar:
     cypress-studio: Cypress Studio
     dashboard: Dashboard
     dashboard-introduction: Introduction
+    continuous-integration: Continuous Integration
+    continuous-integration-introduction: Introduction
     projects: Projects
     runs: Runs
     organizations: Organizations
     users: Users
     bitbucket-integration: Bitbucket Integration
+    aws-codebuild: AWS CodeBuild
+    github-actions: GitHub Actions
+    gitlab-ci: GitLab CI
     github-integration: GitHub Integration
     gitlab-integration: GitLab Integration
     jira-integration: Jira Integration
+    bitbucket-pipelines: Bitbucket Pipelines
     slack-integration: Slack Integration
     analytics: Analytics
     flaky-test-management: Flaky Test Management
@@ -54,7 +60,6 @@ sidebar:
     guides: Guides
     command-line: Command Line
     test-retries: Test Retries
-    continuous-integration: Continuous Integration
     parallelization: Parallelization
     environment-variables: Environment Variables
     launching-browsers: Launching Browsers
@@ -85,6 +90,10 @@ sidebar:
     visual-testing: Visual Testing
     code-coverage: Code Coverage
     component-testing-introduction: Introduction
+    testing-strategies: Testing Strategies
+    auth0-authentication: Auth0 Authentication
+    okta-authentication: Okta Authentication
+    amazon-cognito-authentication: Amazon Cognito Authentication
   api:
     api: API
     table-of-contents: Table of Contents

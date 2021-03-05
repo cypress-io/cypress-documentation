@@ -451,7 +451,9 @@ Watch the short video below to see this example in action
 
 # See also
 
+- Read our blog posts about fighting {% url "the test flake" https://cypress.io/blog/tag/flake/ %}.
 - You can add retry-ability to your own {% url "custom commands" custom-commands %}; see {% url 'this pull request to cypress-xpath' https://github.com/cypress-io/cypress-xpath/pull/12/files %} for an example.
-- You can retry any function with attached assertions using this 3rd party plugin {% url cypress-pipe https://github.com/NicholasBoll/cypress-pipe %}.
+- You can retry any function with attached assertions using the 3rd party plugins {% url cypress-pipe https://github.com/NicholasBoll/cypress-pipe %} and {% url cypress-wait-until https://github.com/NoriSte/cypress-wait-until %}.
+- 3rd party plugin {% url cypress-recurse https://github.com/bahmutov/cypress-recurse %} can be used to implement the {% url 'visual testing with retry-ability for canvas elements' https://glebbahmutov.com/blog/canvas-testing/ %}
 - See retry-ability examples in the {% url "Cypress should callback" https://glebbahmutov.com/blog/cypress-should-callback/ %} blog post.
 - To learn how to enable Cypress' test retries functionality, which retries tests that fail up to the configured number, check out our official guide on {% url "Test Retries" test-retries %}.

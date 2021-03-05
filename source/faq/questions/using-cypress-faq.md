@@ -477,7 +477,7 @@ The `projectId` is a 6 character string that helps identify your project once yo
 }
 ```
 
-For further detail see the {% url Identification projects#Identification %} section of the {% url "Dashboard Service" dashboard-introduction%} docs.
+For further detail see the {% url Identification projects#Identification %} section of the {% url "Dashboard Service" dashboard-introduction %} docs.
 
 ## {% fa fa-angle-right %} What is a Record Key?
 
@@ -487,7 +487,7 @@ You can find your project's record key inside of the *Settings* tab in the Test 
 
 {% imgTag /img/dashboard/record-key-shown-in-desktop-gui-configuration.jpg "Record Key in Configuration Tab" %}
 
-For further detail see the {% url Identification projects#Identification %} section of the {% url "Dashboard Service" dashboard-introduction%} docs.
+For further detail see the {% url Identification projects#Identification %} section of the {% url "Dashboard Service" dashboard-introduction %} docs.
 
 ## {% fa fa-angle-right %} How do I check that an email was sent out?
 
@@ -683,7 +683,7 @@ You may try running the tests locally and {% url "select the Electron browser" l
 
 ## {% fa fa-angle-right %} How do I run the server and tests together and then shutdown the server?
 
-To start the server, run the tests and then shutdown the server we recommend {% url "these npm tools" continuous-integration#Boot-your-server %}.
+To start the server, run the tests and then shutdown the server we recommend {% url "these npm tools" continuous-integration-introduction#Boot-your-server %}.
 
 ## {% fa fa-angle-right %} Can I test my Electron app?
 
@@ -821,7 +821,7 @@ End-to-end tests are an excellent way to keep your application's documentation a
 
 ## {% fa fa-angle-right %} Can I use Jest snapshots?
 
-While there is no built-in `snapshot` command in Cypress, you can make your own snapshot assertion command. Read how to do so in our blog post {% url "End-to-End Snapshot Testing" https://www.cypress.io/blog/2018/01/16/end-to-end-snapshot-testing/ %}. We recommend using the 3rd-party module {% url "cypress-plugin-snapshots" https://github.com/meinaart/cypress-plugin-snapshots %}. For other snapshot plugins, search the {% url Plugins %} page.
+While there is no built-in `snapshot` command in Cypress, you can make your own snapshot assertion command. Read how to do so in our blog post {% url "End-to-End Snapshot Testing" https://www.cypress.io/blog/2018/01/16/end-to-end-snapshot-testing/ %}. We recommend using the 3rd-party module {% url "cypress-plugin-snapshots" https://github.com/meinaart/cypress-plugin-snapshots %}. For other snapshot plugins, search the {% url "Plugins"  plugins %} page.
 
 ## {% fa fa-angle-right %} Can I use Testing Library?
 
