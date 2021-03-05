@@ -77,7 +77,14 @@ export default {
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt/content
     '@nuxt/content',
+    '@nuxtjs/gtm',
   ],
+  /*
+   ** Google Tag Manager
+   */
+  gtm: {
+    id: process.env.GOOGLE_TAG_MANAGER_ID || 'GTM-XXXXXXX',
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
