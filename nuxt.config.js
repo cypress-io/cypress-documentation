@@ -77,7 +77,15 @@ export default {
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt/content
     '@nuxt/content',
+    '@nuxtjs/gtm',
   ],
+  /*
+   ** Google Tag Manager
+   */
+  gtm: {
+    // The env var CONTEXT is set by Netlify and can be 'production', 'deploy-preview', or 'branch-deploy'
+    id: (process.env.CONTEXT === 'production' && process.env.GOOGLE_TAG_MANAGER_ID) || 'GTM-XXXXXXX',
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
