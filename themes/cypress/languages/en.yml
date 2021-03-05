@@ -42,6 +42,7 @@ sidebar:
     organizations: Organizations
     users: Users
     bitbucket-integration: Bitbucket Integration
+    aws-codebuild: AWS CodeBuild
     github-actions: GitHub Actions
     gitlab-ci: GitLab CI
     github-integration: GitHub Integration
