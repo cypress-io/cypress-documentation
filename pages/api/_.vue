@@ -54,15 +54,12 @@ export default {
 
     const isApiToc = params.pathMatch.includes('table-of-contents')
 
-    const paramParts = params.pathMatch.split('/')
-    const slug = paramParts[paramParts.length - 1]
-
     return {
       apiPageContent,
       apiSidebar: items,
       algoliaSettings,
       isApiToc,
-      path: slug,
+      path: params.pathMatch,
     }
   },
   data() {

@@ -73,16 +73,13 @@ export default {
       return error({ statusCode: 404, message: 'Example not found' })
     }
 
-    const paramParts = params.pathMatch.split('/')
-    const slug = paramParts[paramParts.length - 1]
-
     return {
       algoliaSettings,
       exampleItem,
       examplesSidebarItems: items,
       mediaObject,
       title,
-      path: slug,
+      path: params.pathMatch,
     }
   },
   head() {

@@ -38,14 +38,11 @@ export default {
       return error({ statusCode: 404, message: 'FAQ not found' })
     }
 
-    const paramParts = params.pathMatch.split('/')
-    const slug = paramParts[paramParts.length - 1]
-
     return {
       algoliaSettings,
       faqItem,
       faqSidebarItems,
-      path: slug,
+      path: params.pathMatch,
     }
   },
   head() {

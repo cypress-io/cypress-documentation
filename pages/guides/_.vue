@@ -47,14 +47,11 @@ export default {
       return error({ statusCode: 404, message: 'Guide not found' })
     }
 
-    const paramParts = params.pathMatch.split('/')
-    const slug = paramParts[paramParts.length - 1]
-
     return {
       algoliaSettings,
       guide,
       guideSidebar: items,
-      path: slug,
+      path: params.pathMatch,
     }
   },
   head() {
