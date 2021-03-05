@@ -46,6 +46,9 @@ jobs:
       - run:
           name: Netlify Deploy
           command: curl -X POST -d {} $NETLIFY_BUILD_HOOK_MASTER
+      - run:
+          name: Docsearch Scraper
+          command: node ./cy_scripts/scrape.js
 
 workflows:
   version: 2
@@ -85,4 +88,4 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - next-docs

@@ -24,7 +24,7 @@
     "*.{js,vue}": "eslint --cache --fix",
     "*.{css,vue}": "stylelint",
     "*.css": "stylelint --fix",
-    "*.md": "prettier --write" 
+    "*.md": "prettier --write"
   },
   "dependencies": {
     "@docsearch/css": "^1.0.0-alpha.28",
@@ -41,6 +41,7 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
+    "@cypress/env-or-json-file": "^2.0.0",
     "@cypress/eslint-plugin-dev": "^5.1.0",
     "@fortawesome/free-brands-svg-icons": "^5.14.0",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
@@ -51,6 +52,8 @@
     "autoprefixer": "^9",
     "babel-eslint": "^10.1.0",
     "bluebird": "^3.7.2",
+    "chalk": "^4.1.0",
+    "common-tags": "^1.8.0",
     "cross-env": "^7.0.3",
     "cypress": "^6.4.0",
     "eslint": "^7.2.0",
@@ -67,6 +70,7 @@
     "node-sass": "^4.14.1",
     "postcss": "^7",
     "prettier": "^2.0.5",
+    "request-promise": "^4.2.6",
     "sass-loader": "^9.0.3",
     "stylelint": "^13.6.1",
     "stylelint-config-prettier": "^8.0.1",

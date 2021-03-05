@@ -13,6 +13,7 @@ support
 dist/
 static/sw.js
 .eslintcache
+.circle-credentials.json
 
 themes/cypress/source/css/vendor/
 themes/cypress/source/js/vendor/
