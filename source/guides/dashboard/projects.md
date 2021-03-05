@@ -30,7 +30,7 @@ Make sure you {% url "install" installing-cypress %} and {% url "open" installin
 
 {% imgTag /img/dashboard/projects/setup-a-project-3.png "Create a New Project" "no-border" %}
 
-Alternatively, if you've already created a project in the Dashboard, you can link your project by selecting it from the dropdown. Make sure to select a clean project that has not previously been linked to an existing project.
+6. Alternatively, if you've already created a project in the Dashboard, you can link your project by selecting it from the dropdown. Make sure to select a clean project that has not previously been linked to an existing project.
 {% imgTag /img/dashboard/projects/setup-a-project-4.png "Choose a Project" "no-border" %}
 7. Click **Setup Project**.
 8. Now you should see a view explaining how to record your first run with your record key.
