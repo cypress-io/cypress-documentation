@@ -72,7 +72,7 @@ export default {
     <main class="main-content">
       <AppSidebar :items="guideSidebar" section="guides" :path="path" />
       <div class="main-content-article-wrapper">
-        <article class="main-content-article">
+        <article class="main-content-article hide-scroll">
           <h1 class="main-content-title">{{ guide.title }}</h1>
           <nuxt-content :document="guide"></nuxt-content>
           <Footer />
