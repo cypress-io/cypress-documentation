@@ -18,7 +18,7 @@
     "test": "./node_modules/.bin/cypress open",
     "transform": "node scripts/transform.js",
     "make-empty-commit": "node node_modules/make-empty-github-commit/bin/empty.js --repo cypress-io/docs",
-    "postinstall": "husky install"
+    "postinstall": "husky install; patch-package"
   },
   "lint-staged": {
     "*.{js,vue}": "eslint --cache --fix",
@@ -68,7 +68,9 @@
     "make-empty-github-commit": "^1.2.1",
     "netlify-cli": "^3.5.0",
     "node-sass": "^4.14.1",
+    "patch-package": "^6.4.5",
     "postcss": "^7",
+    "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.0.5",
     "request-promise": "^4.2.6",
     "sass-loader": "^9.0.3",
