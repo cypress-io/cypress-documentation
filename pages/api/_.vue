@@ -56,9 +56,6 @@ export default {
 
     const isApiToc = params.pathMatch.includes('table-of-contents')
 
-    const paramParts = params.pathMatch.split('/')
-    const slug = paramParts[paramParts.length - 1]
-
     const [rawContent] = await $content({ deep: true, text: true }).where({ path }).fetch()
     const metaDescription = isApiToc ? 'Cypress API Documentation Table of Contents ' : await getMetaDescription(rawContent.text)
 
@@ -67,8 +64,8 @@ export default {
       apiSidebar: items,
       algoliaSettings,
       isApiToc,
-      path: slug,
-      metaDescription
+      metaDescription,
+      path: params.pathMatch,
     }
   },
   data() {

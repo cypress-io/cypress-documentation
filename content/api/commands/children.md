@@ -24,14 +24,14 @@ The querying behavior of this command matches exactly how [`.children()`](http:/
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get("nav").children(); // Yield children of nav
+cy.get('nav').children() // Yield children of nav
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.children(); // Errors, cannot be chained off 'cy'
-cy.location().children(); // Errors, 'location' does not yield DOM element
+cy.children() // Errors, cannot be chained off 'cy'
+cy.location().children() // Errors, 'location' does not yield DOM element
 ```
 
 ### Arguments
@@ -87,7 +87,7 @@ Pass in an options object to change the default behavior of `.children()`.
 //  <li class="services-2">Logo Design</li>,
 //  <li class="services-3">Print Design</li>
 // ]
-cy.get("ul.secondary-nav").children();
+cy.get('ul.secondary-nav').children()
 ```
 
 ### Selector
@@ -107,7 +107,7 @@ cy.get("ul.secondary-nav").children();
 // yields [
 //  <li class="active">Unit Testing</li>
 // ]
-cy.get("ul").children(".active");
+cy.get('ul').children('.active')
 ```
 
 ## Rules
@@ -118,7 +118,7 @@ cy.get("ul").children(".active");
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`.children` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.children` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.children()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.children()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -129,7 +129,7 @@ cy.get("ul").children(".active");
 **_Assert that there should be 8 children elements in a nav_**
 
 ```javascript
-cy.get(".left-nav>.nav").children().should("have.length", 8);
+cy.get('.left-nav>.nav').children().should('have.length', 8)
 ```
 
 The commands above will display in the Command Log as:

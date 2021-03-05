@@ -10,8 +10,8 @@ The [Selector Playground](/guides/core-concepts/test-runner#Selector-Playground)
 ## Syntax
 
 ```javascript
-Cypress.SelectorPlayground.defaults(options);
-Cypress.SelectorPlayground.getSelector($el);
+Cypress.SelectorPlayground.defaults(options)
+Cypress.SelectorPlayground.getSelector($el)
 ```
 
 ### Arguments
@@ -48,8 +48,8 @@ Set the selector priority to favor IDs, then classes, then attributes.
 
 ```javascript
 Cypress.SelectorPlayground.defaults({
-  selectorPriority: ["id", "class", "attributes"],
-});
+  selectorPriority: ['id', 'class', 'attributes'],
+})
 ```
 
 ### onElement Callback
@@ -59,13 +59,13 @@ Set a custom function for determining the selector for an element. Falls back to
 ```javascript
 Cypress.SelectorPlayground.defaults({
   onElement: ($el) => {
-    const customId = $el.attr("my-custom-attr");
+    const customId = $el.attr('my-custom-attr')
 
     if (customId) {
-      return `[my-custom-attr=${customId}]`;
+      return `[my-custom-attr=${customId}]`
     }
   },
-});
+})
 ```
 
 ### Get Selector
@@ -81,17 +81,17 @@ For example, consider this HTML fragment.
 With the default selector strategy, the selector value will be `'#bingo'` because IDs have priority over classes.
 
 ```js
-const $el = Cypress.$("button");
-const selector = Cypress.SelectorPlayground.getSelector($el); // '#bingo'
+const $el = Cypress.$('button')
+const selector = Cypress.SelectorPlayground.getSelector($el) // '#bingo'
 ```
 
 With a custom selector strategy that favours classes, the selector value will be `'.number3'`.
 
 ```js
 Cypress.SelectorPlayground.defaults({
-  selectorPriority: ["class", "id"],
-});
+  selectorPriority: ['class', 'id'],
+})
 
-const $el = Cypress.$("button");
-const selector = Cypress.SelectorPlayground.getSelector($el); // '.number3'
+const $el = Cypress.$('button')
+const selector = Cypress.SelectorPlayground.getSelector($el) // '.number3'
 ```

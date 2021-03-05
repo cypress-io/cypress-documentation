@@ -13,10 +13,10 @@ The querying behavior of this command is similar to how [`$(...)`](http://api.jq
 ## Syntax
 
 ```javascript
-cy.get(selector);
-cy.get(alias);
-cy.get(selector, options);
-cy.get(alias, options);
+cy.get(selector)
+cy.get(alias)
+cy.get(selector, options)
+cy.get(alias, options)
 ```
 
 ### Usage
@@ -24,7 +24,7 @@ cy.get(alias, options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get(".list > li"); // Yield the <li>'s in .list
+cy.get('.list > li') // Yield the <li>'s in .list
 ```
 
 ### Arguments
@@ -71,31 +71,49 @@ Pass in an options object to change the default behavior of `cy.get()`.
 #### Get the input element
 
 ```javascript
-cy.get("input").should("be.disabled");
+cy.get('input').should('be.disabled')
 ```
 
 #### Find the first `li` descendent within a `ul`
 
 ```javascript
-cy.get("ul li:first").should("have.class", "active");
+cy.get('ul li:first').should('have.class', 'active')
 ```
 
 #### Find the dropdown-menu and click it
 
 ```javascript
-cy.get(".dropdown-menu").click();
+cy.get('.dropdown-menu').click()
 ```
 
 #### Find 5 elements with the given data attribute
 
 ```javascript
-cy.get('[data-test-id="test-example"]').should("have.length", 5);
+cy.get('[data-test-id="test-example"]').should('have.length', 5)
 ```
 
 #### Find the link with an href attribute containing the word "questions" and click it
 
 ```javascript
-cy.get('a[href*="questions"]').click();
+cy.get('a[href*="questions"]').click()
+```
+
+#### Find the element with id that starts with "local-"
+
+```javascript
+cy.get('[id^=local-]')
+```
+
+#### Find the element with id that ends with "-remote"
+
+```javascript
+cy.get('[id$=-remote]')
+```
+
+#### Find the element with id that starts with "local-" and ends with "-remote"
+
+```javascript
+cy.get('[id^=local-][id$=-remote]')
 ```
 
 ### Get in `.within()`
@@ -105,10 +123,10 @@ cy.get('a[href*="questions"]').click();
 Since `cy.get()` is chained off of `cy`, it always looks for the selector within the entire `document`. The only exception is when used inside a [.within()](/api/commands/within) command.
 
 ```javascript
-cy.get("form").within(() => {
-  cy.get("input").type("Pamela"); // Only yield inputs within form
-  cy.get("textarea").type("is a developer"); // Only yield textareas within form
-});
+cy.get('form').within(() => {
+  cy.get('input').type('Pamela') // Only yield inputs within form
+  cy.get('textarea').type('is a developer') // Only yield textareas within form
+})
 ```
 
 ### Alias
@@ -118,42 +136,42 @@ For a detailed explanation of aliasing, [read more about aliasing here](/guides/
 #### Get the aliased 'todos' elements
 
 ```javascript
-cy.get("ul#todos").as("todos");
+cy.get('ul#todos').as('todos')
 
 //...hack hack hack...
 
 //later retrieve the todos
-cy.get("@todos");
+cy.get('@todos')
 ```
 
 #### Get the aliased 'submitBtn' element
 
 ```javascript
 beforeEach(() => {
-  cy.get("button[type=submit]").as("submitBtn");
-});
+  cy.get('button[type=submit]').as('submitBtn')
+})
 
-it("disables on click", () => {
-  cy.get("@submitBtn").should("be.disabled");
-});
+it('disables on click', () => {
+  cy.get('@submitBtn').should('be.disabled')
+})
 ```
 
 #### Get the aliased 'users' fixture
 
 ```javascript
 beforeEach(() => {
-  cy.fixture("users.json").as("users");
-});
+  cy.fixture('users.json').as('users')
+})
 
-it("disables on click", () => {
+it('disables on click', () => {
   // access the array of users
-  cy.get("@users").then((users) => {
+  cy.get('@users').then((users) => {
     // get the first user
-    const user = users[0];
+    const user = users[0]
 
-    cy.get("header").contains(user.name);
-  });
-});
+    cy.get('header').contains(user.name)
+  })
+})
 ```
 
 ## Rules
@@ -164,7 +182,7 @@ it("disables on click", () => {
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`cy.get` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`cy.get` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`cy.get()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`cy.get()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -175,7 +193,7 @@ it("disables on click", () => {
 **_Get an input and assert on the value_**
 
 ```javascript
-cy.get('input[name="firstName"]').should("have.value", "Homer");
+cy.get('input[name="firstName"]').should('have.value', 'Homer')
 ```
 
 The commands above will display in the Command Log as:

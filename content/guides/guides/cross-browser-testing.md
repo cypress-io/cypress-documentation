@@ -67,7 +67,7 @@ workflows:
   nightly:
     triggers:
       - schedule:
-          cron: "0 0 * * *"
+          cron: '0 0 * * *'
           filters:
             branches:
               only:
@@ -146,7 +146,7 @@ workflows:
           record: true
           group: firefox-critical-path
           browser: firefox
-          spec: "cypress/integration/signup.spec.js,cypress/integration/login.spec.js"
+          spec: 'cypress/integration/signup.spec.js,cypress/integration/login.spec.js'
 ```
 
 ### Parallelize per browser
@@ -187,7 +187,7 @@ workflows:
           parallelism: 2
           group: firefox
           browser: firefox
-          spec: "cypress/integration/app.spec.js,cypress/integration/login.spec.js,cypress/integration/about.spec.js"
+          spec: 'cypress/integration/app.spec.js,cypress/integration/login.spec.js,cypress/integration/about.spec.js'
 ```
 
 ### Running Specific Tests by Browser
@@ -206,25 +206,25 @@ You can specify a browser to run or exclude by passing a matcher to the suite or
 
 ```js
 // Run the test if Cypress is run via Firefox
-it("Download extension in Firefox", { browser: "firefox" }, () => {
-  cy.get("#dl-extension").should("contain", "Download Firefox Extension");
-});
+it('Download extension in Firefox', { browser: 'firefox' }, () => {
+  cy.get('#dl-extension').should('contain', 'Download Firefox Extension')
+})
 
 // Run happy path tests if Cypress is run via Firefox
-describe("happy path suite", { browser: "firefox" }, () => {
-  it("...");
-  it("...");
-  it("...");
-});
+describe('happy path suite', { browser: 'firefox' }, () => {
+  it('...')
+  it('...')
+  it('...')
+})
 
 // Ignore test if Cypress is running via Chrome
 // This test is not recorded to the Cypress Dashboard
-it("Show warning outside Chrome", { browser: "!chrome" }, () => {
-  cy.get(".browser-warning").should(
-    "contain",
-    "For optimal viewing, use Chrome browser"
-  );
-});
+it('Show warning outside Chrome', { browser: '!chrome' }, () => {
+  cy.get('.browser-warning').should(
+    'contain',
+    'For optimal viewing, use Chrome browser'
+  )
+})
 ```
 
 ## See also

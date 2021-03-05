@@ -49,9 +49,6 @@ export default {
       return error({ statusCode: 404, message: 'Guide not found' })
     }
 
-    const paramParts = params.pathMatch.split('/')
-    const slug = paramParts[paramParts.length - 1]
-
     const [rawContent] = await $content({ deep: true, text: true }).where({ path }).fetch()
     const metaDescription = await getMetaDescription(rawContent.text)
 
@@ -59,8 +56,8 @@ export default {
       algoliaSettings,
       guide,
       guideSidebar: items,
-      path: slug,
-      metaDescription
+      metaDescription,
+      path: params.pathMatch,
     }
   },
   head() {

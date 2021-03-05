@@ -22,15 +22,15 @@ This element must currently be in focus. If you want to ensure an element is foc
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('[type="email"]').type("me@email.com").blur(); // Blur email input
-cy.get('[tabindex="1"]').focus().blur(); // Blur el with tabindex
+cy.get('[type="email"]').type('me@email.com').blur() // Blur email input
+cy.get('[tabindex="1"]').focus().blur() // Blur el with tabindex
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.blur("input"); // Errors, cannot be chained off 'cy'
-cy.window().blur(); // Errors, 'window' does not yield DOM element
+cy.blur('input') // Errors, cannot be chained off 'cy'
+cy.window().blur() // Errors, 'window' does not yield DOM element
 ```
 
 ### Arguments
@@ -56,7 +56,7 @@ Pass in an options object to change the default behavior of `.blur`.
 #### Blur the comment input
 
 ```javascript
-cy.get('[name="comment"]').type("Nice Product!").blur();
+cy.get('[name="comment"]').type('Nice Product!').blur()
 ```
 
 ### Options
@@ -66,7 +66,7 @@ cy.get('[name="comment"]').type("Nice Product!").blur();
 Setting `force` to `true` in the options disables checking whether the input is focusable or currently has focus.
 
 ```javascript
-cy.get("input:first").blur({ force: true });
+cy.get('input:first').blur({ force: true })
 ```
 
 ## Notes
@@ -97,7 +97,7 @@ Internally Cypress does account for this, and will polyfill the blur events when
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`.blur` will automatically wait for assertions you have chained to pass</li></List>
+<List><li>`.blur()` will automatically wait for assertions you have chained to pass</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -108,7 +108,7 @@ Internally Cypress does account for this, and will polyfill the blur events when
 **_Blur a textarea after typing._**
 
 ```javascript
-cy.get('[name="comment"]').focus().type("Nice Product!").blur();
+cy.get('[name="comment"]').focus().type('Nice Product!').blur()
 ```
 
 The commands above will display in the Command Log as:

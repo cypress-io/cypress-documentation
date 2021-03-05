@@ -1,0 +1,31 @@
+diff --git a/node_modules/github-slugger/index.js b/node_modules/github-slugger/index.js
+index 9d40bc2..c377309 100644
+--- a/node_modules/github-slugger/index.js
++++ b/node_modules/github-slugger/index.js
+@@ -5,6 +5,7 @@ module.exports = BananaSlug
+ var own = Object.hasOwnProperty
+ var whitespace = /\s/g
+ var specials = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~’]/g
++var icons = /<[Ii]con.[^/]+\/*>(<\/[Ii]con>)*/
+ 
+ function BananaSlug () {
+   var self = this
+@@ -45,12 +46,17 @@ BananaSlug.prototype.reset = function () {
+ 
+ function slugger (string, maintainCase) {
+   if (typeof string !== 'string') return ''
+-  if (!maintainCase) string = string.toLowerCase()
++  // We're removing this because we want to maintain casing for anchors 
++  // to be reverse-compatible with older docs
++  // if (!maintainCase) string = string.toLowerCase()
+ 
+   return string.trim()
++    .replace(icons, '')
++    .trim()
+     .replace(specials, '')
+     .replace(emoji(), '')
+     .replace(whitespace, '-')
+ }
+ 
+ BananaSlug.slug = slugger
++

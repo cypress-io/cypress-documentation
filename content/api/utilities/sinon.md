@@ -16,13 +16,13 @@ Cypress.sinon.match.<matcher name>
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-Cypress.sinon.match.string;
+Cypress.sinon.match.string
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.sinon.match.string; // Errors, cannot be chained off 'cy'
+cy.sinon.match.string // Errors, cannot be chained off 'cy'
 ```
 
 ## Examples
@@ -32,32 +32,32 @@ cy.sinon.match.string; // Errors, cannot be chained off 'cy'
 This example comes from the recipe [Root style](https://github.com/cypress-io/cypress-example-recipes#testing-the-dom). Imagine an application code where the method `setProperty` is called to change a CSS variable:
 
 ```js
-document.querySelector("input[type=color]").addEventListener("change", (e) => {
+document.querySelector('input[type=color]').addEventListener('change', (e) => {
   document.documentElement.style.setProperty(
-    "--background-color",
+    '--background-color',
     e.target.value
-  );
-});
+  )
+})
 ```
 
 We can write a test to confirm that the method `setProperty` was called with two strings; we don't care about value of the first string, but we do want to check if it was indeed a string.
 
 ```javascript
 cy.document()
-  .its("documentElement.style")
+  .its('documentElement.style')
   .then((style) => {
-    cy.spy(style, "setProperty").as("setColor");
-  });
+    cy.spy(style, 'setProperty').as('setColor')
+  })
 
-cy.get("input[type=color]").invoke("val", "#ff0000").trigger("change");
+cy.get('input[type=color]').invoke('val', '#ff0000').trigger('change')
 
 // we don't care about '--background-color' exact
 // value but know it should be a string
-cy.get("@setColor").should(
-  "have.been.calledWith",
+cy.get('@setColor').should(
+  'have.been.calledWith',
   Cypress.sinon.match.string,
-  "#ff0000"
-);
+  '#ff0000'
+)
 ```
 
 ## See also

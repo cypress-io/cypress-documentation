@@ -121,13 +121,13 @@ The [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) 
 ```ts
 // cypress/support/commands.ts
 
-Cypress.Commands.add("getBySel", (selector, ...args) => {
-  return cy.get(`[data-test=${selector}]`, ...args);
-});
+Cypress.Commands.add('getBySel', (selector, ...args) => {
+  return cy.get(`[data-test=${selector}]`, ...args)
+})
 
-Cypress.Commands.add("getBySelLike", (selector, ...args) => {
-  return cy.get(`[data-test*=${selector}]`, ...args);
-});
+Cypress.Commands.add('getBySelLike', (selector, ...args) => {
+  return cy.get(`[data-test*=${selector}]`, ...args)
+})
 ```
 
 > _<Icon name="github"></Icon> Source: [cypress/support/commands.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/support/commands.ts)_
@@ -180,12 +180,12 @@ We see new users commonly write code that looks like this:
 ```js
 // DONT DO THIS. IT DOES NOT WORK
 // THE WAY YOU THINK IT DOES.
-const a = cy.get("a");
+const a = cy.get('a')
 
-cy.visit("https://example.cypress.io");
+cy.visit('https://example.cypress.io')
 
 // nope, fails
-a.first().click();
+a.first().click()
 ```
 
 <Alert type="info">
@@ -311,23 +311,23 @@ Let's imagine the following test that is filling out the form.
 
 ```javascript
 // an example of what NOT TO DO
-describe("my form", () => {
-  it("visits the form", () => {
-    cy.visit("/users/new");
-  });
+describe('my form', () => {
+  it('visits the form', () => {
+    cy.visit('/users/new')
+  })
 
-  it("requires first name", () => {
-    cy.get("#first").type("Johnny");
-  });
+  it('requires first name', () => {
+    cy.get('#first').type('Johnny')
+  })
 
-  it("requires last name", () => {
-    cy.get("#last").type("Appleseed");
-  });
+  it('requires last name', () => {
+    cy.get('#last').type('Appleseed')
+  })
 
-  it("can submit a valid form", () => {
-    cy.get("form").submit();
-  });
-});
+  it('can submit a valid form', () => {
+    cy.get('form').submit()
+  })
+})
 ```
 
 What's wrong with the above tests? They are all coupled together!
@@ -340,20 +340,20 @@ Here's 2 ways we can fix this:
 
 ```javascript
 // a bit better
-describe("my form", () => {
-  it("can submit a valid form", () => {
-    cy.visit("/users/new");
+describe('my form', () => {
+  it('can submit a valid form', () => {
+    cy.visit('/users/new')
 
-    cy.log("filling out first name"); // if you really need this
-    cy.get("#first").type("Johnny");
+    cy.log('filling out first name') // if you really need this
+    cy.get('#first').type('Johnny')
 
-    cy.log("filling out last name"); // if you really need this
-    cy.get("#last").type("Appleseed");
+    cy.log('filling out last name') // if you really need this
+    cy.get('#last').type('Appleseed')
 
-    cy.log("submitting form"); // if you really need this
-    cy.get("form").submit();
-  });
-});
+    cy.log('submitting form') // if you really need this
+    cy.get('form').submit()
+  })
+})
 ```
 
 Now we can put an `.only` on this test and it will run successfully irrespective of any other test. The ideal Cypress workflow is writing and iterating on a single test at a time.
@@ -361,23 +361,23 @@ Now we can put an `.only` on this test and it will run successfully irrespective
 ### 2. Run shared code before each test
 
 ```javascript
-describe("my form", () => {
+describe('my form', () => {
   beforeEach(() => {
-    cy.visit("/users/new");
-    cy.get("#first").type("Johnny");
-    cy.get("#last").type("Appleseed");
-  });
+    cy.visit('/users/new')
+    cy.get('#first').type('Johnny')
+    cy.get('#last').type('Appleseed')
+  })
 
-  it("displays form validation", () => {
-    cy.get("#first").clear(); // clear out first name
-    cy.get("form").submit();
-    cy.get("#errors").should("contain", "First name is required");
-  });
+  it('displays form validation', () => {
+    cy.get('#first').clear() // clear out first name
+    cy.get('form').submit()
+    cy.get('#errors').should('contain', 'First name is required')
+  })
 
-  it("can submit a valid form", () => {
-    cy.get("form").submit();
-  });
-});
+  it('can submit a valid form', () => {
+    cy.get('form').submit()
+  })
+})
 ```
 
 This above example is ideal because now we are resetting the state between each test and ensuring nothing in previous tests leaks into subsequent ones.
@@ -401,24 +401,24 @@ We're also paving the way to make it less complicated to write multiple tests ag
 We've seen many users writing this kind of code:
 
 ```javascript
-describe("my form", () => {
+describe('my form', () => {
   before(() => {
-    cy.visit("/users/new");
-    cy.get("#first").type("johnny");
-  });
+    cy.visit('/users/new')
+    cy.get('#first').type('johnny')
+  })
 
-  it("has validation attr", () => {
-    cy.get("#first").should("have.attr", "data-validation", "required");
-  });
+  it('has validation attr', () => {
+    cy.get('#first').should('have.attr', 'data-validation', 'required')
+  })
 
-  it("has active class", () => {
-    cy.get("#first").should("have.class", "active");
-  });
+  it('has active class', () => {
+    cy.get('#first').should('have.class', 'active')
+  })
 
-  it("has formatted first name", () => {
-    cy.get("#first").should("have.value", "Johnny"); // capitalized first letter
-  });
-});
+  it('has formatted first name', () => {
+    cy.get('#first').should('have.value', 'Johnny') // capitalized first letter
+  })
+})
 ```
 
 While technically this runs fine - this is really excessive, and not performant.
@@ -441,19 +441,19 @@ It is common for tests in Cypress to issue 30+ commands. Because nearly every co
 How you should rewrite those tests:
 
 ```javascript
-describe("my form", () => {
+describe('my form', () => {
   before(() => {
-    cy.visit("/users/new");
-  });
+    cy.visit('/users/new')
+  })
 
-  it("validates and formats first name", () => {
-    cy.get("#first")
-      .type("johnny")
-      .should("have.attr", "data-validation", "required")
-      .and("have.class", "active")
-      .and("have.value", "Johnny");
-  });
-});
+  it('validates and formats first name', () => {
+    cy.get('#first')
+      .type('johnny')
+      .should('have.attr', 'data-validation', 'required')
+      .and('have.class', 'active')
+      .and('have.value', 'Johnny')
+  })
+})
 ```
 
 ## Using `after` or `afterEach` hooks
@@ -516,8 +516,8 @@ That is fine - but even if this is the case, it should not go in an `after` or `
 
 ```js
 afterEach(() => {
-  cy.resetDb();
-});
+  cy.resetDb()
+})
 ```
 
 Here is the problem: **there is no guarantee that this code will run.**
@@ -544,8 +544,8 @@ This is also a great opportunity to use [root level hooks in mocha](https://gith
 beforeEach(() => {
   // now this runs prior to every test
   // across all files no matter what
-  cy.resetDb();
-});
+  cy.resetDb()
+})
 ```
 
 ### Is resetting the state necessary?
@@ -564,9 +564,9 @@ The [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) 
 // cypress/tests/ui/auth.spec.ts
 
 beforeEach(function () {
-  cy.task("db:seed");
+  cy.task('db:seed')
   // ...
-});
+})
 ```
 
 > _<Icon name="github"></Icon> Source: [cypress/tests/ui/auth.spec.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui/auth.spec.ts)_
@@ -576,14 +576,14 @@ The `db:seed` task is defined within the [plugins file](/guides/core-concepts/wr
 ```ts
 // cypress/plugins/index.ts
 
-on("task", {
-  async "db:seed"() {
+on('task', {
+  async 'db:seed'() {
     // Send request to backend API to re-seed database with test data
-    const { data } = await axios.post(`${testDataApiEndpoint}/seed`);
-    return data;
+    const { data } = await axios.post(`${testDataApiEndpoint}/seed`)
+    return data
   },
   //...
-});
+})
 ```
 
 > _<Icon name="github"></Icon> Source: [cypress/plugins/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/plugins/index.ts)_
@@ -613,8 +613,8 @@ Let's imagine the following examples:
 Waiting here is unnecessary since the [`cy.request()`](/api/commands/request) command will not resolve until it receives a response from your server. Adding the wait here only adds 5 seconds after the [`cy.request()`](/api/commands/request) has already resolved.
 
 ```javascript
-cy.request("http://localhost:8080/db/seed");
-cy.wait(5000); // <--- this is unnecessary
+cy.request('http://localhost:8080/db/seed')
+cy.wait(5000) // <--- this is unnecessary
 ```
 
 ### Unnecessary wait for `cy.visit()`
@@ -622,8 +622,8 @@ cy.wait(5000); // <--- this is unnecessary
 Waiting for this is unnecessary because the [cy.visit()](/api/commands/visit) resolves once the page fires its `load` event. By that time all of your assets have been loaded including javascript, stylesheets, and html.
 
 ```javascript
-cy.visit("http://localhost/8080");
-cy.wait(5000); // <--- this is unnecessary
+cy.visit('http://localhost/8080')
+cy.wait(5000) // <--- this is unnecessary
 ```
 
 ### Unnecessary wait for `cy.get()`
@@ -633,21 +633,21 @@ Waiting for the [`cy.get()`](/api/commands/get) below is unnecessary because [`c
 Whenever commands have an assertion they will not resolve until their associated assertions pass. This enables you to describe the state of your application without having to worry about when it gets there.
 
 ```javascript
-cy.intercept("GET", /users/, [{ name: "Maggy" }, { name: "Joan" }]);
-cy.get("#fetch").click();
-cy.wait(4000); // <--- this is unnecessary
-cy.get("table tr").should("have.length", 2);
+cy.intercept('GET', /users/, [{ name: 'Maggy' }, { name: 'Joan' }])
+cy.get('#fetch').click()
+cy.wait(4000) // <--- this is unnecessary
+cy.get('table tr').should('have.length', 2)
 ```
 
 Alternatively a better solution to this problem is by waiting explicitly for an aliased route.
 
 ```javascript
-cy.intercept("GET", /users/, [{ name: "Maggy" }, { name: "Joan" }]).as(
-  "getUsers"
-);
-cy.get("#fetch").click();
-cy.wait("@getUsers"); // <--- wait explicitly for this route to finish
-cy.get("table tr").should("have.length", 2);
+cy.intercept('GET', /users/, [{ name: 'Maggy' }, { name: 'Joan' }]).as(
+  'getUsers'
+)
+cy.get('#fetch').click()
+cy.wait('@getUsers') // <--- wait explicitly for this route to finish
+cy.get('table tr').should('have.length', 2)
 ```
 
 ## Web Servers
@@ -688,7 +688,7 @@ Start your web server before running Cypress and kill it after it completes.
 
 Are you trying to run in CI?
 
-We have [examples showing you how to start and stop your web server](/guides/guides/continuous-integration#Boot-your-server).
+We have [examples showing you how to start and stop your web server](/guides/continuous-integration/continuous-integration-introduction#Boot-your-server).
 
 ## Setting a global baseUrl
 

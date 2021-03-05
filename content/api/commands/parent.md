@@ -26,14 +26,14 @@ The querying behavior of this command matches exactly how [`.parent()`](http://a
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get("header").parent(); // Yield parent el of `header`
+cy.get('header').parent() // Yield parent el of `header`
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.parent(); // Errors, cannot be chained off 'cy'
-cy.reload().parent(); // Errors, 'reload' does not yield DOM element
+cy.parent() // Errors, cannot be chained off 'cy'
+cy.reload().parent() // Errors, 'reload' does not yield DOM element
 ```
 
 ### Arguments
@@ -77,7 +77,7 @@ Pass in an options object to change the default behavior of `.parent()`.
 
 ```javascript
 // yields .sub-nav
-cy.get("li.active").parent();
+cy.get('li.active').parent()
 ```
 
 ### Selector
@@ -100,7 +100,7 @@ cy.get("li.active").parent();
 
 ```javascript
 // yields .sub-nav
-cy.get("li").parent(".sub-nav");
+cy.get('li').parent('.sub-nav')
 ```
 
 ## Rules
@@ -111,7 +111,7 @@ cy.get("li").parent(".sub-nav");
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`.parent` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.parent` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.parent()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.parent()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -122,7 +122,7 @@ cy.get("li").parent(".sub-nav");
 **_Assert on the parent of the active li_**
 
 ```javascript
-cy.get("li.active").parent().should("have.class", "nav");
+cy.get('li.active').parent().should('have.class', 'nav')
 ```
 
 The commands above will display in the Command Log as:

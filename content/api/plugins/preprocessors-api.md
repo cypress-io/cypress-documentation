@@ -50,10 +50,10 @@ To use a preprocessor, you should bind to the `file:preprocessor` event in your 
 ```javascript
 // plugins file
 module.exports = (on, config) => {
-  on("file:preprocessor", (file) => {
+  on('file:preprocessor', (file) => {
     // ...
-  });
-};
+  })
+}
 ```
 
 ### The callback function should return one of the following:
@@ -103,11 +103,11 @@ When the running spec, the project, or the browser is closed while running tests
 
 ```javascript
 // example
-const watcher = fs.watch(filePath /* ... */);
+const watcher = fs.watch(filePath /* ... */)
 
-file.on("close", () => {
-  watcher.close();
-});
+file.on('close', () => {
+  watcher.close()
+})
 ```
 
 ### Sending 'rerun' event
@@ -117,8 +117,8 @@ If watching for file changes, emit `rerun` after a file has finished being proce
 ```javascript
 // example
 fs.watch(filePath, () => {
-  file.emit("rerun");
-});
+  file.emit('rerun')
+})
 ```
 
 ## Publishing

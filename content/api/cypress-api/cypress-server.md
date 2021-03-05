@@ -13,7 +13,7 @@ Permanently change the default options for all [`cy.server()`](/api/commands/ser
 ## Syntax
 
 ```javascript
-Cypress.Server.defaults(options);
+Cypress.Server.defaults(options)
 ```
 
 ### Arguments
@@ -36,7 +36,7 @@ Cypress.Server.defaults({
   ignore: (xhr) => {
     // handle custom logic for filtering XHR requests
   },
-});
+})
 ```
 
 ## Notes

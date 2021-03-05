@@ -13,8 +13,8 @@ This is an alias of [`cy.location('hash')`](/api/commands/location)
 ## Syntax
 
 ```javascript
-cy.hash();
-cy.hash(options);
+cy.hash()
+cy.hash(options)
 ```
 
 ### Usage
@@ -22,7 +22,7 @@ cy.hash(options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.hash(); // Get the url hash
+cy.hash() // Get the url hash
 ```
 
 ### Arguments
@@ -56,7 +56,7 @@ Pass in an options object to change the default behavior of `cy.hash()`.
 
 ```javascript
 // yields #/users/1
-cy.hash().should("eq", "#/users/1"); // => true
+cy.hash().should('eq', '#/users/1') // => true
 ```
 
 #### Assert that the hash matches via RegExp
@@ -70,8 +70,8 @@ cy.hash().should("eq", "#/users/1"); // => true
 ```
 
 ```javascript
-cy.get("#users li").find("a").click();
-cy.hash().should("match", /users\/.+$/); // => true
+cy.get('#users li').find('a').click()
+cy.hash().should('match', /users\/.+$/) // => true
 ```
 
 ## Rules
@@ -82,7 +82,7 @@ cy.hash().should("match", /users\/.+$/); // => true
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`cy.hash` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`cy.hash()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -93,7 +93,7 @@ cy.hash().should("match", /users\/.+$/); // => true
 **_Assert that the hash matches `#users/new`_**
 
 ```javascript
-cy.hash().should("eq", "#users/new");
+cy.hash().should('eq', '#users/new')
 ```
 
 The commands above will display in the Command Log as:

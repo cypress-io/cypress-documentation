@@ -7,7 +7,7 @@ title: Cypress.browser
 ## Syntax
 
 ```javascript
-Cypress.browser; // returns browser object
+Cypress.browser // returns browser object
 ```
 
 The object has the following properties:
@@ -32,8 +32,8 @@ The object has the following properties:
 #### `Cypress.browser` returns browser object
 
 ```js
-it("log browser info", () => {
-  console.log(Cypress.browser);
+it('log browser info', () => {
+  console.log(Cypress.browser)
   // {
   //   channel: 'stable',
   //   displayName: 'Chrome',
@@ -46,7 +46,7 @@ it("log browser info", () => {
   //   isHeaded: true,
   //   isHeadless: false
   // }
-});
+})
 ```
 
 ### Conditionals
@@ -62,32 +62,32 @@ it("log browser info", () => {
 ```
 
 ```javascript
-it("has correct Chrome specific css property", () => {
+it('has correct Chrome specific css property', () => {
   // if in Chrome, check css property was properly applied
-  if (Cypress.browser.name === "chrome") {
-    cy.get(".header").should("have.css", "margin-right").and("eq", "0");
+  if (Cypress.browser.name === 'chrome') {
+    cy.get('.header').should('have.css', 'margin-right').and('eq', '0')
   }
-});
+})
 ```
 
 #### Screenshot only in headless browser
 
 ```javascript
 Cypress.Commands.overwrite(
-  "screenshot",
+  'screenshot',
   (originalFn, subject, name, options) => {
     // only take screenshots in headless browser
     if (Cypress.browser.isHeadless) {
       // return the original screenshot function
-      return originalFn(subject, name, options);
+      return originalFn(subject, name, options)
     }
 
-    return cy.log("No screenshot taken when headed");
+    return cy.log('No screenshot taken when headed')
   }
-);
+)
 
 // only takes in headless browser
-cy.screenshot();
+cy.screenshot()
 ```
 
 ## History

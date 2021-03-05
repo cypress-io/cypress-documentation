@@ -249,6 +249,14 @@
       "sourceUrl": "https://keepcoding.io",
       "language": "Spanish",
       "free": true
+    },
+    {
+      "title": "Cypress V6, Frameworks, CI/CD, two React applications",
+      "url": "https://www.udemy.com/course/cypress-v6-frameworks-cicd-two-react-applications",
+      "author": "Hatem Hatamleh",
+      "authorTwitter": "HatemHatamleh",
+      "sourceName": "Udemy",
+      "sourceUrl": "http://udemy.com"
     }
   ]
 }

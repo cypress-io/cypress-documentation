@@ -39,21 +39,21 @@ You can extend any preexisting test or start by creating a new test in your [int
 
 ```js
 // Code from Real World App (RWA)
-describe("Cypress Studio Demo", () => {
+describe('Cypress Studio Demo', () => {
   beforeEach(() => {
     // Seed database with test data
-    cy.task("db:seed");
+    cy.task('db:seed')
 
     // Login test user
-    cy.database("find", "users").then((user) => {
-      cy.login(user.username, "s3cret", true);
-    });
-  });
+    cy.database('find', 'users').then((user) => {
+      cy.login(user.username, 's3cret', true)
+    })
+  })
 
-  it("create new transaction", () => {
+  it('create new transaction', () => {
     // Extend test with Cypress Studio
-  });
-});
+  })
+})
 ```
 
 <Alert type="info">
@@ -132,37 +132,37 @@ Viewing our test code, we can see that the test is updated after clicking "Save 
 
 ```js
 // Code from Real World App (RWA)
-describe("Cypress Studio Demo", () => {
+describe('Cypress Studio Demo', () => {
   beforeEach(() => {
     // Seed database with test data
-    cy.task("db:seed");
+    cy.task('db:seed')
 
     // Login test user
-    cy.database("find", "users").then((user) => {
-      cy.login(user.username, "s3cret", true);
-    });
-  });
+    cy.database('find', 'users').then((user) => {
+      cy.login(user.username, 's3cret', true)
+    })
+  })
 
-  it("create new transaction", () => {
+  it('create new transaction', () => {
     /* ==== Generated with Cypress Studio ==== */
-    cy.get("[data-test=nav-top-new-transaction]").click();
-    cy.get("[data-test=user-list-search-input]").click();
-    cy.get("[data-test=user-list-search-input]").type("dev");
-    cy.get("[data-test=user-list-item-tsHF6_D5oQ]").click();
-    cy.get("#amount").type("$25");
-    cy.get("#transaction-create-description-input").click();
-    cy.get("#transaction-create-description-input").type("Sushi dinner");
+    cy.get('[data-test=nav-top-new-transaction]').click()
+    cy.get('[data-test=user-list-search-input]').click()
+    cy.get('[data-test=user-list-search-input]').type('dev')
+    cy.get('[data-test=user-list-item-tsHF6_D5oQ]').click()
+    cy.get('#amount').type('$25')
+    cy.get('#transaction-create-description-input').click()
+    cy.get('#transaction-create-description-input').type('Sushi dinner')
     cy.get(
-      "[data-test=transaction-create-submit-payment] > .MuiButton-label"
-    ).click();
+      '[data-test=transaction-create-submit-payment] > .MuiButton-label'
+    ).click()
     /* ==== End Cypress Studio ==== */
-  });
-});
+  })
+})
 ```
 
 ### Adding a New Test
 
-You can add a new test to any existing `describe` or `context` block. Next, we can add a new test, by clicking "Add New Test" our defined `describe` block.
+You can add a new test to any existing `describe` or `context` block, by clicking "Add New Test" on our defined `describe` block.
 
 <DocsImage src="/img/guides/cypress-studio/add-test-1.png" alt="Cypress Studio Add Test"></DocsImage>
 
@@ -193,36 +193,36 @@ Finally, viewing our test code, we can see that the test is updated after clicki
 
 ```js
 // Code from Real World App (RWA)
-import { User } from "models";
+import { User } from 'models'
 
-describe("Cypress Studio Demo", () => {
+describe('Cypress Studio Demo', () => {
   beforeEach(() => {
-    cy.task("db:seed");
+    cy.task('db:seed')
 
-    cy.database("find", "users").then((user: User) => {
-      cy.login(user.username, "s3cret", true);
-    });
-  });
+    cy.database('find', 'users').then((user: User) => {
+      cy.login(user.username, 's3cret', true)
+    })
+  })
 
-  it("create new transaction", () => {
+  it('create new transaction', () => {
     // Extend test with Cypress Studio
-  });
+  })
 
   /* === Test Created with Cypress Studio === */
-  it("create bank account", function () {
+  it('create bank account', function () {
     /* ==== Generated with Cypress Studio ==== */
-    cy.get("[data-test=sidenav-bankaccounts]").click();
-    cy.get("[data-test=bankaccount-new] > .MuiButton-label").click();
-    cy.get("#bankaccount-bankName-input").click();
-    cy.get("#bankaccount-bankName-input").type("Test Bank Account");
-    cy.get("#bankaccount-routingNumber-input").click();
-    cy.get("#bankaccount-routingNumber-input").type("987654321");
-    cy.get("#bankaccount-accountNumber-input").click();
-    cy.get("#bankaccount-accountNumber-input").type("123456789");
-    cy.get("[data-test=bankaccount-submit] > .MuiButton-label").click();
+    cy.get('[data-test=sidenav-bankaccounts]').click()
+    cy.get('[data-test=bankaccount-new] > .MuiButton-label').click()
+    cy.get('#bankaccount-bankName-input').click()
+    cy.get('#bankaccount-bankName-input').type('Test Bank Account')
+    cy.get('#bankaccount-routingNumber-input').click()
+    cy.get('#bankaccount-routingNumber-input').type('987654321')
+    cy.get('#bankaccount-accountNumber-input').click()
+    cy.get('#bankaccount-accountNumber-input').type('123456789')
+    cy.get('[data-test=bankaccount-submit] > .MuiButton-label').click()
     /* ==== End Cypress Studio ==== */
-  });
-});
+  })
+})
 ```
 
 <Alert type="info">

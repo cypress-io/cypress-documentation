@@ -176,8 +176,8 @@ You can define behaviors in a `before` or `beforeEach` within any of the `cypres
 
 ```javascript
 beforeEach(() => {
-  cy.log("I run before every test in every spec file!!!!!!");
-});
+  cy.log('I run before every test in every spec file!!!!!!')
+})
 ```
 
 <DocsImage src="/img/guides/global-hooks.png" alt="Global hooks for tests" ></DocsImage>
@@ -244,42 +244,42 @@ The test interface, borrowed from [Mocha](/guides/references/bundled-tools#Mocha
 ```javascript
 // -- Start: Our Application Code --
 function add(a, b) {
-  return a + b;
+  return a + b
 }
 
 function subtract(a, b) {
-  return a - b;
+  return a - b
 }
 
 function divide(a, b) {
-  return a / b;
+  return a / b
 }
 
 function multiply(a, b) {
-  return a * b;
+  return a * b
 }
 // -- End: Our Application Code --
 
 // -- Start: Our Cypress Tests --
-describe("Unit test our math functions", () => {
-  context("math", () => {
-    it("can add numbers", () => {
-      expect(add(1, 2)).to.eq(3);
-    });
+describe('Unit test our math functions', () => {
+  context('math', () => {
+    it('can add numbers', () => {
+      expect(add(1, 2)).to.eq(3)
+    })
 
-    it("can subtract numbers", () => {
-      expect(subtract(5, 12)).to.eq(-7);
-    });
+    it('can subtract numbers', () => {
+      expect(subtract(5, 12)).to.eq(-7)
+    })
 
-    specify("can divide numbers", () => {
-      expect(divide(27, 9)).to.eq(3);
-    });
+    specify('can divide numbers', () => {
+      expect(divide(27, 9)).to.eq(3)
+    })
 
-    specify("can multiply numbers", () => {
-      expect(multiply(5, 4)).to.eq(20);
-    });
-  });
-});
+    specify('can multiply numbers', () => {
+      expect(multiply(5, 4)).to.eq(20)
+    })
+  })
+})
 // -- End: Our Cypress Tests --
 ```
 
@@ -293,25 +293,25 @@ These are helpful to set conditions that you want to run before a set of tests o
 beforeEach(() => {
   // root-level hook
   // runs before every test
-});
+})
 
-describe("Hooks", () => {
+describe('Hooks', () => {
   before(() => {
     // runs once before all tests in the block
-  });
+  })
 
   beforeEach(() => {
     // runs before each test in the block
-  });
+  })
 
   afterEach(() => {
     // runs after each test in the block
-  });
+  })
 
   after(() => {
     // runs once after all tests in the block
-  });
-});
+  })
+})
 ```
 
 #### The order of hook and test execution is as follows:
@@ -342,49 +342,49 @@ To run a specified suite or test, append `.only` to the function. All nested sui
 // -- Start: Our Application Code --
 function fizzbuzz(num) {
   if (num % 3 === 0 && num % 5 === 0) {
-    return "fizzbuzz";
+    return 'fizzbuzz'
   }
 
   if (num % 3 === 0) {
-    return "fizz";
+    return 'fizz'
   }
 
   if (num % 5 === 0) {
-    return "buzz";
+    return 'buzz'
   }
 }
 // -- End: Our Application Code --
 
 // -- Start: Our Cypress Tests --
-describe("Unit Test FizzBuzz", () => {
+describe('Unit Test FizzBuzz', () => {
   function numsExpectedToEq(arr, expected) {
     // loop through the array of nums and make
     // sure they equal what is expected
     arr.forEach((num) => {
-      expect(fizzbuzz(num)).to.eq(expected);
-    });
+      expect(fizzbuzz(num)).to.eq(expected)
+    })
   }
 
   it.only('returns "fizz" when number is multiple of 3', () => {
-    numsExpectedToEq([9, 12, 18], "fizz");
-  });
+    numsExpectedToEq([9, 12, 18], 'fizz')
+  })
 
   it('returns "buzz" when number is multiple of 5', () => {
-    numsExpectedToEq([10, 20, 25], "buzz");
-  });
+    numsExpectedToEq([10, 20, 25], 'buzz')
+  })
 
   it('returns "fizzbuzz" when number is multiple of both 3 and 5', () => {
-    numsExpectedToEq([15, 30, 60], "fizzbuzz");
-  });
-});
+    numsExpectedToEq([15, 30, 60], 'fizzbuzz')
+  })
+})
 ```
 
 To skip a specified suite or test, append `.skip()` to the function. All nested suites will also be skipped.
 
 ```javascript
 it.skip('returns "fizz" when number is multiple of 3', () => {
-  numsExpectedToEq([9, 12, 18], "fizz");
-});
+  numsExpectedToEq([9, 12, 18], 'fizz')
+})
 ```
 
 ### Test Configuration
@@ -396,10 +396,10 @@ This configuration will take effect during the suite or tests where they are set
 #### Syntax
 
 ```javascript
-describe(name, config, fn);
-context(name, config, fn);
-it(name, config, fn);
-specify(name, config, fn);
+describe(name, config, fn)
+context(name, config, fn)
+it(name, config, fn)
+specify(name, config, fn)
 ```
 
 #### Allowed config values
@@ -427,58 +427,58 @@ If you want to target a suite of tests to run or be excluded when run in a speci
 The following suite of tests will be skipped if running tests in Chrome browsers.
 
 ```js
-describe("When NOT in Chrome", { browser: "!chrome" }, () => {
-  it("Shows warning", () => {
-    cy.get(".browser-warning").should(
-      "contain",
-      "For optimal viewing, use Chrome browser"
-    );
-  });
+describe('When NOT in Chrome', { browser: '!chrome' }, () => {
+  it('Shows warning', () => {
+    cy.get('.browser-warning').should(
+      'contain',
+      'For optimal viewing, use Chrome browser'
+    )
+  })
 
-  it("Links to browser compatibility doc", () => {
-    cy.get("a.browser-compat")
-      .should("have.attr", "href")
-      .and("include", "browser-compatibility");
-  });
-});
+  it('Links to browser compatibility doc', () => {
+    cy.get('a.browser-compat')
+      .should('have.attr', 'href')
+      .and('include', 'browser-compatibility')
+  })
+})
 ```
 
 The following suite of tests will only execute when running in the Firefox browser. It will overwrite the viewport resolution in one of the tests, and will merge any current environment variables with the provided ones.
 
 ```js
 describe(
-  "When in Firefox",
+  'When in Firefox',
   {
-    browser: "firefox",
+    browser: 'firefox',
     viewportWidth: 1024,
     viewportHeight: 700,
     env: {
       DEMO: true,
-      API: "http://localhost:9000",
+      API: 'http://localhost:9000',
     },
   },
   () => {
-    it("Sets the expected viewport and API url", () => {
-      expect(cy.config("viewportWidth")).to.equal(1024);
-      expect(cy.config("viewportHeight")).to.equal(700);
-      expect(cy.env("API")).to.equal("http://localhost:9000");
-    });
+    it('Sets the expected viewport and API url', () => {
+      expect(cy.config('viewportWidth')).to.equal(1024)
+      expect(cy.config('viewportHeight')).to.equal(700)
+      expect(cy.env('API')).to.equal('http://localhost:9000')
+    })
 
     it(
-      "Uses the closest API environment variable",
+      'Uses the closest API environment variable',
       {
         env: {
-          API: "http://localhost:3003",
+          API: 'http://localhost:3003',
         },
       },
       () => {
-        expect(cy.env("API")).to.equal("http://localhost:3003");
+        expect(cy.env('API')).to.equal('http://localhost:3003')
         // other environment variables remain unchanged
-        expect(cy.env("DEMO")).to.be.true;
+        expect(cy.env('DEMO')).to.be.true
       }
-    );
+    )
   }
-);
+)
 ```
 
 #### Single test configuration
@@ -503,18 +503,18 @@ it('should redirect unauthenticated user to sign-in page', {
 You can dynamically generate tests using JavaScript.
 
 ```javascript
-describe("if your app uses jQuery", () => {
-  ["mouseover", "mouseout", "mouseenter", "mouseleave"].forEach((event) => {
-    it("triggers event: " + event, () => {
+describe('if your app uses jQuery', () => {
+  ;['mouseover', 'mouseout', 'mouseenter', 'mouseleave'].forEach((event) => {
+    it('triggers event: ' + event, () => {
       // if your app uses jQuery, then we can trigger a jQuery
       // event that causes the event callback to fire
-      cy.get("#with-jquery")
-        .invoke("trigger", event)
-        .get("#messages")
-        .should("contain", "the event " + event + "was fired");
-    });
-  });
-});
+      cy.get('#with-jquery')
+        .invoke('trigger', event)
+        .get('#messages')
+        .should('contain', 'the event ' + event + 'was fired')
+    })
+  })
+})
 ```
 
 The code above will produce a suite with 4 tests:
@@ -532,19 +532,19 @@ The code above will produce a suite with 4 tests:
 Cypress supports both BDD (`expect`/`should`) and TDD (`assert`) style plain assertions. [Read more about plain assertions.](/guides/references/assertions)
 
 ```javascript
-it("can add numbers", () => {
-  expect(add(1, 2)).to.eq(3);
-});
+it('can add numbers', () => {
+  expect(add(1, 2)).to.eq(3)
+})
 
-it("can subtract numbers", () => {
-  assert.equal(subtract(5, 12), -7, "these numbers are equal");
-});
+it('can subtract numbers', () => {
+  assert.equal(subtract(5, 12), -7, 'these numbers are equal')
+})
 ```
 
 The [.should()](/api/commands/should) command and its alias [.and()](/api/commands/and) can also be used to more easily chain assertions off of Cypress commands. [Read more about assertions.](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 ```js
-cy.wrap(add(1, 2)).should("equal", 3);
+cy.wrap(add(1, 2)).should('equal', 3)
 ```
 
 ## Running tests

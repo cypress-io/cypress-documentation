@@ -31,10 +31,10 @@ In Cypress, "environment variables" are variables that are accessible via `Cypre
 ## Syntax
 
 ```javascript
-Cypress.env();
-Cypress.env(name);
-Cypress.env(name, value);
-Cypress.env(object);
+Cypress.env()
+Cypress.env(name)
+Cypress.env(name, value)
+Cypress.env(object)
 ```
 
 ### Arguments
@@ -67,7 +67,7 @@ Set multiple environment variables with an object literal.
 ```
 
 ```javascript
-Cypress.env(); // => {foo: "bar", baz: "quux"}
+Cypress.env() // => {foo: "bar", baz: "quux"}
 ```
 
 ### Name
@@ -87,9 +87,9 @@ CYPRESS_HOST=laura.dev CYPRESS_IS_CI=true CYPRESS_MY_ID=123 cypress run
 ```
 
 ```javascript
-Cypress.env("HOST"); // => "laura.dev"
-Cypress.env("IS_CI"); // => true
-Cypress.env("MY_ID"); // => 123
+Cypress.env('HOST') // => "laura.dev"
+Cypress.env('IS_CI') // => true
+Cypress.env('MY_ID') // => 123
 ```
 
 ### Name and Value
@@ -114,9 +114,9 @@ Remember, any changes that you make to environment variables using this API will
 ```
 
 ```javascript
-Cypress.env("host", "http://server.dev.local");
+Cypress.env('host', 'http://server.dev.local')
 
-Cypress.env("host"); // => http://server.dev.local
+Cypress.env('host') // => http://server.dev.local
 ```
 
 ### Object
@@ -135,11 +135,11 @@ Cypress.env("host"); // => http://server.dev.local
 
 ```javascript
 Cypress.env({
-  host: "http://server.dev.local",
-  foo: "foo",
-});
+  host: 'http://server.dev.local',
+  foo: 'foo',
+})
 
-Cypress.env(); // => {foo: "foo", baz: "quux", host: "http://server.dev.local"}
+Cypress.env() // => {foo: "foo", baz: "quux", host: "http://server.dev.local"}
 ```
 
 ### From a plugin
@@ -152,25 +152,25 @@ Use this approach to grab the value of an environment variable _once_ before any
 // cypress/plugins/index.js
 module.exports = (on, config) => {
   config.env.sharedSecret =
-    process.env.NODE_ENV === "qa" ? "hoop brick tort" : "sushi cup lemon";
+    process.env.NODE_ENV === 'qa' ? 'hoop brick tort' : 'sushi cup lemon'
 
-  return config;
-};
+  return config
+}
 ```
 
 ```js
 // cypress/integration/secrets_spec.js
-describe("Environment variable set in plugin", () => {
-  let sharedSecret;
+describe('Environment variable set in plugin', () => {
+  let sharedSecret
 
   before(() => {
-    sharedSecret = Cypress.env("sharedSecret");
-  });
+    sharedSecret = Cypress.env('sharedSecret')
+  })
 
-  it.only("can be accessed within test.", () => {
-    cy.log(sharedSecret);
-  });
-});
+  it.only('can be accessed within test.', () => {
+    cy.log(sharedSecret)
+  })
+})
 ```
 
 ## Notes

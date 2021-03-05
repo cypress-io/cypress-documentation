@@ -147,9 +147,9 @@ module.exports = (on, config) => {
   //   majorVersion: 80
   // }
   return {
-    browsers: config.browsers.filter((b) => b.family === "chromium"),
-  };
-};
+    browsers: config.browsers.filter((b) => b.family === 'chromium'),
+  }
+}
 ```
 
 When you open the Test Runner in a project that uses the above modifications to your plugins file, only the Chrome browsers found on the system will display in the list of available browsers.
@@ -166,38 +166,36 @@ If you have installed a Chromium-based browser like [Brave](https://brave.com/),
 
 ```javascript
 // cypress/plugins/index.js
-const execa = require("execa");
+const execa = require('execa')
 const findBrowser = () => {
   // the path is hard-coded for simplicity
   const browserPath =
-    "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser";
+    '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser'
 
-  return execa(browserPath, ["--version"]).then((result) => {
+  return execa(browserPath, ['--version']).then((result) => {
     // STDOUT will be like "Brave Browser 77.0.69.135"
-    const [, version] = /Brave Browser (\d+\.\d+\.\d+\.\d+)/.exec(
-      result.stdout
-    );
-    const majorVersion = parseInt(version.split(".")[0]);
+    const [, version] = /Brave Browser (\d+\.\d+\.\d+\.\d+)/.exec(result.stdout)
+    const majorVersion = parseInt(version.split('.')[0])
 
     return {
-      name: "Brave",
-      channel: "stable",
-      family: "chromium",
-      displayName: "Brave",
+      name: 'Brave',
+      channel: 'stable',
+      family: 'chromium',
+      displayName: 'Brave',
       version,
       path: browserPath,
       majorVersion,
-    };
-  });
-};
+    }
+  })
+}
 
 module.exports = (on, config) => {
   return findBrowser().then((browser) => {
     return {
       browsers: config.browsers.concat(browser),
-    };
-  });
-};
+    }
+  })
+}
 ```
 
 <DocsImage src="/img/guides/plugins/brave-browser.png" alt="List of browsers includes Brave browser" ></DocsImage>

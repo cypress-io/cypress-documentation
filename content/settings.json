@@ -2,6 +2,6 @@
   "algolia": {
     "appId": "R9KDA5FMJB",
     "apiKey": "b4af59e23bc2fa05281af7dcf13fcae5",
-    "indexName": "dev_Docs_Next"
+    "indexName": "docs"
   }
 }

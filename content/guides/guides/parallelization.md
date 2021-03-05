@@ -20,7 +20,7 @@ If your project has a large number of tests, it can take a long time for tests t
 
 Cypress can run recorded tests in parallel across multiple machines since version [3.1.0](/guides/references/changelog#3-1-0). While parallel tests can also technically run on a single machine, we do not recommend it since this machine would require significant resources to run your tests efficiently.
 
-This guide assumes you already have your project running and [recording](/guides/dashboard/projects#Setup) within Continuous Integration. If you have not set up your project yet, check out our [Continuous Integration guide](/guides/guides/continuous-integration). If you are running or planning to run tests across multiple browsers (Firefox, Chrome, or Edge), we also recommend checking out our [Cross Browser Testing guide](/guides/guides/cross-browser-testing) for helpful CI strategies when using parallelization.
+This guide assumes you already have your project running and [recording](/guides/dashboard/projects#Setup) within Continuous Integration. If you have not set up your project yet, check out our [Continuous Integration guide](/guides/continuous-integration/continuous-integration-introduction). If you are running or planning to run tests across multiple browsers (Firefox, Chrome, or Edge), we also recommend checking out our [Cross Browser Testing guide](/guides/guides/cross-browser-testing) for helpful CI strategies when using parallelization.
 
 <DocsImage src="/img/guides/parallelization/parallelization-diagram.png" alt="Parallelization Diagram"></DocsImage>
 
@@ -310,7 +310,7 @@ The Machines View charts spec files by the machines that executed them. This vie
 ## Next Steps
 
 - [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app) runs parallelized CI jobs across multiple operating systems, browsers, and viewport sizes.
-- [Continuous Integration Guide](/guides/guides/continuous-integration)
+- [Continuous Integration Guide](/guides/continuous-integration/continuous-integration-introduction)
 - [Cross Browser Testing Guide](/guides/guides/cross-browser-testing)
 - [Blog: Run Your End-to-end Tests 10 Times Faster with Automatic Test Parallelization](https://www.cypress.io/blog/2018/09/05/run-end-to-end-tests-on-ci-faster/)
 - [Blog: Run and group tests the way you want to](https://glebbahmutov.com/blog/run-and-group-tests/)

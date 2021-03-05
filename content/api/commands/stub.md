@@ -13,9 +13,9 @@ Replace a function, record its usage and control its behavior.
 ## Syntax
 
 ```javascript
-cy.stub();
-cy.stub(object, method);
-cy.stub(object, method, replacerFn);
+cy.stub()
+cy.stub(object, method)
+cy.stub(object, method, replacerFn)
 ```
 
 ### Usage
@@ -23,7 +23,7 @@ cy.stub(object, method, replacerFn);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.stub(user, "addFriend");
+cy.stub(user, 'addFriend')
 ```
 
 ### Arguments
@@ -54,34 +54,34 @@ Unlike most Cypress commands, `cy.stub()` is _synchronous_ and returns a value (
 
 ```javascript
 // assume App.start calls util.addListeners
-util.addListeners = cy.stub();
+util.addListeners = cy.stub()
 
-App.start();
-expect(util.addListeners).to.be.called;
+App.start()
+expect(util.addListeners).to.be.called
 ```
 
 #### Replace a method with a stub
 
 ```javascript
 // assume App.start calls util.addListeners
-cy.stub(util, "addListeners");
+cy.stub(util, 'addListeners')
 
-App.start();
-expect(util.addListeners).to.be.called;
+App.start()
+expect(util.addListeners).to.be.called
 ```
 
 #### Replace a method with a function
 
 ```javascript
 // assume App.start calls util.addListeners
-let listenersAdded = false;
+let listenersAdded = false
 
-cy.stub(util, "addListeners", () => {
-  listenersAdded = true;
-});
+cy.stub(util, 'addListeners', () => {
+  listenersAdded = true
+})
 
-App.start();
-expect(listenersAdded).to.be.true;
+App.start()
+expect(listenersAdded).to.be.true
 ```
 
 #### Specify the return value of a stubbed method
@@ -89,29 +89,29 @@ expect(listenersAdded).to.be.true;
 ```javascript
 // assume App.start calls util.addListeners, which returns a function
 // that removes the listeners
-const removeStub = cy.stub();
+const removeStub = cy.stub()
 
-cy.stub(util, "addListeners").returns(removeStub);
+cy.stub(util, 'addListeners').returns(removeStub)
 
-App.start();
-App.stop();
-expect(removeStub).to.be.called;
+App.start()
+App.stop()
+expect(removeStub).to.be.called
 ```
 
 #### Replace built-in window methods like prompt
 
 ```javascript
 // assume App.start uses prompt to set the value of an element with class "name"
-cy.visit("http://localhost:3000", {
+cy.visit('http://localhost:3000', {
   onBeforeLoad(win) {
-    cy.stub(win, "prompt").returns("my custom message");
+    cy.stub(win, 'prompt').returns('my custom message')
   },
-});
+})
 
-App.start();
+App.start()
 
-cy.window().its("prompt").should("be.called");
-cy.get(".name").should("have.value", "my custom message");
+cy.window().its('prompt').should('be.called')
+cy.get('.name').should('have.value', 'my custom message')
 ```
 
 #### Disable logging to Command Log
@@ -121,8 +121,8 @@ You can chain a `.log(bool)` method to disable `cy.stub()` calls from being show
 ```javascript
 const obj = {
   foo() {},
-};
-const stub = cy.stub(obj, "foo").log(false);
+}
+const stub = cy.stub(obj, 'foo').log(false)
 ```
 
 #### More `cy.stub()` examples
@@ -140,13 +140,13 @@ Adding an alias using [`.as()`](/api/commands/as) to stubs makes them easier to 
 ```javascript
 const obj = {
   foo() {},
-};
-const stub = cy.stub(obj, "foo").as("anyArgs");
-const withFoo = stub.withArgs("foo").as("withFoo");
+}
+const stub = cy.stub(obj, 'foo').as('anyArgs')
+const withFoo = stub.withArgs('foo').as('withFoo')
 
-obj.foo();
-expect(stub).to.be.called;
-expect(withFoo).to.be.called; // purposefully failing assertion
+obj.foo()
+expect(stub).to.be.called
+expect(withFoo).to.be.called // purposefully failing assertion
 ```
 
 You will see the following in the command log:
@@ -175,7 +175,7 @@ The main difference between `cy.spy()` and [`cy.stub()`](/api/commands/stub) is 
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`cy.stub` cannot have any assertions chained.</li></List>
+<List><li>`cy.stub()` cannot have any assertions chained.</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -188,11 +188,11 @@ The main difference between `cy.spy()` and [`cy.stub()`](/api/commands/stub) is 
 ```javascript
 const obj = {
   foo() {},
-};
-const stub = cy.stub(obj, "foo").as("foo");
+}
+const stub = cy.stub(obj, 'foo').as('foo')
 
-obj.foo("foo", "bar");
-expect(stub).to.be.called;
+obj.foo('foo', 'bar')
+expect(stub).to.be.called
 ```
 
 The command above will display in the Command Log as:
