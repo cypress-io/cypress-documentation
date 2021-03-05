@@ -7,8 +7,8 @@ Get the `window` object of the page that is currently active.
 ## Syntax
 
 ```javascript
-cy.window();
-cy.window(options);
+cy.window()
+cy.window(options)
 ```
 
 ### Usage
@@ -16,7 +16,7 @@ cy.window(options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.window();
+cy.window()
 ```
 
 ### Arguments
@@ -41,11 +41,11 @@ Pass in an options object to change the default behavior of `cy.window()`.
 #### Yield the remote window object
 
 ```javascript
-cy.visit("http://localhost:8080/app");
+cy.visit('http://localhost:8080/app')
 cy.window().then((win) => {
   // win is the remote window
   // of the page at: http://localhost:8080/app
-});
+})
 ```
 
 #### Check a custom property
@@ -54,48 +54,48 @@ If the application sets a custom property, like:
 
 ```javascript
 window.tags = {
-  foo: "bar",
-};
+  foo: 'bar',
+}
 ```
 
 Our test can confirm the property was properly set.
 
 ```javascript
-cy.window().its("tags.foo").should("equal", "bar");
+cy.window().its('tags.foo').should('equal', 'bar')
 ```
 
 **Note:** Cypress commands are asynchronous, so you cannot check a property value before the Cypress commands ran.
 
 ```javascript
-it("equals bar", () => {
-  let foo;
+it('equals bar', () => {
+  let foo
 
   cy.window().then((win) => {
-    foo = win.foo;
-  });
+    foo = win.foo
+  })
 
   // variable "foo" is still undefined
   // because the above "then" callback
   // has not been executed yet
-  expect(foo).to.equal("bar"); // test fails
-});
+  expect(foo).to.equal('bar') // test fails
+})
 ```
 
 Instead, use [`cy.then()`](/api/commands/then) callback to check the value.
 
 ```javascript
-it("equals bar", () => {
-  let foo;
+it('equals bar', () => {
+  let foo
 
   cy.window()
     .then((win) => {
-      foo = win.foo;
+      foo = win.foo
     })
     .then(() => {
       // variable "foo" has been set
-      expect(foo).to.equal("bar"); // test passes
-    });
-});
+      expect(foo).to.equal('bar') // test passes
+    })
+})
 ```
 
 ### Start tests when app is ready
@@ -106,7 +106,7 @@ If an application takes a while to start, it might "signal" its readiness by set
 // app.js
 // only set property "appReady" if Cypress is running tests
 if (window.Cypress) {
-  window.appReady = true;
+  window.appReady = true
 }
 ```
 
@@ -115,9 +115,9 @@ Cypress Test Runner can wait for the property `window.appReady` to be `true` bef
 ```javascript
 // spec.js
 beforeEach(() => {
-  cy.visit("/");
-  cy.window().should("have.property", "appReady", true);
-});
+  cy.visit('/')
+  cy.window().should('have.property', 'appReady', true)
+})
 ```
 
 <Alert type="info">
@@ -135,7 +135,7 @@ See [Set flag to start tests](https://glebbahmutov.com/blog/set-flag-to-start-te
 #### Passes timeout through to [`.should()`](/api/commands/should) assertion
 
 ```javascript
-cy.window({ timeout: 10000 }).should("have.property", "foo");
+cy.window({ timeout: 10000 }).should('have.property', 'foo')
 ```
 
 ## Notes
@@ -145,18 +145,18 @@ cy.window({ timeout: 10000 }).should("have.property", "foo");
 Let's say you want to check the type of the events. You might write code like below:
 
 ```js
-it("test", (done) => {
-  cy.get("#test-input").then((jQueryElement) => {
-    let elemHtml = jQueryElement.get(0);
+it('test', (done) => {
+  cy.get('#test-input').then((jQueryElement) => {
+    let elemHtml = jQueryElement.get(0)
 
-    elemHtml.addEventListener("keydown", (event) => {
-      expect(event instanceof KeyboardEvent).to.be.true;
-      done();
-    });
-  });
+    elemHtml.addEventListener('keydown', (event) => {
+      expect(event instanceof KeyboardEvent).to.be.true
+      done()
+    })
+  })
 
-  cy.get("#test-input").type("A");
-});
+  cy.get('#test-input').type('A')
+})
 ```
 
 It fails. But the interesting thing is that the type of `event` is `KeyboardEvent` when you `console.log(event)`.
@@ -166,20 +166,20 @@ It's because the Test Runner uses an `iframe` to load the application under test
 That's why the test should be written like this.
 
 ```js
-it("should trigger KeyboardEvent with .type inside Cypress event listener", (done) => {
+it('should trigger KeyboardEvent with .type inside Cypress event listener', (done) => {
   cy.window().then((win) => {
-    cy.get("#test-input").then((jQueryElement) => {
-      let elemHtml = jQueryElement.get(0);
+    cy.get('#test-input').then((jQueryElement) => {
+      let elemHtml = jQueryElement.get(0)
 
-      elemHtml.addEventListener("keydown", (event) => {
-        expect(event instanceof win["KeyboardEvent"]).to.be.true;
-        done();
-      });
-    });
-  });
+      elemHtml.addEventListener('keydown', (event) => {
+        expect(event instanceof win['KeyboardEvent']).to.be.true
+        done()
+      })
+    })
+  })
 
-  cy.get("#test-input").type("A");
-});
+  cy.get('#test-input').type('A')
+})
 ```
 
 ## Rules
@@ -190,7 +190,7 @@ it("should trigger KeyboardEvent with .type inside Cypress event listener", (don
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`cy.window` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`cy.window()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -201,7 +201,7 @@ it("should trigger KeyboardEvent with .type inside Cypress event listener", (don
 **_Get the window_**
 
 ```javascript
-cy.window();
+cy.window()
 ```
 
 The commands above will display in the Command Log as:

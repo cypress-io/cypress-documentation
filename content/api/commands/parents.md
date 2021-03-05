@@ -27,14 +27,14 @@ The querying behavior of this command matches exactly how [`.parents()`](http://
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get("aside").parents(); // Yield parents of aside
+cy.get('aside').parents() // Yield parents of aside
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.parents(); // Errors, cannot be chained off 'cy'
-cy.go("back").parents(); // Errors, 'go' does not yield DOM element
+cy.parents() // Errors, cannot be chained off 'cy'
+cy.go('back').parents() // Errors, 'go' does not yield DOM element
 ```
 
 ### Arguments
@@ -78,7 +78,7 @@ Pass in an options object to change the default behavior of `.parents()`.
 
 ```javascript
 // yields [.sub-nav, li, .main-nav]
-cy.get("li.active").parents();
+cy.get('li.active').parents()
 ```
 
 ### Selector
@@ -87,7 +87,7 @@ cy.get("li.active").parents();
 
 ```javascript
 // yields [.main-nav]
-cy.get("li.active").parents(".main-nav");
+cy.get('li.active').parents('.main-nav')
 ```
 
 ## Rules
@@ -98,7 +98,7 @@ cy.get("li.active").parents(".main-nav");
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`.parents` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.parents` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.parents()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.parents()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -109,7 +109,7 @@ cy.get("li.active").parents(".main-nav");
 **_Get the parents of the active `li`_**
 
 ```javascript
-cy.get("li.active").parents();
+cy.get('li.active').parents()
 ```
 
 <DocsImage src="/img/api/parents/get-all-parents-of-a-dom-element.png" alt="Command Log parents" ></DocsImage>

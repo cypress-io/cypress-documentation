@@ -13,7 +13,7 @@ Wrap a method in a spy in order to record calls to and arguments of the function
 ## Syntax
 
 ```javascript
-cy.spy(object, method);
+cy.spy(object, method)
 ```
 
 ### Usage
@@ -21,7 +21,7 @@ cy.spy(object, method);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.spy(user, "addFriend");
+cy.spy(user, 'addFriend')
 ```
 
 ### Arguments
@@ -48,9 +48,9 @@ Unlike most Cypress commands, `cy.spy()` is _synchronous_ and returns a value (t
 
 ```javascript
 // assume App.start calls util.addListeners
-cy.spy(util, "addListeners");
-App.start();
-expect(util.addListeners).to.be.called;
+cy.spy(util, 'addListeners')
+App.start()
+expect(util.addListeners).to.be.called
 ```
 
 #### Disable logging to Command Log
@@ -60,8 +60,8 @@ You can chain a `.log(bool)` method to disable `cy.stub()` calls from being show
 ```javascript
 const obj = {
   foo() {},
-};
-const stub = cy.stub(obj, "foo").log(false);
+}
+const stub = cy.stub(obj, 'foo').log(false)
 ```
 
 #### More `cy.spy()` examples
@@ -79,13 +79,13 @@ Adding an alias using [`.as()`](/api/commands/as) to spies makes them easier to 
 ```javascript
 const obj = {
   foo() {},
-};
-const spy = cy.spy(obj, "foo").as("anyArgs");
-const withFoo = spy.withArgs("foo").as("withFoo");
+}
+const spy = cy.spy(obj, 'foo').as('anyArgs')
+const withFoo = spy.withArgs('foo').as('withFoo')
 
-obj.foo();
-expect(spy).to.be.called;
-expect(withFoo).to.be.called; // purposefully failing assertion
+obj.foo()
+expect(spy).to.be.called
+expect(withFoo).to.be.called // purposefully failing assertion
 ```
 
 You will see the following in the command log:
@@ -120,7 +120,7 @@ Cypress has also built-in [sinon-chai](/guides/references/bundled-tools#Sinon-Ch
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`cy.spy` cannot have any assertions chained.</li></List>
+<List><li>`cy.spy()` cannot have any assertions chained.</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -133,11 +133,11 @@ Cypress has also built-in [sinon-chai](/guides/references/bundled-tools#Sinon-Ch
 ```javascript
 const obj = {
   foo() {},
-};
-const spy = cy.spy(obj, "foo").as("foo");
+}
+const spy = cy.spy(obj, 'foo').as('foo')
 
-obj.foo("foo", "bar");
-expect(spy).to.be.called;
+obj.foo('foo', 'bar')
+expect(spy).to.be.called
 ```
 
 The command above will display in the Command Log as:

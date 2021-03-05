@@ -14,20 +14,20 @@ Runs Cypress tests via Node.js and resolve with all test results. See the [Cypre
 
 ```javascript
 // e2e-run-tests.js
-const cypress = require("cypress");
+const cypress = require('cypress')
 
 cypress.run({
-  reporter: "junit",
-  browser: "chrome",
+  reporter: 'junit',
+  browser: 'chrome',
   config: {
-    baseUrl: "http://localhost:8080",
+    baseUrl: 'http://localhost:8080',
     video: true,
   },
   env: {
-    login_url: "/login",
-    products_url: "/products",
+    login_url: '/login',
+    products_url: '/products',
   },
-});
+})
 ```
 
 You can then run Cypress by running the following in your terminal or an npm script:
@@ -70,19 +70,19 @@ Here is an example of programmatically running a spec file. Note that the file p
 
 ```js
 // e2e-run-tests.js
-const cypress = require("cypress");
+const cypress = require('cypress')
 
 cypress
   .run({
     // the path is relative to the current working directory
-    spec: "./cypress/integration/examples/actions.spec.js",
+    spec: './cypress/integration/examples/actions.spec.js',
   })
   .then((results) => {
-    console.log(results);
+    console.log(results)
   })
   .catch((err) => {
-    console.error(err);
-  });
+    console.error(err)
+  })
 ```
 
 You can then run Cypress by running the following in your terminal or an npm script:
@@ -96,12 +96,12 @@ node e2e-run-tests.js
 You can pass a wildcard pattern to run all matching spec files
 
 ```js
-const cypress = require("cypress");
+const cypress = require('cypress')
 
 cypress.run({
   // the wildcard path is relative to the current working directory
-  spec: "./cypress/integration/**/api*.js",
-});
+  spec: './cypress/integration/**/api*.js',
+})
 ```
 
 #### Use modern syntax
@@ -109,12 +109,12 @@ cypress.run({
 If your Node version allows you can use the modern `async / await` syntax to wait for the Promise returned by the `cypress.run` method.
 
 ```js
-const cypress = require("cypress");
+const cypress = require('cypress')
 
-(async () => {
-  const results = await cypress.run();
+;(async () => {
+  const results = await cypress.run()
   // use the results object
-})();
+})()
 ```
 
 ### Results
@@ -238,17 +238,17 @@ Open Cypress tests via Node.js.
 
 ```javascript
 // e2e-open-tests.js
-const cypress = require("cypress");
+const cypress = require('cypress')
 
 cypress.open({
   config: {
-    baseUrl: "http://localhost:8080",
+    baseUrl: 'http://localhost:8080',
   },
   env: {
-    login_url: "/login",
-    products_url: "/products",
+    login_url: '/login',
+    products_url: '/products',
   },
-});
+})
 ```
 
 You can then open Cypress by running the following in your terminal or an npm script:
@@ -276,9 +276,9 @@ Just like the [Command Line options](/guides/guides/command-line), you can pass 
 
 ```javascript
 // e2e-open-tests.js
-const cypress = require("cypress");
+const cypress = require('cypress')
 
-cypress.open({});
+cypress.open({})
 ```
 
 You can then open Cypress by running the following in your terminal or an npm script:
@@ -295,10 +295,10 @@ If you are writing a tool that wraps around the `cypress.run()` command, you mig
 
 ```javascript
 // wrapper.js
-const cypress = require("cypress");
+const cypress = require('cypress')
 
-const runOptions = await cypress.cli.parseRunArguments(process.argv.slice(2));
-const results = await cypress.run(runOptions);
+const runOptions = await cypress.cli.parseRunArguments(process.argv.slice(2))
+const results = await cypress.run(runOptions)
 // process the "cypress.run()" results
 ```
 

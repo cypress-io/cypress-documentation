@@ -70,7 +70,7 @@ To take this a step further - we don't believe there is any use case for testing
 Since that is the case, test **the thing** triggering the browser to perform this behavior - as opposed to testing the behavior itself.
 
 ```js
-cy.get('a[href="/foo"]').should("have.attr", "target", "_blank");
+cy.get('a[href="/foo"]').should('have.attr', 'target', '_blank')
 ```
 
 This principle applies to everything in Cypress. Do not test what does not need testing. It is slow, brittle, and adds zero value. Only test the underlying thing that causes the behavior you care about testing.
@@ -143,52 +143,52 @@ You can do this in many ways and here is an example of using an HTTP server to a
 // Cypress tests
 
 // tell the http server at 8081 to connect to 8080
-cy.request("http://localhost:8081/connect?url=http://localhost:8080");
+cy.request('http://localhost:8081/connect?url=http://localhost:8080')
 
 // tell the http server at 8081 to send a message
-cy.request("http://localhost:8081/message?m=hello");
+cy.request('http://localhost:8081/message?m=hello')
 
 // tell the http server at 8081 to disconnect
-cy.request("http://localhost:8081/disconnect");
+cy.request('http://localhost:8081/disconnect')
 ```
 
 And the HTTP server code would look something like this...
 
 ```js
-const client = require("socket.io:client");
-const express = require("express");
+const client = require('socket.io:client')
+const express = require('express')
 
-const app = express();
+const app = express()
 
-let socket;
+let socket
 
-app.get("/connect", (req, res) => {
-  const url = req.query.url;
+app.get('/connect', (req, res) => {
+  const url = req.query.url
 
-  socket = client(url);
+  socket = client(url)
 
-  socket.on("connect", () => {
-    res.sendStatus(200);
-  });
-});
+  socket.on('connect', () => {
+    res.sendStatus(200)
+  })
+})
 
-app.get("/message", (req, res) => {
-  const msg = req.query.m;
+app.get('/message', (req, res) => {
+  const msg = req.query.m
 
   socket.send(msg, () => {
-    res.sendStatus(200);
-  });
-});
+    res.sendStatus(200)
+  })
+})
 
-app.get("/disconnect", (req, res) => {
-  socket.on("disconnect", () => {
-    res.sendStatus(200);
-  });
+app.get('/disconnect', (req, res) => {
+  socket.on('disconnect', () => {
+    res.sendStatus(200)
+  })
 
-  socket.disconnect();
-});
+  socket.disconnect()
+})
 
-app.listen(8081, () => {});
+app.listen(8081, () => {})
 ```
 
 This avoids ever needing a second open browser, but still gives you an end-to-end test that provides 100% confidence that the two clients can communicate with each other.
@@ -217,28 +217,28 @@ The rules are:
 - <Icon name="check-circle" color="green"></Icon> You **can** [visit](/api/commands/visit) two or more domains of different origin in **different** tests.
 
 ```javascript
-it("navigates", () => {
-  cy.visit("https://www.cypress.io");
-  cy.visit("https://docs.cypress.io"); // yup all good
-});
+it('navigates', () => {
+  cy.visit('https://www.cypress.io')
+  cy.visit('https://docs.cypress.io') // yup all good
+})
 ```
 
 ```javascript
-it("navigates", () => {
-  cy.visit("https://apple.com");
-  cy.visit("https://google.com"); // this will error
-});
+it('navigates', () => {
+  cy.visit('https://apple.com')
+  cy.visit('https://google.com') // this will error
+})
 ```
 
 ```javascript
-it("navigates", () => {
-  cy.visit("https://apple.com");
-});
+it('navigates', () => {
+  cy.visit('https://apple.com')
+})
 
 // split visiting different origin in another test
-it("navigates to new origin", () => {
-  cy.visit("https://google.com"); // yup all good
-});
+it('navigates to new origin', () => {
+  cy.visit('https://google.com') // yup all good
+})
 ```
 
 This limitation exists because Cypress switches to the domain under each specific test when it runs.

@@ -1,5 +1,5 @@
 ---
-title: Continuous Integration
+title: Introduction
 ---
 
 <Alert type="info">
@@ -130,7 +130,7 @@ When working with local `https` in webpack, set an environment variable to allow
 
 ### Record tests
 
-Cypress can record your tests and make the results available in the [Cypress Dashboard](/guides/dashboard/dashboard-introduction), which is a service that gives you access to recorded tests - typically when running Cypress tests from your [CI provider](/guides/guides/continuous-integration). The Dashboard provides you insight into what happened when your tests ran.
+Cypress can record your tests and make the results available in the [Cypress Dashboard](/guides/dashboard/dashboard-introduction), which is a service that gives you access to recorded tests - typically when running Cypress tests from your [CI provider](/guides/continuous-integration/continuous-integration-introduction). The Dashboard provides you insight into what happened when your tests ran.
 
 #### Recording tests allow you to:
 
@@ -265,15 +265,15 @@ workflows:
   build:
     jobs:
       - cypress/install:
-          build: "npm run build" # run a custom app build step
+          build: 'npm run build' # run a custom app build step
       - cypress/run:
           requires:
             - cypress/install
           record: true # record results on Cypress Dashboard
           parallel: true # split all specs across machines
           parallelism: 4 # use 4 CircleCI machines to finish quickly
-          group: "all tests" # name this group "all tests" on the dashboard
-          start: "npm start" # start server before running tests
+          group: 'all tests' # name this group "all tests" on the dashboard
+          start: 'npm start' # start server before running tests
 ```
 
 In all cases, you are using `run` and `install` job definitions that Cypress provides inside the orb. Using the orb brings simplicity and static checks of parameters to CircleCI configuration.
@@ -363,24 +363,24 @@ frontend:
   artifacts:
     baseDirectory: app
     files:
-      - "**/*"
+      - '**/*'
   cache:
     paths:
       - node_modules/**/*
 test:
   artifacts:
     baseDirectory: cypress
-    configFilePath: "**/mochawesome.json"
+    configFilePath: '**/mochawesome.json'
     files:
-      - "**/*.png"
-      - "**/*.mp4"
+      - '**/*.png'
+      - '**/*.mp4'
   phases:
     preTest:
       commands:
         - npm install
         - npm install wait-on
         - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
-        - "npm start & npx wait-on http://127.0.0.1:8080"
+        - 'npm start & npx wait-on http://127.0.0.1:8080'
     test:
       commands:
         - 'npx cypress run --reporter mochawesome --reporter-options "reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss"'
@@ -406,24 +406,24 @@ frontend:
   artifacts:
     baseDirectory: app
     files:
-      - "**/*"
+      - '**/*'
   cache:
     paths:
       - node_modules/**/*
 test:
   artifacts:
     baseDirectory: cypress
-    configFilePath: "**/mochawesome.json"
+    configFilePath: '**/mochawesome.json'
     files:
-      - "**/*.png"
-      - "**/*.mp4"
+      - '**/*.png'
+      - '**/*.mp4'
   phases:
     preTest:
       commands:
         - npm install
         - npm install wait-on
         - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
-        - "npm start & npx wait-on http://127.0.0.1:8080"
+        - 'npm start & npx wait-on http://127.0.0.1:8080'
     test:
       commands:
         - 'npx cypress run --record --reporter mochawesome --reporter-options "reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss"'
@@ -440,7 +440,7 @@ backend:
   phases:
     build:
       commands:
-        - "# Execute Amplify CLI with the helper script"
+        - '# Execute Amplify CLI with the helper script'
         - amplifyPush --simple
 frontend:
   phases:
@@ -453,24 +453,24 @@ frontend:
   artifacts:
     baseDirectory: build
     files:
-      - "**/*"
+      - '**/*'
   cache:
     paths:
       - node_modules/**/*
 test:
   artifacts:
     baseDirectory: cypress
-    configFilePath: "**/mochawesome.json"
+    configFilePath: '**/mochawesome.json'
     files:
-      - "**/*.png"
-      - "**/*.mp4"
+      - '**/*.png'
+      - '**/*.mp4'
   phases:
     preTest:
       commands:
         - npm install
         - npm install wait-on
         - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
-        - "npm start & npx wait-on http://localhost:3000"
+        - 'npm start & npx wait-on http://localhost:3000'
     test:
       commands:
         - 'npx cypress run --reporter mochawesome --reporter-options "reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss"'
@@ -489,7 +489,7 @@ backend:
   phases:
     build:
       commands:
-        - "# Execute Amplify CLI with the helper script"
+        - '# Execute Amplify CLI with the helper script'
         - amplifyPush --simple
 frontend:
   phases:
@@ -502,24 +502,24 @@ frontend:
   artifacts:
     baseDirectory: build
     files:
-      - "**/*"
+      - '**/*'
   cache:
     paths:
       - node_modules/**/*
 test:
   artifacts:
     baseDirectory: cypress
-    configFilePath: "**/mochawesome.json"
+    configFilePath: '**/mochawesome.json'
     files:
-      - "**/*.png"
-      - "**/*.mp4"
+      - '**/*.png'
+      - '**/*.mp4'
   phases:
     preTest:
       commands:
         - npm install
         - npm install wait-on
         - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
-        - "npm start & npx wait-on http://localhost:3000"
+        - 'npm start & npx wait-on http://localhost:3000'
     test:
       commands:
         - 'npx cypress run --record --reporter mochawesome --reporter-options "reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss"'
@@ -728,13 +728,13 @@ And then in your tests:
 
 ```javascript
 cy.request({
-  method: "POST",
-  url: Cypress.env("EXTERNAL_API_SERVER") + "/users/1",
+  method: 'POST',
+  url: Cypress.env('EXTERNAL_API_SERVER') + '/users/1',
   body: {
-    foo: "bar",
-    baz: "quux",
+    foo: 'bar',
+    baz: 'quux',
   },
-});
+})
 ```
 
 Refer to the dedicated [Environment Variables Guide](/guides/guides/environment-variables) for more examples.
@@ -748,17 +748,17 @@ If you're using our [Module API](/guides/guides/module-api) then you can write a
 ```js
 // scripts/run-cypress-tests.js
 
-const cypress = require("cypress");
-const server = require("./lib/my-server");
+const cypress = require('cypress')
+const server = require('./lib/my-server')
 
 // start your server
 return server.start().then(() => {
   // kick off a cypress run
   return cypress.run().then((results) => {
     // stop your server when it's complete
-    return server.stop();
-  });
-});
+    return server.stop()
+  })
+})
 ```
 
 ```shell

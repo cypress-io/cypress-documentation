@@ -22,14 +22,14 @@ Identical to [`.then()`](/api/commands/then), but always expects an array-like s
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.getCookies().spread(() => {}); // Yield all cookies
+cy.getCookies().spread(() => {}) // Yield all cookies
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.spread(() => {}); // Errors, cannot be chained off 'cy'
-cy.location().spread(); // Errors, 'location' does not yield an array
+cy.spread(() => {}) // Errors, cannot be chained off 'cy'
+cy.location().spread() // Errors, 'location' does not yield an array
 ```
 
 ### Arguments
@@ -57,14 +57,14 @@ Pass in an options object to change the default behavior of `.spread()`.
 #### Expand the array of aliased routes
 
 ```javascript
-cy.intercept("/users/").as("getUsers");
-cy.intercept("/activities/").as("getActivities");
-cy.intercept("/comments/").as("getComments");
-cy.wait(["@getUsers", "@getActivities", "@getComments"]).spread(
+cy.intercept('/users/').as('getUsers')
+cy.intercept('/activities/').as('getActivities')
+cy.intercept('/comments/').as('getComments')
+cy.wait(['@getUsers', '@getActivities', '@getComments']).spread(
   (getUsers, getActivities, getComments) => {
     // each interception is now an individual argument
   }
-);
+)
 ```
 
 ### Cookies
@@ -74,7 +74,7 @@ cy.wait(["@getUsers", "@getActivities", "@getComments"]).spread(
 ```javascript
 cy.getCookies().spread((cookie1, cookie2, cookie3) => {
   // each cookie is now an individual argument
-});
+})
 ```
 
 ## Rules
@@ -85,7 +85,7 @@ cy.getCookies().spread((cookie1, cookie2, cookie3) => {
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`.spread` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`.spread()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 

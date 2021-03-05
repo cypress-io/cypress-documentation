@@ -4,7 +4,7 @@ title: Projects
 
 With Cypress, you have the ability to record your project's tests.
 
-You typically want to record when running tests in [Continuous Integration](/guides/guides/continuous-integration), but you can also record your tests when running locally.
+You typically want to record when running tests in [Continuous Integration](/guides/continuous-integration/continuous-integration-introduction), but you can also record your tests when running locally.
 
 ## Setup
 
@@ -16,24 +16,30 @@ Make sure you [install](/guides/getting-started/installing-cypress) and [open](/
 
 </Alert>
 
-### Set up a project to record:
-
-<DocsImage src="/img/dashboard/setup-to-record.gif" alt="Setup Project Screen" ></DocsImage>
+### Set up a project to record
 
 1. Click on the **Runs** tab of your project within the [Test Runner](/guides/core-concepts/test-runner).
-2. Click **Set up Project to Record**.
-3. You will need to log in to record your tests, so you will need to log in to the Cypress Dashboard here.
-4. Fill in the name of your project (this is only for display purposes and can be changed later).
-5. Choose who owns the project. You can personally own it or select an organization you've created. If you do not have any organizations, click **Create organization**. Organizations work just like they do in GitHub. They enable you to separate your personal and work projects. [Read more about organizations](/guides/dashboard/organizations).
-6. Choose whether this project is Public or Private.
+2. Click **Connect to Dashboard**.
+3. You will need to log in to record your tests, so you'll be prompted to log in to the Cypress Dashboard here if you haven't already done so.
+   <DocsImage src="/img/dashboard/projects/setup-a-project-1.png" alt="Connect to Dashboard"></DocsImage>
+4. Choose who owns the project. You can personally own it or select an organization you're a member of. If you don't have any organizations, click **Create organization**. Organizations work just like they do in GitHub and enable you to separate your personal and work projects. [Read more about organizations](/guides/dashboard/organizations).
+   <DocsImage src="/img/dashboard/projects/setup-a-project-2.png" alt="Choose an Organization"></DocsImage>
+5. If you don't have any existing projects, you'll have the opportunity to create a new one here. If you have existing projects and want to create a new one, you can click "Create new project" to make a new one.
 
-- **A public project** can have its recordings and runs seen by _anyone_. Typically these are open source projects.
-- **A private project** restricts its access to _[only users you invite](/guides/dashboard/users)_.
+- Fill in the name of your project (this is only for display purposes and can be changed later).
+- Choose whether this project is Public or Private.
+  - **A public project** can have its recordings and runs seen by _anyone_. Typically these are open source projects.
+  - **A private project** restricts its access to _[only users you invite](/guides/dashboard/users)_.
 
+<DocsImage src="/img/dashboard/projects/setup-a-project-3.png" alt="Create a New Project"></DocsImage>
+
+6. Alternatively, if you've already created a project in the Dashboard, you can link your project by selecting it from the dropdown. Make sure to select a clean project that has not previously been linked to an existing project.
+   <DocsImage src="/img/dashboard/projects/setup-a-project-4.png" alt="Choose a Project"></DocsImage>
 7. Click **Setup Project**.
-8. Now you should see a view explaining how to record your first run.
-9. After setting up your project, Cypress inserted a unique [projectId](#Identification) into your `cypress.json`. If you're using source control, we recommend that you check your `cypress.json` including the `projectId` into source control.
-10. Within [Continuous Integration](/guides/guides/continuous-integration), or from your local computer's terminal, pass the displayed [Record Key](#Identification) while running the [cypress run](/guides/guides/command-line#cypress-run) command.
+8. Now you should see a view explaining how to record your first run with your record key.
+   <DocsImage src="/img/dashboard/projects/setup-a-project-5.png" alt="Record Instructions"></DocsImage>
+9. After setting up your project, Cypress inserts a unique [projectId](#Identification) into your configuration file, `cypress.json` by default. If you're using source control, we recommend that you check your configuration file, including the `projectId`, into source control.
+10. Within [Continuous Integration](/guides/continuous-integration/continuous-integration-introduction) or from your local computer's terminal pass the displayed [Record Key](#Identification) while running the [cypress run](/guides/guides/command-line#cypress-run) command.
 
 - Provide record key directly:
 
@@ -100,7 +106,7 @@ Anyone that has access to both the `projectId` and the record key of a project c
 
 If a record key is exposed you should [delete it](#Delete-record-key) and [create a new record key](#Create-new-record-key). Deleted keys will be invalid; If a project is run with a deleted key it will not be able to record.
 
-You can set your record key as an environment variable to help protect it. Learn more [here](/guides/guides/continuous-integration#Environment-variables).
+You can set your record key as an environment variable to help protect it. Learn more [here](/guides/continuous-integration/continuous-integration-introduction#Environment-variables).
 
 </Alert>
 

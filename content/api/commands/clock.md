@@ -15,12 +15,12 @@ The clock starts at the unix epoch (timestamp of 0). This means that when you in
 ## Syntax
 
 ```javascript
-cy.clock();
-cy.clock(now);
-cy.clock(now, functionNames);
-cy.clock(options);
-cy.clock(now, options);
-cy.clock(now, functionNames, options);
+cy.clock()
+cy.clock(now)
+cy.clock(now, functionNames)
+cy.clock(options)
+cy.clock(now, options)
+cy.clock(now, functionNames, options)
 ```
 
 ### Usage
@@ -28,7 +28,7 @@ cy.clock(now, functionNames, options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.clock();
+cy.clock()
 ```
 
 ### Arguments
@@ -71,20 +71,20 @@ You can also access the `clock` object via `this.clock` in a [`.then()`](/api/co
 
 ```javascript
 // your app code
-let seconds = 0;
+let seconds = 0
 
 setInterval(() => {
-  $("#seconds-elapsed").text(++seconds + " seconds");
-}, 1000);
+  $('#seconds-elapsed').text(++seconds + ' seconds')
+}, 1000)
 ```
 
 ```javascript
-cy.clock();
-cy.visit("/index.html");
-cy.tick(1000);
-cy.get("#seconds-elapsed").should("have.text", "1 seconds");
-cy.tick(1000);
-cy.get("#seconds-elapsed").should("have.text", "2 seconds");
+cy.clock()
+cy.visit('/index.html')
+cy.tick(1000)
+cy.get('#seconds-elapsed').should('have.text', '1 seconds')
+cy.tick(1000)
+cy.get('#seconds-elapsed').should('have.text', '2 seconds')
 ```
 
 #### Access the clock object to synchronously move time
@@ -93,28 +93,28 @@ In most cases, it's easier to use [`cy.tick()`](/api/commands/tick) to move time
 
 ```javascript
 cy.clock().then((clock) => {
-  clock.tick(1000);
-});
+  clock.tick(1000)
+})
 ```
 
 You can call `cy.clock()` again for this purpose later in a chain if necessary.
 
 ```javascript
-cy.clock();
-cy.get("input").type("Jane Lane");
+cy.clock()
+cy.get('input').type('Jane Lane')
 cy.clock().then((clock) => {
-  clock.tick(1000);
-});
+  clock.tick(1000)
+})
 ```
 
 The clock object is also available via `this.clock` in any [`.then()`](/api/commands/then) callback.
 
 ```javascript
-cy.clock();
-cy.get("form").then(($form) => {
-  this.clock.tick(1000);
+cy.clock()
+cy.get('form').then(($form) => {
+  this.clock.tick(1000)
   // do something with $form ...
-});
+})
 ```
 
 #### Access the clock object to restore native functions
@@ -123,18 +123,18 @@ In general, it should not be necessary to manually restore the native functions 
 
 ```javascript
 cy.clock().then((clock) => {
-  clock.restore();
-});
+  clock.restore()
+})
 ```
 
 Or via `this.clock`:
 
 ```javascript
-cy.clock();
-cy.get(".timer").then(($timer) => {
-  this.clock.restore();
+cy.clock()
+cy.get('.timer').then(($timer) => {
+  this.clock.restore()
   // do something with $timer ...
-});
+})
 ```
 
 ### Now
@@ -143,15 +143,15 @@ cy.get(".timer").then(($timer) => {
 
 ```javascript
 // your app code
-$("#date").text(new Date().toJSON());
+$('#date').text(new Date().toJSON())
 ```
 
 ```javascript
-const now = new Date(2017, 3, 14).getTime(); // April 14, 2017 timestamp
+const now = new Date(2017, 3, 14).getTime() // April 14, 2017 timestamp
 
-cy.clock(now);
-cy.visit("/index.html");
-cy.get("#date").contains("2017-04-14");
+cy.clock(now)
+cy.visit('/index.html')
+cy.get('#date').contains('2017-04-14')
 ```
 
 ### Function names
@@ -161,13 +161,13 @@ cy.get("#date").contains("2017-04-14");
 This example below will only override `setTimeout` and `clearTimeout` and leave the other time-related functions as they are.
 
 ```javascript
-cy.clock(null, ["setTimeout", "clearTimeout"]);
+cy.clock(null, ['setTimeout', 'clearTimeout'])
 ```
 
 Note that you must specify `Date` in order to override the current datetime. The example below affects the current datetime without affecting scheduled timers.
 
 ```javascript
-cy.clock(Date.UTC(2018, 10, 30), ["Date"]);
+cy.clock(Date.UTC(2018, 10, 30), ['Date'])
 ```
 
 #### `Using cy.clock()` with `cy.tick()`
@@ -183,23 +183,23 @@ cy.clock(Date.UTC(2018, 10, 30), ["Date"]);
 You can restore the clock and allow your application to resume normally without manipulating native global functions related to time. This is automatically called between tests.
 
 ```javascript
-cy.clock();
-cy.visit("http://localhost:3333");
-cy.get("#search").type("Acme Company");
-cy.tick(1000);
+cy.clock()
+cy.visit('http://localhost:3333')
+cy.get('#search').type('Acme Company')
+cy.tick(1000)
 // more test code here
 
 // restore the clock
 cy.clock().then((clock) => {
-  clock.restore();
-});
+  clock.restore()
+})
 // more test code here
 ```
 
 You could also restore by using [.invoke()](/api/commands/invoke) to invoke the `restore` function.
 
 ```js
-cy.clock().invoke("restore");
+cy.clock().invoke('restore')
 ```
 
 ## Notes
@@ -224,7 +224,7 @@ If you call `cy.clock()` before visiting a page with [`cy.visit()`](/api/command
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`cy.clock` is a utility command.</li><li>`cy.clock` will not run assertions. Assertions will pass through as if this command did not exist.</li></List>
+<List><li>`cy.clock()` is a utility command.</li><li>`cy.clock()` will not run assertions. Assertions will pass through as if this command did not exist.</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -235,8 +235,8 @@ If you call `cy.clock()` before visiting a page with [`cy.visit()`](/api/command
 **_Create a clock and tick it 1 second_**
 
 ```javascript
-cy.clock();
-cy.tick(1000);
+cy.clock()
+cy.tick(1000)
 ```
 
 The command above will display in the Command Log as:

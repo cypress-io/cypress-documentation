@@ -13,8 +13,8 @@ This is an alias of [`cy.location('href')`](/api/commands/location)
 ## Syntax
 
 ```javascript
-cy.url();
-cy.url(options);
+cy.url()
+cy.url(options)
 ```
 
 ### Usage
@@ -22,7 +22,7 @@ cy.url(options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.url(); // Yields the current URL as a string
+cy.url() // Yields the current URL as a string
 ```
 
 ### Arguments
@@ -50,9 +50,9 @@ Pass in an options object to change the default behavior of `cy.url()`.
 
 ```javascript
 // clicking the anchor causes the browser to follow the link
-cy.get("#user-edit a").click();
-cy.url().should("include", "/users/1/edit"); // => true
-cy.url().should("eq", "http://localhost:8000/users/1/edit"); // => true
+cy.get('#user-edit a').click()
+cy.url().should('include', '/users/1/edit') // => true
+cy.url().should('eq', 'http://localhost:8000/users/1/edit') // => true
 ```
 
 ## Notes
@@ -64,8 +64,8 @@ cy.url().should("eq", "http://localhost:8000/users/1/edit"); // => true
 `cy.url()` uses `href` under the hood.
 
 ```javascript
-cy.url(); // these yield the same string
-cy.location("href"); // these yield the same string
+cy.url() // these yield the same string
+cy.location('href') // these yield the same string
 ```
 
 ### Differences
@@ -75,11 +75,11 @@ cy.location("href"); // these yield the same string
 Given the remote URL, `http://localhost:8000/index.html`, all 3 of these assertions are the same.
 
 ```javascript
-cy.location("href").should("include", "/index.html");
+cy.location('href').should('include', '/index.html')
 
-cy.location().its("href").should("include", "/index.html");
+cy.location().its('href').should('include', '/index.html')
 
-cy.url().should("include", "/index.html");
+cy.url().should('include', '/index.html')
 ```
 
 `href` and `toString` come from the `window.location` spec.
@@ -95,14 +95,14 @@ Instead of hardcoding the URL you can use the `baseUrl` of the [Cypress configur
 Given the remote URL, `http://localhost:8000/index.html`, these assertions are the same.
 
 ```javascript
-cy.url().should("eq", "http://localhost:8000/index.html");
-cy.url().should("eq", Cypress.config().baseUrl + "/index.html"); // tests won't fail in case the port changes
+cy.url().should('eq', 'http://localhost:8000/index.html')
+cy.url().should('eq', Cypress.config().baseUrl + '/index.html') // tests won't fail in case the port changes
 ```
 
 #### Assert that the url contains "#users/new"
 
 ```javascript
-cy.url().should("contain", "#users/new");
+cy.url().should('contain', '#users/new')
 ```
 
 ## Rules
@@ -113,7 +113,7 @@ cy.url().should("contain", "#users/new");
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`cy.url` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`cy.url()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 

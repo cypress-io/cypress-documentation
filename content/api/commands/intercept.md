@@ -41,8 +41,8 @@ cy.intercept(routeMatcher, routeHandler?)
 Specify the URL to match. See the examples for [Matching URL](#Matching-URL) to see how URLs are matched.
 
 ```ts
-cy.intercept("http://example.com/widgets");
-cy.intercept("http://example.com/widgets", { fixture: "widgets.json" });
+cy.intercept('http://example.com/widgets')
+cy.intercept('http://example.com/widgets', { fixture: 'widgets.json' })
 ```
 
 #### **<Icon name="angle-right"></Icon> method** **_(`string`)_**
@@ -50,10 +50,10 @@ cy.intercept("http://example.com/widgets", { fixture: "widgets.json" });
 Specify the HTTP method to match on.
 
 ```ts
-cy.intercept("POST", "http://example.com/widgets", {
+cy.intercept('POST', 'http://example.com/widgets', {
   statusCode: 200,
-  body: "it worked!",
-});
+  body: 'it worked!',
+})
 ```
 
 #### **<Icon name="angle-right"></Icon> routeMatcher** **_(`RouteMatcher`)_**
@@ -177,7 +177,7 @@ You can provide the entire URL to match
 // will match any request that exactly matches the URL
 //   matches GET https://prod.cypress.io/users
 //   won't match GET https://staging.cypress.io/users
-cy.intercept("https://prod.cypress.io/users");
+cy.intercept('https://prod.cypress.io/users')
 ```
 
 You can provide a substring of the URL to match
@@ -185,14 +185,14 @@ You can provide a substring of the URL to match
 ```js
 // will match any request that contains "users" substring, like
 //   GET <domain>/users?_limit=3 and POST <domain>/users
-cy.intercept("users");
+cy.intercept('users')
 ```
 
 You can provide a [minimatc](/api/utilities/minimatch) pattern
 
 ```javascript
 // will match any HTTP method to urls that end with 3 or 5
-cy.intercept("**/users?_limit=+(3|5)");
+cy.intercept('**/users?_limit=+(3|5)')
 ```
 
 **Tip:** you can evaluate your URL using DevTools console to see if the [minimatch pattern](https://www.npmjs.com/package/minimatch) is correct.
@@ -200,16 +200,16 @@ cy.intercept("**/users?_limit=+(3|5)");
 ```javascript
 // paste into the DevTools console while Cypress is running
 Cypress.minimatch(
-  "https://jsonplaceholder.cypress.io/users?_limit=3",
-  "**/users?_limit=+(3|5)"
-); // true
+  'https://jsonplaceholder.cypress.io/users?_limit=3',
+  '**/users?_limit=+(3|5)'
+) // true
 
 // print verbose debug information
 Cypress.minimatch(
-  "https://jsonplaceholder.cypress.io/users?_limit=3",
-  "**/users?_limit=+(3|5)",
+  'https://jsonplaceholder.cypress.io/users?_limit=3',
+  '**/users?_limit=+(3|5)',
   { debug: true }
-); // true + lots of debug messages
+) // true + lots of debug messages
 ```
 
 You can even add an assertion to the test itself to ensure the URL is matched
@@ -218,23 +218,23 @@ You can even add an assertion to the test itself to ensure the URL is matched
 // arguments are url and the pattern
 expect(
   Cypress.minimatch(
-    "https://jsonplaceholder.cypress.io/users?_limit=3",
-    "**/users?_limit=+(3|5)"
+    'https://jsonplaceholder.cypress.io/users?_limit=3',
+    '**/users?_limit=+(3|5)'
   ),
-  "Minimatch test"
-).to.be.true;
+  'Minimatch test'
+).to.be.true
 ```
 
 For the most powerful matching, provide a regular expression
 
 ```javascript
-cy.intercept(/\/users\?_limit=(3|5)$/).as("users");
-cy.get("#load-users").click();
-cy.wait("@users").its("response.body").should("have.length", 3);
+cy.intercept(/\/users\?_limit=(3|5)$/).as('users')
+cy.get('#load-users').click()
+cy.wait('@users').its('response.body').should('have.length', 3)
 
 // intercepts _limit=5 requests
-cy.get("#load-five-users").click();
-cy.wait("@users").its("response.body").should("have.length", 5);
+cy.get('#load-five-users').click()
+cy.wait('@users').its('response.body').should('have.length', 5)
 ```
 
 ### Waiting on a request
@@ -244,22 +244,22 @@ Use [cy.wait()](/api/commands/wait) with `cy.intercept()` aliases to wait for th
 #### With URL
 
 ```js
-cy.intercept("http://example.com/settings").as("getSettings");
+cy.intercept('http://example.com/settings').as('getSettings')
 // once a request to http://example.com/settings responds, this 'cy.wait' will resolve
-cy.wait("@getSettings");
+cy.wait('@getSettings')
 ```
 
 #### With [RouteMatcher](#routeMatcher-RouteMatcher)
 
 ```js
 cy.intercept({
-  url: "http://example.com/search",
-  query: { q: "expected terms" },
-}).as("search");
+  url: 'http://example.com/search',
+  query: { q: 'expected terms' },
+}).as('search')
 
 // once any type of request to http://example.com/search with a querystring containing
 // 'q=expected+terms' responds, this 'cy.wait' will resolve
-cy.wait("@search");
+cy.wait('@search')
 ```
 
 #### Using the yielded object
@@ -267,22 +267,22 @@ cy.wait("@search");
 Using [cy.wait()](/api/commands/wait) on a `cy.intercept()` route alias yields an interception object which represents the request/response cycle:
 
 ```js
-cy.wait("@someRoute").then((interception) => {
+cy.wait('@someRoute').then((interception) => {
   // 'interception' is an object with properties 'id', 'request' and 'response'
-});
+})
 ```
 
 You can chain [`.its()`](/api/commands/its) and [`.should()`](/api/commands/should) to assert against request/response cycles:
 
 ```js
 // assert that a request to this route was made with a body that included 'user'
-cy.wait("@someRoute").its("request.body").should("include", "user");
+cy.wait('@someRoute').its('request.body').should('include', 'user')
 
 // assert that a request to this route received a response with HTTP status 500
-cy.wait("@someRoute").its("response.statusCode").should("eq", 500);
+cy.wait('@someRoute').its('response.statusCode').should('eq', 500)
 
 // assert that a request to this route received a response body that includes 'id'
-cy.wait("@someRoute").its("response.body").should("include", "id");
+cy.wait('@someRoute').its('response.body').should('include', 'id')
 ```
 
 #### Aliasing individual requests
@@ -290,14 +290,14 @@ cy.wait("@someRoute").its("response.body").should("include", "id");
 Aliases can be set on a per-request basis by setting the `alias` property of the intercepted request:
 
 ```js
-cy.intercept("POST", "/graphql", (req) => {
-  if (req.body.hasOwnProperty("mutation")) {
-    req.alias = "gqlMutation";
+cy.intercept('POST', '/graphql', (req) => {
+  if (req.body.hasOwnProperty('mutation')) {
+    req.alias = 'gqlMutation'
   }
-});
+})
 
 // assert that a matching request has been made
-cy.wait("@gqlMutation");
+cy.wait('@gqlMutation')
 ```
 
 #### Aliasing individual GraphQL requests
@@ -311,53 +311,53 @@ Given that the `operationName` property is optional in GraphQL requests, we can 
 With `operationName` property:
 
 ```js
-cy.intercept("POST", "/graphql", (req) => {
-  if (req.body.operationName.includes("ListPosts")) {
-    req.alias = "gqlListPostsQuery";
+cy.intercept('POST', '/graphql', (req) => {
+  if (req.body.operationName.includes('ListPosts')) {
+    req.alias = 'gqlListPostsQuery'
   }
-});
+})
 
 // assert that a matching request for the ListPosts Query has been made
-cy.wait("@gqlListPostsQuery");
+cy.wait('@gqlListPostsQuery')
 ```
 
 ```js
-cy.intercept("POST", "/graphql", (req) => {
-  if (req.body.operationName.includes("CreatePost")) {
-    req.alias = "gqlCreatePostMutation";
+cy.intercept('POST', '/graphql', (req) => {
+  if (req.body.operationName.includes('CreatePost')) {
+    req.alias = 'gqlCreatePostMutation'
   }
-});
+})
 
 // assert that a matching request for the CreatePost Mutation has been made
-cy.wait("@gqlCreatePostMutation");
+cy.wait('@gqlCreatePostMutation')
 ```
 
 Without `operationName` property:
 
 ```js
-cy.intercept("POST", "/graphql", (req) => {
-  const { body } = req;
+cy.intercept('POST', '/graphql', (req) => {
+  const { body } = req
 
-  if (body.hasOwnProperty("query") && body.query.includes("ListPosts")) {
-    req.alias = "gqlListPostsQuery";
+  if (body.hasOwnProperty('query') && body.query.includes('ListPosts')) {
+    req.alias = 'gqlListPostsQuery'
   }
-});
+})
 
 // assert that a matching request for the ListPosts Query has been made
-cy.wait("@gqlListPostsQuery");
+cy.wait('@gqlListPostsQuery')
 ```
 
 ```js
-cy.intercept("POST", "/graphql", (req) => {
-  const { body } = req;
+cy.intercept('POST', '/graphql', (req) => {
+  const { body } = req
 
-  if (body.hasOwnProperty("mutation") && body.query.includes("CreatePost")) {
-    req.alias = "gqlCreatePostMutation";
+  if (body.hasOwnProperty('mutation') && body.query.includes('CreatePost')) {
+    req.alias = 'gqlCreatePostMutation'
   }
-});
+})
 
 // assert that a matching request for the CreatePost Mutation has been made
-cy.wait("@gqlCreatePostMutation");
+cy.wait('@gqlCreatePostMutation')
 ```
 
 #### Waiting on errors
@@ -365,10 +365,10 @@ cy.wait("@gqlCreatePostMutation");
 You can use [cy.wait()](/api/commands/wait) to wait on requests that end with network errors:
 
 ```js
-cy.intercept("GET", "/should-err", { forceNetworkError: true }).as("err");
+cy.intercept('GET', '/should-err', { forceNetworkError: true }).as('err')
 
 // assert that this request happened, and that it ended in an error
-cy.wait("@err").should("have.property", "error");
+cy.wait('@err').should('have.property', 'error')
 ```
 
 ### Stubbing a response
@@ -377,7 +377,7 @@ cy.wait("@err").should("have.property", "error");
 
 ```js
 // requests to '/update' will be fulfilled with a body of "success"
-cy.intercept("/update", "success");
+cy.intercept('/update', 'success')
 ```
 
 #### With a fixture
@@ -385,7 +385,7 @@ cy.intercept("/update", "success");
 ```js
 // requests to '/users.json' will be fulfilled
 // with the contents of the "users.json" fixture
-cy.intercept("/users.json", { fixture: "users.json" });
+cy.intercept('/users.json', { fixture: 'users.json' })
 ```
 
 #### With a `StaticResponse` object
@@ -395,9 +395,9 @@ A `StaticResponse` object represents a response to an HTTP request, and can be u
 ```js
 const staticResponse = {
   /* some StaticResponse properties here... */
-};
+}
 
-cy.intercept("/projects", staticResponse);
+cy.intercept('/projects', staticResponse)
 ```
 
 Here are the available properties on `StaticResponse`:
@@ -444,9 +444,9 @@ Here are the available properties on `StaticResponse`:
 #### Asserting on a request
 
 ```js
-cy.intercept("POST", "/organization", (req) => {
-  expect(req.body).to.include("Acme Company");
-});
+cy.intercept('POST', '/organization', (req) => {
+  expect(req.body).to.include('Acme Company')
+})
 ```
 
 #### Modifying an outgoing request
@@ -454,10 +454,10 @@ cy.intercept("POST", "/organization", (req) => {
 You can use the route callback to modify the request before it is sent.
 
 ```js
-cy.intercept("POST", "/login", (req) => {
+cy.intercept('POST', '/login', (req) => {
   // set the request body to something different before it's sent to the destination
-  req.body = "username=janelane&password=secret123";
-});
+  req.body = 'username=janelane&password=secret123'
+})
 ```
 
 #### Adding a header to an outgoing request
@@ -465,23 +465,23 @@ cy.intercept("POST", "/login", (req) => {
 You can add a header to an outgoing request, or modify an existing header
 
 ```js
-cy.intercept("/req-headers", (req) => {
-  req.headers["x-custom-headers"] = "added by cy.intercept";
-});
+cy.intercept('/req-headers', (req) => {
+  req.headers['x-custom-headers'] = 'added by cy.intercept'
+})
 ```
 
 **Note:** the new header will NOT be shown in the browser's Network tab, as the request has already left the browser. You can still confirm the header was added by waiting on the intercept as shown below:
 
 ```js
-cy.intercept("/req-headers", (req) => {
-  req.headers["x-custom-headers"] = "added by cy.intercept";
-}).as("headers");
+cy.intercept('/req-headers', (req) => {
+  req.headers['x-custom-headers'] = 'added by cy.intercept'
+}).as('headers')
 
 // the application makes the call ...
 // confirm the custom header was added
-cy.wait("@headers")
-  .its("request.headers")
-  .should("have.property", "x-custom-headers", "added by cy.intercept");
+cy.wait('@headers')
+  .its('request.headers')
+  .should('have.property', 'x-custom-headers', 'added by cy.intercept')
 ```
 
 #### Dynamically stubbing a response
@@ -489,21 +489,21 @@ cy.wait("@headers")
 You can use the `req.reply()` function to dynamically control the response to a request.
 
 ```js
-cy.intercept("/billing", (req) => {
+cy.intercept('/billing', (req) => {
   // functions on 'req' can be used to dynamically respond to a request here
 
   // send the request to the destination server
-  req.reply();
+  req.reply()
 
   // respond to the request with a JSON object
-  req.reply({ plan: "starter" });
+  req.reply({ plan: 'starter' })
 
   // send the request to the destination server, and intercept the response
   req.reply((res) => {
     // 'res' represents the real destination's response
     // See "Intercepting a response" for more details and examples
-  });
-});
+  })
+})
 ```
 
 The available functions on `req` are:
@@ -544,13 +544,13 @@ The available functions on `req` are:
 If a Promise is returned from the route callback, it will be awaited before continuing with the request.
 
 ```js
-cy.intercept("POST", "/login", (req) => {
+cy.intercept('POST', '/login', (req) => {
   // you could asynchronously fetch test data...
   return getLoginCredentials().then((credentials) => {
     // ...and then, use it to supplement the outgoing request
-    req.headers["authorization"] = credentials;
-  });
-});
+    req.headers['authorization'] = credentials
+  })
+})
 ```
 
 #### Passing a request to the next route handler
@@ -559,14 +559,14 @@ If `req.reply()` is not explicitly called inside of a route callback, requests w
 
 ```js
 // you could have a top-level http that sets an auth token on all requests
-cy.intercept("http://api.company.com/", (req) => {
-  req.headers["authorization"] = `token ${token}`;
-});
+cy.intercept('http://api.company.com/', (req) => {
+  req.headers['authorization'] = `token ${token}`
+})
 
 // and then another http that more narrowly asserts on certain requests
-cy.intercept("POST", "http://api.company.com/widgets", (req) => {
-  expect(req.body).to.include("analytics");
-});
+cy.intercept('POST', 'http://api.company.com/widgets', (req) => {
+  expect(req.body).to.include('analytics')
+})
 
 // a POST request to http://api.company.com/widgets would hit both
 // of those callbacks in order then it would be sent out
@@ -578,23 +578,23 @@ cy.intercept("POST", "http://api.company.com/widgets", (req) => {
 Inside of a callback passed to `req.reply()`, you can access the destination server's real response.
 
 ```js
-cy.intercept("/integrations", (req) => {
+cy.intercept('/integrations', (req) => {
   // req.reply() with a callback will send the request to the destination server
   req.reply((res) => {
     // 'res' represents the real destination response
     // you can manipulate 'res' before it's sent to the browser
-  });
-});
+  })
+})
 ```
 
 #### Asserting on a response
 
 ```js
-cy.intercept("/projects", (req) => {
+cy.intercept('/projects', (req) => {
   req.reply((res) => {
-    expect(res.body).to.include("My Project");
-  });
-});
+    expect(res.body).to.include('My Project')
+  })
+})
 ```
 
 #### Returning a Promise
@@ -602,12 +602,12 @@ cy.intercept("/projects", (req) => {
 If a Promise is returned from the route callback, it will be awaited before sending the response to the browser.
 
 ```js
-cy.intercept("/users", (req) => {
+cy.intercept('/users', (req) => {
   req.reply((res) => {
     // the response will not be sent to the browser until 'waitForSomething()' resolves
-    return waitForSomething();
-  });
-});
+    return waitForSomething()
+  })
+})
 ```
 
 #### Modifying an incoming response
@@ -617,21 +617,21 @@ You can use the `res.send()` function to dynamically control the incoming respon
 `res.send()` is implicitly called after the `req.reply` callback finishes if it has not already been called.
 
 ```js
-cy.intercept("/notification", (req) => {
+cy.intercept('/notification', (req) => {
   req.reply((res) => {
     // replaces 'res.body' with "Success" and sends the response to the browser
-    res.send("Success");
+    res.send('Success')
 
     // sends a fixture body instead of the existing 'res.body'
-    res.send({ fixture: "success.json" });
+    res.send({ fixture: 'success.json' })
 
     // delays the response by 1000ms
-    res.delay(1000);
+    res.delay(1000)
 
     // throttles the response to 64kbps
-    res.throttle(64);
-  });
-});
+    res.throttle(64)
+  })
+})
 ```
 
 The available functions on `res` are:

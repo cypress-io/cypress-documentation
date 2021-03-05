@@ -9,7 +9,7 @@ Useful when writing your own [custom commands](/api/cypress-api/custom-commands)
 ## Syntax
 
 ```javascript
-Cypress.log(options);
+Cypress.log(options)
 ```
 
 ### Arguments
@@ -31,16 +31,16 @@ Pass in an options object to `Cypress.log()`.
 We want the Command Log and the console in the DevTools to log specific properties of our custom command.
 
 ```javascript
-Cypress.Commands.add("setSessionStorage", (key, value) => {
+Cypress.Commands.add('setSessionStorage', (key, value) => {
   // Turn off logging of the cy.window() to command log
   cy.window({ log: false }).then((window) => {
-    window.sessionStorage.setItem(key, value);
-  });
+    window.sessionStorage.setItem(key, value)
+  })
 
   const log = Cypress.log({
-    name: "setSessionStorage",
+    name: 'setSessionStorage',
     // shorter name for the Command Log
-    displayName: "setSS",
+    displayName: 'setSS',
     message: `${key}, ${value}`,
     consoleProps: () => {
       // return an object which will
@@ -48,11 +48,11 @@ Cypress.Commands.add("setSessionStorage", (key, value) => {
       return {
         Key: key,
         Value: value,
-        "Session Storage": window.sessionStorage,
-      };
+        'Session Storage': window.sessionStorage,
+      }
     },
-  });
-});
+  })
+})
 ```
 
 The code above displays in the Command Log as shown below, with the console properties shown on click of the command.

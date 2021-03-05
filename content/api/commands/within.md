@@ -16,14 +16,14 @@ Scopes all subsequent cy commands to within this element. Useful when working wi
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get(".list").within(($list) => {}); // Yield the `.list` and scope all commands within it
+cy.get('.list').within(($list) => {}) // Yield the `.list` and scope all commands within it
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.within(() => {}); // Errors, cannot be chained off 'cy'
-cy.getCookies().within(() => {}); // Errors, 'getCookies' does not yield DOM element
+cy.within(() => {}) // Errors, cannot be chained off 'cy'
+cy.getCookies().within(() => {}) // Errors, 'getCookies' does not yield DOM element
 ```
 
 ### Arguments
@@ -59,16 +59,16 @@ Pass in an options object to change the default behavior of `.within()`.
 ```
 
 ```javascript
-cy.get("form").within(($form) => {
+cy.get('form').within(($form) => {
   // you have access to the found form via
   // the jQuery object $form if you need it
 
   // cy.get() will only search for elements within form,
   // not within the entire document
-  cy.get('input[name="email"]').type("john.doe@email.com");
-  cy.get('input[name="password"]').type("password");
-  cy.root().submit();
-});
+  cy.get('input[name="email"]').type('john.doe@email.com')
+  cy.get('input[name="password"]').type('password')
+  cy.root().submit()
+})
 ```
 
 ### Tables
@@ -88,15 +88,42 @@ cy.get("form").within(($form) => {
 ```
 
 ```javascript
-cy.contains("My first client")
-  .parent("tr")
+cy.contains('My first client')
+  .parent('tr')
   .within(() => {
     // all searches are automatically rooted to the found tr element
-    cy.get("td").eq(1).contains("My first project");
-    cy.get("td").eq(2).contains("0");
-    cy.get("td").eq(3).contains("Active");
-    cy.get("td").eq(4).contains("button", "Edit").click();
-  });
+    cy.get('td').eq(1).contains('My first project')
+    cy.get('td').eq(2).contains('0')
+    cy.get('td').eq(3).contains('Active')
+    cy.get('td').eq(4).contains('button', 'Edit').click()
+  })
+```
+
+### Temporarily escape
+
+You can temporarily escape the `.within` context by starting a new command chain with [cy.root](/api/commands/root) followed by [.closest](/api/commands/closest) commands.
+
+```html
+<section class="example">
+  <!-- note the input field outside the form -->
+  <input id="name" type="text" />
+  <form>
+    <input name="email" type="email" />
+    <input name="password" type="password" />
+    <button type="submit">Login</button>
+  </form>
+</section>
+```
+
+```javascript
+cy.get('form').within(($form) => {
+  // temporarily escape the .within context
+  cy.root().closest('.example').find('#name').type('Joe')
+  // continue using the .within context
+  cy.get('input[name="email"]').type('john.doe@email.com')
+  cy.get('input[name="password"]').type('password')
+  cy.root().submit()
+})
 ```
 
 ## Rules
@@ -107,7 +134,7 @@ cy.contains("My first client")
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`.within` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`.within()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -118,9 +145,9 @@ cy.contains("My first client")
 **_Get the input within the form_**
 
 ```javascript
-cy.get(".query-form").within((el) => {
-  cy.get("input:first");
-});
+cy.get('.query-form').within((el) => {
+  cy.get('input:first')
+})
 ```
 
 The commands above will display in the Command Log as:

@@ -14,9 +14,9 @@ The `before:spec` event fires before a spec file is run. The event only fires wh
 ## Syntax
 
 ```js
-on("before:spec", (spec) => {
+on('before:spec', (spec) => {
   /* ... */
-});
+})
 ```
 
 **<Icon name="angle-right"></Icon> spec** **_(Object)_**
@@ -37,7 +37,7 @@ You can return a promise from the `before:spec` event handler and it will be awa
 
 ```javascript
 module.exports = (on, config) => {
-  on("before:spec", (spec) => {
+  on('before:spec', (spec) => {
     // spec will look something like this:
     // {
     //   name: 'login_spec.js',
@@ -45,9 +45,9 @@ module.exports = (on, config) => {
     //   absolute: '/Users/janelane/app/cypress/integration/login_spec.js',
     // }
 
-    console.log("Running", spec.relative);
-  });
-};
+    console.log('Running', spec.relative)
+  })
+}
 ```
 
 ## See also

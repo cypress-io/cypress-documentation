@@ -16,14 +16,14 @@ Scroll an element into view.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get("footer").scrollIntoView(); // Scrolls 'footer' into view
+cy.get('footer').scrollIntoView() // Scrolls 'footer' into view
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.scrollIntoView("footer"); // Errors, cannot be chained off 'cy'
-cy.window().scrollIntoView(); // Errors, 'window' does not yield DOM element
+cy.scrollIntoView('footer') // Errors, cannot be chained off 'cy'
+cy.window().scrollIntoView() // Errors, 'window' does not yield DOM element
 ```
 
 ### Arguments
@@ -49,7 +49,7 @@ Pass in an options object to change the default behavior of `.scrollIntoView()`.
 ### Scrolling
 
 ```javascript
-cy.get("button#checkout").scrollIntoView().should("be.visible");
+cy.get('button#checkout').scrollIntoView().should('be.visible')
 ```
 
 ### Options
@@ -57,19 +57,19 @@ cy.get("button#checkout").scrollIntoView().should("be.visible");
 #### Use linear easing animation to scroll
 
 ```javascript
-cy.get(".next-page").scrollIntoView({ easing: "linear" });
+cy.get('.next-page').scrollIntoView({ easing: 'linear' })
 ```
 
 #### Scroll to element over 2000ms
 
 ```javascript
-cy.get("footer").scrollIntoView({ duration: 2000 });
+cy.get('footer').scrollIntoView({ duration: 2000 })
 ```
 
 #### Scroll 150px below an element
 
 ```js
-cy.get("#nav").scrollIntoView({ offset: { top: 150, left: 0 } });
+cy.get('#nav').scrollIntoView({ offset: { top: 150, left: 0 } })
 ```
 
 ## Notes
@@ -88,7 +88,7 @@ _Cypress does not reflect the accurate scroll positions of any elements within s
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`.scrollIntoView` will automatically wait for assertions you have chained to pass</li></List>
+<List><li>`.scrollIntoView()` will automatically wait for assertions you have chained to pass</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -99,7 +99,7 @@ _Cypress does not reflect the accurate scroll positions of any elements within s
 #### Assert element is visible after scrolling it into view
 
 ```javascript
-cy.get("#scroll-horizontal button").scrollIntoView().should("be.visible");
+cy.get('#scroll-horizontal button').scrollIntoView().should('be.visible')
 ```
 
 The commands above will display in the Command Log as:

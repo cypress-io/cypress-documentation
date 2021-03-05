@@ -33,7 +33,9 @@ You can create an organization from within the [Dashboard Service](https://on.cy
 
 ### Personal Org
 
-By default, every user of Cypress is given a personal organization - named after you. You cannot delete or edit the name of this personal organization.
+In the past, every user of Cypress was given a personal organization - named after you. You cannot delete or edit the name of this personal organization, however you can convert it to a professional organization.
+
+New users will no longer have a personal organization created for them automatically.
 
 #### Convert to professional org
 

@@ -11,18 +11,18 @@ To modify configuration, you return an object from your plugins file exported fu
 ```javascript
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  console.log(config); // see what all is in here!
+  console.log(config) // see what all is in here!
 
   // modify config values
-  config.defaultCommandTimeout = 10000;
-  config.baseUrl = "https://staging.acme.com";
+  config.defaultCommandTimeout = 10000
+  config.baseUrl = 'https://staging.acme.com'
 
   // modify env var value
-  config.env.ENVIRONMENT = "staging";
+  config.env.ENVIRONMENT = 'staging'
 
   // return config
-  return config;
-};
+  return config
+}
 ```
 
 Whenever you return an object from your `pluginFile`, Cypress will take this and "diff" it against the original configuration and automatically set the resolved values to point to what you returned.
@@ -75,9 +75,9 @@ module.exports = (on, config) => {
   //   majorVersion: 80
   // }
   return {
-    browsers: config.browsers.filter((b) => b.family === "chromium"),
-  };
-};
+    browsers: config.browsers.filter((b) => b.family === 'chromium'),
+  }
+}
 ```
 
 When you open the Test Runner in a project that uses the above modifications to your plugins file, only the Chrome browsers found on the system will display in the list of available browsers.
@@ -104,22 +104,22 @@ How you choose to organize your configuration and environment variables is up to
 
 ```javascript
 // promisified fs module
-const fs = require("fs-extra");
-const path = require("path");
+const fs = require('fs-extra')
+const path = require('path')
 
 function getConfigurationByFile(file) {
-  const pathToConfigFile = path.resolve("..", "config", `${file}.json`);
+  const pathToConfigFile = path.resolve('..', 'config', `${file}.json`)
 
-  return fs.readJson(pathToConfigFile);
+  return fs.readJson(pathToConfigFile)
 }
 
 // plugins file
 module.exports = (on, config) => {
   // accept a configFile value or use development by default
-  const file = config.env.configFile || "development";
+  const file = config.env.configFile || 'development'
 
-  return getConfigurationByFile(file);
-};
+  return getConfigurationByFile(file)
+}
 ```
 
 You could now swap out configuration + environment variables like so:

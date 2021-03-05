@@ -7,10 +7,10 @@ Reload the page.
 ## Syntax
 
 ```javascript
-cy.reload();
-cy.reload(forceReload);
-cy.reload(options);
-cy.reload(forceReload, options);
+cy.reload()
+cy.reload(forceReload)
+cy.reload(options)
+cy.reload(forceReload, options)
 ```
 
 ### Usage
@@ -18,7 +18,7 @@ cy.reload(forceReload, options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.reload();
+cy.reload()
 ```
 
 ### Arguments
@@ -45,10 +45,10 @@ Whether to reload the current page without using the cache. `true` forces the re
 #### Reload the page as if the user clicked 'Refresh'
 
 ```javascript
-cy.visit("http://localhost:3000/admin");
-cy.get("#undo-btn").click().should("not.be.visible");
-cy.reload();
-cy.get("#undo-btn").click().should("not.be.visible");
+cy.visit('http://localhost:3000/admin')
+cy.get('#undo-btn').click().should('not.be.visible')
+cy.reload()
+cy.get('#undo-btn').click().should('not.be.visible')
 ```
 
 ### Force Reload
@@ -56,8 +56,8 @@ cy.get("#undo-btn").click().should("not.be.visible");
 #### Reload the page without using the cache
 
 ```javascript
-cy.visit("http://localhost:3000/admin");
-cy.reload(true);
+cy.visit('http://localhost:3000/admin')
+cy.reload(true)
 ```
 
 ## Rules
@@ -68,7 +68,7 @@ cy.reload(true);
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`cy.reload` will automatically wait for assertions you have chained to pass</li></List>
+<List><li>`cy.reload()` will automatically wait for assertions you have chained to pass</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -79,7 +79,7 @@ cy.reload(true);
 **_Reload the page_**
 
 ```javascript
-cy.reload();
+cy.reload()
 ```
 
 The commands above will display in the Command Log as:

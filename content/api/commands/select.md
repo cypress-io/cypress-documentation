@@ -18,14 +18,14 @@ Select an `<option>` within a `<select>`.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get("select").select("user-1"); // Select the 'user-1' option
+cy.get('select').select('user-1') // Select the 'user-1' option
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.select("John Adams"); // Errors, cannot be chained off 'cy'
-cy.location().select(); // Errors, 'location' does not yield <select> element
+cy.select('John Adams') // Errors, cannot be chained off 'cy'
+cy.location().select() // Errors, 'location' does not yield <select> element
 ```
 
 ### Arguments
@@ -68,7 +68,7 @@ Pass in an options object to change the default behavior of `.select()`.
 
 ```javascript
 // yields <option value="456">apples</option>
-cy.get("select").select("apples").should("have.value", "456");
+cy.get('select').select('apples').should('have.value', '456')
 ```
 
 ### Value
@@ -85,7 +85,7 @@ cy.get("select").select("apples").should("have.value", "456");
 
 ```javascript
 // yields <option value="456">apples</option>
-cy.get("select").select("456").should("have.value", "456");
+cy.get('select').select('456').should('have.value', '456')
 ```
 
 ### Select multiple options
@@ -101,10 +101,10 @@ cy.get("select").select("456").should("have.value", "456");
 ```
 
 ```javascript
-cy.get("select")
-  .select(["apples", "bananas"])
-  .invoke("val")
-  .should("deep.equal", ["456", "458"]);
+cy.get('select')
+  .select(['apples', 'bananas'])
+  .invoke('val')
+  .should('deep.equal', ['456', '458'])
 ```
 
 #### Select the options with the values "456" and "457"
@@ -118,10 +118,10 @@ cy.get("select")
 ```
 
 ```javascript
-cy.get("select")
-  .select(["456", "457"])
-  .invoke("val")
-  .should("deep.equal", ["456", "457"]);
+cy.get('select')
+  .select(['456', '457'])
+  .invoke('val')
+  .should('deep.equal', ['456', '457'])
 ```
 
 ### Force select
@@ -140,10 +140,10 @@ cy.get("select")
 ```
 
 ```javascript
-cy.get("select")
-  .select("banana", { force: true })
-  .invoke("val")
-  .should("eq", "banana");
+cy.get('select')
+  .select('banana', { force: true })
+  .invoke('val')
+  .should('eq', 'banana')
 ```
 
 #### Force select a disabled `<select>`
@@ -162,10 +162,10 @@ Passing `{ force: true }` to `.select()` will override the actionability checks 
 ```
 
 ```javascript
-cy.get("select")
-  .select("okra", { force: true })
-  .invoke("val")
-  .should("eq", "okra");
+cy.get('select')
+  .select('okra', { force: true })
+  .invoke('val')
+  .should('eq', 'okra')
 ```
 
 ## Notes
@@ -184,7 +184,7 @@ However, passing `{ force: true }` to `.select()` will not override the actionab
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`.select` will automatically wait for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.select` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.select()` will automatically wait for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.select()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -195,7 +195,7 @@ However, passing `{ force: true }` to `.select()` will not override the actionab
 **_Select the option with the text "Homer Simpson"_**
 
 ```javascript
-cy.get("select").select("Homer Simpson");
+cy.get('select').select('Homer Simpson')
 ```
 
 The commands above will display in the Command Log as:

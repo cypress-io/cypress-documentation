@@ -26,7 +26,7 @@ The plugins file must export a function with the following signature:
 // export a function
 module.exports = (on, config) => {
   // configure plugins here
-};
+}
 ```
 
 The exported function is called whenever a project is opened either with [cypress open](/guides/guides/command-line#cypress-open) or [cypress run](/guides/guides/command-line#cypress-run).
@@ -45,10 +45,10 @@ Registering to listen on an event looks like this:
 
 ```javascript
 module.exports = (on, config) => {
-  on("<event>", (arg1, arg2) => {
+  on('<event>', (arg1, arg2) => {
     // plugin stuff here
-  });
-};
+  })
+}
 ```
 
 Each event documents its own argument signature. To understand how to use them, please [refer to the docs for each one](#List-of-events).
@@ -139,14 +139,14 @@ You can also `require` local files relative to your project.
 ```js
 // cypress/plugins/index.js
 
-const _ = require("lodash"); // yup, dev dependencies
-const path = require("path"); // yup, built in node modules
-const debug = require("debug"); // yup, dependencies
-const User = require("../../lib/models/user"); // yup, relative local modules
+const _ = require('lodash') // yup, dev dependencies
+const path = require('path') // yup, built in node modules
+const debug = require('debug') // yup, dependencies
+const User = require('../../lib/models/user') // yup, relative local modules
 
-console.log(__dirname); // /Users/janelane/Dev/my-project/cypress/plugins/index.js
+console.log(__dirname) // /Users/janelane/Dev/my-project/cypress/plugins/index.js
 
-console.log(process.cwd()); // /Users/janelane/Dev/my-project
+console.log(process.cwd()) // /Users/janelane/Dev/my-project
 ```
 
 ## Error handling

@@ -191,7 +191,7 @@ While this may take a bit more work than other options - it yields you the most 
 
 ### Environment Variables
 
-You can also use [environment variables](/guides/guides/environment-variables) to override configuration values. This is especially useful in [Continuous Integration](/guides/guides/continuous-integration) or when working locally. This gives you the ability to change configuration options without modifying any code or build scripts.
+You can also use [environment variables](/guides/guides/environment-variables) to override configuration values. This is especially useful in [Continuous Integration](/guides/continuous-integration/continuous-integration-introduction) or when working locally. This gives you the ability to change configuration options without modifying any code or build scripts.
 
 By default, any environment variable that matches a corresponding configuration key will override the configuration file (`cypress.json` by default) value.
 
@@ -236,9 +236,9 @@ Configuration set using `Cypress.config` _is only in scope for the current spec 
 </Alert>
 
 ```javascript
-Cypress.config("pageLoadTimeout", 100000);
+Cypress.config('pageLoadTimeout', 100000)
 
-Cypress.config("pageLoadTimeout"); // => 100000
+Cypress.config('pageLoadTimeout') // => 100000
 ```
 
 ### Test Configuration
@@ -269,7 +269,7 @@ You can configure the number of times to retries a suite of tests if they fail d
 
 ```js
 describe(
-  "login",
+  'login',
   {
     retries: {
       runMode: 3,
@@ -277,15 +277,15 @@ describe(
     },
   },
   () => {
-    it("should redirect unauthenticated user to sign-in page", () => {
+    it('should redirect unauthenticated user to sign-in page', () => {
       // ...
-    });
+    })
 
-    it("allows user to login", () => {
+    it('allows user to login', () => {
       // ...
-    });
+    })
   }
-);
+)
 ```
 
 #### Single test configuration
@@ -293,12 +293,12 @@ describe(
 If you want to target a test to run or be excluded when run in a specific browser, you can override the `browser` configuration within the test configuration. The `browser` option accepts the same arguments as [Cypress.isBrowser()](/api/cypress-api/isbrowser).
 
 ```js
-it("Show warning outside Chrome", { browser: "!chrome" }, () => {
-  cy.get(".browser-warning").should(
-    "contain",
-    "For optimal viewing, use Chrome browser"
-  );
-});
+it('Show warning outside Chrome', { browser: '!chrome' }, () => {
+  cy.get('.browser-warning').should(
+    'contain',
+    'For optimal viewing, use Chrome browser'
+  )
+})
 ```
 
 ## Resolved Configuration
@@ -464,7 +464,7 @@ Run GC cleanup before every 3rd test during [cypress run](/guides/guides/command
 You can open Cypress in the interactive mode via the `cypress open` command, and in run mode via the `cypress run` command. To detect the mode from your test code you can query the `isInteractive` property on [Cypress.config](/api/cypress-api/config).
 
 ```javascript
-if (Cypress.config("isInteractive")) {
+if (Cypress.config('isInteractive')) {
   // interactive "cypress open" mode!
 } else {
   // "cypress run" mode
@@ -530,3 +530,4 @@ DEBUG=cypress:cli,cypress:server:specs
 - [Cypress.config()](/api/cypress-api/config)
 - [Environment variables](/guides/guides/environment-variables)
 - [Environment Variables recipe](/examples/examples/recipes#Fundamentals)
+- [Extending the Cypress Config File](https://www.cypress.io/blog/2020/06/18/extending-the-cypress-config-file/) blog post and [@bahmutov/cypress-extends](https://github.com/bahmutov/cypress-extends) package.

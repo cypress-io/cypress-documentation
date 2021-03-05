@@ -68,9 +68,9 @@ For example if you add the command `cy.dataCy` into your [supportFile](/guides/r
 
 ```javascript
 // cypress/support/index.ts
-Cypress.Commands.add("dataCy", (value) => {
-  return cy.get(`[data-cy=${value}]`);
-});
+Cypress.Commands.add('dataCy', (value) => {
+  return cy.get(`[data-cy=${value}]`)
+})
 ```
 
 Then you can add the `dataCy` command to the global Cypress Chainable interface (so called because commands are chained together) by creating a new TypeScript definitions file beside your [supportFile](/guides/references/configuration#Folders-Files), in this case at `cypress/support/index.d.ts`.
@@ -86,7 +86,7 @@ declare namespace Cypress {
      * Custom command to select DOM element by data-cy attribute.
      * @example cy.dataCy('greeting')
      */
-    dataCy(value: string): Chainable<Element>;
+    dataCy(value: string): Chainable<Element>
   }
 }
 ```
@@ -104,12 +104,12 @@ Even if your project is JavaScript only, the JavaScript specs can know about the
 ```javascript
 // from your cypress/integration/spec.ts
 /// <reference path="../support/index.d.ts" />
-it("works", () => {
-  cy.visit("/");
+it('works', () => {
+  cy.visit('/')
   // IntelliSense and TS compiler should
   // not complain about unknown method
-  cy.dataCy("greeting");
-});
+  cy.dataCy('greeting')
+})
 ```
 
 #### Examples:
@@ -134,7 +134,7 @@ You can utilize Cypress's type declarations in your [plugins file](/guides/tooli
 /**
  * @type {Cypress.PluginConfig}
  */
-module.exports = (on, config) => {};
+module.exports = (on, config) => {}
 ```
 
 ## History
