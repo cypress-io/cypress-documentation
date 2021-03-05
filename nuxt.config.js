@@ -4,7 +4,6 @@ const meta = getMetaData()
 
 export default {
   router: {
-    // middleware: 'lower-case-url',
     trailingSlash: false,
     extendRoutes(routes, resolve) {
       routes.push(
@@ -97,9 +96,6 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-    script: [
-      { src: '/lower-case-url.js' }
-    ]
   },
   /*
    ** Global CSS
