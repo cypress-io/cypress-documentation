@@ -26,14 +26,14 @@ The querying behavior of this command matches exactly how [`.nextUntil()`](http:
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get("div").nextUntil(".warning"); // Yield siblings after 'div' until '.warning'
+cy.get('div').nextUntil('.warning') // Yield siblings after 'div' until '.warning'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.nextUntil(); // Errors, cannot be chained off 'cy'
-cy.location().nextUntil("path"); // Errors, 'location' does not yield DOM element
+cy.nextUntil() // Errors, cannot be chained off 'cy'
+cy.location().nextUntil('path') // Errors, 'location' does not yield DOM element
 ```
 
 ### Arguments
@@ -88,7 +88,7 @@ Pass in an options object to change the default behavior of `.nextUntil()`.
 
 ```javascript
 //returns [<li>cucumbers</li>, <li>carrots</li>, <li>corn</li>]
-cy.get("#veggies").nextUntil("#nuts");
+cy.get('#veggies').nextUntil('#nuts')
 ```
 
 ## Rules
@@ -99,7 +99,7 @@ cy.get("#veggies").nextUntil("#nuts");
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`.nextUntil` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.nextUntil` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.nextUntil()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.nextUntil()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -110,7 +110,7 @@ cy.get("#veggies").nextUntil("#nuts");
 **_Find all of the element's siblings following `#veggies` until `#nuts`_**
 
 ```javascript
-cy.get("#veggies").nextUntil("#nuts");
+cy.get('#veggies').nextUntil('#nuts')
 ```
 
 The commands above will display in the Command Log as:

@@ -153,7 +153,7 @@ To change the position in the viewport to where we scroll an element, you can us
 After we verify the element is actionable, Cypress will then fire all of the appropriate events and corresponding default actions. Usually these events' coordinates are fired at the center of the element, but most commands enable you to change the position it's fired to.
 
 ```js
-cy.get("button").click({ position: "topLeft" });
+cy.get('button').click({ position: 'topLeft' })
 ```
 
 The coordinates we fired the event at will generally be available when clicking the command in the [Command Log](/guides/core-concepts/test-runner#Command-Log).
@@ -188,7 +188,7 @@ You can also [bind to Events](/api/events/catalog-of-events) that Cypress fires 
 
 ```js
 // break on a debugger before the action command
-cy.get("button").debug().click();
+cy.get('button').debug().click()
 ```
 
 ## Forcing
@@ -208,7 +208,7 @@ You can pass `{ force: true }` to most action commands.
 ```js
 // force the click and all subsequent events
 // to fire even if this element isn't considered 'actionable'
-cy.get("button").click({ force: true });
+cy.get('button').click({ force: true })
 ```
 
 <Alert type="info">

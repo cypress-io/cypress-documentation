@@ -7,8 +7,8 @@ Get the DOM element that is currently focused.
 ## Syntax
 
 ```javascript
-cy.focused();
-cy.focused(options);
+cy.focused()
+cy.focused(options)
 ```
 
 ### Usage
@@ -16,7 +16,7 @@ cy.focused(options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.focused(); // Yields the element currently in focus
+cy.focused() // Yields the element currently in focus
 ```
 
 ### Arguments
@@ -43,19 +43,19 @@ Pass in an options object to change the default behavior of `cy.focused()`.
 ```javascript
 cy.focused().then(($el) => {
   // do something with $el
-});
+})
 ```
 
 #### Blur the element with focus
 
 ```javascript
-cy.focused().blur();
+cy.focused().blur()
 ```
 
 #### Make an assertion on the focused element
 
 ```javascript
-cy.focused().should("have.attr", "name", "username");
+cy.focused().should('have.attr', 'name', 'username')
 ```
 
 ## Rules
@@ -66,7 +66,7 @@ cy.focused().should("have.attr", "name", "username");
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`cy.focused` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`cy.focused` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`cy.focused()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`cy.focused()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -77,7 +77,7 @@ cy.focused().should("have.attr", "name", "username");
 **_Make an assertion on the focused element_**
 
 ```javascript
-cy.focused().should("have.attr", "name").and("eq", "num");
+cy.focused().should('have.attr', 'name').and('eq', 'num')
 ```
 
 The commands above will display in the Command Log as:

@@ -27,8 +27,8 @@ cy.debug(options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.debug().getCookie("app"); // Pause to debug at beginning of commands
-cy.get("nav").debug(); // Debug the `get` command's yield
+cy.debug().getCookie('app') // Pause to debug at beginning of commands
+cy.get('nav').debug() // Debug the `get` command's yield
 ```
 
 ### Arguments
@@ -52,7 +52,7 @@ Pass in an options object to change the default behavior of `.debug()`.
 #### Pause with debugger after `.get()`
 
 ```javascript
-cy.get("a").debug().should("have.attr", "href");
+cy.get('a').debug().should('have.attr', 'href')
 ```
 
 ## Rules
@@ -63,7 +63,7 @@ cy.get("a").debug().should("have.attr", "href");
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`.debug` is a utility command.</li><li>`.debug` will not run assertions. Assertions will pass through as if this command did not exist.</li></List>
+<List><li>`.debug()` is a utility command.</li><li>`.debug()` will not run assertions. Assertions will pass through as if this command did not exist.</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -74,7 +74,7 @@ cy.get("a").debug().should("have.attr", "href");
 **_Log out the current subject for debugging_**
 
 ```javascript
-cy.get(".ls-btn").click({ force: true }).debug();
+cy.get('.ls-btn').click({ force: true }).debug()
 ```
 
 The commands above will display in the Command Log as:

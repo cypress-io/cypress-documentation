@@ -88,11 +88,11 @@ Once that file is created, you should see it in the list of spec files.
 Now you'll need to add in the following code in your test file to visit your server:
 
 ```js
-describe("The Home Page", () => {
-  it("successfully loads", () => {
-    cy.visit("http://localhost:8080"); // change URL to match your dev URL
-  });
-});
+describe('The Home Page', () => {
+  it('successfully loads', () => {
+    cy.visit('http://localhost:8080') // change URL to match your dev URL
+  })
+})
 ```
 
 Now click on the `home_page_spec.js` file and watch Cypress open your browser.
@@ -139,11 +139,11 @@ Whenever you modify your configuration file, Cypress will automatically reboot i
 We can now visit a relative path and omit the hostname and port.
 
 ```js
-describe("The Home Page", () => {
-  it("successfully loads", () => {
-    cy.visit("/");
-  });
-});
+describe('The Home Page', () => {
+  it('successfully loads', () => {
+    cy.visit('/')
+  })
+})
 ```
 
 Great! Everything should still be green.
@@ -189,16 +189,16 @@ To test various page states - like an empty view, or a pagination view, you'd ne
 If you're running `node.js` on your server, you might add a `before` or `beforeEach` hook that executes an `npm` task.
 
 ```js
-describe("The Home Page", () => {
+describe('The Home Page', () => {
   beforeEach(() => {
     // reset and seed the database prior to every test
-    cy.exec("npm run db:reset && npm run db:seed");
-  });
+    cy.exec('npm run db:reset && npm run db:seed')
+  })
 
-  it("successfully loads", () => {
-    cy.visit("/");
-  });
-});
+  it('successfully loads', () => {
+    cy.visit('/')
+  })
+})
 ```
 
 Instead of just executing a system command, you may want more flexibility and could expose a series of routes only when running in a test environment.
@@ -206,32 +206,32 @@ Instead of just executing a system command, you may want more flexibility and co
 **For instance, you could compose several requests together to tell your server exactly the state you want to create.**
 
 ```js
-describe("The Home Page", () => {
+describe('The Home Page', () => {
   beforeEach(() => {
     // reset and seed the database prior to every test
-    cy.exec("npm run db:reset && npm run db:seed");
+    cy.exec('npm run db:reset && npm run db:seed')
 
     // seed a post in the DB that we control from our tests
-    cy.request("POST", "/test/seed/post", {
-      title: "First Post",
+    cy.request('POST', '/test/seed/post', {
+      title: 'First Post',
       authorId: 1,
-      body: "...",
-    });
+      body: '...',
+    })
 
     // seed a user in the DB that we can control from our tests
-    cy.request("POST", "/test/seed/user", { name: "Jane" })
-      .its("body")
-      .as("currentUser");
-  });
+    cy.request('POST', '/test/seed/user', { name: 'Jane' })
+      .its('body')
+      .as('currentUser')
+  })
 
-  it("successfully loads", () => {
+  it('successfully loads', () => {
     // this.currentUser will now point to the response
     // body of the cy.request() that we could use
     // to log in or work with in some way
 
-    cy.visit("/");
-  });
-});
+    cy.visit('/')
+  })
+})
 ```
 
 While there's nothing really _wrong_ with this approach, it does add a lot of complexity. You will be battling synchronizing the state between your server and your browser - and you'll always need to set up / tear down this state before tests (which is slow).
@@ -287,39 +287,39 @@ Logging in is one of those features that are **mission critical** and should lik
 Here's an example alongside seeding your database:
 
 ```js
-describe("The Login Page", () => {
+describe('The Login Page', () => {
   beforeEach(() => {
     // reset and seed the database prior to every test
-    cy.exec("npm run db:reset && npm run db:seed");
+    cy.exec('npm run db:reset && npm run db:seed')
 
     // seed a user in the DB that we can control from our tests
     // assuming it generates a random password for us
-    cy.request("POST", "/test/seed/user", { username: "jane.lane" })
-      .its("body")
-      .as("currentUser");
-  });
+    cy.request('POST', '/test/seed/user', { username: 'jane.lane' })
+      .its('body')
+      .as('currentUser')
+  })
 
-  it("sets auth cookie when logging in via form submission", function () {
+  it('sets auth cookie when logging in via form submission', function () {
     // destructuring assignment of the this.currentUser object
-    const { username, password } = this.currentUser;
+    const { username, password } = this.currentUser
 
-    cy.visit("/login");
+    cy.visit('/login')
 
-    cy.get("input[name=username]").type(username);
+    cy.get('input[name=username]').type(username)
 
     // {enter} causes the form to submit
-    cy.get("input[name=password]").type(`${password}{enter}`);
+    cy.get('input[name=password]').type(`${password}{enter}`)
 
     // we should be redirected to /dashboard
-    cy.url().should("include", "/dashboard");
+    cy.url().should('include', '/dashboard')
 
     // our auth cookie should be present
-    cy.getCookie("your-session-cookie").should("exist");
+    cy.getCookie('your-session-cookie').should('exist')
 
     // UI should reflect this user being logged in
-    cy.get("h1").should("contain", "jane.lane");
-  });
-});
+    cy.get('h1').should('contain', 'jane.lane')
+  })
+})
 ```
 
 You'll likely also want to test your login UI for:
@@ -376,39 +376,39 @@ Because [`cy.request()`](/api/commands/request) automatically gets and sets cook
 Let's revisit the example from above but assume we're testing some other part of the system.
 
 ```js
-describe("The Dashboard Page", () => {
+describe('The Dashboard Page', () => {
   beforeEach(() => {
     // reset and seed the database prior to every test
-    cy.exec("npm run db:reset && npm run db:seed");
+    cy.exec('npm run db:reset && npm run db:seed')
 
     // seed a user in the DB that we can control from our tests
     // assuming it generates a random password for us
-    cy.request("POST", "/test/seed/user", { username: "jane.lane" })
-      .its("body")
-      .as("currentUser");
-  });
+    cy.request('POST', '/test/seed/user', { username: 'jane.lane' })
+      .its('body')
+      .as('currentUser')
+  })
 
-  it("logs in programmatically without using the UI", function () {
+  it('logs in programmatically without using the UI', function () {
     // destructuring assignment of the this.currentUser object
-    const { username, password } = this.currentUser;
+    const { username, password } = this.currentUser
 
     // programmatically log us in without needing the UI
-    cy.request("POST", "/login", {
+    cy.request('POST', '/login', {
       username,
       password,
-    });
+    })
 
     // now that we're logged in, we can visit
     // any kind of restricted route!
-    cy.visit("/dashboard");
+    cy.visit('/dashboard')
 
     // our auth cookie should be present
-    cy.getCookie("your-session-cookie").should("exist");
+    cy.getCookie('your-session-cookie').should('exist')
 
     // UI should reflect this user being logged in
-    cy.get("h1").should("contain", "jane.lane");
-  });
-});
+    cy.get('h1').should('contain', 'jane.lane')
+  })
+})
 ```
 
 Do you see the difference? We were able to login without needing to actually use our UI. This saves an enormous amount of time visiting the login page, filling out the username, password, and waiting for the server to redirect us _before every test_.
@@ -439,6 +439,6 @@ From here you may want to explore some more of our guides:
 - [Cypress API](/api/api/table-of-contents) to learn what commands are available as you work
 - [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress) explains how Cypress _really_ works
 - [Command Line](/guides/guides/command-line) for running all your tests outside via `cypress run`
-- [Continuous Integration](/guides/guides/continuous-integration) for running Cypress in CI
+- [Continuous Integration](/guides/continuous-integration/continuous-integration-introduction) for running Cypress in CI
 - [Cross Browser Testing](/guides/guides/cross-browser-testing) for optimally running tests in CI across Firefox and Chrome-family browsers
 - <Icon name="github"></Icon> [Cypress Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) for practical demonstrations of Cypress testing practices, configuration, and strategies in a real-world project.

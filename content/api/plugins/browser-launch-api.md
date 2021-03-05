@@ -7,9 +7,9 @@ Before Cypress launches a browser, it gives you the opportunity to modify the br
 ## Syntax
 
 ```js
-on("before:browser:launch", (browser = {}, launchOptions) => {
+on('before:browser:launch', (browser = {}, launchOptions) => {
   /* ... */
-});
+})
 ```
 
 **<Icon name="angle-right"></Icon> browser** **_(object)_**
@@ -61,30 +61,30 @@ Here are args available for the currently supported browsers:
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  on("before:browser:launch", (browser = {}, launchOptions) => {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
     // `args` is an array of all the arguments that will
     // be passed to browsers when it launches
-    console.log(launchOptions.args); // print all current args
+    console.log(launchOptions.args) // print all current args
 
-    if (browser.family === "chromium" && browser.name !== "electron") {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
       // auto open devtools
-      launchOptions.args.push("--auto-open-devtools-for-tabs");
+      launchOptions.args.push('--auto-open-devtools-for-tabs')
     }
 
-    if (browser.family === "firefox") {
+    if (browser.family === 'firefox') {
       // auto open devtools
-      launchOptions.args.push("-devtools");
+      launchOptions.args.push('-devtools')
     }
 
-    if (browser.name === "electron") {
+    if (browser.name === 'electron') {
       // auto open devtools
-      launchOptions.preferences.devTools = true;
+      launchOptions.preferences.devTools = true
     }
 
     // whatever you return here becomes the launchOptions
-    return launchOptions;
-  });
-};
+    return launchOptions
+  })
+}
 ```
 
 #### Add browser extensions:
@@ -92,14 +92,14 @@ module.exports = (on, config) => {
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  on("before:browser:launch", (browser, launchOptions) => {
+  on('before:browser:launch', (browser, launchOptions) => {
     // supply the absolute path to an unpacked extension's folder
     // NOTE: extensions cannot be loaded in headless Chrome
-    launchOptions.extensions.push("Users/jane/path/to/extension");
+    launchOptions.extensions.push('Users/jane/path/to/extension')
 
-    return launchOptions;
-  });
-};
+    return launchOptions
+  })
+}
 ```
 
 #### Changing browser preferences:
@@ -113,32 +113,32 @@ Here are preferences available for the currently supported browsers:
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  on("before:browser:launch", (browser, launchOptions) => {
-    if (browser.family === "chromium" && browser.name !== "electron") {
+  on('before:browser:launch', (browser, launchOptions) => {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
       // in Chromium, preferences can exist in Local State, Preferences, or Secure Preferences
       // via launchOptions.preferences, these can be acccssed as `localState`, `default`, and `secureDefault`
 
       // for example, to set `somePreference: true` in Preferences:
-      launchOptions.preferences.default["preference"] = true;
+      launchOptions.preferences.default['preference'] = true
 
-      return launchOptions;
+      return launchOptions
     }
 
-    if (browser.family === "firefox") {
+    if (browser.family === 'firefox') {
       // launchOptions.preferences is a map of preference names to values
-      launchOptions.preferences["some.preference"] = true;
+      launchOptions.preferences['some.preference'] = true
 
-      return launchOptions;
+      return launchOptions
     }
 
-    if (browser.name === "electron") {
+    if (browser.name === 'electron') {
       // launchOptions.preferences is a `BrowserWindow` `options` object
-      launchOptions.preferences.darkTheme = true;
+      launchOptions.preferences.darkTheme = true
 
-      return launchOptions;
+      return launchOptions
     }
-  });
-};
+  })
+}
 ```
 
 ### Modify Electron app switches
@@ -175,42 +175,42 @@ When a browser runs headless, there is no physical display. You can override the
 
 <Alert type="warning">
 
-This setting changes the display size of the screen and does not affect the `viewportWidth` and `viewportHeight` set in the [configuration](/guides/references/configuration). The `viewportWidth` and `viewportHeight` only affect the size of the application under test displayed inside the Test Runner.
+This setting changes the display size of the screen and does not affect the `viewportWidth` and `viewportHeight` set in the [configuration](/guides/references/configuration). The `viewportWidth` and `viewportHeight` only affect the size of the application under test displayed inside the Test Runner. Read the blog post [Generate High-Resolution Videos and Screenshots](https://www.cypress.io/blog/2021/03/01/generate-high-resolution-videos-and-screenshots/) for details.
 
 </Alert>
 
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  on("before:browser:launch", (browser, launchOptions) => {
-    if (browser.name === "chrome" && browser.isHeadless) {
+  on('before:browser:launch', (browser, launchOptions) => {
+    if (browser.name === 'chrome' && browser.isHeadless) {
       // fullPage screenshot size is 1400x1200 on non-retina screens
       // and 2800x2400 on retina screens
-      launchOptions.args.push("--window-size=1400,1200");
+      launchOptions.args.push('--window-size=1400,1200')
 
       // force screen to be non-retina (1400x1200 size)
-      launchOptions.args.push("--force-device-scale-factor=1");
+      launchOptions.args.push('--force-device-scale-factor=1')
 
       // force screen to be retina (2800x2400 size)
       // launchOptions.args.push('--force-device-scale-factor=2')
     }
 
-    if (browser.name === "electron" && browser.isHeadless) {
+    if (browser.name === 'electron' && browser.isHeadless) {
       // fullPage screenshot size is 1400x1200
-      launchOptions.preferences.width = 1400;
-      launchOptions.preferences.height = 1200;
+      launchOptions.preferences.width = 1400
+      launchOptions.preferences.height = 1200
     }
 
-    if (browser.name === "firefox" && browser.isHeadless) {
+    if (browser.name === 'firefox' && browser.isHeadless) {
       // menubars take up height on the screen
       // so fullPage screenshot size is 1400x1126
-      launchOptions.args.push("--width=1400");
-      launchOptions.args.push("--height=1200");
+      launchOptions.args.push('--width=1400')
+      launchOptions.args.push('--height=1200')
     }
 
-    return launchOptions;
-  });
-};
+    return launchOptions
+  })
+}
 ```
 
 ### Start fullscreen
@@ -218,20 +218,20 @@ module.exports = (on, config) => {
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  on("before:browser:launch", (browser = {}, launchOptions) => {
-    if (browser.family === "chromium" && browser.name !== "electron") {
-      launchOptions.args.push("--start-fullscreen");
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
+      launchOptions.args.push('--start-fullscreen')
 
-      return launchOptions;
+      return launchOptions
     }
 
-    if (browser.name === "electron") {
-      launchOptions.preferences.fullscreen = true;
+    if (browser.name === 'electron') {
+      launchOptions.preferences.fullscreen = true
 
-      return launchOptions;
+      return launchOptions
     }
-  });
-};
+  })
+}
 ```
 
 ### Use fake video for webcam testing
@@ -245,20 +245,20 @@ You can however send your own video file for testing by passing a Chrome command
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  on("before:browser:launch", (browser = {}, launchOptions) => {
-    if (browser.family === "chromium" && browser.name !== "electron") {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
       // Mac/Linux
       launchOptions.args.push(
-        "--use-file-for-fake-video-capture=cypress/fixtures/my-video.y4m"
-      );
+        '--use-file-for-fake-video-capture=cypress/fixtures/my-video.y4m'
+      )
 
       // Windows
       // launchOptions.args.push('--use-file-for-fake-video-capture=c:\\path\\to\\video\\my-video.y4m')
     }
 
-    return launchOptions;
-  });
-};
+    return launchOptions
+  })
+}
 ```
 
 ### Support unique file download mime types
@@ -267,22 +267,22 @@ Cypress supports a myriad of mime types when testing file downloads, but in case
 
 ```js
 module.exports = (on) => {
-  on("before:browser:launch", (browser, options) => {
+  on('before:browser:launch', (browser, options) => {
     // only Firefox requires all mime types to be listed
-    if (browser.family === "firefox") {
+    if (browser.family === 'firefox') {
       const existingMimeTypes =
-        options.preferences["browser.helperApps.neverAsk.saveToDisk"];
-      const myMimeType = "my/mimetype";
+        options.preferences['browser.helperApps.neverAsk.saveToDisk']
+      const myMimeType = 'my/mimetype'
 
       // prevents the browser download prompt
       options.preferences[
-        "browser.helperApps.neverAsk.saveToDisk"
-      ] = `${existingMimeTypes},${myMimeType}`;
+        'browser.helperApps.neverAsk.saveToDisk'
+      ] = `${existingMimeTypes},${myMimeType}`
 
-      return options;
+      return options
     }
-  });
-};
+  })
+}
 ```
 
 <Alert type="info">
@@ -290,6 +290,24 @@ module.exports = (on) => {
 [Check out our example recipe showing how to download and validate CSV and Excel files.](/examples/examples/recipes#Testing-the-DOM)
 
 </Alert>
+
+### Set a Firefox flag
+
+If we need to set a particular Firefox flag, like `browser.send_pings` we can do it via preferences
+
+```js
+module.exports = (on) => {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.family === 'firefox') {
+      launchOptions.preferences['browser.send_pings'] = true
+    }
+
+    return launchOptions
+  })
+}
+```
+
+The above example comes from the blog post [How to Test Anchor Ping](https://glebbahmutov.com/blog/anchor-ping/).
 
 ## History
 

@@ -66,7 +66,7 @@ You can read about our currently available browsers [here](/guides/guides/launch
 
 ## <Icon name="angle-right"></Icon> Will Cypress work in my CI provider?
 
-Cypress works in any [CI provider](/guides/guides/continuous-integration).
+Cypress works in any [CI provider](/guides/continuous-integration/continuous-integration-introduction).
 
 ## <Icon name="angle-right"></Icon> Does Cypress require me to change any of my existing code?
 
@@ -171,7 +171,7 @@ Finally, unit and end-to-end tests are not _that_ different and have common feat
 - Focus on and test only one thing.
 - Are flake-free and do not fail randomly.
 - Give you confidence to refactor code and add new features.
-- Are able to run both locally and on a [continuous integration](/guides/guides/continuous-integration) server.
+- Are able to run both locally and on a [continuous integration](/guides/continuous-integration/continuous-integration-introduction) server.
 
 Certainly, unit and end-to-end tests are NOT in opposition to each other and are complementary tools in your toolbox.
 
@@ -195,3 +195,7 @@ We schedule releases of the Test Runner on Monday every two weeks. This new vers
 We schedule major releases with breaking changes approximately every 3 months.
 
 If there is a significant bug outside of our release schedule then we release a patch as soon as possible.
+
+## <Icon name="angle-right"></Icon> What information is captured or transmitted when using the Cypress Test Runner?
+
+The Cypress Test Runner runs locally so no data is sent to Cypress aside from exception data, which can be disabled using the instructions [here](https://docs.cypress.io/guides/getting-started/installing-cypress.html#Opt-out-of-sending-exception-data-to-Cypress).

@@ -20,14 +20,14 @@ Trigger an event on a DOM element.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get("a").trigger("mousedown"); // Trigger mousedown event on link
+cy.get('a').trigger('mousedown') // Trigger mousedown event on link
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.trigger("touchstart"); // Errors, cannot be chained off 'cy'
-cy.location().trigger("mouseleave"); // Errors, 'location' does not yield DOM element
+cy.trigger('touchstart') // Errors, cannot be chained off 'cy'
+cy.location().trigger('mouseleave') // Errors, 'location' does not yield DOM element
 ```
 
 ### Arguments
@@ -81,26 +81,26 @@ You can also include arbitrary event properties (e.g. `clientX`, `shiftKey`) and
 The DOM element must be in an "interactable" state prior to the triggered event happening (it must be visible and not disabled).
 
 ```javascript
-cy.get("button").trigger("mouseover"); // yields 'button'
+cy.get('button').trigger('mouseover') // yields 'button'
 ```
 
 #### Simulate a "long press" event
 
 ```javascript
-cy.get(".target").trigger("mousedown");
-cy.wait(1000);
-cy.get(".target").trigger("mouseleave");
+cy.get('.target').trigger('mousedown')
+cy.wait(1000)
+cy.get('.target').trigger('mouseleave')
 ```
 
 #### Trigger a `mousedown` from a specific mouse button
 
 ```js
 // Main button pressed (usually the left button)
-cy.get(".target").trigger("mousedown", { button: 0 });
+cy.get('.target').trigger('mousedown', { button: 0 })
 // Auxiliary button pressed (usually the middle button)
-cy.get(".target").trigger("mousedown", { button: 1 });
+cy.get('.target').trigger('mousedown', { button: 1 })
 //Secondary button pressed (usually the right button)
-cy.get(".target").trigger("mousedown", { button: 2 });
+cy.get('.target').trigger('mousedown', { button: 2 })
 ```
 
 #### jQuery UI Sortable
@@ -108,10 +108,10 @@ cy.get(".target").trigger("mousedown", { button: 2 });
 To simulate drag and drop using jQuery UI sortable requires `pageX` and `pageY` properties along with `which:1`.
 
 ```javascript
-cy.get("[data-cy=draggable]")
-  .trigger("mousedown", { which: 1, pageX: 600, pageY: 100 })
-  .trigger("mousemove", { which: 1, pageX: 600, pageY: 600 })
-  .trigger("mouseup");
+cy.get('[data-cy=draggable]')
+  .trigger('mousedown', { which: 1, pageX: 600, pageY: 100 })
+  .trigger('mousemove', { which: 1, pageX: 600, pageY: 600 })
+  .trigger('mouseup')
 ```
 
 #### Drag and Drop
@@ -134,9 +134,9 @@ Below we invoke jQuery's `val()` method to set the value, then trigger the `chan
 Note that some implementations may rely on the `input` event instead, which is fired as a user moves the slider, but is not supported by some browsers.
 
 ```javascript
-cy.get("input[type=range]").as("range").invoke("val", 25).trigger("change");
+cy.get('input[type=range]').as('range').invoke('val', 25).trigger('change')
 
-cy.get("@range").siblings("p").should("have.text", "25");
+cy.get('@range').siblings('p').should('have.text', '25')
 ```
 
 ### Position
@@ -144,7 +144,7 @@ cy.get("@range").siblings("p").should("have.text", "25");
 #### Trigger a `mousedown` on the top right of a button
 
 ```javascript
-cy.get("button").trigger("mousedown", "topRight");
+cy.get('button').trigger('mousedown', 'topRight')
 ```
 
 ### Coordinates
@@ -152,7 +152,7 @@ cy.get("button").trigger("mousedown", "topRight");
 #### Specify explicit coordinates relative to the top left corner
 
 ```javascript
-cy.get("button").trigger("mouseup", 15, 40);
+cy.get('button').trigger('mouseup', 15, 40)
 ```
 
 ### Options
@@ -162,7 +162,7 @@ cy.get("button").trigger("mouseup", 15, 40);
 By default, the event will bubble up the DOM tree. This will prevent the event from bubbling.
 
 ```javascript
-cy.get("button").trigger("mouseover", { bubbles: false });
+cy.get('button').trigger('mouseover', { bubbles: false })
 ```
 
 #### Specify the exact `clientX` and `clientY` the event should have
@@ -170,7 +170,7 @@ cy.get("button").trigger("mouseover", { bubbles: false });
 This overrides the default auto-positioning based on the element itself. Useful for events like `mousemove` where you need the position to be outside the element itself.
 
 ```javascript
-cy.get("button").trigger("mousemove", { clientX: 200, clientY: 300 });
+cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
 ```
 
 ### Fire other Event types.
@@ -180,7 +180,7 @@ By default, `cy.trigger()` fires [`Event`](https://developer.mozilla.org/en-US/d
 In that case, use the `eventConstructor` option.
 
 ```js
-cy.get("button").trigger("mouseover", { eventConstructor: "MouseEvent" });
+cy.get('button').trigger('mouseover', { eventConstructor: 'MouseEvent' })
 ```
 
 ## Notes
@@ -208,13 +208,13 @@ As you can see the documentation of [`MouseEvent`](https://developer.mozilla.org
 In other words, what's the difference between:
 
 ```javascript
-cy.get("button").trigger("focus");
-cy.get("button").focus();
+cy.get('button').trigger('focus')
+cy.get('button').focus()
 
 // ... or ...
 
-cy.get("button").trigger("click");
-cy.get("button").click();
+cy.get('button').trigger('click')
+cy.get('button').click()
 ```
 
 Both types commands will first verify element actionability, but only the "true" action commands will implement all of the default actions of the browser, and additionally perform low level actions to fulfill what's defined in the spec.
@@ -231,7 +231,7 @@ That means that your event listener callbacks will be invoked, but don't expect 
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`.trigger` will automatically wait for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.trigger` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.trigger()` will automatically wait for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.trigger()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -242,7 +242,7 @@ That means that your event listener callbacks will be invoked, but don't expect 
 **_Trigger a `change` event on input type='range'_**
 
 ```javascript
-cy.get(".trigger-input-range").invoke("val", 25).trigger("change");
+cy.get('.trigger-input-range').invoke('val', 25).trigger('change')
 ```
 
 The commands above will display in the Command Log as:

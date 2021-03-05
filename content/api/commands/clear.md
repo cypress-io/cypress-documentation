@@ -22,17 +22,17 @@ An alias for [`.type('{selectall}{backspace}')`](/api/commands/type)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('[type="text"]').clear(); // Clear text input
-cy.get("textarea").type("Hi!").clear(); // Clear textarea
-cy.focused().clear(); // Clear focused input/textarea
+cy.get('[type="text"]').clear() // Clear text input
+cy.get('textarea').type('Hi!').clear() // Clear textarea
+cy.focused().clear() // Clear focused input/textarea
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.clear(); // Errors, cannot be chained off 'cy'
-cy.get("nav").clear(); // Errors, 'get' doesn't yield input or textarea
-cy.url().clear(); // Errors, 'url' doesn't yield DOM element
+cy.clear() // Errors, cannot be chained off 'cy'
+cy.get('nav').clear() // Errors, 'get' doesn't yield input or textarea
+cy.url().clear() // Errors, 'url' doesn't yield DOM element
 ```
 
 ### Arguments
@@ -61,7 +61,7 @@ Pass in an options object to change the default behavior of `.clear()`.
 #### Clear the input and type a new value
 
 ```javascript
-cy.get("textarea").clear().type("Hello, World");
+cy.get('textarea').clear().type('Hello, World')
 ```
 
 ## Notes
@@ -86,7 +86,7 @@ Please read the [`.type()`](/api/commands/type) documentation for more details.
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`.clear` will automatically wait for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.clear` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.clear()` will automatically wait for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.clear()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -97,7 +97,7 @@ Please read the [`.type()`](/api/commands/type) documentation for more details.
 **_Clear the input and type a new value_**
 
 ```javascript
-cy.get('input[name="name"]').clear().type("Jane Lane");
+cy.get('input[name="name"]').clear().type('Jane Lane')
 ```
 
 The commands above will display in the Command Log as:

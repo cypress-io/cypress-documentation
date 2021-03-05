@@ -15,7 +15,7 @@ Use `Cypress.moment` to help format or parse dates.
 ## Syntax
 
 ```javascript
-Cypress.moment();
+Cypress.moment()
 ```
 
 ### Usage
@@ -23,13 +23,13 @@ Cypress.moment();
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-Cypress.moment();
+Cypress.moment()
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.moment(); // Errors, cannot be chained off 'cy'
+cy.moment() // Errors, cannot be chained off 'cy'
 ```
 
 ## Examples
@@ -37,9 +37,9 @@ cy.moment(); // Errors, cannot be chained off 'cy'
 **Test that the span contains formatted text for today**
 
 ```javascript
-const todaysDate = Cypress.moment().format("MMM DD, YYYY");
+const todaysDate = Cypress.moment().format('MMM DD, YYYY')
 
-cy.get("span").should("contain", "Order shipped on: " + todaysDate);
+cy.get('span').should('contain', 'Order shipped on: ' + todaysDate)
 ```
 
 ## See also

@@ -7,12 +7,12 @@ Wait for a number of milliseconds or wait for an aliased resource to resolve bef
 ## Syntax
 
 ```javascript
-cy.wait(time);
-cy.wait(alias);
-cy.wait(aliases);
-cy.wait(time, options);
-cy.wait(alias, options);
-cy.wait(aliases, options);
+cy.wait(time)
+cy.wait(alias)
+cy.wait(aliases)
+cy.wait(time, options)
+cy.wait(alias, options)
+cy.wait(aliases, options)
 ```
 
 ### Usage
@@ -20,8 +20,8 @@ cy.wait(aliases, options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.wait(500);
-cy.wait("@getProfile");
+cy.wait(500)
+cy.wait('@getProfile')
 ```
 
 ### Arguments
@@ -74,7 +74,7 @@ Pass in an options object to change the default behavior of `cy.wait()`.
 #### Wait for an arbitrary period of milliseconds:
 
 ```js
-cy.wait(2000); // wait for 2 seconds
+cy.wait(2000) // wait for 2 seconds
 ```
 
 <Alert type="warning">
@@ -98,13 +98,13 @@ For a detailed explanation of aliasing, [read more about waiting on routes here]
 ```javascript
 // Wait for the route aliased as 'getAccount' to respond
 // without changing or stubbing its response
-cy.intercept("/accounts/*").as("getAccount");
-cy.visit("/accounts/123");
-cy.wait("@getAccount").then((interception) => {
+cy.intercept('/accounts/*').as('getAccount')
+cy.visit('/accounts/123')
+cy.wait('@getAccount').then((interception) => {
   // we can now access the low level interception
   // that contains the request body,
   // response body, status, etc
-});
+})
 ```
 
 #### Wait automatically increments responses
@@ -112,28 +112,28 @@ cy.wait("@getAccount").then((interception) => {
 Each time we use `cy.wait()` for an alias, Cypress waits for the next nth matching request.
 
 ```javascript
-cy.intercept("/books", []).as("getBooks");
-cy.get("#search").type("Grendel");
+cy.intercept('/books', []).as('getBooks')
+cy.get('#search').type('Grendel')
 
 // wait for the first response to finish
-cy.wait("@getBooks");
+cy.wait('@getBooks')
 
 // the results should be empty because we
 // responded with an empty array first
-cy.get("#book-results").should("be.empty");
+cy.get('#book-results').should('be.empty')
 
 // now re-define the /books response
-cy.intercept("/books", [{ name: "Emperor of all maladies" }]);
+cy.intercept('/books', [{ name: 'Emperor of all maladies' }])
 
-cy.get("#search").type("Emperor of");
+cy.get('#search').type('Emperor of')
 
 // now when we wait for 'getBooks' again, Cypress will
 // automatically know to wait for the 2nd response
-cy.wait("@getBooks");
+cy.wait('@getBooks')
 
 // we responded with 1 book item so now we should
 // have one result
-cy.get("#book-results").should("have.length", 1);
+cy.get('#book-results').should('have.length', 1)
 ```
 
 ### Aliases
@@ -143,32 +143,32 @@ cy.get("#book-results").should("have.length", 1);
 When passing an array of aliases to `cy.wait()`, Cypress will wait for all requests to complete within the given `requestTimeout` and `responseTimeout`.
 
 ```javascript
-cy.intercept("users/*").as("getUsers");
-cy.intercept("activities/*").as("getActivities");
-cy.intercept("comments/*").as("getComments");
-cy.visit("/dashboard");
+cy.intercept('users/*').as('getUsers')
+cy.intercept('activities/*').as('getActivities')
+cy.intercept('comments/*').as('getComments')
+cy.visit('/dashboard')
 
-cy.wait(["@getUsers", "@getActivities", "@getComments"]).then(
+cy.wait(['@getUsers', '@getActivities', '@getComments']).then(
   (interceptions) => {
     // interceptions will now be an array of matching requests
     // interceptions[0] <-- getUsers
     // interceptions[1] <-- getActivities
     // interceptions[2] <-- getComments
   }
-);
+)
 ```
 
 #### Using [`.spread()`](/api/commands/spread) to spread the array into multiple arguments.
 
 ```javascript
-cy.intercept("users/*").as("getUsers");
-cy.intercept("activities/*").as("getActivities");
-cy.intercept("comments/*").as("getComments");
-cy.wait(["@getUsers", "@getActivities", "@getComments"]).spread(
+cy.intercept('users/*').as('getUsers')
+cy.intercept('activities/*').as('getActivities')
+cy.intercept('comments/*').as('getComments')
+cy.wait(['@getUsers', '@getActivities', '@getComments']).spread(
   (getUsers, getActivities, getComments) => {
     // each interception is now an individual argument
   }
-);
+)
 ```
 
 ## Notes
@@ -227,7 +227,7 @@ When passing an array of aliases to `cy.wait()`, Cypress will wait for all reque
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`cy.wait` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`cy.wait()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -238,9 +238,9 @@ When passing an array of aliases to `cy.wait()`, Cypress will wait for all reque
 **_Wait for the PUT to users to resolve._**
 
 ```javascript
-cy.intercept("PUT", /users/, {}).as("userPut");
-cy.get("form").submit();
-cy.wait("@userPut").its("request.url").should("include", "users");
+cy.intercept('PUT', /users/, {}).as('userPut')
+cy.get('form').submit()
+cy.wait('@userPut').its('request.url').should('include', 'users')
 ```
 
 The commands above will display in the Command Log as:

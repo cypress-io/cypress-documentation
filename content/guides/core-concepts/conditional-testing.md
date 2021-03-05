@@ -55,35 +55,35 @@ To illustrate this, let's take a straightforward example of trying to conditiona
 // your app code
 
 // random amount of time
-const random = Math.random() * 100;
+const random = Math.random() * 100
 
 // create a <button> element
-const btn = document.createElement("button");
+const btn = document.createElement('button')
 
 // attach it to the body
-document.body.appendChild(btn);
+document.body.appendChild(btn)
 
 setTimeout(() => {
   // add the class active after an indeterminate amount of time
-  btn.setAttribute("class", "active");
-}, random);
+  btn.setAttribute('class', 'active')
+}, random)
 ```
 
 ```js
 // your cypress test code
-it("does something different based on the class of the button", () => {
+it('does something different based on the class of the button', () => {
   // RERUN THIS TEST OVER AND OVER AGAIN
   // AND IT WILL SOMETIMES BE TRUE, AND
   // SOMETIMES BE FALSE.
 
-  cy.get("button").then(($btn) => {
-    if ($btn.hasClass("active")) {
+  cy.get('button').then(($btn) => {
+    if ($btn.hasClass('active')) {
       // do something if it's active
     } else {
       // do something else
     }
-  });
-});
+  })
+})
 ```
 
 Do you see the problem here? This test is non-deterministic. The `<button>` will sometimes have the class `active` and sometimes not. In **most** cases, you cannot rely on the state of the DOM to determine what you should conditionally do.
@@ -162,17 +162,17 @@ Alternatively, if your server saves the campaign with a session, you could ask y
 
 ```js
 // this sends us the session cookies
-cy.visit("https://app.com");
+cy.visit('https://app.com')
 
 // assuming this sends us back
 // the campaign information
-cy.request("https://app.com/me")
-  .its("body.campaign")
+cy.request('https://app.com/me')
+  .its('body.campaign')
   .then((campaign) => {
     // runs different cypress test code
     // based on the type of campaign
-    return campaigns.test(campaign);
-  });
+    return campaigns.test(campaign)
+  })
 ```
 
 #### Use session cookies:
@@ -180,10 +180,10 @@ cy.request("https://app.com/me")
 Another way to test this is if your server sent the campaign in a session cookie that you could read off.
 
 ```js
-cy.visit("https://app.com");
-cy.getCookie("campaign").then((campaign) => {
-  return campaigns.test(campaign);
-});
+cy.visit('https://app.com')
+cy.getCookie('campaign').then((campaign) => {
+  return campaigns.test(campaign)
+})
 ```
 
 #### Embed data in the DOM:
@@ -191,11 +191,11 @@ cy.getCookie("campaign").then((campaign) => {
 Another valid strategy would be to embed data directly into the DOM - but do so in a way where this data is **always** present and query-able. It would have to be present 100% of the time, else this would not work.
 
 ```js
-cy.get("html")
-  .should("have.attr", "data-campaign")
+cy.get('html')
+  .should('have.attr', 'data-campaign')
   .then((campaign) => {
-    return campaigns.test(campaign);
-  });
+    return campaigns.test(campaign)
+  })
 ```
 
 ### Welcome wizard
@@ -214,12 +214,12 @@ These patterns are pretty much the same as before:
 
 ```js
 // dont show the wizard
-cy.visit("https://app.com?wizard=0");
+cy.visit('https://app.com?wizard=0')
 ```
 
 ```js
 // show the wizard
-cy.visit("https://app.com?wizard=1");
+cy.visit('https://app.com?wizard=1')
 ```
 
 We would likely need to update our client side code to check whether this query param is present. Now we know ahead of time whether it will or will not be shown.
@@ -305,39 +305,39 @@ Testing this in Cypress is possible.
 
 ```js
 // app code
-$("button").on("click", (e) => {
+$('button').on('click', (e) => {
   // do something synchronously randomly
   if (Math.random() < 0.5) {
     // append an input
-    $("<input />").appendTo($("body"));
+    $('<input />').appendTo($('body'))
   } else {
     // or append a textarea
-    $("<textarea />").appendTo($("body"));
+    $('<textarea />').appendTo($('body'))
   }
-});
+})
 ```
 
 ```js
 // click the button causing the new
 // elements to appear
-cy.get("button").click();
-cy.get("body")
+cy.get('button').click()
+cy.get('body')
   .then(($body) => {
     // synchronously query from body
     // to find which element was created
-    if ($body.find("input").length) {
+    if ($body.find('input').length) {
       // input was found, do something else here
-      return "input";
+      return 'input'
     }
 
     // else assume it was textarea
-    return "textarea";
+    return 'textarea'
   })
   .then((selector) => {
     // selector is a string that represents
     // the selector we could use to find it
-    cy.get(selector).type(`found the element by selector ${selector}`);
-  });
+    cy.get(selector).type(`found the element by selector ${selector}`)
+  })
 ```
 
 We will reiterate one more time. Had the `<input>` or the `<textarea>` been rendered asynchronously, you could not use the pattern above. You would have to involve arbitrary delays which will not work in every situation, will slow down your tests, and will still leave chances that your tests are flaky (and are an all-around anti-pattern).
@@ -352,8 +352,8 @@ If you are not sure if you have written a potentially flaky test, there is a way
 Cypress._.times(100, (i) => {
   it(`num ${i + 1} - test the thing conditionally`, () => {
     // do the conditional bits 100 times
-  });
-});
+  })
+})
 ```
 
 ### Dynamic text
@@ -401,13 +401,13 @@ For instance you may want to do this:
 ```js
 //! You cannot add error handling to Cypress commands
 //! This code is just for demonstration purposes
-cy.get("button")
-  .contains("hello")
+cy.get('button')
+  .contains('hello')
   .catch((err) => {
     // oh no the button wasn't found
     // (or something else failed)
-    cy.get("somethingElse").click();
-  });
+    cy.get('somethingElse').click()
+  })
 ```
 
 If you've been reading along, then you should already have a grasp on why trying to implement conditional code with asynchronous rendering is not a good idea. If the test writer cannot accurately predict the given state of the system, then neither can Cypress. Error handling offers no additional proof this can be done deterministically.

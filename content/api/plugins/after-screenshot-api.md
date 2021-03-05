@@ -9,9 +9,9 @@ This allows you to record those details, manipulate the image as needed, and ret
 ## Syntax
 
 ```js
-on("after:screenshot", (details) => {
+on('after:screenshot', (details) => {
   /* ... */
-});
+})
 ```
 
 **<Icon name="angle-right"></Icon> details** **_(object)_**
@@ -54,27 +54,27 @@ If you move the location of the screenshot image, you'll want to specify the new
 
 ```js
 // cypress/plugins/index.js
-const fs = require("fs");
+const fs = require('fs')
 
 module.exports = (on, config) => {
-  on("after:screenshot", (details) => {
-    console.log(details); // print all details to terminal
+  on('after:screenshot', (details) => {
+    console.log(details) // print all details to terminal
 
-    const newPath = "/new/path/to/screenshot.png";
+    const newPath = '/new/path/to/screenshot.png'
 
     return new Promise((resolve, reject) => {
       // fs.rename moves the file to the existing directory 'new/path/to'
       // and renames the image to 'screenshot.png'
       fs.rename(details.path, newPath, (err) => {
-        if (err) return reject(err);
+        if (err) return reject(err)
 
         // because we renamed and moved the image, resolve with the new path
         // so it is accurate in the test results
-        resolve({ path: newPath });
-      });
-    });
-  });
-};
+        resolve({ path: newPath })
+      })
+    })
+  })
+}
 ```
 
 ## See also

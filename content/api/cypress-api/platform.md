@@ -9,7 +9,7 @@ Even though Cypress runs in the browser, it automatically makes this property av
 ## Syntax
 
 ```javascript
-Cypress.platform; // 'darwin'
+Cypress.platform // 'darwin'
 ```
 
 ## Examples
@@ -17,10 +17,10 @@ Cypress.platform; // 'darwin'
 ### Conditionals
 
 ```javascript
-it("has JSON files", () => {
+it('has JSON files', () => {
   // if windows do one thing, else do another
-  const cmd = Cypress.platform === "win32" ? "dir *.json" : "ls *.json";
+  const cmd = Cypress.platform === 'win32' ? 'dir *.json' : 'ls *.json'
 
-  cy.exec(cmd).its("stdout").should("include", "package.json");
-});
+  cy.exec(cmd).its('stdout').should('include', 'package.json')
+})
 ```

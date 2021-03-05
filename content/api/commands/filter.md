@@ -28,14 +28,14 @@ The querying behavior of this command matches exactly how [`.filter()`](http://a
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get("td").filter(".users"); // Yield all el's with class '.users'
+cy.get('td').filter('.users') // Yield all el's with class '.users'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.filter(".animated"); // Errors, cannot be chained off 'cy'
-cy.location().filter(); // Errors, 'location' does not yield DOM element
+cy.filter('.animated') // Errors, cannot be chained off 'cy'
+cy.location().filter() // Errors, 'location' does not yield DOM element
 ```
 
 ### Arguments
@@ -75,7 +75,7 @@ Pass in an options object to change the default behavior of `.filter()`.
 
 ```javascript
 // yields <li>About</li>
-cy.get("ul").find(">li").filter(".active");
+cy.get('ul').find('>li').filter('.active')
 ```
 
 ### Contains
@@ -97,7 +97,7 @@ You can use the [jQuery :contains](https://api.jquery.com/contains-selector/) se
 Let's find both list items that contain the work "Services"
 
 ```javascript
-cy.get("li").filter(':contains("Services")').should("have.length", 2);
+cy.get('li').filter(':contains("Services")').should('have.length', 2)
 ```
 
 #### Non-breaking space
@@ -111,7 +111,7 @@ If the HTML contains a [non-breaking space](https://en.wikipedia.org/wiki/Non-br
 ```
 
 ```javascript
-cy.get("[data-testid=testattr]").filter(':contains("Hello\u00a0world")');
+cy.get('[data-testid=testattr]').filter(':contains("Hello\u00a0world")')
 ```
 
 ## Rules
@@ -122,7 +122,7 @@ cy.get("[data-testid=testattr]").filter(':contains("Hello\u00a0world")');
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`.filter` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.filter` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.filter()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.filter()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -133,7 +133,7 @@ cy.get("[data-testid=testattr]").filter(':contains("Hello\u00a0world")');
 **_Filter the li's to the li with the class 'active'._**
 
 ```javascript
-cy.get(".left-nav>.nav").find(">li").filter(".active");
+cy.get('.left-nav>.nav').find('>li').filter('.active')
 ```
 
 The commands above will display in the Command Log as:

@@ -7,8 +7,8 @@ Get the `document.title` property of the page that is currently active.
 ## Syntax
 
 ```javascript
-cy.title();
-cy.title(options);
+cy.title()
+cy.title(options)
 ```
 
 ### Usage
@@ -16,7 +16,7 @@ cy.title(options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.title(); // Yields the documents title as a string
+cy.title() // Yields the documents title as a string
 ```
 
 ### Arguments
@@ -41,7 +41,7 @@ Pass in an options object to change the default behavior of `cy.title()`.
 #### Assert that the document's title is "My Awesome Application"
 
 ```javascript
-cy.title().should("eq", "My Awesome Application");
+cy.title().should('eq', 'My Awesome Application')
 ```
 
 ## Rules
@@ -52,7 +52,7 @@ cy.title().should("eq", "My Awesome Application");
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`cy.title` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`cy.title()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -63,7 +63,7 @@ cy.title().should("eq", "My Awesome Application");
 **_Assert that the document's title includes 'New User'_**
 
 ```javascript
-cy.title().should("include", "New User");
+cy.title().should('include', 'New User')
 ```
 
 The commands above will display in the Command Log as:

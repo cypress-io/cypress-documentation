@@ -30,17 +30,17 @@ An alias of [`.should()`](/api/commands/should)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get(".err").should("be.empty").and("be.hidden"); // Assert '.err' is empty & hidden
-cy.contains("Login").and("be.visible"); // Assert el is visible
-cy.wrap({ foo: "bar" })
-  .should("have.property", "foo") // Assert 'foo' property exists
-  .and("eq", "bar"); // Assert 'foo' property is 'bar'
+cy.get('.err').should('be.empty').and('be.hidden') // Assert '.err' is empty & hidden
+cy.contains('Login').and('be.visible') // Assert el is visible
+cy.wrap({ foo: 'bar' })
+  .should('have.property', 'foo') // Assert 'foo' property exists
+  .and('eq', 'bar') // Assert 'foo' property is 'bar'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.and("eq", "42"); // Errors, cannot be chained off 'cy'
+cy.and('eq', '42') // Errors, cannot be chained off 'cy'
 ```
 
 ### Arguments
@@ -66,18 +66,18 @@ Pass a function that can have any number of explicit assertions within it. Whate
 <List><li>In most cases, `.and()` yields the same subject it was given from the previous command.</li></List>
 
 ```javascript
-cy.get("nav") // yields <nav>
-  .should("be.visible") // yields <nav>
-  .and("have.class", "open"); // yields <nav>
+cy.get('nav') // yields <nav>
+  .should('be.visible') // yields <nav>
+  .and('have.class', 'open') // yields <nav>
 ```
 
 However, some chainers change the subject. In the example below, `.and()` yields the string `sans-serif` because the chainer `have.css, 'font-family'` changes the subject.
 
 ```javascript
-cy.get("nav") // yields <nav>
-  .should("be.visible") // yields <nav>
-  .and("have.css", "font-family") // yields 'sans-serif'
-  .and("match", /serif/); // yields 'sans-serif'
+cy.get('nav') // yields <nav>
+  .should('be.visible') // yields <nav>
+  .and('have.css', 'font-family') // yields 'sans-serif'
+  .and('match', /serif/) // yields 'sans-serif'
 ```
 
 ## Examples
@@ -87,7 +87,7 @@ cy.get("nav") // yields <nav>
 #### Chain assertions on the same subject
 
 ```javascript
-cy.get("button").should("have.class", "active").and("not.be.disabled");
+cy.get('button').should('have.class', 'active').and('not.be.disabled')
 ```
 
 ### Value
@@ -104,11 +104,11 @@ cy.get("button").should("have.class", "active").and("not.be.disabled");
 ```
 
 ```javascript
-cy.get("a")
-  .should("contain", "Edit User") // yields <a>
-  .and("have.attr", "href") // yields string value of href
-  .and("match", /users/) // yields string value of href
-  .and("not.include", "#"); // yields string value of href
+cy.get('a')
+  .should('contain', 'Edit User') // yields <a>
+  .and('have.attr', 'href') // yields string value of href
+  .and('match', /users/) // yields string value of href
+  .and('not.include', '#') // yields string value of href
 ```
 
 ### Method and Value
@@ -116,9 +116,9 @@ cy.get("a")
 #### Assert the href is equal to '/users'
 
 ```javascript
-cy.get("#header a")
-  .should("have.class", "active")
-  .and("have.attr", "href", "/users");
+cy.get('#header a')
+  .should('have.class', 'active')
+  .and('have.attr', 'href', '/users')
 ```
 
 ### Function
@@ -140,28 +140,28 @@ The callback function will be retried over and over again until no assertions wi
 ```
 
 ```javascript
-cy.get("p")
-  .should("not.be.empty")
+cy.get('p')
+  .should('not.be.empty')
   .and(($p) => {
     // should have found 3 elements
-    expect($p).to.have.length(3);
+    expect($p).to.have.length(3)
 
     // make sure the first contains some text content
-    expect($p.first()).to.contain("Hello World");
+    expect($p.first()).to.contain('Hello World')
 
     // use jquery's map to grab all of their classes
     // jquery's map returns a new jquery object
     const classes = $p.map((i, el) => {
-      return Cypress.$(el).attr("class");
-    });
+      return Cypress.$(el).attr('class')
+    })
 
     // call classes.get() to make this a plain array
     expect(classes.get()).to.deep.eq([
-      "text-primary",
-      "text-danger",
-      "text-default",
-    ]);
-  });
+      'text-primary',
+      'text-danger',
+      'text-default',
+    ])
+  })
 ```
 
 <Alert type="info">
@@ -181,7 +181,7 @@ If you've worked in [Chai](http://chaijs.com/) before, you will recognize that `
 Take this _explicit_ assertion for example:
 
 ```javascript
-expect({ foo: "bar" }).to.have.property("foo").and.eq("bar");
+expect({ foo: 'bar' }).to.have.property('foo').and.eq('bar')
 ```
 
 `.and()` reproduces this same assertion behavior.
@@ -197,16 +197,16 @@ The chainers that come from [Chai](/guides/references/bundled-tools#Chai) or [Ch
 Whenever you use a callback function, its return value is always ignored. Cypress always forces the command to yield the value from the previous cy command's yield (which in the example below is `<button>`)
 
 ```javascript
-cy.get("button")
-  .should("be.active")
+cy.get('button')
+  .should('be.active')
   .and(($button) => {
-    expect({ foo: "bar" }).to.deep.eq({ foo: "bar" });
+    expect({ foo: 'bar' }).to.deep.eq({ foo: 'bar' })
 
-    return { foo: "bar" }; // return is ignored, .and() yields <button>
+    return { foo: 'bar' } // return is ignored, .and() yields <button>
   })
   .then(($button) => {
     // do anything we want with <button>
-  });
+  })
 ```
 
 ### Differences
@@ -250,10 +250,10 @@ cy.get('input', {timeout: 10000}).should('have.value', 'US').and(($input) => {
 **Chain assertions on the same subject**
 
 ```javascript
-cy.get(".list")
+cy.get('.list')
   .find('input[type="checkbox"]')
-  .should("be.checked")
-  .and("not.be.disabled");
+  .should('be.checked')
+  .and('not.be.disabled')
 ```
 
 The commands above will display in the Command Log as:

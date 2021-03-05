@@ -184,10 +184,10 @@ Inside of this file, you will export a function. Cypress will call this function
 // export a function
 module.exports = (on, config) => {
   // bind to the event we care about
-  on("<event>", (arg1, arg2) => {
+  on('<event>', (arg1, arg2) => {
     // plugin stuff here
-  });
-};
+  })
+}
 ```
 
 For more information on writing plugins, please [check out our API docs here](/api/plugins/writing-a-plugin).

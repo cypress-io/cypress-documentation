@@ -7,8 +7,8 @@ Set a browser cookie.
 ## Syntax
 
 ```javascript
-cy.setCookie(name, value);
-cy.setCookie(name, value, options);
+cy.setCookie(name, value)
+cy.setCookie(name, value, options)
 ```
 
 ### Usage
@@ -16,7 +16,7 @@ cy.setCookie(name, value, options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.setCookie("auth_key", "123key"); // Set the 'auth_key' cookie to '123key'
+cy.setCookie('auth_key', '123key') // Set the 'auth_key' cookie to '123key'
 ```
 
 ### Arguments
@@ -64,13 +64,13 @@ Pass in an options object to change the default behavior of `cy.setCookie()`.
 #### Set a cookie
 
 ```javascript
-cy.getCookies().should("be.empty");
-cy.setCookie("session_id", "189jd09sufh33aaiidhf99d09");
-cy.getCookie("session_id").should(
-  "have.property",
-  "value",
-  "189jd09sufh33aaiidhf99d09"
-);
+cy.getCookies().should('be.empty')
+cy.setCookie('session_id', '189jd09sufh33aaiidhf99d09')
+cy.getCookie('session_id').should(
+  'have.property',
+  'value',
+  '189jd09sufh33aaiidhf99d09'
+)
 ```
 
 ## Rules
@@ -81,7 +81,7 @@ cy.getCookie("session_id").should(
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`cy.setCookie` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`cy.setCookie()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -94,9 +94,9 @@ Because `cy.setCookie()` is asynchronous it is technically possible for there to
 ## Command Log
 
 ```javascript
-cy.getCookies().should("be.empty");
-cy.setCookie("fakeCookie1", "123ABC");
-cy.getCookie("fakeCookie1").should("have.property", "value", "123ABC");
+cy.getCookies().should('be.empty')
+cy.setCookie('fakeCookie1', '123ABC')
+cy.getCookie('fakeCookie1').should('have.property', 'value', '123ABC')
 ```
 
 The commands above will display in the Command Log as:

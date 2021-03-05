@@ -40,28 +40,28 @@ Because Cypress changes its own host URL to match that of your applications, it 
 If you attempt to visit two different superdomains, Cypress will error. Visiting subdomains works fine. You can visit different superdomains in _different_ tests, but not in the _same_ test.
 
 ```javascript
-it("navigates", () => {
-  cy.visit("https://www.cypress.io");
-  cy.visit("https://docs.cypress.io"); // yup all good
-});
+it('navigates', () => {
+  cy.visit('https://www.cypress.io')
+  cy.visit('https://docs.cypress.io') // yup all good
+})
 ```
 
 ```javascript
-it("navigates", () => {
-  cy.visit("https://apple.com");
-  cy.visit("https://google.com"); // this will error
-});
+it('navigates', () => {
+  cy.visit('https://apple.com')
+  cy.visit('https://google.com') // this will error
+})
 ```
 
 ```javascript
-it("navigates", () => {
-  cy.visit("https://apple.com");
-});
+it('navigates', () => {
+  cy.visit('https://apple.com')
+})
 
 // split visiting different origin in another test
-it("navigates to new origin", () => {
-  cy.visit("https://google.com"); // yup all good
-});
+it('navigates to new origin', () => {
+  cy.visit('https://google.com') // yup all good
+})
 ```
 
 Although Cypress tries to enforce this limitation, it is possible for your application to bypass Cypress's ability to detect this.
@@ -101,7 +101,7 @@ Because of the way Cypress is designed, if you are testing an HTTPS site, Cypres
 
 ```javascript
 // Test code
-cy.visit("https://app.corp.com");
+cy.visit('https://app.corp.com')
 ```
 
 In your application code, you set `cookies` and store a session on the browser. Now let's imagine you have a single `insecure` link (or JavaScript redirect) in your application code.
@@ -117,8 +117,8 @@ Cypress will immediately fail with the following test code:
 
 ```javascript
 // Test code
-cy.visit("https://app.corp.com");
-cy.get("a").click(); // will fail
+cy.visit('https://app.corp.com')
+cy.get('a').click() // will fail
 ```
 
 Browsers refuse to display insecure content on a secure page. Because Cypress initially changed its URL to match `https://app.corp.com` when the browser followed the `href` to `http://app.corp.com/page2`, the browser will refuse to display the contents.
@@ -158,8 +158,8 @@ The most common situation where you might encounter this error is when you click
 
 ```javascript
 // Test code
-cy.visit("http://localhost:8080"); // where your web server + HTML is hosted
-cy.get("a").click(); // browser attempts to load google.com, Cypress errors
+cy.visit('http://localhost:8080') // where your web server + HTML is hosted
+cy.get('a').click() // browser attempts to load google.com, Cypress errors
 ```
 
 We do not recommend visiting a superdomain that you don't control in your tests which you can read more about [here](/guides/references/best-practices#Visiting-external-sites)
@@ -168,21 +168,21 @@ Instead, all you can test is that the `href` property is correct!
 
 ```javascript
 // this test verifies the behavior and will run considerably faster
-cy.visit("http://localhost:8080");
-cy.get("a").should("have.attr", "href", "https://google.com"); // no page load!
+cy.visit('http://localhost:8080')
+cy.get('a').should('have.attr', 'href', 'https://google.com') // no page load!
 ```
 
 Okay but let's say you're worried about `google.com` serving up the right HTML content. How would you test that? We can make a [`cy.request()`](/api/commands/request) directly to it. [`cy.request()`](/api/commands/request) is _NOT bound to CORS or same-origin policy_.
 
 ```javascript
-cy.visit("http://localhost:8080");
-cy.get("a").then(($a) => {
+cy.visit('http://localhost:8080')
+cy.get('a').then(($a) => {
   // pull off the fully qualified href from the <a>
-  const url = $a.prop("href");
+  const url = $a.prop('href')
 
   // make a cy.request to it
-  cy.request(url).its("body").should("include", "</html>");
-});
+  cy.request(url).its('body').should('include', '</html>')
+})
 ```
 
 If you still require visiting a different origin URL then read about [disabling web security](/guides/guides/web-security#Disabling-Web-Security).
@@ -202,8 +202,8 @@ When you submit a regular HTML form, the browser will follow the HTTP(s) request
 ```
 
 ```javascript
-cy.visit("http://localhost:8080");
-cy.get("form").submit(); // submit the form!
+cy.visit('http://localhost:8080')
+cy.get('form').submit() // submit the form!
 ```
 
 If your back end server handling the `/submit` route does a `30x` redirect to a different superdomain, you will get a cross-origin error.
@@ -212,10 +212,10 @@ If your back end server handling the `/submit` route does a `30x` redirect to a 
 // imagine this is some node / express code
 // on your localhost:8080 server
 
-app.post("/submit", (req, res) => {
+app.post('/submit', (req, res) => {
   // redirect the browser to google.com
-  res.redirect("https://google.com");
-});
+  res.redirect('https://google.com')
+})
 ```
 
 A common use case for this is Single sign-on (SSO). In that situation you may `POST` to a different server and are redirected elsewhere (typically with the session token in the URL).
@@ -225,25 +225,25 @@ If that's the case, you can still test this behavior with [`cy.request()`](/api/
 In fact we can likely bypass the initial visit altogether and `POST` directly to your SSO server.
 
 ```javascript
-cy.request("POST", "https://sso.corp.com/auth", {
-  username: "foo",
-  password: "bar",
+cy.request('POST', 'https://sso.corp.com/auth', {
+  username: 'foo',
+  password: 'bar',
 }).then((response) => {
   // pull out the location redirect
-  const loc = response.headers["Location"];
+  const loc = response.headers['Location']
 
   // parse out the token from the url (assuming its in there)
-  const token = parseOutMyToken(loc);
+  const token = parseOutMyToken(loc)
 
   // do something with the token that your web application expects
   // likely the same behavior as what your SSO does under the hood
   // assuming it handles query string tokens like this
-  cy.visit("http://localhost:8080?token=" + token);
+  cy.visit('http://localhost:8080?token=' + token)
 
   // if you don't need to work with the token you can sometimes
   // visit the location header directly
-  cy.visit(loc);
-});
+  cy.visit(loc)
+})
 ```
 
 If you still want to be able to be redirected to your SSO server, you can read about [disabling web security](/guides/guides/web-security#Disabling-Web-Security).
@@ -253,7 +253,7 @@ If you still want to be able to be redirected to your SSO server, you can read a
 When we say JavaScript Redirects we are talking about any kind of code that does something like this:
 
 ```javascript
-window.location.href = "http://some.superdomain.com";
+window.location.href = 'http://some.superdomain.com'
 ```
 
 This is probably the hardest situation to test because it's usually happening due to another cause. You will need to figure out why your JavaScript code is redirecting. Perhaps you're not logged in, and you need to handle that setup elsewhere. Perhaps you're using a Single sign-on (SSO) server and you can read the previous section about working around that.

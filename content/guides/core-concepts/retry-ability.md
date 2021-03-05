@@ -27,18 +27,18 @@ If you are looking to retry tests a configured number of times when the test fai
 There are two types of methods you can call in your Cypress tests: **commands** and **assertions**. For example, there are 6 commands and 2 assertions in the test below.
 
 ```javascript
-it("creates 2 items", () => {
-  cy.visit("/"); // command
+it('creates 2 items', () => {
+  cy.visit('/') // command
   cy.focused() // command
-    .should("have.class", "new-todo"); // assertion
+    .should('have.class', 'new-todo') // assertion
 
-  cy.get(".new-todo") // command
-    .type("todo A{enter}") // command
-    .type("todo B{enter}"); // command
+  cy.get('.new-todo') // command
+    .type('todo A{enter}') // command
+    .type('todo B{enter}') // command
 
-  cy.get(".todo-list li") // command
-    .should("have.length", 2); // assertion
-});
+  cy.get('.todo-list li') // command
+    .should('have.length', 2) // assertion
+})
 ```
 
 The [Command Log](/guides/core-concepts/test-runner#Command-Log) shows both commands and assertions with passing assertions showing in green.
@@ -48,8 +48,8 @@ The [Command Log](/guides/core-concepts/test-runner#Command-Log) shows both comm
 Let's look at the last command and assertion pair:
 
 ```javascript
-cy.get(".todo-list li") // command
-  .should("have.length", 2); // assertion
+cy.get('.todo-list li') // command
+  .should('have.length', 2) // assertion
 ```
 
 Because nothing is synchronous in modern web applications, Cypress can't query all the DOM elements with the class `todo-list` and check if there are only two of them. There are many examples of why this would not work well.
@@ -71,13 +71,13 @@ app.TodoModel.prototype.addTodo = function (title) {
     id: Utils.uuid(),
     title: title,
     completed: false,
-  });
+  })
 
   // let's trigger the UI to render after 3 seconds
   setTimeout(() => {
-    this.inform();
-  }, 3000);
-};
+    this.inform()
+  }, 3000)
+}
 ```
 
 My test still passes! The last `cy.get('.todo-list')` and the assertion `should('have.length', 2)` are clearly showing the spinning indicators, meaning Cypress is requerying for them.
@@ -93,13 +93,13 @@ A single command followed by multiple assertions retries each one of them -- in 
 For example, the following test has [`.should()`](/api/commands/should) and [`.and()`](/api/commands/and) assertions. `.and()` is an alias of the `.should()` command, so the second assertion is really a custom callback assertion in the form of the [`.should(cb)`](/api/commands/should#Function) function with 2 [`expect`](/guides/references/assertions#BDD-Assertions) assertions inside of it.
 
 ```javascript
-cy.get(".todo-list li") // command
-  .should("have.length", 2) // assertion
+cy.get('.todo-list li') // command
+  .should('have.length', 2) // assertion
   .and(($li) => {
     // 2 more assertions
-    expect($li.get(0).textContent, "first item").to.equal("todo a");
-    expect($li.get(1).textContent, "second item").to.equal("todo B");
-  });
+    expect($li.get(0).textContent, 'first item').to.equal('todo a')
+    expect($li.get(1).textContent, 'second item').to.equal('todo B')
+  })
 ```
 
 Because the second assertion `expect($li.get(0).textContent, 'first item').to.equal('todo a')` fails, the third assertion is never reached. The command fails after timing out, and the Command Log correctly shows that the first encountered assertion `should('have.length', 2)` passed, but the second assertion and the command itself failed.
@@ -110,7 +110,7 @@ Because the second assertion `expect($li.get(0).textContent, 'first item').to.eq
 
 Cypress only retries commands that query the DOM: [`cy.get()`](/api/commands/get), [`.find()`](/api/commands/find), [`.contains()`](/api/commands/contains), etc. You can check if a particular command is retried by looking at the "Assertions" section in its API documentation. For example, "Assertions section" of [`.first()`](/api/commands/first) tells us that the command is retried until all assertions that follow it are passing.
 
-<List><li>`.first` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.first` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.first()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.first()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Why are some commands _NOT_ retried?
 
@@ -127,9 +127,9 @@ Very rarely you may want to retry a command like `.click()`. We describe one cas
 Often a Cypress command has built-in assertions that will cause the command to be retried. For example, the [`.eq()`](/api/commands/eq) command will be retried even without any attached assertions until it finds an element with the given index in the previously yielded list of elements.
 
 ```javascript
-cy.get(".todo-list li") // command
-  .should("have.length", 2) // assertion
-  .eq(3); // command
+cy.get('.todo-list li') // command
+  .should('have.length', 2) // assertion
+  .eq(3) // command
 ```
 
 <DocsImage src="/img/guides/retry-ability/eq.gif" alt="Retrying built-in assertion" ></DocsImage>
@@ -163,9 +163,9 @@ We do not recommend changing the command timeout globally. Instead, pass the ind
 
 ```javascript
 // we've modified the timeout which affects default + added assertions
-cy.get(".mobile-nav", { timeout: 10000 })
-  .should("be.visible")
-  .and("contain", "Home");
+cy.get('.mobile-nav', { timeout: 10000 })
+  .should('be.visible')
+  .and('contain', 'Home')
 ```
 
 Cypress will retry for up to 10 seconds to find a visible element of class `mobile-nav` with text containing "Home". For more examples, read the [Timeouts](/guides/core-concepts/introduction-to-cypress#Timeouts) section in the "Introduction to Cypress" guide.
@@ -177,7 +177,7 @@ Overriding the timeout to `0` will essentially disable retrying the command, sin
 ```javascript
 // check synchronously that the element does not exist (no retry)
 // for example just after a server-side render
-cy.get("#ssr-error", { timeout: 0 }).should("not.exist");
+cy.get('#ssr-error', { timeout: 0 }).should('not.exist')
 ```
 
 ## Only the last command is retried
@@ -185,15 +185,15 @@ cy.get("#ssr-error", { timeout: 0 }).should("not.exist");
 Here is a short test that demonstrates some flake.
 
 ```javascript
-it("adds two items", () => {
-  cy.visit("/");
+it('adds two items', () => {
+  cy.visit('/')
 
-  cy.get(".new-todo").type("todo A{enter}");
-  cy.get(".todo-list li").find("label").should("contain", "todo A");
+  cy.get('.new-todo').type('todo A{enter}')
+  cy.get('.todo-list li').find('label').should('contain', 'todo A')
 
-  cy.get(".new-todo").type("todo B{enter}");
-  cy.get(".todo-list li").find("label").should("contain", "todo B");
-});
+  cy.get('.new-todo').type('todo B{enter}')
+  cy.get('.todo-list li').find('label').should('contain', 'todo B')
+})
 ```
 
 The test passes in Cypress without a hitch.
@@ -214,12 +214,12 @@ app.TodoModel.prototype.addTodo = function (title) {
     id: Utils.uuid(),
     title: title,
     completed: false,
-  });
+  })
 
   setTimeout(() => {
-    this.inform();
-  }, 100);
-};
+    this.inform()
+  }, 100)
+}
 ```
 
 This delay could be the source of our flaky tests when the application is running on our CI server. Here is how to see the source of the problem. In the Command Log, hover over each command to see which elements Cypress found at each step.
@@ -249,10 +249,10 @@ Now that we understand the real reason behind the flaky test, we need to think a
 For a variety of implementation reasons, Cypress commands **only** retry the **last command** before the assertion. In our test:
 
 ```javascript
-cy.get(".new-todo").type("todo B{enter}");
-cy.get(".todo-list li") // queries immediately, finds 1 <li>
-  .find("label") // retried, retried, retried with 1 <li>
-  .should("contain", "todo B"); // never succeeds with only 1st <li>
+cy.get('.new-todo').type('todo B{enter}')
+cy.get('.todo-list li') // queries immediately, finds 1 <li>
+  .find('label') // retried, retried, retried with 1 <li>
+  .should('contain', 'todo B') // never succeeds with only 1st <li>
 ```
 
 Luckily, once we understand how retry-ability works and how only the last command is used for assertion retries, we can fix this test for good.
@@ -262,17 +262,17 @@ Luckily, once we understand how retry-ability works and how only the last comman
 The first solution we recommend is to avoid unnecessarily splitting commands that query elements. In our case we first query elements using `cy.get()` and then query from that list of elements using `.find()`. We can combine two separate queries into one - forcing the combined query to be retried.
 
 ```javascript
-it("adds two items", () => {
-  cy.visit("/");
+it('adds two items', () => {
+  cy.visit('/')
 
-  cy.get(".new-todo").type("todo A{enter}");
-  cy.get(".todo-list li label") // 1 query command
-    .should("contain", "todo A"); // assertion
+  cy.get('.new-todo').type('todo A{enter}')
+  cy.get('.todo-list li label') // 1 query command
+    .should('contain', 'todo A') // assertion
 
-  cy.get(".new-todo").type("todo B{enter}");
-  cy.get(".todo-list li label") // 1 query command
-    .should("contain", "todo B"); // assertion
-});
+  cy.get('.new-todo').type('todo B{enter}')
+  cy.get('.todo-list li label') // 1 query command
+    .should('contain', 'todo B') // assertion
+})
 ```
 
 To show the retries, I increased the application's artificial delay to 500ms. The test now always passes because the entire selector is retried. It finds 2 list elements when the second "todo B" is added to the DOM.
@@ -285,15 +285,15 @@ Similarly, when working with deeply nested JavaScript properties using the [`.it
 // 🛑 not recommended
 // only the last "its" will be retried
 cy.window()
-  .its("app") // runs once
-  .its("model") // runs once
-  .its("todos") // retried
-  .should("have.length", 2);
+  .its('app') // runs once
+  .its('model') // runs once
+  .its('todos') // retried
+  .should('have.length', 2)
 
 // ✅ recommended
 cy.window()
-  .its("app.model.todos") // retried
-  .should("have.length", 2);
+  .its('app.model.todos') // retried
+  .should('have.length', 2)
 ```
 
 See the [Set flag to start tests](https://glebbahmutov.com/blog/set-flag-to-start-tests/) blog for the full example.
@@ -303,21 +303,21 @@ See the [Set flag to start tests](https://glebbahmutov.com/blog/set-flag-to-star
 There is another way to fix our flaky test. Whenever you write a longer test, we recommend alternating commands with assertions. In this case, I will add an assertion after the `cy.get()` command, but before the `.find()` command.
 
 ```javascript
-it("adds two items", () => {
-  cy.visit("/");
+it('adds two items', () => {
+  cy.visit('/')
 
-  cy.get(".new-todo").type("todo A{enter}");
-  cy.get(".todo-list li") // command
-    .should("have.length", 1) // assertion
-    .find("label") // command
-    .should("contain", "todo A"); // assertion
+  cy.get('.new-todo').type('todo A{enter}')
+  cy.get('.todo-list li') // command
+    .should('have.length', 1) // assertion
+    .find('label') // command
+    .should('contain', 'todo A') // assertion
 
-  cy.get(".new-todo").type("todo B{enter}");
-  cy.get(".todo-list li") // command
-    .should("have.length", 2) // assertion
-    .find("label") // command
-    .should("contain", "todo B"); // assertion
-});
+  cy.get('.new-todo').type('todo B{enter}')
+  cy.get('.todo-list li') // command
+    .should('have.length', 2) // assertion
+    .find('label') // command
+    .should('contain', 'todo B') // assertion
+})
 ```
 
 <DocsImage src="/img/guides/retry-ability/alternating.png" alt="Passing test" ></DocsImage>
@@ -335,10 +335,10 @@ Below is an example where the number value is set after a delay:
   Random number: <span id="random-number">🎁</span>
 </div>
 <script>
-  const el = document.getElementById("random-number");
+  const el = document.getElementById('random-number')
   setTimeout(() => {
-    el.innerText = Math.floor(Math.random() * 10 + 1);
-  }, 1500);
+    el.innerText = Math.floor(Math.random() * 10 + 1)
+  }, 1500)
 </script>
 ```
 
@@ -350,11 +350,11 @@ You may want to write a test like below, to test that the number is between 1 an
 
 ```javascript
 // WRONG: this test will not work as intended
-cy.get("#random-number") // <div>🎁</div>
-  .invoke("text") // "🎁"
+cy.get('#random-number') // <div>🎁</div>
+  .invoke('text') // "🎁"
   .then(parseFloat) // NaN
-  .should("be.gte", 1) // fails
-  .and("be.lte", 10); // never evaluates
+  .should('be.gte', 1) // fails
+  .and('be.lte', 10) // never evaluates
 ```
 
 Unfortunately, the [.then()](/api/commands/then) command is not retried. Thus the test only runs the entire chain once before failing.
@@ -366,13 +366,13 @@ Unfortunately, the [.then()](/api/commands/then) command is not retried. Thus th
 We need to retry getting the element, invoking the `text()` method, calling the `parseFloat` function and running the `gte` and `lte` assertions. We can achieve this using the `.should(callbackFn)`.
 
 ```javascript
-cy.get("#random-number").should(($div) => {
+cy.get('#random-number').should(($div) => {
   // all the code inside here will retry
   // until it passes or times out
-  const n = parseFloat($div.text());
+  const n = parseFloat($div.text())
 
-  expect(n).to.be.gte(1).and.be.lte(10);
-});
+  expect(n).to.be.gte(1).and.be.lte(10)
+})
 ```
 
 The above test retries getting the element and invoking the text of the element to get the number. When the number is finally set in the application, then the `gte` and `lte` assertions pass and the test passes.
@@ -392,22 +392,22 @@ const Clicker = ({ click }) => (
   <div>
     <button onClick={click}>Click me</button>
   </div>
-);
+)
 
-it("calls the click prop twice", () => {
-  const onClick = cy.stub();
+it('calls the click prop twice', () => {
+  const onClick = cy.stub()
   // "mount" function comes from
   // https://github.com/cypress-io/cypress/tree/master/npm/react
-  mount(<Clicker click={onClick} />);
-  cy.get("button")
+  mount(<Clicker click={onClick} />)
+  cy.get('button')
     .click()
     .click()
     .then(() => {
       // works in this case, but not recommended
       // because .then() does not retry
-      expect(onClick).to.be.calledTwice;
-    });
-});
+      expect(onClick).to.be.calledTwice
+    })
+})
 ```
 
 The above example will fail if the component calls the `click` prop after a delay.
@@ -417,7 +417,7 @@ const Clicker = ({ click }) => (
   <div>
     <button onClick={() => setTimeout(click, 500)}>Click me</button>
   </div>
-);
+)
 ```
 
 <DocsImage src="/img/guides/retry-ability/delay-click.png" alt="Expect fails the test without waiting for the delayed stub" width-600 ></DocsImage>
@@ -429,17 +429,17 @@ The test finishes before the component calls the `click` prop twice, and without
 We recommend aliasing the stub using the [`.as`](/api/commands/as) command and using `cy.get('@alias').should(...)` assertions.
 
 ```js
-it("calls the click prop", () => {
-  const onClick = cy.stub().as("clicker");
+it('calls the click prop', () => {
+  const onClick = cy.stub().as('clicker')
   // "mount" function comes from
   // https://github.com/cypress-io/cypress/tree/master/npm/react
-  mount(<Clicker click={onClick} />);
-  cy.get("button").click().click();
+  mount(<Clicker click={onClick} />)
+  cy.get('button').click().click()
 
   // good practice 💡
   // auto-retry the stub until it was called twice
-  cy.get("@clicker").should("have.been.calledTwice");
-});
+  cy.get('@clicker').should('have.been.calledTwice')
+})
 ```
 
 <DocsImage src="/img/guides/retry-ability/click-twice.gif" alt="Retrying the assertions using a stub alias" ></DocsImage>
@@ -454,7 +454,9 @@ Watch the short video below to see this example in action
 
 ## See also
 
+- Read our blog posts about fighting [the test flake](https://cypress.io/blog/tag/flake/).
 - You can add retry-ability to your own [custom commands](/api/cypress-api/custom-commands); see [this pull request to cypress-xpath](https://github.com/cypress-io/cypress-xpath/pull/12/files) for an example.
-- You can retry any function with attached assertions using this 3rd party plugin [cypress-pipe](https://github.com/NicholasBoll/cypress-pipe).
+- You can retry any function with attached assertions using the 3rd party plugins [cypress-pipe](https://github.com/NicholasBoll/cypress-pipe) and [cypress-wait-until](https://github.com/NoriSte/cypress-wait-until).
+- 3rd party plugin [cypress-recurse](https://github.com/bahmutov/cypress-recurse) can be used to implement the [visual testing with retry-ability for canvas elements](https://glebbahmutov.com/blog/canvas-testing/)
 - See retry-ability examples in the [Cypress should callback](https://glebbahmutov.com/blog/cypress-should-callback/) blog post.
 - To learn how to enable Cypress' test retries functionality, which retries tests that fail up to the configured number, check out our official guide on [Test Retries](/guides/guides/test-retries).

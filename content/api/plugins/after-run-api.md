@@ -16,9 +16,9 @@ The event will fire each time `cypress run` executes. As a result, if running yo
 ## Syntax
 
 ```js
-on("after:run", (results) => {
+on('after:run', (results) => {
   /* ... */
-});
+})
 ```
 
 **<Icon name="angle-right"></Icon> results** **_(Object)_**
@@ -33,7 +33,7 @@ You can return a promise from the `after:run` event handler and it will be await
 
 ```javascript
 module.exports = (on, config) => {
-  on("after:run", (results) => {
+  on('after:run', (results) => {
     // results will look something like this:
     // {
     //   totalDuration: 81,
@@ -59,9 +59,9 @@ module.exports = (on, config) => {
     //   }
     // }
 
-    console.log(results.totalPassed, "out of", results.totalTests, "passed");
-  });
-};
+    console.log(results.totalPassed, 'out of', results.totalTests, 'passed')
+  })
+}
 ```
 
 ## See also

@@ -1,6 +1,15 @@
 {
   "large": [
     {
+      "title": "Cypress Tutorial - Writing E2E Tests For Your Apps",
+      "url": "https://www.youtube.com/watch?v=uNd9HxIHptY",
+      "sourceName": "Youtube",
+      "sourceUrl": "https://www.youtube.com/watch?v=uNd9HxIHptY",
+      "date": "Nov 28, 2020",
+      "author": "PortEXE",
+      "youtubeId": "uNd9HxIHptY"
+    },
+    {
       "title": "Human Connection - Cypress-Tests",
       "url": "https://www.youtube.com/watch?v=MNrA6-KjXk4",
       "sourceName": "Youtube",

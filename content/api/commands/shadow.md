@@ -16,15 +16,15 @@ Traverse into the shadow DOM of an element.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get(".shadow-host").shadow();
+cy.get('.shadow-host').shadow()
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.shadow(); // Errors, cannot be chained off 'cy'
-cy.exec("npm start").shadow(); // Errors, 'exec' does not yield DOM element
-cy.get(".not-a-shadow-host").shadow(); // Errors, subject must host a shadow root
+cy.shadow() // Errors, cannot be chained off 'cy'
+cy.exec('npm start').shadow() // Errors, 'exec' does not yield DOM element
+cy.get('.not-a-shadow-host').shadow() // Errors, subject must host a shadow root
 ```
 
 ### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
@@ -44,7 +44,7 @@ cy.get(".not-a-shadow-host").shadow(); // Errors, subject must host a shadow roo
 
 ```javascript
 // yields [#shadow-root (open)]
-cy.get(".shadow-host").shadow().find(".my-button").click();
+cy.get('.shadow-host').shadow().find('.my-button').click()
 ```
 
 ## Rules
@@ -55,7 +55,7 @@ cy.get(".shadow-host").shadow().find(".my-button").click();
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`.shadow` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.shadow` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) host(s) a shadow root.</li><li>`.shadow` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.shadow()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.shadow()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) host(s) a shadow root.</li><li>`.shadow()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -66,7 +66,7 @@ cy.get(".shadow-host").shadow().find(".my-button").click();
 **_Traverse into the shadow DOM of an element_**
 
 ```javascript
-cy.get(".shadow-host").shadow();
+cy.get('.shadow-host').shadow()
 ```
 
 The commands above will display in the Command Log as:
