@@ -1,4 +1,4 @@
-const API_URL = '/api/table-of-contents'
+const API_URL = '/api/table-of-contents/'
 const SIDEBAR = './content/_data/sidebar.json'
 const SIDEBAR_EN = './content/_data/en.json'
 
