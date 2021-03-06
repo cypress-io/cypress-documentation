@@ -3,6 +3,8 @@ import AppSidebar from '../../components/AppSidebar'
 import AppHeader from '../../components/AppHeader'
 import TableOfContents from '../../components/TableOfContents'
 import Footer from '../../components/Footer'
+import { getMetaData } from '../../utils/getMetaData'
+import { getMetaDescription } from '../../utils/getMetaDescription'
 
 export default {
   components: {
@@ -47,16 +49,40 @@ export default {
       return error({ statusCode: 404, message: 'Guide not found' })
     }
 
+    const [rawContent] = await $content({ deep: true, text: true }).where({ path }).fetch()
+    const metaDescription = await getMetaDescription(rawContent.text)
+
     return {
       algoliaSettings,
       guide,
       guideSidebar: items,
+      metaDescription,
       path: params.pathMatch,
     }
   },
   head() {
     return {
       title: this.guide.title,
+      meta: this.meta,
+      link: [
+        {
+          hid: 'canonical',
+          rel: 'canonical',
+          href: `https://docs.cypress.io/guides/${this.$route.params.pathMatch}`
+        }
+      ]
+    }
+  },
+  computed: {
+    meta() {
+      const metaData = {
+        type: 'article',
+        title: this.guide.title,
+        description: this.metaDescription,
+        url: `https://docs.cypress.io/guides/${this.$route.params.pathMatch}`,
+      }
+
+      return getMetaData(metaData)
     }
   },
 }

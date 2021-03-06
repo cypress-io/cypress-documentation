@@ -4,6 +4,8 @@ import AppHeader from '../../components/AppHeader'
 import Footer from '../../components/Footer'
 import TableOfContents from '../../components/TableOfContents'
 import TableOfContentsList from '../../components/TableOfContentsList.vue'
+import { getMetaData } from '../../utils/getMetaData'
+import { getMetaDescription } from '../../utils/getMetaDescription'
 
 export default {
   components: {
@@ -38,18 +40,42 @@ export default {
       return error({ statusCode: 404, message: 'FAQ not found' })
     }
 
+    const [rawContent] = await $content({ deep: true, text: true }).where({ path }).fetch()
+    const metaDescription = await getMetaDescription(rawContent.text)
+
     return {
       algoliaSettings,
       faqItem,
       faqSidebarItems,
+      metaDescription,
       path: params.pathMatch,
     }
   },
   head() {
     return {
       title: this.faqItem.title,
+      meta: this.meta,
+      link: [
+        {
+          hid: 'canonical',
+          rel: 'canonical',
+          href: `https://docs.cypress.io/faq/${this.$route.params.pathMatch}`
+        }
+      ]
     }
   },
+  computed: {
+    meta() {
+      const metaData = {
+        type: 'article',
+        title: this.faqItem.title,
+        description: this.metaDescription,
+        url: `https://docs.cypress.io/faq/${this.$route.params.pathMatch}`
+      }
+
+      return getMetaData(metaData)
+    }
+  }
 }
 </script>
 

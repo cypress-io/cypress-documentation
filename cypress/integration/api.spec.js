@@ -1,5 +1,4 @@
-const ORIGIN = 'http://localhost:3000'
-const API_URL = `${ORIGIN}/api/table-of-contents`
+const API_URL = '/api/table-of-contents/'
 const SIDEBAR = './content/_data/sidebar.json'
 const SIDEBAR_EN = './content/_data/en.json'
 
@@ -13,8 +12,6 @@ describe('APIs', () => {
     cy.readFile(SIDEBAR).then(({ api: sidebarApi }) => {
       cy.readFile(SIDEBAR_EN).then(({ sidebar: { api } }) => {
         const apiEntries = Object.entries(api)
-
-        // console.log('apiEntries: ', apiEntries)
 
         /**
          * Flattening the sidebar config so it can be used as a lookup

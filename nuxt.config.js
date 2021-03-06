@@ -1,3 +1,6 @@
+import { getMetaData } from './utils/getMetaData'
+
+const meta = getMetaData()
 
 export default {
   router: {
@@ -22,6 +25,59 @@ export default {
         }
       )
     },
+    /**
+     * Adjust the scroll-to behavior for hashes so that
+     * Nuxt can render the content on the page before attempting to
+     * adjust the scroll position too early, which could happen before 
+     * the content is fully rendered. If this happens, the user will
+     * be at an incorrect scroll position. This is a workaround
+     * to arbitrarily wait for an amount of time before assuming that
+     * Nuxt has rendered everything that needs to appear in the page
+     * before attempting to scroll to the hash element.
+     * 
+     * @see
+     * https://github.com/nuxt/nuxt.js/issues/5359
+     */
+    async scrollBehavior(to, from, savedPosition) {
+      if (savedPosition) {
+        return savedPosition;
+      }
+  
+      const wait = (ms) => new Promise(res => setTimeout(res, ms))
+  
+      const findEl = async (hash, x = 0) => {
+        // arbitrarily waiting for nuxt to do its thing on the page
+        await wait(300)
+ 
+        return (
+          document.querySelector(hash) ||
+          new Promise(resolve => {
+            if (x > 50) {
+              return resolve(document.querySelector("#app"));
+            }
+
+            setTimeout(() => {
+              resolve(findEl(hash, ++x || 1));
+            }, 100);
+          })
+        );
+      };
+  
+      if (to.hash) {
+        let el = await findEl(to.hash);
+        // Give the element some breathing room when we scroll it into view
+        const TOP_PADDING = 32
+
+        if ("scrollBehavior" in document.documentElement.style) {
+          return window.scrollTo({ top: el.offsetTop - TOP_PADDING, behavior: "smooth" });
+        }
+ 
+          return window.scrollTo(0, el.offsetTop - TOP_PADDING);
+        
+      }
+
+      return { x: 0, y: 0 };
+    }
   },
   /*
    ** Nuxt target
@@ -33,15 +89,11 @@ export default {
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'Cypress Documentation',
     meta: [
+      ...meta,
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      {
-        hid: 'description',
-        name: 'description',
-        content: process.env.npm_package_description || '',
-      },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },

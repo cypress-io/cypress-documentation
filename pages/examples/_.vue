@@ -3,6 +3,8 @@ import AppSidebar from '@/components/AppSidebar'
 import AppHeader from '@/components/AppHeader'
 import TableOfContents from '@/components/TableOfContents'
 import Badge from '../../components/global/Badge.vue'
+import { getMetaData } from '../../utils/getMetaData'
+import { getMetaDescription } from '../../utils/getMetaDescription'
 
 export default {
   components: {
@@ -73,18 +75,30 @@ export default {
       return error({ statusCode: 404, message: 'Example not found' })
     }
 
+    const [rawContent] = await $content({ deep: true, text: true }).where({ path }).fetch()
+    const metaDescription = await getMetaDescription(rawContent.text)
+
     return {
       algoliaSettings,
       exampleItem,
       examplesSidebarItems: items,
       mediaObject,
       title,
+      metaDescription,
       path: params.pathMatch,
     }
   },
   head() {
     return {
       title: this.exampleItem.title,
+      meta: this.meta,
+      link: [
+        {
+          hid: 'canonical',
+          rel: 'canonical',
+          href: `https://docs.cypress.io/examples/${this.$route.params.pathMatch}`
+        }
+      ]
     }
   },
   computed: {
@@ -115,6 +129,16 @@ export default {
     isScreencasts() {
       return this.mediaObject.slug === 'screencasts'
     },
+    meta() {
+      const metaData = {
+        type: 'article',
+        title: this.exampleItem.title,
+        description: this.metaDescription,
+        url: `https://docs.cypress.io/examples/${this.$route.params.pathMatch}`
+      }
+
+      return getMetaData(metaData)
+    }
   },
 }
 </script>

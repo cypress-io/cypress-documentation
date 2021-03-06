@@ -3,6 +3,8 @@ import AppSidebar from '../../components/AppSidebar'
 import TableOfContents from '../../components/TableOfContents'
 import Footer from '../../components/Footer'
 import ApiTableOfContents from '../../components/ApiTableOfContents.vue'
+import { getMetaData } from '../../utils/getMetaData'
+import { getMetaDescription } from '../../utils/getMetaDescription'
 
 export default {
   components: {
@@ -54,11 +56,15 @@ export default {
 
     const isApiToc = params.pathMatch.includes('table-of-contents')
 
+    const [rawContent] = await $content({ deep: true, text: true }).where({ path }).fetch()
+    const metaDescription = isApiToc ? 'Cypress API Documentation Table of Contents ' : await getMetaDescription(rawContent.text)
+
     return {
       apiPageContent,
       apiSidebar: items,
       algoliaSettings,
       isApiToc,
+      metaDescription,
       path: params.pathMatch,
     }
   },
@@ -70,6 +76,26 @@ export default {
   head() {
     return {
       title: this.apiPageContent.title,
+      meta: this.meta,
+      links: [
+        {
+          hid: 'canonical',
+          rel: 'canonical',
+          href: `https://docs.cypress.io/api/${this.$route.params.pathMatch}`
+        }
+      ]
+    }
+  },
+  computed: {
+    meta() {
+      const metaData = {
+        type: 'article',
+        title: this.apiPageContent.title,
+        description: this.metaDescription,
+        url: `https://docs.cypress.io/api/${this.$route.params.pathMatch}`,
+      }
+
+      return getMetaData(metaData)
     }
   },
   methods: {

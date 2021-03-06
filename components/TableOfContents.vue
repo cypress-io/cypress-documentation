@@ -8,7 +8,7 @@
       <scrollactive
         highlight-first-item
         active-class="scrollactive-item-active"
-        :offset="88"
+        :offset="96"
         tag="ul"
       >
         <li
