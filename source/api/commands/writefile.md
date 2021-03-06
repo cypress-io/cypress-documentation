@@ -10,6 +10,7 @@ Write to a file with the specified contents.
 cy.writeFile(filePath, contents)
 cy.writeFile(filePath, contents, encoding)
 cy.writeFile(filePath, contents, options)
+cy.writeFile(filePath, contents, encoding, options)
 ```
 
 ## Usage
