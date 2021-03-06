@@ -38,8 +38,8 @@ If you want to see component testing working in an existing project, follow thes
 
 - Click on one of the specs. You should see the tests run.
 - Open the spec file in your [preferred IDE](guides/tooling/IDE-integration#file-opener-preference) by clicking on the spec file's name in the sidebar.
-- Make a change and save the spec and see it re-run.
-- Open the tested component and make a change again. The test will be re-run automatically.
+- Make a change in the spec file and save to see the test re-run.
+- Edit the code where the component lives in your application. The test will also automatically re-run.
 
 <DocsImage src="/img/guides/component-testing/first-run.png" alt="Splash Screen of Component Testing" ></DocsImage>
 
