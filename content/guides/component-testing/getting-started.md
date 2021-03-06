@@ -57,7 +57,7 @@ If you are using [Vue.js](https://vuejs.org/), click on the Vue tab of the code 
 
 ### Prerequisites
 
-- A `package.json` file at the root that runs on webpack 4 or 5.
+- A project with a `package.js` file at the root that runs on webpack 4 or 5.
 - A `webpack.config.js` file, or a way to access webpack configuration. Refer to your framework's documentation.
 - Some components that that you want to test that visually display in a browser. It could be a date picker, tabs, responsive images.
 - A basic knowledge of how to write tests in Cypress.
