@@ -19,7 +19,7 @@ The {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} can integrate 
    {% imgTag /img/dashboard/jira-integration/dashboard-jira-atlassian-confirm-install.png "Atlassian Marketplace Cypress for Jira Installation Confirmation" %}
 5. Once installed, click the `Get Started` link in the notification.
    {% imgTag /img/dashboard/jira-integration/dashboard-jira-atlassian-success.png "Atlassian Marketplace Cypress for Jira Installation Success" %}
-5. On the next page, click the `Click to Finish Installation` button to be redirected to the {% url "Cypress Dashboard" dashboard %} and choose the Cypress Organization for integration.
+5. On the next page, click the `Click to Finish Installation` button to be redirected to the {% url "Cypress Dashboard" https://www.cypress.io/dashboard/ %} and choose the Cypress Organization for integration.
    {% imgTag /img/dashboard/jira-integration/dashboard-jira-atlassian-finish-install-step.png "Atlassian Marketplace Cypress for Jira Installation Finish Installation" %}
 
 ## Creating a Jira issue for a test case
