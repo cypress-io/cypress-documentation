@@ -4,7 +4,7 @@
 
 **To support requests using the Fetch API you can use one of the solutions below:**
 
-- Use [`cy.intercept()`](/api/commands/intercept.html) which supports requests using the Fetch API and other types of network requests like page loads. See [`cy.intercept()`](/api/commands/intercept.html).
+- Use [`cy.intercept()`](/api/commands/intercept) which supports requests using the Fetch API and other types of network requests like page loads. See [`cy.intercept()`](/api/commands/intercept).
 - Polyfill `window.fetch` to spy on and stub requests using `cy.route()` and `cy.server()` by enabling [`experimentalFetchPolyfill`](https://on.cypress.io/experimental). See [#95](https://github.com/cypress-io/cypress/issues/95) for more details and temporary workarounds.
 
 </Alert>

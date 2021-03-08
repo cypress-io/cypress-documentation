@@ -21,7 +21,7 @@ The Chrome browser is evergreen - meaning it will automatically update itself, s
 `
 
 module.exports.CYPRESS_ENV_VAR_WARNING = `{% note warning "Difference between OS-level and Cypress environment variables" %}
-In Cypress, "environment variables" are variables that are accessible via \`Cypress.env\`. These are not the same as OS-level environment variables. However, [it is possible to set Cypress environment variables from OS-level environment variables](/guides/guides/environment-variables.html#Option-3-CYPRESS).
+In Cypress, "environment variables" are variables that are accessible via \`Cypress.env\`. These are not the same as OS-level environment variables. However, [it is possible to set Cypress environment variables from OS-level environment variables](/guides/guides/environment-variables#Option-3-CYPRESS).
 {% endnote %}
 `
 
@@ -53,7 +53,7 @@ module.exports.LINUX_DEPENDENCIES = [
 module.exports.NETWORK_STUBBING_WARNING = `{% note danger %}
 🚨 Please be aware that Cypress only currently supports intercepting XMLHttpRequests. **Requests using the Fetch API and other types of network requests like page loads and \`<script>\` tags will not be intercepted or visible in the Command Log.** You can automatically polyfill \`window.fetch\` to spy on and stub requests by enabling an [experimental](https://on.cypress.io/experimental) feature \`experimentalFetchPolyfill\`. See {% issue 95 %} for more details and temporary workarounds.
 
-Cypress also has a new experimental [route2](/api/commands/route2.html) feature that supports requests using the Fetch API and other types of network requests like page loads. For more information, check out the [cy.route2() documentation](/api/commands/route2.html).
+Cypress also has a new experimental [route2](/api/commands/route2) feature that supports requests using the Fetch API and other types of network requests like page loads. For more information, check out the [cy.route2() documentation](/api/commands/route2).
 {% endnote %}
 `
 
@@ -82,6 +82,6 @@ If you are running the tests from within a restrictive VPN you will need to allo
 
 module.exports.XHR_STUBBING_DEPRECATED = [
   '{% note warning %}',
-  '⚠️ **`cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0**. In a future release, support for `cy.server()` and `cy.route()` will be moved to a plugin. Consider using [`cy.intercept()`](/api/commands/intercept.html) instead.',
+  '⚠️ **`cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0**. In a future release, support for `cy.server()` and `cy.route()` will be moved to a plugin. Consider using [`cy.intercept()`](/api/commands/intercept) instead.',
   '{% endnote %}',
 ].join('\n')
