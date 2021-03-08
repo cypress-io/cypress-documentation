@@ -27,6 +27,7 @@ guides:
     slack-integration: slack-integration.html
     analytics: analytics.html
     flaky-test-management: flaky-test-management.html
+    smart-orchestration: smart-orchestration.html
   guides:
     command-line: command-line.html
     module-api: module-api.html

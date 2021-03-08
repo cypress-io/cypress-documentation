@@ -51,6 +51,7 @@ sidebar:
     slack-integration: Slack Integration
     analytics: Analytics
     flaky-test-management: Flaky Test Management
+    smart-orchestration: Smart Orchestration
     debugging: Debugging
     variables-and-aliases: Variables and Aliases
     stubs-spies-and-clocks: Stubs, Spies, and Clocks
