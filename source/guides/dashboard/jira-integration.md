@@ -10,8 +10,15 @@ The {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} can integrate 
 ## Installing the Jira integration
 
 1. Visit **Integrations → Jira** in the Cypress Dashboard and click "Install Jira"
+   {% imgTag /img/dashboard/jira-integration/dashboard-jira-integration-install.png "Cypress Dashboard Integrations" %}
 2. Click the "Get it Now" button on the [Atlassian Marketplace Cypress for Jira page](https://marketplace.atlassian.com/apps/1224341/cypress-for-jira?hosting=cloud&tab=overview)
-3. Login to Jira, Choose a site to install your app and follow the steps to complete the installation.
+   {% imgTag /img/dashboard/jira-integration/dashboard-jira-atlassian-get-it-now.png "Atlassian Marketplace Cypress for Jira" %}
+3. Login to Jira, Choose a site to install your app and click "Install app".
+   {% imgTag /img/dashboard/jira-integration/dashboard-jira-atlassian-choose-site.png "Atlassian Marketplace Cypress for Jira Choose Site" %}
+4. On the "Add to Jira" screen, confirm installation by clicking "Get it now" 
+   {% imgTag /img/dashboard/jira-integration/dashboard-jira-atlassian-confirm-install.png "Atlassian Marketplace Cypress for Jira Installation Confirmation" %}
+5. Jira will confirm the installation.
+   {% imgTag /img/dashboard/jira-integration/dashboard-jira-atlassian-success.png "Atlassian Marketplace Cypress for Jira Installation Success" %}
 
 ## Creating a Jira issue for a test case
 
