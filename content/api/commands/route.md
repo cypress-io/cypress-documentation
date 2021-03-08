@@ -6,7 +6,7 @@ Use `cy.route()` to manage the behavior of network requests.
 
 <Alert type="warning">
 
-⚠️ **`cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0**. In a future release, support for `cy.server()` and `cy.route()` will be moved to a plugin. Consider using [`cy.intercept()`](/api/commands/intercept.html) instead.
+⚠️ **`cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0**. In a future release, support for `cy.server()` and `cy.route()` will be moved to a plugin. Consider using [`cy.intercept()`](/api/commands/intercept) instead.
 
 </Alert>
 
@@ -14,7 +14,7 @@ Use `cy.route()` to manage the behavior of network requests.
 
 🚨 Please be aware that Cypress only currently supports intercepting XMLHttpRequests. **Requests using the Fetch API and other types of network requests like page loads and `<script>` tags will not be intercepted or visible in the Command Log.** You can automatically polyfill `window.fetch` to spy on and stub requests by enabling an [experimental](https://on.cypress.io/experimental) feature `experimentalFetchPolyfill`. See [#95](https://github.com/cypress-io/cypress/issues/95) for more details and temporary workarounds.
 
-Cypress also has a new experimental [route2](/api/commands/route2.html) feature that supports requests using the Fetch API and other types of network requests like page loads. For more information, check out the [cy.route2() documentation](/api/commands/route2.html).
+Cypress also has a new experimental [route2](/api/commands/route2) feature that supports requests using the Fetch API and other types of network requests like page loads. For more information, check out the [cy.route2() documentation](/api/commands/route2).
 
 </Alert>
 
