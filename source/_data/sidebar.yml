@@ -24,6 +24,7 @@ guides:
     bitbucket-integration: bitbucket-integration.html
     github-integration: github-integration.html
     gitlab-integration: gitlab-integration.html
+    jira-integration: jira-integration.html
     slack-integration: slack-integration.html
     analytics: analytics.html
     flaky-test-management: flaky-test-management.html
