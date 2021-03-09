@@ -5,6 +5,7 @@ import TableOfContents from '../../components/TableOfContents'
 import Footer from '../../components/Footer'
 import { getMetaData } from '../../utils/getMetaData'
 import { getMetaDescription } from '../../utils/getMetaDescription'
+import redirections from '../../content/guides/redirections'
 
 export default {
   components: {
@@ -14,7 +15,9 @@ export default {
     Footer,
   },
   async asyncData({ $content, app, params, error }) {
-    const path = `/guides/${params.pathMatch || 'index'}`
+    const corePath = params.pathMatch || 'index'
+    const resolvedCorePath = redirections[corePath] || corePath
+    const path = `/guides/${resolvedCorePath}`
     const { algolia: algoliaSettings } = await $content('settings').fetch()
     const [guide] = await $content({ deep: true }).where({ path }).fetch()
     const { guides: sidebar } = await $content('_data/sidebar').fetch()
