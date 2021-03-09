@@ -160,6 +160,7 @@ export default {
         <article class="main-content-article hide-scroll">
           <h1 class="main-content-title">{{ exampleItem.title }}</h1>
           <nuxt-content :document="exampleItem"></nuxt-content>
+          <Footer />
         </article>
       </div>
       <!--
