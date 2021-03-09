@@ -6,6 +6,7 @@
     >
       <h3 class="toc-heading">ON THIS PAGE</h3>
       <scrollactive
+        :scroll-on-start="false"
         highlight-first-item
         active-class="scrollactive-item-active"
         :offset="96"
