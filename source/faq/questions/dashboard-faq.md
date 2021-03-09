@@ -23,7 +23,7 @@ After recording your tests, you will see them in the {% url 'Dashboard' https://
 
 Please see our {% url 'Pricing Page' https://www.cypress.io/pricing %} for more details.
 
-## {% fa fa-angle-right %} What counts as a test recording?
+## {% fa fa-angle-right %} What counts as a test result?
 
 Which {% url 'pricing tier' https://www.cypress.io/pricing %} is best for you depends on the number of test you record each month in your organization.
 
@@ -118,11 +118,11 @@ You can delete your Cypress account from {% url "your Dashboard profile" https:/
 
 Downgrading your account will **not** result in loss of access to your Dashboard.
 
-However, it will make your Dashboard subject to the limitations of your new plan. For example, downgrading to the *Seed* plan will limit data retention to 30 days and test recordings to 500 per billing period.
+However, it will make your Dashboard subject to the limitations of your new plan. For example, downgrading to the *Seed* plan will limit data retention to 30 days and test results to 500 per billing period.
 
-## {% fa fa-angle-right %} What happens once I reach the test recording limit?
+## {% fa fa-angle-right %} What happens once I reach the test results limit?
 
-Tests running with the `--record` flag will run as normal when the limit is reached, but parallelization will be disabled and new test recordings will be hidden from the dashboard until your plan is upgraded or a new usage cycle begins. The usage cycle resets each month.
+Tests running with the `--record` flag will run as normal when the limit is reached, but parallelization will be disabled and new test results will be hidden from the dashboard until your plan is upgraded or a new usage cycle begins. The usage cycle resets each month.
 
 In order to avoid any interruption in service, we recommend that you review your usage and select a plan that satisfies your usage requirements. You can do this by:
 
