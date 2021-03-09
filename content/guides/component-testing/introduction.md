@@ -1,5 +1,5 @@
 ---
-title: Getting Started
+title: Introduction
 containerClass: component-testing
 ---
 

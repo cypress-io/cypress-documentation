@@ -48,7 +48,7 @@
       "web-security": "web-security.html"
     },
     "component-testing": {
-      "component-testing-getting-started": "getting-started.html"
+      "component-testing-introduction": "introduction.html"
     },
     "tooling": {
       "IDE-integration": "IDE-integration.html",
