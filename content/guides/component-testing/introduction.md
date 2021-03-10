@@ -5,8 +5,6 @@ containerClass: component-testing
 
 ⚠️ The Cypress Component Testing library is still in **Alpha**. We are rapidly developing and expect that the API may undergo breaking changes. Contribute to its development by submitting feature requests or issues [here](https://github.com/cypress-io/cypress/).
 
-⚠️ Cypress component testing is in still in **Alpha**. We are rapidly developing and expect that the API may undergo breaking changes. Contribute to its development by submitting feature requests or issues in the [cypress repo](https://github.com/cypress-io/cypress/).
-
 </alert>
 
 ## What is Component Testing
@@ -79,30 +77,19 @@ Start by running the command below to install dependencies. It will install both
 <code-group>
   <code-block label="React" active>
 
-```sh
-npm install --save-dev cypress @cypress/react
+```bash
+npm install --save-dev cypress @cypress/react @cypress/webpack-dev-server
 ```
 
   </code-block>
   <code-block label="Vue">
 
-```js
-require('@cypress/react/support')
+```bash
+npm install --save-dev cypress @cypress/vue @cypress/webpack-dev-server
 ```
 
   </code-block>
 </code-group>
-
-```js
-// cypress/plugins/index.js
-module.exports = (on, config) => {
-  require('@cypress/react/plugins/react-scripts')(on, config)
-  // IMPORTANT to return the config object
-  // with the any changed environment variables
-
-  return config
-}
-```
 
 If it's your first time using Cypress, run `npx cypress open` and Cypress will create some example directories and files.
 
@@ -117,17 +104,23 @@ Now you need to configure how Cypress will locate component spec files from with
 }
 ```
 
-You'll also need to configure the component testing framework of your choice by adding the component testing plugin. Read more about plugins in general in our [plugins guide](/guides/tooling/plugins-guide).
-
-Since your project uses webpack, you'll be using `webpack-dev-server` to facilitate the matching of the styling and display rules of component.
-
-<alert type="info">
-
-If you have separate webpack configurations for development and production, use the development configuration. It'll give better location information using SourceMaps.
-
-</alert>
+You'll also need to configure the component testing framework of your choice by adding the component testing plugin. Read more about plugins in general in our [plugins guide](/guides/tooling/plugins-guide). If you are using Create React App, you will need to use the `react-scripts` plugin as shown below in your `cypress/plugins/index.js` file.
 
 ```js
+// cypress/plugins/index.js
+module.exports = (on, config) => {
+  require('@cypress/react/plugins/react-scripts')(on, config)
+  // IMPORTANT to return the config object
+  // with the any changed environment variables
+
+  return config
+}
+```
+
+If you are using a React template other than Create React App, such as Next.js, you will need to import the appropriate plugin. See a list of plugins [here](https://github.com/cypress-io/cypress/tree/develop/npm/react/plugins). Alternatively, if you are not using a template and have your own webpack configuration, you can use it:
+
+```js
+// cypress/plugins/index.js
 const { startDevServer } = require('@cypress/webpack-dev-server')
 // your project's webpack configuration
 const webpackConfig = require('../../webpack.config.js')
@@ -139,6 +132,14 @@ module.exports = (on, config) => {
   return config
 }
 ```
+
+The [plugins](https://github.com/cypress-io/cypress/tree/develop/npm/react/plugins) we provide for common project configurations just do the same thing under the hood.
+
+<alert type="info">
+
+If you have separate webpack configurations for development and production, use the development configuration. It'll give better location information using SourceMaps.
+
+</alert>
 
 We are now ready to start testing our components.
 
