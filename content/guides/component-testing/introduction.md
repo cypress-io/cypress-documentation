@@ -20,19 +20,15 @@ Component testing in Cypress is similar to end-to-end testing. The notable diffe
 - There's no need to navigate to a URL. You don't need to call [`cy.visit()`](/api/commands/visit) in your test.
 - Cypress provides a blank canvas where we can `mount` components in isolation.
 
-Let's go through the setup to start testing components.
+A component test looks like this:
 
-## Try out with an existing project
-
-If you want to see component testing working in an existing project, follow these steps:
-
-```javascript
-import { mount } from '@cypress/vue' // or cypress-react-unit-test
+```jsx
+import { mount } from '@cypress/react' // or @cypress-vue
 import TodoList from '@/components/TodoList'
 
 describe('TodoList', () => {
   it('renders the todo list', () => {
-    mount(TodoList)
+    mount(<TodoList />)
     cy.get('[data-testid=todo-list]').should('exist')
   })
 
@@ -51,11 +47,17 @@ describe('TodoList', () => {
 })
 ```
 
-## Set up in your project
+If you are already familiar with Cypress, you'll notice it is almost exactly the same as a Cypresss end-to-end test - all your existing Cypress knowledge and experience is transferrable.
 
-If you want to set up component testing in a project that's already doing end-to-end testing in Cypress, this section will show you how to get setup.
+## Try out with an existing project
 
-Before we start testing components, let's make sure our project has the required prerequisites.
+Let's go through the setup to start testing components. If you want to see component testing working in an React or Vue existing project, follow these steps:
+
+## ⚠️ For existing end-to-end users
+
+If you are using Cypress Component Testing in a project that also has tests written with the Cypress end-to-end runner, you will want a separate `cypress.json` configuration file for your component tests. This will let you specify a different glob to detect your spec files, as well as configure Component Testing specific defaults like `viewportHeight` and `viewportWidth`. You will also want to have a separate plugins file.
+
+To do this, simply copy your `cypress.json` and rename it to `cypress.component.json`. When you start the Component Testing runner, make sure to pass your Component Testing specific configuration with `npx cypress open-ct --config cypress.component.json`.
 
 <alert type="info">
 
