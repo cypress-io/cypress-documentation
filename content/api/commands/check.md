@@ -26,15 +26,15 @@ This element must be an `<input>` with type `checkbox` or `radio`.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('[type="checkbox"]').check(); // Check checkbox element
-cy.get('[type="radio"]').first().check(); // Check first radio element
+cy.get('[type="checkbox"]').check() // Check checkbox element
+cy.get('[type="radio"]').first().check() // Check first radio element
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.check('[type="checkbox"]'); // Errors, cannot be chained off 'cy'
-cy.get("p:first").check(); // Errors, '.get()' does not yield checkbox or radio
+cy.check('[type="checkbox"]') // Errors, cannot be chained off 'cy'
+cy.get('p:first').check() // Errors, '.get()' does not yield checkbox or radio
 ```
 
 ### Arguments
@@ -71,19 +71,19 @@ Pass in an options object to change the default behavior of `.check()`.
 #### Check all checkboxes
 
 ```javascript
-cy.get('[type="checkbox"]').check();
+cy.get('[type="checkbox"]').check()
 ```
 
 #### Select all radios
 
 ```javascript
-cy.get('[type="radio"]').check();
+cy.get('[type="radio"]').check()
 ```
 
 #### Check the element with id of 'saveUserName'
 
 ```javascript
-cy.get("#saveUserName").check();
+cy.get('#saveUserName').check()
 ```
 
 ### Value
@@ -100,7 +100,7 @@ cy.get("#saveUserName").check();
 ```
 
 ```javascript
-cy.get('[type="radio"]').check("US");
+cy.get('[type="radio"]').check('US')
 ```
 
 ### Values
@@ -117,7 +117,7 @@ cy.get('[type="radio"]').check("US");
 ```
 
 ```javascript
-cy.get("form input").check(["subscribe", "accept"]);
+cy.get('form input').check(['subscribe', 'accept'])
 ```
 
 ### Options
@@ -127,10 +127,10 @@ cy.get("form input").check(["subscribe", "accept"]);
 You can ignore Cypress' default behavior of checking that the element is visible, clickable and not disabled by setting `force` to `true` in the options.
 
 ```javascript
-cy.get(".action-checkboxes")
-  .should("not.be.visible") // Passes
+cy.get('.action-checkboxes')
+  .should('not.be.visible') // Passes
   .check({ force: true })
-  .should("be.checked"); // Passes
+  .should('be.checked') // Passes
 ```
 
 ## Notes
@@ -149,7 +149,7 @@ cy.get(".action-checkboxes")
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`.check` will automatically wait for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.check` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.check()` will automatically wait for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.check()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -160,7 +160,7 @@ cy.get(".action-checkboxes")
 **_check the element with name of 'emailUser'_**
 
 ```javascript
-cy.get("form").find('[name="emailUser"]').check();
+cy.get('form').find('[name="emailUser"]').check()
 ```
 
 The commands above will display in the Command Log as:

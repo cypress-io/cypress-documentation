@@ -28,8 +28,8 @@ Enables you to work with the subject yielded from the previous command.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get(".nav").then(($nav) => {}); // Yields .nav as first arg
-cy.location().then((loc) => {}); // Yields location object as first arg
+cy.get('.nav').then(($nav) => {}) // Yields .nav as first arg
+cy.location().then((loc) => {}) // Yields location object as first arg
 ```
 
 ### Arguments
@@ -69,11 +69,11 @@ We have several more examples in our [Core Concepts Guide](/guides/core-concepts
 #### The `button` element is yielded
 
 ```javascript
-cy.get("button").then(($btn) => {
-  const cls = $btn.attr("class");
+cy.get('button').then(($btn) => {
+  const cls = $btn.attr('class')
 
-  cy.wrap($btn).click().should("not.have.class", cls);
-});
+  cy.wrap($btn).click().should('not.have.class', cls)
+})
 ```
 
 #### The number is yielded from previous command
@@ -81,9 +81,9 @@ cy.get("button").then(($btn) => {
 ```js
 cy.wrap(1)
   .then((num) => {
-    cy.wrap(num).should("equal", 1); // true
+    cy.wrap(num).should('equal', 1) // true
   })
-  .should("equal", 1); // true
+  .should('equal', 1) // true
 ```
 
 ### Change subject
@@ -91,15 +91,15 @@ cy.wrap(1)
 #### The el subject is changed with another command
 
 ```javascript
-cy.get("button")
+cy.get('button')
   .then(($btn) => {
-    const cls = $btn.attr("class");
+    const cls = $btn.attr('class')
 
-    cy.wrap($btn).click().should("not.have.class", cls).find("i");
+    cy.wrap($btn).click().should('not.have.class', cls).find('i')
     // since there is no explicit return
     // the last Cypress command's yield is yielded
   })
-  .should("have.class", "spin"); // assert on i element
+  .should('have.class', 'spin') // assert on i element
 ```
 
 #### The number subject is changed with another command
@@ -116,28 +116,28 @@ cy.wrap(1).then((num) => {
 ```javascript
 cy.wrap(1)
   .then((num) => {
-    cy.wrap(num).should("equal", 1); // true
+    cy.wrap(num).should('equal', 1) // true
 
-    return 2;
+    return 2
   })
-  .should("equal", 2); // true
+  .should('equal', 2) // true
 ```
 
 #### Returning `undefined` will not modify the yielded subject
 
 ```javascript
-cy.get("form")
+cy.get('form')
   .then(($form) => {
-    console.log("form is:", $form);
+    console.log('form is:', $form)
     // undefined is returned here, but $form will be
     // yielded to allow for continued chaining
   })
-  .find("input")
+  .find('input')
   .then(($input) => {
     // we have our $input element here since
     // our form element was yielded and we called
     // .find('input') on it
-  });
+  })
 ```
 
 ### Promises
@@ -147,43 +147,43 @@ Cypress waits for Promises to resolve before continuing
 #### Example using Q
 
 ```javascript
-cy.get("button")
+cy.get('button')
   .click()
   .then(($button) => {
-    const p = Q.defer();
+    const p = Q.defer()
 
     setTimeout(() => {
-      p.resolve();
-    }, 1000);
+      p.resolve()
+    }, 1000)
 
-    return p.promise;
-  });
+    return p.promise
+  })
 ```
 
 #### Example using bluebird
 
 ```javascript
-cy.get("button")
+cy.get('button')
   .click()
   .then(($button) => {
-    return Promise.delay(1000);
-  });
+    return Promise.delay(1000)
+  })
 ```
 
 #### Example using jQuery deferred's
 
 ```javascript
-cy.get("button")
+cy.get('button')
   .click()
   .then(($button) => {
-    const df = $.Deferred();
+    const df = $.Deferred()
 
     setTimeout(() => {
-      df.resolve();
-    }, 1000);
+      df.resolve()
+    }, 1000)
 
-    return df;
-  });
+    return df
+  })
 ```
 
 ## Notes
@@ -204,7 +204,7 @@ When using a callback function with `.should()` or `.and()`, on the other hand, 
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`.then` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`.then()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 

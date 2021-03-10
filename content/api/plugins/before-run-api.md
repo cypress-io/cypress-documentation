@@ -16,9 +16,9 @@ The event will fire each time `cypress run` executes. As a result, if running yo
 ## Syntax
 
 ```js
-on("before:run", (details) => {
+on('before:run', (details) => {
   /* ... */
-});
+})
 ```
 
 **<Icon name="angle-right"></Icon> details** **_(Object)_**
@@ -33,7 +33,7 @@ You can return a promise from the `before:run` event handler and it will be awai
 
 ```javascript
 module.exports = (on, config) => {
-  on("before:run", (details) => {
+  on('before:run', (details) => {
     // details will look something like this:
     // {
     //   config: {
@@ -71,13 +71,13 @@ module.exports = (on, config) => {
     // }
 
     console.log(
-      "Running",
+      'Running',
       details.specs.length,
-      "specs in",
+      'specs in',
       details.browser.name
-    );
-  });
-};
+    )
+  })
+}
 ```
 
 ## See also

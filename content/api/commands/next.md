@@ -24,14 +24,14 @@ The querying behavior of this command matches exactly how [`.next()`](http://api
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get("nav a:first").next(); // Yield next link in nav
+cy.get('nav a:first').next() // Yield next link in nav
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.next(); // Errors, cannot be chained off 'cy'
-cy.getCookies().next(); // Errors, 'getCookies' does not yield DOM element
+cy.next() // Errors, cannot be chained off 'cy'
+cy.getCookies().next() // Errors, 'getCookies' does not yield DOM element
 ```
 
 ### Arguments
@@ -69,7 +69,7 @@ Pass in an options object to change the default behavior of `.next()`.
 
 ```javascript
 // yields <li>bananas</li>
-cy.get(".second").next();
+cy.get('.second').next()
 ```
 
 #### Testing a datalist
@@ -84,13 +84,13 @@ cy.get(".second").next();
 ```
 
 ```javascript
-cy.get("#fruit option")
+cy.get('#fruit option')
   .first()
-  .should("have.text", "Apple")
+  .should('have.text', 'Apple')
   .next()
-  .should("have.text", "Banana")
+  .should('have.text', 'Banana')
   .next()
-  .should("have.text", "Cantaloupe");
+  .should('have.text', 'Cantaloupe')
 ```
 
 ### Selector
@@ -108,7 +108,7 @@ cy.get("#fruit option")
 
 ```javascript
 // yields <li>pineapples</li>
-cy.get("li").next(".selected");
+cy.get('li').next('.selected')
 ```
 
 ## Rules
@@ -119,7 +119,7 @@ cy.get("li").next(".selected");
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`.next` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.next` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.next()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.next()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -130,7 +130,7 @@ cy.get("li").next(".selected");
 **_Find the element next to the `.active` li_**
 
 ```javascript
-cy.get(".left-nav").find("li.active").next();
+cy.get('.left-nav').find('li.active').next()
 ```
 
 The commands above will display in the Command Log as:

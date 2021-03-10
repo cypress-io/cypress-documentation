@@ -22,14 +22,14 @@ The querying behavior of this command matches exactly how [`.find()`](http://api
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get(".article").find("footer"); // Yield 'footer' within '.article'
+cy.get('.article').find('footer') // Yield 'footer' within '.article'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.find(".progress"); // Errors, cannot be chained off 'cy'
-cy.exec("node start").find(); // Errors, 'exec' does not yield DOM element
+cy.find('.progress') // Errors, cannot be chained off 'cy'
+cy.exec('node start').find() // Errors, 'exec' does not yield DOM element
 ```
 
 ### Arguments
@@ -67,7 +67,7 @@ Pass in an options object to change the default behavior of `.find()`.
 
 ```javascript
 // yields [<li class="first"></li>, <li class="second"></li>]
-cy.get("#parent").find("li");
+cy.get('#parent').find('li')
 ```
 
 ## Rules
@@ -78,7 +78,7 @@ cy.get("#parent").find("li");
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`.find` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.find` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.find()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.find()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -89,7 +89,7 @@ cy.get("#parent").find("li");
 **_Find the li's within the nav_**
 
 ```javascript
-cy.get(".left-nav>.nav").find(">li");
+cy.get('.left-nav>.nav').find('>li')
 ```
 
 The commands above will display in the Command Log as:

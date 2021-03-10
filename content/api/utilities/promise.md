@@ -9,7 +9,7 @@ Instantiate a new bluebird promise.
 ## Syntax
 
 ```javascript
-new Cypress.Promise(fn);
+new Cypress.Promise(fn)
 ```
 
 ### Usage
@@ -33,41 +33,41 @@ Use `Cypress.Promise` to create promises. Cypress is promise aware so if you ret
 ### Basic Promise
 
 ```javascript
-cy.get("button").then(($button) => {
+cy.get('button').then(($button) => {
   return new Cypress.Promise((resolve, reject) => {
     // do something custom here
-  });
-});
+  })
+})
 ```
 
 ### Waiting for Promises
 
 ```javascript
-it("waits for promises to resolve", () => {
-  let waited = false;
+it('waits for promises to resolve', () => {
+  let waited = false
 
   function waitOneSecond() {
     // return a promise that resolves after 1 second
     return new Cypress.Promise((resolve, reject) => {
       setTimeout(() => {
         // set waited to true
-        waited = true;
+        waited = true
 
         // resolve with 'foo' string
-        resolve("foo");
-      }, 1000);
-    });
+        resolve('foo')
+      }, 1000)
+    })
   }
 
   cy.wrap(null).then(() => {
     // return a promise to cy.then() that
     // is awaited until it resolves
     return waitOneSecond().then((str) => {
-      expect(str).to.eq("foo");
-      expect(waited).to.be.true;
-    });
-  });
-});
+      expect(str).to.eq('foo')
+      expect(waited).to.be.true
+    })
+  })
+})
 ```
 
 ## Notes
@@ -80,16 +80,16 @@ If you use `Cypress.Promise` in your test code, register a callback using Bluebi
 
 ```javascript
 Cypress.Promise.onPossiblyUnhandledRejection((error, promise) => {
-  throw error;
-});
+  throw error
+})
 ```
 
 If you use native built-in promises in your test code, register an event listener on the test `window` object:
 
 ```javascript
-window.addEventListener("unhandledrejection", (event) => {
-  throw event.reason;
-});
+window.addEventListener('unhandledrejection', (event) => {
+  throw event.reason
+})
 ```
 
 **Note:** because this is the test `window` object, such listeners are NOT reset before every test. You can register such listener once using `before` hook in the spec file.

@@ -28,14 +28,14 @@ The querying behavior of this command matches exactly how [`.not()`](http://api.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get("input").not(".required"); // Yield all inputs without class '.required'
+cy.get('input').not('.required') // Yield all inputs without class '.required'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.not(".icon"); // Errors, cannot be chained off 'cy'
-cy.location().not(); // Errors, 'location' does not yield DOM element
+cy.not('.icon') // Errors, cannot be chained off 'cy'
+cy.location().not() // Errors, 'location' does not yield DOM element
 ```
 
 ### Arguments
@@ -74,7 +74,7 @@ Pass in an options object to change the default behavior of `.not()`.
 ```
 
 ```javascript
-cy.get("ul>li").not(".active").should("have.length", 4); // true
+cy.get('ul>li').not('.active').should('have.length', 4) // true
 ```
 
 ## Rules
@@ -85,7 +85,7 @@ cy.get("ul>li").not(".active").should("have.length", 4); // true
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`.not` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.not` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.not()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.not()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -96,7 +96,7 @@ cy.get("ul>li").not(".active").should("have.length", 4); // true
 **_Find all buttons that are not of type submit_**
 
 ```javascript
-cy.get("form").find("button").not('[type="submit"]');
+cy.get('form').find('button').not('[type="submit"]')
 ```
 
 The commands above will display in the Command Log as:

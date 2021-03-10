@@ -65,13 +65,6 @@ export default {
         }, SCROLL_AFTER_MS)
       }
     },
-    isCurrentPathInSection(path, slug) {
-      if (path === slug) {
-        this.isOpen = true
-      }
-
-      return path === slug
-    },
   },
 }
 </script>
@@ -108,7 +101,7 @@ export default {
             })
           "
           :class="
-            isCurrentPathInSection(path, child.slug)
+            path === `${folder}/${child.slug}`
               ? 'active-sidebar-link text-white bg-cyGreen'
               : 'text-gray-600'
           "

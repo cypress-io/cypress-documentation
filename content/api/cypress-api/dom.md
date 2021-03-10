@@ -15,7 +15,7 @@ We suggest [reading through the source code here](https://github.com/cypress-io/
 ## Syntax
 
 ```javascript
-Cypress.dom.isHidden(element);
+Cypress.dom.isHidden(element)
 ```
 
 ## Examples
@@ -25,9 +25,9 @@ Cypress.dom.isHidden(element);
 **Returns a boolean indicating whether an element is attached to the DOM.**
 
 ```javascript
-cy.get("button").then(($el) => {
-  Cypress.dom.isAttached($el); // true
-});
+cy.get('button').then(($el) => {
+  Cypress.dom.isAttached($el) // true
+})
 ```
 
 ### Is descendent
@@ -35,9 +35,9 @@ cy.get("button").then(($el) => {
 **Returns a boolean indicating whether an element is a descendent of another element.**
 
 ```javascript
-cy.get("div").then(($el) => {
-  Cypress.dom.isDescendent($el.parent(), $el); // true
-});
+cy.get('div').then(($el) => {
+  Cypress.dom.isDescendent($el.parent(), $el) // true
+})
 ```
 
 ### Is detached
@@ -45,9 +45,9 @@ cy.get("div").then(($el) => {
 **Returns a boolean indicating whether an element is detached from the DOM.**
 
 ```javascript
-cy.get("button").then(($el) => {
-  Cypress.dom.isDetached($el); // false
-});
+cy.get('button').then(($el) => {
+  Cypress.dom.isDetached($el) // false
+})
 ```
 
 ### Is document
@@ -55,9 +55,9 @@ cy.get("button").then(($el) => {
 **Returns a boolean indicating whether a node is of document type.**
 
 ```javascript
-cy.get("p").then(($el) => {
-  Cypress.dom.isDocument($el); // false
-});
+cy.get('p').then(($el) => {
+  Cypress.dom.isDocument($el) // false
+})
 ```
 
 ### Is DOM
@@ -65,9 +65,9 @@ cy.get("p").then(($el) => {
 **Returns a boolean indicating whether an object is a DOM object.**
 
 ```javascript
-cy.get("body").then(($el) => {
-  Cypress.dom.isDom($el); // true
-});
+cy.get('body').then(($el) => {
+  Cypress.dom.isDom($el) // true
+})
 ```
 
 ### Is element
@@ -75,9 +75,9 @@ cy.get("body").then(($el) => {
 **Returns a boolean indicating whether an object is a DOM element.**
 
 ```javascript
-cy.get("p").then(($el) => {
-  Cypress.dom.isElement($el); // true
-});
+cy.get('p').then(($el) => {
+  Cypress.dom.isElement($el) // true
+})
 ```
 
 ### Is focusable
@@ -87,9 +87,9 @@ cy.get("p").then(($el) => {
 Cypress internally uses this method _everywhere_ to figure out whether an element is hidden, [mostly for actionability](/guides/core-concepts/interacting-with-elements).
 
 ```javascript
-cy.get("input").then(($el) => {
-  Cypress.dom.isFocusable($el); // true
-});
+cy.get('input').then(($el) => {
+  Cypress.dom.isFocusable($el) // true
+})
 ```
 
 ### Is focused
@@ -97,9 +97,9 @@ cy.get("input").then(($el) => {
 **Returns a boolean indicating whether an element currently has focus.**
 
 ```javascript
-cy.get("button").then(($el) => {
-  Cypress.dom.isFocused($el);
-});
+cy.get('button').then(($el) => {
+  Cypress.dom.isFocused($el)
+})
 ```
 
 ### Is hidden
@@ -109,9 +109,9 @@ cy.get("button").then(($el) => {
 Cypress internally uses this method _everywhere_ to figure out whether an element is hidden, [mostly for actionability](/guides/core-concepts/interacting-with-elements).
 
 ```javascript
-cy.get("p").then(($el) => {
-  Cypress.dom.isHidden($el); // false
-});
+cy.get('p').then(($el) => {
+  Cypress.dom.isHidden($el) // false
+})
 ```
 
 ### Is jQuery
@@ -119,9 +119,9 @@ cy.get("p").then(($el) => {
 **Returns a boolean indicating whether an object is a jQuery object.**
 
 ```javascript
-cy.get("input").then(($el) => {
-  Cypress.dom.isJquery($el);
-});
+cy.get('input').then(($el) => {
+  Cypress.dom.isJquery($el)
+})
 ```
 
 ### Is scrollable
@@ -131,9 +131,9 @@ cy.get("input").then(($el) => {
 Cypress internally uses this method _everywhere_ to figure out whether an element can be scrolled, [mostly for actionability](/guides/core-concepts/interacting-with-elements).
 
 ```javascript
-cy.get("body").then(($el) => {
-  Cypress.dom.isScrollable($el); // true
-});
+cy.get('body').then(($el) => {
+  Cypress.dom.isScrollable($el) // true
+})
 ```
 
 ### Is visible
@@ -141,9 +141,9 @@ cy.get("body").then(($el) => {
 **Returns a boolean indicating whether an element is visible.**
 
 ```javascript
-cy.get("img").then(($el) => {
-  Cypress.dom.isVisible($el); // true
-});
+cy.get('img').then(($el) => {
+  Cypress.dom.isVisible($el) // true
+})
 ```
 
 **Tip:** if a Cypress test fails with "element is not visible" error, but you are sure the element should be visible, you can debug the visibility check yourself by stepping through the `Cypress.dom.isVisible` code, see [Debug the Element Visibility Problems in Cypress](https://glebbahmutov.com/blog/debug-visibility/).
@@ -154,8 +154,8 @@ cy.get("img").then(($el) => {
 
 ```javascript
 cy.get(window).then(($el) => {
-  Cypress.dom.isWindow($el); // true
-});
+  Cypress.dom.isWindow($el) // true
+})
 ```
 
 ### Unwrap
@@ -163,9 +163,9 @@ cy.get(window).then(($el) => {
 **Returns an array of raw elements pulled out from a jQuery object.**
 
 ```javascript
-cy.get("body").then(($el) => {
-  Cypress.dom.unwrap($el);
-});
+cy.get('body').then(($el) => {
+  Cypress.dom.unwrap($el)
+})
 ```
 
 ### Wrap
@@ -173,9 +173,9 @@ cy.get("body").then(($el) => {
 **Returns a jQuery object obtained by wrapping an object in jQuery.**
 
 ```javascript
-cy.get("p").then(($el) => {
-  Cypress.dom.wrap($el);
-});
+cy.get('p').then(($el) => {
+  Cypress.dom.wrap($el)
+})
 ```
 
 ## See also

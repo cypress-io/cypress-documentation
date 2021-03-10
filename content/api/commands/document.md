@@ -7,8 +7,8 @@ Get the `window.document` of the page that is currently active.
 ## Syntax
 
 ```javascript
-cy.document();
-cy.document(options);
+cy.document()
+cy.document(options)
 ```
 
 ### Usage
@@ -16,7 +16,7 @@ cy.document(options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.document(); // yield the window.document object
+cy.document() // yield the window.document object
 ```
 
 ### Arguments
@@ -43,13 +43,13 @@ Pass in an options object to change the default behavior of `cy.document()`.
 ```javascript
 cy.document().then((doc) => {
   // work with document element
-});
+})
 ```
 
 #### Make an assertion about the document
 
 ```javascript
-cy.document().its("contentType").should("eq", "text/html");
+cy.document().its('contentType').should('eq', 'text/html')
 ```
 
 ## Rules
@@ -60,7 +60,7 @@ cy.document().its("contentType").should("eq", "text/html");
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`cy.document` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`cy.document()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -71,7 +71,7 @@ cy.document().its("contentType").should("eq", "text/html");
 **_Get the document_**
 
 ```javascript
-cy.document();
+cy.document()
 ```
 
 The command above will display in the Command Log as:

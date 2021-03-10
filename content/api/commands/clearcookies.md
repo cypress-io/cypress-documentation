@@ -13,8 +13,8 @@ Cypress automatically clears all cookies _before_ each test to prevent state fro
 ## Syntax
 
 ```javascript
-cy.clearCookies();
-cy.clearCookies(options);
+cy.clearCookies()
+cy.clearCookies(options)
 ```
 
 ### Usage
@@ -22,7 +22,7 @@ cy.clearCookies(options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.clearCookies(); // clear all cookies
+cy.clearCookies() // clear all cookies
 ```
 
 ### Arguments
@@ -50,11 +50,11 @@ In this example, on first login our server sends us back a session cookie. After
 
 ```javascript
 // assume we just logged in
-cy.contains("Login").click();
-cy.url().should("include", "profile");
-cy.clearCookies();
-cy.visit("/dashboard"); // we should be redirected back to login
-cy.url().should("include", "login");
+cy.contains('Login').click()
+cy.url().should('include', 'profile')
+cy.clearCookies()
+cy.visit('/dashboard') // we should be redirected back to login
+cy.url().should('include', 'login')
 ```
 
 ## Rules
@@ -65,7 +65,7 @@ cy.url().should("include", "login");
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`cy.clearCookies` cannot have any assertions chained.</li></List>
+<List><li>`cy.clearCookies()` cannot have any assertions chained.</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -80,9 +80,9 @@ Because `cy.clearCookies()` is asynchronous it is technically possible for there
 **_Clear cookies after getting cookies_**
 
 ```javascript
-cy.getCookies().should("have.length", 1);
-cy.clearCookies();
-cy.getCookies().should("be.empty");
+cy.getCookies().should('have.length', 1)
+cy.clearCookies()
+cy.getCookies().should('be.empty')
 ```
 
 The commands above will display in the Command Log as:

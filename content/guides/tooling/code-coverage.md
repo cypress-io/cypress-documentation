@@ -27,9 +27,9 @@ Computing the source code lines that were executed during the test is done throu
 ```javascript
 // add.js
 function add(a, b) {
-  return a + b;
+  return a + b
 }
-module.exports = { add };
+module.exports = { add }
 ```
 
 ...and parses it to find all functions, statements, and branches and then inserts **counters** into the code. For the above code it might look like this:
@@ -45,30 +45,30 @@ const c = (window.__coverage__ = {
   // "s" counts the number of times each statement is called
   // we have 3 statements and they all start with 0
   s: [0, 0, 0],
-});
+})
 
 // the original code + increment statements
 // uses "c" alias to "window.__coverage__" object
 // the first statement defines the function,
 // let's increment it
-c.s[0]++;
+c.s[0]++
 function add(a, b) {
   // function is called and then the 2nd statement
-  c.f[0]++;
-  c.s[1]++;
+  c.f[0]++
+  c.s[1]++
 
-  return a + b;
+  return a + b
 }
 // 3rd statement is about to be called
-c.s[2]++;
-module.exports = { add };
+c.s[2]++
+module.exports = { add }
 ```
 
 Imagine we load the above instrumented source file from our test spec file. Immediately some counters will be incremented!
 
 ```javascript
 // add.spec.js
-const { add } = require("./add");
+const { add } = require('./add')
 // JavaScript engine has parsed and evaluated "add.js" source code
 // which ran some of the increment statements
 // __coverage__ has now
@@ -81,11 +81,11 @@ We want to make sure every statement and function in the file `add.js` has been 
 
 ```javascript
 // add.spec.js
-const { add } = require("./add");
+const { add } = require('./add')
 
-it("adds numbers", () => {
-  expect(add(2, 3)).to.equal(5);
-});
+it('adds numbers', () => {
+  expect(add(2, 3)).to.equal(5)
+})
 ```
 
 When the test calls `add(2, 3)`, the counter increments inside the "add" function are executed, and the coverage object becomes:
@@ -142,27 +142,27 @@ We are passing the `--compact=false` flag to generate human-friendly output.
 The instrumentation takes your original code like this fragment...
 
 ```js
-const store = createStore(reducer);
+const store = createStore(reducer)
 
 render(
   <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementById("root")
-);
+  document.getElementById('root')
+)
 ```
 
 ...and wraps each statement with additional counters that keep track of how many times each source line has been executed by the JavaScript runtime.
 
 ```javascript
-const store = (cov_18hmhptych.s[0]++, createStore(reducer));
-cov_18hmhptych.s[1]++;
+const store = (cov_18hmhptych.s[0]++, createStore(reducer))
+cov_18hmhptych.s[1]++
 render(
   <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementById("root")
-);
+  document.getElementById('root')
+)
 ```
 
 Notice the calls to `cov_18hmhptych.s[0]++` and `cov_18hmhptych.s[1]++` that increment the statement counters. All counters and additional book-keeping information is stored in a single object attached to the browser's `window` object. We can see the counters if we serve the `instrumented` folder instead of `src` and open the application.
@@ -224,19 +224,19 @@ Then add the code below to your [supportFile](/guides/references/configuration#F
 
 ```js
 // cypress/support/index.js
-import "@cypress/code-coverage/support";
+import '@cypress/code-coverage/support'
 ```
 
 ```js
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  require("@cypress/code-coverage/task")(on, config);
+  require('@cypress/code-coverage/task')(on, config)
   // include any other plugin code...
 
   // It's IMPORTANT to return the config object
   // with any changed environment variables
-  return config;
-};
+  return config
+}
 ```
 
 When you run the Cypress tests now, you should see a few commands after the tests finish. We have highlighted these commands using a green rectangle below.
@@ -273,19 +273,19 @@ Lines        : 81.42% ( 92/113 )
 Even a single end-to-end test can cover a lot of the application code. For example, let's run the following test that adds a few items, then marks one of them as completed.
 
 ```javascript
-it("adds and completes todos", () => {
-  cy.visit("/");
-  cy.get(".new-todo")
-    .type("write code{enter}")
-    .type("write tests{enter}")
-    .type("deploy{enter}");
+it('adds and completes todos', () => {
+  cy.visit('/')
+  cy.get('.new-todo')
+    .type('write code{enter}')
+    .type('write tests{enter}')
+    .type('deploy{enter}')
 
-  cy.get(".todo").should("have.length", 3);
+  cy.get('.todo').should('have.length', 3)
 
-  cy.get(".todo").first().find(".toggle").check();
+  cy.get('.todo').first().find('.toggle').check()
 
-  cy.get(".todo").first().should("have.class", "completed");
-});
+  cy.get('.todo').first().should('have.class', 'completed')
+})
 ```
 
 After running the test and opening the HTML report, we see 76% code coverage in our application.
@@ -335,18 +335,18 @@ Here is our test to confirm that the error is thrown.
 
 ```javascript
 // cypress/integration/selectors-spec.js
-import { getVisibleTodos } from "../../src/selectors";
+import { getVisibleTodos } from '../../src/selectors'
 
-describe("getVisibleTodos", () => {
-  it("throws an error for unknown visibility filter", () => {
+describe('getVisibleTodos', () => {
+  it('throws an error for unknown visibility filter', () => {
     expect(() => {
       getVisibleTodos({
         todos: [],
-        visibilityFilter: "unknown-filter",
-      });
-    }).to.throw();
-  });
-});
+        visibilityFilter: 'unknown-filter',
+      })
+    }).to.throw()
+  })
+})
 ```
 
 The test passes, even if there is no web application visited.
@@ -360,15 +360,15 @@ If we want to collect the code coverage from the unit tests, we need to instrume
 ```javascript
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  require("@cypress/code-coverage/task")(on, config);
+  require('@cypress/code-coverage/task')(on, config)
   // tell Cypress to use .babelrc file
   // and instrument the specs files
   // only the extra application files will be instrumented
   // not the spec files themselves
-  on("file:preprocessor", require("@cypress/code-coverage/use-babelrc"));
+  on('file:preprocessor', require('@cypress/code-coverage/use-babelrc'))
 
-  return config;
-};
+  return config
+}
 ```
 
 For reference, the `.babelrc` file is shared between the example application and the spec files, thus Cypress tests are transpiled the same way the application code is transpiled.
@@ -420,17 +420,17 @@ You can run your Node server and instrument it using nyc on the fly. Instead of 
 In your server, insert another middleware from `@cypress/code-coverage`. If you use an Express server, include `middleware/express`:
 
 ```javascript
-const express = require("express");
-const app = express();
+const express = require('express')
+const app = express()
 
-require("@cypress/code-coverage/middleware/express")(app);
+require('@cypress/code-coverage/middleware/express')(app)
 ```
 
 If your server uses hapi, include `middleware/hapi`
 
 ```javascript
 if (global.__coverage__) {
-  require("@cypress/code-coverage/middleware/hapi")(server);
+  require('@cypress/code-coverage/middleware/hapi')(server)
 }
 ```
 
@@ -439,7 +439,7 @@ if (global.__coverage__) {
 ```javascript
 /* istanbul ignore next */
 if (global.__coverage__) {
-  require("@cypress/code-coverage/middleware/hapi")(server);
+  require('@cypress/code-coverage/middleware/hapi')(server)
 }
 ```
 
@@ -449,8 +449,8 @@ For any other server type, define a `GET /__coverage__` endpoint and return the 
 if (global.__coverage__) {
   // handle "GET __coverage__" requests
   onRequest = (response) => {
-    response.sendJSON({ coverage: global.__coverage__ });
-  };
+    response.sendJSON({ coverage: global.__coverage__ })
+  }
 }
 ```
 

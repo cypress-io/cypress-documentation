@@ -20,14 +20,14 @@ Uncheck checkbox(es).
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('[type="checkbox"]').uncheck(); // Unchecks checkbox element
+cy.get('[type="checkbox"]').uncheck() // Unchecks checkbox element
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.uncheck('[type="checkbox"]'); // Errors, cannot be chained off 'cy'
-cy.get("p:first").uncheck(); // Errors, '.get()' does not yield checkbox
+cy.uncheck('[type="checkbox"]') // Errors, cannot be chained off 'cy'
+cy.get('p:first').uncheck() // Errors, '.get()' does not yield checkbox
 ```
 
 ### Arguments
@@ -64,13 +64,13 @@ Pass in an options object to change the default behavior of `.uncheck()`.
 #### Uncheck all checkboxes
 
 ```javascript
-cy.get(":checkbox").uncheck();
+cy.get(':checkbox').uncheck()
 ```
 
 #### Uncheck element with the id 'saveUserName'
 
 ```javascript
-cy.get("#saveUserName").uncheck();
+cy.get('#saveUserName').uncheck()
 ```
 
 ### Value
@@ -78,7 +78,7 @@ cy.get("#saveUserName").uncheck();
 #### Uncheck the checkbox with the value of 'ga'
 
 ```javascript
-cy.get('input[type="checkbox"]').uncheck(["ga"]);
+cy.get('input[type="checkbox"]').uncheck(['ga'])
 ```
 
 ### Values
@@ -86,7 +86,7 @@ cy.get('input[type="checkbox"]').uncheck(["ga"]);
 #### Uncheck the checkboxes with the values 'ga' and 'ca'
 
 ```javascript
-cy.get('[type="checkbox"]').uncheck(["ga", "ca"]);
+cy.get('[type="checkbox"]').uncheck(['ga', 'ca'])
 ```
 
 ## Notes
@@ -105,7 +105,7 @@ cy.get('[type="checkbox"]').uncheck(["ga", "ca"]);
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`.uncheck` will automatically wait for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.uncheck` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.uncheck()` will automatically wait for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.uncheck()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 
@@ -120,7 +120,7 @@ cy.get('[data-js="choose-all"]')
   .click()
   .find('input[type="checkbox"]')
   .first()
-  .uncheck();
+  .uncheck()
 ```
 
 The commands above will display in the Command Log as:

@@ -48,16 +48,16 @@ Pass a function that is invoked with the following arguments:
 **_Iterate over an array of DOM elements_**
 
 ```javascript
-cy.get("ul>li").each(($el, index, $list) => {
+cy.get('ul>li').each(($el, index, $list) => {
   // $el is a wrapped jQuery element
-  if ($el.someMethod() === "something") {
+  if ($el.someMethod() === 'something') {
     // wrap this element so we can
     // use cypress commands on it
-    cy.wrap($el).click();
+    cy.wrap($el).click()
   } else {
     // do something else
   }
-});
+})
 ```
 
 **_The original array is always yielded_**
@@ -65,14 +65,14 @@ cy.get("ul>li").each(($el, index, $list) => {
 No matter what is returned in the callback function, `.each()` will always yield the original array.
 
 ```javascript
-cy.get("li")
-  .should("have.length", 3)
+cy.get('li')
+  .should('have.length', 3)
   .each(($li, index, $lis) => {
-    return "something else";
+    return 'something else'
   })
   .then(($lis) => {
-    expect($lis).to.have.length(3); // true
-  });
+    expect($lis).to.have.length(3) // true
+  })
 ```
 
 ### Promises
@@ -85,10 +85,10 @@ If your callback function returns a `Promise`, it will be awaited before iterati
 cy.wrap([1, 2, 3]).each((num, i, array) => {
   return new Cypress.Promise((resolve) => {
     setTimeout(() => {
-      resolve();
-    }, num * 100);
-  });
-});
+      resolve()
+    }, num * 100)
+  })
+})
 ```
 
 ## Notes
@@ -107,7 +107,7 @@ You can stop the `.each()` loop early by returning `false` in the callback funct
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`.each` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`.each()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 

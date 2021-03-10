@@ -50,7 +50,7 @@ Cypress can test anything that runs in a browser.
 Cypress consists of a free, [open source](https://github.com/cypress-io/cypress), [locally installed](/guides/getting-started/installing-cypress) Test Runner **and** a Dashboard Service for [recording your tests](/guides/dashboard/dashboard-introduction).
 
 - **_First:_** Cypress helps you set up and start writing tests every day while you build your application locally. _TDD at its best!_
-- **_Later:_** After building up a suite of tests and [integrating Cypress](/guides/guides/continuous-integration) with your CI Provider, our [Dashboard Service](/guides/dashboard/dashboard-introduction) can record your test runs. You'll never have to wonder: _Why did this fail?_
+- **_Later:_** After building up a suite of tests and [integrating Cypress](/guides/continuous-integration/continuous-integration-introduction) with your CI Provider, our [Dashboard Service](/guides/dashboard/dashboard-introduction) can record your test runs. You'll never have to wonder: _Why did this fail?_
 
 ## Our mission
 

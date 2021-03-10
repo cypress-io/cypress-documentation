@@ -1,14 +1,15 @@
 <template>
-  <div class="hidden lg:block lg:col-span-2 xl:col-span-2 mt-16">
+  <div class="hidden xl:block xl:col-span-2 mt-16">
     <nav
       v-if="toc.length"
-      class="fixed top-16 bottom-0 right-0 pr-8 pb-8 overflow-y-auto space-y-4 hide-scroll"
+      class="fixed w-sidebar top-16 bottom-0 right-0 pl-4 pr-8 pb-8 overflow-y-auto space-y-4 hide-scroll"
     >
       <h3 class="toc-heading">ON THIS PAGE</h3>
       <scrollactive
+        :scroll-on-start="false"
         highlight-first-item
         active-class="scrollactive-item-active"
-        :offset="88"
+        :offset="96"
         tag="ul"
       >
         <li

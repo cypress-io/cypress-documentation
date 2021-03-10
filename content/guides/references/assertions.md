@@ -207,61 +207,61 @@ Here is a list of common element assertions. Notice how we use these assertions 
 
 ```javascript
 // retry until we find 3 matching <li.selected>
-cy.get("li.selected").should("have.length", 3);
+cy.get('li.selected').should('have.length', 3)
 ```
 
 ### Class
 
 ```javascript
 // retry until this input does not have class disabled
-cy.get("form").find("input").should("not.have.class", "disabled");
+cy.get('form').find('input').should('not.have.class', 'disabled')
 ```
 
 ### Value
 
 ```javascript
 // retry until this textarea has the correct value
-cy.get("textarea").should("have.value", "foo bar baz");
+cy.get('textarea').should('have.value', 'foo bar baz')
 ```
 
 ### Text Content
 
 ```javascript
 // retry until this span does not contain 'click me'
-cy.get("a").parent("span.help").should("not.contain", "click me");
+cy.get('a').parent('span.help').should('not.contain', 'click me')
 ```
 
 ### Visibility
 
 ```javascript
 // retry until this button is visible
-cy.get("button").should("be.visible");
+cy.get('button').should('be.visible')
 ```
 
 ### Existence
 
 ```javascript
 // retry until loading spinner no longer exists
-cy.get("#loading").should("not.exist");
+cy.get('#loading').should('not.exist')
 ```
 
 ### State
 
 ```javascript
 // retry until our radio is checked
-cy.get(":radio").should("be.checked");
+cy.get(':radio').should('be.checked')
 ```
 
 ### CSS
 
 ```javascript
 // retry until .completed has matching css
-cy.get(".completed").should("have.css", "text-decoration", "line-through");
+cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
 ```
 
 ```javascript
 // retry while .accordion css has the "display: none" property
-cy.get("#accordion").should("not.have.css", "display", "none");
+cy.get('#accordion').should('not.have.css', 'display', 'none')
 ```
 
 ## Negative assertions
@@ -269,32 +269,32 @@ cy.get("#accordion").should("not.have.css", "display", "none");
 There are positive and negative assertions. Examples of positive assertions are:
 
 ```javascript
-cy.get(".todo-item").should("have.length", 2).and("have.class", "completed");
+cy.get('.todo-item').should('have.length', 2).and('have.class', 'completed')
 ```
 
 The negative assertions have the "not" chainer prefixed to the assertion. Examples of negative assertions are:
 
 ```javascript
-cy.contains("first todo").should("not.have.class", "completed");
-cy.get("#loading").should("not.be.visible");
+cy.contains('first todo').should('not.have.class', 'completed')
+cy.get('#loading').should('not.be.visible')
 ```
 
 #### ⚠️ False passing tests
 
 Negative assertions may pass for reasons you weren't expecting. Let's say we want to test that a Todo list app adds a new Todo item after typing the Todo and pressing enter.
 
-**Postitive assertions**
+**Positive assertions**
 
 When adding an element to the list and using a **positive assertion**, the test asserts a specific number of Todo items in our application.
 
 The test below may still falsely pass if the application behaves unexpectedly, like adding a blank Todo, instead of adding the new Todo with the text "Write tests".
 
 ```javascript
-cy.get("li.todo").should("have.length", 2);
-cy.get("input#new-todo").type("Write tests{enter}");
+cy.get('li.todo').should('have.length', 2)
+cy.get('input#new-todo').type('Write tests{enter}')
 
 // using a positive assertion to check the exact number of items
-cy.get("li.todo").should("have.length", 3);
+cy.get('li.todo').should('have.length', 3)
 ```
 
 **Negative assertions**
@@ -307,11 +307,11 @@ But when using a **negative assertion** in the test below, the test can falsely 
 - An infinite variety of possible application mistakes
 
 ```javascript
-cy.get("li.todo").should("have.length", 2);
-cy.get("input#new-todo").type("Write tests{enter}");
+cy.get('li.todo').should('have.length', 2)
+cy.get('input#new-todo').type('Write tests{enter}')
 
 // using negative assertion to check it's not a number of items
-cy.get("li.todo").should("not.have.length", 2);
+cy.get('li.todo').should('not.have.length', 2)
 ```
 
 **Recommendation**
@@ -320,13 +320,13 @@ We recommend using negative assertions to verify that a specific condition is no
 
 ```javascript
 // at first the item is marked completed
-cy.contains("li.todo", "Write tests")
-  .should("have.class", "completed")
-  .find(".toggle")
-  .click();
+cy.contains('li.todo', 'Write tests')
+  .should('have.class', 'completed')
+  .find('.toggle')
+  .click()
 
 // the CSS class has been removed
-cy.contains("li.todo", "Write tests").should("not.have.class", "completed");
+cy.contains('li.todo', 'Write tests').should('not.have.class', 'completed')
 ```
 
 For more examples, please read the blog post [Be Careful With Negative Assertions](https://glebbahmutov.com/blog/negative-assertions/).
@@ -340,14 +340,14 @@ If built-in assertions are not enough, you can write your own assertion function
 ```
 
 ```javascript
-cy.get("div").should(($div) => {
-  expect($div).to.have.length(1);
+cy.get('div').should(($div) => {
+  expect($div).to.have.length(1)
 
-  const className = $div[0].className;
+  const className = $div[0].className
 
   // className will be a string like "main-abc123 heading-xyz987"
-  expect(className).to.match(/heading-/);
-});
+  expect(className).to.match(/heading-/)
+})
 ```
 
 ## Multiple assertions
@@ -361,25 +361,25 @@ You can attach multiple assertions to the same command.
 ```
 
 ```js
-cy.get(".assertions-link")
-  .should("have.class", "active")
-  .and("have.attr", "href")
-  .and("include", "cypress.io");
+cy.get('.assertions-link')
+  .should('have.class', 'active')
+  .and('have.attr', 'href')
+  .and('include', 'cypress.io')
 ```
 
 Note that all chained assertions will use the same reference to the original subject. For example, if you wanted to test a loading element that first appears and then disappears, the following WILL NOT WORK because the same element cannot be visible and invisible at the same time:
 
 ```js
 // ⛔️ DOES NOT WORK
-cy.get("#loading").should("be.visible").and("not.be.visible");
+cy.get('#loading').should('be.visible').and('not.be.visible')
 ```
 
 Instead you should split the assertions and re-query the element:
 
 ```js
 // ✅ THE CORRECT WAY
-cy.get("#loading").should("be.visible");
-cy.get("#loading").should("not.be.visible");
+cy.get('#loading').should('be.visible')
+cy.get('#loading').should('not.be.visible')
 ```
 
 ## See also

@@ -17,14 +17,14 @@ title: Visual Testing
 Cypress is a _functional_ Test Runner. It drives the web application the way a user would, and checks if the app _functions_ as expected: if the expected message appears, an element is removed, or a CSS class is added after the appropriate user action. A typical Cypress test, for example, can check if a toggled "Todo" item gets a class of "completed" after the `.toggle` is checked:
 
 ```js
-it("completes todo", () => {
+it('completes todo', () => {
   // opens TodoMVC running at "baseUrl"
-  cy.visit("/");
-  cy.get(".new-todo").type("write tests{enter}");
-  cy.contains(".todo-list li", "write tests").find(".toggle").check();
+  cy.visit('/')
+  cy.get('.new-todo').type('write tests{enter}')
+  cy.contains('.todo-list li', 'write tests').find('.toggle').check()
 
-  cy.contains(".todo-list li", "write tests").should("have.class", "completed");
-});
+  cy.contains('.todo-list li', 'write tests').should('have.class', 'completed')
+})
 ```
 
 <DocsImage src="/img/guides/visual-testing/completed-test.gif" alt="Passing Cypress functional test" ></DocsImage>
@@ -36,8 +36,8 @@ Cypress does NOT see how the page actually looks though. For example, Cypress wi
 You could technically write a functional test asserting the CSS properties using the [`have.css` assertion](/guides/references/assertions#CSS), but these may quickly become cumbersome to write and maintain, especially when visual styles rely on a lot of CSS styles.
 
 ```js
-cy.get(".completed").should("have.css", "text-decoration", "line-through");
-cy.get(".completed").should("have.css", "color", "rgb(217,217,217)");
+cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
+cy.get('.completed').should('have.css', 'color', 'rgb(217,217,217)')
 ```
 
 Your visual styles may also rely on more than CSS, perhaps you want to ensure an SVG or image has rendered correctly or shapes were correctly drawn to a canvas.
@@ -56,20 +56,22 @@ For example, one can use the [cypress-plugin-snapshots](https://github.com/meina
 ```
 
 ```js
-it("completes todo", () => {
-  cy.visit("/");
-  cy.get(".new-todo").type("write tests{enter}");
-  cy.contains(".todo-list li", "write tests").find(".toggle").check();
+it('completes todo', () => {
+  cy.visit('/')
+  cy.get('.new-todo').type('write tests{enter}')
+  cy.contains('.todo-list li', 'write tests').find('.toggle').check()
 
-  cy.contains(".todo-list li", "write tests").should("have.class", "completed");
+  cy.contains('.todo-list li', 'write tests').should('have.class', 'completed')
 
   // run 'npm i cypress-plugin-snapshots -S'
   // capture the element screenshot and
   // compare to the baseline image
-  cy.get(".todoapp").toMatchImageSnapshot({
-    threshold: 0.001,
-  });
-});
+  cy.get('.todoapp').toMatchImageSnapshot({
+    imageConfig: {
+      threshold: 0.001,
+    },
+  })
+})
 ```
 
 This open source plugin compares the baseline and the current images side by side within the Cypress Test Runner if pixel difference is above the threshold; notice how the baseline image (_Expected result_) has the label text with the line through, while the new image (_Actual result_) does not have it.
@@ -206,8 +208,8 @@ For example, if the snapshot command is `cy.mySnapshotCommand`:
 ```js
 // the web application takes time to add the new item,
 // sometimes it takes the snapshot BEFORE the new item appears
-cy.get(".new-todo").type("write tests{enter}");
-cy.mySnapshotCommand();
+cy.get('.new-todo').type('write tests{enter}')
+cy.mySnapshotCommand()
 ```
 
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
@@ -215,11 +217,11 @@ cy.mySnapshotCommand();
 ```js
 // use a functional assertion to ensure
 // the web application has re-rendered the page
-cy.get(".new-todo").type("write tests{enter}");
-cy.contains(".todo-list li", "write tests");
+cy.get('.new-todo').type('write tests{enter}')
+cy.contains('.todo-list li', 'write tests')
 // great, the new item is displayed,
 // now we can take the snapshot
-cy.mySnapshotCommand();
+cy.mySnapshotCommand()
 ```
 
 ### Timestamps
@@ -233,11 +235,11 @@ cy.mySnapshotCommand();
 Below we freeze the operating system's time to `Jan 1, 2018` using [cy.clock()](/api/commands/clock) to ensure all images displaying dates and times match.
 
 ```js
-const now = new Date(2018, 1, 1);
+const now = new Date(2018, 1, 1)
 
-cy.clock(now);
+cy.clock(now)
 // ... test
-cy.mySnapshotCommand();
+cy.mySnapshotCommand()
 ```
 
 ### Application state
@@ -251,10 +253,10 @@ cy.mySnapshotCommand();
 Below we stub network calls using [cy.intercept()](/api/commands/intercept) to return the same response data for each XHR request. This ensures that the data displayed in our application images does not change.
 
 ```js
-cy.intercept("/api/items", { fixture: "items" }).as("getItems");
+cy.intercept('/api/items', { fixture: 'items' }).as('getItems')
 // ... action
-cy.wait("@getUsers");
-cy.mySnapshotCommand();
+cy.wait('@getUsers')
+cy.mySnapshotCommand()
 ```
 
 ### Visual diff elements
@@ -287,3 +289,4 @@ If you are working on React components, read [Visual testing for React component
 - [Writing a Plugin](/api/plugins/writing-a-plugin)
 - <Icon name="github"></Icon> [Cypress Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) is a full stack example application that demonstrates **best practices and scalable strategies with Cypress in practical and realistic scenarios**.
 - Read the blog post [Debug a Flaky Visual Regression Test](https://www.cypress.io/blog/2020/10/02/debug-a-flaky-visual-regression-test/)
+- Read the blog post [Canvas Visual Testing with Retries](https://glebbahmutov.com/blog/canvas-testing/)

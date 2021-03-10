@@ -6,7 +6,7 @@ Start a server to begin routing responses to [cy.route()](/api/commands/route) a
 
 <Alert type="warning">
 
-⚠️ **`cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0**. In a future release, support for `cy.server()` and `cy.route()` will be moved to a plugin. Consider using [`cy.intercept()`](/api/commands/intercept.html) instead.
+⚠️ **`cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0**. In a future release, support for `cy.server()` and `cy.route()` will be moved to a plugin. Consider using [`cy.intercept()`](/api/commands/intercept) instead.
 
 </Alert>
 
@@ -14,15 +14,15 @@ Start a server to begin routing responses to [cy.route()](/api/commands/route) a
 
 🚨 Please be aware that Cypress only currently supports intercepting XMLHttpRequests. **Requests using the Fetch API and other types of network requests like page loads and `<script>` tags will not be intercepted or visible in the Command Log.** You can automatically polyfill `window.fetch` to spy on and stub requests by enabling an [experimental](https://on.cypress.io/experimental) feature `experimentalFetchPolyfill`. See [#95](https://github.com/cypress-io/cypress/issues/95) for more details and temporary workarounds.
 
-Cypress also has a new experimental [route2](/api/commands/route2.html) feature that supports requests using the Fetch API and other types of network requests like page loads. For more information, check out the [cy.route2() documentation](/api/commands/route2.html).
+Cypress also has a new experimental [route2](/api/commands/route2) feature that supports requests using the Fetch API and other types of network requests like page loads. For more information, check out the [cy.route2() documentation](/api/commands/route2).
 
 </Alert>
 
 ## Syntax
 
 ```javascript
-cy.server();
-cy.server(options);
+cy.server()
+cy.server(options)
 ```
 
 ### Usage
@@ -30,7 +30,7 @@ cy.server(options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.server();
+cy.server()
 ```
 
 ### Arguments
@@ -82,7 +82,7 @@ Pass in an options object to change the default behavior of `cy.server()`. These
 - You will see requests named as `(XHR Stub)` or `(XHR)` in the Command Log.
 
 ```javascript
-cy.server();
+cy.server()
 ```
 
 ### Options
@@ -95,13 +95,13 @@ In this example, our matching requests will be delayed 1000ms and have a status 
 
 ```javascript
 cy.server({
-  method: "POST",
+  method: 'POST',
   delay: 1000,
   status: 422,
   response: {},
-});
+})
 
-cy.route("/users/", { errors: "Name cannot be blank" });
+cy.route('/users/', { errors: 'Name cannot be blank' })
 ```
 
 #### Change the default delay for all routes
@@ -110,7 +110,7 @@ Adding delay can help simulate real world network latency. Normally stubbed resp
 
 ```javascript
 // delay each route's response 1500ms
-cy.server({ delay: 1500 });
+cy.server({ delay: 1500 })
 ```
 
 #### Send 404s on unmatched requests
@@ -124,19 +124,19 @@ If you'd like Cypress to automatically send requests that do _NOT_ match routes 
 Set `force404` to `true`.
 
 ```javascript
-cy.server({ force404: true });
-cy.route("/activities/**", "fixture:activities.json");
+cy.server({ force404: true })
+cy.route('/activities/**', 'fixture:activities.json')
 ```
 
 ```javascript
 // Application Code
 $(() => {
-  $.get("/activities");
+  $.get('/activities')
 
   // this will be sent back 404 since it
   // does not match any of the cy.routes
-  $.getJSON("/users.json");
-});
+  $.getJSON('/users.json')
+})
 ```
 
 #### Change the default response headers for all routes
@@ -152,32 +152,32 @@ Cypress automatically sets `Content-Length` and `Content-Type` based on the resp
 ```javascript
 cy.server({
   headers: {
-    "x-token": "abc-123-foo-bar",
+    'x-token': 'abc-123-foo-bar',
   },
-});
+})
 
-cy.route("GET", "/users/1", { id: 1, name: "Amanda" }).as("getUser");
-cy.visit("/users/1/profile");
-cy.wait("@getUser")
-  .its("responseHeaders")
-  .should("have.property", "x-token", "abc-123-foo-bar"); // true
+cy.route('GET', '/users/1', { id: 1, name: 'Amanda' }).as('getUser')
+cy.visit('/users/1/profile')
+cy.wait('@getUser')
+  .its('responseHeaders')
+  .should('have.property', 'x-token', 'abc-123-foo-bar') // true
 ```
 
 ```javascript
 // Application Code
 
 // lets use the native XHR object
-const xhr = new XMLHttpRequest();
+const xhr = new XMLHttpRequest()
 
-xhr.open("GET", "/users/1");
+xhr.open('GET', '/users/1')
 
 xhr.onload = function () {
-  const token = this.getResponseHeader("x-token");
+  const token = this.getResponseHeader('x-token')
 
-  console.log(token); // => abc-123-foo-bar
-};
+  console.log(token) // => abc-123-foo-bar
+}
 
-xhr.send();
+xhr.send()
 ```
 
 #### Set a custom request header for all requests
@@ -185,9 +185,9 @@ xhr.send();
 ```js
 cy.server({
   onAnyRequest: (route, proxy) => {
-    proxy.xhr.setRequestHeader("CUSTOM-HEADER", "Header value");
+    proxy.xhr.setRequestHeader('CUSTOM-HEADER', 'Header value')
   },
-});
+})
 ```
 
 #### Change the default filtering
@@ -205,10 +205,10 @@ const ignore = (xhr) => {
   // this function receives the xhr object in question and
   // will ignore if it's a GET that appears to be a static resource
   return (
-    xhr.method === "GET" &&
+    xhr.method === 'GET' &&
     /\.(jsx?|coffee|html|less|s?css|svg)(\?.*)?$/.test(xhr.url)
-  );
-};
+  )
+}
 ```
 
 **You can override this function with your own specific logic:**
@@ -220,7 +220,7 @@ cy.server({
     // truthy if you want this xhr to be ignored,
     // not logged, and not stubbed.
   },
-});
+})
 ```
 
 If you would like to change the default option for **ALL** `cy.server()` you [can change this option permanently](/api/cypress-api/cypress-server#Options).
@@ -230,9 +230,9 @@ If you would like to change the default option for **ALL** `cy.server()` you [ca
 You can disable all stubbing and its effects and restore it to the default behavior as a test is running. By setting `enable` to `false`, this disables stubbing routes and XHR's will no longer show up as (XHR Stub) in the Command Log. However, routing aliases can continue to be used and will continue to match requests, but will not affect responses.
 
 ```javascript
-cy.server();
-cy.route("POST", "/users", {}).as("createUser");
-cy.server({ enable: false });
+cy.server()
+cy.route('POST', '/users', {}).as('createUser')
+cy.server({ enable: false })
 ```
 
 ## Notes
@@ -273,7 +273,7 @@ The intention of [cy.request()](/api/commands/request) is to be used for checkin
 
 ### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
 
-<List><li>`cy.server` cannot have any assertions chained.</li></List>
+<List><li>`cy.server()` cannot have any assertions chained.</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
 

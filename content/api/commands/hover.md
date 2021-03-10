@@ -37,8 +37,8 @@ As a workaround, check out the [recipe leveraging Chrome remote debugging](/exam
 #### Simulating `mouseover` event to get popover to display
 
 ```javascript
-cy.get(".menu-item").trigger("mouseover");
-cy.get(".popover").should("be.visible");
+cy.get('.menu-item').trigger('mouseover')
+cy.get('.popover').should('be.visible')
 ```
 
 ### Invoke
@@ -46,7 +46,7 @@ cy.get(".popover").should("be.visible");
 #### Example of showing an element in order to perform action
 
 ```javascript
-cy.get(".hidden").invoke("show").click();
+cy.get('.hidden').invoke('show').click()
 ```
 
 ### Force click
@@ -56,13 +56,13 @@ You can also force the action to be performed on the element regardless of wheth
 #### Example of clicking on a hidden element
 
 ```javascript
-cy.get(".hidden").click({ force: true });
+cy.get('.hidden').click({ force: true })
 ```
 
 #### Example of checking a hidden element
 
 ```javascript
-cy.get(".checkbox").check({ force: true });
+cy.get('.checkbox').check({ force: true })
 ```
 
 ## See also

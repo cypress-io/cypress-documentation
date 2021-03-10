@@ -3,6 +3,8 @@ import AppSidebar from '@/components/AppSidebar'
 import AppHeader from '@/components/AppHeader'
 import TableOfContents from '@/components/TableOfContents'
 import Badge from '../../components/global/Badge.vue'
+import { getMetaData } from '../../utils/getMetaData'
+import { getMetaDescription } from '../../utils/getMetaDescription'
 
 export default {
   components: {
@@ -73,8 +75,8 @@ export default {
       return error({ statusCode: 404, message: 'Example not found' })
     }
 
-    const paramParts = params.pathMatch.split('/')
-    const slug = paramParts[paramParts.length - 1]
+    const [rawContent] = await $content({ deep: true, text: true }).where({ path }).fetch()
+    const metaDescription = await getMetaDescription(rawContent.text)
 
     return {
       algoliaSettings,
@@ -82,12 +84,21 @@ export default {
       examplesSidebarItems: items,
       mediaObject,
       title,
-      path: slug,
+      metaDescription,
+      path: params.pathMatch,
     }
   },
   head() {
     return {
       title: this.exampleItem.title,
+      meta: this.meta,
+      link: [
+        {
+          hid: 'canonical',
+          rel: 'canonical',
+          href: `https://docs.cypress.io/examples/${this.$route.params.pathMatch}`
+        }
+      ]
     }
   },
   computed: {
@@ -118,6 +129,16 @@ export default {
     isScreencasts() {
       return this.mediaObject.slug === 'screencasts'
     },
+    meta() {
+      const metaData = {
+        type: 'article',
+        title: this.exampleItem.title,
+        description: this.metaDescription,
+        url: `https://docs.cypress.io/examples/${this.$route.params.pathMatch}`
+      }
+
+      return getMetaData(metaData)
+    }
   },
 }
 </script>
@@ -136,9 +157,10 @@ export default {
         :path="path"
       />
       <div v-if="mediaObjectIsEmpty" class="main-content-article-wrapper">
-        <article class="main-content-article">
+        <article class="main-content-article hide-scroll">
           <h1 class="main-content-title">{{ exampleItem.title }}</h1>
           <nuxt-content :document="exampleItem"></nuxt-content>
+          <Footer />
         </article>
       </div>
       <!--
@@ -148,7 +170,7 @@ export default {
 
       <!-- /* Projects */ -->
       <div v-if="isProjects" class="main-content-article-wrapper">
-        <article class="main-content-article nuxt-content">
+        <article class="main-content-article hide-scroll nuxt-content">
           <h1 class="main-content-title">{{ title }}</h1>
           <p>{{ mediaObject.description }}</p>
           <ul>
@@ -169,7 +191,7 @@ export default {
 
       <!-- /* Courses */ -->
       <div v-if="isCourses" class="main-content-article-wrapper">
-        <article class="main-content-article nuxt-content">
+        <article class="main-content-article hide-scroll nuxt-content">
           <h1 class="main-content-title">{{ title }}</h1>
           <p>
             Online courses from that teach end-to-end testing with Cypress over
@@ -209,7 +231,7 @@ export default {
 
       <!-- /* Webinars */ -->
       <div v-if="isWebinars" class="main-content-article-wrapper">
-        <article class="main-content-article nuxt-content">
+        <article class="main-content-article hide-scroll nuxt-content">
           <h1 class="main-content-title">{{ title }}</h1>
           <div class="mb-14">
             <ul>
@@ -253,7 +275,7 @@ export default {
 
       <!-- /* Blogs */ -->
       <div v-if="isBlogs" class="main-content-article-wrapper">
-        <article class="main-content-article nuxt-content">
+        <article class="main-content-article hide-scroll nuxt-content">
           <h1 class="main-content-title">{{ title }}</h1>
           <div class="mb-14">
             <ul>
@@ -301,7 +323,7 @@ export default {
 
       <!-- /* Talks */ -->
       <div v-if="isTalks" class="main-content-article-wrapper">
-        <article class="main-content-article nuxt-content">
+        <article class="main-content-article hide-scroll nuxt-content">
           <h1 class="main-content-title">{{ title }}</h1>
           <div class="mb-14">
             <ul>
@@ -362,7 +384,7 @@ export default {
 
       <!-- /* Podcasts */ -->
       <div v-if="isPodcasts" class="main-content-article-wrapper">
-        <article class="main-content-article nuxt-content">
+        <article class="main-content-article hide-scroll nuxt-content">
           <h1 class="main-content-title">{{ title }}</h1>
           <div class="mb-14">
             <ul>
@@ -417,7 +439,7 @@ export default {
 
       <!-- /* Screencasts */ -->
       <div v-if="isScreencasts" class="main-content-article-wrapper">
-        <article class="main-content-article nuxt-content">
+        <article class="main-content-article hide-scroll nuxt-content">
           <h1 class="main-content-title">{{ title }}</h1>
           <div class="mb-14">
             <ul>

@@ -41,10 +41,10 @@ Set defaults for all cookies, such as preserving a set of cookies to bypass bein
 By turning on debugging, Cypress will automatically generate logs to the console when it _sets_ or _clears_ cookie values. This is useful to help you understand how Cypress clears cookies before each test, and is useful to visualize how to handle preserving cookies in between tests.
 
 ```javascript
-Cypress.Cookies.debug(true); // now Cypress will log when it alters cookies
+Cypress.Cookies.debug(true) // now Cypress will log when it alters cookies
 
-cy.clearCookie("foo");
-cy.setCookie("foo", "bar");
+cy.clearCookie('foo')
+cy.setCookie('foo', 'bar')
 ```
 
 <DocsImage src="/img/api/cookies/cookies-in-console-log.png" alt="Console log when debugging cookies" ></DocsImage>
@@ -54,7 +54,7 @@ cy.setCookie("foo", "bar");
 By default Cypress will log the cookie object which allows you to inspect all of its properties. However you may not need that level of detail and you can turn this off.
 
 ```javascript
-Cypress.Cookies.debug(true, { verbose: false });
+Cypress.Cookies.debug(true, { verbose: false })
 ```
 
 Now when Cypress logs cookies they will only include the `name` and `value`.
@@ -64,7 +64,7 @@ Now when Cypress logs cookies they will only include the `name` and `value`.
 Debugging will be turned on until you explicitly turn it off.
 
 ```javascript
-Cypress.Cookies.debug(false); // now debugging is turned off
+Cypress.Cookies.debug(false) // now debugging is turned off
 ```
 
 ### Preserve Once
@@ -86,14 +86,14 @@ You can use `Cypress.Cookies.preserveOnce()` to preserve cookies through multipl
 There are _likely_ better ways to do this, but this isn't well documented at the moment. Every application is different and there is no one-size-fits-all solution. For the moment, if you're using session-based cookies, this method will work.
 
 ```javascript
-describe("Dashboard", () => {
+describe('Dashboard', () => {
   before(() => {
     // log in only once before any of the tests run.
     // your app will likely set some sort of session cookie.
     // you'll need to know the name of the cookie(s), which you can find
     // in your Resources -> Cookies panel in the Chrome Dev Tools.
-    cy.login();
-  });
+    cy.login()
+  })
 
   beforeEach(() => {
     // before each test, we can automatically preserve the
@@ -102,21 +102,21 @@ describe("Dashboard", () => {
     //
     // the name of your cookies will likely be different
     // this is an example
-    Cypress.Cookies.preserveOnce("session_id", "remember_token");
-  });
+    Cypress.Cookies.preserveOnce('session_id', 'remember_token')
+  })
 
-  it("displays stats", () => {
+  it('displays stats', () => {
     // ...
-  });
+  })
 
-  it("can do something", () => {
+  it('can do something', () => {
     // ...
-  });
+  })
 
-  it("opens a modal", () => {
+  it('opens a modal', () => {
     // ...
-  });
-});
+  })
+})
 ```
 
 ### Defaults
@@ -146,8 +146,8 @@ A great place to put this configuration is in your `cypress/support/index.js` fi
 // now any cookie with the name 'session_id' will
 // not be cleared before each test runs
 Cypress.Cookies.defaults({
-  preserve: "session_id",
-});
+  preserve: 'session_id',
+})
 ```
 
 #### Preserve Array
@@ -156,8 +156,8 @@ Cypress.Cookies.defaults({
 // now any cookie with the name 'session_id' or 'remember_token'
 // will not be cleared before each test runs
 Cypress.Cookies.defaults({
-  preserve: ["session_id", "remember_token"],
-});
+  preserve: ['session_id', 'remember_token'],
+})
 ```
 
 #### Preserve RegExp
@@ -167,7 +167,7 @@ Cypress.Cookies.defaults({
 // will not be cleared before each test runs
 Cypress.Cookies.defaults({
   preserve: /session|remember/,
-});
+})
 ```
 
 #### Preserve Function
@@ -180,7 +180,7 @@ Cypress.Cookies.defaults({
     // then the cookie will not be cleared
     // before each test runs
   },
-});
+})
 ```
 
 ## History

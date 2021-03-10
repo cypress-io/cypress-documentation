@@ -115,6 +115,7 @@ export default {
   --docsearch-hit-active-color: #fff;
   --docsearch-muted-color: var(--color-gray-500);
   --docsearch-logo-color: var(--docsearch-muted-color);
+  --docsearch-container-background: rgba(153, 155, 165, 0.8);
 }
 
 .DocSearch-MagnifierLabel,

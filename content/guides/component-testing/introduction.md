@@ -3,7 +3,7 @@ title: Introduction
 containerClass: component-testing
 ---
 
-<alert type="warning">
+⚠️ The Cypress Component Testing library is still in **Alpha**. We are rapidly developing and expect that the API may undergo breaking changes. Contribute to its development by submitting feature requests or issues [here](https://github.com/cypress-io/cypress/).
 
 ⚠️ Cypress component testing is in still in **Alpha**. We are rapidly developing and expect that the API may undergo breaking changes. Contribute to its development by submitting feature requests or issues in the [cypress repo](https://github.com/cypress-io/cypress/).
 
@@ -28,20 +28,30 @@ Let's go through the setup to start testing components.
 
 If you want to see component testing working in an existing project, follow these steps:
 
-<!-- FIXME: update the url of the example repo we choose -->
+```javascript
+import { mount } from '@cypress/vue' // or cypress-react-unit-test
+import TodoList from '@/components/TodoList'
 
-- Clone this https://github.com/elevatebart/calc.git repository.
-- Install dependencies by running `npm install`.
-- Run `npx cy:open` to open Cypress.
+describe('TodoList', () => {
+  it('renders the todo list', () => {
+    mount(TodoList)
+    cy.get('[data-testid=todo-list]').should('exist')
+  })
 
-<DocsImage src="/img/guides/component-testing/first-open.png" alt="Splash Screen of Component Testing" ></DocsImage>
+  it('contains the correct number of todos', () => {
+    const todos = [
+      { text: 'Buy milk', id: 1 },
+      { text: 'Learn Component Testing', id: 2 },
+    ]
 
-- Click on one of the specs. You should see the tests run.
-- Open the spec file in your [preferred IDE](guides/tooling/IDE-integration#file-opener-preference) by clicking on the spec file's name in the sidebar.
-- Make a change in the spec file and save to see the test re-run.
-- Edit the code where the component lives in your application. The test will also automatically re-run.
+    mount(TodoList, {
+      propsData: { todos },
+    })
 
-<DocsImage src="/img/guides/component-testing/first-run.png" alt="Splash Screen of Component Testing" ></DocsImage>
+    cy.get('[data-testid=todos]').should('have.length', todos.length)
+  })
+})
+```
 
 ## Set up in your project
 
@@ -69,27 +79,30 @@ Start by running the command below to install dependencies. It will install both
 <code-group>
   <code-block label="React" active>
 
-```bash
-npm install cypress @cypress/react @cypress/webpack-dev-server --dev
+```sh
+npm install --save-dev cypress @cypress/react
 ```
 
   </code-block>
   <code-block label="Vue">
 
-```bash
-npm install cypress @cypress/vue @cypress/webpack-dev-server --dev
+```js
+require('@cypress/react/support')
 ```
 
   </code-block>
 </code-group>
 
-### Configuration
+```js
+// cypress/plugins/index.js
+module.exports = (on, config) => {
+  require('@cypress/react/plugins/react-scripts')(on, config)
+  // IMPORTANT to return the config object
+  // with the any changed environment variables
 
-Now that we have the necessary tools installed let's configure our tests.
-
-In the same folder as your `package.json`, create a `cypress.json` file and a `cypress` directory. Both might already exist does not already exists. In this folder create a plugins directory containing an `index.js` file.
-
-<alert type="info">
+  return config
+}
+```
 
 If it's your first time using Cypress, run `npx cypress open` and Cypress will create some example directories and files.
 

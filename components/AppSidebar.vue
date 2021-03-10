@@ -25,11 +25,6 @@ export default {
       },
     },
   },
-  methods: {
-    toggleSidebar() {
-      this.isSidebarOpen = !this.isSidebarOpen
-    },
-  },
 }
 </script>
 
@@ -48,7 +43,7 @@ export default {
         :folder="sidebarGroup.folder"
         :section="section"
         :children="sidebarGroup.children"
-        :initial-is-open="false"
+        :initial-is-open="(path.includes(sidebarGroup.folder))"
         :path="path"
       />
     </div>

@@ -11,7 +11,7 @@ Cypress commands yield jQuery objects, so you can call methods on them.
 If you're trying to assert on an element's text content:
 
 ```javascript
-cy.get("div").should("have.text", "foobarbaz");
+cy.get('div').should('have.text', 'foobarbaz')
 ```
 
 If the text contains a [non-breaking space](https://en.wikipedia.org/wiki/Non-breaking_space) entity `&nbsp;` then use the Unicode character `\u00a0` instead of `&nbsp;`.
@@ -21,55 +21,55 @@ If the text contains a [non-breaking space](https://en.wikipedia.org/wiki/Non-br
 ```
 
 ```javascript
-cy.get("div").should("have.text", "Hello\u00a0world");
+cy.get('div').should('have.text', 'Hello\u00a0world')
 ```
 
 If you'd like to work with the text prior to an assertion:
 
 ```javascript
-cy.get("div").should(($div) => {
-  const text = $div.text();
+cy.get('div').should(($div) => {
+  const text = $div.text()
 
-  expect(text).to.match(/foo/);
-  expect(text).to.include("foo");
-  expect(text).not.to.include("bar");
-});
+  expect(text).to.match(/foo/)
+  expect(text).to.include('foo')
+  expect(text).not.to.include('bar')
+})
 ```
 
 If you need to convert text to a number before checking if it is greater than 10:
 
 ```javascript
-cy.get("div").invoke("text").then(parseFloat).should("be.gt", 10);
+cy.get('div').invoke('text').then(parseFloat).should('be.gt', 10)
 ```
 
 If you need to hold a reference or compare values of text:
 
 ```javascript
-cy.get("div")
-  .invoke("text")
+cy.get('div')
+  .invoke('text')
   .then((text1) => {
     // do more work here
 
     // click the button which changes the div's text
-    cy.get("button").click();
+    cy.get('button').click()
 
     // grab the div again and compare its previous text
     // to the current text
-    cy.get("div")
-      .invoke("text")
+    cy.get('div')
+      .invoke('text')
       .should((text2) => {
-        expect(text1).not.to.eq(text2);
-      });
-  });
+        expect(text1).not.to.eq(text2)
+      })
+  })
 ```
 
 jQuery's `.text()` method automatically calls `elem.textContent` under the hood. If you'd like to instead use `innerText` you can do the following:
 
 ```javascript
-cy.get("div").should(($div) => {
+cy.get('div').should(($div) => {
   // access the native DOM element
-  expect($div.get(0).innerText).to.eq("foobarbaz");
-});
+  expect($div.get(0).innerText).to.eq('foobarbaz')
+})
 ```
 
 This is the equivalent of Selenium's `getText()` method, which returns the innerText of a visible element.
@@ -82,40 +82,40 @@ If you're trying to assert on an input's value:
 
 ```javascript
 // make an assertion on the value
-cy.get("input").should("have.value", "abc");
+cy.get('input').should('have.value', 'abc')
 ```
 
 If you'd like to massage or work with the text prior to an assertion:
 
 ```javascript
-cy.get("input").should(($input) => {
-  const val = $input.val();
+cy.get('input').should(($input) => {
+  const val = $input.val()
 
-  expect(val).to.match(/foo/);
-  expect(val).to.include("foo");
-  expect(val).not.to.include("bar");
-});
+  expect(val).to.match(/foo/)
+  expect(val).to.include('foo')
+  expect(val).not.to.include('bar')
+})
 ```
 
 If you need to hold a reference or compare values of text:
 
 ```javascript
-cy.get("input")
-  .invoke("val")
+cy.get('input')
+  .invoke('val')
   .then((val1) => {
     // do more work here
 
     // click the button which changes the input's value
-    cy.get("button").click();
+    cy.get('button').click()
 
     // grab the input again and compare its previous value
     // to the current value
-    cy.get("input")
-      .invoke("val")
+    cy.get('input')
+      .invoke('val')
       .should((val2) => {
-        expect(val1).not.to.eq(val2);
-      });
-  });
+        expect(val1).not.to.eq(val2)
+      })
+  })
 ```
 
 ## <Icon name="angle-right"></Icon> How do I compare the value or state of one thing to another?
@@ -134,9 +134,9 @@ For examples how to do this, please read our [Variables and Aliases guide](/guid
 Cypress wraps elements in jQuery so you'd get the native element from there within a [.then()](/api/commands/then) command.
 
 ```javascript
-cy.get("button").then(($el) => {
-  $el.get(0);
-});
+cy.get('button').then(($el) => {
+  $el.get(0)
+})
 ```
 
 ## <Icon name="angle-right"></Icon> How do I do something different if an element doesn't exist?
@@ -201,32 +201,32 @@ Yes, you sure can. While executing tests in the Test Runner, you can view the en
 ```
 
 ```js
-describe("The Document Metadata", () => {
+describe('The Document Metadata', () => {
   beforeEach(() => {
-    cy.visit("/");
-  });
+    cy.visit('/')
+  })
 
-  it("looks inside the head content using `cy.document()`", () => {
+  it('looks inside the head content using `cy.document()`', () => {
     // this will yield the entire window.document object
     // if you click on DOCUMENT from the command log,
     // it will output the entire #document to the console
-    cy.document();
-  });
+    cy.document()
+  })
 
   // or make assertions on any of the metadata in the head element
 
-  it("looks inside <title> tag", () => {
-    cy.get("head title").should("contain", "Test the HEAD content");
-  });
+  it('looks inside <title> tag', () => {
+    cy.get('head title').should('contain', 'Test the HEAD content')
+  })
 
-  it("looks inside <meta> tag for description", () => {
+  it('looks inside <meta> tag for description', () => {
     cy.get('head meta[name="description"]').should(
-      "have.attr",
-      "content",
-      "This description is so meta"
-    );
-  });
-});
+      'have.attr',
+      'content',
+      'This description is so meta'
+    )
+  })
+})
 ```
 
 ## <Icon name="angle-right"></Icon> Can I check that a form's HTML form validation is shown when an input is invalid?
@@ -243,11 +243,11 @@ You certainly can.
 ```
 
 ```js
-cy.get('[type="submit"]').click();
-cy.get("input:invalid").should("have.length", 1);
-cy.get("#name").then(($input) => {
-  expect($input[0].validationMessage).to.eq("Please fill out this field.");
-});
+cy.get('[type="submit"]').click()
+cy.get('input:invalid').should('have.length', 1)
+cy.get('#name').then(($input) => {
+  expect($input[0].validationMessage).to.eq('Please fill out this field.')
+})
 ```
 
 **Test custom validation error**
@@ -259,27 +259,27 @@ cy.get("#name").then(($input) => {
     <button type="submit">Submit</button>
   </form>
   <script>
-    const email = document.getElementById("email");
+    const email = document.getElementById('email')
 
-    email.addEventListener("input", function (event) {
+    email.addEventListener('input', function (event) {
       if (email.validity.typeMismatch) {
-        email.setCustomValidity("I expect an email!");
+        email.setCustomValidity('I expect an email!')
       } else {
-        email.setCustomValidity("");
+        email.setCustomValidity('')
       }
-    });
+    })
   </script>
 </body>
 ```
 
 ```javascript
-cy.get("input:invalid").should("have.length", 0);
-cy.get('[type="email"]').type("not_an_email");
-cy.get('[type="submit"]').click();
-cy.get("input:invalid").should("have.length", 1);
+cy.get('input:invalid').should('have.length', 0)
+cy.get('[type="email"]').type('not_an_email')
+cy.get('[type="submit"]').click()
+cy.get('input:invalid').should('have.length', 1)
 cy.get('[type="email"]').then(($input) => {
-  expect($input[0].validationMessage).to.eq("I expect an email!");
-});
+  expect($input[0].validationMessage).to.eq('I expect an email!')
+})
 ```
 
 For more examples, read the blog post [HTML Form Validation in Cypress](https://glebbahmutov.com/blog/form-validation-in-cypress/).
@@ -336,48 +336,48 @@ By default no, Cypress does not listen to the unhandled promise rejection event 
 
 ```js
 // register listener during cy.visit
-it("fails on unhandled rejection", () => {
-  cy.visit("/", {
+it('fails on unhandled rejection', () => {
+  cy.visit('/', {
     onBeforeLoad(win) {
-      win.addEventListener("unhandledrejection", (event) => {
-        const msg = `UNHANDLED PROMISE REJECTION: ${event.reason}`;
+      win.addEventListener('unhandledrejection', (event) => {
+        const msg = `UNHANDLED PROMISE REJECTION: ${event.reason}`
 
         // fail the test
-        throw new Error(msg);
-      });
+        throw new Error(msg)
+      })
     },
-  });
-});
+  })
+})
 
 // ALTERNATIVE: register listener for this test
-it("fails on unhandled rejection", () => {
-  cy.on("window:before:load", (win) => {
-    win.addEventListener("unhandledrejection", (event) => {
-      const msg = `UNHANDLED PROMISE REJECTION: ${event.reason}`;
+it('fails on unhandled rejection', () => {
+  cy.on('window:before:load', (win) => {
+    win.addEventListener('unhandledrejection', (event) => {
+      const msg = `UNHANDLED PROMISE REJECTION: ${event.reason}`
 
       // fail the test
-      throw new Error(msg);
-    });
-  });
+      throw new Error(msg)
+    })
+  })
 
-  cy.visit("/");
-});
+  cy.visit('/')
+})
 
 // ALTERNATIVE: register listener in every test
 before(() => {
-  Cypress.on("window:before:load", (win) => {
-    win.addEventListener("unhandledrejection", (event) => {
-      const msg = `UNHANDLED PROMISE REJECTION: ${event.reason}`;
+  Cypress.on('window:before:load', (win) => {
+    win.addEventListener('unhandledrejection', (event) => {
+      const msg = `UNHANDLED PROMISE REJECTION: ${event.reason}`
 
       // fail the test
-      throw new Error(msg);
-    });
-  });
-});
+      throw new Error(msg)
+    })
+  })
+})
 
-it("fails on unhandled rejection", () => {
-  cy.visit("/");
-});
+it('fails on unhandled rejection', () => {
+  cy.visit('/')
+})
 ```
 
 ## <Icon name="angle-right"></Icon> Can I override environment variables or create configuration for different environments?
@@ -475,7 +475,7 @@ It is possible to upload files in your application but it's different based on h
 
 ```javascript
 // attaches the file cypress/fixtures/data.json
-cy.get('[data-cy="file-input"]').attachFile("data.json");
+cy.get('[data-cy="file-input"]').attachFile('data.json')
 ```
 
 You can read more about uploading files [here](https://github.com/cypress-io/cypress/issues/170).
@@ -517,12 +517,12 @@ Don't try to use your UI to check email. Instead opt to programmatically use 3rd
 You should set up an alias (using [`.as()`](/api/commands/as)) to a single [`cy.intercept()`](/api/commands/intercept) that matches all of the XHRs. You can then [`cy.wait()`](/api/commands/wait) on it multiple times. Cypress keeps track of how many matching requests there are.
 
 ```javascript
-cy.intercept("users").as("getUsers");
-cy.wait("@getUsers"); // Wait for first GET to /users/
-cy.get("#list>li").should("have.length", 10);
-cy.get("#load-more-btn").click();
-cy.wait("@getUsers"); // Wait for second GET to /users/
-cy.get("#list>li").should("have.length", 20);
+cy.intercept('users').as('getUsers')
+cy.wait('@getUsers') // Wait for first GET to /users/
+cy.get('#list>li').should('have.length', 10)
+cy.get('#load-more-btn').click()
+cy.wait('@getUsers') // Wait for second GET to /users/
+cy.get('#list>li').should('have.length', 20)
 ```
 
 ## <Icon name="angle-right"></Icon> How do I seed / reset my database?
@@ -547,8 +547,8 @@ You can preserve specific cookies across tests using the [Cypress.Cookies api](/
 // now any cookie with the name 'session_id' will
 // not be cleared before each test runs
 Cypress.Cookies.defaults({
-  preserve: "session_id",
-});
+  preserve: 'session_id',
+})
 ```
 
 You **cannot** currently preserve localStorage across tests and can read more [here](https://github.com/cypress-io/cypress/issues/'461#issuecomment-325402086').
@@ -559,18 +559,18 @@ Oftentimes you can usually account for animation by asserting [`.should('be.visi
 
 ```javascript
 // assuming a click event causes the animation
-cy.get(".element").click().should("not.have.class", "animating");
+cy.get('.element').click().should('not.have.class', 'animating')
 ```
 
 If the animation is especially long, you could extend the time Cypress waits for the assertion to pass by increasing the `timeout` of the previous command before the assertion.
 
 ```javascript
-cy.get("button", { timeout: 10000 }) // wait up to 10 seconds for this 'button' to exist
-  .should("be.visible"); // and to be visible
+cy.get('button', { timeout: 10000 }) // wait up to 10 seconds for this 'button' to exist
+  .should('be.visible') // and to be visible
 
-cy.get(".element")
+cy.get('.element')
   .click({ timeout: 10000 })
-  .should("not.have.class", "animating");
+  .should('not.have.class', 'animating')
 // wait up to 10 seconds for the .element to not have 'animating' class
 ```
 
@@ -593,16 +593,16 @@ Yes, you can. We provide an [example here](/api/commands/viewport#Width-Height).
 Yes. In this example, we loop through an array of urls and make assertions on the logo.
 
 ```javascript
-const urls = ["https://docs.cypress.io", "https://www.cypress.io"];
+const urls = ['https://docs.cypress.io', 'https://www.cypress.io']
 
-describe("Logo", () => {
+describe('Logo', () => {
   urls.forEach((url) => {
     it(`Should display logo on ${url}`, () => {
-      cy.visit(url);
-      cy.get("#logo img").should("have.attr", "src").and("include", "logo");
-    });
-  });
-});
+      cy.visit(url)
+      cy.get('#logo img').should('have.attr', 'src').and('include', 'logo')
+    })
+  })
+})
 ```
 
 <DocsImage src="/img/faq/questions/command-log-of-dynamic-url-test.png" alt="Command Log multiple urls" ></DocsImage>
@@ -634,7 +634,7 @@ Here's an example:
 if (window.Cypress) {
   // we are running in Cypress
   // so do something different here
-  window.env = "test";
+  window.env = 'test'
 } else {
   // we are running in a regular ol' browser
 }
@@ -700,7 +700,7 @@ You may try running the tests locally and [select the Electron browser](/guides/
 
 ## <Icon name="angle-right"></Icon> How do I run the server and tests together and then shutdown the server?
 
-To start the server, run the tests and then shutdown the server we recommend [these npm tools](/guides/guides/continuous-integration#Boot-your-server).
+To start the server, run the tests and then shutdown the server we recommend [these npm tools](/guides/continuous-integration/continuous-integration-introduction#Boot-your-server).
 
 ## <Icon name="angle-right"></Icon> Can I test my Electron app?
 
@@ -743,14 +743,14 @@ Usually your end-to-end tests interact with the application through public brows
 To spy on `console.log` you should use [cy.stub()](/api/commands/stub).
 
 ```javascript
-cy.visit("/", {
+cy.visit('/', {
   onBeforeLoad(win) {
-    cy.stub(win.console, "log").as("consoleLog");
+    cy.stub(win.console, 'log').as('consoleLog')
   },
-});
+})
 
 //...
-cy.get("@consoleLog").should("be.calledWith", "Hello World!");
+cy.get('@consoleLog').should('be.calledWith', 'Hello World!')
 ```
 
 Also, check out our [Stubbing `console` Receipe](/examples/examples/recipes#Stubbing-and-spying).
@@ -771,16 +771,16 @@ To test elements with those characters in ids, they need to be escaped with [`CS
 ```
 
 ```js
-it("test", () => {
-  cy.visit("index.html");
-  cy.get(`#${CSS.escape("Configuration/Setup/TextField.id")}`).contains(
-    "Hello World"
-  );
+it('test', () => {
+  cy.visit('index.html')
+  cy.get(`#${CSS.escape('Configuration/Setup/TextField.id')}`).contains(
+    'Hello World'
+  )
 
   cy.get(
-    `#${Cypress.$.escapeSelector("Configuration/Setup/TextField.id")}`
-  ).contains("Hello World");
-});
+    `#${Cypress.$.escapeSelector('Configuration/Setup/TextField.id')}`
+  ).contains('Hello World')
+})
 ```
 
 Note that `cy.$$.escapeSelector()` doesn't work. `cy.$$` doesn't refer to `jQuery`. It only queries DOM. [Learn more about why](/api/utilities/$#Notes)
@@ -840,7 +840,7 @@ End-to-end tests are an excellent way to keep your application's documentation a
 
 ## <Icon name="angle-right"></Icon> Can I use Jest snapshots?
 
-While there is no built-in `snapshot` command in Cypress, you can make your own snapshot assertion command. Read how to do so in our blog post [End-to-End Snapshot Testing](https://www.cypress.io/blog/2018/01/16/end-to-end-snapshot-testing/). We recommend using the 3rd-party module [cypress-plugin-snapshots](https://github.com/meinaart/cypress-plugin-snapshots). For other snapshot plugins, search the {% url Plugins %} page.
+While there is no built-in `snapshot` command in Cypress, you can make your own snapshot assertion command. Read how to do so in our blog post [End-to-End Snapshot Testing](https://www.cypress.io/blog/2018/01/16/end-to-end-snapshot-testing/). We recommend using the 3rd-party module [cypress-plugin-snapshots](https://github.com/meinaart/cypress-plugin-snapshots). For other snapshot plugins, search the [Plugins](/plugins/plugins/index) page.
 
 ## <Icon name="angle-right"></Icon> Can I use Testing Library?
 
@@ -849,22 +849,22 @@ Absolutely! Feel free to add the [@testing-library/cypress](https://testing-libr
 The following example comes from the Testing Library's documentation
 
 ```js
-cy.findByRole("button", { name: /Jackie Chan/i }).click();
-cy.findByRole("button", { name: /Button Text/i }).should("exist");
-cy.findByRole("button", { name: /Non-existing Button Text/i }).should(
-  "not.exist"
-);
+cy.findByRole('button', { name: /Jackie Chan/i }).click()
+cy.findByRole('button', { name: /Button Text/i }).should('exist')
+cy.findByRole('button', { name: /Non-existing Button Text/i }).should(
+  'not.exist'
+)
 
-cy.findByLabelText(/Label text/i, { timeout: 7000 }).should("exist");
+cy.findByLabelText(/Label text/i, { timeout: 7000 }).should('exist')
 
 // findAllByText _inside_ a form element
-cy.get("form")
-  .findByText("button", { name: /Button Text/i })
-  .should("exist");
+cy.get('form')
+  .findByText('button', { name: /Button Text/i })
+  .should('exist')
 
-cy.findByRole("dialog").within(() => {
-  cy.findByRole("button", { name: /confirm/i });
-});
+cy.findByRole('dialog').within(() => {
+  cy.findByRole('button', { name: /confirm/i })
+})
 ```
 
 We have had a webinar with [Roman Sandler](https://twitter.com/RomanSndlr) where he has given practical advice on writing effective tests using the Testing Library. You can find the recording and the slides [here](https://www.cypress.io/blog/2020/07/15/webcast-recording-build-invincible-integration-tests-using-cypress-and-cypress-testing-library/).
