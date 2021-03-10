@@ -1,3 +1,6 @@
+[[plugins]]
+package = "/netlify-plugins/cache"
+
 [build]
   publish = "dist/"
   command = "yarn build"
