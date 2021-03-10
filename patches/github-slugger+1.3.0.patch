@@ -1,16 +1,19 @@
 diff --git a/node_modules/github-slugger/index.js b/node_modules/github-slugger/index.js
-index 9d40bc2..c377309 100644
+index 9d40bc2..0863325 100644
 --- a/node_modules/github-slugger/index.js
 +++ b/node_modules/github-slugger/index.js
-@@ -5,6 +5,7 @@ module.exports = BananaSlug
+@@ -4,7 +4,9 @@ module.exports = BananaSlug
+ 
  var own = Object.hasOwnProperty
  var whitespace = /\s/g
- var specials = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~’]/g
+-var specials = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~’]/g
++var specials = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,/:;<=>?@[\]^`{|}~’]/g
++var shouldBecomeDash = /\./g
 +var icons = /<[Ii]con.[^/]+\/*>(<\/[Ii]con>)*/
  
  function BananaSlug () {
    var self = this
-@@ -45,12 +46,17 @@ BananaSlug.prototype.reset = function () {
+@@ -45,12 +47,18 @@ BananaSlug.prototype.reset = function () {
  
  function slugger (string, maintainCase) {
    if (typeof string !== 'string') return ''
@@ -22,6 +25,7 @@ index 9d40bc2..c377309 100644
    return string.trim()
 +    .replace(icons, '')
 +    .trim()
++    .replace(shouldBecomeDash, '-')
      .replace(specials, '')
      .replace(emoji(), '')
      .replace(whitespace, '-')
