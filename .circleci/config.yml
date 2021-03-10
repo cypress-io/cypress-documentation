@@ -76,6 +76,7 @@ workflows:
           ci-build-id: ${CIRCLE_SHA1:0:8}
           group: 'UI - Chrome'
           requires:
+            - build
             - Setup Linux
 
       - build:
