@@ -44,9 +44,9 @@ If you had any failed tests, you can hover over the spec chart and click on the 
 
 {% imgTag /img/dashboard/specs-failures-popup.png "Failures popup on spec hover" %}
 
-## {% fa fa-code fa-fw %} Standard output
+## {% fa fa-code fa-fw %} CI logs
 
-Standard output includes details and summaries of your tests for each spec file based on the {% url 'reporter' reporters %} you have set. By default it is the `spec` reporter.
+CI logs from the Cypress standard output include details and summaries of your tests for each spec file based on the {% url 'reporter' reporters %} you have set. By default it is the `spec` reporter.
 
 You will also see a summary at the bottom indicating the screenshots, or videos that were uploaded during the recording.
 
@@ -79,7 +79,7 @@ Any tests that fail during a test run can be found under the **Failures** tab. E
 
 You can cancel a run currently in progress from the Dashboard. Runs can only be canceled by members of the project.
 
-**To cancel a run**
+## To cancel a run
 
 - Click on a run in progress from the run list
 - Click on **{% fa fa-ban %} Cancel run** in the upper-right corner of the run details page
@@ -87,7 +87,7 @@ You can cancel a run currently in progress from the Dashboard. Runs can only be 
 
 {% video local /img/snippets/cancelling-run.mp4 %}
 
-**What happens when a run is canceled?**
+## What happens when a run is canceled?
 
 - The run status will update to canceled.
 - A message will appear on the run details page showing the time of cancellation and the user that canceled the run.
@@ -97,25 +97,26 @@ You can cancel a run currently in progress from the Dashboard. Runs can only be 
 - If you have Analytics enabled, canceled runs will appear in the {% url "Runs over time" analytics#Run-status %} chart.
 - Any incomplete calls to {% url "`cypress run --record`" command-line#cypress-run %} for the run will be marked as canceled and not run.
 - Any existing calls to {% url "`cypress run --record`" command-line#cypress-run %} for the run will exit with an error like below.
+
   {% imgTag /img/dashboard/cancel-run-error.png "cancel-run-error" width-600 %}
 
 # Archive run
 
 Runs that have been canceled or are in an errored state can be archived from the Dashboard.
 
-**To archive a run**
+## To archive a run
 
 - In the cancellation or error message, click **Archive this run**.
   {% imgTag /img/dashboard/archive-run-within-cancelation-msg.png "cancel-run-error" %}
 
-**What happens when a run is archived?**
+## What happens when a run is archived?
 
 - The archived run will no longer display in the runs list or {% url "Analytics" analytics %} reporting.
 - Archived runs can be accessed by the URL to that run. The format is:
   `https://dashboard.cypress.io/projects/{project ID}/runs/{run number}`
 - Any tests recorded to the Dashboard will still count towards your monthly test results limit, even when it has been archived.
 
-**To restore an archived run**
+## To restore an archived run
 
 - Visit the archived run. The archived run can be accessed by the URL of the run. The format is:
   `https://dashboard.cypress.io/projects/{project ID}/runs/{run number}`

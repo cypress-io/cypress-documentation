@@ -13,7 +13,7 @@ The Cypress Dashboard provides four distinct Smart Orchestration features for us
 
 It is often helpful to be **aware of test failures earlier within a CI test run so that debugging and iterations can resume and progress much faster**. Being able to catch issues sooner within the CI process can save valuable time in troubleshooting failures and deploying fixes.
 
-{% note info "Consider the Scenario" %}
+{% note info "{% fa fa-graduation-cap %} Consider the Scenario" %}
 For example, you have a test suite consisting of several spec files that take 30 minutes to execute, but failures start to occur within one spec at the 20 minute marker. A subsequent code change aimed at resolving the issue will have to be validated after running the CI build and waiting 20 minutes. This process and waiting continues until the issue is fixed.
 
 By running failed specs first, the issues can be surfaced earlier and reduce that 20 minute wait to potentially a few minutes. **Considering that a test suite has multiple spec files, this orchestration strategy will always save time.**
@@ -41,7 +41,7 @@ In addition to saving time by running failed specs first, also consider {% urlHa
 
 Continuous Integration (CI) pipelines are typically costly processes that can demand significant compute time. **When a test failure occurs in CI, it often does not make sense to continue running the remainder of a test suite** since the process has to start again upon merging of subsequent fixes and other code changes.
 
-{% note success "Benefits" %}
+{% note success "{% fa fa-check %} Benefits" %}
 Canceling an **entire** test run, even if parallelized, upon the first test failure will:
 
 1. **Reduce CI costs**. These cost savings can be significant for large test suites.
