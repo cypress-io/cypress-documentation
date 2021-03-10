@@ -60,7 +60,7 @@ Pass in an options object to change the default behavior of `cy.fixture()`.
 | --------- | -------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.fixture()` to resolve before [timing out](#Timeouts) |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 `cy.fixture()` yields the contents of the file. Formatting is determined by its file extension.
 
@@ -229,15 +229,15 @@ describe('User page', () => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.fixture()` requires being chained off of `cy`.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 <List><li>`cy.fixture()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.fixture()` should never time out.</li><li><Alert type="warning">
 

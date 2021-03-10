@@ -75,7 +75,7 @@ Pass in an options object to change the default behavior of `cy.viewport()`.
 | ------ | ------- | ---------------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`cy.viewport()` yields `null`.</li><li>`cy.viewport()` cannot be chained further.</li></List>
 
@@ -246,15 +246,15 @@ describe(
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.viewport()` requires being chained off of `cy`.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 <List><li>`cy.viewport()` cannot have any assertions chained.</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.viewport()` cannot time out.</li></List>
 

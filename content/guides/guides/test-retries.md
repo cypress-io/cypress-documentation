@@ -209,11 +209,11 @@ For a comprehensive view of how flake is affecting your overall test suite, you 
 
 ## Frequently Asked Questions (FAQs)
 
-### Will retried tests be counted as more than one test recording in my billing?
+### Will retried tests be counted as more than one test result in my billing?
 
 No. Tests recorded during `cypress run` with the `--record` flag will be counted the same with or without test retries.
 
-We consider each time the `it()` function is called to be a single test for billing purposes. The test retrying will not count as extra test recordings in your billing.
+We consider each time the `it()` function is called to be a single test for billing purposes. The test retrying will not count as extra test results in your billing.
 
 You can always see how many tests you've recorded from your organization's Billing & Usage page within the [Dashboard](https://on.cypress.io/dashboard).
 

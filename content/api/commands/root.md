@@ -33,7 +33,7 @@ Pass in an options object to change the default behavior of `.root()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.root()` to resolve before [timing out](#Timeouts)                   |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 `.root()` yields the root DOM element.
 
@@ -63,15 +63,15 @@ cy.get('form').within(($form) => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.root()` requires being chained off of `cy`.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 <List><li>`cy.root()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.root()` can time out waiting for assertions you've added to pass.</li></List>
 

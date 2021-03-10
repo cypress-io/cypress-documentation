@@ -113,7 +113,7 @@ Pass in an options object to change the default behavior of `cy.request()`.
 
 You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout` globally in [configuration](/guides/references/configuration).
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 `cy.request()` yields the `response` as an object literal containing properties such as:
 
@@ -327,15 +327,15 @@ The intention of `cy.request()` is to be used for checking endpoints on an actua
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.request()` requires being chained off of `cy`.</li><li>`cy.request()` requires that the server send a response.</li><li>`cy.request()` requires that the response status code be `2xx` or `3xx` or `failOnStatusCode` is `true`.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 <List><li>`cy.request()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.request()` can time out waiting for the server to respond.</li></List>
 

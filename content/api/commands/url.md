@@ -38,7 +38,7 @@ Pass in an options object to change the default behavior of `cy.url()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.url()` to resolve before [timing out](#Timeouts)                    |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`cy.url()` 'yields the current URL as a string' </li></List>
 
@@ -107,15 +107,15 @@ cy.url().should('contain', '#users/new')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.url()` requires being chained off of `cy`.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 <List><li>`cy.url()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.url()` can time out waiting for assertions you've added to pass.</li></List>
 

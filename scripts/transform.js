@@ -547,10 +547,10 @@ const yieldsTransform = (files) => {return {
 }}
 
 const HELPER_ICON_LINK_MAP = {
-  yields: 'introduction-to-cypress#Subject-Management',
-  timeout: 'introduction-to-cypress#Timeouts',
-  assertions: 'introduction-to-cypress#Assertions',
-  requirements: 'introduction-to-cypress#Chains-of-Commands',
+  yields: '/guides/core-concepts/introduction-to-cypress#Subject-Management',
+  timeout: '/guides/core-concepts/introduction-to-cypress#Timeouts',
+  assertions: '/guides/core-concepts/introduction-to-cypress#Assertions',
+  requirements: '/guides/core-concepts/introduction-to-cypress#Chains-of-Commands',
 }
 
 const helperIconTransform = (files) => {return {

@@ -41,7 +41,7 @@ Pass in an options object to change the default behavior of `cy.clearLocalStorag
 | ------ | ------- | ---------------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`cy.clearLocalStorage()` yields `null`.</li><li>`cy.clearLocalStorage()` cannot be chained further.</li></List>
 
@@ -71,15 +71,15 @@ cy.clearLocalStorage(/app-/)
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.clearLocalStorage()` requires being chained off of `cy`.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 <List><li>`cy.clearLocalStorage()` cannot have any assertions chained.</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.clearLocalStorage()` cannot time out.</li></List>
 

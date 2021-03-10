@@ -52,7 +52,7 @@ Pass in an options object to change the default behavior of `cy.readFile()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.readFile()` to resolve before [timing out](#Timeouts)               |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`cy.readFile()` 'yields the contents of the file' </li></List>
 
@@ -175,15 +175,15 @@ cy.readFile('some/nested/path/story.txt').should('eq', 'Once upon a time...')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.readFile()` requires being chained off of `cy`.</li><li>`cy.readFile()` requires the file must exist.</li><li>`cy.readFile()` requires the file be successfully read from disk.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 <List><li>`cy.readFile()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.readFile()` can time out waiting for assertions you've added to pass.</li></List>
 

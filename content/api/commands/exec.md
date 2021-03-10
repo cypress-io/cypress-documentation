@@ -46,7 +46,7 @@ Pass in an options object to change the default behavior of `cy.exec()`.
 | `failOnNonZeroExit` | `true`                                                     | whether to fail if the command exits with a non-zero code                                                                                                    |
 | `timeout`           | [`execTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.exec()` to resolve before [timing out](#Timeouts)                                                                                       |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 `cy.exec()` yields an object with the following properties:
 
@@ -179,15 +179,15 @@ describe('has data available from database', { execTimeout: 90000 }, () => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.exec()` requires being chained off of `cy`.</li><li>`cy.exec()` requires the executed system command to eventually exit.</li><li>`cy.exec()` requires that the exit code be `0` when `failOnNonZeroExit` is `true`.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 <List><li>`cy.exec()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.exec()` can time out waiting for the system command to exist.</li></List>
 

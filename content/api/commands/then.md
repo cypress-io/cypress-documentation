@@ -46,7 +46,7 @@ Pass in an options object to change the default behavior of `.then()`.
 
 Pass a function that takes the previously yielded subject as its first argument.
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 `.then()` is modeled identically to the way Promises work in JavaScript. Whatever is returned from the callback function becomes the new subject and will flow into the next command (with the exception of `undefined`).
 
@@ -198,15 +198,15 @@ When using a callback function with `.should()` or `.and()`, on the other hand, 
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.then()` requires being chained off a previous command.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 <List><li>`.then()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.then()` can time out waiting for a promise you've returned to resolve.</li></List>
 

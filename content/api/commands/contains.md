@@ -57,7 +57,7 @@ Pass in an options object to change the default behavior of `.contains()`.
 | `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)  | Time to wait for `.contains()` to resolve before [timing out](#Timeouts)                                     |
 | `includeShadowDom` | [`includeShadowDom`<br](/> config option value' configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`.contains()` yields the new DOM element it found.</li></List>
 
@@ -391,15 +391,15 @@ cy.contains('Age').find('input').type('29')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.contains()` can be chained off of `cy` or off a command that yields DOM element(s).</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 <List><li>`.contains()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.contains()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.contains()` can time out waiting for the element(s) to [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.contains()` can time out waiting for assertions you've added to pass.</li></List>
 
