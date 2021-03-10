@@ -30,7 +30,7 @@ cy.tick(500)
 
 The number of `milliseconds` to move the clock. Any timers within the affected range of time will be called.
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 `cy.tick()` yields a `clock` object with the following methods:
 
@@ -101,15 +101,15 @@ cy.clock().invoke('restore')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.tick()` requires being chained off of `cy`.</li><li>`cy.tick()` requires that `cy.clock()` be called before it.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 <List><li>`cy.tick()` is a utility command.</li><li>`cy.tick()` will not run assertions. Assertions will pass through as if this command did not exist.</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.tick()` cannot time out.</li></List>
 

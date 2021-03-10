@@ -235,15 +235,15 @@ cy.wrap(english).invoke('greeting').should('equal', 'bye')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.invoke()` requires being chained off a previous command.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 <List><li>`.invoke()` will wait for the `function` to exist on the subject before running.</li><li>`.invoke()` will wait for the promise to resolve if the invoked `function` returns a promise.</li><li>`.invoke()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.invoke()` can time out waiting for assertions you've added to pass.</li><li>`.invoke()` can time out waiting for a promise you've returned to resolve.</li></List>
 

@@ -48,10 +48,12 @@
       "gitlab-ci": "GitLab CI",
       "github-integration": "GitHub Integration",
       "gitlab-integration": "GitLab Integration",
+      "jira-integration": "Jira Integration",
       "bitbucket-pipelines": "Bitbucket Pipelines",
       "slack-integration": "Slack Integration",
       "analytics": "Analytics",
       "flaky-test-management": "Flaky Test Management",
+      "smart-orchestration": "Smart Orchestration",
       "debugging": "Debugging",
       "variables-and-aliases": "Variables and Aliases",
       "stubs-spies-and-clocks": "Stubs, Spies, and Clocks",
@@ -93,7 +95,8 @@
       "testing-strategies": "Testing Strategies",
       "auth0-authentication": "Auth0 Authentication",
       "okta-authentication": "Okta Authentication",
-      "amazon-cognito-authentication": "Amazon Cognito Authentication"
+      "amazon-cognito-authentication": "Amazon Cognito Authentication",
+      "google-authentication": "Google Authentication"
     },
     "api": {
       "api": "API",

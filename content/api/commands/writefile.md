@@ -10,6 +10,7 @@ Write to a file with the specified contents.
 cy.writeFile(filePath, contents)
 cy.writeFile(filePath, contents, encoding)
 cy.writeFile(filePath, contents, options)
+cy.writeFile(filePath, contents, encoding, options)
 ```
 
 ### Usage
@@ -62,7 +63,7 @@ To use encoding with other options, have your options object be your third param
 
 </Alert>
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`cy.writeFile()` 'yields the value of the <code>contents</code> argument' </li></List>
 
@@ -179,15 +180,15 @@ cy.readFile(filename).then((list) => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.writeFile()` requires being chained off of `cy`.</li><li>`cy.writeFile()` requires the file be successfully written to disk. Anything preventing this such as OS permission issues will cause it to fail.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 <List><li>`cy.writeFile()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.writeFile()` should never time out.</li><li><Alert type="warning">
 

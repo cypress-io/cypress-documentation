@@ -1,7 +1,10 @@
 <script>
-const TOC_TYPES = {
-  SECTION_HEADER: 'SECTION_HEADER',
-  LIST_ITEM: 'LIST_ITEM',
+const startWithApi = path => {
+  if (path.startsWith('api')) {
+    return `/${path}`
+  }
+
+  return `/api/${path}`
 }
 
 export default {
@@ -18,34 +21,23 @@ export default {
 
     const { ...rest } = sidebar
 
-    /**
-     * We want to flatten the `api` section of the `sidebar.json`.
-     * We create a flat list of items that can be one of two types:
-     *   1. TOC_TYPES.SECTION_HEADER
-     *   2. TOC_TYPES.LIST_ITEM
-     * We use a flattened list since it is easy to iterate over, and
-     * we will check the `type` field to determine whether or not to
-     * render a section header or a list item.
-     */
     const apiTocList = Object.keys(rest).reduce((all, slug) => {
       return [
         ...all,
         {
           id: slug,
           text: userFriendlyNameMap[slug],
-          type: TOC_TYPES.SECTION_HEADER,
           children: Object.keys(rest[slug]).reduce((allNested, nestedSlug) => {
             const link =
-              slug === 'all-assertions'
-                ? 'guides/references/assertions'
-                : `${slug}/${nestedSlug}`
+              nestedSlug === 'all-assertions'
+                ? '/guides/references/assertions'
+                : startWithApi(`${slug}/${nestedSlug}`)
 
             return [
               ...allNested,
               {
                 id: link,
                 text: userFriendlyNameMap[nestedSlug],
-                type: TOC_TYPES.LIST_ITEM,
                 link,
               },
             ]

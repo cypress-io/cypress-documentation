@@ -65,7 +65,7 @@ Pass in an options object to control the behavior of `cy.visit()`.
 
 You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl` globally in [configuration](/guides/references/configuration).
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`cy.visit()` 'yields the `window` object after the page finishes loading' </li></List>
 
@@ -324,15 +324,15 @@ Cypress will automatically apply the routes to the very next `cy.visit()` and do
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.visit()` requires being chained off of `cy`.</li><li>`cy.visit()` requires the response to be `content-type: text/html`.</li><li>`cy.visit()` requires the response code to be `2xx` after following redirects.</li><li>`cy.visit()` requires the load `load` event to eventually fire.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 <List><li>`cy.visit()` will automatically wait for assertions you have chained to pass</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.visit()` can time out waiting for the page to fire its `load` event.</li><li>`cy.visit()` can time out waiting for assertions you've added to pass.</li></List>
 

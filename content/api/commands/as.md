@@ -39,7 +39,7 @@ cy.as('foo') // Errors, cannot be chained off 'cy'
 
 The name of the alias to be referenced later within a [`cy.get()`](/api/commands/get) or [`cy.wait()`](/api/commands/wait) command using an `@` prefix.
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`.as()` yields the same subject it was given from the previous command.</li></List>
 
@@ -134,15 +134,15 @@ describe('A fixture', () => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.as()` requires being chained off a previous command.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 <List><li>`.as()` is a utility command.</li><li>`.as()` will not run assertions. Assertions will pass through as if this command did not exist.</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.as()` cannot time out.</li></List>
 
