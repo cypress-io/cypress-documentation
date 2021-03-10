@@ -56,7 +56,7 @@ export default {
     const sortedChangelogs = changelogs.sort(sortChangelogs)
 
     const tableOfContents = sortedChangelogs.map((item) => {return {
-      id: item.slug.replace(/\./g, ''),
+      id: item.slug.replace(/\./g, '-'),
       depth: 1,
       text: item.slug,
     }})
@@ -127,7 +127,7 @@ export default {
     meta() {
       const metaData = {
         type: 'article',
-        title: this.guide.title,
+        title: 'Changelog',
         description: this.metaDescription,
         url: `https://docs.cypress.io/guides/${this.path}`,
       }
