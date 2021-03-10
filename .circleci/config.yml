@@ -22,7 +22,6 @@ commands:
       - run:
           name: Install Dependencies
           command: yarn --frozen-lockfile
-      - run: yarn patch-package --reverse
       - save_cache:
           key: yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}
           paths:
