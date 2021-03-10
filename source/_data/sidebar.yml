@@ -24,9 +24,11 @@ guides:
     bitbucket-integration: bitbucket-integration.html
     github-integration: github-integration.html
     gitlab-integration: gitlab-integration.html
+    jira-integration: jira-integration.html
     slack-integration: slack-integration.html
     analytics: analytics.html
     flaky-test-management: flaky-test-management.html
+    smart-orchestration: smart-orchestration.html
   guides:
     command-line: command-line.html
     module-api: module-api.html
@@ -44,6 +46,7 @@ guides:
     auth0-authentication: auth0-authentication.html
     amazon-cognito-authentication: amazon-cognito-authentication.html
     okta-authentication: okta-authentication.html
+    google-authentication: google-authentication.html
   continuous-integration:
     continuous-integration-introduction: introduction.html
     github-actions: github-actions.html

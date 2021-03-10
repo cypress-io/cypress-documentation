@@ -36,7 +36,7 @@ cy.wrap({ foo: 'bar' })
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
 
 ```javascript
-cy.and('eq', '42')   // Errors, cannot be chained off 'cy'
+cy.and('eq', '42')   // Should not be chained off 'cy'
 ```
 
 ## Arguments
