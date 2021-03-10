@@ -140,6 +140,7 @@ export default {
         'faHistory',
         'faBan',
         'faLongArrowAltUp',
+        'faFolderOpen'
       ],
       brands: ['faGithub', 'faTwitter', 'faYoutube'],
     },

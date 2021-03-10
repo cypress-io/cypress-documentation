@@ -100,8 +100,8 @@ Once you log in to the [Dashboard Service](https://on.cypress.io/dashboard) you 
 
 **Here are some of our own public projects you can view:**
 
-- [<Icon name="folder-open-o"></Icon> cypress-realworld-app](https://dashboard.cypress.io/projects/7s5okt)
-- [<Icon name="folder-open-o"></Icon> cypress-example-recipes](https://dashboard.cypress.io/#/projects/6p53jw)
-- [<Icon name="folder-open-o"></Icon> cypress-example-kitchensink](https://dashboard.cypress.io/#/projects/4b7344)
-- [<Icon name="folder-open-o"></Icon> cypress-example-todomvc](https://dashboard.cypress.io/#/projects/245obj)
-- [<Icon name="folder-open-o"></Icon> cypress-example-piechopper](https://dashboard.cypress.io/#/projects/fuduzp)
+- [<Icon name="folder-open"></Icon> cypress-realworld-app](https://dashboard.cypress.io/projects/7s5okt)
+- [<Icon name="folder-open"></Icon> cypress-example-recipes](https://dashboard.cypress.io/#/projects/6p53jw)
+- [<Icon name="folder-open"></Icon> cypress-example-kitchensink](https://dashboard.cypress.io/#/projects/4b7344)
+- [<Icon name="folder-open"></Icon> cypress-example-todomvc](https://dashboard.cypress.io/#/projects/245obj)
+- [<Icon name="folder-open"></Icon> cypress-example-piechopper](https://dashboard.cypress.io/#/projects/fuduzp)
