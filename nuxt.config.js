@@ -1,4 +1,5 @@
 import { getMetaData } from './utils/getMetaData'
+import { redirects } from './redirects'
 
 const meta = getMetaData()
 
@@ -6,36 +7,7 @@ export default {
   router: {
     trailingSlash: true,
     extendRoutes(routes, resolve) {
-      routes.push(
-        {
-          path: '/',
-          redirect: '/guides/overview/why-cypress/',
-        },
-        {
-          path: '/guides',
-          redirect: '/guides/overview/why-cypress/',
-        },
-        {
-          path: '/api',
-          redirect: '/api/table-of-contents/'
-        },
-        {
-          path: '/examples',
-          redirect: '/examples/examples/recipes/'
-        },
-        {
-          path: '/faq',
-          redirect: '/faq/questions/using-cypress-faq/'
-        },
-        {
-          path: '/plugins',
-          redirect: '/plugins/directory/',
-        },
-        {
-          path: '/guides/dashboard/dashboard-introduction',
-          redirect: '/guides/dashboard/introduction/',
-        }
-      )
+      routes.push(...redirects)
     },
   },
   /*
@@ -95,7 +67,10 @@ export default {
    */
   gtm: {
     // The env var CONTEXT is set by Netlify and can be 'production', 'deploy-preview', or 'branch-deploy'
-    id: (process.env.CONTEXT === 'production' && process.env.GOOGLE_TAG_MANAGER_ID) || 'GTM-XXXXXXX',
+    id:
+      (process.env.CONTEXT === 'production' &&
+        process.env.GOOGLE_TAG_MANAGER_ID) ||
+      'GTM-XXXXXXX',
   },
   /*
    ** Axios module configuration
@@ -152,7 +127,7 @@ export default {
         'faHistory',
         'faBan',
         'faLongArrowAltUp',
-        'faFolderOpen'
+        'faFolderOpen',
       ],
       brands: ['faGithub', 'faTwitter', 'faYoutube'],
     },
