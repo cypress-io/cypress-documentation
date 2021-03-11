@@ -117,11 +117,25 @@ cy.get('button').should('have.id', 'new-user').then(($button) => {
 
 ## Method and Value
 
-### Assert the href is equal to '/users'
+### Assert the anchor element has href attribute
 
 ```javascript
 // have.attr comes from chai-jquery
+cy.get('#header a').should('have.attr', 'href')
+```
+
+### Assert the href attribute is equal to '/users'
+
+```javascript
 cy.get('#header a').should('have.attr', 'href', '/users')
+```
+
+**Note:** the `have.attr` assertion changes the subject from the original element to the attribute's value
+
+```javascript
+cy.get('#header a')             // yields the element
+  .should('have.attr', 'href')  // yields the "href" attribute
+  .and('equal', '/users')       // checks the "href" value
 ```
 
 ## Focus
