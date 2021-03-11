@@ -34,7 +34,7 @@ cy.wrap({ foo: 'bar' }).its('foo').should('eq', 'bar') // Assert the 'foo' prope
 **{% fa fa-exclamation-triangle red %} Incorrect Usage**
 
 ```javascript
-cy.should('eq', '42')   // Errors, cannot be chained off 'cy'
+cy.should('eq', '42')   // Should not be chained off 'cy'
 ```
 
 ## Arguments
