@@ -11,6 +11,8 @@ The `before:spec` event fires before a spec file is run. The event only fires wh
 
 # Syntax
 
+{% partial code_runs_in_node %}
+
 ```js
 on('before:spec', (spec) => { /* ... */ })
 ```
