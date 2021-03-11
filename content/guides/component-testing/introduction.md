@@ -49,15 +49,36 @@ describe('TodoList', () => {
 
 If you are already familiar with Cypress, you'll notice it is almost exactly the same as a Cypresss end-to-end test - all your existing Cypress knowledge and experience is transferrable.
 
-## Try out with an existing project
-
-Let's go through the setup to start testing components. If you want to see component testing working in an React or Vue existing project, follow these steps:
-
 ## ⚠️ For existing end-to-end users
 
 If you are using Cypress Component Testing in a project that also has tests written with the Cypress end-to-end runner, you will want a separate `cypress.json` configuration file for your component tests. This will let you specify a different glob to detect your spec files, as well as configure Component Testing specific defaults like `viewportHeight` and `viewportWidth`. You will also want to have a separate plugins file.
 
-To do this, simply copy your `cypress.json` and rename it to `cypress.component.json`. When you start the Component Testing runner, make sure to pass your Component Testing specific configuration with `npx cypress open-ct --config cypress.component.json`.
+The recommended approach is to copy your `cypress.json` and rename it to `cypress.component.json`. You should also make a Component Testing specific plugin file. The recommendation here is to create `cypress/plugins/component.js`.
+
+Inside `cypress.component.json`, you should specify your Component Testing specific plugin file:
+
+```json
+{
+  "pluginsFile": "cypress/plugins/component.js"
+}
+```
+
+When you start the Component Testing runner, make sure to pass your Component Testing specific configuration with `npx cypress open-ct --config-file cypress.component.json`. To simplify things, we recommend adding the following to your `package.json`:
+
+```json
+{
+  "scripts": {
+    "cypress:open-ct": "cypress open-ct --config-file cypress.component.json",
+    "cypress:run-ct": "cypress run-ct --config-file cypress.component.json"
+  }
+}
+```
+
+These are analogous to the recommendations in [getting started](/guides/getting-started/installing-cypress/#Adding-npm-scripts). Now you can start Component Testing by running `npx cypress:open-ct`.
+
+## Try out with an existing project
+
+Let's go through the setup to start testing components. If you want to see component testing working in an React or Vue existing project, follow these steps:
 
 <alert type="info">
 
@@ -106,10 +127,10 @@ Now you need to configure how Cypress will locate component spec files from with
 }
 ```
 
-You'll also need to configure the component testing framework of your choice by adding the component testing plugin. Read more about plugins in general in our [plugins guide](/guides/tooling/plugins-guide). If you are using Create React App, you will need to use the `react-scripts` plugin as shown below in your `cypress/plugins/index.js` file.
+You'll also need to configure the component testing framework of your choice by adding the component testing plugin. Read more about plugins in general in our [plugins guide](/guides/tooling/plugins-guide). If you are using Create React App, you will need to use the `react-scripts` plugin as shown below in your `cypress/plugins/component.js` file.
 
 ```js
-// cypress/plugins/index.js
+// cypress/plugins/component.js
 module.exports = (on, config) => {
   require('@cypress/react/plugins/react-scripts')(on, config)
   // IMPORTANT to return the config object
@@ -122,7 +143,7 @@ module.exports = (on, config) => {
 If you are using a React template other than Create React App, such as Next.js, you will need to import the appropriate plugin. See a list of plugins [here](https://github.com/cypress-io/cypress/tree/develop/npm/react/plugins). Alternatively, if you are not using a template and have your own webpack configuration, you can use it:
 
 ```js
-// cypress/plugins/index.js
+// cypress/plugins/component.js
 const { startDevServer } = require('@cypress/webpack-dev-server')
 // your project's webpack configuration
 const webpackConfig = require('../../webpack.config.js')
