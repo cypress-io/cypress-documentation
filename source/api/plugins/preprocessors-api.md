@@ -18,6 +18,10 @@ The code contains comments that explain how it utilizes the preprocessor API.
 * {% url 'Browserify preprocessor' https://github.com/cypress-io/cypress-browserify-preprocessor %}
 * {% url 'Watch preprocessor' https://github.com/cypress-io/cypress-watch-preprocessor %}
 
+## See also
+
+The blog post {% url 'Write Cypress Markdown Preprocessor' https://glebbahmutov.com/blog/write-cypress-preprocessor/ %} shows how to write your own file preprocessor.
+
 # Defaults
 
 By default, Cypress comes packaged with the **webpack preprocessor** already installed.
