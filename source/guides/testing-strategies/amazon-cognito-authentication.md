@@ -176,7 +176,7 @@ The {% url "runnable version of this test" https://github.com/cypress-io/cypress
 describe('Cognito', function () {
   beforeEach(function () {
     cy.task('db:seed')
-    cy.loginByOktaApi(Cypress.env('cognito_username'), Cypress.env('cognito_password'))
+    cy.loginByCognitoApi(Cypress.env('cognito_username'), Cypress.env('cognito_password'))
   })
 
   it('shows onboarding', function () {
