@@ -236,3 +236,4 @@ When you click on a stub or spy, we also output **remarkably** helpful debugging
 - {% url "Spies, stubs and clocks" https://example.cypress.io/commands/spies-stubs-clocks %} examples
 - {% url "Stub navigator API in end-to-end tests" https://glebbahmutov.com/blog/stub-navigator-api/ %}
 - {% url "Shrink the Untestable Code With App Actions And Effects" https://www.cypress.io/blog/2019/02/28/shrink-the-untestable-code-with-app-actions-and-effects/ %}
+- {% url "Testing periodic network requests with cy.intercept and cy.clock combination" https://www.cypress.io/blog/2021/02/23/cy-intercept-and-cy-clock/ %}
