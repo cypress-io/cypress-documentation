@@ -164,6 +164,22 @@ cy.get('select')
   .should('eq', 'okra')
 ```
 
+## Selected option
+
+You can get the currently selected option using the jQuery's {% url ':selected selector' https://api.jquery.com/selected-selector/ %}.
+
+```html
+<select id="name">
+  <option>Joe</option>
+  <option>Mary</option>
+  <option selected="selected">Peter</option>
+</select>
+```
+
+```javascript
+cy.get('select#name option:selected').should('have.text', 'Peter')
+```
+
 # Notes
 
 ## Actionability
