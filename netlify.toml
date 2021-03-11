@@ -43,3 +43,6 @@
 
 [[plugins]]
   package = "/netlify-plugins/cache"
+  
+[[plugins]]
+  package = "netlify-plugin-debug-cache"
