@@ -9,7 +9,6 @@
   "license": "MIT",
   "scripts": {
     "build": "nuxt generate",
-    "build:netlify": "yarn && yarn build",
     "copy": "bash ./scripts/clone-current-docs.sh",
     "start": "cross-env NODE_ENV=development nuxt",
     "start:ci": "yarn build && cd dist/ && npx http-server . --port 3000",

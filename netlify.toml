@@ -1,6 +1,6 @@
 [build]
   publish = "dist/"
-  command = "yarn build:netlify"
+  command = "yarn build"
 
 [context.deploy-preview]
   publish = "dist/"
