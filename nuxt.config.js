@@ -7,7 +7,7 @@ export default {
   router: {
     trailingSlash: true,
     extendRoutes(routes, resolve) {
-      routes.push(...redirects)
+      redirects.forEach((redirect) => routes.push(redirect))
     },
   },
   /*
