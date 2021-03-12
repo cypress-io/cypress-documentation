@@ -22,31 +22,33 @@ export default {
       required: true,
     },
   },
-  data: () => {return {
-    navLink: [
-      {
-        label: 'Guides',
-        path: '/guides/overview/why-cypress',
-      },
-      {
-        label: 'API',
-        path: '/api/table-of-contents',
-      },
-      {
-        label: 'Plugins',
-        path: '/plugins',
-      },
-      {
-        label: 'Examples',
-        path: '/examples/examples/recipes',
-      },
-      {
-        label: 'FAQ',
-        path: '/faq/questions/using-cypress-faq',
-      },
-    ],
-    isMenuOpen: false,
-  }},
+  data: () => {
+    return {
+      navLink: [
+        {
+          label: 'Guides',
+          path: '/guides/overview/why-cypress',
+        },
+        {
+          label: 'API',
+          path: '/api/table-of-contents',
+        },
+        {
+          label: 'Plugins',
+          path: '/plugins',
+        },
+        {
+          label: 'Examples',
+          path: '/examples/examples/recipes',
+        },
+        {
+          label: 'FAQ',
+          path: '/faq/questions/using-cypress-faq',
+        },
+      ],
+      isMenuOpen: false,
+    }
+  },
   methods: {
     getSidebarItemLink,
     toggleMenu() {
