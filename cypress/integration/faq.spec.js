@@ -28,11 +28,13 @@ describe('FAQ', () => {
               force: true,
             })
 
+            const redirects = {
+              'using-cypress-faq': '/faq/questions/using-cypress-faq/',
+            }
+
             cy.location('pathname').should(
               'equal',
-              page === 'using-cypress-faq'
-                ? `/faq/${category}/${page}/`
-                : `/faq/${category}/${page}`
+              redirects[page] || `/faq/${category}/${page}`
             )
 
             cy.contains(

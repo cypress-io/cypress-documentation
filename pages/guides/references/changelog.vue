@@ -55,49 +55,60 @@ export default {
 
     const sortedChangelogs = changelogs.sort(sortChangelogs)
 
-    const tableOfContents = sortedChangelogs.map((item) => {return {
-      id: item.slug.replace(/\./g, '-'),
-      depth: 1,
-      text: item.slug,
-    }})
+    const tableOfContents = sortedChangelogs.map((item) => {
+      return {
+        id: item.slug.replace(/\./g, '-'),
+        depth: 1,
+        text: item.slug,
+      }
+    })
 
     const { guides: sidebar } = await $content('_data/sidebar').fetch()
     const {
       sidebar: { guides: userFriendlyNameMap },
     } = await $content('_data/en').fetch()
 
-    const items = Object.keys(sidebar).map((key) => {return {
-      label: userFriendlyNameMap[key],
-      badge: '',
-      children: Object.keys(sidebar[key]).map((nestedKey) => {
-        let slug = nestedKey
+    const items = Object.keys(sidebar).map((key) => {
+      return {
+        label: userFriendlyNameMap[key],
+        badge: '',
+        children: Object.keys(sidebar[key]).map((nestedKey) => {
+          let slug = nestedKey
 
-        // Some slugs might not match the file name exactly.
-        // E.g. "dashboard-introduction.md" doesn't exist, but "introduction.md"
-        // within the "dashboard" directory does. This checks for instances of
-        // the directory name being included in the file name, and if so, removes it
-        // from the slug.
-        if (nestedKey.includes(key)) {
-          slug = nestedKey.replace(`${key}-`, '')
-        }
+          // Some slugs might not match the file name exactly.
+          // E.g. "dashboard-introduction.md" doesn't exist, but "introduction.md"
+          // within the "dashboard" directory does. This checks for instances of
+          // the directory name being included in the file name, and if so, removes it
+          // from the slug.
+          if (nestedKey.includes(key)) {
+            slug = nestedKey.replace(`${key}-`, '')
+          }
 
-        return {
-          slug,
-          label: userFriendlyNameMap[nestedKey],
-        }
-      }),
-      folder: key,
-    }})
+          return {
+            slug,
+            label: userFriendlyNameMap[nestedKey],
+          }
+        }),
+        folder: key,
+      }
+    })
 
     if (!changelogs || (Array.isArray(changelogs) && changelogs.length === 0)) {
       return error({ statusCode: 404, message: 'Changelogs not found' })
     }
 
-    const markdownChangelogs = await $content({ deep: true, text: true }).where({ path: '_changelogs' }).fetch()
-    const sortedMarkdownChangelogs = markdownChangelogs.sort(sortChangelogs).slice(0, 3)
-    const recentChangelogsText = sortedMarkdownChangelogs.reduce((all, item) => {
-      return `${all + item.text  }\n`
-    }, '')
+    const markdownChangelogs = await $content({ deep: true, text: true })
+      .where({ path: '_changelogs' })
+      .fetch()
+    const sortedMarkdownChangelogs = markdownChangelogs
+      .sort(sortChangelogs)
+      .slice(0, 3)
+    const recentChangelogsText = sortedMarkdownChangelogs.reduce(
+      (all, item) => {
+        return `${all + item.text}\n`
+      },
+      ''
+    )
 
     const metaDescription = await getMetaDescription(recentChangelogsText)
 
@@ -107,7 +118,7 @@ export default {
       guideSidebar: items,
       path: 'references/changelog',
       tableOfContents,
-      metaDescription
+      metaDescription,
     }
   },
   head() {
@@ -118,9 +129,9 @@ export default {
         {
           hid: 'canonical',
           rel: 'canonical',
-          href: `https://docs.cypress.io/guides/${this.path}`
-        }
-      ]
+          href: `https://docs.cypress.io/guides/${this.path}`,
+        },
+      ],
     }
   },
   computed: {
@@ -133,7 +144,7 @@ export default {
       }
 
       return getMetaData(metaData)
-    }
+    },
   },
 }
 </script>
