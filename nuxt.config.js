@@ -5,7 +5,7 @@ const meta = getMetaData()
 
 export default {
   router: {
-    trailingSlash: false,
+    trailingSlash: undefined,
     extendRoutes(routes, resolve) {
       routes.push(...redirects)
     },
