@@ -7,8 +7,8 @@ export const getSidebarItemLink = ({ section, folder, slug }) => {
    * Guides section.
    */
   if (slug === 'all-assertions') {
-    return `/guides/references/assertions/`
+    return `/guides/references/assertions`
   }
 
-  return `/${section}/${folder ? `${folder}/` : ''}${slug}/`
+  return `/${section}/${folder ? `${folder}/` : ''}${slug}`
 }

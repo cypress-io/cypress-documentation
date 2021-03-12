@@ -31,14 +31,14 @@ describe('Guides', () => {
             ).click({ force: true })
 
             const redirects = {
-              'dashboard-introduction': '/guides/dashboard/introduction/',
+              'dashboard-introduction': '/guides/dashboard/introduction',
               'continuous-integration-introduction':
-                '/guides/continuous-integration/introduction/',
+                '/guides/continuous-integration/introduction',
             }
 
             cy.location('pathname').should(
               'equal',
-              redirects[page] || `/guides/${category}/${page}/`
+              redirects[page] || `/guides/${category}/${page}`
             )
 
             cy.contains(

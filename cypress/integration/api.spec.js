@@ -32,12 +32,12 @@ describe('APIs', () => {
 
             const redirects = {
               'table-of-contents': '/api/table-of-contents/',
-              'all-assertions': '/guides/references/assertions/',
+              'all-assertions': '/guides/references/assertions',
             }
 
             cy.location('pathname').should(
               'equal',
-              redirects[page] || `/api/${category}/${page}/`
+              redirects[page] || `/api/${category}/${page}`
             )
 
             cy.contains(

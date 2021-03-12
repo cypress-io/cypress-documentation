@@ -1,30 +1,30 @@
 export const redirects = [
   {
     path: '/',
-    redirect: '/guides/overview/why-cypress/',
+    redirect: '/guides/overview/why-cypress',
   },
   {
     path: '/guides',
-    redirect: '/guides/overview/why-cypress/',
+    redirect: '/guides/overview/why-cypress',
   },
   {
     path: '/api',
-    redirect: '/api/table-of-contents/',
+    redirect: '/api/table-of-contents',
   },
   {
     path: '/examples',
-    redirect: '/examples/examples/recipes/',
+    redirect: '/examples/examples/recipes',
   },
   {
     path: '/faq',
-    redirect: '/faq/questions/using-cypress-faq/',
+    redirect: '/faq/questions/using-cypress-faq',
   },
   {
     path: '/plugins',
-    redirect: '/plugins/directory/',
+    redirect: '/plugins/directory',
   },
   {
     path: '/guides/dashboard/dashboard-introduction',
-    redirect: '/guides/dashboard/introduction/',
+    redirect: '/guides/dashboard/introduction',
   },
 ]
