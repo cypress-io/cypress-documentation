@@ -1,10 +1,10 @@
 <script>
-import AppSidebar from '../../../components/AppSidebar'
-import AppHeader from '../../../components/AppHeader'
-import TableOfContents from '../../../components/TableOfContents'
-import Footer from '../../../components/Footer'
-import { getMetaData } from '../../../utils/getMetaData'
-import { getMetaDescription } from '../../../utils/getMetaDescription'
+import AppSidebar from '../../../../components/AppSidebar'
+import AppHeader from '../../../../components/AppHeader'
+import TableOfContents from '../../../../components/TableOfContents'
+import Footer from '../../../../components/Footer'
+import { getMetaData } from '../../../../utils/getMetaData'
+import { getMetaDescription } from '../../../../utils/getMetaDescription'
 
 const sortChangelogs = (a, b) => {
   // descending order
@@ -116,7 +116,7 @@ export default {
       algoliaSettings,
       changelogs: sortedChangelogs,
       guideSidebar: items,
-      path: 'references/changelog',
+      path: 'references/changelog/',
       tableOfContents,
       metaDescription,
     }
@@ -175,5 +175,5 @@ export default {
 </template>
 
 <style lang="scss">
-@import '../../../styles/content.scss';
+@import '../../../../styles/content.scss';
 </style>

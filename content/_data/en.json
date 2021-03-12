@@ -79,7 +79,7 @@
       "best-practices": "Best Practices",
       "trade-offs": "Trade-offs",
       "troubleshooting": "Troubleshooting",
-      "changelog": "Changelog",
+      "changelog/": "Changelog",
       "migration-guide": "Migration Guide",
       "roadmap": "Roadmap",
       "tooling": "Tooling",

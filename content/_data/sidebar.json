@@ -81,7 +81,7 @@
       "bundled-tools": "bundled-tools.html",
       "trade-offs": "trade-offs.html",
       "troubleshooting": "troubleshooting.html",
-      "changelog": "changelog.html",
+      "changelog/": "changelog.html",
       "migration-guide": "migration-guide.html",
       "roadmap": "roadmap.html",
       "experiments": "experiments.html"

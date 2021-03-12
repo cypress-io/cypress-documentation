@@ -27,4 +27,8 @@ export const redirects = [
     path: '/guides/dashboard/dashboard-introduction',
     redirect: '/guides/dashboard/introduction',
   },
+  {
+    path: '/guides/references/changelog',
+    redirect: '/guides/references/changelog/',
+  },
 ]
