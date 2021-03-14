@@ -46,7 +46,7 @@ Pass in an options object to change the default behavior of `.spread()`.
 | --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------- |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.spread()` to resolve before [timing out](#Timeouts) |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`.spread()` 'yields the return value of your callback function' </li><li>`.spread()` wll not change the subject if `null` or `undefined` is returned.</li></List>
 
@@ -79,15 +79,15 @@ cy.getCookies().spread((cookie1, cookie2, cookie3) => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.spread()` requires being chained off a previous command.</li><li>`.spread()` requires being chained off a command that yields an array-like structure.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 <List><li>`.spread()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.spread()` can time out waiting for a promise you've returned to resolve.</li></List>
 

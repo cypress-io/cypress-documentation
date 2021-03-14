@@ -178,6 +178,19 @@ $sidebar-desktop-width: 290px;
 
   /* #endregion Heading Links */
 
+  blockquote {
+    @apply border-l-4;
+    @apply px-12;
+    @apply py-6;
+    @apply bg-gray-100;
+    @apply mb-8;
+    @apply italic;
+
+    & > p {
+      @apply mb-0;
+    }
+  }
+
   svg {
     @apply inline-block;
     height: 1em;

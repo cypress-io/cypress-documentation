@@ -63,7 +63,7 @@ Pass in an options object to change the default behavior of `cy.scrollTo()`.
 | `log`              | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.scrollTo()` to resolve before [timing out](#Timeouts)                 |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`cy.scrollTo()` yields the same subject it was given from the previous command.</li></List>
 
@@ -161,11 +161,11 @@ _Cypress does not reflect the accurate scroll positions of any elements within s
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.scrollTo()` requires being chained off a command that yields DOM element(s).</li><li>`.scrollTo()` requires the element to be scrollable.</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.scrollTo()` can time out waiting for assertions you've added to pass.</li></List>
 

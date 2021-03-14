@@ -38,7 +38,7 @@ cy.wrap({ foo: 'bar' }).its('foo').should('eq', 'bar') // Assert the 'foo' prope
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.should('eq', '42') // Errors, cannot be chained off 'cy'
+cy.should('eq', '42') // Should not be chained off 'cy'
 ```
 
 ### Arguments
@@ -59,7 +59,7 @@ A method to be called on the chainer.
 
 Pass a function that can have any number of explicit assertions within it. Whatever was passed to the function is what is yielded.
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>In most cases, `.should()` yields the same subject it was given from the previous command.</li></List>
 
@@ -384,11 +384,11 @@ When using a callback function with `.should()` or `.and()`, on the other hand, 
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.should()` requires being chained off a previous command.</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.should()` will continue to [retry](/guides/core-concepts/retry-ability) its specified assertions until it times out.</li></List>
 

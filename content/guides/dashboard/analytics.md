@@ -217,3 +217,9 @@ The main key performance indicators tracked are:
 <DocsImage src="/img/dashboard/analytics/dashboard-analytics-slowest-tests-table.png" alt="Dashboard Analytics Slowest Tests Table Screenshot" ></DocsImage>
 
 A table of results grouped by median duration and total runs.
+
+## Most common errors
+
+This report shows the impact of the most common types of errors across the test suite.
+
+<DocsImage src="/img/dashboard/analytics/dashboard-analytics-common-errors.png" alt="Dashboard Analytics Slowest Tests Table Screenshot" ></DocsImage>

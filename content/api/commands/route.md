@@ -80,7 +80,7 @@ Pass in an options object to change the default behavior of `cy.route()`. By def
 
 You can also set options for all [`cy.wait()`](/api/commands/wait)'s `requestTimeout` and `responseTimeout` globally in [configuration](/guides/references/configuration) to control how long to wait for the request and response of a supplied route.
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`cy.route()` yields `null`.</li><li>`cy.route()` can be aliased, but otherwise cannot be chained further.</li></List>
 
@@ -483,15 +483,15 @@ You can [read more about this here.](/api/commands/server#Options)
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.route()` requires being chained off of `cy`.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 <List><li>`cy.route()` cannot have any assertions chained.</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.route()` cannot time out.</li></List>
 
