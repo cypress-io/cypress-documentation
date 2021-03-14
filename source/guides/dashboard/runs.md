@@ -64,7 +64,7 @@ The video recorded during the test run can be found under the **Video** of the s
 
 # {% fa fa-exclamation-triangle fa-fw %} Test failures
 
-Any tests that fail during a test run can be found under the **Failures** tab. Each failure is listed under its test title.
+Any tests that fail during a test run can be found under the **Test Results** tab. Each failure is listed under its test title.
 
 ## Each failure displays:
 
