@@ -8,13 +8,6 @@ export default {
     AppHeader,
     Footer,
   },
-  // async asyncData({ $content }) {
-  //   const { algolia: algoliaSettings } = await $content('settings').fetch()
-  //   console.log('algoliaSettings: ', algoliaSettings)
-  //   return {
-  //     algoliaSettings,
-  //   }
-  // },
   data() {
     return {
       algoliaSettings: algolia,
