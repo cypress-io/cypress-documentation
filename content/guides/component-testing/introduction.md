@@ -7,11 +7,11 @@ containerClass: component-testing
 
 </alert>
 
-## What is Component Testing
+## What is Component Testing?
 
 _Definition: Running tests on a component in isolation._
 
-Typically component tests are run using a Node.js testing framework like `jest` or `mocha`. Components we want to test are rendered in a virtualized browser called [JSDom](https://github.com/jsdom/jsdom).
+Typically component tests are run using a Node.js testing framework like `jest` or `mocha`. Components we want to test are rendered in a virtualized browser called [jsdom](https://github.com/jsdom/jsdom).
 
 With component testing in Cypress, you can achieve the same goal: test a component in isolation. Instead of having components render inside a terminal, Cypress renders components in a real browser. Since the components you are testing are visible in the browser, this makes it easier to test and debug when a test fails.
 
@@ -55,15 +55,22 @@ Let's go through the setup to start testing components. If you want to see compo
 
 ## ⚠️ For existing end-to-end users
 
-If you are using Cypress Component Testing in a project that also has tests written with the Cypress end-to-end runner, you will want a separate `cypress.json` configuration file for your component tests. This will let you specify a different glob to detect your spec files, as well as configure Component Testing specific defaults like `viewportHeight` and `viewportWidth`. You will also want to have a separate plugins file.
+If you are using Cypress Component Testing in a project that also has tests written with the Cypress end-to-end runner, you may want to configure some Component Testing specific defaults.
 
-To do this, simply copy your `cypress.json` and rename it to `cypress.component.json`. When you start the Component Testing runner, make sure to pass your Component Testing specific configuration with `npx cypress open-ct --config cypress.component.json`.
+You can configure or override specific defaults in [`cypress.json`](/guides/references/configuration) using the `component` key. For example, if you would like to use a different test glob and viewport for Component Testing, your `cypress.json` might look like this:
 
-<alert type="info">
+```json
+{
+  "testFiles": "cypress/integration/*.spec.js",
+  "component": {
+    "testFiles": ".*/__tests__/.*spec.tsx",
+    "viewportHeight": 500,
+    "viewportWidth": 700
+  }
+}
+```
 
-If you are using [Vue.js](https://vuejs.org/), click on the Vue tab of the code examples when available. If there is no Vue tab, the code is the same.
-
-</alert>
+The Component Testing runner will use all the configuration at the root level of `cypress.json`, and apply any Component Testing specific overrides.
 
 ### Prerequisites
 
@@ -73,6 +80,12 @@ If you are using [Vue.js](https://vuejs.org/), click on the Vue tab of the code 
 - A basic knowledge of how to write tests in Cypress.
 
 ### Install
+
+<alert type="info">
+
+If you are using [Vue.js](https://vuejs.org/), click on the Vue tab of the code examples when available. If there is no Vue tab, the code is the same.
+
+</alert>
 
 Start by running the command below to install dependencies. It will install both the latest version of Cypress and the tooling you need to run component testing.
 
@@ -93,6 +106,8 @@ npm install --save-dev cypress @cypress/vue @cypress/webpack-dev-server
   </code-block>
 </code-group>
 
+<alert type="info">
+
 If it's your first time using Cypress, run `npx cypress open` and Cypress will create some example directories and files.
 
 </alert>
@@ -108,18 +123,46 @@ Now you need to configure how Cypress will locate component spec files from with
 
 You'll also need to configure the component testing framework of your choice by adding the component testing plugin. Read more about plugins in general in our [plugins guide](/guides/tooling/plugins-guide). If you are using Create React App, you will need to use the `react-scripts` plugin as shown below in your `cypress/plugins/index.js` file.
 
+<code-group>
+  <code-block label="React (using create-react-app)" active>
+
 ```js
 // cypress/plugins/index.js
-module.exports = (on, config) => {
-  require('@cypress/react/plugins/react-scripts')(on, config)
-  // IMPORTANT to return the config object
-  // with the any changed environment variables
+
+module.exports = (on, config, mode) => {
+  if (mode === 'component') {
+    require('@cypress/react/plugins/react-scripts')(on, config)
+  }
 
   return config
 }
 ```
 
-If you are using a React template other than Create React App, such as Next.js, you will need to import the appropriate plugin. See a list of plugins [here](https://github.com/cypress-io/cypress/tree/develop/npm/react/plugins). Alternatively, if you are not using a template and have your own webpack configuration, you can use it:
+  </code-block>
+  <code-block label="Vue (using vue-cli)">
+
+```js
+// cypress/plugins/index.js
+
+module.exports = (on, config, mode) => {
+  if (mode === 'component') {
+    const { startDevServer } = require('@cypress/webpack-dev-server')
+    const webpackConfig = require('@vue/cli-service/webpack.config.js')
+    on('dev-server:start', (options) =>
+      startDevServer({ options, webpackConfig })
+    )
+  }
+
+  return config
+}
+```
+
+  </code-block>
+</code-group>
+
+Note we have a conditional check against `mode`. This is useful if your project is already using some existing plugins for the E2E runner, and you don't want them to conflict.
+
+If you are using a React template other than Create React App, such as Next.js, or a Vue template other than vue-cli, you will need to import the appropriate plugin. See a list of officially maintained plugins [here](https://github.com/cypress-io/cypress/tree/develop/npm/react/plugins). Alternatively, if you have your own webpack configuration, you can just provide it:
 
 ```js
 // cypress/plugins/index.js
@@ -127,10 +170,13 @@ const { startDevServer } = require('@cypress/webpack-dev-server')
 // your project's webpack configuration
 const webpackConfig = require('../../webpack.config.js')
 
-module.exports = (on, config) => {
-  on('dev-server:start', (options) => {
-    return startDevServer({ options, webpackConfig })
-  })
+module.exports = (on, config, mode) => {
+  if (mode === 'component') {
+    on('dev-server:start', (options) => {
+      return startDevServer({ options, webpackConfig })
+    })
+  }
+
   return config
 }
 ```
@@ -159,7 +205,7 @@ This example assumes a `<Button />` component exists.
 ```jsx
 import * as React from 'react'
 import { mount } from '@cypress/react'
-import Button from './button'
+import Button from './Button'
 
 it('Button', () => {
   mount(<Button>Test button</Button>)
@@ -172,7 +218,7 @@ it('Button', () => {
 
 ```jsx
 import { mount } from '@cypress/vue'
-import Button from './button'
+import Button from './Button'
 
 it('Button', () => {
   // with JSX
