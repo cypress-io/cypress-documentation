@@ -58,7 +58,7 @@ You will also see a summary at the bottom indicating the screenshots, or videos 
 
 All screenshots taken during the test run can be found in the **Screenshots** of the spec. Both screenshots taken during failures and screenshots taken using the [`cy.screenshot()`](/api/commands/screenshot) command will show up here.
 
-### <Icon name="video-camera" className="fa-fw"></Icon> Videos
+### <Icon name="video" className="fa-fw"></Icon> Videos
 
 The video recorded during the test run can be found under the **Video** of the spec. You can also download the video.
 

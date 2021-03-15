@@ -98,6 +98,7 @@ export default {
                 href="https://github.com/cypress-io/cypress"
                 class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-bold"
               >
+                <span class="sr-only">GitHub</span>
                 <Icon :name="['fab', 'github']" color="inherit" />
               </a>
             </div>
