@@ -178,6 +178,36 @@ For more complex configuration objects, you may want to consider passing a [JSON
 cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.ts"]}'
 ```
 
+### Runner Specific Overrides
+
+As of Cypress 7.0, Cypress now includes a [Component Testing](/guides/component-testing/introduction/) specific runner. You can override configuration in `cypress.json` for either the E2E or Component Testing runner using the `e2e` and `component` options in `cypress.json`.
+
+#### Examples
+
+Component Testing specific viewports:
+
+```json
+{
+  "viewportHeight": 600,
+  "viewportWidth": 1000,
+  "component": {
+    "viewportHeight": 500,
+    "viewportWidth": 500
+  }
+}
+```
+
+E2E specific timeouts:
+
+```json
+{
+  "defaultCommandTimeout": 5000,
+  "e2e": {
+    "defaultCommandTimeout": 10000
+  }
+}
+```
+
 ### Plugins
 
 You can programmatically modify configuration values using Node within the `pluginsFile`. This enables you to do things like:

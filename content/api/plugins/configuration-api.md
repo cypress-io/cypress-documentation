@@ -10,8 +10,8 @@ To modify configuration, you return an object from your plugins file exported fu
 
 ```javascript
 // cypress/plugins/index.js
-module.exports = (on, config) => {
-  console.log(config) // see what all is in here!
+module.exports = (on, config, mode) => {
+  console.log(config) // see everything in here!
 
   // modify config values
   config.defaultCommandTimeout = 10000
@@ -62,7 +62,7 @@ In the plugins file, you can filter the list of browsers passed inside the `conf
 
 ```javascript
 // cypress/plugins/index.js
-module.exports = (on, config) => {
+module.exports = (on, config, mode) => {
   // inside config.browsers array each object has information like
   // {
   //   name: 'chrome',
@@ -114,7 +114,7 @@ function getConfigurationByFile(file) {
 }
 
 // plugins file
-module.exports = (on, config) => {
+module.exports = (on, config, mode) => {
   // accept a configFile value or use development by default
   const file = config.env.configFile || 'development'
 
@@ -198,3 +198,21 @@ This would enable you to do things like this:
 This is a less complicated example. Remember - you have the full power of Node at your disposal.
 
 How you choose to edit the configuration is up to you. You don't have to read off of the file system - you could store them all in memory inside of your `pluginsFile` if you wanted.
+
+### Runner Specific Plugins
+
+As of Cypress 7.0, Cypress now includes a [Component Testing](/guides/component-testing/introduction/) specific runner. The exported function from the plugins file recevies three arugments; the third is `mode`, which is either `e2e` or `component` depending on which runner was launched. This allows you to configure runner specific plugins.
+
+#### Use Cypress React Plugin Conditionally
+
+Conditionally apply the Cypress React Plugin if launching in Component Testing mode:
+
+```js
+module.exports = (on, config, mode) => {
+  if (mode === 'component') {
+    require('@cypress/react/plugins/react-scripts')(on, config)
+  }
+
+  return config
+}
+```
