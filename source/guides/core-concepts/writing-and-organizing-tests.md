@@ -134,7 +134,7 @@ To learn more about videos and settings available, see {% url "Screenshots and V
 
 ## Plugin files
 
-The plugin file is a special file that executes in Node before the project is loaded, before the browser launches, and during your test execution. While the Cypress tests execute in the browser, the plugin file runs in the background Node process, giving your tests an ability to access the file system and the rest of the operating system by calling the {% url "cy.task" task %} command.
+The plugin file is a special file that executes in Node before the project is loaded, before the browser launches, and during your test execution. While the Cypress tests execute in the browser, the plugin file runs in the background Node process, giving your tests the ability to access the file system and the rest of the operating system by calling the {% url "cy.task()" task %} command.
 
 The plugin file is a good place to define how you want to bundle the spec files via the {% url "preprocessors" preprocessors-api %}, how to find and launch the browsers via the {% url "browser launch API" browser-launch-api %}, and other cool things. Read our {% url "plugins guide" plugins-guide %} for more details and examples.
 
