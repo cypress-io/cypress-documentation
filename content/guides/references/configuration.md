@@ -180,11 +180,11 @@ cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*
 
 ### Runner Specific Overrides
 
-As of Cypress 7.0, Cypress now includes a [Component Testing](/guides/component-testing/introduction/) specific runner. You can override configuration in `cypress.json` for either the E2E or Component Testing runner using the `e2e` and `component` options in `cypress.json`.
+You can override configuration for either the E2E or [Component Testing](/guides/component-testing/introduction/) runner using the `e2e` and `component` options.
 
 #### Examples
 
-Component Testing specific viewports:
+Component Testing specific viewports in configuration file (`cypress.json` by default):
 
 ```json
 {
@@ -197,7 +197,7 @@ Component Testing specific viewports:
 }
 ```
 
-E2E specific timeouts:
+E2E specific timeouts in configuration file (`cypress.json` by default):
 
 ```json
 {
@@ -547,6 +547,7 @@ DEBUG=cypress:cli,cypress:server:specs
 
 | Version                                      | Changes                                                 |
 | -------------------------------------------- | ------------------------------------------------------- |
+| [7.0.0](/guides/references/changelog)        | Added `e2e` and `component` options.                    |
 | [6.1.0](/guides/references/changelog#6-1-0)  | Added option `scrollBehavior`                           |
 | [5.2.0](/guides/references/changelog#5-2-0)  | Added `includeShadowDom` option.                        |
 | [5.0.0](/guides/references/changelog)        | Added `retries` configuration.                          |

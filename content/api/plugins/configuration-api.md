@@ -201,7 +201,7 @@ How you choose to edit the configuration is up to you. You don't have to read of
 
 ### Runner Specific Plugins
 
-As of Cypress 7.0, Cypress now includes a [Component Testing](/guides/component-testing/introduction/) specific runner. The exported function from the plugins file recevies three arugments; the third is `mode`, which is either `e2e` or `component` depending on which runner was launched. This allows you to configure runner specific plugins.
+The exported function from the plugins file receives three arguments. The third argument is `mode`, which is either `e2e` or `component` depending on if the E2E or [Component Testing](/guides/component-testing/introduction/) runner was launched. This allows you to configure runner specific plugins.
 
 #### Use Cypress React Plugin Conditionally
 
@@ -216,3 +216,9 @@ module.exports = (on, config, mode) => {
   return config
 }
 ```
+
+## History
+
+| Version                               | Changes                |
+| ------------------------------------- | ---------------------- |
+| [7.0.0](/guides/references/changelog) | Added `mode` argument. |
