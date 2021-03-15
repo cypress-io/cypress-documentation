@@ -78,6 +78,7 @@ const iconTransform = (files) => {
       // the updated names for these icons.
       const FONTAWESOME_ICON_MAP = {
         warning: 'exclamation-triangle',
+        'video-camera': 'video',
       }
 
       const iconName = FONTAWESOME_ICON_MAP[name]

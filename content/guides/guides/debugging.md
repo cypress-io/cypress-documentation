@@ -94,7 +94,7 @@ Though Cypress has built out [an excellent Test Runner](/guides/core-concepts/te
 
 <Alert type="info">
 
-### <Icon name="video-camera"></Icon> See it in action!
+### <Icon name="video"></Icon> See it in action!
 
 You can see a walk-through of debugging some application code from Cypress [in this segment from our React tutorial series](https://vimeo.com/242961930#t=264s).
 

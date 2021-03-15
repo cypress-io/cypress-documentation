@@ -19,7 +19,7 @@ title: Introduction to Cypress
 
 **This is the single most important guide** for understanding how to test with Cypress. Read it. Understand it. Ask questions about it so that we can improve it.
 
-After you're done, we suggest watching some of our <Icon name="video-camera"></Icon> [Tutorial Videos](/examples/examples/tutorials).
+After you're done, we suggest watching some of our <Icon name="video"></Icon> [Tutorial Videos](/examples/examples/tutorials).
 
 </Alert>
 

@@ -291,7 +291,7 @@ cy.get('#results').should('contain', 'Book 1').and('contain', 'Book 2')
 The Cypress [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) has various tests for testing an auto-complete field within a large user journey test that properly await requests triggered upon auto-complete input changes. Check out the example:
 
 - <Icon name="github"></Icon> [Auto-complete test code](https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/cypress/tests/ui/new-transaction.spec.ts#L36-L50)
-- <Icon name="video-camera"></Icon> [Auto-complete test run video recording](https://dashboard.cypress.io/projects/7s5okt/runs/2352/test-results/3bf064fd-6959-441c-bf31-a9f276db0627/video) in Cypress Dashboard.
+- <Icon name="video"></Icon> [Auto-complete test run video recording](https://dashboard.cypress.io/projects/7s5okt/runs/2352/test-results/3bf064fd-6959-441c-bf31-a9f276db0627/video) in Cypress Dashboard.
 
 </Alert>
 
