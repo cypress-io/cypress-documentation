@@ -22,6 +22,10 @@ By running failed specs first, the issues can be surfaced earlier and reduce tha
 
 ## Toggle running of failed specs first
 
+{% note success "{% fa fa-star %} Premium Dashboard Feature" %}
+**Running failed specs first** is a *Smart Orchestration* feature available to users with a {% url "Business Dashboard plan" https://cypress.io/pricing %}.
+{% endnote %}
+
 Controlling running of failed specs first is a *Smart Orchestration* feature that is managed within a project's settings.
 
 To enable or disable this feature:
@@ -52,11 +56,18 @@ Canceling an **entire** test run, even if parallelized, upon the first test fail
 
 ## Toggle cancellation of test runs upon first failure
 
+{% note success "{% fa fa-star %} Premium Dashboard Feature" %}
+**Canceling test runs when a test fails** is a *Smart Orchestration* feature available to users with a {% url "Business Dashboard plan" https://cypress.io/pricing %}.
+{% endnote %}
+
 Controlling cancellation of test runs upon the first failed test is a *Smart Orchestration* feature that is managed within a project's settings.
 
 {% note warning "Consideration for Teams" %}
 If your development, testing, or QA teams operate in a highly collaborative workflow where multiple people are working on various test failures at the same time, it may be helpful to disable run cancellation upon first failure, so **all failing tests can be surfaced for each test run**.
+{% endnote %}
 
+{% note info "Consideration for Teams" %}
+If your development, testing, or QA teams operate in a highly collaborative workflow where multiple people are working on various test failures at the same time, it may be helpful to disable run cancellation upon first failure, so **all failing tests can be surfaced for each test run**.
 {% endnote %}
 
 To enable or disable this feature:

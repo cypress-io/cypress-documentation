@@ -18,6 +18,10 @@ Test retries is **disabled by default**, and you can {% url "enable it within yo
 
 ## Flake Detection
 
+{% note success "{% fa fa-star %} Premium Dashboard Feature" %}
+**Test flake detection** is available to users with a {% url "Team Dashboard plan" https://cypress.io/pricing %}.
+{% endnote %}
+
 One way to battle flaky tests is to detect and monitor them as they occur in an organized and methodical manner such that you can assess their severity to assist with prioritizing their fix.
 
 {% note warning "Test Retries & Flake Detection"%}
@@ -33,6 +37,10 @@ Test runs with flaky tests will be flagged with the number of flaky of tests wit
 Any failure across multiple test run attempts triggered by test retrying will result in a given test case to be flagged as flaky.
 
 ### Flaky Test Analytics
+
+{% note success "{% fa fa-star %} Premium Dashboard Feature" %}
+**Test flake analytics** are available to users with a {% url "Team Dashboard plan" https://cypress.io/pricing %}.
+{% endnote %}
 
 The flaky tests analytics page provides a birds-eye-view on the state of flake within your project by showing:
 
@@ -72,11 +80,11 @@ With this concept in mind, it is possible to always have zero final failure rate
 
 {% imgTag /img/dashboard/flaky-test-management/flake-v-fail-1.png "flake rate vs fail rate" %}
 
-{% note success "Provide Feedback" %}
-Flake detection is new feature of the Cypress Dashboard and is part of our larger effort to minimize flake. {% url "Please provide any feedback within our public roadmap." https://portal.productboard.com/cypress-io/1-cypress-dashboard/c/19-see-the-flakiest-tests-in-your-test-suite %}
-{% endnote %}
-
 ## Flake Alerting
+
+{% note success "{% fa fa-star %} Premium Dashboard Feature" %}
+**Test flake alerting** is available to users with a {% url "Team Dashboard plan" https://cypress.io/pricing %}.
+{% endnote %}
 
 The Dashboard can provide alerts via {% url "GitHub" github-integration %} and {% url "Slack integrations" slack-integration %}, to further assist with staying on top of flake occurrences.
 
