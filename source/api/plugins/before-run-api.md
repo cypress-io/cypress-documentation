@@ -1,17 +1,14 @@
 ---
 title: Before Run API
-containerClass: experimental
 ---
 
 The `before:run` event fires before a run starts. The event only fires when running via `cypress run`.
 
 The event will fire each time `cypress run` executes. As a result, if running your specs in {% url "parallel" parallelization %}, the event will fire once for each machine on which the tests are run.
 
-{% note warning %}
-{% fa fa-warning orange %} **This is an experimental feature. In order to use it, you must set the {% url "`experimentalRunEvents`" experiments %} configuration option to `true`.**
-{% endnote %}
-
 # Syntax
+
+{% partial code_runs_in_node %}
 
 ```js
 on('before:run', (details) => { /* ... */ })

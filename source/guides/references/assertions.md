@@ -256,6 +256,25 @@ cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
 cy.get('#accordion').should('not.have.css', 'display', 'none')
 ```
 
+## Disabled property
+
+```html
+<input type="text" id="example-input" disabled />
+```
+
+```javascript
+cy.get('#example-input')
+  .should('be.disabled')
+  // let's enable this element from the test
+  .invoke('prop', 'disabled', false)
+
+cy.get('#example-input')
+  // we can use "enabled" assertion
+  .should('be.enabled')
+  // or negate the "disabled" assertion
+  .and('not.be.disabled')
+```
+
 # Negative assertions
 
 There are positive and negative assertions. Examples of positive assertions are:
@@ -273,7 +292,7 @@ cy.contains('first todo').should('not.have.class', 'completed')
 cy.get('#loading').should('not.be.visible')
 ```
 
-### ⚠️ False passing tests 
+### ⚠️ False passing tests
 
 Negative assertions may pass for reasons you weren't expecting. Let's say we want to test that a Todo list app adds a new Todo item after typing the Todo and pressing enter.
 
