@@ -369,11 +369,13 @@ const urlInternalBacktickTransform = (files) => {
   }
 }
 
-const urlChangelogTransform = (files) => {return {
-  files,
-  from: /{%\s+url\s+"[0-9]+\.[0-9]+\.[0-9]+"\s+changelog-([0-9]+)[.-]([0-9]+)[.-]([0-9]+)\s+%}/g,
-  to: '[#$1.$2.$3](#$1-$2-$3)',
-}}
+const urlChangelogTransform = (files) => {
+  return {
+    files,
+    from: /{%\s+url\s+"[0-9]+\.[0-9]+\.[0-9]+"\s+changelog-([0-9]+)[.-]([0-9]+)[.-]([0-9]+)\s+%}/g,
+    to: '[$1.$2.$3](#$1-$2-$3)',
+  }
+}
 
 const urlCatchAllTransform = (files) => {
   return {
