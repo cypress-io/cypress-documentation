@@ -1,15 +1,10 @@
 ---
 title: After Run API
-containerClass: experimental
 ---
 
 The `after:run` event fires after a run is finished. The event only fires when running via `cypress run`.
 
 The event will fire each time `cypress run` executes. As a result, if running your specs in {% url "parallel" parallelization %}, the event will fire once for each machine on which `cypress run` is called.
-
-{% note warning %}
-{% fa fa-warning orange %} **This is an experimental feature. In order to use it, you must set the {% url "`experimentalRunEvents`" experiments %} configuration option to `true`.**
-{% endnote %}
 
 # Syntax
 

@@ -1,13 +1,8 @@
 ---
 title: Before Spec API
-containerClass: experimental
 ---
 
 The `before:spec` event fires before a spec file is run. The event only fires when running via `cypress run`.
-
-{% note warning %}
-{% fa fa-warning orange %} **This is an experimental feature. In order to use it, you must set the {% url "`experimentalRunEvents`" experiments %} configuration option to `true`.**
-{% endnote %}
 
 # Syntax
 
