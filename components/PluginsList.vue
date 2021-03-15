@@ -152,6 +152,7 @@ ul.plugins-list {
   .keyword {
     font-weight: 300;
     color: #777;
+    @apply mr-2;
   }
 }
 </style>
