@@ -8,7 +8,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "nuxt generate",
+    "build": "nuxt generate && mv dist/404/index.html dist/404.html && rm -rf dist/404",
     "copy": "bash ./scripts/clone-current-docs.sh",
     "start": "cross-env NODE_ENV=development nuxt",
     "start:ci": "yarn build && cd dist/ && npx http-server . --port 3000",
