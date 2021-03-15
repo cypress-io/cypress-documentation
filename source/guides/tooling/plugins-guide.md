@@ -116,6 +116,8 @@ You can use the `task` event to do things like:
 
 The {% url "Real World App (RWA)" https://github.com/cypress-io/cypress-realworld-app %} uses {% url tasks task %} to re-seed its database, and to filter/find test data for various testing scenarios.
 
+{% partial code_runs_in_node %}
+
 ```ts
 // cypress/plugins/index.ts
 

@@ -8,6 +8,8 @@ This allows you to record those details, manipulate the image as needed, and ret
 
 # Syntax
 
+{% partial code_runs_in_node %}
+
 ```js
 on('after:screenshot', (details) => { /* ... */ })
 ```

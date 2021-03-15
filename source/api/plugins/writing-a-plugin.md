@@ -27,6 +27,8 @@ module.exports = (on, config) => {
 }
 ```
 
+{% partial code_runs_in_node %}
+
 The exported function is called whenever a project is opened either with {% url "`cypress open`" command-line#cypress-open %} or {% url "`cypress run`" command-line#cypress-run %}.
 
 Your function will receive 2 arguments: `on` and `config`.
