@@ -6,6 +6,8 @@ The `after:spec` event fires after a spec file is run. The event only fires when
 
 # Syntax
 
+{% partial code_runs_in_node %}
+
 ```js
 on('after:spec', (spec, results) => { /* ... */ })
 ```

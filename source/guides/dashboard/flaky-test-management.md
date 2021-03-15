@@ -99,3 +99,7 @@ Flake alerting via Slack can be enabled within Slack integration settings:
 After enabling Slack alerts, the Dashboard will send Slack messages whenever flaky tests are detected:
 
 {% imgTag /img/dashboard/flaky-test-management/flake-slack-alert.png "Slack flake alert" %}
+
+## See Also
+
+- Read our blog posts about fighting {% url "the test flake" https://cypress.io/blog/tag/flake/ %}.

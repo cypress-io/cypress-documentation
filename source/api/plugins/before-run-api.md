@@ -8,6 +8,8 @@ The event will fire each time `cypress run` executes. As a result, if running yo
 
 # Syntax
 
+{% partial code_runs_in_node %}
+
 ```js
 on('before:run', (details) => { /* ... */ })
 ```

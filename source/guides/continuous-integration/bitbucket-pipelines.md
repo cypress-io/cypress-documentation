@@ -227,7 +227,7 @@ In the Bitbucket Pipelines configuration we have defined in the previous section
 
   2. {% url "Parallelizing test runs" parallelization %} and optimizing their execution via {% url "intelligent load-balancing" parallelization#Balance-strategy %} of test specs across CI machines with the `--parallel` flag.
 
-  3. Organizing and consolidating multiple `cypress run` calls by labeled groups into a single report within the. {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}. In the example above we use the `--group "UI - Chrome"` flag to organize all of UI tests within the Chrome browser within a group labeled "UI - Chrome" within our {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} report.
+  3. Organizing and consolidating multiple `cypress run` calls by labeled groups into a single report within the. {% url "Cypress Dashboard" https://on.cypress.io/dashboard %}. In the example above we use the `--group "UI - Chrome"` flag to organize all UI tests for the Chrome browser into a group labeled "UI - Chrome" in the {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} report.
 
 # Cypress Real World Example with Bitbucket Pipelines
 

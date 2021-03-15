@@ -8,6 +8,14 @@ small:
 
 # large links with thumbnails, links, embedded video
 large:
+  - title: "Stable Product Delivery with Cypress"
+    url: https://apisix.apache.org/blog/2021/02/08/stable-product-delivery-with-cypress
+    sourceName: APISIX
+    sourceUrl: https://apisix.apache.org/blog
+    author: Yi Sun
+    date: February 8, 2021
+    img: /img/examples/stable-product-delivery-with-cypress.png
+
   - title: "Running Cypress tests parallel in GitLab Pipeline"
     url: https://medium.com/trendyol-tech/running-cypress-tests-parallel-in-gitlab-pipeline-56b1fa4cb286/
     sourceName: Medium

@@ -29,7 +29,7 @@ The permissions for each user role for the Dashboard Service.
 
 | Permission                                         |  |  | |
 | ---------------------------------------------------|--------|-------|------|
-| See test recordings of private projects            | ✅ **Member**    | ✅ **Admin**    | ✅ **Owner** |
+| See test results of private projects            | ✅ **Member**    | ✅ **Admin**    | ✅ **Owner** |
 | See record keys of projects                        | ✅ **Member**    | ✅ **Admin**    | ✅ **Owner** |
 | See billing and usage information                  |        | ✅ **Admin**    | ✅ **Owner** |
 | Edit billing information                           |        | ✅ **Admin**    | ✅ **Owner** |

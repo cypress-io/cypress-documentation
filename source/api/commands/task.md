@@ -472,3 +472,4 @@ When clicking on the `task` command within the command log, the console outputs 
 - {% url "Blog: Incredibly Powerful cy.task()" https://glebbahmutov.com/blog/powerful-cy-task/ %}
 - {% url "Blog: Rolling for a Test" https://glebbahmutov.com/blog/rolling-for-test/ %}
 - {% url "Universal Code Test with Cypress" https://glebbahmutov.com/blog/universal-code-test/ %}
+- repository {% url "cypress-db-example" https://github.com/bahmutov/cypress-db-example %} shows how to connect to a Sqlite3 database and use it during tests.

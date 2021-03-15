@@ -41,6 +41,12 @@ $(npm bin)/cypress run
 npx cypress run
 ```
 
+...or by using Yarn...
+
+```shell
+yarn open
+```
+
 You may find it easier to add the cypress command to the `scripts` object in your `package.json` file and call it from an {% url "`npm run` script" https://docs.npmjs.com/cli/run-script.html %}.
 
 When calling a command using `npm run`, you need to pass the command's arguments using the `--` string. For example, if you have  the following command defined in your `package.json`
@@ -64,6 +70,10 @@ If you are using the {% url npx https://github.com/zkat/npx %} tool, you can inv
 ```shell
 npx cypress run --record --spec "cypress/integration/my-spec.js"
 ```
+
+{% note info %}
+Read how we typically organize and execute npm scripts in the blog post {% url "How I Organize my npm Scripts" https://glebbahmutov.com/blog/organize-npm-scripts/ %}.
+{% endnote %}
 
 # Commands
 

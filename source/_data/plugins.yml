@@ -42,6 +42,12 @@
       keywords: [rollup]
       badge: community
 
+    - name: cypress-markdown-preprocessor
+      description: Cypress preprocessor for extracting tests from Markdown files
+      link: https://github.com/bahmutov/cypress-markdown-preprocessor
+      keywords: [markdown]
+      badge: community
+
     - name: cypress-rollup-preprocessor
       description: Cypress preprocessor for bundling JavaScript via rollup
       link: https://github.com/lmarqs/cypress-rollup-preprocessor
@@ -246,7 +252,7 @@
       link: https://github.com/javierbrea/cypress-fail-fast
       keywords: [fail-fast, failure, skip, config]
       badge: community
-      
+
     - name: cypress-fail-on-console-error
       description: Fail cypress test on console error.
       link: https://github.com/nils-hoyer/cypress-fail-on-console-error
@@ -338,7 +344,7 @@
       link: https://github.com/kentcdodds/cypress-testing-library
       keywords: [testing-library, dom-testing-library, react-testing-library]
       badge: verified
-      
+
     - name: cypress-plugin-stripe-elements
       description: Simple commands that make it easy to target and fill in Stripe Elements input fields
       link: https://github.com/dbalatero/cypress-plugin-stripe-elements
@@ -374,6 +380,12 @@
       link: https://github.com/NoriSte/cypress-wait-until
       keywords: [commands, wait, wait-until, recursive-promise, check-async-value, check-value, open-source-saturday]
       badge: verified
+
+    - name: cypress-recurse
+      description: A way to re-run Cypress commands until a predicate function returns true
+      link: https://github.com/bahmutov/cypress-recurse
+      keywords: [commands, wait, wait-until, recursive-promise, check-async-value, check-value]
+      badge: community
 
     - name: cypress-cy-select
       description: data-cy shorthand notation for cypress get and find functions
@@ -439,19 +451,19 @@
       link: https://github.com/swimlane/cy-dom-diff
       keywords: [dom, assertions]
       badge: community
-    
+
     - name: cypress-maildev
       description: A bunch of Cypress commands in order to test your messages (SMS and Emails) by using Maildev REST API.
       link: https://github.com/Clebiez/cypress-maildev
       keywords: [email, sms, commands]
       badge: community
-      
+
     - name: cypress-real-events
       description: Fire native system events from Cypress like hover, swipe, etc
       link: https://github.com/dmtrKovalenko/cypress-real-events
       keywords: [commands]
       badge: community
-      
+
 - name: Extending other testing frameworks
   plugins:
     - name: cyphell
@@ -572,7 +584,7 @@
       link: https://github.com/noeldemartin/cypress-laravel
       keywords: [php, laravel]
       badge: community
-      
+
     - name: cypress-splitio
       description: Stores your split.io toggles as environment variables. Helps to decide which e2e tests you need to run.
       link: https://gitlab.com/davidggevorgyan/cypress-splitio

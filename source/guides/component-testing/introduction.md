@@ -3,7 +3,7 @@ title: Introduction
 containerClass: component-testing
 ---
 
-⚠️ The Cypress Component Testing library is in still in **Alpha**. We are rapidly developing and expect that the API may undergo breaking changes. Contribute to its development by submitting feature requests or issues [here](https://github.com/cypress-io/cypress/).
+⚠️ The Cypress Component Testing library is still in **Alpha**. We are rapidly developing and expect that the API may undergo breaking changes. Contribute to its development by submitting feature requests or issues [here](https://github.com/cypress-io/cypress/).
 
 
 # What is Cypress Component Testing?
@@ -27,7 +27,7 @@ A Cypress Component Test contains a `mount` function and assertions about the co
 With Cypress as the Test Runner and assertions framework, component tests in React and Vue look very similar. Here's an example, written in Vue:
  
 ```javascript
-import { mount } from '@cypress/vue' // or cypress-react-unit-test
+import { mount } from '@cypress/vue' // or @cypress/react
 import TodoList from '@/components/TodoList'
 
 describe('TodoList', () => {
