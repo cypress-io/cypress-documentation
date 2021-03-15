@@ -2,6 +2,10 @@
 title: Jira Integration
 ---
 
+{% note success "{% fa fa-star %} Premium Dashboard Feature" %}
+**Jira integration** is available to users with a {% url "Team Dashboard plan" https://cypress.io/pricing %}.
+{% endnote %}
+
 The {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} can integrate with your Jira workflow to enable:
 
 - Creating one or more Jira issues for a given a test case directly from the Cypress Dashboard.
@@ -15,7 +19,7 @@ The {% url "Cypress Dashboard" https://on.cypress.io/dashboard %} can integrate 
    {% imgTag /img/dashboard/jira-integration/dashboard-jira-atlassian-get-it-now.png "Atlassian Marketplace Cypress for Jira" %}
 3. Login to Jira, Choose a site to install your app and click "Install app".
    {% imgTag /img/dashboard/jira-integration/dashboard-jira-atlassian-choose-site.png "Atlassian Marketplace Cypress for Jira Choose Site" %}
-4. On the "Add to Jira" screen, confirm installation by clicking "Get it now" 
+4. On the "Add to Jira" screen, confirm installation by clicking "Get it now"
    {% imgTag /img/dashboard/jira-integration/dashboard-jira-atlassian-confirm-install.png "Atlassian Marketplace Cypress for Jira Installation Confirmation" %}
 5. Once installed, click the `Get Started` link in the notification.
    {% imgTag /img/dashboard/jira-integration/dashboard-jira-atlassian-success.png "Atlassian Marketplace Cypress for Jira Installation Success" %}

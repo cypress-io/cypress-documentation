@@ -175,7 +175,10 @@ The {% url "runnable version of this test" https://github.com/cypress-io/cypress
 ```jsx
 describe('Cognito', function () {
   beforeEach(function () {
+    # Seed database with test data
     cy.task('db:seed')
+
+    # Programmatically login via Amazon Cognito API
     cy.loginByCognitoApi(Cypress.env('cognito_username'), Cypress.env('cognito_password'))
   })
 
