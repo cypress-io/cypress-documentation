@@ -23,8 +23,8 @@ Component testing in Cypress is similar to end-to-end testing. The notable diffe
 A component test looks like this:
 
 ```jsx
-import { mount } from '@cypress/react' // or @cypress-vue
-import TodoList from '@/components/TodoList'
+import { mount } from '@cypress/react' // or @cypress/vue
+import TodoList from './components/TodoList'
 
 describe('TodoList', () => {
   it('renders the todo list', () => {
@@ -38,9 +38,7 @@ describe('TodoList', () => {
       { text: 'Learn Component Testing', id: 2 },
     ]
 
-    mount(TodoList, {
-      propsData: { todos },
-    })
+    mount(<TodoList todos={todos} />)
 
     cy.get('[data-testid=todos]').should('have.length', todos.length)
   })
@@ -51,7 +49,7 @@ If you are already familiar with Cypress, you'll notice it is almost exactly the
 
 ## Try out with an existing project
 
-Let's go through the setup to start testing components. If you want to see component testing working in an React or Vue existing project, follow these steps:
+Let's go through the setup to start testing components. You can set it up with an existing React or Vue existing project, or in a new project. This guide assumes your project has a [webpack based](https://webpack.js.org/) tool chain.
 
 ## ⚠️ For existing end-to-end users
 
@@ -63,6 +61,7 @@ You can configure or override specific defaults in [`cypress.json`](/guides/refe
 {
   "testFiles": "cypress/integration/*.spec.js",
   "component": {
+    "componentFolder": "src",
     "testFiles": ".*/__tests__/.*spec.tsx",
     "viewportHeight": 500,
     "viewportWidth": 700
@@ -116,8 +115,10 @@ Now you need to configure how Cypress will locate component spec files from with
 
 ```json
 {
-  "componentFolder": "src",
-  "testFiles": "**/*spec.{js,jsx,ts,tsx}"
+  "component": {
+    "componentFolder": "src",
+    "testFiles": "**/*spec.{js,jsx,ts,tsx}"
+  }
 }
 ```
 
