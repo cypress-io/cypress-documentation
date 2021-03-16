@@ -10,6 +10,10 @@ export default {
       type: String,
       required: true,
     },
+    title: {
+      type: String,
+      required: true,
+    },
   },
   computed: {
     videoId() {
@@ -25,6 +29,7 @@ export default {
   <EmbedContainer>
     <iframe
       :src="`https://player.vimeo.com/video/${videoId}`"
+      :title="title"
       webkitallowfullscreen
       mozallowfullscreen
       allowfullscreen

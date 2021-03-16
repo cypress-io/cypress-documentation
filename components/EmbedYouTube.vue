@@ -10,6 +10,10 @@ export default {
       type: String,
       required: true,
     },
+    title: {
+      type: String,
+      required: true,
+    },
   },
 }
 </script>
@@ -18,6 +22,7 @@ export default {
   <EmbedContainer>
     <iframe
       :src="src"
+      :title="title"
       webkitallowfullscreen
       mozallowfullscreen
       allowfullscreen
