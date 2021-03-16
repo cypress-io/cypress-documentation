@@ -116,7 +116,7 @@ export default {
 
 <style scoped>
 .active-sidebar-link {
-  color: #127458;
-  background-color: #cff1e6;
+  @apply bg-gray-200;
+  @apply text-gray-600;
 }
 </style>
