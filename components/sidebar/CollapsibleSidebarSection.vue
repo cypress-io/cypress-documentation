@@ -102,7 +102,7 @@ export default {
           "
           :class="
             path === `${folder}/${child.slug}`
-              ? 'active-sidebar-link bg-gray-200 text-gray-600'
+              ? 'active-sidebar-link'
               : 'text-gray-600'
           "
           class="rounded-md group w-full flex items-center pl-4 pr-2 py-1 text-md font-medium hover:text-green transition-colors hover:bg-gray-50"
@@ -113,3 +113,10 @@ export default {
     </ul>
   </div>
 </template>
+
+<style scoped>
+.active-sidebar-link {
+  color: #127458;
+  background-color: #cff1e6;
+}
+</style>
