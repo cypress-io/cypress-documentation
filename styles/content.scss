@@ -157,6 +157,13 @@ $font-color-black: rgb(46, 49, 56);
     @apply font-medium;
   }
 
+  h2 > em,
+  h3 > em,
+  h4 > em,
+  h5 > em {
+    @apply mx-2;
+  }
+
   /* #region Heading Links */
 
   h2:before,

@@ -145,4 +145,4 @@ Use the following npm keywords:
 ]
 ```
 
-Feel free to submit your published plugins to our [list of plugins](/plugins/plugins/index).
+Feel free to submit your published plugins to our [list of plugins](/plugins).
