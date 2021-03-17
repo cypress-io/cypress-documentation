@@ -406,7 +406,7 @@ Cypress runs GC cleanup during [cypress run](/guides/guides/command-line#cypress
 
 Because GC adds additional time to the overall run, we've added the amount of time this routine has taken to the bottom of the Command Log in the Test Runner.
 
-<DocsImage src="/img/guides/firefox-gc-interval-in-command-log.jpg" alt=></DocsImage>
+<DocsImage src="/img/guides/firefox-gc-interval-in-command-log.jpg" alt="GC duration shown"></DocsImage>
 
 #### Configuration
 
