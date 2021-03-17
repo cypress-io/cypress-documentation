@@ -55,8 +55,6 @@ Make sure you [install](/guides/getting-started/installing-cypress) and [open](/
   cypress run --record
   ```
 
-````
-
 🎉 Your tests are now recording! As soon as tests finish running, you will see them in the [Dashboard](https://on.cypress.io/dashboard) and in the Runs tab of the [Test Runner](/guides/core-concepts/test-runner).
 
 <DocsImage src="/img/dashboard/dashboard-runs-list.png" alt="Dashboard Screenshot" ></DocsImage>
@@ -75,9 +73,9 @@ Once you set up your project to record, we generate a unique `projectId` for you
 
 ```json
 {
-"projectId": "a7bq2k"
+  "projectId": "a7bq2k"
 }
-````
+```
 
 This helps us uniquely identify your project. If you manually alter this, **Cypress will no longer be able to identify your project or find the recorded builds for it**.
 

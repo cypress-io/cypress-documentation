@@ -264,6 +264,25 @@ cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
 cy.get('#accordion').should('not.have.css', 'display', 'none')
 ```
 
+### Disabled property
+
+```html
+<input type="text" id="example-input" disabled />
+```
+
+```javascript
+cy.get('#example-input')
+  .should('be.disabled')
+  // let's enable this element from the test
+  .invoke('prop', 'disabled', false)
+
+cy.get('#example-input')
+  // we can use "enabled" assertion
+  .should('be.enabled')
+  // or negate the "disabled" assertion
+  .and('not.be.disabled')
+```
+
 ## Negative assertions
 
 There are positive and negative assertions. Examples of positive assertions are:

@@ -148,11 +148,11 @@ To learn more about videos and settings available, see [Screenshots and Videos](
 
 ### Plugin files
 
-By default Cypress will automatically include the plugins file `cypress/plugins/index.js` **before** every single spec file it runs. We do this purely as a convenience mechanism so you don't have to import this file in every single one of your spec files.
+The plugin file is a special file that executes in Node before the project is loaded, before the browser launches, and during your test execution. While the Cypress tests execute in the browser, the plugin file runs in the background Node process, giving your tests the ability to access the file system and the rest of the operating system by calling the [cy.task()](/api/commands/task) command.
+
+The plugin file is a good place to define how you want to bundle the spec files via the [preprocessors](/api/plugins/preprocessors-api), how to find and launch the browsers via the [browser launch API](/api/plugins/browser-launch-api), and other cool things. Read our [plugins guide](/guides/tooling/plugins-guide) for more details and examples.
 
 The initial imported plugins file can be [configured to another file](/guides/references/configuration#Folders-Files).
-
-[Read more about using plugins to extend Cypress behavior.](/guides/tooling/plugins-guide)
 
 ### Support file
 
@@ -416,6 +416,7 @@ specify(name, config, fn)
 - `requestTimeout`
 - `responseTimeout`
 - `retries`
+- `scrollBehavior`
 - `viewportHeight`
 - `viewportWidth`
 - `waitForAnimations`

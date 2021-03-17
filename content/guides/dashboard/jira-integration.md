@@ -2,6 +2,14 @@
 title: Jira Integration
 ---
 
+<Alert type="success">
+
+<strong class="alert-header"><Icon name="star"></Icon> Premium Dashboard Feature</strong>
+
+**Jira integration** is available to users with a [Team Dashboard plan](https://cypress.io/pricing).
+
+</Alert>
+
 The [Cypress Dashboard](https://on.cypress.io/dashboard) can integrate with your Jira workflow to enable:
 
 - Creating one or more Jira issues for a given a test case directly from the Cypress Dashboard.

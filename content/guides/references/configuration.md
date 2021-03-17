@@ -259,6 +259,7 @@ The configuration values passed in will only take effect during the suite or tes
 - `requestTimeout`
 - `responseTimeout`
 - `retries`
+- `scrollBehavior`
 - `viewportHeight`
 - `viewportWidth`
 - `waitForAnimations`

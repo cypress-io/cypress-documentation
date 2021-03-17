@@ -10,6 +10,7 @@ module.exports.ALLOWED_TEST_CONFIG = `{% fa fa-exclamation-triangle red %} **Not
 - \`requestTimeout\`
 - \`responseTimeout\`
 - \`retries\`
+- \`scrollBehavior\`
 - \`viewportHeight\`
 - \`viewportWidth\`
 - \`waitForAnimations\`
@@ -21,12 +22,12 @@ The Chrome browser is evergreen - meaning it will automatically update itself, s
 `
 
 module.exports.CYPRESS_ENV_VAR_WARNING = `{% note warning "Difference between OS-level and Cypress environment variables" %}
-In Cypress, "environment variables" are variables that are accessible via \`Cypress.env\`. These are not the same as OS-level environment variables. However, [it is possible to set Cypress environment variables from OS-level environment variables](/guides/guides/environment-variables#Option-3-CYPRESS).
+In Cypress, "environment variables" are variables that are accessible via \`Cypress.env\`. These are not the same as OS-level environment variables. However, [it is possible to set Cypress environment variables from OS-level environment variables](/guides/guides/environment-variables.html#Option-3-CYPRESS).
 {% endnote %}
 `
 
 module.exports.ERRORS_ANATOMY = `1. **Error name**: This is the type of the error (e.g. AssertionError, CypressError)
-1. **Error message**: This generally tells you what went wrong. It can vary in length. Some are short like in the example, while some are long, and may tell you exactly how to fix the error. Some also contain a **Learn more** link that will take you to relevant Cypress documentation.
+1. **Error message**: This generally tells you what went wrong. It can vary in length. Some are short like in the example, while some are long, and may tell you exactly how to fix the error.
 1. **Learn more:** Some error messages contain a Learn more link that will take you to relevant Cypress documentation.
 1. **Code frame file**: This is usually the top line of the stack trace and it shows the file, line number, and column number that is highlighted in the code frame below. Clicking on this link will open the file in your  [preferred file opener](https://on.cypress.io/IDE-integration#File-Opener-Preference) and highlight the line and column in editors that support it.
 1. **Code frame**: This shows a snippet of code where the failure occurred, with the relevant line and column highlighted.
@@ -50,10 +51,13 @@ module.exports.LINUX_DEPENDENCIES = [
   '```',
 ].join('\n')
 
-module.exports.NETWORK_STUBBING_WARNING = `{% note danger %}
-🚨 Please be aware that Cypress only currently supports intercepting XMLHttpRequests. **Requests using the Fetch API and other types of network requests like page loads and \`<script>\` tags will not be intercepted or visible in the Command Log.** You can automatically polyfill \`window.fetch\` to spy on and stub requests by enabling an [experimental](https://on.cypress.io/experimental) feature \`experimentalFetchPolyfill\`. See {% issue 95 %} for more details and temporary workarounds.
+module.exports.NETWORK_STUBBING_WARNING = `{% note warning %}
+⚠️ \`cy.route()\` and \`cy.server()\` only support intercepting XMLHttpRequests. Requests using the Fetch API and other types of network requests like page loads and \`<script>\` tags will not be intercepted by \`cy.route()\` and \`cy.server()\`.
 
-Cypress also has a new experimental [route2](/api/commands/route2) feature that supports requests using the Fetch API and other types of network requests like page loads. For more information, check out the [cy.route2() documentation](/api/commands/route2).
+**To support requests using the Fetch API you can use one of the solutions below:**
+
+- Use [\`cy.intercept()\`](/api/commands/intercept.html) which supports requests using the Fetch API and other types of network requests like page loads. See [\`cy.intercept()\`](/api/commands/intercept.html).
+- Polyfill \`window.fetch\` to spy on and stub requests using \`cy.route()\` and \`cy.server()\` by enabling [\`experimentalFetchPolyfill\`](https://on.cypress.io/experimental). See {% issue 95 %} for more details and temporary workarounds.
 {% endnote %}
 `
 
@@ -82,6 +86,12 @@ If you are running the tests from within a restrictive VPN you will need to allo
 
 module.exports.XHR_STUBBING_DEPRECATED = [
   '{% note warning %}',
-  '⚠️ **`cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0**. In a future release, support for `cy.server()` and `cy.route()` will be moved to a plugin. Consider using [`cy.intercept()`](/api/commands/intercept) instead.',
+  '⚠️ **`cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0**. In a future release, support for `cy.server()` and `cy.route()` will be moved to a plugin. Consider using [`cy.intercept()`](/api/commands/intercept.html) instead. See our guide on [Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide.html#Migrating-cy-route-to-cy-intercept)',
+  '{% endnote %}',
+].join('\n')
+
+module.exports.CODE_RUNS_IN_NODE = [
+  '{% note warning %}',
+  '⚠️ This code is part of the [plugin file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.',
   '{% endnote %}',
 ].join('\n')

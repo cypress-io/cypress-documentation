@@ -18,6 +18,10 @@ The code contains comments that explain how it utilizes the preprocessor API.
 - [Browserify preprocessor](https://github.com/cypress-io/cypress-browserify-preprocessor)
 - [Watch preprocessor](https://github.com/cypress-io/cypress-watch-preprocessor)
 
+### See also
+
+The blog post [Write Cypress Markdown Preprocessor](https://glebbahmutov.com/blog/write-cypress-preprocessor/) shows how to write your own file preprocessor.
+
 ## Defaults
 
 By default, Cypress comes packaged with the **webpack preprocessor** already installed.
@@ -44,6 +48,12 @@ If you don't use webpack in your project or would like to keep the majority of t
 - Add support for CoffeeScript `2.x.x`
 
 ## Usage
+
+<Alert type="warning">
+
+⚠️ This code is part of the [plugin file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
+
+</Alert>
 
 To use a preprocessor, you should bind to the `file:preprocessor` event in your [pluginsFile](/guides/references/configuration#Folders-Files):
 
