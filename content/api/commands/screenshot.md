@@ -223,19 +223,21 @@ cy.get('.sticky-header').invoke('css', 'position', null)
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.screenshot()` can be chained off of `cy` or off a command that yields a single DOM element.</li></List>
+- `cy.screenshot()` can be chained off of `cy` or off a command that yields a single DOM element.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.screenshot()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+- `cy.screenshot()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.screenshot()` should never time out.</li><li><Alert type="warning">
+- `cy.screenshot()` should never time out.
+
+<Alert type="warning">
 
 Because `cy.screenshot()` is asynchronous it is technically possible for there to be a timeout while talking to the internal Cypress automation APIs. But for practical purposes it should never happen.
 
-</Alert></li></List>
+</Alert>
 
 ## Command Log
 
