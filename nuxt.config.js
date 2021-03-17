@@ -106,6 +106,7 @@ export default {
       solid: [
         'faAngleRight',
         'faBug',
+        'faCheck',
         'faCheckCircle',
         'faCheckSquare',
         'faCode',

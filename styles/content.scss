@@ -306,6 +306,7 @@ $font-color-black: rgb(46, 49, 56);
   /* #region Alerts */
   div.alert {
     @apply border-l-4;
+    @apply border-gray-600;
     @apply px-12;
     @apply py-6;
     @apply mb-8;
