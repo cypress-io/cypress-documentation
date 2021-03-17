@@ -45,6 +45,11 @@ $font-color-black: rgb(46, 49, 56);
     @apply px-16;
     @apply mx-2;
   }
+
+  @screen xl {
+    padding-left: 8rem;
+    padding-right: 6rem;
+  }
 }
 
 .main-content-title {
