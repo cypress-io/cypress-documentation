@@ -319,24 +319,31 @@ $font-color-black: rgb(46, 49, 56);
     }
 
     h2,
-    h3 {
+    h3,
+    h4,
+    h5 {
       @apply text-xl;
       @apply flex;
       @apply flex-row;
       @apply items-center;
       @apply font-bold;
-      @apply my-4;
+      @apply mb-4;
+    }
+
+    h2,
+    h3,
+    h4,
+    h5 .badge {
+      @apply ml-2;
     }
 
     h2 > svg,
-    h3 > svg {
+    h3 > svg,
+    h4 > svg,
+    h5 > svg {
       @apply h-7;
       @apply w-7;
       @apply mr-2;
-    }
-
-    p {
-      @apply mb-4;
     }
 
     ul {

@@ -269,7 +269,7 @@ Now we can assert something about this new page!
 
 </Alert>
 
-### <Icon name="check-square-o"></Icon> Step 4: Make an assertion
+### <Icon name="check-square"></Icon> Step 4: Make an assertion
 
 Let's make an assertion about something on the new page we clicked into. Perhaps we'd like to make sure the new URL is the expected URL. We can do that by looking up the URL and chaining an assertion to it with [.should()](/api/commands/should).
 
