@@ -96,9 +96,9 @@ While outside the scope of this article, you could test a chat application using
 #### 1. Use only the browser:
 
 ```text
-    &downarrow;
-&leftarrow; browser &rightarrow;
-    &uparrow;
+    ↓
+← browser →
+    ↑
 ```
 
 Avoid the server, invoke your JavaScript callbacks manually thereby simulating what happens when "notifications come in", or "users leave the chat" purely in the browser.
@@ -108,13 +108,13 @@ You can [stub](/api/commands/stub) everything and simulate every single scenario
 #### 2. Stub the other connection:
 
 ```text
-server &rightarrow; browser
-            &downarrow;
-server &leftarrow; browser
-  &downarrow;
+server → browser
+            ↓
+server ← browser
+  ↓
 (other connections stubbed)
-  &downarrow;
-server &rightarrow; browser
+  ↓
+server → browser
 ```
 
 Use your server to receive messages from the browser, and simulate "the other participant" by sending messages as that participant. This is certainly application specific, but generally you could insert records into the database or do whatever it takes for your server to act as if a message of one client needs to be sent back to the browser.
@@ -124,15 +124,15 @@ Typically this pattern enables you to avoid making a secondary WebSocket connect
 #### 3: Introduce another connection:
 
 ```text
-server &rightarrow; browser
-            &downarrow;
-server &leftarrow; browser
-  &downarrow;
-server &rightarrow; other connection
-            &downarrow;
-server &leftarrow; other connection
-  &downarrow;
-server &rightarrow; browser
+server → browser
+            ↓
+server ← browser
+  ↓
+server → other connection
+            ↓
+server ← other connection
+  ↓
+server → browser
 ```
 
 To do this - you would need a background process outside of the browser to make the underlying WebSocket connection that you can then communicate with and control.
