@@ -44,12 +44,12 @@ Make sure you [install](/guides/getting-started/installing-cypress) and [open](/
 - Provide record key directly:
 
   ```shell
-  cypress run --record --key &lt;record key&gt;
+  cypress run --record --key <record key>
   ```
 
 - Or set record key as environment variable
   ```shell
-  export CYPRESS_RECORD_KEY=&lt;record key&gt;
+  export CYPRESS_RECORD_KEY=<record key>
   ```
   ```shell
   cypress run --record
