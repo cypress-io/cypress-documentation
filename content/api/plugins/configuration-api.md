@@ -208,8 +208,8 @@ The exported function from the plugins file receives three arguments. The third 
 Conditionally apply the Cypress React Plugin if launching in Component Testing mode:
 
 ```js
-module.exports = (on, config, mode) => {
-  if (mode === 'component') {
+module.exports = (on, config) => {
+  if (config.testingType === 'component') {
     require('@cypress/react/plugins/react-scripts')(on, config)
   }
 
@@ -219,6 +219,6 @@ module.exports = (on, config, mode) => {
 
 ## History
 
-| Version                               | Changes                |
-| ------------------------------------- | ---------------------- |
-| [7.0.0](/guides/references/changelog) | Added `mode` argument. |
+| Version                               | Changes                                   |
+| ------------------------------------- | ----------------------------------------- |
+| [7.0.0](/guides/references/changelog) | Added `testingType` property to `config`. |

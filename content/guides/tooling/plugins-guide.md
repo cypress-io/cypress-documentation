@@ -159,7 +159,7 @@ Plugins from our [official list](/plugins/plugins/index) are npm modules. This e
 You can install any published plugin using NPM:
 
 ```shell
-npm install &lt;plugin name&gt; --save-dev
+npm install <plugin name> --save-dev
 ```
 
 ## Using a plugin

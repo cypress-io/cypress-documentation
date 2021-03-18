@@ -207,6 +207,7 @@
       "cypress-log": "cypress-log.html",
       "platform": "platform.html",
       "spec": "spec.html",
+      "testing-type": "testing-type.html",
       "version": "version.html"
     },
     "plugins": {
