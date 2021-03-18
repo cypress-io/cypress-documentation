@@ -1,0 +1,15 @@
+diff --git a/node_modules/vue-scrollactive/dist/vue-scrollactive.min.js b/node_modules/vue-scrollactive/dist/vue-scrollactive.min.js
+index cfc4ecb..170528f 100644
+--- a/node_modules/vue-scrollactive/dist/vue-scrollactive.min.js
++++ b/node_modules/vue-scrollactive/dist/vue-scrollactive.min.js
+@@ -382,9 +382,7 @@
+               }
+             },
+             pushHashToUrl: function (t) {
+-              window.history.pushState
+-                ? window.history.pushState(null, null, t)
+-                : (window.location.hash = t);
++              window.$nuxt.$router.push(t)
+             },
+           },
+         },

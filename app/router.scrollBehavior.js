@@ -59,11 +59,7 @@ function shouldScrollToTop(route) {
   return Pages.some(({ options }) => options && options.scrollToTop)
 }
 
-/* eslint-disable no-console */
 export default function scrollBehavior(to, from, savedPosition) {
-  window.console.log('to: ', to)
-  window.console.log('from: ', from)
-  window.console.log('savedPosition: ', savedPosition)
   // If the returned position is falsy or an empty object, will retain current scroll position
   let position = false
   const isRouteChanged = to !== from
@@ -73,7 +69,6 @@ export default function scrollBehavior(to, from, savedPosition) {
     position = savedPosition
     window.scrollTo(savedPosition.x, savedPosition.y)
   } else if (isRouteChanged && shouldScrollToTop(to)) {
-    window.console.log('route changed and should scrollToTop, pos = {x:0,y:0}')
     position = { x: 0, y: 0 }
     window.scrollTo(0, 0)
   }
@@ -110,18 +105,18 @@ export default function scrollBehavior(to, from, savedPosition) {
 
           if (ele) {
             // scroll to anchor by returning the selector
-            position = { selector: to.hash, offset: { y: 80 } }
-            window.console.log('scrollBehavior - position: ', position)
+            const HEADER_OFFSET = 80
+
+            position = { selector: to.hash, offset: { y: HEADER_OFFSET } }
           }
         } catch (e) {
+          // eslint-disable-next-line no-console
           console.warn(
             'Failed to save scroll position. Please add CSS.escape() polyfill (https://github.com/mathiasbynens/CSS.escape).'
           )
         }
-        window.console.log('resolving position: ', position)
         resolve(position)
       }
     })
   })
 }
-/* eslint-enable no-console */
