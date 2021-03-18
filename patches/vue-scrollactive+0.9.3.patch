@@ -1,43 +1,26 @@
 diff --git a/node_modules/vue-scrollactive/dist/vue-scrollactive.min.js b/node_modules/vue-scrollactive/dist/vue-scrollactive.min.js
-index cfc4ecb..024dca4 100644
+index cfc4ecb..6741180 100644
 --- a/node_modules/vue-scrollactive/dist/vue-scrollactive.min.js
 +++ b/node_modules/vue-scrollactive/dist/vue-scrollactive.min.js
-@@ -243,19 +243,21 @@
-             },
-           },
-           mounted: function () {
--            var t = window.MutationObserver || window.WebKitMutationObserver;
--            this.observer ||
--              ((this.observer = new t(this.initScrollactiveItems)),
--              this.observer.observe(this.$refs['scrollactive-nav-wrapper'], {
--                childList: !0,
--                subtree: !0,
--              })),
--              this.initScrollactiveItems(),
--              this.removeActiveClass(),
+@@ -252,10 +252,16 @@
+               })),
+               this.initScrollactiveItems(),
+               this.removeActiveClass(),
 -              (this.currentItem = this.getItemInsideWindow()),
--              this.currentItem && this.currentItem.classList.add(this.activeClass),
--              this.scrollOnStart && this.scrollToHashElement(),
--              this.scrollContainer.addEventListener('scroll', this.onScroll);
-+            setTimeout(() => {
-+              var t = window.MutationObserver || window.WebKitMutationObserver;
-+              this.observer ||
-+                ((this.observer = new t(this.initScrollactiveItems)),
-+                this.observer.observe(this.$refs['scrollactive-nav-wrapper'], {
-+                  childList: !0,
-+                  subtree: !0,
-+                })),
-+                this.initScrollactiveItems(),
-+                this.removeActiveClass(),
-+                (this.currentItem = this.getItemInsideWindow()),
-+                this.currentItem && this.currentItem.classList.add(this.activeClass),
-+                this.scrollOnStart && this.scrollToHashElement(),
-+                this.scrollContainer.addEventListener('scroll', this.onScroll);
-+            }, 50)
++              (this.currentItem = Array.from(this.items)
++                .find(
++                  function(item) {
++                    return item.hash === window.location.hash
++                  }) || this.getItemInsideWindow()
++              ),
+               this.currentItem && this.currentItem.classList.add(this.activeClass),
+               this.scrollOnStart && this.scrollToHashElement(),
+               this.scrollContainer.addEventListener('scroll', this.onScroll);
++            window.COMPONENT = this
            },
            updated: function () {
              this.initScrollactiveItems();
-@@ -382,9 +384,7 @@
+@@ -382,9 +388,7 @@
                }
              },
              pushHashToUrl: function (t) {
