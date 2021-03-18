@@ -67,7 +67,7 @@ export default {
 <template>
   <nav
     :class="isMenuOpen ? 'h-full' : ''"
-    class="w-full bg-gray-800 fixed overflow-y-auto z-20"
+    class="w-full bg-gray-800 fixed top-0 left-0 overflow-y-auto z-20"
   >
     <div class="mx-auto px-2 sm:px-4 lg:px-8">
       <div class="relative flex items-center justify-between h-16">
