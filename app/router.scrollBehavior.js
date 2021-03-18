@@ -70,7 +70,11 @@ export default function scrollBehavior(to, from, savedPosition) {
     window.scrollTo(savedPosition.x, savedPosition.y)
   } else if (isRouteChanged && shouldScrollToTop(to)) {
     position = { x: 0, y: 0 }
-    window.scrollTo(0, 0)
+    if (!to.hash) {
+      return new Promise((resolve) => {
+        resolve(position)
+      })
+    }
   }
 
   const nuxt = window.$nuxt
