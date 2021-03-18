@@ -15,7 +15,7 @@
         <li
           v-for="link of toc"
           :key="link.id"
-          class="text-gray-400 dark:text-gray-300"
+          class="text-gray-500 dark:text-gray-300"
         >
           <a
             :href="`#${link.id}`"

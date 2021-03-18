@@ -93,7 +93,7 @@ export default {
           <Icon :name="['fab', 'twitter']" color="inherit" />
         </a>
       </div>
-      <p class="mt-8 text-center text-base text-gray-400">
+      <p class="mt-8 text-center text-base text-gray-500">
         &copy; 2021 Cypress.io. All rights reserved.
       </p>
     </div>
