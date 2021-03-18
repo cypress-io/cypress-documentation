@@ -1,8 +1,8 @@
 diff --git a/node_modules/vue-scrollactive/dist/vue-scrollactive.min.js b/node_modules/vue-scrollactive/dist/vue-scrollactive.min.js
-index cfc4ecb..6741180 100644
+index cfc4ecb..fbb114b 100644
 --- a/node_modules/vue-scrollactive/dist/vue-scrollactive.min.js
 +++ b/node_modules/vue-scrollactive/dist/vue-scrollactive.min.js
-@@ -252,10 +252,16 @@
+@@ -252,7 +252,12 @@
                })),
                this.initScrollactiveItems(),
                this.removeActiveClass(),
@@ -16,11 +16,7 @@ index cfc4ecb..6741180 100644
                this.currentItem && this.currentItem.classList.add(this.activeClass),
                this.scrollOnStart && this.scrollToHashElement(),
                this.scrollContainer.addEventListener('scroll', this.onScroll);
-+            window.COMPONENT = this
-           },
-           updated: function () {
-             this.initScrollactiveItems();
-@@ -382,9 +388,7 @@
+@@ -382,9 +387,7 @@
                }
              },
              pushHashToUrl: function (t) {
