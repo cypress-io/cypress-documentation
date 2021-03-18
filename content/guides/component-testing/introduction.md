@@ -130,8 +130,8 @@ You'll also need to configure the component testing framework of your choice by 
 ```js
 // cypress/plugins/index.js
 
-module.exports = (on, config, mode) => {
-  if (mode === 'component') {
+module.exports = (on, config) => {
+  if (config.testingType === 'component') {
     require('@cypress/react/plugins/react-scripts')(on, config)
   }
 
@@ -145,8 +145,8 @@ module.exports = (on, config, mode) => {
 ```js
 // cypress/plugins/index.js
 
-module.exports = (on, config, mode) => {
-  if (mode === 'component') {
+module.exports = (on, config) => {
+  if (config.testingType === 'component') {
     const { startDevServer } = require('@cypress/webpack-dev-server')
     const webpackConfig = require('@vue/cli-service/webpack.config.js')
     on('dev-server:start', (options) =>
@@ -161,7 +161,7 @@ module.exports = (on, config, mode) => {
   </code-block>
 </code-group>
 
-Note we have a conditional check against `mode`. This is useful if your project is already using some existing plugins for the E2E runner, and you don't want them to conflict.
+Note we have a conditional check against `config.testingType`. This is useful if your project is already using some existing plugins for the E2E runner, and you don't want them to conflict.
 
 If you are using a React template other than Create React App, such as Next.js, or a Vue template other than vue-cli, you will need to import the appropriate plugin. See a list of officially maintained plugins [here](https://github.com/cypress-io/cypress/tree/develop/npm/react/plugins). Alternatively, if you have your own webpack configuration, you can just provide it:
 
@@ -171,8 +171,8 @@ const { startDevServer } = require('@cypress/webpack-dev-server')
 // your project's webpack configuration
 const webpackConfig = require('../../webpack.config.js')
 
-module.exports = (on, config, mode) => {
-  if (mode === 'component') {
+module.exports = (on, config) => {
+  if (config.testingType === 'component') {
     on('dev-server:start', (options) => {
       return startDevServer({ options, webpackConfig })
     })
