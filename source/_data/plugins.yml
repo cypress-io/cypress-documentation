@@ -464,6 +464,12 @@
       keywords: [commands]
       badge: community
 
+    - name: cypress-azure-keyvault
+      description: Cypress custom command to get keys from Azure Key Vaults.
+      link: https://github.com/prma85/cypress-azure-keyvault
+      keywords: [testing, azure, keyvault, secret]
+      badge: community
+
 - name: Extending other testing frameworks
   plugins:
     - name: cyphell
