@@ -54,6 +54,18 @@
       keywords: [rollup]
       badge: community
 
+    - name: @bahmutov/cypress-esbuild-preprocessor
+      description: Bundle Cypress specs using esbuild
+      link: https://github.com/bahmutov/cypress-esbuild-preprocessor
+      keywords: [esbuild]
+      badge: community
+
+    - name: cypress-esbuild-preprocessor
+      description: Uses evanw/esbuild to bundle your specs.
+      link: https://github.com/sod/cypress-esbuild-preprocessor
+      keywords: [esbuild]
+      badge: community
+
 - name: Development Tools
   plugins:
     - name: CircleCI Cypress Orb
@@ -698,7 +710,7 @@
       link: https://github.com/uktrade/cypress-image-diff
       keywords: [screenshots, visual regression, image-diff]
       badge: community
-      
+
     - name: Micoo
       description: Cypress plugin for doing visual regression testing with Micoo service
       link: https://github.com/Mikuu/Micoo/tree/master/clients/micoocypress
