@@ -42,6 +42,11 @@ if (process.client) {
   }
 }
 
+/**
+ * Required for the default `scrollToTop` behavior
+ * @see
+ * https://nuxtjs.org/docs/2.x/components-glossary/pages-scrolltotop/
+ */
 function shouldScrollToTop(route) {
   const Pages = getMatchedComponents(route)
 
@@ -66,6 +71,7 @@ export default function scrollBehavior(to, from, savedPosition) {
   // savedPosition is only available for popstate navigations (back button)
   if (savedPosition) {
     position = savedPosition
+    window.scrollTo(savedPosition.x, savedPosition.y)
   } else if (isRouteChanged && shouldScrollToTop(to)) {
     window.console.log('route changed and should scrollToTop, pos = {x:0,y:0}')
     position = { x: 0, y: 0 }
@@ -95,7 +101,7 @@ export default function scrollBehavior(to, from, savedPosition) {
           typeof window.CSS !== 'undefined' &&
           typeof window.CSS.escape !== 'undefined'
         ) {
-          hash = `#${  window.CSS.escape(hash.substr(1))}`
+          hash = `#${window.CSS.escape(hash.substr(1))}`
         }
 
         try {
@@ -111,6 +117,7 @@ export default function scrollBehavior(to, from, savedPosition) {
             'Failed to save scroll position. Please add CSS.escape() polyfill (https://github.com/mathiasbynens/CSS.escape).'
           )
         }
+        window.console.log('resolving position: ', position)
         resolve(position)
       }
     })
