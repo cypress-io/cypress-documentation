@@ -1,4 +1,5 @@
 $sidebar-desktop-width: 290px;
+$font-color-black: rgb(46, 49, 56);
 
 [id] {
   scroll-margin-top: 5.5rem;
@@ -49,6 +50,7 @@ $sidebar-desktop-width: 290px;
 .main-content-title {
   border-bottom-width: 1px;
   border-bottom-color: rgb(238, 238, 238);
+  color: $font-color-black;
   @apply text-3xl;
   @apply font-bold;
   @apply mt-10;
@@ -78,6 +80,19 @@ $sidebar-desktop-width: 290px;
     box-shadow: 0 1px 2px #ddd;
   }
 
+  p,
+  li,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  td,
+  th {
+    color: $font-color-black;
+  }
+
   strong {
     @apply font-semibold;
   }
@@ -85,7 +100,7 @@ $sidebar-desktop-width: 290px;
   & > h1 {
     border-bottom-width: 1px;
     border-bottom-color: rgb(238, 238, 238);
-    @apply text-black;
+    color: rgb(46, 49, 56);
     @apply font-bold;
     @apply text-3xl;
     @apply mt-16;
