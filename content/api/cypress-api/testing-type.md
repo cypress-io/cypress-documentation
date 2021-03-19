@@ -34,6 +34,6 @@ it('does something differently', () => {
 
 ## History
 
-| Version                               | Changes            |
-| ------------------------------------- | ------------------ |
-| [7.0.0](/guides/references/changelog) | Added `testingType |
+| Version                               | Changes             |
+| ------------------------------------- | ------------------- |
+| [7.0.0](/guides/references/changelog) | Added `testingType` |

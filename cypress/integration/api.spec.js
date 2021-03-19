@@ -74,6 +74,7 @@ describe('APIs', () => {
               'cypress-log': 'Cypress.log',
               platform: 'Cypress.platform',
               spec: 'Cypress.spec',
+              'testing-type': 'Cypress.testingType',
               version: 'Cypress.version',
               'configuration-api': 'Configuration API',
               'preprocessors-api': 'Preprocessors API',
