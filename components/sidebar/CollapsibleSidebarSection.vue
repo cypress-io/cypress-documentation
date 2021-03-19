@@ -65,19 +65,12 @@ export default {
         }, SCROLL_AFTER_MS)
       }
     },
-    isCurrentPathInSection(path, slug) {
-      if (path === slug) {
-        this.isOpen = true
-      }
-
-      return path === slug
-    },
   },
 }
 </script>
 
 <template>
-  <div class="space-y-1 px-4 pb-4">
+  <div class="space-y-1 px-4 pb-4" :data-test="folder">
     <button
       class="group w-full flex items-start text-left px-2 pl-4 pr-1 text-lg font-bold bg-lightGray text-gray-600 hover:text-gray-900 hover:bg-gray-50 focus:outline-none"
       @click="toggleSection"
@@ -108,8 +101,8 @@ export default {
             })
           "
           :class="
-            isCurrentPathInSection(path, child.slug)
-              ? 'active-sidebar-link text-white bg-cyGreen'
+            path === `${folder}/${child.slug}`
+              ? 'active-sidebar-link'
               : 'text-gray-600'
           "
           class="rounded-md group w-full flex items-center pl-4 pr-2 py-1 text-md font-medium hover:text-green transition-colors hover:bg-gray-50"
@@ -120,3 +113,10 @@ export default {
     </ul>
   </div>
 </template>
+
+<style scoped>
+.active-sidebar-link {
+  color: #127458;
+  background-color: #cff1e6;
+}
+</style>

@@ -1,7 +1,8 @@
 $sidebar-desktop-width: 290px;
+$font-color-black: rgb(46, 49, 56);
 
-html {
-  scroll-padding-top: 5.5rem;
+[id] {
+  scroll-margin-top: 5.5rem;
 }
 
 .app-sidebar {
@@ -25,7 +26,7 @@ html {
   @apply flex;
   @apply flex-row;
   @apply justify-center;
-  @apply lg:col-span-7;
+  @apply lg:col-span-9;
   @apply xl:col-span-8;
   @apply mt-16;
 }
@@ -49,6 +50,7 @@ html {
 .main-content-title {
   border-bottom-width: 1px;
   border-bottom-color: rgb(238, 238, 238);
+  color: $font-color-black;
   @apply text-3xl;
   @apply font-bold;
   @apply mt-10;
@@ -78,14 +80,27 @@ html {
     box-shadow: 0 1px 2px #ddd;
   }
 
+  p,
+  li,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  td,
+  th {
+    color: $font-color-black;
+  }
+
   strong {
-    @apply font-medium;
+    @apply font-semibold;
   }
 
   & > h1 {
     border-bottom-width: 1px;
     border-bottom-color: rgb(238, 238, 238);
-    @apply text-black;
+    color: rgb(46, 49, 56);
     @apply font-bold;
     @apply text-3xl;
     @apply mt-16;
@@ -177,6 +192,19 @@ html {
   }
 
   /* #endregion Heading Links */
+
+  blockquote {
+    @apply border-l-4;
+    @apply px-12;
+    @apply py-6;
+    @apply bg-gray-100;
+    @apply mb-8;
+    @apply italic;
+
+    & > p {
+      @apply mb-0;
+    }
+  }
 
   svg {
     @apply inline-block;

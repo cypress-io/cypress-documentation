@@ -6,25 +6,41 @@
   publish = "dist/"
 
 [[redirects]]
+  from = "/"
+  to = "/guides/overview/why-cypress/"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/guides"
-  to = "/guides/overview/why-cypress"
+  to = "/guides/overview/why-cypress/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/api"
-  to = "/api/table-of-contents"
+  to = "/api/table-of-contents/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/examples"
-  to = "/examples/examples/recipes"
+  to = "/examples/examples/recipes/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/faq"
-  to = "/faq/questions/using-cypress-faq"
+  to = "/faq/questions/using-cypress-faq/"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/guides/dashboard/dashboard-introduction"
+  to = "/guides/dashboard/introduction/"
+  status = 301
+  force = true
+
+# [[plugins]]
+# package = "/netlify-plugins/cache"
+  

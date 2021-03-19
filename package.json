@@ -8,7 +8,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "nuxt generate",
+    "build": "nuxt generate && mv dist/404/index.html dist/404.html && rm -rf dist/404",
     "copy": "bash ./scripts/clone-current-docs.sh",
     "start": "cross-env NODE_ENV=development nuxt",
     "start:ci": "yarn build && cd dist/ && npx http-server . --port 3000",
@@ -18,19 +18,20 @@
     "test": "./node_modules/.bin/cypress open",
     "transform": "node scripts/transform.js",
     "make-empty-commit": "node node_modules/make-empty-github-commit/bin/empty.js --repo cypress-io/docs",
-    "postinstall": "husky install"
+    "postinstall": "husky install; patch-package"
   },
   "lint-staged": {
     "*.{js,vue}": "eslint --cache --fix",
     "*.{css,vue}": "stylelint",
     "*.css": "stylelint --fix",
-    "*.md": "prettier --write" 
+    "*.md": "prettier --write"
   },
   "dependencies": {
     "@docsearch/css": "^1.0.0-alpha.28",
     "@docsearch/js": "^1.0.0-alpha.28",
     "@nuxt/content": "^1.3.2",
     "@nuxtjs/axios": "^5.11.0",
+    "@nuxtjs/gtm": "^2.4.0",
     "@nuxtjs/pwa": "^3.0.0-beta.20",
     "@tailwindcss/forms": "^0.2.1",
     "deepdash": "^5.3.5",
@@ -41,6 +42,7 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
+    "@cypress/env-or-json-file": "^2.0.0",
     "@cypress/eslint-plugin-dev": "^5.1.0",
     "@fortawesome/free-brands-svg-icons": "^5.14.0",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
@@ -51,6 +53,8 @@
     "autoprefixer": "^9",
     "babel-eslint": "^10.1.0",
     "bluebird": "^3.7.2",
+    "chalk": "^4.1.0",
+    "common-tags": "^1.8.0",
     "cross-env": "^7.0.3",
     "cypress": "^6.4.0",
     "eslint": "^7.2.0",
@@ -65,9 +69,14 @@
     "make-empty-github-commit": "^1.2.1",
     "netlify-cli": "^3.5.0",
     "node-sass": "^4.14.1",
+    "patch-package": "^6.4.5",
     "postcss": "^7",
+    "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.0.5",
+    "remark": "^13.0.0",
+    "request-promise": "^4.2.6",
     "sass-loader": "^9.0.3",
+    "strip-markdown": "^4.0.0",
     "stylelint": "^13.6.1",
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-config-standard": "^20.0.0",

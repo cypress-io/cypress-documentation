@@ -7,8 +7,8 @@ Get a browser cookie by its name.
 ## Syntax
 
 ```javascript
-cy.getCookie(name);
-cy.getCookie(name, options);
+cy.getCookie(name)
+cy.getCookie(name, options)
 ```
 
 ### Usage
@@ -16,7 +16,7 @@ cy.getCookie(name, options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.getCookie("auth_key"); // Get cookie with name 'auth_key'
+cy.getCookie('auth_key') // Get cookie with name 'auth_key'
 ```
 
 ### Arguments
@@ -34,7 +34,7 @@ Pass in an options object to change the default behavior of `cy.getCookie()`.
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.getCookie()` to resolve before [timing out](#Timeouts)              |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 `cy.getCookie()` yields a cookie object with the following properties:
 
@@ -61,48 +61,48 @@ In this example, on first login, our server sends us back a session cookie.
 
 ```javascript
 // assume we just logged in
-cy.contains("Login").click();
-cy.url().should("include", "profile");
+cy.contains('Login').click()
+cy.url().should('include', 'profile')
 // retries until cookie with value=189jd09su
 // is found or default command timeout ends
-cy.getCookie("session_id")
-  .should("have.property", "value", "189jd09su")
+cy.getCookie('session_id')
+  .should('have.property', 'value', '189jd09su')
   .then((cookie) => {
     // cookie is an object with "domain", "name" and other properties
-  });
+  })
 ```
 
 You can check the cookie existence without comparing any of its properties
 
 ```javascript
-cy.getCookie("my-session-cookie").should("exist");
+cy.getCookie('my-session-cookie').should('exist')
 ```
 
 If you need the cookie value, for example to use in a subsequent call
 
 ```js
-let cookie;
+let cookie
 
-cy.getCookie("session_id")
-  .should("exist")
+cy.getCookie('session_id')
+  .should('exist')
   .then((c) => {
     // save cookie until we need it
-    cookie = c;
-  });
+    cookie = c
+  })
 
 // some time later, force the "cy.request"
 // to run ONLY after the cookie has been set
 // by placing it inside ".then"
-cy.get("#submit")
+cy.get('#submit')
   .click()
   .then(() => {
     cy.request({
-      url: "/api/admin",
+      url: '/api/admin',
       headers: {
-        "my-token-x": cookie.value,
+        'my-token-x': cookie.value,
       },
-    });
-  });
+    })
+  })
 ```
 
 #### Using `cy.getCookie()` to test logging in
@@ -115,15 +115,15 @@ Check out our example recipes using `cy.getCookie()` to test [logging in using H
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.getCookie()` requires being chained off of `cy`.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.getCookie` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`cy.getCookie()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.getCookie()` should never time out.</li><li><Alert type="warning">
 
@@ -134,7 +134,7 @@ Because `cy.getCookie()` is asynchronous it is technically possible for there to
 ## Command Log
 
 ```javascript
-cy.getCookie("fakeCookie1").should("have.property", "value", "123ABC");
+cy.getCookie('fakeCookie1').should('have.property', 'value', '123ABC')
 ```
 
 The commands above will display in the Command Log as:

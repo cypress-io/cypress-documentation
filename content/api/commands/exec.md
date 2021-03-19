@@ -17,8 +17,8 @@ Read about [best practices](/guides/references/best-practices#Web-Servers) here.
 ## Syntax
 
 ```javascript
-cy.exec(command);
-cy.exec(command, options);
+cy.exec(command)
+cy.exec(command, options)
 ```
 
 ### Usage
@@ -26,7 +26,7 @@ cy.exec(command, options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.exec("npm run build");
+cy.exec('npm run build')
 ```
 
 ### Arguments
@@ -46,7 +46,7 @@ Pass in an options object to change the default behavior of `cy.exec()`.
 | `failOnNonZeroExit` | `true`                                                     | whether to fail if the command exits with a non-zero code                                                                                                    |
 | `timeout`           | [`execTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.exec()` to resolve before [timing out](#Timeouts)                                                                                       |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 `cy.exec()` yields an object with the following properties:
 
@@ -68,41 +68,41 @@ Pass in an options object to change the default behavior of `cy.exec()`.
 #### Run a build command
 
 ```javascript
-cy.exec("npm run build").then((result) => {
+cy.exec('npm run build').then((result) => {
   // yields the 'result' object
   // {
   //   code: 0,
   //   stdout: "Files successfully built",
   //   stderr: ""
   // }
-});
+})
 ```
 
 #### Seed the database and assert it was successful
 
 ```javascript
-cy.exec("rake db:seed").its("code").should("eq", 0);
+cy.exec('rake db:seed').its('code').should('eq', 0)
 ```
 
 #### Run an arbitrary script and assert its output
 
 ```javascript
-cy.exec("npm run my-script")
-  .its("stdout")
-  .should("contain", "Done running the script");
+cy.exec('npm run my-script')
+  .its('stdout')
+  .should('contain', 'Done running the script')
 ```
 
 #### Write to a file to create a fixture from response body
 
 ```javascript
-cy.intercept("POST", "/comments").as("postComment");
-cy.get(".add-comment").click();
-cy.wait("@postComment").then(({ response }) => {
+cy.intercept('POST', '/comments').as('postComment')
+cy.get('.add-comment').click()
+cy.wait('@postComment').then(({ response }) => {
   cy.exec(
     `echo ${JSON.stringify(response.body)} >cypress/fixtures/comment.json`
-  );
-  cy.fixture("comment.json").should("deep.eq", response.body);
-});
+  )
+  cy.fixture('comment.json').should('deep.eq', response.body)
+})
 ```
 
 ### Options
@@ -115,7 +115,7 @@ Cypress will _not_ continue running any other commands until `cy.exec()` has fin
 
 ```javascript
 // will fail if script takes longer than 20 seconds to finish
-cy.exec("npm run build", { timeout: 20000 });
+cy.exec('npm run build', { timeout: 20000 })
 ```
 
 #### Choose to not fail on non-zero exit and assert on code and stderr
@@ -129,9 +129,9 @@ cy.exec('man bear pig', { failOnNonZeroExit: false }).then((obj) => {
 #### Specify environment variables
 
 ```javascript
-cy.exec("echo $USERNAME", { env: { USERNAME: "johndoe" } })
-  .its("stdout")
-  .should("contain", "johndoe");
+cy.exec('echo $USERNAME', { env: { USERNAME: 'johndoe' } })
+  .its('stdout')
+  .should('contain', 'johndoe')
 ```
 
 ## Notes
@@ -153,8 +153,8 @@ A command must exit within the `execTimeout` or Cypress will kill the command's 
 You can change the timeout of `cy.exec()` for the remainder of the tests by setting the new values for `execTimeout` within [Cypress.config()](/api/cypress-api/config).
 
 ```js
-Cypress.config("execTimeout", 30000);
-Cypress.config("execTimeout"); // => 30000
+Cypress.config('execTimeout', 30000)
+Cypress.config('execTimeout') // => 30000
 ```
 
 ### Set timeout in the test configuration
@@ -164,30 +164,30 @@ You can configure the `cy.exec()` timeout within a suite or test by passing the 
 This will set the timeout throughout the duration of the tests, then return it to the default `execTimeout` when complete.
 
 ```js
-describe("has data available from database", { execTimeout: 90000 }, () => {
+describe('has data available from database', { execTimeout: 90000 }, () => {
   before(() => {
-    cy.exec("rake db:seed");
-  });
+    cy.exec('rake db:seed')
+  })
 
   // tests
 
   after(() => {
-    cy.exec("rake db:reset");
-  });
-});
+    cy.exec('rake db:reset')
+  })
+})
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.exec()` requires being chained off of `cy`.</li><li>`cy.exec()` requires the executed system command to eventually exit.</li><li>`cy.exec()` requires that the exit code be `0` when `failOnNonZeroExit` is `true`.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.exec` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`cy.exec()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.exec()` can time out waiting for the system command to exist.</li></List>
 
@@ -196,10 +196,10 @@ describe("has data available from database", { execTimeout: 90000 }, () => {
 **_List the contents of the default `cypress.json` configuration file_**
 
 ```javascript
-if (Cypress.platform === "win32") {
-  cy.exec("print cypress.json").its("stderr").should("be.empty");
+if (Cypress.platform === 'win32') {
+  cy.exec('print cypress.json').its('stderr').should('be.empty')
 } else {
-  cy.exec("cat cypress.json").its("stderr").should("be.empty");
+  cy.exec('cat cypress.json').its('stderr').should('be.empty')
 }
 ```
 

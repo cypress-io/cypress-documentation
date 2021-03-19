@@ -7,11 +7,11 @@ Make an HTTP request.
 ## Syntax
 
 ```javascript
-cy.request(url);
-cy.request(url, body);
-cy.request(method, url);
-cy.request(method, url, body);
-cy.request(options);
+cy.request(url)
+cy.request(url, body)
+cy.request(method, url)
+cy.request(method, url, body)
+cy.request(options)
 ```
 
 ### Usage
@@ -19,7 +19,7 @@ cy.request(options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.request("http://dev.local/seed");
+cy.request('http://dev.local/seed')
 ```
 
 ### Arguments
@@ -33,8 +33,8 @@ If you provide a non fully qualified domain name (FQDN), Cypress will make its b
 1. If you make a `cy.request()` after visiting a page, Cypress assumes the url used for the `cy.visit()` is the host.
 
 ```javascript
-cy.visit("http://localhost:8080/app");
-cy.request("users/1.json"); //  url is  http://localhost:8080/users/1.json
+cy.visit('http://localhost:8080/app')
+cy.request('users/1.json') //  url is  http://localhost:8080/users/1.json
 ```
 
 2. If you make a `cy.request()` prior to visiting a page, Cypress uses the host configured as the `baseUrl` property inside of of your [configuration file](/guides/references/configuration).
@@ -47,7 +47,7 @@ cy.request("users/1.json"); //  url is  http://localhost:8080/users/1.json
 ```
 
 ```javascript
-cy.request("seed/admin"); // url is http://localhost:1234/seed/admin
+cy.request('seed/admin') // url is http://localhost:1234/seed/admin
 ```
 
 3. If Cypress cannot determine the host it will throw an error.
@@ -113,7 +113,7 @@ Pass in an options object to change the default behavior of `cy.request()`.
 
 You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout` globally in [configuration](/guides/references/configuration).
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 `cy.request()` yields the `response` as an object literal containing properties such as:
 
@@ -132,8 +132,8 @@ You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout` gl
 
 ```javascript
 beforeEach(() => {
-  cy.request("http://localhost:8080/db/seed");
-});
+  cy.request('http://localhost:8080/db/seed')
+})
 ```
 
 #### Issue an HTTP request
@@ -141,7 +141,7 @@ beforeEach(() => {
 Sometimes it's quicker to test the contents of a page rather than [`cy.visit()`](/api/commands/visit) and wait for the entire page and all of its resources to load.
 
 ```javascript
-cy.request("/admin").its("body").should("include", "<h1>Admin</h1>");
+cy.request('/admin').its('body').should('include', '<h1>Admin</h1>')
 ```
 
 ### Method and URL
@@ -149,19 +149,19 @@ cy.request("/admin").its("body").should("include", "<h1>Admin</h1>");
 #### Send a `DELETE` request
 
 ```javascript
-cy.request("DELETE", "http://localhost:8888/users/827");
+cy.request('DELETE', 'http://localhost:8888/users/827')
 ```
 
 #### Alias the request using [.as()](/api/commands/as)
 
 ```javascript
-cy.request("https://jsonplaceholder.cypress.io/comments").as("comments");
+cy.request('https://jsonplaceholder.cypress.io/comments').as('comments')
 
-cy.get("@comments").should((response) => {
-  expect(response.body).to.have.length(500);
-  expect(response).to.have.property("headers");
-  expect(response).to.have.property("duration");
-});
+cy.get('@comments').should((response) => {
+  expect(response.body).to.have.length(500)
+  expect(response).to.have.property('headers')
+  expect(response).to.have.property('duration')
+})
 ```
 
 ### Method, URL, and Body
@@ -169,12 +169,12 @@ cy.get("@comments").should((response) => {
 #### Send a `POST` request with a JSON body
 
 ```javascript
-cy.request("POST", "http://localhost:8888/users/admin", { name: "Jane" }).then(
+cy.request('POST', 'http://localhost:8888/users/admin', { name: 'Jane' }).then(
   (response) => {
     // response.body is automatically serialized into JSON
-    expect(response.body).to.have.property("name", "Jane"); // true
+    expect(response.body).to.have.property('name', 'Jane') // true
   }
-);
+)
 ```
 
 ### Options
@@ -187,13 +187,13 @@ The `redirectedToUrl` property is a special Cypress property that normalizes the
 
 ```javascript
 cy.request({
-  url: "/dashboard",
+  url: '/dashboard',
   followRedirect: false, // turn off following redirects
 }).then((resp) => {
   // redirect status code is 302
-  expect(resp.status).to.eq(302);
-  expect(resp.redirectedToUrl).to.eq("http://localhost:8082/unauthorized");
-});
+  expect(resp.status).to.eq(302)
+  expect(resp.redirectedToUrl).to.eq('http://localhost:8082/unauthorized')
+})
 ```
 
 #### Download a PDF file
@@ -202,11 +202,11 @@ By passing the `encoding: binary` option, the `response.body` will be serialized
 
 ```javascript
 cy.request({
-  url: "http://localhost:8080/some-document.pdf",
-  encoding: "binary",
+  url: 'http://localhost:8080/some-document.pdf',
+  encoding: 'binary',
 }).then((response) => {
-  cy.writeFile("path/to/save/document.pdf", response.body, "binary");
-});
+  cy.writeFile('path/to/save/document.pdf', response.body, 'binary')
+})
 ```
 
 #### Get Data URL of an image
@@ -215,14 +215,14 @@ By passing the `encoding: base64` option, the `response.body` will be base64-enc
 
 ```javascript
 cy.request({
-  url: "https://docs.cypress.io/img/logo.png",
-  encoding: "base64",
+  url: 'https://docs.cypress.io/img/logo.png',
+  encoding: 'base64',
 }).then((response) => {
-  const base64Content = response.body;
-  const mime = response.headers["content-type"]; // or 'image/png'
+  const base64Content = response.body
+  const mime = response.headers['content-type'] // or 'image/png'
   // see https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
-  const imageDataUrl = `data:${mime};base64,${base64Content}`;
-});
+  const imageDataUrl = `data:${mime};base64,${base64Content}`
+})
 ```
 
 #### HTML form submissions using form option
@@ -233,17 +233,17 @@ Using `cy.request()`, we can bypass all of this because it automatically gets an
 
 ```javascript
 cy.request({
-  method: "POST",
-  url: "/login_with_form", // baseUrl is prepended to url
+  method: 'POST',
+  url: '/login_with_form', // baseUrl is prepended to url
   form: true, // indicates the body should be form urlencoded and sets Content-Type: application/x-www-form-urlencoded headers
   body: {
-    username: "jane.lane",
-    password: "password123",
+    username: 'jane.lane',
+    password: 'password123',
   },
-});
+})
 
 // to prove we have a session
-cy.getCookie("cypress-session-cookie").should("exist");
+cy.getCookie('cypress-session-cookie').should('exist')
 ```
 
 #### Using `cy.request()` for HTML Forms
@@ -304,9 +304,9 @@ Normally when the browser detects a cross-origin HTTP request, it will send an `
 
 ```javascript
 // we can make requests to any external server, no problem.
-cy.request("https://www.google.com/webhp?#q=cypress.io+cors")
-  .its("body")
-  .should("include", "Testing, the way it should be"); // true
+cy.request('https://www.google.com/webhp?#q=cypress.io+cors')
+  .its('body')
+  .should('include', 'Testing, the way it should be') // true
 ```
 
 ### Cookies
@@ -327,15 +327,15 @@ The intention of `cy.request()` is to be used for checking endpoints on an actua
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.request()` requires being chained off of `cy`.</li><li>`cy.request()` requires that the server send a response.</li><li>`cy.request()` requires that the response status code be `2xx` or `3xx` or `failOnStatusCode` is `true`.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.request` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`cy.request()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.request()` can time out waiting for the server to respond.</li></List>
 
@@ -344,12 +344,12 @@ The intention of `cy.request()` is to be used for checking endpoints on an actua
 **_Request comments endpoint and test response_**
 
 ```javascript
-cy.request("https://jsonplaceholder.typicode.com/comments").then((response) => {
-  expect(response.status).to.eq(200);
-  expect(response.body).to.have.length(500);
-  expect(response).to.have.property("headers");
-  expect(response).to.have.property("duration");
-});
+cy.request('https://jsonplaceholder.typicode.com/comments').then((response) => {
+  expect(response.status).to.eq(200)
+  expect(response.body).to.have.length(500)
+  expect(response).to.have.property('headers')
+  expect(response).to.have.property('duration')
+})
 ```
 
 The commands above will display in the Command Log as:

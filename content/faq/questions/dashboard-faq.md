@@ -8,7 +8,7 @@ containerClass: faq
 
 <DocsImage src="/img/dashboard/dashboard-runs-list.png" alt="Dashboard Screenshot" ></DocsImage>
 
-The [Dashboard](https://on.cypress.io/dashboard) is a Cypress service that gives you access to tests you've recorded - typically when running Cypress tests from your [CI provider](/guides/guides/continuous-integration). The Dashboard provides you insight into what happened during your tests run.
+The [Dashboard](https://on.cypress.io/dashboard) is a Cypress service that gives you access to tests you've recorded - typically when running Cypress tests from your [CI provider](/guides/continuous-integration/continuous-integration-introduction). The Dashboard provides you insight into what happened during your tests run.
 
 You can read more [here](/guides/dashboard/dashboard-introduction).
 
@@ -23,7 +23,7 @@ After recording your tests, you will see them in the [Dashboard](https://on.cypr
 
 Please see our [Pricing Page](https://www.cypress.io/pricing) for more details.
 
-## <Icon name="angle-right"></Icon> What counts as a test recording?
+## <Icon name="angle-right"></Icon> What counts as a test result?
 
 Which [pricing tier](https://www.cypress.io/pricing) is best for you depends on the number of test you record each month in your organization.
 
@@ -45,7 +45,7 @@ A [user](/guides/dashboard/users) is anyone with a login to our Dashboard Servic
 
 ## <Icon name="angle-right"></Icon> How is this different than CI?
 
-Cypress is **complementary** to your [CI provider](/guides/guides/continuous-integration), and plays a completely different role.
+Cypress is **complementary** to your [CI provider](/guides/continuous-integration/continuous-integration-introduction), and plays a completely different role.
 
 It doesn't replace or change anything related to CI. You will run Cypress tests in your CI provider.
 
@@ -96,7 +96,7 @@ Thus, to better load balance the specs, you would want more spec files with appr
 
 ## <Icon name="angle-right"></Icon> My CI setup is based on Docker, but is very custom. How can I load balance my test runs?
 
-Even if your CI setup is very different from the [CI examples we have](/guides/guides/continuous-integration#Examples) and [run with our sample projects](https://github.com/cypress-io/cypress-example-kitchensink#ci-status), you can still take advantage of the test load balancing using the Dashboard. Find a variable across your containers that is the same for all of them, but is different from run to run. For example it could be an environment variable called `CI_RUN_ID` that you set when creating the containers to run Cypress. You can pass this variable via CLI argument [`--ci-build-id`](/guides/guides/command-line#cypress-run-ci-build-id-lt-id-gt)when starting Cypress in each container:
+Even if your CI setup is very different from the [CI examples we have](/guides/continuous-integration/continuous-integration-introduction#Examples) and [run with our sample projects](https://github.com/cypress-io/cypress-example-kitchensink#ci-status), you can still take advantage of the test load balancing using the Dashboard. Find a variable across your containers that is the same for all of them, but is different from run to run. For example it could be an environment variable called `CI_RUN_ID` that you set when creating the containers to run Cypress. You can pass this variable via CLI argument [`--ci-build-id`](/guides/guides/command-line#cypress-run-ci-build-id-lt-id-gt)when starting Cypress in each container:
 
 ```shell
 cypress run --record --parallel --ci-build-id $CI_RUN_ID
@@ -118,11 +118,11 @@ You can delete your Cypress account from [your Dashboard profile](https://dashbo
 
 Downgrading your account will **not** result in loss of access to your Dashboard.
 
-However, it will make your Dashboard subject to the limitations of your new plan. For example, downgrading to the _Seed_ plan will limit data retention to 30 days and test recordings to 500 per billing period.
+However, it will make your Dashboard subject to the limitations of your new plan. For example, downgrading to the _Seed_ plan will limit data retention to 30 days and test results to 500 per billing period.
 
-## <Icon name="angle-right"></Icon> What happens once I reach the test recording limit?
+## <Icon name="angle-right"></Icon> What happens once I reach the test results limit?
 
-Tests running with the `--record` flag will run as normal when the limit is reached, but parallelization will be disabled and new test recordings will be hidden from the dashboard until your plan is upgraded or a new usage cycle begins. The usage cycle resets each month.
+Tests running with the `--record` flag will run as normal when the limit is reached, but parallelization will be disabled and new test results will be hidden from the dashboard until your plan is upgraded or a new usage cycle begins. The usage cycle resets each month.
 
 In order to avoid any interruption in service, we recommend that you review your usage and select a plan that satisfies your usage requirements. You can do this by:
 

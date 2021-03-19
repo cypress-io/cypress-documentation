@@ -27,8 +27,8 @@ cy.debug(options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.debug().getCookie("app"); // Pause to debug at beginning of commands
-cy.get("nav").debug(); // Debug the `get` command's yield
+cy.debug().getCookie('app') // Pause to debug at beginning of commands
+cy.get('nav').debug() // Debug the `get` command's yield
 ```
 
 ### Arguments
@@ -41,7 +41,7 @@ Pass in an options object to change the default behavior of `.debug()`.
 | ------ | ------- | ---------------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`.debug()` yields the same subject it was given from the previous command.</li></List>
 
@@ -52,20 +52,20 @@ Pass in an options object to change the default behavior of `.debug()`.
 #### Pause with debugger after `.get()`
 
 ```javascript
-cy.get("a").debug().should("have.attr", "href");
+cy.get('a').debug().should('have.attr', 'href')
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.debug()` can bechained off of `cy` or off another command.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.debug` is a utility command.</li><li>`.debug` will not run assertions. Assertions will pass through as if this command did not exist.</li></List>
+<List><li>`.debug()` is a utility command.</li><li>`.debug()` will not run assertions. Assertions will pass through as if this command did not exist.</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.debug()` cannot time out.</li></List>
 
@@ -74,7 +74,7 @@ cy.get("a").debug().should("have.attr", "href");
 **_Log out the current subject for debugging_**
 
 ```javascript
-cy.get(".ls-btn").click({ force: true }).debug();
+cy.get('.ls-btn').click({ force: true }).debug()
 ```
 
 The commands above will display in the Command Log as:

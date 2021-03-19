@@ -6,7 +6,7 @@ title: Environment Variables
 
 <strong class="alert-header">Difference between OS-level and Cypress environment variables</strong>
 
-In Cypress, "environment variables" are variables that are accessible via `Cypress.env`. These are not the same as OS-level environment variables. However, [it is possible to set Cypress environment variables from OS-level environment variables](/guides/guides/environment-variables.html#Option-3-CYPRESS).
+In Cypress, "environment variables" are variables that are accessible via `Cypress.env`. These are not the same as OS-level environment variables. However, [it is possible to set Cypress environment variables from OS-level environment variables](/guides/guides/environment-variables#Option-3-CYPRESS).
 
 </Alert>
 
@@ -21,13 +21,13 @@ Environment variables can be changed easily - especially when running in CI.
 #### Instead of hard coding this in your tests:
 
 ```javascript
-cy.request("https://api.acme.corp"); // this will break on other environments
+cy.request('https://api.acme.corp') // this will break on other environments
 ```
 
 #### We can move this into a Cypress environment variable:
 
 ```javascript
-cy.request(Cypress.env("EXTERNAL_API")); // points to a dynamic env var
+cy.request(Cypress.env('EXTERNAL_API')) // points to a dynamic env var
 ```
 
 <Alert type="info">
@@ -61,7 +61,7 @@ There are 5 different ways to set environment variables. Each has a slightly dif
 - [Set an environment variable within your plugins.](#Option-5-Plugins)
 - [Set an environment variable within test configuration.](#Option-6-Test-Configuration)
 
-Don't feel obligated to pick just one method. It is common to use one strategy for local development but another when running in [CI](/guides/guides/continuous-integration).
+Don't feel obligated to pick just one method. It is common to use one strategy for local development but another when running in [CI](/guides/continuous-integration/continuous-integration-introduction).
 
 When your tests are running, you can use the [`Cypress.env`](/api/cypress-api/env) function to access the values of your environment variables.
 
@@ -82,9 +82,9 @@ Any key/value you set in your [configuration file (`cypress.json` by default)](/
 #### Test file
 
 ```javascript
-Cypress.env(); // {login_url: '/login', products_url: '/products'}
-Cypress.env("login_url"); // '/login'
-Cypress.env("products_url"); // '/products'
+Cypress.env() // {login_url: '/login', products_url: '/products'}
+Cypress.env('login_url') // '/login'
+Cypress.env('products_url') // '/products'
 ```
 
 #### Overview
@@ -121,9 +121,9 @@ This strategy is useful because if you add `cypress.env.json` to your `.gitignor
 #### From test file
 
 ```javascript
-Cypress.env(); // {host: 'veronica.dev.local', api_server: 'http://localhost:8888/api/v1'}
-Cypress.env("host"); // 'veronica.dev.local'
-Cypress.env("api_server"); // 'http://localhost:8888/api/v1/'
+Cypress.env() // {host: 'veronica.dev.local', api_server: 'http://localhost:8888/api/v1'}
+Cypress.env('host') // 'veronica.dev.local'
+Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 ```
 
 #### An Overview
@@ -177,9 +177,9 @@ export cypress_api_server=http://localhost:8888/api/v1/
 In your test file you should omit `CYPRESS_` or `cypress_` prefix
 
 ```javascript
-Cypress.env(); // {HOST: 'laura.dev.local', api_server: 'http://localhost:8888/api/v1'}
-Cypress.env("HOST"); // 'laura.dev.local'
-Cypress.env("api_server"); // 'http://localhost:8888/api/v1/'
+Cypress.env() // {HOST: 'laura.dev.local', api_server: 'http://localhost:8888/api/v1'}
+Cypress.env('HOST') // 'laura.dev.local'
+Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 ```
 
 #### Overview:
@@ -227,9 +227,9 @@ cypress run --env host=kevin.dev.local,api_server=http://localhost:8888/api/v1
 #### Test file:
 
 ```javascript
-Cypress.env(); // {host: 'kevin.dev.local', api_server: 'http://localhost:8888/api/v1'}
-Cypress.env("host"); // 'kevin.dev.local'
-Cypress.env("api_server"); // 'http://localhost:8888/api/v1/'
+Cypress.env() // {host: 'kevin.dev.local', api_server: 'http://localhost:8888/api/v1'}
+Cypress.env('host') // 'kevin.dev.local'
+Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 ```
 
 #### Overview -
@@ -267,20 +267,20 @@ USER_NAME=aTester
 
 ```js
 // plugins/index.js
-require("dotenv").config();
+require('dotenv').config()
 
 module.exports = (on, config) => {
   // copy any needed variables from process.env to config.env
-  config.env.username = process.env.USER_NAME;
+  config.env.username = process.env.USER_NAME
 
   // do not forget to return the changed config object!
-  return config;
-};
+  return config
+}
 
 // integration/spec.js
-it("has username to use", () => {
-  expect(Cypress.env("username")).to.be.a("string");
-});
+it('has username to use', () => {
+  expect(Cypress.env('username')).to.be.a('string')
+})
 ```
 
 [We've fully documented how to do this here.](/api/plugins/configuration-api)
@@ -314,19 +314,19 @@ You can set environment variables for specific suites or tests by passing the `e
 ```js
 // change environment variable for single suite of tests
 describe(
-  "test against Spanish site",
+  'test against Spanish site',
   {
     env: {
-      language: "es",
+      language: 'es',
     },
   },
   () => {
-    it("displays Spanish", () => {
-      cy.visit(`https://docs.cypress.io/${Cypress.env("language")}/`);
-      cy.contains("¿Por qué Cypress?");
-    });
+    it('displays Spanish', () => {
+      cy.visit(`https://docs.cypress.io/${Cypress.env('language')}/`)
+      cy.contains('¿Por qué Cypress?')
+    })
   }
-);
+)
 ```
 
 #### Single test configuration
@@ -334,29 +334,29 @@ describe(
 ```js
 // change environment variable for single test
 it(
-  "smoke test develop api",
+  'smoke test develop api',
   {
     env: {
-      api: "https://dev.myapi.com",
+      api: 'https://dev.myapi.com',
     },
   },
   () => {
-    cy.request(Cypress.env("api")).its("status").should("eq", 200);
+    cy.request(Cypress.env('api')).its('status').should('eq', 200)
   }
-);
+)
 
 // change environment variable for single test
 it(
-  "smoke test staging api",
+  'smoke test staging api',
   {
     env: {
-      api: "https://staging.myapi.com",
+      api: 'https://staging.myapi.com',
     },
   },
   () => {
-    cy.request(Cypress.env("api")).its("status").should("eq", 200);
+    cy.request(Cypress.env('api')).its('status').should('eq', 200)
   }
-);
+)
 ```
 
 #### Overview

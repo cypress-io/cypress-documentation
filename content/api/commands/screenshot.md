@@ -25,8 +25,8 @@ cy.screenshot(fileName, options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.screenshot();
-cy.get(".post").screenshot();
+cy.screenshot()
+cy.get('.post').screenshot()
 ```
 
 ### Arguments
@@ -54,7 +54,7 @@ Pass in an options object to change the default behavior of `.screenshot()`.
 
 For more details on these options and to set some as defaults across all uses of `.screenshot()`, see the [Cypress.Screenshot API doc](/api/cypress-api/screenshot-api).
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`.screenshot()` yields the same subject it was given from the previous command.</li></List>
 
@@ -69,13 +69,13 @@ The screenshot will be stored in the `cypress/screenshots` folder by default. Yo
 ```javascript
 // cypress/integration/users.spec.js
 
-describe("my tests", () => {
-  it("takes a screenshot", () => {
+describe('my tests', () => {
+  it('takes a screenshot', () => {
     // screenshot will be saved as
     // cypress/screenshots/users.spec.js/my tests -- takes a screenshot.png
-    cy.screenshot();
-  });
-});
+    cy.screenshot()
+  })
+})
 ```
 
 ### Filename
@@ -85,7 +85,7 @@ describe("my tests", () => {
 ```javascript
 // screenshot will be saved as
 // cypress/screenshots/spec.js/clicking-on-nav.png
-cy.screenshot("clicking-on-nav");
+cy.screenshot('clicking-on-nav')
 ```
 
 #### Take a screenshot and save in a specific directory
@@ -93,7 +93,7 @@ cy.screenshot("clicking-on-nav");
 ```javascript
 // screenshot will be saved as
 // cypress/screenshots/spec.js/actions/login/clicking-login.png
-cy.screenshot("actions/login/clicking-login");
+cy.screenshot('actions/login/clicking-login')
 ```
 
 ### Clip
@@ -103,7 +103,7 @@ cy.screenshot("actions/login/clicking-login");
 ```javascript
 // screenshot will be clipped 20px from the top and left
 // to the dimensions 400px x 300px
-cy.screenshot({ x: 20, y: 20, width: 400, height: 300 });
+cy.screenshot({ x: 20, y: 20, width: 400, height: 300 })
 ```
 
 ### Screenshot an element
@@ -111,25 +111,25 @@ cy.screenshot({ x: 20, y: 20, width: 400, height: 300 });
 #### Take a screenshot of the first `.post` element
 
 ```javascript
-cy.get(".post").first().screenshot();
+cy.get('.post').first().screenshot()
 ```
 
 #### Take a screenshot of the first `.post` element with 10px of padding around it
 
 ```javascript
-cy.get(".post").first().screenshot({ padding: 10 });
+cy.get('.post').first().screenshot({ padding: 10 })
 ```
 
 #### Chain off the screenshot to click the element captured
 
 ```javascript
-cy.get("button").first().screenshot().click();
+cy.get('button').first().screenshot().click()
 ```
 
 ### Get screenshot info from the `onAfterScreenshot` callback
 
 ```javascript
-cy.screenshot("my-screenshot", {
+cy.screenshot('my-screenshot', {
   onAfterScreenshot($el, props) {
     // props has information about the screenshot,
     // including but not limited to the following:
@@ -146,7 +146,7 @@ cy.screenshot("my-screenshot", {
     //   duration: 2300,
     // }
   },
-});
+})
 ```
 
 ## Notes
@@ -163,20 +163,20 @@ Screenshot naming follows these rules:
 For example, given a spec file located at `cypress/integration/users/login_spec.js`:
 
 ```javascript
-describe("my tests", () => {
-  it("takes a screenshot", () => {
-    cy.screenshot(); // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot.png
-    cy.screenshot(); // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (1).png
-    cy.screenshot(); // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (2).png
+describe('my tests', () => {
+  it('takes a screenshot', () => {
+    cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot.png
+    cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (1).png
+    cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (2).png
 
-    cy.screenshot("my-screenshot"); // cypress/screenshots/users/login_spec.js/my-screenshot.png
-    cy.screenshot("my-screenshot"); // cypress/screenshots/users/login_spec.js/my-screenshot (1).png
+    cy.screenshot('my-screenshot') // cypress/screenshots/users/login_spec.js/my-screenshot.png
+    cy.screenshot('my-screenshot') // cypress/screenshots/users/login_spec.js/my-screenshot (1).png
 
-    cy.screenshot("my/nested/screenshot"); // cypress/screenshots/users/login_spec.js/my/nested/screenshot.png
+    cy.screenshot('my/nested/screenshot') // cypress/screenshots/users/login_spec.js/my/nested/screenshot.png
 
     // if this test fails, the screenshot will be saved to cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (failed).png
-  });
-});
+  })
+})
 ```
 
 ### `after:screenshot` plugin event
@@ -187,7 +187,7 @@ You can get details about any given screenshot and manipulate it after it has be
 
 #### Automatic screenshots on test failure
 
-When running through `cypress run` or in [Continuous Integration](/guides/guides/continuous-integration), Cypress automatically takes a screenshot when a test fails. You can optionally turn this off by setting `screenshotOnRunFailure` to `false` within your [`screenshotOnRunFailure`](/guides/references/configuration#Screenshots) or [Cypress.Screenshot.defaults()](/api/cypress-api/screenshot-api).
+When running through `cypress run` or in [Continuous Integration](/guides/continuous-integration/continuous-integration-introduction), Cypress automatically takes a screenshot when a test fails. You can optionally turn this off by setting `screenshotOnRunFailure` to `false` within your [`screenshotOnRunFailure`](/guides/references/configuration#Screenshots) or [Cypress.Screenshot.defaults()](/api/cypress-api/screenshot-api).
 
 ### Viewing Screenshots
 
@@ -214,22 +214,22 @@ We make our best effort to synchronize taking a screenshot with our renderer, bu
 When passing `fullPage` to the `capture` option, Cypress scrolls the application under test from top to bottom, takes screenshots at each point and stitches them together. Due to this, elements that are `position: fixed` or `position: sticky` will appear multiple times in the final screenshot. To prevent this, in most cases you can programmatically change the element to be `position: absolute` before the screenshot and change it back afterwards like shown below:
 
 ```javascript
-cy.get(".sticky-header").invoke("css", "position", "absolute");
-cy.screenshot();
-cy.get(".sticky-header").invoke("css", "position", null);
+cy.get('.sticky-header').invoke('css', 'position', 'absolute')
+cy.screenshot()
+cy.get('.sticky-header').invoke('css', 'position', null)
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.screenshot()` can be chained off of `cy` or off a command that yields a single DOM element.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.screenshot` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`cy.screenshot()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.screenshot()` should never time out.</li><li><Alert type="warning">
 
@@ -242,7 +242,7 @@ Because `cy.screenshot()` is asynchronous it is technically possible for there t
 #### Take a screenshot with a specific filename
 
 ```javascript
-cy.screenshot("my-image");
+cy.screenshot('my-image')
 ```
 
 The commands above will display in the Command Log as:

@@ -14,7 +14,7 @@ The Screenshot API allows you set defaults for how screenshots are captured duri
 ## Syntax
 
 ```javascript
-Cypress.Screenshot.defaults(options);
+Cypress.Screenshot.defaults(options)
 ```
 
 ### Arguments
@@ -41,8 +41,8 @@ Elements that match the specified selectors will be blacked out from the screens
 
 ```javascript
 Cypress.Screenshot.defaults({
-  blackout: [".secret-info", "[data-hide=true]"],
-});
+  blackout: ['.secret-info', '[data-hide=true]'],
+})
 ```
 
 ### Take a screenshot of the entire Test Runner
@@ -51,8 +51,8 @@ By default, [`cy.screenshot()`](/api/commands/screenshot) only captures your app
 
 ```javascript
 Cypress.Screenshot.defaults({
-  capture: "runner",
-});
+  capture: 'runner',
+})
 ```
 
 ### Allow timers and animations to keep running
@@ -62,7 +62,7 @@ By default, JavaScript timers and CSS animations are disabled to try to prevent 
 ```javascript
 Cypress.Screenshot.defaults({
   disableTimersAndAnimations: false,
-});
+})
 ```
 
 ### Disable screenshots on run failures
@@ -72,7 +72,7 @@ By default, Cypress automatically takes a screenshot when there is a failure whe
 ```javascript
 Cypress.Screenshot.defaults({
   screenshotOnRunFailure: false,
-});
+})
 ```
 
 ### Scale `viewport` and `fullPage` captures
@@ -82,7 +82,7 @@ By default, scaling the application under test is turned off during when the `ca
 ```javascript
 Cypress.Screenshot.defaults({
   scale: true,
-});
+})
 ```
 
 ### Change the DOM using `onBeforeScreenshot` and `onAfterScreenshot`
@@ -94,21 +94,21 @@ In this example, imagine there is a clock in your app showing the current time. 
 ```javascript
 Cypress.Screenshot.defaults({
   onBeforeScreenshot($el) {
-    const $clock = $el.find(".clock");
+    const $clock = $el.find('.clock')
 
     if ($clock) {
-      $clock.hide();
+      $clock.hide()
     }
   },
 
   onAfterScreenshot($el, props) {
-    const $clock = $el.find(".clock");
+    const $clock = $el.find('.clock')
 
     if ($clock) {
-      $clock.show();
+      $clock.show()
     }
   },
-});
+})
 ```
 
 ### Get properties from the `onAfterScreenshot` callback
@@ -130,7 +130,7 @@ Cypress.Screenshot.defaults({
     //   duration: 2300,
     // }
   },
-});
+})
 ```
 
 ## Notes

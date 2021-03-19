@@ -7,10 +7,10 @@ Load a fixed set of data located in a file.
 ## Syntax
 
 ```javascript
-cy.fixture(filePath);
-cy.fixture(filePath, encoding);
-cy.fixture(filePath, options);
-cy.fixture(filePath, encoding, options);
+cy.fixture(filePath)
+cy.fixture(filePath, encoding)
+cy.fixture(filePath, options)
+cy.fixture(filePath, encoding, options)
 ```
 
 ### Usage
@@ -18,10 +18,10 @@ cy.fixture(filePath, encoding, options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.fixture("users").as("usersJson"); // load data from users.json
-cy.fixture("logo.png").then((logo) => {
+cy.fixture('users').as('usersJson') // load data from users.json
+cy.fixture('logo.png').then((logo) => {
   // load data from logo.png
-});
+})
 ```
 
 ### Arguments
@@ -33,7 +33,7 @@ A path to a file within the [`fixturesFolder`](/guides/references/configuration#
 You can nest fixtures within folders and reference them by defining the path from the fixturesFolder:
 
 ```javascript
-cy.fixture("users/admin.json"); // Get data from {fixturesFolder}/users/admin.json
+cy.fixture('users/admin.json') // Get data from {fixturesFolder}/users/admin.json
 ```
 
 **<Icon name="angle-right"></Icon> encoding** **_(String)_**
@@ -60,7 +60,7 @@ Pass in an options object to change the default behavior of `cy.fixture()`.
 | --------- | -------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.fixture()` to resolve before [timing out](#Timeouts) |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 `cy.fixture()` yields the contents of the file. Formatting is determined by its file extension.
 
@@ -71,7 +71,7 @@ Pass in an options object to change the default behavior of `cy.fixture()`.
 #### Load a `users.json` fixture
 
 ```javascript
-cy.fixture("users.json").as("usersData");
+cy.fixture('users.json').as('usersData')
 ```
 
 #### Omit the fixture file's extension
@@ -79,7 +79,7 @@ cy.fixture("users.json").as("usersData");
 When no extension is passed to `cy.fixture()`, Cypress will search for files with the specified name within the [`fixturesFolder`](/guides/references/configuration#Folders-Files) (which defaults to `cypress/fixtures`) and resolve the first one.
 
 ```javascript
-cy.fixture("admin").as("adminJSON");
+cy.fixture('admin').as('adminJSON')
 ```
 
 The example above would resolve in the following order:
@@ -103,32 +103,32 @@ The example above would resolve in the following order:
 #### Image fixtures are sent as `base64`
 
 ```javascript
-cy.fixture("images/logo.png").then((logo) => {
+cy.fixture('images/logo.png').then((logo) => {
   // logo will be encoded as base64
   // and should look something like this:
   // aIJKnwxydrB10NVWqhlmmC+ZiWs7otHotSAAAOw==...
-});
+})
 ```
 
 #### Change encoding of Image fixture
 
 ```javascript
-cy.fixture("images/logo.png", "binary").then((logo) => {
+cy.fixture('images/logo.png', 'binary').then((logo) => {
   // logo will be encoded as binary
   // and should look something like this:
   // 000000000000000000000000000000000000000000...
-});
+})
 ```
 
 ### Playing MP3 file
 
 ```javascript
-cy.fixture("audio/sound.mp3", "base64").then((mp3) => {
-  const uri = "data:audio/mp3;base64," + mp3;
-  const audio = new Audio(uri);
+cy.fixture('audio/sound.mp3', 'base64').then((mp3) => {
+  const uri = 'data:audio/mp3;base64,' + mp3
+  const audio = new Audio(uri)
 
-  audio.play();
-});
+  audio.play()
+})
 ```
 
 ### Accessing Fixture Data
@@ -136,9 +136,9 @@ cy.fixture("audio/sound.mp3", "base64").then((mp3) => {
 #### Using `.then()` to access fixture data
 
 ```javascript
-cy.fixture("users").then((json) => {
-  cy.intercept("GET", "/users/**", json);
-});
+cy.fixture('users').then((json) => {
+  cy.intercept('GET', '/users/**', json)
+})
 ```
 
 #### Using fixtures to bootstrap data
@@ -154,15 +154,15 @@ cy.fixture("users").then((json) => {
 You can modify fixture data directly before passing it along to a route.
 
 ```javascript
-cy.fixture("user").then((user) => {
-  user.firstName = "Jane";
-  cy.intercept("GET", "/users/1", user).as("getUser");
-});
+cy.fixture('user').then((user) => {
+  user.firstName = 'Jane'
+  cy.intercept('GET', '/users/1', user).as('getUser')
+})
 
-cy.visit("/users");
-cy.wait("@getUser").then(({ request }) => {
-  expect(request.body.firstName).to.eq("Jane");
-});
+cy.visit('/users')
+cy.wait('@getUser').then(({ request }) => {
+  expect(request.body.firstName).to.eq('Jane')
+})
 ```
 
 ## Notes
@@ -174,7 +174,7 @@ cy.wait("@getUser").then(({ request }) => {
 Fixtures can also be referenced directly without using the `.fixture()` command by using the special property `fixture` on the [`cy.intercept()`](/api/commands/intercept) `StaticResponse` object.
 
 ```javascript
-cy.intercept("GET", "/users/**", { fixture: "users" });
+cy.intercept('GET', '/users/**', { fixture: 'users' })
 ```
 
 ### Validation
@@ -210,34 +210,34 @@ For other types of files, they will be read as `utf8` by default, unless specifi
 If you store and access the fixture data using `this` test context object, make sure to use `function () { ... }` callbacks. Otherwise the test engine will NOT have `this` pointing at the test context.
 
 ```javascript
-describe("User page", () => {
+describe('User page', () => {
   beforeEach(function () {
     // "this" points at the test context object
-    cy.fixture("user").then((user) => {
+    cy.fixture('user').then((user) => {
       // "this" is still the test context object
-      this.user = user;
-    });
-  });
+      this.user = user
+    })
+  })
 
   // the test callback is in "function () { ... }" form
-  it("has user", function () {
+  it('has user', function () {
     // this.user exists
-    expect(this.user.firstName).to.equal("Jane");
-  });
-});
+    expect(this.user.firstName).to.equal('Jane')
+  })
+})
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.fixture()` requires being chained off of `cy`.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.fixture` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`cy.fixture()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.fixture()` should never time out.</li><li><Alert type="warning">
 

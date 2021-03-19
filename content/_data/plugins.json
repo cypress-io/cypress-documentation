@@ -472,6 +472,20 @@
           "badge": "verified"
         },
         {
+          "name": "cypress-recurse",
+          "description": "A way to re-run Cypress commands until a predicate function returns true",
+          "link": "https://github.com/bahmutov/cypress-recurse",
+          "keywords": [
+            "commands",
+            "wait",
+            "wait-until",
+            "recursive-promise",
+            "check-async-value",
+            "check-value"
+          ],
+          "badge": "community"
+        },
+        {
           "name": "cypress-cy-select",
           "description": "data-cy shorthand notation for cypress get and find functions",
           "link": "https://github.com/FlorianGoussin/cypress-cy-select",
@@ -548,6 +562,13 @@
           "badge": "community"
         },
         {
+          "name": "cypress-maildev",
+          "description": "A bunch of Cypress commands in order to test your messages (SMS and Emails) by using Maildev REST API.",
+          "link": "https://github.com/Clebiez/cypress-maildev",
+          "keywords": ["email", "sms", "commands"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-real-events",
           "description": "Fire native system events from Cypress like hover, swipe, etc",
           "link": "https://github.com/dmtrKovalenko/cypress-real-events",
@@ -591,7 +612,7 @@
     },
     {
       "name": "Authentication",
-      "description": "Also take a look at [\"Logging in\"](https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes) recipes.",
+      "description": "Also take a look at [Logging in](https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes) recipes.",
       "plugins": [
         {
           "name": "cypress-keycloak-commands",
@@ -648,7 +669,7 @@
         {
           "name": "cypress-on-rails",
           "description": "Rubygem for using cypress.io with Ruby on Rails applications",
-          "link": "https://github.com/grantspeelman/cypress-on-rails#cypressdev",
+          "link": "https://github.com/shakacode/cypress-on-rails",
           "keywords": ["ruby-rack", "ruby-on-rails"],
           "badge": "community"
         },
@@ -713,6 +734,13 @@
           "description": "Add commands and hooks to test Laravel applications",
           "link": "https://github.com/noeldemartin/cypress-laravel",
           "keywords": ["php", "laravel"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-splitio",
+          "description": "Stores your split.io toggles as environment variables. Helps to decide which e2e tests you need to run.",
+          "link": "https://gitlab.com/davidggevorgyan/cypress-splitio",
+          "keywords": ["split.io", "feature flags"],
           "badge": "community"
         },
         {

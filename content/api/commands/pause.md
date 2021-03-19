@@ -25,8 +25,8 @@ cy.pause(options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.pause().getCookie("app"); // Pause at the beginning of commands
-cy.get("nav").pause(); // Pause after the 'get' commands yield
+cy.pause().getCookie('app') // Pause at the beginning of commands
+cy.get('nav').pause() // Pause after the 'get' commands yield
 ```
 
 ### Arguments
@@ -39,7 +39,7 @@ Pass in an options object to change the default behavior of `.pause()`.
 | ------ | ------- | ---------------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`.pause()` yields the same subject it was given from the previous command.</li></List>
 
@@ -50,24 +50,24 @@ Pass in an options object to change the default behavior of `.pause()`.
 #### Pause after assertion
 
 ```javascript
-cy.get("a")
-  .should("have.attr", "href")
-  .and("match", /dashboard/)
-  .pause();
-cy.get("button").should("not.be.disabled");
+cy.get('a')
+  .should('have.attr', 'href')
+  .and('match', /dashboard/)
+  .pause()
+cy.get('button').should('not.be.disabled')
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.pause()` can bechained off of `cy` or off another command.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.pause` is a utility command.</li><li>`.pause` will not run assertions. Assertions will pass through as if this command did not exist.</li></List>
+<List><li>`.pause()` is a utility command.</li><li>`.pause()` will not run assertions. Assertions will pass through as if this command did not exist.</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.pause()` cannot time out.</li></List>
 
@@ -76,7 +76,7 @@ cy.get("button").should("not.be.disabled");
 ### Pause and step through each `.click()` command
 
 ```javascript
-cy.get("#action-canvas")
+cy.get('#action-canvas')
   .click(80, 75)
   .pause()
   .click(170, 75)
@@ -84,7 +84,7 @@ cy.get("#action-canvas")
   .click(100, 185)
   .click(125, 190)
   .click(150, 185)
-  .click(170, 165);
+  .click(170, 165)
 ```
 
 The commands above will display in the Command Log as:

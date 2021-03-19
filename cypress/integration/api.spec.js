@@ -1,5 +1,4 @@
-const ORIGIN = 'http://localhost:3000'
-const API_URL = `${ORIGIN}/api/table-of-contents`
+const API_URL = '/api/table-of-contents/'
 const SIDEBAR = './content/_data/sidebar.json'
 const SIDEBAR_EN = './content/_data/en.json'
 
@@ -12,90 +11,91 @@ describe('APIs', () => {
   it('contains a sidebar', () => {
     cy.readFile(SIDEBAR).then(({ api: sidebarApi }) => {
       cy.readFile(SIDEBAR_EN).then(({ sidebar: { api } }) => {
-        const apiEntries = Object.entries(api)
+        const sidebarCategories = Object.keys(sidebarApi)
 
-        // console.log('apiEntries: ', apiEntries)
+        cy.wrap(sidebarCategories).each((category) => {
+          const pages = Object.keys(sidebarApi[category])
 
-        /**
-         * Flattening the sidebar config so it can be used as a lookup
-         * when we iterate through the `en.yml` file. The `en.yml` file
-         * may contain key/value pairs that do not exist in the sidebar,
-         * likely artifacts of items that used to exist in the sidebar
-         * at one point.
-         */
-        const sidebarItems = Object.keys(sidebarApi).reduce((all, key) => {
-          return {
-            ...all,
-            ...sidebarApi[key],
-          }
-        }, {})
+          cy.get('.app-sidebar').contains(api[category])
 
-        for (let i = 0; i < apiEntries.length; i++) {
-          const [slug, userFriendlyString] = apiEntries[i]
+          cy.wrap(pages).each((page) => {
+            const pageTitle = api[page]
 
-          const existsInSidebar = sidebarItems[slug] !== undefined
-
-          if (!existsInSidebar) {
-            continue
-          }
-
-          cy.get('.app-sidebar').contains(userFriendlyString)
-
-          /**
-           * The `en` file contains a flat list of slug-to-friendly-name pairs.
-           * Each item in the `en` list may or may not be a clickable link in
-           * the sidebar. We have to reference the `sidebar.json` file to determine
-           * if a sidebar item is meant to be a link to another page.
-           *
-           * The top-level keys in the `sidebar.json` are for each of the items
-           * in the top navigation bar: guides, api, plugins, examples, faq, etc.
-           *
-           * The nested keys of those top-level keys (e.g. the keys within `guides`)
-           * are all section headers in the sidebar, and thus, not links to other pages.
-           *
-           * Therefore, the only clickable links in the sidebar that redirect the user
-           * are any items that are not also top-level keys within the different sections
-           * of `sidebar.json`.
-           *
-           * Alternatively, instead of doing this cross-referencing between two different
-           * files (one that describes the structure of the sidebar and the other its content),
-           * a `sidebar` or `en` file could exist such that the sidebar data is both
-           * structured in its currently sectioned manner and contain the user-friendly
-           * content.
-           */
-          const shouldBePageLink = sidebarApi[slug] === undefined
-
-          if (shouldBePageLink) {
-            /**
-             * Steps:
-             * 1. Click the link
-             * 2. Assert that the title has changed
-             * 3. Assert that the path has changed
-             * 4. Capture a snapshot for visual regression testing
-             */
-            cy.title().then(existingTitle => {
-              cy.get('.app-sidebar')
-                .contains(userFriendlyString)
-                .click({ force: true })
-  
-  
-              /**
-               * The title won't change if we are already
-               * on the first page and navigate to the first
-               * page again.
-               */
-              const isDefaultPage = i === 0
-  
-              if (!isDefaultPage) {
-                cy.title().should('equal', existingTitle)
-              }
-  
-              cy.visualSnapshot(`API / ${userFriendlyString}`)
+            cy.contains(
+              page === 'table-of-contents'
+                ? '.app-sidebar a'
+                : `.app-sidebar [data-test="${category}"] a`,
+              pageTitle
+            ).click({
+              force: true,
             })
-          }
+
+            const redirects = {
+              'table-of-contents': '/api/table-of-contents/',
+              'all-assertions': '/guides/references/assertions',
+            }
+
+            cy.location('pathname').should(
+              'equal',
+              redirects[page] || `/api/${category}/${page}`
+            )
+
+            cy.contains(
+              page === 'table-of-contents' || page === 'all-assertions'
+                ? '.app-sidebar a'
+                : `.app-sidebar [data-test="${category}"] a`,
+              page === 'all-assertions' ? 'Assertions' : pageTitle
+            ).should(
+              'have.class',
+              'nuxt-link-exact-active nuxt-link-active active-sidebar-link'
+            )
+
+            const titleAliases = {
+              'all-assertions': 'Assertions',
+              _: 'Cypress._',
+              $: 'Cypress.$',
+              minimatch: 'Cypress.minimatch',
+              promise: 'Cypress.Promise',
+              sinon: 'Cypress.sinon',
+              blob: 'Cypress.Blob',
+              moment: 'Cypress.moment',
+              'custom-commands': 'Custom Commands',
+              cookies: 'Cypress.Cookies',
+              'screenshot-api': 'Cypress.Screenshot',
+              'selector-playground-api': 'Cypress.SelectorPlayground',
+              'cypress-server': 'Cypress.Server',
+              arch: 'Cypress.arch',
+              browser: 'Cypress.browser',
+              config: 'Cypress.config',
+              dom: 'Cypress.dom',
+              env: 'Cypress.env',
+              isbrowser: 'Cypress.isBrowser',
+              iscy: 'Cypress.isCy',
+              'cypress-log': 'Cypress.log',
+              platform: 'Cypress.platform',
+              spec: 'Cypress.spec',
+              version: 'Cypress.version',
+              'configuration-api': 'Configuration API',
+              'preprocessors-api': 'Preprocessors API',
+              'before-run-api': 'Before Run API',
+              'after-run-api': 'After Run API',
+              'before-spec-api': 'Before Spec API',
+              'after-spec-api': 'After Spec API',
+              'browser-launch-api': 'Browser Launch API',
+              'after-screenshot-api': 'After Screenshot API',
+            }
+
+            cy.title().should('equal', titleAliases[page] || pageTitle)
+
+            cy.get('.main-content-title').contains(
+              titleAliases[page] || pageTitle
+            )
+
+            cy.visualSnapshot(`/api/${category}/${page}`)
+          })
 
           cy.visit(API_URL)
-        }
+        })
       })
     })
   })

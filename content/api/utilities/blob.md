@@ -9,7 +9,7 @@ Use `Cypress.Blob` to convert `base64` strings to Blob objects. Useful for testi
 ## Syntax
 
 ```javascript
-Cypress.Blob.method();
+Cypress.Blob.method()
 ```
 
 ### Usage
@@ -17,13 +17,13 @@ Cypress.Blob.method();
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-Cypress.Blob.method();
+Cypress.Blob.method()
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.Blob.method(); // Errors, cannot be chained off 'cy'
+cy.Blob.method() // Errors, cannot be chained off 'cy'
 ```
 
 ## Examples
@@ -34,37 +34,37 @@ cy.Blob.method(); // Errors, cannot be chained off 'cy'
 
 ```javascript
 // programmatically upload the logo
-cy.fixture("images/logo.png").as("logo");
-cy.get("input[type=file]").then(function ($input) {
+cy.fixture('images/logo.png').as('logo')
+cy.get('input[type=file]').then(function ($input) {
   // convert the logo base64 string to a blob
-  const blob = Cypress.Blob.base64StringToBlob(this.logo, "image/png");
+  const blob = Cypress.Blob.base64StringToBlob(this.logo, 'image/png')
 
   // pass the blob to the fileupload jQuery plugin
   // https://github.com/blueimp/jQuery-File-Upload
   // used in your application's code
   // which initiates a programmatic upload
-  $input.fileupload("add", { files: blob });
-});
+  $input.fileupload('add', { files: blob })
+})
 ```
 
 #### Using an image fixture for upload
 
 ```javascript
 // programmatically upload the logo
-cy.fixture("images/logo.png").as("logo");
-cy.get("input[type=file]").then(function (el) {
+cy.fixture('images/logo.png').as('logo')
+cy.get('input[type=file]').then(function (el) {
   // convert the logo base64 string to a blob
-  const blob = Cypress.Blob.base64StringToBlob(this.logo, "image/png");
+  const blob = Cypress.Blob.base64StringToBlob(this.logo, 'image/png')
 
-  const file = new File([blob], "images/logo.png", { type: "image/png" });
-  const list = new DataTransfer();
+  const file = new File([blob], 'images/logo.png', { type: 'image/png' })
+  const list = new DataTransfer()
 
-  list.items.add(file);
-  const myFileList = list.files;
+  list.items.add(file)
+  const myFileList = list.files
 
-  el[0].files = myFileList;
-  el[0].dispatchEvent(new Event("change", { bubbles: true }));
-});
+  el[0].files = myFileList
+  el[0].dispatchEvent(new Event('change', { bubbles: true }))
+})
 ```
 
 ### Getting dataUrl string
@@ -72,15 +72,15 @@ cy.get("input[type=file]").then(function (el) {
 #### Create an `img` element and set its `src` to the `dataUrl`
 
 ```javascript
-return Cypress.Blob.imgSrcToDataURL("/assets/img/logo.png").then((dataUrl) => {
-  const img = Cypress.$("<img />", { src: dataUrl });
+return Cypress.Blob.imgSrcToDataURL('/assets/img/logo.png').then((dataUrl) => {
+  const img = Cypress.$('<img />', { src: dataUrl })
 
-  cy.get(".utility-blob").then(($div) => {
+  cy.get('.utility-blob').then(($div) => {
     // append the image
-    $div.append(img);
-  });
-  cy.get(".utility-blob img").click().should("have.attr", "src", dataUrl);
-});
+    $div.append(img)
+  })
+  cy.get('.utility-blob img').click().should('have.attr', 'src', dataUrl)
+})
 ```
 
 ## History

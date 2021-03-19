@@ -22,14 +22,14 @@ Identical to [`.then()`](/api/commands/then), but always expects an array-like s
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.getCookies().spread(() => {}); // Yield all cookies
+cy.getCookies().spread(() => {}) // Yield all cookies
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.spread(() => {}); // Errors, cannot be chained off 'cy'
-cy.location().spread(); // Errors, 'location' does not yield an array
+cy.spread(() => {}) // Errors, cannot be chained off 'cy'
+cy.location().spread() // Errors, 'location' does not yield an array
 ```
 
 ### Arguments
@@ -46,7 +46,7 @@ Pass in an options object to change the default behavior of `.spread()`.
 | --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------- |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.spread()` to resolve before [timing out](#Timeouts) |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`.spread()` 'yields the return value of your callback function' </li><li>`.spread()` wll not change the subject if `null` or `undefined` is returned.</li></List>
 
@@ -57,14 +57,14 @@ Pass in an options object to change the default behavior of `.spread()`.
 #### Expand the array of aliased routes
 
 ```javascript
-cy.intercept("/users/").as("getUsers");
-cy.intercept("/activities/").as("getActivities");
-cy.intercept("/comments/").as("getComments");
-cy.wait(["@getUsers", "@getActivities", "@getComments"]).spread(
+cy.intercept('/users/').as('getUsers')
+cy.intercept('/activities/').as('getActivities')
+cy.intercept('/comments/').as('getComments')
+cy.wait(['@getUsers', '@getActivities', '@getComments']).spread(
   (getUsers, getActivities, getComments) => {
     // each interception is now an individual argument
   }
-);
+)
 ```
 
 ### Cookies
@@ -74,20 +74,20 @@ cy.wait(["@getUsers", "@getActivities", "@getComments"]).spread(
 ```javascript
 cy.getCookies().spread((cookie1, cookie2, cookie3) => {
   // each cookie is now an individual argument
-});
+})
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.spread()` requires being chained off a previous command.</li><li>`.spread()` requires being chained off a command that yields an array-like structure.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.spread` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`.spread()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.spread()` can time out waiting for a promise you've returned to resolve.</li></List>
 

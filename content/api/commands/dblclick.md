@@ -20,16 +20,16 @@ Double-click a DOM element.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get("button").dblclick(); // Double click on button
-cy.focused().dblclick(); // Double click on el with focus
-cy.contains("Welcome").dblclick(); // Double click on first el containing 'Welcome'
+cy.get('button').dblclick() // Double click on button
+cy.focused().dblclick() // Double click on el with focus
+cy.contains('Welcome').dblclick() // Double click on first el containing 'Welcome'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.dblclick("button"); // Errors, cannot be chained off 'cy'
-cy.window().dblclick(); // Errors, 'window' does not yield DOM element
+cy.dblclick('button') // Errors, cannot be chained off 'cy'
+cy.window().dblclick() // Errors, 'window' does not yield DOM element
 ```
 
 ### Arguments
@@ -66,7 +66,7 @@ Pass in an options object to change the default behavior of `.dblclick()`.
 | `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.dblclick()` to resolve before [timing out](#Timeouts)                                                                           |
 | `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`.dblclick()` yields the same subject it was given from the previous command.</li></List>
 
@@ -77,7 +77,7 @@ Pass in an options object to change the default behavior of `.dblclick()`.
 #### Double click an anchor link
 
 ```javascript
-cy.get("a#nav1").dblclick(); // yields the <a>
+cy.get('a#nav1').dblclick() // yields the <a>
 ```
 
 ### Position
@@ -87,7 +87,7 @@ cy.get("a#nav1").dblclick(); // yields the <a>
 Click the bottom center of the button.
 
 ```javascript
-cy.get("button").dblclick("bottom");
+cy.get('button').dblclick('bottom')
 ```
 
 ### Coordinates
@@ -97,7 +97,7 @@ cy.get("button").dblclick("bottom");
 The double click below will be issued inside of the element (30px from the left and 10px from the top).
 
 ```javascript
-cy.get("button").dblclick(30, 10);
+cy.get('button').dblclick(30, 10)
 ```
 
 ### Options
@@ -107,19 +107,19 @@ cy.get("button").dblclick(30, 10);
 Forcing a double click overrides the [actionable checks](/guides/core-concepts/interacting-with-elements#Forcing) Cypress applies and will automatically fire the events.
 
 ```javascript
-cy.get("button").dblclick({ force: true });
+cy.get('button').dblclick({ force: true })
 ```
 
 #### Force a double click with position argument
 
 ```javascript
-cy.get("button").dblclick("topRight", { force: true });
+cy.get('button').dblclick('topRight', { force: true })
 ```
 
 #### Force a double click with relative coordinates
 
 ```javascript
-cy.get("button").dblclick(60, 60, { force: true });
+cy.get('button').dblclick(60, 60, { force: true })
 ```
 
 #### Double click all buttons found on the page
@@ -129,7 +129,7 @@ By default, Cypress will iteratively apply the double click to each element and 
 You can turn this off by passing `multiple: false` to `.dblclick()`.
 
 ```javascript
-cy.get("button").dblclick({ multiple: false });
+cy.get('button').dblclick({ multiple: false })
 ```
 
 #### Double click with key combinations
@@ -155,9 +155,9 @@ The following modifiers can be combined with `.dblclick()`.
 
 ```js
 // execute ALT + dblclick on the first <li>
-cy.get("li:first").dblclick({
+cy.get('li:first').dblclick({
   altKey: true,
-});
+})
 ```
 
 ## Notes
@@ -170,15 +170,15 @@ cy.get("li:first").dblclick({
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.dblclick()` requires being chained off a command that yields DOM element(s).</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.dblclick` will automatically wait for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.dblclick` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.dblclick()` will automatically wait for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.dblclick()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.dblclick()` can time out waiting for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.dblclick()` can time out waiting for assertions you've added to pass.</li></List>
 
@@ -187,7 +187,7 @@ cy.get("li:first").dblclick({
 **_Double click on a div_**
 
 ```javascript
-cy.get(".action-div").dblclick();
+cy.get('.action-div').dblclick()
 ```
 
 The commands above will display in the Command Log as:

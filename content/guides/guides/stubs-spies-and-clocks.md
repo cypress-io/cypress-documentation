@@ -50,22 +50,22 @@ A stub is most commonly used in a unit test but is still useful during some inte
 
 ```javascript
 // create a standalone stub (generally for use in unit test)
-cy.stub();
+cy.stub()
 
 // replace obj.method() with a stubbed function
-cy.stub(obj, "method");
+cy.stub(obj, 'method')
 
 // force obj.method() to return "foo"
-cy.stub(obj, "method").returns("foo");
+cy.stub(obj, 'method').returns('foo')
 
 // force obj.method() when called with "bar" argument to return "foo"
-cy.stub(obj, "method").withArgs("bar").returns("foo");
+cy.stub(obj, 'method').withArgs('bar').returns('foo')
 
 // force obj.method() to return a promise which resolves to "foo"
-cy.stub(obj, "method").resolves("foo");
+cy.stub(obj, 'method').resolves('foo')
 
 // force obj.method() to return a promise rejected with an error
-cy.stub(obj, "method").rejects(new Error("foo"));
+cy.stub(obj, 'method').rejects(new Error('foo'))
 ```
 
 You generally stub a function when it has side effects you are trying to control.
@@ -95,7 +95,7 @@ A spy gives you the ability to "spy" on a function, by letting you capture and t
 A spy does **not** modify the behavior of the function - it is left perfectly intact. A spy is most useful when you are testing the contract between multiple functions and you don't care about the side effects the real function may create (if any).
 
 ```javascript
-cy.spy(obj, "method");
+cy.spy(obj, 'method')
 ```
 
 <Alert type="info">
@@ -126,10 +126,10 @@ With [cy.clock()](/api/commands/clock) you can control:
 Once you've enabled [`cy.clock()`](/api/commands/clock) you can control time by **ticking** it ahead by milliseconds.
 
 ```javascript
-cy.clock();
-cy.visit("http://localhost:3333");
-cy.get("#search").type("Acme Company");
-cy.tick(1000);
+cy.clock()
+cy.visit('http://localhost:3333')
+cy.get('#search').type('Acme Company')
+cy.tick(1000)
 ```
 
 You can call [`cy.clock()`](/api/commands/clock) **prior** to visiting your application and we will automatically bind it to the application on the next [`cy.visit()`](/api/commands/visit). We bind **before** any timers from your application can be invoked. This works identically to [`cy.server()`](/api/commands/server) and [`cy.route()`](/api/commands/route).
@@ -139,23 +139,23 @@ You can call [`cy.clock()`](/api/commands/clock) **prior** to visiting your appl
 You can restore the clock and allow your application to resume normally without manipulating native global functions related to time. This is automatically called between tests.
 
 ```javascript
-cy.clock();
-cy.visit("http://localhost:3333");
-cy.get("#search").type("Acme Company");
-cy.tick(1000);
+cy.clock()
+cy.visit('http://localhost:3333')
+cy.get('#search').type('Acme Company')
+cy.tick(1000)
 // more test code here
 
 // restore the clock
 cy.clock().then((clock) => {
-  clock.restore();
-});
+  clock.restore()
+})
 // more test code here
 ```
 
 You could also restore by using [.invoke()](/api/commands/invoke) to invoke the `restore` function.
 
 ```js
-cy.clock().invoke("restore");
+cy.clock().invoke('restore')
 ```
 
 ### Assertions
@@ -165,50 +165,50 @@ Once you have a `stub` or a `spy` in hand, you can then create assertions about 
 ```javascript
 const user = {
   getName: (arg) => {
-    return arg;
+    return arg
   },
 
   updateEmail: (arg) => {
-    return arg;
+    return arg
   },
 
   fail: () => {
-    throw new Error("fail whale");
+    throw new Error('fail whale')
   },
-};
+}
 
 // force user.getName() to return "Jane"
-cy.stub(user, "getName").returns("Jane Lane");
+cy.stub(user, 'getName').returns('Jane Lane')
 
 // spy on updateEmail but do not change its behavior
-cy.spy(user, "updateEmail");
+cy.spy(user, 'updateEmail')
 
 // spy on fail but do not change its behavior
-cy.spy(user, "fail");
+cy.spy(user, 'fail')
 
 // invoke getName
-const name = user.getName(123);
+const name = user.getName(123)
 
 // invoke updateEmail
-const email = user.updateEmail("jane@devs.com");
+const email = user.updateEmail('jane@devs.com')
 
 try {
   // invoke fail
-  user.fail();
+  user.fail()
 } catch (e) {}
 
-expect(name).to.eq("Jane Lane"); // true
-expect(user.getName).to.be.calledOnce; // true
-expect(user.getName).not.to.be.calledTwice; // true
-expect(user.getName).to.be.calledWith(123);
-expect(user.getName).to.be.calledWithExactly(123); // true
-expect(user.getName).to.be.calledOn(user); // true
+expect(name).to.eq('Jane Lane') // true
+expect(user.getName).to.be.calledOnce // true
+expect(user.getName).not.to.be.calledTwice // true
+expect(user.getName).to.be.calledWith(123)
+expect(user.getName).to.be.calledWithExactly(123) // true
+expect(user.getName).to.be.calledOn(user) // true
 
-expect(email).to.eq("jane@devs.com"); // true
-expect(user.updateEmail).to.be.calledWith("jane@devs.com"); // true
-expect(user.updateEmail).to.have.returned("jane@devs.com"); // true
+expect(email).to.eq('jane@devs.com') // true
+expect(user.updateEmail).to.be.calledWith('jane@devs.com') // true
+expect(user.updateEmail).to.have.returned('jane@devs.com') // true
 
-expect(user.fail).to.have.thrown("Error"); // true
+expect(user.fail).to.have.thrown('Error') // true
 ```
 
 ## Integration and Extensions

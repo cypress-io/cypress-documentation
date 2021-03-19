@@ -7,10 +7,10 @@ Reload the page.
 ## Syntax
 
 ```javascript
-cy.reload();
-cy.reload(forceReload);
-cy.reload(options);
-cy.reload(forceReload, options);
+cy.reload()
+cy.reload(forceReload)
+cy.reload(options)
+cy.reload(forceReload, options)
 ```
 
 ### Usage
@@ -18,7 +18,7 @@ cy.reload(forceReload, options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.reload();
+cy.reload()
 ```
 
 ### Arguments
@@ -34,7 +34,7 @@ Whether to reload the current page without using the cache. `true` forces the re
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout` | [`pageLoadTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.reload()` to resolve before [timing out](#Timeouts)                 |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`cy.reload()` 'yields the `window` object after the page finishes loading' </li></List>
 
@@ -45,10 +45,10 @@ Whether to reload the current page without using the cache. `true` forces the re
 #### Reload the page as if the user clicked 'Refresh'
 
 ```javascript
-cy.visit("http://localhost:3000/admin");
-cy.get("#undo-btn").click().should("not.be.visible");
-cy.reload();
-cy.get("#undo-btn").click().should("not.be.visible");
+cy.visit('http://localhost:3000/admin')
+cy.get('#undo-btn').click().should('not.be.visible')
+cy.reload()
+cy.get('#undo-btn').click().should('not.be.visible')
 ```
 
 ### Force Reload
@@ -56,21 +56,21 @@ cy.get("#undo-btn").click().should("not.be.visible");
 #### Reload the page without using the cache
 
 ```javascript
-cy.visit("http://localhost:3000/admin");
-cy.reload(true);
+cy.visit('http://localhost:3000/admin')
+cy.reload(true)
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.reload()` requires being chained off of `cy`.</li><li>`cy.reload()` requires the response to be `content-type: text/html`.</li><li>`cy.reload()` requires the response code to be `2xx` after following redirects.</li><li>`cy.reload()` requires the load `load` event to eventually fire.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.reload` will automatically wait for assertions you have chained to pass</li></List>
+<List><li>`cy.reload()` will automatically wait for assertions you have chained to pass</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.reload()` can time out waiting for the page to fire its `load` event.</li><li>`cy.reload()` can time out waiting for assertions you've added to pass.</li></List>
 
@@ -79,7 +79,7 @@ cy.reload(true);
 **_Reload the page_**
 
 ```javascript
-cy.reload();
+cy.reload()
 ```
 
 The commands above will display in the Command Log as:

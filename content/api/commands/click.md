@@ -20,16 +20,16 @@ Click a DOM element.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get(".btn").click(); // Click on button
-cy.focused().click(); // Click on el with focus
-cy.contains("Welcome").click(); // Click on first el containing 'Welcome'
+cy.get('.btn').click() // Click on button
+cy.focused().click() // Click on el with focus
+cy.contains('Welcome').click() // Click on first el containing 'Welcome'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.click(".btn"); // Errors, cannot be chained off 'cy'
-cy.window().click(); // Errors, 'window' does not yield DOM element
+cy.click('.btn') // Errors, cannot be chained off 'cy'
+cy.window().click() // Errors, 'window' does not yield DOM element
 ```
 
 ### Arguments
@@ -66,7 +66,7 @@ Pass in an options object to change the default behavior of `.click()`.
 | `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.click()` to resolve before [timing out](#Timeouts)                                                                              |
 | `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`.click()` yields the same subject it was given from the previous command.</li></List>
 
@@ -77,7 +77,7 @@ Pass in an options object to change the default behavior of `.click()`.
 #### Click a link in a nav
 
 ```javascript
-cy.get(".nav > a").click();
+cy.get('.nav > a').click()
 ```
 
 ### Position
@@ -87,7 +87,7 @@ cy.get(".nav > a").click();
 Click the top right corner of the button.
 
 ```javascript
-cy.get("img").click("topRight");
+cy.get('img').click('topRight')
 ```
 
 ### Coordinates
@@ -97,7 +97,7 @@ cy.get("img").click("topRight");
 The click below will be issued inside of the element (15px from the left and 40px from the top).
 
 ```javascript
-cy.get("#top-banner").click(15, 40);
+cy.get('#top-banner').click(15, 40)
 ```
 
 ### Options
@@ -107,20 +107,20 @@ cy.get("#top-banner").click(15, 40);
 Forcing a click overrides the [actionable checks](/guides/core-concepts/interacting-with-elements#Forcing) Cypress applies and will automatically fire the events.
 
 ```javascript
-cy.get(".close").as("closeBtn");
-cy.get("@closeBtn").click({ force: true });
+cy.get('.close').as('closeBtn')
+cy.get('@closeBtn').click({ force: true })
 ```
 
 #### Force a click with position argument
 
 ```javascript
-cy.get("#collapse-sidebar").click("bottomLeft", { force: true });
+cy.get('#collapse-sidebar').click('bottomLeft', { force: true })
 ```
 
 #### Force a click with relative coordinates
 
 ```javascript
-cy.get("#footer .next").click(5, 60, { force: true });
+cy.get('#footer .next').click(5, 60, { force: true })
 ```
 
 #### Click all elements with id starting with 'btn'
@@ -128,7 +128,7 @@ cy.get("#footer .next").click(5, 60, { force: true });
 By default, Cypress will error if you're trying to click multiple elements. By passing `{ multiple: true }` Cypress will iteratively apply the click to each element and will also log to the [Command Log](/guides/core-concepts/test-runner#Command-Log) multiple times.
 
 ```javascript
-cy.get("[id^=btn]").click({ multiple: true });
+cy.get('[id^=btn]').click({ multiple: true })
 ```
 
 #### Click with key combinations
@@ -154,9 +154,9 @@ The following keys can be combined with `.click()` through the `options`.
 
 ```js
 // execute a SHIFT + click on the first <li>
-cy.get("li:first").click({
+cy.get('li:first').click({
   shiftKey: true,
-});
+})
 ```
 
 ## Notes
@@ -183,15 +183,15 @@ If the mousedown event has its default action prevented (`e.preventDefault()`) t
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.click()` requires being chained off a command that yields DOM element(s).</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.click` will automatically wait for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.click` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.click()` will automatically wait for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.click()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.click()` can time out waiting for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.click()` can time out waiting for assertions you've added to pass.</li></List>
 
@@ -200,7 +200,7 @@ If the mousedown event has its default action prevented (`e.preventDefault()`) t
 **_Click the button_**
 
 ```javascript
-cy.get(".action-btn").click();
+cy.get('.action-btn').click()
 ```
 
 The commands above will display in the Command Log as:

@@ -16,14 +16,14 @@ Type into a DOM element.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get("input").type("Hello, World"); // Type 'Hello, World' into the 'input'
+cy.get('input').type('Hello, World') // Type 'Hello, World' into the 'input'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.type("Welcome"); // Errors, cannot be chained off 'cy'
-cy.url().type("www.cypress.io"); // Errors, 'url' does not yield DOM element
+cy.type('Welcome') // Errors, cannot be chained off 'cy'
+cy.url().type('www.cypress.io') // Errors, 'url' does not yield DOM element
 ```
 
 ### Arguments
@@ -85,7 +85,7 @@ Pass in an options object to change the default behavior of `.type()`.
 | `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.type()` to resolve before [timing out](#Timeouts)                                                                               |
 | `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`.type()` yields the same subject it was given from the previous command.</li></List>
 
@@ -96,7 +96,7 @@ Pass in an options object to change the default behavior of `.type()`.
 #### Type into a textarea.
 
 ```javascript
-cy.get("textarea").type("Hello world"); // yields <textarea>
+cy.get('textarea').type('Hello world') // yields <textarea>
 ```
 
 #### Type into a login form
@@ -112,7 +112,7 @@ cy.get("textarea").type("Hello world"); // yields <textarea>
 Each keypress is delayed 10ms by default in order to simulate how a very fast user types!
 
 ```javascript
-cy.get("[contenteditable]").type("some text!");
+cy.get('[contenteditable]').type('some text!')
 ```
 
 #### 'Selecting' an option from datalist
@@ -129,7 +129,7 @@ For 'selecting' an option, just type it into the input.
 ```
 
 ```javascript
-cy.get("input").type("Apple");
+cy.get('input').type('Apple')
 ```
 
 ### Tabindex
@@ -143,7 +143,7 @@ cy.get("input").type("Apple");
 ```
 
 ```javascript
-cy.get("#el").type("supercalifragilisticexpialidocious");
+cy.get('#el').type('supercalifragilisticexpialidocious')
 ```
 
 ### Date Inputs
@@ -207,7 +207,7 @@ You can also use key combinations during [.click()](/api/commands/click#Click-wi
 ```javascript
 // This is the same as a user holding down SHIFT and ALT, then pressing b
 // The modifiers are released before typing 'hello'
-cy.get("input").type("{shift+alt+b}hello");
+cy.get('input').type('{shift+alt+b}hello')
 ```
 
 When a modifier is specified on its own, it will remain activated for the duration of the `.type()` command, and is released when all subsequent characters are typed. However, [{release: false}](#Options) can be passed as an [option](#Key-Combinations).
@@ -215,7 +215,7 @@ When a modifier is specified on its own, it will remain activated for the durati
 ```javascript
 // This is the same as a user holding down SHIFT and ALT, then typing 'hello'
 // The modifiers are held for the duration of the command.
-cy.get("input").type("{shift}{alt}hello");
+cy.get('input').type('{shift}{alt}hello')
 ```
 
 #### Type literal `{` or `}` characters
@@ -223,11 +223,11 @@ cy.get("input").type("{shift}{alt}hello");
 To disable parsing special characters sequences, set the `parseSpecialCharSequences` option to `false`.
 
 ```js
-cy.get("#code-input")
+cy.get('#code-input')
   // will not escape { } characters
-  .type("function (num) {return num * num;}", {
+  .type('function (num) {return num * num;}', {
     parseSpecialCharSequences: false,
-  });
+  })
 ```
 
 #### Hold down modifier key and type a word
@@ -235,7 +235,7 @@ cy.get("#code-input")
 ```javascript
 // all characters after {ctrl} will have 'ctrlKey'
 // set to 'true' on their key events
-cy.get("input").type("{ctrl}test");
+cy.get('input').type('{ctrl}test')
 ```
 
 #### Release behavior
@@ -245,43 +245,43 @@ By default, modifiers are released after each type command.
 ```javascript
 // 'ctrlKey' will be true for each event while 'test' is typed
 // but false while 'everything' is typed
-cy.get("input").type("{ctrl}test").type("everything");
+cy.get('input').type('{ctrl}test').type('everything')
 ```
 
 To keep a modifier activated between commands, specify `{release: false}` in the options.
 
 ```javascript
 // 'altKey' will be true while typing 'foo'
-cy.get("input").type("{alt}foo", { release: false });
+cy.get('input').type('{alt}foo', { release: false })
 // 'altKey' will also be true during 'get' and 'click' commands
-cy.get("button").click();
+cy.get('button').click()
 ```
 
 Modifiers are automatically released between tests, even with `{release: false}`.
 
 ```javascript
-it("has modifiers activated", () => {
+it('has modifiers activated', () => {
   // 'altKey' will be true while typing 'foo'
-  cy.get("input").type("{alt}foo", { release: false });
-});
+  cy.get('input').type('{alt}foo', { release: false })
+})
 
-it("does not have modifiers activated", () => {
+it('does not have modifiers activated', () => {
   // 'altKey' will be false while typing 'bar'
-  cy.get("input").type("bar");
-});
+  cy.get('input').type('bar')
+})
 ```
 
 To manually release modifiers within a test after using `{release: false}`, use another `type` command and the modifier will be released after it.
 
 ```javascript
 // 'altKey' will be true while typing 'foo'
-cy.get("input").type("{alt}foo", { release: false });
+cy.get('input').type('{alt}foo', { release: false })
 // 'altKey' will be true during the 'get' and 'click' commands
-cy.get("button").click();
+cy.get('button').click()
 // 'altKey' will be released after this command
-cy.get("input").type("{alt}");
+cy.get('input').type('{alt}')
 // 'altKey' will be false during the 'get' and 'click' commands
-cy.get("button").click();
+cy.get('button').click()
 ```
 
 ### Global Shortcuts
@@ -297,9 +297,9 @@ To support this, the `body` can be used as the DOM element to type into (even th
 
 ```javascript
 // all of the type events are fired on the body
-cy.get("body").type(
-  "{uparrow}{uparrow}{downarrow}{downarrow}{leftarrow}{rightarrow}{leftarrow}{rightarrow}ba"
-);
+cy.get('body').type(
+  '{uparrow}{uparrow}{downarrow}{downarrow}{leftarrow}{rightarrow}{leftarrow}{rightarrow}ba'
+)
 ```
 
 #### Do a shift + click
@@ -308,7 +308,7 @@ cy.get("body").type(
 // execute a SHIFT + click on the first <li>
 // {release: false} is necessary so that
 // SHIFT will not be released after the type command
-cy.get("body").type("{shift}", { release: false }).get("li:first").click();
+cy.get('body').type('{shift}', { release: false }).get('li:first').click()
 ```
 
 ### Options
@@ -318,7 +318,7 @@ cy.get("body").type("{shift}", { release: false }).get("li:first").click();
 Forcing typing overrides the [actionable checks](/guides/core-concepts/interacting-with-elements#Forcing) Cypress applies and will automatically fire the events.
 
 ```javascript
-cy.get("input[type=text]").type("Test all the things", { force: true });
+cy.get('input[type=text]').type('Test all the things', { force: true })
 ```
 
 ## Notes
@@ -387,13 +387,13 @@ Cypress respects all default browser behavior when events are canceled.
 ```javascript
 // prevent the characters from being inserted
 // by canceling keydown, keypress, or textInput
-$("#username").on("keydown", (e) => {
-  e.preventDefault();
-});
+$('#username').on('keydown', (e) => {
+  e.preventDefault()
+})
 
 // Cypress will not insert any characters if keydown, keypress, or textInput
 // are cancelled - which matches the default browser behavior
-cy.get("#username").type("bob@gmail.com").should("have.value", ""); // true
+cy.get('#username').type('bob@gmail.com').should('have.value', '') // true
 ```
 
 #### Preventing `mousedown` does not prevent typing
@@ -430,12 +430,12 @@ Modifiers are simulated by setting their corresponding values to `true` for key 
 
 ```javascript
 // app code
-document.querySelector("input:first").addEventListener("keydown", (e) => {
+document.querySelector('input:first').addEventListener('keydown', (e) => {
   // e.shiftKey will be true
-});
+})
 
 // in test
-cy.get("input:first").type("{shift}a");
+cy.get('input:first').type('{shift}a')
 ```
 
 In the example above, a lowercase `a` will be typed, because that's the literal character specified. To type a capital `A`, you can use `.type('{shift}A')` (or `.type('A')` if you don't care about the `shiftKey` property on any key events).
@@ -463,8 +463,8 @@ For instance the following will submit the form.
 ```
 
 ```javascript
-cy.get("#username").type("bob@burgers.com");
-cy.get("#password").type("password123{enter}");
+cy.get('#username').type('bob@burgers.com')
+cy.get('#password').type('password123{enter}')
 ```
 
 Because there are multiple `inputs` and one `submit` button, Cypress submits the form (and fires submit events) as well as a synthetic `click` event to the `button`.
@@ -482,15 +482,15 @@ If the form's `submit` event is `preventedDefault` the form will not actually be
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.type()` requires being chained off a command that yields DOM element(s).</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.type` will automatically wait for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.type` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.type()` will automatically wait for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.type()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.type()` can time out waiting for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.type()` can time out waiting for assertions you've added to pass.</li></List>
 
@@ -499,7 +499,7 @@ If the form's `submit` event is `preventedDefault` the form will not actually be
 **Type into the input**
 
 ```javascript
-cy.get("input[name=firstName]").type("Jane Lane");
+cy.get('input[name=firstName]').type('Jane Lane')
 ```
 
 The commands above will display in the Command Log as:

@@ -155,7 +155,7 @@ The `routeHandler` defines what will happen with a request if the [routeMatcher]
 - If an **object with no `StaticResponse` keys** is passed, it will be sent as a JSON response body. For example, passing `{ foo: 'bar' }` is equivalent to passing `{ body: { foo: 'bar' } }`.
 - If a **function callback** is passed, it will be called whenever a request matching this route is received, with the first parameter being the request object. From inside the callback, you can modify the outgoing request, send a response, access the real response, and much more. See [Intercepting a request](#Intercepting-a-request) and [Intercepting a response](#Intercepting-a-response) for examples of dynamic interception.
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `cy.intercept()` yields `null`.
 - `cy.intercept()` can be aliased, but otherwise cannot be chained further.

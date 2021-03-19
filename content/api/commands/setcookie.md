@@ -7,8 +7,8 @@ Set a browser cookie.
 ## Syntax
 
 ```javascript
-cy.setCookie(name, value);
-cy.setCookie(name, value, options);
+cy.setCookie(name, value)
+cy.setCookie(name, value, options)
 ```
 
 ### Usage
@@ -16,7 +16,7 @@ cy.setCookie(name, value, options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.setCookie("auth_key", "123key"); // Set the 'auth_key' cookie to '123key'
+cy.setCookie('auth_key', '123key') // Set the 'auth_key' cookie to '123key'
 ```
 
 ### Arguments
@@ -44,7 +44,7 @@ Pass in an options object to change the default behavior of `cy.setCookie()`.
 | `timeout`  | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.setCookie()` to resolve before [timing out](#Timeouts)                                                                                                                                           |
 | `sameSite` | `undefined`                                                    | Cookie's SameSite value. If set, should be one of `lax`, `strict`, or `no_restriction`. Pass `undefined` to use the browser's default. Note: `no_restriction` can only be used if the `secure` flag is set to `true`. |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 `cy.setCookie()` yields a cookie object with the following properties:
 
@@ -64,26 +64,26 @@ Pass in an options object to change the default behavior of `cy.setCookie()`.
 #### Set a cookie
 
 ```javascript
-cy.getCookies().should("be.empty");
-cy.setCookie("session_id", "189jd09sufh33aaiidhf99d09");
-cy.getCookie("session_id").should(
-  "have.property",
-  "value",
-  "189jd09sufh33aaiidhf99d09"
-);
+cy.getCookies().should('be.empty')
+cy.setCookie('session_id', '189jd09sufh33aaiidhf99d09')
+cy.getCookie('session_id').should(
+  'have.property',
+  'value',
+  '189jd09sufh33aaiidhf99d09'
+)
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.setCookie()` requires being chained off of `cy`.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.setCookie` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`cy.setCookie()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.setCookie()` should never time out.</li><li><Alert type="warning">
 
@@ -94,9 +94,9 @@ Because `cy.setCookie()` is asynchronous it is technically possible for there to
 ## Command Log
 
 ```javascript
-cy.getCookies().should("be.empty");
-cy.setCookie("fakeCookie1", "123ABC");
-cy.getCookie("fakeCookie1").should("have.property", "value", "123ABC");
+cy.getCookies().should('be.empty')
+cy.setCookie('fakeCookie1', '123ABC')
+cy.getCookie('fakeCookie1').should('have.property', 'value', '123ABC')
 ```
 
 The commands above will display in the Command Log as:

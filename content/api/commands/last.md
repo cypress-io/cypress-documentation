@@ -22,14 +22,14 @@ The querying behavior of this command matches exactly how [`.last()`](http://api
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get("nav a").last(); // Yield last link in nav
+cy.get('nav a').last() // Yield last link in nav
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.last(); // Errors, cannot be chained off 'cy'
-cy.getCookies().last(); // Errors, 'getCookies' does not yield DOM element
+cy.last() // Errors, cannot be chained off 'cy'
+cy.getCookies().last() // Errors, 'getCookies' does not yield DOM element
 ```
 
 ### Arguments
@@ -43,7 +43,7 @@ Pass in an options object to change the default behavior of `.last()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.last()` to resolve before [timing out](#Timeouts)                     |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`.last()` yields the new DOM element(s) it found.</li></List>
 
@@ -64,20 +64,20 @@ Pass in an options object to change the default behavior of `.last()`.
 
 ```javascript
 // yields <li class="four">Knick knack on my door</li>
-cy.get("li").last();
+cy.get('li').last()
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.last()` requires being chained off a command that yields DOM element(s).</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.last` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.last` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.last()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.last()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.last()` can time out waiting for the element(s) to [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.last()` can time out waiting for assertions you've added to pass.</li></List>
 
@@ -86,7 +86,7 @@ cy.get("li").last();
 **_Find the last button in the form_**
 
 ```javascript
-cy.get("form").find("button").last();
+cy.get('form').find('button').last()
 ```
 
 The commands above will display in the Command Log as:

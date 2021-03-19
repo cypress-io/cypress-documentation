@@ -22,14 +22,14 @@ The querying behavior of this command matches exactly how [`.closest()`](http://
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get("td").closest(".filled"); // Yield closest el with class '.filled'
+cy.get('td').closest('.filled') // Yield closest el with class '.filled'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.closest(".active"); // Errors, cannot be chained off 'cy'
-cy.url().closest(); // Errors, 'url' does not yield DOM element
+cy.closest('.active') // Errors, cannot be chained off 'cy'
+cy.url().closest() // Errors, 'url' does not yield DOM element
 ```
 
 ### Arguments
@@ -47,7 +47,7 @@ Pass in an options object to change the default behavior of `.closest()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.closest()` to resolve before [timing out](#Timeouts)                  |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`.closest()` yields the new DOM element(s) it found.</li></List>
 
@@ -58,20 +58,20 @@ Pass in an options object to change the default behavior of `.closest()`.
 #### Find the closest element of the `.error` with the class 'banner'
 
 ```javascript
-cy.get("p.error").closest(".banner");
+cy.get('p.error').closest('.banner')
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.closest()` requires being chained off a command that yields DOM element(s).</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.closest` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.closest` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.closest()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.closest()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.closest()` can time out waiting for the element(s) to [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.closest()` can time out waiting for assertions you've added to pass.</li></List>
 
@@ -80,7 +80,7 @@ cy.get("p.error").closest(".banner");
 #### Find the closest element of `li.active` with the class 'nav'
 
 ```javascript
-cy.get("li.active").closest(".nav");
+cy.get('li.active').closest('.nav')
 ```
 
 The commands above will display in the Command Log as:

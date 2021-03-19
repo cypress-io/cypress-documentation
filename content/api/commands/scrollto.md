@@ -7,9 +7,9 @@ Scroll to a specific position.
 ## Syntax
 
 ```javascript
-cy.scrollTo(position);
-cy.scrollTo(x, y);
-cy.scrollTo(position, options);
+cy.scrollTo(position)
+cy.scrollTo(x, y)
+cy.scrollTo(position, options)
 cy.scrollTo(x, y, options)
 
   // ---or---
@@ -17,7 +17,7 @@ cy.scrollTo(x, y, options)
   .scrollTo(position)
   .scrollTo(x, y)
   .scrollTo(position, options)
-  .scrollTo(x, y, options);
+  .scrollTo(x, y, options)
 ```
 
 ### Usage
@@ -25,14 +25,14 @@ cy.scrollTo(x, y, options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.scrollTo(0, 500); // Scroll the window 500px down
-cy.get(".sidebar").scrollTo("bottom"); // Scroll 'sidebar' to its bottom
+cy.scrollTo(0, 500) // Scroll the window 500px down
+cy.get('.sidebar').scrollTo('bottom') // Scroll 'sidebar' to its bottom
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.title().scrollTo("My App"); // Errors, 'title' does not yield DOM element
+cy.title().scrollTo('My App') // Errors, 'title' does not yield DOM element
 ```
 
 ### Arguments
@@ -63,7 +63,7 @@ Pass in an options object to change the default behavior of `cy.scrollTo()`.
 | `log`              | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.scrollTo()` to resolve before [timing out](#Timeouts)                 |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`cy.scrollTo()` yields the same subject it was given from the previous command.</li></List>
 
@@ -74,13 +74,13 @@ Pass in an options object to change the default behavior of `cy.scrollTo()`.
 #### Scroll to the bottom of the window
 
 ```javascript
-cy.scrollTo("bottom");
+cy.scrollTo('bottom')
 ```
 
 #### Scroll to the center of the list
 
 ```javascript
-cy.get("#movies-list").scrollTo("center");
+cy.get('#movies-list').scrollTo('center')
 ```
 
 ### Coordinates
@@ -88,19 +88,19 @@ cy.get("#movies-list").scrollTo("center");
 #### Scroll 500px down the list
 
 ```javascript
-cy.get("#infinite-scroll-list").scrollTo(0, 500);
+cy.get('#infinite-scroll-list').scrollTo(0, 500)
 ```
 
 #### Scroll the window 500px to the right
 
 ```javascript
-cy.scrollTo("500px");
+cy.scrollTo('500px')
 ```
 
 #### Scroll 25% down the element's height
 
 ```javascript
-cy.get(".user-photo").scrollTo("0%", "25%");
+cy.get('.user-photo').scrollTo('0%', '25%')
 ```
 
 ### Options
@@ -108,13 +108,13 @@ cy.get(".user-photo").scrollTo("0%", "25%");
 #### Use linear easing animation to scroll
 
 ```javascript
-cy.get(".documentation").scrollTo("top", { easing: "linear" });
+cy.get('.documentation').scrollTo('top', { easing: 'linear' })
 ```
 
 #### Scroll to the right over 2000ms
 
 ```javascript
-cy.get("#slider").scrollTo("right", { duration: 2000 });
+cy.get('#slider').scrollTo('right', { duration: 2000 })
 ```
 
 #### Do not error if element is not scrollable
@@ -123,8 +123,8 @@ Let's say we do not know whether our `table` element is scrollable. Sometimes th
 
 ```js
 // will move on to next command even if table is not scrollable
-cy.get("table").scrollTo("bottom", { ensureScrollable: false });
-cy.get("table").find("tr:last-child").should("be.visible");
+cy.get('table').scrollTo('bottom', { ensureScrollable: false })
+cy.get('table').find('tr:last-child').should('be.visible')
 ```
 
 ## Notes
@@ -142,7 +142,7 @@ cy.get("table").find("tr:last-child").should("be.visible");
 This scrolls the `window`.
 
 ```javascript
-cy.scrollTo("bottom");
+cy.scrollTo('bottom')
 ```
 
 #### When chained to an existing series of commands:
@@ -150,7 +150,7 @@ cy.scrollTo("bottom");
 This will scroll the `<#checkout-items>` element.
 
 ```javascript
-cy.get("#checkout-items").scrollTo("right");
+cy.get('#checkout-items').scrollTo('right')
 ```
 
 ### Snapshots
@@ -161,11 +161,11 @@ _Cypress does not reflect the accurate scroll positions of any elements within s
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.scrollTo()` requires being chained off a command that yields DOM element(s).</li><li>`.scrollTo()` requires the element to be scrollable.</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.scrollTo()` can time out waiting for assertions you've added to pass.</li></List>
 
@@ -174,8 +174,8 @@ _Cypress does not reflect the accurate scroll positions of any elements within s
 **_Scroll to the bottom of the window then scroll the element to the "right"_**
 
 ```javascript
-cy.scrollTo("bottom");
-cy.get("#scrollable-horizontal").scrollTo("right");
+cy.scrollTo('bottom')
+cy.get('#scrollable-horizontal').scrollTo('right')
 ```
 
 The commands above will display in the Command Log as:

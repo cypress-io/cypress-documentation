@@ -12,10 +12,15 @@ export default {
       type: String,
       required: true,
     },
+    title: {
+      type: String,
+      required: false,
+      default: 'video',
+    },
   },
   computed: {
     filePath() {
-      return require(`../../assets${  this.src}`)
+      return require(`../../assets${this.src}`)
     },
     isVimeo() {
       return this.src.includes('vimeo.com')
@@ -28,8 +33,8 @@ export default {
 </script>
 
 <template>
-  <EmbedVimeo v-if="isVimeo" :src="src" />
-  <EmbedYouTube v-else-if="isYouTube" :src="src" />
+  <EmbedVimeo v-if="isVimeo" :src="src" :title="title" />
+  <EmbedYouTube v-else-if="isYouTube" :src="src" :title="title" />
   <video v-else class="docs-video" controls>
     <source :src="filePath" />
   </video>

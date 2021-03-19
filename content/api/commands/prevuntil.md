@@ -26,14 +26,14 @@ The querying behavior of this command matches exactly how [`.prevUntil()`](http:
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get("p").prevUntil(".intro"); // Yield siblings before 'p' until '.intro'
+cy.get('p').prevUntil('.intro') // Yield siblings before 'p' until '.intro'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.prevUntil(); // Errors, cannot be chained off 'cy'
-cy.location().prevUntil("path"); // Errors, 'location' does not yield DOM element
+cy.prevUntil() // Errors, cannot be chained off 'cy'
+cy.location().prevUntil('path') // Errors, 'location' does not yield DOM element
 ```
 
 ### Arguments
@@ -59,7 +59,7 @@ Pass in an options object to change the default behavior of `.prevUntil()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.prevUntil()` to resolve before [timing out](#Timeouts)                |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`.prevUntil()` yields the new DOM element(s) it found.</li></List>
 
@@ -88,20 +88,20 @@ Pass in an options object to change the default behavior of `.prevUntil()`.
 
 ```javascript
 // yields [<li>cucumbers</li>, <li>carrots</li>, <li>corn</li>]
-cy.get("#nuts").prevUntil("#veggies");
+cy.get('#nuts').prevUntil('#veggies')
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.prevUntil()` requires being chained off a command that yields DOM element(s).</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.prevUntil` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.prevUntil` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.prevUntil()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.prevUntil()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.prevUntil()` can time out waiting for the element(s) to [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.prevUntil()` can time out waiting for assertions you've added to pass.</li></List>
 
@@ -110,7 +110,7 @@ cy.get("#nuts").prevUntil("#veggies");
 **_Find all of the element's siblings before `#nuts` until `#veggies`_**
 
 ```javascript
-cy.get("#nuts").prevUntil("#veggies");
+cy.get('#nuts').prevUntil('#veggies')
 ```
 
 The commands above will display in the Command Log as:

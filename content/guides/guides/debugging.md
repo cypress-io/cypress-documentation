@@ -21,13 +21,13 @@ Your Cypress test code runs in the same run loop as your application. This means
 Based on those statements, you might be tempted to throw a `debugger` into your test, like so:
 
 ```js
-it("let me debug like a fiend", () => {
-  cy.visit("/my/page/path");
+it('let me debug like a fiend', () => {
+  cy.visit('/my/page/path')
 
-  cy.get(".selector-in-question");
+  cy.get('.selector-in-question')
 
-  debugger; // Doesn't work
-});
+  debugger // Doesn't work
+})
 ```
 
 This may not work exactly as you are expecting. As you may remember from the [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress), `cy` commands enqueue an action to be taken later. Can you see what the test above will do given that perspective?
@@ -37,15 +37,15 @@ Both [`cy.visit()`](/api/commands/visit) and [`cy.get()`](/api/commands/get) wil
 Let's use [`.then()`](/api/commands/then) to tap into the Cypress command during execution and add a `debugger` at the appropriate time:
 
 ```js
-it("let me debug when the after the command executes", () => {
-  cy.visit("/my/page/path");
+it('let me debug when the after the command executes', () => {
+  cy.visit('/my/page/path')
 
-  cy.get(".selector-in-question").then(($selectedElement) => {
+  cy.get('.selector-in-question').then(($selectedElement) => {
     // Debugger is hit after the cy.visit
     // and cy.get command have completed
-    debugger;
-  });
-});
+    debugger
+  })
+})
 ```
 
 Now we're in business! The first time through, [`cy.visit()`](/api/commands/visit) and the [`cy.get()`](/api/commands/get) chain (with its [`.then()`](/api/commands/then) attached) are enqueued for Cypress to execute. The `it` block exits, and Cypress starts its work:
@@ -61,11 +61,11 @@ Now we're in business! The first time through, [`cy.visit()`](/api/commands/visi
 Cypress also exposes a shortcut for debugging commands, [`.debug()`](/api/commands/debug). Let's rewrite the test above using this helper method:
 
 ```js
-it("let me debug like a fiend", () => {
-  cy.visit("/my/page/path");
+it('let me debug like a fiend', () => {
+  cy.visit('/my/page/path')
 
-  cy.get(".selector-in-question").debug();
-});
+  cy.get('.selector-in-question').debug()
+})
 ```
 
 The current subject that is yielded by the [`cy.get()`](/api/commands/get) is exposed as the variable `subject` within your Developer Tools so that you can interact with it in the console.
@@ -79,11 +79,11 @@ Use [`.debug()`](/api/commands/debug) to quickly inspect any (or many!) part(s) 
 You can run the test command by command using the [`.pause()`](/api/commands/pause) command.
 
 ```javascript
-it("adds items", () => {
-  cy.pause();
-  cy.get(".new-todo");
+it('adds items', () => {
+  cy.pause()
+  cy.get('.new-todo')
   // more commands
-});
+})
 ```
 
 This allows you to inspect the web application, the DOM, the network, and any storage after each command to make sure everything happens as expected.
@@ -94,7 +94,7 @@ Though Cypress has built out [an excellent Test Runner](/guides/core-concepts/te
 
 <Alert type="info">
 
-### <Icon name="video-camera"></Icon> See it in action!
+### <Icon name="video"></Icon> See it in action!
 
 You can see a walk-through of debugging some application code from Cypress [in this segment from our React tutorial series](https://vimeo.com/242961930#t=264s).
 
@@ -117,10 +117,10 @@ Sometimes tests fail. Sometimes we want them to fail, just so we know they're te
 Let's take a look at the anatomy of an error and how it is displayed in Cypress, by way of a failing test.
 
 ```js
-it("reroutes on users page", () => {
-  cy.contains("Users").click();
-  cy.url().should("include", "users");
-});
+it('reroutes on users page', () => {
+  cy.contains('Users').click()
+  cy.url().should('include', 'users')
+})
 ```
 
 The center of the `<li>Users</li>` element is hidden from view in our application under test, so the test above will fail. Within Cypress, an error will show on failure that includes the following pieces of information:
@@ -169,7 +169,7 @@ Cypress emits multiple events you can listen to as shown below. [Read more about
 If you need to run a Cypress command straight from the Developer Tools console, you can use the internal command `cy.now('command name', ...arguments)`. For example, to run the equivalent of `cy.task('database', 123)` outside the normal execution command chain:
 
 ```javascript
-cy.now("task", 123).then(console.log);
+cy.now('task', 123).then(console.log)
 // runs cy.task(123) and prints the resolved value
 ```
 

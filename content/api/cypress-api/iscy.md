@@ -9,7 +9,7 @@ This utility may be useful when writing [plugins](/api/plugins/writing-a-plugin)
 ## Syntax
 
 ```javascript
-Cypress.isCy(obj);
+Cypress.isCy(obj)
 ```
 
 ### Arguments
@@ -21,13 +21,13 @@ The object to test.
 ## Examples
 
 ```javascript
-Cypress.isCy(cy); // true
+Cypress.isCy(cy) // true
 
 const chainer = cy.wrap().then(() => {
-  Cypress.isCy(chainer); // true
-});
+  Cypress.isCy(chainer) // true
+})
 
-Cypress.isCy(undefined); // false
+Cypress.isCy(undefined) // false
 
-Cypress.isCy(() => {}); // false
+Cypress.isCy(() => {}) // false
 ```

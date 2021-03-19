@@ -4,7 +4,7 @@ title: Cypress.Server
 
 <Alert type="warning">
 
-⚠️ **`cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0**. In a future release, support for `cy.server()` and `cy.route()` will be moved to a plugin. Consider using [`cy.intercept()`](/api/commands/intercept.html) instead.
+⚠️ **`cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0**. In a future release, support for `cy.server()` and `cy.route()` will be moved to a plugin. Consider using [`cy.intercept()`](/api/commands/intercept) instead.
 
 </Alert>
 
@@ -13,7 +13,7 @@ Permanently change the default options for all [`cy.server()`](/api/commands/ser
 ## Syntax
 
 ```javascript
-Cypress.Server.defaults(options);
+Cypress.Server.defaults(options)
 ```
 
 ### Arguments
@@ -36,7 +36,7 @@ Cypress.Server.defaults({
   ignore: (xhr) => {
     // handle custom logic for filtering XHR requests
   },
-});
+})
 ```
 
 ## Notes

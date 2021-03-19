@@ -83,7 +83,7 @@ Notice that the Cypress `npm` package is a wrapper around the Cypress binary. Th
 The recommended approach is to install Cypress with `npm` because :
 
 - Cypress is versioned like any other dependency.
-- It simplifies running Cypress in [Continuous Integration](/guides/guides/continuous-integration).
+- It simplifies running Cypress in [Continuous Integration](/guides/continuous-integration/continuous-integration-introduction).
 
 </Alert>
 
@@ -117,7 +117,7 @@ Then you can manually unzip and double click. Cypress will run without needing t
 
 ### <Icon name="refresh"></Icon> Continuous integration
 
-Please read our [Continuous Integration](/guides/guides/continuous-integration) docs for help installing Cypress in CI. When running in linux you'll need to install some [system dependencies](/guides/guides/continuous-integration#Dependencies) or you can use our [Docker images](/examples/examples/docker) which have everything you need prebuilt.
+Please read our [Continuous Integration](/guides/continuous-integration/continuous-integration-introduction) docs for help installing Cypress in CI. When running in linux you'll need to install some [system dependencies](/guides/continuous-integration/continuous-integration-introduction#Dependencies) or you can use our [Docker images](/examples/examples/docker) which have everything you need prebuilt.
 
 ## Opening Cypress
 
@@ -260,7 +260,7 @@ environment:
   CYPRESS_CACHE_FOLDER: '~/.cache/Cypress'
 ```
 
-See also [Continuous Integration - Caching](/guides/guides/continuous-integration#Caching) section in the documentation.
+See also [Continuous Integration - Caching](/guides/continuous-integration/continuous-integration-introduction#Caching) section in the documentation.
 
 <Alert type="warning">
 

@@ -33,10 +33,10 @@ Not all configuration values can be changed during runtime. See [Notes](#Notes) 
 ## Syntax
 
 ```javascript
-Cypress.config();
-Cypress.config(name);
-Cypress.config(name, value);
-Cypress.config(object);
+Cypress.config()
+Cypress.config(name)
+Cypress.config(name, value)
+Cypress.config(object)
 ```
 
 ### Arguments
@@ -68,7 +68,7 @@ Set multiple configuration options with an object literal.
 <!-- textlint-disable -->
 
 ```javascript
-Cypress.config(); // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, ...}
+Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, ...}
 ```
 
 <!-- textlint-enable -->
@@ -84,7 +84,7 @@ Cypress.config(); // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, .
 ```
 
 ```javascript
-Cypress.config("pageLoadTimeout"); // => 60000
+Cypress.config('pageLoadTimeout') // => 60000
 ```
 
 ### Name and Value
@@ -107,9 +107,9 @@ Remember, any changes that you make to configuration using this API will only be
 ```
 
 ```javascript
-Cypress.config("viewportWidth", 800);
+Cypress.config('viewportWidth', 800)
 
-Cypress.config("viewportWidth"); // => 800
+Cypress.config('viewportWidth') // => 800
 ```
 
 ### Object
@@ -127,9 +127,9 @@ Cypress.config("viewportWidth"); // => 800
 Cypress.config({
   defaultCommandTimeout: 10000,
   viewportHeight: 900,
-});
+})
 
-Cypress.config(); // => {defaultCommandTimeout: 10000, viewportHeight: 900, ...}
+Cypress.config() // => {defaultCommandTimeout: 10000, viewportHeight: 900, ...}
 ```
 
 ## Notes

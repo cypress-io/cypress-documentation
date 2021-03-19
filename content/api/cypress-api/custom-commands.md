@@ -13,9 +13,9 @@ A great place to define or overwrite commands is in your `cypress/support/comman
 ## Syntax
 
 ```javascript
-Cypress.Commands.add(name, callbackFn);
-Cypress.Commands.add(name, options, callbackFn);
-Cypress.Commands.overwrite(name, callbackFn);
+Cypress.Commands.add(name, callbackFn)
+Cypress.Commands.add(name, options, callbackFn)
+Cypress.Commands.overwrite(name, callbackFn)
 ```
 
 ### Usage
@@ -23,8 +23,8 @@ Cypress.Commands.overwrite(name, callbackFn);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-Cypress.Commands.add("login", (email, pw) => {});
-Cypress.Commands.overwrite("visit", (orig, url, options) => {});
+Cypress.Commands.add('login', (email, pw) => {})
+Cypress.Commands.overwrite('visit', (orig, url, options) => {})
 ```
 
 ### Arguments
@@ -82,25 +82,25 @@ Examples of parent commands:
 #### Click link containing text
 
 ```js
-Cypress.Commands.add("clickLink", (label) => {
-  cy.get("a").contains(label).click();
-});
+Cypress.Commands.add('clickLink', (label) => {
+  cy.get('a').contains(label).click()
+})
 ```
 
 ```js
-cy.clickLink("Buy Now");
+cy.clickLink('Buy Now')
 ```
 
 #### Check a token
 
 ```js
-Cypress.Commands.add("checkToken", (token) => {
-  cy.window().its("localStorage.token").should("eq", token);
-});
+Cypress.Commands.add('checkToken', (token) => {
+  cy.window().its('localStorage.token').should('eq', token)
+})
 ```
 
 ```js
-cy.checkToken("abc123");
+cy.checkToken('abc123')
 ```
 
 #### Download a file
@@ -108,160 +108,160 @@ cy.checkToken("abc123");
 Originally used in [cypress-downloadfile](https://github.com/Xvier/cypress-downloadfile), this command calls other Cypress commands.
 
 ```javascript
-Cypress.Commands.add("downloadFile", (url, directory, fileName) => {
+Cypress.Commands.add('downloadFile', (url, directory, fileName) => {
   return cy.getCookies().then((cookies) => {
-    return cy.task("downloadFile", {
+    return cy.task('downloadFile', {
       url,
       directory,
       cookies,
       fileName,
-    });
-  });
-});
+    })
+  })
+})
 ```
 
 ```js
-cy.downloadFile("https://path_to_file.pdf", "mydownloads", "demo.pdf");
+cy.downloadFile('https://path_to_file.pdf', 'mydownloads', 'demo.pdf')
 ```
 
 #### Commands to work with `sessionStorage`
 
 ```js
-Cypress.Commands.add("getSessionStorage", (key) => {
-  cy.window().then((window) => window.sessionStorage.getItem(key));
-});
+Cypress.Commands.add('getSessionStorage', (key) => {
+  cy.window().then((window) => window.sessionStorage.getItem(key))
+})
 
-Cypress.Commands.add("setSessionStorage", (key, value) => {
+Cypress.Commands.add('setSessionStorage', (key, value) => {
   cy.window().then((window) => {
-    window.sessionStorage.setItem(key, value);
-  });
-});
+    window.sessionStorage.setItem(key, value)
+  })
+})
 ```
 
 ```js
-cy.setSessionStorage("token", "abc123");
-cy.getSessionStorage("token").should("eq", "abc123");
+cy.setSessionStorage('token', 'abc123')
+cy.getSessionStorage('token').should('eq', 'abc123')
 ```
 
 #### Log in command using UI
 
 ```js
-Cypress.Commands.add("typeLogin", (user) => {
-  cy.get("input[name=email]").type(user.email);
+Cypress.Commands.add('typeLogin', (user) => {
+  cy.get('input[name=email]').type(user.email)
 
-  cy.get("input[name=password]").type(user.password);
-});
+  cy.get('input[name=password]').type(user.password)
+})
 ```
 
 ```js
-cy.typeLogin({ email: "fake@email.com", password: "Secret1" });
+cy.typeLogin({ email: 'fake@email.com', password: 'Secret1' })
 ```
 
 #### Log in command using request
 
 ```javascript
-Cypress.Commands.add("login", (userType, options = {}) => {
+Cypress.Commands.add('login', (userType, options = {}) => {
   // this is an example of skipping your UI and logging in programmatically
 
   // setup some basic types
   // and user properties
   const types = {
     admin: {
-      name: "Jane Lane",
+      name: 'Jane Lane',
       admin: true,
     },
     user: {
-      name: "Jim Bob",
+      name: 'Jim Bob',
       admin: false,
     },
-  };
+  }
 
   // grab the user
-  const user = types[userType];
+  const user = types[userType]
 
   // create the user first in the DB
   cy.request({
-    url: "/seed/users", // assuming you've exposed a seeds route
-    method: "POST",
+    url: '/seed/users', // assuming you've exposed a seeds route
+    method: 'POST',
     body: user,
   })
-    .its("body")
+    .its('body')
     .then((body) => {
       // assuming the server sends back the user details
       // including a randomly generated password
       //
       // we can now login as this newly created user
       cy.request({
-        url: "/login",
-        method: "POST",
+        url: '/login',
+        method: 'POST',
         body: {
           email: body.email,
           password: body.password,
         },
-      });
-    });
-});
+      })
+    })
+})
 ```
 
 ```javascript
 // can start a chain off of cy
-cy.login("admin");
+cy.login('admin')
 
 // can be chained but will not receive the previous subject
-cy.get("button").login("user");
+cy.get('button').login('user')
 ```
 
 #### Log out command using UI
 
 ```js
-Cypress.Commands.add("logout", () => {
-  cy.contains("Login").should("not.exist");
-  cy.get(".avatar").click();
-  cy.contains("Logout").click();
-});
+Cypress.Commands.add('logout', () => {
+  cy.contains('Login').should('not.exist')
+  cy.get('.avatar').click()
+  cy.contains('Logout').click()
+})
 ```
 
 #### Log out command using `localStorage`
 
 ```js
-Cypress.Commands.add("logout", () => {
-  cy.window().its("localStorage").invoke("removeItem", "session");
+Cypress.Commands.add('logout', () => {
+  cy.window().its('localStorage').invoke('removeItem', 'session')
 
-  cy.visit("/login");
-});
+  cy.visit('/login')
+})
 ```
 
 ```js
-cy.logout();
+cy.logout()
 ```
 
 #### Create a user
 
 ```js
-Cypress.Commands.add("createUser", (user) => {
+Cypress.Commands.add('createUser', (user) => {
   cy.request({
-    method: "POST",
-    url: "https://www.example.com/tokens",
+    method: 'POST',
+    url: 'https://www.example.com/tokens',
     body: {
-      email: "admin_username",
-      password: "admin_password",
+      email: 'admin_username',
+      password: 'admin_password',
     },
   }).then((resp) => {
     cy.request({
-      method: "POST",
-      url: "https://www.example.com/users",
-      headers: { Authorization: "Bearer " + resp.body.token },
+      method: 'POST',
+      url: 'https://www.example.com/users',
+      headers: { Authorization: 'Bearer ' + resp.body.token },
       body: user,
-    });
-  });
-});
+    })
+  })
+})
 ```
 
 ```js
 cy.createUser({
   id: 123,
-  name: "Jane Lane",
-});
+  name: 'Jane Lane',
+})
 ```
 
 <Alert type="info">
@@ -293,7 +293,7 @@ Examples of child commands:
 // but demonstrates how subject is passed
 // and how the arguments are shifted
 Cypress.Commands.add(
-  "console",
+  'console',
   {
     prevSubject: true,
   },
@@ -302,26 +302,26 @@ Cypress.Commands.add(
     // and the commands arguments are shifted
 
     // allow us to change the console method used
-    method = method || "log";
+    method = method || 'log'
 
     // log the subject to the console
-    console[method]("The subject is", subject);
+    console[method]('The subject is', subject)
 
     // whatever we return becomes the new subject
     //
     // we don't want to change the subject so
     // we return whatever was passed in
-    return subject;
+    return subject
   }
-);
+)
 ```
 
 ```javascript
-cy.get("button")
-  .console("info")
+cy.get('button')
+  .console('info')
   .then(($button) => {
     // subject is still $button
-  });
+  })
 ```
 
 By setting the `{ prevSubject: true }`, our new `.console()` command will require a subject.
@@ -329,7 +329,7 @@ By setting the `{ prevSubject: true }`, our new `.console()` command will requir
 Invoking it like this would error:
 
 ```javascript
-cy.console(); // error about how you can't call console without a subject
+cy.console() // error about how you can't call console without a subject
 ```
 
 <Alert type="info">
@@ -373,8 +373,8 @@ Cypress.Commands.add('dismiss', {
 ```
 
 ```javascript
-cy.dismiss(); // no subject
-cy.get("#dialog").dismiss(); // with subject
+cy.dismiss() // no subject
+cy.get('#dialog').dismiss() // with subject
 ```
 
 ### Overwrite Existing Commands
@@ -384,23 +384,23 @@ You can also modify the behavior of existing Cypress commands. This is useful to
 #### Overwrite `visit` command
 
 ```javascript
-Cypress.Commands.overwrite("visit", (originalFn, url, options) => {
-  const domain = Cypress.env("BASE_DOMAIN");
+Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
+  const domain = Cypress.env('BASE_DOMAIN')
 
-  if (domain === "...") {
-    url = "...";
+  if (domain === '...') {
+    url = '...'
   }
 
-  if (options.something === "else") {
-    url = "...";
+  if (options.something === 'else') {
+    url = '...'
   }
 
   // originalFn is the existing `visit` command that you need to call
   // and it will receive whatever you pass in here.
   //
   // make sure to add a return here!
-  return originalFn(url, options);
-});
+  return originalFn(url, options)
+})
 ```
 
 <Alert type="info">
@@ -418,8 +418,8 @@ For more complex use cases feel free to overwrite existing commands.
 If you are typing into a password field, the password input is masked automatically within your application. But [.type()](/api/commands/type) automatically logs any typed content into the Test Runner's Command Log.
 
 ```js
-cy.get("#username").type("username@email.com");
-cy.get("#password").type("superSecret123");
+cy.get('#username').type('username@email.com')
+cy.get('#password').type('superSecret123')
 ```
 
 <DocsImage src="/img/api/custom-commands/custom-command-type-no-masked-password.png" alt=></DocsImage>
@@ -427,25 +427,25 @@ cy.get("#password").type("superSecret123");
 You may want to mask some values passed to the [.type()](/api/commands/type) command so that sensitive data does not display in screenshots or videos of your test run. This example overwrites the [.type()](/api/commands/type) command to allow you to mask sensitive data in the Test Runner's Command Log.
 
 ```js
-Cypress.Commands.overwrite("type", (originalFn, element, text, options) => {
+Cypress.Commands.overwrite('type', (originalFn, element, text, options) => {
   if (options && options.sensitive) {
     // turn off original log
-    options.log = false;
+    options.log = false
     // create our own log with masked message
     Cypress.log({
       $el: element,
-      name: "type",
-      message: "*".repeat(text.length),
-    });
+      name: 'type',
+      message: '*'.repeat(text.length),
+    })
   }
 
-  return originalFn(element, text, options);
-});
+  return originalFn(element, text, options)
+})
 ```
 
 ```js
-cy.get("#username").type("username@email.com");
-cy.get("#password").type("superSecret123", { sensitive: true });
+cy.get('#username').type('username@email.com')
+cy.get('#password').type('superSecret123', { sensitive: true })
 ```
 
 Now our sensitive password is not printed to the Test Runner's Command Log when `sensitive: true` is passed as an option to [.type()](/api/commands/type).
@@ -466,20 +466,20 @@ This example overwrites [cy.screenshot()](/api/commands/screenshot) to always wa
 
 ```javascript
 Cypress.Commands.overwrite(
-  "screenshot",
+  'screenshot',
   (originalFn, subject, name, options) => {
     // call another command, no need to return as it is managed
-    cy.get(".app")
-      .should("be.visible")
+    cy.get('.app')
+      .should('be.visible')
 
       // overwrite the default timeout, because screenshot does that internally
       // otherwise the `then` is limited to the default command timeout
-      .then({ timeout: Cypress.config("responseTimeout") }, () => {
+      .then({ timeout: Cypress.config('responseTimeout') }, () => {
         // return the original function so that cypress waits for it
-        return originalFn(subject, name, options);
-      });
+        return originalFn(subject, name, options)
+      })
   }
-);
+)
 ```
 
 #### Overwrite `contains` command
@@ -488,20 +488,20 @@ This example overwrites [.contains()](/api/commands/contains) to always have the
 
 ```js
 Cypress.Commands.overwrite(
-  "contains",
+  'contains',
   (originalFn, subject, filter, text, options = {}) => {
     // determine if a filter argument was passed
-    if (typeof text === "object") {
-      options = text;
-      text = filter;
-      filter = undefined;
+    if (typeof text === 'object') {
+      options = text
+      text = filter
+      filter = undefined
     }
 
-    options.matchCase = false;
+    options.matchCase = false
 
-    return originalFn(subject, filter, text, options);
+    return originalFn(subject, filter, text, options)
   }
-);
+)
 ```
 
 ## Validations
@@ -527,28 +527,28 @@ Require subject be of type: `element`.
 ```javascript
 // this is how .click() is implemented
 Cypress.Commands.add(
-  "click",
+  'click',
   {
-    prevSubject: "element",
+    prevSubject: 'element',
   },
   (subject, options) => {
     // receives the previous subject and it's
     // guaranteed to be an element
   }
-);
+)
 ```
 
 **<Icon name="check-circle" color="green"></Icon> Valid Usage**
 
 ```javascript
-cy.get("button").click(); // has subject, and is `element`
+cy.get('button').click() // has subject, and is `element`
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Invalid Usage**
 
 ```javascript
-cy.click(); // no subject, will error
-cy.wrap([]).click(); // has subject, but not `element`, will error
+cy.click() // no subject, will error
+cy.wrap([]).click() // has subject, but not `element`, will error
 ```
 
 ### Allow Multiple Types
@@ -560,30 +560,30 @@ Require subject be one of the following types: `element`, `document` or `window`
 ```javascript
 // this is how .trigger() is implemented
 Cypress.Commands.add(
-  "trigger",
+  'trigger',
   {
-    prevSubject: ["element", "document", "window"],
+    prevSubject: ['element', 'document', 'window'],
   },
   (subject, eventName, options) => {
     // receives the previous subject and it's
     // guaranteed to be an element, document, or window
   }
-);
+)
 ```
 
 **<Icon name="check-circle" color="green"></Icon> Valid Usage**
 
 ```javascript
-cy.get("button").trigger(); // has subject, and is `element`
-cy.document().trigger(); // has subject, and is `document`
-cy.window().trigger(); // has subject, and is `window`
+cy.get('button').trigger() // has subject, and is `element`
+cy.document().trigger() // has subject, and is `document`
+cy.window().trigger() // has subject, and is `window`
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Invalid Usage**
 
 ```javascript
-cy.trigger(); // no subject, will error
-cy.wrap(true).trigger(); // has subject, but not `element`, will error
+cy.trigger() // no subject, will error
+cy.wrap(true).trigger() // has subject, but not `element`, will error
 ```
 
 Validations always work as "or" not "and".
@@ -595,9 +595,9 @@ You can also mix optional commands **with** validations.
 ```javascript
 // this is how .contains() is implemented
 Cypress.Commands.add(
-  "contains",
+  'contains',
   {
-    prevSubject: ["optional", "window", "document", "element"],
+    prevSubject: ['optional', 'window', 'document', 'element'],
   },
   (subject, options) => {
     // subject could be undefined
@@ -613,23 +613,23 @@ Cypress.Commands.add(
       // ...
     }
   }
-);
+)
 ```
 
 **<Icon name="check-circle" color="green"></Icon> Valid Usage**
 
 ```javascript
-cy.contains(); // no subject, but valid because it's optional
-cy.get("#main").contains(); // has subject, and is `element`
-cy.window().contains(); // has subject, and is `window`
-cy.document().contains(); // has subject, and is `document`
-cy.visit().contains(); // has subject, and since visit yields `window` it's ok
+cy.contains() // no subject, but valid because it's optional
+cy.get('#main').contains() // has subject, and is `element`
+cy.window().contains() // has subject, and is `window`
+cy.document().contains() // has subject, and is `document`
+cy.visit().contains() // has subject, and since visit yields `window` it's ok
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Invalid Usage**
 
 ```javascript
-cy.wrap(null).contains(); // has subject, but not `element`, will error
+cy.wrap(null).contains() // has subject, but not `element`, will error
 ```
 
 ## Notes
@@ -663,30 +663,30 @@ const search = (term, options = {}) => {
   // example massaging to defaults
   _.defaults(options, {
     headers: {},
-  });
+  })
 
-  const { fixture, headers } = options;
+  const { fixture, headers } = options
 
   // return cy chain here so we can
   // chain off this function below
   return cy
     .log(`Searching for: ${term} `)
     .route({
-      url: "/search/**",
+      url: '/search/**',
       response: `fixture:${fixture}`,
       headers: headers,
     })
-    .as("getSearchResults")
-    .get("#search")
+    .as('getSearchResults')
+    .get('#search')
     .type(term)
-    .wait("@getSearchResults");
-};
+    .wait('@getSearchResults')
+}
 
-it("displays a list of search results", () => {
-  cy.visit("/page")
+it('displays a list of search results', () => {
+  cy.visit('/page')
     .then(() => {
-      search("cypress.io", {
-        fixture: "list",
+      search('cypress.io', {
+        fixture: 'list',
       }).then((reqRes) => {
         // do something with the '@getSearchResults'
         // request such as make assertions on the
@@ -698,46 +698,46 @@ it("displays a list of search results", () => {
         //   request: {...},
         //   response: {...},
         // }
-      });
+      })
     })
-    .get("#results li")
-    .should("have.length", 5)
-    .get("#pagination")
-    .should("not.exist");
-});
+    .get('#results li')
+    .should('have.length', 5)
+    .get('#pagination')
+    .should('not.exist')
+})
 
-it("displays no search results", () => {
-  cy.visit("/page")
+it('displays no search results', () => {
+  cy.visit('/page')
     .then(() => {
-      search("cypress.io", {
-        fixture: "zero",
-      });
+      search('cypress.io', {
+        fixture: 'zero',
+      })
     })
-    .get("#results")
-    .should("contain", "No results found");
-});
+    .get('#results')
+    .should('contain', 'No results found')
+})
 
-it("paginates many search results", () => {
-  cy.visit("/page")
+it('paginates many search results', () => {
+  cy.visit('/page')
     .then(() => {
-      search("cypress.io", {
-        fixture: "list",
+      search('cypress.io', {
+        fixture: 'list',
         headers: {
           // trick our app into thinking
           // there's a bunch of pages
-          "x-pagination-total": 3,
+          'x-pagination-total': 3,
         },
-      });
+      })
     })
-    .get("#pagination")
+    .get('#pagination')
     .should(($pagination) => {
       // should offer to goto next page
-      expect($pagination).to.contain("Next");
+      expect($pagination).to.contain('Next')
 
       // should have provided 3 page links
-      expect($pagination.find("li.page")).to.have.length(3);
-    });
-});
+      expect($pagination.find('li.page')).to.have.length(3)
+    })
+})
 ```
 
 #### 2. Don't overcomplicate things

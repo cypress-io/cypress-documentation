@@ -7,9 +7,10 @@ Write to a file with the specified contents.
 ## Syntax
 
 ```javascript
-cy.writeFile(filePath, contents);
-cy.writeFile(filePath, contents, encoding);
-cy.writeFile(filePath, contents, options);
+cy.writeFile(filePath, contents)
+cy.writeFile(filePath, contents, encoding)
+cy.writeFile(filePath, contents, options)
+cy.writeFile(filePath, contents, encoding, options)
 ```
 
 ### Usage
@@ -17,7 +18,7 @@ cy.writeFile(filePath, contents, options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.writeFile("menu.json");
+cy.writeFile('menu.json')
 ```
 
 ### Arguments
@@ -62,7 +63,7 @@ To use encoding with other options, have your options object be your third param
 
 </Alert>
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`cy.writeFile()` 'yields the value of the <code>contents</code> argument' </li></List>
 
@@ -75,10 +76,10 @@ To use encoding with other options, have your options object be your third param
 If the path to the file does not exist, the file and its path will be created. If the file already exists, it will be over-written.
 
 ```javascript
-cy.writeFile("path/to/message.txt", "Hello World");
-cy.readFile("path/to/message.txt").then((text) => {
-  expect(text).to.equal("Hello World"); // true
-});
+cy.writeFile('path/to/message.txt', 'Hello World')
+cy.readFile('path/to/message.txt').then((text) => {
+  expect(text).to.equal('Hello World') // true
+})
 ```
 
 `{projectRoot}/path/to/message.txt` will be created with the following contents:
@@ -94,13 +95,10 @@ cy.readFile("path/to/message.txt").then((text) => {
 JavaScript arrays and objects are stringified and formatted into text.
 
 ```javascript
-cy.writeFile("path/to/data.json", {
-  name: "Eliza",
-  email: "eliza@example.com",
-});
-cy.readFile("path/to/data.json").then((user) => {
-  expect(user.name).to.equal("Eliza"); // true
-});
+cy.writeFile('path/to/data.json', { name: 'Eliza', email: 'eliza@example.com' })
+cy.readFile('path/to/data.json').then((user) => {
+  expect(user.name).to.equal('Eliza') // true
+})
 ```
 
 `{projectRoot}/path/to/data.json` will be created with the following contents:
@@ -115,14 +113,14 @@ cy.readFile("path/to/data.json").then((user) => {
 #### Write response data to a fixture file
 
 ```javascript
-cy.request("https://jsonplaceholder.typicode.com/users").then((response) => {
-  cy.writeFile("cypress/fixtures/users.json", response.body);
-});
+cy.request('https://jsonplaceholder.typicode.com/users').then((response) => {
+  cy.writeFile('cypress/fixtures/users.json', response.body)
+})
 
 // our fixture file is now generated and can be used
-cy.fixture("users").then((users) => {
-  expect(users[0].name).to.exist;
-});
+cy.fixture('users').then((users) => {
+  expect(users[0].name).to.exist
+})
 ```
 
 ### Encoding
@@ -142,10 +140,10 @@ Hello World
 #### Specify the encoding as part of the options object
 
 ```javascript
-cy.writeFile("path/to/ascii.txt", "Hello World", {
-  encoding: "ascii",
-  flag: "a+",
-});
+cy.writeFile('path/to/ascii.txt', 'Hello World', {
+  encoding: 'ascii',
+  flag: 'a+',
+})
 ```
 
 ### Flags
@@ -153,20 +151,44 @@ cy.writeFile("path/to/ascii.txt", "Hello World", {
 #### Append contents to the end of a file
 
 ```javascript
-cy.writeFile("path/to/message.txt", "Hello World", { flag: "a+" });
+cy.writeFile('path/to/message.txt', 'Hello World', { flag: 'a+' })
+```
+
+Note that appending assumes plain text file. If you want to merge a JSON object for example, you need to read it first, add new properties, then write the combined result back.
+
+```javascript
+const filename = '/path/to/file.json'
+
+cy.readFile(filename).then((obj) => {
+  obj.id = '1234'
+  // write the merged object
+  cy.writeFile(filename, obj)
+})
+```
+
+Similarly, if you need to push new items to an array
+
+```javascript
+const filename = '/path/to/list.json'
+
+cy.readFile(filename).then((list) => {
+  list.push({ item: 'example' })
+  // write the merged array
+  cy.writeFile(filename, list)
+})
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.writeFile()` requires being chained off of `cy`.</li><li>`cy.writeFile()` requires the file be successfully written to disk. Anything preventing this such as OS permission issues will cause it to fail.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.writeFile` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`cy.writeFile()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.writeFile()` should never time out.</li><li><Alert type="warning">
 
@@ -179,7 +201,7 @@ Because `cy.writeFile()` is asynchronous it is technically possible for there to
 **_Write an array to a file_**
 
 ```javascript
-cy.writeFile("info.log", ["foo", "bar", "baz"]);
+cy.writeFile('info.log', ['foo', 'bar', 'baz'])
 ```
 
 The command above will display in the Command Log as:

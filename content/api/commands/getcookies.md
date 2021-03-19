@@ -7,8 +7,8 @@ Get all of the browser cookies.
 ## Syntax
 
 ```javascript
-cy.getCookies();
-cy.getCookies(options);
+cy.getCookies()
+cy.getCookies(options)
 ```
 
 ### Usage
@@ -16,7 +16,7 @@ cy.getCookies(options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.getCookies(); // Get all cookies
+cy.getCookies() // Get all cookies
 ```
 
 ### Arguments
@@ -30,7 +30,7 @@ Pass in an options object to change the default behavior of `cy.getCookies()`.
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.getCookies()` to resolve before [timing out](#Timeouts)             |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 `cy.getCookies()` yields an array of cookie objects. Each cookie object has the following properties:
 
@@ -53,26 +53,26 @@ In this example, on first login our server sends us back a session cookie.
 
 ```javascript
 // assume we just logged in
-cy.contains("Login").click();
-cy.url().should("include", "profile");
+cy.contains('Login').click()
+cy.url().should('include', 'profile')
 cy.getCookies()
-  .should("have.length", 1)
+  .should('have.length', 1)
   .then((cookies) => {
-    expect(cookies[0]).to.have.property("name", "session_id");
-  });
+    expect(cookies[0]).to.have.property('name', 'session_id')
+  })
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.getCookies()` requires being chained off of `cy`.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.getCookies` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`cy.getCookies()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.getCookies()` should never time out.</li><li><Alert type="warning">
 
@@ -84,15 +84,15 @@ Because `cy.getCookies()` is asynchronous it is technically possible for there t
 
 ```javascript
 cy.getCookies()
-  .should("have.length", 1)
+  .should('have.length', 1)
   .then((cookies) => {
-    expect(cookies[0]).to.have.property("name", "fakeCookie1");
-    expect(cookies[0]).to.have.property("value", "123ABC");
-    expect(cookies[0]).to.have.property("domain");
-    expect(cookies[0]).to.have.property("httpOnly");
-    expect(cookies[0]).to.have.property("path");
-    expect(cookies[0]).to.have.property("secure");
-  });
+    expect(cookies[0]).to.have.property('name', 'fakeCookie1')
+    expect(cookies[0]).to.have.property('value', '123ABC')
+    expect(cookies[0]).to.have.property('domain')
+    expect(cookies[0]).to.have.property('httpOnly')
+    expect(cookies[0]).to.have.property('path')
+    expect(cookies[0]).to.have.property('secure')
+  })
 ```
 
 The commands above will display in the Command Log as:

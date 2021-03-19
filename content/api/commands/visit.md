@@ -17,9 +17,9 @@ Read about [best practices](/guides/references/best-practices#Setting-a-global-b
 ## Syntax
 
 ```javascript
-cy.visit(url);
-cy.visit(url, options);
-cy.visit(options);
+cy.visit(url)
+cy.visit(url, options)
+cy.visit(options)
 ```
 
 ### Usage
@@ -27,10 +27,10 @@ cy.visit(options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.visit("http://localhost:3000");
-cy.visit("/"); // visits the baseUrl
-cy.visit("index.html"); // visits the local file "index.html"
-cy.visit("./pages/hello.html");
+cy.visit('http://localhost:3000')
+cy.visit('/') // visits the baseUrl
+cy.visit('index.html') // visits the local file "index.html"
+cy.visit('./pages/hello.html')
 ```
 
 ### Arguments
@@ -65,16 +65,16 @@ Pass in an options object to control the behavior of `cy.visit()`.
 
 You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl` globally in [configuration](/guides/references/configuration).
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`cy.visit()` 'yields the `window` object after the page finishes loading' </li></List>
 
 Let's confirm the `window.navigator.language` after visiting the site:
 
 ```javascript
-cy.visit("/") // yields the window object
-  .its("navigator.language") // yields window.navigator.language
-  .should("equal", "en-US"); // asserts the expected value
+cy.visit('/') // yields the window object
+  .its('navigator.language') // yields window.navigator.language
+  .should('equal', 'en-US') // asserts the expected value
 ```
 
 ## Examples
@@ -86,7 +86,7 @@ cy.visit("/") // yields the window object
 `cy.visit()` resolves when the remote page fires its `load` event.
 
 ```javascript
-cy.visit("http://localhost:8000");
+cy.visit('http://localhost:8000')
 ```
 
 ### Options
@@ -95,7 +95,7 @@ cy.visit("http://localhost:8000");
 
 ```javascript
 // Wait 30 seconds for page 'load' event
-cy.visit("/index.html", { timeout: 30000 });
+cy.visit('/index.html', { timeout: 30000 })
 ```
 
 #### Add basic auth headers
@@ -105,19 +105,19 @@ Cypress will automatically apply the right authorization headers if you're attem
 Provide the `username` and `password` in the `auth` object. Then all subsequent requests matching the origin you're testing will have these attached at the network level.
 
 ```javascript
-cy.visit("https://www.acme.com/", {
+cy.visit('https://www.acme.com/', {
   auth: {
-    username: "wile",
-    password: "coyote",
+    username: 'wile',
+    password: 'coyote',
   },
-});
+})
 ```
 
 You can also provide the username and password directly in the URL.
 
 ```javascript
 // this is the same thing as providing the auth object
-cy.visit("https://wile:coyote@www.acme.com");
+cy.visit('https://wile:coyote@www.acme.com')
 ```
 
 <Alert type="info">
@@ -131,11 +131,11 @@ Cypress will automatically attach this header at the network proxy level, outsid
 `onBeforeLoad` is called as soon as possible, before your page has loaded all of its resources. Your scripts will not be ready at this point, but it's a great hook to potentially manipulate the page.
 
 ```javascript
-cy.visit("http://localhost:3000/#dashboard", {
+cy.visit('http://localhost:3000/#dashboard', {
   onBeforeLoad: (contentWindow) => {
     // contentWindow is the remote page's window object
   },
-});
+})
 ```
 
 <Alert type="info">
@@ -153,14 +153,14 @@ Check out our example recipes using `cy.visit()`'s `onBeforeLoad` option to:
 `onLoad` is called once your page has fired its `load` event. All of the scripts, stylesheets, html and other resources are guaranteed to be available at this point.
 
 ```javascript
-cy.visit("http://localhost:3000/#/users", {
+cy.visit('http://localhost:3000/#/users', {
   onLoad: (contentWindow) => {
     // contentWindow is the remote page's window object
     if (contentWindow.angular) {
       // do something
     }
   },
-});
+})
 ```
 
 #### Add query paramaters
@@ -169,21 +169,21 @@ You can provide query parameters as an object to `cy.visit()` by passing `qs` to
 
 ```js
 // visits http://localhost:3500/users?page=1&role=admin
-cy.visit("http://localhost:3500/users", {
+cy.visit('http://localhost:3500/users', {
   qs: {
-    page: "1",
-    role: "admin",
+    page: '1',
+    role: 'admin',
   },
-});
+})
 ```
 
 The parameters passed to `qs` will be merged into existing query parameters on the `url`.
 
 ```js
 // visits http://example.com/users?page=1&admin=true
-cy.visit("http://example.com/users?page=1", {
+cy.visit('http://example.com/users?page=1', {
   qs: { admin: true },
-});
+})
 ```
 
 #### Submit a form
@@ -192,13 +192,13 @@ To send a request that looks like a user submitting an HTML form, use a `POST` m
 
 ```javascript
 cy.visit({
-  url: "http://localhost:3000/cgi-bin/newsletterSignup",
-  method: "POST",
+  url: 'http://localhost:3000/cgi-bin/newsletterSignup',
+  method: 'POST',
   body: {
-    name: "George P. Burdell",
-    email: "burdell@microsoft.com",
+    name: 'George P. Burdell',
+    email: 'burdell@microsoft.com',
   },
-});
+})
 ```
 
 ## Notes
@@ -210,8 +210,8 @@ cy.visit({
 ```javascript
 // we aren't logged in, so our web server
 // redirected us to /login
-cy.visit("http://localhost:3000/admin");
-cy.url().should("match", /login/);
+cy.visit('http://localhost:3000/admin')
+cy.url().should('match', /login/)
 ```
 
 ### Protocol
@@ -221,9 +221,9 @@ cy.url().should("match", /login/);
 Cypress automatically prepends the `http://` protocol to common hosts. If you're not using one of these 3 hosts, then make sure to provide the protocol.
 
 ```javascript
-cy.visit("localhost:3000"); // Visits http://localhost:3000
-cy.visit("0.0.0.0:3000"); // Visits http://0.0.0.0:3000
-cy.visit("127.0.0.1:3000"); // Visits http://127.0.0.1:3000
+cy.visit('localhost:3000') // Visits http://localhost:3000
+cy.visit('0.0.0.0:3000') // Visits http://0.0.0.0:3000
+cy.visit('127.0.0.1:3000') // Visits http://127.0.0.1:3000
 ```
 
 ### Web Server
@@ -235,7 +235,7 @@ Cypress will automatically attempt to serve your files if you don't provide a ho
 Having Cypress serve your files is useful in smaller projects and example apps, but isn't recommended for production apps. It is always better to run your own server and provide the url to Cypress.
 
 ```javascript
-cy.visit("app/index.html");
+cy.visit('app/index.html')
 ```
 
 #### Visit local file when `baseUrl` is set
@@ -251,15 +251,15 @@ If you have `baseUrl` set, but need to visit a local file in a single test or a 
 The first test visits the `baseUrl`, while the second test visits the local file.
 
 ```javascript
-it("visits base url", () => {
-  cy.visit("/");
-  cy.contains("h1", "Kitchen Sink");
-});
+it('visits base url', () => {
+  cy.visit('/')
+  cy.contains('h1', 'Kitchen Sink')
+})
 
-it("visits local file", { baseUrl: null }, () => {
-  cy.visit("index.html");
-  cy.contains("local file");
-});
+it('visits local file', { baseUrl: null }, () => {
+  cy.visit('index.html')
+  cy.contains('local file')
+})
 ```
 
 **Tip:** because visiting every new domain requires the Test Runner window reload, we recommend putting the above tests in separate spec files.
@@ -277,7 +277,7 @@ Configure `baseUrl` in the your [configuration](/guides/references/configuration
 ```
 
 ```javascript
-cy.visit("dashboard"); // Visits http://localhost:3000/#/dashboard
+cy.visit('dashboard') // Visits http://localhost:3000/#/dashboard
 ```
 
 ### Window
@@ -285,9 +285,9 @@ cy.visit("dashboard"); // Visits http://localhost:3000/#/dashboard
 #### Visit will always yield the remote page's `window` object when it resolves
 
 ```javascript
-cy.visit("index.html").then((contentWindow) => {
+cy.visit('index.html').then((contentWindow) => {
   // contentWindow is the remote page's window object
-});
+})
 ```
 
 ### User agent
@@ -304,8 +304,8 @@ You may think this works:
 
 ```javascript
 // this code may not work depending on implementation
-cy.visit("http://localhost:8000/#/app");
-cy.intercept("/users/**", { fixture: "users" });
+cy.visit('http://localhost:8000/#/app')
+cy.intercept('/users/**', { fixture: 'users' })
 ```
 
 But if your app makes a request upon being initialized, _the above code will not work_. `cy.visit()` will resolve once its `load` event fires. The [`cy.intercept()`](/api/commands/intercept) command is not processed until _after_ `cy.visit()` resolves.
@@ -324,15 +324,15 @@ Cypress will automatically apply the routes to the very next `cy.visit()` and do
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.visit()` requires being chained off of `cy`.</li><li>`cy.visit()` requires the response to be `content-type: text/html`.</li><li>`cy.visit()` requires the response code to be `2xx` after following redirects.</li><li>`cy.visit()` requires the load `load` event to eventually fire.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.visit` will automatically wait for assertions you have chained to pass</li></List>
+<List><li>`cy.visit()` will automatically wait for assertions you have chained to pass</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.visit()` can time out waiting for the page to fire its `load` event.</li><li>`cy.visit()` can time out waiting for assertions you've added to pass.</li></List>
 
@@ -342,8 +342,8 @@ Cypress will automatically apply the routes to the very next `cy.visit()` and do
 
 ```javascript
 beforeEach(() => {
-  cy.visit("https://example.cypress.io/commands/viewport");
-});
+  cy.visit('https://example.cypress.io/commands/viewport')
+})
 ```
 
 The commands above will display in the Command Log as:

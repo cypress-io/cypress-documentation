@@ -7,8 +7,8 @@ Navigate back or forward to the previous or next URL in the browser's history.
 ## Syntax
 
 ```javascript
-cy.go(direction);
-cy.go(direction, options);
+cy.go(direction)
+cy.go(direction, options)
 ```
 
 ### Usage
@@ -16,7 +16,7 @@ cy.go(direction, options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.go("back");
+cy.go('back')
 ```
 
 ### Arguments
@@ -36,7 +36,7 @@ Pass in an options object to change the default behavior of `cy.go()`.
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout` | [`pageLoadTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.go()` to resolve before [timing out](#Timeouts)                     |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`cy.go()` 'yields the `window` object after the page finishes loading' </li></List>
 
@@ -47,13 +47,13 @@ Pass in an options object to change the default behavior of `cy.go()`.
 #### Go back in browser's history
 
 ```javascript
-cy.go("back"); // equivalent to clicking back button
+cy.go('back') // equivalent to clicking back button
 ```
 
 #### Go forward in browser's history
 
 ```javascript
-cy.go("forward"); // equivalent to clicking forward button
+cy.go('forward') // equivalent to clicking forward button
 ```
 
 ### Number
@@ -61,13 +61,13 @@ cy.go("forward"); // equivalent to clicking forward button
 #### Go back in browser's history
 
 ```javascript
-cy.go(-1); // equivalent to clicking back button
+cy.go(-1) // equivalent to clicking back button
 ```
 
 #### Go forward in browser's history
 
 ```javascript
-cy.go(1); // equivalent to clicking forward button
+cy.go(1) // equivalent to clicking forward button
 ```
 
 ## Notes
@@ -80,15 +80,15 @@ Cypress additionally handles situations where a page load was not caused (such a
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.go()` requires being chained off of `cy`.</li><li>`cy.go()` requires the response to be `content-type: text/html`.</li><li>`cy.go()` requires the response code to be `2xx` after following redirects.</li><li>`cy.go()` requires the load `load` event to eventually fire.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.go` will automatically wait for assertions you have chained to pass</li></List>
+<List><li>`cy.go()` will automatically wait for assertions you have chained to pass</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.go()` can time out waiting for the page to fire its `load` event.</li><li>`cy.go()` can time out waiting for assertions you've added to pass.</li></List>
 
@@ -97,7 +97,7 @@ Cypress additionally handles situations where a page load was not caused (such a
 **_Go back in browser's history_**
 
 ```javascript
-cy.visit("http://localhost:8000/folders").go("back");
+cy.visit('http://localhost:8000/folders').go('back')
 ```
 
 The commands above will display in the Command Log as:

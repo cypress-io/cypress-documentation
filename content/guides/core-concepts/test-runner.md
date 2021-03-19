@@ -82,9 +82,9 @@ The righthand side of the Test Runner is used to display the Application Under T
 In the example below, we wrote the following code in our test file:
 
 ```javascript
-cy.visit("https://example.cypress.io");
+cy.visit('https://example.cypress.io')
 
-cy.title().should("include", "Kitchen Sink");
+cy.title().should('include', 'Kitchen Sink')
 ```
 
 In the corresponding Application Preview below, you can see `https://example.cypress.io` is being displayed in the righthand side. Not only is the application visible, but it is fully interactable. You can open your developer tools to inspect elements as you would in your normal application. The DOM is completely available for debugging.

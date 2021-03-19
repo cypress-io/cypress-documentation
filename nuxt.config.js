@@ -1,27 +1,17 @@
+import { getMetaData } from './utils/getMetaData'
+import { redirects } from './redirects'
+
+const meta = getMetaData()
 
 export default {
   router: {
-    trailingSlash: false,
+    trailingSlash: undefined,
     extendRoutes(routes, resolve) {
-      routes.push(
-        {
-          path: '/',
-          redirect: '/guides/overview/why-cypress',
-        },
-        {
-          path: '/guides',
-          redirect: '/guides/overview/why-cypress',
-        },
-        {
-          path: '/plugins',
-          redirect: '/plugins/directory',
-        },
-        {
-          path: '/guides/dashboard/dashboard-introduction',
-          redirect: '/guides/dashboard/introduction',
-        }
-      )
+      routes.push(...redirects)
     },
+  },
+  generate: {
+    routes: ['404'],
   },
   /*
    ** Nuxt target
@@ -33,15 +23,11 @@ export default {
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'Cypress Documentation',
     meta: [
+      ...meta,
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      {
-        hid: 'description',
-        name: 'description',
-        content: process.env.npm_package_description || '',
-      },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
@@ -77,7 +63,18 @@ export default {
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt/content
     '@nuxt/content',
+    '@nuxtjs/gtm',
   ],
+  /*
+   ** Google Tag Manager
+   */
+  gtm: {
+    // The env var CONTEXT is set by Netlify and can be 'production', 'deploy-preview', or 'branch-deploy'
+    id:
+      (process.env.CONTEXT === 'production' &&
+        process.env.GOOGLE_TAG_MANAGER_ID) ||
+      'GTM-XXXXXXX',
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
@@ -133,6 +130,7 @@ export default {
         'faHistory',
         'faBan',
         'faLongArrowAltUp',
+        'faFolderOpen',
       ],
       brands: ['faGithub', 'faTwitter', 'faYoutube'],
     },

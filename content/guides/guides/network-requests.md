@@ -151,11 +151,11 @@ See [cy.intercept()](/api/commands/intercept) for more information and for examp
 ```javascript
 cy.intercept(
   {
-    method: "GET", // Route all GET requests
-    url: "/users/*", // that have a URL that matches '/users/*'
+    method: 'GET', // Route all GET requests
+    url: '/users/*', // that have a URL that matches '/users/*'
   },
   [] // and force the response to be: []
-);
+)
 ```
 
 When you use [`cy.intercept()`](/api/commands/intercept) to define a route, Cypress displays this under "Routes" in the Command Log.
@@ -174,7 +174,7 @@ When stubbing a response, you typically need to manage potentially large and com
 
 ```javascript
 // we set the response to be the activites.json fixture
-cy.intercept("GET", "activities/*", { fixture: "activities.json" });
+cy.intercept('GET', 'activities/*', { fixture: 'activities.json' })
 ```
 
 ### Organizing
@@ -196,7 +196,7 @@ Your fixtures can be further organized within additional folders. For instance, 
 To access the fixtures nested within the `images` folder, include the folder in your [`cy.fixture()`](/api/commands/fixture) command.
 
 ```javascript
-cy.fixture("images/dogs.png"); // yields dogs.png as Base64
+cy.fixture('images/dogs.png') // yields dogs.png as Base64
 ```
 
 ## Waiting
@@ -212,42 +212,42 @@ This following section utilizes a concept known as [Aliasing](/guides/core-conce
 Here is an example of aliasing requests and then subsequently waiting on them:
 
 ```javascript
-cy.intercept("activities/*", { fixture: "activities" }).as("getActivities");
-cy.intercept("messages/*", { fixture: "messages" }).as("getMessages");
+cy.intercept('activities/*', { fixture: 'activities' }).as('getActivities')
+cy.intercept('messages/*', { fixture: 'messages' }).as('getMessages')
 
 // visit the dashboard, which should make requests that match
 // the two routes above
-cy.visit("http://localhost:8888/dashboard");
+cy.visit('http://localhost:8888/dashboard')
 
 // pass an array of Route Aliases that forces Cypress to wait
 // until it sees a response for each request that matches
 // each of these aliases
-cy.wait(["@getActivities", "@getMessages"]);
+cy.wait(['@getActivities', '@getMessages'])
 
 // these commands will not run until the wait command resolves above
-cy.get("h1").should("contain", "Dashboard");
+cy.get('h1').should('contain', 'Dashboard')
 ```
 
 If you would like to check the response data of each response of an aliased route, you can use several `cy.wait()` calls.
 
 ```javascript
 cy.intercept({
-  method: "POST",
-  url: "/myApi",
-}).as("apiCheck");
+  method: 'POST',
+  url: '/myApi',
+}).as('apiCheck')
 
-cy.visit("/");
-cy.wait("@apiCheck").then((interception) => {
-  assert.isNotNull(interception.response.body, "1st API call has data");
-});
+cy.visit('/')
+cy.wait('@apiCheck').then((interception) => {
+  assert.isNotNull(interception.response.body, '1st API call has data')
+})
 
-cy.wait("@apiCheck").then((interception) => {
-  assert.isNotNull(interception.response.body, "2nd API call has data");
-});
+cy.wait('@apiCheck').then((interception) => {
+  assert.isNotNull(interception.response.body, '2nd API call has data')
+})
 
-cy.wait("@apiCheck").then((interception) => {
-  assert.isNotNull(interception.response.body, "3rd API call has data");
-});
+cy.wait('@apiCheck').then((interception) => {
+  assert.isNotNull(interception.response.body, '3rd API call has data')
+})
 ```
 
 Waiting on an aliased route has big advantages:
@@ -267,21 +267,21 @@ One advantage of declaratively waiting for responses is that it decreases test f
 What makes this example below so powerful is that Cypress will automatically wait for a request that matches the `getSearch` alias. Instead of forcing Cypress to test the _side effect_ of a successful request (the display of the Book results), you can test the actual _cause_ of the results.
 
 ```javascript
-cy.intercept("/search*", [{ item: "Book 1" }, { item: "Book 2" }]).as(
-  "getSearch"
-);
+cy.intercept('/search*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as(
+  'getSearch'
+)
 
 // our autocomplete field is throttled
 // meaning it only makes a request after
 // 500ms from the last keyPress
-cy.get("#autocomplete").type("Book");
+cy.get('#autocomplete').type('Book')
 
 // wait for the request + response
 // thus insulating us from the
 // throttled request
-cy.wait("@getSearch");
+cy.wait('@getSearch')
 
-cy.get("#results").should("contain", "Book 1").and("contain", "Book 2");
+cy.get('#results').should('contain', 'Book 1').and('contain', 'Book 2')
 ```
 
 <Alert type="info">
@@ -291,7 +291,7 @@ cy.get("#results").should("contain", "Book 1").and("contain", "Book 2");
 The Cypress [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) has various tests for testing an auto-complete field within a large user journey test that properly await requests triggered upon auto-complete input changes. Check out the example:
 
 - <Icon name="github"></Icon> [Auto-complete test code](https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/cypress/tests/ui/new-transaction.spec.ts#L36-L50)
-- <Icon name="video-camera"></Icon> [Auto-complete test run video recording](https://dashboard.cypress.io/projects/7s5okt/runs/2352/test-results/3bf064fd-6959-441c-bf31-a9f276db0627/video) in Cypress Dashboard.
+- <Icon name="video"></Icon> [Auto-complete test run video recording](https://dashboard.cypress.io/projects/7s5okt/runs/2352/test-results/3bf064fd-6959-441c-bf31-a9f276db0627/video) in Cypress Dashboard.
 
 </Alert>
 
@@ -330,19 +330,17 @@ In our example above we can assert about the request object to verify that it se
 ```javascript
 // any request to "search/*" endpoint will automatically receive
 // an array with two book objects
-cy.intercept("search/*", [{ item: "Book 1" }, { item: "Book 2" }]).as(
-  "getSearch"
-);
+cy.intercept('search/*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as(
+  'getSearch'
+)
 
-cy.get("#autocomplete").type("Book");
+cy.get('#autocomplete').type('Book')
 
 // this yields us the interception cycle object which includes
 // fields for the request and response
-cy.wait("@getSearch")
-  .its("request.url")
-  .should("include", "/search?query=Book");
+cy.wait('@getSearch').its('request.url').should('include', '/search?query=Book')
 
-cy.get("#results").should("contain", "Book 1").and("contain", "Book 2");
+cy.get('#results').should('contain', 'Book 1').and('contain', 'Book 2')
 ```
 
 **_The interception object that [`cy.wait()`](/api/commands/wait) yields you has everything you need to make assertions including:_**
@@ -359,42 +357,42 @@ cy.get("#results").should("contain", "Book 1").and("contain", "Book 2");
 
 ```javascript
 // spy on POST requests to /users endpoint
-cy.intercept("POST", "/users").as("new-user");
+cy.intercept('POST', '/users').as('new-user')
 // trigger network calls by manipulating web app's user interface, then
-cy.wait("@new-user").should("have.property", "response.statusCode", 201);
+cy.wait('@new-user').should('have.property', 'response.statusCode', 201)
 
 // we can grab the completed interception object again to run more assertions
 // using cy.get(<alias>)
-cy.get("@new-user") // yields the same interception object
-  .its("request.body")
+cy.get('@new-user') // yields the same interception object
+  .its('request.body')
   .should(
-    "deep.equal",
+    'deep.equal',
     JSON.stringify({
-      id: "101",
-      firstName: "Joe",
-      lastName: "Black",
+      id: '101',
+      firstName: 'Joe',
+      lastName: 'Black',
     })
-  );
+  )
 
 // and we can place multiple assertions in a single "should" callback
-cy.get("@new-user").should(({ request, response }) => {
-  expect(request.url).to.match(/\/users$/);
-  expect(request.method).to.equal("POST");
+cy.get('@new-user').should(({ request, response }) => {
+  expect(request.url).to.match(/\/users$/)
+  expect(request.method).to.equal('POST')
   // it is a good practice to add assertion messages
   // as the 2nd argument to expect()
-  expect(response.headers, "response headers").to.include({
-    "cache-control": "no-cache",
-    expires: "-1",
-    "content-type": "application/json; charset=utf-8",
-    location: "<domain>/users/101",
-  });
-});
+  expect(response.headers, 'response headers').to.include({
+    'cache-control': 'no-cache',
+    expires: '-1',
+    'content-type': 'application/json; charset=utf-8',
+    location: '<domain>/users/101',
+  })
+})
 ```
 
 **Tip:** you can inspect the full request cycle object by logging it to the console
 
 ```javascript
-cy.wait("@new-user").then(console.log);
+cy.wait('@new-user').then(console.log)
 ```
 
 ## See also

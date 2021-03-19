@@ -18,12 +18,12 @@ commands:
       - checkout
       - restore_cache:
           keys:
-            - yarn-cache-{{ checksum "yarn.lock" }}
+            - yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}
       - run:
           name: Install Dependencies
           command: yarn --frozen-lockfile
       - save_cache:
-          key: yarn-cache-{{ checksum "yarn.lock" }}
+          key: yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}
           paths:
             - node_modules
       - run:
@@ -46,6 +46,9 @@ jobs:
       - run:
           name: Netlify Deploy
           command: curl -X POST -d {} $NETLIFY_BUILD_HOOK_MASTER
+      - run:
+          name: Docsearch Scraper
+          command: node ./cy_scripts/scrape.js
 
 workflows:
   version: 2
@@ -73,6 +76,7 @@ workflows:
           ci-build-id: ${CIRCLE_SHA1:0:8}
           group: 'UI - Chrome'
           requires:
+            - build
             - Setup Linux
 
       - build:
@@ -85,4 +89,4 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - next-docs

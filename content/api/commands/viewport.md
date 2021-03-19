@@ -13,10 +13,10 @@ You can set the viewport's width and height globally by defining `viewportWidth`
 ## Syntax
 
 ```javascript
-cy.viewport(width, height);
-cy.viewport(preset, orientation);
-cy.viewport(width, height, options);
-cy.viewport(preset, orientation, options);
+cy.viewport(width, height)
+cy.viewport(preset, orientation)
+cy.viewport(width, height, options)
+cy.viewport(preset, orientation, options)
 ```
 
 ### Usage
@@ -24,8 +24,8 @@ cy.viewport(preset, orientation, options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.viewport(550, 750); // Set viewport to 550px x 750px
-cy.viewport("iphone-6"); // Set viewport to 375px x 667px
+cy.viewport(550, 750) // Set viewport to 550px x 750px
+cy.viewport('iphone-6') // Set viewport to 375px x 667px
 ```
 
 ### Arguments
@@ -75,7 +75,7 @@ Pass in an options object to change the default behavior of `cy.viewport()`.
 | ------ | ------- | ---------------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`cy.viewport()` yields `null`.</li><li>`cy.viewport()` cannot be chained further.</li></List>
 
@@ -86,67 +86,67 @@ Pass in an options object to change the default behavior of `cy.viewport()`.
 #### Resize the viewport to 1024px x 768px
 
 ```javascript
-cy.viewport(1024, 768);
+cy.viewport(1024, 768)
 ```
 
 #### Organize desktop vs mobile tests separately
 
 ```javascript
-describe("Nav Menus", () => {
-  context("720p resolution", () => {
+describe('Nav Menus', () => {
+  context('720p resolution', () => {
     beforeEach(() => {
       // run these tests as if in a desktop
       // browser with a 720p monitor
-      cy.viewport(1280, 720);
-    });
+      cy.viewport(1280, 720)
+    })
 
-    it("displays full header", () => {
-      cy.get("nav .desktop-menu").should("be.visible");
-      cy.get("nav .mobile-menu").should("not.be.visible");
-    });
-  });
+    it('displays full header', () => {
+      cy.get('nav .desktop-menu').should('be.visible')
+      cy.get('nav .mobile-menu').should('not.be.visible')
+    })
+  })
 
-  context("iphone-5 resolution", () => {
+  context('iphone-5 resolution', () => {
     beforeEach(() => {
       // run these tests as if in a mobile browser
       // and ensure our responsive UI is correct
-      cy.viewport("iphone-5");
-    });
+      cy.viewport('iphone-5')
+    })
 
-    it("displays mobile menu on click", () => {
-      cy.get("nav .desktop-menu").should("not.be.visible");
-      cy.get("nav .mobile-menu")
-        .should("be.visible")
-        .find("i.hamburger")
-        .click();
+    it('displays mobile menu on click', () => {
+      cy.get('nav .desktop-menu').should('not.be.visible')
+      cy.get('nav .mobile-menu')
+        .should('be.visible')
+        .find('i.hamburger')
+        .click()
 
-      cy.get("ul.slideout-menu").should("be.visible");
-    });
-  });
-});
+      cy.get('ul.slideout-menu').should('be.visible')
+    })
+  })
+})
 ```
 
 #### Dynamically test multiple viewports
 
 ```javascript
-const sizes = ["iphone-6", "ipad-2", [1024, 768]];
+const sizes = ['iphone-6', 'ipad-2', [1024, 768]]
 
-describe("Logo", () => {
+describe('Logo', () => {
   sizes.forEach((size) => {
     // make assertions on the logo using
     // an array of different viewports
     it(`Should display logo on ${size} screen`, () => {
       if (Cypress._.isArray(size)) {
-        cy.viewport(size[0], size[1]);
+        cy.viewport(size[0], size[1])
       } else {
-        cy.viewport(size);
+        cy.viewport(size)
       }
 
-      cy.visit("https://www.cypress.io");
-      cy.get("#logo").should("be.visible");
-    });
-  });
-});
+      cy.visit('https://www.cypress.io')
+      cy.get('#logo').should('be.visible')
+    })
+  })
+})
 ```
 
 <DocsImage src="/img/api/viewport/loop-through-an-array-of-multiple-viewports.png" alt="Command Log of multiple viewports" ></DocsImage>
@@ -156,7 +156,7 @@ describe("Logo", () => {
 #### Resize the viewport to iPhone 6 width and height
 
 ```javascript
-cy.viewport("iphone-6"); // viewport will change to 414px x 736px
+cy.viewport('iphone-6') // viewport will change to 414px x 736px
 ```
 
 ### Orientation
@@ -166,7 +166,7 @@ cy.viewport("iphone-6"); // viewport will change to 414px x 736px
 ```javascript
 // the viewport will now be changed to 736px x 414px
 // and simulates the user holding the iPhone in landscape
-cy.viewport("iphone-6", "landscape");
+cy.viewport('iphone-6', 'landscape')
 ```
 
 ## Notes
@@ -215,8 +215,8 @@ The upsides to this are that tests should consistently pass or fail regardless o
 You can change the size of the viewport height and width for the remainder of the tests by setting the new values for `viewportHeight` or `viewportWidth` within [Cypress.config()](/api/cypress-api/config).
 
 ```js
-Cypress.config("viewportWidth", 800);
-Cypress.config("viewportWidth"); // => 800
+Cypress.config('viewportWidth', 800)
+Cypress.config('viewportWidth') // => 800
 ```
 
 ### Set viewport in the test configuration
@@ -227,34 +227,34 @@ This will set the height and width throughout the duration of the tests, then re
 
 ```js
 describe(
-  "page display on medium size screen",
+  'page display on medium size screen',
   {
     viewportHeight: 1000,
     viewportWidth: 400,
   },
   () => {
-    it("does not display sidebar", () => {
-      cy.get("#sidebar").should("not.be.visible");
-    });
+    it('does not display sidebar', () => {
+      cy.get('#sidebar').should('not.be.visible')
+    })
 
-    it("shows hamburger menu", () => {
-      cy.get("#header").find("i.menu").should("be.visible");
-    });
+    it('shows hamburger menu', () => {
+      cy.get('#header').find('i.menu').should('be.visible')
+    })
   }
-);
+)
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.viewport()` requires being chained off of `cy`.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.viewport` cannot have any assertions chained.</li></List>
+<List><li>`cy.viewport()` cannot have any assertions chained.</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.viewport()` cannot time out.</li></List>
 
@@ -263,14 +263,14 @@ describe(
 **_Change viewport size to test responsive nav_**
 
 ```javascript
-cy.get("#navbar").should("be.visible");
+cy.get('#navbar').should('be.visible')
 
-cy.viewport(320, 480);
+cy.viewport(320, 480)
 
 // the navbar should have collapse since our screen is smaller
-cy.get("#navbar").should("not.be.visible");
-cy.get(".navbar-toggle").should("be.visible").click();
-cy.get(".nav").find("a").should("be.visible");
+cy.get('#navbar').should('not.be.visible')
+cy.get('.navbar-toggle').should('be.visible').click()
+cy.get('.nav').find('a').should('be.visible')
 ```
 
 The commands above will display in the Command Log as:

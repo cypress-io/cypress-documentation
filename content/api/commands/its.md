@@ -22,15 +22,15 @@ If you want to call a `function` on the previously yielded subject, use [`.invok
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.wrap({ width: "50" }).its("width"); // Get the 'width' property
-cy.window().its("sessionStorage"); // Get the 'sessionStorage' property
+cy.wrap({ width: '50' }).its('width') // Get the 'width' property
+cy.window().its('sessionStorage') // Get the 'sessionStorage' property
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.its("window"); // Errors, cannot be chained off 'cy'
-cy.clearCookies().its("length"); // Errors, 'clearCookies' does not yield Object
+cy.its('window') // Errors, cannot be chained off 'cy'
+cy.clearCookies().its('length') // Errors, 'clearCookies' does not yield Object
 ```
 
 ### Arguments
@@ -48,7 +48,7 @@ Pass in an options object to change the default behavior of `.its()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.its()` to resolve before [timing out](#Timeouts)                      |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`.its()` 'yields the value of the property' </li></List>
 
@@ -59,7 +59,7 @@ Pass in an options object to change the default behavior of `.its()`.
 #### Get property
 
 ```javascript
-cy.wrap({ age: 52 }).its("age").should("eq", 52); // true
+cy.wrap({ age: 52 }).its('age').should('eq', 52) // true
 ```
 
 ### Arrays
@@ -67,7 +67,7 @@ cy.wrap({ age: 52 }).its("age").should("eq", 52); // true
 #### Get index
 
 ```javascript
-cy.wrap(["Wai Yan", "Yu"]).its(1).should("eq", "Yu"); // true
+cy.wrap(['Wai Yan', 'Yu']).its(1).should('eq', 'Yu') // true
 ```
 
 ### DOM Elements
@@ -107,7 +107,7 @@ cy
 #### Get `length` of title
 
 ```javascript
-cy.title().its("length").should("eq", 24);
+cy.title().its('length').should('eq', 24)
 ```
 
 ### Functions
@@ -116,10 +116,10 @@ cy.title().its("length").should("eq", 24);
 
 ```javascript
 const fn = () => {
-  return 42;
-};
+  return 42
+}
 
-cy.wrap({ getNum: fn }).its("getNum").should("be.a", "function");
+cy.wrap({ getNum: fn }).its('getNum').should('be.a', 'function')
 ```
 
 #### Access function properties
@@ -131,20 +131,20 @@ You can access functions to then drill into their own properties instead of invo
 // a basic Factory constructor
 const Factory = (arg) => {
   // ...
-};
+}
 
 Factory.create = (arg) => {
-  return new Factory(arg);
-};
+  return new Factory(arg)
+}
 
 // assign it to the window
-window.Factory = Factory;
+window.Factory = Factory
 ```
 
 ```javascript
 cy.window() // yields window object
-  .its("Factory") // yields Factory function
-  .invoke("create", "arg"); // now invoke properties on it
+  .its('Factory') // yields Factory function
+  .invoke('create', 'arg') // now invoke properties on it
 ```
 
 #### Use `.its()` to test `window.fetch`
@@ -163,12 +163,12 @@ You can drill into nested properties by using _dot notation_.
 const user = {
   contacts: {
     work: {
-      name: "Kamil",
+      name: 'Kamil',
     },
   },
-};
+}
 
-cy.wrap(user).its("contacts.work.name").should("eq", "Kamil"); // true
+cy.wrap(user).its('contacts.work.name').should('eq', 'Kamil') // true
 ```
 
 ### Existence
@@ -177,29 +177,29 @@ cy.wrap(user).its("contacts.work.name").should("eq", "Kamil"); // true
 
 ```javascript
 cy.window()
-  .its("globalProp")
+  .its('globalProp')
   .then((globalProp) => {
     // do something now that window.globalProp exists
-  });
+  })
 ```
 
 #### Assert that a property does not exist on `window`
 
 ```javascript
-cy.window().its("evilProp").should("not.exist");
+cy.window().its('evilProp').should('not.exist')
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.its()` requires being chained off a previous command.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.its` will automatically [retry](/guides/core-concepts/retry-ability) until it has a property that is not `null` or `undefined`.</li></List>
+<List><li>`.its()` will automatically [retry](/guides/core-concepts/retry-ability) until it has a property that is not `null` or `undefined`.</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.its()` can time out waiting for the property to exist.</li><li>`.its()` can time out waiting for assertions you've added to pass.</li></List>
 
@@ -208,17 +208,17 @@ cy.window().its("evilProp").should("not.exist");
 **_Get `responseBody` of aliased route_**
 
 ```javascript
-cy.intercept(/comments/, { fixture: "comments.json" }).as("getComments");
-cy.get("#fetch-comments").click();
-cy.wait("@getComments")
-  .its("response.body")
+cy.intercept(/comments/, { fixture: 'comments.json' }).as('getComments')
+cy.get('#fetch-comments').click()
+cy.wait('@getComments')
+  .its('response.body')
   .should(
-    "deep.eq",
+    'deep.eq',
     JSON.stringify([
-      { id: 1, comment: "hi" },
-      { id: 2, comment: "there" },
+      { id: 1, comment: 'hi' },
+      { id: 2, comment: 'there' },
     ])
-  );
+  )
 ```
 
 The commands above will display in the Command Log as:

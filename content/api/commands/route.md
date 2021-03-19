@@ -6,7 +6,7 @@ Use `cy.route()` to manage the behavior of network requests.
 
 <Alert type="warning">
 
-⚠️ **`cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0**. In a future release, support for `cy.server()` and `cy.route()` will be moved to a plugin. Consider using [`cy.intercept()`](/api/commands/intercept.html) instead.
+⚠️ **`cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0**. In a future release, support for `cy.server()` and `cy.route()` will be moved to a plugin. Consider using [`cy.intercept()`](/api/commands/intercept) instead.
 
 </Alert>
 
@@ -14,19 +14,19 @@ Use `cy.route()` to manage the behavior of network requests.
 
 🚨 Please be aware that Cypress only currently supports intercepting XMLHttpRequests. **Requests using the Fetch API and other types of network requests like page loads and `<script>` tags will not be intercepted or visible in the Command Log.** You can automatically polyfill `window.fetch` to spy on and stub requests by enabling an [experimental](https://on.cypress.io/experimental) feature `experimentalFetchPolyfill`. See [#95](https://github.com/cypress-io/cypress/issues/95) for more details and temporary workarounds.
 
-Cypress also has a new experimental [route2](/api/commands/route2.html) feature that supports requests using the Fetch API and other types of network requests like page loads. For more information, check out the [cy.route2() documentation](/api/commands/route2.html).
+Cypress also has a new experimental [route2](/api/commands/route2) feature that supports requests using the Fetch API and other types of network requests like page loads. For more information, check out the [cy.route2() documentation](/api/commands/route2).
 
 </Alert>
 
 ## Syntax
 
 ```javascript
-cy.route(url);
-cy.route(url, response);
-cy.route(method, url);
-cy.route(method, url, response);
-cy.route(callbackFn);
-cy.route(options);
+cy.route(url)
+cy.route(url, response)
+cy.route(method, url)
+cy.route(method, url, response)
+cy.route(callbackFn)
+cy.route(options)
 ```
 
 ### Usage
@@ -34,7 +34,7 @@ cy.route(options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.route("/users/**");
+cy.route('/users/**')
 ```
 
 ### Arguments
@@ -80,7 +80,7 @@ Pass in an options object to change the default behavior of `cy.route()`. By def
 
 You can also set options for all [`cy.wait()`](/api/commands/wait)'s `requestTimeout` and `responseTimeout` globally in [configuration](/guides/references/configuration) to control how long to wait for the request and response of a supplied route.
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`cy.route()` yields `null`.</li><li>`cy.route()` can be aliased, but otherwise cannot be chained further.</li></List>
 
@@ -93,20 +93,20 @@ If you do not pass a `response` to a route, Cypress will pass the request throug
 #### Wait on XHR `GET` request matching `url`
 
 ```javascript
-cy.server();
-cy.route("**/users").as("getUsers");
-cy.visit("/users");
-cy.wait("@getUsers");
+cy.server()
+cy.route('**/users').as('getUsers')
+cy.visit('/users')
+cy.wait('@getUsers')
 ```
 
 #### Wait on XHR's matching `method` and `url`
 
 ```javascript
-cy.server();
-cy.route("POST", "**/users").as("postUser");
-cy.visit("/users");
-cy.get("#first-name").type("Julius{enter}");
-cy.wait("@postUser");
+cy.server()
+cy.route('POST', '**/users').as('postUser')
+cy.visit('/users')
+cy.get('#first-name').type('Julius{enter}')
+cy.wait('@postUser')
 ```
 
 #### Setup route to `POST` to login
@@ -128,8 +128,8 @@ We expose [`Cypress.minimatch`](/api/utilities/minimatch) as a function that you
 #### Match route against any UserId
 
 ```javascript
-cy.server();
-cy.route("**/users/*/comments");
+cy.server()
+cy.route('**/users/*/comments')
 
 // https://localhost:7777/users/123/comments     <-- matches
 // https://localhost:7777/users/123/comments/465 <-- does not match
@@ -138,8 +138,8 @@ cy.route("**/users/*/comments");
 #### Use glob to match all segments
 
 ```javascript
-cy.server();
-cy.route("**/posts/**");
+cy.server()
+cy.route('**/posts/**')
 
 // https://localhost:7777/posts/1            <-- matches
 // https://localhost:7777/posts/foo/bar/baz  <-- matches
@@ -168,13 +168,13 @@ If you pass a `response` to `cy.route()`, Cypress will stub the response in the 
 When passing a `string` as the `url`, the XHR's URL must match _exactly_ what you've written. You'll want to use the decoded string and not include any hash encoding (ie. use `@` instead of `%40`).
 
 ```javascript
-cy.server();
-cy.route("https://localhost:7777/surveys/customer?email=john@doe.com", [
+cy.server()
+cy.route('https://localhost:7777/surveys/customer?email=john@doe.com', [
   {
     id: 1,
-    name: "john",
+    name: 'john',
   },
-]);
+])
 ```
 
 #### `url` as a RegExp
@@ -182,15 +182,15 @@ cy.route("https://localhost:7777/surveys/customer?email=john@doe.com", [
 When passing a RegExp as the `url`, the XHR's url will be tested against the regular expression and will apply if it passes.
 
 ```javascript
-cy.server();
-cy.route(/users\/\d+/, { id: 1, name: "Phoebe" });
+cy.server()
+cy.route(/users\/\d+/, { id: 1, name: 'Phoebe' })
 ```
 
 ```javascript
 // Application Code
-$.get("https://localhost:7777/users/1337", (data) => {
-  console.log(data); // => {id: 1, name: "Phoebe"}
-});
+$.get('https://localhost:7777/users/1337', (data) => {
+  console.log(data) // => {id: 1, name: "Phoebe"}
+})
 ```
 
 #### Response functions
@@ -204,10 +204,10 @@ const commentsResponse = (routeData) => {
   //routeData is a reference to the current route's information
   return {
     data: someOtherFunction(routeData),
-  };
-};
+  }
+}
 
-cy.route("POST", "**/comments", commentsResponse);
+cy.route('POST', '**/comments', commentsResponse)
 ```
 
 #### Matching requests and routes
@@ -236,8 +236,8 @@ You can [read more about this behavior here.](/api/commands/server#Options)
 The below example matches all `DELETE` requests to "/users" and stubs a response with an empty JSON object.
 
 ```javascript
-cy.server();
-cy.route("DELETE", "**/users/*", {});
+cy.server()
+cy.route('DELETE', '**/users/*', {})
 ```
 
 #### Making multiple requests to the same route
@@ -245,29 +245,29 @@ cy.route("DELETE", "**/users/*", {});
 You can test a route multiple times with unique response objects by using [aliases](/guides/core-concepts/variables-and-aliases#Aliases) and [cy.wait()](/api/commands/wait). Each time we use `cy.wait()` for an alias, Cypress waits for the next nth matching request.
 
 ```js
-cy.server();
-cy.route("/beetles", []).as("getBeetles");
-cy.get("#search").type("Weevil");
+cy.server()
+cy.route('/beetles', []).as('getBeetles')
+cy.get('#search').type('Weevil')
 
 // wait for the first response to finish
-cy.wait("@getBeetles");
+cy.wait('@getBeetles')
 
 // the results should be empty because we
 // responded with an empty array first
-cy.get("#beetle-results").should("be.empty");
+cy.get('#beetle-results').should('be.empty')
 
 // now re-define the /beetles response
-cy.route("/beetles", [{ name: "Geotrupidae" }]);
+cy.route('/beetles', [{ name: 'Geotrupidae' }])
 
-cy.get("#search").type("Geotrupidae");
+cy.get('#search').type('Geotrupidae')
 
 // now when we wait for 'getBeetles' again, Cypress will
 // automatically know to wait for the 2nd response
-cy.wait("@getBeetles");
+cy.wait('@getBeetles')
 
 // we responded with 1 beetle item so now we should
 // have one result
-cy.get("#beetle-results").should("have.length", 1);
+cy.get('#beetle-results').should('have.length', 1)
 ```
 
 ### Fixtures
@@ -275,31 +275,31 @@ cy.get("#beetle-results").should("have.length", 1);
 Instead of writing a response inline you can automatically connect a response with a [`cy.fixture()`](/api/commands/fixture).
 
 ```javascript
-cy.server();
-cy.route("**/posts/*", "fixture:logo.png").as("getLogo");
-cy.route("**/users", "fixture:users/all.json").as("getUsers");
-cy.route("**/admin", "fx:users/admin.json").as("getAdmin");
+cy.server()
+cy.route('**/posts/*', 'fixture:logo.png').as('getLogo')
+cy.route('**/users', 'fixture:users/all.json').as('getUsers')
+cy.route('**/admin', 'fx:users/admin.json').as('getAdmin')
 ```
 
 You may want to define the `cy.route()` after receiving the fixture and working with its data.
 
 ```javascript
-cy.fixture("user").then((user) => {
-  user.firstName = "Jane";
+cy.fixture('user').then((user) => {
+  user.firstName = 'Jane'
   // work with the users array here
 
-  cy.route("GET", "**/user/123", user);
-});
+  cy.route('GET', '**/user/123', user)
+})
 
-cy.visit("/users");
-cy.get(".user").should("include", "Jane");
+cy.visit('/users')
+cy.get('.user').should('include', 'Jane')
 ```
 
 You can also reference fixtures as strings directly in the response by passing an aliased fixture with `@`.
 
 ```javascript
-cy.fixture("user").as("fxUser");
-cy.route("POST", "**/users", "@fxUser");
+cy.fixture('user').as('fxUser')
+cy.route('POST', '**/users', '@fxUser')
 ```
 
 ### Options
@@ -307,17 +307,17 @@ cy.route("POST", "**/users", "@fxUser");
 #### Pass in an options object
 
 ```javascript
-cy.server();
+cy.server()
 cy.route({
-  method: "DELETE",
-  url: "**/user/*",
+  method: 'DELETE',
+  url: '**/user/*',
   status: 412,
   response: {
     rolesCount: 2,
   },
   delay: 500,
   headers: {
-    "X-Token": null,
+    'X-Token': null,
   },
   onRequest: (xhr) => {
     // do something with the
@@ -329,7 +329,7 @@ cy.route({
     // raw XHR object when the
     // response comes back
   },
-});
+})
 ```
 
 #### Simulate a server redirect
@@ -338,13 +338,13 @@ Below we simulate the server returning `503` with a stubbed empty JSON response 
 
 ```javascript
 cy.route({
-  method: "POST",
-  url: "**/login",
+  method: 'POST',
+  url: '**/login',
   response: {
     // simulate a redirect to another page
-    redirect: "/error",
+    redirect: '/error',
   },
-});
+})
 ```
 
 #### Setup route to error on `POST` to login
@@ -363,13 +363,13 @@ If you'd like to override this, explicitly pass in `headers` as an object litera
 
 ```javascript
 cy.route({
-  url: "**/user-image.png",
-  response: "fx:logo.png,binary", // binary encoding
+  url: '**/user-image.png',
+  response: 'fx:logo.png,binary', // binary encoding
   headers: {
     // set content-type headers
-    "content-type": "binary/octet-stream",
+    'content-type': 'binary/octet-stream',
   },
-});
+})
 ```
 
 #### Use delays for responses
@@ -378,11 +378,11 @@ You can pass in a `delay` option that causes a delay (in ms) to the `response` f
 
 ```javascript
 cy.route({
-  method: "PATCH",
-  url: "**/activities/*",
+  method: 'PATCH',
+  url: '**/activities/*',
   response: {},
   delay: 3000,
-});
+})
 ```
 
 ### Function
@@ -395,11 +395,11 @@ cy.route(() => {
 
   // and return an appropriate routing object here
   return {
-    method: "POST",
-    url: "**/users/*/comments",
+    method: 'POST',
+    url: '**/users/*/comments',
     response: this.commentsFixture,
-  };
-});
+  }
+})
 ```
 
 #### Functions that return promises are awaited
@@ -411,13 +411,13 @@ cy.route(() => {
     // resolve this promise after 1 second
     setTimeout(() => {
       resolve({
-        method: "PUT",
-        url: "**/posts/**",
-        response: "@postFixture",
-      });
-    }, 1000);
-  });
-});
+        method: 'PUT',
+        url: '**/posts/**',
+        response: '@postFixture',
+      })
+    }, 1000)
+  })
+})
 ```
 
 ## Notes
@@ -453,7 +453,7 @@ The intention of `cy.request()` is to be used for checking endpoints on an actua
 When Cypress matches up an outgoing XHR request to a `cy.route()`, it actually attempts to match it against both the fully qualified URL and then additionally without the URL's origin.
 
 ```javascript
-cy.route("**/users/*");
+cy.route('**/users/*')
 ```
 
 The following XHRs which were `xhr.open(...)` with these URLs would:
@@ -476,32 +476,32 @@ The following XHRs which were `xhr.open(...)` with these URLs would:
 You can force requests that do _not_ match a route to return a `404` status and an empty body by passing an option to the `cy.server()` like so:
 
 ```javascript
-cy.server({ force404: true });
+cy.server({ force404: true })
 ```
 
 You can [read more about this here.](/api/commands/server#Options)
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.route()` requires being chained off of `cy`.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.route` cannot have any assertions chained.</li></List>
+<List><li>`cy.route()` cannot have any assertions chained.</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.route()` cannot time out.</li></List>
 
 ## Command Log
 
 ```javascript
-cy.server();
-cy.route(/accounts/).as("accountsGet");
-cy.route(/company/, "fixtures:company").as("companyGet");
-cy.route(/teams/, "fixtures:teams").as("teamsGet");
+cy.server()
+cy.route(/accounts/).as('accountsGet')
+cy.route(/company/, 'fixtures:company').as('companyGet')
+cy.route(/teams/, 'fixtures:teams').as('teamsGet')
 ```
 
 Whenever you start a server and add routes, Cypress will display a new Instrument Log called _Routes_. It will list the routing table in the Instrument Log, including the `method`, `url`, `stubbed`, `alias` and number of matched requests:

@@ -24,14 +24,14 @@ The querying behavior of this command matches exactly how [`.prevAll()`](http://
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get(".active").prevAll(); // Yield all links previous to `.active`
+cy.get('.active').prevAll() // Yield all links previous to `.active`
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.prevAll(); // Errors, cannot be chained off 'cy'
-cy.getCookies().prevAll(); // Errors, 'getCookies' does not yield DOM element
+cy.prevAll() // Errors, cannot be chained off 'cy'
+cy.getCookies().prevAll() // Errors, 'getCookies' does not yield DOM element
 ```
 
 ### Arguments
@@ -49,7 +49,7 @@ Pass in an options object to change the default behavior of `.prevAll()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.prevAll()` to resolve before [timing out](#Timeouts)                  |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`.prevAll()` yields the new DOM element(s) it found.</li></List>
 
@@ -71,7 +71,7 @@ Pass in an options object to change the default behavior of `.prevAll()`.
 
 ```javascript
 // yields [<li>apples</li>, <li>oranges</li>]
-cy.get(".third").prevAll();
+cy.get('.third').prevAll()
 ```
 
 ### Selector
@@ -90,20 +90,20 @@ cy.get(".third").prevAll();
 
 ```javascript
 // yields <li>pineapples</li>
-cy.get("li").prevAll(".selected");
+cy.get('li').prevAll('.selected')
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.prevAll()` requires being chained off a command that yields DOM element(s).</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.prevAll` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.prevAll` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.prevAll()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.prevAll()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.prevAll()` can time out waiting for the element(s) to [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.prevAll()` can time out waiting for assertions you've added to pass.</li></List>
 
@@ -112,7 +112,7 @@ cy.get("li").prevAll(".selected");
 **_Find all elements before the `.active` li_**
 
 ```javascript
-cy.get(".left-nav").find("li.active").prevAll();
+cy.get('.left-nav').find('li.active').prevAll()
 ```
 
 The commands above will display in the Command Log as:

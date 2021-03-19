@@ -61,11 +61,11 @@ As we continue to save our new test file we'll see the browser auto reloading in
 Open up your favorite IDE and add the code below to our `sample_spec.js` test file.
 
 ```js
-describe("My First Test", () => {
-  it("Does not do much!", () => {
-    expect(true).to.equal(true);
-  });
-});
+describe('My First Test', () => {
+  it('Does not do much!', () => {
+    expect(true).to.equal(true)
+  })
+})
 ```
 
 Once you save this file you should see the browser reload.
@@ -85,11 +85,11 @@ Notice Cypress displays a message about this being the default page [on the righ
 Now let's write our first failing test.
 
 ```js
-describe("My First Test", () => {
-  it("Does not do much!", () => {
-    expect(true).to.equal(false);
-  });
-});
+describe('My First Test', () => {
+  it('Does not do much!', () => {
+    expect(true).to.equal(false)
+  })
+})
 ```
 
 Once you save again, you'll see Cypress display the failing test in red since `true` does not equal `false`.
@@ -156,11 +156,11 @@ First, let's visit a web page. We will visit our [Kitchen Sink](/examples/exampl
 We can pass the URL we want to visit to [`cy.visit()`](/api/commands/visit). Let's replace our previous test with the one below that actually visits a page:
 
 ```js
-describe("My First Test", () => {
-  it("Visits the Kitchen Sink", () => {
-    cy.visit("https://example.cypress.io");
-  });
-});
+describe('My First Test', () => {
+  it('Visits the Kitchen Sink', () => {
+    cy.visit('https://example.cypress.io')
+  })
+})
 ```
 
 Save the file and switch back over to the Cypress Test Runner. You might notice a few things:
@@ -200,13 +200,13 @@ To find this element by its contents, we'll use [cy.contains()](/api/commands/co
 Let's add it to our test and see what happens:
 
 ```js
-describe("My First Test", () => {
+describe('My First Test', () => {
   it('finds the content "type"', () => {
-    cy.visit("https://example.cypress.io");
+    cy.visit('https://example.cypress.io')
 
-    cy.contains("type");
-  });
-});
+    cy.contains('type')
+  })
+})
 ```
 
 Our test should now display `CONTAINS` in the [Command Log](/guides/core-concepts/test-runner#Command-Log) and still be green.
@@ -246,13 +246,13 @@ Before we add another command - let's get this test back to passing. Replace `hy
 Ok, now we want to click on the link we found. How do we do that? Add a [.click()](/api/commands/click) command to the end of the previous command, like so:
 
 ```js
-describe("My First Test", () => {
+describe('My First Test', () => {
   it('clicks the link "type"', () => {
-    cy.visit("https://example.cypress.io");
+    cy.visit('https://example.cypress.io')
 
-    cy.contains("type").click();
-  });
-});
+    cy.contains('type').click()
+  })
+})
 ```
 
 You can almost read it like a little story! Cypress calls this "chaining" and we chain together commands to build tests that really express what the app does in a declarative way.
@@ -276,16 +276,16 @@ Let's make an assertion about something on the new page we clicked into. Perhaps
 Here's what that looks like:
 
 ```js
-describe("My First Test", () => {
+describe('My First Test', () => {
   it('clicking "type" navigates to a new url', () => {
-    cy.visit("https://example.cypress.io");
+    cy.visit('https://example.cypress.io')
 
-    cy.contains("type").click();
+    cy.contains('type').click()
 
     // Should be on a new URL which includes '/commands/actions'
-    cy.url().should("include", "/commands/actions");
-  });
-});
+    cy.url().should('include', '/commands/actions')
+  })
+})
 ```
 
 #### Adding more commands and assertions
@@ -297,21 +297,21 @@ We can continue the interactions and assertions in this test by adding another c
 We can use [cy.get()](/api/commands/get) to select an element based on a CSS class. Then we can use the [.type()](/api/commands/type) command to enter text into the selected input. Finally, we can verify that the value of the input reflects the text that was typed with another [.should()](/api/commands/should).
 
 ```js
-describe("My First Test", () => {
-  it("Gets, types and asserts", () => {
-    cy.visit("https://example.cypress.io");
+describe('My First Test', () => {
+  it('Gets, types and asserts', () => {
+    cy.visit('https://example.cypress.io')
 
-    cy.contains("type").click();
+    cy.contains('type').click()
 
     // Should be on a new URL which includes '/commands/actions'
-    cy.url().should("include", "/commands/actions");
+    cy.url().should('include', '/commands/actions')
 
     // Get an input, type into it and verify that the value has been updated
-    cy.get(".action-email")
-      .type("fake@email.com")
-      .should("have.value", "fake@email.com");
-  });
-});
+    cy.get('.action-email')
+      .type('fake@email.com')
+      .should('have.value', 'fake@email.com')
+  })
+})
 ```
 
 And there you have it: a short test in Cypress that visits a page, finds and clicks a link, verifies the URL and then verifies the behavior of an element on the new page. If we read it out loud, it might sound like:
@@ -473,23 +473,23 @@ For instance there is:
 Let's add a [cy.pause()](/api/commands/pause) to our test code and see what happens.
 
 ```js
-describe("My First Test", () => {
+describe('My First Test', () => {
   it('clicking "type" shows the right headings', () => {
-    cy.visit("https://example.cypress.io");
+    cy.visit('https://example.cypress.io')
 
-    cy.pause();
+    cy.pause()
 
-    cy.contains("type").click();
+    cy.contains('type').click()
 
     // Should be on a new URL which includes '/commands/actions'
-    cy.url().should("include", "/commands/actions");
+    cy.url().should('include', '/commands/actions')
 
     // Get an input, type into it and verify that the value has been updated
-    cy.get(".action-email")
-      .type("fake@email.com")
-      .should("have.value", "fake@email.com");
-  });
-});
+    cy.get('.action-email')
+      .type('fake@email.com')
+      .should('have.value', 'fake@email.com')
+  })
+})
 ```
 
 Now Cypress provides us a UI (similar to debugger) to step forward through each command.

@@ -24,15 +24,15 @@ The querying behavior of this command matches exactly how [`.eq()`](https://api.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get("tbody>tr").eq(0); // Yield first 'tr' in 'tbody'
-cy.get("ul>li").eq(4); // Yield fifth 'li' in 'ul'
+cy.get('tbody>tr').eq(0) // Yield first 'tr' in 'tbody'
+cy.get('ul>li').eq(4) // Yield fifth 'li' in 'ul'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.eq(0); // Errors, cannot be chained off 'cy'
-cy.getCookies().eq(4); // Errors, 'getCookies' does not yield DOM element
+cy.eq(0) // Errors, cannot be chained off 'cy'
+cy.getCookies().eq(4) // Errors, 'getCookies' does not yield DOM element
 ```
 
 ### Arguments
@@ -54,7 +54,7 @@ Pass in an options object to change the default behavior of `.eq()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.eq()` to resolve before [timing out](#Timeouts)                       |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`.eq()` yields the new DOM element(s) it found.</li></List>
 
@@ -75,7 +75,7 @@ Pass in an options object to change the default behavior of `.eq()`.
 ```
 
 ```javascript
-cy.get("li").eq(1).should("contain", "siamese"); // true
+cy.get('li').eq(1).should('contain', 'siamese') // true
 ```
 
 #### Make an assertion on the 3rd row of a table
@@ -102,7 +102,7 @@ cy.get("li").eq(1).should("contain", "siamese"); // true
 ```
 
 ```javascript
-cy.get("tr").eq(2).should("contain", "Canada"); //true
+cy.get('tr').eq(2).should('contain', 'Canada') //true
 ```
 
 ### Index From End
@@ -120,20 +120,20 @@ cy.get("tr").eq(2).should("contain", "Canada"); //true
 ```
 
 ```javascript
-cy.get("li").eq(-2).should("contain", "sphynx"); // true
+cy.get('li').eq(-2).should('contain', 'sphynx') // true
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.eq()` requires being chained off a command that yields DOM element(s).</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.eq` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.eq` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.eq()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.eq()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.eq()` can time out waiting for the element(s) to [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.eq()` can time out waiting for assertions you've added to pass.</li></List>
 
@@ -142,7 +142,7 @@ cy.get("li").eq(-2).should("contain", "sphynx"); // true
 **_Find the 4th `<li>` in the navigation_**
 
 ```javascript
-cy.get(".left-nav.nav").find(">li").eq(3);
+cy.get('.left-nav.nav').find('>li').eq(3)
 ```
 
 The commands above will display in the Command Log as:

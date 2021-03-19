@@ -7,10 +7,10 @@ Read a file and yield its contents.
 ## Syntax
 
 ```javascript
-cy.readFile(filePath);
-cy.readFile(filePath, encoding);
-cy.readFile(filePath, options);
-cy.readFile(filePath, encoding, options);
+cy.readFile(filePath)
+cy.readFile(filePath, encoding)
+cy.readFile(filePath, options)
+cy.readFile(filePath, encoding, options)
 ```
 
 ### Usage
@@ -18,7 +18,7 @@ cy.readFile(filePath, encoding, options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.readFile("menu.json");
+cy.readFile('menu.json')
 ```
 
 ### Arguments
@@ -52,7 +52,7 @@ Pass in an options object to change the default behavior of `cy.readFile()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.readFile()` to resolve before [timing out](#Timeouts)               |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`cy.readFile()` 'yields the contents of the file' </li></List>
 
@@ -71,7 +71,7 @@ Hello World
 ```
 
 ```javascript
-cy.readFile("path/to/message.txt").should("eq", "Hello World"); // true
+cy.readFile('path/to/message.txt').should('eq', 'Hello World') // true
 ```
 
 ### JSON
@@ -88,7 +88,7 @@ For JSON, the contents yielded are parsed into JavaScript and returned.
 ```
 
 ```javascript
-cy.readFile("path/to/data.json").its("name").should("eq", "Eliza"); // true
+cy.readFile('path/to/data.json').its('name').should('eq', 'Eliza') // true
 ```
 
 ### YAML
@@ -96,20 +96,20 @@ cy.readFile("path/to/data.json").its("name").should("eq", "Eliza"); // true
 #### Get translation data from a YAML file
 
 ```javascript
-const YAML = require("yamljs");
+const YAML = require('yamljs')
 
-cy.readFile("languages/en.yml").then((str) => {
+cy.readFile('languages/en.yml').then((str) => {
   // parse the string into object literal
-  const english = YAML.parse(str);
+  const english = YAML.parse(str)
 
-  cy.get("#sidebar")
-    .find(".sidebar-title")
+  cy.get('#sidebar')
+    .find('.sidebar-title')
     .each(($el, i) => {
-      englishTitle = english.sidebar[i];
+      englishTitle = english.sidebar[i]
 
-      expect($el.text()).to.eq(englishTitle);
-    });
-});
+      expect($el.text()).to.eq(englishTitle)
+    })
+})
 ```
 
 ### Encoding
@@ -117,22 +117,22 @@ cy.readFile("languages/en.yml").then((str) => {
 #### Specify the encoding with the second argument
 
 ```javascript
-cy.readFile("path/to/logo.png", "base64").then((logo) => {
+cy.readFile('path/to/logo.png', 'base64').then((logo) => {
   // logo will be encoded as base64
   // and should look something like this:
   // aIJKnwxydrB10NVWqhlmmC+ZiWs7otHotSAAAOw==...
-});
+})
 ```
 
 ### Playing MP3 file
 
 ```javascript
-cy.readFile("audio/sound.mp3", "base64").then((mp3) => {
-  const uri = "data:audio/mp3;base64," + mp3;
-  const audio = new Audio(uri);
+cy.readFile('audio/sound.mp3', 'base64').then((mp3) => {
+  const uri = 'data:audio/mp3;base64,' + mp3
+  const audio = new Audio(uri)
 
-  audio.play();
-});
+  audio.play()
+})
 ```
 
 ## Notes
@@ -145,7 +145,7 @@ By default, `cy.readFile()` asserts that the file exists and will fail if it doe
 
 ```javascript
 // will fail after the defaultCommandTimeout is reached
-cy.readFile("does-not-exist.yaml");
+cy.readFile('does-not-exist.yaml')
 ```
 
 #### Asserting file non-existence
@@ -154,7 +154,7 @@ You can assert that a file does not exist like so:
 
 ```javascript
 // will pass if the file does not exist
-cy.readFile("does-not-exist.yaml").should("not.exist");
+cy.readFile('does-not-exist.yaml').should('not.exist')
 ```
 
 #### Read a file that might not exist
@@ -170,20 +170,20 @@ cy.readFile("does-not-exist.yaml").should("not.exist");
 ```javascript
 // if this assertion fails cy.readFile will poll the file
 // until it eventually passes its assertions (or times out)
-cy.readFile("some/nested/path/story.txt").should("eq", "Once upon a time...");
+cy.readFile('some/nested/path/story.txt').should('eq', 'Once upon a time...')
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.readFile()` requires being chained off of `cy`.</li><li>`cy.readFile()` requires the file must exist.</li><li>`cy.readFile()` requires the file be successfully read from disk.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.readFile` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`cy.readFile()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.readFile()` can time out waiting for assertions you've added to pass.</li></List>
 
@@ -192,7 +192,7 @@ cy.readFile("some/nested/path/story.txt").should("eq", "Once upon a time...");
 **_List the contents of the default `cypress.json` configuration file_**
 
 ```javascript
-cy.readFile("cypress.json");
+cy.readFile('cypress.json')
 ```
 
 The command above will display in the Command Log as:

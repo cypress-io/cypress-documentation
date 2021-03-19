@@ -15,9 +15,9 @@ We do not recommend starting a web server using `cy.task()`. Read about [best pr
 ## Syntax
 
 ```javascript
-cy.task(event);
-cy.task(event, arg);
-cy.task(event, arg, options);
+cy.task(event)
+cy.task(event, arg)
+cy.task(event, arg, options)
 ```
 
 ### Usage
@@ -26,20 +26,20 @@ cy.task(event, arg, options);
 
 ```javascript
 // in test
-cy.task("log", "This will be output to the terminal");
+cy.task('log', 'This will be output to the terminal')
 ```
 
 ```javascript
 // in plugins file
 module.exports = (on, config) => {
-  on("task", {
+  on('task', {
     log(message) {
-      console.log(message);
+      console.log(message)
 
-      return null;
+      return null
     },
-  });
-};
+  })
+}
 ```
 
 The `task` plugin event handler can return a value or a promise. The command will fail if `undefined` is returned or if the promise is resolved with `undefined`. This helps catch typos or cases where the task event is not handled.
@@ -60,21 +60,21 @@ If you need to pass multiple arguments, use an object
 
 ```javascript
 // in test
-cy.task("hello", { greeting: "Hello", name: "World" });
+cy.task('hello', { greeting: 'Hello', name: 'World' })
 ```
 
 ```javascript
 // in plugins/index.js
 module.exports = (on, config) => {
-  on("task", {
+  on('task', {
     // deconstruct the individual properties
     hello({ greeting, name }) {
-      console.log("%s, %s", greeting, name);
+      console.log('%s, %s', greeting, name)
 
-      return null;
+      return null
     },
-  });
-};
+  })
+}
 ```
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
@@ -86,7 +86,7 @@ Pass in an options object to change the default behavior of `cy.task()`.
 | `log`     | `true`                                                     | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout` | [`taskTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.task()` to resolve before [timing out](#Timeouts)                   |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 `cy.task()` yields the value returned or resolved by the `task` event in the [pluginsFile](/guides/references/configuration#Folders-Files).
 
@@ -110,19 +110,19 @@ cy.task('readFileMaybe', 'my-file.txt').then((textOrNull) => { ... })
 
 ```javascript
 // in plugins/index.js
-const fs = require("fs");
+const fs = require('fs')
 
 module.exports = (on, config) => {
-  on("task", {
+  on('task', {
     readFileMaybe(filename) {
       if (fs.existsSync(filename)) {
-        return fs.readFileSync(filename, "utf8");
+        return fs.readFileSync(filename, 'utf8')
       }
 
-      return null;
+      return null
     },
-  });
-};
+  })
+}
 ```
 
 ### Return number of files in the folder
@@ -134,75 +134,75 @@ cy.task('countFiles', 'cypress/downloads').then((count) => { ... })
 
 ```javascript
 // in plugins/index.js
-const fs = require("fs");
+const fs = require('fs')
 
 module.exports = (on, config) => {
-  on("task", {
+  on('task', {
     countFiles(folderName) {
       return new Promise((resolve, reject) => {
         fs.readdir(folderName, (err, files) => {
           if (err) {
-            return reject(err);
+            return reject(err)
           }
 
-          resolve(files.length);
-        });
-      });
+          resolve(files.length)
+        })
+      })
     },
-  });
-};
+  })
+}
 ```
 
 ### Seed a database
 
 ```javascript
 // in test
-describe("e2e", () => {
+describe('e2e', () => {
   beforeEach(() => {
-    cy.task("defaults:db");
-    cy.visit("/");
-  });
+    cy.task('defaults:db')
+    cy.visit('/')
+  })
 
-  it("displays article values", () => {
-    cy.get(".article-list").should("have.length", 10);
-  });
-});
+  it('displays article values', () => {
+    cy.get('.article-list').should('have.length', 10)
+  })
+})
 ```
 
 ```javascript
 // in plugins/index.js
 // we require some code in our app that
 // is responsible for seeding our database
-const db = require("../../server/src/db");
+const db = require('../../server/src/db')
 
 module.exports = (on, config) => {
-  on("task", {
-    "defaults:db": () => {
-      return db.seed("defaults");
+  on('task', {
+    'defaults:db': () => {
+      return db.seed('defaults')
     },
-  });
-};
+  })
+}
 ```
 
 ### Return a Promise from an asynchronous task
 
 ```javascript
 // in test
-cy.task("pause", 1000);
+cy.task('pause', 1000)
 ```
 
 ```javascript
 // in plugins/index.js
 module.exports = (on, config) => {
-  on("task", {
+  on('task', {
     pause(ms) {
       return new Promise((resolve) => {
         // tasks should not resolve with undefined
-        setTimeout(() => resolve(null), ms);
-      });
+        setTimeout(() => resolve(null), ms)
+      })
     },
-  });
-};
+  })
+}
 ```
 
 ### Save a variable across non same-origin URL visits
@@ -213,41 +213,41 @@ We can save the variable and retrieve the saved variable outside of the test usi
 
 ```javascript
 // in test
-describe("Href visit", () => {
-  it("captures href", () => {
-    cy.visit("https://www.mywebapp.com");
-    cy.get("a")
-      .invoke("attr", "href")
+describe('Href visit', () => {
+  it('captures href', () => {
+    cy.visit('https://www.mywebapp.com')
+    cy.get('a')
+      .invoke('attr', 'href')
       .then((href) => {
         // href is not same-origin as current url
         // like https://www.anotherwebapp.com
-        cy.task("setHref", href);
-      });
-  });
+        cy.task('setHref', href)
+      })
+  })
 
-  it("visit href", () => {
-    cy.task("getHref").then((href) => {
+  it('visit href', () => {
+    cy.task('getHref').then((href) => {
       // visit non same-origin url https://www.anotherwebapp.com
-      cy.visit(href);
-    });
-  });
-});
+      cy.visit(href)
+    })
+  })
+})
 ```
 
 ```javascript
 // in plugins/index.js
-let href;
+let href
 
 module.exports = (on, config) => {
-  on("task", {
+  on('task', {
     setHref: (val) => {
-      return (href = val);
+      return (href = val)
     },
     getHref: () => {
-      return href;
+      return href
     },
-  });
-};
+  })
+}
 ```
 
 ### Command options
@@ -260,7 +260,7 @@ Cypress will _not_ continue running any other commands until `cy.task()` has fin
 
 ```javascript
 // will fail if seeding the database takes longer than 20 seconds to finish
-cy.task("seedDatabase", null, { timeout: 20000 });
+cy.task('seedDatabase', null, { timeout: 20000 })
 ```
 
 ## Notes
@@ -283,22 +283,22 @@ Sometimes you might be using plugins that export their tasks for registration. C
 
 ```javascript
 // in plugins/index.js file
-const skipAndOnlyTask = require("cypress-skip-and-only-ui/task");
-const fs = require("fs");
+const skipAndOnlyTask = require('cypress-skip-and-only-ui/task')
+const fs = require('fs')
 const myTask = {
   readFileMaybe(filename) {
     if (fs.existsSync(filename)) {
-      return fs.readFileSync(filename, "utf8");
+      return fs.readFileSync(filename, 'utf8')
     }
 
-    return null;
+    return null
   },
-};
+}
 
 // register plugin's task
-on("task", skipAndOnlyTask);
+on('task', skipAndOnlyTask)
 // and register my own task
-on("task", myTask);
+on('task', myTask)
 ```
 
 See [#2284](https://github.com/cypress-io/cypress/issues/2284) for implementation.
@@ -316,8 +316,8 @@ If multiple task objects use the same key, the later registration will overwrite
 You can change the timeout of `cy.task()` for the remainder of the tests by setting the new values for `taskTimeout` within [Cypress.config()](/api/cypress-api/config).
 
 ```js
-Cypress.config("taskTimeout", 30000);
-Cypress.config("taskTimeout"); // => 30000
+Cypress.config('taskTimeout', 30000)
+Cypress.config('taskTimeout') // => 30000
 ```
 
 ### Set timeout in the test configuration
@@ -327,17 +327,17 @@ You can configure the `cy.task()` timeout within a suite or test by passing the 
 This will set the timeout throughout the duration of the tests, then return it to the default `taskTimeout` when complete.
 
 ```js
-describe("has data available from database", { taskTimeout: 90000 }, () => {
+describe('has data available from database', { taskTimeout: 90000 }, () => {
   before(() => {
-    cy.task("seedDatabase");
-  });
+    cy.task('seedDatabase')
+  })
 
   // tests
 
   after(() => {
-    cy.task("resetDatabase");
-  });
-});
+    cy.task('resetDatabase')
+  })
+})
 ```
 
 ### Allows a single argument only
@@ -346,64 +346,64 @@ The syntax `cy.task(name, arg, options)` only has place for a single argument to
 
 ```javascript
 // in test
-const dbName = "stagingA";
-const query = "SELECT * FROM users";
+const dbName = 'stagingA'
+const query = 'SELECT * FROM users'
 
-cy.task("queryDatabase", { dbName, query });
+cy.task('queryDatabase', { dbName, query })
 ```
 
 ```javascript
 // in plugins/index.js
-const mysql = require("mysql");
+const mysql = require('mysql')
 // the connection strings for different databases could
 // come from a config file, or from environment variables
 const connections = {
   stagingA: {
-    host: "staging.my.co",
-    user: "test",
-    password: "***",
-    database: "users",
+    host: 'staging.my.co',
+    user: 'test',
+    password: '***',
+    database: 'users',
   },
   stagingB: {
-    host: "staging-b.my.co",
-    user: "test",
-    password: "***",
-    database: "users",
+    host: 'staging-b.my.co',
+    user: 'test',
+    password: '***',
+    database: 'users',
   },
-};
+}
 
 // querying the database from Node
 function queryDB(connectionInfo, query) {
-  const connection = mysql.createConnection(connectionInfo);
+  const connection = mysql.createConnection(connectionInfo)
 
-  connection.connect();
+  connection.connect()
 
   return new Promise((resolve, reject) => {
     connection.query(query, (error, results) => {
       if (error) {
-        return reject(error);
+        return reject(error)
       }
 
-      connection.end();
+      connection.end()
 
-      return resolve(results);
-    });
-  });
+      return resolve(results)
+    })
+  })
 }
 module.exports = (on, config) => {
-  on("task", {
+  on('task', {
     // destructure the argument into the individual fields
     queryDatabase({ dbName, query }) {
-      const connectionInfo = connections[dbName];
+      const connectionInfo = connections[dbName]
 
       if (!connectionInfo) {
-        throw new Error(`Do not have DB connection under name ${dbName}`);
+        throw new Error(`Do not have DB connection under name ${dbName}`)
       }
 
-      return queryDB(connectionInfo, query);
+      return queryDB(connectionInfo, query)
     },
-  });
-};
+  })
+}
 ```
 
 ### Argument should be serializable
@@ -412,40 +412,40 @@ The argument `arg` sent via `cy.task(name, arg)` should be serializable; it cann
 
 ```javascript
 // in test
-cy.task("date", new Date()).then((s) => {
+cy.task('date', new Date()).then((s) => {
   // the yielded result is a string
   // we need to convert it to Date object
-  const result = new Date(s);
-});
+  const result = new Date(s)
+})
 ```
 
 ```javascript
 // in plugins/index.js
 module.exports = (on, config) => {
-  on("task", {
+  on('task', {
     date(s) {
       // s is a string, so convert it to Date
-      const d = new Date(s);
+      const d = new Date(s)
 
       // do something with the date
       // and return it back
-      return d;
+      return d
     },
-  });
-};
+  })
+}
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.task()` requires being chained off of `cy`.</li><li>`cy.task()` requires the task to eventually end.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.task` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`cy.task()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.task()` can time out waiting for the task to end.</li></List>
 
@@ -454,7 +454,7 @@ module.exports = (on, config) => {
 #### List the contents of the default `cypress.json` configuration file
 
 ```javascript
-cy.task("readJson", "cypress.json");
+cy.task('readJson', 'cypress.json')
 ```
 
 The command above will display in the Command Log as:

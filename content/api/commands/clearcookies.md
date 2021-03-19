@@ -13,8 +13,8 @@ Cypress automatically clears all cookies _before_ each test to prevent state fro
 ## Syntax
 
 ```javascript
-cy.clearCookies();
-cy.clearCookies(options);
+cy.clearCookies()
+cy.clearCookies(options)
 ```
 
 ### Usage
@@ -22,7 +22,7 @@ cy.clearCookies(options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.clearCookies(); // clear all cookies
+cy.clearCookies() // clear all cookies
 ```
 
 ### Arguments
@@ -36,7 +36,7 @@ Pass in an options object to change the default behavior of `cy.clearCookies()`.
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.clearCookies()` to resolve before [timing out](#Timeouts)           |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`cy.clearCookies()` yields `null`.</li><li>`cy.clearCookies()` cannot be chained further.</li></List>
 
@@ -50,24 +50,24 @@ In this example, on first login our server sends us back a session cookie. After
 
 ```javascript
 // assume we just logged in
-cy.contains("Login").click();
-cy.url().should("include", "profile");
-cy.clearCookies();
-cy.visit("/dashboard"); // we should be redirected back to login
-cy.url().should("include", "login");
+cy.contains('Login').click()
+cy.url().should('include', 'profile')
+cy.clearCookies()
+cy.visit('/dashboard') // we should be redirected back to login
+cy.url().should('include', 'login')
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.clearCookies()` requires being chained off of `cy`.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.clearCookies` cannot have any assertions chained.</li></List>
+<List><li>`cy.clearCookies()` cannot have any assertions chained.</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.clearCookies()` should never time out.</li><li><Alert type="warning">
 
@@ -80,9 +80,9 @@ Because `cy.clearCookies()` is asynchronous it is technically possible for there
 **_Clear cookies after getting cookies_**
 
 ```javascript
-cy.getCookies().should("have.length", 1);
-cy.clearCookies();
-cy.getCookies().should("be.empty");
+cy.getCookies().should('have.length', 1)
+cy.clearCookies()
+cy.getCookies().should('be.empty')
 ```
 
 The commands above will display in the Command Log as:

@@ -46,9 +46,9 @@ If you had any failed tests, you can hover over the spec chart and click on the 
 
 <DocsImage src="/img/dashboard/specs-failures-popup.png" alt="Failures popup on spec hover" ></DocsImage>
 
-### <Icon name="code" className="fa-fw"></Icon> Standard output
+### <Icon name="code" className="fa-fw"></Icon> CI logs
 
-Standard output includes details and summaries of your tests for each spec file based on the [reporter](/guides/tooling/reporters) you have set. By default it is the `spec` reporter.
+CI logs from the Cypress standard output include details and summaries of your tests for each spec file based on the [reporter](/guides/tooling/reporters) you have set. By default it is the `spec` reporter.
 
 You will also see a summary at the bottom indicating the screenshots, or videos that were uploaded during the recording.
 
@@ -58,7 +58,7 @@ You will also see a summary at the bottom indicating the screenshots, or videos 
 
 All screenshots taken during the test run can be found in the **Screenshots** of the spec. Both screenshots taken during failures and screenshots taken using the [`cy.screenshot()`](/api/commands/screenshot) command will show up here.
 
-### <Icon name="video-camera" className="fa-fw"></Icon> Videos
+### <Icon name="video" className="fa-fw"></Icon> Videos
 
 The video recorded during the test run can be found under the **Video** of the spec. You can also download the video.
 
@@ -71,17 +71,17 @@ Any tests that fail during a test run can be found under the **Failures** tab. E
 ### Each failure displays:
 
 - **Test title:** The title of the failed test.
-- **Error:** The stack trace of the error.
+- **Error:** The stack trace, error message, and point-of-failure code frame for each attempt of a test..
 - **Screenshot:** Any screenshots taken during the test.
 - **Video:** The recorded video scrubbed to the point of failure in the test.
 
-<DocsImage src="/img/dashboard/failures-of-recorded-run.png" alt="failure tab" ></DocsImage>
+<DocsImage src="/img/dashboard/runs/test-attempts-and-errors.png" alt="failure tab" ></DocsImage>
 
 ## Cancel run
 
 You can cancel a run currently in progress from the Dashboard. Runs can only be canceled by members of the project.
 
-**To cancel a run**
+### To cancel a run
 
 - Click on a run in progress from the run list
 - Click on **<Icon name="ban"></Icon> Cancel run** in the upper-right corner of the run details page
@@ -89,44 +89,45 @@ You can cancel a run currently in progress from the Dashboard. Runs can only be 
 
 <DocsVideo src="/img/snippets/cancelling-run.mp4"></DocsVideo>
 
-**What happens when a run is canceled?**
+### What happens when a run is canceled?
 
 - The run status will update to canceled.
 - A message will appear on the run details page showing the time of cancellation and the user that canceled the run.
 - The run will display as **Canceled** in the associated GitHub pull request if [GitHub Integration](/guides/dashboard/github-integration) is enabled.
 - Any tests recorded to completion will be available to view in the run details page.
-- Any tests recorded to completion will still count towards your monthly test recording limit.
+- Any tests recorded to completion will still count towards your monthly test results limit.
 - If you have Analytics enabled, canceled runs will appear in the [Runs over time](/guides/dashboard/analytics#Run-status) chart.
 - Any incomplete calls to [cypress run --record](/guides/guides/command-line#cypress-run) for the run will be marked as canceled and not run.
 - Any existing calls to [cypress run --record](/guides/guides/command-line#cypress-run) for the run will exit with an error like below.
+
   <DocsImage src="/img/dashboard/cancel-run-error.png" alt="cancel-run-error" width-600 ></DocsImage>
 
 ## Archive run
 
 Runs that have been canceled or are in an errored state can be archived from the Dashboard.
 
-**To archive a run**
+### To archive a run
 
 - In the cancellation or error message, click **Archive this run**.
   <DocsImage src="/img/dashboard/archive-run-within-cancelation-msg.png" alt="cancel-run-error" ></DocsImage>
 
-**What happens when a run is archived?**
+### What happens when a run is archived?
 
 - The archived run will no longer display in the runs list or [Analytics](/guides/dashboard/analytics) reporting.
 - Archived runs can be accessed by the URL to that run. The format is:
   `https://dashboard.cypress.io/projects/{project ID}/runs/{run number}`
-- Any tests recorded to the Dashboard will still count towards your monthly test recording limit, even when it has been archived.
+- Any tests recorded to the Dashboard will still count towards your monthly test results limit, even when it has been archived.
 
-**To restore an archived run**
+### To restore an archived run
 
 - Visit the archived run. The archived run can be accessed by the URL of the run. The format is:
   `https://dashboard.cypress.io/projects/{project ID}/runs/{run number}`
 - Click **<Icon name="history"></Icon> Restore from archive**
   <DocsImage src="/img/dashboard/restore-from-archive.png" alt="restore-from-archive" ></DocsImage>
 
-## Test Case History
+## Test Code History
 
-<DocsImage src="/img/dashboard/runs/dashboard-runs-details-sidebar-test-case-history.png" alt="Screenshot of the Test Case History panel" ></DocsImage>
+<DocsImage src="/img/dashboard/runs/test-code-history.png" alt="Screenshot of the Test Code History panel" ></DocsImage>
 
 When looking further into a test runs information, there is a new Test Case History panel. It matches test cases by spec and title and combines it with commit information to provide users insight to:
 

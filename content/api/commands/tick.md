@@ -13,7 +13,7 @@ Move time after overriding a native time function with [`cy.clock()`](/api/comma
 ## Syntax
 
 ```javascript
-cy.tick(milliseconds);
+cy.tick(milliseconds)
 ```
 
 ### Usage
@@ -21,7 +21,7 @@ cy.tick(milliseconds);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.tick(500);
+cy.tick(500)
 ```
 
 ### Arguments
@@ -30,7 +30,7 @@ cy.tick(500);
 
 The number of `milliseconds` to move the clock. Any timers within the affected range of time will be called.
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 `cy.tick()` yields a `clock` object with the following methods:
 
@@ -54,17 +54,17 @@ You can also access the `clock` object via `this.clock` in a [`.then()`](/api/co
 // app code loaded by index.html
 window.addIntro = () => {
   setTimeout(() => {
-    document.getElementById("#header").textContent = "Hello, World";
-  }, 500);
-};
+    document.getElementById('#header').textContent = 'Hello, World'
+  }, 500)
+}
 ```
 
 ```javascript
-cy.clock();
-cy.visit("/index.html");
-cy.window().invoke("addIntro");
-cy.tick(500);
-cy.get("#header").should("have.text", "Hello, World");
+cy.clock()
+cy.visit('/index.html')
+cy.window().invoke('addIntro')
+cy.tick(500)
+cy.get('#header').should('have.text', 'Hello, World')
 ```
 
 #### Using `cy.clock()` with `cy.tick()`
@@ -80,36 +80,36 @@ cy.get("#header").should("have.text", "Hello, World");
 You can restore the clock and allow your application to resume normally without manipulating native global functions related to time. This is automatically called between tests.
 
 ```javascript
-cy.clock();
-cy.visit("http://localhost:3333");
-cy.get("#search").type("Acme Company");
-cy.tick(1000);
+cy.clock()
+cy.visit('http://localhost:3333')
+cy.get('#search').type('Acme Company')
+cy.tick(1000)
 // more test code here
 
 // restore the clock
 cy.clock().then((clock) => {
-  clock.restore();
-});
+  clock.restore()
+})
 // more test code here
 ```
 
 You could also restore by using [.invoke()](/api/commands/invoke) to invoke the `restore` function.
 
 ```js
-cy.clock().invoke("restore");
+cy.clock().invoke('restore')
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.tick()` requires being chained off of `cy`.</li><li>`cy.tick()` requires that `cy.clock()` be called before it.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.tick` is a utility command.</li><li>`cy.tick` will not run assertions. Assertions will pass through as if this command did not exist.</li></List>
+<List><li>`cy.tick()` is a utility command.</li><li>`cy.tick()` will not run assertions. Assertions will pass through as if this command did not exist.</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.tick()` cannot time out.</li></List>
 
@@ -118,8 +118,8 @@ cy.clock().invoke("restore");
 **_Create a clock and tick it 1 second_**
 
 ```javascript
-cy.clock();
-cy.tick(1000);
+cy.clock()
+cy.tick(1000)
 ```
 
 The command above will display in the Command Log as:

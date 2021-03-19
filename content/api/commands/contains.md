@@ -25,15 +25,15 @@ cy.contains(selector, content, options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get(".nav").contains("About"); // Yield el in .nav containing 'About'
-cy.contains("Hello"); // Yield first el in document containing 'Hello'
+cy.get('.nav').contains('About') // Yield el in .nav containing 'About'
+cy.contains('Hello') // Yield first el in document containing 'Hello'
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.title().contains("My App"); // Errors, 'title' does not yield DOM element
-cy.getCookies().contains("_key"); // Errors, 'getCookies' does not yield DOM element
+cy.title().contains('My App') // Errors, 'title' does not yield DOM element
+cy.getCookies().contains('_key') // Errors, 'getCookies' does not yield DOM element
 ```
 
 ### Arguments
@@ -57,7 +57,7 @@ Pass in an options object to change the default behavior of `.contains()`.
 | `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)  | Time to wait for `.contains()` to resolve before [timing out](#Timeouts)                                     |
 | `includeShadowDom` | [`includeShadowDom`<br](/> config option value' configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`.contains()` yields the new DOM element it found.</li></List>
 
@@ -77,7 +77,7 @@ Pass in an options object to change the default behavior of `.contains()`.
 
 ```javascript
 // yields <li>apples</li>
-cy.contains("apples");
+cy.contains('apples')
 ```
 
 #### Find the `input[type='submit']` by value
@@ -102,7 +102,7 @@ Get the form element and search in its descendants for the content "submit the f
 
 ```javascript
 // yields input[type='submit'] element then clicks it
-cy.get("form").contains("submit the form!").click();
+cy.get('form').contains('submit the form!').click()
 ```
 
 ### Number
@@ -119,7 +119,7 @@ Even though the `<span>` is the deepest element that contains a "4", Cypress aut
 
 ```javascript
 // yields <button>
-cy.contains(4);
+cy.contains(4)
 ```
 
 ### Regular Expression
@@ -136,7 +136,7 @@ cy.contains(4);
 
 ```javascript
 // yields <li>bananas</li>
-cy.contains(/^b\w+/);
+cy.contains(/^b\w+/)
 ```
 
 ### Selector
@@ -163,7 +163,7 @@ To override the element that is yielded we can pass 'ul' as the selector.
 
 ```javascript
 // yields <ul>...</ul>
-cy.contains("ul", "apples");
+cy.contains('ul', 'apples')
 ```
 
 #### Keep the form as the subject
@@ -181,9 +181,9 @@ Here's an example that uses the selector to ensure that the `<form>` remains the
 ```
 
 ```javascript
-cy.get("form") // yields <form>...</form>
-  .contains("form", "Proceed") // yields <form>...</form>
-  .submit(); // yields <form>...</form>
+cy.get('form') // yields <form>...</form>
+  .contains('form', 'Proceed') // yields <form>...</form>
+  .submit() // yields <form>...</form>
 ```
 
 Without the explicit selector the subject would change to be the `<button>`. Using the explicit selector ensures that chained commands will have the `<form>` as the subject.
@@ -197,8 +197,8 @@ Here's an example using the `matchCase` option to ignore case sensitivity.
 ```
 
 ```js
-cy.get("div").contains("capital sentence"); // fail
-cy.get("div").contains("capital sentence", { matchCase: false }); // pass
+cy.get('div').contains('capital sentence') // fail
+cy.get('div').contains('capital sentence', { matchCase: false }) // pass
 ```
 
 ## Notes
@@ -212,7 +212,7 @@ cy.get("div").contains("capital sentence", { matchCase: false }); // pass
 This queries the entire `document` for the content.
 
 ```javascript
-cy.contains("Log In");
+cy.contains('Log In')
 ```
 
 #### When chained to an existing series of commands
@@ -220,7 +220,7 @@ cy.contains("Log In");
 This will query inside of the `<#checkout-container>` element.
 
 ```javascript
-cy.get("#checkout-container").contains("Buy Now");
+cy.get('#checkout-container').contains('Buy Now')
 ```
 
 #### Be wary of chaining multiple contains
@@ -229,7 +229,7 @@ Let's imagine a scenario where you click a button to delete a user and a dialog 
 
 ```javascript
 // This doesn't work as intended
-cy.contains("Delete User").click().contains("Yes, Delete!").click();
+cy.contains('Delete User').click().contains('Yes, Delete!').click()
 ```
 
 Because the second `.contains()` is chained off of a command that yielded the `<button>`, Cypress will look inside of the `<button>` for the new content.
@@ -239,8 +239,8 @@ In other words, Cypress will look inside of the `<button>` containing "Delete Us
 What you want to do is call `cy` again, which automatically creates a new chain scoped to the `document`.
 
 ```javascript
-cy.contains("Delete User").click();
-cy.contains("Yes, Delete!").click();
+cy.contains('Delete User').click()
+cy.contains('Yes, Delete!').click()
 ```
 
 ### Leading, trailing, duplicate whitespaces aren't ignored in `<pre>` tag
@@ -265,11 +265,11 @@ To reflect this behavior, Cypress also doesn't ignore them.
 ```js
 // test result for above code
 
-cy.get("p").contains("Hello, World !"); // pass
-cy.get("p").contains("           Hello,          World   !"); // fail
+cy.get('p').contains('Hello, World !') // pass
+cy.get('p').contains('           Hello,          World   !') // fail
 
-cy.get("pre").contains("Hello, World !"); // fail
-cy.get("pre").contains("                 Hello,           World      !"); // pass
+cy.get('pre').contains('Hello, World !') // fail
+cy.get('pre').contains('                 Hello,           World      !') // pass
 ```
 
 ### Non-breaking space
@@ -282,7 +282,7 @@ You can use a space character in `cy.contains()` to match text in the HTML that 
 
 ```javascript
 // finds the span element
-cy.contains("Hello world");
+cy.contains('Hello world')
 ```
 
 ### Single Element
@@ -306,14 +306,14 @@ The below example will return the `<li>` in the `#header` since that is the _fir
 
 ```javascript
 // yields #header li
-cy.contains("Jane Lane");
+cy.contains('Jane Lane')
 ```
 
 If you wanted to select the `<span>` instead, you could narrow the elements yielded before the `.contains()`.
 
 ```javascript
 // yields <span>
-cy.get("#main").contains("Jane Lane");
+cy.get('#main').contains('Jane Lane')
 ```
 
 ### Preferences
@@ -344,7 +344,7 @@ Even though the `<span>` is the deepest element that contains "Search", Cypress 
 
 ```javascript
 // yields <button>
-cy.contains("Search").children("i").should("have.class", "fa-search");
+cy.contains('Search').children('i').should('have.class', 'fa-search')
 ```
 
 #### Favor of `<a>` over other deeper elements
@@ -364,7 +364,7 @@ Even though the `<span>` is the deepest element that contains "Sign Out", Cypres
 
 ```javascript
 // yields <a>
-cy.get("nav").contains("Sign Out").should("have.attr", "href", "/signout");
+cy.get('nav').contains('Sign Out').should('have.attr', 'href', '/signout')
 ```
 
 #### Favor of `<label>` over other deeper elements
@@ -386,20 +386,20 @@ Even though the `<span>` is the deepest element that contains "Age", Cypress yie
 
 ```javascript
 // yields label
-cy.contains("Age").find("input").type("29");
+cy.contains('Age').find('input').type('29')
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.contains()` can be chained off of `cy` or off a command that yields DOM element(s).</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.contains` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.contains` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.contains()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.contains()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.contains()` can time out waiting for the element(s) to [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.contains()` can time out waiting for assertions you've added to pass.</li></List>
 
@@ -408,7 +408,7 @@ cy.contains("Age").find("input").type("29");
 **_Element contains text "New User"_**
 
 ```javascript
-cy.get("h1").contains("New User");
+cy.get('h1').contains('New User')
 ```
 
 The commands above will display in the Command Log as:

@@ -16,7 +16,7 @@ cy.log(message, args...)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.log("created new user");
+cy.log('created new user')
 ```
 
 ### Arguments
@@ -29,7 +29,7 @@ Message to be printed to Cypress Command Log. Accepts a Markdown formatted messa
 
 Additional arguments to be printed to the Cypress Command Log. There is no limit to the number of arguments.
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`cy.log()` yields `null`.</li><li>`cy.log()` cannot be chained further.</li></List>
 
@@ -40,9 +40,9 @@ Additional arguments to be printed to the Cypress Command Log. There is no limit
 #### Print a message to the Command Log.
 
 ```javascript
-cy.click("Login");
-cy.url().should("not.include", "login");
-cy.log("Login successful");
+cy.click('Login')
+cy.url().should('not.include', 'login')
+cy.log('Login successful')
 ```
 
 ### Args
@@ -50,20 +50,20 @@ cy.log("Login successful");
 #### Print a message with arguments to the Command Log.
 
 ```javascript
-cy.log("events triggered", events);
+cy.log('events triggered', events)
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.log()` requires being chained off of `cy`.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.log` cannot have any assertions chained.</li></List>
+<List><li>`cy.log()` cannot have any assertions chained.</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.log()` cannot time out.</li></List>
 
@@ -72,8 +72,8 @@ cy.log("events triggered", events);
 #### Print messages with arguments to the Command Log.
 
 ```javascript
-cy.log("log out any message we want here");
-cy.log("another message", ["one", "two", "three"]);
+cy.log('log out any message we want here')
+cy.log('another message', ['one', 'two', 'three'])
 ```
 
 The commands above will display in the Command Log as:

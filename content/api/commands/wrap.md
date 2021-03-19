@@ -7,8 +7,8 @@ Yield the object passed into `.wrap()`. If the object is a promise, yield its re
 ## Syntax
 
 ```javascript
-cy.wrap(subject);
-cy.wrap(subject, options);
+cy.wrap(subject)
+cy.wrap(subject, options)
 ```
 
 ### Usage
@@ -16,7 +16,7 @@ cy.wrap(subject, options);
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.wrap({ name: "Jane Lane" });
+cy.wrap({ name: 'Jane Lane' })
 ```
 
 ### Arguments
@@ -34,7 +34,7 @@ Pass in an options object to change the default behavior of `cy.wrap()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.wrap()` to resolve before [timing out](#Timeouts)                   |
 
-### Yields [<Icon name="question-circle"/>](introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 <List><li>`cy.wrap()` 'yields the object it was called with' </li></List>
 
@@ -46,10 +46,10 @@ Pass in an options object to change the default behavior of `cy.wrap()`.
 
 ```javascript
 const getName = () => {
-  return "Jane Lane";
-};
+  return 'Jane Lane'
+}
 
-cy.wrap({ name: getName }).invoke("name").should("eq", "Jane Lane"); // true
+cy.wrap({ name: getName }).invoke('name').should('eq', 'Jane Lane') // true
 ```
 
 ### Elements
@@ -57,26 +57,26 @@ cy.wrap({ name: getName }).invoke("name").should("eq", "Jane Lane"); // true
 #### Wrap elements to continue executing commands
 
 ```javascript
-cy.get("form").within(($form) => {
+cy.get('form').within(($form) => {
   // ... more commands
 
-  cy.wrap($form).should("have.class", "form-container");
-});
+  cy.wrap($form).should('have.class', 'form-container')
+})
 ```
 
 #### Conditionally wrap elements
 
 ```javascript
-cy.get("button").then(($button) => {
+cy.get('button').then(($button) => {
   // $button is a wrapped jQuery element
-  if ($button.someMethod() === "something") {
+  if ($button.someMethod() === 'something') {
     // wrap this element so we can
     // use cypress commands on it
-    cy.wrap($button).click();
+    cy.wrap($button).click()
   } else {
     // do something else
   }
-});
+})
 ```
 
 ### Promises
@@ -90,15 +90,15 @@ const myPromise = new Promise((resolve, reject) => {
   // we use setTimeout(...) to simulate async code.
   setTimeout(() => {
     resolve({
-      type: "success",
-      message: "It worked!",
-    });
-  }, 2500);
-});
+      type: 'success',
+      message: 'It worked!',
+    })
+  }, 2500)
+})
 
-it("should wait for promises to resolve", () => {
-  cy.wrap(myPromise).its("message").should("eq", "It worked!");
-});
+it('should wait for promises to resolve', () => {
+  cy.wrap(myPromise).its('message').should('eq', 'It worked!')
+})
 ```
 
 <DocsImage src="/img/api/wrap/cypress-wrapped-promise-waits-to-resolve.gif" alt="Wrap of promises" ></DocsImage>
@@ -107,31 +107,31 @@ it("should wait for promises to resolve", () => {
 
 ```javascript
 // import application code for logging in
-import { userService } from "../../src/_services/user.service";
+import { userService } from '../../src/_services/user.service'
 
-it("can assert against resolved object using .should", () => {
-  cy.log("user service login");
-  const username = Cypress.env("username");
-  const password = Cypress.env("password");
+it('can assert against resolved object using .should', () => {
+  cy.log('user service login')
+  const username = Cypress.env('username')
+  const password = Cypress.env('password')
 
   // wrap the promise returned by the application code
   cy.wrap(userService.login(username, password))
     // check the yielded object
-    .should("be.an", "object")
-    .and("have.keys", ["firstName", "lastName", "username", "id", "token"])
-    .and("contain", {
-      username: "test",
-      firstName: "Test",
-      lastName: "User",
-    });
+    .should('be.an', 'object')
+    .and('have.keys', ['firstName', 'lastName', 'username', 'id', 'token'])
+    .and('contain', {
+      username: 'test',
+      firstName: 'Test',
+      lastName: 'User',
+    })
 
   // cy.visit command will wait for the promise returned from
   // the "userService.login" to resolve. Then local storage item is set
   // and the visit will immediately be authenticated and logged in
-  cy.visit("/");
+  cy.visit('/')
   // we should be logged in
-  cy.contains("Hi Test!").should("be.visible");
-});
+  cy.contains('Hi Test!').should('be.visible')
+})
 ```
 
 **Note:** `.wrap()` will not synchronize asynchronous function calls for you. For example, given the following example:
@@ -143,15 +143,15 @@ it("can assert against resolved object using .should", () => {
 **<Icon name="exclamation-triangle" color="red"></Icon>** If you wrap the asynchronous functions in `cy.wrap()`, then `bar()` may be called prematurely before the required data is available:
 
 ```javascript
-cy.wrap(foo());
+cy.wrap(foo())
 
-cy.get("some-button").click();
-cy.get("some-input").type(someValue);
-cy.get("some-submit-button").click();
+cy.get('some-button').click()
+cy.get('some-input').type(someValue)
+cy.get('some-submit-button').click()
 
 // this will execute `bar()` immediately without waiting
 // for other cy.get(...) functions to complete
-cy.wrap(bar()); // DON'T DO THIS
+cy.wrap(bar()) // DON'T DO THIS
 ```
 
 This behavior is due to the function invocation `foo()` and `bar()`, which call the functions immediately to return a Promise.
@@ -159,30 +159,30 @@ This behavior is due to the function invocation `foo()` and `bar()`, which call 
 **<Icon name="check-circle" color="green"></Icon>** If you want `bar()` to execute after `foo()` and the [cy.get()](/api/commands/get) commands, one solution is to chain off the final command using [.then()](/api/commands/then):
 
 ```javascript
-cy.wrap(foo());
+cy.wrap(foo())
 
-cy.get("some-button").click();
-cy.get("some-input").type(someValue);
-cy.get("some-submit-button")
+cy.get('some-button').click()
+cy.get('some-input').type(someValue)
+cy.get('some-submit-button')
   .click()
   .then(() => {
     // this will execute `bar()` after the
     // other cy.get(...) functions complete
-    cy.wrap(bar());
-  });
+    cy.wrap(bar())
+  })
 ```
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`cy.wrap()` requires being chained off of `cy`.</li></List>
 
-### Assertions [<Icon name="question-circle"/>](introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.wrap`, when its argument is a promise, will automatically wait until the promise resolves. If the promise is rejected, `cy.wrap` will fail the test.</li><li>`cy.wrap` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`cy.wrap()`, when its argument is a promise, will automatically wait until the promise resolves. If the promise is rejected, `cy.wrap()` will fail the test.</li><li>`cy.wrap()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
 
-### Timeouts [<Icon name="question-circle"/>](introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`cy.wrap()` can time out waiting for assertions you've added to pass.</li></List>
 
@@ -191,7 +191,7 @@ cy.get("some-submit-button")
 **Make assertions about object**
 
 ```javascript
-cy.wrap({ amount: 10 }).should("have.property", "amount").and("eq", 10);
+cy.wrap({ amount: 10 }).should('have.property', 'amount').and('eq', 10)
 ```
 
 The commands above will display in the Command Log as:
