@@ -19,7 +19,7 @@ export default {
 </script>
 
 <template>
-  <img class="docs-image" :src="filePath" :alt="alt" />
+  <img class="docs-image" loading="lazy" :src="filePath" :alt="alt" />
 </template>
 
 <style lang="scss">
