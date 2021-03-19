@@ -576,7 +576,7 @@ Cypress's APIs are built very differently from what you're likely used to: but t
 
 Using JavaScript loop commands like `while` can have unexpected effects. Let's say our application shows a random number on load.
 
-<DocsImage src="/img/guides/core-concepts/reload-page.gif" alt="Manually reloading the browser page until the number 7 appears" style="aspect-ratio: 494 / 368"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/reload-page.gif" alt="Manually reloading the browser page until the number 7 appears"></DocsImage>
 
 We want the test to stop when it finds the number 7. If any other number is displayed the test reloads the page and checks again.
 
@@ -645,7 +645,7 @@ checkAndReload()
 
 The test runs and correctly finishes.
 
-<DocsImage src="/img/guides/core-concepts/lucky-7.gif" alt="Test reloads the page until the number 7 appears" style="aspect-ratio: 1000 / 1288"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/lucky-7.gif" alt="Test reloads the page until the number 7 appears"></DocsImage>
 
 You can see a short video going through this example at [https://www.youtube.com/watch?v=5Z8BaPNDfvA](https://www.youtube.com/watch?v=5Z8BaPNDfvA).
 
