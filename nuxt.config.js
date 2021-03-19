@@ -49,10 +49,9 @@ export default {
    ** Nuxt.js dev-modules
    */
   buildModules: [
-    // Doc: https://github.com/nuxt-community/tailwindcss-module
     '@nuxtjs/tailwindcss',
-    // Doc: https://github.com/nuxt-community/fontawesome-module
     '@nuxtjs/fontawesome',
+    '@nuxt/image'
   ],
   /*
    ** Nuxt.js modules

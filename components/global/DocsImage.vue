@@ -12,7 +12,7 @@ export default {
   },
   computed: {
     filePath() {
-      return require(`../../assets${  this.src}`)
+      return require(`../../assets${this.src}`)
     },
   },
 }

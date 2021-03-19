@@ -119,7 +119,10 @@ export default function scrollBehavior(to, from, savedPosition) {
             'Failed to save scroll position. Please add CSS.escape() polyfill (https://github.com/mathiasbynens/CSS.escape).'
           )
         }
-        resolve(position)
+        setTimeout(() => {
+          resolve(position)
+        }, 10)
+        
       }
     })
   })
