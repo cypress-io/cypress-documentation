@@ -115,14 +115,6 @@ $font-color-black: rgb(46, 49, 56);
     @apply pb-3;
   }
 
-  h1,
-  h2,
-  h3 {
-    @apply flex;
-    @apply flex-row;
-    @apply items-center;
-  }
-
   h2 {
     @apply font-bold;
 
