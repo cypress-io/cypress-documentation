@@ -18,12 +18,12 @@ commands:
       - checkout
       - restore_cache:
           keys:
-            - yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}
+            - yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}-{{ checksum "patches/vue-scrollactive+0.9.3.patch" }}
       - run:
           name: Install Dependencies
           command: yarn --frozen-lockfile
       - save_cache:
-          key: yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}
+          key: yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}-{{ checksum "patches/vue-scrollactive+0.9.3.patch" }}
           paths:
             - node_modules
       - run:

@@ -55,7 +55,7 @@ Pass in an options object to change the default behavior of `cy.location()`.
 
 #### When given a `key` argument:
 
-<List><li>`cy.location()` 'yields the value of the location property as a string' </li></List>
+- `cy.location()` yields the value of the location property as a string
 
 ## Examples
 

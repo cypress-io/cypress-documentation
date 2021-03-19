@@ -422,7 +422,7 @@ cy.get('#username').type('username@email.com')
 cy.get('#password').type('superSecret123')
 ```
 
-<DocsImage src="/img/api/custom-commands/custom-command-type-no-masked-password.png" alt=></DocsImage>
+<DocsImage src="/img/api/custom-commands/custom-command-type-no-masked-password.png"></DocsImage>
 
 You may want to mask some values passed to the [.type()](/api/commands/type) command so that sensitive data does not display in screenshots or videos of your test run. This example overwrites the [.type()](/api/commands/type) command to allow you to mask sensitive data in the Test Runner's Command Log.
 
@@ -450,7 +450,7 @@ cy.get('#password').type('superSecret123', { sensitive: true })
 
 Now our sensitive password is not printed to the Test Runner's Command Log when `sensitive: true` is passed as an option to [.type()](/api/commands/type).
 
-<DocsImage src="/img/api/custom-commands/custom-command-type-masked-password.png" alt=></DocsImage>
+<DocsImage src="/img/api/custom-commands/custom-command-type-masked-password.png"></DocsImage>
 
 <Alert type="info">
 

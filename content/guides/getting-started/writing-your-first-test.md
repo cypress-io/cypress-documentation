@@ -269,7 +269,7 @@ Now we can assert something about this new page!
 
 </Alert>
 
-### <Icon name="check-square-o"></Icon> Step 4: Make an assertion
+### <Icon name="check-square"></Icon> Step 4: Make an assertion
 
 Let's make an assertion about something on the new page we clicked into. Perhaps we'd like to make sure the new URL is the expected URL. We can do that by looking up the URL and chaining an assertion to it with [.should()](/api/commands/should).
 
@@ -422,7 +422,7 @@ When a command causes an immediate visual change in our application, cycling bet
 Cypress prints several pieces of information when an error occurs during a Cypress test.
 
 1. **Error name**: This is the type of the error (e.g. AssertionError, CypressError)
-1. **Error message**: This generally tells you what went wrong. It can vary in length. Some are short like in the example, while some are long, and may tell you exactly how to fix the error. Some also contain a **Learn more** link that will take you to relevant Cypress documentation.
+1. **Error message**: This generally tells you what went wrong. It can vary in length. Some are short like in the example, while some are long, and may tell you exactly how to fix the error.
 1. **Learn more:** Some error messages contain a Learn more link that will take you to relevant Cypress documentation.
 1. **Code frame file**: This is usually the top line of the stack trace and it shows the file, line number, and column number that is highlighted in the code frame below. Clicking on this link will open the file in your [preferred file opener](https://on.cypress.io/IDE-integration#File-Opener-Preference) and highlight the line and column in editors that support it.
 1. **Code frame**: This shows a snippet of code where the failure occurred, with the relevant line and column highlighted.

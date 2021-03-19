@@ -49,10 +49,9 @@ export default {
    ** Nuxt.js dev-modules
    */
   buildModules: [
-    // Doc: https://github.com/nuxt-community/tailwindcss-module
     '@nuxtjs/tailwindcss',
-    // Doc: https://github.com/nuxt-community/fontawesome-module
     '@nuxtjs/fontawesome',
+    '@nuxt/image'
   ],
   /*
    ** Nuxt.js modules
@@ -60,7 +59,6 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt/content
     '@nuxt/content',
     '@nuxtjs/gtm',
@@ -106,6 +104,7 @@ export default {
       solid: [
         'faAngleRight',
         'faBug',
+        'faCheck',
         'faCheckCircle',
         'faCheckSquare',
         'faCode',

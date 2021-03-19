@@ -53,6 +53,13 @@
           "badge": "community"
         },
         {
+          "name": "cypress-markdown-preprocessor",
+          "description": "Cypress preprocessor for extracting tests from Markdown files",
+          "link": "https://github.com/bahmutov/cypress-markdown-preprocessor",
+          "keywords": ["markdown"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-rollup-preprocessor",
           "description": "Cypress preprocessor for bundling JavaScript via rollup",
           "link": "https://github.com/lmarqs/cypress-rollup-preprocessor",
@@ -872,6 +879,18 @@
           "description": "Visual regression testing plugin maintained by DIT - UK Gov.",
           "link": "https://github.com/uktrade/cypress-image-diff",
           "keywords": ["screenshots", "visual regression", "image-diff"],
+          "badge": "community"
+        },
+        {
+          "name": "Micoo",
+          "description": "Cypress plugin for doing visual regression testing with Micoo service",
+          "link": "https://github.com/Mikuu/Micoo/tree/master/clients/micoocypress",
+          "keywords": [
+            "visual regression testing",
+            "visual testing",
+            "screenshots comparison",
+            "testing service"
+          ],
           "badge": "community"
         }
       ]

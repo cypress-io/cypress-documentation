@@ -66,19 +66,21 @@ cy.getCookies()
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.getCookies()` requires being chained off of `cy`.</li></List>
+- `cy.getCookies()` requires being chained off of `cy`.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.getCookies()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+- `cy.getCookies()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.getCookies()` should never time out.</li><li><Alert type="warning">
+- `cy.getCookies()` should never time out.
+
+<Alert type="warning">
 
 Because `cy.getCookies()` is asynchronous it is technically possible for there to be a timeout while talking to the internal Cypress automation APIs. But for practical purposes it should never happen.
 
-</Alert></li></List>
+</Alert>
 
 ## Command Log
 
