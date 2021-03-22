@@ -1,19 +1,18 @@
 ---
 title: Before Run API
-containerClass: experimental
 ---
 
 The `before:run` event fires before a run starts. The event only fires when running via `cypress run`.
 
 The event will fire each time `cypress run` executes. As a result, if running your specs in [parallel](/guides/guides/parallelization), the event will fire once for each machine on which the tests are run.
 
+## Syntax
+
 <Alert type="warning">
 
-<Icon name="exclamation-triangle" color="orange"></Icon> **This is an experimental feature. In order to use it, you must set the [experimentalRunEvents](/guides/references/experiments) configuration option to `true`.**
+⚠️ This code is part of the [plugin file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
 
 </Alert>
-
-## Syntax
 
 ```js
 on('before:run', (details) => {

@@ -45,6 +45,11 @@ $font-color-black: rgb(46, 49, 56);
     @apply px-16;
     @apply mx-2;
   }
+
+  @screen xl {
+    padding-left: 8rem;
+    padding-right: 6rem;
+  }
 }
 
 .main-content-title {
@@ -78,6 +83,8 @@ $font-color-black: rgb(46, 49, 56);
     @apply my-4;
     border: 1px solid #ddd;
     box-shadow: 0 1px 2px #ddd;
+    width: auto;
+    height: auto;
   }
 
   p,
@@ -106,14 +113,6 @@ $font-color-black: rgb(46, 49, 56);
     @apply mt-16;
     @apply mb-6;
     @apply pb-3;
-  }
-
-  h1,
-  h2,
-  h3 {
-    @apply flex;
-    @apply flex-row;
-    @apply items-center;
   }
 
   h2 {
@@ -155,6 +154,13 @@ $font-color-black: rgb(46, 49, 56);
   & > h4 {
     @apply text-xl;
     @apply font-medium;
+  }
+
+  h2 > em,
+  h3 > em,
+  h4 > em,
+  h5 > em {
+    @apply mx-2;
   }
 
   /* #region Heading Links */
@@ -306,6 +312,7 @@ $font-color-black: rgb(46, 49, 56);
   /* #region Alerts */
   div.alert {
     @apply border-l-4;
+    @apply border-gray-600;
     @apply px-12;
     @apply py-6;
     @apply mb-8;
@@ -319,24 +326,31 @@ $font-color-black: rgb(46, 49, 56);
     }
 
     h2,
-    h3 {
+    h3,
+    h4,
+    h5 {
       @apply text-xl;
       @apply flex;
       @apply flex-row;
       @apply items-center;
       @apply font-bold;
-      @apply my-4;
+      @apply mb-4;
+    }
+
+    h2,
+    h3,
+    h4,
+    h5 .badge {
+      @apply ml-2;
     }
 
     h2 > svg,
-    h3 > svg {
+    h3 > svg,
+    h4 > svg,
+    h5 > svg {
       @apply h-7;
       @apply w-7;
       @apply mr-2;
-    }
-
-    p {
-      @apply mb-4;
     }
 
     ul {

@@ -1,6 +1,15 @@
 {
   "courses": [
     {
+      "title": "Testes Automatizados com Cypress - Avançado",
+      "url": "https://www.udemy.com/course/testes-automatizados-com-cypress-avancado",
+      "author": "Walmyr Lima e Silva Filho",
+      "authorTwitter": "walmyrlimaesilv",
+      "sourceName": "Udemy",
+      "sourceUrl": "https://udemy.com",
+      "language": "Portuguese"
+    },
+    {
       "title": "Introduction to Cypress",
       "url": "https://www.ministryoftesting.com/dojo/courses/introduction-to-cypress?goal=0_02cca1920b-ef8df17a7d-289508933&mc_cid=ef8df17a7d&mc_eid=1e83fcd2d8",
       "author": "Marie Drake",

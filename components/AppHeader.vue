@@ -65,7 +65,10 @@ export default {
 </script>
 
 <template>
-  <nav class="w-full bg-gray-800 fixed overflow-y-auto z-20">
+  <nav
+    :class="isMenuOpen ? 'h-full' : ''"
+    class="w-full bg-gray-800 fixed top-0 left-0 overflow-y-auto z-20"
+  >
     <div class="mx-auto px-2 sm:px-4 lg:px-8">
       <div class="relative flex items-center justify-between h-16">
         <div class="flex items-center px-2 lg:px-0">
@@ -165,7 +168,10 @@ export default {
 
     Menu open: "block", Menu closed: "hidden"
     -->
-    <div :class="isMenuOpen ? 'block' : 'hidden'" class="lg:hidden">
+    <div
+      :class="isMenuOpen ? 'block' : 'hidden'"
+      class="lg:hidden overflow-y-auto"
+    >
       <div class="px-2 pt-2 pb-3 space-y-1">
         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
         <nuxt-link

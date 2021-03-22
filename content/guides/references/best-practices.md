@@ -296,7 +296,7 @@ Nevertheless, if you **did** want to write a test in Cypress, you already have t
 
 You only need to do one thing to know whether you've coupled your tests incorrectly, or if one test is relying on the state of a previous one.
 
-Put an `.only` on the test and refresh the browser.
+Change `it` to [`it.only`](https://jestjs.io/docs/api#testonlyname-fn-timeout) on the test and refresh the browser.
 
 If this test can run **by itself** and pass - congratulations you have written a good test.
 
@@ -332,7 +332,7 @@ describe('my form', () => {
 
 What's wrong with the above tests? They are all coupled together!
 
-If you were to put an `.only` on any of the last three tests, they would fail. Each test requires the previous to run in a specific order in order to pass.
+If you were to change `it` to [`it.only`](https://jestjs.io/docs/api#testonlyname-fn-timeout) on any of the last three tests, they would fail. Each test requires the previous to run in a specific order in order to pass.
 
 Here's 2 ways we can fix this:
 

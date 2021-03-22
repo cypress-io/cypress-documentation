@@ -20,9 +20,13 @@ Component testing in Cypress is similar to end-to-end testing. The notable diffe
 - There's no need to navigate to a URL. You don't need to call [`cy.visit()`](/api/commands/visit) in your test.
 - Cypress provides a blank canvas where we can `mount` components in isolation.
 
-A component test looks like this:
+## Getting Started
 
-```jsx
+A Cypress Component Test contains a `mount` function and assertions about the component it has rendered. A test may interact with component as a user would, using Cypress API commands like [.click()](/api/commands/click), [.type()](/api/commands/type), or [many more](/api/api/table-of-contents).
+
+With Cypress as the Test Runner and assertions framework, component tests in React and Vue look very similar. Here's an example, written in React:
+
+```javascript
 import { mount } from '@cypress/react' // or @cypress/vue
 import TodoList from './components/TodoList'
 

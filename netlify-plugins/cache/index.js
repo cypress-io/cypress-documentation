@@ -10,7 +10,11 @@ module.exports = {
   },
   async onPostBuild({ utils }) {
     await utils.cache.save('node_modules', {
-      digests: ['patches/github-slugger+1.3.0.patch', 'yarn.lock'],
+      digests: [
+        'patches/github-slugger+1.3.0.patch',
+        'patches/vue-scrollactive+0.9.3.patch',
+        'yarn.lock',
+      ],
     })
   },
 }

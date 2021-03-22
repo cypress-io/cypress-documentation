@@ -44,18 +44,16 @@ Make sure you [install](/guides/getting-started/installing-cypress) and [open](/
 - Provide record key directly:
 
   ```shell
-  cypress run --record --key &lt;record key&gt;
+  cypress run --record --key <record key>
   ```
 
 - Or set record key as environment variable
   ```shell
-  export CYPRESS_RECORD_KEY=&lt;record key&gt;
+  export CYPRESS_RECORD_KEY=<record key>
   ```
   ```shell
   cypress run --record
   ```
-
-````
 
 🎉 Your tests are now recording! As soon as tests finish running, you will see them in the [Dashboard](https://on.cypress.io/dashboard) and in the Runs tab of the [Test Runner](/guides/core-concepts/test-runner).
 
@@ -75,9 +73,9 @@ Once you set up your project to record, we generate a unique `projectId` for you
 
 ```json
 {
-"projectId": "a7bq2k"
+  "projectId": "a7bq2k"
 }
-````
+```
 
 This helps us uniquely identify your project. If you manually alter this, **Cypress will no longer be able to identify your project or find the recorded builds for it**.
 

@@ -150,7 +150,7 @@ The following keys can be combined with `.click()` through the `options`.
 | `metaKey`  | Activates the meta key (Windows key or command key for Mac). Aliases: <code>commandKey</code>, <code>cmdKey</code>. |
 | `shiftKey` | Activates the shift key.                                                                                            |
 
-##### Shift click
+#### Shift click
 
 ```js
 // execute a SHIFT + click on the first <li>
