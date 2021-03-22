@@ -433,13 +433,13 @@ If you get this error in a case where the element is definitely visible in the D
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> You passed the `--record` flag but did not provide us your Record Key.
 
-You may receive this error when trying to run Cypress tests in [Continuous Integration](/guides/continuous-integration/continuous-integration-introduction). This means that you did not pass a specific record key to: [cypress run --record](/guides/guides/command-line#cypress-run).
+You may receive this error when trying to run Cypress tests in [Continuous Integration](/guides/continuous-integration/introduction). This means that you did not pass a specific record key to: [cypress run --record](/guides/guides/command-line#cypress-run).
 
 Since no record key was passed, Cypress checks for any environment variable with the name `CYPRESS_RECORD_KEY`. In this case, that was also not found.
 
 You can get your project's record key by locating it in your settings tab in the Test Runner or in the [Dashboard Service](https://on.cypress.io/dashboard).
 
-You will want to then [add the key to your config file or as an environment variable](/guides/continuous-integration/continuous-integration-introduction#Record-tests).
+You will want to then [add the key to your config file or as an environment variable](/guides/continuous-integration/introduction#Record-tests).
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> The `cypress ci` command has been deprecated
 
@@ -471,7 +471,7 @@ We will automatically apply the record key environment variable.
 
 This error occurs in CI when using `cypress run` without a valid Cypress binary cache installed on the system (on linux that's `~/.cache/Cypress`).
 
-To fix this error, follow instructions on [caching the cypress binary in CI](/guides/continuous-integration/continuous-integration-introduction#Caching), then bump the version of your CI cache to ensure a clean build.
+To fix this error, follow instructions on [caching the cypress binary in CI](/guides/continuous-integration/introduction#Caching), then bump the version of your CI cache to ensure a clean build.
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> Incorrect usage of `--ci-build-id` flag
 
@@ -495,7 +495,7 @@ You passed the [--group](/guides/guides/command-line#cypress-run-group-lt-name-g
 
 In order to use either of these parameters a `ciBuildId` must be determined.
 
-The `ciBuildId` is automatically detected if you are running Cypress in most [CI providers](/guides/continuous-integration/continuous-integration-introduction#Examples). Please review the [natively recognized environment variables](/guides/guides/parallelization#CI-Build-ID-environment-variables-by-provider) for your CI provider.
+The `ciBuildId` is automatically detected if you are running Cypress in most [CI providers](/guides/continuous-integration/introduction#Examples). Please review the [natively recognized environment variables](/guides/guides/parallelization#CI-Build-ID-environment-variables-by-provider) for your CI provider.
 
 You can avoid this check in the future by passing an ID to the [--ci-build-id](/guides/guides/command-line#cypress-run-ci-build-id-lt-id-gt) flag manually.
 

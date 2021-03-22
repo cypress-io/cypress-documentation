@@ -14,7 +14,7 @@ GitHub Enterprise's On-premise platform is currently not supported. If you're in
 
 <Alert type="warning">
 
-GitHub Integration is dependent on your CI environment reliably providing commit SHA data (typically via an environment variable). This is not a problem for most users, but if you are facing GitHub integration issues with your CI setup, please make sure the git information is being sent properly by following [these guidelines](/guides/continuous-integration/continuous-integration-introduction#Git-information). If you are still facing issues after this, please [contact us](mailto:hello@cypress.io).
+GitHub Integration is dependent on your CI environment reliably providing commit SHA data (typically via an environment variable). This is not a problem for most users, but if you are facing GitHub integration issues with your CI setup, please make sure the git information is being sent properly by following [these guidelines](/guides/continuous-integration/introduction#Git-information). If you are still facing issues after this, please [contact us](mailto:hello@cypress.io).
 
 </Alert>
 

@@ -700,7 +700,7 @@ You may try running the tests locally and [select the Electron browser](/guides/
 
 ## <Icon name="angle-right"></Icon> How do I run the server and tests together and then shutdown the server?
 
-To start the server, run the tests and then shutdown the server we recommend [these npm tools](/guides/continuous-integration/continuous-integration-introduction#Boot-your-server).
+To start the server, run the tests and then shutdown the server we recommend [these npm tools](/guides/continuous-integration/introduction#Boot-your-server).
 
 ## <Icon name="angle-right"></Icon> Can I test my Electron app?
 
