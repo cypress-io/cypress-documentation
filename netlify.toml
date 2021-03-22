@@ -40,7 +40,3 @@
   to = "/guides/dashboard/introduction/"
   status = 301
   force = true
-
-# [[plugins]]
-# package = "/netlify-plugins/cache"
-  
