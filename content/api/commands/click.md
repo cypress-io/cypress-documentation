@@ -221,7 +221,7 @@ When clicking on `click` within the command log, the console outputs the followi
 ## See also
 
 - [`.check()`](/api/commands/check)
-- [`.click()` examples in kitchensink app](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples/actions.spec.js#L66 })
+- [`.click()` examples in kitchensink app](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples/actions.spec.js#L66)
 - [`.dblclick()`](/api/commands/dblclick)
 - [`.rightclick()`](/api/commands/rightclick)
 - [`.select()`](/api/commands/select)
