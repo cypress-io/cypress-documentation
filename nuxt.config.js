@@ -48,11 +48,7 @@ export default {
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: [
-    '@nuxtjs/tailwindcss',
-    '@nuxtjs/fontawesome',
-    '@nuxt/image'
-  ],
+  buildModules: ['@nuxtjs/tailwindcss', '@nuxtjs/fontawesome', '@nuxt/image'],
   /*
    ** Nuxt.js modules
    */
@@ -130,6 +126,7 @@ export default {
         'faBan',
         'faLongArrowAltUp',
         'faFolderOpen',
+        'faStar',
       ],
       brands: ['faGithub', 'faTwitter', 'faYoutube'],
     },
