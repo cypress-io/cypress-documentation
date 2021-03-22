@@ -10,7 +10,7 @@ Cypress bundles the popular [Chai](/guides/references/assertions#Chai) assertion
 
 This document is only a reference to every assertion Cypress supports.
 
-If you're looking to understand **how** to use these assertions please read about assertions in our [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Assertions guide).
+If you're looking to understand **how** to use these assertions please read about assertions in our [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Assertions) guide.
 
 </Alert>
 
