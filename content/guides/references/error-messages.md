@@ -15,7 +15,7 @@ This message means that Cypress was unable to find tests in the specified file. 
 
 This message means that Cypress encountered an error when compiling and/or bundling your test file. Cypress automatically compiles and bundles your test code so you can use ES2015, CoffeeScript, modules, etc.
 
-#### You'll typically receive this message due to:
+#### You’ll typically receive this message due to:
 
 - The file not existing
 - A syntax error in the file or one of its dependencies
@@ -425,7 +425,7 @@ The version of Mocha was upgraded with Cypress 4.0. Mocha 3+ no longer allows re
 
 You can safely remove: `{stub: false}`.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> CypressError: Timed out retrying: Expected to find element: '...', but never found it. Queried from element: <...>
+### <Icon name="exclamation-triangle" color="red"></Icon> CypressError: Timed out retrying: Expected to find element: ‘…’, but never found it. Queried from element: <…>
 
 If you get this error in a case where the element is definitely visible in the DOM, your document might contain malformed HTML. In such cases, `document.querySelector()` will not find any elements that appear after the point where the HTML is malformed. Even if you feel certain your HTML is not malformed anywhere, check it anyway (line by line in the dev tools). Especially if you've exhausted all other possibilities.
 
