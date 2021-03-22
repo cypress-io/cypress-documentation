@@ -1185,8 +1185,11 @@ cy.get('.mobile-nav', { timeout: 10000 })
 Under the hood Cypress:
 
 - Gets the element `.mobile-nav`
+
   ✨**and waits up to 10 seconds for it to exist in the DOM**✨
+
   ✨**and waits up to 10 seconds for it to be visible**✨
+
   ✨**and waits up to 10 seconds for it to contain the text: 'Home'**✨
 
 Notice that this timeout has flowed down to all assertions and Cypress will now wait _up to 10 seconds total_ for all of them to pass.

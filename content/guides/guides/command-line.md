@@ -291,7 +291,7 @@ cypress run --record --key <record_key>
 
 If you set the **Record Key** as the environment variable `CYPRESS_RECORD_KEY`, you can omit the `--key` flag.
 
-You'd typically set this environment variable when running in [Continuous Integration](/guides/continuous-integration/continuous-integration-introduction).
+You'd typically set this environment variable when running in [Continuous Integration](/guides/continuous-integration/introduction).
 
 ```shell
 export CYPRESS_RECORD_KEY=abc-key-123
