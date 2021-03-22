@@ -78,7 +78,7 @@ After completing the Cypress GitHub App installation for your organization you c
 
 </Alert>
 
-    <DocsImage src="/img/dashboard/github-integration/org-settings-with-no-enabled-projects.png" alt="Org GitHub Integration settings"></DocsImage>
+<DocsImage src="/img/dashboard/github-integration/org-settings-with-no-enabled-projects.png" alt="Org GitHub Integration settings"></DocsImage>
 
 3. Select a GitHub repository to associate with the project.
 
