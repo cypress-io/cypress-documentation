@@ -127,6 +127,17 @@ cy.get('form')
 })
 ```
 
+### Raw HTMLElements are wrapped with jQuery
+
+```javascript
+cy.get('div')
+.then(($div) => {
+  return $div[0] // type => HTMLDivElement
+}).then(($div) => {
+  $div // type => JQuery<HTMLDivElement>
+})
+```
+
 ## Promises
 
 Cypress waits for Promises to resolve before continuing
