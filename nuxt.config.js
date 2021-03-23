@@ -5,7 +5,7 @@ const meta = getMetaData()
 
 export default {
   router: {
-    trailingSlash: false,
+    trailingSlash: undefined,
     extendRoutes(routes, resolve) {
       routes.push(...redirects)
     },
@@ -33,6 +33,7 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script: [{ src: '/js/ensureTrailingSlash.js' }],
   },
   /*
    ** Global CSS
