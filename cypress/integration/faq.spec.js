@@ -1,4 +1,4 @@
-const FAQ_URL = '/faq/questions/using-cypress-faq/'
+const FAQ_URL = '/faq/questions/using-cypress-faq'
 const SIDEBAR = './content/_data/sidebar.json'
 const SIDEBAR_EN = './content/_data/en.json'
 
