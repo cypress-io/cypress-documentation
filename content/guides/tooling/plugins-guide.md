@@ -156,11 +156,11 @@ Check out the [Real World App test suites](https://github.com/cypress-io/cypress
 
 Cypress maintains a curated list of plugins created by us and the community. You can `npm install` any of the plugins listed below:
 
-[Our curated list of Cypress plugins.](/plugins/plugins/index)
+[Our curated list of Cypress plugins.](/plugins/directory)
 
 ## Installing plugins
 
-Plugins from our [official list](/plugins/plugins/index) are npm modules. This enables them to be versioned and updated separately without needing to update Cypress itself.
+Plugins from our [official list](/plugins/directory) are npm modules. This enables them to be versioned and updated separately without needing to update Cypress itself.
 
 You can install any published plugin using NPM:
 

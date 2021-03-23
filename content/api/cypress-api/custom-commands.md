@@ -784,7 +784,7 @@ You can describe the method signature for your custom command, allowing IntelliS
 ## See also
 
 - Blog posts [Writing a Custom Cypress Command](https://glebbahmutov.com/blog/writing-custom-cypress-command/) and [How to Publish Custom Cypress Command on NPM](https://glebbahmutov.com/blog/publishing-cypress-command/).
-- [Plugins using custom commands](/plugins/plugins/index#custom-commands)
+- [Plugins using custom commands](/plugins/directory#custom-commands)
 - [`cypress-xpath`](https://github.com/cypress-io/cypress-xpath) adds a `cy.xpath()` command and shows best practices for writing custom commands: retries, logging, and TypeScript definition.
 - [Cypress.log()](/api/cypress-api/cypress-log)
 - [Recipe: Logging In](/examples/examples/recipes)

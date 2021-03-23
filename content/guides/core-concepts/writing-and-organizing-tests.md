@@ -636,7 +636,7 @@ The component responsible for the file-watching behavior in Cypress is the [`web
 
 If you need further control of the file-watching behavior you can configure this preprocessor explicitly: it exposes options that allow you to configure behavior such as _what_ is watched and the delay before emitting an "update" event after a change.
 
-Cypress also ships other [file-watching preprocessors](/plugins/plugins/index); you'll have to configure these explicitly if you want to use them.
+Cypress also ships other [file-watching preprocessors](/plugins/directory); you'll have to configure these explicitly if you want to use them.
 
 - [Cypress Watch Preprocessor](https://github.com/cypress-io/cypress-watch-preprocessor)
 - [Cypress webpack Preprocessor](https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor)
