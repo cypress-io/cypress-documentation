@@ -24,6 +24,12 @@
   force = true
 
 [[redirects]]
+  from = "/plugins"
+  to = "/plugins/directory"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/examples"
   to = "/examples/examples/recipes/"
   status = 301
