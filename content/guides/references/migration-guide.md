@@ -8,7 +8,7 @@ This guide details the changes and how to change your code to migrate to Cypress
 
 ## `cy.intercept()` changes
 
-Cypress 7.0 comes with two breaking changes to `cy.intercept()`:
+Cypress 7.0 comes with three breaking changes to `cy.intercept()`:
 
 ### Handler ordering is reversed
 
@@ -16,20 +16,62 @@ Previous to Cypress 7.0, `cy.intercept()` handlers were run in the order that th
 
 With Cypress 7.0, `cy.intercept()` handlers are now run in reverse order of definition, stopping after the first handler to call `req.reply()`, or once all handlers are complete.
 
-This change was done so that users can override previously declared `cy.intercept()` handlers by calling `cy.intercept()` again. See {% issue 9302 %} for more details.
+This change was done so that users can override previously declared `cy.intercept()` handlers by calling `cy.intercept()` again. See [#9302](https://github.com/cypress-io/cypress/issues/9302) for more details.
 
-{% badge danger Before %}
+<Badge type="danger">Before</Badge>
 
 ```js
-cy.intercept(url, (req) => { /* This will be called first! */ })
-cy.intercept(url, (req) => { /* This will be called second! */ })
+cy.intercept(url, (req) => {
+  /* This will be called first! */
+})
+cy.intercept(url, (req) => {
+  /* This will be called second! */
+})
 ```
 
-{% badge success After %}
+<Badge type="success">After</Badge>
 
 ```js
-cy.intercept(url, (req) => { /* This will be called second! */ })
-cy.intercept(url, (req) => { /* This will be called first! */ })
+cy.intercept(url, (req) => {
+  /* This will be called second! */
+})
+cy.intercept(url, (req) => {
+  /* This will be called first! */
+})
+```
+
+### Deprecated `cy.route2` command removed
+
+`cy.route2` was the original name for `cy.intercept` during the experimental phase of the feature. It was deprecated in Cypress 6.0. In Cypress 7.0, it has been removed entirely. Please update existing usages of `cy.route2` to call `cy.intercept` instead.
+
+<Badge type="danger">Before</Badge>
+
+```js
+cy.route2('/widgets/*', { fixture: 'widget.json' }).as('widget')
+```
+
+<Badge type="success">After</Badge>
+
+```js
+cy.intercept('/widgets/*', { fixture: 'widget.json' }).as('widget')
+```
+
+### Falsy values are no longer dropped in `StaticResponse` bodies
+
+Previously, falsy values supplied as the `body` of a `StaticResponse` would get dropped (the same as if no body was supplied). Now, the bodies are properly encoded in the response.
+
+<Badge type="danger">Before</Badge>
+
+```js
+cy.intercept('/does-it-exist', { body: false })
+// Requests to `/does-it-exist` receive an empty response body
+```
+
+<Badge type="success">After</Badge>
+
+```js
+cy.intercept('/does-it-exist', { body: false })
+// Requests to `/does-it-exist` receive a response body of `false`
 ```
 
 ## Node.js 12+ support
