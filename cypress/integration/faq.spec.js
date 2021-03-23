@@ -29,7 +29,7 @@ describe('FAQ', () => {
             })
 
             const redirects = {
-              'using-cypress-faq': '/faq/questions/using-cypress-faq/',
+              'using-cypress-faq': '/faq/questions/using-cypress-faq',
             }
 
             cy.location('pathname').should(
