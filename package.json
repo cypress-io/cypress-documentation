@@ -11,7 +11,7 @@
     "build": "nuxt generate && mv dist/404/index.html dist/404.html && rm -rf dist/404",
     "copy": "bash ./scripts/clone-current-docs.sh",
     "start": "cross-env NODE_ENV=development nuxt",
-    "start:ci": "yarn build && cd dist/ && npx http-server . --port 3000",
+    "start:ci": "cross-env NODE_ENV=test yarn build && cd dist/ && npx http-server . --port 3000",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint:style": "stylelint **/*.{vue,css} --ignore-path .gitignore",
     "lint": "yarn lint:js && yarn lint:style",

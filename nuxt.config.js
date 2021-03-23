@@ -33,7 +33,10 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-    script: [{ src: '/js/removeTrailingSlash.js' }],
+    script:
+      process.env.NODE_ENV === 'test'
+        ? []
+        : [{ src: '/js/removeTrailingSlash.js' }],
   },
   /*
    ** Global CSS
