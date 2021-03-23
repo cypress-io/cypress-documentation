@@ -71,6 +71,8 @@ To add a page such as a new guide or API documentation:
 - **REQUIRED**: Commit the new file using git - we auto-generate the doc to display within each supported language, this auto-generation depends on the file existing in git.
 - Submit a [pull request](#Pull-Requests) for your change.
 
+> Note: If you need to change the overall layout of a page, you should create a Vue component within the `/pages` directory. The `/pages` directory contains the `_.vue` components responsible for generating the views for the routes `/guides`, `/api/`, `/plugins`, etc. If you wanted to create a guide page that has a different layout from the other guide pages, you would create a component file within `/guides` matching the route name that you want to use. For example, if I wanted to create a unique guide page without the sidebar about using the Dashboard, I would create a file called `/pages/guides/my-dashboard-guide.vue` and create a Vue component for the specific layout I want to create. The page will then be accessible at the route `/guides/my-dashboard-guide`.
+
 ### Deleting Pages
 
 To delete a page:
