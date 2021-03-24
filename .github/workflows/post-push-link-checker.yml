@@ -24,18 +24,21 @@ jobs:
             # Skip files not in the content directory
             if [ path_parts[0] != $CONTENT_DIR ]
             then
+              echo "File is not in content directory. Skipping..."
               continue
             fi
 
             # Skip non-markdown files
             if [[ changed_file != *.md ]]
             then
+              echo "File is not a markdown file. Skipping..."
               continue
             fi
 
             # Ignore changelog files (for now, because I'm a lazy developer)
             if [ path_parts[1] == "_changelogs" ]
             then
+              echo "File is a changelog file. Skipping..."
               continue
             fi
 
