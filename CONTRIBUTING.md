@@ -35,6 +35,20 @@ git clone git@github.com:<your username>/cypress-documentation.git
 cd cypress-documentation
 ```
 
+### Using Vue Components
+
+This project uses [`@nuxt/content`](https://content.nuxtjs.org/) which enables you to write Vue components within markdown. Any component files placed within the `/components/global` directory will be available for use within the markdown files. There are a [few limitations](https://content.nuxtjs.org/writing#vue-components) with using Vue components in markdown.
+
+#### Alerts
+
+Use [`<Alert>`](/components/global/Alert.vue) to grab the reader's attention with a blurb. You can change the look of the `<Alert>` by setting the `type` prop to `info`, `tip`, `warning`, or `danger`.
+
+##### Example
+
+```jsx
+<Alert type="info">This is an important message.</Alert>
+```
+
 ### Adding Examples
 
 To add a course, blog, talk, podcast, or screencast to our docs, submit a [pull request](#Pull-Requests) with your data added to the corresponding [courses.json](/content/_data/courses.json), [blogs.json](/content/_data/blogs.json), [talks.json](/content/_data/talks.json), [podcasts.json](/content/_data/podcasts.json) or [screencasts.json](/content/_data/screencasts.json) file.
