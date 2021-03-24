@@ -11,11 +11,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       
-      - name: Install dependencies
-        run: yarn --frozen-lockfile
-      
-      - name: Build
-        run: yarn start:ci
+      - name: Wait for Netlify deploy
+        uses: probablyup/wait-for-netlify-action@3.2.0
+        id: waitForDeployment
+        with:
+          site_id: ${{ secrets.NETLIFY_SITE_ID }}
+        env:
+          NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
 
       - id: files
         uses: jitterbit/get-changed-files@v1
@@ -57,8 +59,10 @@ jobs:
             # Remove extension
             file_path=${file_path%.md}
 
-            ORIGIN=localhost:3000
+            ORIGIN=${{ steps.waitForDeployment.outputs.url }}
             URL_TO_CHECK=$ORIGIN/$file_path
 
             echo "Need to visit URL and check for broken links: $URL_TO_CHECK"
+
+            npx broken-link-checker $URL_TO_CHECK -eo
           done
