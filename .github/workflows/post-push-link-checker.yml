@@ -1,0 +1,19 @@
+name: Post-push Link Checker
+
+on: push
+
+jobs:
+  link-check:
+    name: Broken link checker
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run broken-link-checker
+        uses: jitterbit/get-changed-files@v1
+        run: |
+          for changed_file in ${{ steps.files.outputs.all }}; do
+            echo "Do something with this ${changed_file}."
+          done
