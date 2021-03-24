@@ -11,9 +11,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: yarn --frozen-lockfile && cd node_modules/broken-link-checker && yarn 
-      
       - name: Wait for Netlify deploy
         uses: probablyup/wait-for-netlify-action@3.2.0
         id: waitForDeployment
