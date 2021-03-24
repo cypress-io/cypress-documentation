@@ -64,5 +64,7 @@ jobs:
 
             echo "Need to visit URL and check for broken links: $URL_TO_CHECK"
 
-            npx broken-link-checker $URL_TO_CHECK -eo
+            # Using unreleased version v0.8.0 for this issue:
+            # https://github.com/stevenvachon/broken-link-checker/issues/58
+            npx stevenvachon/broken-link-checker#v0.8.0 $URL_TO_CHECK -eo
           done
