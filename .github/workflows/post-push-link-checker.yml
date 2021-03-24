@@ -11,6 +11,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Install dependencies
+        run: |
+          yarn --frozen-lockfile
+
+      - name: Build
+      - run: |
+          yarn start:ci
+
       - id: files
         uses: jitterbit/get-changed-files@v1
       - run: |
@@ -45,7 +53,14 @@ jobs:
 
             echo "Markdown file changed: $changed_file"
 
-            path=${changed_file%.md}
+            # Remove "content/" from string
+            file_path=${changed_file#*/}
 
-            echo "Need to check path for broken links: $path"
+            # Remove extension
+            file_path=${file_path%.md}
+
+            ORIGIN=localhost:3000
+            URL_TO_CHECK=$ORIGIN/$file_path
+
+            echo "Need to visit URL and check for broken links: $URL_TO_CHECK"
           done
