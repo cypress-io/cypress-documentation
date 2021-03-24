@@ -41,4 +41,7 @@ jobs:
 
             echo "Markdown file changed: $changed_file"
 
+            path=${changed_file%.md}
+
+            echo "Need to check path for broken links: $path"
           done
