@@ -16,7 +16,29 @@ jobs:
       - run: |
           for changed_file in ${{ steps.files.outputs.all }}; do
             echo "Do something with this ${changed_file}."
+
             # Find changed files in the content directory
             path_parts=(${changed_file//\// })
-            echo ${path_parts[0]}
+            CONTENT_DIR="content"
+
+            # Skip files not in the content directory
+            if [ path_parts[0] != $CONTENT_DIR ]
+            then
+              continue
+            fi
+
+            # Skip non-markdown files
+            if [[ changed_file != *.md ]]
+            then
+              continue
+            fi
+
+            # Ignore changelog files (for now, because I'm a lazy developer)
+            if [ path_parts[1] == "_changelogs" ]
+            then
+              continue
+            fi
+
+            echo "Markdown file changed: $changed_file"
+
           done
