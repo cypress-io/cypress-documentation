@@ -10,6 +10,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile && cd node_modules/broken-link-checker && yarn 
       
       - name: Wait for Netlify deploy
         uses: probablyup/wait-for-netlify-action@3.2.0
@@ -64,7 +67,5 @@ jobs:
 
             echo "Need to visit URL and check for broken links: $URL_TO_CHECK"
 
-            # Using unreleased version v0.8.0 for this issue:
-            # https://github.com/stevenvachon/broken-link-checker/issues/58
-            npx stevenvachon/broken-link-checker#v0.8.0 $URL_TO_CHECK -eo
+            npx broken-link-checker $URL_TO_CHECK -eo
           done
