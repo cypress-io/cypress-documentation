@@ -30,7 +30,7 @@ jobs:
             fi
 
             # Skip non-markdown files
-            if [[ changed_file != *.md ]]
+            if [ ${changed_file: -3} != ".md" ]
             then
               echo "File is not a markdown file. Skipping..."
               continue
