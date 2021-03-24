@@ -1,12 +1,11 @@
-# Cypress Documentation [![Cypress Dashboard](https://img.shields.io/badge/cypress-dashboard-brightgreen.svg)](https://dashboard.cypress.io/#/projects/ma3dkn/runs) [![first-timers-only](http://img.shields.io/badge/first--timers--only-friendly-blue.svg)](https://github.com/cypress-io/cypress-documentation/labels/first-timers-only) [![renovate-app badge][renovate-badge]][renovate-app]
+# Cypress Documentation [![Cypress Dashboard](https://img.shields.io/badge/cypress-dashboard-brightgreen.svg)](https://dashboard.cypress.io/#/projects/ma3dkn/runs) [![first-timers-only](http://img.shields.io/badge/first--timers--only-friendly-blue.svg)](https://github.com/cypress-io/cypress-documentation/labels/first-timers-only) [![renovate-app badge][renovate-badge]][renovate-app][![Netlify Status](https://api.netlify.com/api/v1/badges/dbf22ada-b50c-49b0-a933-bf02e87d25d1/deploy-status)](https://app.netlify.com/sites/cypress-docs/deploys)
 
 The code for Cypress Documentation including Guides, API, Examples, Dashboard & FAQ found at https://docs.cypress.io.
 
-![Cypress Documentation Preview](https://user-images.githubusercontent.com/5605406/69174503-f6012680-0acf-11ea-933e-6fc2d3a5841c.png)
+![Cypress Documentation Preview](https://user-images.githubusercontent.com/11802078/112329249-09547100-8c85-11eb-97fe-8a52e4245874.png)
 
 ## CI status
 
-- [![CircleCI](https://circleci.com/gh/cypress-io/cypress-documentation/tree/develop.svg?style=svg)](https://circleci.com/gh/cypress-io/cypress-documentation/tree/develop) `develop` branch
 - [![CircleCI](https://circleci.com/gh/cypress-io/cypress-documentation/tree/master.svg?style=svg)](https://circleci.com/gh/cypress-io/cypress-documentation/tree/master) `master` branch
 
 ## Getting Started
