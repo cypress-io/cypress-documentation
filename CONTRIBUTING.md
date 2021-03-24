@@ -6,6 +6,11 @@ Thanks for taking the time to contribute! :smile:
 
 - [Code of Conduct](#code-of-conduct)
 - [Writing Documentation](#writing-documentation)
+  - [Using Vue Components](#using-vue-components)
+    - [Alerts](#alerts)
+    - [Images](#images)
+    - [Videos](#videos)
+    - [Icons](#icons)
   - [Adding Examples](#adding-examples)
   - [Adding Plugins](#adding-plugins)
   - [Adding Pages](#adding-pages)
@@ -43,10 +48,38 @@ This project uses [`@nuxt/content`](https://content.nuxtjs.org/) which enables y
 
 Use [`<Alert>`](/components/global/Alert.vue) to grab the reader's attention with a blurb. You can change the look of the `<Alert>` by setting the `type` prop to `info`, `tip`, `warning`, or `danger`.
 
-##### Example
-
 ```jsx
 <Alert type="info">This is an important message.</Alert>
+```
+
+### Images
+
+If you are starting a new page and want to add images, add a new folder to [`assets/img`](/assets/img). For example when adding a new "Code Coverage" page to `guides/tooling`, I have created new folder `assets/img/guides/tooling` and copied an image there called `coverage-object.png`. Within the markdown, I can include the image using the [`<DocsImage />` component](/components/global/DocsImage.vue).
+
+```jsx
+<DocsImage
+  src="/assets/img/guides/tooling/coverage-object.png"
+  alt="code coverage object"
+/>
+```
+
+### Videos
+
+You can embed videos within the markdown with the [`<DocsVideo>`](/components/global/DocsVideo.vue) component. Currently, it supports local files, YouTube, and Vimeo embeds. Set the `src` prop to a relative path for a local video file or the embed link for YouTube or Vimeo videos. You should also set a `title` prop describing the video for accessibility reasons.
+
+```jsx
+<DocsVideo
+  src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+  title="Cypress Tips and Tricks"
+>
+```
+
+### Icons
+
+[Font Awesome](https://fontawesome.com/) icons can be used within markdown. Set the `name` prop to the name of the Font Awesome icon. Make sure that the icon appears in the list of imported icons within the `nuxt.config.js` file under the `fontawesome` key.
+
+```jsx
+<Icon name="question-circle"></Icon>
 ```
 
 ### Adding Examples
@@ -57,17 +90,6 @@ Add an associated image with the example within the [`assets/img`](/assets/img) 
 
 ```jsx
 <DocsImage src="/img/examples/name-of-file.jpg" alt="alt text describing img" />
-```
-
-### Using images
-
-If you are starting a new page and want to add images, add a new folder to "assets/img". For example when adding a new "Code Coverage" page to "guides/tooling", I have created new folder "assets/img/guides/tooling" and copied an image there called "coverage-object.png". From the page itself, I can include the image using the [`<DocsImage />` component](/components/global/DocsImage.vue).
-
-```jsx
-<DocsImage
-  src="/assets/img/guides/tooling/coverage-object.png"
-  alt="code coverage object"
-/>
 ```
 
 ### Adding Plugins
