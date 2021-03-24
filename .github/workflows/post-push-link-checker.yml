@@ -25,6 +25,7 @@ jobs:
             if [ path_parts[0] != $CONTENT_DIR ]
             then
               echo "File is not in content directory. Skipping..."
+              echo "path_parts[0] = $path_parts[0]"
               continue
             fi
 
