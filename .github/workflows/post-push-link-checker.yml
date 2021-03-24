@@ -16,4 +16,7 @@ jobs:
       - run: |
           for changed_file in ${{ steps.files.outputs.all }}; do
             echo "Do something with this ${changed_file}."
+            # Find changed files in the content directory
+            path_parts=(${changed_file//\// })
+            echo ${path_parts[0]}
           done
