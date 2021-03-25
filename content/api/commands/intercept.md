@@ -550,18 +550,19 @@ cy.intercept('POST', '/login', (req) => {
 If `req.reply()` is not explicitly called inside of a route callback, requests will pass to the next route callback until none are left.
 
 ```js
-// you could have a top-level http that sets an auth token on all requests
-cy.intercept('http://api.company.com/', (req) => {
+// you could have a top-level middleware handler that sets an auth token on all requests
+// setting `middleware: true` will cause this to always be called first
+cy.intercept('http://api.company.com/', { middleware: true }, (req) => {
   req.headers['authorization'] = `token ${token}`
 })
 
-// and then another http that more narrowly asserts on certain requests
+// and then have another handler that more narrowly asserts on certain requests
 cy.intercept('POST', 'http://api.company.com/widgets', (req) => {
   expect(req.body).to.include('analytics')
 })
 
 // a POST request to http://api.company.com/widgets would hit both
-// of those callbacks in order then it would be sent out
+// of those callbacks, middleware first, then the request would be sent out
 // with the modified request headers to the real destination
 ```
 
