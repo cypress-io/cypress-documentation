@@ -7,7 +7,7 @@ containerClass: examples
 
 <DocsImage src="/img/examples/end-to-end-testing-workshop.jpg" alt="End-to-end Testing Workshop" ></DocsImage>
 
-Cypress has put together a full day workshop that teaches how to test a modern web application using Cypress. You can preview the slides here: [https://gitpitch.com/cypress-io/testing-workshop-cypress#/](https://gitpitch.com/cypress-io/testing-workshop-cypress#/)
+Cypress has put together a full day workshop that teaches how to test a modern web application using Cypress. You can preview the slides here: [testing-workshop-cypress.netlify.app/](https://testing-workshop-cypress.netlify.app/)
 
 The repository [cypress-io/testing-workshop-cypress](https://github.com/cypress-io/testing-workshop-cypress) has:
 
@@ -30,6 +30,17 @@ The content should be a good starting point for anyone who wants to learn Cypres
 - Component testing
 
 We hope this testing workshop proves itself useful in teaching developers and testers good Cypress practices.
+
+## Cypress on CI
+
+<DocsImage src="/img/examples/cypress-workshop-ci.png" alt="Cypress on CI workshop" ></DocsImage>
+
+Cypress team has prepared a 4 hour workshop that shows how to successfully run Cypress tests on several popular continuous integration services. You can preview the slides at [cypress-workshop-ci.netlify.app](https://cypress-workshop-ci.netlify.app/). The repository [github.com/cypress-io/cypress-workshop-ci](https://github.com/cypress-io/cypress-workshop-ci) has the Markdown slides with all content and teaches you how to test the [example application](https://github.com/cypress-io/cypress-workshop-ci-example) on:
+
+- generic continuous integration service
+- GitHub Actions using [cypress-io/github-action](https://github.com/cypress-io/github-action)
+- CircleCI using [cypress-io/circleci-orb](https://github.com/cypress-io/circleci-orb)
+- Netlify Build using [cypress-io/netlify-plugin-cypress](https://github.com/cypress-io/netlify-plugin-cypress)
 
 ## ReactJSDay 2019 Testing Course
 
