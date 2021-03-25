@@ -64,5 +64,5 @@ jobs:
 
             echo "Need to visit URL and check for broken links: $URL_TO_CHECK"
 
-            npx broken-link-checker $URL_TO_CHECK -eo
+            npx broken-link-checker $URL_TO_CHECK -eof
           done
