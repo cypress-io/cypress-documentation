@@ -489,7 +489,8 @@ cy.wait('@headers')
 You can add, modify or delete a header to all outgoing requests using a `beforeEach()` in the `cypress/support/index.js` file
 
 ```ts
-// cypress/support/index.js
+// Code from Real World App (RWA)
+// cypress/support/index.ts
 import './commands'
 
 beforeEach(() => {
@@ -684,6 +685,38 @@ The available functions on `res` are:
   throttle: (throttleKbps: number) => IncomingHttpResponse
 }
 ```
+
+#### Throttle or delay response all incoming responses
+
+You can throttle or delay all incoming responses using a `beforeEach()` in the `cypress/support/index.js` file
+
+```ts
+// Code from Real World App (RWA)
+// cypress/support/index.ts
+import { isMobile } from './utils'
+import './commands'
+
+// Delay API responses for mobile testing to simulate real world conditions
+if (isMobile()) {
+  cy.intercept({ url: 'http://localhost:3001', middleware: true }, (req) => {
+    req.on('response', (res) => {
+      // For all request except the /login
+      if (req.url !== 'http://localhost:3001/login') {
+        // Delay the response
+        res.delay(2500)
+      }
+    })
+  })
+}
+```
+
+<Alert type="info">
+
+##### <Icon name="graduation-cap"></Icon> Real World Example
+
+Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and refer to the [cypress/support/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/support/index.ts) file for a working example.
+
+</Alert>
 
 ## History
 
