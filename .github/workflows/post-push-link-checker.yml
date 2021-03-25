@@ -32,7 +32,9 @@ jobs:
         run: yarn --frozen-lockfile
 
       - name: Build and serve
-        run: yarn build && nohup node scripts/server.js
+        run: |
+          yarn build 
+          node scripts/server.js &
 
       - name: Wait for server 
         uses: nev7n/wait_for_response@v1
