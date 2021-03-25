@@ -517,7 +517,7 @@ Don't try to use your UI to check email. Instead opt to programmatically use 3rd
 You should set up an alias (using [`.as()`](/api/commands/as)) to a single [`cy.intercept()`](/api/commands/intercept) that matches all of the XHRs. You can then [`cy.wait()`](/api/commands/wait) on it multiple times. Cypress keeps track of how many matching requests there are.
 
 ```javascript
-cy.intercept('users').as('getUsers')
+cy.intercept('/users*').as('getUsers')
 cy.wait('@getUsers') // Wait for first GET to /users/
 cy.get('#list>li').should('have.length', 10)
 cy.get('#load-more-btn').click()

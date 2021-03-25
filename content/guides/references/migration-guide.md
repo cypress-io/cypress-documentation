@@ -191,9 +191,11 @@ cy.intercept('GET', '/projects', {
 })
 ```
 
-### Override route matchers
+### Override intercepts
 
-Unlike `cy.route()`, `cy.intercept()` currently does _not_ allow you to override a previous response. For more information on this, see [#9302](https://github.com/cypress-io/cypress/issues/9302) and [this blog post](https://glebbahmutov.com/blog/cypress-intercept-problems/#no-overwriting-interceptors). Overriding responses will be added in a future release.
+As of 7.0, newer intercepts are called before older intercepts, allowing users to override intercepts. [See "Handler ordering is reversed" for more details](#Handler-ordering-is-reversed).
+
+Before 7.0, intercepts could not be overridden. See [#9302](https://github.com/cypress-io/cypress/issues/9302) for more details.
 
 ## Migrating to Cypress 6.0
 

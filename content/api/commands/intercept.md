@@ -21,8 +21,6 @@ Unlike [cy.route()](/api/commands/route), `cy.intercept()`:
 - can intercept all types of network requests including Fetch API, page loads, XMLHttpRequests, resource loads, etc.
 - does not require calling [cy.server()](/api/commands/server) before use - in fact, `cy.server()` does not influence `cy.intercept()` at all.
 - does not have method set to `GET` by default, but intercepts `*` methods.
-- uses plain substring match, or RegExp, or [minimatc](/api/utilities/minimatch) to match URL.
-- Currently, cannot override previously-defined responses: see [#9302](https://github.com/cypress-io/cypress/issues/9302) and [Cypress intercept problems blog](https://glebbahmutov.com/blog/cypress-intercept-problems/#no-overwriting-interceptors) for more information. Overriding responses will be added in a future release.
 
 ## Usage
 
@@ -30,6 +28,7 @@ Unlike [cy.route()](/api/commands/route), `cy.intercept()`:
 cy.intercept(url, routeHandler?)
 cy.intercept(method, url, routeHandler?)
 cy.intercept(routeMatcher, routeHandler?)
+cy.intercept(url, routeMatcher, routeHandler)
 ```
 
 **Note:** all intercepts are automatically cleared before every test.
@@ -84,15 +83,16 @@ All properties are optional. All properties that are set must match for the rout
    */
   https?: boolean
   /**
-   * If `true`, will match the supplied `url` against incoming `path`s.
-   * Requires a `url` argument. Cannot be used with a `path` argument.
-   */
-  matchUrlAgainstPath?: boolean
-  /**
    * Match against the request's HTTP method.
    * @default '*'
    */
   method?: string | RegExp
+  /**
+   * If `true`, this will pass the request on to the next `RouteMatcher` after the request handler completes.
+   * Can only be used with a dynamic request handler.
+   * @default false
+   */
+  middleware?: boolean
   /**
    * Match on request path after the hostname, including query params.
    */
@@ -144,6 +144,12 @@ cy.intercept({
   // only requests to URLs starting with 'http://api.example.com/widgets'
   // having the header 'x-requested-with: exampleClient' will be received
 })
+
+// in this example, the supplied URL `/users` is merged with the RouteMatcher
+// passed as the second argument
+cy.intercept('/users', { middleware: true }, (req) => {
+  req.headers['authorization'] = `Bearer ${bearerToken}`
+})
 ```
 
 #### **<Icon name="angle-right"></Icon> routeHandler** **_(`string | object | Function | StaticResponse`)_**
@@ -165,12 +171,6 @@ The `routeHandler` defines what will happen with a request if the [routeMatcher]
 
 ### Matching URL
 
-<Alert type="info">
-
-**Note:** passing a URL as a string or RegExp to `cy.intercept()` will automatically set `matchUrlAgainstPath` to `true`. This means that the supplied string or RegExp will be matched against the **path** if matching against the **URL** fails.
-
-</Alert>
-
 You can provide the entire URL to match
 
 ```js
@@ -180,22 +180,14 @@ You can provide the entire URL to match
 cy.intercept('https://prod.cypress.io/users')
 ```
 
-You can provide a substring of the URL to match
-
-```js
-// will match any request that contains "users" substring, like
-//   GET <domain>/users?_limit=3 and POST <domain>/users
-cy.intercept('users')
-```
-
-You can provide a [minimatc](/api/utilities/minimatch) pattern
+You can provide a [`minimatch`](/api/utilities/minimatch) pattern
 
 ```javascript
 // will match any HTTP method to urls that end with 3 or 5
 cy.intercept('**/users?_limit=+(3|5)')
 ```
 
-**Tip:** you can evaluate your URL using DevTools console to see if the [minimatch pattern](https://www.npmjs.com/package/minimatch) is correct.
+**Tip:** you can evaluate your URL using DevTools console to see if the [`minimatch` pattern](https://www.npmjs.com/package/minimatch) is correct.
 
 ```javascript
 // paste into the DevTools console while Cypress is running
@@ -253,7 +245,7 @@ cy.wait('@getSettings')
 
 ```js
 cy.intercept({
-  url: 'http://example.com/search',
+  url: 'http://example.com/search*',
   query: { q: 'expected terms' },
 }).as('search')
 
@@ -590,7 +582,7 @@ cy.intercept('/integrations', (req) => {
 #### Asserting on a response
 
 ```js
-cy.intercept('/projects', (req) => {
+cy.intercept('/projects/2', (req) => {
   req.reply((res) => {
     expect(res.body).to.include('My Project')
   })
@@ -662,14 +654,14 @@ The available functions on `res` are:
 
 ## History
 
-| Version                                     | Changes                                                                              |
-| ------------------------------------------- | ------------------------------------------------------------------------------------ |
-| [7.0.0](/guides/references/changelog#7-0-0) | Removed `cy.route2()` alias for `cy.intercept()`.                                    |
-| [6.4.0](/guides/references/changelog#6-4-0) | Renamed `delayMs` property to `delay` (backwards-compatible).                        |
-| [6.2.0](/guides/references/changelog#6-2-0) | Added `matchUrlAgainstPath` option to `RouteMatcher`.                                |
-| [6.0.0](/guides/references/changelog#6-0-0) | Renamed `cy.route2()` to `cy.intercept()`.                                           |
-| [6.0.0](/guides/references/changelog#6-0-0) | Removed `experimentalNetworkStubbing` option and made it the default behavior.       |
-| [5.1.0](/guides/references/changelog#5-1-0) | Added experimental `cy.route2()` command under `experimentalNetworkStubbing` option. |
+| Version                                     | Changes                                                                                                                                                                                                       |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [7.0.0](/guides/references/changelog#7-0-0) | Removed `matchUrlAgainstPath` option from `RouteMatcher`, reversed handler ordering, added request events, removed substring URL matching, removed `cy.route2` alias, added `middleware` RouteMatcher option. |
+| [6.4.0](/guides/references/changelog#6-4-0) | Renamed `delayMs` property to `delay` (backwards-compatible).                                                                                                                                                 |
+| [6.2.0](/guides/references/changelog#6-2-0) | Added `matchUrlAgainstPath` option to `RouteMatcher`.                                                                                                                                                         |
+| [6.0.0](/guides/references/changelog#6-0-0) | Renamed `cy.route2()` to `cy.intercept()`.                                                                                                                                                                    |
+| [6.0.0](/guides/references/changelog#6-0-0) | Removed `experimentalNetworkStubbing` option and made it the default behavior.                                                                                                                                |
+| [5.1.0](/guides/references/changelog#5-1-0) | Added experimental `cy.route2()` command under `experimentalNetworkStubbing` option.                                                                                                                          |
 
 ## Notes
 
