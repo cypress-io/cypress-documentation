@@ -8,7 +8,7 @@ This guide details the changes and how to change your code to migrate to Cypress
 
 ## [`cy.intercept()`][intercept] changes
 
-[Cypress 7.0](<(/guides/references/changelog#7-0-0)>) comes with three breaking changes to [`cy.intercept()`][intercept]:
+[Cypress 7.0](<(/guides/references/changelog#7-0-0)>) comes with some breaking changes to [`cy.intercept()`][intercept]:
 
 ### Handler ordering is reversed
 
@@ -39,6 +39,40 @@ cy.intercept(url, (req) => {
   /* This will be called first! */
 })
 ```
+
+### URL matching is stricter
+
+Before Cypress 7.0, [`cy.intercept()`][intercept] would match URLs against strings by using `minimatch`, substring match, or by equality.
+
+With Cypress 7.0, this behavior is being tightened - URLs are matched against strings only by `minimatch` or by equality. The substring match has been removed.
+
+This more closely matches the URL matching behavior shown by `cy.route()`. However, some intercepts will not match, even though they did before.
+
+For example, requests with querystrings may no longer match:
+
+```js
+// Q: will this intercept match a request for `/items?page=1`?
+cy.intercept('/items')
+// A:
+// ✅ before 7.0.0, this will match, because it is a substring
+// ❌ after 7.0.0, this will not match, because of the querystring
+// solution: update the intercept to match the querystring:
+cy.intercept('/items?page=1)
+```
+
+Also, requests for paths in nested directories may be affected:
+
+```js
+// Q: will this intercept match a request for `/some/items`?
+cy.intercept('/items')
+// A:
+// ✅ before 7.0.0, this will match, because it is a substring
+// ❌ after 7.0.0, this will not match, because of the leading directory
+// solution: update the intercept to include the directory:
+cy.intercept('/some/items')
+```
+
+Additionally, the `matchUrlAgainstPath` `RouteMatcher` option that was added in Cypress 6.2.0 has been removed in Cypress 7.0. It can be safely removed from tests.
 
 ### Deprecated `cy.route2` command removed
 
