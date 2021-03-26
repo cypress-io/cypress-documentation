@@ -837,6 +837,10 @@ If you want colors to be disabled, you can pass the `NO_COLOR` environment varia
 NO_COLOR=1 cypress run
 ```
 
+## Workshop
+
+Cypress team has created a full workshop showing how to run Cypress on popular CI providers. Find the workshop at [github.com/cypress-io/cypress-workshop-ci](https://github.com/cypress-io/cypress-workshop-ci).
+
 ## See also
 
 - [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app) runs parallelized CI jobs across multiple operating systems, browsers, and viewport sizes.
