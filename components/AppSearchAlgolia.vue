@@ -3,8 +3,6 @@
 </template>
 
 <script>
-import docsearch from '@docsearch/js'
-
 export default {
   props: {
     options: {
@@ -42,45 +40,51 @@ export default {
       return this.stripTrailingSlash(url)
     },
     initialize(userOptions, code) {
-      const lang = undefined // todo
+      Promise.all([
+        import(/* webpackChunkName: "docsearch" */ '@docsearch/js'),
+        import(/* webpackChunkName: "docsearch" */ '@docsearch/css'),
+      ]).then(([docsearch]) => {
+        docsearch = docsearch.default
+        const lang = undefined // todo
 
-      const payload = Object.assign({}, userOptions, {
-        container: '#docsearch',
-        searchParameters: Object.assign(
-          {},
-          lang && {
-            facetFilters: [
-              `${userOptions.langAttribute || 'language'}:${lang.iso}`,
-            ].concat(userOptions.facetFilters || []),
-          }
-        ),
-        navigator: {
-          navigate: ({ suggestionUrl }) => {
-            window.location.assign(suggestionUrl)
-          },
-        },
-        transformItems: (items) => {
-          return items.map((item) => {
-            return Object.assign({}, item, {
-              url: this.formatUrl(item.url),
-            })
-          })
-        },
-        hitComponent: ({ hit, children }) => {
-          return {
-            type: 'a',
-            ref: undefined,
-            constructor: undefined,
-            key: undefined,
-            props: {
-              href: hit.url,
-              children,
+        const payload = Object.assign({}, userOptions, {
+          container: '#docsearch',
+          searchParameters: Object.assign(
+            {},
+            lang && {
+              facetFilters: [
+                `${userOptions.langAttribute || 'language'}:${lang.iso}`,
+              ].concat(userOptions.facetFilters || []),
+            }
+          ),
+          navigator: {
+            navigate: ({ suggestionUrl }) => {
+              window.location.assign(suggestionUrl)
             },
-          }
-        },
-      })
+          },
+          transformItems: (items) => {
+            return items.map((item) => {
+              return Object.assign({}, item, {
+                url: this.formatUrl(item.url),
+              })
+            })
+          },
+          hitComponent: ({ hit, children }) => {
+            return {
+              type: 'a',
+              ref: undefined,
+              constructor: undefined,
+              key: undefined,
+              props: {
+                href: hit.url,
+                children,
+              },
+            }
+          },
+        })
 
-      docsearch(payload)
+        docsearch(payload)
+      })
     },
     update(options, lang) {
       this.$el.innerHTML =
