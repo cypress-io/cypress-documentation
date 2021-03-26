@@ -17,17 +17,11 @@ export default {
     },
   },
   watch: {
-    '$i18n.locale'(newValue) {
-      // this.update(this.options, newValue)
-      this.update(this.options, newValue)
-    },
     options(newValue) {
-      // this.update(newValue, this.$i18n.locale)
       this.update(newValue)
     },
   },
   mounted() {
-    // this.initialize(this.options, this.$i18n.locale)
     this.initialize(this.options)
   },
   methods: {
@@ -42,18 +36,16 @@ export default {
       }
 
       const url = pathname.replace(this.settings.url, '/') + hash
-      
+
       return this.stripTrailingSlash(url)
     },
     initialize(userOptions, code) {
-      // const lang = this.$i18n.locales.find((locale) => locale.code === code)
-      const lang = undefined // todo
-
       Promise.all([
         import(/* webpackChunkName: "docsearch" */ '@docsearch/js'),
         import(/* webpackChunkName: "docsearch" */ '@docsearch/css'),
       ]).then(([docsearch]) => {
         docsearch = docsearch.default
+        const lang = undefined // todo
 
         const payload = Object.assign({}, userOptions, {
           container: '#docsearch',
@@ -95,7 +87,9 @@ export default {
       })
     },
     update(options, lang) {
-      this.$el.innerHTML = '<div id="docsearch"></div>'
+      this.$el.innerHTML =
+        '<div id="docsearch" class="w-full mx-8 lg:m-0 lg:w-1/5"></div>'
+
       this.initialize(options, lang)
     },
   },
