@@ -12,6 +12,8 @@ Cypress enables you to dynamically modify configuration values and environment v
 
 </Alert>
 
+{% partial code_runs_in_node %}
+
 To modify configuration, you return an object from your plugins file exported function.
 
 ```javascript

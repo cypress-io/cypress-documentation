@@ -12,6 +12,8 @@ Before Cypress launches a browser, it gives you the opportunity to modify the br
 
 </Alert>
 
+{% partial code_runs_in_node %}
+
 ```js
 on('before:browser:launch', (browser = {}, launchOptions) => {
   /* ... */

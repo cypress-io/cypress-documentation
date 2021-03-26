@@ -126,6 +126,8 @@ The [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) 
 
 </Alert>
 
+{% partial code_runs_in_node %}
+
 ```ts
 // cypress/plugins/index.ts
 
