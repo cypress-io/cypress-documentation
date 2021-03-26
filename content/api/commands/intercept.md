@@ -167,6 +167,288 @@ The `routeHandler` defines what will happen with a request if the [routeMatcher]
 - `cy.intercept()` can be aliased, but otherwise cannot be chained further.
 - Waiting on an aliased `cy.intercept()` route using [cy.wait()](/api/commands/wait) will yield an object that contains information about the matching request/response cycle. See [Using the yielded object](#Using-the-yielded-object) for examples of how to use this object.
 
+## Intercepted requests
+
+If a function is passed as the handler for a `cy.intercept()`, it will be called with the first argument being an object that represents the intercepted HTTP request:
+
+```js
+cy.intercept('/api', (req) => {
+  // `req` represents the intercepted HTTP request
+})
+```
+
+From here, you can do several things with the intercepted request:
+
+- you can modify and assert on the request's properties (body, headers, URL, method...)
+- the request can be sent to the real upstream server
+  - optionally, you can intercept the response from this
+- a response can be provided to stub out the request
+- listeners can be attached to various events on the request
+
+### Request object properties
+
+The request object (`req`) has several properties from the HTTP request itself. All of the following properties on `req` can be modified except for `httpVersion`:
+
+```ts
+{
+  /**
+   * The body of the request.
+   * If a JSON Content-Type was used and the body was valid JSON, this will be an object.
+   * If the body was binary content, this will be a buffer.
+   */
+  body: string | object | any
+  /**
+   * The headers of the request.
+   */
+  headers: { [key: string]: string }
+  /**
+   * Request HTTP method (GET, POST, ...).
+   */
+  method: string
+  /**
+   * Request URL.
+   */
+  url: string
+  /**
+   * The HTTP version used in the request. Read only.
+   */
+  httpVersion: string
+}
+```
+
+`req` also has some optional properties which can be set to control Cypress-specific behavior:
+
+```ts
+{
+  /**
+   * If provided, the number of milliseconds before an upstream response to this request
+   * will time out and cause an error. By default, `responseTimeout` from config is used.
+   */
+  responseTimeout?: number
+  /**
+   * Set if redirects should be followed when this request is made. By default, requests will
+   * not follow redirects before yielding the response (the 3xx redirect is yielded)
+   */
+  followRedirect?: boolean
+  /**
+   * If set, `cy.wait` can be used to await the request/response cycle to complete for this
+   * request via `cy.wait('@alias')`.
+   */
+  alias?: string
+}
+```
+
+Any modifications to the properties of `req` will be persisted to other request handlers, and finally merged into the actual outbound HTTP request.
+
+### Controlling the outbound request with `req.continue()`
+
+Calling `req.continue()` without any argument will cause the request to be sent outgoing, and the response will be returned to the browser after any other listeners have been called. For example, the following code modifies a `POST` request and then sends it to the upstream server:
+
+```js
+cy.intercept('POST', '/submitStory', (req) => {
+  req.body.storyName = 'some name'
+  // send the modified request and skip any other matching request handlers
+  req.continue()
+})
+```
+
+If a function is passed to `req.continue()`, the request will be sent to the real upstream server, and the callback will be called with the response once the response is fully received from the server. See ["Intercepted responses"][res]
+
+Note: calling `req.continue()` will stop the request from propagating to the next matching request handler in line. See ["Interception lifecycle"][lifecycle] for more information.
+
+### Providing a stub response with `req.reply()`
+
+The `req.reply()` function can be used to send a stub response for an intercepted request. By passing a string, object, or [`StaticResponse`][staticresponse] to `req.reply()`, the request can be preventing from reaching the destination server.
+
+For example, the following code stubs out a JSON response from a request interceptor:
+
+```js
+cy.intercept('/billing', (req) => {
+  // dynamically get billing plan name at request-time
+  const planName = getPlanName()
+  // this object will automatically be JSON.stringified and sent as the response
+  req.reply({ plan: planName })
+})
+```
+
+Instead of passing a plain object or string to `req.reply()`, you can also pass a [`StaticResponse`][staticresponse] object. With a [`StaticResponse`][staticresponse], you can force a network error, delay/throttle the response, send a fixture, and more.
+
+For example, the following code serves a dynamically chosen fixture with a delay of 500ms:
+
+```js
+cy.intercept('/api/users/*', async (req) => {
+  // asynchronously retrieve fixture filename at request-time
+  const fixtureFilename = await getFixtureFilenameForUrl(req.url)
+  req.reply({
+    fixture: fixtureFilename,
+    delayMs: 500,
+  })
+})
+```
+
+See the [`StaticResponse` documentation][staticresponse] for more information on stubbing responses in this manner.
+
+Note: calling `req.reply()` will stop the request from propagating to the next matching request handler in line. See ["Interception lifecycle"][lifecycle] for more information.
+
+### Request events
+
+For advanced use, several events are available on `req`, that represent different stages of the [Interception lifecycle][lifecycle].
+
+By calling `req.on`, you can subscribe to different events:
+
+```js
+cy.intercept('/shop', (req) => {
+  req.on('before:response', (res) => {
+    /**
+     * Emitted before `response` and before any `req.continue` handlers.
+     * Modifications to `res` will be applied to the incoming response.
+     * If a promise is returned, it will be awaited before processing other event handlers.
+     */
+  })
+
+  req.on('response', (res) => {
+    /**
+     * Emitted after `before:response` and after any `req.continue` handlers - before the response is sent to the browser.
+     * Modifications to `res` will be applied to the incoming response.
+     * If a promise is returned, it will be awaited before processing other event handlers.
+     */
+  })
+
+  req.on('after:response', (res) => {
+    /**
+     * Emitted once the response to a request has finished sending to the browser.
+     * Modifications to `res` have no impact.
+     * If a promise is returned, it will be awaited before processing other event handlers.
+     */
+  })
+})
+```
+
+See ["Intercepted responses"][res] for more details on the `res` object yielded by `before:response` and `response`. See ["Interception lifecycle"][lifecycle] for more details on request ordering.
+
+## Intercepted responses
+
+The response can be intercepted in two ways:
+
+- by passing a callback to [`req.continue()`](req-continue) within a request handler
+- by listening for the `before:response` or `response` request events (see ["Request events"](#Request-events))
+
+The response object, `res`, will be passed as the first argument to the handler function.
+
+```js
+cy.intercept('/url', (req) => {
+  res.on('before:response', (res) => {
+    // this will be called before any `req.continue` or `response` handlers
+  })
+
+  req.continue((res) => {
+    // this will be called after all `before:response` handlers and before any `response` handlers
+    // by calling `req.continue`, we signal that this request handler will be the last one, and that
+    // the request should be sent outgoing at this point. for that reason, there can only be one
+    // `req.continue` handler per request.
+  })
+
+  res.on('response', (res) => {
+    // this will be called after all `before:response` handlers and after the `req.continue` handler
+    // but before the response is sent to the browser
+  })
+})
+```
+
+### Response object properties
+
+The response object (`res`) has several properties from the HTTP response itself. All of the following properties on `res` can be modified:
+
+```ts
+{
+  /**
+   * The body of the response.
+   * If a JSON Content-Type was used and the body was valid JSON, this will be an object.
+   * If the body was binary content, this will be a buffer.
+   */
+  body: string | object | any
+  /**
+   * The headers of the response.
+   */
+  headers: { [key: string]: string }
+  /**
+   * The HTTP status code of the response.
+   */
+  statusCode: number
+  /**
+   * The HTTP status message.
+   */
+  statusMessage: string
+}
+```
+
+`res` also has some optional properties which can be set to control Cypress-specific behavior:
+
+```ts
+{
+  /**
+   * Kilobits per second to send 'body'.
+   */
+  throttleKbps?: number
+  /**
+   * Milliseconds to delay before the response is sent.
+   */
+  delayMs?: number
+}
+```
+
+Any modifications to the properties of `res` will be persisted to other response handlers, and finally merged into the actual incoming HTTP response.
+
+### Ending the response with `res.send()`
+
+To end the response phase of the request, call `res.send()`. Optionally, you can pass a [`StaticResponse`][staticresponse] to `res.send()`, to be merged with the actual response.
+
+When you call `res.send()`, the response phase will end immediately and no other matching response handlers will be called.
+
+## `StaticResponse` objects
+
+## Interception lifecycle
+
+The lifecycle of a `cy.intercept()` interception begins when an HTTP request is sent from your app that matches one or more registered `cy.intercept()` routes. From there, each interception has two phases: request and response.
+
+`cy.intercept()` routes are matched in reverse order of definition, except for routes which are defined with `{ middleware: true }`, which always run first. This allows you to override existing `cy.intercept()` declarations by defining an overlapping `cy.intercept()`.
+
+### Request phase
+
+The following steps are used to handle the request phase.
+
+1. Start with the first matching route according to the above algorithm (middleware first, followed by handlers in reverse order).
+2. Was a handler (body, [`StaticResponse`][staticresponse], or function) supplied to `cy.intercept()`? If not, continue to step 7.
+3. If the handler was a body or `StaticResponse`, immediately end the request with that response.
+4. If the handler was a function, call the function with `req`, the incoming request, as the first argument. See ["Intercepted requests"][req] for more information on the `req` object.
+   - If `req.reply()` is called, immediately end the request phase with the provided response. See ["Providing a stub response with `req.reply()`"](#Providing-a-stub-response-with-req-reply).
+   - If `req.continue()` is called, immediately end the request phase, and send the request to the destination server. If a callback is provided to `req.continue()`, it will be called during the [response phase](#Response-phase)
+5. If the handler returned a Promise, wait for the Promise to resolve.
+6. Merge any modifications to the request object with the real request.
+7. If there is another matching `cy.intercept()`, return to step 2 and continue following steps with that route.
+8. Send the request outgoing to the destination server and end the request phase. The [response phase](#Response-phase) will begin once a response is received.
+
+### Response phase
+
+Once the HTTP response is received from the upstream server, the following steps are applied:
+
+1. Get a list of registered `before:response` event listeners.
+2. For each `before:response` listener (if any), call it with the [`res`][res] object.
+   - If `res.send()` is called, end the response phase and merge any passed arguments with the response.
+   - If a Promise is returned, await it. Merge any modified response properties with the real response.
+3. If a `req.continue()` with callback is declared for this route, call the callback with the [`res`][res] object.
+   - If `res.send()` is called, end the response phase and merge any passed arguments with the response.
+   - If a Promise is returned, await it. Merge any modified response properties with the real response.
+4. Get a list of registered `response` event listeners.
+5. For each `response` listener (if any), call it with the [`res`][res] object.
+   - If `res.send()` is called, end the response phase and merge any passed arguments with the response.
+   - If a Promise is returned, await it. Merge any modified response properties with the real response.
+6. Send the response to the browser.
+7. Once the response is complete, get a list of registered `after:response` event listeners.
+8. For each `after:response` listener (if any), call it with the [`res`][res] object (minus `res.send`)
+   - If a Promise is returned, await it.
+9. End the response phase.
+
 ## Examples
 
 ### Matching URL
@@ -697,3 +979,9 @@ The intention of `cy.request()` is to be used for checking endpoints on an actua
 - [`cy.route()` vs `cy.route2()`](https://glebbahmutov.com/blog/cy-route-vs-route2/) blog post
 - [Smart GraphQL Stubbing in Cypress](https://glebbahmutov.com/blog/smart-graphql-stubbing/) blog post
 - [Open issues for `net stubbing`](https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aopen+label%3Apkg%2Fnet-stubbing) and [closed issues for `net stubbing`](https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aclosed+label%3Apkg%2Fnet-stubbing)
+
+[staticresponse]: #StaticResponse-objects
+[lifecycle]: #Interception-lifecycle
+[req]: #Intercepted-requests
+[req-continue]: #Controlling-the-outbound-request-with-req-continue
+[res]: #Intercepted-responses

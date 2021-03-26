@@ -6,17 +6,17 @@ title: Migration Guide
 
 This guide details the changes and how to change your code to migrate to Cypress 7.0. [See the full changelog for 7.0](/guides/references/changelog#7-0-0).
 
-## `cy.intercept()` changes
+## [`cy.intercept()`][intercept] changes
 
-Cypress 7.0 comes with three breaking changes to `cy.intercept()`:
+[Cypress 7.0](<(/guides/references/changelog#7-0-0)>) comes with three breaking changes to [`cy.intercept()`][intercept]:
 
 ### Handler ordering is reversed
 
-Previous to Cypress 7.0, `cy.intercept()` handlers were run in the order that they are defined, stopping after the first handler to call `req.reply()`, or once all handlers are complete.
+Previous to Cypress 7.0, [`cy.intercept()`][intercept] handlers were run in the order that they are defined, stopping after the first handler to call `req.reply()`, or once all handlers are complete.
 
-With Cypress 7.0, `cy.intercept()` handlers are now run in reverse order of definition, stopping after the first handler to call `req.reply()`, or once all handlers are complete.
+With Cypress 7.0, [`cy.intercept()`][intercept] handlers are now run in reverse order of definition, stopping after the first handler to call `req.reply()`, or once all handlers are complete.
 
-This change was done so that users can override previously declared `cy.intercept()` handlers by calling `cy.intercept()` again. See [#9302](https://github.com/cypress-io/cypress/issues/9302) for more details.
+This change was done so that users can override previously declared [`cy.intercept()`][intercept] handlers by calling [`cy.intercept()`][intercept] again. See [#9302](https://github.com/cypress-io/cypress/issues/9302) for more details.
 
 <Badge type="danger">Before</Badge>
 
@@ -80,15 +80,15 @@ Cypress comes bundled with its own [Node.js version](https://github.com/cypress-
 
 Node.js 10 reached its end of life on Dec 31, 2019 and Node.js 13 reached its end of life on June 1, 2019. [See Node's release schedule](https://github.com/nodejs/Release). These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 12 or Node.js 14+.
 
-## Migrating `cy.route()` to `cy.intercept()`
+## Migrating `cy.route()` to [`cy.intercept()`][intercept]
 
-This guide details how to change your test code to migrate from `cy.route()` to `cy.intercept()`. `cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0. In a future release, support for `cy.server()` and `cy.route()` will be removed.
+This guide details how to change your test code to migrate from `cy.route()` to [`cy.intercept()`][intercept]. `cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0. In a future release, support for `cy.server()` and `cy.route()` will be removed.
 
-Please also refer to the full documentation for [cy.intercept()](/api/commands/intercept).
+Please also refer to the full documentation for [cy.intercept()][intercept].
 
 ### Match simple route
 
-In many use cases, you can replace `cy.route()` with [cy.intercept()](/api/commands/intercept) and remove the call to `cy.server()` (which is no longer necessary).
+In many use cases, you can replace `cy.route()` with [cy.intercept()][intercept] and remove the call to `cy.server()` (which is no longer necessary).
 
 <Badge type="danger">Before</Badge>
 
@@ -111,7 +111,7 @@ cy.intercept('PATCH', '/projects/*').as('updateProject')
 
 ### Match against `url` and `path`
 
-The `url` argument to [cy.intercept()](/api/commands/intercept) matches against the full url, as opposed to the `url` or `path` in `cy.route()`. If you're using the `url` argument in `cy.intercept()`, you may need to update your code depending on the route you're trying to match.
+The `url` argument to [cy.intercept()][intercept] matches against the full url, as opposed to the `url` or `path` in `cy.route()`. If you're using the `url` argument in [`cy.intercept()`][intercept], you may need to update your code depending on the route you're trying to match.
 
 <Badge type="danger">Before</Badge>
 
@@ -143,7 +143,7 @@ cy.intercept({
 
 ### `cy.wait()` object
 
-The object returned by `cy.wait()` is different from intercepted HTTP requests using `cy.intercept()` than the object returned from an awaited `cy.route()` XHR.
+The object returned by `cy.wait()` is different from intercepted HTTP requests using [`cy.intercept()`][intercept] than the object returned from an awaited `cy.route()` XHR.
 
 <Badge type="danger">Before</Badge>
 
@@ -173,7 +173,7 @@ cy.wait('@createUser').then(({ request, response }) => {
 
 ### Fixtures
 
-You can stub requests and response with fixture data by defining a `fixture` property in the `routeHandler` argument for `cy.intercept()`.
+You can stub requests and response with fixture data by defining a `fixture` property in the `routeHandler` argument for [`cy.intercept()`][intercept].
 
 <Badge type="danger">Before</Badge>
 
@@ -303,11 +303,11 @@ it('test', () => {
 
 ### `cy.wait(alias)` type
 
-[cy.route()](/api/commands/route) is deprecated in 6.0.0. We encourage the use of [cy.intercept()](/api/commands/intercept) instead. Due to this deprecation, the type yielded by [cy.wait(alias)](/api/commands/wait) has changed.
+[cy.route()](/api/commands/route) is deprecated in 6.0.0. We encourage the use of [cy.intercept()][intercept] instead. Due to this deprecation, the type yielded by [cy.wait(alias)](/api/commands/wait) has changed.
 
 <Badge type="danger">Before</Badge> Before 6.0.0, [cy.wait(alias)](/api/commands/wait) would yield an object of type `WaitXHR`.
 
-<Badge type="success">After</Badge> In 6.0.0 and onwards, [cy.wait(alias)](/api/commands/wait) will yield an object of type `Interception`. This matches the new interception object type used for [cy.intercept()](/api/commands/intercept).
+<Badge type="success">After</Badge> In 6.0.0 and onwards, [cy.wait(alias)](/api/commands/wait) will yield an object of type `Interception`. This matches the new interception object type used for [cy.intercept()][intercept].
 
 #### Restore old behavior
 
@@ -1168,3 +1168,5 @@ module.exports = (on) => {
   on('file:preprocessor', browserify())
 }
 ```
+
+[intercept]: /api/commands/intercept
