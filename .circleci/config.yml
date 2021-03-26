@@ -89,4 +89,4 @@ workflows:
           filters:
             branches:
               only:
-                - next-docs
+                - master
