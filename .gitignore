@@ -9,6 +9,11 @@ public/
 support
 !cypress/support
 .idea/
+.nuxt/
+dist/
+static/sw.js
+.eslintcache
+.circle-credentials.json
 
 themes/cypress/source/css/vendor/
 themes/cypress/source/js/vendor/

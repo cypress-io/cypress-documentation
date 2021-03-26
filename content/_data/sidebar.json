@@ -1,0 +1,253 @@
+{
+  "guides": {
+    "overview": {
+      "why-cypress": "why-cypress.html",
+      "key-differences": "key-differences.html"
+    },
+    "getting-started": {
+      "installing-cypress": "installing-cypress.html",
+      "writing-your-first-test": "writing-your-first-test.html",
+      "testing-your-app": "testing-your-app.html"
+    },
+    "core-concepts": {
+      "introduction-to-cypress": "introduction-to-cypress.html",
+      "writing-and-organizing-tests": "writing-and-organizing-tests.html",
+      "retry-ability": "retry-ability.html",
+      "interacting-with-elements": "interacting-with-elements.html",
+      "variables-and-aliases": "variables-and-aliases.html",
+      "conditional-testing": "conditional-testing.html",
+      "test-runner": "test-runner.html",
+      "cypress-studio": "cypress-studio.html"
+    },
+    "dashboard": {
+      "dashboard-introduction": "introduction.html",
+      "projects": "projects.html",
+      "runs": "runs.html",
+      "organizations": "organizations.html",
+      "users": "users.html",
+      "bitbucket-integration": "bitbucket-integration.html",
+      "github-integration": "github-integration.html",
+      "gitlab-integration": "gitlab-integration.html",
+      "jira-integration": "jira-integration.html",
+      "slack-integration": "slack-integration.html",
+      "analytics": "analytics.html",
+      "flaky-test-management": "flaky-test-management.html",
+      "smart-orchestration": "smart-orchestration.html"
+    },
+    "guides": {
+      "command-line": "command-line.html",
+      "module-api": "module-api.html",
+      "debugging": "debugging.html",
+      "network-requests": "network-requests.html",
+      "test-retries": "test-retries.html",
+      "parallelization": "parallelization.html",
+      "environment-variables": "environment-variables.html",
+      "stubs-spies-and-clocks": "stubs-spies-and-clocks.html",
+      "screenshots-and-videos": "screenshots-and-videos.html",
+      "launching-browsers": "launching-browsers.html",
+      "cross-browser-testing": "cross-browser-testing.html",
+      "web-security": "web-security.html"
+    },
+    "testing-strategies": {
+      "auth0-authentication": "auth0-authentication.html",
+      "amazon-cognito-authentication": "amazon-cognito-authentication.html",
+      "okta-authentication": "okta-authentication.html",
+      "google-authentication": "google-authentication.html"
+    },
+    "continuous-integration": {
+      "continuous-integration-introduction": "introduction.html",
+      "github-actions": "github-actions.html",
+      "gitlab-ci": "gitlab-ci.html",
+      "bitbucket-pipelines": "bitbucket-pipelines.html",
+      "aws-codebuild": "aws-codebuild.html"
+    },
+    "component-testing": {
+      "component-testing-introduction": "introduction.html"
+    },
+    "tooling": {
+      "IDE-integration": "IDE-integration.html",
+      "plugins-guide": "plugins-guide.html",
+      "reporters": "reporters.html",
+      "typescript-support": "typescript-support.html",
+      "visual-testing": "visual-testing.html",
+      "code-coverage": "code-coverage.html"
+    },
+    "references": {
+      "assertions": "assertions.html",
+      "configuration": "configuration.html",
+      "proxy-configuration": "proxy-configuration.html",
+      "best-practices": "best-practices.html",
+      "error-messages": "error-messages.html",
+      "bundled-tools": "bundled-tools.html",
+      "trade-offs": "trade-offs.html",
+      "troubleshooting": "troubleshooting.html",
+      "changelog": "changelog.html",
+      "migration-guide": "migration-guide.html",
+      "roadmap": "roadmap.html",
+      "experiments": "experiments.html"
+    }
+  },
+  "api": {
+    "api": {
+      "table-of-contents": "table-of-contents.html"
+    },
+    "events": {
+      "catalog-of-events": "catalog-of-events.html"
+    },
+    "assertions": {
+      "all-assertions": "assertions.html"
+    },
+    "commands": {
+      "and": "and.html",
+      "as": "as.html",
+      "blur": "blur.html",
+      "check": "check.html",
+      "children": "children.html",
+      "clear": "clear.html",
+      "clearcookie": "clearcookie.html",
+      "clearcookies": "clearcookies.html",
+      "clearlocalstorage": "clearlocalstorage.html",
+      "click": "click.html",
+      "clock": "clock.html",
+      "closest": "closest.html",
+      "contains": "contains.html",
+      "dblclick": "dblclick.html",
+      "debug": "debug.html",
+      "document": "document.html",
+      "each": "each.html",
+      "end": "end.html",
+      "eq": "eq.html",
+      "exec": "exec.html",
+      "filter": "filter.html",
+      "find": "find.html",
+      "first": "first.html",
+      "fixture": "fixture.html",
+      "focus": "focus.html",
+      "focused": "focused.html",
+      "get": "get.html",
+      "getcookie": "getcookie.html",
+      "getcookies": "getcookies.html",
+      "go": "go.html",
+      "hash": "hash.html",
+      "hover": "hover.html",
+      "intercept": "intercept.html",
+      "invoke": "invoke.html",
+      "its": "its.html",
+      "last": "last.html",
+      "location": "location.html",
+      "log": "log.html",
+      "next": "next.html",
+      "nextall": "nextall.html",
+      "nextuntil": "nextuntil.html",
+      "not": "not.html",
+      "parent": "parent.html",
+      "parents": "parents.html",
+      "parentsuntil": "parentsuntil.html",
+      "pause": "pause.html",
+      "prev": "prev.html",
+      "prevall": "prevall.html",
+      "prevuntil": "prevuntil.html",
+      "readfile": "readfile.html",
+      "reload": "reload.html",
+      "request": "request.html",
+      "rightclick": "rightclick.html",
+      "root": "root.html",
+      "route": "route.html",
+      "screenshot": "screenshot.html",
+      "scrollintoview": "scrollintoview.html",
+      "scrollto": "scrollto.html",
+      "select": "select.html",
+      "server": "server.html",
+      "setcookie": "setcookie.html",
+      "shadow": "shadow.html",
+      "should": "should.html",
+      "siblings": "siblings.html",
+      "spread": "spread.html",
+      "spy": "spy.html",
+      "stub": "stub.html",
+      "submit": "submit.html",
+      "task": "task.html",
+      "then": "then.html",
+      "tick": "tick.html",
+      "title": "title.html",
+      "trigger": "trigger.html",
+      "type": "type.html",
+      "uncheck": "uncheck.html",
+      "url": "url.html",
+      "viewport": "viewport.html",
+      "visit": "visit.html",
+      "wait": "wait.html",
+      "window": "window.html",
+      "within": "within.html",
+      "wrap": "wrap.html",
+      "writefile": "writefile.html"
+    },
+    "utilities": {
+      "_": "_.html",
+      "$": "$.html",
+      "blob": "blob.html",
+      "minimatch": "minimatch.html",
+      "moment": "moment.html",
+      "promise": "promise.html",
+      "sinon": "sinon.html"
+    },
+    "cypress-api": {
+      "custom-commands": "custom-commands.html",
+      "cookies": "cookies.html",
+      "screenshot-api": "screenshot-api.html",
+      "selector-playground-api": "selector-playground-api.html",
+      "cypress-server": "cypress-server.html",
+      "arch": "arch.html",
+      "browser": "browser.html",
+      "config": "config.html",
+      "dom": "dom.html",
+      "env": "env.html",
+      "isbrowser": "isbrowser.html",
+      "iscy": "iscy.html",
+      "cypress-log": "cypress-log.html",
+      "platform": "platform.html",
+      "spec": "spec.html",
+      "version": "version.html"
+    },
+    "plugins": {
+      "writing-a-plugin": "writing-a-plugin.html",
+      "configuration-api": "configuration-api.html",
+      "preprocessors-api": "preprocessors-api.html",
+      "before-run-api": "before-run-api.html",
+      "after-run-api": "after-run-api.html",
+      "before-spec-api": "before-spec-api.html",
+      "after-spec-api": "after-spec-api.html",
+      "browser-launch-api": "browser-launch-api.html",
+      "after-screenshot-api": "after-screenshot-api.html"
+    }
+  },
+  "plugins": {
+    "plugins": "index.html"
+  },
+  "examples": {
+    "examples": {
+      "recipes": "recipes.html",
+      "tutorials": "tutorials.html",
+      "applications": "applications.html",
+      "docker": "docker.html",
+      "workshop": "workshop.html",
+      "projects-media": "projects-media.html"
+    },
+    "media": {
+      "courses-media": "courses-media.html",
+      "webinars-media": "webinars-media.html",
+      "blogs-media": "blogs-media.html",
+      "talks-media": "talks-media.html",
+      "podcasts-media": "podcasts-media.html",
+      "screencasts-media": "screencasts-media.html"
+    }
+  },
+  "faq": {
+    "questions": {
+      "using-cypress-faq": "using-cypress-faq.html",
+      "general-questions-faq": "general-questions-faq.html",
+      "dashboard-faq": "dashboard-faq.html",
+      "company-faq": "company-faq.html"
+    }
+  }
+}

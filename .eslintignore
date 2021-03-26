@@ -1,2 +1,2 @@
-/public/*
-/themes/*
+/dist/*
+.eslintcache

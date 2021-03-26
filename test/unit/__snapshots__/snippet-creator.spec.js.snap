@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Snippet Creator errors if no argument provided 1`] = `"[Snippet Creator] Error: Script takes exactly 1 argument, received 0"`;
-
-exports[`Snippet Creator errors out if can't find input file 1`] = `"[Snippet Creator] Error: Cannot find input file: asdf"`;

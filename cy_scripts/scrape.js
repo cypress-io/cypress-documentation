@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 
-const path = require('path')
 const chalk = require('chalk')
 const Promise = require('bluebird')
 const request = require('request-promise')
@@ -9,7 +8,12 @@ const {
   filenameToShellVariable,
 } = require('@cypress/env-or-json-file')
 const { stripIndent } = require('common-tags')
-const R = require('ramda')
+
+const tap = (func) => {return (arg) => {
+  func(arg)
+
+  return arg
+}}
 
 function checkToken (token) {
   if (!token) {
@@ -41,7 +45,7 @@ function getCircleCredentials () {
   // which is something like _circle_credentials_json
   // you can load such environment variable quickly from local terminal with
   // https://github.com/bahmutov/as-a
-  const jsonFile = path.join('support', '.circle-credentials.json')
+  const jsonFile = '.circle-credentials.json'
   const config = configFromEnvOrJsonFile(jsonFile)
 
   if (!config) {
@@ -58,7 +62,7 @@ function getCircleCredentials () {
 function scrape () {
   return Promise.resolve()
   .then(getCircleCredentials)
-  .then(R.tap(checkToken))
+  .then(tap(checkToken))
   .then((token) => {
     // hmm, how do we trigger workflow?
     // seems this is not supported yet as of July 10th 2017

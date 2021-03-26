@@ -1,0 +1,39 @@
+diff --git a/node_modules/vue-scrollactive/dist/vue-scrollactive.min.js b/node_modules/vue-scrollactive/dist/vue-scrollactive.min.js
+index cfc4ecb..8101834 100644
+--- a/node_modules/vue-scrollactive/dist/vue-scrollactive.min.js
++++ b/node_modules/vue-scrollactive/dist/vue-scrollactive.min.js
+@@ -252,7 +252,12 @@
+               })),
+               this.initScrollactiveItems(),
+               this.removeActiveClass(),
+-              (this.currentItem = this.getItemInsideWindow()),
++              (this.currentItem = Array.from(this.items)
++                .find(
++                  function(item) {
++                    return item.hash === window.location.hash
++                  }) || this.getItemInsideWindow()
++              ),
+               this.currentItem && this.currentItem.classList.add(this.activeClass),
+               this.scrollOnStart && this.scrollToHashElement(),
+               this.scrollContainer.addEventListener('scroll', this.onScroll);
+@@ -269,7 +274,8 @@
+               (this.currentItem = this.getItemInsideWindow()),
+                 this.currentItem !== this.lastActiveItem &&
+                   (this.removeActiveClass(),
+-                  this.$emit('itemchanged', t, this.currentItem, this.lastActiveItem),
++                  this.$emit('itemchanged', t, this.currentItem, this.lastActiveItem) && (
++                    this.currentItem && this.currentItem.hash && window.history.replaceState(null, null, this.currentItem.hash)),
+                   (this.lastActiveItem = this.currentItem)),
+                 this.currentItem && this.currentItem.classList.add(this.activeClass);
+             },
+@@ -382,9 +388,7 @@
+               }
+             },
+             pushHashToUrl: function (t) {
+-              window.history.pushState
+-                ? window.history.pushState(null, null, t)
+-                : (window.location.hash = t);
++              window.$nuxt.$router.push(t)
+             },
+           },
+         },
