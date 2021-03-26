@@ -150,13 +150,13 @@ cy.intercept('/users', { middleware: true }, (req) => {
 })
 ```
 
-#### **<Icon name="angle-right"></Icon> routeHandler** **_(`string | object | Function | StaticResponse`)_**
+#### **<Icon name="angle-right"></Icon> routeHandler** **_(`string | object | Function | [StaticResponse][staticresponse]`)_**
 
 The `routeHandler` defines what will happen with a request if the [routeMatcher](#routeMatcher-RouteMatcher) matches. It can be used to [statically define a response](#Stubbing-a-response) for matching requests, or a function can be passed to [dynamically intercept the outgoing request](#Intercepting-a-request).
 
-- If a **string** is passed, requests to the route will be fulfilled with that string as the body. Passing `"foo"` is equivalent to using a `StaticResponse` object with `{ body: "foo" }`.
-- If a **`StaticResponse` object** is passed, requests to the route will be fulfilled with a response using the values supplied in the `StaticResponse`. A `StaticResponse` can define the body of the response, as well as the headers, HTTP status code, and more. See [Stubbing a response with a `StaticResponse` object](#With-a-StaticResponse-object) for an example of how this is used.
-- If an **object with no `StaticResponse` keys** is passed, it will be sent as a JSON response body. For example, passing `{ foo: 'bar' }` is equivalent to passing `{ body: { foo: 'bar' } }`.
+- If a **string** is passed, requests to the route will be fulfilled with that string as the body. Passing `"foo"` is equivalent to using a [`StaticResponse`][staticresponse] object with `{ body: "foo" }`.
+- If a **[`StaticResponse`][staticresponse] object** is passed, requests to the route will be fulfilled with a response using the values supplied in the `StaticResponse`. A `StaticResponse` can define the body of the response, as well as the headers, HTTP status code, and more. See [Stubbing a response with a `StaticResponse` object](#With-a-StaticResponse-object) for an example of how this is used.
+- If an **object with no [`StaticResponse`][staticresponse] keys** is passed, it will be sent as a JSON response body. For example, passing `{ foo: 'bar' }` is equivalent to passing `{ body: { foo: 'bar' } }`.
 - If a **callback** is passed, it will be called whenever a request matching this route is received, with the first parameter being the request object. From inside the callback, you can modify the outgoing request, send a response, access the real response, and much more. See ["Intercepted requests"][req] for more information.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
@@ -424,7 +424,7 @@ cy.intercept('POST', '/organization', (req) => {
 
 #### Modifying an outgoing request
 
-You can use the route callback to modify the request before it is sent.
+You can use the request handler callback to modify the request before it is sent.
 
 ```js
 cy.intercept('POST', '/login', (req) => {
@@ -459,7 +459,7 @@ cy.wait('@headers')
 
 #### Dynamically stubbing a response
 
-You can use the `req.reply()` function to dynamically control the response to a request.
+You can use the [`req.reply()`][req-reply] function to dynamically control the response to a request.
 
 ```js
 cy.intercept('/billing', (req) => {
@@ -495,9 +495,9 @@ cy.intercept('POST', '/login', (req) => {
 })
 ```
 
-#### Passing a request to the next route handler
+#### Passing a request to the next request handler
 
-If `req.reply()` is not explicitly called inside of a route callback, requests will pass to the next route callback until none are left.
+If [`req.reply()`][req-reply] is not explicitly called inside of a request handler, requests will pass to the next request handler until none are left.
 
 ```js
 // you could have a top-level middleware handler that sets an auth token on all requests
@@ -916,10 +916,10 @@ The following steps are used to handle the request phase.
 
 1. Start with the first matching route according to the above algorithm (middleware first, followed by handlers in reverse order).
 2. Was a handler (body, [`StaticResponse`][staticresponse], or function) supplied to `cy.intercept()`? If not, continue to step 7.
-3. If the handler was a body or `StaticResponse`, immediately end the request with that response.
+3. If the handler was a body or [`StaticResponse`][staticresponse], immediately end the request with that response.
 4. If the handler was a function, call the function with `req`, the incoming request, as the first argument. See ["Intercepted requests"][req] for more information on the `req` object.
-   - If `req.reply()` is called, immediately end the request phase with the provided response. See ["Providing a stub response with `req.reply()`"](#Providing-a-stub-response-with-req-reply).
-   - If `req.continue()` is called, immediately end the request phase, and send the request to the destination server. If a callback is provided to `req.continue()`, it will be called during the [response phase](#Response-phase)
+   - If [`req.reply()`][req-reply] is called, immediately end the request phase with the provided response. See ["Providing a stub response with `req.reply()`"](#Providing-a-stub-response-with-req-reply).
+   - If [`req.continue()`][req-continue] is called, immediately end the request phase, and send the request to the destination server. If a callback is provided to [`req.continue()`][req-continue], it will be called during the [response phase](#Response-phase)
 5. If the handler returned a Promise, wait for the Promise to resolve.
 6. Merge any modifications to the request object with the real request.
 7. If there is another matching `cy.intercept()`, return to step 2 and continue following steps with that route.
@@ -931,14 +931,14 @@ Once the HTTP response is received from the upstream server, the following steps
 
 1. Get a list of registered `before:response` event listeners.
 2. For each `before:response` listener (if any), call it with the [`res`][res] object.
-   - If `res.send()` is called, end the response phase and merge any passed arguments with the response.
+   - If [`res.send()`][res-send] is called, end the response phase and merge any passed arguments with the response.
    - If a Promise is returned, await it. Merge any modified response properties with the real response.
 3. If a `req.continue()` with callback is declared for this route, call the callback with the [`res`][res] object.
-   - If `res.send()` is called, end the response phase and merge any passed arguments with the response.
+   - If [`res.send()`][res-send] is called, end the response phase and merge any passed arguments with the response.
    - If a Promise is returned, await it. Merge any modified response properties with the real response.
 4. Get a list of registered `response` event listeners.
 5. For each `response` listener (if any), call it with the [`res`][res] object.
-   - If `res.send()` is called, end the response phase and merge any passed arguments with the response.
+   - If [`res.send()`][res-send] is called, end the response phase and merge any passed arguments with the response.
    - If a Promise is returned, await it. Merge any modified response properties with the real response.
 6. Send the response to the browser.
 7. Once the response is complete, get a list of registered `after:response` event listeners.

@@ -51,21 +51,19 @@ This more closely matches the URL matching behavior shown by `cy.route()`. Howev
 For example, requests with querystrings may no longer match:
 
 ```js
-// Q: will this intercept match a request for `/items?page=1`?
+// will this intercept match a request for `/items?page=1`?
 cy.intercept('/items')
-// A:
 // ✅ before 7.0.0, this will match, because it is a substring
 // ❌ after 7.0.0, this will not match, because of the querystring
-// solution: update the intercept to match the querystring:
-cy.intercept('/items?page=1)
+// solution: update the intercept to match the querystring with a wildcard:
+cy.intercept('/items?*')
 ```
 
 Also, requests for paths in nested directories may be affected:
 
 ```js
-// Q: will this intercept match a request for `/some/items`?
+// will this intercept match a request for `/some/items`?
 cy.intercept('/items')
-// A:
 // ✅ before 7.0.0, this will match, because it is a substring
 // ❌ after 7.0.0, this will not match, because of the leading directory
 // solution: update the intercept to include the directory:
