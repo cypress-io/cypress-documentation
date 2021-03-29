@@ -91,7 +91,6 @@ $card-header-breakpoint: 1280px;
 
 ul.plugins-list {
   display: flex;
-  // margin: 0 0 0 -10px;
   margin: 0 !important;
   padding: 0;
   width: calc(100% + 20px);
