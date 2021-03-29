@@ -53,12 +53,12 @@ When using aliases with DOM elements, Cypress will query the DOM again if the pr
 
 Pass in an options object to change the default behavior of `cy.get()`.
 
-| Option             | Default                                                               | Description                                                                                                  |
-| ------------------ | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| `log`              | `true`                                                                | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                     |
-| `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)  | Time to wait for `cy.get()` to resolve before [timing out](#Timeouts)                                        |
-| `withinSubject`    | null                                                                  | Element to search for children in. If null, search begins from root-level DOM element                        |
-| `includeShadowDom` | [`includeShadowDom`<br](/> config option value' configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
+| Option             | Default                                                                           | Description                                                                                                  |
+| ------------------ | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `log`              | `true`                                                                            | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                     |
+| `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)              | Time to wait for `cy.get()` to resolve before [timing out](#Timeouts)                                        |
+| `withinSubject`    | null                                                                              | Element to search for children in. If null, search begins from root-level DOM element                        |
+| `includeShadowDom` | [`includeShadowDom` config option value](/guides/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 

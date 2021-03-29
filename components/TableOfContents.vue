@@ -9,7 +9,7 @@
         :scroll-on-start="false"
         highlight-first-item
         active-class="scrollactive-item-active"
-        :offset="96"
+        :offset="100"
         tag="ul"
       >
         <li

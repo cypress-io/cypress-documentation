@@ -23,6 +23,9 @@ export default {
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
+    htmlAttrs: {
+      lang: 'en',
+    },
     title: 'Cypress Documentation',
     meta: [
       ...meta,
@@ -30,6 +33,7 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script: [{ src: '/js/removeTrailingSlash.js' }],
   },
   /*
    ** Global CSS
@@ -48,32 +52,18 @@ export default {
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: [
-    // Doc: https://github.com/nuxt-community/tailwindcss-module
-    '@nuxtjs/tailwindcss',
-    // Doc: https://github.com/nuxt-community/fontawesome-module
-    '@nuxtjs/fontawesome',
-  ],
+  buildModules: ['@nuxtjs/tailwindcss', '@nuxtjs/fontawesome', '@nuxt/image'],
   /*
    ** Nuxt.js modules
    */
-  modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-    '@nuxtjs/pwa',
-    // Doc: https://github.com/nuxt/content
-    '@nuxt/content',
-    '@nuxtjs/gtm',
-  ],
+  modules: ['@nuxtjs/axios', '@nuxt/content', '@nuxtjs/gtm'],
   /*
    ** Google Tag Manager
    */
   gtm: {
     // The env var CONTEXT is set by Netlify and can be 'production', 'deploy-preview', or 'branch-deploy'
     id:
-      (process.env.CONTEXT === 'production' &&
-        process.env.GOOGLE_TAG_MANAGER_ID) ||
-      'GTM-XXXXXXX',
+      (process.env.CONTEXT === 'production' && 'GTM-KNKBWLD') || 'GTM-XXXXXXX',
   },
   /*
    ** Axios module configuration
@@ -106,6 +96,7 @@ export default {
       solid: [
         'faAngleRight',
         'faBug',
+        'faCheck',
         'faCheckCircle',
         'faCheckSquare',
         'faCode',
@@ -131,6 +122,7 @@ export default {
         'faBan',
         'faLongArrowAltUp',
         'faFolderOpen',
+        'faStar',
       ],
       brands: ['faGithub', 'faTwitter', 'faYoutube'],
     },

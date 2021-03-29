@@ -89,7 +89,7 @@ cy.get('button').trigger('mouseover') // yields 'button'
 ```javascript
 cy.get('.target').trigger('mousedown')
 cy.wait(1000)
-cy.get('.target').trigger('mouseleave')
+cy.get('.target').trigger('mouseup')
 ```
 
 #### Trigger a `mousedown` from a specific mouse button
