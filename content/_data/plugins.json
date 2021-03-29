@@ -640,7 +640,7 @@
     },
     {
       "name": "Authentication",
-      "description": "Also take a look at [Logging in](https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes) recipes.",
+      "description": "Also take a look at <a target=\"_blank\" href=\"https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes\">Logging in</a> recipes.",
       "plugins": [
         {
           "name": "cypress-keycloak-commands",
