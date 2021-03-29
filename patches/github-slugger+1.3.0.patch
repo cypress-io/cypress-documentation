@@ -1,17 +1,24 @@
 diff --git a/node_modules/github-slugger/index.js b/node_modules/github-slugger/index.js
-index 9d40bc2..81faa5a 100644
+index 9d40bc2..21c4f6d 100644
 --- a/node_modules/github-slugger/index.js
 +++ b/node_modules/github-slugger/index.js
-@@ -5,6 +5,8 @@ module.exports = BananaSlug
+@@ -4,7 +4,14 @@ module.exports = BananaSlug
+ 
  var own = Object.hasOwnProperty
  var whitespace = /\s/g
- var specials = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~’]/g
+-var specials = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~’]/g
++var specials = /['!"#$%&()*+,/:;=?@[\]^`{|}~]/g
++var periodAtEnd = /\.{1}$/g
++// var shouldBecomeDash = /(?<!\.)\.{1,2}(?!\.)/g
 +var shouldBecomeDash = /\./g
 +var icons = /<[Ii]con.[^/]+\/*>(<\/[Ii]con>)*/
++var lessThan = /</g
++var greaterThan = />/g
++var twoOrMoreDashes = /-{2,}/g
  
  function BananaSlug () {
    var self = this
-@@ -45,12 +47,18 @@ BananaSlug.prototype.reset = function () {
+@@ -45,12 +52,28 @@ BananaSlug.prototype.reset = function () {
  
  function slugger (string, maintainCase) {
    if (typeof string !== 'string') return ''
@@ -20,13 +27,25 @@ index 9d40bc2..81faa5a 100644
 +  // to be reverse-compatible with older docs
 +  // if (!maintainCase) string = string.toLowerCase()
  
-   return string.trim()
+-  return string.trim()
+-    .replace(specials, '')
++  var str = string.trim()
 +    .replace(icons, '')
 +    .trim()
++    .replace(periodAtEnd, '')
 +    .replace(shouldBecomeDash, '-')
-     .replace(specials, '')
++    .replace(lessThan, 'lt-')
++    .replace(greaterThan, '-gt')
++    .replace(specials, '-')
      .replace(emoji(), '')
      .replace(whitespace, '-')
++    .replace(twoOrMoreDashes, '-')
++
++  if (str[str.length - 1] === '-') {
++    str = str.slice(0, str.length - 1)
++  }
++
++  return str
  }
  
  BananaSlug.slug = slugger

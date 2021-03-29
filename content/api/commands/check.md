@@ -133,6 +133,22 @@ cy.get('.action-checkboxes')
   .should('be.checked') // Passes
 ```
 
+### Find checked option
+
+You can get the currently checked option using the jQuery's [:checked selector](https://api.jquery.com/checked-selector/).
+
+```html
+<form id="pick-fruit">
+  <input type="radio" name="fruit" value="orange" id="orange" />
+  <input type="radio" name="fruit" value="apple" id="apple" checked="checked" />
+  <input type="radio" name="fruit" value="banana" id="banana" />
+</form>
+```
+
+```javascript
+cy.get('#pick-fruit :checked').should('be.checked').and('have.value', 'apple')
+```
+
 ## Notes
 
 ### Actionability

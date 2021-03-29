@@ -295,5 +295,6 @@ When clicking on `viewport` within the command log, the console outputs the foll
 ## See also
 
 - Read blog post [Use meaningful smoke tests](https://www.cypress.io/blog/2019/12/06/use-meaningful-smoke-tests/) where we run the same test with different viewport resolutions
+- Read blog post [Generate High-Resolution Videos and Screenshots](https://www.cypress.io/blog/2021/03/01/generate-high-resolution-videos-and-screenshots/) to learn how to change the browser's window size to capture screenshots and videos with more detail
 - [Configuration](/guides/references/configuration)
 - [Cypress.config()](/api/cypress-api/config)

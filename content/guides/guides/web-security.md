@@ -290,7 +290,7 @@ One thing you may notice though is that Cypress still enforces visiting a single
 
 Still here? That's cool, let's disable web security!
 
-#### Set `chromeWebSecurity` to `false` in your [configuration file (`cypress.json` by default)](/guides/references/configuration)`
+#### Set `chromeWebSecurity` to `false` in your [configuration file (`cypress.json` by default)](/guides/references/configuration)
 
 ```json
 {

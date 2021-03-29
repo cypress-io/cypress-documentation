@@ -195,7 +195,7 @@ If you are using the [Cypress Dashboard](/guides/dashboard/dashboard-introductio
 
 These tests are also indicated with a "Flaky" badge on the Latest Runs page and Test Results tab on the Run Details page.
 
-<DocsVideo src="/img/guides/test-retries/flaky-test-filter.mp4 "Flaky test filter""></DocsVideo>
+<DocsVideo src="/img/guides/test-retries/flaky-test-filter.mp4" title="Flaky test filter"></DocsVideo>
 
 Clicking on a Test Result will open the Test Case History screen. This demonstrates the number of failed attempts, the screenshots and/or videos of failed attempts, and the error for failed attempts.
 

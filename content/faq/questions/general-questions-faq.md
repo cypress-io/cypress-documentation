@@ -26,11 +26,11 @@ You can read about testing mobile applications with Ionic and Cypress [here](htt
 
 The Cypress Test Runner is a hybrid application/framework/service all rolled into one. It takes a little bit of other testing tools, brings them together and improves on them.
 
-### Mocha
+#### Mocha
 
 Mocha is a testing framework for JavaScript. [Mocha](http://mochajs.org/) gives you the `it`, `describe`, `beforeEach` methods. Cypress isn't **different** from Mocha, it actually **uses** Mocha under the hood. All of your tests will be written on top of Mocha's `bdd` interface.
 
-### Karma
+#### Karma
 
 A unit testing runner for JavaScript, [Karma](http://karma-runner.github.io/), works with either [Jasmine](https://jasmine.github.io/), [Mocha](http://mochajs.org/), or any other JavaScript testing framework.
 
@@ -38,7 +38,7 @@ Karma also watches your JavaScript files, live reloads when they change, and is 
 
 Cypress essentially replaces Karma because it does all of this already and much more.
 
-### Capybara
+#### Capybara
 
 The `Ruby` specific tool that allows you to write integration tests for your web application is [Capybara](http://teamcapybara.github.io/capybara/). In the Rails world, this is the _go-to_ tool for testing your application. It uses [Sauce Labs](https://SauceLabs.com/) (or another headless driver) to interact with browsers. Its API consists of commands that query for DOM elements, perform user actions, navigate around, etc.
 
@@ -46,7 +46,7 @@ Cypress essentially replaces Capybara because it does all of these things and mu
 
 Oftentimes Capybara begins to not work as well in complex JavaScript applications. Additionally, trying to TDD your application is often difficult. You often have to resort to writing your application code first (typically manually refreshing your browser after changes) until you get it working. From there you write tests, but lose the entire value of TDD.
 
-### Protractor
+#### Protractor
 
 Using [Protractor](http://www.protractortest.org/) provides a nice Promise-based interface on top of Selenium, which makes it less complicated to deal with asynchronous code. Protractor comes with all of the features of Capybara and essentially suffers from the same problems.
 
@@ -66,7 +66,7 @@ You can read about our currently available browsers [here](/guides/guides/launch
 
 ## <Icon name="angle-right"></Icon> Will Cypress work in my CI provider?
 
-Cypress works in any [CI provider](/guides/continuous-integration/continuous-integration-introduction).
+Cypress works in any [CI provider](/guides/continuous-integration/introduction).
 
 ## <Icon name="angle-right"></Icon> Does Cypress require me to change any of my existing code?
 
@@ -171,7 +171,7 @@ Finally, unit and end-to-end tests are not _that_ different and have common feat
 - Focus on and test only one thing.
 - Are flake-free and do not fail randomly.
 - Give you confidence to refactor code and add new features.
-- Are able to run both locally and on a [continuous integration](/guides/continuous-integration/continuous-integration-introduction) server.
+- Are able to run both locally and on a [continuous integration](/guides/continuous-integration/introduction) server.
 
 Certainly, unit and end-to-end tests are NOT in opposition to each other and are complementary tools in your toolbox.
 

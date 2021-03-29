@@ -29,6 +29,12 @@ module.exports = (on, config) => {
 }
 ```
 
+<Alert type="warning">
+
+⚠️ This code is part of the [plugin file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
+
+</Alert>
+
 The exported function is called whenever a project is opened either with [cypress open](/guides/guides/command-line#cypress-open) or [cypress run](/guides/guides/command-line#cypress-run).
 
 Your function will receive 2 arguments: `on` and `config`.
