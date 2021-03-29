@@ -253,6 +253,7 @@ phases:
 In the AWS CodeBuild configuration we have defined in the previous section, we are leveraging three useful features of the [Cypress Dashboard](https://on.cypress.io/dashboard):
 
 1. [Recording test results with the `--record` flag](https://on.cypress.io/how-do-i-record-runs) to the [Cypress Dashboard](https://on.cypress.io/dashboard):
+
    - In-depth and shareable [test reports](/guides/dashboard/runs).
    - Visibility into test failures via quick access to error messages, stack traces, screenshots, videos, and contextual details.
    - [Integrating testing with the pull-request (PR) process](/guides/dashboard/github-integration) via [commit status check guards](/guides/dashboard/github-integration#Status-checks) and convenient [test report comments](/guides/dashboard/github-integration#Pull-request-comments).

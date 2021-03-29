@@ -179,6 +179,36 @@ For more complex configuration objects, you may want to consider passing a [JSON
 cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.ts"]}'
 ```
 
+### Runner Specific Overrides
+
+You can override configuration for either the E2E or [Component Testing](/guides/component-testing/introduction/) runner using the `e2e` and `component` options.
+
+#### Examples
+
+Component Testing specific viewports in configuration file (`cypress.json` by default):
+
+```json
+{
+  "viewportHeight": 600,
+  "viewportWidth": 1000,
+  "component": {
+    "viewportHeight": 500,
+    "viewportWidth": 500
+  }
+}
+```
+
+E2E specific timeouts in configuration file (`cypress.json` by default):
+
+```json
+{
+  "defaultCommandTimeout": 5000,
+  "e2e": {
+    "defaultCommandTimeout": 10000
+  }
+}
+```
+
 ### Plugins
 
 You can programmatically modify configuration values using Node within the `pluginsFile`. This enables you to do things like:
@@ -519,6 +549,7 @@ DEBUG=cypress:cli,cypress:server:specs
 
 | Version                                      | Changes                                                 |
 | -------------------------------------------- | ------------------------------------------------------- |
+| [7.0.0](/guides/references/changelog#7-0-0)  | Added `e2e` and `component` options.                    |
 | [7.0.0](/guides/references/changelog#7-0-0)  | Added `redirectionLimit` option.                        |
 | [6.1.0](/guides/references/changelog#6-1-0)  | Added `scrollBehavior` option.                          |
 | [5.2.0](/guides/references/changelog#5-2-0)  | Added `includeShadowDom` option.                        |
