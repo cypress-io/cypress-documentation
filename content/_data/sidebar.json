@@ -62,8 +62,7 @@
       "aws-codebuild": "aws-codebuild.html"
     },
     "component-testing": {
-      "component-testing-introduction": "introduction.html",
-      "component-testing-migration-to-7": "migration-to-7.html"
+      "component-testing-introduction": "introduction.html"
     },
     "tooling": {
       "IDE-integration": "IDE-integration.html",
