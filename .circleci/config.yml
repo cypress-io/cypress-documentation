@@ -18,12 +18,12 @@ commands:
       - checkout
       - restore_cache:
           keys:
-            - yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}-{{ checksum "patches/vue-scrollactive+0.9.3.patch" }}-{{ checksum "patches/@docsearch+js+1.0.0-alpha.28.patch" }}
+            - yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}-{{ checksum "patches/vue-scrollactive+0.9.3.patch" }}-{{ checksum "patches/@docsearch+js+1.0.0-alpha.28.patch" }}-{{ checksum "patches/@nuxt+vue-app+2.14.12.patch" }}
       - run:
           name: Install Dependencies
           command: yarn --frozen-lockfile
       - save_cache:
-          key: yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}-{{ checksum "patches/vue-scrollactive+0.9.3.patch" }}-{{ checksum "patches/@docsearch+js+1.0.0-alpha.28.patch" }}
+          key: yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}-{{ checksum "patches/vue-scrollactive+0.9.3.patch" }}-{{ checksum "patches/@docsearch+js+1.0.0-alpha.28.patch" }}-{{ checksum "patches/@nuxt+vue-app+2.14.12.patch" }}
           paths:
             - node_modules
       - run:
