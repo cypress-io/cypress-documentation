@@ -2,15 +2,15 @@
 title: Migration Guide
 ---
 
-# Migrating to Cypress 7.0
+## Migrating to Cypress 7.0
 
 This guide details the changes and how to change your code to migrate to Cypress 7.0. [See the full changelog for 7.0](/guides/references/changelog#7-0-0).
 
-## [`cy.intercept()`][intercept] changes
+### [`cy.intercept()`][intercept] changes
 
 [Cypress 7.0](<(/guides/references/changelog#7-0-0)>) comes with some breaking changes to [`cy.intercept()`][intercept]:
 
-### Handler ordering is reversed
+#### Handler ordering is reversed
 
 Previous to Cypress 7.0, [`cy.intercept()`][intercept] handlers were run in the order that they are defined, stopping after the first handler to call `req.reply()`, or once all handlers are complete.
 
@@ -40,7 +40,7 @@ cy.intercept(url, (req) => {
 })
 ```
 
-### URL matching is stricter
+#### URL matching is stricter
 
 Before Cypress 7.0, [`cy.intercept()`][intercept] would match URLs against strings by using `minimatch`, substring match, or by equality.
 
@@ -72,7 +72,7 @@ cy.intercept('/some/items')
 
 Additionally, the `matchUrlAgainstPath` `RouteMatcher` option that was added in Cypress 6.2.0 has been removed in Cypress 7.0. It can be safely removed from tests.
 
-### Deprecated `cy.route2()` command removed
+#### Deprecated `cy.route2()` command removed
 
 `cy.route2()` was the original name for `cy.intercept()` during the experimental phase of the feature. It was deprecated in Cypress 6.0. In Cypress 7.0, it has been removed entirely. Please update existing usages of `cy.route2()` to call `cy.intercept()` instead.
 
@@ -88,7 +88,7 @@ cy.route2('/widgets/*', { fixture: 'widget.json' }).as('widget')
 cy.intercept('/widgets/*', { fixture: 'widget.json' }).as('widget')
 ```
 
-### Falsy values are no longer dropped in `StaticResponse` bodies
+#### Falsy values are no longer dropped in `StaticResponse` bodies
 
 Previously, falsy values supplied as the `body` of a `StaticResponse` would get dropped (the same as if no body was supplied). Now, the bodies are properly encoded in the response.
 
@@ -106,7 +106,7 @@ cy.intercept('/does-it-exist', { body: false })
 // Requests to `/does-it-exist` receive a response body of `false`
 ```
 
-## Node.js 12+ support
+### Node.js 12+ support
 
 Cypress comes bundled with its own [Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version). However, installing the `cypress` npm package uses the Node.js version installed on your system.
 
