@@ -106,6 +106,37 @@ cy.intercept('/does-it-exist', { body: false })
 // Requests to `/does-it-exist` receive a response body of `false`
 ```
 
+### Uncaught exception and unhandled rejections
+
+In 7.0, Cypress now fails tests in more situations where there is an uncaught exception and also if there is an unhandled promise rejection in the application under test.
+
+You can ignore these situations and not fail the Cypress test with the code below.
+
+#### Turn off all uncaught exception handling
+
+```javascript
+Cypress.on('uncaught:exception', (err, runnable) => {
+  // returning false here prevents Cypress from
+  // failing the test
+  return false
+})
+```
+
+#### Turn off uncaught exception handling unhandled promise rejections
+
+```javascript
+Cypress.on('uncaught:exception', (err, runnable, promise) => {
+  // when the exception originated from an unhandled promise
+  // rejection, the promise is provided as a third argument
+  // you can turn off failing the test in this case
+  if (promise) {
+    // returning false here prevents Cypress from
+    // failing the test
+    return false
+  }
+})
+```
+
 ### Node.js 12+ support
 
 Cypress comes bundled with its own [Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version). However, installing the `cypress` npm package uses the Node.js version installed on your system.
