@@ -2,7 +2,7 @@
 title: Cypress.testingType
 ---
 
-`Cypress.testingType` returns the current testing type, determined by the test runner. It is either `e2e` for the regular Cypress test runner, or `component` for experimental [Component Testing](guides/component-testing/introduction).
+`Cypress.testingType` returns the current testing type, determined by the Test Runner chosen to run. The `Cypress.testingType` returns `e2e` for Cypress Test Runner `integration` tests, or `component` for experimental [Component Testing](guides/component-testing/introduction).
 
 ## Syntax
 
@@ -16,7 +16,7 @@ Cypress.testingType // returns 'e2e' or 'component'
 
 ```javascript
 it('is running experimental component testing mode', () => {
-  expect(Cypress.testingType).to.be.equal('component')
+  expect(Cypress.testingType).to.equal('component')
 })
 ```
 
@@ -34,6 +34,6 @@ it('does something differently', () => {
 
 ## History
 
-| Version                               | Changes             |
-| ------------------------------------- | ------------------- |
-| [7.0.0](/guides/references/changelog) | Added `testingType` |
+| Version                               | Changes                     |
+| ------------------------------------- | --------------------------- |
+| [7.0.0](/guides/references/changelog) | Added `Cypress.testingType` |
