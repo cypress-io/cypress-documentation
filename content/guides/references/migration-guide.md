@@ -40,6 +40,8 @@ cy.intercept(url, (req) => {
 })
 ```
 
+[Read more about the `cy.intercept()` interception lifecycle.](/api/commands/intercept#Interception-lifecycle)
+
 #### URL matching is stricter
 
 Before Cypress 7.0, [`cy.intercept()`][intercept] would match URLs against strings by using `minimatch`, substring match, or by equality.
@@ -87,6 +89,36 @@ cy.route2('/widgets/*', { fixture: 'widget.json' }).as('widget')
 ```js
 cy.intercept('/widgets/*', { fixture: 'widget.json' }).as('widget')
 ```
+
+#### `res.delay()` and `res.throttle()` have been renamed
+
+The `res.delay()` and `res.throttle()` functions that exist on responses yielded to response handlers have been renamed.
+
+The new names are `res.setDelay()` and `res.setThrottle()`, respectively.
+
+<Badge type="danger">Before</Badge>
+
+```js
+cy.intercept('/slow', (req) => {
+  req.continue((res) => {
+    // apply a delay of 1 second and a throttle of 56kbps
+    res.delay(1000).throttle(56)
+  })
+})
+```
+
+<Badge type="success">After</Badge>
+
+```js
+cy.intercept('/slow', (req) => {
+  req.continue((res) => {
+    // apply a delay of 1 second and a throttle of 56kbps
+    res.setDelay(1000).setThrottle(56)
+  })
+})
+```
+
+[Read more about available functions on `res`.][/api/commands/intercept#intercepted-response]
 
 #### Falsy values are no longer dropped in `StaticResponse` bodies
 
