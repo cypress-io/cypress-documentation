@@ -844,7 +844,7 @@ While there is no built-in `snapshot` command in Cypress, you can make your own 
 
 ## <Icon name="angle-right"></Icon> Can I use Testing Library?
 
-Absolutely! Feel free to add the [@testing-library/cypress](https://testing-library.com/docs/cypress-testing-library/intro/) to your setup and use its methods like `findByRole`, `findByLabelText`, `findByText`, and others to find the DOM elements.
+Absolutely! Feel free to add the [@testing-library/cypress](https://testing-library.com/docs/cypress-testing-library/intro/) to your setup and use its methods like `findByRole`, `findByLabelText`, `findByText`, `findByTestId`, and others to find the DOM elements.
 
 The following example comes from the Testing Library's documentation
 
