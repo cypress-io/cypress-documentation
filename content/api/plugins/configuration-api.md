@@ -10,7 +10,7 @@ To modify configuration, you return an object from your plugins file exported fu
 
 ```javascript
 // cypress/plugins/index.js
-module.exports = (on, config, mode) => {
+module.exports = (on, config) => {
   console.log(config) // see everything in here!
 
   // modify config values
@@ -62,7 +62,7 @@ In the plugins file, you can filter the list of browsers passed inside the `conf
 
 ```javascript
 // cypress/plugins/index.js
-module.exports = (on, config, mode) => {
+module.exports = (on, config) => {
   // inside config.browsers array each object has information like
   // {
   //   name: 'chrome',
@@ -114,7 +114,7 @@ function getConfigurationByFile(file) {
 }
 
 // plugins file
-module.exports = (on, config, mode) => {
+module.exports = (on, config) => {
   // accept a configFile value or use development by default
   const file = config.env.configFile || 'development'
 
@@ -201,11 +201,11 @@ How you choose to edit the configuration is up to you. You don't have to read of
 
 ### Runner Specific Plugins
 
-The exported function from the plugins file receives three arguments. The third argument is `mode`, which is either `e2e` or `component` depending on if the E2E or [Component Testing](/guides/component-testing/introduction/) runner was launched. This allows you to configure runner specific plugins.
+You can access the type of tests running via the `config.testingType` property. The testing type is either `e2e` or `component` depending on if the E2E or [Component Testing](/guides/component-testing/introduction/) runner was launched. This allows you to configure runner specific plugins.
 
 #### Use Cypress React Plugin Conditionally
 
-Conditionally apply the Cypress React Plugin if launching in Component Testing mode:
+Conditionally apply the Cypress React Plugin if launching via Component Testing:
 
 ```js
 module.exports = (on, config) => {
