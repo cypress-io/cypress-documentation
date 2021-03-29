@@ -699,7 +699,7 @@ You can throttle or delay all incoming responses using a `beforeEach()` in the `
 import { isMobile } from './utils'
 import './commands'
 
-// Delay API responses for mobile testing to simulate real world conditions
+// Throttle API responses for mobile testing to simulate real world conditions
 if (isMobile()) {
   cy.intercept({ url: 'http://localhost:3001', middleware: true }, (req) => {
     req.on('response', (res) => {
