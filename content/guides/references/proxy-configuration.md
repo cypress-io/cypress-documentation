@@ -71,7 +71,7 @@ setx HTTP_PROXY http://my-company-proxy.com
 
 <Alert type="warning">
 
-This section refers to your operating system's environment variables, _not_ {% url "Cypress environment variables" guides/guides/environment-variables %}
+This section refers to your operating system's environment variables, _not_ [Cypress environment variables](/guides/guides/environment-variables)
 
 </Alert>
 

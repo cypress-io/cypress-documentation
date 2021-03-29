@@ -90,7 +90,7 @@ describe('Some Tests', () => {
 
 Move those Cypress commands into an `it(...)` block and everything will work correctly.
 
-If you are purposefully writing commands outside of a test, there is probably a better way to accomplish what you're trying to do. Read through the {% url "Examples" examples/examples/recipes %}, [chat with someone in our chat](https://gitter.im/cypress-io/cypress), or [open an issue](https://github.com/cypress-io/cypress/issues/new).
+If you are purposefully writing commands outside of a test, there is probably a better way to accomplish what you're trying to do. Read through the [Examples](/examples/examples/recipes), [chat with someone in our chat](https://gitter.im/cypress-io/cypress), or [open an issue](https://github.com/cypress-io/cypress/issues/new).
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy...()` failed because the element you are chaining off of has become detached or removed from the dom
 
