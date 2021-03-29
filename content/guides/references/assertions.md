@@ -10,7 +10,7 @@ Cypress bundles the popular [Chai](/guides/references/assertions#Chai) assertion
 
 This document is only a reference to every assertion Cypress supports.
 
-If you're looking to understand **how** to use these assertions please read about assertions in our [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Assertions guide).
+If you're looking to understand **how** to use these assertions please read about assertions in our [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Assertions) guide.
 
 </Alert>
 
@@ -262,6 +262,25 @@ cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
 ```javascript
 // retry while .accordion css has the "display: none" property
 cy.get('#accordion').should('not.have.css', 'display', 'none')
+```
+
+### Disabled property
+
+```html
+<input type="text" id="example-input" disabled />
+```
+
+```javascript
+cy.get('#example-input')
+  .should('be.disabled')
+  // let's enable this element from the test
+  .invoke('prop', 'disabled', false)
+
+cy.get('#example-input')
+  // we can use "enabled" assertion
+  .should('be.enabled')
+  // or negate the "disabled" assertion
+  .and('not.be.disabled')
 ```
 
 ## Negative assertions

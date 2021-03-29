@@ -43,5 +43,9 @@ export default {
 <style lang="scss">
 .docs-video {
   @apply mb-4;
+  // stylelint-disable-next-line at-rule-no-unknown
+  @screen xl {
+    min-height: 380px;
+  }
 }
 </style>

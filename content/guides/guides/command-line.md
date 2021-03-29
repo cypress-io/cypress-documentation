@@ -45,6 +45,12 @@ $(npm bin)/cypress run
 npx cypress run
 ```
 
+...or by using Yarn...
+
+```shell
+yarn open
+```
+
 You may find it easier to add the cypress command to the `scripts` object in your `package.json` file and call it from an [`npm run` script](https://docs.npmjs.com/cli/run-script.html).
 
 When calling a command using `npm run`, you need to pass the command's arguments using the `--` string. For example, if you have the following command defined in your `package.json`
@@ -68,6 +74,12 @@ If you are using the [npx](https://github.com/zkat/npx) tool, you can invoke the
 ```shell
 npx cypress run --record --spec "cypress/integration/my-spec.js"
 ```
+
+<Alert type="info">
+
+Read how we typically organize and execute npm scripts in the blog post [How I Organize my npm Scripts](https://glebbahmutov.com/blog/organize-npm-scripts/).
+
+</Alert>
 
 ## Commands
 
@@ -279,7 +291,7 @@ cypress run --record --key <record_key>
 
 If you set the **Record Key** as the environment variable `CYPRESS_RECORD_KEY`, you can omit the `--key` flag.
 
-You'd typically set this environment variable when running in [Continuous Integration](/guides/continuous-integration/continuous-integration-introduction).
+You'd typically set this environment variable when running in [Continuous Integration](/guides/continuous-integration/introduction).
 
 ```shell
 export CYPRESS_RECORD_KEY=abc-key-123

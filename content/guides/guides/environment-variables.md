@@ -6,7 +6,7 @@ title: Environment Variables
 
 <strong class="alert-header">Difference between OS-level and Cypress environment variables</strong>
 
-In Cypress, "environment variables" are variables that are accessible via `Cypress.env`. These are not the same as OS-level environment variables. However, [it is possible to set Cypress environment variables from OS-level environment variables](/guides/guides/environment-variables#Option-3-CYPRESS).
+In Cypress, "environment variables" are variables that are accessible via `Cypress.env`. These are not the same as OS-level environment variables. However, [it is possible to set Cypress environment variables from OS-level environment variables](/guides/guides/environment-variables.html#Option-3-CYPRESS).
 
 </Alert>
 
@@ -61,7 +61,7 @@ There are 5 different ways to set environment variables. Each has a slightly dif
 - [Set an environment variable within your plugins.](#Option-5-Plugins)
 - [Set an environment variable within test configuration.](#Option-6-Test-Configuration)
 
-Don't feel obligated to pick just one method. It is common to use one strategy for local development but another when running in [CI](/guides/continuous-integration/continuous-integration-introduction).
+Don't feel obligated to pick just one method. It is common to use one strategy for local development but another when running in [CI](/guides/continuous-integration/introduction).
 
 When your tests are running, you can use the [`Cypress.env`](/api/cypress-api/env) function to access the values of your environment variables.
 

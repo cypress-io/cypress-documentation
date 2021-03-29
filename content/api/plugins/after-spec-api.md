@@ -1,17 +1,16 @@
 ---
 title: After Spec API
-containerClass: experimental
 ---
 
 The `after:spec` event fires after a spec file is run. The event only fires when running via `cypress run`.
 
+## Syntax
+
 <Alert type="warning">
 
-<Icon name="exclamation-triangle" color="orange"></Icon> **This is an experimental feature. In order to use it, you must set the [experimentalRunEvents](/guides/references/experiments) configuration option to `true`.**
+⚠️ This code is part of the [plugin file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
 
 </Alert>
-
-## Syntax
 
 ```js
 on('after:spec', (spec, results) => {

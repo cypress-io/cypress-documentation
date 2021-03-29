@@ -65,19 +65,21 @@ cy.url().should('include', 'login')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.clearCookie()` requires being chained off of `cy`.</li></List>
+- `cy.clearCookie()` requires being chained off of `cy`.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.clearCookie()` cannot have any assertions chained.</li></List>
+- `cy.clearCookie()` cannot have any assertions chained.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.clearCookie()` should never time out.</li><li><Alert type="warning">
+- `cy.clearCookie()` should never time out.
+
+<Alert type="warning">
 
 Because `cy.clearCookie()` is asynchronous it is technically possible for there to be a timeout while talking to the internal Cypress automation APIs. But for practical purposes it should never happen.
 
-</Alert></li></List>
+</Alert>
 
 ## Command Log
 

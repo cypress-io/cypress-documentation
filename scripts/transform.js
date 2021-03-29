@@ -79,6 +79,8 @@ const iconTransform = (files) => {
       const FONTAWESOME_ICON_MAP = {
         warning: 'exclamation-triangle',
         'video-camera': 'video',
+        'check-square-o': 'check-square',
+        'folder-open-o': 'folder-open',
       }
 
       const iconName = FONTAWESOME_ICON_MAP[name]

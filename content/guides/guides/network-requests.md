@@ -19,6 +19,7 @@ title: Network Requests
 **Note:** If you're looking for a resource to make an HTTP request take a look at [cy.request()](/api/commands/request)
 
 </Alert>
+
 ## Testing Strategies
 
 Cypress helps you test the entire lifecycle of HTTP requests within your application. Cypress provides you access to the objects with information about the request, enabling you to make assertions about its properties. Additionally you can even stub and mock a request's response.

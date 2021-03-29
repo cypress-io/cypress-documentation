@@ -185,8 +185,11 @@ The [runnable version of this test](https://github.com/cypress-io/cypress-realwo
 ```jsx
 describe('Cognito', function () {
   beforeEach(function () {
+    // Seed database with test data
     cy.task('db:seed')
-    cy.loginByOktaApi(
+
+    // Programmatically login via Amazon Cognito API
+    cy.loginByCognitoApi(
       Cypress.env('cognito_username'),
       Cypress.env('cognito_password')
     )

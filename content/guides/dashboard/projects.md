@@ -4,7 +4,7 @@ title: Projects
 
 With Cypress, you have the ability to record your project's tests.
 
-You typically want to record when running tests in [Continuous Integration](/guides/continuous-integration/continuous-integration-introduction), but you can also record your tests when running locally.
+You typically want to record when running tests in [Continuous Integration](/guides/continuous-integration/introduction), but you can also record your tests when running locally.
 
 ## Setup
 
@@ -39,23 +39,21 @@ Make sure you [install](/guides/getting-started/installing-cypress) and [open](/
 8. Now you should see a view explaining how to record your first run with your record key.
    <DocsImage src="/img/dashboard/projects/setup-a-project-5.png" alt="Record Instructions"></DocsImage>
 9. After setting up your project, Cypress inserts a unique [projectId](#Identification) into your configuration file, `cypress.json` by default. If you're using source control, we recommend that you check your configuration file, including the `projectId`, into source control.
-10. Within [Continuous Integration](/guides/continuous-integration/continuous-integration-introduction) or from your local computer's terminal pass the displayed [Record Key](#Identification) while running the [cypress run](/guides/guides/command-line#cypress-run) command.
+10. Within [Continuous Integration](/guides/continuous-integration/introduction) or from your local computer's terminal pass the displayed [Record Key](#Identification) while running the [cypress run](/guides/guides/command-line#cypress-run) command.
 
 - Provide record key directly:
 
   ```shell
-  cypress run --record --key &lt;record key&gt;
+  cypress run --record --key <record key>
   ```
 
 - Or set record key as environment variable
   ```shell
-  export CYPRESS_RECORD_KEY=&lt;record key&gt;
+  export CYPRESS_RECORD_KEY=<record key>
   ```
   ```shell
   cypress run --record
   ```
-
-````
 
 🎉 Your tests are now recording! As soon as tests finish running, you will see them in the [Dashboard](https://on.cypress.io/dashboard) and in the Runs tab of the [Test Runner](/guides/core-concepts/test-runner).
 
@@ -75,9 +73,9 @@ Once you set up your project to record, we generate a unique `projectId` for you
 
 ```json
 {
-"projectId": "a7bq2k"
+  "projectId": "a7bq2k"
 }
-````
+```
 
 This helps us uniquely identify your project. If you manually alter this, **Cypress will no longer be able to identify your project or find the recorded builds for it**.
 
@@ -106,7 +104,7 @@ Anyone that has access to both the `projectId` and the record key of a project c
 
 If a record key is exposed you should [delete it](#Delete-record-key) and [create a new record key](#Create-new-record-key). Deleted keys will be invalid; If a project is run with a deleted key it will not be able to record.
 
-You can set your record key as an environment variable to help protect it. Learn more [here](/guides/continuous-integration/continuous-integration-introduction#Environment-variables).
+You can set your record key as an environment variable to help protect it. Learn more [here](/guides/continuous-integration/introduction#Environment-variables).
 
 </Alert>
 

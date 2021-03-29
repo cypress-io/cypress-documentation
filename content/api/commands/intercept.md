@@ -125,22 +125,25 @@ All properties are optional. All properties that are set must match for the rout
 cy.intercept({
   pathname: '/search',
   query: {
-    q: 'some terms'
-  }
+    q: 'some terms',
+  },
 }).as('searchForTerms')
 // this 'cy.wait' will only resolve once a request is made to '/search'
 // with the query paramater 'q=some+terms'
 cy.wait('@searchForTerms')
 
-cy.intercept({
-  // this RegExp matches any URL beginning with 'http://api.example.com/widgets'
-  url: /^http:\/\/api\.example\.com\/widgets/
-  headers: {
-    'x-requested-with': 'exampleClient'
+cy.intercept(
+  {
+    // this RegExp matches any URL beginning with 'http://api.example.com/widgets'
+    url: /^http:\/\/api\.example\.com\/widgets/,
+    headers: {
+      'x-requested-with': 'exampleClient',
+    },
+  },
+  (req) => {
+    // only requests to URLs starting with 'http://api.example.com/widgets'
+    // having the header 'x-requested-with: exampleClient' will be received
   }
-}, (req) => {
-  // only requests to URLs starting with 'http://api.example.com/widgets'
-  // having the header 'x-requested-with: exampleClient' will be received
 })
 
 // in this example, the supplied URL `/users` is merged with the RouteMatcher

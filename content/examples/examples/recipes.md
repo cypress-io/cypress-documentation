@@ -54,7 +54,7 @@ Recipes show you how to test common scenarios in Cypress.
 | [Json Web Tokens](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__jwt)                   | Log in using JWT                            |
 | [Using application code](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__using-app-code) | Log in by calling the application code      |
 
-Also see [Authentication plugins](/plugins/plugins/index#authentication) and watch [Organizing Tests, Logging In, Controlling State](https://www.youtube.com/watch?v=5XQOK0v_YRE)
+Also see [Authentication plugins](/plugins/directory#authentication) and watch [Organizing Tests, Logging In, Controlling State](https://www.youtube.com/watch?v=5XQOK0v_YRE)
 
 ## Preprocessors
 

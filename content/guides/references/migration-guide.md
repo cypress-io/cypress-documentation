@@ -721,7 +721,7 @@ cy.getCookie('token').then((cookie) => {
 })
 ```
 
-### **dirname / **filename
+### dirname / filename
 
 The globals `__dirname` and `__filename` no longer include a leading slash.
 
