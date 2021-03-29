@@ -92,6 +92,7 @@
       "visual-testing": "Visual Testing",
       "code-coverage": "Code Coverage",
       "component-testing-introduction": "Introduction",
+      "component-testing-migration-to-7": "Migrate from 6.X to 7.0",
       "testing-strategies": "Testing Strategies",
       "auth0-authentication": "Auth0 Authentication",
       "okta-authentication": "Okta Authentication",
