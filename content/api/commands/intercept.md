@@ -487,6 +487,32 @@ cy.wait('@headers')
   .should('have.property', 'x-custom-headers', 'added by cy.intercept')
 ```
 
+#### Add, modify or delete a header to all outgoing requests
+
+You can add, modify or delete a header to all outgoing requests using a `beforeEach()` in the `cypress/support/index.js` file
+
+```ts
+// Code from Real World App (RWA)
+// cypress/support/index.ts
+import './commands'
+
+beforeEach(() => {
+  cy.intercept(
+    { url: 'http://localhost:3001', middleware: true },
+    // Delete 'if-none-match' header from all outgoing requests
+    (req) => delete req.headers['if-none-match']
+  )
+})
+```
+
+<Alert type="info">
+
+##### <Icon name="graduation-cap"></Icon> Real World Example
+
+Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and refer to the [cypress/support/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/support/index.ts) file for a working example.
+
+</Alert>
+
 #### Dynamically stubbing a response
 
 You can use the `req.reply()` function to dynamically control the response to a request.
@@ -662,6 +688,35 @@ The available functions on `res` are:
   throttle: (throttleKbps: number) => IncomingHttpResponse
 }
 ```
+
+#### Throttle or delay response all incoming responses
+
+You can throttle or delay all incoming responses using a `beforeEach()` in the `cypress/support/index.js` file
+
+```ts
+// Code from Real World App (RWA)
+// cypress/support/index.ts
+import { isMobile } from './utils'
+import './commands'
+
+// Throttle API responses for mobile testing to simulate real world conditions
+if (isMobile()) {
+  cy.intercept({ url: 'http://localhost:3001', middleware: true }, (req) => {
+    req.on('response', (res) => {
+      // Throttle the response to 1 Mbps to simulate a mobile 3G connection
+      res.throttle(1000)
+    })
+  })
+}
+```
+
+<Alert type="info">
+
+##### <Icon name="graduation-cap"></Icon> Real World Example
+
+Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and refer to the [cypress/support/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/support/index.ts) file for a working example.
+
+</Alert>
 
 ## History
 
