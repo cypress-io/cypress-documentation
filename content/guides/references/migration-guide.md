@@ -72,9 +72,9 @@ cy.intercept('/some/items')
 
 Additionally, the `matchUrlAgainstPath` `RouteMatcher` option that was added in Cypress 6.2.0 has been removed in Cypress 7.0. It can be safely removed from tests.
 
-### Deprecated `cy.route2` command removed
+### Deprecated `cy.route2()` command removed
 
-`cy.route2` was the original name for `cy.intercept` during the experimental phase of the feature. It was deprecated in Cypress 6.0. In Cypress 7.0, it has been removed entirely. Please update existing usages of `cy.route2` to call `cy.intercept` instead.
+`cy.route2()` was the original name for `cy.intercept()` during the experimental phase of the feature. It was deprecated in Cypress 6.0. In Cypress 7.0, it has been removed entirely. Please update existing usages of `cy.route2()` to call `cy.intercept()` instead.
 
 <Badge type="danger">Before</Badge>
 
