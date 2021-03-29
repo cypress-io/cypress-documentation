@@ -595,7 +595,7 @@ import { isMobile } from './utils'
 import './commands'
 // Throttle API responses for mobile testing to simulate real world conditions
 if (isMobile()) {
-  cy.intercept({ url: 'http://localhost:3001', middleware: true }, (req) => {
+  cy.intercept({ url: 'http://localhost:3001/*', middleware: true }, (req) => {
     req.on('response', (res) => {
       // Throttle the response to 1 Mbps to simulate a mobile 3G connection
       res.setThrottle(1000)
