@@ -703,11 +703,8 @@ import './commands'
 if (isMobile()) {
   cy.intercept({ url: 'http://localhost:3001', middleware: true }, (req) => {
     req.on('response', (res) => {
-      // For all request except the /login
-      if (req.url !== 'http://localhost:3001/login') {
-        // Throttle the response to 1 Mbps to simulate a mobile 3G connection
-        res.throttle(1000)
-      }
+      // Throttle the response to 1 Mbps to simulate a mobile 3G connection
+      res.throttle(1000)
     })
   })
 }
