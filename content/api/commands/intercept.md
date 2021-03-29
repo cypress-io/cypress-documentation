@@ -698,7 +698,7 @@ cy.intercept('/api/users/*', async (req) => {
   const fixtureFilename = await getFixtureFilenameForUrl(req.url)
   req.reply({
     fixture: fixtureFilename,
-    delayMs: 500,
+    delay: 500,
   })
 })
 ```
@@ -834,7 +834,7 @@ The response object (`res`) yielded to response handlers has several properties 
   /**
    * Milliseconds to delay before the response is sent.
    */
-  delayMs?: number
+  delay?: number
 }
 ```
 
@@ -874,11 +874,11 @@ There are also two convenience functions available on `res`:
   /**
    * Wait for 'delay' milliseconds before sending the response to the client.
    */
-  delay: (delay: number) => IncomingHttpResponse
+  setDelay: (delay: number) => IncomingHttpResponse
   /**
    * Serve the response at 'throttleKbps' kilobytes per second.
    */
-  throttle: (throttleKbps: number) => IncomingHttpResponse
+  setThrottle: (throttleKbps: number) => IncomingHttpResponse
 }
 ```
 
@@ -923,7 +923,7 @@ The following properties are available on `StaticResponse`. All properties are o
   /**
    * Milliseconds to delay before the response is sent.
    */
-  delayMs?: number
+  delay?: number
   /**
    * Kilobits per second to send 'body'.
    */
@@ -977,14 +977,14 @@ Once the HTTP response is received from the upstream server, the following steps
 
 ## History
 
-| Version                                     | Changes                                                                                                                                                                                                       |
-| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [7.0.0](/guides/references/changelog#7-0-0) | Removed `matchUrlAgainstPath` option from `RouteMatcher`, reversed handler ordering, added request events, removed substring URL matching, removed `cy.route2` alias, added `middleware` RouteMatcher option. |
-| [6.4.0](/guides/references/changelog#6-4-0) | Renamed `delayMs` property to `delay` (backwards-compatible).                                                                                                                                                 |
-| [6.2.0](/guides/references/changelog#6-2-0) | Added `matchUrlAgainstPath` option to `RouteMatcher`.                                                                                                                                                         |
-| [6.0.0](/guides/references/changelog#6-0-0) | Renamed `cy.route2()` to `cy.intercept()`.                                                                                                                                                                    |
-| [6.0.0](/guides/references/changelog#6-0-0) | Removed `experimentalNetworkStubbing` option and made it the default behavior.                                                                                                                                |
-| [5.1.0](/guides/references/changelog#5-1-0) | Added experimental `cy.route2()` command under `experimentalNetworkStubbing` option.                                                                                                                          |
+| Version                                     | Changes                                                                                                                                                                                                                                                                                              |
+| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [7.0.0](/guides/references/changelog#7-0-0) | Removed `matchUrlAgainstPath` option from `RouteMatcher`, reversed handler ordering, added request events, removed substring URL matching, removed `cy.route2` alias, added `middleware` RouteMatcher option, renamed `res.delay()` to `res.setDelay()` and `res.throttle()` to `res.setThrottle()`. |
+| [6.4.0](/guides/references/changelog#6-4-0) | Renamed `delayMs` property to `delay` (backwards-compatible).                                                                                                                                                                                                                                        |
+| [6.2.0](/guides/references/changelog#6-2-0) | Added `matchUrlAgainstPath` option to `RouteMatcher`.                                                                                                                                                                                                                                                |
+| [6.0.0](/guides/references/changelog#6-0-0) | Renamed `cy.route2()` to `cy.intercept()`.                                                                                                                                                                                                                                                           |
+| [6.0.0](/guides/references/changelog#6-0-0) | Removed `experimentalNetworkStubbing` option and made it the default behavior.                                                                                                                                                                                                                       |
+| [5.1.0](/guides/references/changelog#5-1-0) | Added experimental `cy.route2()` command under `experimentalNetworkStubbing` option.                                                                                                                                                                                                                 |
 
 ## Notes
 
