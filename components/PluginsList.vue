@@ -10,7 +10,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="nuxt-content">
     <section
       v-for="pluginType in list"
       :key="pluginType.name"
@@ -24,9 +24,11 @@ export default {
           >{{ pluginType.name }}</a
         >
       </h2>
-      <p v-if="pluginType.description" class="my-8">
-        {{ pluginType.description }}
-      </p>
+      <p
+        v-if="pluginType.description"
+        class="my-8"
+        v-html="pluginType.description"
+      ></p>
       <ul class="plugins-list">
         <li v-for="plugin in pluginType.plugins" :key="plugin.name" class="m-3">
           <div class="plugin-title">
@@ -89,7 +91,7 @@ $card-header-breakpoint: 1280px;
 
 ul.plugins-list {
   display: flex;
-  margin: 0 0 0 -10px;
+  margin: 0 !important;
   padding: 0;
   width: calc(100% + 20px);
   flex-wrap: wrap;
@@ -119,6 +121,14 @@ ul.plugins-list {
   .plugin-title {
     border-bottom: 1px solid #eee;
     margin-bottom: 0.6em;
+
+    /* remove hash symbol from appearing in the ::before 
+       of the anchors in titles */
+    & > h3 > a::before {
+      content: '';
+      margin-left: 0;
+      padding-right: 0;
+    }
 
     @media (min-width: $card-header-breakpoint) {
       display: flex;
