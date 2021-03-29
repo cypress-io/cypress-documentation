@@ -239,11 +239,13 @@ describe('User page', () => {
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.fixture()` should never time out.</li><li><Alert type="warning">
+- `cy.fixture()` should never time out.
+
+<Alert type="warning">
 
 Because `cy.fixture()` is asynchronous it is technically possible for there to be a timeout while talking to the internal Cypress automation APIs. But for practical purposes it should never happen.
 
-</Alert></li></List>
+</Alert>
 
 ## Command Log
 

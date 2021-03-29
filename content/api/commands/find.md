@@ -42,11 +42,11 @@ A selector used to filter matching descendent DOM elements.
 
 Pass in an options object to change the default behavior of `.find()`.
 
-| Option             | Default                                                               | Description                                                                                                  |
-| ------------------ | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| `log`              | `true`                                                                | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                     |
-| `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)  | Time to wait for `.find()` to resolve before [timing out](#Timeouts)                                         |
-| `includeShadowDom` | [`includeShadowDom`<br](/> config option value' configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
+| Option             | Default                                                                           | Description                                                                                                  |
+| ------------------ | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `log`              | `true`                                                                            | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                     |
+| `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)              | Time to wait for `.find()` to resolve before [timing out](#Timeouts)                                         |
+| `includeShadowDom` | [`includeShadowDom` config option value](/guides/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 

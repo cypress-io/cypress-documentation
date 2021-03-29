@@ -6,6 +6,11 @@ Thanks for taking the time to contribute! :smile:
 
 - [Code of Conduct](#code-of-conduct)
 - [Writing Documentation](#writing-documentation)
+  - [Using Vue Components](#using-vue-components)
+    - [Alerts](#alerts)
+    - [Images](#images)
+    - [Videos](#videos)
+    - [Icons](#icons)
   - [Adding Examples](#adding-examples)
   - [Adding Plugins](#adding-plugins)
   - [Adding Pages](#adding-pages)
@@ -32,7 +37,49 @@ Using GitHub, [create a copy](https://guides.github.com/activities/forking/) (a 
 
 ```shell
 git clone git@github.com:<your username>/cypress-documentation.git
-cd docs
+cd cypress-documentation
+```
+
+### Using Vue Components
+
+This project uses [`@nuxt/content`](https://content.nuxtjs.org/) which enables you to write Vue components within markdown. Any component files placed within the `/components/global` directory will be available for use within the markdown files. There are a [few limitations](https://content.nuxtjs.org/writing#vue-components) with using Vue components in markdown.
+
+#### Alerts
+
+Use [`<Alert>`](/components/global/Alert.vue) to grab the reader's attention with a blurb. You can change the look of the `<Alert>` by setting the `type` prop to `info`, `tip`, `warning`, or `danger`.
+
+```jsx
+<Alert type="info">This is an important message.</Alert>
+```
+
+### Images
+
+If you are starting a new page and want to add images, add a new folder to [`assets/img`](/assets/img). For example when adding a new "Code Coverage" page to `guides/tooling`, I have created new folder `assets/img/guides/tooling` and copied an image there called `coverage-object.png`. Within the markdown, I can include the image using the [`<DocsImage />` component](/components/global/DocsImage.vue).
+
+```jsx
+<DocsImage
+  src="/assets/img/guides/tooling/coverage-object.png"
+  alt="code coverage object"
+/>
+```
+
+### Videos
+
+You can embed videos within the markdown with the [`<DocsVideo>`](/components/global/DocsVideo.vue) component. Currently, it supports local files, YouTube, and Vimeo embeds. Set the `src` prop to a relative path for a local video file or the embed link for YouTube or Vimeo videos. You should also set a `title` prop describing the video for accessibility reasons.
+
+```jsx
+<DocsVideo
+  src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+  title="Cypress Tips and Tricks"
+>
+```
+
+### Icons
+
+[Font Awesome](https://fontawesome.com/) icons can be used within markdown. Set the `name` prop to the name of the Font Awesome icon. Make sure that the icon appears in the list of imported icons within the `nuxt.config.js` file under the `fontawesome` key.
+
+```jsx
+<Icon name="question-circle"></Icon>
 ```
 
 ### Adding Examples
@@ -43,17 +90,6 @@ Add an associated image with the example within the [`assets/img`](/assets/img) 
 
 ```jsx
 <DocsImage src="/img/examples/name-of-file.jpg" alt="alt text describing img" />
-```
-
-### Using images
-
-If you are starting a new page and want to add images, add a new folder to "assets/img". For example when adding a new "Code Coverage" page to "guides/tooling", I have created new folder "assets/img/guides/tooling" and copied an image there called "coverage-object.png". From the page itself, I can include the image using the [`<DocsImage />` component](/components/global/DocsImage.vue).
-
-```jsx
-<DocsImage
-  src="/assets/img/guides/tooling/coverage-object.png"
-  alt="code coverage object"
-/>
 ```
 
 ### Adding Plugins
@@ -70,6 +106,8 @@ To add a page such as a new guide or API documentation:
 - Build the documentation site locally so that you can visually inspect your new page and the links to it.
 - **REQUIRED**: Commit the new file using git - we auto-generate the doc to display within each supported language, this auto-generation depends on the file existing in git.
 - Submit a [pull request](#Pull-Requests) for your change.
+
+> Note: If you need to change the overall layout of a page, you should create a Vue component within the `/pages` directory. The `/pages` directory contains the `_.vue` components responsible for generating the views for the routes `/guides`, `/api/`, `/plugins`, etc. If you wanted to create a guide page that has a different layout from the other guide pages, you would create a component file within `/guides` matching the route name that you want to use. For example, if I wanted to create a unique guide page without the sidebar about using the Dashboard, I would create a file called `/pages/guides/my-dashboard-guide.vue` and create a Vue component for the specific layout I want to create. The page will then be accessible at the route `/guides/my-dashboard-guide`.
 
 ### Deleting Pages
 
@@ -147,8 +185,6 @@ You should push your local changes to your forked GitHub repository and then ope
 - When opening a PR for a specific issue already open, please use the `closes #issueNumber` syntax in the pull request description&mdash;for example, `closes #138`&mdash;so that the issue will be [automatically closed](https://help.github.com/articles/closing-issues-using-keywords/) when the PR is merged.
 - Please check the "Allow edits from maintainers" checkbox when submitting your PR. This will make it easier for the maintainers to make minor adjustments, to help with tests or any other changes we may need.
   ![Allow edits from maintainers checkbox](https://user-images.githubusercontent.com/1271181/31393427-b3105d44-ada9-11e7-80f2-0dac51e3919e.png)
-
-Every pull request merged into `develop` automatically opens another pull request to `master`, which should be merged automatically using Mergify Bot after the CircleCI tests pass, see issue [#2363](https://github.com/cypress-io/cypress-documentation/issues/2363).
 
 ### Contributor License Agreement
 

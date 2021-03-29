@@ -296,7 +296,7 @@ Nevertheless, if you **did** want to write a test in Cypress, you already have t
 
 You only need to do one thing to know whether you've coupled your tests incorrectly, or if one test is relying on the state of a previous one.
 
-Put an `.only` on the test and refresh the browser.
+Change `it` to [`it.only`](https://jestjs.io/docs/api#testonlyname-fn-timeout) on the test and refresh the browser.
 
 If this test can run **by itself** and pass - congratulations you have written a good test.
 
@@ -332,7 +332,7 @@ describe('my form', () => {
 
 What's wrong with the above tests? They are all coupled together!
 
-If you were to put an `.only` on any of the last three tests, they would fail. Each test requires the previous to run in a specific order in order to pass.
+If you were to change `it` to [`it.only`](https://jestjs.io/docs/api#testonlyname-fn-timeout) on any of the last three tests, they would fail. Each test requires the previous to run in a specific order in order to pass.
 
 Here's 2 ways we can fix this:
 
@@ -633,7 +633,7 @@ Waiting for the [`cy.get()`](/api/commands/get) below is unnecessary because [`c
 Whenever commands have an assertion they will not resolve until their associated assertions pass. This enables you to describe the state of your application without having to worry about when it gets there.
 
 ```javascript
-cy.intercept('GET', /users/, [{ name: 'Maggy' }, { name: 'Joan' }])
+cy.intercept('GET', '/users', [{ name: 'Maggy' }, { name: 'Joan' }])
 cy.get('#fetch').click()
 cy.wait(4000) // <--- this is unnecessary
 cy.get('table tr').should('have.length', 2)
@@ -642,7 +642,7 @@ cy.get('table tr').should('have.length', 2)
 Alternatively a better solution to this problem is by waiting explicitly for an aliased route.
 
 ```javascript
-cy.intercept('GET', /users/, [{ name: 'Maggy' }, { name: 'Joan' }]).as(
+cy.intercept('GET', '/users', [{ name: 'Maggy' }, { name: 'Joan' }]).as(
   'getUsers'
 )
 cy.get('#fetch').click()
@@ -688,7 +688,7 @@ Start your web server before running Cypress and kill it after it completes.
 
 Are you trying to run in CI?
 
-We have [examples showing you how to start and stop your web server](/guides/continuous-integration/continuous-integration-introduction#Boot-your-server).
+We have [examples showing you how to start and stop your web server](/guides/continuous-integration/introduction#Boot-your-server).
 
 ## Setting a global baseUrl
 

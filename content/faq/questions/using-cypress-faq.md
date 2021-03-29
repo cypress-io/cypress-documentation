@@ -517,7 +517,7 @@ Don't try to use your UI to check email. Instead opt to programmatically use 3rd
 You should set up an alias (using [`.as()`](/api/commands/as)) to a single [`cy.intercept()`](/api/commands/intercept) that matches all of the XHRs. You can then [`cy.wait()`](/api/commands/wait) on it multiple times. Cypress keeps track of how many matching requests there are.
 
 ```javascript
-cy.intercept('users').as('getUsers')
+cy.intercept('/users*').as('getUsers')
 cy.wait('@getUsers') // Wait for first GET to /users/
 cy.get('#list>li').should('have.length', 10)
 cy.get('#load-more-btn').click()
@@ -672,7 +672,7 @@ Not at the moment. [There is an open issue for this.](https://github.com/cypress
 
 ## <Icon name="angle-right"></Icon> Does Cypress support ES7?
 
-Yes. You can customize how specs are processed by using one of our [preprocessor plugins](/plugins/plugins/index) or by [writing your own custom preprocessor](/api/plugins/preprocessors-api).
+Yes. You can customize how specs are processed by using one of our [preprocessor plugins](/plugins/directory) or by [writing your own custom preprocessor](/api/plugins/preprocessors-api).
 
 Typically you'd reuse your existing Babel and webpack configurations.
 
@@ -700,7 +700,7 @@ You may try running the tests locally and [select the Electron browser](/guides/
 
 ## <Icon name="angle-right"></Icon> How do I run the server and tests together and then shutdown the server?
 
-To start the server, run the tests and then shutdown the server we recommend [these npm tools](/guides/continuous-integration/continuous-integration-introduction#Boot-your-server).
+To start the server, run the tests and then shutdown the server we recommend [these npm tools](/guides/continuous-integration/introduction#Boot-your-server).
 
 ## <Icon name="angle-right"></Icon> Can I test my Electron app?
 
@@ -800,7 +800,7 @@ It might be because of the 2 different windows in Cypress Test Runner. For more 
 
 Yes, you can. You can write feature files containing Cucumber scenarios and then use Cypress to write your step definitions in your spec files. A special preprocessor then converts the scenarios and step definitions into "regular" JavaScript Cypress tests.
 
-- try using the [Cucumber preprocessor](https://github.com/TheBrainFamily/cypress-cucumber-preprocessor) and search our [Plugins](/plugins/plugins/index) page for additional helper plugins
+- try using the [Cucumber preprocessor](https://github.com/TheBrainFamily/cypress-cucumber-preprocessor) and search our [Plugins](/plugins/directory) page for additional helper plugins
 - read [Cypress Super-patterns: How to elevate the quality of your test suite](https://dev.to/wescopeland/cypress-super-patterns-how-to-elevate-the-quality-of-your-test-suite-1lcf) for best practices when writing Cucumber tests
 - take a look at [briebug/bba-cypress-quickstart](https://github.com/briebug/bba-cypress-quickstart) example application
 
@@ -840,7 +840,7 @@ End-to-end tests are an excellent way to keep your application's documentation a
 
 ## <Icon name="angle-right"></Icon> Can I use Jest snapshots?
 
-While there is no built-in `snapshot` command in Cypress, you can make your own snapshot assertion command. Read how to do so in our blog post [End-to-End Snapshot Testing](https://www.cypress.io/blog/2018/01/16/end-to-end-snapshot-testing/). We recommend using the 3rd-party module [cypress-plugin-snapshots](https://github.com/meinaart/cypress-plugin-snapshots). For other snapshot plugins, search the [Plugins](/plugins/plugins/index) page.
+While there is no built-in `snapshot` command in Cypress, you can make your own snapshot assertion command. Read how to do so in our blog post [End-to-End Snapshot Testing](https://www.cypress.io/blog/2018/01/16/end-to-end-snapshot-testing/). We recommend using the 3rd-party module [cypress-plugin-snapshots](https://github.com/meinaart/cypress-plugin-snapshots). For other snapshot plugins, search the [Plugins](/plugins/directory) page.
 
 ## <Icon name="angle-right"></Icon> Can I use Testing Library?
 

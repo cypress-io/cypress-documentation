@@ -77,6 +77,5 @@ Cypress also bundles the following tools on the `Cypress` object. These can be u
 - [`Cypress._`](/api/utilities/_) (lodash)
 - [`Cypress.$`](/api/utilities/$) (jQuery)
 - [`Cypress.minimatch`](/api/utilities/minimatch) (minimatch.js)
-- [`Cypress.moment`](/api/utilities/moment) (moment.js)
 - [`Cypress.Blob`](/api/utilities/blob) (Blob utils)
 - [`Cypress.Promise`](/api/utilities/promise) (Bluebird)

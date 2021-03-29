@@ -2,15 +2,125 @@
 title: Migration Guide
 ---
 
-## Migrating `cy.route()` to `cy.intercept()`
+## Migrating to Cypress 7.0
 
-This guide details how to change your test code to migrate from `cy.route()` to `cy.intercept()`. `cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0. In a future release, support for `cy.server()` and `cy.route()` will be removed.
+This guide details the changes and how to change your code to migrate to Cypress 7.0. [See the full changelog for 7.0](/guides/references/changelog#7-0-0).
 
-Please also refer to the full documentation for [cy.intercept()](/api/commands/intercept).
+### [`cy.intercept()`][intercept] changes
+
+[Cypress 7.0](<(/guides/references/changelog#7-0-0)>) comes with some breaking changes to [`cy.intercept()`][intercept]:
+
+#### Handler ordering is reversed
+
+Previous to Cypress 7.0, [`cy.intercept()`][intercept] handlers were run in the order that they are defined, stopping after the first handler to call `req.reply()`, or once all handlers are complete.
+
+With Cypress 7.0, [`cy.intercept()`][intercept] handlers are now run in reverse order of definition, stopping after the first handler to call `req.reply()`, or once all handlers are complete.
+
+This change was done so that users can override previously declared [`cy.intercept()`][intercept] handlers by calling [`cy.intercept()`][intercept] again. See [#9302](https://github.com/cypress-io/cypress/issues/9302) for more details.
+
+<Badge type="danger">Before</Badge>
+
+```js
+cy.intercept(url, (req) => {
+  /* This will be called first! */
+})
+cy.intercept(url, (req) => {
+  /* This will be called second! */
+})
+```
+
+<Badge type="success">After</Badge>
+
+```js
+cy.intercept(url, (req) => {
+  /* This will be called second! */
+})
+cy.intercept(url, (req) => {
+  /* This will be called first! */
+})
+```
+
+#### URL matching is stricter
+
+Before Cypress 7.0, [`cy.intercept()`][intercept] would match URLs against strings by using `minimatch`, substring match, or by equality.
+
+With Cypress 7.0, this behavior is being tightened - URLs are matched against strings only by `minimatch` or by equality. The substring match has been removed.
+
+This more closely matches the URL matching behavior shown by `cy.route()`. However, some intercepts will not match, even though they did before.
+
+For example, requests with querystrings may no longer match:
+
+```js
+// will this intercept match a request for `/items?page=1`?
+cy.intercept('/items')
+// ✅ before 7.0.0, this will match, because it is a substring
+// ❌ after 7.0.0, this will not match, because of the querystring
+// solution: update the intercept to match the querystring with a wildcard:
+cy.intercept('/items?*')
+```
+
+Also, requests for paths in nested directories may be affected:
+
+```js
+// will this intercept match a request for `/some/items`?
+cy.intercept('/items')
+// ✅ before 7.0.0, this will match, because it is a substring
+// ❌ after 7.0.0, this will not match, because of the leading directory
+// solution: update the intercept to include the directory:
+cy.intercept('/some/items')
+```
+
+Additionally, the `matchUrlAgainstPath` `RouteMatcher` option that was added in Cypress 6.2.0 has been removed in Cypress 7.0. It can be safely removed from tests.
+
+#### Deprecated `cy.route2()` command removed
+
+`cy.route2()` was the original name for `cy.intercept()` during the experimental phase of the feature. It was deprecated in Cypress 6.0. In Cypress 7.0, it has been removed entirely. Please update existing usages of `cy.route2()` to call `cy.intercept()` instead.
+
+<Badge type="danger">Before</Badge>
+
+```js
+cy.route2('/widgets/*', { fixture: 'widget.json' }).as('widget')
+```
+
+<Badge type="success">After</Badge>
+
+```js
+cy.intercept('/widgets/*', { fixture: 'widget.json' }).as('widget')
+```
+
+#### Falsy values are no longer dropped in `StaticResponse` bodies
+
+Previously, falsy values supplied as the `body` of a `StaticResponse` would get dropped (the same as if no body was supplied). Now, the bodies are properly encoded in the response.
+
+<Badge type="danger">Before</Badge>
+
+```js
+cy.intercept('/does-it-exist', { body: false })
+// Requests to `/does-it-exist` receive an empty response body
+```
+
+<Badge type="success">After</Badge>
+
+```js
+cy.intercept('/does-it-exist', { body: false })
+// Requests to `/does-it-exist` receive a response body of `false`
+```
+
+### Node.js 12+ support
+
+Cypress comes bundled with its own [Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version). However, installing the `cypress` npm package uses the Node.js version installed on your system.
+
+Node.js 10 reached its end of life on Dec 31, 2019 and Node.js 13 reached its end of life on June 1, 2019. [See Node's release schedule](https://github.com/nodejs/Release). These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 12 or Node.js 14+.
+
+## Migrating `cy.route()` to [`cy.intercept()`][intercept]
+
+This guide details how to change your test code to migrate from `cy.route()` to [`cy.intercept()`][intercept]. `cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0. In a future release, support for `cy.server()` and `cy.route()` will be removed.
+
+Please also refer to the full documentation for [cy.intercept()][intercept].
 
 ### Match simple route
 
-In many use cases, you can replace `cy.route()` with [cy.intercept()](/api/commands/intercept) and remove the call to `cy.server()` (which is no longer necessary).
+In many use cases, you can replace `cy.route()` with [cy.intercept()][intercept] and remove the call to `cy.server()` (which is no longer necessary).
 
 <Badge type="danger">Before</Badge>
 
@@ -33,7 +143,7 @@ cy.intercept('PATCH', '/projects/*').as('updateProject')
 
 ### Match against `url` and `path`
 
-The `url` argument to [cy.intercept()](/api/commands/intercept) matches against the full url, as opposed to the `url` or `path` in `cy.route()`. If you're using the `url` argument in `cy.intercept()`, you may need to update your code depending on the route you're trying to match.
+The `url` argument to [cy.intercept()][intercept] matches against the full url, as opposed to the `url` or `path` in `cy.route()`. If you're using the `url` argument in [`cy.intercept()`][intercept], you may need to update your code depending on the route you're trying to match.
 
 <Badge type="danger">Before</Badge>
 
@@ -65,7 +175,7 @@ cy.intercept({
 
 ### `cy.wait()` object
 
-The object returned by `cy.wait()` is different from intercepted HTTP requests using `cy.intercept()` than the object returned from an awaited `cy.route()` XHR.
+The object returned by `cy.wait()` is different from intercepted HTTP requests using [`cy.intercept()`][intercept] than the object returned from an awaited `cy.route()` XHR.
 
 <Badge type="danger">Before</Badge>
 
@@ -95,7 +205,7 @@ cy.wait('@createUser').then(({ request, response }) => {
 
 ### Fixtures
 
-You can stub requests and response with fixture data by defining a `fixture` property in the `routeHandler` argument for `cy.intercept()`.
+You can stub requests and response with fixture data by defining a `fixture` property in the `routeHandler` argument for [`cy.intercept()`][intercept].
 
 <Badge type="danger">Before</Badge>
 
@@ -113,9 +223,11 @@ cy.intercept('GET', '/projects', {
 })
 ```
 
-### Override route matchers
+### Override intercepts
 
-Unlike `cy.route()`, `cy.intercept()` currently does _not_ allow you to override a previous response. For more information on this, see [#9302](https://github.com/cypress-io/cypress/issues/9302) and [this blog post](https://glebbahmutov.com/blog/cypress-intercept-problems/#no-overwriting-interceptors). Overriding responses will be added in a future release.
+As of 7.0, newer intercepts are called before older intercepts, allowing users to override intercepts. [See "Handler ordering is reversed" for more details](#Handler-ordering-is-reversed).
+
+Before 7.0, intercepts could not be overridden. See [#9302](https://github.com/cypress-io/cypress/issues/9302) for more details.
 
 ## Migrating to Cypress 6.0
 
@@ -223,11 +335,11 @@ it('test', () => {
 
 ### `cy.wait(alias)` type
 
-[cy.route()](/api/commands/route) is deprecated in 6.0.0. We encourage the use of [cy.intercept()](/api/commands/intercept) instead. Due to this deprecation, the type yielded by [cy.wait(alias)](/api/commands/wait) has changed.
+[cy.route()](/api/commands/route) is deprecated in 6.0.0. We encourage the use of [cy.intercept()][intercept] instead. Due to this deprecation, the type yielded by [cy.wait(alias)](/api/commands/wait) has changed.
 
 <Badge type="danger">Before</Badge> Before 6.0.0, [cy.wait(alias)](/api/commands/wait) would yield an object of type `WaitXHR`.
 
-<Badge type="success">After</Badge> In 6.0.0 and onwards, [cy.wait(alias)](/api/commands/wait) will yield an object of type `Interception`. This matches the new interception object type used for [cy.intercept()](/api/commands/intercept).
+<Badge type="success">After</Badge> In 6.0.0 and onwards, [cy.wait(alias)](/api/commands/wait) will yield an object of type `Interception`. This matches the new interception object type used for [cy.intercept()][intercept].
 
 #### Restore old behavior
 
@@ -609,7 +721,7 @@ cy.getCookie('token').then((cookie) => {
 })
 ```
 
-### **dirname / **filename
+### dirname / filename
 
 The globals `__dirname` and `__filename` no longer include a leading slash.
 
@@ -661,7 +773,7 @@ Cypress 5.0 raises minimum required TypeScript version from 2.9+ to 3.4+. You'll
 
 ### Node.js 10+ support
 
-Cypress comes bundled with it's own [Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version). However, installing the `cypress` npm package uses the Node.js version installed on your system.
+Cypress comes bundled with its own [Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version). However, installing the `cypress` npm package uses the Node.js version installed on your system.
 
 Node.js 8 reached its end of life on Dec 31, 2019 and Node.js 11 reached its end of life on June 1, 2019. [See Node's release schedule](https://github.com/nodejs/Release). These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 10 or Node.js 12+.
 
@@ -1066,7 +1178,7 @@ cy.get('p').contains('hello\nworld') // Pass in 3.x. Fail in 4.0.0.
 
 ### Node.js 8+ support
 
-Cypress comes bundled with it's own [Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version). However, installing the `cypress` npm package uses the Node.js version installed on your system.
+Cypress comes bundled with its own [Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version). However, installing the `cypress` npm package uses the Node.js version installed on your system.
 
 Node.js 4 reached its end of life on April 30, 2018 and Node.js 6 reached its end of life on April 30, 2019. [See Node's release schedule](https://github.com/nodejs/Release). These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 8.
 
@@ -1088,3 +1200,5 @@ module.exports = (on) => {
   on('file:preprocessor', browserify())
 }
 ```
+
+[intercept]: /api/commands/intercept

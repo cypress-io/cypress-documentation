@@ -57,9 +57,9 @@ Pass in an options object to change the default behavior of `.spread()`.
 #### Expand the array of aliased routes
 
 ```javascript
-cy.intercept('/users/').as('getUsers')
-cy.intercept('/activities/').as('getActivities')
-cy.intercept('/comments/').as('getComments')
+cy.intercept('/users/*').as('getUsers')
+cy.intercept('/activities/*').as('getActivities')
+cy.intercept('/comments/*').as('getComments')
 cy.wait(['@getUsers', '@getActivities', '@getComments']).spread(
   (getUsers, getActivities, getComments) => {
     // each interception is now an individual argument

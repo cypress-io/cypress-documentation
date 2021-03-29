@@ -22,13 +22,14 @@ The default behavior of Cypress can be modified by supplying any of the followin
 | ---------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `baseUrl`              | `null`                            | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL                                                                          |
 | `env`                  | `{}`                              | Any values to be set as [environment variables](/guides/guides/environment-variables)                                                                                                        |
+| `includeShadowDom`     | `false`                           | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get))                                 |
 | `numTestsKeptInMemory` | `50`                              | The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.           |
 | `port`                 | `null`                            | Port used to host Cypress. Normally this is a randomly generated port                                                                                                                        |
+| `redirectionLimit`     | `20`                              | The number of times that the application under test can redirect before erroring.                                                                                                            |
 | `reporter`             | `spec`                            | The [reporter](/guides/tooling/reporters) used during `cypress run`                                                                                                                          |
 | `reporterOptions`      | `null`                            | The [reporter options](/guides/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                           |
 | `retries`              | `{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. See [Test Retries](/guides/guides/test-retries) for more information. |
 | `watchForFileChanges`  | `true`                            | Whether Cypress will watch and restart tests on test file changes                                                                                                                            |
-| `includeShadowDom`     | `false`                           | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get))                                 |
 
 ### Timeouts
 
@@ -221,7 +222,7 @@ While this may take a bit more work than other options - it yields you the most 
 
 ### Environment Variables
 
-You can also use [environment variables](/guides/guides/environment-variables) to override configuration values. This is especially useful in [Continuous Integration](/guides/continuous-integration/continuous-integration-introduction) or when working locally. This gives you the ability to change configuration options without modifying any code or build scripts.
+You can also use [environment variables](/guides/guides/environment-variables) to override configuration values. This is especially useful in [Continuous Integration](/guides/continuous-integration/introduction) or when working locally. This gives you the ability to change configuration options without modifying any code or build scripts.
 
 By default, any environment variable that matches a corresponding configuration key will override the configuration file (`cypress.json` by default) value.
 
@@ -289,6 +290,7 @@ The configuration values passed in will only take effect during the suite or tes
 - `requestTimeout`
 - `responseTimeout`
 - `retries`
+- `scrollBehavior`
 - `viewportHeight`
 - `viewportWidth`
 - `waitForAnimations`
@@ -435,7 +437,7 @@ Cypress runs GC cleanup during [cypress run](/guides/guides/command-line#cypress
 
 Because GC adds additional time to the overall run, we've added the amount of time this routine has taken to the bottom of the Command Log in the Test Runner.
 
-<DocsImage src="/img/guides/firefox-gc-interval-in-command-log.jpg" alt=></DocsImage>
+<DocsImage src="/img/guides/firefox-gc-interval-in-command-log.jpg" alt="GC duration shown"></DocsImage>
 
 #### Configuration
 
@@ -547,11 +549,12 @@ DEBUG=cypress:cli,cypress:server:specs
 
 | Version                                      | Changes                                                 |
 | -------------------------------------------- | ------------------------------------------------------- |
-| [7.0.0](/guides/references/changelog)        | Added `e2e` and `component` options.                    |
-| [6.1.0](/guides/references/changelog#6-1-0)  | Added option `scrollBehavior`                           |
+| [7.0.0](/guides/references/changelog#7-0-0)  | Added `e2e` and `component` options.                    |
+| [7.0.0](/guides/references/changelog#7-0-0)  | Added `redirectionLimit` option.                        |
+| [6.1.0](/guides/references/changelog#6-1-0)  | Added `scrollBehavior` option.                          |
 | [5.2.0](/guides/references/changelog#5-2-0)  | Added `includeShadowDom` option.                        |
-| [5.0.0](/guides/references/changelog)        | Added `retries` configuration.                          |
-| [5.0.0](/guides/references/changelog)        | Renamed `blacklistHosts` configuration to `blockHosts`. |
+| [5.0.0](/guides/references/changelog#5-0-0)  | Added `retries` configuration.                          |
+| [5.0.0](/guides/references/changelog#5-0-0)  | Renamed `blacklistHosts` configuration to `blockHosts`. |
 | [4.1.0](/guides/references/changelog#4-12-0) | Added `screenshotOnRunFailure` configuration.           |
 | [4.0.0](/guides/references/changelog#4-0-0)  | Added `firefoxGcInterval` configuration.                |
 | [3.5.0](/guides/references/changelog#3-5-0)  | Added `nodeVersion` configuration.                      |

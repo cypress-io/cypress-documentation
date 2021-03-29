@@ -147,7 +147,7 @@ Reference the [AWS CodePipeline integration with CodeBuild and multiple input so
 
 ## Parallelization
 
-The {% url "Cypress Dashboard" 'dashboard' %} offers the ability to [parallelize and group test runs](/guides/guides/parallelization) along with additional insights and [analytics](/guides/dashboard/analytics) for Cypress tests.
+The [Cypress Dashboard](/guides/dashboard/introduction) offers the ability to [parallelize and group test runs](/guides/guides/parallelization) along with additional insights and [analytics](/guides/dashboard/analytics) for Cypress tests.
 
 AWS CodeBuild offers a [build-matrix strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix) for declaring different job configurations for a single job definition. The [build-matrix strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix) provides an option to specify a container image for the job. Jobs declared within a build-matrix strategy can run in parallel which enables us run multiples instances of Cypress at same time as we will see later in this section.
 
@@ -254,11 +254,10 @@ In the AWS CodeBuild configuration we have defined in the previous section, we a
 
 1. [Recording test results with the `--record` flag](https://on.cypress.io/how-do-i-record-runs) to the [Cypress Dashboard](https://on.cypress.io/dashboard):
 
-
-    - In-depth and shareable [test reports](/guides/dashboard/runs).
-    - Visibility into test failures via quick access to error messages, stack traces, screenshots, videos, and contextual details.
-    - [Integrating testing with the pull-request (PR) process](/guides/dashboard/github-integration) via [commit status check guards](/guides/dashboard/github-integration#Status-checks) and convenient [test report comments](/guides/dashboard/github-integration#Pull-request-comments).
-    - [Detecting flaky tests](/guides/dashboard/flaky-test-management) and surfacing them via [Slack alerts](/guides/dashboard/flaky-test-management#Slack) or [GitHub PR status checks](/guides/dashboard/flaky-test-management#GitHub).
+   - In-depth and shareable [test reports](/guides/dashboard/runs).
+   - Visibility into test failures via quick access to error messages, stack traces, screenshots, videos, and contextual details.
+   - [Integrating testing with the pull-request (PR) process](/guides/dashboard/github-integration) via [commit status check guards](/guides/dashboard/github-integration#Status-checks) and convenient [test report comments](/guides/dashboard/github-integration#Pull-request-comments).
+   - [Detecting flaky tests](/guides/dashboard/flaky-test-management) and surfacing them via [Slack alerts](/guides/dashboard/flaky-test-management#Slack) or [GitHub PR status checks](/guides/dashboard/flaky-test-management#GitHub).
 
 2. [Parallelizing test runs](/guides/guides/parallelization) and optimizing their execution via [intelligent load-balancing](/guides/guides/parallelization#Balance-strategy) of test specs across CI machines with the `--parallel` flag.
 

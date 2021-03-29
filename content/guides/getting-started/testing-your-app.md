@@ -439,6 +439,6 @@ From here you may want to explore some more of our guides:
 - [Cypress API](/api/api/table-of-contents) to learn what commands are available as you work
 - [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress) explains how Cypress _really_ works
 - [Command Line](/guides/guides/command-line) for running all your tests outside via `cypress run`
-- [Continuous Integration](/guides/continuous-integration/continuous-integration-introduction) for running Cypress in CI
+- [Continuous Integration](/guides/continuous-integration/introduction) for running Cypress in CI
 - [Cross Browser Testing](/guides/guides/cross-browser-testing) for optimally running tests in CI across Firefox and Chrome-family browsers
 - <Icon name="github"></Icon> [Cypress Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) for practical demonstrations of Cypress testing practices, configuration, and strategies in a real-world project.

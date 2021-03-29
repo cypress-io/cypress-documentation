@@ -28,7 +28,7 @@ A Cypress Component Test contains a `mount` function and assertions about the co
 With Cypress as the Test Runner and assertions framework, component tests in React and Vue look very similar. Here's an example, written in Vue:
 
 ```javascript
-import { mount } from '@cypress/vue' // or cypress-react-unit-test
+import { mount } from '@cypress/vue' // or @cypress/react
 import TodoList from '@/components/TodoList'
 
 describe('TodoList', () => {

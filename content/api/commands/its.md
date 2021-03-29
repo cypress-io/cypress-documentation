@@ -208,7 +208,7 @@ cy.window().its('evilProp').should('not.exist')
 **_Get `responseBody` of aliased route_**
 
 ```javascript
-cy.intercept(/comments/, { fixture: 'comments.json' }).as('getComments')
+cy.intercept('/comments', { fixture: 'comments.json' }).as('getComments')
 cy.get('#fetch-comments').click()
 cy.wait('@getComments')
   .its('response.body')

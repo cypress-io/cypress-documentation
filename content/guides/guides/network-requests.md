@@ -19,6 +19,7 @@ title: Network Requests
 **Note:** If you're looking for a resource to make an HTTP request take a look at [cy.request()](/api/commands/request)
 
 </Alert>
+
 ## Testing Strategies
 
 Cypress helps you test the entire lifecycle of HTTP requests within your application. Cypress provides you access to the objects with information about the request, enabling you to make assertions about its properties. Additionally you can even stub and mock a request's response.
@@ -174,7 +175,7 @@ When stubbing a response, you typically need to manage potentially large and com
 
 ```javascript
 // we set the response to be the activites.json fixture
-cy.intercept('GET', 'activities/*', { fixture: 'activities.json' })
+cy.intercept('GET', '/activities/*', { fixture: 'activities.json' })
 ```
 
 ### Organizing
@@ -212,8 +213,8 @@ This following section utilizes a concept known as [Aliasing](/guides/core-conce
 Here is an example of aliasing requests and then subsequently waiting on them:
 
 ```javascript
-cy.intercept('activities/*', { fixture: 'activities' }).as('getActivities')
-cy.intercept('messages/*', { fixture: 'messages' }).as('getMessages')
+cy.intercept('/activities/*', { fixture: 'activities' }).as('getActivities')
+cy.intercept('/messages/*', { fixture: 'messages' }).as('getMessages')
 
 // visit the dashboard, which should make requests that match
 // the two routes above
@@ -312,7 +313,7 @@ With Cypress, by adding a [`cy.wait()`](/api/commands/wait), you can more easily
 <!--
 To reproduce the following screenshot:
 it('test', () => {
-  cy.intercept('foo/bar').as('getSearch')
+  cy.intercept('/foo/bar').as('getSearch')
   cy.wait('@getSearch')
 })
 -->
@@ -328,9 +329,9 @@ Another benefit of using [`cy.wait()`](/api/commands/wait) on requests is that i
 In our example above we can assert about the request object to verify that it sent data as a query string in the URL. Although we're mocking the response, we can still verify that our application sends the correct request.
 
 ```javascript
-// any request to "search/*" endpoint will automatically receive
+// any request to "/search/*" endpoint will automatically receive
 // an array with two book objects
-cy.intercept('search/*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as(
+cy.intercept('/search/*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as(
   'getSearch'
 )
 

@@ -204,11 +204,10 @@ In the GitLab CI configuration we have defined in the previous section, we are l
 
 1. [Recording test results with the `--record` flag](https://on.cypress.io/how-do-i-record-runs) to the [Cypress Dashboard](https://on.cypress.io/dashboard):
 
-
-    - In-depth and shareable [test reports](/guides/dashboard/runs).
-    - Visibility into test failures via quick access to error messages, stack traces, screenshots, videos, and contextual details.
-    - [Integrating testing with the merge-request process](/guides/dashboard/gitlab-integration) via [commit status guards](/guides/dashboard/gitlab-integration#Commit-statuses) and convenient [test report comments](/guides/dashboard/gitlab-integration#Merge-Request-comments).
-    - [Detecting flaky tests](/guides/dashboard/flaky-test-management) and surfacing them via [Slack alerts](/guides/dashboard/flaky-test-management#Slack) or [GitLab PR status checks](/guides/dashboard/gitlab-integration).
+   - In-depth and shareable [test reports](/guides/dashboard/runs).
+   - Visibility into test failures via quick access to error messages, stack traces, screenshots, videos, and contextual details.
+   - [Integrating testing with the merge-request process](/guides/dashboard/gitlab-integration) via [commit status guards](/guides/dashboard/gitlab-integration#Commit-statuses) and convenient [test report comments](/guides/dashboard/gitlab-integration#Merge-Request-comments).
+   - [Detecting flaky tests](/guides/dashboard/flaky-test-management) and surfacing them via [Slack alerts](/guides/dashboard/flaky-test-management#Slack) or [GitLab PR status checks](/guides/dashboard/gitlab-integration).
 
 2. [Parallelizing test runs](/guides/guides/parallelization) and optimizing their execution via [intelligent load-balancing](/guides/guides/parallelization#Balance-strategy) of test specs across CI machines with the `--parallel` flag.
 
