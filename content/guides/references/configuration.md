@@ -2,7 +2,9 @@
 title: Configuration
 ---
 
-When a project is added to Cypress, a `cypress.json` file is created in the project. This file is used to store the `projectId` ([after configuring your tests to record](/guides/dashboard/projects#Setup)) and any configuration values you supply.
+## cypress.json
+
+The first time you open Cypress Test Runner, it creates the `cypress.json` configuration file. This JSON file is used to store any configuration values you supply. If you [configure your tests to record](/guides/dashboard/projects#Setup) the results to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction) the `projectId` will be written in this file too.
 
 <Alert type="warning">
 
