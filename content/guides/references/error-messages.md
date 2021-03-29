@@ -485,7 +485,7 @@ Check out our [guide on parallelizing runs](/guides/guides/parallelization) and 
 
 You passed the `--ci-build-id`, [--group](/guides/guides/command-line#cypress-run-group-lt-name-gt), or [--parallel](/guides/guides/command-line#cypress-run-parallel) flag without also passing the `--record` flag.
 
-These flags can only be used when recording to the [Dashboard Service](/guides/dashboard/dashboard-introduction).
+These flags can only be used when recording to the [Dashboard Service](/guides/dashboard/introduction).
 
 Please review our [parallelization](/guides/guides/parallelization) documentation to learn more.
 

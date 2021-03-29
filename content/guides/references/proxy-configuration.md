@@ -6,7 +6,7 @@ Cypress needs Internet access to work. Many companies require the use of a corpo
 
 - Cypress won't be able to load web pages besides `localhost`.
 - Cypress won't be able to warn you if your [baseUrl](/guides/references/configuration#Global) isn't available.
-- Cypress won't be able to connect to the [Dashboard Service](/guides/dashboard/dashboard-introduction) to log in or record test runs.
+- Cypress won't be able to connect to the [Dashboard Service](/guides/dashboard/introduction) to log in or record test runs.
 - `npm install cypress` may fail while downloading the Cypress binary.
 
 If you are experiencing any or all of these issues, you may need to configure Cypress with your proxy. Instructions are available for [macOS](#Set-a-proxy-on-Linux-or-macOS), [Linux](#Set-a-proxy-on-Linux-or-macOS), and [Windows](#Set-a-proxy-on-Windows).

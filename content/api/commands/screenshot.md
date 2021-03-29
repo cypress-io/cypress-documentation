@@ -266,7 +266,7 @@ When clicking on `screenshot` within the command log, the console outputs the fo
 - [After Screenshot API](/api/plugins/after-screenshot-api)
 - [`cy.debug()`](/api/commands/debug)
 - [`Cypress.Screenshot`](/api/cypress-api/screenshot-api)
-- [Dashboard Service](/guides/dashboard/dashboard-introduction)
+- [Dashboard Service](/guides/dashboard/introduction)
 - [`.pause()`](/api/commands/pause)
 - [Screenshots and Videos](/guides/guides/screenshots-and-videos)
 - [Visual Testing](/guides/tooling/visual-testing)
