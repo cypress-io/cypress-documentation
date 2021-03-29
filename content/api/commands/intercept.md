@@ -584,6 +584,34 @@ cy.intercept('/users', (req) => {
 })
 ```
 
+#### Throttle or delay response all incoming responses
+
+You can throttle or delay all incoming responses using a `beforeEach()` in the `cypress/support/index.js` file
+
+```ts
+// Code from Real World App (RWA)
+// cypress/support/index.ts
+import { isMobile } from './utils'
+import './commands'
+// Throttle API responses for mobile testing to simulate real world conditions
+if (isMobile()) {
+  cy.intercept({ url: 'http://localhost:3001', middleware: true }, (req) => {
+    req.on('response', (res) => {
+      // Throttle the response to 1 Mbps to simulate a mobile 3G connection
+      res.setThrottle(1000)
+    })
+  })
+}
+```
+
+<Alert type="info">
+
+##### <Icon name="graduation-cap"></Icon> Real World Example
+
+Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and refer to the [cypress/support/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/support/index.ts) file for a working example.
+
+</Alert>
+
 ## Intercepted requests
 
 If a function is passed as the handler for a `cy.intercept()`, it will be called with the first argument being an object that represents the intercepted HTTP request:
