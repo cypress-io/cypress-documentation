@@ -897,7 +897,7 @@ The following properties are available on `StaticResponse`. All properties are o
   /**
    * Milliseconds to delay before the response is sent.
    */
-  delay?: number
+  delayMs?: number
   /**
    * Kilobits per second to send 'body'.
    */
