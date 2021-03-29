@@ -705,7 +705,7 @@ if (isMobile()) {
     req.on('response', (res) => {
       // For all request except the /login
       if (req.url !== 'http://localhost:3001/login') {
-        // Delay the response
+        // Throttle the response to 1 Mbps to simulate a mobile 3G connection
         res.throttle(1000)
       }
     })
