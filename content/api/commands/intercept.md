@@ -706,7 +706,7 @@ if (isMobile()) {
       // For all request except the /login
       if (req.url !== 'http://localhost:3001/login') {
         // Delay the response
-        res.delay(2500)
+        res.throttle(1000)
       }
     })
   })
