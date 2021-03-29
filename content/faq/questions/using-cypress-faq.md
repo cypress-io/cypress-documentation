@@ -490,7 +490,7 @@ The `projectId` is a 6 character string that helps identify your project once yo
 }
 ```
 
-For further detail see the [Identification](/guides/dashboard/projects#Identification) section of the [Dashboard Service](/guides/dashboard/dashboard-introduction) docs.
+For further detail see the [Identification](/guides/dashboard/projects#Identification) section of the [Dashboard Service](/guides/dashboard/introduction) docs.
 
 ## <Icon name="angle-right"></Icon> What is a Record Key?
 
@@ -500,7 +500,7 @@ You can find your project's record key inside of the _Settings_ tab in the Test 
 
 <DocsImage src="/img/dashboard/record-key-shown-in-desktop-gui-configuration.jpg" alt="Record Key in Configuration Tab" ></DocsImage>
 
-For further detail see the [Identification](/guides/dashboard/projects#Identification) section of the [Dashboard Service](/guides/dashboard/dashboard-introduction) docs.
+For further detail see the [Identification](/guides/dashboard/projects#Identification) section of the [Dashboard Service](/guides/dashboard/introduction) docs.
 
 ## <Icon name="angle-right"></Icon> How do I check that an email was sent out?
 
@@ -816,7 +816,7 @@ Yes, as you can read in the official [Gatsby docs](https://www.gatsbyjs.com/docs
 
 Yes, absolutely. A good example of a fully tested React application is our [Cypress RealWorld App](https://github.com/cypress-io/cypress-example-realworld) and [TodoMVC Redux App](https://github.com/cypress-io/cypress-example-todomvc-redux). You can even use React DevTools while testing your application, read [The easiest way to connect Cypress and React DevTools](https://dev.to/dmtrkovalenko/the-easiest-way-to-connect-cypress-and-react-devtools-5hgm). If you really need to select React components by their name, props, or state, check out [cypress-react-selector](https://github.com/abhinaba-ghosh/cypress-react-selector).
 
-Finally, you might want to check out the [React Component Testing](/guides/component-testing/component-testing-introduction) adaptor that allows you to test your React components right inside Cypress.
+Finally, you might want to check out the [React Component Testing](/guides/component-testing/introduction) adaptor that allows you to test your React components right inside Cypress.
 
 ## <Icon name="angle-right"></Icon> Can I check the GraphQL network calls using Cypress?
 

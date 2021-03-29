@@ -86,7 +86,7 @@ module.exports = (on, config) => {
 ## See also
 
 - [cy.screenshot()](/api/commands/screenshot)
-- [Dashboard Service](/guides/dashboard/dashboard-introduction)
+- [Dashboard Service](/guides/dashboard/introduction)
 - [Plugins Guide](/guides/tooling/plugins-guide)
 - [Screenshots and Videos](/guides/guides/screenshots-and-videos)
 - [Visual Testing](/guides/tooling/visual-testing)

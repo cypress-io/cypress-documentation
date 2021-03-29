@@ -142,6 +142,6 @@ A great place to put this configuration is in your [`cypress/support/index.js` f
 ## See also
 
 - [cy.screenshot()](/api/commands/screenshot)
-- [Dashboard Service](/guides/dashboard/dashboard-introduction)
+- [Dashboard Service](/guides/dashboard/introduction)
 - [Screenshots and Videos](/guides/guides/screenshots-and-videos)
 - [Visual Testing](/guides/tooling/visual-testing)
