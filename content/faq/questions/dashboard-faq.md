@@ -10,7 +10,7 @@ containerClass: faq
 
 The [Dashboard](https://on.cypress.io/dashboard) is a Cypress service that gives you access to tests you've recorded - typically when running Cypress tests from your [CI provider](/guides/continuous-integration/introduction). The Dashboard provides you insight into what happened during your tests run.
 
-You can read more [here](/guides/dashboard/dashboard-introduction).
+You can read more [here](/guides/dashboard/introduction).
 
 ## <Icon name="angle-right"></Icon> How do I record my tests?
 
@@ -49,9 +49,9 @@ Cypress is **complementary** to your [CI provider](/guides/continuous-integratio
 
 It doesn't replace or change anything related to CI. You will run Cypress tests in your CI provider.
 
-The difference between our [Dashboard Service](/guides/dashboard/dashboard-introduction) and your CI provider is that your CI provider has no idea what is going on inside of the Cypress process. It's programmed to know whether or not a process failed - based on whether it had an exit code greater than `0`.
+The difference between our [Dashboard Service](/guides/dashboard/introduction) and your CI provider is that your CI provider has no idea what is going on inside of the Cypress process. It's programmed to know whether or not a process failed - based on whether it had an exit code greater than `0`.
 
-Our [Dashboard Service](/guides/dashboard/dashboard-introduction) provides you with the low level details of _what_ happened during your run. Using both your CI provider + Cypress together gives the insight required to debug your test runs.
+Our [Dashboard Service](/guides/dashboard/introduction) provides you with the low level details of _what_ happened during your run. Using both your CI provider + Cypress together gives the insight required to debug your test runs.
 
 When a run happens and a test fails - instead of going and inspecting your CI provider's `stdout` output, you can log into the [Dashboard](https://on.cypress.io/dashboard), see the `stdout` as well as screenshots and video of the tests running. It should be instantly clear what the problem was.
 

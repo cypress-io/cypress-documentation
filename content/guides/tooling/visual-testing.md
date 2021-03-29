@@ -100,7 +100,7 @@ First joint webinar with Applitools
 
 <!-- textlint-enable -->
 
-Second joint webinar with Applitools with a focus on {% url 'Component Testing' ../component-testing/introduction.html %}
+Second joint webinar with Applitools with a focus on [Component Testing](/guides/component-testing/introduction)
 
 <!-- textlint-disable -->
 
