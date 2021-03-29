@@ -117,6 +117,178 @@ cy.intercept('GET', '/projects', {
 
 Unlike `cy.route()`, `cy.intercept()` currently does _not_ allow you to override a previous response. For more information on this, see [#9302](https://github.com/cypress-io/cypress/issues/9302) and [this blog post](https://glebbahmutov.com/blog/cypress-intercept-problems/#no-overwriting-interceptors). Overriding responses will be added in a future release.
 
+## Migrating to Component Testing 7.0
+
+### cypress.json
+
+Remove `"experimentalComponentTesting": true` since the flag will give you an error.
+
+Remember that from 7.0 you can configure `cypress.json` and have specific flags for component testing or e2e.
+
+For example if you want video recording enabled only for End-to-end testing, you can disbale it for compoent testing like so
+
+```json
+{
+  "testFiles": "**/*spec.{js,jsx,ts,tsx}",
+  "video": true,
+  "component": {
+    "componentFolder": "src/components",
+    "video": false
+  }
+}
+```
+
+[Read the docs for the new config](/guides/references/configuration)
+
+### Plugins file
+
+#### Predefined react plugins
+
+First, if you are using a predefined plugin of `@cypress/react`, Component Testing is still configured the same. No action neede
+
+To know if you are using the predefined plugins file, look at the path imported/required in your plugins file.
+If the path contains `@cypress/react/plugins/...` you are using one.
+
+<Alert type="info">
+
+You are requiring from `cypress-react-unit-test/plugins/...`? Then you are using an old version of Cypress Component Testing. <br/>
+The package has changed name last year and has moved to the `@cypress` npm organisation.
+Please install `@cypress/react` and update the required path to `@cypress/react/plugins/...`
+
+</Alert>
+
+For example, this `cypress/plugins.js` file is still valid.
+
+```js
+const injectNextDevServer = require('@cypress/react/plugins/next')
+
+module.exports = (on, config) => {
+  injectNextDevServer(on, config)
+
+  return config
+}
+```
+
+#### Dev-servers instead of Preprocessors
+
+Before 7.0, Cypress Component testing used preprocessors to bundle your code before serving it to the cypress tests.
+You could have a plugins file like the following:
+
+```js
+const webpackPreprocessor = require('@cypress/webpack-preprocessor')
+const webpackConfig = require('../webpack.config')
+
+module.exports = (on, config) => {
+  on('file:preprocessor', webpackPreprocessor(options))
+
+  return config
+}
+```
+
+In 7.0 we introduced the concept of test "dev-server". So you will have to change the plugins file like so.
+
+```js
+const { startDevServer } = require('@cypress/webpack-dev-server') // replace the preprocessor with a dev-server
+const webpackConfig = require('../webpack.config')
+
+module.exports = (on, config) => {
+  on('dev-server:start', (options) => {
+    // use the dev-server:start event instead of file preprocessor
+    return startDevServer({ options, webpackConfig })
+  })
+
+  return config
+}
+```
+
+### Support file
+
+Here is a piece of good news: You do not need to have anything in the support file anymore.
+
+If you find the following line in your support file, remove it, it is not useful anymore.
+
+```js
+import '@cypress/react/hooks' // OR import '@cypress/react/hooks'
+```
+
+We kept the file in the published version to avoid breaking changes. But the file does not do anything.
+
+### New commands
+
+In 6.X we launched Component Testing with the same command as End to End testing: `cypress open`. Running the tests in CI, meant we run `cypress run` wether it was component tests or integration tests.
+
+In 7.0, we added 2 new commands:
+
+#### cypress open-ct
+
+This command opens your browser, with a list of all the specs found for component testing.
+
+<DocsImage src="/img/guides/cypress-open-ct.png" alt="When you open React Component Test" ></DocsImage>
+
+In this interface you run your tests by clicking on them.
+
+#### cypress run-ct
+
+In Continuous Integration, you will want to run all component-testing specs at once. This command will do exactly that and fail if one spec returns an error.
+
+### Breaking changes
+
+#### Coverage
+
+In 6.X, React component testing embeds test coverage tools by default.
+If you wish to monitor coverage in your tests, you have to install it yourself.
+
+Use [this documentation](/guides/tooling/code-coverage) to bring it back.
+
+#### React cypress selector
+
+In 6.X, `cypress-react-selector` was installed within `@cypress/react`
+
+If you use `cy.react()` in your tests, [install it back in your support file](https://www.npmjs.com/package/cypress-react-selector)
+
+#### Cleanup after each tests
+
+In 6.X if you updated the html independently from the Component Tests, the HTML was reinitialized after every test.
+
+In 7.0, only the components added using the `mount()` function will be cleaned automatically.
+
+If you have 2 tests like this in the same spec file, they will deal with teh same HTML.
+
+```js
+describe('HTML changes', () => {
+  it('first test', () => {
+    Cypress.$('body').append("<div id='firstDiv'/>")
+    cy.get('.firstDiv').should('be.visible')
+  })
+
+  it('second test', () => {
+    Cypress.$('body').append("<div id='secondDiv'/>")
+    cy.get('div').should('have.length', 2) // this will contain both div
+    // the first div will not have been cleaned up after the first test
+    // It will remain in the DOM until it is manually removed
+  })
+})
+```
+
+but you can do this without needing to cleanup yourself between each test:
+
+```js
+import { mount } from '@cypress/react'
+import Button from './Button'
+
+describe('HTML changes', () => {
+  it('first test', () => {
+    mount(<Button>test</Button>)
+    cy.contains('test').should('have.length', 1)
+  })
+
+  it('second test', () => {
+    mount(<Button>test</Button>)
+    cy.contains('test').should('have.length', 1)
+  })
+})
+```
+
 ## Migrating to Cypress 6.0
 
 This guide details the changes and how to change your code to migrate to Cypress 6.0. [See the full changelog for 6.0](/guides/references/changelog#6-0-0).
