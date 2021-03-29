@@ -68,7 +68,7 @@ Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/
 
 We will use Cypress Studio to perform a "New Transaction" user journey. First, launch the Test Runner and run the spec created in the previous step.
 
-<DocsImage src="/img/guides/cypress-studio/run-spec-1.png" alt="Cypress Studio"></DocsImage>
+<DocsImage src="/img/guides/cypress-studio/run-spec-1.png" alt="Cypress Studio" no-border></DocsImage>
 
 Once the tests complete their run, hover over a test in the Command Log to reveal an "Add Commands to Test" button.
 
@@ -80,7 +80,7 @@ Cypress Studio is directly integrated with the [Command Log](/guides/core-concep
 
 </Alert>
 
-<DocsImage src="/img/guides/cypress-studio/run-spec-2.png" alt="Cypress Studio"></DocsImage>
+<DocsImage src="/img/guides/cypress-studio/run-spec-2.png" alt="Cypress Studio" no-border></DocsImage>
 
 #### Step 2 - Launch Cypress Studio
 
@@ -92,7 +92,7 @@ Cypress will automatically execute all hooks and currently present test code, an
 
 Next, the Test Runner will execute the test in isolation and pause after the last command in the test.
 
-<DocsImage src="/img/guides/cypress-studio/extend-new-transaction-ready.png" alt="Cypress Studio Ready"></DocsImage>
+<DocsImage src="/img/guides/cypress-studio/extend-new-transaction-ready.png" alt="Cypress Studio Ready" no-border></DocsImage>
 
 Now, we can begin updating the test to create a new transaction between users.
 
@@ -100,15 +100,15 @@ Now, we can begin updating the test to create a new transaction between users.
 
 To record actions, begin interacting with the application. Here we will click on the first name input and as a result we will see the click recorded in the Command Log.
 
-<DocsImage src="/img/guides/cypress-studio/extend-new-transaction-user-list.png" alt="Cypress Studio Extend Test"></DocsImage>
+<DocsImage src="/img/guides/cypress-studio/extend-new-transaction-user-list.png" alt="Cypress Studio Extend Test" no-border></DocsImage>
 
 Next, we can type the name of a user to pay and click on the user in the results.
 
-<DocsImage src="/img/guides/cypress-studio/extend-new-transaction-click-user.png" alt="Cypress Studio Extend Test"></DocsImage>
+<DocsImage src="/img/guides/cypress-studio/extend-new-transaction-click-user.png" alt="Cypress Studio Extend Test" no-border></DocsImage>
 
 We will complete the transaction form by clicking on and typing in the amount and description inputs.
 
-<DocsImage src="/img/guides/cypress-studio/extend-new-transaction-form.png" alt="Cypress Studio Extend Test"></DocsImage>
+<DocsImage src="/img/guides/cypress-studio/extend-new-transaction-form.png" alt="Cypress Studio Extend Test" no-border></DocsImage>
 
 <Alert type="success">
 
@@ -118,11 +118,11 @@ Notice the commands generated in the Command Log.
 
 Finally, we will click the "Pay" button.
 
-<DocsImage src="/img/guides/cypress-studio/extend-new-transaction-pay.png" alt="Cypress Studio Extend Test"></DocsImage>
+<DocsImage src="/img/guides/cypress-studio/extend-new-transaction-pay.png" alt="Cypress Studio Extend Test" no-border></DocsImage>
 
 We are presented with a confirmation page of our new transaction.
 
-<DocsImage src="/img/guides/cypress-studio/extend-new-transaction-confirmation.png" alt="Cypress Studio Extend Test Confirmation"></DocsImage>
+<DocsImage src="/img/guides/cypress-studio/extend-new-transaction-confirmation.png" alt="Cypress Studio Extend Test Confirmation" no-border></DocsImage>
 
 To discard the interactions, click the "Cancel" button to exit Cypress Studio. If satisfied with the interactions with the application, click "Save Commands" and the test code will be saved to your spec file.
 
@@ -164,30 +164,30 @@ describe('Cypress Studio Demo', () => {
 
 You can add a new test to any existing `describe` or `context` block, by clicking "Add New Test" on our defined `describe` block.
 
-<DocsImage src="/img/guides/cypress-studio/add-test-1.png" alt="Cypress Studio Add Test"></DocsImage>
+<DocsImage src="/img/guides/cypress-studio/add-test-1.png" alt="Cypress Studio Add Test" no-border></DocsImage>
 
 We are launched into Cypress Studio and can begin interacting with our application to generate the test.
 
 For this test, we will add a new bank account. Our interactions are as follows:
 
 1. Click "Bank Accounts" in left hand navigation
-   <DocsImage src="/img/guides/cypress-studio/add-test-2.png" alt="Cypress Studio Begin Add Test"></DocsImage>
+   <DocsImage src="/img/guides/cypress-studio/add-test-2.png" alt="Cypress Studio Begin Add Test" no-border></DocsImage>
 2. Click the "Create" button on Bank Accounts page
-   <DocsImage src="/img/guides/cypress-studio/add-test-create.png" alt="Cypress Studio Add Test Create Bank Account"></DocsImage>
+   <DocsImage src="/img/guides/cypress-studio/add-test-create.png" alt="Cypress Studio Add Test Create Bank Account" no-border></DocsImage>
 3. Fill out the bank account information
-   <DocsImage src="/img/guides/cypress-studio/add-test-form-complete.png" alt="Cypress Studio Add Test Complete Bank Account Form"></DocsImage>
+   <DocsImage src="/img/guides/cypress-studio/add-test-form-complete.png" alt="Cypress Studio Add Test Complete Bank Account Form" no-border></DocsImage>
 4. Click the "Save" button
-   <DocsImage src="/img/guides/cypress-studio/add-test-form-saving.png" alt="Cypress Studio Add Test Saving Bank Account"></DocsImage>
+   <DocsImage src="/img/guides/cypress-studio/add-test-form-saving.png" alt="Cypress Studio Add Test Saving Bank Account" no-border></DocsImage>
 
 To discard the interactions, click the "Cancel" button to exit Cypress Studio.
 
 If satisfied with the interactions with the application, click "Save Commands" and prompt will ask for the name of the test. Click "Save Test" and the test will be saved to the file.
 
-<DocsImage src="/img/guides/cypress-studio/add-test-save-test.png" alt="Cypress Studio Add Test Completed Run"></DocsImage>
+<DocsImage src="/img/guides/cypress-studio/add-test-save-test.png" alt="Cypress Studio Add Test Completed Run" no-border></DocsImage>
 
 Once saved, the file will be run again in Cypress.
 
-<DocsImage src="/img/guides/cypress-studio/add-test-final.png" alt="Cypress Studio Add Test Completed Run"></DocsImage>
+<DocsImage src="/img/guides/cypress-studio/add-test-final.png" alt="Cypress Studio Add Test Completed Run" no-border></DocsImage>
 
 Finally, viewing our test code, we can see that the test is updated after clicking "Save Commands" with the actions we recorded in Cypress Studio.
 
