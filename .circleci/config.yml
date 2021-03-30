@@ -83,7 +83,7 @@ workflows:
           executor: with-chrome-and-firefox
       
       - link-check-changed-files:
-          name: 'Check for broken links within changed content files'
+          name: 'Broken link checker'
           requires:
             - build
 
