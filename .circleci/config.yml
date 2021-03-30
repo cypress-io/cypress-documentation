@@ -29,6 +29,12 @@ commands:
       - run:
           name: Nuxt Build
           command: yarn build
+  
+  link-check-changed-files:
+    steps:
+      - run:
+          name: Check for broken links within changed content files
+          command: node scripts/changedFilesBrokenLinkChecker.js
 
 jobs:
   build:
@@ -39,6 +45,12 @@ jobs:
       - run:
           name: Netlify Deploy
           command: ./node_modules/.bin/netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --dir=./dist
+
+  link-check-changed-files:
+    executor: node-executor
+    working_directory: ~/repo
+    steps: link-check-changed-files
+
   release:
     executor: node-executor
     steps:
@@ -59,6 +71,11 @@ workflows:
           yarn: true
           install-command: yarn --frozen-lockfile
           executor: with-chrome-and-firefox
+      
+      - link-check-changed-files:
+          name: 'Check for broken links within changed content files'
+          requires:
+            - build
 
       # Run E2E tests in Chrome
       - cypress/run:
