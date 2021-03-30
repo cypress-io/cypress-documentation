@@ -56,7 +56,10 @@ app.use(
 app.use(logger)
 
 app.listen(PORT, () => {
-  process.send('ready')
+  if (process.send) {
+    process.send('ready')
+  }
+
   // eslint-disable-next-line no-console
   console.log(`Server listening on port ${PORT}.`)
 })
