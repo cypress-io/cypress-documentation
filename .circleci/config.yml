@@ -48,7 +48,6 @@ jobs:
 
   link-check-changed-files:
     executor: node-executor
-    working_directory: ~/repo
     steps: 
       - link-check-changed-files
 
