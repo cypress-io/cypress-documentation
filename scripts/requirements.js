@@ -95,7 +95,7 @@ const createReadFileListItems = (cmd) => {return [
 
 const createRequestListItems = (cmd) => {return [
   createParentCommandListItem(cmd),
-  `${codify(cmd)} requires that the server send a response.`,
+  `${codify(cmd)} requires that the server sends a response.`,
   `${codify(cmd)} requires that the response status code be ${codify(
     '2xx'
   )} or ${codify('3xx')} or ${codify('failOnStatusCode')} is ${codify(
