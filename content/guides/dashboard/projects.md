@@ -21,23 +21,23 @@ Make sure you [install](/guides/getting-started/installing-cypress) and [open](/
 1. Click on the **Runs** tab of your project within the [Test Runner](/guides/core-concepts/test-runner).
 2. Click **Connect to Dashboard**.
 3. You will need to log in to record your tests, so you'll be prompted to log in to the Cypress Dashboard here if you haven't already done so.
-   <DocsImage src="/img/dashboard/projects/setup-a-project-1.png" alt="Connect to Dashboard"></DocsImage>
+   <DocsImage src="/img/dashboard/projects/setup-a-project-1.png" alt="Connect to Dashboard" no-border></DocsImage>
 4. Choose who owns the project. You can personally own it or select an organization you're a member of. If you don't have any organizations, click **Create organization**. Organizations work just like they do in GitHub and enable you to separate your personal and work projects. [Read more about organizations](/guides/dashboard/organizations).
-   <DocsImage src="/img/dashboard/projects/setup-a-project-2.png" alt="Choose an Organization"></DocsImage>
-5. If you don't have any existing projects, you'll have the opportunity to create a new one here. If you have existing projects and want to create a new one, you can click "Create new project" to make a new one.
+   <DocsImage src="/img/dashboard/projects/setup-a-project-2.png" alt="Choose an Organization" no-border></DocsImage>
+5. If you don't have any existing projects, you'll have the opportunity to create a new one here. If you have existing projects and want to create a new one, you can click "Create a new project" to make a new one.
 
 - Fill in the name of your project (this is only for display purposes and can be changed later).
 - Choose whether this project is Public or Private.
   - **A public project** can have its recordings and runs seen by _anyone_. Typically these are open source projects.
   - **A private project** restricts its access to _[only users you invite](/guides/dashboard/users)_.
 
-<DocsImage src="/img/dashboard/projects/setup-a-project-3.png" alt="Create a New Project"></DocsImage>
+<DocsImage src="/img/dashboard/projects/setup-a-project-3.png" alt="Create a New Project" no-border></DocsImage>
 
 6. Alternatively, if you've already created a project in the Dashboard, you can link your project by selecting it from the dropdown. Make sure to select a clean project that has not previously been linked to an existing project.
-   <DocsImage src="/img/dashboard/projects/setup-a-project-4.png" alt="Choose a Project"></DocsImage>
+   <DocsImage src="/img/dashboard/projects/setup-a-project-4.png" alt="Choose a Project" no-border></DocsImage>
 7. Click **Setup Project**.
 8. Now you should see a view explaining how to record your first run with your record key.
-   <DocsImage src="/img/dashboard/projects/setup-a-project-5.png" alt="Record Instructions"></DocsImage>
+   <DocsImage src="/img/dashboard/projects/setup-a-project-5.png" alt="Record Instructions" no-border></DocsImage>
 9. After setting up your project, Cypress inserts a unique [projectId](#Identification) into your configuration file, `cypress.json` by default. If you're using source control, we recommend that you check your configuration file, including the `projectId`, into source control.
 10. Within [Continuous Integration](/guides/continuous-integration/introduction) or from your local computer's terminal pass the displayed [Record Key](#Identification) while running the [cypress run](/guides/guides/command-line#cypress-run) command.
 
