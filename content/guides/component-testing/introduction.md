@@ -49,17 +49,19 @@ describe('TodoList', () => {
 })
 ```
 
-If you are already familiar with Cypress, you'll notice it is almost exactly the same as a Cypresss end-to-end test - all your existing Cypress knowledge and experience is transferrable.
+If you are already familiar with Cypress, you'll notice it is almost exactly the same as a Cypress end-to-end testing - all your existing Cypress knowledge and experience is transferrable.
 
-## Try out with an existing project
+## Try with an existing project
 
-Let's go through the setup to start testing components. You can set it up with an existing React or Vue existing project, or in a new project. This guide assumes your project has a [webpack based](https://webpack.js.org/) tool chain.
+Let's go through the setup to start testing components. You can set it up with an existing React or Vue project or in a new project. This guide assumes your project has a [webpack based](https://webpack.js.org/) tool chain.
 
 ## ⚠️ For existing end-to-end users
 
-If you are using Cypress Component Testing in a project that also has tests written with the Cypress end-to-end runner, you may want to configure some Component Testing specific defaults.
+If you are using Cypress Component Testing in a project that also has tests written with the Cypress end-to-end test runner, you may want to configure some Component Testing specific defaults.
 
-You can configure or override specific defaults in [`cypress.json`](/guides/references/configuration) using the `component` key. For example, if you would like to use a different test glob and viewport for Component Testing, your `cypress.json` might look like this:
+You can configure or override specific defaults in your [configuration file](/guides/references/configuration), `cypress.json` by default, using the `component` key.
+
+For example, if you would like to use a different viewport size or target different test files for Component Testing, your `cypress.json` might look like this:
 
 ```json
 {
@@ -73,7 +75,7 @@ You can configure or override specific defaults in [`cypress.json`](/guides/refe
 }
 ```
 
-The Component Testing runner will use all the configuration at the root level of `cypress.json`, and apply any Component Testing specific overrides.
+The Component Testing runner will use all the configuration at the root level of your configuration file and apply any Component Testing specific overrides.
 
 ### Prerequisites
 
@@ -86,7 +88,7 @@ The Component Testing runner will use all the configuration at the root level of
 
 <alert type="info">
 
-If you are using [Vue.js](https://vuejs.org/), click on the Vue tab of the code examples when available. If there is no Vue tab, the code is the same.
+If you are using [Vue.js](https://vuejs.org/), click on the Vue tab of the code examples in our documentation when available. If there is no Vue tab, the code is the same.
 
 </alert>
 
