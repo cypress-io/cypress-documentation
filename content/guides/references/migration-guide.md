@@ -238,10 +238,10 @@ If you have the following line in your support file, you can safely remove it, i
 <Badge type="danger">Before</Badge>
 
 ```js
-import '@cypress/react/hooks' // OR import '@cypress/react/hooks'
+import '@cypress/react/hooks' // OR import '@cypress-react-unit-testing'
 ```
 
-We kept the file in the published version to avoid breaking changes. But the file doesn't do anything.
+We kept the `hooks.js` file in version 7.0 to avoid a breaking change, but the hooks file doesn't do anything.
 
 #### New commands
 
