@@ -34,7 +34,7 @@ commands:
     steps:
       - run:
           name: Broken link checker for changed files
-          command: yarn changed-files-broken-link-checker:ci
+          command: node scripts/changedFilesBrokenLinkChecker.js
 
 jobs:
   build:
@@ -45,11 +45,19 @@ jobs:
       - run:
           name: Netlify Deploy
           command: ./node_modules/.bin/netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --dir=./dist
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - build/*
+            - scripts/*
+            - node_modules/*
 
   link-check-changed-files:
     executor: node-executor
     working_directory: ~/repo
-    steps: 
+    steps:
+      - attach_workspace:
+          at: ~/repo
       - link-check-changed-files
 
   release:
