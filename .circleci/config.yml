@@ -33,8 +33,8 @@ commands:
   link-check-changed-files:
     steps:
       - run:
-          name: Check for broken links within changed content files
-          command: node scripts/changedFilesBrokenLinkChecker.js
+          name: Broken link checker for changed files
+          command: yarn changed-files-broken-link-checker:ci
 
 jobs:
   build:
