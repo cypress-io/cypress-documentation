@@ -202,7 +202,8 @@ For example if you want video recording enabled only for End-to-end testing, you
 
 #### Predefined React Plugins
 
-First, if you are using a predefined plugin of `@cypress/react`, Component Testing is still configured the same. No action neede
+First, if you are using a predefined plugin of `@cypress/react`, Component Testing is still configured the same.
+You will not need to change anything to your configuration for component tests 7.0 to work.
 
 To know if you are using the predefined plugins file, look at the path imported/required in your plugins file.
 If the path contains `@cypress/react/plugins/...` you are using one.
@@ -245,7 +246,7 @@ module.exports = (on, config) => {
 }
 ```
 
-In 7.0 we introduced the concept of test "dev-server". So you will have to change the plugins file like so.
+In 7.0 we introduced the concept of a test "dev-server". So you will have to change the plugins file like so.
 
 <Badge type="success">After</Badge>
 
@@ -265,7 +266,7 @@ module.exports = (on, config) => {
 
 ### Support File
 
-Here is a piece of good news: You do not need to have anything in the support file anymore.
+Good news: You no longer require a support file.
 
 If you find the following line in your support file, remove it, it is not useful anymore.
 
@@ -289,7 +290,7 @@ This command opens your browser, with a list of all the specs found for componen
 
 <DocsImage src="/img/guides/cypress-open-ct.png" alt="When you open React Component Test" ></DocsImage>
 
-In this interface you run your tests by clicking on them.
+In this interface you run your tests by selecting them from the file navigator view on the left.
 
 #### cypress run-ct
 
@@ -306,9 +307,9 @@ Use [this documentation](/guides/tooling/code-coverage) to bring it back.
 
 #### cypress-react-selector
 
-In 6.X, `cypress-react-selector` was installed within `@cypress/react`
+In 6.X, [cypress-react-selector](https://www.npmjs.com/package/cypress-react-selector) was installed as a dependency of `@cypress/react`.
 
-If you use `cy.react()` in your tests, [install it back in your support file](https://www.npmjs.com/package/cypress-react-selector).
+If you use `cy.react()` in your tests, install it in your own devDependencies. The install you had in your support file still works.
 
 #### Cleanup After Each Test
 
@@ -316,7 +317,7 @@ In 6.X if you updated the html independently from the Component Tests, the HTML 
 
 In 7.0, only the components added using the `mount()` function will be cleaned automatically.
 
-If you have 2 tests like this in the same spec file, they will deal with teh same HTML.
+If you have 2 tests like this in the same spec file, they will deal with the same HTML.
 
 ```js
 describe('HTML changes', () => {
@@ -334,7 +335,7 @@ describe('HTML changes', () => {
 })
 ```
 
-but you can do this without needing to cleanup yourself between each test:
+However, you can do the following without needing to cleanup yourself between each test:
 
 ```js
 import { mount } from '@cypress/react'
@@ -345,6 +346,9 @@ describe('HTML changes', () => {
     mount(<Button>test</Button>)
     cy.contains('test').should('have.length', 1)
   })
+
+  // Button is getting cleaned after the test
+  // since it has been added with mount()
 
   it('second test', () => {
     mount(<Button>test</Button>)
