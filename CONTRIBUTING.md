@@ -179,12 +179,15 @@ Javascript code is linted with [ESLint](https://eslint.org/).
 
 ### Pull Requests
 
-You should push your local changes to your forked GitHub repository and then open a pull request (PR) from your repo to the `cypress-io/docs` repo.
+You should push your local changes to your forked GitHub repository and then open a pull request (PR) from your repo to the `cypress-io/cypress-documentation` repo.
 
-- The PR should be from your repository to the `develop` branch in `cypress-io/docs`
+- The PR should be from your repository to the `master` branch in `cypress-io/cypress-documentation`
 - When opening a PR for a specific issue already open, please use the `closes #issueNumber` syntax in the pull request description&mdash;for example, `closes #138`&mdash;so that the issue will be [automatically closed](https://help.github.com/articles/closing-issues-using-keywords/) when the PR is merged.
 - Please check the "Allow edits from maintainers" checkbox when submitting your PR. This will make it easier for the maintainers to make minor adjustments, to help with tests or any other changes we may need.
   ![Allow edits from maintainers checkbox](https://user-images.githubusercontent.com/1271181/31393427-b3105d44-ada9-11e7-80f2-0dac51e3919e.png)
+- All PRs will automatically create a deploy preview URL with Netlify. The deploy preview can be accessed via the PR's `netlify-cyporess-docs/deploy-preview` status check:
+
+![Netlify deploy preview status check](https://user-images.githubusercontent.com/11802078/113176533-36b79680-9212-11eb-8aec-898d0f5047df.png)
 
 ### Contributor License Agreement
 
@@ -194,11 +197,11 @@ After making a [pull request](#pull-requests), the CLA assistant will add a revi
 
 ## Deployment
 
-We will try to review and merge pull requests as fast as possible. After merging, we will deploy it to the staging environment, run E2E tests (using Cypress itself of course!), and then merge it into `master`, which will deploy it to the official [https://docs.cypress.io](https://docs.cypress.io) website. If you want to know our deploy process, read [DEPLOY.md](DEPLOY.md).
+We will try to review and merge pull requests as fast as possible. After merging, the changes will be made available on the official [https://docs.cypress.io](https://docs.cypress.io) website.
 
 ### Trigger workflow build
 
-Due to CircleCI API limitations (even after 2 years), you cannot trigger a workflow build using the API. Thus if you need to build, test and deploy `develop` branch for example, your best bet is to create an empty GitHub commit in the [cypress-io/docs](https://github.com/cypress-io/docs) repository in the `develop` branch. We have added [make-empty-github-commit](https://github.com/bahmutov/make-empty-github-commit) as a dev dependency and set it as `make-empty-commit` NPM script in the [package.json](package.json).
+Due to CircleCI API limitations, you cannot trigger a workflow build using the API. Thus if you need to build, test and deploy `your-branch` branch for example, your best bet is to create an empty GitHub commit in the [cypress-io/cypress-documentation](https://github.com/cypress-io/cypress-documentation) repository in the `your-branch` branch. We have added [make-empty-github-commit](https://github.com/bahmutov/make-empty-github-commit) as a dev dependency and set it as `make-empty-commit` NPM script in the [package.json](package.json).
 
 To trigger production rebuild and redeploy, use personal GitHub token and run:
 
