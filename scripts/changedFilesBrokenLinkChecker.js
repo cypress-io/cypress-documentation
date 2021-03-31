@@ -2,18 +2,8 @@
 const { execSync, fork } = require('child_process')
 const { HtmlUrlChecker } = require('broken-link-checker')
 const chalk = require('chalk')
-
-const logger = {
-  log: (...args) => {
-    console.log(`${chalk.yellow(`[${new Date().toISOString()}]:`)} `, ...args)
-  },
-  error: (...args) => {
-    console.error(
-      `${chalk.bgRed(`[${new Date().toISOString()}]: ⛔️ ERROR:`)} `,
-      ...args
-    )
-  },
-}
+const { logger } = require('./utils/logger')
+const { prettyPrintStatusCode } = require('./utils/prettyPrintStatusCode')
 
 const GIT_DIFF_NAME_STATUS_LAST_COMMIT = 'git diff --name-status HEAD~1'
 const MARKDOWN_EXTENSION = '.md'
@@ -136,14 +126,6 @@ const getGitDiffList = () => {
   }
 
   return []
-}
-
-const prettyPrintStatusCode = (statusCode) => {
-  if (statusCode >= 400) {
-    return chalk.bgRed(`ERROR ⛔️`)
-  }
-
-  return chalk.green(`OK ✅`)
 }
 
 const makeSiteCheckerForUrl = (url) => {
