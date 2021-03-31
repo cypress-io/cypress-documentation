@@ -138,21 +138,21 @@ cy.intercept('/does-it-exist', { body: false })
 // Requests to `/does-it-exist` receive a response body of `false`
 ```
 
-## Migrating to Component Testing in Cypress 7.0
+### Component Testing
 
-In 7.0, component testing is no longer experimental. Cypress now ships with a dedicated component test runner with a new UI and dedicated subcommands to launch it.
+In 7.0, component testing is no longer experimental. Cypress now ships with a dedicated component test runner with a new UI and dedicated commands to launch it.
 
 **Changes are required for all existing projects**. The required changes are limited to configuration and there are no breaking changes to the `mount` API. The migration guide contains the following steps:
 
-1. Update `cypress.json` to remove `experimentalComponentTesting`
+1. Update your configuration file, `cypress.json` by default, to remove `experimentalComponentTesting`
 2. Install updated dependencies
 3. Update the plugins file
-4. Begin using CLI subcommands
+4. Use CLI commands to launch
 5. Update the support file (optionally)
 
-### Remove `experimentalComponentTesting` flag
+#### Remove `experimentalComponentTesting` config
 
-The `experimentalComponentTesting` flag was used to prevent component testing code from executing within the Cypress end-to-end test runner. We no longer need this flag and have made setting this flag throw an error so it is apparent that component tests will no longer run when calling `cypress open` or `cypress run`.
+The `experimentalComponentTesting` configuration is no longer needed to run component tests. Remove this flag in order to run Cypress tests without erroring.
 
 <Badge type="danger">Before</Badge> experimentalComponentTesting flag is required for component testing
 
@@ -173,20 +173,20 @@ The `experimentalComponentTesting` flag was used to prevent component testing co
 }
 ```
 
-### Installing component testing dependencies
+#### Installing component testing dependencies
 
 The Component Test Runner requires the following dependencies:
 
-1. framework-specific bindings such as [`@cypress/react`][npmcypressreact]
-2. development server adapter such as [`@cypress/webpack-dev-server`][npmcypresswebpackdevserver]
-3. peer dependencies such as [`webpack-dev-server`][npmwebpackdevserver], [`vue`][npmvue], or [`react`][npmreact]
+1. Framework-specific bindings such as [`@cypress/react`][npmcypressreact].
+2. Development server adapter such as [`@cypress/webpack-dev-server`][npmcypresswebpackdevserver].
+3. Peer dependencies such as [`webpack-dev-server`][npmwebpackdevserver], [`vue`][npmvue], or [`react`][npmreact].
 
 **Install React dependencies**
 
-1. Upgrade to [`@cypress/react`][npmcypressreact] 5.X
-2. Install [`@cypress/webpack-dev-server`][npmcypresswebpackdevserver]
-3. (Optional) Install [`cypress-react-selector`][npmcypressreactselector] if any tests use `cy.react()`
-4. (Optional) Install code coverage, see [installation steps](/guides/tooling/code-coverage))
+1. Upgrade to [`@cypress/react`][npmcypressreact] 5.X.
+2. Install [`@cypress/webpack-dev-server`][npmcypresswebpackdevserver].
+3. (Optional) Install [`cypress-react-selector`][npmcypressreactselector] if any tests use `cy.react()`.
+4. (Optional) Install code coverage, see [installation steps](/guides/tooling/code-coverage)).
 
 ```shell
 npm i cypress @cypress/react @cypress/webpack-dev-server -D
@@ -194,8 +194,8 @@ npm i cypress @cypress/react @cypress/webpack-dev-server -D
 
 **Install Vue 3 dependencies**
 
-1. Upgrade to [`@cypress/vue@next`][npmcypressvue] (3.X and above)
-2. Install [`@cypress/webpack-dev-server`][npmcypresswebpackdevserver]
+1. Upgrade to [`@cypress/vue@next`][npmcypressvue] (3.X and above).
+2. Install [`@cypress/webpack-dev-server`][npmcypresswebpackdevserver].
 
 ```shell
 npm i cypress @cypress/vue@next @cypress/webpack-dev-server -D
@@ -203,21 +203,18 @@ npm i cypress @cypress/vue@next @cypress/webpack-dev-server -D
 
 **Install Vue 2 dependencies**
 
-1. Upgrade to [`@cypress/vue@2`][npmcypressvue] (2.X only)
-2. Install [`@cypress/webpack-dev-server`][npmcypresswebpackdevserver]
+1. Upgrade to [`@cypress/vue@2`][npmcypressvue] (2.X only).
+2. Install [`@cypress/webpack-dev-server`][npmcypresswebpackdevserver].
 
 ```shell
 npm i cypress @cypress/vue @cypress/webpack-dev-server -D
 ```
 
-### Migrate component file to use `dev-server:start`
+#### Update plugins file to use `dev-server:start`
 
 **Re-using a project's local development server instead of file preprocessors**
+
 In 7.0 Cypress component tests require that code is bundled with your local development server, via a new `dev-server:start` event. This event replaces the previous `file:preprocessor` event.
-
-Previously, Cypress component testing used preprocessors to bundle your code before serving it to the Cypress tests. This had significant performance reprocussions for component tests because the amount of code bundled from an application is much larger than that bundled for an end-to-end test.
-
-Migrating from preprocessors to local development servers also addresses many issues related to: mismatched dependencies, different bundling contexts between support and spec code, support for dynamic imports, and various invalid webpack configurations. When using the user's local development server, we avoid modifying the user's webpack configuation and this significantly improves the compatibility of the test runner with various webpack build configurations.
 
 <Badge type="danger">Before</Badge> Plugins file registers the file:preprocessor event
 
@@ -251,9 +248,11 @@ module.exports = (on, config) => {
 ```
 
 **Configure `plugins.js` for React projects**
+
 Projects using React may not need to update their plugins file. If your project is using a webpack scaffold or boilerplate, it is recommended to use a preset plugin imported from `@cypress/react/plugins/...`
 
 **Preset Plugins for React**
+
 If you are using a preset plugin within [`@cypress/react`][npmcypressreact], you should not need to update your plugins file. To check if you are using a preset, check to see if your plugins file contains an import to a file inside of `@cypress/react/plugins`.
 
 <Badge type="success">After</Badge> An example plugins file to configure component testing in a React Scripts project
@@ -273,7 +272,8 @@ module.exports = (on, config) => {
 ```
 
 **Configure `plugins.js` for Vue**
-Projects using Vue will likely be using either [`@vue/cli`][npmvuecli] or manually defining webpack configuration. These steps are identical to the manual setup steps, with the execption of how you resolve the webpack configuration. To access the resolved webpack configuration that contains any `vue.config.js` setup or the default [`@vue/cli`][npmvuecli] webpack setup, you must import the configuration and pass it into [`@cypress/webpack-dev-server`][npmcypresswebpackdevserver].
+
+Projects using Vue will likely be using either [`@vue/cli`][npmvuecli] or manually defining webpack configuration. These steps are identical to the manual setup steps, with the exception of how you resolve the webpack configuration. To access the resolved webpack configuration that contains any `vue.config.js` setup or the default [`@vue/cli`][npmvuecli] webpack setup, you must import the configuration and pass it into [`@cypress/webpack-dev-server`][npmcypresswebpackdevserver].
 
 <Badge type="success">After</Badge> An example plugins file to configure component testing in a Vue CLI project
 
@@ -293,6 +293,7 @@ module.exports = (on, config) => {
 ```
 
 **Configuring a project with vanilla webpack**
+
 For projects with manually defined or ejected webpack configurations, the webpack configuration must be passed in.
 
 <Badge type="success">After</Badge> An example plugins file to configure component testing in a project with vanilla webpack
@@ -310,13 +311,12 @@ module.exports = (on, config) => {
 }
 ```
 
-**Run component tests with `open-ct` and `run-ct`**
+#### Use CLI commands to launch
+
 To run your component tests you _must_ use the dedicated component testing subcommands.
 
 - `cypress open-ct`
 - `cypress run-ct`
-
-To maintain parity between Cypress 6.X and Cypress 7.0, any scripts that rely on `cypress run` or `cypress open` to launch both types of tests must be updated to execute the end-to-end and component testing runners independently. You'll want to update these commands within your `package.json` scripts as well as any continuous integration tasks.
 
 <Alert type="info">
 
@@ -337,10 +337,26 @@ cypress run-ct
 cypress run
 ```
 
+#### Update the support file (optionally)
+
+Previously, a support file was required to set up the component testing target node. This is no longer necessary.
+
+Specifically for React users, if the support file contains the following line, please remove it. The import will fail in the future. We have left it in to avoid a breaking change, but the file does nothing.
+
+<Badge type="danger">Before</Badge> The support file was required to import a script from [@cypress/react][npmcypressreact]
+
+```js
+// support.js
+
+// This import should be removed, it will error in a future update
+import '@cypress/react/hooks'
+```
+
 **Expanded stylesheet support**
+
 Stylesheets are now bundled and imported within spec and support files. Previously, many of `mount`'s mounting options such as `stylesheets`, `cssFiles`, and `styles` were required to import stylesheets into your component tests. This often involved pre-compiling the stylesheets before launching the component tests, which affected performance. Migrating to imports for these styles is optional, but recommended.
 
-Now, stylesheets should be loaded into the `document` the same way they are in your application. It is recommended you update your code like so:
+Now, stylesheets should be loaded into the `document` the same way they are in your application. It is recommended you update your code like so:
 
 <Badge type="danger">Before</Badge> Stylesheets were loaded using the filesystem
 
@@ -379,24 +395,12 @@ it('renders a Button', () => {
 })
 ```
 
-**Support file changes for `@cypress/react`**
-Previously, a support file was required to setup the component testing target node. This is no longer necessary.
-
-Specifically for React users, if the support file contains the following line, please remove it. The import will fail in the future. We have left it in to avoid a breaking change, but the file does nothing.
-
-<Badge type="danger">Before</Badge> The support file was required to import a script from [@cypress/react][npmcypressreact]
-
-```js
-// support.js
-
-// This import should be removed, it will error in a future update
-import '@cypress/react/hooks'
-```
-
 **Desktop GUI no longer displays component tests**
+
 Previously, the Desktop GUI displayed _both_ end-to-end and component tests. Now, component tests are only displayed when launching via the component testing-specific subcommands. `cypress open-ct` (or `run-ct` in CI)
 
 **Executing all or some component tests**
+
 In 6.X, the Desktop GUI had support for finding and executing a subset of component tests. In 7.0, this is possible with the `--headed` command and a spec glob, like so:
 
 ```sh
@@ -404,17 +408,20 @@ cypress run-ct --headed --spec **/some-folder/*spec.*
 ```
 
 **Coverage**
-Previously, the [`@cypress/react`][npmcypressreact] 4.X package embedded code coverage in your tests automatically. _This added significant performance overhead and has therefore been removed._
+
+Previously, the [`@cypress/react`][npmcypressreact] 4.X package embedded code coverage in your tests automatically.
 
 If you still wish to record code coverage in your tests, you must manually install it. Please see our [code coverage guide](/guides/tooling/code-coverage) for the latest steps.
 
 **cypress-react-selector**
+
 If you use `cy.react()` in your tests, you must manually install [`cypress-react-selector`][npmcypressreactselector] with `npm i cypress-react-selector -D`. You do not need to update your support file.
 
 **HTML Side effects**
-As of 7.0, we only clean up components mounted by the Cypress via [`@cypress/react`][npmcypressreact] or [`@cypress/vue`][npmcypressvue].
 
-We no longer automatically reset the `document.body` between tests. Any HTML side effects of your component tests will carry over. Among other reasons, this is to preserve any `style` imports or script code injected into `head` at the top of your spec file or source code.
+As of 7.0, we only clean up components mounted by Cypress via [`@cypress/react`][npmcypressreact] or [`@cypress/vue`][npmcypressvue].
+
+We no longer automatically reset the `document.body` between tests. Any HTML side effects of your component tests will carry over.
 
 <Badge type="danger">Before</Badge> All HTML content was cleared between spec files
 
@@ -472,58 +479,8 @@ describe('Component teardown behavior', () => {
 ```
 
 **Legacy `cypress-react-unit-test` and `cypress-vue-unit-test` packages**
+
 For users upgrading from [`cypress-react-unit-tests`][npmlegacycypressreact] or [`cypress-vue-unit-tests`][npmlegacycypressvue], please update all references to use [`@cypress/react`][npmcypressreact] or [`@cypress/vue`][npmcypressvue]. These packages have been deprecated and moved to the Cypress scope on npm.
-
-**Overriding `cypress.json` configuration by testing type**
-Depending on what type of test you're going to run, you may want to overwrite certain defaults such as `testFiles`, `supportFile`, or `video`. This can be done in a few ways. For more information, please see the [documentation](/guides/references/configuration#Runner-Specific-Overrides).
-
-###### Runtime configuration in plugins.js
-
-<Badge type="info">Recommended</Badge> Defining logic within the plugins file and overwriting configuration based on the testingType option
-
-```js
-// plugins.js
-const webpackConfig = require('../webpack.config.js')
-const webpackPreprocessor = require('@cypress/webpack-preprocessor')
-const { startDevServer } = require('@cypress/webpack-dev-server')
-
-module.exports = (on, config) => {
-  if (config.testingType === 'component') {
-    config.video = false
-    config.viewportWidth = 500
-    config.viewportHeight = 500
-
-    on('dev-server:start', (options) => {
-      return startDevServer({ options, webpackConfig })
-    })
-  } else {
-    // Slow tasks that are only relevant to end-to-end tasks should be placed within a conditional
-    // so that they are only executed during `cypress open` or `cypress run`
-    on('file:preprocessor', webpackPreprocessor(options))
-  }
-
-  // Always return config
-  return config
-}
-```
-
-**cypress.json overrides**
-This configuration turns video recording off when launching component tests. There is also an `e2e` configuration value to accomplish the same behavior for end-to-end tests. Below in an example `cypress.json` configuration that uses the `component` namespaces to override the root-level configuration values.
-
-When running component tests, this configuration turns video recording off and matches `testFiles` inside of the `src/components/**/__tests__/` directory. When running end-to-end tests, video recording is turned on and matches `testFiles` inside of `cypress/integration`.
-
-```json
-{
-  "testFiles": "cypress/integration/*spec.{js,jsx,ts,tsx}",
-  "video": true,
-  "component": {
-    "testFiles": "**/__tests__/*spec.{js,jsx,ts,tsx}",
-    "componentFolder": "src/components",
-    "video": false
-  },
-  "e2e": {}
-}
-```
 
 ### Uncaught exception and unhandled rejections
 
