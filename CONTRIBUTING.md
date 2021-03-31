@@ -185,9 +185,11 @@ You should push your local changes to your forked GitHub repository and then ope
 - When opening a PR for a specific issue already open, please use the `closes #issueNumber` syntax in the pull request description&mdash;for example, `closes #138`&mdash;so that the issue will be [automatically closed](https://help.github.com/articles/closing-issues-using-keywords/) when the PR is merged.
 - Please check the "Allow edits from maintainers" checkbox when submitting your PR. This will make it easier for the maintainers to make minor adjustments, to help with tests or any other changes we may need.
   ![Allow edits from maintainers checkbox](https://user-images.githubusercontent.com/1271181/31393427-b3105d44-ada9-11e7-80f2-0dac51e3919e.png)
-- All PRs will automatically create a deploy preview URL with Netlify. The deploy preview can be accessed via the PR's `netlify-cyporess-docs/deploy-preview` status check:
+- All PRs against `master` will automatically create a deploy preview URL with Netlify. The deploy preview can be accessed via the PR's `netlify-cypress-docs/deploy-preview` status check:
 
 ![Netlify deploy preview status check](https://user-images.githubusercontent.com/11802078/113176533-36b79680-9212-11eb-8aec-898d0f5047df.png)
+
+- All branches will automatically create a branch deploy preview. The branch deploy previews do not appear as a GitHub status check like deploy previews. You can view your branch's deploy preview by visiting `https://$BRANCH_NAME--cypress-docs.netlify.app` where `$BRANCH_NAME` is your git branch name. For example, if my branch was named `my-branch`, my branch preview will be available at `https://my-branch--cypress-docs.netlify.app`.
 
 ### Contributor License Agreement
 
