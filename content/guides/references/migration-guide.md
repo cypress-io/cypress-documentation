@@ -154,7 +154,7 @@ In 7.0, component testing is no longer experimental. Cypress now ships with a de
 
 The `experimentalComponentTesting` flag was used to prevent component testing code from executing within the Cypress end-to-end test runner. We no longer need this flag and have made setting this flag throw an error so it is apparent that component tests will no longer run when calling `cypress open` or `cypress run`.
 
-<Badge type="danger">Before</Badge> `experimentalComponentTesting` flag is required for component testing
+<Badge type="danger">Before</Badge> experimentalComponentTesting flag is required for component testing
 
 ```json
 {
@@ -164,7 +164,7 @@ The `experimentalComponentTesting` flag was used to prevent component testing co
 }
 ```
 
-<Badge type="success">After</Badge> `experimentalComponentTesting` flag must be removed
+<Badge type="success">After</Badge> experimentalComponentTesting flag must be removed
 
 ```json
 {
@@ -342,7 +342,7 @@ Stylesheets are now bundled and imported within spec and support files. Previous
 
 Now, stylesheets should be loaded into the `document` the same way they are in your application. It is recommended you update your code like so:
 
-<Badge type="danger">Before</Badge> Stylesheets were loaded using the filesystem and `fs`
+<Badge type="danger">Before</Badge> Stylesheets were loaded using the filesystem
 
 ```js
 const { mount } = require('@cypress/react')
@@ -384,7 +384,7 @@ Previously, a support file was required to setup the component testing target no
 
 Specifically for React users, if the support file contains the following line, please remove it. The import will fail in the future. We have left it in to avoid a breaking change, but the file does nothing.
 
-<Badge type="danger">Before</Badge> The support file was required to import a script from [`@cypress/react`][npmcypressreact]
+<Badge type="danger">Before</Badge> The support file was required to import a script from [@cypress/react][npmcypressreact]
 
 ```js
 // support.js
@@ -479,7 +479,7 @@ Depending on what type of test you're going to run, you may want to overwrite ce
 
 ###### Runtime configuration in plugins.js
 
-<Badge type="info">Recommended</Badge> Defining logic within the plugins file and overwriting configuration based on the `testingType` option
+<Badge type="info">Recommended</Badge> Defining logic within the plugins file and overwriting configuration based on the testingType option
 
 ```js
 // plugins.js
@@ -508,9 +508,9 @@ module.exports = (on, config) => {
 ```
 
 **cypress.json overrides**
-This configuration turns video recording off when launching component tests. There is also an `e2e` configuration value to accomplish the same behavior for end-to-end tests.
+This configuration turns video recording off when launching component tests. There is also an `e2e` configuration value to accomplish the same behavior for end-to-end tests. Below in an example `cypress.json` configuration that uses the `component` namespaces to override the root-level configuration values.
 
-<Badge type="info">Example</Badge> Using the `e2e` and `component` namespaces to override the root-level configuration values
+When running component tests, this configuration turns video recording off and matches `testFiles` inside of the `src/components/**/__tests__/` directory. When running end-to-end tests, video recording is turned on and matches `testFiles` inside of `cypress/integration`.
 
 ```json
 {
