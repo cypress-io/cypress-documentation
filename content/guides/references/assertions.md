@@ -229,6 +229,13 @@ cy.get('textarea').should('have.value', 'foo bar baz')
 ```javascript
 // retry until this span does not contain 'click me'
 cy.get('a').parent('span.help').should('not.contain', 'click me')
+// the element's text should start with "Hello"
+cy.get('#greeting')
+  .invoke('text')
+  .should('match', /^Hello/)
+// tip: use cy.contains to find element with its text
+// matching the given regular expression
+cy.contains('#a-greeting', /^Hello/)
 ```
 
 ### Visibility
