@@ -337,6 +337,21 @@ cypress run-ct
 cypress run
 ```
 
+#### Update the support file (optionally)
+
+Previously, a support file was required to set up the component testing target node. This is no longer necessary.
+
+Specifically for React users, if the support file contains the following line, please remove it. The import will fail in the future. We have left it in to avoid a breaking change, but the file does nothing.
+
+<Badge type="danger">Before</Badge> The support file was required to import a script from [@cypress/react][npmcypressreact]
+
+```js
+// support.js
+
+// This import should be removed, it will error in a future update
+import '@cypress/react/hooks'
+```
+
 **Expanded stylesheet support**
 
 Stylesheets are now bundled and imported within spec and support files. Previously, many of `mount`'s mounting options such as `stylesheets`, `cssFiles`, and `styles` were required to import stylesheets into your component tests. This often involved pre-compiling the stylesheets before launching the component tests, which affected performance. Migrating to imports for these styles is optional, but recommended.
@@ -378,21 +393,6 @@ it('renders a Button', () => {
   // as well as the application's index.scss styles
   mount(<Button />)
 })
-```
-
-#### Update the support file (optionally)
-
-Previously, a support file was required to set up the component testing target node. This is no longer necessary.
-
-Specifically for React users, if the support file contains the following line, please remove it. The import will fail in the future. We have left it in to avoid a breaking change, but the file does nothing.
-
-<Badge type="danger">Before</Badge> The support file was required to import a script from [@cypress/react][npmcypressreact]
-
-```js
-// support.js
-
-// This import should be removed, it will error in a future update
-import '@cypress/react/hooks'
 ```
 
 **Desktop GUI no longer displays component tests**
