@@ -254,7 +254,7 @@ module.exports = (on, config) => {
 Projects using React may not need to update their plugins file. If your project is using a webpack scaffold or boilerplate, it is recommended to use a preset plugin imported from `@cypress/react/plugins/...`
 
 **Preset Plugins for React**
-If you are using a preset plugin within [`@cypress/react`][npmcypressreact], you should not need to update your plugins file. To know if you are using a preset plugin, look at the path imported in your plugins file. If the path contains `@cypress/react/plugins/...`, then you may not need to touch the plugins file.
+If you are using a preset plugin within [`@cypress/react`][npmcypressreact], you should not need to update your plugins file. To check if you are using a preset, check to see if your plugins file contains an import to a file inside of `@cypress/react/plugins`.
 
 <Badge type="success">After</Badge> An example plugins file to configure component testing in a React Scripts project
 
