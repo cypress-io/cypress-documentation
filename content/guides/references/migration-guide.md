@@ -409,7 +409,7 @@ cypress run-ct --headed --spec **/some-folder/*spec.*
 
 **Coverage**
 
-Previously, the [`@cypress/react`][npmcypressreact] 4.X package embedded code coverage in your tests automatically. _This added significant performance overhead and has therefore been removed._
+Previously, the [`@cypress/react`][npmcypressreact] 4.X package embedded code coverage in your tests automatically.
 
 If you still wish to record code coverage in your tests, you must manually install it. Please see our [code coverage guide](/guides/tooling/code-coverage) for the latest steps.
 
