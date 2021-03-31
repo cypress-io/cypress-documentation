@@ -6,7 +6,7 @@ title: Migration Guide
 
 This guide details the changes and how to change your code to migrate to Cypress 7.0. [See the full changelog for 7.0](/guides/references/changelog#7-0-0).
 
-### `cy.intercept()` changes
+### [`cy.intercept()`][intercept] changes
 
 [Cypress 7.0](<(/guides/references/changelog#7-0-0)>) comes with some breaking changes to [`cy.intercept()`][intercept]:
 
@@ -254,7 +254,7 @@ module.exports = (on, config) => {
 Projects using React may not need to update their plugins file. If your project is using a webpack scaffold or boilerplate, it is recommended to use a preset plugin imported from `@cypress/react/plugins/...`
 
 **Preset Plugins for React**
-If you are using a preset plugin within [`@cypress/react`][npmcypressreact], you should not need to update your plugins file. To know if you are using a preset plugin, look at the path imported in your plugins file. If the path contains `@cypress/react/plugins/...`, then you may not need to touch the plugins file.
+If you are using a preset plugin within [`@cypress/react`][npmcypressreact], you should not need to update your plugins file. To check if you are using a preset, check to see if your plugins file contains an import to a file inside of `@cypress/react/plugins`.
 
 <Badge type="success">After</Badge> An example plugins file to configure component testing in a React Scripts project
 
@@ -411,10 +411,10 @@ If you still wish to record code coverage in your tests, you must manually insta
 **cypress-react-selector**
 If you use `cy.react()` in your tests, you must manually install [`cypress-react-selector`][npmcypressreactselector] with `npm i cypress-react-selector -D`. You do not need to update your support file.
 
-**HTML Side-affects**
+**HTML Side effects**
 As of 7.0, we only clean up components mounted by the Cypress via [`@cypress/react`][npmcypressreact] or [`@cypress/vue`][npmcypressvue].
 
-We no longer automatically reset the `document.body` between tests. Any HTML side-affects of your component tests will carry over. Among other reasons, this is to preserve any `style` imports or script code injected into `head` at the top of your spec file or source code.
+We no longer automatically reset the `document.body` between tests. Any HTML side effects of your component tests will carry over. Among other reasons, this is to preserve any `style` imports or script code injected into `head` at the top of your spec file or source code.
 
 <Badge type="danger">Before</Badge> All HTML content was cleared between spec files
 
@@ -472,7 +472,7 @@ describe('Component teardown behavior', () => {
 ```
 
 **Legacy `cypress-react-unit-test` and `cypress-vue-unit-test` packages**
-For users upgrading from [`cypress-react-unit-tests`][npmlegacycypressreact] or [`cypress-vue-unit-tests`][npmlegacycypressvue], please update all references to use [`@cypress/react`][npmcypressreact] or [`@cypress/vue`][npmcypressvie]. These packages have been deprecated and moved to the Cypress scope on npm.
+For users upgrading from [`cypress-react-unit-tests`][npmlegacycypressreact] or [`cypress-vue-unit-tests`][npmlegacycypressvue], please update all references to use [`@cypress/react`][npmcypressreact] or [`@cypress/vue`][npmcypressvue]. These packages have been deprecated and moved to the Cypress scope on npm.
 
 **Overriding `cypress.json` configuration by testing type**
 Depending on what type of test you're going to run, you may want to overwrite certain defaults such as `testFiles`, `supportFile`, or `video`. This can be done in a few ways. For more information, please see the [documentation](/guides/references/configuration#Runner-Specific-Overrides).
