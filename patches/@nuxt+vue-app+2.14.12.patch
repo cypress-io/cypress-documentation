@@ -1,5 +1,5 @@
 diff --git a/node_modules/@nuxt/vue-app/template/App.js b/node_modules/@nuxt/vue-app/template/App.js
-index c8f7c95..09ef19d 100644
+index c8f7c95..9c65c53 100644
 --- a/node_modules/@nuxt/vue-app/template/App.js
 +++ b/node_modules/@nuxt/vue-app/template/App.js
 @@ -43,9 +43,6 @@ export default {
@@ -12,3 +12,17 @@ index c8f7c95..09ef19d 100644
        key: this.layoutName
      }, [layoutEl])
      <% } else { %>
+@@ -69,11 +66,8 @@ export default {
+     }, [templateEl])
+     <% } %>
+ 
+-    return h('div', {
+-      domProps: {
+-        id: '<%= globals.id %>'
+-      }
+-    }, [
++    return h('div', {}, 
++    [
+       <% if (loading) { %>loadingEl, <% } %>
+       <% if (buildIndicator) { %>h(NuxtBuildIndicator), <% } %>
+       <% if (features.transitions) { %>transitionEl<% } else { %>templateEl<% } %>
