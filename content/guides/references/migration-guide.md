@@ -419,9 +419,9 @@ If you use `cy.react()` in your tests, you must manually install [`cypress-react
 
 **HTML Side effects**
 
-As of 7.0, we only clean up components mounted by the Cypress via [`@cypress/react`][npmcypressreact] or [`@cypress/vue`][npmcypressvue].
+As of 7.0, we only clean up components mounted by Cypress via [`@cypress/react`][npmcypressreact] or [`@cypress/vue`][npmcypressvue].
 
-We no longer automatically reset the `document.body` between tests. Any HTML side effects of your component tests will carry over. Among other reasons, this is to preserve any `style` imports or script code injected into `head` at the top of your spec file or source code.
+We no longer automatically reset the `document.body` between tests. Any HTML side effects of your component tests will carry over.
 
 <Badge type="danger">Before</Badge> All HTML content was cleared between spec files
 
@@ -481,59 +481,6 @@ describe('Component teardown behavior', () => {
 **Legacy `cypress-react-unit-test` and `cypress-vue-unit-test` packages**
 
 For users upgrading from [`cypress-react-unit-tests`][npmlegacycypressreact] or [`cypress-vue-unit-tests`][npmlegacycypressvue], please update all references to use [`@cypress/react`][npmcypressreact] or [`@cypress/vue`][npmcypressvue]. These packages have been deprecated and moved to the Cypress scope on npm.
-
-**Overriding `cypress.json` configuration by testing type**
-
-Depending on what type of test you're going to run, you may want to overwrite certain defaults such as `testFiles`, `supportFile`, or `video`. This can be done in a few ways. For more information, please see the [documentation](/guides/references/configuration#Runner-Specific-Overrides).
-
-###### Runtime configuration in plugins.js
-
-<Badge type="info">Recommended</Badge> Defining logic within the plugins file and overwriting configuration based on the testingType option
-
-```js
-// plugins.js
-const webpackConfig = require('../webpack.config.js')
-const webpackPreprocessor = require('@cypress/webpack-preprocessor')
-const { startDevServer } = require('@cypress/webpack-dev-server')
-
-module.exports = (on, config) => {
-  if (config.testingType === 'component') {
-    config.video = false
-    config.viewportWidth = 500
-    config.viewportHeight = 500
-
-    on('dev-server:start', (options) => {
-      return startDevServer({ options, webpackConfig })
-    })
-  } else {
-    // Slow tasks that are only relevant to end-to-end tasks should be placed within a conditional
-    // so that they are only executed during `cypress open` or `cypress run`
-    on('file:preprocessor', webpackPreprocessor(options))
-  }
-
-  // Always return config
-  return config
-}
-```
-
-**cypress.json overrides**
-
-This configuration turns video recording off when launching component tests. There is also an `e2e` configuration value to accomplish the same behavior for end-to-end tests. Below in an example `cypress.json` configuration that uses the `component` namespaces to override the root-level configuration values.
-
-When running component tests, this configuration turns video recording off and matches `testFiles` inside of the `src/components/**/__tests__/` directory. When running end-to-end tests, video recording is turned on and matches `testFiles` inside of `cypress/integration`.
-
-```json
-{
-  "testFiles": "cypress/integration/*spec.{js,jsx,ts,tsx}",
-  "video": true,
-  "component": {
-    "testFiles": "**/__tests__/*spec.{js,jsx,ts,tsx}",
-    "componentFolder": "src/components",
-    "video": false
-  },
-  "e2e": {}
-}
-```
 
 ### Uncaught exception and unhandled rejections
 
