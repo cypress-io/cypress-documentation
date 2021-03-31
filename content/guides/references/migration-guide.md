@@ -411,10 +411,10 @@ If you still wish to record code coverage in your tests, you must manually insta
 **cypress-react-selector**
 If you use `cy.react()` in your tests, you must manually install [`cypress-react-selector`][npmcypressreactselector] with `npm i cypress-react-selector -D`. You do not need to update your support file.
 
-**HTML Side-affects**
+**HTML Side effects**
 As of 7.0, we only clean up components mounted by the Cypress via [`@cypress/react`][npmcypressreact] or [`@cypress/vue`][npmcypressvue].
 
-We no longer automatically reset the `document.body` between tests. Any HTML side-affects of your component tests will carry over. Among other reasons, this is to preserve any `style` imports or script code injected into `head` at the top of your spec file or source code.
+We no longer automatically reset the `document.body` between tests. Any HTML side effects of your component tests will carry over. Among other reasons, this is to preserve any `style` imports or script code injected into `head` at the top of your spec file or source code.
 
 <Badge type="danger">Before</Badge> All HTML content was cleared between spec files
 
