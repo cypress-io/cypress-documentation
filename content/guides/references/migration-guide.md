@@ -394,7 +394,7 @@ import '@cypress/react/hooks'
 ```
 
 **Desktop GUI no longer displays component tests**
-Previously, the Desktop GUI displayed _both_ E2E and component tests. Now, component tests are only displayed when launching via the component testing-specific subcommands. `cypress open-ct` (or `run-ct` in CI)
+Previously, the Desktop GUI displayed _both_ end-to-end and component tests. Now, component tests are only displayed when launching via the component testing-specific subcommands. `cypress open-ct` (or `run-ct` in CI)
 
 **Executing all or some component tests**
 In 6.X, the Desktop GUI had support for finding and executing a subset of component tests. In 7.0, this is possible with the `--headed` command and a spec glob, like so:
