@@ -48,12 +48,14 @@ export default {
             </div>
           </div>
           <p>{{ plugin.description }}</p>
-          <span
-            v-for="keyword in plugin.keywords"
-            :key="keyword"
-            class="keyword"
-            >#{{ keyword }}</span
-          >
+          <div class="break-words">
+            <span
+              v-for="keyword in plugin.keywords"
+              :key="keyword"
+              class="keyword"
+              >#{{ keyword }}</span
+            >
+          </div>
         </li>
       </ul>
     </section>
@@ -100,9 +102,14 @@ ul.plugins-list {
     box-sizing: border-box;
     list-style: none;
     padding: 20px;
-    width: 30%;
     border: 1px solid #e8e8e8;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.15);
+    @apply w-full;
+
+    /* stylelint-disable-next-line at-rule-no-unknown */
+    @screen lg {
+      width: 30%;
+    }
 
     p {
       margin-bottom: 0.5em;

@@ -21,14 +21,16 @@ export default {
       return error({ statusCode: 404, message: 'Plugin Doc not found' })
     }
 
-    const [rawContent] = await $content({ deep: true, text: true }).where({ path }).fetch()
+    const [rawContent] = await $content({ deep: true, text: true })
+      .where({ path })
+      .fetch()
     const metaDescription = await getMetaDescription(rawContent.text)
 
     return {
       algoliaSettings,
       pluginDoc,
       plugins,
-      metaDescription
+      metaDescription,
     }
   },
   head() {
@@ -39,9 +41,9 @@ export default {
         {
           hid: 'canonical',
           rel: 'canonical',
-          href: `https://docs.cypress.io/plugins/${this.$route.params.pathMatch}`
-        }
-      ]
+          href: `https://docs.cypress.io/plugins/${this.$route.params.pathMatch}`,
+        },
+      ],
     }
   },
   computed: {
@@ -50,12 +52,12 @@ export default {
         type: 'article',
         title: this.pluginDoc.title,
         description: this.metaDescription,
-        url: `https://docs.cypress.io/plugins/${this.$route.params.pathMatch}`
+        url: `https://docs.cypress.io/plugins/${this.$route.params.pathMatch}`,
       }
 
       return getMetaData(metaData)
-    }
-  }
+    },
+  },
 }
 </script>
 
