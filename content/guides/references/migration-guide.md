@@ -472,7 +472,7 @@ describe('Component teardown behavior', () => {
 ```
 
 **Legacy `cypress-react-unit-test` and `cypress-vue-unit-test` packages**
-For users upgrading from [`cypress-react-unit-tests`][npmlegacycypressreact] or [`cypress-vue-unit-tests`][npmlegacycypressvue], please update all references to use [`@cypress/react`][npmcypressreact] or [`@cypress/vue`][npmcypressvie]. These packages have been deprecated and moved to the Cypress scope on npm.
+For users upgrading from [`cypress-react-unit-tests`][npmlegacycypressreact] or [`cypress-vue-unit-tests`][npmlegacycypressvue], please update all references to use [`@cypress/react`][npmcypressreact] or [`@cypress/vue`][npmcypressvue]. These packages have been deprecated and moved to the Cypress scope on npm.
 
 **Overriding `cypress.json` configuration by testing type**
 Depending on what type of test you're going to run, you may want to overwrite certain defaults such as `testFiles`, `supportFile`, or `video`. This can be done in a few ways. For more information, please see the [documentation](/guides/references/configuration#Runner-Specific-Overrides).
