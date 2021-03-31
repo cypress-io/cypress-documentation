@@ -173,7 +173,7 @@ The `experimentalComponentTesting` configuration is no longer needed to run comp
 }
 ```
 
-#### Installing component testing dependencies
+#### Install component testing dependencies
 
 The Component Test Runner requires the following dependencies:
 
@@ -352,7 +352,7 @@ Specifically for React users, if the support file contains the following line, p
 import '@cypress/react/hooks'
 ```
 
-**Expanded stylesheet support**
+#### Expanded stylesheet support
 
 Stylesheets are now bundled and imported within spec and support files. Previously, many of `mount`'s mounting options such as `stylesheets`, `cssFiles`, and `styles` were required to import stylesheets into your component tests. This often involved pre-compiling the stylesheets before launching the component tests, which affected performance. Migrating to imports for these styles is optional, but recommended.
 
@@ -395,11 +395,11 @@ it('renders a Button', () => {
 })
 ```
 
-**Desktop GUI no longer displays component tests**
+#### Desktop GUI no longer displays component tests
 
 Previously, the Desktop GUI displayed _both_ end-to-end and component tests. Now, component tests are only displayed when launching via the component testing-specific subcommands. `cypress open-ct` (or `run-ct` in CI)
 
-**Executing all or some component tests**
+#### Executing all or some component tests
 
 In 6.X, the Desktop GUI had support for finding and executing a subset of component tests. In 7.0, this is possible with the `--headed` command and a spec glob, like so:
 
@@ -407,17 +407,17 @@ In 6.X, the Desktop GUI had support for finding and executing a subset of compon
 cypress run-ct --headed --spec **/some-folder/*spec.*
 ```
 
-**Coverage**
+#### Coverage
 
 Previously, the [`@cypress/react`][npmcypressreact] 4.X package embedded code coverage in your tests automatically.
 
 If you still wish to record code coverage in your tests, you must manually install it. Please see our [code coverage guide](/guides/tooling/code-coverage) for the latest steps.
 
-**cypress-react-selector**
+#### cypress-react-selector
 
 If you use `cy.react()` in your tests, you must manually install [`cypress-react-selector`][npmcypressreactselector] with `npm i cypress-react-selector -D`. You do not need to update your support file.
 
-**HTML Side effects**
+#### HTML Side effects
 
 As of 7.0, we only clean up components mounted by Cypress via [`@cypress/react`][npmcypressreact] or [`@cypress/vue`][npmcypressvue].
 
@@ -478,7 +478,7 @@ describe('Component teardown behavior', () => {
 })
 ```
 
-**Legacy `cypress-react-unit-test` and `cypress-vue-unit-test` packages**
+#### Legacy `cypress-react-unit-test` and `cypress-vue-unit-test` packages
 
 For users upgrading from [`cypress-react-unit-tests`][npmlegacycypressreact] or [`cypress-vue-unit-tests`][npmlegacycypressvue], please update all references to use [`@cypress/react`][npmcypressreact] or [`@cypress/vue`][npmcypressvue]. These packages have been deprecated and moved to the Cypress scope on npm.
 
