@@ -1652,7 +1652,6 @@ module.exports = (on) => {
 ```
 
 [intercept]: /api/commands/intercept
-
 [npmcypresswebpackdevserver]: https://www.npmjs.org/packages/@cypress/webpack-dev-server
 [npmcypressreact]: https://www.npmjs.org/packages/@cypress/react
 [npmcypressvue]: https://www.npmjs.org/packages/@cypress/vue
