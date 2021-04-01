@@ -35,8 +35,7 @@ export default {
         return absoluteUrl
       }
 
-      const url =
-        pathname.replace(this.settings.url, '/') + hash.replace('#__nuxt', '')
+      const url = pathname.replace(this.settings.url, '/') + hash
 
       return this.stripTrailingSlash(url)
     },
@@ -66,7 +65,15 @@ export default {
           transformItems: (items) => {
             return items.map((item) => {
               return Object.assign({}, item, {
-                url: this.formatUrl(item.url),
+                /**
+                 * Search terms where the query matches the h1 header on the page,
+                 * e.g. the query "clearCookie" returns the link to the `clearCookie`
+                 * API doc page, will include a hash for `#__nuxt` in the search result
+                 * URL. This hash can be safely removed before displaying the results
+                 * in the Algolia UI. Removing the hash from the Nuxt app itself causes
+                 * other unintended side effects, so we will sanitize these results instead.
+                 */
+                url: this.formatUrl(item.url).replace('#__nuxt', ''),
               })
             })
           },
