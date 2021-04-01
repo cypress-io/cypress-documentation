@@ -13,16 +13,20 @@
         tag="ul"
       >
         <li
-          v-for="link of toc"
+          v-for="(link, index) of toc"
           :key="link.id"
           class="text-gray-500 dark:text-gray-300"
+          :class="{
+            'pt-4': link.depth === 2 && index !== 0,
+            'pb-1': link.depth === 2,
+          }"
         >
           <a
             :href="`#${link.id}`"
-            class="block text-sm scrollactive-item pl-1 transition-transform ease-in-out duration-300 transform hover:translate-x-1"
+            class="block text-sm scrollactive-item pl-1 hover:text-green transition-colors"
             :class="{
-              'py-1 font-bold': link.depth === 2,
-              'ml-4 py-1 pl-2 border-l-2 border-gray-300': link.depth === 3,
+              'py-1 pb-2 pl-2 font-bold': link.depth === 2,
+              'ml-4 py-1 pl-2 border-l-2 border-gray-200': link.depth === 3,
             }"
             >{{ link.text }}</a
           >
