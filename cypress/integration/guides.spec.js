@@ -18,16 +18,31 @@ describe('Guides', () => {
           cy.get('.app-sidebar').contains(guides[category])
 
           cy.wrap(pages).each((page) => {
-            const pageTitle = guides[page]
+            /**
+             * The `title` in the front matter is _usually_ the same as the
+             * `en.json` data for that key. However, some exceptions exist
+             * which use a front matter `title` that does not match.
+             */
+            const titleMismatches = {
+              'dashboard-introduction': 'Dashboard',
+            }
+
+            const pageTitle = titleMismatches[page] || guides[page]
 
             if (page === 'component-testing-introduction') {
               // for now, bypass an error thrown on this page by vue-meta
               return
             }
 
+            // Title on /guides/dashboard/introduction is "Dashboard" whereas the sidebar
+            // item is "Introduction"
+            const sidebarItemMismatches = {
+              Dashboard: 'Introduction',
+            }
+
             cy.contains(
               `.app-sidebar [data-test="${category}"] a`,
-              pageTitle
+              sidebarItemMismatches[pageTitle] || pageTitle
             ).click({ force: true })
 
             const redirects = {
@@ -43,7 +58,7 @@ describe('Guides', () => {
 
             cy.contains(
               `.app-sidebar [data-test="${category}"] a`,
-              pageTitle
+              sidebarItemMismatches[pageTitle] || pageTitle
             ).should(
               'have.class',
               'nuxt-link-exact-active nuxt-link-active active-sidebar-link'
