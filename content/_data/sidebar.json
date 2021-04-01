@@ -52,7 +52,8 @@
       "auth0-authentication": "auth0-authentication.html",
       "amazon-cognito-authentication": "amazon-cognito-authentication.html",
       "okta-authentication": "okta-authentication.html",
-      "google-authentication": "google-authentication.html"
+      "google-authentication": "google-authentication.html",
+      "graphql": "graphql.html"
     },
     "continuous-integration": {
       "continuous-integration-introduction": "introduction.html",
