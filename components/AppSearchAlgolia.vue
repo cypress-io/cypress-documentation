@@ -35,7 +35,8 @@ export default {
         return absoluteUrl
       }
 
-      const url = pathname.replace(this.settings.url, '/') + hash
+      const url =
+        pathname.replace(this.settings.url, '/') + hash.replace('#__nuxt', '')
 
       return this.stripTrailingSlash(url)
     },
