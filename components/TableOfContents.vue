@@ -17,7 +17,8 @@
           :key="link.id"
           class="text-gray-500 dark:text-gray-300"
           :class="{
-            'pt-4': link.depth === 2 && index !== 0,
+            'pt-4':
+              link.depth === 2 && index !== 0 && toc[index - 1].depth === 3,
             'pb-1': link.depth === 2,
           }"
         >
