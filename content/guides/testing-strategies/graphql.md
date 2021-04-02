@@ -90,6 +90,8 @@ cy.wait('@gqlIsUserLoggedInQuery').then((resp) => {
 
 ## Override Query or Mutation in Test
 
+We can override the response to a GraphQL query or mutation by declaring an intercept in the test.
+
 ```js
 // app.spec.js
 import { hasQuery, aliasQuery } from '../utils/graphql-test-utils'
@@ -108,8 +110,12 @@ context('Tests', () => {
     cy.intercept('POST', apiGraphQL, (req) => {
       const { body } = req
       if (hasQuery(req, 'GetLaunchList')) {
+        // Declare the alias from the initial intercept in the beforeEach
         req.alias = 'gqlGetLaunchListQuery'
-        req.continue((res) => {
+
+        // Set req.fixture or use req.reply to modify portions of the response
+        req.reply((res) => {
+          // Modify the response body directly
           res.body.data.launches.hasMore = false
           res.body.data.launches.launches = res.body.data.launches.launches.slice(
             5
