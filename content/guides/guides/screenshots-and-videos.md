@@ -37,7 +37,7 @@ Videos are stored in the [`videosFolder`](/guides/references/configuration#Video
 
 After `cypress run` completes, Cypress automatically compresses the video in order to save on file size. By default it compresses to a `32 CRF`, but this is configurable with the [`videoCompression`](/guides/references/configuration#Videos) property.
 
-When using the `--record` flag while running your tests, videos are processed, compressed, and uploaded to the [Dashboard Service](/guides/dashboard/dashboard-introduction) after every spec file runs, successful or not. To change this behavior to only process videos in the case that tests fail, set the [`videoUploadOnPasses`](/guides/references/configuration#Videos) configuration option to `false`.
+When using the `--record` flag while running your tests, videos are processed, compressed, and uploaded to the [Dashboard Service](/guides/dashboard/introduction) after every spec file runs, successful or not. To change this behavior to only process videos in the case that tests fail, set the [`videoUploadOnPasses`](/guides/references/configuration#Videos) configuration option to `false`.
 
 Cypress clears any existing videos before a `cypress run`. If you do not want to clear your videos folder before a run, you can set [`trashAssetsBeforeRuns`](/guides/references/configuration#Videos) to `false`.
 
@@ -79,7 +79,7 @@ So you are capturing screenshots and recording videos of your test runs, now wha
 
 <!-- Line breaks removed to prevent random br elements -->
 
-Something you can take advantage of today is the [Cypress Dashboard Service](/guides/dashboard/dashboard-introduction): our companion enterprise service that stores your artifacts for you and lets you view them from any web browser, as well as share them with your team.
+Something you can take advantage of today is the [Cypress Dashboard Service](/guides/dashboard/introduction): our companion enterprise service that stores your artifacts for you and lets you view them from any web browser, as well as share them with your team.
 
 ### Visual Regression Test / Screenshot Diffing
 
@@ -89,6 +89,6 @@ Another possibility is visual regression testing: comparing screenshots of past 
 
 - [After Screenshot API](/api/plugins/after-screenshot-api)
 - [Cypress.Screenshot](/api/cypress-api/screenshot-api)
-- [Dashboard Service](/guides/dashboard/dashboard-introduction)
+- [Dashboard Service](/guides/dashboard/introduction)
 - [`cy.screenshot()`](/api/commands/screenshot)
 - [Visual Testing](/guides/tooling/visual-testing)

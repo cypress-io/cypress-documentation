@@ -137,7 +137,7 @@ jobs:
 
 ## Parallelization
 
-The [Cypress Dashboard](/guides/dashboard/dashboard-introduction) offers the ability to [parallelize and group test runs](/guides/guides/parallelization) along with additional insights and [analytics](/guides/dashboard/analytics) for Cypress tests.
+The [Cypress Dashboard](/guides/dashboard/introduction) offers the ability to [parallelize and group test runs](/guides/guides/parallelization) along with additional insights and [analytics](/guides/dashboard/analytics) for Cypress tests.
 
 GitHub Actions offers a [matrix strategy](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix) for declaring different job configurations for a single job definition. Jobs declared within a matrix strategy can run in parallel which enables us run multiples instances of Cypress at same time as we will see later in this section.
 

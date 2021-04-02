@@ -90,7 +90,7 @@ describe('Some Tests', () => {
 
 Move those Cypress commands into an `it(...)` block and everything will work correctly.
 
-If you are purposefully writing commands outside of a test, there is probably a better way to accomplish what you're trying to do. Read through the {% url "Examples" examples/examples/recipes %}, [chat with someone in our chat](https://gitter.im/cypress-io/cypress), or [open an issue](https://github.com/cypress-io/cypress/issues/new).
+If you are purposefully writing commands outside of a test, there is probably a better way to accomplish what you're trying to do. Read through the [Examples](/examples/examples/recipes), [chat with someone in our chat](https://gitter.im/cypress-io/cypress), or [open an issue](https://github.com/cypress-io/cypress/issues/new).
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy...()` failed because the element you are chaining off of has become detached or removed from the dom
 
@@ -485,7 +485,7 @@ Check out our [guide on parallelizing runs](/guides/guides/parallelization) and 
 
 You passed the `--ci-build-id`, [--group](/guides/guides/command-line#cypress-run-group-lt-name-gt), or [--parallel](/guides/guides/command-line#cypress-run-parallel) flag without also passing the `--record` flag.
 
-These flags can only be used when recording to the [Dashboard Service](/guides/dashboard/dashboard-introduction).
+These flags can only be used when recording to the [Dashboard Service](/guides/dashboard/introduction).
 
 Please review our [parallelization](/guides/guides/parallelization) documentation to learn more.
 

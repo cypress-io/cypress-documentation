@@ -284,7 +284,7 @@ Aliases can be set on a per-request basis by setting the `alias` property of the
 
 ```js
 cy.intercept('POST', '/graphql', (req) => {
-  if (req.body.hasOwnProperty('mutation')) {
+  if (req.body.hasOwnProperty('query') && req.body.query.includes('mutation')) {
     req.alias = 'gqlMutation'
   }
 })
@@ -344,7 +344,7 @@ cy.wait('@gqlListPostsQuery')
 cy.intercept('POST', '/graphql', (req) => {
   const { body } = req
 
-  if (body.hasOwnProperty('mutation') && body.query.includes('CreatePost')) {
+  if (body.hasOwnProperty('query') && body.query.includes('CreatePost')) {
     req.alias = 'gqlCreatePostMutation'
   }
 })

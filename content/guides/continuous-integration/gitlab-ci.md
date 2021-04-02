@@ -106,7 +106,7 @@ test:
 
 ## Parallelization
 
-The [Cypress Dashboard](/guides/dashboard/dashboard-introduction) offers the ability to [parallelize and group test runs](/guides/guides/parallelization) along with additional insights and [analytics](/guides/dashboard/analytics) for Cypress tests.
+The [Cypress Dashboard](/guides/dashboard/introduction) offers the ability to [parallelize and group test runs](/guides/guides/parallelization) along with additional insights and [analytics](/guides/dashboard/analytics) for Cypress tests.
 
 The addition of the [`parallel` attribute](https://docs.gitlab.com/ee/ci/yaml/#parallel) to the configuration of a job will allow us to run multiples instances of Cypress at same time as we will see later in this section.
 
