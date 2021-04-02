@@ -14,40 +14,65 @@ title: GraphQL
 
 In the `beforeEach`, we will use [cy.intercept()](/api/commands/intercept) to capture all requests for a GraphQL endpoint (e.g. `/graphql`), use conditionals to match the query or mutation and set an alias for using `req.alias`.
 
+First, we'll create a set of utility functions to help match and alias our queries and mutations.
+
 ```js
+// utils/graphql-test-utils.js
+
 // Utility to match GraphQL mutation based on the operation name
-const hasMutation = (req, operationName) => {
-  return req.body.hasOwnProperty("query") && req.body.query.includes(`mutation ${operationName}`)
+export const hasMutation = (req, operationName) => {
+  const { body } = req
+  return (
+    body.hasOwnProperty('query') &&
+    body.query.includes(`mutation ${operationName}`)
+  )
 }
 
 // Utility to match GraphQL query based on the operation name
-const hasQuery = (req, operationName) => {
-  return req.body.hasOwnProperty("query") && req.body.query.includes(`query ${operationName}`)
-})
+export const hasQuery = (req, operationName) => {
+  const { body } = req
+  return (
+    body.hasOwnProperty('query') &&
+    body.query.includes(`query ${operationName}`)
+  )
+}
+
+// Alias query if operationName matches
+export const aliasQuery = (req, operationName) => {
+  if (hasQuery(req, operationName)) {
+    req.alias = `gql${operationName}Query`
+  }
+}
+
+// Alias mutation if operationName matches
+export const aliasMutation = (req, operationName) => {
+  if (hasMutation(req, operationName)) {
+    req.alias = `gql${operationName}Mutation`
+  }
+}
+```
+
+In our test file, we can import these utilities and use them to alias the queries and mutations for our tests in a `beforeEach`.
+
+```js
+// app.spec.js
+import {
+  hasQuery,
+  aliasQuery,
+  aliasMutation,
+} from '../utils/graphql-test-utils'
 
 context('Tests', () => {
   beforeEach(() => {
     cy.intercept('POST', apiGraphQL, (req) => {
-      const { body } = req
-      if (hasQuery(req, 'Login')) {
-        req.alias = 'gqlIsUserLoggedInQuery'
-      }
+      // Queries
+      aliasQuery(req, 'GetLaunchList')
+      aliasQuery(req, 'LaunchDetails')
+      aliasQuery(req, 'GetMyTrips')
 
-      if (hasQuery(req, 'GetLaunchList')) {
-        req.alias = 'gqlGetLaunchListQuery'
-      }
-
-      if (hasQuery(req, 'LaunchDetails')) {
-        req.alias = 'gqlLaunchDetailsQuery'
-      }
-
-      if (hasQuery(req, 'GetMyTrips')) {
-        req.alias = 'gqlGetMyTripsQuery'
-      }
-
-      if (hasMutation(req, 'BookTrips')) {
-        req.alias = 'gqlBookTripsMutation'
-      }
+      // Mutations
+      aliasMutation(req, 'Login')
+      aliasMutation(req, 'BookTrips')
     })
   })
   // ...
@@ -66,14 +91,14 @@ cy.wait('@gqlIsUserLoggedInQuery').then((resp) => {
 ## Override Query or Mutation in Test
 
 ```js
+// app.spec.js
+import { hasQuery, aliasQuery } from '../utils/graphql-test-utils'
+
 context('Tests', () => {
   beforeEach(() => {
     cy.intercept('POST', apiGraphQL, (req) => {
-      const { body } = req
-
-      if (hasQuery(req, 'GetLaunchList')) {
-        req.alias = 'gqlGetLaunchListQuery'
-      }
+      // Queries
+      aliasQuery(req, 'GetLaunchList')
 
       // ...
     })
