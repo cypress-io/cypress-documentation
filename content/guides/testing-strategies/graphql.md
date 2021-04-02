@@ -15,32 +15,38 @@ title: GraphQL
 In the `beforeEach`, we will use [cy.intercept()](/api/commands/intercept) to capture all requests for a GraphQL endpoint (e.g. `/graphql`), use conditionals to match the query or mutation and set an alias for using `req.alias`.
 
 ```js
-// Utility function to match GraphQL Query or Mutation based on the operation name
-const hasQueryOrMutation = (req, operationName) =>
-  req.body.hasOwnProperty('query') && req.body.query.includes(operationName)
+// Utility to match GraphQL mutation based on the operation name
+const hasMutation = (req, operationName) => {
+  return req.body.hasOwnProperty("query") && req.body.query.includes(`mutation ${operationName}`)
+}
+
+// Utility to match GraphQL query based on the operation name
+const hasQuery = (req, operationName) => {
+  return req.body.hasOwnProperty("query") && req.body.query.includes(`query ${operationName}`)
+})
 
 context('Tests', () => {
   beforeEach(() => {
     cy.intercept('POST', apiGraphQL, (req) => {
       const { body } = req
-      if (hasQueryOrMutation(req, 'Login')) {
+      if (hasQuery(req, 'Login')) {
         req.alias = 'gqlIsUserLoggedInQuery'
       }
 
-      if (hasQueryOrMutation(req, 'GetLaunchList')) {
+      if (hasQuery(req, 'GetLaunchList')) {
         req.alias = 'gqlGetLaunchListQuery'
       }
 
-      if (hasQueryOrMutation(req, 'LaunchDetails')) {
+      if (hasQuery(req, 'LaunchDetails')) {
         req.alias = 'gqlLaunchDetailsQuery'
       }
 
-      if (hasQueryOrMutation(req, 'BookTrips')) {
-        req.alias = 'gqlBookTripsMutation'
+      if (hasQuery(req, 'GetMyTrips')) {
+        req.alias = 'gqlGetMyTripsQuery'
       }
 
-      if (hasQueryOrMutation(req, 'GetMyTrips')) {
-        req.alias = 'gqlGetMyTripsQuery'
+      if (hasMutation(req, 'BookTrips')) {
+        req.alias = 'gqlBookTripsMutation'
       }
     })
   })
@@ -65,7 +71,7 @@ context('Tests', () => {
     cy.intercept('POST', apiGraphQL, (req) => {
       const { body } = req
 
-      if (hasQueryOrMutation(req, 'GetLaunchList')) {
+      if (hasQuery(req, 'GetLaunchList')) {
         req.alias = 'gqlGetLaunchListQuery'
       }
 
@@ -76,7 +82,7 @@ context('Tests', () => {
   it('should not display the load more button on the launches page', () => {
     cy.intercept('POST', apiGraphQL, (req) => {
       const { body } = req
-      if (hasQueryOrMutation(req, 'GetLaunchList')) {
+      if (hasQuery(req, 'GetLaunchList')) {
         req.alias = 'gqlGetLaunchListQuery'
         req.continue((res) => {
           res.body.data.launches.hasMore = false
