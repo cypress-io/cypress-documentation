@@ -52,3 +52,9 @@
   to = "/guides/dashboard/introduction/"
   status = 301
   force = true
+
+[[plugins]]
+package = "@netlify/plugin-sitemap"
+
+  [plugins.inputs]
+  baseUrl = "https://docs.cypress.io"

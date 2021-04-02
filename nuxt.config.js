@@ -58,10 +58,6 @@ export default {
    */
   modules: ['@nuxtjs/axios', '@nuxt/content', '@nuxtjs/gtm', '@nuxtjs/sitemap'],
   /*
-   ** Sitemap
-   */
-  sitemap: {},
-  /*
    ** Google Tag Manager
    */
   gtm: {
