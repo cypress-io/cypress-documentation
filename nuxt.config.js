@@ -56,7 +56,7 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ['@nuxtjs/axios', '@nuxt/content', '@nuxtjs/gtm', '@nuxtjs/sitemap'],
+  modules: ['@nuxtjs/axios', '@nuxt/content', '@nuxtjs/gtm'],
   /*
    ** Google Tag Manager
    */
