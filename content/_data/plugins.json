@@ -322,6 +322,13 @@
           "badge": "community"
         },
         {
+          "name": "cypress-benchmark",
+          "description": "A Cypress plugin to benchmark tests.",
+          "link": "https://github.com/adrfoong/cypress-benchmark",
+          "keywords": ["cypress", "benchmark", "performance"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-fail-fast",
           "description": "Enables fail fast in Cypress, skipping the rest of tests on first failure.",
           "link": "https://github.com/javierbrea/cypress-fail-fast",
