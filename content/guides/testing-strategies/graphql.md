@@ -6,9 +6,17 @@ title: GraphQL
 
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
-- Strategies for testing GraphQL API's with Cypress
+- Best practices to alias multiple GraphQL queries or mutations for a group of tests.
+- Overriding an existing intercept to modify the query or mutation response
+- Asserting against a GraphQL query or mutation response
 
 </Alert>
+
+The strategies below follow best known practices for waiting and asserting against GraphQL queries or mutations.
+
+Waiting and asserting on GraphQL API requests rely on matching a query or mutation name in the POST body.
+
+As of version 7.0.0 of Cypress, [cy.intercept()](/api/commands/intercept) can override the response to a GraphQL query or mutation by declaring an intercept at the beginning of the test or closer to the expectation.
 
 ## Alias multiple queries or mutations
 
@@ -81,16 +89,36 @@ context('Tests', () => {
 
 ## Expectations for Query or Mutation Results
 
+Expectations can be made against the response of an intercepted GraphQL query or mutation using [cy.wait()](/api/commands/wait).
+
 ```js
-cy.wait('@gqlIsUserLoggedInQuery').then((resp) => {
-  expect(resp.response.body.data.login.id).to.exist
-  expect(resp.response.body.data.login.token).to.exist
+// app.spec.js
+import { hasQuery, aliasQuery } from '../utils/graphql-test-utils'
+
+context('Tests', () => {
+  beforeEach(() => {
+    cy.intercept('POST', apiGraphQL, (req) => {
+      // Queries
+      aliasQuery(req, 'Login')
+
+      // ...
+    })
+  })
+
+  it('should verify login data', () => {
+    cy.wait('@gqlLoginQuery').then((resp) => {
+      expect(resp.response.body.data.login.id).to.exist
+      expect(resp.response.body.data.login.token).to.exist
+    })
+  })
 })
 ```
 
-## Override Query or Mutation in Test
+## Modifying a Query or Mutation Response
 
-We can override the response to a GraphQL query or mutation by declaring an intercept in the test.
+As of version 7.0.0 of Cypress, [cy.intercept()](/api/commands/intercept) can override the response to a GraphQL query or mutation by declaring an intercept in the test.
+
+In the test below, the response is modified to test the UI for a single page of results.
 
 ```js
 // app.spec.js
