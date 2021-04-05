@@ -16,7 +16,7 @@ The strategies below follow best known practices for waiting and asserting again
 
 Waiting and asserting on GraphQL API requests rely on matching a query or mutation name in the POST body.
 
-As of version 7.0.0 of Cypress, [cy.intercept()](/api/commands/intercept) can override the response to a GraphQL query or mutation by declaring an intercept at the beginning of the test or closer to the expectation.
+As of version 7.0 of Cypress, [cy.intercept()](/api/commands/intercept) can override the response to a GraphQL query or mutation by declaring an intercept at the beginning of the test or closer to the expectation.
 
 ## Alias multiple queries or mutations
 
@@ -116,7 +116,7 @@ context('Tests', () => {
 
 ## Modifying a Query or Mutation Response
 
-As of version 7.0.0 of Cypress, [cy.intercept()](/api/commands/intercept) can override the response to a GraphQL query or mutation by declaring an intercept in the test.
+As of version 7.0 of Cypress, [cy.intercept()](/api/commands/intercept) can override the response to a GraphQL query or mutation by declaring an intercept in the test.
 
 In the test below, the response is modified to test the UI for a single page of results.
 
