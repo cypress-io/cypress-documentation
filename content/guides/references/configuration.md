@@ -313,7 +313,7 @@ When you open a Cypress project, clicking on the **Settings** tab will display t
 - The [Cypress environment file](/guides/guides/environment-variables#Option-2-cypress-env-json)
 - System [environment variables](/guides/guides/environment-variables#Option-3-CYPRESS)
 - [Command Line arguments](/guides/guides/command-line)
-- [Plugin file](/api/plugins/configuration-api)
+- [Plugins file](/api/plugins/configuration-api)
 
 <DocsImage src="/img/guides/configuration/see-resolved-configuration.jpg" alt="See resolved configuration" ></DocsImage>
 

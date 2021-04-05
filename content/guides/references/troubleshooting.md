@@ -243,7 +243,7 @@ Cypress is built from multiple packages, each responsible for its own logging: s
 | `cypress:net-stubbing*`       | Network interception in the proxy layer     |
 | `cypress:server:reporter`     | Problems with test reporters                |
 | `cypress:server:preprocessor` | Processing specs                            |
-| `cypress:server:plugins`      | Running the plugin file and bundling specs  |
+| `cypress:server:plugins`      | Running the plugins file and bundling specs  |
 | `cypress:server:socket-e2e`   | Watching spec files                         |
 | `cypress:server:task`         | Invoking the `cy.task` command              |
 | `cypress:server:socket-base`  | Debugging `cy.request` command              |

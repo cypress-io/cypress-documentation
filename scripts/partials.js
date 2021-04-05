@@ -18,7 +18,7 @@ module.exports.ALLOWED_TEST_CONFIG = `{% fa fa-exclamation-triangle red %} **Not
 
 module.exports.CHROMIUM_DOWNLOAD = `### Download specific Chrome version
 
-The Chrome browser is evergreen - meaning it will automatically update itself, sometimes causing a breaking change in your automated tests. We host [chromium.cypress.io](https://chromium.cypress.io) with links to download a specific released version of Chrome (dev, Canary and stable) for every platform. 
+The Chrome browser is evergreen - meaning it will automatically update itself, sometimes causing a breaking change in your automated tests. We host [chromium.cypress.io](https://chromium.cypress.io) with links to download a specific released version of Chrome (dev, Canary and stable) for every platform.
 `
 
 module.exports.CYPRESS_ENV_VAR_WARNING = `{% note warning "Difference between OS-level and Cypress environment variables" %}
@@ -92,6 +92,6 @@ module.exports.XHR_STUBBING_DEPRECATED = [
 
 module.exports.CODE_RUNS_IN_NODE = [
   '{% note warning %}',
-  '⚠️ This code is part of the [plugin file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.',
+  '⚠️ This code is part of the [plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.',
   '{% endnote %}',
 ].join('\n')
