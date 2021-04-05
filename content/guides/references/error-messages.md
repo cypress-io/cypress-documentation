@@ -658,6 +658,8 @@ Here are some potential workarounds:
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> Uncaught exceptions from your application
 
-WIP. We'll be adding more here soon.
+When Cypress detects an uncaught exception in your application, it will fail the currently running test.
 
-For now, please visit the [Catalog of Events](/api/events/catalog-of-events#Uncaught-Exceptions) page for examples how to turn off catching uncaught exceptions.
+You can turn off this behavior globally or conditionally with the `uncaught:exception` event. Please see the [Catalog of Events](/api/events/catalog-of-events#Uncaught-Exceptions) for examples.
+
+On a technical note, Cypress considers uncaught exceptions to be any error that is uncaught by your application, whether they are "standard" errors or unhandled promise rejections. If the error triggers the window's global `error` handler or its `unhandledrejection` handler, Cypress will detect it and fail the test.

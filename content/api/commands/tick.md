@@ -13,7 +13,7 @@ Move time after overriding a native time function with [`cy.clock()`](/api/comma
 ## Syntax
 
 ```javascript
-cy.tick(milliseconds)
+cy.tick(milliseconds, options)
 ```
 
 ### Usage
@@ -29,6 +29,14 @@ cy.tick(500)
 **<Icon name="angle-right"></Icon> milliseconds** **_(Number)_**
 
 The number of `milliseconds` to move the clock. Any timers within the affected range of time will be called.
+
+**<Icon name="angle-right"></Icon> options** **_(Object)_**
+
+Pass in an options object to change the default behavior of `cy.tick()`.
+
+| Option | Default | Description                                                                              |
+| ------ | ------- | ---------------------------------------------------------------------------------------- |
+| `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
@@ -132,9 +140,10 @@ When clicking on the `tick` command within the command log, the console outputs 
 
 ## History
 
-| Version                                       | Changes                   |
-| --------------------------------------------- | ------------------------- |
-| [0.18.8](/guides/references/changelog#0-18-8) | `cy.tick()` command added |
+| Version                                       | Changes                           |
+| --------------------------------------------- | --------------------------------- |
+| [7.0.0](/guides/references/changelog#7-0-0)   | `log` option added to `cy.tick()` |
+| [0.18.8](/guides/references/changelog#0-18-8) | `cy.tick()` command added         |
 
 ## See also
 
