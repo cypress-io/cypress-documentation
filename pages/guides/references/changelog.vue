@@ -3,8 +3,7 @@ import AppSidebar from '../../../components/AppSidebar'
 import AppHeader from '../../../components/AppHeader'
 import TableOfContents from '../../../components/TableOfContents'
 import Footer from '../../../components/Footer'
-import { getMetaData } from '../../../utils/getMetaData'
-import { getMetaDescription } from '../../../utils/getMetaDescription'
+import { getMetaData, getMetaDescription, getTitle } from '../../../utils'
 
 const sortChangelogs = (a, b) => {
   // descending order
@@ -123,7 +122,7 @@ export default {
   },
   head() {
     return {
-      title: 'Changelog',
+      title: getTitle('Changelog'),
       meta: this.meta,
       link: [
         {
@@ -138,7 +137,7 @@ export default {
     meta() {
       const metaData = {
         type: 'article',
-        title: 'Changelog',
+        title: getTitle('Changelog'),
         description: this.metaDescription,
         url: `https://docs.cypress.io/guides/${this.path}`,
       }

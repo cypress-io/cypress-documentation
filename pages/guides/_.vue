@@ -3,8 +3,7 @@ import AppSidebar from '../../components/AppSidebar'
 import AppHeader from '../../components/AppHeader'
 import TableOfContents from '../../components/TableOfContents'
 import Footer from '../../components/Footer'
-import { getMetaData } from '../../utils/getMetaData'
-import { getMetaDescription } from '../../utils/getMetaDescription'
+import { getMetaData, getMetaDescription, getTitle } from '../../utils'
 
 export default {
   components: {
@@ -66,7 +65,8 @@ export default {
   },
   head() {
     return {
-      title: (this.guide && this.guide.title) || 'Cypress Documentation',
+      title:
+        getTitle(this.guide && this.guide.title) || 'Cypress Documentation',
       meta: this.meta,
       link: [
         {
@@ -81,7 +81,8 @@ export default {
     meta() {
       const metaData = {
         type: 'article',
-        title: (this.guide && this.guide.title) || 'Cypress Documentation',
+        title:
+          getTitle(this.guide && this.guide.title) || 'Cypress Documentation',
         description: this.metaDescription,
         url: `https://docs.cypress.io/guides/${this.$route.params.pathMatch}`,
       }

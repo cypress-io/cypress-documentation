@@ -1,6 +1,7 @@
 const API_URL = '/api/table-of-contents'
 const SIDEBAR = './content/_data/sidebar.json'
 const SIDEBAR_EN = './content/_data/en.json'
+const { getTitle } = require('../../utils')
 
 describe('APIs', () => {
   beforeEach(() => {
@@ -85,7 +86,10 @@ describe('APIs', () => {
               'after-screenshot-api': 'After Screenshot API',
             }
 
-            cy.title().should('equal', titleAliases[page] || pageTitle)
+            cy.title().should(
+              'equal',
+              getTitle(titleAliases[page] || pageTitle)
+            )
 
             cy.get('.main-content-title').contains(
               titleAliases[page] || pageTitle

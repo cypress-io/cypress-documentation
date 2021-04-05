@@ -1,5 +1,6 @@
 const SIDEBAR = './content/_data/sidebar.json'
 const SIDEBAR_EN = './content/_data/en.json'
+const { getTitle } = require('../../utils')
 
 describe('Guides', () => {
   beforeEach(() => {
@@ -64,7 +65,7 @@ describe('Guides', () => {
               'nuxt-link-exact-active nuxt-link-active active-sidebar-link'
             )
 
-            cy.title().should('equal', pageTitle)
+            cy.title().should('equal', getTitle(pageTitle))
 
             cy.get('.main-content-title').contains(pageTitle)
 

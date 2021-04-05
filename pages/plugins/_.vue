@@ -2,8 +2,7 @@
 import AppHeader from '@/components/AppHeader'
 import PluginsList from '@/components/PluginsList.vue'
 import Footer from '@/components/Footer'
-import { getMetaData } from '../../utils/getMetaData'
-import { getMetaDescription } from '../../utils/getMetaDescription'
+import { getMetaData, getMetaDescription, getTitle } from '../../utils'
 
 export default {
   components: {
@@ -35,7 +34,7 @@ export default {
   },
   head() {
     return {
-      title: this.pluginDoc.title,
+      title: getTitle(this.pluginDoc.title),
       meta: this.meta,
       link: [
         {
@@ -50,7 +49,7 @@ export default {
     meta() {
       const metaData = {
         type: 'article',
-        title: this.pluginDoc.title,
+        title: getTitle(this.pluginDoc.title),
         description: this.metaDescription,
         url: `https://docs.cypress.io/plugins/${this.$route.params.pathMatch}`,
       }

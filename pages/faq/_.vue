@@ -4,8 +4,7 @@ import AppHeader from '../../components/AppHeader'
 import Footer from '../../components/Footer'
 import TableOfContents from '../../components/TableOfContents'
 import TableOfContentsList from '../../components/TableOfContentsList.vue'
-import { getMetaData } from '../../utils/getMetaData'
-import { getMetaDescription } from '../../utils/getMetaDescription'
+import { getMetaData, getMetaDescription, getTitle } from '../../utils'
 
 export default {
   components: {
@@ -24,23 +23,27 @@ export default {
       sidebar: { faq: userFriendlyNameMap },
     } = await $content('_data/en').fetch()
 
-    const faqSidebarItems = Object.keys(sidebar).map((key) => {return {
-      label: userFriendlyNameMap[key],
-      badge: '',
-      children: Object.keys(sidebar[key]).map((nestedKey) => {
-        return {
-          slug: nestedKey,
-          label: userFriendlyNameMap[nestedKey],
-        }
-      }),
-      folder: key,
-    }})
+    const faqSidebarItems = Object.keys(sidebar).map((key) => {
+      return {
+        label: userFriendlyNameMap[key],
+        badge: '',
+        children: Object.keys(sidebar[key]).map((nestedKey) => {
+          return {
+            slug: nestedKey,
+            label: userFriendlyNameMap[nestedKey],
+          }
+        }),
+        folder: key,
+      }
+    })
 
     if (!faqItem) {
       return error({ statusCode: 404, message: 'FAQ not found' })
     }
 
-    const [rawContent] = await $content({ deep: true, text: true }).where({ path }).fetch()
+    const [rawContent] = await $content({ deep: true, text: true })
+      .where({ path })
+      .fetch()
     const metaDescription = await getMetaDescription(rawContent.text)
 
     return {
@@ -53,29 +56,29 @@ export default {
   },
   head() {
     return {
-      title: this.faqItem.title,
+      title: getTitle(this.faqItem.title),
       meta: this.meta,
       link: [
         {
           hid: 'canonical',
           rel: 'canonical',
-          href: `https://docs.cypress.io/faq/${this.$route.params.pathMatch}`
-        }
-      ]
+          href: `https://docs.cypress.io/faq/${this.$route.params.pathMatch}`,
+        },
+      ],
     }
   },
   computed: {
     meta() {
       const metaData = {
         type: 'article',
-        title: this.faqItem.title,
+        title: getTitle(this.faqItem.title),
         description: this.metaDescription,
-        url: `https://docs.cypress.io/faq/${this.$route.params.pathMatch}`
+        url: `https://docs.cypress.io/faq/${this.$route.params.pathMatch}`,
       }
 
       return getMetaData(metaData)
-    }
-  }
+    },
+  },
 }
 </script>
 
