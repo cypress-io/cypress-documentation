@@ -1,7 +1,7 @@
 const EXAMPLES_URL = '/examples/examples/recipes#Fundamentals'
 const SIDEBAR = './content/_data/sidebar.json'
 const SIDEBAR_EN = './content/_data/en.json'
-const getTitle = './utils/getTitle'
+const { getTitle } = './utils/getTitle'
 
 describe('Examples', () => {
   beforeEach(() => {
