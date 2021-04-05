@@ -3,7 +3,7 @@ import AppSidebar from '@/components/AppSidebar'
 import AppHeader from '@/components/AppHeader'
 import TableOfContentsList from '@/components/TableOfContentsList'
 import Footer from '@/components/Footer'
-import { getMetaData, getMetaDescription, getTitle } from '../../utils'
+import { getMetaData, getMetaDescription, getTitle } from '../../../utils'
 
 export default {
   components: {

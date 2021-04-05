@@ -3,7 +3,7 @@ import AppSidebar from '../../../components/AppSidebar'
 import AppHeader from '../../../components/AppHeader'
 import TableOfContents from '../../../components/TableOfContents'
 import Footer from '../../../components/Footer'
-import { getMetaData, getMetaDescription, getTitle } from '../../utils'
+import { getMetaData, getMetaDescription, getTitle } from '../../../utils'
 
 const sortChangelogs = (a, b) => {
   // descending order
