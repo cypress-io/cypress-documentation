@@ -138,6 +138,12 @@ cy.intercept('/does-it-exist', { body: false })
 // Requests to `/does-it-exist` receive a response body of `false`
 ```
 
+#### Errors thrown by request and response handlers are no longer wrapped
+
+Previously, errors thrown inside of `req` and `res` handlers would be wrapped by a `CypressError`. In 7.0.0, errors thrown inside of these handlers are not wrapped before failing the test.
+
+This should only affect users who are explicitly asserting on global errors. See [#15189](https://github.com/cypress-io/cypress/issues/15189) for more details.
+
 ### Component Testing
 
 In 7.0, component testing is no longer experimental. Cypress now ships with a dedicated component test runner with a new UI and dedicated commands to launch it.
