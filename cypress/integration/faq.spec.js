@@ -1,6 +1,7 @@
 const FAQ_URL = '/faq/questions/using-cypress-faq'
 const SIDEBAR = './content/_data/sidebar.json'
 const SIDEBAR_EN = './content/_data/en.json'
+const getTitle = './utils/getTitle'
 
 describe('FAQ', () => {
   beforeEach(() => {
@@ -45,7 +46,7 @@ describe('FAQ', () => {
               'nuxt-link-exact-active nuxt-link-active active-sidebar-link'
             )
 
-            cy.title().should('equal', pageTitle)
+            cy.title().should('equal', getTitle(pageTitle))
 
             cy.get('.main-content-title').contains(pageTitle)
 
