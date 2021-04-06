@@ -2,7 +2,7 @@
 title: After Spec API
 ---
 
-The `after:spec` event fires after a spec file is run. The event only fires when running via `cypress run`.
+The `after:spec` event fires after a spec file is run. When running cypress via `cypress open`, the event will fire when the browser closes.
 
 ## Syntax
 
@@ -31,6 +31,8 @@ Details of the spec file, including the following properties:
 **<Icon name="angle-right"></Icon> results** **_(Object)_**
 
 Details of the spec file's results, including numbers of passes/failures/etc and details on the tests themselves.
+
+Results are only provided when running via `cypress run`. When running via `cypress open`, the results will be undefined.
 
 ## Usage
 
