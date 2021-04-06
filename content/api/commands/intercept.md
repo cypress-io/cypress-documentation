@@ -153,7 +153,7 @@ cy.intercept('/users', { middleware: true }, (req) => {
 })
 ```
 
-#### **<Icon name="angle-right"></Icon> routeHandler** **_(`string | object | Function | [StaticResponse][staticresponse]`)_**
+#### <Icon name="angle-right"></Icon> routeHandler (<code>string | object | Function | [StaticResponse][staticresponse]</code>)
 
 The `routeHandler` defines what will happen with a request if the [routeMatcher](#routeMatcher-RouteMatcher) matches. It can be used to [statically define a response](#Stubbing-a-response) for matching requests, or a function can be passed to [dynamically intercept the outgoing request](#Intercepting-a-request).
 
