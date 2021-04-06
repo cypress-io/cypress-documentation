@@ -959,7 +959,7 @@ The following properties are available on `StaticResponse`. All properties are o
 }
 ```
 
-See ["Stubbing a response with a `StaticResponse` object"][#with-a-staticresponse-object] for examples of stubbing with `cy.intercept()`.
+See ["Stubbing a response with a `StaticResponse` object"](#With-a-StaticResponse-object) for examples of stubbing with `cy.intercept()`.
 
 ## Interception lifecycle
 
