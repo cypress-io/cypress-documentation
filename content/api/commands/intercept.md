@@ -526,7 +526,7 @@ cy.intercept('POST', '/login', (req) => {
 
 #### Passing a request to the next request handler
 
-If [`req.reply()`][req-reply] is not explicitly called inside of a request handler, requests will pass to the next request handler until none are left.
+If [`req.reply()`][req-reply] or [`req.continue()`][req-continue] is not explicitly called inside of a request handler, requests will pass to the next request handler until none are left.
 
 ```js
 // you could have a top-level middleware handler that sets an auth token on all requests
