@@ -14,6 +14,12 @@ When running via `cypress run`, the event will fire each time `cypress run` exec
 
 </Alert>
 
+<Alert type="warning">
+
+⚠️ When running via `cypress open`, the `after:run` event only fires if the [experimentalInteractiveRunEvents flag](/guides/references/configuration#Experiments) is enabled.
+
+</Alert>
+
 ```js
 on('after:run', (results) => {
   /* ... */

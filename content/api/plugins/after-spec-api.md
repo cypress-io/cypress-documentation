@@ -12,6 +12,12 @@ The `after:spec` event fires after a spec file is run. When running cypress via 
 
 </Alert>
 
+<Alert type="warning">
+
+⚠️ When running via `cypress open`, the `after:spec` event only fires if the [experimentalInteractiveRunEvents flag](/guides/references/configuration#Experiments) is enabled.
+
+</Alert>
+
 ```js
 on('after:spec', (spec, results) => {
   /* ... */

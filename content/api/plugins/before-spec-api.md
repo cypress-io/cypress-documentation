@@ -12,6 +12,12 @@ The `before:spec` event fires before a spec file is run. When running cypress vi
 
 </Alert>
 
+<Alert type="warning">
+
+⚠️ When running via `cypress open`, the `before:spec` event only fires if the [experimentalInteractiveRunEvents flag](/guides/references/configuration#Experiments) is enabled.
+
+</Alert>
+
 ```js
 on('before:spec', (spec) => {
   /* ... */

@@ -14,6 +14,12 @@ The event will fire each time `cypress run` executes. As a result, if running yo
 
 </Alert>
 
+<Alert type="warning">
+
+⚠️ When running via `cypress open`, the `before:run` event only fires if the [experimentalInteractiveRunEvents flag](/guides/references/configuration#Experiments) is enabled.
+
+</Alert>
+
 ```js
 on('before:run', (details) => {
   /* ... */
@@ -22,7 +28,7 @@ on('before:run', (details) => {
 
 **<Icon name="angle-right"></Icon> details** **_(Object)_**
 
-Details of the run, including the project config, details about the browser and system, and the specs that will be run.
+Details of the run, including the project config, system information, and the version of Cypress. More details are included when running via `cypress run`.
 
 ## Usage
 
