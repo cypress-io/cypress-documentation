@@ -271,4 +271,4 @@ In the project we just built, this command will show the following results.
 
 <DocsImage src="/img/guides/component-testing/run-result.png" alt="Result of headless test run" ></DocsImage>
 
-To make the component tests part of your [continuous integration](/guides/guides/continuous-integration) pipeline, add a script to run `npx cypress run-ct` to your CI configuration.
+To make the component tests part of your [continuous integration](/guides/continuous-integration/introduction) pipeline, add a script to run `npx cypress run-ct` to your CI configuration.
