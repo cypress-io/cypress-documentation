@@ -471,7 +471,7 @@ import './commands'
 
 beforeEach(() => {
   cy.intercept(
-    { url: 'http://localhost:3001', middleware: true },
+    { url: 'http://localhost:3001/**', middleware: true },
     // Delete 'if-none-match' header from all outgoing requests
     (req) => delete req.headers['if-none-match']
   )
@@ -595,7 +595,7 @@ import { isMobile } from './utils'
 import './commands'
 // Throttle API responses for mobile testing to simulate real world conditions
 if (isMobile()) {
-  cy.intercept({ url: 'http://localhost:3001/*', middleware: true }, (req) => {
+  cy.intercept({ url: 'http://localhost:3001/**', middleware: true }, (req) => {
     req.on('response', (res) => {
       // Throttle the response to 1 Mbps to simulate a mobile 3G connection
       res.setThrottle(1000)
