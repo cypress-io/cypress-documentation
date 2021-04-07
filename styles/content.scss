@@ -477,3 +477,9 @@ pre[class*='language-'] ::selection {
   background: #4f5b66;
 }
 /* #endregion Syntax highlighting selection override */
+
+@media only percy {
+  .nuxt-content {
+    visibility: hidden;
+  }
+}
