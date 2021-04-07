@@ -22,7 +22,7 @@ describe('APIs', () => {
             .then(($category) => {
               cy.get(`[data-test="${api[category]}-children"]`).then(($ul) => {
                 if ($ul.hasClass('hidden')) {
-                  $category.click()
+                  $category.scrollIntoView().click()
                 }
               })
             })
@@ -35,7 +35,9 @@ describe('APIs', () => {
                 ? '.app-sidebar a'
                 : `.app-sidebar [data-test="${category}"] a`,
               pageTitle
-            ).click()
+            )
+              .scrollIntoView()
+              .click()
 
             const redirects = {
               'table-of-contents': '/api/table-of-contents',

@@ -22,7 +22,7 @@ describe('FAQ', () => {
             .then(($category) => {
               cy.get(`[data-test="${faq[category]}-children"]`).then(($ul) => {
                 if ($ul.hasClass('hidden')) {
-                  $category.click()
+                  $category.scrollIntoView().click()
                 }
               })
             })
@@ -30,10 +30,9 @@ describe('FAQ', () => {
           cy.wrap(pages).each((page) => {
             const pageTitle = faq[page]
 
-            cy.contains(
-              `.app-sidebar [data-test="${category}"] a`,
-              pageTitle
-            ).click()
+            cy.contains(`.app-sidebar [data-test="${category}"] a`, pageTitle)
+              .scrollIntoView()
+              .click()
 
             const redirects = {
               'using-cypress-faq': '/faq/questions/using-cypress-faq',

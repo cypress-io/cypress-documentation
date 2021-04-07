@@ -22,7 +22,7 @@ describe('Guides', () => {
               cy.get(`[data-test="${guides[category]}-children"]`).then(
                 ($ul) => {
                   if ($ul.hasClass('hidden')) {
-                    $category.click()
+                    $category.scrollIntoView().click()
                   }
                 }
               )
@@ -54,7 +54,9 @@ describe('Guides', () => {
             cy.contains(
               `.app-sidebar [data-test="${category}"] a`,
               sidebarItemMismatches[pageTitle] || pageTitle
-            ).click()
+            )
+              .scrollIntoView()
+              .click()
 
             const redirects = {
               'dashboard-introduction': '/guides/dashboard/introduction',
