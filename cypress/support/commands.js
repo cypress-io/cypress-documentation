@@ -15,7 +15,7 @@ Cypress.Commands.add('visualSnapshot', (maybeName) => {
   let snapshotTitle = cy.state('runnable').fullTitle()
 
   if (maybeName) {
-    snapshotTitle = `${snapshotTitle  } - ${  maybeName}`
+    snapshotTitle = `${snapshotTitle} - ${maybeName}`
   }
 
   cy.percySnapshot(snapshotTitle, {
