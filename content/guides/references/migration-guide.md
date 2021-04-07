@@ -356,7 +356,7 @@ Previously, a support file was required to set up the component testing target n
 
 Specifically for React users, if the support file contains the following line, please remove it. The import will fail in the future. We have left it in to avoid a breaking change, but the file does nothing.
 
-<Badge type="danger">Before</Badge> The support file was required to import a script from [@cypress/react](https://www.npmjs.com/package/@cypress/webpack-dev-server)
+<Badge type="danger">Before</Badge> The support file was required to import a script from [@cypress/react](https://www.npmjs.com/package/@cypress/react)
 
 ```js
 // support.js
