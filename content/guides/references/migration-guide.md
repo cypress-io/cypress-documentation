@@ -2,15 +2,545 @@
 title: Migration Guide
 ---
 
-## Migrating `cy.route()` to `cy.intercept()`
+## Migrating to Cypress 7.0
 
-This guide details how to change your test code to migrate from `cy.route()` to `cy.intercept()`. `cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0. In a future release, support for `cy.server()` and `cy.route()` will be removed.
+This guide details the changes and how to change your code to migrate to Cypress 7.0. [See the full changelog for 7.0](/guides/references/changelog#7-0-0).
 
-Please also refer to the full documentation for [cy.intercept()](/api/commands/intercept).
+### [`cy.intercept()`][intercept] changes
+
+[Cypress 7.0](<(/guides/references/changelog#7-0-0)>) comes with some breaking changes to [`cy.intercept()`][intercept]:
+
+#### Handler ordering is reversed
+
+Previous to Cypress 7.0, [`cy.intercept()`][intercept] handlers were run in the order that they are defined, stopping after the first handler to call `req.reply()`, or once all handlers are complete.
+
+With Cypress 7.0, [`cy.intercept()`][intercept] handlers are now run in reverse order of definition, stopping after the first handler to call `req.reply()`, or once all handlers are complete.
+
+This change was done so that users can override previously declared [`cy.intercept()`][intercept] handlers by calling [`cy.intercept()`][intercept] again. See [#9302](https://github.com/cypress-io/cypress/issues/9302) for more details.
+
+<Badge type="danger">Before</Badge>
+
+```js
+cy.intercept(url, (req) => {
+  /* This will be called first! */
+})
+cy.intercept(url, (req) => {
+  /* This will be called second! */
+})
+```
+
+<Badge type="success">After</Badge>
+
+```js
+cy.intercept(url, (req) => {
+  /* This will be called second! */
+})
+cy.intercept(url, (req) => {
+  /* This will be called first! */
+})
+```
+
+[Read more about the `cy.intercept()` interception lifecycle.](/api/commands/intercept#Interception-lifecycle)
+
+#### URL matching is stricter
+
+Before Cypress 7.0, [`cy.intercept()`][intercept] would match URLs against strings by using `minimatch`, substring match, or by equality.
+
+With Cypress 7.0, this behavior is being tightened - URLs are matched against strings only by `minimatch` or by equality. The substring match has been removed.
+
+This more closely matches the URL matching behavior shown by `cy.route()`. However, some intercepts will not match, even though they did before.
+
+For example, requests with querystrings may no longer match:
+
+```js
+// will this intercept match a request for `/items?page=1`?
+cy.intercept('/items')
+// ✅ before 7.0.0, this will match, because it is a substring
+// ❌ after 7.0.0, this will not match, because of the querystring
+// solution: update the intercept to match the querystring with a wildcard:
+cy.intercept('/items?*')
+```
+
+Also, requests for paths in nested directories may be affected:
+
+```js
+// will this intercept match a request for `/some/items`?
+cy.intercept('/items')
+// ✅ before 7.0.0, this will match, because it is a substring
+// ❌ after 7.0.0, this will not match, because of the leading directory
+// solution: update the intercept to include the directory:
+cy.intercept('/some/items')
+```
+
+Additionally, the `matchUrlAgainstPath` `RouteMatcher` option that was added in Cypress 6.2.0 has been removed in Cypress 7.0. It can be safely removed from tests.
+
+#### Deprecated `cy.route2()` command removed
+
+`cy.route2()` was the original name for `cy.intercept()` during the experimental phase of the feature. It was deprecated in Cypress 6.0. In Cypress 7.0, it has been removed entirely. Please update existing usages of `cy.route2()` to call `cy.intercept()` instead.
+
+<Badge type="danger">Before</Badge>
+
+```js
+cy.route2('/widgets/*', { fixture: 'widget.json' }).as('widget')
+```
+
+<Badge type="success">After</Badge>
+
+```js
+cy.intercept('/widgets/*', { fixture: 'widget.json' }).as('widget')
+```
+
+#### `res.delay()` and `res.throttle()` have been renamed
+
+The `res.delay()` and `res.throttle()` functions that exist on responses yielded to response handlers have been renamed.
+
+The new names are `res.setDelay()` and `res.setThrottle()`, respectively.
+
+<Badge type="danger">Before</Badge>
+
+```js
+cy.intercept('/slow', (req) => {
+  req.continue((res) => {
+    // apply a delay of 1 second and a throttle of 56kbps
+    res.delay(1000).throttle(56)
+  })
+})
+```
+
+<Badge type="success">After</Badge>
+
+```js
+cy.intercept('/slow', (req) => {
+  req.continue((res) => {
+    // apply a delay of 1 second and a throttle of 56kbps
+    res.setDelay(1000).setThrottle(56)
+  })
+})
+```
+
+[Read more about available functions on `res`.][/api/commands/intercept#intercepted-response]
+
+#### Falsy values are no longer dropped in `StaticResponse` bodies
+
+Previously, falsy values supplied as the `body` of a `StaticResponse` would get dropped (the same as if no body was supplied). Now, the bodies are properly encoded in the response.
+
+<Badge type="danger">Before</Badge>
+
+```js
+cy.intercept('/does-it-exist', { body: false })
+// Requests to `/does-it-exist` receive an empty response body
+```
+
+<Badge type="success">After</Badge>
+
+```js
+cy.intercept('/does-it-exist', { body: false })
+// Requests to `/does-it-exist` receive a response body of `false`
+```
+
+#### Errors thrown by request and response handlers are no longer wrapped
+
+Previously, errors thrown inside of `req` and `res` handlers would be wrapped by a `CypressError`. In 7.0.0, errors thrown inside of these handlers are not wrapped before failing the test.
+
+This should only affect users who are explicitly asserting on global errors. See [#15189](https://github.com/cypress-io/cypress/issues/15189) for more details.
+
+### Component Testing
+
+In 7.0, component testing is no longer experimental. Cypress now ships with a dedicated component test runner with a new UI and dedicated commands to launch it.
+
+**Changes are required for all existing projects**. The required changes are limited to configuration and there are no breaking changes to the `mount` API. The migration guide contains the following steps:
+
+1. [Update your configuration file, `cypress.json` by default, to remove `experimentalComponentTesting`](/guides/references/migration-guide#1-Remove-experimentalComponentTesting-config)
+2. [Install updated dependencies](/guides/references/migration-guide##2-Install-component-testing-dependencies)
+3. [Update the plugins file](/guides/references/migration-guide#3-Update-plugins-file-to-use-dev-server-start)
+4. [Use CLI commands to launch](/guides/references/migration-guide#4-Use-CLI-commands-to-launch)
+5. [Update the support file (optionally)](/guides/references/migration-guide#5-Update-the-support-file-optionally)
+
+#### 1. Remove `experimentalComponentTesting` config
+
+The `experimentalComponentTesting` configuration is no longer needed to run component tests. Remove this flag in order to run Cypress tests without erroring.
+
+<Badge type="danger">Before</Badge> experimentalComponentTesting flag is required for component testing
+
+```json
+{
+  "experimentalComponentTesting": true,
+  "componentFolder": "src",
+  "testFiles": "**/*spec.{js,jsx,ts,tsx}"
+}
+```
+
+<Badge type="success">After</Badge> experimentalComponentTesting flag must be removed
+
+```json
+{
+  "componentFolder": "src",
+  "testFiles": "**/*spec.{js,jsx,ts,tsx}"
+}
+```
+
+#### 2. Install component testing dependencies
+
+The Component Test Runner requires the following dependencies:
+
+- Framework-specific bindings such as [`@cypress/react`][npmcypressreact].
+- Development server adapter such as [`@cypress/webpack-dev-server`][npmcypresswebpackdevserver].
+- Peer dependencies such as [`webpack-dev-server`][npmwebpackdevserver], [`vue`][npmvue], or [`react`][npmreact].
+
+**Install React dependencies**
+
+1. Upgrade to [`@cypress/react`](https://www.npmjs.com/package/@cypress/react) 5.X.
+2. Install [`@cypress/webpack-dev-server`](https://www.npmjs.com/package/@cypress/webpack-dev-server).
+3. (Optional) Install [`cypress-react-selector`](https://www.npmjs.com/package/cypress-react-selector) if any tests use `cy.react()`.
+4. (Optional) Install code coverage, see [installation steps](/guides/tooling/code-coverage)).
+
+```shell
+npm i cypress @cypress/react @cypress/webpack-dev-server -D
+```
+
+**Install Vue 3 dependencies**
+
+1. Upgrade to [`@cypress/vue@next`](https://www.npmjs.com/package/@cypress/vue) (3.X and above).
+2. Install [`@cypress/webpack-dev-server`](https://www.npmjs.com/package/@cypress/webpack-dev-server).
+
+```shell
+npm i cypress @cypress/vue@next @cypress/webpack-dev-server -D
+```
+
+**Install Vue 2 dependencies**
+
+1. Upgrade to [`@cypress/vue@2`](https://www.npmjs.com/package/@cypress/vue) (2.X only).
+2. Install [`@cypress/webpack-dev-server`](https://www.npmjs.com/package/@cypress/webpack-dev-server).
+
+```shell
+npm i cypress @cypress/vue @cypress/webpack-dev-server -D
+```
+
+#### 3. Update plugins file to use `dev-server:start`
+
+**Re-using a project's local development server instead of file preprocessors**
+
+In 7.0 Cypress component tests require that code is bundled with your local development server, via a new `dev-server:start` event. This event replaces the previous `file:preprocessor` event.
+
+<Badge type="danger">Before</Badge> Plugins file registers the file:preprocessor event
+
+```js
+const webpackPreprocessor = require('@cypress/webpack-preprocessor')
+const webpackConfig = require('../webpack.config.js')
+
+module.exports = (on, config) => {
+  on('file:preprocessor', webpackPreprocessor(options))
+
+  return config
+}
+```
+
+<Badge type="success">After</Badge> Plugins file registers the dev-server:start event
+
+```js
+// The @cypress/webpack-dev-server package replaces @cypress/webpack-preprocessor
+const { startDevServer } = require('@cypress/webpack-dev-server')
+const webpackConfig = require('../webpack.config.js')
+
+module.exports = (on, config) => {
+  // You must use the dev-server:start event instead of the file:preprocessor event
+
+  on('dev-server:start', (options) => {
+    return startDevServer({ options, webpackConfig })
+  })
+
+  return config
+}
+```
+
+**Configure `plugins.js` for React projects**
+
+Projects using React may not need to update their plugins file. If your project is using a webpack scaffold or boilerplate, it is recommended to use a preset plugin imported from `@cypress/react/plugins/...`
+
+**Preset Plugins for React**
+
+If you are using a preset plugin within [`@cypress/react`](https://www.npmjs.com/package/@cypress/react), you should not need to update your plugins file. To check if you are using a preset, check to see if your plugins file contains an import to a file inside of `@cypress/react/plugins`.
+
+<Badge type="success">After</Badge> An example plugins file to configure component testing in a React Scripts project
+
+```js
+// The @cypress/react project exposes preset plugin configurations
+// These presets automatically register the events to bundle the project properly
+const injectReactScriptsDevServer = require('@cypress/react/plugins/react-scripts')
+
+module.exports = (on, config) => {
+  // Internally, this method registers `dev-server:start` with the proper webpack configuration
+  // Previously, it registered the `file:preprocessor` event.
+  injectReactScriptsDevServer(on, config)
+
+  return config
+}
+```
+
+**Configure `plugins.js` for Vue**
+
+Projects using Vue will likely be using either [`@vue/cli`](https://cli.vuejs.org/) or manually defining webpack configuration. These steps are identical to the manual setup steps, with the exception of how you resolve the webpack configuration. To access the resolved webpack configuration that contains any `vue.config.js` setup or the default [`@vue/cli`][npmvuecli] webpack setup, you must import the configuration and pass it into [`@cypress/webpack-dev-server`][https://www.npmjs.com/package/@cypress/webpack-dev-server].
+
+<Badge type="success">After</Badge> An example plugins file to configure component testing in a Vue CLI project
+
+```js
+const { startDevServer } = require('@cypress/webpack-dev-server')
+
+// The resolved configuration, which contains any `vue.config.js` setup
+const webpackConfig = require('@vue/cli-service/webpack.config.js')
+
+module.exports = (on, config) => {
+  on('dev-server:start', (options) => {
+    return startDevServer({ options, webpackConfig })
+  })
+
+  return config // you *must* return config
+}
+```
+
+**Configuring a project with vanilla webpack**
+
+For projects with manually defined or ejected webpack configurations, the webpack configuration must be passed in.
+
+<Badge type="success">After</Badge> An example plugins file to configure component testing in a project with vanilla webpack
+
+```js
+const { startDevServer } = require('@cypress/webpack-dev-server')
+const webpackConfig = require('../webpack.config.js')
+
+module.exports = (on, config) => {
+  on('dev-server:start', (options) => {
+    return startDevServer({ options, webpackConfig })
+  })
+
+  return config
+}
+```
+
+#### 4. Use CLI commands to launch
+
+To run your component tests you _must_ use the dedicated component testing subcommands.
+
+- `cypress open-ct`
+- `cypress run-ct`
+
+<Alert type="info">
+
+Component tests will no longer be picked up when launching Cypress from `cypress open` or `cypress run`. Please use `cypress open-ct` or `cypress run-ct`.
+
+</Alert>
+
+<Badge type="danger">Before</Badge> Commands launches both end-to-end and component tests.
+
+```shell
+cypress run
+```
+
+<Badge type="success">After</Badge> Command launches Cypress Component Test Runner and executes component tests. End-to-end tests are run separately.
+
+```shell
+# open component testing runner
+cypress open-ct
+
+# run all component tests
+cypress run-ct
+
+# e2e tests
+cypress open
+cypress run
+```
+
+#### 5. Update the support file (optionally)
+
+Previously, a support file was required to set up the component testing target node. This is no longer necessary.
+
+Specifically for React users, if the support file contains the following line, please remove it. The import will fail in the future. We have left it in to avoid a breaking change, but the file does nothing.
+
+<Badge type="danger">Before</Badge> The support file was required to import a script from [@cypress/react][npmcypressreact]
+
+```js
+// support.js
+
+// This import should be removed, it will error in a future update
+import '@cypress/react/hooks'
+```
+
+#### Expanded stylesheet support
+
+Stylesheets are now bundled and imported within spec and support files. Previously, many of `mount`'s mounting options such as `stylesheets`, `cssFiles`, and `styles` were required to import stylesheets into your component tests. This often involved pre-compiling the stylesheets before launching the component tests, which affected performance. Migrating to imports for these styles is optional, but recommended.
+
+Now, stylesheets should be loaded into the `document` the same way they are in your application. It is recommended you update your code like so:
+
+<Badge type="danger">Before</Badge> Stylesheets were loaded using the filesystem
+
+```js
+const { mount } = require('@cypress/react')
+const Button = require('./Button')
+
+it('renders a Button', () => {
+  // Mounting a button and loading the Tailwind CSS library
+  mount(<Button />, {
+    stylesheets: [
+      // Paths are relative to the project root directory and must be pre-compiled
+      // Because they are static, they do not watch for file updates
+      '/dist/index.css',
+      '/node_modules/tailwindcss/dist/tailwind.min.css',
+    ],
+  })
+})
+```
+
+<Badge type="success">After</Badge> Stylesheets are supported via an import and `mountingOptions.stylesheets` is not recommended
+
+```js
+// In the majority of modern style-loaders,
+// these styles will be injected into document.head when they're imported below
+require('./index.scss')
+require('tailwindcss/dist/tailwindcss.min.css')
+
+const { mount } = require('@cypress/react')
+const Button = require('./Button')
+
+it('renders a Button', () => {
+  // This button will render with the Tailwind CSS styles
+  // as well as the application's index.scss styles
+  mount(<Button />)
+})
+```
+
+#### Desktop GUI no longer displays component tests
+
+Previously, the Desktop GUI displayed _both_ end-to-end and component tests. Now, component tests are only displayed when launching via the component testing-specific subcommands. `cypress open-ct` (or `run-ct` in CI)
+
+#### Executing all or some component tests
+
+In 6.X, the Desktop GUI had support for finding and executing a subset of component tests. In 7.0, this is possible with the `--headed` command and a spec glob, like so:
+
+```sh
+cypress run-ct --headed --spec **/some-folder/*spec.*
+```
+
+#### Coverage
+
+Previously, the [`@cypress/react`](https://www.npmjs.com/package/@cypress/vue) 4.X package embedded code coverage in your tests automatically.
+
+If you still wish to record code coverage in your tests, you must manually install it. Please see our [code coverage guide](/guides/tooling/code-coverage) for the latest steps.
+
+#### cypress-react-selector
+
+If you use `cy.react()` in your tests, you must manually install [`cypress-react-selector`](https://www.npmjs.com/package/cypress-react-selector) with `npm i cypress-react-selector -D`. You do not need to update your support file.
+
+#### HTML Side effects
+
+As of 7.0, we only clean up components mounted by Cypress via [`@cypress/react`](https://www.npmjs.com/package/@cypress/react) or [`@cypress/vue`](https://www.npmjs.com/package/@cypress/vue).
+
+We no longer automatically reset the `document.body` between tests. Any HTML side effects of your component tests will carry over.
+
+<Badge type="danger">Before</Badge> All HTML content was cleared between spec files
+
+```jsx
+const { mount } = require('@cypress/react')
+
+describe('Component teardown behavior', () => {
+  it('modifies the document and mounts a component', () => {
+    // HTML unrelated to the component is mounted
+    Cypress.$('body').append('<div id="some-html"/>')
+
+    // A component is mounted
+    mount(<Button id="my-button"></Button>)
+
+    cy.get('#some-html').should('exist')
+    cy.get('#my-button').should('exist')
+  })
+
+  it('cleans up any HTML', () => {
+    // The component is automatically unmounted by Cypress
+    cy.get('#my-button').should('not.exist')
+
+    // The HTML left over from the previous test has been cleaned up
+    // This was done automatically by Cypress
+    cy.get('#some-html').should('not.exist')
+  })
+})
+```
+
+<Badge type="success">After</Badge> Only the components are cleaned up between spec files
+
+```jsx
+const { mount } = require('@cypress/react')
+
+describe('Component teardown behavior', () => {
+  it('modifies the document and mounts a component', () => {
+    // HTML unrelated to the component is mounted
+    Cypress.$('body').append('<div id="some-html"/>')
+
+    // A component is mounted
+    mount(<Button id="my-button"></Button>)
+
+    cy.get('#some-html').should('exist')
+    cy.get('#my-button').should('exist')
+  })
+
+  it('only cleans up *components* between tests', () => {
+    // The component is automatically unmounted by Cypress
+    cy.get('#my-button').should('not.exist')
+
+    // The HTML left over from the previous test should be manually cleared
+    cy.get('#some-html').should('not.exist')
+  })
+})
+```
+
+#### Legacy `cypress-react-unit-test` and `cypress-vue-unit-test` packages
+
+For users upgrading from [`cypress-react-unit-tests`](https://www.npmjs.com/package/cypress-react-unit-test) or [`cypress-vue-unit-tests`](https://www.npmjs.com/package/cypress-vue-unit-test), please update all references to use [`@cypress/react`](https://www.npmjs.com/package/@cypress/react) or [`@cypress/vue`](https://www.npmjs.com/package/@cypress/vue). These packages have been deprecated and moved to the Cypress scope on npm.
+
+### Uncaught exception and unhandled rejections
+
+In 7.0, Cypress now fails tests in more situations where there is an uncaught exception and also if there is an unhandled promise rejection in the application under test.
+
+You can ignore these situations and not fail the Cypress test with the code below.
+
+#### Turn off all uncaught exception handling
+
+```javascript
+Cypress.on('uncaught:exception', (err, runnable) => {
+  // returning false here prevents Cypress from
+  // failing the test
+  return false
+})
+```
+
+#### Turn off uncaught exception handling unhandled promise rejections
+
+```javascript
+Cypress.on('uncaught:exception', (err, runnable, promise) => {
+  // when the exception originated from an unhandled promise
+  // rejection, the promise is provided as a third argument
+  // you can turn off failing the test in this case
+  if (promise) {
+    // returning false here prevents Cypress from
+    // failing the test
+    return false
+  }
+})
+```
+
+### Node.js 12+ support
+
+Cypress comes bundled with its own [Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version). However, installing the `cypress` npm package uses the Node.js version installed on your system.
+
+Node.js 10 reached its end of life on Dec 31, 2019 and Node.js 13 reached its end of life on June 1, 2019. [See Node's release schedule](https://github.com/nodejs/Release). These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 12 or Node.js 14+.
+
+## Migrating `cy.route()` to [`cy.intercept()`][intercept]
+
+This guide details how to change your test code to migrate from `cy.route()` to [`cy.intercept()`][intercept]. `cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0. In a future release, support for `cy.server()` and `cy.route()` will be removed.
+
+Please also refer to the full documentation for [cy.intercept()][intercept].
 
 ### Match simple route
 
-In many use cases, you can replace `cy.route()` with [cy.intercept()](/api/commands/intercept) and remove the call to `cy.server()` (which is no longer necessary).
+In many use cases, you can replace `cy.route()` with [cy.intercept()][intercept] and remove the call to `cy.server()` (which is no longer necessary).
 
 <Badge type="danger">Before</Badge>
 
@@ -33,7 +563,7 @@ cy.intercept('PATCH', '/projects/*').as('updateProject')
 
 ### Match against `url` and `path`
 
-The `url` argument to [cy.intercept()](/api/commands/intercept) matches against the full url, as opposed to the `url` or `path` in `cy.route()`. If you're using the `url` argument in `cy.intercept()`, you may need to update your code depending on the route you're trying to match.
+The `url` argument to [cy.intercept()][intercept] matches against the full url, as opposed to the `url` or `path` in `cy.route()`. If you're using the `url` argument in [`cy.intercept()`][intercept], you may need to update your code depending on the route you're trying to match.
 
 <Badge type="danger">Before</Badge>
 
@@ -65,7 +595,7 @@ cy.intercept({
 
 ### `cy.wait()` object
 
-The object returned by `cy.wait()` is different from intercepted HTTP requests using `cy.intercept()` than the object returned from an awaited `cy.route()` XHR.
+The object returned by `cy.wait()` is different from intercepted HTTP requests using [`cy.intercept()`][intercept] than the object returned from an awaited `cy.route()` XHR.
 
 <Badge type="danger">Before</Badge>
 
@@ -95,7 +625,7 @@ cy.wait('@createUser').then(({ request, response }) => {
 
 ### Fixtures
 
-You can stub requests and response with fixture data by defining a `fixture` property in the `routeHandler` argument for `cy.intercept()`.
+You can stub requests and response with fixture data by defining a `fixture` property in the `routeHandler` argument for [`cy.intercept()`][intercept].
 
 <Badge type="danger">Before</Badge>
 
@@ -113,9 +643,11 @@ cy.intercept('GET', '/projects', {
 })
 ```
 
-### Override route matchers
+### Override intercepts
 
-Unlike `cy.route()`, `cy.intercept()` currently does _not_ allow you to override a previous response. For more information on this, see [#9302](https://github.com/cypress-io/cypress/issues/9302) and [this blog post](https://glebbahmutov.com/blog/cypress-intercept-problems/#no-overwriting-interceptors). Overriding responses will be added in a future release.
+As of 7.0, newer intercepts are called before older intercepts, allowing users to override intercepts. [See "Handler ordering is reversed" for more details](#Handler-ordering-is-reversed).
+
+Before 7.0, intercepts could not be overridden. See [#9302](https://github.com/cypress-io/cypress/issues/9302) for more details.
 
 ## Migrating to Cypress 6.0
 
@@ -223,11 +755,11 @@ it('test', () => {
 
 ### `cy.wait(alias)` type
 
-[cy.route()](/api/commands/route) is deprecated in 6.0.0. We encourage the use of [cy.intercept()](/api/commands/intercept) instead. Due to this deprecation, the type yielded by [cy.wait(alias)](/api/commands/wait) has changed.
+[cy.route()](/api/commands/route) is deprecated in 6.0.0. We encourage the use of [cy.intercept()][intercept] instead. Due to this deprecation, the type yielded by [cy.wait(alias)](/api/commands/wait) has changed.
 
 <Badge type="danger">Before</Badge> Before 6.0.0, [cy.wait(alias)](/api/commands/wait) would yield an object of type `WaitXHR`.
 
-<Badge type="success">After</Badge> In 6.0.0 and onwards, [cy.wait(alias)](/api/commands/wait) will yield an object of type `Interception`. This matches the new interception object type used for [cy.intercept()](/api/commands/intercept).
+<Badge type="success">After</Badge> In 6.0.0 and onwards, [cy.wait(alias)](/api/commands/wait) will yield an object of type `Interception`. This matches the new interception object type used for [cy.intercept()][intercept].
 
 #### Restore old behavior
 
@@ -661,7 +1193,7 @@ Cypress 5.0 raises minimum required TypeScript version from 2.9+ to 3.4+. You'll
 
 ### Node.js 10+ support
 
-Cypress comes bundled with it's own [Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version). However, installing the `cypress` npm package uses the Node.js version installed on your system.
+Cypress comes bundled with its own [Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version). However, installing the `cypress` npm package uses the Node.js version installed on your system.
 
 Node.js 8 reached its end of life on Dec 31, 2019 and Node.js 11 reached its end of life on June 1, 2019. [See Node's release schedule](https://github.com/nodejs/Release). These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 10 or Node.js 12+.
 
@@ -1066,7 +1598,7 @@ cy.get('p').contains('hello\nworld') // Pass in 3.x. Fail in 4.0.0.
 
 ### Node.js 8+ support
 
-Cypress comes bundled with it's own [Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version). However, installing the `cypress` npm package uses the Node.js version installed on your system.
+Cypress comes bundled with its own [Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version). However, installing the `cypress` npm package uses the Node.js version installed on your system.
 
 Node.js 4 reached its end of life on April 30, 2018 and Node.js 6 reached its end of life on April 30, 2019. [See Node's release schedule](https://github.com/nodejs/Release). These Node.js versions will no longer be supported when installing Cypress. The minimum Node.js version supported to install Cypress is Node.js 8.
 
@@ -1088,3 +1620,11 @@ module.exports = (on) => {
   on('file:preprocessor', browserify())
 }
 ```
+
+[intercept]: /api/commands/intercept
+[npmcypresswebpackdevserver]: https://www.npmjs.org/packages/@cypress/webpack-dev-server
+[npmcypressreact]: https://www.npmjs.org/packages/@cypress/react
+[npmcypressvue]: https://www.npmjs.org/packages/@cypress/vue
+[npmreact]: https://www.npmjs.org/packages/react
+[npmvue]: https://www.npmjs.org/packages/vue
+[npmwebpackdevserver]: https://www.npmjs.org/packages/webpack-dev-server
