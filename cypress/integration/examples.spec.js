@@ -35,9 +35,7 @@ describe('Examples', () => {
             cy.contains(
               `.app-sidebar [data-test="${category}"] a`,
               pageTitle
-            ).click({
-              force: true,
-            })
+            ).click()
 
             cy.location('pathname').should(
               'equal',

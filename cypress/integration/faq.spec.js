@@ -33,9 +33,7 @@ describe('FAQ', () => {
             cy.contains(
               `.app-sidebar [data-test="${category}"] a`,
               pageTitle
-            ).click({
-              force: true,
-            })
+            ).click()
 
             const redirects = {
               'using-cypress-faq': '/faq/questions/using-cypress-faq',

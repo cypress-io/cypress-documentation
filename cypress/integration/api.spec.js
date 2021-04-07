@@ -35,9 +35,7 @@ describe('APIs', () => {
                 ? '.app-sidebar a'
                 : `.app-sidebar [data-test="${category}"] a`,
               pageTitle
-            ).click({
-              force: true,
-            })
+            ).click()
 
             const redirects = {
               'table-of-contents': '/api/table-of-contents',
