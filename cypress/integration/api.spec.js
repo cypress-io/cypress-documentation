@@ -17,7 +17,15 @@ describe('APIs', () => {
         cy.wrap(sidebarCategories).each((category) => {
           const pages = Object.keys(sidebarApi[category])
 
-          cy.get('.app-sidebar').contains(api[category])
+          cy.get('.app-sidebar')
+            .contains(api[category])
+            .then(($category) => {
+              cy.get(`[data-test="${api[category]}-children"]`).then(($ul) => {
+                if ($ul.hasClass('hidden')) {
+                  $category.click()
+                }
+              })
+            })
 
           cy.wrap(pages).each((page) => {
             const pageTitle = api[page]

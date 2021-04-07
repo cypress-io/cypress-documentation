@@ -16,7 +16,17 @@ describe('Guides', () => {
         cy.wrap(sidebarCategories).each((category) => {
           const pages = Object.keys(sidebarGuides[category])
 
-          cy.get('.app-sidebar').contains(guides[category])
+          cy.get('.app-sidebar')
+            .contains(guides[category])
+            .then(($category) => {
+              cy.get(`[data-test="${guides[category]}-children"]`).then(
+                ($ul) => {
+                  if ($ul.hasClass('hidden')) {
+                    $category.click()
+                  }
+                }
+              )
+            })
 
           cy.wrap(pages).each((page) => {
             /**
@@ -44,7 +54,7 @@ describe('Guides', () => {
             cy.contains(
               `.app-sidebar [data-test="${category}"] a`,
               sidebarItemMismatches[pageTitle] || pageTitle
-            ).click({ force: true })
+            ).click()
 
             const redirects = {
               'dashboard-introduction': '/guides/dashboard/introduction',

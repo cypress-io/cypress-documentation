@@ -87,7 +87,11 @@ export default {
       </svg>
     </button>
     <!-- Expandable link section, show/hide based on state. -->
-    <ul :class="isOpen ? '' : 'hidden'" class="space-y-1 m-0">
+    <ul
+      :class="isOpen ? '' : 'hidden'"
+      class="space-y-1 m-0"
+      :data-test="`${label}-children`"
+    >
       <li
         v-for="(child, index) in children"
         :key="`collapsible-sidebar-section-${index}`"
