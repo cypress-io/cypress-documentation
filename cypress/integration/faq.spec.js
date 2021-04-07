@@ -17,7 +17,15 @@ describe('FAQ', () => {
         cy.wrap(sidebarCategories).each((category) => {
           const pages = Object.keys(sidebarFaq[category])
 
-          cy.get('.app-sidebar').contains(faq[category])
+          cy.get('.app-sidebar')
+            .contains(faq[category])
+            .then(($category) => {
+              cy.get(`[data-test="${faq[category]}-children"]`).then(($ul) => {
+                if ($ul.hasClass('hidden')) {
+                  cy.wrap($category).scrollIntoView().click()
+                }
+              })
+            })
 
           cy.wrap(pages).each((page) => {
             const pageTitle = faq[page]
@@ -25,9 +33,7 @@ describe('FAQ', () => {
             cy.contains(
               `.app-sidebar [data-test="${category}"] a`,
               pageTitle
-            ).click({
-              force: true,
-            })
+            ).click({ force: true })
 
             const redirects = {
               'using-cypress-faq': '/faq/questions/using-cypress-faq',
