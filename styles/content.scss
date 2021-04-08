@@ -478,6 +478,14 @@ pre[class*='language-'] ::selection {
 }
 /* #endregion Syntax highlighting selection override */
 
+/* #region Overriding syntax highlighting theme */
+/* Prevent calls to .continue() from being italicized since */
+/* syntax highlighter thinks .continue() is a `continue` keyword */
+span.token.keyword.control-flow {
+  font-style: normal;
+}
+/* #endregion Overriding syntax highlighting theme */
+
 @media only percy {
   .nuxt-content::after {
     content: '';
