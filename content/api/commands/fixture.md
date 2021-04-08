@@ -227,6 +227,44 @@ describe('User page', () => {
 })
 ```
 
+### Loaded just once
+
+Please keep in mind that fixture files are assumed to be unchanged during the test, and thus the Test Runner loads them just once. Even if you overwrite the fixture file itself, the already loaded fixture data remains the same.
+
+For example, if you want to reply to a network request with different object, the following **will not work**:
+
+```js
+// 🚨 DOES NOT WORK
+cy.intercept('GET', '/todos/1', { fixture: 'todo' }).as('todo')
+// application requests the /todos/1 resource
+// the intercept replies with the object from todo.json file
+
+cy.wait('@todo').then(() => {
+  cy.writeFile('/cypress/fixtures/todo.json', { title: 'New data' })
+})
+// application requests the /todos/1 resource again
+// the intercept replies with the originally loaded object
+// from the todo.json file and NOT { "title": "New data" }
+```
+
+In this situation, avoid using the fixture file and instead respond to the network request with the object
+
+```js
+// ✅ RESPOND WITH OBJECT
+cy.fixture('todo.json').then((todo) => {
+  cy.intercept('GET', '/todos/1', { body: todo }).as('todo')
+  // application requests the /todos/1 resource
+  // the intercept replies with the initial object
+
+  cy.wait('@todo').then(() => {
+    // modify the response object
+    todo.title = 'New data'
+    // and override the intercept
+    cy.intercept('GET', '/todos/1', { body: todo })
+  })
+})
+```
+
 ## Rules
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
