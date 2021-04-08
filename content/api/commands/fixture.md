@@ -98,6 +98,20 @@ The example above would resolve in the following order:
 12. `cypress/fixtures/admin.tiff`
 13. `cypress/fixtures/admin.zip`
 
+#### Use import statement
+
+If you are loading a JSON fixture, you can simply use the `import` statement and let the bundler load it:
+
+```js
+// cypress/integration/spec.js
+import user from '../fixtures/user.json'
+it('loads the same object', () => {
+  cy.fixture('user').then((userFixture) => {
+    expect(user, 'the same data').to.deep.equal(userFixture)
+  })
+})
+```
+
 ### Images
 
 #### Image fixtures are sent as `base64`
