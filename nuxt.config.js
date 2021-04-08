@@ -56,7 +56,12 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ['@nuxtjs/axios', '@nuxt/content', '@nuxtjs/gtm'],
+  modules: ['@nuxtjs/axios', '@nuxt/content', '@nuxtjs/gtm', '@nuxtjs/sentry'],
+  sentry: {
+    dsn:
+      (process.env.CONTEXT === 'production' && process.env.SENTRY_DSN) ||
+      undefined,
+  },
   /*
    ** Google Tag Manager
    */
