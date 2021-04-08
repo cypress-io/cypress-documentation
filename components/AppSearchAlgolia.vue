@@ -29,12 +29,7 @@ export default {
       return url.replace(/\/$|\/(?=\?)|\/(?=#)/g, '')
     },
     formatUrl(absoluteUrl) {
-      const { pathname, origin, hash } = new URL(absoluteUrl)
-
-      if (location.origin !== origin) {
-        return absoluteUrl
-      }
-
+      const { pathname, hash } = new URL(absoluteUrl)
       const url = pathname.replace(this.settings.url, '/') + hash
 
       return this.stripTrailingSlash(url)
