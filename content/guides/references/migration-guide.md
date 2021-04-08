@@ -118,7 +118,7 @@ cy.intercept('/slow', (req) => {
 })
 ```
 
-[Read more about available functions on `res`.][/api/commands/intercept#intercepted-response]
+[Read more about available functions on `res`.](/api/commands/intercept#intercepted-response)
 
 #### Falsy values are no longer dropped in `StaticResponse` bodies
 
@@ -183,9 +183,9 @@ The `experimentalComponentTesting` configuration is no longer needed to run comp
 
 The Component Test Runner requires the following dependencies:
 
-- Framework-specific bindings such as [`@cypress/react`][npmcypressreact].
-- Development server adapter such as [`@cypress/webpack-dev-server`][npmcypresswebpackdevserver].
-- Peer dependencies such as [`webpack-dev-server`][npmwebpackdevserver], [`vue`][npmvue], or [`react`][npmreact].
+- Framework-specific bindings such as [`@cypress/react`](https://www.npmjs.com/package/@cypress/react).
+- Development server adapter such as [`@cypress/webpack-dev-server`](https://www.npmjs.com/package/@cypress/webpack-dev-server).
+- Peer dependencies such as [`webpack-dev-server`](https://www.npmjs.com/package/webpack-dev-server), [`vue`][npmvue], or [`react`][npmreact].
 
 **Install React dependencies**
 
@@ -255,7 +255,7 @@ module.exports = (on, config) => {
 
 **Configure `plugins.js` for React projects**
 
-Projects using React may not need to update their plugins file. If your project is using a webpack scaffold or boilerplate, it is recommended to use a preset plugin imported from `@cypress/react/plugins/...`
+Projects using React may not need to update their plugins file. If your project is using a webpack scaffold or boilerplate, it is recommended to use a preset plugin imported from [`@cypress/react/plugins`](https://github.com/cypress-io/cypress/tree/develop/npm/react/plugins).
 
 **Preset Plugins for React**
 
@@ -279,7 +279,7 @@ module.exports = (on, config) => {
 
 **Configure `plugins.js` for Vue**
 
-Projects using Vue will likely be using either [`@vue/cli`](https://cli.vuejs.org/) or manually defining webpack configuration. These steps are identical to the manual setup steps, with the exception of how you resolve the webpack configuration. To access the resolved webpack configuration that contains any `vue.config.js` setup or the default [`@vue/cli`][npmvuecli] webpack setup, you must import the configuration and pass it into [`@cypress/webpack-dev-server`][https://www.npmjs.com/package/@cypress/webpack-dev-server].
+Projects using Vue will likely be using either [`@vue/cli`](https://cli.vuejs.org/) or manually defining webpack configuration. These steps are identical to the manual setup steps, with the exception of how you resolve the webpack configuration. To access the resolved webpack configuration that contains any `vue.config.js` setup or the default [`@vue/cli`](https://cli.vuejs.org/) webpack setup, you must import the configuration and pass it into [`@cypress/webpack-dev-server`](https://www.npmjs.com/package/@cypress/webpack-dev-server).
 
 <Badge type="success">After</Badge> An example plugins file to configure component testing in a Vue CLI project
 
@@ -356,7 +356,7 @@ Previously, a support file was required to set up the component testing target n
 
 Specifically for React users, if the support file contains the following line, please remove it. The import will fail in the future. We have left it in to avoid a breaking change, but the file does nothing.
 
-<Badge type="danger">Before</Badge> The support file was required to import a script from [@cypress/react][npmcypressreact]
+<Badge type="danger">Before</Badge> The support file was required to import a script from [@cypress/react](https://www.npmjs.com/package/@cypress/react)
 
 ```js
 // support.js
