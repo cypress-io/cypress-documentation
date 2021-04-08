@@ -497,10 +497,10 @@ cy.get('@comments').should((response) => {
 
 ### Aliases are reset before each test
 
-**Note:** all aliases are reset before each test. A common user mistake is to create aliases using a `before` hook. Such aliases work in the first test only!
+**Note:** all aliases are reset before each test. A common user mistake is to create aliases using the `before` hook. Such aliases work in the first test only!
 
 ```js
-// 🚨 THIS EXAMPLE WOULD NOT WORK
+// 🚨 THIS EXAMPLE DOES NOT WORK
 before(() => {
   // notice this alias is created just once using "before" hook
   cy.wrap('some value').as('exampleValue')
