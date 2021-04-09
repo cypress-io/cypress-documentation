@@ -115,6 +115,15 @@ Then you can manually unzip and double click. Cypress will run without needing t
 
 <DocsVideo src="/img/snippets/installing-global.mp4"></DocsVideo>
 
+<Alert type="info">
+
+<strong class="alert-header">Direct downloading for old versions</strong>
+
+It is possible to download an old version from our CDN by suffixing the URL with the desired version (ex. [https://download.cypress.io/desktop/6.8.0](https://download.cypress.io/desktop/6.8.0)).
+
+</Alert>
+
+
 ### <Icon name="refresh"></Icon> Continuous integration
 
 Please read our [Continuous Integration](/guides/continuous-integration/introduction) docs for help installing Cypress in CI. When running in linux you'll need to install some [system dependencies](/guides/continuous-integration/introduction#Dependencies) or you can use our [Docker images](/examples/examples/docker) which have everything you need prebuilt.
