@@ -62,33 +62,28 @@ export default {
   </div>
 </template>
 
-<style lang="scss">
-$card-header-breakpoint: 1280px;
+<style module>
+.plugins .wrapper {
+  padding: 40px 40px;
+}
 
-.plugins {
-  .wrapper {
-    padding: 40px 40px;
-  }
+.plugins h2 {
+  border-bottom: 0;
+  margin-bottom: 0;
+}
 
-  h2 {
-    border-bottom: 0;
-    margin-bottom: 0;
-  }
+.plugins h3 {
+  font-size: 1.3em;
+  margin: 0;
+  border-bottom: 0;
+  line-height: 1.3;
+}
 
-  h3 {
-    font-size: 1.3em;
-    margin: 0;
-    border-bottom: 0;
-    line-height: 1.3;
-
-    a {
-      border-bottom: 0;
-
-      &:hover {
-        border-bottom: 0;
-      }
-    }
-  }
+.plugins a {
+  border-bottom: 0;
+}
+.plugins a:hover {
+  border-bottom: 0;
 }
 
 ul.plugins-list {
@@ -97,30 +92,33 @@ ul.plugins-list {
   padding: 0;
   width: calc(100% + 20px);
   flex-wrap: wrap;
+}
 
-  li {
+ul.plugins-list  li {
     box-sizing: border-box;
     list-style: none;
     padding: 20px;
     border: 1px solid #e8e8e8;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.15);
     @apply w-full;
+}
 
-    /* stylelint-disable-next-line at-rule-no-unknown */
-    @screen lg {
-      width: 30%;
-    }
-
-    p {
-      margin-bottom: 0.5em;
-    }
+/* stylelint-disable-next-line at-rule-no-unknown */
+@screen lg {
+  ul.plugins-list li {
+    width: 30%;
   }
+}
+
+ul.plugins-list li p {
+  margin-bottom: 0.5em;
+}
 
   .plugin-badge {
     // margin-top: -8px;
     margin-bottom: 5px;
 
-    @media (min-width: $card-header-breakpoint) {
+    @media (min-width: 1280px) {
       margin: 0;
     }
   }
@@ -129,7 +127,7 @@ ul.plugins-list {
     border-bottom: 1px solid #eee;
     margin-bottom: 0.6em;
 
-    /* remove hash symbol from appearing in the ::before 
+    /* remove hash symbol from appearing in the ::before
        of the anchors in titles */
     & > h3 > a::before {
       content: '';
@@ -137,7 +135,7 @@ ul.plugins-list {
       padding-right: 0;
     }
 
-    @media (min-width: $card-header-breakpoint) {
+    @media (min-width: 1280px) {
       display: flex;
       align-items: center;
       justify-content: space-between;
