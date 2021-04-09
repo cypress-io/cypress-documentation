@@ -105,7 +105,7 @@ workflows:
           command-prefix: npx percy exec --
           yarn: true
           start: yarn start:ci
-          record: $SHOULD_RECORD_CYPRESS_TESTS
+          record: [[ -n $SHOULD_RECORD_CYPRESS_TESTS ]]
           parallel: true
           parallelism: 4
           ci-build-id: ${CIRCLE_SHA1:0:8}
