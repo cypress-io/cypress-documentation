@@ -334,6 +334,13 @@
           "link": "https://github.com/nils-hoyer/cypress-fail-on-console-error",
           "keywords": ["console", "error", "fail"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-template-fixtures",
+          "description": "Allow using {{ENVIRONMENT_VARIABLE}} in Cypress fixture files.",
+          "link": "https://github.com/xpol/cypress-template-fixtures",
+          "keywords": ["fixtures", "templates", "environment variables"],
+          "badge": "community"
         }
       ]
     },
