@@ -334,6 +334,13 @@
           "link": "https://github.com/nils-hoyer/cypress-fail-on-console-error",
           "keywords": ["console", "error", "fail"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-parallel",
+          "description": "Run the tests faster on your local machine, exploiting different threads for a tests parallel execution.",
+          "link": "https://github.com/tnicola/cypress-parallel",
+          "keywords": ["parallel", "sharding", "local"],
+          "badge": "community"
         }
       ]
     },
