@@ -29,7 +29,12 @@ export default {
       return url.replace(/\/$|\/(?=\?)|\/(?=#)/g, '')
     },
     formatUrl(absoluteUrl) {
-      const { pathname, hash } = new URL(absoluteUrl)
+      const { pathname, hash, origin } = new URL(absoluteUrl)
+
+      if (!origin.includes('docs.cypress.io')) {
+        return absoluteUrl
+      }
+
       const url = pathname.replace(this.settings.url, '/') + hash
 
       return this.stripTrailingSlash(url)
