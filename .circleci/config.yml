@@ -105,7 +105,6 @@ workflows:
           command-prefix: npx percy exec --
           yarn: true
           start: yarn start:ci
-          record: $SHOULD_RECORD_CYPRESS_TESTS = "true" ? true : false
           parallel: true
           parallelism: 4
           ci-build-id: ${CIRCLE_SHA1:0:8}
@@ -113,6 +112,12 @@ workflows:
           requires:
             - build
             - Setup Linux
+          command: |
+            if [ -n "$DOCS_RECORD_KEY" ]; then
+              yarn cypress run --record --key $DOCS_RECORD_KEY --parallel
+            else
+              yarn cypress run
+            fi
 
       - build:
           filters:
