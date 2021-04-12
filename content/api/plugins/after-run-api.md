@@ -66,7 +66,10 @@ module.exports = (on, config) => {
     //   }
     // }
 
-    console.log(results.totalPassed, 'out of', results.totalTests, 'passed')
+    if (results) {
+      // results will be undefined in interactive mode
+      console.log(results.totalPassed, 'out of', results.totalTests, 'passed')
+    }
   })
 }
 ```

@@ -90,12 +90,15 @@ module.exports = (on, config) => {
     //   cypressVersion: '7.0.0'
     // }
 
-    console.log(
-      'Running',
-      details.specs.length,
-      'specs in',
-      details.browser.name
-    )
+    if (details.specs && details.browser) {
+      // details.specs and details.browser will be undefined in interactive mode
+      console.log(
+        'Running',
+        details.specs.length,
+        'specs in',
+        details.browser.name
+      )
+    }
   })
 }
 ```
