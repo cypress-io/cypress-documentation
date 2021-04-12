@@ -96,6 +96,23 @@ Add an associated image with the example within the [`assets/img`](/assets/img) 
 
 To add a plugin, submit a [pull request](#Pull-Requests) with the corresponding data added to the [`plugins.json`](/content/_data/plugins.json) file. Your plugin should have a name, description, link to the plugin's code, as well as any keywords.
 
+We want to showcase plugins that work and have a good developer experience. This means that a good plugin generally has:
+
+1. Purpose of plugin articulated up front
+1. Installation guide
+1. Options and API are documented
+1. Easy to follow documentation. Users should not have to read the source code to get things working.
+
+Each plugin submitted to the plugins list should have the following:
+
+1. Integration tests with Cypress
+
+   - Demonstrates the plugin working
+   - Acts as real-world example usage
+
+2. CI pipeline
+3. Compatability with at least the latest major version of Cypress
+
 ### Adding Pages
 
 To add a page such as a new guide or API documentation:
