@@ -16,7 +16,17 @@ describe('Guides', () => {
         cy.wrap(sidebarCategories).each((category) => {
           const pages = Object.keys(sidebarGuides[category])
 
-          cy.get('.app-sidebar').contains(guides[category])
+          cy.get('.app-sidebar')
+            .contains(guides[category])
+            .then(($category) => {
+              cy.get(`[data-test="${guides[category]}-children"]`).then(
+                ($ul) => {
+                  if ($ul.hasClass('hidden')) {
+                    cy.wrap($category).scrollIntoView().click()
+                  }
+                }
+              )
+            })
 
           cy.wrap(pages).each((page) => {
             /**

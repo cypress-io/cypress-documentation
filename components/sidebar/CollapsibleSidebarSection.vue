@@ -72,7 +72,7 @@ export default {
 <template>
   <div class="space-y-1 px-4 pb-4" :data-test="folder">
     <button
-      class="group w-full flex items-start text-left px-2 pl-4 pr-1 text-lg font-bold bg-lightGray text-gray-600 hover:text-gray-900 hover:bg-gray-50 focus:outline-none"
+      class="group w-full flex items-center text-left px-2 pl-4 pr-1 text-lg font-bold bg-lightGray text-gray-600 hover:text-gray-900 hover:bg-gray-50 focus:outline-none"
       @click="toggleSection"
     >
       {{ label }}
@@ -87,7 +87,11 @@ export default {
       </svg>
     </button>
     <!-- Expandable link section, show/hide based on state. -->
-    <ul :class="isOpen ? '' : 'hidden'" class="space-y-1 m-0">
+    <ul
+      :class="isOpen ? '' : 'hidden'"
+      class="space-y-1 m-0"
+      :data-test="`${label}-children`"
+    >
       <li
         v-for="(child, index) in children"
         :key="`collapsible-sidebar-section-${index}`"

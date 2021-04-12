@@ -29,9 +29,9 @@ export default {
       return url.replace(/\/$|\/(?=\?)|\/(?=#)/g, '')
     },
     formatUrl(absoluteUrl) {
-      const { pathname, origin, hash } = new URL(absoluteUrl)
+      const { pathname, hash, origin } = new URL(absoluteUrl)
 
-      if (location.origin !== origin) {
+      if (!origin.includes('docs.cypress.io')) {
         return absoluteUrl
       }
 

@@ -116,6 +116,12 @@ cy.get('[id$=-remote]')
 cy.get('[id^=local-][id$=-remote]')
 ```
 
+#### Find the element with id that has characters used in CSS like ".", ":".
+
+```javascript
+cy.get('#id\\.\\.\\.1234') // escape the character with \\
+```
+
 ### Get in `.within()`
 
 #### `cy.get()` in the [`.within()`](/api/commands/within) command
