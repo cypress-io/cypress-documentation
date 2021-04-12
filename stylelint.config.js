@@ -8,5 +8,18 @@ module.exports = {
   // https://stylelint.io/user-guide/configuration
   rules: {
     'no-descending-specificity': null,
+    'at-rule-no-unknown': [
+      true,
+      {
+        ignoreAtRules: [
+          'tailwind',
+          'variants',
+          'responsive',
+          'apply',
+          'screen',
+          'value',
+        ],
+      },
+    ],
   },
 }

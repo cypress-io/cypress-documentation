@@ -115,7 +115,3 @@ export default {
     </main>
   </div>
 </template>
-
-<style lang="scss">
-@import '../../styles/content.scss';
-</style>
