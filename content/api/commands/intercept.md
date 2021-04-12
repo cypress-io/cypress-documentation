@@ -49,63 +49,19 @@ Specify the HTTP method to match on.
 
 All properties are optional. All properties that are set must match for the route to handle a request. If a `string` is passed to any property, it will be glob-matched against the request using [`minimatch`](https://github.com/isaacs/minimatch).The available `routeMatcher` properties are listed below:
 
-```ts
-{
-  /**
-   * Match against the username and password used in HTTP Basic authentication.
-   */
-  auth?: { username: string | RegExp, password: string | RegExp }
-  /**
-   * Match against HTTP headers on the request.
-   */
-  headers?: {
-    [name: string]: string | RegExp
-  }
-  /**
-   * Match against the requested HTTP hostname.
-   */
-  hostname?: string | RegExp
-  /**
-   * If 'true', only HTTPS requests will be matched.
-   * If 'false', only HTTP requests will be matched.
-   */
-  https?: boolean
-  /**
-   * Match against the request's HTTP method.
-   * @default '*'
-   */
-  method?: string | RegExp
-  /**
-   * If `true`, this will pass the request on to the next `RouteMatcher` after the request handler completes.
-   * Can only be used with a dynamic request handler.
-   * @default false
-   */
-  middleware?: boolean
-  /**
-   * Match on request path after the hostname, including query params.
-   */
-  path?: string | RegExp
-  /**
-   * Matches like 'path', but without query params.
-   */
-  pathname?: string | RegExp
-  /**
-   * Match based on requested port, or pass an array of ports
-   * to match against any in that array.
-   */
-  port?: number | number[]
-  /**
-   * Match on parsed querystring parameters.
-   */
-  query?: {
-    [key: string]: string | RegExp
-  }
-  /**
-   * Match against the full request URL.
-   */
-  url?: string | RegExp
-}
-```
+| Option     | Default | Description                                                                        |
+|------------|---------|------------------------------------------------------------------------------------|
+| auth       | null    | `username` and `password` used in HTTP Basic authentication                        |
+| headers    | null    | HTTP request headers                                                               |
+| hostname   | null    | HTTP request hostname                                                              |
+| https      | null    | `true`: only secure (https://) requests `false`: only insecure (http://) requests  |
+| method     | "*"     | HTTP request method                                                                |
+| middleware | false   | Pass the request on to the next `RouteMatcher` after the request handler completes |
+| path       | null    | HTTP request path after the hostname, including query parameters                   |
+| pathname   | null    | Like `path`, but without query parameters                                          |
+| port       | null    | HTTP request port(s)                                                               |
+| query      | null    | Parsed query string parameters                                                     |
+| url        | null    | Full HTTP request URL                                                              |
 
 #### <Icon name="angle-right"></Icon> routeHandler (<code>string | object | Function | [StaticResponse][staticresponse]</code>)
 
@@ -876,42 +832,15 @@ A `StaticResponse` represents a stubbed response to an HTTP request. You can sup
 
 The following properties are available on `StaticResponse`. All properties are optional:
 
-```ts
-{
-  /**
-   * Serve a fixture as the response body.
-   */
-  fixture?: string
-  /**
-   * Serve a static string/JSON object as the response body.
-   */
-  body?: string | object | object[]
-  /**
-   * HTTP headers to accompany the response.
-   * @default {}
-   */
-  headers?: { [key: string]: string }
-  /**
-   * The HTTP status code to send.
-   * @default 200
-   */
-  statusCode?: number
-  /**
-   * If 'forceNetworkError' is truthy, Cypress will destroy the browser connection
-   * and send no response. Useful for simulating a server that is not reachable.
-   * Must not be set in combination with other options.
-   */
-  forceNetworkError?: boolean
-  /**
-   * Milliseconds to delay before the response is sent.
-   */
-  delay?: number
-  /**
-   * Kilobits per second to send 'body'.
-   */
-  throttleKbps?: number
-}
-```
+| Option            | Default | Description                                            |
+|-------------------|---------|--------------------------------------------------------|
+| fixture           | null    | Serve a fixture as the HTTP response body              |
+| body              | null    | Serve a static string/JSON object as the response body |
+| headers           | {}      | HTTP response headers                                  |
+| statusCode        | 200     | HTTP response status code                              |
+| forceNetworkError | null    | Force an error by destroying the browser session       |
+| delay             | null    | Minimum network latency/delay (milliseconds)           |
+| throttleKbps      | null    | Maximum network throughput (kilobits/second)           |
 
 See ["Stubbing a response with a `StaticResponse` object"][#with-a-staticresponse-object] for examples of stubbing with `cy.intercept()`.
 
