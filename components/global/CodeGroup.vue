@@ -1,5 +1,5 @@
 <template>
-  <div class="code-group">
+  <div :class="$style.codeGroup">
     <div
       class="rounded-t-md border-b-2 border-gray-700 px-2 bg-gray-800 text-sm text-white relative"
     >
@@ -10,8 +10,10 @@
         class="px-4 py-3 text-gray-400 font-bold font-mono"
         :class="[activeTabIndex === i && 'active']"
         @click="updateTabs(i)"
-      >{{ label }}</button>
-      <span ref="highlight-underline" class="highlight-underline" />
+      >
+        {{ label }}
+      </button>
+      <span ref="highlight-underline" :class="$style.highlightUnderline" />
     </div>
     <slot />
   </div>
@@ -19,40 +21,42 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       tabs: [],
-      activeTabIndex: 0
+      activeTabIndex: 0,
     }
   },
   watch: {
-    activeTabIndex (newValue, oldValue) {
+    activeTabIndex(newValue, oldValue) {
       this.switchTab(newValue)
-    }
+    },
   },
-  mounted () {
-    this.tabs = this.$slots.default.filter(slot => Boolean(slot.componentOptions)).map((slot) => {
-      return {
-        label: slot.componentOptions.propsData.label,
-        elm: slot.elm
-      }
-    })
+  mounted() {
+    this.tabs = this.$slots.default
+      .filter((slot) => Boolean(slot.componentOptions))
+      .map((slot) => {
+        return {
+          label: slot.componentOptions.propsData.label,
+          elm: slot.elm,
+        }
+      })
 
     this.$nextTick(this.updateHighlighteUnderlinePosition)
   },
   methods: {
-    switchTab (i) {
+    switchTab(i) {
       this.tabs.forEach((tab) => {
         tab.elm.classList.remove('active')
       })
 
       this.tabs[i].elm.classList.add('active')
     },
-    updateTabs (i) {
+    updateTabs(i) {
       this.activeTabIndex = i
       this.updateHighlighteUnderlinePosition()
     },
-    updateHighlighteUnderlinePosition () {
+    updateHighlighteUnderlinePosition() {
       const activeTab = this.$refs.tabs[this.activeTabIndex]
 
       if (!activeTab) {
@@ -63,17 +67,17 @@ export default {
 
       highlightUnderline.style.left = `${activeTab.offsetLeft}px`
       highlightUnderline.style.width = `${activeTab.clientWidth}px`
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style lang="scss" scoped>
+<style module>
 button {
   outline: none;
 }
 
-.highlight-underline {
+.highlightUnderline {
   bottom: -2px;
   height: 2px;
   transition: left 150ms, width 150ms;
@@ -82,15 +86,13 @@ button {
   @apply absolute;
 }
 
-.code-group {
-  /**
-   * Since this code is going to be in the 
-   * code block it will have another scope,
-   * we need to avoid scoping it 
-   */
-  & /deep/ pre[class*='language-'] {
-    @apply rounded-t-none;
-    @apply mt-0;
-  }
+/**
+ * Since this code is going to be in the 
+ * code block it will have another scope,
+ * we need to avoid scoping it 
+ */
+.codeGroup pre[class*='language-'] {
+  @apply rounded-t-none;
+  @apply mt-0;
 }
 </style>
