@@ -85,6 +85,7 @@
     "sass-loader": "^9.0.3",
     "strip-markdown": "^4.0.0",
     "stylelint": "^13.6.1",
+    "stylelint-config-css-modules": "^2.2.0",
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-config-standard": "^20.0.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
