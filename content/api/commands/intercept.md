@@ -806,7 +806,7 @@ The response object, `res`, will be passed as the first argument to the handler 
 
 ```js
 cy.intercept('/url', (req) => {
-  res.on('before:response', (res) => {
+  req.on('before:response', (res) => {
     // this will be called before any `req.continue` or `response` handlers
   })
 
@@ -817,7 +817,7 @@ cy.intercept('/url', (req) => {
     // `req.continue` handler per request.
   })
 
-  res.on('response', (res) => {
+  req.on('response', (res) => {
     // this will be called after all `before:response` handlers and after the `req.continue` handler
     // but before the response is sent to the browser
   })
