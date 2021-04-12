@@ -65,8 +65,8 @@ If you currently do not use Webpack, you can create a separate configuration for
 
 - A project with a `package.js` file at the root that runs on Webpack 4 or 5.
 - A `webpack.config.js` file, or a way to access Webpack configuration. Refer to your framework's documentation.
-- Some components that that you want to test that visually display in a browser. It could be a date picker, tabs, responsive images.
-- A basic knowledge of how to write tests in Cypress.
+- Some components that you want to test that visually display in a browser. It could be a date picker, tabs, responsive images.
+- A basic knowledge of how to write tests in Cypress. (See the [Getting Started](/guides/core-concepts/introduction-to-cypress) guide.)
 
 ### ⚠️ Existing end-to-end users
 
