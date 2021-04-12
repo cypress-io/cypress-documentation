@@ -39,21 +39,9 @@ cy.intercept(url, routeMatcher, routeHandler)
 
 Specify the URL to match. See the examples for [Matching URL](#Matching-URL) to see how URLs are matched.
 
-```ts
-cy.intercept('http://example.com/widgets')
-cy.intercept('http://example.com/widgets', { fixture: 'widgets.json' })
-```
-
 #### **<Icon name="angle-right"></Icon> method** **_(`string`)_**
 
 Specify the HTTP method to match on.
-
-```ts
-cy.intercept('POST', 'http://example.com/widgets', {
-  statusCode: 200,
-  body: 'it worked!',
-})
-```
 
 #### **<Icon name="angle-right"></Icon> routeMatcher** **_(`RouteMatcher`)_**
 
@@ -117,40 +105,6 @@ All properties are optional. All properties that are set must match for the rout
    */
   url?: string | RegExp
 }
-```
-
-`routeMatcher` usage examples:
-
-```ts
-cy.intercept({
-  pathname: '/search',
-  query: {
-    q: 'some terms',
-  },
-}).as('searchForTerms')
-// this 'cy.wait' will only resolve once a request is made to '/search'
-// with the query paramater 'q=some+terms'
-cy.wait('@searchForTerms')
-
-cy.intercept(
-  {
-    // this RegExp matches any URL beginning with 'http://api.example.com/widgets'
-    url: /^http:\/\/api\.example\.com\/widgets/,
-    headers: {
-      'x-requested-with': 'exampleClient',
-    },
-  },
-  (req) => {
-    // only requests to URLs starting with 'http://api.example.com/widgets'
-    // having the header 'x-requested-with: exampleClient' will be received
-  }
-})
-
-// in this example, the supplied URL `/users` is merged with the RouteMatcher
-// passed as the second argument
-cy.intercept('/users', { middleware: true }, (req) => {
-  req.headers['authorization'] = `Bearer ${bearerToken}`
-})
 ```
 
 #### <Icon name="angle-right"></Icon> routeHandler (<code>string | object | Function | [StaticResponse][staticresponse]</code>)
