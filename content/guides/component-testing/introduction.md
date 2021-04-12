@@ -51,15 +51,28 @@ describe('TodoList', () => {
 
 If you are already familiar with Cypress, you'll notice it is almost exactly the same as a Cypress end-to-end testing - all your existing Cypress knowledge and experience is transferrable.
 
-## Try with an existing project
+## Project Setup
 
-Let's go through the setup to start testing components. You can set it up with an existing React or Vue project or in a new project. This guide assumes your project has a [webpack based](https://webpack.js.org/) tool chain.
+Let's go through the setup to start testing components. You can set it up with an existing React or Vue project, or start a new project from scratch. This guide assumes your project uses a [Webpack based](https://webpack.js.org/) tool chain.
 
-## ⚠️ For existing end-to-end users
+<alert type="info">
 
-If you are using Cypress Component Testing in a project that also has tests written with the Cypress end-to-end test runner, you may want to configure some Component Testing specific defaults.
+If you currently do not use Webpack, you can create a separate configuration for Webpack specifically for Cypress Component Testing. Follow the [Webpack getting started guide](https://webpack.js.org/guides/getting-started/) to create a new Webpack config, then continue following the [Installation guide](#Install) below.
 
-You can configure or override specific defaults in your [configuration file](/guides/references/configuration), `cypress.json` by default, using the `component` key.
+</alert>
+
+### Prerequisites
+
+- A project with a `package.js` file at the root that runs on Webpack 4 or 5.
+- A `webpack.config.js` file, or a way to access Webpack configuration. Refer to your framework's documentation.
+- Some components that that you want to test that visually display in a browser. It could be a date picker, tabs, responsive images.
+- A basic knowledge of how to write tests in Cypress.
+
+### ⚠️ Existing end-to-end users
+
+If you are using Cypress Component Testing in a project that also has tests written with the Cypress End-to-End test runner, you may want to configure some Component Testing specific defaults.
+
+You can configure or override Component Testing defaults in your [configuration file](/guides/references/configuration) (`cypress.json` by default) using the `component` key.
 
 For example, if you would like to use a different viewport size or target different test files for Component Testing, your `cypress.json` might look like this:
 
@@ -77,13 +90,6 @@ For example, if you would like to use a different viewport size or target differ
 
 The Component Testing runner will use all the configuration at the root level of your configuration file and apply any Component Testing specific overrides.
 
-### Prerequisites
-
-- A project with a `package.js` file at the root that runs on webpack 4 or 5.
-- A `webpack.config.js` file, or a way to access webpack configuration. Refer to your framework's documentation.
-- Some components that that you want to test that visually display in a browser. It could be a date picker, tabs, responsive images.
-- A basic knowledge of how to write tests in Cypress.
-
 ### Install
 
 <alert type="info">
@@ -98,14 +104,14 @@ Start by running the command below to install dependencies. It will install both
   <code-block label="React" active>
 
 ```bash
-npm install --save-dev cypress @cypress/react @cypress/webpack-dev-server
+npm install --save-dev cypress @cypress/react @cypress/webpack-dev-server webpack-dev-server
 ```
 
   </code-block>
   <code-block label="Vue">
 
 ```bash
-npm install --save-dev cypress @cypress/vue @cypress/webpack-dev-server
+npm install --save-dev cypress @cypress/vue @cypress/webpack-dev-server webpack-dev-server
 ```
 
   </code-block>
@@ -113,11 +119,11 @@ npm install --save-dev cypress @cypress/vue @cypress/webpack-dev-server
 
 <alert type="info">
 
-If it's your first time using Cypress, run `npx cypress open` and Cypress will create some example directories and files.
+If it's your first time using Cypress, check out the [main Getting Started documentation](guides/getting-started/installing-cypress).
 
 </alert>
 
-Now you need to configure how Cypress will locate component spec files from within your configuration file (`cypress.json` by default). In the following configuration, all components test files are in the `src` directory and match the glob given in the `testFiles` key.
+Once installed, you need to configure how Cypress will locate component spec files. In the following configuration file (`cypress.json` by default), all components test files contained within the `src` directory and match the glob given in the `testFiles` key.
 
 ```json
 {
@@ -128,10 +134,10 @@ Now you need to configure how Cypress will locate component spec files from with
 }
 ```
 
-You'll also need to configure the component testing framework of your choice by adding the component testing plugin. Read more about plugins in general in our [plugins guide](/guides/tooling/plugins-guide). If you are using Create React App, you will need to use the `react-scripts` plugin as shown below in your `cypress/plugins/index.js` file.
+You will also need to configure the component testing framework of your choice by installing the corresponding component testing plugin. Read more about Cypress plugins in our [plugins guide](/guides/tooling/plugins-guide). For example, if you are using Create React App, you will need to use the `react-scripts` plugin as shown below in your `cypress/plugins/index.js` file.
 
 <code-group>
-  <code-block label="React (using create-react-app)" active>
+  <code-block label="React (using CRA)" active>
 
 ```js
 // cypress/plugins/index.js
@@ -154,7 +160,32 @@ module.exports = (on, config) => {
 module.exports = (on, config) => {
   if (config.testingType === 'component') {
     const { startDevServer } = require('@cypress/webpack-dev-server')
+
+    // Vue's Webpack configuration
     const webpackConfig = require('@vue/cli-service/webpack.config.js')
+
+    on('dev-server:start', (options) =>
+      startDevServer({ options, webpackConfig })
+    )
+  }
+
+  return config
+}
+```
+
+  </code-block>
+  <code-block label="Generic Webpack">
+
+```js
+// cypress/plugins/index.js
+
+module.exports = (on, config) => {
+  if (config.testingType === 'component') {
+    const { startDevServer } = require('@cypress/webpack-dev-server')
+
+    // Your project's Webpack configuration
+    const webpackConfig = require('../../webpack.config.js')
+
     on('dev-server:start', (options) =>
       startDevServer({ options, webpackConfig })
     )
@@ -167,44 +198,28 @@ module.exports = (on, config) => {
   </code-block>
 </code-group>
 
-Note we have a conditional check against `config.testingType`. This is useful if your project is already using some existing plugins for the E2E runner, and you don't want them to conflict.
+Note we have a conditional check against `config.testingType`. This is useful if your project is already using existing plugins for the E2E runner, and you don't want them to conflict.
 
-If you are using a React template other than Create React App, such as Next.js, or a Vue template other than vue-cli, you will need to import the appropriate plugin. See a list of officially maintained plugins [here](https://github.com/cypress-io/cypress/tree/develop/npm/react/plugins). Alternatively, if you have your own webpack configuration, you can just provide it:
-
-```js
-// cypress/plugins/index.js
-const { startDevServer } = require('@cypress/webpack-dev-server')
-// your project's webpack configuration
-const webpackConfig = require('../../webpack.config.js')
-
-module.exports = (on, config) => {
-  if (config.testingType === 'component') {
-    on('dev-server:start', (options) => {
-      return startDevServer({ options, webpackConfig })
-    })
-  }
-
-  return config
-}
-```
-
-The [plugins](https://github.com/cypress-io/cypress/tree/develop/npm/react/plugins) we provide for common project configurations just do the same thing under the hood.
+If you have a different React development environment from Create React App, such as Next.js, or use a Vue template other than vue-cli, you will need to import the appropriate plugin. See a list of officially maintained plugins [here](https://github.com/cypress-io/cypress/tree/develop/npm/react/plugins). Each of these plugins perform the same tasks under the hood. Alternatively, if you have your own Webpack configuration, you can just provide it (without need for a specific plugin) as specified above.
 
 <alert type="info">
 
-If you have separate webpack configurations for development and production, use the development configuration. It'll give better location information using SourceMaps.
+If you have separate Webpack configurations for development and production, use the development configuration. It will give better location information using SourceMaps.
 
 </alert>
 
-We are now ready to start testing our components.
-
 ### Writing Component Tests
 
-This example assumes a `<Button />` component exists.
+This example assumes a project with a `<Button />` component.
+
+We recommend locating your component tests next to the components you are testing. If you are using our recommended `testFiles` glob (`**/*spec.{js,jsx,ts,tsx}`) [as described above](#Install):
 
 - Navigate to where this component exists in your code.
 - Create a spec file in the same folder called `Button.spec.jsx`.
-- Write a test in the `Button.spec.jsx` file:
+
+Otherwise create `Button.spec.jsx` in the relevant directory based on your configuration.
+
+Once the test file exists, we can begin to write a test called `Button.spec.jsx`:
 
 <code-group>
   <code-block label="React" active>
@@ -245,7 +260,13 @@ it('Button', () => {
   </code-block>
 </code-group>
 
-- Open Cypress to test components with the command below.
+<alert type="info">
+
+The React and Vue tests are nearly identical, allowing for a common shared test style across frameworks!
+
+</alert>
+
+- Open Cypress in Component Testing mode:
 
 ```shell
 npx cypress open-ct
@@ -255,13 +276,13 @@ npx cypress open-ct
 
 <DocsImage src="/img/guides/component-testing/one-spec.png" alt="Single Spec file with single test run" ></DocsImage>
 
-- Try modifying the test in your IDE, make the test fail, etc. The tests re-run instantly with visual feedback.
+- Try to modify the test in your editor, make the test fail, etc. The tests will re-run instantly with immediate visual feedback.
 
 ### Set up CI
 
 Sometimes we want to run tests without interactivity and see all results in the terminal, like when we run our tests in continuous integration.
 
-To run all tests in the terminal, run the command below:
+To run all component tests in the terminal, run the command below:
 
 ```shell
 npx cypress run-ct
