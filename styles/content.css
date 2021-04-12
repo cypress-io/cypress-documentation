@@ -1,5 +1,6 @@
-@value sidebar-desktop-width: 290px;
-@value font-color-black: rgb(46, 49, 56);
+:root {
+  --font-color-black: rgb(46, 49, 56);
+}
 
 [id] {
   scroll-margin-top: 5.5rem;
@@ -55,7 +56,7 @@
 .main-content-title {
   border-bottom-width: 1px;
   border-bottom-color: rgb(238, 238, 238);
-  color: $font-color-black;
+  color: var(--font-color-black);
   @apply text-3xl;
   @apply font-bold;
   @apply mt-10;
@@ -96,7 +97,7 @@
 .nuxt-content h6,
 .nuxt-content td,
 .nuxt-content th {
-  color: font-color-black;
+  color: var(--font-color-black);
 }
 
 .nuxt-content strong {
