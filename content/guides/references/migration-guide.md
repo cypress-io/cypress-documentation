@@ -1175,7 +1175,7 @@ apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 lib
 
 ### TypeScript esModuleInterop
 
-Cypress no longer forces the `esModuleInterop` compiler option for TypeScript to be `true` for spec, support, and plugin files. We recommend setting it in your project's `tsconfig.json` instead if you need to.
+Cypress no longer forces the `esModuleInterop` compiler option for TypeScript to be `true` for spec, support, and plugins files. We recommend setting it in your project's `tsconfig.json` instead if you need to.
 
 ```json
 // tsconfig.json

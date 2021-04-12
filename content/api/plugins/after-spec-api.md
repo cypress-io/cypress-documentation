@@ -2,13 +2,19 @@
 title: After Spec API
 ---
 
-The `after:spec` event fires after a spec file is run. The event only fires when running via `cypress run`.
+The `after:spec` event fires after a spec file is run. When running cypress via `cypress open`, the event will fire when the browser closes.
 
 ## Syntax
 
 <Alert type="warning">
 
-⚠️ This code is part of the [plugin file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
+⚠️ This code is part of the [plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
+
+</Alert>
+
+<Alert type="warning">
+
+⚠️ When running via `cypress open`, the `after:spec` event only fires if the [experimentalInteractiveRunEvents flag](/guides/references/configuration#Experiments) is enabled.
 
 </Alert>
 
@@ -31,6 +37,8 @@ Details of the spec file, including the following properties:
 **<Icon name="angle-right"></Icon> results** **_(Object)_**
 
 Details of the spec file's results, including numbers of passes/failures/etc and details on the tests themselves.
+
+Results are only provided when running via `cypress run`. When running via `cypress open`, the results will be undefined.
 
 ## Usage
 
@@ -91,7 +99,7 @@ const del = require('del')
 
 module.exports = (on, config) => {
   on('after:spec', (spec, results) => {
-    if (results.stats.failures === 0 && results.video) {
+    if (results && results.stats.failures === 0 && results.video) {
       // `del()` returns a promise, so it's important to return it to ensure
       // deleting the video is finished before moving on
       return del(results.video)

@@ -2,15 +2,21 @@
 title: After Run API
 ---
 
-The `after:run` event fires after a run is finished. The event only fires when running via `cypress run`.
+The `after:run` event fires after a run is finished. When running cypress via `cypress open`, the event will fire when closing a project.
 
-The event will fire each time `cypress run` executes. As a result, if running your specs in [parallel](/guides/guides/parallelization), the event will fire once for each machine on which `cypress run` is called.
+When running via `cypress run`, the event will fire each time `cypress run` executes. As a result, if running your specs in [parallel](/guides/guides/parallelization), the event will fire once for each machine on which `cypress run` is called.
 
 ## Syntax
 
 <Alert type="warning">
 
-⚠️ This code is part of the [plugin file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
+⚠️ This code is part of the [plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
+
+</Alert>
+
+<Alert type="warning">
+
+⚠️ When running via `cypress open`, the `after:run` event only fires if the [experimentalInteractiveRunEvents flag](/guides/references/configuration#Experiments) is enabled.
 
 </Alert>
 
@@ -24,6 +30,8 @@ on('after:run', (results) => {
 
 Results of the run, including the total number of passes/failures/etc, the project config, and details about the browser and system. It is the same as the results object resolved by the [Module API](/guides/guides/module-api#Results).
 
+Results are only provided when running via `cypress run`. When running via `cypress open`, the results will be undefined.
+
 ## Usage
 
 You can return a promise from the `after:run` event handler and it will be awaited before Cypress proceeds running your specs.
@@ -33,7 +41,7 @@ You can return a promise from the `after:run` event handler and it will be await
 ```javascript
 module.exports = (on, config) => {
   on('after:run', (results) => {
-    // results will look something like this:
+    // results will look something like this when run via `cypress run`:
     // {
     //   totalDuration: 81,
     //   totalSuites: 0,
@@ -58,7 +66,10 @@ module.exports = (on, config) => {
     //   }
     // }
 
-    console.log(results.totalPassed, 'out of', results.totalTests, 'passed')
+    if (results) {
+      // results will be undefined in interactive mode
+      console.log(results.totalPassed, 'out of', results.totalTests, 'passed')
+    }
   })
 }
 ```
