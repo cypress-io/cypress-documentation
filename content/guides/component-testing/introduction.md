@@ -198,7 +198,7 @@ module.exports = (on, config) => {
   </code-block>
 </code-group>
 
-Note we have a conditional check against `config.testingType`. This is useful if your project is already using existing plugins for the E2E runner, and you don't want them to conflict.
+Note we have a conditional check against `config.testingType`. This is useful if your project is already using existing plugins for the End-to-end runner, and you don't want them to conflict.
 
 If you have a different React development environment from Create React App, such as Next.js, or use a Vue template other than vue-cli, you will need to import the appropriate plugin. See a list of officially maintained plugins [here](https://github.com/cypress-io/cypress/tree/develop/npm/react/plugins). Each of these plugins perform the same tasks under the hood. Alternatively, if you have your own Webpack configuration, you can just provide it (without need for a specific plugin) as specified above.
 
