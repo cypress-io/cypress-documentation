@@ -243,11 +243,12 @@ export default {
               </li>
             </ul>
           </div>
-          <div class="media-container">
+          <div :class="$style.mediaContainer">
             <div
               v-for="item in mediaObject.large"
               :key="`${item.url}`"
-              class="media w-3/6 float-left"
+              :class="$style.media"
+              class="w-3/6 float-left"
             >
               <div class="relative mb-4 h-20">
                 <a
@@ -293,11 +294,12 @@ export default {
               </li>
             </ul>
           </div>
-          <div class="media-container">
+          <div :class="$style.mediaContainer">
             <div
               v-for="item in mediaObject.large"
               :key="`${item.url}`"
-              class="media w-3/6 float-left"
+              :class="$style.media"
+              class="w-3/6 float-left"
             >
               <div class="relative mb-4 h-20">
                 <a
@@ -335,11 +337,12 @@ export default {
               </li>
             </ul>
           </div>
-          <div class="media-container">
+          <div :class="$style.mediaContainer">
             <div
               v-for="item in mediaObject.large"
               :key="`${item.url}`"
-              class="media w-3/6 float-left"
+              :class="$style.media"
+              class="w-3/6 float-left"
             >
               <div class="relative mb-4 h-20">
                 <a
@@ -396,11 +399,12 @@ export default {
               </li>
             </ul>
           </div>
-          <div class="media-container">
+          <div :class="$style.mediaContainer">
             <div
               v-for="item in mediaObject.large"
               :key="`${item.url}`"
-              class="media w-3/6 float-left"
+              :class="$style.media"
+              class="w-3/6 float-left"
             >
               <div class="relative mb-4 h-20">
                 <a
@@ -451,11 +455,12 @@ export default {
               </li>
             </ul>
           </div>
-          <div class="media-container">
+          <div :class="$style.mediaContainer">
             <div
               v-for="item in mediaObject.large"
               :key="`${item.url}`"
-              class="media w-3/6 float-left"
+              :class="$style.media"
+              class="w-3/6 float-left"
             >
               <div class="relative mb-4 h-20">
                 <a
@@ -506,16 +511,12 @@ export default {
   </div>
 </template>
 
-<style lang="scss" scoped>
-@import '../../styles/content.scss';
-
-.media {
-  &:nth-child(odd) {
-    clear: both;
-  }
+<style module>
+.media:nth-child(odd) {
+  clear: both;
 }
 
-.media-container div:nth-child(odd) {
+.mediaContainer div:nth-child(odd) {
   @apply pr-8;
 }
 </style>
