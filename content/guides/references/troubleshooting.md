@@ -290,6 +290,15 @@ cypress:server:socket-base backend:request { eventName: 'http:request', args:
   retryOnNetworkFailure: true, retryOnStatusCodeFailure: false } ] } +4ms
 ```
 
+#### 3rd party modules
+
+Some 3rd party modules like [@cypress/request](https://github.com/cypress-io/request) output additional log messages by inspecting the `NODE_DEBUG` environment variable. For example to debug the network interception and the requests made by the `@cypress/request` use:
+
+```shell
+DEBUG=cypress:net-stubbing:server:intercept-request \
+  NODE_DEBUG=request npx cypress run
+```
+
 ### Debug logs in the browser
 
 If the problem is seen during `cypress open` you can print debug logs in the browser too. Open the browser's Developer Tools and set a `localStorage` property:
