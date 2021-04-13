@@ -134,9 +134,7 @@ export default {
   </div>
 </template>
 
-<style lang="scss">
-@import '../../styles/content.scss';
-
+<style module>
 h3 a:nth-child(2) {
   @apply ml-1;
 }

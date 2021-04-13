@@ -1,5 +1,5 @@
 <template>
-  <div :class="['badge', `badge-${type}`]">
+  <div :class="['badge', $style[type]]">
     <slot />
   </div>
 </template>
@@ -15,7 +15,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style module>
 .badge {
   display: inline-block;
   color: #fff;
@@ -28,15 +28,15 @@ export default {
   @apply py-1;
 }
 
-.badge-success {
+.success {
   background-color: #28a745;
 }
 
-.badge-danger {
+.danger {
   background-color: #dc3545;
 }
 
-.badge-info {
+.info {
   background-color: #007bff;
 }
 </style>

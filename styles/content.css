@@ -1,0 +1,361 @@
+:root {
+  --font-color-black: rgb(46, 49, 56);
+}
+
+[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+.app-sidebar {
+  background-color: rgb(249, 252, 251);
+  border-right-color: rgb(240, 243, 242);
+  border-right-style: solid;
+  border-right-width: 1px;
+}
+
+.main-content {
+  @apply w-full;
+  @apply lg:grid;
+  @apply lg:grid-cols-12;
+  @apply lg:gap-8;
+}
+
+.main-content-article-wrapper {
+  @apply w-full;
+  @apply relative;
+  @apply my-0;
+  @apply flex;
+  @apply flex-row;
+  @apply justify-center;
+  @apply lg:col-span-9;
+  @apply xl:col-span-8;
+  @apply mt-16;
+}
+
+.main-content-article {
+  flex: 1;
+  overflow: scroll;
+  max-width: 900px;
+  @apply px-4;
+
+  @screen md {
+    @apply px-8;
+  }
+
+  @screen lg {
+    @apply px-16;
+    @apply mx-2;
+  }
+
+  @screen xl {
+    padding-left: 8rem;
+    padding-right: 6rem;
+  }
+}
+
+.main-content-title {
+  border-bottom-width: 1px;
+  border-bottom-color: rgb(238, 238, 238);
+  color: var(--font-color-black);
+  @apply text-3xl;
+  @apply font-bold;
+  @apply mt-10;
+  @apply mb-6;
+  @apply pb-3;
+
+  @screen md {
+    @apply text-5xl;
+    @apply mt-14;
+  }
+}
+
+/* Hide scrollbar */
+.hide-scroll {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.nuxt-content img {
+  border: 1px solid #ddd;
+  box-shadow: 0 1px 2px #ddd;
+  width: auto;
+  height: auto;
+  @apply my-4;
+  @apply max-w-full;
+}
+
+.nuxt-content p,
+.nuxt-content li,
+.nuxt-content h1,
+.nuxt-content h2,
+.nuxt-content h3,
+.nuxt-content h4,
+.nuxt-content h5,
+.nuxt-content h6,
+.nuxt-content td,
+.nuxt-content th {
+  color: var(--font-color-black);
+}
+
+.nuxt-content strong {
+  @apply font-semibold;
+}
+
+.nuxt-content > h1 {
+  border-bottom-width: 1px;
+  border-bottom-color: rgb(238, 238, 238);
+  color: rgb(46, 49, 56);
+  @apply font-bold;
+  @apply text-3xl;
+  @apply mt-16;
+  @apply mb-6;
+  @apply pb-3;
+}
+
+.nuxt-content h2 {
+  @apply font-bold;
+}
+
+.nuxt-content > svg {
+  @apply mr-2;
+}
+
+.nuxt-content h1 > svg,
+.nuxt-content h2 > svg,
+.nuxt-content h3 > svg {
+  @apply mr-2;
+}
+
+.nuxt-content > h2 {
+  border-bottom-width: 1px;
+  border-bottom-color: rgb(238, 238, 238);
+  @apply mt-8;
+  @apply text-3xl;
+}
+
+.nuxt-content > h2,
+.nuxt-content > h3,
+.nuxt-content > h4 {
+  border-bottom-color: rgb(238, 238, 238);
+  @apply mb-6;
+  @apply pb-2;
+  @apply border-b;
+}
+
+.nuxt-content > h3 {
+  @apply text-2xl;
+  @apply font-bold;
+  @apply mt-8;
+}
+
+.nuxt-content > h4 {
+  @apply text-xl;
+  @apply font-medium;
+}
+
+.nuxt-content h2 > em,
+.nuxt-content h3 > em,
+.nuxt-content h4 > em,
+.nuxt-content h5 > em {
+  @apply mx-2;
+}
+
+/* #region Heading Links */
+
+.nuxt-content h2::before,
+.nuxt-content h3::before,
+.nuxt-content h4::before {
+  content: ' ';
+  @apply block;
+  @apply invisible;
+  @apply pointer-events-none;
+}
+
+/* We use :first-of-type because a title 
+   may contain an anchor tag that isn't  
+   the hidden link that is automagically 
+   added by nuxt-content. */
+.nuxt-content h2 > a:first-of-type::before,
+.nuxt-content h3 > a:first-of-type::before,
+.nuxt-content h4 > a:first-of-type::before {
+  content: '#';
+  color: #1079c3;
+  margin-left: -1.25rem;
+  /* stylelint-disable-next-line custom-property-empty-line-before */
+  --text-opacity: 1;
+  @apply font-normal;
+  @apply text-xl;
+  @apply pr-2;
+  @apply opacity-0;
+}
+
+.nuxt-content h2:hover > a:first-of-type::before,
+.nuxt-content h3:hover > a:first-of-type::before,
+.nuxt-content h4:hover > a:first-of-type::before {
+  @apply opacity-100;
+}
+
+/* #endregion Heading Links */
+
+.nuxt-content blockquote {
+  @apply border-l-4;
+  @apply px-12;
+  @apply py-6;
+  @apply bg-gray-100;
+  @apply mb-8;
+  @apply italic;
+}
+
+.nuxt-content > p {
+  @apply mb-0;
+}
+
+.nuxt-content svg {
+  height: 1em;
+  width: 1em;
+  @apply inline-block;
+}
+
+.nuxt-content p {
+  @apply text-lg;
+  @apply mb-5;
+}
+
+.nuxt-content p > code,
+.nuxt-content li > code {
+  color: #000;
+}
+
+.nuxt-content p > code,
+.nuxt-content li > code,
+.nuxt-content a > code,
+.nuxt-content h2 > code,
+.nuxt-content h3 > code,
+.nuxt-content td > code {
+  font-weight: 400;
+  font-size: 0.875em;
+  background-color: #f7fafc;
+  padding-left: 0.15rem;
+  padding-right: 0.15rem;
+  border-width: 1px;
+  border-color: #edf2f7;
+  border-radius: 0.25rem;
+}
+
+.nuxt-content h2 > code,
+.nuxt-content h3 > code {
+  @apply mx-2;
+}
+
+.nuxt-content a {
+  color: #1079c3;
+  text-decoration: none;
+  border-bottom: 1px dotted #1079c3;
+}
+
+.nuxt-content a:hover {
+  border-bottom-style: solid;
+}
+
+.nuxt-content strong > em {
+  border-bottom: 1px dotted #ccc;
+  @apply not-italic;
+  @apply font-bold;
+}
+
+/* #region Lists */
+.nuxt-content ol,
+.nuxt-content ul {
+  @apply ml-8;
+}
+
+.nuxt-content ul {
+  @apply list-disc;
+}
+
+.nuxt-content ol {
+  @apply list-decimal;
+}
+
+.nuxt-content li {
+  @apply font-normal;
+  @apply text-lg;
+  @apply mt-4;
+  @apply mb-4;
+}
+
+/* #endregion Lists */
+
+.nuxt-content pre {
+  @apply mb-6;
+}
+
+/* #region Tables */
+.nuxt-content table {
+  @apply table-auto;
+  @apply mb-5;
+}
+
+.nuxt-content th,
+.nuxt-content td {
+  @apply border;
+  @apply px-4;
+  @apply py-2;
+}
+
+.nuxt-content tr:nth-child(2n) {
+  @apply bg-gray-100;
+}
+
+/* #endregion Tables */
+
+.nuxt-content-highlight {
+  @apply mb-5;
+}
+
+.nuxt-content-highlight .line-numbers {
+  border-radius: 6px;
+}
+
+/* #region Syntax highlighting selection override */
+code[class*='language-']::-moz-selection,
+pre[class*='language-']::-moz-selection,
+code[class*='language-'] ::-moz-selection,
+pre[class*='language-'] ::-moz-selection {
+  background: #4f5b66;
+}
+
+code[class*='language-']::selection,
+pre[class*='language-']::selection,
+code[class*='language-'] ::selection,
+pre[class*='language-'] ::selection {
+  background: #4f5b66;
+}
+
+/* #endregion Syntax highlighting selection override */
+
+/* #region Overriding syntax highlighting theme 
+
+/* Prevent calls to .continue() from being italicized since 
+   syntax highlighter thinks .continue() is a `continue` keyword */
+span.token.keyword.control-flow {
+  font-style: normal;
+}
+
+/* #endregion Overriding syntax highlighting theme */
+
+@media only percy {
+  .nuxt-content::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(252, 162, 162);
+  }
+}

@@ -1,5 +1,5 @@
 <script>
-const startWithApi = path => {
+const startWithApi = (path) => {
   if (path.startsWith('api')) {
     return `/${path}`
   }
@@ -72,7 +72,3 @@ export default {
     </ul>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@import '../styles/content.scss';
-</style>
