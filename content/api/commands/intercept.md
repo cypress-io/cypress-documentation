@@ -63,7 +63,7 @@ Specify the [HTTP request method](https://developer.mozilla.org/en-US/docs/Web/H
 
 <Alert type="bolt">
 
-If no method is defined Cypress will match `GET` requests by default.
+If no `method` is provided, Cypress will match _all_ HTTP methods (`*` wildcard) by default.
 
 </Alert>
 
