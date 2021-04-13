@@ -61,6 +61,12 @@ Specify the URL to match. See [Matching URL](#Matching-URL) for examples.
 
 Specify the [HTTP request method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) (`GET`, `POST`, `PUT`, etc.) to match on.
 
+<Alert type="bolt">
+
+If no method is defined Cypress will match `GET` requests by default.
+
+</Alert>
+
 **<Icon name="angle-right"></Icon> routeMatcher** **_(`RouteMatcher`)_**
 
 For more advanced matching of incoming HTTP requests, you can pass in the `routeMatcher` to specify matching beyond `url` and `method` - like headers and query parameters. See the chart below. 
