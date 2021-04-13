@@ -24,6 +24,14 @@ If the text contains a [non-breaking space](https://en.wikipedia.org/wiki/Non-br
 cy.get('div').should('have.text', 'Hello\u00a0world')
 ```
 
+You can also use the [cy.contains](/api/commands/contains) command which handles the non-breaking space entities
+
+```javascript
+cy.contains('div', 'Hello world')
+```
+
+**Tip:** watch the [Confirming the text with non breaking space entity](https://youtu.be/6CxZuolWlYM) video.
+
 If you'd like to work with the text prior to an assertion:
 
 ```javascript
