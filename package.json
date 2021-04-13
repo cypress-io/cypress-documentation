@@ -36,7 +36,6 @@
     "@nuxtjs/axios": "^5.11.0",
     "@nuxtjs/gtm": "^2.4.0",
     "@nuxtjs/sentry": "^5.0.3",
-    "@tailwindcss/forms": "^0.2.1",
     "deepdash": "^5.3.5",
     "nuxt": "^2.13.0",
     "prism-themes": "^1.4.0",
@@ -53,9 +52,7 @@
     "@nuxt/image": "^0.4.1",
     "@nuxtjs/eslint-config": "^3.0.0",
     "@nuxtjs/fontawesome": "^1.1.2",
-    "@nuxtjs/tailwindcss": "^3.4.2",
     "@percy/cypress": "^2.3.4",
-    "autoprefixer": "^9",
     "babel-eslint": "^10.1.0",
     "bluebird": "^3.7.2",
     "broken-link-checker": "^0.7.8",
@@ -76,8 +73,8 @@
     "make-empty-github-commit": "^1.2.1",
     "netlify-cli": "^3.5.0",
     "node-sass": "^4.14.1",
+    "nuxt-windicss": "^0.5.4",
     "patch-package": "^6.4.5",
-    "postcss": "^7",
     "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.0.5",
     "remark": "^13.0.0",
@@ -87,6 +84,6 @@
     "stylelint": "^13.6.1",
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-config-standard": "^20.0.0",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+    "vue-windicss-preprocess": "^2.2.0"
   }
 }

@@ -1,10 +1,13 @@
+// const colors = require('windicss/colors')
+// const typography = require('windicss/plugin/typography')
+
 module.exports = {
   /**
    * All utilities will be marked with !important
    * @see https://tailwindcss.com/docs/configuration#important
    */
   important: false,
-  plugins: [require('@tailwindcss/forms')],
+  // plugins: [require('@tailwindcss/forms')],
   theme: {
     extend: {
       colors: {
