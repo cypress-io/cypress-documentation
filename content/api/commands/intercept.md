@@ -53,32 +53,32 @@ cy.intercept('/users/**')
 ```
 ### Arguments
 
-#### **<Icon name="angle-right"></Icon> url** **_(`string | RegExp`)_**
+**<Icon name="angle-right"></Icon> url** **_(String, Glob, RegExp)_**
 
-Specify the URL to match. See the examples for [Matching URL](#Matching-URL) to see how URLs are matched.
+Specify the URL to match. See [Matching URL](#Matching-URL) for examples.
 
-#### **<Icon name="angle-right"></Icon> method** **_(`string`)_**
+**<Icon name="angle-right"></Icon> method** **_(String)_**
 
-Specify the HTTP method to match on.
+Specify the [HTTP request method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) (`GET`, `POST`, `PUT`, etc.) to match on.
 
-#### **<Icon name="angle-right"></Icon> routeMatcher** **_(`RouteMatcher`)_**
+**<Icon name="angle-right"></Icon> routeMatcher** **_(`RouteMatcher`)_**
 
-`routeMatcher` is an object used to match which incoming HTTP requests will be handled by this route.
+For more advanced matching of incoming HTTP requests, you can pass in the `routeMatcher` to specify matching beyond `url` and `method` - like headers and query parameters. See the chart below. 
 
-All properties are optional. All properties that are set must match for the route to handle a request. If a `string` is passed to any property, it will be glob-matched against the request using [`minimatch`](https://github.com/isaacs/minimatch).The available `routeMatcher` properties are listed below:
+All properties are optional and can be a string or pattern (glob or regular expression), except when specified.
 
 | Option     | Default | Description                                                                        |
 |------------|---------|------------------------------------------------------------------------------------|
-| auth       | null    | `username` and `password` used in HTTP Basic authentication                        |
-| headers    | null    | HTTP request headers                                                               |
+| auth       | null    | `username` and `password` used in HTTP Basic Authentication (_object_)             |
+| headers    | null    | HTTP request headers (_object_)                                                    |
 | hostname   | null    | HTTP request hostname                                                              |
-| https      | null    | `true`: only secure (https://) requests `false`: only insecure (http://) requests  |
+| https      | null    | `true`: only secure (https://) requests, `false`: only insecure (http://) requests |
 | method     | "*"     | HTTP request method                                                                |
 | middleware | false   | Pass the request on to the next `RouteMatcher` after the request handler completes |
 | path       | null    | HTTP request path after the hostname, including query parameters                   |
 | pathname   | null    | Like `path`, but without query parameters                                          |
-| port       | null    | HTTP request port(s)                                                               |
-| query      | null    | Parsed query string parameters                                                     |
+| port       | null    | HTTP request port(s) (_number_ or _array_)                                         |
+| query      | null    | Parsed query string (_object_)                                                     |
 | url        | null    | Full HTTP request URL                                                              |
 
 #### <Icon name="angle-right"></Icon> routeHandler (<code>string | object | Function | [StaticResponse][staticresponse]</code>)
