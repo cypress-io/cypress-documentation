@@ -22,17 +22,35 @@ Unlike [cy.route()](/api/commands/route), `cy.intercept()`:
 - does not require calling [cy.server()](/api/commands/server) before use - in fact, `cy.server()` does not influence `cy.intercept()` at all.
 - does not have method set to `GET` by default, but intercepts `*` methods.
 
-## Usage
+## Syntax
 
-```ts
-cy.intercept(url, routeHandler?)
-cy.intercept(method, url, routeHandler?)
-cy.intercept(routeMatcher, routeHandler?)
+### Route-matching Only (No Stubbing or Intercepting)
+```js
+cy.intercept(url)
+cy.intercept(method, url)
+cy.intercept(routeMatcher)
+cy.intercept(url, routeMatcher)
+cy.intercept(method, url, routeMatcher)
+```
+
+### Route-matching With Stubbing and Intercepting
+```js
+cy.intercept(url, routeHandler)
+cy.intercept(method, url, routeHandler)
+cy.intercept(routeMatcher, routeHandler)
 cy.intercept(url, routeMatcher, routeHandler)
+cy.intercept(method, url, routeMatcher, routeHandler)
 ```
 
 **Note:** all intercepts are automatically cleared before every test.
 
+### Usage
+
+**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+
+```js
+cy.intercept('/users/**')
+```
 ### Arguments
 
 #### **<Icon name="angle-right"></Icon> url** **_(`string | RegExp`)_**
