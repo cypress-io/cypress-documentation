@@ -11,7 +11,7 @@ Thanks for taking the time to contribute! :smile:
     - [Images](#images)
     - [Videos](#videos)
     - [Icons](#icons)
-  - [Partials](#using-snippets)
+  - [Partials](#partials)
   - [Adding Examples](#adding-examples)
   - [Adding Plugins](#adding-plugins)
   - [Adding Pages](#adding-pages)
