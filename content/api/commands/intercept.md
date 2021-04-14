@@ -846,7 +846,7 @@ The following properties are available on `StaticResponse`. All properties are o
 | headers           | {}      | HTTP response headers                                  |
 | statusCode        | 200     | HTTP response status code                              |
 | forceNetworkError | null    | Force an error by destroying the browser session       |
-| delay             | null    | Minimum network latency/delay (milliseconds)           |
+| delay             | 0       | Minimum network latency/delay (milliseconds)           |
 | throttleKbps      | null    | Maximum network throughput (kilobits/second)           |
 
 See ["Stubbing a response with a `StaticResponse` object"][#with-a-staticresponse-object] for examples of stubbing with `cy.intercept()`.
