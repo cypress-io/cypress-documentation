@@ -71,11 +71,11 @@ All properties are optional and except when specified, can be a string or a patt
 
 **<Icon name="angle-right"></Icon> routeHandler _(<code>string | object | Function | [StaticResponse][staticresponse]</code>)_**
 
-The `routeHandler` defines what will happen with a request if the [routeMatcher](#routeMatcher-RouteMatcher) matches. It can be used to [statically define a response](#Stubbing-a-response) or [dynamically intercept the outgoing request](#Intercepting-a-request).
+The `routeHandler` defines what will happen with a request if the [routeMatcher](#routeMatcher-RouteMatcher) matches.
 
-The `routeHandler` function accepts the matched request as its argument which has methods used for modifying the outgoing request, the incoming response, or both.
+The `routeHandler` function accepts the matched request as its argument which has methods used for [modifying the outgoing request](#Intercepting-a-request), the incoming response, or both.
 
-If you only need to modify the response you can pass in a [`StaticResponse`][staticresponse] object (to define the body, headers, status code and more). And if it's specifically the response _body_ you're wanting to stub you can simply pass that in as plain JSON instead.
+If you only need to modify the response you can pass in a [`StaticResponse`][staticresponse] object (to define the body, headers, status code and more). And if it's specifically the response _body_ you're wanting to [stub](#Stubbing-a-response) you can simply pass that in as plain JSON instead.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
