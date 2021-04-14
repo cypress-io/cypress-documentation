@@ -4,24 +4,6 @@ title: intercept
 
 Use `cy.intercept()` to manage the behavior of HTTP requests at the network layer.
 
-With `cy.intercept()`, you can:
-
-- stub or spy on any type of HTTP request.
-  - If `cy.intercept()` provides a response object, or a fixture, or calls `req.reply()` then the request will NOT go to the server, and instead will be mocked from the test.
-  - Otherwise the request will go out to the server, and the test spies on the network call. The spying intercept can even modify the real response from the server before it is returned to the web application under test.
-- [modify an HTTP request's body, headers, and URL](#Intercepting-a-request) before it is sent to the destination server.
-- stub the response to an HTTP request, either dynamically or statically.
-- [modify real HTTP responses](#Intercepting-a-response), changing the body, headers, or HTTP status code before they are received by the browser.
-- and much more - `cy.intercept()` gives full access to all HTTP requests at all stages.
-
-## Comparison to `cy.route()`
-
-Unlike [cy.route()](/api/commands/route), `cy.intercept()`:
-
-- can intercept all types of network requests including Fetch API, page loads, XMLHttpRequests, resource loads, etc.
-- does not require calling [cy.server()](/api/commands/server) before use - in fact, `cy.server()` does not influence `cy.intercept()` at all.
-- does not have method set to `GET` by default, but intercepts `*` methods.
-
 ## Syntax
 
 ### Route-matching Only (No Stubbing or Intercepting)
