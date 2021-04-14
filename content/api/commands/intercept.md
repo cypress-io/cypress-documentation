@@ -85,6 +85,8 @@ If you only need to modify the response you can pass in a [`StaticResponse`][sta
 
 ## Examples
 
+Despite its name, `cy.intercept` can be used to passively listen for matching network requests and apply aliases to them without manipulating the request or its response in any way. As you'll see, this alone is powerful as it allows you to wait for these requests, resulting in more reliable tests.
+
 ### Matching URL
 
 You can provide the entire URL to match
