@@ -53,7 +53,7 @@ If no `method` is provided, Cypress will match _all_ HTTP methods (`*` wildcard)
 
 For more advanced matching of incoming HTTP requests, you can pass in the `routeMatcher` to specify matching beyond `url` and `method` - like headers and query parameters. See the chart below. 
 
-All properties are optional and can be a string or pattern (glob or regular expression), except when specified.
+All properties are optional and except when specified, can be a string or a pattern (glob or regular expression):
 
 | Option     | Default | Description                                                                        |
 |------------|---------|------------------------------------------------------------------------------------|
@@ -61,7 +61,7 @@ All properties are optional and can be a string or pattern (glob or regular expr
 | headers    | null    | HTTP request headers (_object_)                                                    |
 | hostname   | null    | HTTP request hostname                                                              |
 | https      | null    | `true`: only secure (https://) requests, `false`: only insecure (http://) requests |
-| method     | "*"     | HTTP request method                                                                |
+| method     | *     | HTTP request method                                                                |
 | middleware | false   | Pass the request on to the next `RouteMatcher` after the request handler completes |
 | path       | null    | HTTP request path after the hostname, including query parameters                   |
 | pathname   | null    | Like `path`, but without query parameters                                          |
