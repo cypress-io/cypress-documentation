@@ -81,6 +81,16 @@ export default {
    */
   content: {
     markdown: {
+      remarkPlugins: (_defaultPlugins) => {return [
+        'remark-directive',
+        '~/scripts/remarkPartialPlugin.js',
+        'remark-squeeze-paragraphs',
+        'remark-slug',
+        'remark-autolink-headings',
+        'remark-external-links',
+        'remark-footnotes',
+        'remark-gfm',
+      ]},
       prism: {
         theme: 'prism-themes/themes/prism-material-oceanic.css',
       },
