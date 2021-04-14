@@ -125,6 +125,10 @@ Assume you have a `<Partial>` Vue component. If you wanted to introduce a `<Part
 
 For most use cases, you should use the `::include{file=FILE_NAME}` directive when you want to inject reusable markdown into multiple files. A `<Partial>` Vue component may be a better fit if you wish to add custom interactivity to reusable strings of text.
 
+#### Limitations
+
+When including the `::include{file=FILE_NAME}` directive in another markdown file, Nuxt's hot module reloading will automatically trigger the partial's content to be inserted into the markdown file. However, if you wish to make changes to the partial file itself, you will need to stop and restart the development server with `yarn start` to see the changes. This is because the custom remark plugin that is enabling this partial system is only ran when the server is started and not on each hot module reload.
+
 ### Adding Examples
 
 To add a course, blog, talk, podcast, or screencast to our docs, submit a [pull request](#Pull-Requests) with your data added to the corresponding [courses.json](/content/_data/courses.json), [blogs.json](/content/_data/blogs.json), [talks.json](/content/_data/talks.json), [podcasts.json](/content/_data/podcasts.json) or [screencasts.json](/content/_data/screencasts.json) file.
