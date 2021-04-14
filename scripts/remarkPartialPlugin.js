@@ -40,6 +40,11 @@ module.exports = function remarkPartialPlugin() {
     const { file } = attributes
 
     if (!file) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        'Found a "::include" directive without a "name" attribute. You might have intended to import a partial into a markdown file, but no partial can be found without the "file" attribute. The "::include" directive should look like "::include{file=path/to/file}".'
+      )
+
       return
     }
 
