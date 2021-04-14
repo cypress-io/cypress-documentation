@@ -53,7 +53,7 @@ If you are already familiar with Cypress, you'll notice it is almost exactly the
 
 ## Project Setup
 
-Let's go through the setup to start testing components. You can set it up with an existing React or Vue project, or start a new project from scratch. This guide assumes your project uses a [Webpack based](https://webpack.js.org/) tool chain.
+Let's go through the setup to start testing components. You can set it up with an existing React or Vue project, or start a new project from scratch. This guide assumes your project uses a [Webpack based](https://webpack.js.org/) tool chain. For our experimental Vite based instructions, please see the information here.
 
 <alert type="info">
 
@@ -293,3 +293,57 @@ In the project we just built, this command will show the following results.
 <DocsImage src="/img/guides/component-testing/run-result.png" alt="Result of headless test run" ></DocsImage>
 
 To make the component tests part of your [continuous integration](/guides/continuous-integration/introduction) pipeline, add a script to run `npx cypress run-ct` to your CI configuration.
+
+### Experimental
+
+The tools listed in this section are actively being developed. We will support early adoption of these projects in order to get community feedback. Please report issues against these projects in Github or contact us on [Discord](https://discord.gg/Cd4CdSx) for additional support.
+
+#### Vite
+
+For a quick-start, please take a look at the boilerplate repositories below. To setup a project from scratch please check out the below plugins file.
+
+**From Boilerplate**
+
+- [Vite + Vue 3](https://github.com/JessicaSachs/cypress-loves-vite) (VueConfUS 2021 by Jessica Sachs)
+
+**From Scratch**
+
+To get started with Vite, please follow the installation instructions for Webpack, but replace `@cypress/webpack-dev-server` with `@cypress/vite-dev-server`. Here is a sample `plugins.js` file where the `dev-server:start` event is registered with Vite.
+
+<code-block label="plugins.js">
+
+```js
+import { startDevServer } from '@cypress/vite-dev-server'
+
+export default function (on, config) {
+  on('dev-server:start', (options) => {
+    const viteConfig = {
+      // import or inline your vite configuration from vite.config.js
+    }
+    return startDevServer({ options, viteConfig })
+  })
+  return config
+}
+```
+
+</code-block>
+
+Exactly like Webpack, you should start Cypress with `yarn cypress open-ct`. Writing component tests when using Vite is _exactly_ the same as when using Webpack. Minor differences may occur depending on the
+
+**Known issues**
+
+- Missing Vitesse support
+- May flake in resource-constrained CI machines
+- Issues with certain PWA plugins
+
+**Debugging Strategies**
+
+Issues will often arise during the initial compilation and start of your project. Please collect logs and focus on stripping down your `viteConfig` to work around any issues. Please log any issues in Github.
+
+**Collecting logs**
+
+To debug any Vite issues, run Cypress using `DEBUG=cypress:* yarn cypress open-ct`.
+
+**Compiling your project**
+
+Remove all plugins and pass in an empty `viteConfig` into the `startDevServer` options. Add plugins in one-at-a-time
