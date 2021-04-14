@@ -11526,6 +11526,17 @@ mdast-util-definitions@^4.0.0:
   dependencies:
     unist-util-visit "^2.0.0"
 
+mdast-util-directive@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/mdast-util-directive/-/mdast-util-directive-1.0.1.tgz#bc2aea94eee5b89f2d11bf4546d40453e0b34cc6"
+  integrity sha512-VuO1za7BMtWMg8KA8eZrTBorEnCOOW5CXfIuNzUXe7YPie/wLgmNk/jxLMY8m+mzuqnO5eN0JuvlgFtO9EJpbQ==
+  dependencies:
+    mdast-util-to-markdown "^0.6.0"
+    parse-entities "^2.0.0"
+    repeat-string "^1.0.0"
+    stringify-entities "^3.1.0"
+    unist-util-visit-parents "^3.0.0"
+
 mdast-util-find-and-replace@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/mdast-util-find-and-replace/-/mdast-util-find-and-replace-1.1.0.tgz#8b782285741b05310e3641196dfc4b17bc30d971"
@@ -11727,6 +11738,14 @@ micro-memoize@^2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/micro-memoize/-/micro-memoize-2.1.2.tgz#0787eeb1a12b4033a0fe162dfc9df4280291cee4"
   integrity sha512-COjNutiFgnDHXZEIM/jYuZPwq2h8zMUeScf6Sh6so98a+REqdlpaNS7Cb2ffGfK5I+xfgoA3Rx49NGuNJTJq3w==
+
+micromark-extension-directive@^1.0.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/micromark-extension-directive/-/micromark-extension-directive-1.3.0.tgz#8b9214d7bf9177f866214a6c745c27a0917503fd"
+  integrity sha512-sbIkwLU6Xj2p4l29PnsN6Jjj2L2bCo9urE3rgft4kK4s73WLbmvUVLUQej0TNK8RJGujzvKAAYeqfPYgaH69zA==
+  dependencies:
+    micromark "~2.11.0"
+    parse-entities "^2.0.0"
 
 micromark-extension-footnote@^0.3.0:
   version "0.3.2"
@@ -15004,6 +15023,14 @@ remark-autolink-headings@^6.0.1:
     extend "^3.0.0"
     unist-util-visit "^2.0.0"
 
+remark-directive@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/remark-directive/-/remark-directive-1.0.1.tgz#13356db9c893d16ad15406e4b77a389525c4bdf9"
+  integrity sha512-x6rZs0qa0zu9gW7Avd+rRxHJL2K9TGk+c51NaLfQgCNI7SxwBycRJ3w5mMkjkIjO6O9/qdx0ntu48byCSgF96Q==
+  dependencies:
+    mdast-util-directive "^1.0.0"
+    micromark-extension-directive "^1.0.0"
+
 remark-external-links@^8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/remark-external-links/-/remark-external-links-8.0.0.tgz#308de69482958b5d1cd3692bc9b725ce0240f345"
@@ -16261,7 +16288,7 @@ string_decoder@~1.1.1:
   dependencies:
     safe-buffer "~5.1.0"
 
-stringify-entities@^3.0.1:
+stringify-entities@^3.0.1, stringify-entities@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/stringify-entities/-/stringify-entities-3.1.0.tgz#b8d3feac256d9ffcc9fa1fefdcf3ca70576ee903"
   integrity sha512-3FP+jGMmMV/ffZs86MoghGqAoqXAdxLrJP4GUdrDN1aIScYih5tuIO3eF4To5AJZ79KDZ8Fpdy7QJnK8SsL1Vg==
@@ -17294,6 +17321,13 @@ unist-util-stringify-position@^2.0.0:
   integrity sha512-3faScn5I+hy9VleOq/qNbAd6pAx7iH5jYBMS9I1HgQVijz/4mv5Bvw5iw1sC/90CODiKo81G/ps8AJrISn687g==
   dependencies:
     "@types/unist" "^2.0.2"
+
+unist-util-visit-children@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/unist-util-visit-children/-/unist-util-visit-children-2.0.0.tgz#c853e309863d764e4aaf69795f999c4e1c94b44a"
+  integrity sha512-n8CvdoeexGn6EkAa865Wp9SFFuS1IKf1j0vMoEwHHfA5f48gJPK6rwS/s/P+ouRDfAklQaiBQtlloX3KadUrww==
+  dependencies:
+    "@types/unist" "^2.0.0"
 
 unist-util-visit-parents@^3.0.0:
   version "3.1.1"
