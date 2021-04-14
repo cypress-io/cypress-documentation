@@ -87,14 +87,13 @@ All properties are optional and can be a string or pattern (glob or regular expr
 | query      | null    | Parsed query string (_object_)                                                     |
 | url        | null    | Full HTTP request URL                                                              |
 
-#### <Icon name="angle-right"></Icon> routeHandler (<code>string | object | Function | [StaticResponse][staticresponse]</code>)
+**<Icon name="angle-right"></Icon> routeHandler _(<code>string | object | Function | [StaticResponse][staticresponse]</code>)_**
 
-The `routeHandler` defines what will happen with a request if the [routeMatcher](#routeMatcher-RouteMatcher) matches. It can be used to [statically define a response](#Stubbing-a-response) for matching requests, or a function can be passed to [dynamically intercept the outgoing request](#Intercepting-a-request).
+The `routeHandler` defines what will happen with a request if the [routeMatcher](#routeMatcher-RouteMatcher) matches. It can be used to [statically define a response](#Stubbing-a-response) or [dynamically intercept the outgoing request](#Intercepting-a-request).
 
-- If a **string** is passed, requests to the route will be fulfilled with that string as the body. Passing `"foo"` is equivalent to using a [`StaticResponse`][staticresponse] object with `{ body: "foo" }`.
-- If a **[`StaticResponse`][staticresponse] object** is passed, requests to the route will be fulfilled with a response using the values supplied in the `StaticResponse`. A `StaticResponse` can define the body of the response, as well as the headers, HTTP status code, and more. See [Stubbing a response with a `StaticResponse` object](#With-a-StaticResponse-object) for an example of how this is used.
-- If an **object with no [`StaticResponse`][staticresponse] keys** is passed, it will be sent as a JSON response body. For example, passing `{ foo: 'bar' }` is equivalent to passing `{ body: { foo: 'bar' } }`.
-- If a **callback** is passed, it will be called whenever a request matching this route is received, with the first parameter being the request object. From inside the callback, you can modify the outgoing request, send a response, access the real response, and much more. See ["Intercepted requests"][req] for more information.
+The `routeHandler` function accepts the matched request as its argument which has methods used for modifying the outgoing request, the incoming response, or both.
+
+If you only need to modify the response you can pass in a [`StaticResponse`][staticresponse] object (to define the body, headers, status code and more). And if it's specifically the response _body_ you're wanting to stub you can simply pass that in as plain JSON instead.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
