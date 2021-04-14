@@ -17322,13 +17322,6 @@ unist-util-stringify-position@^2.0.0:
   dependencies:
     "@types/unist" "^2.0.2"
 
-unist-util-visit-children@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/unist-util-visit-children/-/unist-util-visit-children-2.0.0.tgz#c853e309863d764e4aaf69795f999c4e1c94b44a"
-  integrity sha512-n8CvdoeexGn6EkAa865Wp9SFFuS1IKf1j0vMoEwHHfA5f48gJPK6rwS/s/P+ouRDfAklQaiBQtlloX3KadUrww==
-  dependencies:
-    "@types/unist" "^2.0.0"
-
 unist-util-visit-parents@^3.0.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/unist-util-visit-parents/-/unist-util-visit-parents-3.1.1.tgz#65a6ce698f78a6b0f56aa0e88f13801886cdaef6"
