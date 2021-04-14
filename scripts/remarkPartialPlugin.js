@@ -69,7 +69,7 @@ function readFile(filepath) {
     console.error(
       `Failed to read file: ${filepath}`,
       error,
-      'This error is due to a problem with templating. Check your markdown files for the "::include{file=PATH_TO_FILE}" directive and make sure that PATH_TO_FILE exists. If this issue persists, please open a new issue with steps to reproduce.'
+      'This error is due to a problem with partials. Check your markdown files for the "::include{file=PATH_TO_FILE}" directive and make sure that PATH_TO_FILE exists. If this issue persists, please open a new issue with steps to reproduce.'
     )
   }
 }
