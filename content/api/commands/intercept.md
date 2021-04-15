@@ -35,11 +35,11 @@ cy.intercept('/users/**')
 ```
 ### Arguments
 
-**<Icon name="angle-right"></Icon> url** **_(String, Glob, RegExp)_**
+#### **<Icon name="angle-right"></Icon> url** **_(String, Glob, RegExp)_**
 
 Specify the URL to match. See [Matching URL](#Matching-URL) for examples.
 
-**<Icon name="angle-right"></Icon> method** **_(String)_**
+#### **<Icon name="angle-right"></Icon> method** **_(String)_**
 
 Specify the [HTTP request method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) (`GET`, `POST`, `PUT`, etc.) to match on.
 
@@ -49,7 +49,7 @@ If no `method` is provided, Cypress will match _all_ HTTP methods (`*` wildcard)
 
 </Alert>
 
-**<Icon name="angle-right"></Icon> routeMatcher** **_(`RouteMatcher`)_**
+#### **<Icon name="angle-right"></Icon> routeMatcher** **_(`RouteMatcher`)_**
 
 For more advanced matching of incoming HTTP requests, you can pass in the `routeMatcher` to specify matching beyond `url` and `method` - like headers and query parameters. See the chart below. 
 
@@ -69,7 +69,7 @@ All properties are optional and except when specified, can be a string or a patt
 | query      | null    | Parsed query string (_object_)                                                     |
 | url        | null    | Full HTTP request URL                                                              |
 
-**<Icon name="angle-right"></Icon> routeHandler _(<code>string | object | Function | [StaticResponse][staticresponse]</code>)_**
+#### **<Icon name="angle-right"></Icon> routeHandler _(<code>string | object | Function | [StaticResponse][staticresponse]</code>)_**
 
 The `routeHandler` defines what will happen with a request if the [routeMatcher](#routeMatcher-RouteMatcher) matches.
 
