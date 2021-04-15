@@ -44,6 +44,45 @@ Pass in an options object to change the default behavior of `.within()`.
 
 <List><li>`.within()` yields the same subject it was given from the previous command.</li></List>
 
+Trying to return a different element the `.within` callback have no effect:
+
+```html
+<div id="within-yields">
+  The parent div
+  <div class="some-child">Child element</div>
+</div>
+```
+
+```js
+cy.get('#within-yields')
+  .within(() => {
+    // we are trying to return something
+    // from the .within callback,
+    // but it won't have any effect
+    return cy.contains('Child element').should('have.class', 'some-child')
+  })
+  .should('have.id', 'within-yields')
+```
+
+Similarly, trying to change the subject by using the [cy.wrap](/api/commands/wrap) command inside the `.within` callback have no effect:
+
+```html
+<div id="wrap-inside-within">
+  The parent div
+  <div class="some-child">Child element</div>
+</div>
+```
+
+```js
+cy.get('#wrap-inside-within')
+  .within(() => {
+    // returning cy.wrap(...) has no effect on the yielded value
+    // it will still be the original parent DOM element
+    return cy.wrap('a new value')
+  })
+  .should('have.id', 'wrap-inside-within')
+```
+
 ## Examples
 
 ### Forms
@@ -160,9 +199,10 @@ When clicking on the `within` command within the command log, the console output
 
 ## History
 
-| Version                                       | Changes                   |
-| --------------------------------------------- | ------------------------- |
-| [< 0.3.3](/guides/references/changelog#0-3-3) | `.within()` command added |
+| Version                                       | Changes                                                 |
+| --------------------------------------------- | ------------------------------------------------------- |
+| [< 0.3.3](/guides/references/changelog#0-3-3) | `.within()` command added                               |
+| [5.4.0](/guides/references/changelog#5-4-0)   | fixed the yielded value to always be the parent element |
 
 ## See also
 
