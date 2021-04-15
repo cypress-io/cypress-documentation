@@ -186,7 +186,7 @@ cy.intercept('GET', '**/users')
 ```
 `routeMatcher` is ideal when you require more [advanced matching]().
 
-## Advanced Matching
+### Advanced Matching
 ### Method and URL
 ```js
 // basic example shown previously
