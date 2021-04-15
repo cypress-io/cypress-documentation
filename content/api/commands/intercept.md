@@ -50,7 +50,7 @@ Specify the URL to match. See [Matching URL](#Matching-URL) for examples.
 
 #### **<Icon name="angle-right"></Icon> method** **_(String)_**
 
-Specify the [HTTP request method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) (`GET`, `POST`, `PUT`, etc.) to match on.
+Specify the [HTTP request method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`, etc.) to match on.
 
 <Alert type="bolt">
 
