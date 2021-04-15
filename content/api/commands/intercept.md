@@ -2,6 +2,15 @@
 title: intercept
 ---
 
+<!-- TODO DX-79 Refactor introduction to concisely highlight the the key capabilities of the API
+The current introductory content is extraneous and can be condensed to cover:
+Modifying HTTP requests and responses, dynamically and statically.
+Ability to intercept all network request types: Fetch API, page loads, XMLHttpRequests, resource loads, etc.
+The introduction should also list some common applications of the API. For example:
+Creating error scenarios to for testing
+Slowing network traffic for testing user experience 
+etc.. -->
+
 Use `cy.intercept()` to manage the behavior of HTTP requests at the network layer.
 
 ## Syntax
@@ -85,7 +94,8 @@ If you only need to modify the response you can pass in a [`StaticResponse`][sta
 
 ## Examples
 
-Despite its name, `cy.intercept` can be used to passively listen for matching network requests and apply aliases to them without manipulating the request or its response in any way. As you'll see, this alone is powerful as it allows you to wait for these requests, resulting in more reliable tests.
+<!-- TODO DX-86 Add granular headings for code snippets/examples for link-ability -->
+<!-- TODO DX-88 Add a routeHandler options section that includes examples for each option -->
 
 ### Matching URL
 
@@ -443,6 +453,8 @@ cy.intercept('POST', '/login', (req) => {
 
 #### Passing a request to the next request handler
 
+<!-- TODO DX-83 Add more examples of the `middleware` use case -->
+
 If [`req.reply()`][req-reply] is not explicitly called inside of a request handler, requests will pass to the next request handler until none are left.
 
 ```js
@@ -678,6 +690,14 @@ Note: calling `req.reply()` will end the request phase and stop the request from
 
 ### Request events
 
+<!-- TODO DX-76 Add more examples of request events usage
+Craft and add usage examples of the events:
+before:response 
+response 
+after:response
+within the "Intercepted requests" and "Intercepted responses" sections.
+Recommend other places within the intercept docs, but also the larger docs where these examples can be linked. -->
+
 For advanced use, several events are available on `req`, that represent different stages of the [Interception lifecycle][lifecycle].
 
 By calling `req.on`, you can subscribe to different events:
@@ -852,6 +872,8 @@ The following properties are available on `StaticResponse`. All properties are o
 See ["Stubbing a response with a `StaticResponse` object"][#with-a-staticresponse-object] for examples of stubbing with `cy.intercept()`.
 
 ## Interception lifecycle
+
+<!-- TODO DX-82 Create flow diagram for interception lifecycle -->
 
 The lifecycle of a `cy.intercept()` interception begins when an HTTP request is sent from your app that matches one or more registered `cy.intercept()` routes. From there, each interception has two phases: request and response.
 
