@@ -97,116 +97,150 @@ If you only need to modify the response you can pass in a [`StaticResponse`][sta
 <!-- TODO DX-86 Add granular headings for code snippets/examples for link-ability -->
 <!-- TODO DX-88 Add a routeHandler options section that includes examples for each option -->
 
-### Matching URL
+### Matching a URL
 
-You can provide the entire URL to match
+You can provide the exact URL to match, but typically pattern matching is more effective and a glob pattern will likely be the simpler of the two to implement. See the Glob Pattern Matching section.
 
 ```js
-// will match any request that exactly matches the URL
-//   matches GET https://prod.cypress.io/users
-//   won't match GET https://staging.cypress.io/users
+// match any request that exactly matches the URL
 cy.intercept('https://prod.cypress.io/users')
-```
 
-You can provide a [`minimatch`](/api/utilities/minimatch) pattern
-
-```javascript
-// will match any HTTP method to urls that end with 3 or 5
+// match any request that satisfies a glob pattern
 cy.intercept('**/users?_limit=+(3|5)')
+
+// match any request that satisfies a regex pattern
+cy.intercept(/\/users\?_limit=(3|5)$/)
 ```
 
-**Tip:** you can evaluate your URL using DevTools console to see if the [`minimatch` pattern](https://www.npmjs.com/package/minimatch) is correct.
+<!-- TODO move this section -->
+### Glob Pattern Matching URLs
+
+Providing an exact URL to match can be too restrictive. For example, what if you wanted to run your tests on a different host? 
+
+```js
+// match any request that exactly matches the URL
+cy.intercept('https://prod.cypress.io/users')
+// matches this: https://prod.cypress.io/users
+// ...but not this: https://staging.cypress.io/users
+// ...or this: http://localhost/users
+```
+Glob pattern matching provides the necessary flexibility:
+
+```js
+cy.intercept('**/users')
+// matches all of these:
+// https://prod.cypress.io/users
+// https://staging.cypress.io/users
+// http://localhost/users
+
+cy.intercept('**/users?_limit=+(3|5)')
+// matches all of these:
+// https://prod.cypress.io/users?_limit=3
+// http://localhost/users?_limit=5
+
+```
+Under the hood, Cypress uses the [minimatch]() library for glob matching and provides access to it via the `Cypress` global.
+This enables you to test your pattern in the Test Runner browser console.
+
+The first argument that the `Cypress.minimatch` function takes is the URL (string) and the second is the pattern (string). If invoking the function with those yields `true`, then you have a match!
 
 ```javascript
-// paste into the DevTools console while Cypress is running
-Cypress.minimatch(
-  'https://jsonplaceholder.cypress.io/users?_limit=3',
-  '**/users?_limit=+(3|5)'
-) // true
-
-// print verbose debug information
-Cypress.minimatch(
-  'https://jsonplaceholder.cypress.io/users?_limit=3',
-  '**/users?_limit=+(3|5)',
-  { debug: true }
-) // true + lots of debug messages
+// executed in the Test Runner browser console:
+Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)') 
+// true
+Cypress.minimatch('http://localhost/users?_limit=5', '**/users?_limit=+(3|5)') 
+// true
+Cypress.minimatch('http://localhost/users?_limit=7', '**/users?_limit=+(3|5)') 
+// false
 ```
 
-You can even add an assertion to the test itself to ensure the URL is matched
+The third argument that `Cypress.minimatch` takes is for specifying options (object), one of which is `debug` which if set to `true`, will yield verbose output that could help you understand why your pattern isn't working as you expect:
 
-```javascript
-// arguments are url and the pattern
-expect(
-  Cypress.minimatch(
-    'https://jsonplaceholder.cypress.io/users?_limit=3',
-    '**/users?_limit=+(3|5)'
-  ),
-  'Minimatch test'
-).to.be.true
+```js
+Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)', { debug: true }) 
+// true (plus debug messages)
 ```
 
-For the most powerful matching, provide a regular expression
+### Specifying a Method
 
-```javascript
-cy.intercept(/\/users\?_limit=(3|5)$/).as('users')
-cy.get('#load-users').click()
-cy.wait('@users').its('response.body').should('have.length', 3)
+If you don't pass a `method` argument, then all HTTP methods (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`, etc.) will match.
 
-// intercepts _limit=5 requests
-cy.get('#load-five-users').click()
-cy.wait('@users').its('response.body').should('have.length', 5)
+```js
+cy.intercept('**/users')
+// matches this: GET http://localhost/users
+// ...and this, too: POST http://localhost/users
+
+cy.intercept('GET', '**/users')
+// matches this: GET http://localhost/users
+// ...but not this: POST http://localhost/users
 ```
+
+### Using routeMatcher
+
+Specifying a `method` and `url` to match can also be acheived by passing the `routeMatcher` object into `cy.intercept` instead:
+
+```js
+// These both yield the same result:
+cy.intercept({ method: 'GET', url: '**/users'})
+cy.intercept('GET', '**/users')
+```
+`routeMatcher` is ideal when you require more [advanced matching]().
+
+### Aliasing a Route
+
+While `cy.intercept` doesn't yield anything, you can chain `as` off it to create an (`alias`)[]:
+
+```js
+cy.intercept('GET', '**/users').as('getAllUsers')
+cy.intercept('POST', '**/users').as('createUser')
+```
+
+<!-- TODO move this -->
+`cy.intercept` can be used to passively listen for matching routes and apply aliases to them without manipulating the request or its response in any way. As you'll see, this alone is powerful as it allows you to wait for these requests, resulting in more reliable tests.
 
 ### Waiting on a request
 
-Use [cy.wait()](/api/commands/wait) with `cy.intercept()` aliases to wait for the request/response cycle to complete.
-
-#### With URL
+We can build upon the previous examples of defining an aliased route with [cy.wait()](/api/commands/wait) in order to wait for the request to be sent and a response to be received before executing the next command.
 
 ```js
-cy.intercept('http://example.com/settings').as('getSettings')
-// once a request to http://example.com/settings responds, this 'cy.wait' will resolve
-cy.wait('@getSettings')
+cy.intercept('GET', '**/users').as('getAllUsers')
+cy.intercept('POST', '**/users').as('createUser')
+
+// remember the `@` prefix when referencing aliases
+cy.get('button.createUser').click()
+cy.wait('@createUser')
+// the commands below will not execute until a response is received from `POST /users`
+cy.get('#field.firstName').should('equal', 'Adam')
+
 ```
 
-#### With [RouteMatcher](#routeMatcher-RouteMatcher)
+#### Making assertions on a request/response
+
+When invoked with a route alias, [`cy.wait`](/api/commands/wait) returns an object that includes `request` and `response` which we can make assertions on:
 
 ```js
-cy.intercept({
-  url: 'http://example.com/search*',
-  query: { q: 'expected terms' },
-}).as('search')
+// assert that the request body includes 'user'
+cy.wait('@createUser').its('request.body').should('include', 'user')
 
-// once any type of request to http://example.com/search with a querystring containing
-// 'q=expected+terms' responds, this 'cy.wait' will resolve
-cy.wait('@search')
+// assert that the response HTTP status is 201 (Created)
+cy.wait('@createUser').its('response.statusCode').should('eq', 201)
 ```
 
-#### Using the yielded object
-
-Using [cy.wait()](/api/commands/wait) on a `cy.intercept()` route alias yields an interception object which represents the request/response cycle:
+<!-- make this example better
+what's actually in the ic object? -->
+### Using the yielded object
+You could also access the entire object which represents the request/response cycle that was intercepted:
 
 ```js
-cy.wait('@someRoute').then((interception) => {
-  // 'interception' is an object with properties 'id', 'request' and 'response'
+cy.wait('@createUser').then((ic) => {
+  const { request, response, id, ...rest } = ic
+  // ...
 })
 ```
 
-You can chain [`.its()`](/api/commands/its) and [`.should()`](/api/commands/should) to assert against request/response cycles:
-
-```js
-// assert that a request to this route was made with a body that included 'user'
-cy.wait('@someRoute').its('request.body').should('include', 'user')
-
-// assert that a request to this route received a response with HTTP status 500
-cy.wait('@someRoute').its('response.statusCode').should('eq', 500)
-
-// assert that a request to this route received a response body that includes 'id'
-cy.wait('@someRoute').its('response.body').should('include', 'id')
-```
 
 #### Aliasing individual requests
-
+<!-- does this have other use cases outside of graphQL? -->
 Aliases can be set on a per-request basis by setting the `alias` property of the intercepted request:
 
 ```js
