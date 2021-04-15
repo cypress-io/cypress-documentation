@@ -306,7 +306,7 @@ If `true`, this will pass the request on to the next `RouteMatcher` after the re
 Can only be used with a dynamic request handler.
 ### Aliasing a Route
 
-While `cy.intercept` doesn't yield anything, you can chain `as` off it to create an (`alias`)[]:
+While `cy.intercept` doesn't yield anything, you can chain `as` off it to create an [`alias`]():
 
 ```js
 cy.intercept('GET', '**/users').as('getAllUsers')
@@ -492,7 +492,7 @@ cy.intercept('/not-found', {
 })
 ```
 
-See ["`StaticResponse` objects"][staticresponse] for more information on `StaticResponse`s.
+See [`StaticResponse` objects][staticresponse] for more information on `StaticResponse`s.
 
 ### Intercepting a request
 
