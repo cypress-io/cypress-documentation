@@ -1,5 +1,5 @@
 <template>
-  <div :class="['badge', $style[type]]">
+  <div :class="[$style.badge, $style[type]]">
     <slot />
   </div>
 </template>
