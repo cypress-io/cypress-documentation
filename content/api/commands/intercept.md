@@ -186,6 +186,124 @@ cy.intercept('GET', '**/users')
 ```
 `routeMatcher` is ideal when you require more [advanced matching]().
 
+## Advanced Matching
+### Method and URL
+```js
+// basic example shown previously
+cy.intercept({ 
+  method: 'GET', 
+  url: '**/users'
+})
+
+// match updates to the `/users` endpoint
+cy.intercept({ 
+  method: '+(PUT|PATCH)', 
+  url: '**/users/*'
+})
+// matches 
+// PUT /users/1
+// PATCH /users/1
+// doesn't match
+// GET /users
+// GET /users/1
+
+// same as above, but using regex
+cy.intercept({ 
+  method: '/PUT|PATCH/', 
+  url: '**/users/*'
+})
+```
+### Path and Pathname
+```js
+cy.intercept({
+  method: 'GET'
+  pathname: 'users'
+  }
+})
+
+cy.intercept({
+  method: 'GET'
+  path: 'users'
+  }
+})
+
+// ^ those two are equivalent to this:
+cy.intercept({
+  method: 'GET'
+  url: '**/users'
+  }
+})
+
+// query params can also be included in `path` (but not `pathname`)
+cy.intercept({
+  method: 'GET',
+  path: 'users?_limit=3'
+  }
+})
+```
+### Query
+```js
+cy.intercept({
+  method: 'GET',
+  path: 'users'
+  query: {
+    _limit: 3
+  }
+  }
+})
+```
+### Protocol (https)
+```js
+// matches only insecure requests to `GET /users`
+cy.intercept({ 
+  method: 'GET', 
+  url: '**/users',
+  https: false
+})
+```
+### Hostname and Port
+```js
+// specify a single port with a number
+cy.intercept({
+  method: 'GET'
+  hostname: 'localhost',
+  port: 8080
+  path: 'users'
+})
+
+// specify multiple ports with an array of numbers
+cy.intercept({
+  method: 'GET'
+  hostname: 'localhost',
+  port: [ 3000, 3001 ]
+  path: 'users'
+})
+```
+### Headers
+[HTTP headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers) are used by the client (like your application's front-end) and server (like the backend or API for your application) to pass along additional information with the request or response. 
+
+```js
+// matches all requests for images
+cy.intercept({
+  headers: {
+    method: 'GET',
+    Accept: 'image/*'
+  }
+})
+```
+### Authentication
+```js
+cy.intercept({
+  auth: {
+    username: 'fakeUser',
+    password: 'fakePa$$w0Rd'
+  }
+})
+```
+### Middleware
+
+If `true`, this will pass the request on to the next `RouteMatcher` after the request handler completes.
+Can only be used with a dynamic request handler.
 ### Aliasing a Route
 
 While `cy.intercept` doesn't yield anything, you can chain `as` off it to create an (`alias`)[]:
