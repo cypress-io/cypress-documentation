@@ -698,7 +698,9 @@ Yes! Check out our [ESLint plugin](https://github.com/cypress-io/eslint-plugin-c
 
 ## <Icon name="angle-right"></Icon> When I visit my site directly, the certificate is verified, however the browser launched through Cypress is showing it as "Not Secure". Why?
 
-This is normal. Cypress modifies the traffic between your server and the browser. The browser notices this and displays a certificate warning. However, this is purely cosmetic and does not alter the way your application under test runs in any way, so you can safely ignore this warning.
+When using Cypress to test an https site, you might see a browser warning next to the browser URL. This is normal. Cypress modifies the traffic between your server and the browser. The browser notices this and displays a certificate warning. However, this is purely cosmetic and does not alter the way your application under test runs in any way, so you can safely ignore this warning. The network traffic between Cypress and the backend server still happens via https protocol.
+
+See also the [Web Security](/guides/guides/web-security) guide.
 
 ## <Icon name="angle-right"></Icon> Is there an option to run Cypress in CI with Developer Tools open? We want to track network and console issues.
 
