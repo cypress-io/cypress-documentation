@@ -130,14 +130,14 @@ Glob pattern matching provides the necessary flexibility:
 ```js
 cy.intercept('**/users')
 // matches all of these:
-// https://prod.cypress.io/users
-// https://staging.cypress.io/users
-// http://localhost/users
+//   https://prod.cypress.io/users
+//   https://staging.cypress.io/users
+//   http://localhost/users
 
 cy.intercept('**/users?_limit=+(3|5)')
 // matches all of these:
-// https://prod.cypress.io/users?_limit=3
-// http://localhost/users?_limit=5
+//   https://prod.cypress.io/users?_limit=3
+//   http://localhost/users?_limit=5
 
 ```
 Under the hood, Cypress uses the [minimatch]() library for glob matching and provides access to it via the `Cypress` global.
@@ -201,12 +201,12 @@ cy.intercept({
   method: '+(PUT|PATCH)', 
   url: '**/users/*'
 })
-// matches 
-// PUT /users/1
-// PATCH /users/1
-// doesn't match
-// GET /users
-// GET /users/1
+// matches: 
+//   PUT /users/1
+//   PATCH /users/1
+//   doesn't match
+//   GET /users
+//   GET /users/1
 
 // same as above, but using regex
 cy.intercept({ 
@@ -284,7 +284,7 @@ cy.intercept({
 [HTTP headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers) are used by the client (like your application's front-end) and server (like the backend or API for your application) to pass along additional information with the request or response. 
 
 ```js
-// matches all requests for images
+// match all requests for images by specifying the `Accept` header
 cy.intercept({
   headers: {
     method: 'GET',
