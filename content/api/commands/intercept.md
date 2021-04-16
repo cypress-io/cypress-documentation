@@ -2,14 +2,15 @@
 title: intercept
 ---
 
-<!-- TODO DX-79 Refactor introduction to concisely highlight the the key capabilities of the API
-The current introductory content is extraneous and can be condensed to cover:
-Modifying HTTP requests and responses, dynamically and statically.
-Ability to intercept all network request types: Fetch API, page loads, XMLHttpRequests, resource loads, etc.
-The introduction should also list some common applications of the API. For example:
-Creating error scenarios to for testing
-Slowing network traffic for testing user experience 
-etc.. -->
+<!-- 
+TODO DX-79 Refactor introduction to concisely highlight the the key capabilities of the API
+- Modifying HTTP requests and responses, dynamically and statically.
+- Ability to intercept all network request types: Fetch API, page loads, XMLHttpRequests, resource loads, etc.
+- Common applications of the API:
+- Creating error scenarios to for testing
+- Slowing network traffic for testing user experience 
+- etc.. 
+-->
 
 Use `cy.intercept()` to manage the behavior of HTTP requests at the network layer.
 
