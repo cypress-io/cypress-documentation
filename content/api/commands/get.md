@@ -135,7 +135,7 @@ cy.get('form').within(() => {
 })
 ```
 
-### Get vs .find
+### Get vs Find
 
 The `cy.get` command always starts its search from the [cy.root](https://on.cypress.io/root) element. In most cases, it is the `document` element, unless used inside the [.within()](/api/commands/within) command. The [.find](https://on.cypress.io/find) command starts its search from the current subject.
 
