@@ -526,7 +526,7 @@ cy.intercept('POST', '/login', (req) => {
 
 #### Passing a request to the next request handler
 
-If [`req.reply()`][req-reply] is not explicitly called inside of a request handler, requests will pass to the next request handler until none are left.
+If [`req.reply()`][req-reply] or [`req.continue()`][req-continue] is not explicitly called inside of a request handler, requests will pass to the next request handler until none are left.
 
 ```js
 // you could have a top-level middleware handler that sets an auth token on all requests
@@ -959,7 +959,7 @@ The following properties are available on `StaticResponse`. All properties are o
 }
 ```
 
-See ["Stubbing a response with a `StaticResponse` object"][#with-a-staticresponse-object] for examples of stubbing with `cy.intercept()`.
+See ["Stubbing a response with a `StaticResponse` object"](#With-a-StaticResponse-object) for examples of stubbing with `cy.intercept()`.
 
 ## Interception lifecycle
 
