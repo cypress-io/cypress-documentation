@@ -187,7 +187,7 @@ cy.intercept('GET', '**/users')
 `routeMatcher` is ideal when you require more [advanced matching]().
 
 ### Advanced Matching
-### Method and URL
+#### Method and URL
 ```js
 // basic example shown previously
 cy.intercept({ 
@@ -213,7 +213,7 @@ cy.intercept({
   url: '**/users/*'
 })
 ```
-### Path and Pathname
+#### Path and Pathname
 ```js
 cy.intercept({
   method: 'GET'
@@ -241,7 +241,7 @@ cy.intercept({
   }
 })
 ```
-### Query
+#### Query
 ```js
 cy.intercept({
   method: 'GET',
@@ -252,7 +252,7 @@ cy.intercept({
   }
 })
 ```
-### Protocol (https)
+#### Protocol (https)
 ```js
 // matches only insecure requests to `GET /users`
 cy.intercept({ 
@@ -261,7 +261,7 @@ cy.intercept({
   https: false
 })
 ```
-### Hostname and Port
+#### Hostname and Port
 ```js
 // specify a single port with a number
 cy.intercept({
@@ -279,7 +279,7 @@ cy.intercept({
   path: 'users'
 })
 ```
-### Headers
+#### Headers
 [HTTP headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers) are used by the client (like your application's front-end) and server (like the backend or API for your application) to pass along additional information with the request or response. 
 
 ```js
@@ -291,7 +291,7 @@ cy.intercept({
   }
 })
 ```
-### Authentication
+#### Authentication
 ```js
 cy.intercept({
   auth: {
@@ -300,7 +300,7 @@ cy.intercept({
   }
 })
 ```
-### Middleware
+#### Middleware
 
 If `true`, this will pass the request on to the next `RouteMatcher` after the request handler completes.
 Can only be used with a dynamic request handler.
