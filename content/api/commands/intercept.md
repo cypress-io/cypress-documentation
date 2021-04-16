@@ -315,8 +315,9 @@ cy.intercept('POST', '**/users').as('createUser')
 ```
 
 <!-- TODO move this -->
+<Alert type="info">
 `cy.intercept` can be used to passively listen for matching routes and apply aliases to them without manipulating the request or its response in any way. As you'll see, this alone is powerful as it allows you to wait for these requests, resulting in more reliable tests.
-
+</Alert>
 ### Waiting on a request
 
 We can build upon the previous examples of defining an aliased route with [cy.wait()](/api/commands/wait) in order to wait for the request to be sent and a response to be received before executing the next command.
@@ -326,7 +327,7 @@ cy.intercept('GET', '**/users').as('getAllUsers')
 cy.intercept('POST', '**/users').as('createUser')
 
 // remember the `@` prefix when referencing aliases
-cy.get('button.createUser').click()
+cy.get('button.save').click()
 cy.wait('@createUser')
 // the commands below will not execute until a response is received from `POST /users`
 cy.get('#field.firstName').should('equal', 'Adam')
