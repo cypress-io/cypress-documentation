@@ -355,9 +355,8 @@ cy.wait('@createUser').then((ic) => {
   // ...
 })
 ```
+#### Aliasing individual GraphQL requests
 
-
-#### Aliasing individual requests
 <!-- does this have other use cases outside of graphQL? -->
 Aliases can be set on a per-request basis by setting the `alias` property of the intercepted request:
 
@@ -371,10 +370,6 @@ cy.intercept('POST', '/graphql', (req) => {
 // assert that a matching request has been made
 cy.wait('@gqlMutation')
 ```
-
-#### Aliasing individual GraphQL requests
-
-Aliases can be set on a per-request basis by setting the `alias` property of the intercepted request.
 
 This is useful against GraphQL endpoints to wait for specific Queries and Mutations.
 
