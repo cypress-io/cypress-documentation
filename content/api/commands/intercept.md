@@ -15,7 +15,7 @@ Use `cy.intercept()` to manage the behavior of HTTP requests at the network laye
 
 ## Syntax
 
-### Route-matching Only (No Stubbing or Intercepting)
+### Without `routeHandler` (Passive Route-matching Only)
 ```js
 cy.intercept(url)
 cy.intercept(method, url)
@@ -24,7 +24,7 @@ cy.intercept(url, routeMatcher)
 cy.intercept(method, url, routeMatcher)
 ```
 
-### Route-matching With Stubbing and Intercepting
+### With `routeHandler` (Route-matching, Response Stubbing, Request/Response Modification and Spying)
 ```js
 cy.intercept(url, routeHandler)
 cy.intercept(method, url, routeHandler)
