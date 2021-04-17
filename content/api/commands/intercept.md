@@ -440,6 +440,122 @@ cy.intercept('GET', '/should-err', { forceNetworkError: true }).as('err')
 cy.wait('@err').should('have.property', 'error')
 ```
 
+### routeHandler
+
+The previous examples have dealt with just passively matching and aliasing routes so we can wait for requests and make assertions on them in test. The remaining examples will build upon previous ones simply by adding `routeHandler` as the last argument to `cy.intercept`.
+
+If a function is passed as the handler for a `cy.intercept()`, it will be called with the first argument being an object that represents the intercepted HTTP request:
+
+```js
+cy.intercept('/api', (req) => {
+  // do something with the intercepted request
+})
+```
+
+From here, you can do several things with the intercepted request:
+
+- modify and make assertions on the request like its body, headers, URL, method, etc.
+- stub out the response without interacting with a real back-end
+- pass the request through to its destination and modify or make assertions on the real response on its way back
+- attach listeners to various events on the request
+
+#### Asserting on a request
+
+```js
+cy.intercept('POST', '/users', (req) => {
+  expect(req.body).to.include('Peter Pan')
+})
+```
+
+#### Modifying an outgoing request
+
+You can use the request handler callback to modify the request before it is sent.
+
+```js
+// modify the request body before it's sent to its destination
+cy.intercept('POST', '/users', (req) => {
+  req.body = {
+    name: 'Peter Pan'
+  }
+})
+
+// add a header to an outgoing request
+cy.intercept('POST', '/users', (req) => {
+  req.headers['x-custom-header'] = 'added by cy.intercept'
+})
+
+// modify an existing header
+cy.intercept('POST', '/users', (req) => {
+  req.headers['Authorization'] = 'Basic YWxhZGRpbjpvcGVuc2VzYW1l'
+})
+```
+
+**Note:** the request modification can be verified by waiting on the intercept (see below). It can't be verified by inspecting the browser's network traffic, since the browser logs network traffic _before_ Cypress can intercept it.
+
+```js
+cy.intercept('POST', '/users', (req) => {
+  req.headers['x-custom-header'] = 'added by cy.intercept'
+}).as('createUser')
+
+cy.get('button.save').click()
+// you can see the headers in the console output by selecting this line in the command log:
+cy.wait('@createUser') 
+  // ...or make an assertion:
+  .its('request.headers').should('have.property', 'x-custom-header', 'added by cy.intercept')
+```
+
+#### Controlling the response
+
+The intercepted request passed to the route handler contains methods to dynamically control the response to a request:
+
+* `reply` - to stub out a response requiring no dependency on a real back-end
+* `continue` - to modify or make assertions on the real response
+##### Stubbing out a response
+
+```js
+// stub out the response without interacting with a real back-end
+cy.intercept('POST', '/users', (req) => {
+  req.reply({
+    name: 'Peter Pan'
+  })
+})
+```
+##### Modifying the real response
+
+```js
+// pass the request through and make an assertion on the real response
+cy.intercept('POST', '/users', (req) => {
+  req.continue((res) => {
+    expect(res.body).to.include('Peter Pan')
+  })
+})
+
+```
+
+#### Returning a Promise
+
+If a Promise is returned from the route callback, it will be awaited before continuing with the request.
+
+```js
+cy.intercept('POST', '/users', (req) => {
+  // asynchronously fetch test data
+  return getAuthToken().then((token) => {
+    // ...and apply it to the outgoing request
+    req.headers['Authorization'] = `Basic ${token}`
+  })
+})
+
+cy.intercept('POST', '/users', (req) => {
+  req.continue((res) => {
+    // the response will not be sent to the browser until this resolves:
+    return waitForSomething()
+  })
+})
+
+```
+
+#### Attach listeners
+
 ### Stubbing a response
 
 #### With a string
@@ -493,49 +609,6 @@ See [`StaticResponse` objects][staticresponse] for more information on `StaticRe
 
 ### Intercepting a request
 
-#### Asserting on a request
-
-```js
-cy.intercept('POST', '/organization', (req) => {
-  expect(req.body).to.include('Acme Company')
-})
-```
-
-#### Modifying an outgoing request
-
-You can use the request handler callback to modify the request before it is sent.
-
-```js
-cy.intercept('POST', '/login', (req) => {
-  // set the request body to something different before it's sent to the destination
-  req.body = 'username=janelane&password=secret123'
-})
-```
-
-#### Adding a header to an outgoing request
-
-You can add a header to an outgoing request, or modify an existing header
-
-```js
-cy.intercept('/req-headers', (req) => {
-  req.headers['x-custom-headers'] = 'added by cy.intercept'
-})
-```
-
-**Note:** the new header will NOT be shown in the browser's Network tab, as the request has already left the browser. You can still confirm the header was added by waiting on the intercept as shown below:
-
-```js
-cy.intercept('/req-headers', (req) => {
-  req.headers['x-custom-headers'] = 'added by cy.intercept'
-}).as('headers')
-
-// the application makes the call ...
-// confirm the custom header was added
-cy.wait('@headers')
-  .its('request.headers')
-  .should('have.property', 'x-custom-headers', 'added by cy.intercept')
-```
-
 #### Add, modify or delete a header to all outgoing requests
 
 You can add, modify or delete a header to all outgoing requests using a `beforeEach()` in the `cypress/support/index.js` file
@@ -562,44 +635,6 @@ Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/
 
 </Alert>
 
-#### Dynamically stubbing a response
-
-You can use the [`req.reply()`][req-reply] function to dynamically control the response to a request.
-
-```js
-cy.intercept('/billing', (req) => {
-  // functions on 'req' can be used to dynamically respond to a request here
-
-  // send the request to the destination server
-  req.reply()
-
-  // respond to the request with a JSON object
-  req.reply({ plan: 'starter' })
-
-  // send the request to the destination server, and intercept the response
-  req.continue((res) => {
-    // 'res' represents the real destination's response
-    // See "Intercepting a response" for more details and examples
-  })
-})
-```
-
-See ["Intercepted requests"][req] for more information on the `req` object and its properties and methods.
-
-#### Returning a Promise
-
-If a Promise is returned from the route callback, it will be awaited before continuing with the request.
-
-```js
-cy.intercept('POST', '/login', (req) => {
-  // you could asynchronously fetch test data...
-  return getLoginCredentials().then((credentials) => {
-    // ...and then, use it to supplement the outgoing request
-    req.headers['authorization'] = credentials
-  })
-})
-```
-
 #### Passing a request to the next request handler
 
 <!-- TODO DX-83 Add more examples of the `middleware` use case -->
@@ -621,45 +656,6 @@ cy.intercept('POST', 'http://api.company.com/widgets', (req) => {
 // a POST request to http://api.company.com/widgets would hit both
 // of those callbacks, middleware first, then the request would be sent out
 // with the modified request headers to the real destination
-```
-
-### Intercepting a response
-
-Inside of a callback passed to `req.continue()`, you can access the destination server's real response.
-
-```js
-cy.intercept('/integrations', (req) => {
-  // req.continue() with a callback will send the request to the destination server
-  req.continue((res) => {
-    // 'res' represents the real destination response
-    // you can manipulate 'res' before it's sent to the browser
-  })
-})
-```
-
-See ["Intercepted responses"][res] for more information on the `res` object. See ["Controlling the outbound request with `req.continue()`"][req-continue] for more information about `req.continue()`.
-
-#### Asserting on a response
-
-```js
-cy.intercept('/projects/2', (req) => {
-  req.continue((res) => {
-    expect(res.body).to.include('My Project')
-  })
-})
-```
-
-#### Returning a Promise
-
-If a Promise is returned from the route callback, it will be awaited before sending the response to the browser.
-
-```js
-cy.intercept('/users', (req) => {
-  req.continue((res) => {
-    // the response will not be sent to the browser until 'waitForSomething()' resolves
-    return waitForSomething()
-  })
-})
 ```
 
 #### Throttle or delay response all incoming responses
@@ -689,24 +685,6 @@ if (isMobile()) {
 Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and refer to the [cypress/support/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/support/index.ts) file for a working example.
 
 </Alert>
-
-## Intercepted requests
-
-If a function is passed as the handler for a `cy.intercept()`, it will be called with the first argument being an object that represents the intercepted HTTP request:
-
-```js
-cy.intercept('/api', (req) => {
-  // `req` represents the intercepted HTTP request
-})
-```
-
-From here, you can do several things with the intercepted request:
-
-- you can modify and assert on the request's properties (body, headers, URL, method...)
-- the request can be sent to the real upstream server
-  - optionally, you can intercept the response from this
-- a response can be provided to stub out the request
-- listeners can be attached to various events on the request
 
 ### Request object properties
 
