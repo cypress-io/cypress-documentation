@@ -161,7 +161,6 @@ You can also pass in options (object) as the third argument, one of which is `de
 Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)', { debug: true }) 
 // true (plus debug messages)
 ```
-
 ### Specifying a Method
 
 If you don't pass a `method` argument, then all HTTP methods (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`, etc.) will match.
@@ -318,6 +317,7 @@ cy.intercept('POST', '**/users').as('createUser')
 <Alert type="info">
 `cy.intercept` can be used to passively listen for matching routes and apply aliases to them without manipulating the request or its response in any way. As you'll see, this alone is powerful as it allows you to wait for these requests, resulting in more reliable tests.
 </Alert>
+
 ### Waiting on a request
 
 We can build upon the previous examples of defining an aliased route with [cy.wait()](/api/commands/wait) in order to wait for the request to be sent and a response to be received before executing the next command.
