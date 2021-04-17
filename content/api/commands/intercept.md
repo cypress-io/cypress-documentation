@@ -688,7 +688,8 @@ Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/
 
 ### Request object properties
 
-The request object (`req`) has several properties from the HTTP request itself. All of the following properties on `req` can be modified except for `httpVersion`:
+The object representing the intercepted request has several properties from the HTTP request itself. 
+**Note:** `httpVersion` is read-only 
 
 ```ts
 {
@@ -716,8 +717,7 @@ The request object (`req`) has several properties from the HTTP request itself. 
   httpVersion: string
 }
 ```
-
-`req` also has some optional properties which can be set to control Cypress-specific behavior:
+Optional Properties (to control Cypress-specific behavior):
 
 ```ts
 {
