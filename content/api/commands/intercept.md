@@ -803,7 +803,6 @@ cy.intercept('/shop', (req) => {
     /**
      * Emitted before `response` and before any `req.continue` handlers.
      * Modifications to `res` will be applied to the incoming response.
-     * If a promise is returned, it will be awaited before processing other event handlers.
      */
   })
 
@@ -811,7 +810,6 @@ cy.intercept('/shop', (req) => {
     /**
      * Emitted after `before:response` and after any `req.continue` handlers - before the response is sent to the browser.
      * Modifications to `res` will be applied to the incoming response.
-     * If a promise is returned, it will be awaited before processing other event handlers.
      */
   })
 
@@ -819,12 +817,11 @@ cy.intercept('/shop', (req) => {
     /**
      * Emitted once the response to a request has finished sending to the browser.
      * Modifications to `res` have no impact.
-     * If a promise is returned, it will be awaited before processing other event handlers.
      */
   })
 })
 ```
-
+Note: If a promise is returned, it will be awaited before processing other event handlers.
 See ["Intercepted responses"][res] for more details on the `res` object yielded by `before:response` and `response`. See ["Interception lifecycle"][lifecycle] for more details on request ordering.
 
 <!-- we shouldn't use the term `intercepted` here -->
