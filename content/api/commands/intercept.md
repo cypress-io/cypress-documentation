@@ -525,7 +525,7 @@ cy.intercept('POST', '/users', (req) => {
     },
     statusCode: 201,
     body: {
-    name: 'Peter Pan'
+      name: 'Peter Pan'
     },
     delay: 10, // milliseconds
     throttleKbps: 1000, // to simulate a 3G connection
@@ -630,43 +630,14 @@ cy.intercept('POST', '/users', (req) => {
 
 ```
 
-#### Attach listeners
 
-### Stubbing a response
 
-#### With a string
+#### Stubbing a response with a string
 
 ```js
-// requests to '/update' will be fulfilled with a body of "success"
-cy.intercept('/update', 'success')
-```
-
-#### With a fixture
-
-```js
-// requests to '/users.json' will be fulfilled
-// with the contents of the "users.json" fixture
-cy.intercept('/users.json', { fixture: 'users.json' })
-```
-
-#### With a `StaticResponse` object
-
-A [`StaticResponse`][staticresponse] object represents a response to an HTTP request, and can be used to stub routes:
-
-```js
-const staticResponse = {
-  /* some StaticResponse properties here... */
-}
-
-cy.intercept('/projects', staticResponse)
-```
-
-For example, to stub a response with a JSON body:
-
-```js
-cy.intercept('/projects', {
-  body: [{ projectId: '1' }, { projectId: '2' }],
-})
+// requests to create a user will be fulfilled with a body of 'success'
+cy.intercept('POST', '**/users', 'success')
+// { body: 'sucess' }
 ```
 
 ### Intercepting a request
@@ -817,32 +788,6 @@ cy.intercept('/api/users/*', async (req) => {
 ```
 
 See the [`StaticResponse` documentation][staticresponse] for more information on stubbing responses in this manner.
-
-`req.reply()` also supports shorthand, similar to [`res.send()`][res-send], to avoid having to specify a `StaticResponse` object:
-
-```js
-req.reply(body) // equivalent to `req.reply({ body })`
-req.reply(body, headers) // equivalent to `req.reply({ body, headers })`
-req.reply(statusCode, body, headers) // equivalent to `req.reply({ statusCode, body, headers})`
-```
-
-There are also two convenience functions available on `req`:
-
-```ts
-{
-  /**
-   * Destroy the request and respond with a network error.
-   */
-  destroy(): void
-  /**
-   * Respond to this request with a redirect to a new 'location'.
-   * @param statusCode HTTP status code to redirect with. Default: 302
-   */
-  redirect(location: string, statusCode?: number): void
-}
-```
-
-Note: calling `req.reply()` will end the request phase and stop the request from propagating to the next matching request handler in line. See ["Interception lifecycle"][lifecycle] for more information.
 
 ### Request events
 
