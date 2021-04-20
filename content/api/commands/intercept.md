@@ -856,7 +856,9 @@ cy.intercept('/url', (req) => {
 
 ### Intercepted Response object properties
 
-The response object (`res`) yielded to response handlers has several properties from the HTTP response itself. All of the following properties on `res` can be modified:
+The intercepted response object yielded to response handlers has several properties from the HTTP response itself that can be modified:
+
+Core HTTP Response Properties
 
 | Property      | Description                                         |
 |---------------|-----------------------------------------------------|
@@ -867,62 +869,44 @@ The response object (`res`) yielded to response handlers has several properties 
 
 Optional Properties (to control Cypress-specific behavior):
 
-| Property        | Default                  | Description                                                |
-|-----------------|--------------------------|------------------------------------------------------------|
-| responseTimeout | `responseTimeout` config | number of milliseconds before upstream response times out  |
-| followRedirect  | false                    | follow redirects (3xx status) before yielding the response |
-| alias           | null                     | request alias (used for `cy.wait`)                         |
-
 | Property     | Default | Description                                  |
 |--------------|---------|----------------------------------------------|
 | throttleKbps | null    | Maximum network throughput (kilobits/second) |
 | delay        | 0       | Minimum network latency/delay (milliseconds) |
 
-Any modifications to the properties of `res` will be persisted to other response handlers, and finally merged into the actual incoming HTTP response.
+Any modifications to these properties will be persisted to other response handlers, and finally merged into the actual incoming HTTP response.
 
-### Ending the response with `res.send()`
+Methods
+In addition to the above properties, the intercepted request also contains the following methods:
+| Method      | Description                                                     |
+|-------------|-----------------------------------------------------------------|
+| setDelay    | Minimum response latency/delay (`number`, milliseconds)         |
+| setThrottle | Maximum response network throughput (`number`, kilobits/second) |
+| send        | Send response (`object`, `StaticResponse`)                      |
 
-To end the response phase of the request, call `res.send()`. Optionally, you can pass a [`StaticResponse`][staticresponse] to `res.send()`, to be merged with the actual response.
+The `send` method is used to send the real response to the server. It accepts a `StaticResponse`][staticresponse] used to merge any necessary changes to the response before sending it.
 
-When `res.send()` is called, the response phase will end immediately and no other response handlers will be called for the current request. Here is an example of how `res.send()` could be used:
+Note: No other response handlers will be called for the request once the response is sent. See [Interception lifecycle][lifecycle].
 
 ```js
-cy.intercept('/notification', (req) => {
+// conditionally send a fake response in place of the real one 
+cy.intercept('/users', (req) => {
   req.continue((res) => {
     if (res.body.status === 'failed') {
-      // sends a fixture body instead of the existing 'res.body'
       res.send({ fixture: 'success.json' })
     }
   })
 })
 ```
-
 See the [`StaticResponse` documentation][staticresponse] for more information on the format.
 
-`res.send()` also supports shorthand, similar to [`req.reply()`][req-reply], to avoid having to specify a `StaticResponse` object:
+`send` also supports shorthand, similar to [`reply`][req-reply], to avoid having to specify a `StaticResponse` object:
 
 ```js
 res.send(body) // equivalent to `res.send({ body })`
 res.send(body, headers) // equivalent to `res.send({ body, headers })`
 res.send(statusCode, body, headers) // equivalent to `res.send({ statusCode, body, headers})`
 ```
-
-There are also two convenience functions available on `res`:
-
-```ts
-{
-  /**
-   * Wait for 'delay' milliseconds before sending the response to the client.
-   */
-  setDelay: (delay: number) => IncomingHttpResponse
-  /**
-   * Serve the response at 'throttleKbps' kilobytes per second.
-   */
-  setThrottle: (throttleKbps: number) => IncomingHttpResponse
-}
-```
-
-Note: calling `res.send()` will end the response phase and stop the response from propagating to the next matching response handler in line. See ["Interception lifecycle"][lifecycle] for more information.
 
 ## `StaticResponse` objects
 
