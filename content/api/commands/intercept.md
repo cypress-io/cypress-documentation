@@ -508,19 +508,58 @@ cy.wait('@createUser')
 
 The intercepted request passed to the route handler contains methods to dynamically control the response to a request:
 
-* `reply` - to stub out a response requiring no dependency on a real back-end
-* `continue` - to modify or make assertions on the real response
-##### Stubbing out a response
+* `reply` - stub out a response requiring no dependency on a real back-end
+* `continue` - modify or make assertions on the real response
+* `destroy` - destroy the request and respond with a network error
+* `redirect` - respond to the request with a redirect to a specified location
+* `on` - modify the response by attaching to events
+
+##### Stubbing out a response (`reply`)
+
+The `reply` method takes a [`StaticResponse`][staticresponse] object as an input: 
 
 ```js
 // stub out the response without interacting with a real back-end
 cy.intercept('POST', '/users', (req) => {
   req.reply({
+    headers: {
+      Set-Cookie: 'newUserName=Peter Pan;'
+    },
+    statusCode: 201,
+    body: {
     name: 'Peter Pan'
+    },
+    delay: 10, // milliseconds
+    throttleKbps: 1000, // to simulate a 3G connection
+    forceNetworkError: false // default
+  })
+})
+
+// stub out a response body using a fixture
+cy.intercept('GET', '/users', (req) => {
+  req.reply({
+    statusCode: 200, // default
+    fixture: 'users.json'
   })
 })
 ```
-##### Modifying the real response
+See [`StaticResponse` objects][staticresponse] below for more information.
+
+The `reply` method also supports shorthand to avoid having to specify a `StaticResponse` object:
+
+```js
+req.reply(body) // equivalent to `req.reply({ body })`
+req.reply(body, headers) // equivalent to `req.reply({ body, headers })`
+req.reply(statusCode, body, headers) // equivalent to `req.reply({ statusCode, body, headers})`
+```
+
+<Alert type="bolt">
+
+Note: Calling `reply()` will end the request phase and stop the request from propagating to the next matching request handler in line. See [Interception Lifecycle][lifecycle].
+
+</Alert>
+
+##### Modifying the real response (`continue`)
 
 ```js
 // pass the request through and make an assertion on the real response
@@ -531,6 +570,45 @@ cy.intercept('POST', '/users', (req) => {
 })
 
 ```
+
+##### Responding with a network error (`destroy`)
+
+```js
+// destroy the request and respond with a network error
+cy.intercept('POST', '/users', (req) => {
+  req.destroy()
+})
+
+```
+
+##### Responding with a new location (`redirect`)
+
+```js
+// respond to this request with a redirect to a new 'location'
+cy.intercept('GET', '/users', (req) => {
+  // statusCode defaults to `302`
+  req.redirect(location: '/404Page', statusCode: 404)
+})
+```
+
+##### Responding by listening to events (`on`)
+
+
+```js
+cy.intercept('GET', '/users', (req) => {
+  req.on('before:response', (res) => {
+    // do something when the `before:response` event is triggered
+  })
+})
+cy.intercept('POST', '/users', (req) => {
+  req.on('response', (res) => {
+    // do something when the `response` event is triggered
+  })
+})
+
+```
+See example for throttling a response
+See more examples of events
 
 #### Returning a Promise
 
