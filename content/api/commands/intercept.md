@@ -559,6 +559,8 @@ Note: Calling `reply()` will end the request phase and stop the request from pro
 
 ##### Modifying the real response (`continue`)
 
+The `continue` method accepts a function which is passed an object representing the real response being intercepted on its way back to the client (your front-end application).
+
 ```js
 // pass the request through and make an assertion on the real response
 cy.intercept('POST', '/users', (req) => {
