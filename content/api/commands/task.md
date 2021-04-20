@@ -482,3 +482,4 @@ When clicking on the `task` command within the command log, the console outputs 
 - [Blog: Rolling for a Test](https://glebbahmutov.com/blog/rolling-for-test/)
 - [Universal Code Test with Cypress](https://glebbahmutov.com/blog/universal-code-test/)
 - repository [cypress-db-example](https://github.com/bahmutov/cypress-db-example) shows how to connect to a Sqlite3 database and use it during tests.
+- [Blog: Testing Mongo with Cypress](https://glebbahmutov.com/blog/testing-mongo-with-cypress/) shows how to access the MongoDB during Cypress API tests locally and on CircleCI.
