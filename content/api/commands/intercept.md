@@ -764,58 +764,25 @@ Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/
 
 </Alert>
 
-### Request object properties
+### Intercepted Request object properties
 
 The object representing the intercepted request has several properties from the HTTP request itself. 
-**Note:** `httpVersion` is read-only 
 
-```ts
-{
-  /**
-   * The body of the request.
-   * If a JSON Content-Type was used and the body was valid JSON, this will be an object.
-   * If the body was binary content, this will be a buffer.
-   */
-  body: string | object | any
-  /**
-   * The headers of the request.
-   */
-  headers: { [key: string]: string }
-  /**
-   * Request HTTP method (GET, POST, ...).
-   */
-  method: string
-  /**
-   * Request URL.
-   */
-  url: string
-  /**
-   * The HTTP version used in the request. Read only.
-   */
-  httpVersion: string
-}
-```
+| Property    | Description                                          |
+|-------------|------------------------------------------------------|
+| body        | request body (JSON: object, binary: buffer/string)   |
+| headers     | request headers (object)                             |
+| method      | request method (string)                              |
+| url         | request URL (string)                                 |
+| httpVersion | HTTP version used in the request (string, read-only) |
+
 Optional Properties (to control Cypress-specific behavior):
 
-```ts
-{
-  /**
-   * If provided, the number of milliseconds before an upstream response to this request
-   * will time out and cause an error. By default, `responseTimeout` from config is used.
-   */
-  responseTimeout?: number
-  /**
-   * Set if redirects should be followed when this request is made. By default, requests will
-   * not follow redirects before yielding the response (the 3xx redirect is yielded)
-   */
-  followRedirect?: boolean
-  /**
-   * If set, `cy.wait` can be used to await the request/response cycle to complete for this
-   * request via `cy.wait('@alias')`.
-   */
-  alias?: string
-}
-```
+| Property        | Default                  | Description                                                |
+|-----------------|--------------------------|------------------------------------------------------------|
+| responseTimeout | `responseTimeout` config | number of milliseconds before upstream response times out  |
+| followRedirect  | false                    | follow redirects (3xx status) before yielding the response |
+| alias           | null                     | request alias (used for `cy.wait`)                         |
 
 Any modifications to the properties of `req` will be persisted to other request handlers, and finally merged into the actual outbound HTTP request.
 
@@ -966,47 +933,29 @@ cy.intercept('/url', (req) => {
 })
 ```
 
-### Response object properties
+### Intercepted Response object properties
 
 The response object (`res`) yielded to response handlers has several properties from the HTTP response itself. All of the following properties on `res` can be modified:
 
-```ts
-{
-  /**
-   * The body of the response.
-   * If a JSON Content-Type was used and the body was valid JSON, this will be an object.
-   * If the body was binary content, this will be a buffer.
-   */
-  body: string | object | any
-  /**
-   * The headers of the response.
-   */
-  headers: { [key: string]: string }
-  /**
-   * The HTTP status code of the response.
-   */
-  statusCode: number
-  /**
-   * The HTTP status message.
-   */
-  statusMessage: string
-}
-```
+| Property      | Description                                         |
+|---------------|-----------------------------------------------------|
+| body          | response body (JSON: object, binary: buffer/string) |
+| headers       | response headers (object)                           |
+| statusCode    | response status code (number)                       |
+| statusMessage | response status message (string)                    |
 
-`res` also has some optional properties which can be set to control Cypress-specific behavior:
+Optional Properties (to control Cypress-specific behavior):
 
-```ts
-{
-  /**
-   * Kilobits per second to send 'body'.
-   */
-  throttleKbps?: number
-  /**
-   * Milliseconds to delay before the response is sent.
-   */
-  delay?: number
-}
-```
+| Property        | Default                  | Description                                                |
+|-----------------|--------------------------|------------------------------------------------------------|
+| responseTimeout | `responseTimeout` config | number of milliseconds before upstream response times out  |
+| followRedirect  | false                    | follow redirects (3xx status) before yielding the response |
+| alias           | null                     | request alias (used for `cy.wait`)                         |
+
+| Property     | Default | Description                                  |
+|--------------|---------|----------------------------------------------|
+| throttleKbps | null    | Maximum network throughput (kilobits/second) |
+| delay        | 0       | Minimum network latency/delay (milliseconds) |
 
 Any modifications to the properties of `res` will be persisted to other response handlers, and finally merged into the actual incoming HTTP response.
 
