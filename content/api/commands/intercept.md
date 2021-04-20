@@ -331,7 +331,6 @@ cy.get('button.save').click()
 cy.wait('@createUser')
 // the commands below will not execute until a response is received from `POST /users`
 cy.get('#field.firstName').should('equal', 'Adam')
-
 ```
 
 #### Making assertions on a request/response
@@ -470,7 +469,6 @@ cy.intercept('POST', '/users', (req) => {
 #### Modifying an outgoing request
 
 You can use the request handler callback to modify the request before it is sent.
-
 ```js
 // modify the request body before it's sent to its destination
 cy.intercept('POST', '/users', (req) => {
@@ -671,22 +669,8 @@ cy.intercept('/projects', {
 })
 ```
 
-Or to stub headers, status code, and body all at once:
-
-```js
-cy.intercept('/not-found', {
-  statusCode: 404,
-  body: '404 Not Found!',
-  headers: {
-    'x-not-found': 'true',
-  },
-})
-```
-
-See [`StaticResponse` objects][staticresponse] for more information on `StaticResponse`s.
-
 ### Intercepting a request
-
+<!-- "intercepting" here implies it's not a passive operation -->
 #### Add, modify or delete a header to all outgoing requests
 
 You can add, modify or delete a header to all outgoing requests using a `beforeEach()` in the `cypress/support/index.js` file
@@ -804,7 +788,7 @@ Note: calling `req.continue()` will stop the request from propagating to the nex
 
 ### Providing a stub response with `req.reply()`
 
-The `req.reply()` function can be used to send a stub response for an intercepted request. By passing a string, object, or [`StaticResponse`][staticresponse] to `req.reply()`, the request can be preventing from reaching the destination server.
+The `req.reply()` function can be used to send a stub response for an intercepted request. By passing a string, object, or [`StaticResponse`][staticresponse] to `req.reply()`, the request can be prevented from reaching the destination server.
 
 For example, the following code stubs out a JSON response from a request interceptor:
 
@@ -820,7 +804,7 @@ cy.intercept('/billing', (req) => {
 Instead of passing a plain object or string to `req.reply()`, you can also pass a [`StaticResponse`][staticresponse] object. With a [`StaticResponse`][staticresponse], you can force a network error, delay/throttle the response, send a fixture, and more.
 
 For example, the following code serves a dynamically chosen fixture with a delay of 500ms:
-
+<!-- this is the first time seeing use of async/await in a cy docs example  -->
 ```js
 cy.intercept('/api/users/*', async (req) => {
   // asynchronously retrieve fixture filename at request-time
@@ -862,13 +846,7 @@ Note: calling `req.reply()` will end the request phase and stop the request from
 
 ### Request events
 
-<!-- TODO DX-76 Add more examples of request events usage
-Craft and add usage examples of the events:
-before:response 
-response 
-after:response
-within the "Intercepted requests" and "Intercepted responses" sections.
-Recommend other places within the intercept docs, but also the larger docs where these examples can be linked. -->
+<!-- TODO DX-76 Add more examples of request events usage -->
 
 For advanced use, several events are available on `req`, that represent different stages of the [Interception lifecycle][lifecycle].
 
@@ -904,6 +882,7 @@ cy.intercept('/shop', (req) => {
 
 See ["Intercepted responses"][res] for more details on the `res` object yielded by `before:response` and `response`. See ["Interception lifecycle"][lifecycle] for more details on request ordering.
 
+<!-- we shouldn't use the term `intercepted` here -->
 ## Intercepted responses
 
 The response can be intercepted in two ways:
