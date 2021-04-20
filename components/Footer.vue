@@ -25,19 +25,19 @@ export default {
 
         <div class="px-5 py-2">
           <a
-            href="https://gitter.im/cypress-io/cypress"
+            href="https://discord.gg/cMjUZg7"
             class="text-base text-gray-500 hover:text-gray-900"
           >
-            Gitter
+            Discord
           </a>
         </div>
 
         <div class="px-5 py-2">
           <a
-            href="https://on.cypress.io/contributing"
+            href="https://github.com/cypress-io/cypress/discussions"
             class="text-base text-gray-500 hover:text-gray-900"
           >
-            Contribute
+            Discussions
           </a>
         </div>
 
