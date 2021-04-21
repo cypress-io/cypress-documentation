@@ -119,57 +119,6 @@ cy.intercept('**/users?_limit=+(3|5)')
 cy.intercept(/\/users\?_limit=(3|5)$/)
 ```
 
-<!-- TODO move this section -->
-
-### Glob Pattern Matching URLs
-
-Providing an exact URL to match can be too restrictive. For example, what if you wanted to run your tests on a different host?
-
-```js
-// match any request that exactly matches the URL
-cy.intercept('https://prod.cypress.io/users')
-// matches this: https://prod.cypress.io/users
-// ...but not this: https://staging.cypress.io/users
-// ...or this: http://localhost/users
-```
-
-Glob pattern matching provides the necessary flexibility:
-
-```js
-cy.intercept('**/users')
-// matches all of these:
-//   https://prod.cypress.io/users
-//   https://staging.cypress.io/users
-//   http://localhost/users
-
-cy.intercept('**/users?_limit=+(3|5)')
-// matches all of these:
-//   https://prod.cypress.io/users?_limit=3
-//   http://localhost/users?_limit=5
-```
-
-Under the hood, Cypress uses the [minimatch]() library for glob matching and provides access to it via the `Cypress` global.
-This enables you to test your pattern in the Test Runner browser console.
-
-You can invoke the `Cypress.minimatch` with just two arguments - the URL (string) and the pattern (string), respectively - and if it yields `true, then you have a match!
-
-```javascript
-// executed in the Test Runner browser console:
-Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)')
-// true
-Cypress.minimatch('http://localhost/users?_limit=5', '**/users?_limit=+(3|5)')
-// true
-Cypress.minimatch('http://localhost/users?_limit=7', '**/users?_limit=+(3|5)')
-// false
-```
-
-You can also pass in options (object) as the third argument, one of which is `debug` which if set to `true`, will yield verbose output that could help you understand why your pattern isn't working as you expect:
-
-```js
-Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)', {
-  debug: true,
-})
-// true (plus debug messages)
 ```
 
 ### Specifying a Method
@@ -857,6 +806,54 @@ cy.intercept('/shop', (req) => {
 
 Note: If a promise is returned, it will be awaited before processing other event handlers.
 See ["Intercepted responses"][res] for more details on the `res` object yielded by `before:response` and `response`. See ["Interception lifecycle"][lifecycle] for more details on request ordering.
+
+## Glob Pattern Matching URLs
+
+Providing an exact URL to match can be too restrictive. For example, what if you wanted to run your tests on a different host? 
+
+```js
+// match any request that exactly matches the URL
+cy.intercept('https://prod.cypress.io/users')
+// matches this: https://prod.cypress.io/users
+// ...but not this: https://staging.cypress.io/users
+// ...or this: http://localhost/users
+```
+Glob pattern matching provides the necessary flexibility:
+
+```js
+cy.intercept('**/users')
+// matches all of these:
+//   https://prod.cypress.io/users
+//   https://staging.cypress.io/users
+//   http://localhost/users
+
+cy.intercept('**/users?_limit=+(3|5)')
+// matches all of these:
+//   https://prod.cypress.io/users?_limit=3
+//   http://localhost/users?_limit=5
+
+```
+Under the hood, Cypress uses the [minimatch]() library for glob matching and provides access to it via the `Cypress` global.
+This enables you to test your pattern in the Test Runner browser console.
+
+You can invoke the `Cypress.minimatch` with just two arguments - the URL (string) and the pattern (string), respectively - and if it yields `true, then you have a match!
+
+```javascript
+// executed in the Test Runner browser console:
+Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)') 
+// true
+Cypress.minimatch('http://localhost/users?_limit=5', '**/users?_limit=+(3|5)') 
+// true
+Cypress.minimatch('http://localhost/users?_limit=7', '**/users?_limit=+(3|5)') 
+// false
+```
+
+You can also pass in options (object) as the third argument, one of which is `debug` which if set to `true`, will yield verbose output that could help you understand why your pattern isn't working as you expect:
+
+```js
+Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)', { debug: true }) 
+// true (plus debug messages)
+
 
 <!-- we shouldn't use the term `intercepted` here -->
 
