@@ -195,9 +195,9 @@ This avoids ever needing a second open browser, but still gives you an end-to-en
 
 ### Same-origin
 
-Each test is limited to only visiting a domains that are determined to be of the same-origin.
+Each test is limited to only visiting the domains that are determined to be of the same-origin rule.
 
-What is same-origin? Two URLs have the same origin if the protocol, port (if specified), and host are the same for both. Cypress automatically handles hosts of the same superdomain by injecting [`document.domain`](https://developer.mozilla.org/en-US/docs/Web/API/Document/domain) into `text/html` pages, so a host of the same superdomain is considered fine.
+What is same-origin? Two URLs have the same origin if the protocol, port (if specified), and host are the same for both. Cypress automatically handles hosts of the same superdomain by injecting the [`document.domain`](https://developer.mozilla.org/en-US/docs/Web/API/Document/domain) property into the visited `text/html` pages, so a host of the same superdomain is considered fine.
 
 Given the URLs below, all have the same-origin compared to `https://www.cypress.io`.
 
@@ -210,6 +210,8 @@ The URLs below, however, will have different origins compared to `https://www.cy
 - `http://www.cypress.io` (Different protocol)
 - `https://docs.cypress.io:81` (Different port)
 - `https://www.auth0.com/` (Different host of different superdomain)
+
+The `http://localhost` URLs differ if their ports are different. For example, the `http://localhost:3000` URL is considered to be a different origin from the `http://localhost:8080` URL.
 
 The rules are:
 

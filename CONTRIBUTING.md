@@ -11,6 +11,7 @@ Thanks for taking the time to contribute! :smile:
     - [Images](#images)
     - [Videos](#videos)
     - [Icons](#icons)
+  - [Partials](#partials)
   - [Adding Examples](#adding-examples)
   - [Adding Plugins](#adding-plugins)
   - [Adding Pages](#adding-pages)
@@ -81,6 +82,52 @@ You can embed videos within the markdown with the [`<DocsVideo>`](/components/gl
 ```jsx
 <Icon name="question-circle"></Icon>
 ```
+
+### Partials
+
+Partials are snippets of reusable markdown that can be inserted into other markdown files. You may want to use a partial when you are writing the same content across multiple markdown files.
+
+#### Writing a Partial
+
+A partial is a markdown file that you want to import and inject into another markdown file. They can contain any content that you would otherwise want to write in other markdown files.
+
+```md
+## My First Partial
+
+<Alert type="info">
+
+This is my reusable partial.
+
+</Alert>
+```
+
+#### Using Partials
+
+Partials can be imported into other markdown files with the `::include{file=FILE_NAME}` directive.
+
+```md
+## My Favorite Food
+
+### Pizza
+
+::include{file=path/to/pizza-recipe.md}
+```
+
+When the page is generated, the content of `path/to/pizza-recipe.md` will be injected into the markdown file.
+
+The `::include{file=FILE_NAME}` directive assumes that the `FILE_NAME` exists within the `content` directory. You must provide the path relative to the `content` directory as the `file` property. For example, if the partial `pizza-recipe.md` was located at `/content/recipes/pizza-recipe.md`, the `::include` directive would be `::include{file=recipes/pizza-recipe.md}`.
+
+#### When to use Partials instead of Vue components
+
+It is possible to create partials using Vue components in the markdown instead of using the `::include{file=FILE_NAME}` directive. However, there are downsides to this approach.
+
+Assume you have a `<Partial>` Vue component. If you wanted to introduce a `<Partial>` to a markdown file and let that partial add a new header to the page, you would need to add a header element to the `<Partial>` component. Due to how each page's table of contents is generated, this new header would not appear in the "On This Page" section that appears on the right-hand side of most documentation pages. The header would also be missing the anchor tag that is otherwise automatically inserted into all headers.
+
+For most use cases, you should use the `::include{file=FILE_NAME}` directive when you want to inject reusable markdown into multiple files. A `<Partial>` Vue component may be a better fit if you wish to add custom interactivity to reusable strings of text.
+
+#### Limitations
+
+When including the `::include{file=FILE_NAME}` directive in another markdown file, Nuxt's hot module reloading will automatically trigger the partial's content to be inserted into the markdown file. However, if you wish to make changes to the partial file itself, you will need to stop and restart the development server with `yarn start` to see the changes. This is because the custom remark plugin that is enabling this partial system is only ran when the server is started and not on each hot module reload.
 
 ### Adding Examples
 

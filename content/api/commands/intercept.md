@@ -703,9 +703,7 @@ Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/
 
 #### Passing a request to the next request handler
 
-<!-- TODO DX-83 Add more examples of the `middleware` use case -->
-
-If [`req.reply()`][req-reply] is not explicitly called inside of a request handler, requests will pass to the next request handler until none are left.
+If [`req.reply()`][req-reply] or [`req.continue()`][req-continue] is not explicitly called inside of a request handler, requests will pass to the next request handler until none are left.
 
 ```js
 // you could have a top-level middleware handler that sets an auth token on all requests
@@ -966,7 +964,7 @@ The following properties are available on `StaticResponse`. All properties are o
 | delay             | 0       | Minimum network latency/delay (milliseconds)           |
 | throttleKbps      | null    | Maximum network throughput (kilobits/second)           |
 
-See ["Stubbing a response with a `StaticResponse` object"][#with-a-staticresponse-object] for examples of stubbing with `cy.intercept()`.
+See ["Stubbing a response with a `StaticResponse` object"](#With-a-StaticResponse-object) for examples of stubbing with `cy.intercept()`.
 
 ## Interception lifecycle
 

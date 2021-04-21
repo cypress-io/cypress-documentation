@@ -29,9 +29,9 @@ export default {
         class="my-8"
         v-html="pluginType.description"
       ></p>
-      <ul class="plugins-list">
+      <ul :class="$style.pluginsList">
         <li v-for="plugin in pluginType.plugins" :key="plugin.name" class="m-3">
-          <div class="plugin-title">
+          <div :class="$style.pluginTitle">
             <h3>
               <a
                 :href="plugin.link"
@@ -41,8 +41,16 @@ export default {
                 >{{ plugin.name }}</a
               >
             </h3>
-            <div v-if="plugin.badge" class="plugin-badge">
-              <span :class="`badge badge-pill badge-${plugin.badge}`">
+            <div v-if="plugin.badge" :class="$style.pluginBadge">
+              <span
+                :class="`${$style.badge} ${$style.badgePill} ${
+                  $style[
+                    `badge${plugin.badge[0]
+                      .toUpperCase()
+                      .concat(plugin.badge.slice(1))}`
+                  ]
+                }`"
+              >
                 {{ plugin.badge }}
               </span>
             </div>
@@ -52,7 +60,7 @@ export default {
             <span
               v-for="keyword in plugin.keywords"
               :key="keyword"
-              class="keyword"
+              :class="$style.keyword"
               >#{{ keyword }}</span
             >
           </div>
@@ -62,114 +70,124 @@ export default {
   </div>
 </template>
 
-<style lang="scss">
-$card-header-breakpoint: 1280px;
-
-.plugins {
-  .wrapper {
-    padding: 40px 40px;
-  }
-
-  h2 {
-    border-bottom: 0;
-    margin-bottom: 0;
-  }
-
-  h3 {
-    font-size: 1.3em;
-    margin: 0;
-    border-bottom: 0;
-    line-height: 1.3;
-
-    a {
-      border-bottom: 0;
-
-      &:hover {
-        border-bottom: 0;
-      }
-    }
-  }
+<style module>
+.plugins .wrapper {
+  padding: 40px 40px;
 }
 
-ul.plugins-list {
+.plugins h2 {
+  border-bottom: 0;
+  margin-bottom: 0;
+}
+
+.plugins h3 {
+  font-size: 1.3em;
+  margin: 0;
+  border-bottom: 0;
+  line-height: 1.3;
+}
+
+.plugins a {
+  border-bottom: 0;
+}
+.plugins a:hover {
+  border-bottom: 0;
+}
+
+ul.pluginsList {
   display: flex;
   margin: 0 !important;
   padding: 0;
   width: calc(100% + 20px);
   flex-wrap: wrap;
+}
 
-  li {
-    box-sizing: border-box;
-    list-style: none;
-    padding: 20px;
-    border: 1px solid #e8e8e8;
-    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.15);
-    @apply w-full;
+ul.pluginsList li {
+  box-sizing: border-box;
+  list-style: none;
+  padding: 20px;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.15);
+  @apply w-full;
+}
 
-    /* stylelint-disable-next-line at-rule-no-unknown */
-    @screen lg {
-      width: 30%;
-    }
+/* stylelint-disable-next-line at-rule-no-unknown */
+@screen lg {
+  ul.pluginsList li {
+    width: 30%;
+  }
+}
 
-    p {
-      margin-bottom: 0.5em;
-    }
+ul.pluginsList li p {
+  margin-bottom: 0.5em;
+}
+
+.pluginBadge {
+  margin-bottom: 5px;
+}
+
+.pluginTitle {
+  border-bottom: 1px solid #eee;
+  margin-bottom: 0.6em;
+}
+
+@media (min-width: 1280px) {
+  .pluginTitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
   }
 
-  .plugin-badge {
-    // margin-top: -8px;
-    margin-bottom: 5px;
-
-    @media (min-width: $card-header-breakpoint) {
-      margin: 0;
-    }
+  .pluginBadge {
+    margin: 0;
   }
+}
 
-  .plugin-title {
-    border-bottom: 1px solid #eee;
-    margin-bottom: 0.6em;
+/* remove hash symbol from appearing in the ::before
+   of the anchors in titles */
+.pluginTitle > h3 > a::before {
+  content: '';
+  margin-left: 0;
+  padding-right: 0;
+}
 
-    /* remove hash symbol from appearing in the ::before 
-       of the anchors in titles */
-    & > h3 > a::before {
-      content: '';
-      margin-left: 0;
-      padding-right: 0;
-    }
+.badge {
+  display: inline-block;
+  color: #fff;
+  font-size: 0.7rem;
+  border-radius: 10rem;
+  font-weight: 700;
+  padding: 0.25em 0.4em;
+  line-height: 0.7rem;
+  @apply px-2;
+  @apply py-1;
+}
 
-    @media (min-width: $card-header-breakpoint) {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: 0.5rem;
-    }
+.badgePill {
+  font-size: 12px;
+  color: white;
+}
 
-    .badge-pill {
-      font-size: 12px;
-      color: white;
+.badgePill.badgeCommunity {
+  background-color: #737373;
+}
 
-      &.badge-community {
-        background-color: #737373;
-      }
+.badgePill.badgeExperimental {
+  background-color: #965cc1;
+}
 
-      &.badge-experimental {
-        background-color: #965cc1;
-      }
+.badgePill.badgeOfficial {
+  background-color: #257e8e;
+}
 
-      &.badge-official {
-        background-color: #257e8e;
-      }
+.badgePill.badgeVerified {
+  background-color: #00805b;
+}
 
-      &.badge-verified {
-        background-color: #00805b;
-      }
-    }
-  }
-
-  .keyword {
-    font-weight: 300;
-    color: #777;
-    @apply mr-2;
-  }
+.keyword {
+  font-weight: 300;
+  color: #777;
+  @apply mr-2;
 }
 </style>

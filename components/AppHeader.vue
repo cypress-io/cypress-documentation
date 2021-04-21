@@ -75,7 +75,7 @@ export default {
           <div class="flex-shrink-0">
             <a href="/">
               <img
-                class="app-header-logo block h-8 w-auto"
+                class="block h-8 w-auto"
                 :src="require('~/assets/cypress-logo.png')"
                 alt="Cypress Docs Logo"
               />
@@ -222,36 +222,3 @@ export default {
     </div>
   </nav>
 </template>
-
-<style lang="scss">
-.app-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: black;
-  @apply px-3;
-}
-
-.app-header-left {
-  display: flex;
-  align-items: center;
-}
-
-.app-header-nav-link {
-  display: inline-block;
-  border-bottom: 5px solid black;
-  font-size: 1.2rem;
-  color: #fff;
-  @apply px-5;
-  @apply py-4;
-
-  &:first-of-type {
-    @apply ml-2;
-  }
-
-  &.nuxt-link-active {
-    background-color: hsla(0, 0, 0%, 0.1);
-    border-bottom: 5px solid #00bf88;
-  }
-}
-</style>

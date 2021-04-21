@@ -41,12 +41,6 @@ We recommend the following configuration in a [`tsconfig.json`](http://www.types
 
 The `"types"` will tell the TypeScript compiler to only include type definitions from Cypress. This will address instances where the project also uses `@types/chai` or `@types/jquery`. Since [Chai](/guides/references/bundled-tools#Chai) and [jQuery](/guides/references/bundled-tools#Other-Library-Utilities) are namespaces (globals), incompatible versions will cause the package manager (`yarn` or `npm`) to nest and include multiple definitions and cause conflicts.
 
-<Alert type="info">
-
-You can find an example of Jest and Cypress installed in the same project using a separate `tsconfig.json` file in the [cypress-io/cypress-and-jest-typescript-example](https://github.com/cypress-io/cypress-and-jest-typescript-example) repo.
-
-</Alert>
-
 <Alert type="warning">
 
 You may have to restart your IDE's TypeScript server if the setup above does not appear to work. For example:
@@ -136,6 +130,13 @@ You can utilize Cypress's type declarations in your [plugins file](/guides/tooli
  */
 module.exports = (on, config) => {}
 ```
+
+### Clashing types with Jest
+
+If you are using both Jest and Cypress in the same project, the TypeScript types registered globally by the two test runners can clash. For example, both Jest and Cypress provide the clashing types for the `describe` and `it` functions. Both Jest and Expect (bundled inside Cypress) provide the clashing types for the `expect` assertion, etc. There are two solutions to disentangle the types:
+
+1. Configure a separate `tsconfig.json` for E2E tests. See our example [cypress-io/cypress-and-jest-typescript-example](https://github.com/cypress-io/cypress-and-jest-typescript-example) repo.
+2. Remove Cypress global variables by using NPM package [local-cypress](https://github.com/bahmutov/local-cypress). Read the blog post [How to Avoid Using Global Cypress Variables](https://glebbahmutov.com/blog/local-cypress/) for details.
 
 ## History
 

@@ -88,6 +88,14 @@ Note the use of the standard function syntax. Using [arrow functions](https://de
 
 ## Notes
 
+### Aliases are reset
+
+<Alert type="warning">
+
+**Note:** all aliases are reset before each test. See the [aliases guide](/guides/core-concepts/variables-and-aliases) for details.
+
+</Alert>
+
 ### Reserved words
 
 #### Alias names cannot match some reserved words.

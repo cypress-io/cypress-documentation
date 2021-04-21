@@ -146,11 +146,11 @@ Any videos recorded of the run are stored in the [`videosFolder`](/guides/refere
 
 To learn more about videos and settings available, see [Screenshots and Videos](/guides/guides/screenshots-and-videos#Screenshots)
 
-### Plugin files
+### Plugins file
 
-The plugin file is a special file that executes in Node before the project is loaded, before the browser launches, and during your test execution. While the Cypress tests execute in the browser, the plugin file runs in the background Node process, giving your tests the ability to access the file system and the rest of the operating system by calling the [cy.task()](/api/commands/task) command.
+The plugins file is a special file that executes in Node before the project is loaded, before the browser launches, and during your test execution. While the Cypress tests execute in the browser, the plugins file runs in the background Node process, giving your tests the ability to access the file system and the rest of the operating system by calling the [cy.task()](/api/commands/task) command.
 
-The plugin file is a good place to define how you want to bundle the spec files via the [preprocessors](/api/plugins/preprocessors-api), how to find and launch the browsers via the [browser launch API](/api/plugins/browser-launch-api), and other cool things. Read our [plugins guide](/guides/tooling/plugins-guide) for more details and examples.
+The plugins file is a good place to define how you want to bundle the spec files via the [preprocessors](/api/plugins/preprocessors-api), how to find and launch the browsers via the [browser launch API](/api/plugins/browser-launch-api), and other cool things. Read our [plugins guide](/guides/tooling/plugins-guide) for more details and examples.
 
 The initial imported plugins file can be [configured to another file](/guides/references/configuration#Folders-Files).
 

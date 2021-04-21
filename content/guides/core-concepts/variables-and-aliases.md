@@ -494,3 +494,44 @@ cy.get('@comments').should((response) => {
   })
 })
 ```
+
+### Aliases are reset before each test
+
+**Note:** all aliases are reset before each test. A common user mistake is to create aliases using the `before` hook. Such aliases work in the first test only!
+
+```js
+// 🚨 THIS EXAMPLE DOES NOT WORK
+before(() => {
+  // notice this alias is created just once using "before" hook
+  cy.wrap('some value').as('exampleValue')
+})
+
+it('works in the first test', () => {
+  cy.get('@exampleValue').should('equal', 'some value')
+})
+
+// NOTE the second test is failing because the alias is reset
+it('does not exist in the second test', () => {
+  // there is not alias because it is created once before
+  // the first test, and is reset before the second test
+  cy.get('@exampleValue').should('equal', 'some value')
+})
+```
+
+The solution is to create the aliases before each test using the `beforeEach` hook
+
+```js
+// ✅ THE CORRECT EXAMPLE
+beforeEach(() => {
+  // we will create a new alias before each test
+  cy.wrap('some value').as('exampleValue')
+})
+
+it('works in the first test', () => {
+  cy.get('@exampleValue').should('equal', 'some value')
+})
+
+it('works in the second test', () => {
+  cy.get('@exampleValue').should('equal', 'some value')
+})
+```
