@@ -4,6 +4,7 @@ import AppHeader from '../../../components/AppHeader'
 import TableOfContents from '../../../components/TableOfContents'
 import Footer from '../../../components/Footer'
 import { getMetaData, getMetaDescription, getTitle } from '../../../utils'
+import { fetchBanner } from '../../../utils/sanity'
 
 const sortChangelogs = (a, b) => {
   // descending order
@@ -111,6 +112,8 @@ export default {
 
     const metaDescription = await getMetaDescription(recentChangelogsText)
 
+    const banner = await fetchBanner()
+
     return {
       algoliaSettings,
       changelogs: sortedChangelogs,
@@ -118,6 +121,7 @@ export default {
       path: 'references/changelog',
       tableOfContents,
       metaDescription,
+      banner,
     }
   },
   head() {
@@ -154,9 +158,15 @@ export default {
       :mobile-menu-items="guideSidebar"
       section="guides"
       :algolia-settings="algoliaSettings"
+      :banner="banner"
     />
-    <main class="main-content">
-      <AppSidebar :items="guideSidebar" section="guides" :path="path" />
+    <main :class="Boolean(banner) ? 'banner-margin' : ''" class="main-content">
+      <AppSidebar
+        :items="guideSidebar"
+        section="guides"
+        :path="path"
+        :has-banner="Boolean(banner)"
+      />
       <div class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
           <h1 class="main-content-title">Changelog</h1>
@@ -168,7 +178,7 @@ export default {
           <Footer />
         </article>
       </div>
-      <TableOfContents :toc="tableOfContents" />
+      <TableOfContents :toc="tableOfContents" :has-banner="Boolean(banner)" />
     </main>
   </div>
 </template>

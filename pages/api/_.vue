@@ -4,6 +4,7 @@ import TableOfContents from '../../components/TableOfContents'
 import Footer from '../../components/Footer'
 import ApiTableOfContents from '../../components/ApiTableOfContents.vue'
 import { getMetaData, getMetaDescription, getTitle } from '../../utils'
+import { fetchBanner } from '../../utils/sanity'
 
 export default {
   components: {
@@ -65,6 +66,8 @@ export default {
       ? 'Cypress API Documentation Table of Contents '
       : await getMetaDescription(rawContent.text)
 
+    const banner = await fetchBanner()
+
     return {
       apiPageContent,
       apiSidebar: items,
@@ -72,6 +75,7 @@ export default {
       isApiToc,
       metaDescription,
       path: activeSidebarItem,
+      banner,
     }
   },
   data() {
@@ -118,9 +122,15 @@ export default {
       :mobile-menu-items="apiSidebar"
       section="api"
       :algolia-settings="algoliaSettings"
+      :banner="banner"
     />
-    <main class="main-content">
-      <AppSidebar :items="apiSidebar" section="api" :path="path" />
+    <main :class="Boolean(banner) ? 'banner-margin' : ''" class="main-content">
+      <AppSidebar
+        :items="apiSidebar"
+        section="api"
+        :path="path"
+        :has-banner="Boolean(banner)"
+      />
       <div class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
           <h1 class="main-content-title">{{ apiPageContent.title }}</h1>
@@ -129,7 +139,10 @@ export default {
           <Footer />
         </article>
       </div>
-      <TableOfContents :toc="apiPageContent.toc" />
+      <TableOfContents
+        :toc="apiPageContent.toc"
+        :has-banner="Boolean(banner)"
+      />
     </main>
   </div>
 </template>

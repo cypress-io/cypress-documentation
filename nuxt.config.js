@@ -39,11 +39,19 @@ export default {
    ** Global CSS
    */
   css: ['@/styles/content.css'],
+  env: {
+    SANITY_PROJECT_ID: process.env.SANITY_PROJECT_ID,
+    SANITY_AUTH_TOKEN: process.env.SANITY_AUTH_TOKEN,
+  },
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ['@/plugins/vue-scrollactive'],
+  plugins: [
+    '@/plugins/vue-scrollactive',
+    '@/plugins/sanity-blocks-vue-component',
+    '@/plugins/sanity-client',
+  ],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -81,16 +89,18 @@ export default {
    */
   content: {
     markdown: {
-      remarkPlugins: (_defaultPlugins) => {return [
-        'remark-directive',
-        '~/scripts/remarkPartialPlugin.js',
-        'remark-squeeze-paragraphs',
-        'remark-slug',
-        'remark-autolink-headings',
-        'remark-external-links',
-        'remark-footnotes',
-        'remark-gfm',
-      ]},
+      remarkPlugins: (_defaultPlugins) => {
+        return [
+          'remark-directive',
+          '~/scripts/remarkPartialPlugin.js',
+          'remark-squeeze-paragraphs',
+          'remark-slug',
+          'remark-autolink-headings',
+          'remark-external-links',
+          'remark-footnotes',
+          'remark-gfm',
+        ]
+      },
       prism: {
         theme: 'prism-themes/themes/prism-material-oceanic.css',
       },
