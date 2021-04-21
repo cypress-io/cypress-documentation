@@ -67,23 +67,25 @@ If no `method` is provided, Cypress will match _all_ HTTP methods (`*` wildcard)
 
 #### **<Icon name="angle-right"></Icon> routeMatcher** **_(`RouteMatcher`)_**
 
-For more advanced matching of incoming HTTP requests, you can pass in the `routeMatcher` to specify matching beyond `url` and `method` - like headers and query parameters. See the chart below.
+For more refined matching, you can pass in the `routeMatcher` to specify matching HTTP requests beyond `url` and `method` - like headers and query parameters. See the chart below.
 
-All properties are optional and except when specified, can be a string or a pattern (glob or regular expression):
+All properties are optional and except when specified, can be a string for an exact match or a pattern (glob/minimatch or regular expression):
 
-| Option     | Default | Description                                                                        |
-| ---------- | ------- | ---------------------------------------------------------------------------------- |
-| auth       | null    | `username` and `password` used in HTTP Basic Authentication (_object_)             |
-| headers    | null    | HTTP request headers (_object_)                                                    |
-| hostname   | null    | HTTP request hostname                                                              |
-| https      | null    | `true`: only secure (https://) requests, `false`: only insecure (http://) requests |
-| method     | \*      | HTTP request method                                                                |
-| middleware | false   | Pass the request on to the next `RouteMatcher` after the request handler completes |
-| path       | null    | HTTP request path after the hostname, including query parameters                   |
-| pathname   | null    | Like `path`, but without query parameters                                          |
-| port       | null    | HTTP request port(s) (_number_ or _array_)                                         |
-| query      | null    | Parsed query string (_object_)                                                     |
-| url        | null    | Full HTTP request URL                                                              |
+<!-- TODO add an example link for each option -->
+
+| Option     | Description                                                                             |
+| ---------- | --------------------------------------------------------------------------------------- |
+| auth       | `username` and `password` used in HTTP Basic Authentication (`object`)                  |
+| headers    | HTTP request headers (`object`)                                                         |
+| hostname   | HTTP request hostname                                                                   |
+| https      | `true`: only secure (https://) requests, `false`: only insecure (http://) requests      |
+| method     | HTTP request method (matches all by default)                                            |
+| middleware | `true`: match routes in defined order, `false`: match routes in reverse order (default) |
+| path       | HTTP request path after the hostname, including query parameters                        |
+| pathname   | Like `path`, but without query parameters                                               |
+| port       | HTTP request port(s) (`number` or `Array`)                                              |
+| query      | Parsed query string (`object`)                                                          |
+| url        | Full HTTP request URL                                                                   |
 
 #### **<Icon name="angle-right"></Icon> routeHandler _(<code>string | object | Function | [StaticResponse][staticresponse]</code>)_**
 
@@ -119,7 +121,7 @@ cy.intercept('**/users?_limit=+(3|5)')
 cy.intercept(/\/users\?_limit=(3|5)$/)
 ```
 
-```
+````
 
 ### Specifying a Method
 
@@ -133,7 +135,7 @@ cy.intercept('**/users')
 cy.intercept('GET', '**/users')
 // matches this: GET http://localhost/users
 // ...but not this: POST http://localhost/users
-```
+````
 
 ### Using routeMatcher
 
@@ -809,7 +811,7 @@ See ["Intercepted responses"][res] for more details on the `res` object yielded 
 
 ## Glob Pattern Matching URLs
 
-Providing an exact URL to match can be too restrictive. For example, what if you wanted to run your tests on a different host? 
+Providing an exact URL to match can be too restrictive. For example, what if you wanted to run your tests on a different host?
 
 ```js
 // match any request that exactly matches the URL
@@ -818,6 +820,7 @@ cy.intercept('https://prod.cypress.io/users')
 // ...but not this: https://staging.cypress.io/users
 // ...or this: http://localhost/users
 ```
+
 Glob pattern matching provides the necessary flexibility:
 
 ```js
@@ -831,8 +834,8 @@ cy.intercept('**/users?_limit=+(3|5)')
 // matches all of these:
 //   https://prod.cypress.io/users?_limit=3
 //   http://localhost/users?_limit=5
-
 ```
+
 Under the hood, Cypress uses the [minimatch]() library for glob matching and provides access to it via the `Cypress` global.
 This enables you to test your pattern in the Test Runner browser console.
 
@@ -840,18 +843,18 @@ You can invoke the `Cypress.minimatch` with just two arguments - the URL (string
 
 ```javascript
 // executed in the Test Runner browser console:
-Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)') 
+Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)')
 // true
-Cypress.minimatch('http://localhost/users?_limit=5', '**/users?_limit=+(3|5)') 
+Cypress.minimatch('http://localhost/users?_limit=5', '**/users?_limit=+(3|5)')
 // true
-Cypress.minimatch('http://localhost/users?_limit=7', '**/users?_limit=+(3|5)') 
+Cypress.minimatch('http://localhost/users?_limit=7', '**/users?_limit=+(3|5)')
 // false
 ```
 
 You can also pass in options (object) as the third argument, one of which is `debug` which if set to `true`, will yield verbose output that could help you understand why your pattern isn't working as you expect:
 
-```js
-Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)', { debug: true }) 
+````js
+Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)', { debug: true })
 // true (plus debug messages)
 
 
@@ -884,7 +887,7 @@ cy.intercept('/url', (req) => {
     // but before the response is sent to the browser
   })
 })
-```
+````
 
 ### Intercepted Response object properties
 
