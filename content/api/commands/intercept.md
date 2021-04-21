@@ -2,17 +2,18 @@
 title: intercept
 ---
 
-<!-- 
-TODO DX-79 Refactor introduction to concisely highlight the the key capabilities of the API
-- Modifying HTTP requests and responses, dynamically and statically.
-- Ability to intercept all network request types: Fetch API, page loads, XMLHttpRequests, resource loads, etc.
-- Common applications of the API:
-- Creating error scenarios to for testing
-- Slowing network traffic for testing user experience 
-- etc.. 
--->
+Cypress intercepts requests at the network layer including `XMLHttpRequest` (XHR) and `fetch`. Use `cy.intercept()` to manage the behavior of these requests, including:
 
-Use `cy.intercept()` to manage the behavior of HTTP requests at the network layer.
+* Waiting on HTTP requests to complete before executing commands
+* Making assertions and modifying 
+  * the request made by your front-end application 
+  * the response from your back-end service
+* Mocking all or some of your backend API by stubbing out responses
+* Simulating different client connections by throttling data transfer rate
+* Simulating back-end service bottlenecks by adding a delay to the response
+* Simulating a 3rd-party API outage by forcing a network error
+
+Be sure to read the [Network Requests](/guides/guides/network-requests) guide.
 
 ## Syntax
 
