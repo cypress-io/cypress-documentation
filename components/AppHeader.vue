@@ -77,7 +77,7 @@ export default {
       :class="isMenuOpen ? 'h-full' : ''"
       class="w-full bg-gray-800 fixed top-0 left-0 overflow-y-auto z-20"
     >
-      <Banner :v-if="Boolean(banner)" :banner="banner"></Banner>
+      <Banner v-if="Boolean(banner)" :banner="banner"></Banner>
       <div class="mx-auto px-2 sm:px-4 lg:px-8">
         <div class="relative flex items-center justify-between h-16">
           <div class="flex items-center px-2 lg:px-0">

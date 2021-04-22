@@ -1,4 +1,4 @@
-import { client } from '../../plugins/sanity-client'
+import { getClient } from '../../plugins/sanity-client'
 
 const bannerFields = [
   'message',
@@ -30,6 +30,7 @@ const once = (fn) => {
 }
 
 export const fetchBanner = once(async () => {
+  const client = getClient()
   const results = await client.fetch(query)
 
   if (!results.length) {

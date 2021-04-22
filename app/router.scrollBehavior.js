@@ -110,7 +110,7 @@ export default function scrollBehavior(to, from, savedPosition) {
           if (ele) {
             const banner = document.getElementById('banner')
             const TOP_HEADER_OFFSET = 80
-            const BANNER_OFFSET = 64
+            const BANNER_OFFSET = 48
             // scroll to anchor by returning the selector
             const HEADER_OFFSET = banner
               ? TOP_HEADER_OFFSET + BANNER_OFFSET
