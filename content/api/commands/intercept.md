@@ -95,6 +95,8 @@ The `routeHandler` function accepts the matched request as its argument which ha
 
 If you only need to modify the response you can pass in a [`StaticResponse`][staticresponse] object (to define the body, headers, status code and more). And if it's specifically the response _body_ you're wanting to [stub](#Stubbing-a-response) you can simply pass that in as plain JSON instead.
 
+See examples in [`routeHandler`](#routeHandler)
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `cy.intercept()` yields `null`.
