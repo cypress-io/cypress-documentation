@@ -865,42 +865,15 @@ A `StaticResponse` represents a stubbed response to an HTTP request. You can sup
 
 The following properties are available on `StaticResponse`. All properties are optional:
 
-```ts
-{
-  /**
-   * Serve a fixture as the response body.
-   */
-  fixture?: string
-  /**
-   * Serve a static string/JSON object as the response body.
-   */
-  body?: string | object | object[]
-  /**
-   * HTTP headers to accompany the response.
-   * @default {}
-   */
-  headers?: { [key: string]: string }
-  /**
-   * The HTTP status code to send.
-   * @default 200
-   */
-  statusCode?: number
-  /**
-   * If 'forceNetworkError' is truthy, Cypress will destroy the browser connection
-   * and send no response. Useful for simulating a server that is not reachable.
-   * Must not be set in combination with other options.
-   */
-  forceNetworkError?: boolean
-  /**
-   * Milliseconds to delay before the response is sent.
-   */
-  delay?: number
-  /**
-   * Kilobits per second to send 'body'.
-   */
-  throttleKbps?: number
-}
-```
+| Option            | Description                                            |
+| ----------------- | ------------------------------------------------------ |
+| fixture           | Serve a fixture as the HTTP response body              |
+| body              | Serve a static string/JSON object as the response body |
+| headers           | HTTP response headers                                  |
+| statusCode        | HTTP response status code                              |
+| forceNetworkError | Force an error by destroying the browser session       |
+| delay             | Minimum network latency/delay (milliseconds)           |
+| throttleKbps      | Maximum network throughput (kilobits/second)           |
 
 See ["Stubbing a response with a `StaticResponse` object"](#With-a-StaticResponse-object) for examples of stubbing with `cy.intercept()`.
 
