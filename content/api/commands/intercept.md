@@ -59,16 +59,15 @@ cy.intercept('/users/**')
 
 Specify the URL to match. See [Matching `url`](#match-url) for examples.
 
-#### **<Icon name="angle-right"></Icon> method** **_(`string`)_**
+#### **<Icon name="angle-right"></Icon> method** **_(String)_**
 
-Specify the HTTP method to match on.
+Specify the [HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`, etc.) to match on.
 
-```ts
-cy.intercept('POST', 'http://example.com/widgets', {
-  statusCode: 200,
-  body: 'it worked!',
-})
-```
+<Alert type="bolt">
+
+If no `method` is provided, Cypress will match _all_ HTTP methods (`*` wildcard) by default.
+
+</Alert>
 
 #### **<Icon name="angle-right"></Icon> routeMatcher** **_(`RouteMatcher`)_**
 
@@ -198,6 +197,24 @@ cy.intercept('/users?_limit=+(3|5)')
 
 // match any request that satisfies a regex pattern
 cy.intercept(/\/users\?_limit=(3|5)$/)
+```
+
+### Matching `method`
+
+<Alert type="warning">
+
+If you don't pass in a [`method` argument][arg-method], then all HTTP methods (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`, etc.) will match.
+
+</Alert>
+
+```js
+cy.intercept('/users')
+// matches this: GET http://localhost/users
+// ...and this, too: POST http://localhost/users
+
+cy.intercept('GET', '/users')
+// matches this: GET http://localhost/users
+// ...but not this: POST http://localhost/users
 ```
 
 ### Waiting on a request
