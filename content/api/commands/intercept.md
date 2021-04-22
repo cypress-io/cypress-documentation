@@ -227,7 +227,7 @@ cy.wait('@someRoute').then((interception) => {
 })
 ```
 
-You can chain [`.its()`](/api/commands/its) and [`.should()`](/api/commands/should) to assert against request/response cycles:
+##### You can chain [`.its()`](/api/commands/its) and [`.should()`](/api/commands/should) to assert against request/response cycles:
 
 ```js
 // assert that a request to this route was made with a body that included 'user'
@@ -280,7 +280,7 @@ const staticResponse = {
 cy.intercept('/projects', staticResponse)
 ```
 
-For example, to stub a response with a JSON body:
+##### Stub a response with a JSON body
 
 ```js
 cy.intercept('/projects', {
@@ -288,7 +288,7 @@ cy.intercept('/projects', {
 })
 ```
 
-Or to stub headers, status code, and body all at once:
+##### Stub headers, status code, and body all at once
 
 ```js
 cy.intercept('/not-found', {
@@ -334,6 +334,8 @@ cy.intercept('/req-headers', (req) => {
 ```
 
 **Note:** the new header will NOT be shown in the browser's Network tab, as the request has already left the browser. You can still confirm the header was added by waiting on the intercept as shown below:
+
+##### Waiting on the intercept
 
 ```js
 cy.intercept('/req-headers', (req) => {
@@ -605,7 +607,7 @@ cy.intercept('/billing', (req) => {
 
 Instead of passing a plain object or string to `req.reply()`, you can also pass a [`StaticResponse`][staticresponse] object. With a [`StaticResponse`][staticresponse], you can force a network error, delay/throttle the response, send a fixture, and more.
 
-For example, the following code serves a dynamically chosen fixture with a delay of 500ms:
+#### Serve a dynamically chosen fixture with a delay of 500ms
 
 ```js
 cy.intercept('/api/users/*', async (req) => {
@@ -620,6 +622,8 @@ cy.intercept('/api/users/*', async (req) => {
 
 See the [`StaticResponse` documentation][staticresponse] for more information on stubbing responses in this manner.
 
+#### `req.reply()` shorthand
+
 `req.reply()` also supports shorthand, similar to [`res.send()`][res-send], to avoid having to specify a `StaticResponse` object:
 
 ```js
@@ -627,6 +631,8 @@ req.reply(body) // equivalent to `req.reply({ body })`
 req.reply(body, headers) // equivalent to `req.reply({ body, headers })`
 req.reply(statusCode, body, headers) // equivalent to `req.reply({ statusCode, body, headers})`
 ```
+
+#### Convenience functions
 
 There are also two convenience functions available on `req`:
 
@@ -774,6 +780,8 @@ cy.intercept('/notification', (req) => {
 
 See the [`StaticResponse` documentation][staticresponse] for more information on the format.
 
+#### `res.send()` shorthand
+
 `res.send()` also supports shorthand, similar to [`req.reply()`][req-reply], to avoid having to specify a `StaticResponse` object:
 
 ```js
@@ -781,6 +789,8 @@ res.send(body) // equivalent to `res.send({ body })`
 res.send(body, headers) // equivalent to `res.send({ body, headers })`
 res.send(statusCode, body, headers) // equivalent to `res.send({ statusCode, body, headers})`
 ```
+
+#### Convenience functions
 
 There are also two convenience functions available on `res`:
 
@@ -890,6 +900,8 @@ cy.intercept('/users?_limit=+(3|5)')
 //   http://localhost/users?_limit=5
 ```
 
+### Cypress.minimatch
+
 Under the hood, Cypress uses the [minimatch](/api/utilities/minimatch) library for glob matching and provides access to it via the `Cypress` global.
 This enables you to test your pattern in the Test Runner browser console.
 
@@ -904,6 +916,8 @@ Cypress.minimatch('http://localhost/users?_limit=5', '/users?_limit=+(3|5)')
 Cypress.minimatch('http://localhost/users?_limit=7', '/users?_limit=+(3|5)')
 // false
 ```
+
+#### minimatch options
 
 You can also pass in options (`object`) as the third argument, one of which is `debug` which if set to `true`, will yield verbose output that could help you understand why your pattern isn't working as you expect:
 
@@ -939,7 +953,7 @@ This is useful against GraphQL endpoints to wait for specific Queries and Mutati
 
 Given that the `operationName` property is optional in GraphQL requests, we can `alias` with or without this property.
 
-With `operationName` property:
+##### With `operationName` property
 
 ```js
 cy.intercept('POST', '/graphql', (req) => {
@@ -963,7 +977,7 @@ cy.intercept('POST', '/graphql', (req) => {
 cy.wait('@gqlCreatePostMutation')
 ```
 
-Without `operationName` property:
+##### Without `operationName` property
 
 ```js
 cy.intercept('POST', '/graphql', (req) => {
