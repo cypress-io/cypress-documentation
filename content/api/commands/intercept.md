@@ -1032,3 +1032,4 @@ The intention of `cy.request()` is to be used for checking endpoints on an actua
 [res-send]: #Ending-the-response-with-res-send
 [match-url]: #Matching-url
 [glob-match-url]: #Glob-Pattern-Matching-URLs
+[arg-method]: #method-String
