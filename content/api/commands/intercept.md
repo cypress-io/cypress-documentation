@@ -1023,6 +1023,57 @@ Once the HTTP response is received from the upstream server, the following steps
    - If a Promise is returned, await it.
 9. End the response phase.
 
+## Glob Pattern Matching URLs
+
+When [matching a URL][match-url], providing an exact URL to match can be too restrictive. For example, what if you wanted to run your tests on a different host?
+
+```js
+// match any request that exactly matches the URL
+cy.intercept('https://prod.cypress.io/users')
+// matches this: https://prod.cypress.io/users
+// ...but not this: https://staging.cypress.io/users
+// ...or this: http://localhost/users
+```
+
+Glob pattern matching provides the necessary flexibility:
+
+```js
+cy.intercept('/users')
+// matches all of these:
+//   https://prod.cypress.io/users
+//   https://staging.cypress.io/users
+//   http://localhost/users
+
+cy.intercept('/users?_limit=+(3|5)')
+// matches all of these:
+//   https://prod.cypress.io/users?_limit=3
+//   http://localhost/users?_limit=5
+```
+
+Under the hood, Cypress uses the [minimatch](/api/utilities/minimatch) library for glob matching and provides access to it via the `Cypress` global.
+This enables you to test your pattern in the Test Runner browser console.
+
+You can invoke the `Cypress.minimatch` with just two arguments - the URL (`string`) and the pattern (`string`), respectively - and if it yields `true`, then you have a match!
+
+```javascript
+// executed in the Test Runner browser console:
+Cypress.minimatch('http://localhost/users?_limit=3', '/users?_limit=+(3|5)')
+// true
+Cypress.minimatch('http://localhost/users?_limit=5', '/users?_limit=+(3|5)')
+// true
+Cypress.minimatch('http://localhost/users?_limit=7', '/users?_limit=+(3|5)')
+// false
+```
+
+You can also pass in options (`object`) as the third argument, one of which is `debug` which if set to `true`, will yield verbose output that could help you understand why your pattern isn't working as you expect:
+
+```js
+Cypress.minimatch('http://localhost/users?_limit=3', '/users?_limit=+(3|5)', {
+  debug: true,
+})
+// true (plus debug messages)
+```
+
 ## Comparison to `cy.route()`
 
 Unlike [cy.route()](/api/commands/route), `cy.intercept()`:
@@ -1083,3 +1134,5 @@ The intention of `cy.request()` is to be used for checking endpoints on an actua
 [req-reply]: #Providing-a-stub-response-with-req-reply
 [res]: #Intercepted-responses
 [res-send]: #Ending-the-response-with-res-send
+[match-url]: #Matching-URL
+[glob-match-url]: #Glob-Pattern-Matching-URLs
