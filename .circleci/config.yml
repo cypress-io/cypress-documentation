@@ -79,6 +79,13 @@ jobs:
       - run:
           name: Docsearch Scraper
           command: node ./cy_scripts/scrape.js
+  
+  publish-scheduled-sanity-content:
+    executor: node-executor
+    steps:
+      - run:
+          name: Check for scheduled sanity.io content to publish and invoke Netlify build hook if necessary
+          command: node ./scripts/sanity/publishContent.js
 
 workflows:
   version: 2
@@ -141,3 +148,15 @@ workflows:
                 - master
     jobs:
       - broken-link-check-prod
+
+   sanity-scheduled-content-check:
+      triggers:
+        - schedule:
+            cron: "0 0 0/12 * * ?"
+            filters:
+              branches:
+                only:
+                  - master
+    
+    jobs:
+      - publish-scheduled-sanity-content

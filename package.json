@@ -43,7 +43,6 @@
     "prism-themes": "^1.4.0",
     "remark-directive": "^1.0.1",
     "replace-in-file": "^6.2.0",
-    "sanity-blocks-vue-component": "^0.1.0",
     "unist-util-visit": "^2.0.3",
     "vue-scrollactive": "^0.9.3",
     "yamljs": "^0.3.0"
