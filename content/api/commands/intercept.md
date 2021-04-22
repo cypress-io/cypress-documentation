@@ -2,22 +2,22 @@
 title: intercept
 ---
 
-Cypress intercepts requests at the network layer including `XMLHttpRequest` (XHR) and `fetch`. Use `cy.intercept()` to manage the behavior of these requests, including:
+Cypress intercepts requests at the network layer including `XMLHttpRequest` (XHR) and `fetch`. Use `cy.intercept()` to manage the behavior of these intercepted requests, including:
 
-- Waiting on HTTP requests to complete before executing commands
-- Making assertions and modifying
-  - the request made by your front-end application
-  - the response from your back-end service
-- Mocking all or some of your backend API by stubbing out responses
-- Simulating different client connections by throttling data transfer rate
-- Simulating back-end service bottlenecks by adding a delay to the response
-- Simulating a 3rd-party API outage by forcing a network error
+- Waiting on HTTP requests to complete before executing commands.
+- Making assertions and modifying (statically or dynamically):
+  - the request made by your front-end application.
+  - the response from your back-end service.
+- Mocking all or some of your backend API by stubbing out responses.
+- Simulating different client connections by throttling data transfer rate.
+- Simulating back-end service bottlenecks by adding a delay to the response.
+- Simulating a 3rd-party API outage by forcing a network error.
 
-<Alert>
-    `cy.route` was replaced by `cy.intercept`
+<Alert type="warning">
+
+    `cy.route` was replaced by `cy.intercept` in Version 6.0.0. See [Comparison to cy.route](#Comparison-to-cy-route)
+
 </Alert>
-
-<!-- TODO add a blurb about the cy.route comparison -->
 
 ## Syntax and Usage
 
