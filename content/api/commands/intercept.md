@@ -139,6 +139,27 @@ cy.intercept('GET', '/users')
 // ...but not this: POST http://localhost/users
 ```
 
+### Aliasing a Route
+
+While `cy.intercept` doesn't yield anything, you can chain [`.as`](/api/commands/as) to it to create an [alias](/guides/core-concepts/variables-and-aliases#Aliases):
+
+```js
+cy.intercept('GET', '/users').as('getAllUsers')
+cy.intercept('POST', '/users').as('createUser')
+```
+
+<Alert type="info">
+
+For aliasing requests with GraphQL, see [Aliasing individual GraphQL requests](#Aliasing-individual-GraphQL-requests).
+
+</Alert>
+
+<Alert type="info">
+
+`cy.intercept` can be used to passively listen for matching routes and apply aliases to them without manipulating the request or its response in any way. As you'll see, this alone is powerful as it allows you to wait for these requests, resulting in more reliable tests.
+
+</Alert>
+
 ### Waiting on a request
 
 Use [cy.wait()](/api/commands/wait) with `cy.intercept()` aliases to wait for the request/response cycle to complete.
