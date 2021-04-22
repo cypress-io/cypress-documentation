@@ -19,16 +19,39 @@ Cypress intercepts requests at the network layer including `XMLHttpRequest` (XHR
 
 </Alert>
 
-## Usage
+## Syntax and Usage
 
-```ts
-cy.intercept(url, routeHandler?)
-cy.intercept(method, url, routeHandler?)
-cy.intercept(routeMatcher, routeHandler?)
-cy.intercept(url, routeMatcher, routeHandler)
+#### Without `routeHandler` (Spying Only)
+
+```js
+cy.intercept(url)
+cy.intercept(method, url)
+cy.intercept(routeMatcher)
+cy.intercept(url, routeMatcher)
+cy.intercept(method, url, routeMatcher)
 ```
 
-**Note:** all intercepts are automatically cleared before every test.
+#### With `routeHandler` (Request/Response Modification and Spying)
+
+```js
+cy.intercept(url, routeHandler)
+cy.intercept(method, url, routeHandler)
+cy.intercept(routeMatcher, routeHandler)
+cy.intercept(url, routeMatcher, routeHandler)
+cy.intercept(method, url, routeMatcher, routeHandler)
+```
+
+<Alert type="warning">
+
+All intercepts are automatically cleared before every test.
+
+</Alert>
+
+**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+
+```js
+cy.intercept('/users/**')
+```
 
 ### Arguments
 
