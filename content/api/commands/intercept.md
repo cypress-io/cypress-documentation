@@ -2,25 +2,22 @@
 title: intercept
 ---
 
-Use `cy.intercept()` to manage the behavior of HTTP requests at the network layer.
+Cypress intercepts requests at the network layer including `XMLHttpRequest` (XHR) and `fetch`. Use `cy.intercept` to manage the behavior of these intercepted requests, including:
 
-With `cy.intercept()`, you can:
+- Waiting on HTTP requests to complete before executing commands.
+- Making assertions and modifying (statically or dynamically):
+  - the request made by your front-end application.
+  - the response from your back-end service.
+- Mocking all or some of your backend API by stubbing out responses.
+- Simulating different client connections by throttling data transfer rate.
+- Simulating back-end service bottlenecks by adding a delay to the response.
+- Simulating a 3rd-party API outage by forcing a network error.
 
-- stub or spy on any type of HTTP request.
-  - If `cy.intercept()` provides a response object, or a fixture, or calls `req.reply()` then the request will NOT go to the server, and instead will be mocked from the test.
-  - Otherwise the request will go out to the server, and the test spies on the network call. The spying intercept can even modify the real response from the server before it is returned to the web application under test.
-- [modify an HTTP request's body, headers, and URL](#Intercepting-a-request) before it is sent to the destination server.
-- stub the response to an HTTP request, either dynamically or statically.
-- [modify real HTTP responses](#Intercepting-a-response), changing the body, headers, or HTTP status code before they are received by the browser.
-- and much more - `cy.intercept()` gives full access to all HTTP requests at all stages.
+<Alert type="warning">
 
-## Comparison to `cy.route()`
+`cy.route` was replaced by `cy.intercept` in Version 6.0.0. See [Comparison to `cy.route`](#Comparison-to-cy-route).
 
-Unlike [cy.route()](/api/commands/route), `cy.intercept()`:
-
-- can intercept all types of network requests including Fetch API, page loads, XMLHttpRequests, resource loads, etc.
-- does not require calling [cy.server()](/api/commands/server) before use - in fact, `cy.server()` does not influence `cy.intercept()` at all.
-- does not have method set to `GET` by default, but intercepts `*` methods.
+</Alert>
 
 ## Usage
 
@@ -1002,6 +999,14 @@ Once the HTTP response is received from the upstream server, the following steps
 8. For each `after:response` listener (if any), call it with the [`res`][res] object (minus `res.send`)
    - If a Promise is returned, await it.
 9. End the response phase.
+
+## Comparison to `cy.route()`
+
+Unlike [cy.route()](/api/commands/route), `cy.intercept()`:
+
+- can intercept all types of network requests including Fetch API, page loads, XMLHttpRequests, resource loads, etc.
+- does not require calling [cy.server()](/api/commands/server) before use - in fact, `cy.server()` does not influence `cy.intercept()` at all.
+- does not have method set to `GET` by default, but intercepts `*` methods.
 
 ## History
 
