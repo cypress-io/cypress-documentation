@@ -149,13 +149,13 @@ workflows:
     jobs:
       - broken-link-check-prod
 
-   sanity-scheduled-content-check:
-      triggers:
-        - schedule:
-            cron: "0 0 0/12 * * ?"
-            filters:
-              branches:
-                only:
-                  - master
+  sanity-scheduled-content-check:
+    triggers:
+      - schedule:
+          cron: "0 0 0/12 * * ?"
+          filters:
+            branches:
+              only:
+                - master
     jobs:
-      - publish-scheduled-sanity-content
+        - publish-scheduled-sanity-content
