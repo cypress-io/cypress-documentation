@@ -1,6 +1,14 @@
 {
   "courses": [
     {
+      "title": "Testing Automation with Cypress - Advanced",
+      "url": "https://www.udemy.com/course/testing-automation-with-cypress-advanced",
+      "author": "Walmyr Lima e Silva Filho",
+      "authorTwitter": "walmyrlimaesilv",
+      "sourceName": "Udemy",
+      "sourceUrl": "https://udemy.com"
+    },
+    {
       "title": "Testes Automatizados com Cypress - Avançado",
       "url": "https://www.udemy.com/course/testes-automatizados-com-cypress-avancado",
       "author": "Walmyr Lima e Silva Filho",
