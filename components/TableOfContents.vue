@@ -61,7 +61,7 @@ export default {
   },
   data() {
     const DEFAULT_OFFSET = 100
-    const BANNER_OFFSET = 64
+    const BANNER_OFFSET = 48
 
     return {
       offset: this.hasBanner ? DEFAULT_OFFSET + BANNER_OFFSET : DEFAULT_OFFSET,

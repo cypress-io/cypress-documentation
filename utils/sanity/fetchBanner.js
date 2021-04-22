@@ -9,7 +9,7 @@ const bannerFields = [
 ]
 
 const NOW = new Date()
-const query = `*[_type == "banner" && publishedAt <= "${NOW.toISOString()}"] {${bannerFields.join(
+const query = `*[_type == "banner" && publishedAt <= "${NOW.toISOString()}" && unpublishedAt > "${NOW.toISOString()}"] {${bannerFields.join(
   ', '
 )}}`
 
