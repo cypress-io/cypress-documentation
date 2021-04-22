@@ -75,63 +75,19 @@ If no `method` is provided, Cypress will match _all_ HTTP methods (`*` wildcard)
 
 All properties are optional. All properties that are set must match for the route to handle a request. If a `string` is passed to any property, it will be glob-matched against the request using [`minimatch`](https://github.com/isaacs/minimatch).The available `routeMatcher` properties are listed below:
 
-```ts
-{
-  /**
-   * Match against the username and password used in HTTP Basic authentication.
-   */
-  auth?: { username: string | RegExp, password: string | RegExp }
-  /**
-   * Match against HTTP headers on the request.
-   */
-  headers?: {
-    [name: string]: string | RegExp
-  }
-  /**
-   * Match against the requested HTTP hostname.
-   */
-  hostname?: string | RegExp
-  /**
-   * If 'true', only HTTPS requests will be matched.
-   * If 'false', only HTTP requests will be matched.
-   */
-  https?: boolean
-  /**
-   * Match against the request's HTTP method.
-   * @default '*'
-   */
-  method?: string | RegExp
-  /**
-   * If `true`, this will pass the request on to the next `RouteMatcher` after the request handler completes.
-   * Can only be used with a dynamic request handler.
-   * @default false
-   */
-  middleware?: boolean
-  /**
-   * Match on request path after the hostname, including query params.
-   */
-  path?: string | RegExp
-  /**
-   * Matches like 'path', but without query params.
-   */
-  pathname?: string | RegExp
-  /**
-   * Match based on requested port, or pass an array of ports
-   * to match against any in that array.
-   */
-  port?: number | number[]
-  /**
-   * Match on parsed querystring parameters.
-   */
-  query?: {
-    [key: string]: string | RegExp
-  }
-  /**
-   * Match against the full request URL.
-   */
-  url?: string | RegExp
-}
-```
+| Option     | Description                                                                                     |
+| ---------- | ----------------------------------------------------------------------------------------------- |
+| auth       | `username` and `password` used in HTTP Basic Authentication (`object`)                          |
+| headers    | HTTP request headers (`object`)                                                                 |
+| hostname   | HTTP request hostname                                                                           |
+| https      | `true`: only secure (https://) requests, `false`: only insecure (http://) requests              |
+| method     | HTTP request method (matches all by default)                                                    |
+| middleware | `true`: match route first and in defined order, `false`: match route in reverse order (default) |
+| path       | HTTP request path after the hostname, including query parameters                                |
+| pathname   | Like `path`, but without query parameters                                                       |
+| port       | HTTP request port(s) (`number` or `Array`)                                                      |
+| query      | Parsed query string (`object`)                                                                  |
+| url        | Full HTTP request URL                                                                           |
 
 `routeMatcher` usage examples:
 
