@@ -157,6 +157,5 @@ workflows:
               branches:
                 only:
                   - master
-    
     jobs:
       - publish-scheduled-sanity-content
