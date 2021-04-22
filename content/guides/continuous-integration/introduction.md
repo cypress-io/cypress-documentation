@@ -9,7 +9,7 @@ title: Introduction
 - How to run Cypress tests in Continuous Integration
 - How to configure Cypress in various CI Providers
 - How to record tests to the Cypress Dashboard
-- How to run tests in parallel on CI
+- How to run tests in parallel in CI
 
 </Alert>
 
@@ -130,14 +130,14 @@ When working with local `https` in webpack, set an environment variable to allow
 
 ### Record tests
 
-Cypress can record your tests and make the results available in the [Cypress Dashboard](/guides/dashboard/introduction), which is a service that gives you access to recorded tests - typically when running Cypress tests from your [CI provider](/guides/continuous-integration/introduction). The Dashboard provides you insight into what happened when your tests ran.
+Cypress can record your tests and make the results available in the [Cypress Dashboard](/guides/dashboard/introduction). This gives you access to your recorded tests from your [CI provider](/guides/continuous-integration/introduction) &mdash; providing you with insight into what happened when your tests ran.
 
 #### Recording tests allow you to:
 
 - See the number of failed, pending and passing tests.
 - Get the entire stack trace of failed tests.
 - View screenshots taken when tests fail and when using [`cy.screenshot()`](/api/commands/screenshot).
-- Watch a video of your entire test run or a clip at the point of test failure.
+- Watch a video of your entire test run or a clip at the point of failure.
 - See which machines ran each test when [parallelized](/guides/guides/parallelization).
 
 #### To record tests:
@@ -213,7 +213,7 @@ script:
   - $(npm bin)/cypress run --record
 ```
 
-Caching folders with npm modules saves a lot of time after the first build.
+_Caching folders with npm modules saves a lot of time after the first build._
 
 ### CircleCI
 
@@ -235,7 +235,7 @@ Check out the full <Icon name="github"></Icon> [RWA Circle CI configuration](htt
 
 #### Example CircleCI Orb
 
-The Cypress CircleCI Orb is a piece of configuration set in your `.circleci/config.yml` file to correctly install, cache and run Cypress with very little effort.
+The Cypress CircleCI Orb is a piece of configuration set in your `.circleci/config.yml` file to correctly install, cache and run Cypress with little effort.
 
 Full documentation can be found at the [`cypress-io/circleci-orb`](https://github.com/cypress-io/circleci-orb) repo.
 
@@ -276,9 +276,9 @@ workflows:
           start: 'npm start' # start server before running tests
 ```
 
-In all cases, you are using `run` and `install` job definitions that Cypress provides inside the orb. Using the orb brings simplicity and static checks of parameters to CircleCI configuration.
+In all cases, you are using `run` and `install` job definitions that Cypress provides inside the orb. Using the orb brings simplicity and staticly checks the parameters of the CircleCI configuration.
 
-You can find multiple examples at [our orb examples page](https://github.com/cypress-io/circleci-orb/blob/master/docs/examples.md) and in the [cypress-example-circleci-orb](https://github.com/cypress-io/cypress-example-circleci-orb) project.
+You can find multiple examples at our [orb examples page](https://github.com/cypress-io/circleci-orb/blob/master/docs/examples.md) and in the [cypress-example-circleci-orb](https://github.com/cypress-io/cypress-example-circleci-orb) project.
 
 #### Example `.circleci/config.yml` v2 config file
 
@@ -344,7 +344,7 @@ Find the complete CircleCI v2 example with caching and artifact upload in the [c
 
 #### RAM Disk
 
-You can speed up Cypress test jobs by using CircleCI RAM disk, read [Start CircleCI Machines Faster by Using RAM Disk](https://glebbahmutov.com/blog/circle-ram-disk/) blog post.
+You can speed up Cypress test jobs by using CircleCI RAM disk, read the [Start CircleCI Machines Faster by Using RAM Disk](https://glebbahmutov.com/blog/circle-ram-disk/) blog post.
 
 ### AWS Amplify
 
@@ -542,11 +542,11 @@ Read our tutorials [Triple Tested Static Site Deployed to GitHub Pages Using Git
 
 ### Netlify
 
-We recommend using our official [netlify-plugin-cypress](https://github.com/cypress-io/netlify-plugin-cypress) to execute end-to-end tests before and after deployment to Netlify platform. Read our tutorials [Test Sites Deployed To Netlify Using netlify-plugin-cypress](https://glebbahmutov.com/blog/test-netlify/) and [Run Cypress Tests on Netlify Using a Single Line](https://cypress.io/blog/2020/03/30/run-cypress-tests-on-netlify-using-a-single-line/).
+We recommend using our official [netlify-plugin-cypress](https://github.com/cypress-io/netlify-plugin-cypress) to execute end-to-end tests before and after deployment to the Netlify platform. Read our tutorials [Test Sites Deployed To Netlify Using netlify-plugin-cypress](https://glebbahmutov.com/blog/test-netlify/) and [Run Cypress Tests on Netlify Using a Single Line](https://cypress.io/blog/2020/03/30/run-cypress-tests-on-netlify-using-a-single-line/).
 
 ### Docker
 
-We have [created](https://github.com/cypress-io/cypress-docker-images) an official [cypress/base](https://hub.docker.com/r/cypress/base/) container with all of the required dependencies installed. You can add Cypress and go! We are also adding images with browsers pre-installed under [cypress/browsers](https://hub.docker.com/r/cypress/browsers/) name. A typical Dockerfile would look like this:
+We have [created](https://github.com/cypress-io/cypress-docker-images) an official [cypress/base](https://hub.docker.com/r/cypress/base/) container with all of the required dependencies installed. We are also adding images with browsers pre-installed under the [cypress/browsers](https://hub.docker.com/r/cypress/browsers/) name. A typical Dockerfile would look like this:
 
 ```text
 FROM cypress/base
@@ -556,7 +556,7 @@ RUN $(npm bin)/cypress run
 
 <Alert type="warning">
 
-Mounting a project directory with an existing `node_modules` into a `cypress/base` docker image **will not work**:
+Mounting a project directory with an existing `node_modules` directory into a `cypress/base` docker image **will not work**:
 
 ```shell
 docker run -it -v /app:/app cypress/base:10 bash -c 'cypress run'
@@ -569,13 +569,13 @@ Instead, you should build a docker container for your project's version of cypre
 
 #### Docker images & CI examples
 
-See our [examples](/examples/examples/docker) for additional information on our maintained images and configurations on several CI providers.
+See our [examples](/examples/examples/docker) for additional information on our maintained images and configurations for several CI providers.
 
 ## Advanced setup
 
 ### Machine requirements
 
-Hardware requirements to run Cypress depend how much memory the browser, the application under test, and the server (if running it locally) need to run the tests without crashing.
+Hardware requirements to run Cypress depend on how much memory the browser, the application under test and the server (if running locally) need to run the tests without crashing.
 
 **Some signs that your machine may not have enough CPU or memory to run Cypress:**
 
@@ -609,10 +609,14 @@ node -p 'os.cpus()'
 
 **Example projects and the machine configurations used to run them on CI:**
 
-- [Cypress Documentation](https://github.com/cypress-io/cypress-documentation) and [Real World App](https://github.com/cypress-io/cypress-realworld-app) projects run tests on the default CircleCI machine using the [Docker executor](https://circleci.com/docs/2.0/executor-types/) on the [default medium size machine](https://circleci.com/docs/2.0/configuration-reference/#resource_class) with 2 vCPUs and 4GB of RAM. `cypress info` reports `System Memory: 73.8 GB free 25 GB` with CPUs reported as `Intel(R) Xeon(R) Platinum 8124M CPU @ 3.00GHz`. Note that the free memory varies on CircleCI, typically we see values anywhere from 6GB to 30GB.
-- [Real World App](https://github.com/cypress-io/cypress-realworld-app) also executes its tests using [GitHub Actions](https://github.com/cypress-io/github-action) with the [default hosted runner](https://docs.github.com/en/actions/reference/specifications-for-github-hosted-runners) with 2 vCPUs and 7GB of RAM. `cypress info` reports `System Memory: 7.29 GB free 632 MB` with CPUs reported as `Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz`.
+- The [Cypress Documentation](https://github.com/cypress-io/cypress-documentation) and [Real World App](https://github.com/cypress-io/cypress-realworld-app) projects run tests on the default CircleCI machine using the [Docker executor](https://circleci.com/docs/2.0/executor-types/) on the [default medium size machine](https://circleci.com/docs/2.0/configuration-reference/#resource_class) with 2 vCPUs and 4GB of RAM. `cypress info` reports `System Memory: 73.8 GB free 25 GB` with CPUs reported as `Intel(R) Xeon(R) Platinum 8124M CPU @ 3.00GHz`. _Note that the free memory varies on CircleCI, typically we see values anywhere from 6GB to 30GB_.
+- The [Real World App](https://github.com/cypress-io/cypress-realworld-app) also executes its tests using [GitHub Actions](https://github.com/cypress-io/github-action) with the [default hosted runner](https://docs.github.com/en/actions/reference/specifications-for-github-hosted-runners) with 2 vCPUs and 7GB of RAM. `cypress info` reports `System Memory: 7.29 GB free 632 MB` with CPUs reported as `Intel(R) Xeon(R) Platinum 8171M CPU @ 2.60GHz`.
+
+<Alert type="info">
 
 **Tip:** if there are problems with longer specs, try splitting them into shorter ones, following [this example](https://glebbahmutov.com/blog/split-spec/).
+
+</Alert>
 
 ### Dependencies
 
@@ -634,7 +638,7 @@ yum install -y xorg-x11-server-Xvfb gtk2-devel gtk3-devel libnotify-devel GConf2
 
 ### Caching
 
-As of [Cypress version 3.0](/guides/references/changelog#3-0-0), Cypress downloads its binary to the global system cache - on linux that is `~/.cache/Cypress`. By ensuring this cache persists across builds you can save minutes off install time by preventing a large binary download.
+As of [Cypress version 3.0](/guides/references/changelog#3-0-0), Cypress downloads its binary to the global system cache &mdash; `~/.cache/Cypress` on linux. _You can save minutes off of install time by ensuring this cache persists across builds_.
 
 #### We recommend users:
 
@@ -650,7 +654,11 @@ As of [Cypress version 3.0](/guides/references/changelog#3-0-0), Cypress downloa
 
 - Make sure you are not restoring the previous cache using lax keys; then the Cypress binaries can "snowball", read [Do Not Let Cypress Cache Snowball on CI](https://glebbahmutov.com/blog/do-not-let-cypress-cache-snowball/).
 
+<Alert type="info">
+
 **Tip:** you can find lots of CI examples with configured caching in our [cypress-example-kitchensink](https://github.com/cypress-io/cypress-example-kitchensink#ci-status) repository.
+
+</Alert>
 
 ### Environment variables
 
@@ -671,7 +679,7 @@ Refer to the [Environment Variables recipe](/guides/references/configuration#Env
 
 **_Record Key_**
 
-If you are [recording your runs](#Record-tests) on a public project, you'll want to protect your Record Key. [Learn why.](/guides/dashboard/projects#Identification)
+If you are [recording your runs](#Record-tests) on a public project, you'll want to protect your [Record Key](/guides/dashboard/projects#Record-key).
 
 Instead of hard coding it into your run command like this:
 
@@ -710,7 +718,7 @@ Under some environment setups (e.g. `docker`/`docker-compose`) if the `.git` dir
 - SHA: `COMMIT_INFO_SHA`
 - Remote: `COMMIT_INFO_REMOTE`
 
-If the commit information is missing in the Dashboard run then [GitHub Integration](/guides/dashboard/github-integration) or other tasks might not work correctly. To see the relevant Cypress debug logs, set the environment variable `DEBUG` on your CI machine and inspect the terminal output to see why the commit information is unavailable.
+If the commit information is missing in the Dashboard, then [GitHub Integration](/guides/dashboard/github-integration) or other tasks might not work correctly. To see the relevant Cypress debug logs, set the environment variable `DEBUG` on your CI machine and inspect the terminal output to see why the commit information is unavailable.
 
 ```shell
 DEBUG=commit-info,cypress:server:record
@@ -741,7 +749,7 @@ Refer to the dedicated [Environment Variables Guide](/guides/guides/environment-
 
 ### Module API
 
-Oftentimes it can be less complex to programmatically control and boot your servers with a Node script.
+Oftentimes, it can be less complex to programmatically control and boot your servers with a Node script.
 
 If you're using our [Module API](/guides/guides/module-api) then you can write a script that boots and then shuts down the server later. As a bonus, you can work with the results and do other things.
 
@@ -839,7 +847,7 @@ NO_COLOR=1 cypress run
 
 ## Workshop
 
-Cypress team has created a full workshop showing how to run Cypress on popular CI providers. Find the workshop at [github.com/cypress-io/cypress-workshop-ci](https://github.com/cypress-io/cypress-workshop-ci).
+The Cypress team has created a full workshop showing how to run Cypress on popular CI providers. You can find the workshop at [github.com/cypress-io/cypress-workshop-ci](https://github.com/cypress-io/cypress-workshop-ci).
 
 ## See also
 
