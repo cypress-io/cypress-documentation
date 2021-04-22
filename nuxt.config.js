@@ -47,11 +47,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [
-    '@/plugins/vue-scrollactive',
-    '@/plugins/sanity-blocks-vue-component',
-    '@/plugins/sanity-client',
-  ],
+  plugins: ['@/plugins/vue-scrollactive', '@/plugins/sanity-client'],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
