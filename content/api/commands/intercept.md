@@ -55,14 +55,9 @@ cy.intercept('/users/**')
 
 ### Arguments
 
-#### **<Icon name="angle-right"></Icon> url** **_(`string | RegExp`)_**
+#### **<Icon name="angle-right"></Icon> url** **_(String, Glob, RegExp)_**
 
-Specify the URL to match. See the examples for [Matching URL](#Matching-URL) to see how URLs are matched.
-
-```ts
-cy.intercept('http://example.com/widgets')
-cy.intercept('http://example.com/widgets', { fixture: 'widgets.json' })
-```
+Specify the URL to match. See [Matching `url`](#match-url) for examples.
 
 #### **<Icon name="angle-right"></Icon> method** **_(`string`)_**
 
@@ -190,64 +185,19 @@ The `routeHandler` defines what will happen with a request if the [routeMatcher]
 
 ## Examples
 
-### Matching URL
+### Matching `url`
 
-You can provide the entire URL to match
+You can provide the exact [URL](#Arguments) to match, but typically pattern-matching is more effective and a glob pattern will likely be the simpler of the two to implement. See [Glob Pattern Matching URLs](#Glob-Pattern-Matching-URLs).
 
 ```js
-// will match any request that exactly matches the URL
-//   matches GET https://prod.cypress.io/users
-//   won't match GET https://staging.cypress.io/users
+// match any request that exactly matches the URL
 cy.intercept('https://prod.cypress.io/users')
-```
 
-You can provide a [`minimatch`](/api/utilities/minimatch) pattern
+// match any request that satisfies a glob pattern
+cy.intercept('/users?_limit=+(3|5)')
 
-```javascript
-// will match any HTTP method to urls that end with 3 or 5
-cy.intercept('**/users?_limit=+(3|5)')
-```
-
-**Tip:** you can evaluate your URL using DevTools console to see if the [`minimatch` pattern](https://www.npmjs.com/package/minimatch) is correct.
-
-```javascript
-// paste into the DevTools console while Cypress is running
-Cypress.minimatch(
-  'https://jsonplaceholder.cypress.io/users?_limit=3',
-  '**/users?_limit=+(3|5)'
-) // true
-
-// print verbose debug information
-Cypress.minimatch(
-  'https://jsonplaceholder.cypress.io/users?_limit=3',
-  '**/users?_limit=+(3|5)',
-  { debug: true }
-) // true + lots of debug messages
-```
-
-You can even add an assertion to the test itself to ensure the URL is matched
-
-```javascript
-// arguments are url and the pattern
-expect(
-  Cypress.minimatch(
-    'https://jsonplaceholder.cypress.io/users?_limit=3',
-    '**/users?_limit=+(3|5)'
-  ),
-  'Minimatch test'
-).to.be.true
-```
-
-For the most powerful matching, provide a regular expression
-
-```javascript
-cy.intercept(/\/users\?_limit=(3|5)$/).as('users')
-cy.get('#load-users').click()
-cy.wait('@users').its('response.body').should('have.length', 3)
-
-// intercepts _limit=5 requests
-cy.get('#load-five-users').click()
-cy.wait('@users').its('response.body').should('have.length', 5)
+// match any request that satisfies a regex pattern
+cy.intercept(/\/users\?_limit=(3|5)$/)
 ```
 
 ### Waiting on a request
@@ -1134,5 +1084,5 @@ The intention of `cy.request()` is to be used for checking endpoints on an actua
 [req-reply]: #Providing-a-stub-response-with-req-reply
 [res]: #Intercepted-responses
 [res-send]: #Ending-the-response-with-res-send
-[match-url]: #Matching-URL
+[match-url]: #Matching-url
 [glob-match-url]: #Glob-Pattern-Matching-URLs
