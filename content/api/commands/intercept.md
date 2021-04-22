@@ -89,40 +89,6 @@ All properties are optional. All properties that are set must match for the rout
 | query      | Parsed query string (`object`)                                                                  |
 | url        | Full HTTP request URL                                                                           |
 
-`routeMatcher` usage examples:
-
-```ts
-cy.intercept({
-  pathname: '/search',
-  query: {
-    q: 'some terms',
-  },
-}).as('searchForTerms')
-// this 'cy.wait' will only resolve once a request is made to '/search'
-// with the query paramater 'q=some+terms'
-cy.wait('@searchForTerms')
-
-cy.intercept(
-  {
-    // this RegExp matches any URL beginning with 'http://api.example.com/widgets'
-    url: /^http:\/\/api\.example\.com\/widgets/,
-    headers: {
-      'x-requested-with': 'exampleClient',
-    },
-  },
-  (req) => {
-    // only requests to URLs starting with 'http://api.example.com/widgets'
-    // having the header 'x-requested-with: exampleClient' will be received
-  }
-})
-
-// in this example, the supplied URL `/users` is merged with the RouteMatcher
-// passed as the second argument
-cy.intercept('/users', { middleware: true }, (req) => {
-  req.headers['authorization'] = `Bearer ${bearerToken}`
-})
-```
-
 #### <Icon name="angle-right"></Icon> routeHandler (<code>string | object | Function | [StaticResponse][staticresponse]</code>)
 
 The `routeHandler` defines what will happen with a request if the [routeMatcher](#routeMatcher-RouteMatcher) matches. It can be used to [statically define a response](#Stubbing-a-response) for matching requests, or a function can be passed to [dynamically intercept the outgoing request](#Intercepting-a-request).
@@ -196,6 +162,38 @@ cy.intercept({
 // once any type of request to http://example.com/search with a querystring containing
 // 'q=expected+terms' responds, this 'cy.wait' will resolve
 cy.wait('@search')
+```
+
+```ts
+cy.intercept({
+  pathname: '/search',
+  query: {
+    q: 'some terms',
+  },
+}).as('searchForTerms')
+// this 'cy.wait' will only resolve once a request is made to '/search'
+// with the query paramater 'q=some+terms'
+cy.wait('@searchForTerms')
+
+cy.intercept(
+  {
+    // this RegExp matches any URL beginning with 'http://api.example.com/widgets'
+    url: /^http:\/\/api\.example\.com\/widgets/,
+    headers: {
+      'x-requested-with': 'exampleClient',
+    },
+  },
+  (req) => {
+    // only requests to URLs starting with 'http://api.example.com/widgets'
+    // having the header 'x-requested-with: exampleClient' will be received
+  }
+})
+
+// in this example, the supplied URL `/users` is merged with the RouteMatcher
+// passed as the second argument
+cy.intercept('/users', { middleware: true }, (req) => {
+  req.headers['authorization'] = `Bearer ${bearerToken}`
+})
 ```
 
 #### Using the yielded object
