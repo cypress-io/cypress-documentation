@@ -4,6 +4,7 @@ import AppHeader from '@/components/AppHeader'
 import TableOfContents from '@/components/TableOfContents'
 import Badge from '../../components/global/Badge.vue'
 import { getMetaData, getMetaDescription, getTitle } from '../../utils'
+import { fetchBanner } from '../../utils/sanity'
 
 export default {
   components: {
@@ -81,6 +82,8 @@ export default {
       .fetch()
     const metaDescription = await getMetaDescription(rawContent.text)
 
+    const banner = await fetchBanner()
+
     return {
       algoliaSettings,
       exampleItem,
@@ -89,6 +92,7 @@ export default {
       title,
       metaDescription,
       path: params.pathMatch,
+      banner,
     }
   },
   head() {
@@ -152,12 +156,14 @@ export default {
       :mobile-menu-items="examplesSidebarItems"
       section="examples"
       :algolia-settings="algoliaSettings"
+      :banner="banner"
     />
-    <main class="main-content">
+    <main :class="Boolean(banner) ? 'banner-margin' : ''" class="main-content">
       <AppSidebar
         :items="examplesSidebarItems"
         section="examples"
         :path="path"
+        :has-banner="Boolean(banner)"
       />
       <div v-if="mediaObjectIsEmpty" class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
@@ -506,7 +512,7 @@ export default {
         </article>
       </div>
 
-      <TableOfContents :toc="exampleItem.toc" />
+      <TableOfContents :toc="exampleItem.toc" :has-banner="Boolean(banner)" />
     </main>
   </div>
 </template>

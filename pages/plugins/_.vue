@@ -3,6 +3,7 @@ import AppHeader from '@/components/AppHeader'
 import PluginsList from '@/components/PluginsList.vue'
 import Footer from '@/components/Footer'
 import { getMetaData, getMetaDescription, getTitle } from '../../utils'
+import { fetchBanner } from '../../utils/sanity'
 
 export default {
   components: {
@@ -25,11 +26,14 @@ export default {
       .fetch()
     const metaDescription = await getMetaDescription(rawContent.text)
 
+    const banner = await fetchBanner()
+
     return {
       algoliaSettings,
       pluginDoc,
       plugins,
       metaDescription,
+      banner,
     }
   },
   head() {
@@ -62,8 +66,12 @@ export default {
 
 <template>
   <div class="w-full">
-    <AppHeader section="plugins" :algolia-settings="algoliaSettings" />
-    <main class="pt-16">
+    <AppHeader
+      section="plugins"
+      :algolia-settings="algoliaSettings"
+      :banner="banner"
+    />
+    <main :class="Boolean(banner) ? $style.bannerMargin : ''" class="pt-16">
       <div class="mt-16 mx-16">
         <article class="w-full">
           <h1 class="main-content-title">{{ pluginDoc.title }}</h1>
@@ -75,3 +83,9 @@ export default {
     </main>
   </div>
 </template>
+
+<style module>
+.bannerMargin {
+  margin-top: 48px;
+}
+</style>
