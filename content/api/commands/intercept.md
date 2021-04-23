@@ -98,6 +98,8 @@ The `routeHandler` defines what will happen with a request if the [routeMatcher]
 - If an **object with no [`StaticResponse`][staticresponse] keys** is passed, it will be sent as a JSON response body. For example, passing `{ foo: 'bar' }` is equivalent to passing `{ body: { foo: 'bar' } }`.
 - If a **callback** is passed, it will be called whenever a request matching this route is received, with the first parameter being the request object. From inside the callback, you can modify the outgoing request, send a response, access the real response, and much more. See ["Intercepted requests"][req] for more information.
 
+See [Request/Response Modification with `routeHandler`](#Request-Response-Modification-with-routeHandler)
+
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `cy.intercept()` yields `null`.
@@ -500,6 +502,214 @@ if (isMobile()) {
 Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and refer to the [cypress/support/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/support/index.ts) file for a working example.
 
 </Alert>
+
+### Request/Response Modification with `routeHandler`
+
+Specifying a `routeHandler` as the last argument to `cy.intercept` is what's required to leverage capabilities beyond just spying routes.
+
+<!-- TODO emphasize the usage of StaticResponse as the routeHandler -->
+
+If a function is passed as the `routeHandler`, it will be called with the intercepted HTTP request:
+
+```js
+cy.intercept('/api', (req) => {
+  // do something with the intercepted request
+})
+```
+
+From here, you can do several things with the intercepted request:
+
+- modify and make assertions on the request like its body, headers, URL, method, etc.
+- stub out the response without interacting with a real back-end
+- pass the request through to its destination and modify or make assertions on the real response on its way back
+- attach listeners to various events on the request
+
+#### Asserting on a request
+
+```js
+cy.intercept('POST', '/users', (req) => {
+  expect(req.body).to.include('Peter Pan')
+})
+```
+
+You can use the request handler callback to make an assertion on the Intercepted Request Object modify the request before it is sent.
+
+#### Controlling the outgoing request
+
+```js
+// modify the request body before it's sent to its destination
+cy.intercept('POST', '/users', (req) => {
+  req.body = {
+    name: 'Peter Pan',
+  }
+})
+
+// add a header to an outgoing request
+cy.intercept('POST', '/users', (req) => {
+  req.headers['x-custom-header'] = 'added by cy.intercept'
+})
+
+// modify an existing header
+cy.intercept('POST', '/users', (req) => {
+  req.headers['Authorization'] = 'Basic YWxhZGRpbjpvcGVuc2VzYW1l'
+})
+```
+
+#### Verifying the request modification
+
+```js
+cy.intercept('POST', '/users', (req) => {
+  req.headers['x-custom-header'] = 'added by cy.intercept'
+}).as('createUser')
+
+cy.get('button.save').click()
+// you can see the headers in the console output by selecting this line in the command log:
+cy.wait('@createUser')
+  // ...or make an assertion:
+  .its('request.headers')
+  .should('have.property', 'x-custom-header', 'added by cy.intercept')
+```
+
+<Alert type="warning">
+
+The request modification cannot be verified by inspecting the browser's network traffic, since the browser logs network traffic _before_ Cypress can intercept it.
+
+</Alert>
+
+#### Controlling the response
+
+The intercepted request passed to the route handler contains methods to dynamically control the response to a request:
+
+- `reply` - stub out a response requiring no dependency on a real back-end
+- `continue` - modify or make assertions on the real response
+- `destroy` - destroy the request and respond with a network error
+- `redirect` - respond to the request with a redirect to a specified location
+- `on` - modify the response by attaching to events
+
+##### Stubbing out a response (`reply`)
+
+The `reply` method takes a [`StaticResponse`][staticresponse] object as an input:
+
+```js
+// stub out the response without interacting with a real back-end
+cy.intercept('POST', '/users', (req) => {
+  req.reply({
+    headers: {
+      Set-Cookie: 'newUserName=Peter Pan;'
+    },
+    statusCode: 201,
+    body: {
+      name: 'Peter Pan'
+    },
+    delay: 10, // milliseconds
+    throttleKbps: 1000, // to simulate a 3G connection
+    forceNetworkError: false // default
+  })
+})
+
+// stub out a response body using a fixture
+cy.intercept('GET', '/users', (req) => {
+  req.reply({
+    statusCode: 200, // default
+    fixture: 'users.json'
+  })
+})
+```
+
+See [`StaticResponse` objects][staticresponse] below for more information.
+
+The `reply` method also supports shorthand to avoid having to specify a `StaticResponse` object:
+
+```js
+req.reply(body) // equivalent to `req.reply({ body })`
+req.reply(body, headers) // equivalent to `req.reply({ body, headers })`
+req.reply(statusCode, body, headers) // equivalent to `req.reply({ statusCode, body, headers})`
+```
+
+<Alert type="bolt">
+
+Note: Calling `reply()` will end the request phase and stop the request from propagating to the next matching request handler in line. See [Interception Lifecycle][lifecycle].
+
+</Alert>
+
+##### Modifying the real response (`continue`)
+
+The `continue` method accepts a function which is passed an object representing the real response being intercepted on its way back to the client (your front-end application).
+
+```js
+// pass the request through and make an assertion on the real response
+cy.intercept('POST', '/users', (req) => {
+  req.continue((res) => {
+    expect(res.body).to.include('Peter Pan')
+  })
+})
+```
+
+##### Responding with a network error (`destroy`)
+
+```js
+// destroy the request and respond with a network error
+cy.intercept('POST', '/users', (req) => {
+  req.destroy()
+})
+```
+
+##### Responding with a new location (`redirect`)
+
+```js
+// respond to this request with a redirect to a new 'location'
+cy.intercept('GET', '/users', (req) => {
+  // statusCode defaults to `302`
+  req.redirect((location: '/404Page'), (statusCode: 404))
+})
+```
+
+##### Responding by listening to events (`on`)
+
+```js
+cy.intercept('GET', '/users', (req) => {
+  req.on('before:response', (res) => {
+    // do something when the `before:response` event is triggered
+  })
+})
+cy.intercept('POST', '/users', (req) => {
+  req.on('response', (res) => {
+    // do something when the `response` event is triggered
+  })
+})
+```
+
+See example for throttling a response
+See more examples of events
+
+#### Returning a Promise
+
+If a Promise is returned from the route callback, it will be awaited before continuing with the request.
+
+```js
+cy.intercept('POST', '/users', (req) => {
+  // asynchronously fetch test data
+  return getAuthToken().then((token) => {
+    // ...and apply it to the outgoing request
+    req.headers['Authorization'] = `Basic ${token}`
+  })
+})
+
+cy.intercept('POST', '/users', (req) => {
+  req.continue((res) => {
+    // the response will not be sent to the browser until this resolves:
+    return waitForSomething()
+  })
+})
+```
+
+#### Stubbing a response with a string
+
+```js
+// requests to create a user will be fulfilled with a body of 'success'
+cy.intercept('POST', '/users', 'success')
+// { body: 'sucess' }
+```
 
 ## Intercepted requests
 
