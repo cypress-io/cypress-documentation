@@ -158,4 +158,4 @@ workflows:
               only:
                 - master
     jobs:
-      - broken-link-check-prod
+      - publish-scheduled-sanity-content
