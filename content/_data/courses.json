@@ -266,6 +266,14 @@
       "authorTwitter": "HatemHatamleh",
       "sourceName": "Udemy",
       "sourceUrl": "http://udemy.com"
+    },
+    {
+      "title": "Cypress Training from Edgewords",
+      "url": "https://www.edgewordstraining.co.uk/automated-software-testing-training-courses/cypress/",
+      "author": "Edgewords",
+      "authorTwitter": "edgewords",
+      "sourceName": "Edgewords",
+      "sourceUrl": "https://www.edgewordstraining.co.uk/"
     }
   ]
 }
