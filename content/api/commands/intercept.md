@@ -931,43 +931,23 @@ cy.intercept('/url', (req) => {
 
 The response object (`res`) yielded to response handlers has several properties from the HTTP response itself. All of the following properties on `res` can be modified:
 
-```ts
-{
-  /**
-   * The body of the response.
-   * If a JSON Content-Type was used and the body was valid JSON, this will be an object.
-   * If the body was binary content, this will be a buffer.
-   */
-  body: string | object | any
-  /**
-   * The headers of the response.
-   */
-  headers: { [key: string]: string }
-  /**
-   * The HTTP status code of the response.
-   */
-  statusCode: number
-  /**
-   * The HTTP status message.
-   */
-  statusMessage: string
-}
-```
+| Property      | Description                        |
+| ------------- | ---------------------------------- |
+| body          | response body (`object`, `string`) |
+| headers       | response headers (`object`)        |
+| statusCode    | response status code (`number`)    |
+| statusMessage | response status message (`string`) |
+
+**Note about `body`:** If the response header contains `Content-Type: application/json` and the body contains valid JSON, this will be an `object`. And if the body contains binary content, this will be a buffer.
 
 `res` also has some optional properties which can be set to control Cypress-specific behavior:
 
-```ts
-{
-  /**
-   * Kilobits per second to send 'body'.
-   */
-  throttleKbps?: number
-  /**
-   * Milliseconds to delay before the response is sent.
-   */
-  delay?: number
-}
-```
+| Property     | Description                                                                 |
+| ------------ | --------------------------------------------------------------------------- |
+| throttleKbps | Maximum data transfer rate of the response (kilobits/second)                |
+| delay        | Minimum network latency or delay to add to the response time (milliseconds) |
+
+````
 
 Any modifications to the properties of `res` will be persisted to other response handlers, and finally merged into the actual incoming HTTP response.
 
@@ -986,7 +966,7 @@ cy.intercept('/notification', (req) => {
     }
   })
 })
-```
+````
 
 See the [`StaticResponse` documentation][staticresponse] for more information on the format.
 
