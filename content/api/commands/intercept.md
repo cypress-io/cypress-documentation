@@ -426,9 +426,11 @@ cy.wait('@err').should('have.property', 'error')
 
 ### routeHandler
 
-The previous examples have dealt with just passively matching and aliasing routes so we can wait for requests and make assertions on them in test. The remaining examples will build upon previous ones simply by adding `routeHandler` as the last argument to `cy.intercept`.
+The previous examples have dealt with just spying and aliasing routes so we can wait for requests and make assertions on them in test. The remaining examples will build upon previous ones simply by specifying a `routeHandler` as the last argument to `cy.intercept`.
 
-If a function is passed as the handler for a `cy.intercept()`, it will be called with the first argument being an object that represents the intercepted HTTP request:
+<!-- TODO emphasize the usage of StaticResponse as the routeHandler -->
+
+If a function is passed as the `routeHandler`, it will be called with the intercepted HTTP request:
 
 ```js
 cy.intercept('/api', (req) => {
@@ -474,7 +476,7 @@ cy.intercept('POST', '/users', (req) => {
 })
 ```
 
-**Note:** the request modification can be verified by waiting on the intercept (see below). It can't be verified by inspecting the browser's network traffic, since the browser logs network traffic _before_ Cypress can intercept it.
+#### Verifying the request modification
 
 ```js
 cy.intercept('POST', '/users', (req) => {
@@ -488,6 +490,12 @@ cy.wait('@createUser')
   .its('request.headers')
   .should('have.property', 'x-custom-header', 'added by cy.intercept')
 ```
+
+<Alert type="warning">
+
+The request modification cannot be verified by inspecting the browser's network traffic, since the browser logs network traffic _before_ Cypress can intercept it.
+
+</Alert>
 
 #### Controlling the response
 
@@ -620,7 +628,7 @@ cy.intercept('POST', '/users', (req) => {
 
 ```js
 // requests to create a user will be fulfilled with a body of 'success'
-cy.intercept('POST', '**/users', 'success')
+cy.intercept('POST', '/users', 'success')
 // { body: 'sucess' }
 ```
 
