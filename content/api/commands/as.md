@@ -22,7 +22,7 @@ Assign an alias for later use. Reference the alias later within a [`cy.get()`](/
 
 ```javascript
 cy.get('.main-nav').find('li').first().as('firstNav') // Alias element as @firstNav
-cy.intercept('PUT', 'users').as('putUser') // Alias route as @putUser
+cy.intercept('PUT', '/users').as('putUser') // Alias route as @putUser
 cy.stub(api, 'onUnauth').as('unauth') // Alias stub as @unauth
 cy.spy(win, 'fetch').as('winFetch') // Alias spy as @winFetch
 ```
@@ -61,7 +61,7 @@ it('disables on click', () => {
 Aliasing a route and then using [`cy.wait()`](/api/commands/wait) to wait for the aliased route.
 
 ```javascript
-cy.intercept('PUT', 'users', { fixture: 'user' }).as('putUser')
+cy.intercept('PUT', '/users', { fixture: 'user' }).as('putUser')
 cy.get('form').submit()
 cy.wait('@putUser').its('url').should('contain', 'users')
 ```
@@ -87,6 +87,14 @@ Note the use of the standard function syntax. Using [arrow functions](https://de
 </Alert>
 
 ## Notes
+
+### Aliases are reset
+
+<Alert type="warning">
+
+**Note:** all aliases are reset before each test. See the [aliases guide](/guides/core-concepts/variables-and-aliases) for details.
+
+</Alert>
 
 ### Reserved words
 
@@ -151,9 +159,9 @@ describe('A fixture', () => {
 **_Alias several routes_**
 
 ```javascript
-cy.intercept(/company/).as('companyGet')
-cy.intercept(/roles/).as('rolesGet')
-cy.intercept(/teams/).as('teamsGet')
+cy.intercept('/company/*').as('companyGet')
+cy.intercept('/roles/*').as('rolesGet')
+cy.intercept('/teams/*').as('teamsGet')
 cy.intercept(/users\/\d+/).as('userGet')
 cy.intercept('PUT', /^\/users\/\d+/).as('userPut')
 ```

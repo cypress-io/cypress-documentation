@@ -130,7 +130,7 @@ When working with local `https` in webpack, set an environment variable to allow
 
 ### Record tests
 
-Cypress can record your tests and make the results available in the [Cypress Dashboard](/guides/dashboard/dashboard-introduction), which is a service that gives you access to recorded tests - typically when running Cypress tests from your [CI provider](/guides/continuous-integration/continuous-integration-introduction). The Dashboard provides you insight into what happened when your tests ran.
+Cypress can record your tests and make the results available in the [Cypress Dashboard](/guides/dashboard/introduction), which is a service that gives you access to recorded tests - typically when running Cypress tests from your [CI provider](/guides/continuous-integration/introduction). The Dashboard provides you insight into what happened when your tests ran.
 
 #### Recording tests allow you to:
 
@@ -149,7 +149,7 @@ Cypress can record your tests and make the results available in the [Cypress Das
 cypress run --record --key=abc123
 ```
 
-[Read the full guide on the Dashboard Service.](/guides/dashboard/dashboard-introduction)
+[Read the full guide on the Dashboard Service.](/guides/dashboard/introduction)
 
 ### Run tests in parallel
 
@@ -836,6 +836,10 @@ If you want colors to be disabled, you can pass the `NO_COLOR` environment varia
 ```shell
 NO_COLOR=1 cypress run
 ```
+
+## Workshop
+
+Cypress team has created a full workshop showing how to run Cypress on popular CI providers. Find the workshop at [github.com/cypress-io/cypress-workshop-ci](https://github.com/cypress-io/cypress-workshop-ci).
 
 ## See also
 

@@ -6,6 +6,12 @@ Thanks for taking the time to contribute! :smile:
 
 - [Code of Conduct](#code-of-conduct)
 - [Writing Documentation](#writing-documentation)
+  - [Using Vue Components](#using-vue-components)
+    - [Alerts](#alerts)
+    - [Images](#images)
+    - [Videos](#videos)
+    - [Icons](#icons)
+  - [Partials](#partials)
   - [Adding Examples](#adding-examples)
   - [Adding Plugins](#adding-plugins)
   - [Adding Pages](#adding-pages)
@@ -32,8 +38,96 @@ Using GitHub, [create a copy](https://guides.github.com/activities/forking/) (a 
 
 ```shell
 git clone git@github.com:<your username>/cypress-documentation.git
-cd docs
+cd cypress-documentation
 ```
+
+### Using Vue Components
+
+This project uses [`@nuxt/content`](https://content.nuxtjs.org/) which enables you to write Vue components within markdown. Any component files placed within the `/components/global` directory will be available for use within the markdown files. There are a [few limitations](https://content.nuxtjs.org/writing#vue-components) with using Vue components in markdown.
+
+#### Alerts
+
+Use [`<Alert>`](/components/global/Alert.vue) to grab the reader's attention with a blurb. You can change the look of the `<Alert>` by setting the `type` prop to `info`, `tip`, `warning`, or `danger`.
+
+```jsx
+<Alert type="info">This is an important message.</Alert>
+```
+
+### Images
+
+If you are starting a new page and want to add images, add a new folder to [`assets/img`](/assets/img). For example when adding a new "Code Coverage" page to `guides/tooling`, I have created new folder `assets/img/guides/tooling` and copied an image there called `coverage-object.png`. Within the markdown, I can include the image using the [`<DocsImage />` component](/components/global/DocsImage.vue).
+
+```jsx
+<DocsImage
+  src="/assets/img/guides/tooling/coverage-object.png"
+  alt="code coverage object"
+/>
+```
+
+### Videos
+
+You can embed videos within the markdown with the [`<DocsVideo>`](/components/global/DocsVideo.vue) component. Currently, it supports local files, YouTube, and Vimeo embeds. Set the `src` prop to a relative path for a local video file or the embed link for YouTube or Vimeo videos. You should also set a `title` prop describing the video for accessibility reasons.
+
+```jsx
+<DocsVideo
+  src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+  title="Cypress Tips and Tricks"
+>
+```
+
+### Icons
+
+[Font Awesome](https://fontawesome.com/) icons can be used within markdown. Set the `name` prop to the name of the Font Awesome icon. Make sure that the icon appears in the list of imported icons within the `nuxt.config.js` file under the `fontawesome` key.
+
+```jsx
+<Icon name="question-circle"></Icon>
+```
+
+### Partials
+
+Partials are snippets of reusable markdown that can be inserted into other markdown files. You may want to use a partial when you are writing the same content across multiple markdown files.
+
+#### Writing a Partial
+
+A partial is a markdown file that you want to import and inject into another markdown file. They can contain any content that you would otherwise want to write in other markdown files.
+
+```md
+## My First Partial
+
+<Alert type="info">
+
+This is my reusable partial.
+
+</Alert>
+```
+
+#### Using Partials
+
+Partials can be imported into other markdown files with the `::include{file=FILE_NAME}` directive.
+
+```md
+## My Favorite Food
+
+### Pizza
+
+::include{file=path/to/pizza-recipe.md}
+```
+
+When the page is generated, the content of `path/to/pizza-recipe.md` will be injected into the markdown file.
+
+The `::include{file=FILE_NAME}` directive assumes that the `FILE_NAME` exists within the `content` directory. You must provide the path relative to the `content` directory as the `file` property. For example, if the partial `pizza-recipe.md` was located at `/content/recipes/pizza-recipe.md`, the `::include` directive would be `::include{file=recipes/pizza-recipe.md}`.
+
+#### When to use Partials instead of Vue components
+
+It is possible to create partials using Vue components in the markdown instead of using the `::include{file=FILE_NAME}` directive. However, there are downsides to this approach.
+
+Assume you have a `<Partial>` Vue component. If you wanted to introduce a `<Partial>` to a markdown file and let that partial add a new header to the page, you would need to add a header element to the `<Partial>` component. Due to how each page's table of contents is generated, this new header would not appear in the "On This Page" section that appears on the right-hand side of most documentation pages. The header would also be missing the anchor tag that is otherwise automatically inserted into all headers.
+
+For most use cases, you should use the `::include{file=FILE_NAME}` directive when you want to inject reusable markdown into multiple files. A `<Partial>` Vue component may be a better fit if you wish to add custom interactivity to reusable strings of text.
+
+#### Limitations
+
+When including the `::include{file=FILE_NAME}` directive in another markdown file, Nuxt's hot module reloading will automatically trigger the partial's content to be inserted into the markdown file. However, if you wish to make changes to the partial file itself, you will need to stop and restart the development server with `yarn start` to see the changes. This is because the custom remark plugin that is enabling this partial system is only ran when the server is started and not on each hot module reload.
 
 ### Adding Examples
 
@@ -45,20 +139,26 @@ Add an associated image with the example within the [`assets/img`](/assets/img) 
 <DocsImage src="/img/examples/name-of-file.jpg" alt="alt text describing img" />
 ```
 
-### Using images
-
-If you are starting a new page and want to add images, add a new folder to "assets/img". For example when adding a new "Code Coverage" page to "guides/tooling", I have created new folder "assets/img/guides/tooling" and copied an image there called "coverage-object.png". From the page itself, I can include the image using the [`<DocsImage />` component](/components/global/DocsImage.vue).
-
-```jsx
-<DocsImage
-  src="/assets/img/guides/tooling/coverage-object.png"
-  alt="code coverage object"
-/>
-```
-
 ### Adding Plugins
 
 To add a plugin, submit a [pull request](#Pull-Requests) with the corresponding data added to the [`plugins.json`](/content/_data/plugins.json) file. Your plugin should have a name, description, link to the plugin's code, as well as any keywords.
+
+We want to showcase plugins that work and have a good developer experience. This means that a good plugin generally has:
+
+1. Purpose of plugin articulated up front
+1. Installation guide
+1. Options and API are documented
+1. Easy to follow documentation. Users should not have to read the source code to get things working.
+
+Each plugin submitted to the plugins list should have the following:
+
+1. Integration tests with Cypress
+
+   - Demonstrates the plugin working
+   - Acts as real-world example usage
+
+2. CI pipeline
+3. Compatability with at least the latest major version of Cypress
 
 ### Adding Pages
 
@@ -70,6 +170,8 @@ To add a page such as a new guide or API documentation:
 - Build the documentation site locally so that you can visually inspect your new page and the links to it.
 - **REQUIRED**: Commit the new file using git - we auto-generate the doc to display within each supported language, this auto-generation depends on the file existing in git.
 - Submit a [pull request](#Pull-Requests) for your change.
+
+> Note: If you need to change the overall layout of a page, you should create a Vue component within the `/pages` directory. The `/pages` directory contains the `_.vue` components responsible for generating the views for the routes `/guides`, `/api/`, `/plugins`, etc. If you wanted to create a guide page that has a different layout from the other guide pages, you would create a component file within `/guides` matching the route name that you want to use. For example, if I wanted to create a unique guide page without the sidebar about using the Dashboard, I would create a file called `/pages/guides/my-dashboard-guide.vue` and create a Vue component for the specific layout I want to create. The page will then be accessible at the route `/guides/my-dashboard-guide`.
 
 ### Deleting Pages
 
@@ -141,14 +243,17 @@ Javascript code is linted with [ESLint](https://eslint.org/).
 
 ### Pull Requests
 
-You should push your local changes to your forked GitHub repository and then open a pull request (PR) from your repo to the `cypress-io/docs` repo.
+You should push your local changes to your forked GitHub repository and then open a pull request (PR) from your repo to the `cypress-io/cypress-documentation` repo.
 
-- The PR should be from your repository to the `develop` branch in `cypress-io/docs`
+- The PR should be from your repository to the `master` branch in `cypress-io/cypress-documentation`
 - When opening a PR for a specific issue already open, please use the `closes #issueNumber` syntax in the pull request description&mdash;for example, `closes #138`&mdash;so that the issue will be [automatically closed](https://help.github.com/articles/closing-issues-using-keywords/) when the PR is merged.
 - Please check the "Allow edits from maintainers" checkbox when submitting your PR. This will make it easier for the maintainers to make minor adjustments, to help with tests or any other changes we may need.
   ![Allow edits from maintainers checkbox](https://user-images.githubusercontent.com/1271181/31393427-b3105d44-ada9-11e7-80f2-0dac51e3919e.png)
+- All PRs against `master` will automatically create a deploy preview URL with Netlify. The deploy preview can be accessed via the PR's `netlify-cypress-docs/deploy-preview` status check:
 
-Every pull request merged into `develop` automatically opens another pull request to `master`, which should be merged automatically using Mergify Bot after the CircleCI tests pass, see issue [#2363](https://github.com/cypress-io/cypress-documentation/issues/2363).
+![Netlify deploy preview status check](https://user-images.githubusercontent.com/11802078/113176533-36b79680-9212-11eb-8aec-898d0f5047df.png)
+
+- All branches will automatically create a branch deploy preview. The branch deploy previews do not appear as a GitHub status check like deploy previews. You can view your branch's deploy preview by visiting `https://$BRANCH_NAME--cypress-docs.netlify.app` where `$BRANCH_NAME` is your git branch name. For example, if my branch was named `my-branch`, my branch preview will be available at `https://my-branch--cypress-docs.netlify.app`.
 
 ### Contributor License Agreement
 
@@ -158,11 +263,11 @@ After making a [pull request](#pull-requests), the CLA assistant will add a revi
 
 ## Deployment
 
-We will try to review and merge pull requests as fast as possible. After merging, we will deploy it to the staging environment, run E2E tests (using Cypress itself of course!), and then merge it into `master`, which will deploy it to the official [https://docs.cypress.io](https://docs.cypress.io) website. If you want to know our deploy process, read [DEPLOY.md](DEPLOY.md).
+We will try to review and merge pull requests as fast as possible. After merging, the changes will be made available on the official [https://docs.cypress.io](https://docs.cypress.io) website.
 
 ### Trigger workflow build
 
-Due to CircleCI API limitations (even after 2 years), you cannot trigger a workflow build using the API. Thus if you need to build, test and deploy `develop` branch for example, your best bet is to create an empty GitHub commit in the [cypress-io/docs](https://github.com/cypress-io/docs) repository in the `develop` branch. We have added [make-empty-github-commit](https://github.com/bahmutov/make-empty-github-commit) as a dev dependency and set it as `make-empty-commit` NPM script in the [package.json](package.json).
+Due to CircleCI API limitations, you cannot trigger a workflow build using the API. Thus if you need to build, test and deploy `your-branch` branch for example, your best bet is to create an empty GitHub commit in the [cypress-io/cypress-documentation](https://github.com/cypress-io/cypress-documentation) repository in the `your-branch` branch. We have added [make-empty-github-commit](https://github.com/bahmutov/make-empty-github-commit) as a dev dependency and set it as `make-empty-commit` NPM script in the [package.json](package.json).
 
 To trigger production rebuild and redeploy, use personal GitHub token and run:
 

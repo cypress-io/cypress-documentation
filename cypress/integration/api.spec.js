@@ -1,6 +1,7 @@
-const API_URL = '/api/table-of-contents/'
+const API_URL = '/api/table-of-contents'
 const SIDEBAR = './content/_data/sidebar.json'
 const SIDEBAR_EN = './content/_data/en.json'
+const { getTitle } = require('../../utils')
 
 describe('APIs', () => {
   beforeEach(() => {
@@ -16,7 +17,15 @@ describe('APIs', () => {
         cy.wrap(sidebarCategories).each((category) => {
           const pages = Object.keys(sidebarApi[category])
 
-          cy.get('.app-sidebar').contains(api[category])
+          cy.get('.app-sidebar')
+            .contains(api[category])
+            .then(($category) => {
+              cy.get(`[data-test="${api[category]}-children"]`).then(($ul) => {
+                if ($ul.hasClass('hidden')) {
+                  cy.wrap($category).scrollIntoView().click()
+                }
+              })
+            })
 
           cy.wrap(pages).each((page) => {
             const pageTitle = api[page]
@@ -26,12 +35,10 @@ describe('APIs', () => {
                 ? '.app-sidebar a'
                 : `.app-sidebar [data-test="${category}"] a`,
               pageTitle
-            ).click({
-              force: true,
-            })
+            ).click({ force: true })
 
             const redirects = {
-              'table-of-contents': '/api/table-of-contents/',
+              'table-of-contents': '/api/table-of-contents',
               'all-assertions': '/guides/references/assertions',
             }
 
@@ -74,6 +81,7 @@ describe('APIs', () => {
               'cypress-log': 'Cypress.log',
               platform: 'Cypress.platform',
               spec: 'Cypress.spec',
+              'testing-type': 'Cypress.testingType',
               version: 'Cypress.version',
               'configuration-api': 'Configuration API',
               'preprocessors-api': 'Preprocessors API',
@@ -85,7 +93,10 @@ describe('APIs', () => {
               'after-screenshot-api': 'After Screenshot API',
             }
 
-            cy.title().should('equal', titleAliases[page] || pageTitle)
+            cy.title().should(
+              'equal',
+              getTitle(titleAliases[page] || pageTitle)
+            )
 
             cy.get('.main-content-title').contains(
               titleAliases[page] || pageTitle

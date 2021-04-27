@@ -745,9 +745,9 @@ it('changes the URL when "awesome" is clicked', () => {
 })
 ```
 
-Big difference! In addition to reading much cleaner, Cypress does more than this, because **Promises themselves have no concepts of retry-ability**.
+Big difference! In addition to reading much cleaner, Cypress does more than this, because **Promises themselves have no concepts of [retry-ability](/guides/core-concepts/retry-ability)**.
 
-Without **retry-ability**, assertions would randomly fail. This would lead to flaky, inconsistent results. This is also why we cannot use new JS features like `async / await`.
+Without [**retry-ability**](/guides/core-concepts/retry-ability), assertions would randomly fail. This would lead to flaky, inconsistent results. This is also why we cannot use new JS features like `async / await`.
 
 Cypress cannot yield you primitive values isolated away from other commands. That is because Cypress commands act internally like an asynchronous stream of data that only resolve after being affected and modified **by other commands**. This means we cannot yield you discrete values in chunks because we have to know everything about what you expect before handing off a value.
 
@@ -1153,6 +1153,7 @@ cy.get('.mobile-nav')
 Under the hood Cypress:
 
 - Queries for the element `.mobile-nav`
+
   ✨**and waits up to 4 seconds for it to exist in the DOM**✨
 
 #### Example #2: Additional Assertions
@@ -1165,9 +1166,12 @@ cy.get('.mobile-nav').should('be.visible').and('contain', 'Home')
 Under the hood Cypress:
 
 - Queries for the element `.mobile-nav`
+
   ✨**and waits up to 4 seconds for it to exist in the DOM**✨
+
   ✨**and waits up to 4 seconds for it to be visible**✨
-  ✨**and waits up to 4 seconds for it to contain the text: 'Home'**✨
+
+  ✨**and waits up to 4 seconds for it to contain the text: Home**✨
 
 The _total_ amount of time Cypress will wait for _all_ of the assertions to pass is for the duration of the [cy.get()](/api/commands/get) `timeout` (which is 4 seconds).
 
@@ -1176,7 +1180,8 @@ Timeouts can be modified per command and this will affect all default assertions
 #### Example #3: Modifying Timeouts
 
 ```js
-// we've modified the timeout which affects default + added assertions
+// we've modified the timeout which affects default
+// plus all added assertions
 cy.get('.mobile-nav', { timeout: 10000 })
   .should('be.visible')
   .and('contain', 'Home')
@@ -1185,11 +1190,29 @@ cy.get('.mobile-nav', { timeout: 10000 })
 Under the hood Cypress:
 
 - Gets the element `.mobile-nav`
+
   ✨**and waits up to 10 seconds for it to exist in the DOM**✨
+
   ✨**and waits up to 10 seconds for it to be visible**✨
-  ✨**and waits up to 10 seconds for it to contain the text: 'Home'**✨
+
+  ✨**and waits up to 10 seconds for it to contain the text: Home**✨
 
 Notice that this timeout has flowed down to all assertions and Cypress will now wait _up to 10 seconds total_ for all of them to pass.
+
+<Alert type="danger">
+
+Note that you _never_ change the timeout inside the assertion. The `timeout` parameter **always** goes inside the command.
+
+```js
+// 🚨 DOES NOT WORK
+cy.get('.selector').should('be.visible', { timeout: 1000 })
+// ✅ THE CORRECT WAY
+cy.get('.selector', { timeout: 1000 }).should('be.visible')
+```
+
+Remember, you are retrying the command with attached assertions, not just the assertions!
+
+</Alert>
 
 ### Default Values
 

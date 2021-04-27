@@ -8,9 +8,9 @@ containerClass: faq
 
 <DocsImage src="/img/dashboard/dashboard-runs-list.png" alt="Dashboard Screenshot" ></DocsImage>
 
-The [Dashboard](https://on.cypress.io/dashboard) is a Cypress service that gives you access to tests you've recorded - typically when running Cypress tests from your [CI provider](/guides/continuous-integration/continuous-integration-introduction). The Dashboard provides you insight into what happened during your tests run.
+The [Dashboard](https://on.cypress.io/dashboard) is a Cypress service that gives you access to tests you've recorded - typically when running Cypress tests from your [CI provider](/guides/continuous-integration/introduction). The Dashboard provides you insight into what happened during your tests run.
 
-You can read more [here](/guides/dashboard/dashboard-introduction).
+You can read more [here](/guides/dashboard/introduction).
 
 ## <Icon name="angle-right"></Icon> How do I record my tests?
 
@@ -45,13 +45,13 @@ A [user](/guides/dashboard/users) is anyone with a login to our Dashboard Servic
 
 ## <Icon name="angle-right"></Icon> How is this different than CI?
 
-Cypress is **complementary** to your [CI provider](/guides/continuous-integration/continuous-integration-introduction), and plays a completely different role.
+Cypress is **complementary** to your [CI provider](/guides/continuous-integration/introduction), and plays a completely different role.
 
 It doesn't replace or change anything related to CI. You will run Cypress tests in your CI provider.
 
-The difference between our [Dashboard Service](/guides/dashboard/dashboard-introduction) and your CI provider is that your CI provider has no idea what is going on inside of the Cypress process. It's programmed to know whether or not a process failed - based on whether it had an exit code greater than `0`.
+The difference between our [Dashboard Service](/guides/dashboard/introduction) and your CI provider is that your CI provider has no idea what is going on inside of the Cypress process. It's programmed to know whether or not a process failed - based on whether it had an exit code greater than `0`.
 
-Our [Dashboard Service](/guides/dashboard/dashboard-introduction) provides you with the low level details of _what_ happened during your run. Using both your CI provider + Cypress together gives the insight required to debug your test runs.
+Our [Dashboard Service](/guides/dashboard/introduction) provides you with the low level details of _what_ happened during your run. Using both your CI provider + Cypress together gives the insight required to debug your test runs.
 
 When a run happens and a test fails - instead of going and inspecting your CI provider's `stdout` output, you can log into the [Dashboard](https://on.cypress.io/dashboard), see the `stdout` as well as screenshots and video of the tests running. It should be instantly clear what the problem was.
 
@@ -96,7 +96,7 @@ Thus, to better load balance the specs, you would want more spec files with appr
 
 ## <Icon name="angle-right"></Icon> My CI setup is based on Docker, but is very custom. How can I load balance my test runs?
 
-Even if your CI setup is very different from the [CI examples we have](/guides/continuous-integration/continuous-integration-introduction#Examples) and [run with our sample projects](https://github.com/cypress-io/cypress-example-kitchensink#ci-status), you can still take advantage of the test load balancing using the Dashboard. Find a variable across your containers that is the same for all of them, but is different from run to run. For example it could be an environment variable called `CI_RUN_ID` that you set when creating the containers to run Cypress. You can pass this variable via CLI argument [`--ci-build-id`](/guides/guides/command-line#cypress-run-ci-build-id-lt-id-gt)when starting Cypress in each container:
+Even if your CI setup is very different from the [CI examples we have](/guides/continuous-integration/introduction#Examples) and [run with our sample projects](https://github.com/cypress-io/cypress-example-kitchensink#ci-status), you can still take advantage of the test load balancing using the Dashboard. Find a variable across your containers that is the same for all of them, but is different from run to run. For example it could be an environment variable called `CI_RUN_ID` that you set when creating the containers to run Cypress. You can pass this variable via CLI argument [`--ci-build-id`](/guides/guides/command-line#cypress-run-ci-build-id-lt-id-gt)when starting Cypress in each container:
 
 ```shell
 cypress run --record --parallel --ci-build-id $CI_RUN_ID

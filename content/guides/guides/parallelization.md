@@ -20,7 +20,7 @@ If your project has a large number of tests, it can take a long time for tests t
 
 Cypress can run recorded tests in parallel across multiple machines since version [3.1.0](/guides/references/changelog#3-1-0). While parallel tests can also technically run on a single machine, we do not recommend it since this machine would require significant resources to run your tests efficiently.
 
-This guide assumes you already have your project running and [recording](/guides/dashboard/projects#Setup) within Continuous Integration. If you have not set up your project yet, check out our [Continuous Integration guide](/guides/continuous-integration/continuous-integration-introduction). If you are running or planning to run tests across multiple browsers (Firefox, Chrome, or Edge), we also recommend checking out our [Cross Browser Testing guide](/guides/guides/cross-browser-testing) for helpful CI strategies when using parallelization.
+This guide assumes you already have your project running and [recording](/guides/dashboard/projects#Setup) within Continuous Integration. If you have not set up your project yet, check out our [Continuous Integration guide](/guides/continuous-integration/introduction). If you are running or planning to run tests across multiple browsers (Firefox, Chrome, or Edge), we also recommend checking out our [Cross Browser Testing guide](/guides/guides/cross-browser-testing) for helpful CI strategies when using parallelization.
 
 <DocsImage src="/img/guides/parallelization/parallelization-diagram.png" alt="Parallelization Diagram"></DocsImage>
 
@@ -40,18 +40,17 @@ Cypress will assign each spec file to an available machine based on our [balance
 cypress run --record --key=abc123 --parallel
 ```
 
-    <Alert type="info">
+<Alert type="info">
 
-
-    Running tests in parallel requires the [`--record` flag](/guides/guides/command-line#cypress-run) be passed. This ensures Cypress can properly collect the data needed to parallelize future runs. This also gives you the full benefit of seeing the results of your parallelized tests in our [Dashboard Service](/guides/dashboard/dashboard-introduction). If you have not set up your project to record, check out our [setup guide](/guides/dashboard/projects#Setup).
+Running tests in parallel requires the [`--record` flag](/guides/guides/command-line#cypress-run) be passed. This ensures Cypress can properly collect the data needed to parallelize future runs. This also gives you the full benefit of seeing the results of your parallelized tests in our [Dashboard Service](/guides/dashboard/introduction). If you have not set up your project to record, check out our [setup guide](/guides/dashboard/projects#Setup).
 
 </Alert>
 
 ## CI parallelization interactions
 
-During parallelization mode, the Cypress [Dashboard Service](/guides/dashboard/dashboard-introduction) interacts with your CI machines to orchestrate the parallelization of a test run via [load-balancing](#Balance-strategy) of specs across available CI machines by the following process:
+During parallelization mode, the Cypress [Dashboard Service](/guides/dashboard/introduction) interacts with your CI machines to orchestrate the parallelization of a test run via [load-balancing](#Balance-strategy) of specs across available CI machines by the following process:
 
-1. CI machines contact the Cypress [Dashboard Service](/guides/dashboard/dashboard-introduction) to indicate which spec files to run in the project.
+1. CI machines contact the Cypress [Dashboard Service](/guides/dashboard/introduction) to indicate which spec files to run in the project.
 2. A machine opts in to receiving a spec file to run by contacting Cypress.
 3. Upon receiving requests from a CI machine, Cypress calculates the estimated duration to test each spec file.
 4. Based on these estimations, Cypress distributes ([load-balances](#Balance-strategy)) spec files one-by-one to each available machine in a way that minimizes overall test run time.
@@ -287,7 +286,7 @@ This **delay is 60 seconds by default**, but is [configurable within the Dashboa
 
 ## Visualizing parallelization and groups in the Dashboard
 
-You can see the result of each spec file that ran within the [Dashboard Service](/guides/dashboard/dashboard-introduction) in the run's **Specs** tab. Specs are visualized within a **Timeline**, **Bar Chart**, and **Machines** view.
+You can see the result of each spec file that ran within the [Dashboard Service](/guides/dashboard/introduction) in the run's **Specs** tab. Specs are visualized within a **Timeline**, **Bar Chart**, and **Machines** view.
 
 ### Timeline View
 
@@ -310,7 +309,7 @@ The Machines View charts spec files by the machines that executed them. This vie
 ## Next Steps
 
 - [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app) runs parallelized CI jobs across multiple operating systems, browsers, and viewport sizes.
-- [Continuous Integration Guide](/guides/continuous-integration/continuous-integration-introduction)
+- [Continuous Integration Guide](/guides/continuous-integration/introduction)
 - [Cross Browser Testing Guide](/guides/guides/cross-browser-testing)
 - [Blog: Run Your End-to-end Tests 10 Times Faster with Automatic Test Parallelization](https://www.cypress.io/blog/2018/09/05/run-end-to-end-tests-on-ci-faster/)
 - [Blog: Run and group tests the way you want to](https://glebbahmutov.com/blog/run-and-group-tests/)

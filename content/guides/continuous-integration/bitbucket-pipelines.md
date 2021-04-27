@@ -110,7 +110,7 @@ definitions:
 
 ## Parallelization
 
-The {% url "Cypress Dashboard" 'dashboard' %} offers the ability to [parallelize and group test runs](/guides/guides/parallelization) along with additional insights and [analytics](/guides/dashboard/analytics) for Cypress tests.
+The [Cypress Dashboard](/guides/dashboard/introduction) offers the ability to [parallelize and group test runs](/guides/guides/parallelization) along with additional insights and [analytics](/guides/dashboard/analytics) for Cypress tests.
 
 Before diving into an example of a parallelization setup, it is important to understand the two different types of jobs that we will declare:
 
@@ -230,11 +230,10 @@ In the Bitbucket Pipelines configuration we have defined in the previous section
 
 1. [Recording test results with the `--record` flag](https://on.cypress.io/how-do-i-record-runs) to the [Cypress Dashboard](https://on.cypress.io/dashboard):
 
-
-    - In-depth and shareable [test reports](/guides/dashboard/runs).
-    - Visibility into test failures via quick access to error messages, stack traces, screenshots, videos, and contextual details.
-    - [Integrating testing with the pull-request process](/guides/dashboard/bitbucket-integration) via [commit status check guards](/guides/dashboard/bitbucket-integration#Status-checks) and convenient [pull request comments](/guides/dashboard/bitbucket-integration#Pull-Request-comments).
-    - [Detecting flaky tests](/guides/dashboard/flaky-test-management) and surfacing them via [Slack alerts](/guides/dashboard/flaky-test-management#Slack) or [Bitbucket PR status checks](/guides/dashboard/bitbucket-integration).
+   - In-depth and shareable [test reports](/guides/dashboard/runs).
+   - Visibility into test failures via quick access to error messages, stack traces, screenshots, videos, and contextual details.
+   - [Integrating testing with the pull-request process](/guides/dashboard/bitbucket-integration) via [commit status check guards](/guides/dashboard/bitbucket-integration#Status-checks) and convenient [pull request comments](/guides/dashboard/bitbucket-integration#Pull-Request-comments).
+   - [Detecting flaky tests](/guides/dashboard/flaky-test-management) and surfacing them via [Slack alerts](/guides/dashboard/flaky-test-management#Slack) or [Bitbucket PR status checks](/guides/dashboard/bitbucket-integration).
 
 2. [Parallelizing test runs](/guides/guides/parallelization) and optimizing their execution via [intelligent load-balancing](/guides/guides/parallelization#Balance-strategy) of test specs across CI machines with the `--parallel` flag.
 

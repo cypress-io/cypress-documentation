@@ -143,9 +143,9 @@ cy.get('#book-results').should('have.length', 1)
 When passing an array of aliases to `cy.wait()`, Cypress will wait for all requests to complete within the given `requestTimeout` and `responseTimeout`.
 
 ```javascript
-cy.intercept('users/*').as('getUsers')
-cy.intercept('activities/*').as('getActivities')
-cy.intercept('comments/*').as('getComments')
+cy.intercept('/users/*').as('getUsers')
+cy.intercept('/activities/*').as('getActivities')
+cy.intercept('/comments/*').as('getComments')
 cy.visit('/dashboard')
 
 cy.wait(['@getUsers', '@getActivities', '@getComments']).then(
@@ -161,9 +161,9 @@ cy.wait(['@getUsers', '@getActivities', '@getComments']).then(
 #### Using [`.spread()`](/api/commands/spread) to spread the array into multiple arguments.
 
 ```javascript
-cy.intercept('users/*').as('getUsers')
-cy.intercept('activities/*').as('getActivities')
-cy.intercept('comments/*').as('getComments')
+cy.intercept('/users/*').as('getUsers')
+cy.intercept('/activities/*').as('getActivities')
+cy.intercept('/comments/*').as('getComments')
 cy.wait(['@getUsers', '@getActivities', '@getComments']).spread(
   (getUsers, getActivities, getComments) => {
     // each interception is now an individual argument
@@ -207,7 +207,7 @@ This means that when you begin waiting for an aliased request, Cypress will wait
 
 <DocsImage src="/img/api/wait/error-for-no-matching-route-when-waiting-in-test.png" alt="Error for no matching request" ></DocsImage>
 
-Once Cypress detects that a matching request has begun its request, it then switches over to the 2nd waiting period. This duration is configured by the [`responseTimeout`](/guides/references/configuration#Timeouts) option - which has a default of `20000` ms.
+Once Cypress detects that a matching request has begun its request, it then switches over to the 2nd waiting period. This duration is configured by the [`responseTimeout`](/guides/references/configuration#Timeouts) option - which has a default of `30000` ms.
 
 This means Cypress will now wait up to 20 seconds for the external server to respond to this request. If no response is detected, you will get an error message that looks like this:
 

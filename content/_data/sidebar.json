@@ -188,7 +188,6 @@
       "$": "$.html",
       "blob": "blob.html",
       "minimatch": "minimatch.html",
-      "moment": "moment.html",
       "promise": "promise.html",
       "sinon": "sinon.html"
     },
@@ -208,6 +207,7 @@
       "cypress-log": "cypress-log.html",
       "platform": "platform.html",
       "spec": "spec.html",
+      "testing-type": "testing-type.html",
       "version": "version.html"
     },
     "plugins": {

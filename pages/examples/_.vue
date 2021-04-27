@@ -3,8 +3,8 @@ import AppSidebar from '@/components/AppSidebar'
 import AppHeader from '@/components/AppHeader'
 import TableOfContents from '@/components/TableOfContents'
 import Badge from '../../components/global/Badge.vue'
-import { getMetaData } from '../../utils/getMetaData'
-import { getMetaDescription } from '../../utils/getMetaDescription'
+import { getMetaData, getMetaDescription, getTitle } from '../../utils'
+import { fetchBanner } from '../../utils/sanity'
 
 export default {
   components: {
@@ -50,33 +50,39 @@ export default {
       title = userFriendlyNameMap[filename]
     }
 
-    const items = Object.keys(sidebar).map((key) => {return {
-      label: userFriendlyNameMap[key],
-      badge: '',
-      children: Object.keys(sidebar[key]).map((nestedKey) => {
-        // let slug = nestedKey
-        // Some slugs might not match the file name exactly.
-        // E.g. "dashboard-introduction.md" doesn't exist, but "introduction.md"
-        // within the "dashboard" directory does. This checks for instances of
-        // the directory name being included in the file name, and if so, removes it
-        // from the slug.
-        // if (nestedKey.includes(key)) {
-        //   slug = nestedKey.replace(`${key}-`, '')
-        // }
-        return {
-          slug: nestedKey,
-          label: userFriendlyNameMap[nestedKey],
-        }
-      }),
-      folder: key,
-    }})
+    const items = Object.keys(sidebar).map((key) => {
+      return {
+        label: userFriendlyNameMap[key],
+        badge: '',
+        children: Object.keys(sidebar[key]).map((nestedKey) => {
+          // let slug = nestedKey
+          // Some slugs might not match the file name exactly.
+          // E.g. "dashboard-introduction.md" doesn't exist, but "introduction.md"
+          // within the "dashboard" directory does. This checks for instances of
+          // the directory name being included in the file name, and if so, removes it
+          // from the slug.
+          // if (nestedKey.includes(key)) {
+          //   slug = nestedKey.replace(`${key}-`, '')
+          // }
+          return {
+            slug: nestedKey,
+            label: userFriendlyNameMap[nestedKey],
+          }
+        }),
+        folder: key,
+      }
+    })
 
     if (!exampleItem) {
       return error({ statusCode: 404, message: 'Example not found' })
     }
 
-    const [rawContent] = await $content({ deep: true, text: true }).where({ path }).fetch()
+    const [rawContent] = await $content({ deep: true, text: true })
+      .where({ path })
+      .fetch()
     const metaDescription = await getMetaDescription(rawContent.text)
+
+    const banner = await fetchBanner()
 
     return {
       algoliaSettings,
@@ -86,19 +92,20 @@ export default {
       title,
       metaDescription,
       path: params.pathMatch,
+      banner,
     }
   },
   head() {
     return {
-      title: this.exampleItem.title,
+      title: getTitle(this.exampleItem.title),
       meta: this.meta,
       link: [
         {
           hid: 'canonical',
           rel: 'canonical',
-          href: `https://docs.cypress.io/examples/${this.$route.params.pathMatch}`
-        }
-      ]
+          href: `https://docs.cypress.io/examples/${this.$route.params.pathMatch}`,
+        },
+      ],
     }
   },
   computed: {
@@ -132,13 +139,13 @@ export default {
     meta() {
       const metaData = {
         type: 'article',
-        title: this.exampleItem.title,
+        title: getTitle(this.exampleItem.title),
         description: this.metaDescription,
-        url: `https://docs.cypress.io/examples/${this.$route.params.pathMatch}`
+        url: `https://docs.cypress.io/examples/${this.$route.params.pathMatch}`,
       }
 
       return getMetaData(metaData)
-    }
+    },
   },
 }
 </script>
@@ -149,12 +156,14 @@ export default {
       :mobile-menu-items="examplesSidebarItems"
       section="examples"
       :algolia-settings="algoliaSettings"
+      :banner="banner"
     />
-    <main class="main-content">
+    <main :class="Boolean(banner) ? 'banner-margin' : ''" class="main-content">
       <AppSidebar
         :items="examplesSidebarItems"
         section="examples"
         :path="path"
+        :has-banner="Boolean(banner)"
       />
       <div v-if="mediaObjectIsEmpty" class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
@@ -240,11 +249,12 @@ export default {
               </li>
             </ul>
           </div>
-          <div class="media-container">
+          <div :class="$style.mediaContainer">
             <div
               v-for="item in mediaObject.large"
               :key="`${item.url}`"
-              class="media w-3/6 float-left"
+              :class="$style.media"
+              class="w-3/6 float-left"
             >
               <div class="relative mb-4 h-20">
                 <a
@@ -290,11 +300,12 @@ export default {
               </li>
             </ul>
           </div>
-          <div class="media-container">
+          <div :class="$style.mediaContainer">
             <div
               v-for="item in mediaObject.large"
               :key="`${item.url}`"
-              class="media w-3/6 float-left"
+              :class="$style.media"
+              class="w-3/6 float-left"
             >
               <div class="relative mb-4 h-20">
                 <a
@@ -332,11 +343,12 @@ export default {
               </li>
             </ul>
           </div>
-          <div class="media-container">
+          <div :class="$style.mediaContainer">
             <div
               v-for="item in mediaObject.large"
               :key="`${item.url}`"
-              class="media w-3/6 float-left"
+              :class="$style.media"
+              class="w-3/6 float-left"
             >
               <div class="relative mb-4 h-20">
                 <a
@@ -393,11 +405,12 @@ export default {
               </li>
             </ul>
           </div>
-          <div class="media-container">
+          <div :class="$style.mediaContainer">
             <div
               v-for="item in mediaObject.large"
               :key="`${item.url}`"
-              class="media w-3/6 float-left"
+              :class="$style.media"
+              class="w-3/6 float-left"
             >
               <div class="relative mb-4 h-20">
                 <a
@@ -448,11 +461,12 @@ export default {
               </li>
             </ul>
           </div>
-          <div class="media-container">
+          <div :class="$style.mediaContainer">
             <div
               v-for="item in mediaObject.large"
               :key="`${item.url}`"
-              class="media w-3/6 float-left"
+              :class="$style.media"
+              class="w-3/6 float-left"
             >
               <div class="relative mb-4 h-20">
                 <a
@@ -498,21 +512,17 @@ export default {
         </article>
       </div>
 
-      <TableOfContents :toc="exampleItem.toc" />
+      <TableOfContents :toc="exampleItem.toc" :has-banner="Boolean(banner)" />
     </main>
   </div>
 </template>
 
-<style lang="scss" scoped>
-@import '../../styles/content.scss';
-
-.media {
-  &:nth-child(odd) {
-    clear: both;
-  }
+<style module>
+.media:nth-child(odd) {
+  clear: both;
 }
 
-.media-container div:nth-child(odd) {
+.mediaContainer div:nth-child(odd) {
   @apply pr-8;
 }
 </style>

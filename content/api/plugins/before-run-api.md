@@ -2,7 +2,7 @@
 title: Before Run API
 ---
 
-The `before:run` event fires before a run starts. The event only fires when running via `cypress run`.
+The `before:run` event fires before a run starts. When running cypress via `cypress open`, the event will fire when opening a project.
 
 The event will fire each time `cypress run` executes. As a result, if running your specs in [parallel](/guides/guides/parallelization), the event will fire once for each machine on which the tests are run.
 
@@ -10,7 +10,13 @@ The event will fire each time `cypress run` executes. As a result, if running yo
 
 <Alert type="warning">
 
-⚠️ This code is part of the [plugin file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
+⚠️ This code is part of the [plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
+
+</Alert>
+
+<Alert type="warning">
+
+⚠️ When running via `cypress open`, the `before:run` event only fires if the [experimentalInteractiveRunEvents flag](/guides/references/configuration#Experiments) is enabled.
 
 </Alert>
 
@@ -22,7 +28,7 @@ on('before:run', (details) => {
 
 **<Icon name="angle-right"></Icon> details** **_(Object)_**
 
-Details of the run, including the project config, details about the browser and system, and the specs that will be run.
+Details of the run, including the project config, system information, and the version of Cypress. More details are included when running via `cypress run`.
 
 ## Usage
 
@@ -33,7 +39,7 @@ You can return a promise from the `before:run` event handler and it will be awai
 ```javascript
 module.exports = (on, config) => {
   on('before:run', (details) => {
-    // details will look something like this:
+    // details will look something like this when run via `cypress run`:
     // {
     //   config: {
     //     projectId: '12345',
@@ -47,8 +53,7 @@ module.exports = (on, config) => {
     //     version: '59.0.3071.115',
     //     // ...more properties...
     //   },
-    //   system:
-    //   {
+    //   system: {
     //     osName: 'darwin',
     //     osVersion: '16.7.0',
     //   }
@@ -69,12 +74,31 @@ module.exports = (on, config) => {
     //   tag: 'tag-1'
     // }
 
-    console.log(
-      'Running',
-      details.specs.length,
-      'specs in',
-      details.browser.name
-    )
+    // details will look something like this when run via `cypress open`:
+    // {
+    //   config: {
+    //     projectId: '12345',
+    //     baseUrl: 'http://example.com/',
+    //     viewportWidth: 1000,
+    //     viewportHeight: 660,
+    //     // ...more properties...
+    //   },
+    //   system: {
+    //     osName: 'darwin',
+    //     osVersion: '16.7.0',
+    //   }
+    //   cypressVersion: '7.0.0'
+    // }
+
+    if (details.specs && details.browser) {
+      // details.specs and details.browser will be undefined in interactive mode
+      console.log(
+        'Running',
+        details.specs.length,
+        'specs in',
+        details.browser.name
+      )
+    }
   })
 }
 ```

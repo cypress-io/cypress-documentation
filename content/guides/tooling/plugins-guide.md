@@ -122,7 +122,13 @@ The [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) 
 
 <Alert type="warning">
 
-⚠️ This code is part of the [plugin file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
+⚠️ This code is part of the [plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
+
+</Alert>
+
+<Alert type="warning">
+
+⚠️ This code is part of the [plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
 
 </Alert>
 
@@ -156,11 +162,11 @@ Check out the [Real World App test suites](https://github.com/cypress-io/cypress
 
 Cypress maintains a curated list of plugins created by us and the community. You can `npm install` any of the plugins listed below:
 
-[Our curated list of Cypress plugins.](/plugins/plugins/index)
+[Our curated list of Cypress plugins.](/plugins/directory)
 
 ## Installing plugins
 
-Plugins from our [official list](/plugins/plugins/index) are npm modules. This enables them to be versioned and updated separately without needing to update Cypress itself.
+Plugins from our [official list](/plugins/directory) are npm modules. This enables them to be versioned and updated separately without needing to update Cypress itself.
 
 You can install any published plugin using NPM:
 

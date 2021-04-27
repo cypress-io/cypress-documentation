@@ -10,7 +10,7 @@ This allows you to record those details, manipulate the image as needed, and ret
 
 <Alert type="warning">
 
-⚠️ This code is part of the [plugin file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
+⚠️ This code is part of the [plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
 
 </Alert>
 
@@ -86,7 +86,7 @@ module.exports = (on, config) => {
 ## See also
 
 - [cy.screenshot()](/api/commands/screenshot)
-- [Dashboard Service](/guides/dashboard/dashboard-introduction)
+- [Dashboard Service](/guides/dashboard/introduction)
 - [Plugins Guide](/guides/tooling/plugins-guide)
 - [Screenshots and Videos](/guides/guides/screenshots-and-videos)
 - [Visual Testing](/guides/tooling/visual-testing)

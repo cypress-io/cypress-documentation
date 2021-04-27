@@ -15,7 +15,7 @@ This message means that Cypress was unable to find tests in the specified file. 
 
 This message means that Cypress encountered an error when compiling and/or bundling your test file. Cypress automatically compiles and bundles your test code so you can use ES2015, CoffeeScript, modules, etc.
 
-#### You'll typically receive this message due to:
+#### You’ll typically receive this message due to:
 
 - The file not existing
 - A syntax error in the file or one of its dependencies
@@ -90,7 +90,7 @@ describe('Some Tests', () => {
 
 Move those Cypress commands into an `it(...)` block and everything will work correctly.
 
-If you are purposefully writing commands outside of a test, there is probably a better way to accomplish what you're trying to do. Read through the {% url "Examples" examples/examples/recipes %}, [chat with someone in our chat](https://gitter.im/cypress-io/cypress), or [open an issue](https://github.com/cypress-io/cypress/issues/new).
+If you are purposefully writing commands outside of a test, there is probably a better way to accomplish what you're trying to do. Read through the [Examples](/examples/examples/recipes), [chat with someone in our chat](https://gitter.im/cypress-io/cypress), or [open an issue](https://github.com/cypress-io/cypress/issues/new).
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy...()` failed because the element you are chaining off of has become detached or removed from the dom
 
@@ -425,7 +425,7 @@ The version of Mocha was upgraded with Cypress 4.0. Mocha 3+ no longer allows re
 
 You can safely remove: `{stub: false}`.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> CypressError: Timed out retrying: Expected to find element: '...', but never found it. Queried from element: <...>
+### <Icon name="exclamation-triangle" color="red"></Icon> CypressError: Timed out retrying: Expected to find element: ‘…’, but never found it. Queried from element: <…>
 
 If you get this error in a case where the element is definitely visible in the DOM, your document might contain malformed HTML. In such cases, `document.querySelector()` will not find any elements that appear after the point where the HTML is malformed. Even if you feel certain your HTML is not malformed anywhere, check it anyway (line by line in the dev tools). Especially if you've exhausted all other possibilities.
 
@@ -433,13 +433,13 @@ If you get this error in a case where the element is definitely visible in the D
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> You passed the `--record` flag but did not provide us your Record Key.
 
-You may receive this error when trying to run Cypress tests in [Continuous Integration](/guides/continuous-integration/continuous-integration-introduction). This means that you did not pass a specific record key to: [cypress run --record](/guides/guides/command-line#cypress-run).
+You may receive this error when trying to run Cypress tests in [Continuous Integration](/guides/continuous-integration/introduction). This means that you did not pass a specific record key to: [cypress run --record](/guides/guides/command-line#cypress-run).
 
 Since no record key was passed, Cypress checks for any environment variable with the name `CYPRESS_RECORD_KEY`. In this case, that was also not found.
 
 You can get your project's record key by locating it in your settings tab in the Test Runner or in the [Dashboard Service](https://on.cypress.io/dashboard).
 
-You will want to then [add the key to your config file or as an environment variable](/guides/continuous-integration/continuous-integration-introduction#Record-tests).
+You will want to then [add the key to your config file or as an environment variable](/guides/continuous-integration/introduction#Record-tests).
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> The `cypress ci` command has been deprecated
 
@@ -471,7 +471,7 @@ We will automatically apply the record key environment variable.
 
 This error occurs in CI when using `cypress run` without a valid Cypress binary cache installed on the system (on linux that's `~/.cache/Cypress`).
 
-To fix this error, follow instructions on [caching the cypress binary in CI](/guides/continuous-integration/continuous-integration-introduction#Caching), then bump the version of your CI cache to ensure a clean build.
+To fix this error, follow instructions on [caching the cypress binary in CI](/guides/continuous-integration/introduction#Caching), then bump the version of your CI cache to ensure a clean build.
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> Incorrect usage of `--ci-build-id` flag
 
@@ -485,7 +485,7 @@ Check out our [guide on parallelizing runs](/guides/guides/parallelization) and 
 
 You passed the `--ci-build-id`, [--group](/guides/guides/command-line#cypress-run-group-lt-name-gt), or [--parallel](/guides/guides/command-line#cypress-run-parallel) flag without also passing the `--record` flag.
 
-These flags can only be used when recording to the [Dashboard Service](/guides/dashboard/dashboard-introduction).
+These flags can only be used when recording to the [Dashboard Service](/guides/dashboard/introduction).
 
 Please review our [parallelization](/guides/guides/parallelization) documentation to learn more.
 
@@ -495,7 +495,7 @@ You passed the [--group](/guides/guides/command-line#cypress-run-group-lt-name-g
 
 In order to use either of these parameters a `ciBuildId` must be determined.
 
-The `ciBuildId` is automatically detected if you are running Cypress in most [CI providers](/guides/continuous-integration/continuous-integration-introduction#Examples). Please review the [natively recognized environment variables](/guides/guides/parallelization#CI-Build-ID-environment-variables-by-provider) for your CI provider.
+The `ciBuildId` is automatically detected if you are running Cypress in most [CI providers](/guides/continuous-integration/introduction#Examples). Please review the [natively recognized environment variables](/guides/guides/parallelization#CI-Build-ID-environment-variables-by-provider) for your CI provider.
 
 You can avoid this check in the future by passing an ID to the [--ci-build-id](/guides/guides/command-line#cypress-run-ci-build-id-lt-id-gt) flag manually.
 
@@ -658,6 +658,8 @@ Here are some potential workarounds:
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> Uncaught exceptions from your application
 
-WIP. We'll be adding more here soon.
+When Cypress detects an uncaught exception in your application, it will fail the currently running test.
 
-For now, please visit the [Catalog of Events](/api/events/catalog-of-events#Uncaught-Exceptions) page for examples how to turn off catching uncaught exceptions.
+You can turn off this behavior globally or conditionally with the `uncaught:exception` event. Please see the [Catalog of Events](/api/events/catalog-of-events#Uncaught-Exceptions) for examples.
+
+On a technical note, Cypress considers uncaught exceptions to be any error that is uncaught by your application, whether they are "standard" errors or unhandled promise rejections. If the error triggers the window's global `error` handler or its `unhandledrejection` handler, Cypress will detect it and fail the test.

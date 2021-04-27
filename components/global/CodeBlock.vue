@@ -14,20 +14,21 @@ export default {
 </script>
 
 <template>
-  <div class="code-block" :class="[active && 'active']">
+  <div :class="[active && 'active', $style.codeBlock]">
     <slot />
   </div>
 </template>
 
-<style lang="scss">
-.code-block {
+<style module>
+.codeBlock {
   display: none;
 }
-.code-block.active {
-  display: block;
 
-  .line-numbers {
-    @apply mt-0;
-  }
+:global(.active) {
+  display: block;
+}
+
+:global(.active .line-numbers) {
+  @apply mt-0;
 }
 </style>

@@ -84,11 +84,11 @@ Like most image comparison tools, the plugin also shows a difference view on mou
 
 ## Tooling
 
-There are several published, open source plugins, listed in the [Visual Testing plugins](/plugins/plugins/index#visual-testing) section, and several commercial companies have developed visual testing solutions on top of the Cypress Test Runner listed below.
+There are several published, open source plugins, listed in the [Visual Testing plugins](/plugins/directory#visual-testing) section, and several commercial companies have developed visual testing solutions on top of the Cypress Test Runner listed below.
 
 ### Open source
 
-Listed in the [Visual Testing plugins](/plugins/plugins/index#visual-testing) section.
+Listed in the [Visual Testing plugins](/plugins/directory#visual-testing) section.
 
 ### Applitools
 
@@ -100,7 +100,7 @@ First joint webinar with Applitools
 
 <!-- textlint-enable -->
 
-Second joint webinar with Applitools with a focus on {% url 'Component Testing' ../component-testing/introduction.html %}
+Second joint webinar with Applitools with a focus on [Component Testing](/guides/component-testing/introduction)
 
 <!-- textlint-disable -->
 
@@ -273,7 +273,7 @@ Targeting specific DOM element will help avoid visual changes from component "X"
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use [Component Testing plugins](/plugins/plugins/index) to test the individual components functionality in addition to end-to-end and visual tests.
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use [Component Testing plugins](/plugins/directory) to test the individual components functionality in addition to end-to-end and visual tests.
 
 </Alert>
 
@@ -285,7 +285,7 @@ If you are working on React components, read [Visual testing for React component
 - [cy.screenshot()](/api/commands/screenshot)
 - [Cypress.Screenshot](/api/cypress-api/screenshot-api)
 - [Plugins](/guides/tooling/plugins-guide)
-- [Visual Testing Plugins](/plugins/plugins/index#visual-testing)
+- [Visual Testing Plugins](/plugins/directory#visual-testing)
 - [Writing a Plugin](/api/plugins/writing-a-plugin)
 - <Icon name="github"></Icon> [Cypress Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) is a full stack example application that demonstrates **best practices and scalable strategies with Cypress in practical and realistic scenarios**.
 - Read the blog post [Debug a Flaky Visual Regression Test](https://www.cypress.io/blog/2020/10/02/debug-a-flaky-visual-regression-test/)

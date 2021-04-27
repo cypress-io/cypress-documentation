@@ -2,7 +2,9 @@
 title: Configuration
 ---
 
-When a project is added to Cypress, a `cypress.json` file is created in the project. This file is used to store the `projectId` ([after configuring your tests to record](/guides/dashboard/projects#Setup)) and any configuration values you supply.
+## cypress.json
+
+The first time you open Cypress Test Runner, it creates the `cypress.json` configuration file. This JSON file is used to store any configuration values you supply. If you [configure your tests to record](/guides/dashboard/projects#Setup) the results to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction) the `projectId` will be written in this file too.
 
 <Alert type="warning">
 
@@ -22,13 +24,14 @@ The default behavior of Cypress can be modified by supplying any of the followin
 | ---------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `baseUrl`              | `null`                            | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL                                                                          |
 | `env`                  | `{}`                              | Any values to be set as [environment variables](/guides/guides/environment-variables)                                                                                                        |
+| `includeShadowDom`     | `false`                           | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get))                                 |
 | `numTestsKeptInMemory` | `50`                              | The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.           |
 | `port`                 | `null`                            | Port used to host Cypress. Normally this is a randomly generated port                                                                                                                        |
+| `redirectionLimit`     | `20`                              | The number of times that the application under test can redirect before erroring.                                                                                                            |
 | `reporter`             | `spec`                            | The [reporter](/guides/tooling/reporters) used during `cypress run`                                                                                                                          |
 | `reporterOptions`      | `null`                            | The [reporter options](/guides/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                           |
 | `retries`              | `{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. See [Test Retries](/guides/guides/test-retries) for more information. |
 | `watchForFileChanges`  | `true`                            | Whether Cypress will watch and restart tests on test file changes                                                                                                                            |
-| `includeShadowDom`     | `false`                           | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get))                                 |
 
 ### Timeouts
 
@@ -76,13 +79,13 @@ For more options regarding screenshots, view the [Cypress.Screenshot API](/api/c
 
 ### Videos
 
-| Option                  | Default          | Description                                                                                                                                                                                                                                                                                                                        |
-| ----------------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `trashAssetsBeforeRuns` | `true`           | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.                                                                                                                                                                                       |
-| `videoCompression`      | `32`             | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` to disable compression or a value between `0` and `51`, where a lower value results in better quality (at the expense of a higher file size).                                                                               |
-| `videosFolder`          | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.                                                                                                                                                                                                                                 |
-| `video`                 | `true`           | Whether Cypress will capture a video of the tests run with `cypress run`.                                                                                                                                                                                                                                                          |
-| `videoUploadOnPasses`   | `true`           | Whether Cypress will process, compress, and upload videos to the [Dashboard](/guides/dashboard/dashboard-introduction) even when all tests in a spec file are passing. This only applies when recording your runs to the Dashboard. Turn this off if you'd like to only upload the spec file's video when there are failing tests. |
+| Option                  | Default          | Description                                                                                                                                                                                                                                                                                                              |
+| ----------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `trashAssetsBeforeRuns` | `true`           | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.                                                                                                                                                                             |
+| `videoCompression`      | `32`             | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` to disable compression or a value between `0` and `51`, where a lower value results in better quality (at the expense of a higher file size).                                                                     |
+| `videosFolder`          | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.                                                                                                                                                                                                                       |
+| `video`                 | `true`           | Whether Cypress will capture a video of the tests run with `cypress run`.                                                                                                                                                                                                                                                |
+| `videoUploadOnPasses`   | `true`           | Whether Cypress will process, compress, and upload videos to the [Dashboard](/guides/dashboard/introduction) even when all tests in a spec file are passing. This only applies when recording your runs to the Dashboard. Turn this off if you'd like to only upload the spec file's video when there are failing tests. |
 
 ### Downloads
 
@@ -178,6 +181,36 @@ For more complex configuration objects, you may want to consider passing a [JSON
 cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.ts"]}'
 ```
 
+### Runner Specific Overrides
+
+You can override configuration for either the E2E or [Component Testing](/guides/component-testing/introduction/) runner using the `e2e` and `component` options.
+
+#### Examples
+
+Component Testing specific viewports in configuration file (`cypress.json` by default):
+
+```json
+{
+  "viewportHeight": 600,
+  "viewportWidth": 1000,
+  "component": {
+    "viewportHeight": 500,
+    "viewportWidth": 500
+  }
+}
+```
+
+E2E specific timeouts in configuration file (`cypress.json` by default):
+
+```json
+{
+  "defaultCommandTimeout": 5000,
+  "e2e": {
+    "defaultCommandTimeout": 10000
+  }
+}
+```
+
 ### Plugins
 
 You can programmatically modify configuration values using Node within the `pluginsFile`. This enables you to do things like:
@@ -191,7 +224,7 @@ While this may take a bit more work than other options - it yields you the most 
 
 ### Environment Variables
 
-You can also use [environment variables](/guides/guides/environment-variables) to override configuration values. This is especially useful in [Continuous Integration](/guides/continuous-integration/continuous-integration-introduction) or when working locally. This gives you the ability to change configuration options without modifying any code or build scripts.
+You can also use [environment variables](/guides/guides/environment-variables) to override configuration values. This is especially useful in [Continuous Integration](/guides/continuous-integration/introduction) or when working locally. This gives you the ability to change configuration options without modifying any code or build scripts.
 
 By default, any environment variable that matches a corresponding configuration key will override the configuration file (`cypress.json` by default) value.
 
@@ -311,7 +344,7 @@ When you open a Cypress project, clicking on the **Settings** tab will display t
 - The [Cypress environment file](/guides/guides/environment-variables#Option-2-cypress-env-json)
 - System [environment variables](/guides/guides/environment-variables#Option-3-CYPRESS)
 - [Command Line arguments](/guides/guides/command-line)
-- [Plugin file](/api/plugins/configuration-api)
+- [Plugins file](/api/plugins/configuration-api)
 
 <DocsImage src="/img/guides/configuration/see-resolved-configuration.jpg" alt="See resolved configuration" ></DocsImage>
 
@@ -518,10 +551,12 @@ DEBUG=cypress:cli,cypress:server:specs
 
 | Version                                      | Changes                                                 |
 | -------------------------------------------- | ------------------------------------------------------- |
-| [6.1.0](/guides/references/changelog#6-1-0)  | Added option `scrollBehavior`                           |
+| [7.0.0](/guides/references/changelog#7-0-0)  | Added `e2e` and `component` options.                    |
+| [7.0.0](/guides/references/changelog#7-0-0)  | Added `redirectionLimit` option.                        |
+| [6.1.0](/guides/references/changelog#6-1-0)  | Added `scrollBehavior` option.                          |
 | [5.2.0](/guides/references/changelog#5-2-0)  | Added `includeShadowDom` option.                        |
-| [5.0.0](/guides/references/changelog)        | Added `retries` configuration.                          |
-| [5.0.0](/guides/references/changelog)        | Renamed `blacklistHosts` configuration to `blockHosts`. |
+| [5.0.0](/guides/references/changelog#5-0-0)  | Added `retries` configuration.                          |
+| [5.0.0](/guides/references/changelog#5-0-0)  | Renamed `blacklistHosts` configuration to `blockHosts`. |
 | [4.1.0](/guides/references/changelog#4-12-0) | Added `screenshotOnRunFailure` configuration.           |
 | [4.0.0](/guides/references/changelog#4-0-0)  | Added `firefoxGcInterval` configuration.                |
 | [3.5.0](/guides/references/changelog#3-5-0)  | Added `nodeVersion` configuration.                      |

@@ -17,17 +17,11 @@ export default {
     },
   },
   watch: {
-    '$i18n.locale'(newValue) {
-      // this.update(this.options, newValue)
-      this.update(this.options, newValue)
-    },
     options(newValue) {
-      // this.update(newValue, this.$i18n.locale)
       this.update(newValue)
     },
   },
   mounted() {
-    // this.initialize(this.options, this.$i18n.locale)
     this.initialize(this.options)
   },
   methods: {
@@ -35,25 +29,23 @@ export default {
       return url.replace(/\/$|\/(?=\?)|\/(?=#)/g, '')
     },
     formatUrl(absoluteUrl) {
-      const { pathname, origin, hash } = new URL(absoluteUrl)
+      const { pathname, hash, origin } = new URL(absoluteUrl)
 
-      if (location.origin !== origin) {
+      if (!origin.includes('docs.cypress.io')) {
         return absoluteUrl
       }
 
       const url = pathname.replace(this.settings.url, '/') + hash
-      
+
       return this.stripTrailingSlash(url)
     },
     initialize(userOptions, code) {
-      // const lang = this.$i18n.locales.find((locale) => locale.code === code)
-      const lang = undefined // todo
-
       Promise.all([
         import(/* webpackChunkName: "docsearch" */ '@docsearch/js'),
         import(/* webpackChunkName: "docsearch" */ '@docsearch/css'),
       ]).then(([docsearch]) => {
         docsearch = docsearch.default
+        const lang = undefined // todo
 
         const payload = Object.assign({}, userOptions, {
           container: '#docsearch',
@@ -73,7 +65,15 @@ export default {
           transformItems: (items) => {
             return items.map((item) => {
               return Object.assign({}, item, {
-                url: this.formatUrl(item.url),
+                /**
+                 * Search terms where the query matches the h1 header on the page,
+                 * e.g. the query "clearCookie" returns the link to the `clearCookie`
+                 * API doc page, will include a hash for `#__nuxt` in the search result
+                 * URL. This hash can be safely removed before displaying the results
+                 * in the Algolia UI. Removing the hash from the Nuxt app itself causes
+                 * other unintended side effects, so we will sanitize these results instead.
+                 */
+                url: this.formatUrl(item.url).replace('#__nuxt', ''),
               })
             })
           },
@@ -95,7 +95,9 @@ export default {
       })
     },
     update(options, lang) {
-      this.$el.innerHTML = '<div id="docsearch"></div>'
+      this.$el.innerHTML =
+        '<div id="docsearch" class="w-full mx-8 lg:m-0 lg:w-1/5"></div>'
+
       this.initialize(options, lang)
     },
   },

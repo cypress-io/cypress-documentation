@@ -6,7 +6,7 @@ containerClass: faq
 
 ## <Icon name="angle-right"></Icon> Is Cypress free and open source?
 
-The [Test Runner](/guides/core-concepts/test-runner) is a free, downloadable and open source (MIT license) application. This is always free to use. Our [Dashboard Service](/guides/dashboard/dashboard-introduction) is a web application that offers a variety of billing plans (including a free, open source plan) for when you want to record your test runs in CI.
+The [Test Runner](/guides/core-concepts/test-runner) is a free, downloadable and open source (MIT license) application. This is always free to use. Our [Dashboard Service](/guides/dashboard/introduction) is a web application that offers a variety of billing plans (including a free, open source plan) for when you want to record your test runs in CI.
 
 Please see our [Pricing Page](https://www.cypress.io/pricing) for more details.
 
@@ -66,7 +66,7 @@ You can read about our currently available browsers [here](/guides/guides/launch
 
 ## <Icon name="angle-right"></Icon> Will Cypress work in my CI provider?
 
-Cypress works in any [CI provider](/guides/continuous-integration/continuous-integration-introduction).
+Cypress works in any [CI provider](/guides/continuous-integration/introduction).
 
 ## <Icon name="angle-right"></Icon> Does Cypress require me to change any of my existing code?
 
@@ -171,7 +171,7 @@ Finally, unit and end-to-end tests are not _that_ different and have common feat
 - Focus on and test only one thing.
 - Are flake-free and do not fail randomly.
 - Give you confidence to refactor code and add new features.
-- Are able to run both locally and on a [continuous integration](/guides/continuous-integration/continuous-integration-introduction) server.
+- Are able to run both locally and on a [continuous integration](/guides/continuous-integration/introduction) server.
 
 Certainly, unit and end-to-end tests are NOT in opposition to each other and are complementary tools in your toolbox.
 

@@ -23,23 +23,31 @@ export default {
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
+    htmlAttrs: {
+      lang: 'en',
+    },
     title: 'Cypress Documentation',
     meta: [
       ...meta,
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/img/favicon.ico' }],
+    script: [{ src: '/js/removeTrailingSlash.js' }],
   },
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['@/styles/content.css'],
+  env: {
+    SANITY_PROJECT_ID: process.env.SANITY_PROJECT_ID,
+    SANITY_AUTH_TOKEN: process.env.SANITY_AUTH_TOKEN,
+  },
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ['@/plugins/vue-scrollactive'],
+  plugins: ['@/plugins/vue-scrollactive', '@/plugins/sanity-client'],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -48,30 +56,23 @@ export default {
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: [
-    '@nuxtjs/tailwindcss',
-    '@nuxtjs/fontawesome',
-    '@nuxt/image'
-  ],
+  buildModules: ['@nuxtjs/tailwindcss', '@nuxtjs/fontawesome', '@nuxt/image'],
   /*
    ** Nuxt.js modules
    */
-  modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-    // Doc: https://github.com/nuxt/content
-    '@nuxt/content',
-    '@nuxtjs/gtm',
-  ],
+  modules: ['@nuxtjs/axios', '@nuxt/content', '@nuxtjs/gtm', '@nuxtjs/sentry'],
+  sentry: {
+    dsn:
+      (process.env.CONTEXT === 'production' && process.env.SENTRY_DSN) ||
+      undefined,
+  },
   /*
    ** Google Tag Manager
    */
   gtm: {
     // The env var CONTEXT is set by Netlify and can be 'production', 'deploy-preview', or 'branch-deploy'
     id:
-      (process.env.CONTEXT === 'production' &&
-        process.env.GOOGLE_TAG_MANAGER_ID) ||
-      'GTM-XXXXXXX',
+      (process.env.CONTEXT === 'production' && 'GTM-KNKBWLD') || 'GTM-XXXXXXX',
   },
   /*
    ** Axios module configuration
@@ -84,6 +85,18 @@ export default {
    */
   content: {
     markdown: {
+      remarkPlugins: (_defaultPlugins) => {
+        return [
+          'remark-directive',
+          '~/scripts/remarkPartialPlugin.js',
+          'remark-squeeze-paragraphs',
+          'remark-slug',
+          'remark-autolink-headings',
+          'remark-external-links',
+          'remark-footnotes',
+          'remark-gfm',
+        ]
+      },
       prism: {
         theme: 'prism-themes/themes/prism-material-oceanic.css',
       },
@@ -130,6 +143,7 @@ export default {
         'faBan',
         'faLongArrowAltUp',
         'faFolderOpen',
+        'faStar',
       ],
       brands: ['faGithub', 'faTwitter', 'faYoutube'],
     },

@@ -10,7 +10,7 @@ Cypress bundles the popular [Chai](/guides/references/assertions#Chai) assertion
 
 This document is only a reference to every assertion Cypress supports.
 
-If you're looking to understand **how** to use these assertions please read about assertions in our [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Assertions guide).
+If you're looking to understand **how** to use these assertions please read about assertions in our [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Assertions) guide.
 
 </Alert>
 
@@ -227,9 +227,22 @@ cy.get('textarea').should('have.value', 'foo bar baz')
 ### Text Content
 
 ```javascript
+// assert the element's text content is exactly the given text
+cy.get('#user-name').should('have.text', 'Joe Smith')
+// assert the element's text includes the given substring
+cy.get('#address').should('include.text', 'Atlanta')
 // retry until this span does not contain 'click me'
 cy.get('a').parent('span.help').should('not.contain', 'click me')
+// the element's text should start with "Hello"
+cy.get('#greeting')
+  .invoke('text')
+  .should('match', /^Hello/)
+// tip: use cy.contains to find element with its text
+// matching the given regular expression
+cy.contains('#a-greeting', /^Hello/)
 ```
+
+**Tip:** read about assertions against a text with non-breaking space entities in [How do I get an element's text contents?](/faq/questions/using-cypress-faq#How-do-I-get-an-element-s-text-contents)
 
 ### Visibility
 

@@ -65,6 +65,20 @@
           "link": "https://github.com/lmarqs/cypress-rollup-preprocessor",
           "keywords": ["rollup"],
           "badge": "community"
+        },
+        {
+          "name": "@bahmutov/cypress-esbuild-preprocessor",
+          "description": "Bundle Cypress specs using esbuild",
+          "link": "https://github.com/bahmutov/cypress-esbuild-preprocessor",
+          "keywords": ["esbuild"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-esbuild-preprocessor",
+          "description": "Uses evanw/esbuild to bundle your specs.",
+          "link": "https://github.com/sod/cypress-esbuild-preprocessor",
+          "keywords": ["esbuild"],
+          "badge": "community"
         }
       ]
     },
@@ -581,6 +595,13 @@
           "link": "https://github.com/dmtrKovalenko/cypress-real-events",
           "keywords": ["commands"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-azure-keyvault",
+          "description": "Cypress custom command to get keys from Azure Key Vaults.",
+          "link": "https://github.com/prma85/cypress-azure-keyvault",
+          "keywords": ["testing", "azure", "keyvault", "secret"],
+          "badge": "community"
         }
       ]
     },
@@ -619,7 +640,7 @@
     },
     {
       "name": "Authentication",
-      "description": "Also take a look at [Logging in](https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes) recipes.",
+      "description": "Also take a look at <a target=\"_blank\" href=\"https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes\">Logging in</a> recipes.",
       "plugins": [
         {
           "name": "cypress-keycloak-commands",

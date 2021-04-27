@@ -243,7 +243,7 @@ Cypress is built from multiple packages, each responsible for its own logging: s
 | `cypress:net-stubbing*`       | Network interception in the proxy layer     |
 | `cypress:server:reporter`     | Problems with test reporters                |
 | `cypress:server:preprocessor` | Processing specs                            |
-| `cypress:server:plugins`      | Running the plugin file and bundling specs  |
+| `cypress:server:plugins`      | Running the plugins file and bundling specs  |
 | `cypress:server:socket-e2e`   | Watching spec files                         |
 | `cypress:server:task`         | Invoking the `cy.task` command              |
 | `cypress:server:socket-base`  | Debugging `cy.request` command              |
@@ -288,6 +288,15 @@ cypress:server:socket-base backend:request { eventName: 'http:request', args:
   auth: { username: 'jane.lane', password: 'password123' }, json: true, encoding: 'utf8',
   gzip: true, timeout: 30000, followRedirect: true, failOnStatusCode: true,
   retryOnNetworkFailure: true, retryOnStatusCodeFailure: false } ] } +4ms
+```
+
+#### 3rd party modules
+
+Some 3rd party modules like [@cypress/request](https://github.com/cypress-io/request) output additional log messages by inspecting the `NODE_DEBUG` environment variable. For example to debug the network interception and the requests made by the `@cypress/request` use:
+
+```shell
+DEBUG=cypress:net-stubbing:server:intercept-request \
+  NODE_DEBUG=request npx cypress run
 ```
 
 ### Debug logs in the browser

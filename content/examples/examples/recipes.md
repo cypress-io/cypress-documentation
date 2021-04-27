@@ -54,7 +54,7 @@ Recipes show you how to test common scenarios in Cypress.
 | [Json Web Tokens](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__jwt)                   | Log in using JWT                            |
 | [Using application code](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__using-app-code) | Log in by calling the application code      |
 
-Also see [Authentication plugins](/plugins/plugins/index#authentication) and watch [Organizing Tests, Logging In, Controlling State](https://www.youtube.com/watch?v=5XQOK0v_YRE)
+Also see [Authentication plugins](/plugins/directory#authentication) and watch [Organizing Tests, Logging In, Controlling State](https://www.youtube.com/watch?v=5XQOK0v_YRE)
 
 ## Preprocessors
 
@@ -100,8 +100,9 @@ Demo recipes from the blog posts at [Cypress blog](https://www.cypress.io/blog).
 | Recipe                                                                                                                        | Description                               |
 | ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
 | [Application Code](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/unit-testing__application-code) | Import and test your own application code |
-| [React](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/unit-testing__react)                       | Test your react components in isolation   |
 | [File Upload in React](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/file-upload-react)          | Test file upload in React application     |
+
+**Note:** looking for the React/Vue component testing recipes? Read the [Introducing the Cypress Component Test Runner– new in 7.0.0](https://www.cypress.io/blog/2021/04/06/introducing-the-cypress-component-test-runner/) blog post.
 
 ## Server Communication
 

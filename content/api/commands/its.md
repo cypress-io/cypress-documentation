@@ -75,11 +75,9 @@ cy.wrap(['Wai Yan', 'Yu']).its(1).should('eq', 'Yu') // true
 #### Get the `length` property of a DOM element
 
 ```javascript
-cy
-  .get('ul li')       // this yields us a jquery object
-  .its('length')      // calls 'length' property returning that value
+cy.get('ul li') // this yields us a jquery object
+  .its('length') // calls 'length' property returning that value
   .should('be.gt', 2) // ensure the length is greater than 2
-})
 ```
 
 ### Requests
@@ -208,7 +206,7 @@ cy.window().its('evilProp').should('not.exist')
 **_Get `responseBody` of aliased route_**
 
 ```javascript
-cy.intercept(/comments/, { fixture: 'comments.json' }).as('getComments')
+cy.intercept('/comments', { fixture: 'comments.json' }).as('getComments')
 cy.get('#fetch-comments').click()
 cy.wait('@getComments')
   .its('response.body')

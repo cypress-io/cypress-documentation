@@ -144,7 +144,7 @@ To apply specific Cypress [configuration](/guides/references/configuration) valu
 
 While `Cypress.config()` changes configuration values through the entire spec file, using test configuration will only change configuration values during the suite or test where they are set. The values will then reset to the previous default values after the suite or test is complete.
 
-See the full guide on {% url "test configuration", configuration#Test-Configuration %}.
+See the full guide on [test configuration](/api/cypress-api/config#Test-Configuration).
 
 ### Why is it `Cypress.config` and not `cy.config`?
 

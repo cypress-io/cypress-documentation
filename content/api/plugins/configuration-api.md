@@ -2,13 +2,19 @@
 title: Configuration API
 ---
 
-Cypress enables you to dynamically modify configuration values and environment variables from your plugin file.
+Cypress enables you to dynamically modify configuration values and environment variables from your plugins file.
 
 ## Usage
 
 <Alert type="warning">
 
-⚠️ This code is part of the [plugin file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
+⚠️ This code is part of the [plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
+
+</Alert>
+
+<Alert type="warning">
+
+⚠️ This code is part of the [plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
 
 </Alert>
 
@@ -17,7 +23,7 @@ To modify configuration, you return an object from your plugins file exported fu
 ```javascript
 // cypress/plugins/index.js
 module.exports = (on, config) => {
-  console.log(config) // see what all is in here!
+  console.log(config) // see everything in here!
 
   // modify config values
   config.defaultCommandTimeout = 10000
@@ -204,3 +210,27 @@ This would enable you to do things like this:
 This is a less complicated example. Remember - you have the full power of Node at your disposal.
 
 How you choose to edit the configuration is up to you. You don't have to read off of the file system - you could store them all in memory inside of your `pluginsFile` if you wanted.
+
+### Runner Specific Plugins
+
+You can access the type of tests running via the `config.testingType` property. The testing type is either `e2e` or `component` depending on if the E2E or [Component Testing](/guides/component-testing/introduction/) runner was launched. This allows you to configure runner specific plugins.
+
+#### Use Cypress React Plugin Conditionally
+
+Conditionally apply the Cypress React Plugin if launching via Component Testing:
+
+```js
+module.exports = (on, config) => {
+  if (config.testingType === 'component') {
+    require('@cypress/react/plugins/react-scripts')(on, config)
+  }
+
+  return config
+}
+```
+
+## History
+
+| Version                               | Changes                                   |
+| ------------------------------------- | ----------------------------------------- |
+| [7.0.0](/guides/references/changelog) | Added `testingType` property to `config`. |

@@ -61,7 +61,7 @@ There are 5 different ways to set environment variables. Each has a slightly dif
 - [Set an environment variable within your plugins.](#Option-5-Plugins)
 - [Set an environment variable within test configuration.](#Option-6-Test-Configuration)
 
-Don't feel obligated to pick just one method. It is common to use one strategy for local development but another when running in [CI](/guides/continuous-integration/continuous-integration-introduction).
+Don't feel obligated to pick just one method. It is common to use one strategy for local development but another when running in [CI](/guides/continuous-integration/introduction).
 
 When your tests are running, you can use the [`Cypress.env`](/api/cypress-api/env) function to access the values of your environment variables.
 

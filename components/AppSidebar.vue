@@ -24,6 +24,11 @@ export default {
         )
       },
     },
+    hasBanner: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
 }
 </script>
@@ -34,6 +39,7 @@ export default {
     role="navigation"
   >
     <div
+      :class="hasBanner ? $style.bannerMargin : ''"
       class="mt-5 pt-16 fixed top-0 bottom-0 left-0 right-0 overflow-y-auto lg:w-sidebar flex-grow flex flex-col overflow-y-auto hide-scroll"
     >
       <CollapsibleSidebarSection
@@ -43,52 +49,15 @@ export default {
         :folder="sidebarGroup.folder"
         :section="section"
         :children="sidebarGroup.children"
-        :initial-is-open="(path.includes(sidebarGroup.folder))"
+        :initial-is-open="path.includes(sidebarGroup.folder)"
         :path="path"
       />
     </div>
   </aside>
 </template>
 
-<style lang="scss" scoped>
-.app-sidebar {
-  ul,
-  li {
-    @apply list-none;
-  }
-}
-
-.app-sidebar-link {
-  display: block;
-  font-weight: 500;
-  @apply py-1;
-  @apply px-8;
-}
-
-.app-sidebar-sticky {
-  position: sticky;
-  top: 0;
-  height: calc(100vh - 35px);
-  overflow-y: auto;
-}
-
-.app-sidebar-heading {
-  @apply mb-2;
-  @apply px-8;
-  // @apply text-gray-500;
-  @apply uppercase;
-  @apply tracking-wider;
-  @apply font-bold;
-  @apply text-xs;
-}
-
-.app-sidebar-nav {
-  @apply py-4;
-}
-
-.nuxt-link-exact-active {
-  color: #fff;
-  font-weight: 600;
-  background-color: #1dbe89;
+<style module>
+.bannerMargin {
+  margin-top: 80px;
 }
 </style>
