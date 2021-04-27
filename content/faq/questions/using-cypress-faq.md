@@ -559,7 +559,7 @@ Cypress.Cookies.defaults({
 })
 ```
 
-You **cannot** currently preserve localStorage across tests and can read more [here](https://github.com/cypress-io/cypress/issues/'461#issuecomment-325402086').
+You **cannot** currently preserve localStorage across tests and can read more [here](https://github.com/cypress-io/cypress/issues/461#issuecomment-325402086).
 
 ## <Icon name="angle-right"></Icon> Some of my elements animate in; how do I work around that?
 
