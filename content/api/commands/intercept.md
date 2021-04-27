@@ -27,8 +27,6 @@ Cypress intercepts requests at the network layer including `XMLHttpRequest` (XHR
 cy.intercept(url)
 cy.intercept(method, url)
 cy.intercept(routeMatcher)
-cy.intercept(url, routeMatcher)
-cy.intercept(method, url, routeMatcher)
 ```
 
 #### With `routeHandler` (Request/Response Modification and Spying)
@@ -38,7 +36,6 @@ cy.intercept(url, routeHandler)
 cy.intercept(method, url, routeHandler)
 cy.intercept(routeMatcher, routeHandler)
 cy.intercept(url, routeMatcher, routeHandler)
-cy.intercept(method, url, routeMatcher, routeHandler)
 ```
 
 <Alert type="warning">
@@ -51,9 +48,27 @@ All intercepts are automatically cleared before every test.
 
 ```js
 cy.intercept('/users/**')
+cy.intercept('GET', '/users*')
+cy.intercept({ method: 'get', url: '/users*', hostname: 'localhost' })
+cy.intercept({ method: 'POST', url: '/users*' }, { success: true })
+cy.intercept('/users*', { hostname: 'localhost' }, (req) => {
+  /* do something with request */
+})
+```
+
+**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+
+```js
+cy.intercept('GET')
+cy.intercept({ success: true })
+cy.intercept('/users*', { method: 'GET' })
+cy.intercept('GET', '/users*', { hostname: 'localhost' })
+cy.intercept('GET', '/users*', { hostname: 'localhost' }, { success: true })
 ```
 
 ### Arguments
+
+`cy.intercept()` accepts up to three arguments
 
 #### **<Icon name="angle-right"></Icon> url** **_(String, Glob, RegExp)_**
 
