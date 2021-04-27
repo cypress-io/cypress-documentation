@@ -576,6 +576,12 @@ The request modification cannot be verified by inspecting the browser's network 
 
 </Alert>
 
+<Alert type="warning">
+
+While [`cy.request()`](/api/commands/request) is used to manually send requests, `cy.intercept()` only intercepts those sent by your front-end application. Therefore, `cy.intercept()` cannot be debugged using [`cy.request()`](/api/commands/request).
+
+</Alert>
+
 #### Controlling the response
 
 The intercepted request passed to the route handler contains methods to dynamically control the response to a request:
@@ -1214,39 +1220,17 @@ Unlike [cy.route()](/api/commands/route), `cy.intercept()`:
 | [6.0.0](/guides/references/changelog#6-0-0) | Removed `experimentalNetworkStubbing` option and made it the default behavior.                                                                                                                                                                                                                       |
 | [5.1.0](/guides/references/changelog#5-1-0) | Added experimental `cy.route2()` command under `experimentalNetworkStubbing` option.                                                                                                                                                                                                                 |
 
-## Notes
-
-### `cy.intercept()` cannot be debugged using [`cy.request()`](/api/commands/request)
-
-#### `cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.intercept()`
-
-The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the front end application.
-
 ## See also
 
 - [`.as()`](/api/commands/as)
-- [`cy.fixture()`](/api/commands/fixture)
 - [`cy.wait()`](/api/commands/wait)
+- [Network Requests Guide](/guides/guides/network-requests)
+- [Cypress Example Recipes](https://github.com/cypress-io/cypress-example-recipes#stubbing-and-spying)
+- [Kitchen Sink Examples](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples/network_requests.spec.js)
 - [Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide#Migrating-cy-route-to-cy-intercept)
-- [`cy.intercept()` example recipes with real-world examples](https://github.com/cypress-io/cypress-example-recipes#stubbing-and-spying)
-  - spying on requests
-  - stubbing any request
-  - changing the response from the server
-  - intercepting static resources like HTML and CSS
-  - redirecting requests
-  - replying with different responses
-- [How cy.intercept works](https://slides.com/bahmutov/how-cy-intercept-works) presentation
-- [Cypress cy.intercept Problems](https://glebbahmutov.com/blog/cypress-intercept-problems/) with advanced `cy.intercept` tips to solve the common problems:
-  - The intercept was registered too late
-  - `cy.wait` uses the intercept
-  - The response was cached
-  - The request matched multiple intercepts
-  - How to overwrite interceptors
-  - How to avoid using Cypress commands inside the interceptor
-  - Sending different responses
-- [`cy.route()` vs `cy.route2()`](https://glebbahmutov.com/blog/cy-route-vs-route2/) blog post
 - [Smart GraphQL Stubbing in Cypress](https://glebbahmutov.com/blog/smart-graphql-stubbing/) blog post
-- [Open issues for `net stubbing`](https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aopen+label%3Apkg%2Fnet-stubbing) and [closed issues for `net stubbing`](https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aclosed+label%3Apkg%2Fnet-stubbing)
+  <!-- - [How cy.intercept works](https://slides.com/bahmutov/how-cy-intercept-works) presentation -->
+  <!-- - [Cypress cy.intercept Problems](https://glebbahmutov.com/blog/cypress-intercept-problems/) -->
 
 [staticresponse]: #StaticResponse-objects
 [lifecycle]: #Interception-lifecycle
