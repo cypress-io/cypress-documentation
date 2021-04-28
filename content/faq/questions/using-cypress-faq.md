@@ -739,7 +739,7 @@ There is already a great section in [Custom Commands](/api/cypress-api/custom-co
 
 ## <Icon name="angle-right"></Icon> Can I print the list of commands from a test in the terminal?
 
-If a test fails, Cypress takes a screenshot image, but does not print the list of commands in the terminal, only the failed assertion. There is a user space plugin [cypress-failed-log](https://github.com/bahmutov/cypress-failed-log) that saves a JSON file with all commands from a failed test. We are also working on mirroring `console.log` messages from the browser in the terminal, see [#2078](https://github.com/cypress-io/cypress/issues/2078).
+If a test fails, Cypress takes a screenshot image, but does not print the list of commands in the terminal, only the failed assertion. There is a user space plugin [cypress-failed-log](https://github.com/bahmutov/cypress-failed-log) that saves a JSON file with all commands from a failed test.
 
 ## <Icon name="angle-right"></Icon> Can my tests interact with Redux / Vuex data store?
 
