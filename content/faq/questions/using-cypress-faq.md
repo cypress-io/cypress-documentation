@@ -722,7 +722,7 @@ That being said, we use Cypress to test our own Desktop app's front end - by stu
 
 - Search existing [open issues](https://github.com/cypress-io/cypress/issues), it may already be reported!
 - Update Cypress. Your issue may have [already been fixed](/guides/references/changelog).
-- [open an issue](https://github.com/cypress-io/cypress/issues/new). Your best chance of getting a bug looked at quickly is to provide a repository with a reproducible bug that can be cloned and run.
+- [open an issue](https://github.com/cypress-io/cypress/issues/new/choose). Your best chance of getting a bug looked at quickly is to provide a repository with a reproducible bug that can be cloned and run.
 
 ## <Icon name="angle-right"></Icon> What are your best practices for organizing tests?
 
