@@ -486,7 +486,7 @@ It is possible to upload files in your application but it's different based on h
 cy.get('[data-cy="file-input"]').attachFile('data.json')
 ```
 
-You can read more about uploading files [here](https://github.com/cypress-io/cypress/issues/170).
+You can read more about uploading files in [this issue](https://github.com/cypress-io/cypress/issues/170).
 
 ## <Icon name="angle-right"></Icon> What is the projectId for?
 
@@ -541,8 +541,6 @@ You could also stub requests directly using [`cy.intercept()`](/api/commands/int
 
 ## <Icon name="angle-right"></Icon> How do I test elements inside an iframe?
 
-As of [0.20.0](https://github.com/cypress-io/cypress/issues/136#issuecomment-328100955) you can now wrap the elements of an iframe and work with them.
-
 We have an [open proposal](https://github.com/cypress-io/cypress/issues/685) to expand the APIs to support "switching into" an iframe and then back out of them.
 
 ## <Icon name="angle-right"></Icon> How do I preserve cookies / localStorage in between my tests?
@@ -559,7 +557,7 @@ Cypress.Cookies.defaults({
 })
 ```
 
-You **cannot** currently preserve localStorage across tests and can read more [here](https://github.com/cypress-io/cypress/issues/461#issuecomment-325402086).
+You **cannot** currently preserve localStorage across tests and can read more in [this issue](https://github.com/cypress-io/cypress/issues/461#issuecomment-325402086).
 
 ## <Icon name="angle-right"></Icon> Some of my elements animate in; how do I work around that?
 
@@ -676,7 +674,9 @@ No. You cannot add a `.catch` error handler to a failed command. [Read more abou
 
 ## <Icon name="angle-right"></Icon> Is there a way to modify the screenshots/video resolution?
 
-Not at the moment. [There is an open issue for this.](https://github.com/cypress-io/cypress/issues/587)
+There is an [open issue](https://github.com/cypress-io/cypress/issues/587) for more easily configuring this.
+
+You can modify the screenshot and video size when running headlessly with [this workaround](/api/plugins/browser-launch-api#Set-screen-size-when-running-headless).
 
 ## <Icon name="angle-right"></Icon> Does Cypress support ES7?
 
@@ -704,7 +704,7 @@ See also the [Web Security](/guides/guides/web-security) guide.
 
 ## <Icon name="angle-right"></Icon> Is there an option to run Cypress in CI with Developer Tools open? We want to track network and console issues.
 
-No. This is definitely the motivation behind [this open issue](https://github.com/cypress-io/cypress/issues/448), but there is not a way to run Cypress in `cypress run` with Developer Tools open.
+No. There is not currently a way to run Cypress in `cypress run` with Developer Tools open. Refer to [this issue](https://github.com/cypress-io/cypress/issues/2024) if you'd like this feature.
 
 You may try running the tests locally and [select the Electron browser](/guides/guides/launching-browsers#Electron-Browser), that is as close as you will get with Developer Tools open and replicating the environment that was run during `cypress run`.
 
