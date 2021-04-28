@@ -666,7 +666,7 @@ If we collapse the test commands, we can see the empty box marking the skipped t
 
 <DocsImage src="/img/guides/core-concepts/skipped.png" alt="Test runner showing one failed and one skipped test" ></DocsImage>
 
-So the tests that were meant to be executed, but where skipped due to some run-time problem are marked "skipped" by Cypress.
+The tests that were meant to be executed but were skipped due to some run-time problem are marked "skipped" by Cypress.
 
 **Tip:** read the blog post [Cypress Test Statuses](https://glebbahmutov.com/blog/cypress-test-statuses/) for more examples explaining the reasoning behind these test statuses. Read the blog post [Writing Test Progress](https://glebbahmutov.com/blog/writing-tests-progress/) to learn how to use the pending tests to tracking the test strategy implementation.
 
