@@ -202,7 +202,7 @@ The Cypress Test Runner runs locally so no data is sent to Cypress aside from ex
 
 ## <Icon name="angle-right"></Icon> Can I write API tests using Cypress?
 
-Cypress is mainly designed to run end-to-end tests, but if you need to write a few tests that call the backend API using the [cy.request](/api/commands/request) command ... who can stop you?
+Cypress is mainly designed to run end-to-end tests, but if you need to write a few tests that call the backend API using the [`cy.request()`](/api/commands/request) command ... who can stop you?
 
 ```js
 it('adds a todo', () => {
