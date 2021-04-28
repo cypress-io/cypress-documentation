@@ -221,6 +221,8 @@ it('adds a todo', () => {
 })
 ```
 
+Take a look at our [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) that uses quite a few such tests to verify the backend APIs.
+
 You can verify the responses using the built-in assertions and perform multiple calls. You can even write E2E tests that combine UI commands with API testing as needed:
 
 ```js
