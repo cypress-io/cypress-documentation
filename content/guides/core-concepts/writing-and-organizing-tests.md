@@ -579,7 +579,7 @@ You can also run a subset of all specs by entering a text search filter. Only th
 
 ## Test statuses
 
-After the Cypress spec completes every test has one of 4 statuses: **passed**, **failed**, **pended**, or **skipped**.
+After the Cypress spec completes every test has one of 4 statuses: **passed**, **failed**, **pending**, or **skipped**.
 
 ### Passed
 
