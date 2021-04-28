@@ -23,6 +23,93 @@ After you're done, we suggest watching some of our <Icon name="video"></Icon> [T
 
 </Alert>
 
+## Test types
+
+Cypress is primarily used to write end-to-end (E2E) tests for static web sites and dynamic web applications. A typical E2E test visits the browser page and performs actions via page UI, just like a real user:
+
+```js
+it('adds todos', () => {
+  cy.visit('https://todo.app.com')
+  cy.get('.new-input').type('write code{enter}').type('write tests{enter}')
+  // confirm the application is showing two items
+  cy.get('li.todo').should('have.length', 2)
+})
+```
+
+Cypress can also mount components from some web frameworks and execute [component tests](/guides/component-testing/introduction) using the same full set Cypress commands as E2E test.
+
+```js
+import { mount } from '@cypress/react' // or @cypress/vue
+import TodoList from './components/TodoList'
+
+it('contains the correct number of todos', () => {
+  const todos = [
+    { text: 'Buy milk', id: 1 },
+    { text: 'Learn Component Testing', id: 2 },
+  ]
+
+  mount(<TodoList todos={todos} />)
+  // the component starts running like a mini web app
+  cy.get('[data-testid=todos]').should('have.length', todos.length)
+})
+```
+
+Cypress can perform arbitrary HTTP calls, thus could be used to do API testing:
+
+```js
+it('adds a todo', () => {
+  cy.request({
+    url: '/todos',
+    method: 'POST',
+    body: {
+      title: 'Write REST API',
+    },
+  })
+    .its('body')
+    .should('deep.contain', {
+      title: 'Write REST API',
+      completed: false,
+    })
+})
+```
+
+Cypress can also execute unit tests for code that is meant to run in the browser environment:
+
+```js
+it('converts string to base64', () => {
+  expect(window.btoa('foo')).to.equal('Zm9v')
+})
+```
+
+Cypress can also execute unit tests for isomorphic or universal code that can run both in the browser and in Node:
+
+```js
+const { add } = require('./my/math')
+it('adds two numbers', () => {
+  expect(add(2, 3)).to.equal(5)
+})
+```
+
+But what Cypress cannot do is to run unit tests for any code that needs the Node environment - because Cypress executes the tests in the browser.
+
+```js
+const fs = require('fs')
+it('reads a file', () => {
+  // 🚨 NOPE, NOT GOING TO WORK
+  fs.readFileSync('file.txt', 'utf8')
+})
+```
+
+<Alert type="success">
+
+<strong class="alert-header">Stay tuned</strong>
+
+We are working on the "Cypress-Node" Test Runner to make testing Node code as simple as testing the browser apps.
+
+</Alert>
+
+Finally, through a large number of [official and 3rd party plugins](/plugins/directory) you can write Cypress [a11y](https://github.com/component-driven/cypress-axe), [visual](/plugins/directory#Visual%20Testing), and other types of tests.
+
 ## Cypress Can Be Simple (Sometimes)
 
 Simplicity is all about getting more done with less typing. Let's look at an example:
