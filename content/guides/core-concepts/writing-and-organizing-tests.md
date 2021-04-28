@@ -579,27 +579,27 @@ You can also run a subset of all specs by entering a text search filter. Only th
 
 ## Test statuses
 
-After the Cypress spec completes every test has one of the 4 statuses: passing, failing, pending, or skipped.
+After the Cypress spec completes every test has one of 4 statuses: **passed**, **failed**, **pended**, or **skipped**.
 
-### Passing
+### Passed
 
-The passing tests have successfully completed all their commands without failing any assertions. The test screenshot below shows a passing test:
+Passed tests have successfully completed all their commands without failing any assertions. The test screenshot below shows a passed test:
 
-<DocsImage src="/img/guides/core-concepts/passing-test.png" alt="Test runner with a single passing test" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/passing-test.png" alt="Test runner with a single passed test" ></DocsImage>
 
-Note that a test can pass after several [test retries](/guides/guides/test-retries). In that case the Command Log shows some failing attempts, but ultimately the entire test finishes successfully.
+Note that a test can pass after several [test retries](/guides/guides/test-retries). In that case the Command Log shows some failed attempts, but ultimately the entire test finishes successfully.
 
-### Failing
+### Failed
 
-Good news - the failing test has found a problem. Could be much worse - it could be a user hitting this bug!
+Good news - the failed test has found a problem. Could be much worse - it could be a user hitting this bug!
 
-<DocsImage src="/img/guides/core-concepts/failing-test.png" alt="Test runner with a single failing test" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/failing-test.png" alt="Test runner with a single failed test" ></DocsImage>
 
-After the test fails, use the screenshot and the video to find the problem and fix it.
+After a test fails, the screenshots and videos can help find the problem so it can be fixed.
 
 ### Pending
 
-You can write _placeholder_ tests in several ways as shown below, and Cypress knows NOT to run them. Cypress marks all these tests _pending_.
+You can write _placeholder_ tests in several ways as shown below, and Cypress knows NOT to run them. Cypress marks all the tests below as _pending_.
 
 ```js
 describe('TodoMVC', () => {
@@ -621,11 +621,11 @@ All 3 tests above are marked _pending_ when Cypress finishes running the spec fi
 
 <DocsImage src="/img/guides/core-concepts/different-pending.png" alt="Test runner with three pending tests" ></DocsImage>
 
-So remember - if you (the test writer) knowingly skip a test using one of the above three ways, Cypress counts it as a _pending_ test. The result will be known in the future when you enable the test again.
+So remember - if you (the test writer) knowingly skip a test using one of the above three ways, Cypress counts it as a _pending_ test.
 
 ### Skipped
 
-The last test status is for tests that the user _meant_ to run, but these tests were skipped due to some run-time error. For example, imagine a group of tests sharing the same `beforeEach` hook. The hook executes the common commands. For example, we could visit the page in the `beforeEach` hook because every test needs to start at the page.
+The last test status is for tests that you _meant_ to run, but these tests were skipped due to some run-time error. For example, imagine a group of tests sharing the same `beforeEach` hook - where you visit the page in the `beforeEach` hook.
 
 ```js
 /// <reference types="cypress" />
@@ -650,15 +650,15 @@ If the `beforeEach` hook completes and both tests finish, two tests are passing.
 
 <DocsImage src="/img/guides/core-concepts/two-passing.png" alt="Test runner showing two passing tests" ></DocsImage>
 
-But what happens if a command inside the `beforeEach` hook fails? For example, let's pretend we want to visit a non-existent page `/hmm` instead of the `/`. If we change our `beforeEach` to fail:
+But what happens if a command inside the `beforeEach` hook fails? For example, let's pretend we want to visit a non-existent page `/does-not-exist` instead of the `/`. If we change our `beforeEach` to fail:
 
 ```js
 beforeEach(() => {
-  cy.visit('/hmm')
+  cy.visit('/does-not-exist')
 })
 ```
 
-When Cypres starts executing the first test, the `beforeEach` hook fails. Now the first test is marked "failing". BUT if the `beforeEach` hook failed once, why would we execute it _again_ before the second test? It would just fail the same way! So Cypress _skips_ the remaining tests in that block, because they would also fail for sure due to the bad `beforeEach` hook.
+When Cypres starts executing the first test, the `beforeEach` hook fails. Now the first test is marked as **failed**. BUT if the `beforeEach` hook failed once, why would we execute it _again_ before the second test? It would just fail the same way! So Cypress _skips_ the remaining tests in that block, because they would also fail due to the `beforeEach` hook failure.
 
 <DocsImage src="/img/guides/core-concepts/1-skipped.png" alt="Test runner showing a skipped test" ></DocsImage>
 
