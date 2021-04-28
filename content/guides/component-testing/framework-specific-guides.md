@@ -1,5 +1,5 @@
 ---
-title: Framework Specific Guides
+title: Framework Configuration
 containerClass: component-testing
 ---
 
@@ -11,11 +11,11 @@ Recent years have seen an explosion in component based libraries (Vue, React) an
 
 ... details and example configuration ...
 
-## Next
+## Next.js
 
 It's possible to use Cypress with the latest version of Next.js, which uses Webpack 4, as well as with Webpack 5 via `next.config.js` with `webpack5: true`.
 
-## Current (Webpack 4)
+### Next.js (Webpack 4)
 
 This guide assumes you've created your app using the [`create-next-app`](https://nextjs.org/docs/api-reference/create-next-app) tool. Although Next.js is webpack based, it doesn't it as a direct dependency, so you'll need to install it. You'll also need to install the Cypress Webpack Dev Server and React adapter:
 
@@ -58,13 +58,17 @@ it('Renders page component', () => {
   mount(<IndexPage />)
   cy.contains('Welcome to Next.js')
 })
-````
+```
 
-## Future Next.js (Webpack 5)
+Start Cypress with `npx cypress open-ct` - your page should be rendered.
+
+<Alert type="info">
+There are some Next.js specific caveats due to it's server side architecture relating to `getInitialProps` and `getStaticProps`. [Learn more here](https://github.com/cypress-io/cypress/tree/develop/npm/react/examples/nextjs#server-side-props).
+</Alert>
+
+### Next.js (Webpack 5)
 
 You can also use Cypress component testing with Next.js and Webpack 5. The process is the same as with Webpack 4, described above, with a few key differences.
-
-### Webpack 5 with Next.js
 
 In your `next.config.js`, tell Next.js to use webpack 5:
 
@@ -91,3 +95,4 @@ Everything else is the same as configuring Cypress with Next.js and Webpack 4.
 ## Vite Based Projects (Vue, React)
 
 ... details and example configuration ...
+````
