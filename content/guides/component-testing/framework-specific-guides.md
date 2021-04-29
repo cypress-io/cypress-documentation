@@ -45,7 +45,7 @@ module.exports = (on, config) => {
 If you are using the Vue CLI's PWA feature, there is a known caveat regarding configuration. See [here](https://github.com/cypress-io/cypress/issues/15968#issuecomment-819170918) for more information.
 </Alert>
 
-Lastly, tell Cypress where you find your test. In this example all the tests are in `src` and named `spec.js`:
+Lastly, tell Cypress where you find your test in `cypress.json`. In this example all the tests are in `src` and named `spec.js`:
 
 ```json
 {
@@ -105,7 +105,7 @@ module.exports = (on, config) => {
 }
 ```
 
-Lastly, tell Cypress where you find your test. In this example all the tests are in `cypress/pages`:
+Lastly, tell Cypress where you find your test in `cypress.json`. In this example all the tests are in `cypress/pages`:
 
 ```json
 {
@@ -185,7 +185,7 @@ module.exports = (on, config) => {
 }
 ```
 
-Lastly, tell Cypress where you find your test. While it's possible to mount components in the `pages` directory, generally you will want to be more granular with your component tests - full page tests are best implemented with Cypress e2e runner.
+Lastly, tell Cypress where you find your tests in `cypress.json`. While it's possible to mount components in the `pages` directory, generally you will want to be more granular with your component tests - full page tests are best implemented with Cypress e2e runner.
 
 In this example we specify the `componentFolder` as `components`, the default for Nuxt.
 
@@ -281,4 +281,48 @@ Start Cypress with `npx cypress open-ct` - the test runner will open. Select you
 
 ## Vite Based Projects (Vue, React)
 
-... details and example configuration ...
+Cypress also ships a Vite based dev server, as opposed to a Webpack based on like the other examples on this page. This example uses a Vite project with React, created via `npm init @vitejs/app my-react-app -- --template react`. The configuration instructions are the same for Vue.
+
+Inside of `cypress/plugins/index.js`, configure Cypress to use the Vite dev server:
+
+```js
+const path = require('path')
+const { startDevServer } = require('@cypress/vite-dev-server')
+
+module.exports = (on, config) => {
+  on('dev-server:start', (options) => {
+    return startDevServer({
+      options,
+      viteConfig: {
+        configFile: path.resolve(__dirname, '..', '..', 'vite.config.js'),
+      },
+    })
+  })
+
+  return config
+}
+```
+
+Lastly, tell Cypress where you find your test in `cypress.json`. In this example all the tests are in `src` and named `spec.jsx`:
+
+```json
+{
+  "testFiles": "**/*.spec.jsx",
+  "componentFolder": "src"
+}
+```
+
+Finally, add a test in `src/App.spec.jsx`:
+
+```jsx
+import React from 'react'
+import { mount } from '@cypress/react'
+import App from './App'
+
+it('renders learn react link', () => {
+  mount(<App />)
+  cy.get('a').contains('Learn React')
+})
+```
+
+Start Cypress with `npx cypress open-ct` - the test runner will open. Select your test to execute it and see the rendered output. You can also run the tests without opening a browser with `npx cypress run-ct`.
