@@ -398,7 +398,7 @@ cy.get('#username').type('bob@gmail.com').should('have.value', '') // true
 
 #### Preventing `mousedown` does not prevent typing
 
-In a real browser, preventing `mousedown` on a form field will prevent it from receiving focus and thus prevent it from being able to be typed into. Currently, Cypress does not factor this in. [open an issue](https://github.com/cypress-io/cypress/issues/new) if you need this to be fixed.
+In a real browser, preventing `mousedown` on a form field will prevent it from receiving focus and thus prevent it from being able to be typed into. Currently, Cypress does not factor this in. [open an issue](https://github.com/cypress-io/cypress/issues/new/choose) if you need this to be fixed.
 
 #### Key Events Table
 
@@ -415,8 +415,6 @@ Any modifiers activated for the event are also listed in a `modifiers` column.
 ### Tabbing
 
 #### Typing `tab` key does not work
-
-Tabbing will be implemented as part of our work on [Native Browser Events](https://github.com/cypress-io/cypress/issues/311) and will support things like multiple tabs, tabbing in reverse, or tabbing to a specific element.
 
 In the meantime, you can use the experimental [cypress-plugin-tab](https://github.com/Bkucera/cypress-plugin-tab) and can thumbs up [this issue](https://github.com/cypress-io/cypress/issues/299).
 

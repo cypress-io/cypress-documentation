@@ -411,7 +411,7 @@ When Cypress blocks a request made to a matching host, it will automatically sen
 
 ### modifyObstructiveCode
 
-With this option enabled - Cypress will search through the response streams coming from your server on `.html` and `.js` files and replace code that [matches the following patterns.](https://github.com/cypress-io/cypress/issues/886#issuecomment-364779884)
+With this option enabled - Cypress will search through the response streams coming from your server on `.html` and `.js` files and replace code that matches patterns commonly found in framebusting.
 
 These script patterns are antiquated and deprecated security techniques to prevent clickjacking and framebusting. They are a relic of the past and are no longer necessary in modern browsers. However many sites and applications still implement them.
 
