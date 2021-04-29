@@ -9,7 +9,71 @@ Recent years have seen an explosion in component based libraries (Vue, React) an
 
 ## Vue (Vue CLI)
 
-... details and example configuration ...
+Cypress works with both Vue 2 and Vue 3. The configuration is almost identical.
+
+### Vue 2 (Vue CLI)
+
+This guide assumes you've created your app using the [Vue CLI](https://cli.vuejs.org/). This documentation was written using Vue CLI v4.5.12.
+
+You'll also need to install the Cypress Webpack Dev Server and Vue 2 adapter, as well as some devDependencies:
+
+```sh
+npm install cypress @cypress/vue @cypress/webpack-dev-server html-webpack-plugin@4 --dev
+```
+
+`html-webpack-plugin@4` is required because the projects created with the Vue CLI v4 use Webpack v4. If you are using Vue CLI v5 (currently in alpha) you will need `html-webpack-plugin@5` instead.
+
+Next configure the dev-server to use the same Webpack configuration used by Vue CLI:
+
+```js
+const { startDevServer } = require('@cypress/webpack-dev-server')
+const webpackConfig = require('@vue/cli-service/webpack.config')
+
+module.exports = (on, config) => {
+  on('dev-server:start', (options) => {
+    return startDevServer({
+      options,
+      webpackConfig,
+    })
+  })
+
+  return config
+}
+```
+
+<Alert type="info">
+If you are using the Vue CLI's PWA feature, there is a known caveat regarding configuration. See [here](https://github.com/cypress-io/cypress/issues/15968#issuecomment-819170918) for more information.
+</Alert>
+
+Lastly, tell Cypress where you find your test. In this example all the tests are in `src` and named `spec.js`:
+
+```json
+{
+  "testFiles": "**/*.spec.js",
+  "componentFolder": "src"
+}
+```
+
+Finally, add a test:
+
+```jsx
+// src/components/HelloWorld.spec.js
+
+import { mount } from '@cypress/vue'
+import HelloWorld from './HelloWorld.vue'
+
+it('renders a message', () => {
+  mount(HelloWorld, {
+    propsData: {
+      msg: 'Hello Cypress!',
+    },
+  })
+
+  cy.get('h1').contains('Hello Cypress!')
+})
+```
+
+Start Cypress with `npx cypress open-ct` - the test runner will open. Select your test to execute it and see the rendered output. You can also run the tests without opening a browser with `npx cypress run-ct`.
 
 ## Next.js
 
@@ -17,7 +81,7 @@ It's possible to use Cypress with the latest version of Next.js, which uses Webp
 
 ### Next.js (Webpack 4)
 
-This guide assumes you've created your app using the [`create-next-app`](https://nextjs.org/docs/api-reference/create-next-app) tool. Although Next.js is webpack based, it doesn't it as a direct dependency, so you'll need to install it. You'll also need to install the Cypress Webpack Dev Server and React adapter:
+this guide assumes you've created your app using the [`create-next-app`](https://nextjs.org/docs/api-reference/create-next-app) tool. although next.js is webpack based, it doesn't it as a direct dependency, so you'll need to install it. you'll also need to install the cypress webpack dev server and react adapter:
 
 ```sh
 npm install cypress @cypress/webpack-dev-server @cypress/react html-webpack-plugin@4 webpack@4 webpack-dev-server@3 --dev
@@ -39,15 +103,14 @@ module.exports = (on, config) => {
 
 Lastly, tell Cypress where you find your test. In this example all the tests are in `cypress/pages`:
 
-``json
+```json
 {
-"testFiles": "\*_/_.spec.{js,jsx}",
-"componentFolder": "cypress/pages"
+  "testFiles": "*_/_.spec.{js,jsx}",
+  "componentFolder": "cypress/pages"
 }
+```
 
-````
-
-Finally, add a test:
+Finally, add a test in `cypress/pages`:
 
 ```jsx
 import React from 'react'
@@ -60,7 +123,7 @@ it('Renders page component', () => {
 })
 ```
 
-Start Cypress with `npx cypress open-ct` - your page should be rendered.
+Start Cypress with `npx cypress open-ct` - the test runner will open. Select your test to execute it and see the rendered output. You can also run the tests without opening a browser with `npx cypress run-ct`.
 
 <Alert type="info">
 There are some Next.js specific caveats due to it's server side architecture relating to `getInitialProps` and `getStaticProps`. [Learn more here](https://github.com/cypress-io/cypress/tree/develop/npm/react/examples/nextjs#server-side-props).
@@ -95,4 +158,3 @@ Everything else is the same as configuring Cypress with Next.js and Webpack 4.
 ## Vite Based Projects (Vue, React)
 
 ... details and example configuration ...
-````
