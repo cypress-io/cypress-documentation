@@ -75,6 +75,10 @@ it('renders a message', () => {
 
 Start Cypress with `npx cypress open-ct` - the test runner will open. Select your test to execute it and see the rendered output. You can also run the tests without opening a browser with `npx cypress run-ct`.
 
+### Vue 3 (Vue CLI)
+
+The installation and configuration is the same as Vue 2 with the Vue CLI as shown above. The only difference is the Vue adatper should be installed using `npm install @cypress/vue@next` - `@cypress/vue` target Vue 2, and the `next` branch targets Vue 3.
+
 ## Next.js
 
 It's possible to use Cypress with the latest version of Next.js, which uses Webpack 4, as well as with Webpack 5 via `next.config.js` with `webpack5: true`.
