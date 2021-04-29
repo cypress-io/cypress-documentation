@@ -77,7 +77,7 @@ Start Cypress with `npx cypress open-ct` - the test runner will open. Select you
 
 ### Vue 3 (Vue CLI)
 
-The installation and configuration is the same as Vue 2 with the Vue CLI as shown above. The only difference is the Vue adatper should be installed using `npm install @cypress/vue@next` - `@cypress/vue` target Vue 2, and the `next` branch targets Vue 3.
+The installation and configuration is the same as Vue 2 with the Vue CLI as described above. The only difference is the Vue adatper should be installed using `npm install @cypress/vue@next` - `@cypress/vue` target Vue 2, and the `next` branch targets Vue 3.
 
 ## Next.js
 
@@ -157,7 +157,127 @@ Everything else is the same as configuring Cypress with Next.js and Webpack 4.
 
 ## Nuxt
 
-... details and example configuration ...
+This guide assumes you've created your app using the [`create-nuxt-app`].
+
+Nuxt uses Vue 2 and Webpack under the hood, so you also need to install the Cypress Webpack Dev Server and Vue 2 adapter, as well as some devDependencies:
+
+```sh
+npm install cypress @cypress/vue @cypress/webpack-dev-server html-webpack-plugin@4 --dev
+```
+
+`html-webpack-plugin@4` is required because the projects created with the Vue CLI v4 use Webpack v4.
+
+Next configure the dev-server to use the same Webpack configuration used by Vue CLI:
+
+```js
+const { startDevServer } = require('@cypress/webpack-dev-server')
+const { getWebpackConfig } = require('nuxt')
+
+module.exports = (on, config) => {
+  on('dev-server:start', (options) => {
+    return startDevServer({
+      options,
+      webpackConfig,
+    })
+  })
+
+  return config
+}
+```
+
+Lastly, tell Cypress where you find your test. While it's possible to mount components in the `pages` directory, generally you will want to be more granular with your component tests - full page tests are best implemented with Cypress e2e runner.
+
+In this example we specify the `componentFolder` as `components`, the default for Nuxt.
+
+```json
+{
+  "testFiles": "**/*.spec.js",
+  "componentFolder": "components"
+}
+```
+
+Finally, add a component and test:
+
+```html
+<!-- components/mountains.vue -->
+
+<template>
+  <p v-if="$fetchState.pending">Fetching mountains...</p>
+  <p v-else-if="$fetchState.error">An error occurred :(</p>
+  <div v-else>
+    <h1>Nuxt Mountains</h1>
+    <ul>
+      <li v-for="mountain of mountains">{{ mountain.title }}</li>
+    </ul>
+  </div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        mountains: [],
+      }
+    },
+    async fetch() {
+      this.mountains = await fetch(
+        'https://api.nuxtjs.dev/mountains'
+      ).then((res) => res.json())
+    },
+  }
+</script>
+```
+
+```js
+// components/mountains.spec.js
+import { mount } from '@cypress/vue'
+import Mountains from './mountains.vue'
+
+describe('Mountains', () => {
+  it('shows a load state', () => {
+    mount(Mountains, {
+      mocks: {
+        $fetchState: {
+          pending: true,
+        },
+      },
+    })
+
+    cy.get('p').contains('Fetching mountains...')
+  })
+
+  it('shows a failed state', () => {
+    mount(Mountains, {
+      mocks: {
+        $fetchState: {
+          error: true,
+        },
+      },
+    })
+
+    cy.get('p').contains('An error occurred :(')
+  })
+
+  it('shows a failed state', () => {
+    mount(Mountains, {
+      data() {
+        return {
+          mountains: [{ title: 'Mt Everest' }],
+        }
+      },
+      mocks: {
+        $fetchState: {},
+      },
+    })
+
+    cy.get('li').contains('Mt Everest')
+  })
+})
+```
+
+Because Cypress mounts components in islation, Nuxt specific APIs are generally _not_ applied. In this example, the `fetch` hook is not automatically applied, so we used the `mocks` mounting option to specify the three component states (loading, error and success) and test each one in isolation.
+
+Start Cypress with `npx cypress open-ct` - the test runner will open. Select your test to execute it and see the rendered output. You can also run the tests without opening a browser with `npx cypress run-ct`.
 
 ## Vite Based Projects (Vue, React)
 
