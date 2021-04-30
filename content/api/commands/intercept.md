@@ -68,12 +68,10 @@ cy.intercept('/users*', { method: 'GET' })
 cy.intercept('GET', '/users*', { hostname: 'localhost' })
 // `method` can't be passed in with `routeMatcher`
 cy.intercept('GET', '/users*', { hostname: 'localhost' }, { success: true })
-// this command only accepts three arguments
+// this command only accepts up to three arguments
 ```
 
 ### Arguments
-
-`cy.intercept()` accepts up to three arguments
 
 #### **<Icon name="angle-right"></Icon> url** **_(String, Glob, RegExp)_**
 
@@ -95,7 +93,7 @@ If no `method` is provided, Cypress will match _all_ HTTP methods (`*` wildcard)
 
 `routeMatcher` is an object used to match which incoming HTTP requests will be handled by this route.
 
-All properties are optional<sup>\*</sup>. All properties that are set must match for the route to handle a request. If a `string` is passed to any property, it will be glob-matched against the request using [`minimatch`](https://github.com/isaacs/minimatch).The available `routeMatcher` properties are listed below:
+All properties are optional. All properties that are set must match for the route to handle a request. If a `string` is passed to any property, it will be glob-matched against the request using [`minimatch`](https://github.com/isaacs/minimatch).The available `routeMatcher` properties are listed below:
 
 | Option     | Description                                                                                     |
 | ---------- | ----------------------------------------------------------------------------------------------- |
@@ -109,14 +107,7 @@ All properties are optional<sup>\*</sup>. All properties that are set must match
 | pathname   | Like `path`, but without query parameters                                                       |
 | port       | HTTP request port(s) (`number` or `Array`)                                                      |
 | query      | Parsed query string (`object`)                                                                  |
-
-<Alert type="warning">
-
-<sup>\*</sup> `url` is **required** whether specified as a `routeMatcher` property or passed in as the first argument.
-
-</Alert>
-
-| url | Full HTTP request URL |
+| url        | Full HTTP request URL                                                                           |
 
 #### <Icon name="angle-right"></Icon> routeHandler (<code>string | object | Function | [StaticResponse][staticresponse]</code>)
 
