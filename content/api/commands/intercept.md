@@ -1257,9 +1257,10 @@ Unlike [cy.route()](/api/commands/route), `cy.intercept()`:
 - [Cypress Example Recipes](https://github.com/cypress-io/cypress-example-recipes#stubbing-and-spying)
 - [Kitchen Sink Examples](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples/network_requests.spec.js)
 - [Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide#Migrating-cy-route-to-cy-intercept)
+<!-- TODO add examples from the resources below to `cypress-example-recipes` repo -->
 - [Smart GraphQL Stubbing in Cypress](https://glebbahmutov.com/blog/smart-graphql-stubbing/) blog post
-  <!-- - [How cy.intercept works](https://slides.com/bahmutov/how-cy-intercept-works) presentation -->
-  <!-- - [Cypress cy.intercept Problems](https://glebbahmutov.com/blog/cypress-intercept-problems/) -->
+- [How cy.intercept works](https://slides.com/bahmutov/how-cy-intercept-works)
+- [Cypress `cy.intercept()` Problems](https://glebbahmutov.com/blog/cypress-intercept-problems/)
 
 [staticresponse]: #StaticResponse-objects
 [lifecycle]: #Interception-lifecycle
