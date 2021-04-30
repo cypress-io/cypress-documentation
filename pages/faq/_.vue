@@ -5,6 +5,7 @@ import Footer from '../../components/Footer'
 import TableOfContents from '../../components/TableOfContents'
 import TableOfContentsList from '../../components/TableOfContentsList.vue'
 import { getMetaData, getMetaDescription, getTitle } from '../../utils'
+import { fetchBanner } from '../../utils/sanity'
 
 export default {
   components: {
@@ -46,12 +47,15 @@ export default {
       .fetch()
     const metaDescription = await getMetaDescription(rawContent.text)
 
+    const banner = await fetchBanner()
+
     return {
       algoliaSettings,
       faqItem,
       faqSidebarItems,
       metaDescription,
       path: params.pathMatch,
+      banner,
     }
   },
   head() {
@@ -88,9 +92,15 @@ export default {
       :mobile-menu-items="faqSidebarItems"
       section="faq"
       :algolia-settings="algoliaSettings"
+      :banner="banner"
     />
-    <main class="main-content">
-      <AppSidebar :items="faqSidebarItems" section="faq" :path="path" />
+    <main :class="Boolean(banner) ? 'banner-margin' : ''" class="main-content">
+      <AppSidebar
+        :items="faqSidebarItems"
+        section="faq"
+        :path="path"
+        :has-banner="Boolean(banner)"
+      />
       <div class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
           <h1 class="main-content-title">{{ faqItem.title }}</h1>

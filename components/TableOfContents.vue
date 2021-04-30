@@ -2,6 +2,7 @@
   <div class="hidden xl:block xl:col-span-2 mt-16">
     <nav
       v-if="toc.length"
+      :class="hasBanner ? $style.bannerMargin : ''"
       class="fixed w-sidebar top-16 bottom-0 right-0 pl-4 pr-8 pb-8 overflow-y-auto space-y-4 hide-scroll"
     >
       <h3 :class="$style.tocHeading">ON THIS PAGE</h3>
@@ -9,7 +10,7 @@
         :scroll-on-start="false"
         highlight-first-item
         :active-class="$style.scrollactiveItemActive"
-        :offset="100"
+        :offset="offset"
         tag="ul"
       >
         <li
@@ -52,18 +53,26 @@ export default {
       type: Array,
       default: () => [],
     },
+    hasBanner: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
+  data() {
+    const DEFAULT_OFFSET = 100
+    const BANNER_OFFSET = 48
+
+    return {
+      offset: this.hasBanner ? DEFAULT_OFFSET + BANNER_OFFSET : DEFAULT_OFFSET,
+    }
   },
 }
 </script>
 
 <style module>
-.toc {
-  @apply pl-8;
-  @apply pr-2;
-}
-
-.toc li {
-  @apply list-none;
+.bannerMargin {
+  padding-top: 64px;
 }
 
 .tocHeading {

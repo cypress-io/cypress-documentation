@@ -90,7 +90,7 @@ describe('Some Tests', () => {
 
 Move those Cypress commands into an `it(...)` block and everything will work correctly.
 
-If you are purposefully writing commands outside of a test, there is probably a better way to accomplish what you're trying to do. Read through the [Examples](/examples/examples/recipes), [chat with someone in our chat](https://gitter.im/cypress-io/cypress), or [open an issue](https://github.com/cypress-io/cypress/issues/new).
+If you are purposefully writing commands outside of a test, there is probably a better way to accomplish what you're trying to do. Read through the [Examples](/examples/examples/recipes), [chat with someone in our chat](https://gitter.im/cypress-io/cypress), or [open an issue](https://github.com/cypress-io/cypress/issues/new/choose).
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy...()` failed because the element you are chaining off of has become detached or removed from the dom
 
@@ -203,7 +203,7 @@ You may see a variation of this message for 4 different reasons:
 
 Cypress runs several calculations to ensure an element can _actually_ be interacted with like a real user would. If you're seeing this error, you may need to _guard_ your commands (due to a timing or an animation issue).
 
-There have been situations where Cypress does not correctly allow you to interact with an element that should be interactable. If that's the case, [open an issue](https://github.com/cypress-io/cypress/issues/new).
+There have been situations where Cypress does not correctly allow you to interact with an element that should be interactable. If that's the case, [open an issue](https://github.com/cypress-io/cypress/issues/new/choose).
 
 If you'd like to override these built-in checks, provide the `{force: true}` option to the action itself. Refer to each command for their available options, additional use cases, and argument usage.
 

@@ -27,8 +27,7 @@ Many of these issues are currently being worked on or are on our [Roadmap](/guid
 - [`cy.tab()` command.](https://github.com/cypress-io/cypress/issues/299)
 - [There is not any native or mobile events support.](https://github.com/cypress-io/cypress/issues/311#issuecomment-339824191)
 - [Testing file uploads is application specific.](https://github.com/cypress-io/cypress/issues/170#issuecomment-340012621)
-- [Testing file downloads is application specific.](https://github.com/cypress-io/cypress/issues/433#issuecomment-280465552)
-- [iframe support is somewhat limited, but does work.](https://github.com/cypress-io/cypress/issues/685)
+- [iframe support is somewhat limited, but does work.](https://github.com/cypress-io/cypress/issues/136)
 
 ## Permanent trade-offs
 

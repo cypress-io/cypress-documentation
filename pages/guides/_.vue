@@ -4,6 +4,7 @@ import AppHeader from '../../components/AppHeader'
 import TableOfContents from '../../components/TableOfContents'
 import Footer from '../../components/Footer'
 import { getMetaData, getMetaDescription, getTitle } from '../../utils'
+import { fetchBanner } from '../../utils/sanity'
 
 export default {
   components: {
@@ -55,12 +56,15 @@ export default {
       .fetch()
     const metaDescription = await getMetaDescription(rawContent.text)
 
+    const banner = await fetchBanner()
+
     return {
       algoliaSettings,
       guide,
       guideSidebar: items,
       metaDescription,
       path: params.pathMatch,
+      banner,
     }
   },
   head() {
@@ -98,10 +102,16 @@ export default {
     <AppHeader
       :mobile-menu-items="guideSidebar"
       section="guides"
+      :banner="banner"
       :algolia-settings="algoliaSettings"
     />
-    <main class="main-content">
-      <AppSidebar :items="guideSidebar" section="guides" :path="path" />
+    <main :class="Boolean(banner) ? 'banner-margin' : ''" class="main-content">
+      <AppSidebar
+        :has-banner="Boolean(banner)"
+        :items="guideSidebar"
+        section="guides"
+        :path="path"
+      />
       <div class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
           <h1 class="main-content-title">
@@ -111,7 +121,10 @@ export default {
           <Footer />
         </article>
       </div>
-      <TableOfContents :toc="guide && guide.toc" />
+      <TableOfContents
+        :toc="guide && guide.toc"
+        :has-banner="Boolean(banner)"
+      />
     </main>
   </div>
 </template>

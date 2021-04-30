@@ -56,7 +56,7 @@ module.exports.NETWORK_STUBBING_WARNING = `{% note warning %}
 
 **To support requests using the Fetch API you can use one of the solutions below:**
 
-- Use [\`cy.intercept()\`](/api/commands/intercept.html) which supports requests using the Fetch API and other types of network requests like page loads. See [\`cy.intercept()\`](/api/commands/intercept.html).
+- Use [\`cy.intercept()\`](/api/commands/intercept) which supports requests using the Fetch API and other types of network requests like page loads. See [\`cy.intercept()\`](/api/commands/intercept).
 - Polyfill \`window.fetch\` to spy on and stub requests using \`cy.route()\` and \`cy.server()\` by enabling [\`experimentalFetchPolyfill\`](https://on.cypress.io/experimental). See {% issue 95 %} for more details and temporary workarounds.
 {% endnote %}
 `
@@ -86,12 +86,12 @@ If you are running the tests from within a restrictive VPN you will need to allo
 
 module.exports.XHR_STUBBING_DEPRECATED = [
   '{% note warning %}',
-  '⚠️ **`cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0**. In a future release, support for `cy.server()` and `cy.route()` will be moved to a plugin. Consider using [`cy.intercept()`](/api/commands/intercept.html) instead. See our guide on [Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide.html#Migrating-cy-route-to-cy-intercept)',
+  '⚠️ **`cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0**. In a future release, support for `cy.server()` and `cy.route()` will be moved to a plugin. Consider using [`cy.intercept()`](/api/commands/intercept) instead. See our guide on [Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide#Migrating-cy-route-to-cy-intercept)',
   '{% endnote %}',
 ].join('\n')
 
 module.exports.CODE_RUNS_IN_NODE = [
   '{% note warning %}',
-  '⚠️ This code is part of the [plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.',
+  '⚠️ This code is part of the [plugins file](/guides/core-concepts/writing-and-organizing-tests#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.',
   '{% endnote %}',
 ].join('\n')

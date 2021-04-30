@@ -119,7 +119,7 @@ npm install --save-dev cypress @cypress/vue @cypress/webpack-dev-server webpack-
 
 <alert type="info">
 
-If it's your first time using Cypress, check out the [main Getting Started documentation](guides/getting-started/installing-cypress).
+If it's your first time using Cypress, check out the [main Getting Started documentation](/guides/getting-started/installing-cypress).
 
 </alert>
 
