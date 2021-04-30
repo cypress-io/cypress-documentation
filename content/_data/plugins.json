@@ -177,6 +177,13 @@
           "badge": "community"
         },
         {
+          "name": "cypress-grep",
+          "description": "Filter tests using its title or tags",
+          "link": "https://github.com/bahmutov/cypress-grep",
+          "keywords": ["grep"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-autorecord",
           "description": "Simplify API mocking by auto-recording/stubbing HTTP interactions and automating the process of updating/deleting mocks.",
           "link": "https://github.com/Nanciee/cypress-autorecord",
