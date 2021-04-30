@@ -63,7 +63,7 @@
     },
     "component-testing": {
       "component-testing-introduction": "introduction.html",
-      "framework-specific-guides": "framework-specific-guides.html"
+      "framework-configuration": "framework-configuration.html"
     },
     "tooling": {
       "IDE-integration": "IDE-integration.html",
