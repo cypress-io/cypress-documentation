@@ -38,7 +38,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['~/styles/content.scss'],
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
@@ -52,7 +52,17 @@ export default {
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: ['nuxt-windicss', '@nuxtjs/fontawesome', '@nuxt/image'],
+  buildModules: [
+    'nuxt-windicss',
+    '@nuxtjs/fontawesome',
+    '@nuxt/image'
+  ],
+
+  windicss: {
+    scan: {
+      fileExtensions: ['vue', 'js', 'css', 'scss']
+    },
+  },
   /*
    ** Nuxt.js modules
    */
