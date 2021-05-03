@@ -106,6 +106,30 @@ it('works', () => {
 })
 ```
 
+<Alert type="info">
+
+If you want to avoid having to add the tripple slash reference to each spec file, combine the declaration and support files into one. It will automatically add the type declarations to the ambient scope.
+
+```typescript
+// cypress/support/index.ts
+/// <reference types="cypress" />
+declare namespace Cypress {
+  interface Chainable {
+    /**
+     * Custom command to select DOM element by data-cy attribute.
+     * @example cy.dataCy('greeting')
+     */
+    dataCy(value: string): Chainable<Element>
+  }
+}
+
+Cypress.Commands.add('dataCy', (value) => {
+  return cy.get(`[data-cy=${value}]`)
+})
+```
+
+</Alert>
+
 #### Examples:
 
 - See [Adding Custom Commands](https://github.com/cypress-io/cypress-example-recipes#fundamentals) example recipe.
