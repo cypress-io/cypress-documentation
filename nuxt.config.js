@@ -56,7 +56,7 @@ export default {
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: ['@nuxtjs/tailwindcss', '@nuxtjs/fontawesome', '@nuxt/image'],
+  buildModules: ['@nuxtjs/tailwindcss', '@nuxtjs/fontawesome', '@nuxt/image', 'nuxt-build-optimisations'],
   /*
    ** Nuxt.js modules
    */
