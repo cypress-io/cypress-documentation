@@ -60,17 +60,17 @@ When adding [custom commands](/api/cypress-api/custom-commands) to the `cy` obje
 
 For example if you add the command `cy.dataCy` into your [supportFile](/guides/references/configuration#Folders-Files) like this:
 
-```javascript
+```typescript
 // cypress/support/index.ts
 Cypress.Commands.add('dataCy', (value) => {
   return cy.get(`[data-cy=${value}]`)
 })
 ```
 
-Then you can add the `dataCy` command to the global Cypress Chainable interface (so called because commands are chained together) by creating a new TypeScript definitions file beside your [supportFile](/guides/references/configuration#Folders-Files), in this case at `cypress/support/index.d.ts`.
+Then you can add the `dataCy` command to the global Cypress Chainable interface (so called because commands are chained together) to your `cypress/support/index.ts` file.
 
 ```typescript
-// in cypress/support/index.d.ts
+// in cypress/support/index.ts
 // load type definitions that come with Cypress module
 /// <reference types="cypress" />
 
@@ -95,7 +95,7 @@ If your specs files are in TypeScript, you should include the TypeScript definit
 
 Even if your project is JavaScript only, the JavaScript specs can know about the new command by referencing the file using the special triple slash `reference path` comment.
 
-```javascript
+```typescript
 // from your cypress/integration/spec.ts
 /// <reference path="../support/index.d.ts" />
 it('works', () => {
@@ -105,30 +105,6 @@ it('works', () => {
   cy.dataCy('greeting')
 })
 ```
-
-<Alert type="info">
-
-If you want to avoid having to add the tripple slash reference to each spec file, combine the declaration and support files into one. It will automatically add the type declarations to the ambient scope.
-
-```typescript
-// cypress/support/index.ts
-/// <reference types="cypress" />
-declare namespace Cypress {
-  interface Chainable {
-    /**
-     * Custom command to select DOM element by data-cy attribute.
-     * @example cy.dataCy('greeting')
-     */
-    dataCy(value: string): Chainable<Element>
-  }
-}
-
-Cypress.Commands.add('dataCy', (value) => {
-  return cy.get(`[data-cy=${value}]`)
-})
-```
-
-</Alert>
 
 #### Examples:
 
