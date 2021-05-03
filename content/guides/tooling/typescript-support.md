@@ -97,7 +97,6 @@ Even if your project is JavaScript only, the JavaScript specs can know about the
 
 ```typescript
 // from your cypress/integration/spec.ts
-/// <reference path="../support/index.d.ts" />
 it('works', () => {
   cy.visit('/')
   // IntelliSense and TS compiler should
