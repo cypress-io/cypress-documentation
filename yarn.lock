@@ -17700,15 +17700,6 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue-windicss-preprocess@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/vue-windicss-preprocess/-/vue-windicss-preprocess-2.2.0.tgz#a0bacf055c944e1c087333b7d1bdaefb1ef1e106"
-  integrity sha512-CKLD+OVqq1FD0vq8a7OC7UM1x18zF6NCZXUkYg0vBppH032mDnXg1iHEkrl1YLJaEKuOPZz4IvUO1O9VwOWEHw==
-  dependencies:
-    loader-utils "^2.0.0"
-    magic-string "^0.25.7"
-    windicss "^2.3.0"
-
 vue@^2.6.12:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
@@ -17747,8 +17738,10 @@ watchpack@^1.7.4:
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
+    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
+    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"
@@ -17958,7 +17951,7 @@ windicss-webpack-plugin@^0.3.3:
     webpack-virtual-modules "^0.4.2"
     windicss "^2.5.12"
 
-windicss@^2.3.0, windicss@^2.5.11, windicss@^2.5.12:
+windicss@^2.5.11, windicss@^2.5.12:
   version "2.5.14"
   resolved "https://registry.yarnpkg.com/windicss/-/windicss-2.5.14.tgz#41236ccc2517c0947e1adb69e0d5e8aa9bed9c1e"
   integrity sha512-8Lm7U1M5AzJPbiaVSVz7qWdETRzlkv//5LBMICBBAojos1jo09lUGhNZ5rBzHeldB9JmqYMDOGgrrXHExu0EAg==
