@@ -73,7 +73,7 @@
     "make-empty-github-commit": "^1.2.1",
     "netlify-cli": "^3.5.0",
     "node-sass": "^4.14.1",
-    "nuxt-windicss": "^0.5.4",
+    "nuxt-windicss": "^0.6.0",
     "patch-package": "^6.4.5",
     "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.0.5",
