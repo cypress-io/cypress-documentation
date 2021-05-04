@@ -101,7 +101,7 @@ All properties are optional. All properties that are set must match for the rout
 | headers    | HTTP request headers (`object`)                                                                 |
 | hostname   | HTTP request hostname                                                                           |
 | https      | `true`: only secure (https://) requests, `false`: only insecure (http://) requests              |
-| method     | HTTP request method (matches all by default)                                                    |
+| method     | HTTP request method (matches any method by default)                                                    |
 | middleware | `true`: match route first and in defined order, `false`: match route in reverse order (default) |
 | path       | HTTP request path after the hostname, including query parameters                                |
 | pathname   | Like `path`, but without query parameters                                                       |
