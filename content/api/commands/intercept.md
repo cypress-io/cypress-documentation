@@ -973,7 +973,6 @@ The response object (`res`) yielded to response handlers has several properties 
 | throttleKbps | Maximum data transfer rate of the response (kilobits/second)                |
 | delay        | Minimum network latency or delay to add to the response time (milliseconds) |
 
-````
 
 Any modifications to the properties of `res` will be persisted to other response handlers, and finally merged into the actual incoming HTTP response.
 
