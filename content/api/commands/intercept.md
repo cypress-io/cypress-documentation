@@ -118,7 +118,7 @@ The `routeHandler` defines what will happen with a request if the [routeMatcher]
 - If an **object with no [`StaticResponse`][staticresponse] keys** is passed, it will be sent as a JSON response body. For example, passing `{ foo: 'bar' }` is equivalent to passing `{ body: { foo: 'bar' } }`.
 - If a **callback** is passed, it will be called whenever a request matching this route is received, with the first parameter being the request object. From inside the callback, you can modify the outgoing request, send a response, access the real response, and much more. See ["Intercepted requests"][req] for more information.
 
-See [Request/Response Modification with `routeHandler`](#Request-Response-Modification-with-routeHandler)
+See [Request/Response Modification with `routeHandler`](#Request-Response-Modification-with-routeHandler).
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
