@@ -213,14 +213,32 @@ E2E specific timeouts in configuration file (`cypress.json` by default):
 
 ### Plugins
 
-You can programmatically modify configuration values using Node within the `pluginsFile`. This enables you to do things like:
+Cypress plugin file runs in Node environment before the browser running a spec file even launches, which gives you the most flexibility to set the configuration values. This enables you to do things like:
 
 - Use `fs` and read off configuration values and dynamically change them.
 - Edit the list of browsers found by default by Cypress
+- Set config values by reading any custom environment variables
 
 While this may take a bit more work than other options - it yields you the most amount of flexibility and the ability to manage configuration however you'd like.
 
-[We've fully documented how to do this here.](/api/plugins/configuration-api)
+```js
+// cypress/plugins/index.js
+module.exports = (on, config) => {
+  // modify the config values
+  config.defaultCommandTimeout = 10000
+
+  // read an environment variable and
+  // pass its value to the specs
+  config.env.userName = process.env.TEST_USER || 'Joe'
+  // the specs will be able to access the above value
+  // by using Cypress.env('userName')
+
+  // IMPORTANT return the updated config object
+  return config
+}
+```
+
+We've fully documented how to set the configuration values from plugin file [here](/api/plugins/configuration-api).
 
 ### Environment Variables
 
@@ -563,7 +581,8 @@ DEBUG=cypress:cli,cypress:server:specs
 
 ## See also
 
-- [Cypress.config()](/api/cypress-api/config)
+- [Cypress.config()](/api/cypress-api/config) and [Cypress.env()](/api/cypress-api/env)
 - [Environment variables](/guides/guides/environment-variables)
 - [Environment Variables recipe](/examples/examples/recipes#Fundamentals)
 - [Extending the Cypress Config File](https://www.cypress.io/blog/2020/06/18/extending-the-cypress-config-file/) blog post and [@bahmutov/cypress-extends](https://github.com/bahmutov/cypress-extends) package.
+- Blog post [Keep passwords secret in E2E tests](https://glebbahmutov.com/blog/keep-passwords-secret-in-e2e-tests/)
