@@ -85,7 +85,7 @@ Specify the [HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Meth
 
 <Alert type="bolt">
 
-If no `method` is provided, Cypress will match _all_ HTTP methods (`*` wildcard) by default.
+If no `method` is provided, Cypress will match _any_ HTTP method (`*`) by default.
 
 </Alert>
 
