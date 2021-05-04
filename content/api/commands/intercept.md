@@ -130,7 +130,7 @@ See [Request/Response Modification with `routeHandler`](#Request-Response-Modifi
 
 ### Matching `url`
 
-You can provide the exact [URL](#Arguments) to match, but typically pattern-matching is more effective and a glob pattern will likely be the simpler of the two to implement. See [Glob Pattern Matching URLs](#Glob-Pattern-Matching-URLs).
+You can provide the exact [URL](#Arguments) to match or use pattern-matching to match many URLs at once, either with globs or with regex. See [Glob Pattern Matching URLs](#Glob-Pattern-Matching-URLs).
 
 ```js
 // match any request that exactly matches the URL
