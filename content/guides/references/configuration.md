@@ -213,7 +213,7 @@ E2E specific timeouts in configuration file (`cypress.json` by default):
 
 ### Plugins
 
-Cypress plugin file runs in Node environment before the browser running a spec file even launches, which gives you the most flexibility to set the configuration values. This enables you to do things like:
+The Cypress plugins file runs in Node environment before the browser running a spec file launches, giving you the most flexibility to set the configuration values. This enables you to do things like:
 
 - Use `fs` and read off configuration values and dynamically change them.
 - Edit the list of browsers found by default by Cypress
