@@ -137,7 +137,7 @@ You can provide the exact [URL](#Arguments) to match or use pattern-matching to 
 cy.intercept('https://prod.cypress.io/users')
 
 // match any request that satisfies a glob pattern
-cy.intercept('/users?_limit=+(3|5)')
+cy.intercept('/users?_limit=*')
 
 // match any request that satisfies a regex pattern
 cy.intercept(/\/users\?_limit=(3|5)$/)
