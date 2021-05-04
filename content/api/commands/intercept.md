@@ -571,7 +571,7 @@ cy.intercept('POST', '/users', (req) => {
 
 // modify an existing header
 cy.intercept('POST', '/users', (req) => {
-  req.headers['Authorization'] = 'Basic YWxhZGRpbjpvcGVuc2VzYW1l'
+  req.headers['authorization'] = 'Basic YWxhZGRpbjpvcGVuc2VzYW1l'
 })
 ```
 
