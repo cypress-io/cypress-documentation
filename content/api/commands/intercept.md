@@ -959,7 +959,7 @@ The response object (`res`) yielded to response handlers has several properties 
 
 | Property      | Description                        |
 | ------------- | ---------------------------------- |
-| body          | response body (`object`, `string`) |
+| body          | response body (`object`, `string`, `ArrayBuffer`) |
 | headers       | response headers (`object`)        |
 | statusCode    | response status code (`number`)    |
 | statusMessage | response status message (`string`) |
