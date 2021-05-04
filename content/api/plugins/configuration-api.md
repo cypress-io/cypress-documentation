@@ -231,5 +231,5 @@ module.exports = (on, config) => {
 
 ## See also
 
-- the [Configuration](https://github.com/cypress-io/testing-workshop-cypress#intermediate) section of the Cypress Testing Workshop
+- The [Configuration](https://github.com/cypress-io/testing-workshop-cypress#intermediate) section of the Cypress Testing Workshop
 - blog post [Keep passwords secret in E2E tests](https://glebbahmutov.com/blog/keep-passwords-secret-in-e2e-tests/)
