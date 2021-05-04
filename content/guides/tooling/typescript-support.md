@@ -91,9 +91,7 @@ A nice detailed JSDoc comment above the method type will be really appreciated b
 
 </Alert>
 
-If your specs files are in TypeScript, you should include the TypeScript definition file, `cypress/support/index.d.ts`, with the rest of the source files.
-
-Even if your project is JavaScript only, the JavaScript specs can know about the new command by referencing the file using the special triple slash `reference path` comment.
+In your specs, you can now use the custom command as expected
 
 ```typescript
 // from your cypress/integration/spec.ts
@@ -107,6 +105,7 @@ it('works', () => {
 
 #### Examples:
 
+- Find [the standalone example](https://github.com/cypress-io/add-cypress-custom-command-in-typescript).
 - See [Adding Custom Commands](https://github.com/cypress-io/cypress-example-recipes#fundamentals) example recipe.
 - You can find an example with custom commands written in TypeScript in [omerose/cypress-support](https://github.com/omerose/cypress-support) repo.
 - Example project [cypress-example-todomvc custom commands](https://github.com/cypress-io/cypress-example-todomvc#custom-commands) uses custom commands to avoid boilerplate code.
