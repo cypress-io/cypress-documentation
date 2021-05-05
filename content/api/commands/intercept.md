@@ -30,7 +30,7 @@ cy.intercept(method, url)
 cy.intercept(routeMatcher)
 ```
 
-#### With `routeHandler` (Request/Response Modification and Spying)
+#### With `routeHandler` (Request/Response Stubbing and Spying)
 
 ```js
 cy.intercept(url, routeHandler)
