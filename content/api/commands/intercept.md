@@ -113,6 +113,10 @@ All properties are optional. All properties that are set must match for the rout
     [key: string]: string | RegExp
   }
   /**
+   * If set, this `RouteMatcher` will only match the first `times` requests.
+   */
+  times?: number
+  /**
    * Match against the full request URL.
    */
   url?: string | RegExp
@@ -151,6 +155,10 @@ cy.intercept(
 cy.intercept('/users', { middleware: true }, (req) => {
   req.headers['authorization'] = `Bearer ${bearerToken}`
 })
+
+// this example will cause 1 request to `/temporary-error` to receive a network
+// error. subsequent requests will not match this RouteMatcher.
+cy.intercept('/temporary-error', { times: 1 }, { forceNetworkError: true })
 ```
 
 #### <Icon name="angle-right"></Icon> routeHandler (<code>string | object | Function | [StaticResponse][staticresponse]</code>)
