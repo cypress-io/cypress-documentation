@@ -4,6 +4,7 @@ title: intercept
 
 Cypress routes all HTTP requests - including `XMLHttpRequest` (XHR) and `fetch` - through its proxy. Use `cy.intercept` to manage the behavior of these requests, including:
 
+<!-- TODO DX-182 add links to examples -->
 - Waiting on HTTP requests to complete before executing commands.
 - Making assertions and modifying (statically or dynamically):
   - the request made by your front-end application.
