@@ -229,7 +229,7 @@ cy.intercept(
   },
   (req) => {
     // only requests to URLs starting with 'http://api.example.com/widgets'
-    // having the header 'x-requested-with: exampleClient' will be received
+    // and having the header 'x-requested-with: exampleClient' will be intercepted
   }
 })
 
