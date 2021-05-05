@@ -16,7 +16,7 @@ Cypress routes all HTTP requests - including `XMLHttpRequest` (XHR) and `fetch` 
 
 <Alert type="warning">
 
-`cy.route` was replaced by `cy.intercept` in Version 6.0.0. See [Comparison to `cy.route`](#Comparison-to-cy-route).
+`cy.intercept()` is the successor to `cy.route()` as of Cypress 6.0.0. See [Comparison to `cy.route`](#Comparison-to-cy-route).
 
 </Alert>
 
