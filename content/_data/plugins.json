@@ -25,7 +25,7 @@
           "badge": "community"
         },
         {
-          "name": "ESLint",
+          "name": "cypress-eslint-preprocessor",
           "description": "Runs linting via ESLint on your spec files as they are loaded and display errors in the console",
           "link": "https://github.com/chinchiheather/cypress-eslint-preprocessor",
           "keywords": ["eslint"],
@@ -114,7 +114,7 @@
           "badge": "official"
         },
         {
-          "name": "ESLint",
+          "name": "eslint-plugin-cypress",
           "description": "ESLint plugin that sets globals for writing tests in Cypress.",
           "link": "https://github.com/cypress-io/eslint-plugin-cypress",
           "keywords": ["eslint"],
