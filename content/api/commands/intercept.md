@@ -98,7 +98,7 @@ All properties are optional. All properties that are set must match for the rout
 
 | Option     | Description                                                                                     |
 | ---------- | ----------------------------------------------------------------------------------------------- |
-| auth       | `username` and `password` used in HTTP Basic Authentication (`object`)                          |
+| auth       | HTTP Basic Authentication (`object` with keys `username` and `password`)                          |
 | headers    | HTTP request headers (`object`)                                                                 |
 | hostname   | HTTP request hostname                                                                           |
 | https      | `true`: only secure (https://) requests, `false`: only insecure (http://) requests              |
