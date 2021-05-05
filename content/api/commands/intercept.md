@@ -56,21 +56,6 @@ cy.intercept('/users*', { hostname: 'localhost' }, (req) => {
 })
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
-
-```js
-cy.intercept('GET')
-// `method` argument must be passed in with `url`
-cy.intercept({ success: true })
-// `routeHandler` cannot be passed in by itself
-cy.intercept('/users*', { method: 'GET' })
-// `url` with `routeMatcher` requires `routeHandler`
-cy.intercept('GET', '/users*', { hostname: 'localhost' })
-// `method` can't be passed in with `routeMatcher`
-cy.intercept('GET', '/users*', { hostname: 'localhost' }, { success: true })
-// this command only accepts up to three arguments
-```
-
 ### Arguments
 
 #### **<Icon name="angle-right"></Icon> url** **_(String, Glob, RegExp)_**
@@ -101,7 +86,7 @@ All properties are optional. All properties that are set must match for the rout
 | headers    | HTTP request headers (`object`)                                                                 |
 | hostname   | HTTP request hostname                                                                           |
 | https      | `true`: only secure (https://) requests, `false`: only insecure (http://) requests              |
-| method     | HTTP request method (matches any method by default)                                                    |
+| method     | HTTP request method (matches any method by default)                                             |
 | middleware | `true`: match route first and in defined order, `false`: match route in reverse order (default) |
 | path       | HTTP request path after the hostname, including query parameters                                |
 | pathname   | Like `path`, but without query parameters                                                       |
@@ -957,12 +942,12 @@ cy.intercept('/url', (req) => {
 
 The response object (`res`) yielded to response handlers has several properties from the HTTP response itself. All of the following properties on `res` can be modified:
 
-| Property      | Description                        |
-| ------------- | ---------------------------------- |
+| Property      | Description                                       |
+| ------------- | ------------------------------------------------- |
 | body          | response body (`object`, `string`, `ArrayBuffer`) |
-| headers       | response headers (`object`)        |
-| statusCode    | response status code (`number`)    |
-| statusMessage | response status message (`string`) |
+| headers       | response headers (`object`)                       |
+| statusCode    | response status code (`number`)                   |
+| statusMessage | response status message (`string`)                |
 
 **Note about `body`:** If the response header contains `Content-Type: application/json` and the body contains valid JSON, this will be an `object`. And if the body contains binary content, this will be a buffer.
 
@@ -972,7 +957,6 @@ The response object (`res`) yielded to response handlers has several properties 
 | ------------ | --------------------------------------------------------------------------- |
 | throttleKbps | Maximum data transfer rate of the response (kilobits/second)                |
 | delay        | Minimum network latency or delay to add to the response time (milliseconds) |
-
 
 Any modifications to the properties of `res` will be persisted to other response handlers, and finally merged into the actual incoming HTTP response.
 
@@ -991,7 +975,7 @@ cy.intercept('/notification', (req) => {
     }
   })
 })
-````
+```
 
 See the [`StaticResponse` documentation][staticresponse] for more information on the format.
 
