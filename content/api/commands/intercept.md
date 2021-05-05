@@ -179,7 +179,7 @@ For aliasing requests with GraphQL, see [Aliasing individual GraphQL requests](#
 
 <Alert type="info">
 
-`cy.intercept` can be used to passively listen for matching routes and apply aliases to them without manipulating the request or its response in any way. As you'll see, this alone is powerful as it allows you to wait for these requests, resulting in more reliable tests.
+`cy.intercept` can be used solely for spying: to passively listen for matching routes and apply aliases to them without manipulating the request or its response in any way. This alone is powerful as it allows you to wait for these requests, resulting in more reliable tests.
 
 </Alert>
 
