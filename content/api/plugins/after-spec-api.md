@@ -97,7 +97,7 @@ The example below shows how to delete the recorded video for specs with no faili
 ```javascript
 // plugins/index.js
 
-// need to install this dependency
+// need to install the "del" module as a dependency
 // npm i del --save-dev
 const del = require('del')
 
