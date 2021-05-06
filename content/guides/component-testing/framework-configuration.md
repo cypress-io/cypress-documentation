@@ -157,7 +157,7 @@ It's possible to use Cypress with the latest version of Next.js, which uses Webp
 this guide assumes you've created your app using the [`create-next-app`](https://nextjs.org/docs/api-reference/create-next-app) tool. although next.js is webpack based, it doesn't it as a direct dependency, so you'll need to install it. you'll also need to install the cypress webpack dev server and react adapter:
 
 ```sh
-npm install cypress @cypress/webpack-dev-server @cypress/react html-webpack-plugin@4 webpack@4 webpack-dev-server@3 --dev
+npm install --save-dev cypress @cypress/webpack-dev-server @cypress/react html-webpack-plugin@4 webpack@4 webpack-dev-server@3
 ```
 
 Note we are installing `html-webpack-plugin@4` and `webpack@4`. Those are the versions that correspond to the current version of Next.js.
