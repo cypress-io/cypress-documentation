@@ -2,8 +2,9 @@
 title: intercept
 ---
 
-Cypress intercepts requests at the network layer including `XMLHttpRequest` (XHR) and `fetch`. Use `cy.intercept` to manage the behavior of these intercepted requests, including:
+Cypress routes all HTTP requests - including `XMLHttpRequest` (XHR) and `fetch` - through its proxy. Use `cy.intercept` to manage the behavior of these requests, including:
 
+<!-- TODO DX-182 add links to examples -->
 - Waiting on HTTP requests to complete before executing commands.
 - Making assertions and modifying (statically or dynamically):
   - the request made by your front-end application.
@@ -15,7 +16,7 @@ Cypress intercepts requests at the network layer including `XMLHttpRequest` (XHR
 
 <Alert type="warning">
 
-`cy.route` was replaced by `cy.intercept` in Version 6.0.0. See [Comparison to `cy.route`](#Comparison-to-cy-route).
+`cy.intercept()` is the successor to `cy.route()` as of Cypress 6.0.0. See [Comparison to `cy.route`](#Comparison-to-cy-route).
 
 </Alert>
 
@@ -29,7 +30,7 @@ cy.intercept(method, url)
 cy.intercept(routeMatcher)
 ```
 
-#### With `routeHandler` (Request/Response Modification and Spying)
+#### With `routeHandler` (Request/Response Stubbing and Spying)
 
 ```js
 cy.intercept(url, routeHandler)
@@ -82,7 +83,7 @@ All properties are optional. All properties that are set must match for the rout
 
 | Option     | Description                                                                                     |
 | ---------- | ----------------------------------------------------------------------------------------------- |
-| auth       | `username` and `password` used in HTTP Basic Authentication (`object`)                          |
+| auth       | HTTP Basic Authentication (`object` with keys `username` and `password`)                          |
 | headers    | HTTP request headers (`object`)                                                                 |
 | hostname   | HTTP request hostname                                                                           |
 | https      | `true`: only secure (https://) requests, `false`: only insecure (http://) requests              |
@@ -163,7 +164,7 @@ For aliasing requests with GraphQL, see [Aliasing individual GraphQL requests](#
 
 <Alert type="info">
 
-`cy.intercept` can be used to passively listen for matching routes and apply aliases to them without manipulating the request or its response in any way. As you'll see, this alone is powerful as it allows you to wait for these requests, resulting in more reliable tests.
+`cy.intercept` can be used solely for spying: to passively listen for matching routes and apply aliases to them without manipulating the request or its response in any way. This alone is powerful as it allows you to wait for these requests, resulting in more reliable tests.
 
 </Alert>
 
@@ -213,7 +214,7 @@ cy.intercept(
   },
   (req) => {
     // only requests to URLs starting with 'http://api.example.com/widgets'
-    // having the header 'x-requested-with: exampleClient' will be received
+    // and having the header 'x-requested-with: exampleClient' will be intercepted
   }
 })
 
