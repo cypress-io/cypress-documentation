@@ -3,7 +3,7 @@ title: Framework Configuration
 containerClass: component-testing
 ---
 
-Recent years have seen an explosion in component based libraries (Vue, React) and frameworks built on top of them (Nuxt, Next). Cypress tests and written and behave the same regardless. Some frameworks require some additional configuration to work correctly with Cypress component testing.
+Recent years have seen an explosion in component based libraries (Vue, React) and frameworks built on top of them (Nuxt, Next). Cypress tests are written and behave the same regardless. Some frameworks require some additional configuration to work correctly with Cypress component testing.
 
 All the example projects described in this page can be found [here](https://github.com/lmiller1990/cypress-component-examples).
 
@@ -72,7 +72,7 @@ npm install cypress @cypress/vue @cypress/webpack-dev-server html-webpack-plugin
 
 `html-webpack-plugin@4` is required because the projects created with the Vue CLI v4 use Webpack v4. If you are using Vue CLI v5 (currently in alpha) you will need `html-webpack-plugin@5` instead.
 
-Next configure the dev-server to use the same Webpack configuration used by Vue CLI. Place the following in `cypress/plugins/index.js`, creating the relevant directores.
+Next configure the dev-server to use the same Webpack configuration used by Vue CLI. Place the following in `cypress/plugins/index.js`, creating the relevant directories.
 
 ```js
 // cypress/plugins/index.js
@@ -130,7 +130,7 @@ Start Cypress with `npx cypress open-ct` - the test runner will open. Select you
 
 ### Vue 3 (Vue CLI)
 
-The installation and configuration is the same as Vue 2 with the Vue CLI as described above. The only difference is the Vue adatper should be installed using `npm install @cypress/vue@next` - `@cypress/vue` target Vue 2, and the `next` branch targets Vue 3.
+The installation and configuration is the same as Vue 2 with the Vue CLI as described above. The only difference is the Vue adapter should be installed using `npm install @cypress/vue@next` - `@cypress/vue` target Vue 2, and the `next` branch targets Vue 3.
 
 You can find an example project [here](https://github.com/lmiller1990/cypress-component-examples/tree/main/vue-cli-vue-3-cypress).
 
@@ -334,7 +334,7 @@ describe('Mountains', () => {
 })
 ```
 
-Because Cypress mounts components in islation, Nuxt specific APIs are generally _not_ applied. In this example, the `fetch` hook is not automatically applied, so we used the `mocks` mounting option to specify the three component states (loading, error and success) and test each one in isolation.
+Because Cypress mounts components in isolation, Nuxt specific APIs are generally _not_ applied. In this example, the `fetch` hook is not automatically applied, so we used the `mocks` mounting option to specify the three component states (loading, error and success) and test each one in isolation.
 
 Start Cypress with `npx cypress open-ct` - the test runner will open. Select your test to execute it and see the rendered output. You can also run the tests without opening a browser with `npx cypress run-ct`.
 
