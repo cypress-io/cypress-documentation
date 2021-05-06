@@ -154,7 +154,7 @@ cy.intercept('GET', '/users')
 
 ### Aliasing a Route
 
-While `cy.intercept` doesn't yield anything, you can chain [`.as`](/api/commands/as) to it to create an [alias](/guides/core-concepts/variables-and-aliases#Aliases):
+While `cy.intercept` doesn't yield anything, you can chain [`.as`](/api/commands/as) to it to create an [alias](/guides/core-concepts/variables-and-aliases#Aliases) which can be used to [wait on a request](#Waiting-on-a-request).
 
 ```js
 cy.intercept('GET', '/users').as('getAllUsers')
