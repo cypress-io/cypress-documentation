@@ -204,7 +204,9 @@ it('Renders page component', () => {
 
 Start Cypress with `npx cypress open-ct` - the test runner will open. Select your test to execute it and see the rendered output. You can also run the tests without opening a browser with `npx cypress run-ct`.
 
-<Alert type="info">
+<Alert type="warning">
+
+<strong class="alert-header">Caveats</strong>
 
 There are some Next.js specific caveats due to it's server side architecture relating to `getInitialProps` and `getStaticProps`. [Learn more here](https://github.com/cypress-io/cypress/tree/develop/npm/react/examples/nextjs#server-side-props).
 
