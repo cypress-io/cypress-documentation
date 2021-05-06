@@ -92,7 +92,7 @@ module.exports = (on, config) => {
 
 You can delete the recorded video for a spec when certain conditions are met. This will skip the compression and uploading of the video when recording to the Dashboard.
 
-The example below shows how to delete the recorded video specs with no failing tests.
+The example below shows how to delete the recorded video for specs with no failing tests.
 
 ```javascript
 // plugins/index.js
