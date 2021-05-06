@@ -512,7 +512,7 @@ Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/
 
 Specifying a `routeHandler` as the last argument to `cy.intercept` is what's required to leverage capabilities beyond just spying routes.
 
-<!-- TODO emphasize the usage of StaticResponse as the routeHandler -->
+<!-- TODO DX-188 emphasize the usage of StaticResponse as the routeHandler -->
 
 If a function is passed as the `routeHandler`, it will be called with the intercepted HTTP request:
 
@@ -524,6 +524,7 @@ cy.intercept('/api', (req) => {
 
 From here, you can do several things with the intercepted request:
 
+<!-- TODO DX-190 add links to examples -->
 - modify and make assertions on the request like its body, headers, URL, method, etc.
 - stub out the response without interacting with a real back-end
 - pass the request through to its destination and modify or make assertions on the real response on its way back
