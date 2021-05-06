@@ -160,44 +160,6 @@ it('adds a todo', () => {
 })
 ```
 
-### Unit
-
-You can also use Cypress to execute unit tests for code that is meant to run in the browser environment.
-
-```js
-it('converts string to base64', () => {
-  expect(window.btoa('foo')).to.equal('Zm9v')
-})
-```
-
-Cypress can also execute unit tests for isomorphic or universal code that can run both in the browser and in Node.
-
-```js
-const { add } = require('./my/math')
-it('adds two numbers', () => {
-  expect(add(2, 3)).to.equal(5)
-})
-```
-
-Cypress currently can't run unit tests for code that requires the Node environment - because Cypress executes tests in the browser.
-
-```js
-const fs = require('fs')
-
-it('reads a file', () => {
-  // 🚨 NOPE, NOT GOING TO WORK
-  fs.readFileSync('file.txt', 'utf8')
-})
-```
-
-<Alert type="success">
-
-<strong class="alert-header">Stay tuned</strong>
-
-We are working on a "Cypress-Node" Test Runner to make testing Node code as simple as testing browser applications.
-
-</Alert>
-
 ### Other
 
 Finally, through a large number of [official and 3rd party plugins](/plugins/directory) you can write Cypress [a11y](https://github.com/component-driven/cypress-axe), [visual](/plugins/directory#Visual%20Testing), and other types of tests.
