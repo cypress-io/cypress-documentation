@@ -104,7 +104,9 @@ module.exports = (on, config) => {
 }
 ```
 
-<Alert type="info">
+<Alert type="warning">
+
+<strong class="alert-header">PWA Caveat</strong>
 
 If you are using the Vue CLI's PWA feature, there is a known caveat regarding configuration. See [here](https://github.com/cypress-io/cypress/issues/15968#issuecomment-819170918) for more information.
 
