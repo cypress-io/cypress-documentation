@@ -17,7 +17,13 @@ Once you have a React project, you'll also need to install the Cypress Webpack D
 npm install --save-dev cypress @cypress/vue @cypress/webpack-dev-server html-webpack-plugin@4
 ```
 
+<Alert type="info">
+
+<strong class="alert-header">Note</strong>
+
 `html-webpack-plugin@4` is required because the projects created with Create React App use Webpack v4.
+
+</Alert>
 
 Next configure the dev-server to use the same Webpack configuration used by Create React App. We can do this easily using the `react-scripts` plugin provided by Cypress:
 
