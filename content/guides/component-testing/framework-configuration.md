@@ -208,7 +208,7 @@ Start Cypress with `npx cypress open-ct` - the test runner will open. Select you
 
 <strong class="alert-header">Caveats</strong>
 
-There are some Next.js specific caveats due to it's server side architecture relating to `getInitialProps` and `getStaticProps`. [Learn more here](https://github.com/cypress-io/cypress/tree/develop/npm/react/examples/nextjs#server-side-props).
+There are some Next.js specific caveats due to its server side architecture relating to `getInitialProps` and `getStaticProps`. [Learn more here](https://github.com/cypress-io/cypress/tree/develop/npm/react/examples/nextjs#server-side-props).
 
 </Alert>
 
