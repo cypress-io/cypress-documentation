@@ -525,6 +525,7 @@ cy.intercept('/api', (req) => {
 From here, you can do several things with the intercepted request:
 
 <!-- TODO DX-190 add links to examples -->
+
 - modify and make assertions on the request like its body, headers, URL, method, etc.
 - stub out the response without interacting with a real back-end
 - pass the request through to its destination and modify or make assertions on the real response on its way back
@@ -532,13 +533,15 @@ From here, you can do several things with the intercepted request:
 
 #### Asserting on a request
 
+You can use the request handler callback to make an assertion on the Intercepted Request Object before it is sent.
+
 ```js
+// match requests to create a user
 cy.intercept('POST', '/users', (req) => {
+  // make an assertion on the payload contents
   expect(req.body).to.include('Peter Pan')
 })
 ```
-
-You can use the request handler callback to make an assertion on the Intercepted Request Object modify the request before it is sent.
 
 #### Controlling the outgoing request
 
