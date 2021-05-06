@@ -229,7 +229,7 @@ module.exports = {
 Finally, ensure you install Webpack 5 and the corresponding HTMLWebpackPlugin version:
 
 ```sh
-npm install cypress @cypress/webpack-dev-server @cypress/react html-webpack-plugin@5 webpack@5 webpack-dev-server@3 --dev
+npm install --save-dev cypress @cypress/webpack-dev-server @cypress/react html-webpack-plugin@5 webpack@5 webpack-dev-server@3
 ```
 
 Everything else is the same as configuring Cypress with Next.js and Webpack 4.
@@ -241,7 +241,7 @@ This guide assumes you've created your app using the [`create-nuxt-app`]. You ca
 Nuxt uses Vue 2 and Webpack under the hood, so you also need to install the Cypress Webpack Dev Server and Vue 2 adapter, as well as some devDependencies:
 
 ```sh
-npm install cypress @cypress/vue @cypress/webpack-dev-server html-webpack-plugin@4 --dev
+npm install --save-dev cypress @cypress/vue @cypress/webpack-dev-server html-webpack-plugin@4
 ```
 
 `html-webpack-plugin@4` is required because the projects created with the Vue CLI v4 use Webpack v4.
