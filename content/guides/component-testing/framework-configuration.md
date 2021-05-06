@@ -160,7 +160,13 @@ this guide assumes you've created your app using the [`create-next-app`](https:/
 npm install --save-dev cypress @cypress/webpack-dev-server @cypress/react html-webpack-plugin@4 webpack@4 webpack-dev-server@3
 ```
 
+<Alert type="info">
+
+<strong class="alert-header">Note</strong>
+
 Note we are installing `html-webpack-plugin@4` and `webpack@4`. Those are the versions that correspond to the current version of Next.js.
+
+</Alert>
 
 Next configure the dev-server using the Next.js adapter shipped with `@cypress/react` by adding the following code to `cypress/plugins/index.js`, creating the relevant directories:
 
