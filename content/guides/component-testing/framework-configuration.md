@@ -244,7 +244,13 @@ Nuxt uses Vue 2 and Webpack under the hood, so you also need to install the Cypr
 npm install --save-dev cypress @cypress/vue @cypress/webpack-dev-server html-webpack-plugin@4
 ```
 
+<Alert type="info">
+
+<strong class="alert-header">Note</strong>
+
 `html-webpack-plugin@4` is required because the projects created with the Vue CLI v4 use Webpack v4.
+
+</Alert>
 
 Next configure the dev-server to use the same Webpack configuration used by Nuxt. Place the following in `cypress/plugins/index.js`, creating the relevant directories.
 
