@@ -93,7 +93,9 @@ module.exports = (on, config) => {
 ```
 
 <Alert type="info">
+
 If you are using the Vue CLI's PWA feature, there is a known caveat regarding configuration. See [here](https://github.com/cypress-io/cypress/issues/15968#issuecomment-819170918) for more information.
+
 </Alert>
 
 Lastly, tell Cypress where you find your test in `cypress.json`. In this example all the tests are in `src` and named `spec.js`:
@@ -183,7 +185,9 @@ it('Renders page component', () => {
 Start Cypress with `npx cypress open-ct` - the test runner will open. Select your test to execute it and see the rendered output. You can also run the tests without opening a browser with `npx cypress run-ct`.
 
 <Alert type="info">
+
 There are some Next.js specific caveats due to it's server side architecture relating to `getInitialProps` and `getStaticProps`. [Learn more here](https://github.com/cypress-io/cypress/tree/develop/npm/react/examples/nextjs#server-side-props).
+
 </Alert>
 
 ### Next.js (Webpack 5)
