@@ -76,7 +76,13 @@ You'll also need to install the Cypress Webpack Dev Server and Vue 2 adapter, as
 npm install --save-dev cypress @cypress/vue @cypress/webpack-dev-server html-webpack-plugin@4
 ```
 
+<Alert type="info">
+
+<strong class="alert-header">Note</strong>
+
 `html-webpack-plugin@4` is required because the projects created with the Vue CLI v4 use Webpack v4. If you are using Vue CLI v5 (currently in alpha) you will need `html-webpack-plugin@5` instead.
+
+</Alert>
 
 Next configure the dev-server to use the same Webpack configuration used by Vue CLI. Place the following in `cypress/plugins/index.js`, creating the relevant directories.
 
