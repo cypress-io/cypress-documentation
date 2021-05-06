@@ -66,9 +66,9 @@ cy.intercept('/users*', { hostname: 'localhost' }, (req) => {
 
 #### **<Icon name="angle-right"></Icon> url** **_(String, Glob, RegExp)_**
 
-This value can be passed in via [`routeMatcher`][] instead. See below.
-
 Specify the URL to match. See [Matching `url`](#match-url) for examples.
+
+**Note:** This value can be passed in via [`routeMatcher`][arg-routematcher] instead.
 
 #### **<Icon name="angle-right"></Icon> method** **_(String)_**
 
@@ -1247,3 +1247,4 @@ Unlike [cy.route()](/api/commands/route), `cy.intercept()`:
 [glob-match-url]: #Glob-Pattern-Matching-URLs
 [arg-method]: #method-String
 [arg-routehandler]: #routeHandler-lt-code-gtstring-object-Function-StaticResponselt-code-gt
+[arg-routematcher]: #routeMatcher-RouteMatcher
