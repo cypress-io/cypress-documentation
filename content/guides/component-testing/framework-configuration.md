@@ -73,7 +73,7 @@ This guide assumes you've created your app using the [Vue CLI](https://cli.vuejs
 You'll also need to install the Cypress Webpack Dev Server and Vue 2 adapter, as well as some devDependencies:
 
 ```sh
-npm install cypress @cypress/vue @cypress/webpack-dev-server html-webpack-plugin@4 --dev
+npm install --save-dev cypress @cypress/vue @cypress/webpack-dev-server html-webpack-plugin@4
 ```
 
 `html-webpack-plugin@4` is required because the projects created with the Vue CLI v4 use Webpack v4. If you are using Vue CLI v5 (currently in alpha) you will need `html-webpack-plugin@5` instead.
