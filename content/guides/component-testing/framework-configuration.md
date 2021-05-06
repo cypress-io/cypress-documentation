@@ -75,6 +75,8 @@ npm install cypress @cypress/vue @cypress/webpack-dev-server html-webpack-plugin
 Next configure the dev-server to use the same Webpack configuration used by Vue CLI. Place the following in `cypress/plugins/index.js`, creating the relevant directores.
 
 ```js
+// cypress/plugins/index.js
+
 const { startDevServer } = require('@cypress/webpack-dev-server')
 const webpackConfig = require('@vue/cli-service/webpack.config')
 
@@ -221,6 +223,8 @@ npm install cypress @cypress/vue @cypress/webpack-dev-server html-webpack-plugin
 Next configure the dev-server to use the same Webpack configuration used by Nuxt. Place the following in `cypress/plugins/index.js`, creating the relevant directories.
 
 ```js
+// cypress/plugins/index.js
+
 const { startDevServer } = require('@cypress/webpack-dev-server')
 const { getWebpackConfig } = require('nuxt')
 
@@ -337,6 +341,8 @@ Cypress also ships a Vite based dev server, as opposed to a Webpack based on lik
 Inside of `cypress/plugins/index.js`, configure Cypress to use the Vite dev server:
 
 ```js
+// cypress/plugins/index.js
+
 const path = require('path')
 const { startDevServer } = require('@cypress/vite-dev-server')
 
