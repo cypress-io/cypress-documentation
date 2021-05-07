@@ -321,11 +321,16 @@ cy.intercept('POST', '/organization', (req) => {
 
 #### Modifying an outgoing request
 
-You can use the request handler callback to modify the request before it is sent.
+You can use the request handler callback to modify the [intercepted request object][req] before it is sent.
 
 ```js
+// set the request body to something different before it's sent to the destination
 cy.intercept('POST', '/login', (req) => {
-  // set the request body to something different before it's sent to the destination
+  req.body = 'username=janelane&password=secret123'
+})
+
+// dynamically set the alias
+cy.intercept('POST', '/login', (req) => {
   req.body = 'username=janelane&password=secret123'
 })
 ```
