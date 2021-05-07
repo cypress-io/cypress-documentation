@@ -9,6 +9,7 @@ title: Why Cypress?
 - What Cypress is and why you should use it
 - Our mission, and what we believe in
 - Key Cypress features
+- Types of tests Cypress is designed for
 
 </Alert>
 
@@ -100,6 +101,68 @@ Cypress runs as fast as your browser can render content. You can watch tests run
 Readable error messages help you to debug quickly. You also have access to all the developer tools you know and love.
 
 <DocsVideo src="/img/snippets/debugging.mp4"></DocsVideo>
+
+## Test types
+
+Cypress can be used to write several different types of tests. This can provide even more confidence that your application under test is working as intended.
+
+### End-to-end
+
+Cypress was originally designed to run end-to-end (E2E) tests on anything that runs in a browser. A typical E2E test visits the application in a browser and performs actions via the UI just like a real user would.
+
+```js
+it('adds todos', () => {
+  cy.visit('https://todo.app.com')
+  cy.get('.new-input').type('write code{enter}').type('write tests{enter}')
+  // confirm the application is showing two items
+  cy.get('li.todo').should('have.length', 2)
+})
+```
+
+### Component
+
+You can also use Cypress to mount components from some web frameworks and execute [component tests](/guides/component-testing/introduction).
+
+```js
+import { mount } from '@cypress/react' // or @cypress/vue
+import TodoList from './components/TodoList'
+
+it('contains the correct number of todos', () => {
+  const todos = [
+    { text: 'Buy milk', id: 1 },
+    { text: 'Learn Component Testing', id: 2 },
+  ]
+
+  mount(<TodoList todos={todos} />)
+  // the component starts running like a mini web app
+  cy.get('[data-testid=todos]').should('have.length', todos.length)
+})
+```
+
+### API
+
+Cypress can perform arbitrary HTTP calls, thus you can use it for API testing.
+
+```js
+it('adds a todo', () => {
+  cy.request({
+    url: '/todos',
+    method: 'POST',
+    body: {
+      title: 'Write REST API',
+    },
+  })
+    .its('body')
+    .should('deep.contain', {
+      title: 'Write REST API',
+      completed: false,
+    })
+})
+```
+
+### Other
+
+Finally, through a large number of [official and 3rd party plugins](/plugins/directory) you can write Cypress [a11y](https://github.com/component-driven/cypress-axe), [visual](/plugins/directory#Visual%20Testing), and other types of tests.
 
 ## Cypress in the Real World
 

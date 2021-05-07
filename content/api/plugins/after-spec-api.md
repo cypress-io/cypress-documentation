@@ -90,11 +90,15 @@ module.exports = (on, config) => {
 
 ### Delete the recorded video if the spec passed
 
-You can delete the recorded video for a spec. This will skip the compression and uploading of the video when recording to the Dashboard.
+You can delete the recorded video for a spec when certain conditions are met. This will skip the compression and uploading of the video when recording to the Dashboard.
 
-The example below shows how to delete the recorded video for a spec with no failing tests.
+The example below shows how to delete the recorded video for specs with no failing tests.
 
 ```javascript
+// plugins/index.js
+
+// need to install the "del" module as a dependency
+// npm i del --save-dev
 const del = require('del')
 
 module.exports = (on, config) => {
@@ -103,6 +107,36 @@ module.exports = (on, config) => {
       // `del()` returns a promise, so it's important to return it to ensure
       // deleting the video is finished before moving on
       return del(results.video)
+    }
+  })
+}
+```
+
+### Delete the recorded video if no tests retried
+
+You can delete the recorded video for a spec when certain conditions are met. This will skip the compression and uploading of the video when recording to the Dashboard.
+
+The example below shows how to delete the recorded video for specs that had no retry attempts when using Cypress [test retries](/guides/guides/test-retries).
+
+```javascript
+// plugins/index.js
+
+// need to install these dependencies
+// npm i lodash del --save-dev
+const _ = require('lodash')
+const del = require('del')
+
+module.exports = (on, config) => {
+  on('after:spec', (spec, results) => {
+    if (results && results.video) {
+      // Do we have failures for any retry attempts?
+      const failures = _.some(results.tests, (test) => {
+        return _.some(test.attempts, { state: 'failed' })
+      })
+      if (!failures) {
+        // delete the video if the spec passed and no tests retried
+        return del(results.video)
+      }
     }
   })
 }
