@@ -1030,7 +1030,7 @@ The following properties are available on `StaticResponse`. All properties are o
 | body              | Serve a static string/JSON object as the response body                      |
 | headers           | HTTP response headers                                                       |
 | statusCode        | HTTP response status code                                                   |
-| forceNetworkError | Force an error by destroying the browser session                            |
+| forceNetworkError | Force an error by destroying the browser connection                            |
 | delay             | Minimum network latency or delay to add to the response time (milliseconds) |
 | throttleKbps      | Maximum data transfer rate of the response (kilobits/second)                |
 
