@@ -682,7 +682,7 @@ cy.intercept('POST', '/users', (req) => {
 // respond to this request with a redirect to a new 'location'
 cy.intercept('GET', '/users', (req) => {
   // statusCode defaults to `302`
-  req.redirect((location: '/404Page'), (statusCode: 404))
+  req.redirect('/customers', 301)
 })
 ```
 
