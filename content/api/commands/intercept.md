@@ -600,13 +600,13 @@ The request modification cannot be verified by inspecting the browser's network 
 
 #### Controlling the response
 
-The intercepted request passed to the route handler contains methods to dynamically control the response to a request:
+The intercepted request passed to the route handler (hereafter referred to as `req`, though you can use any name) contains methods to dynamically control the response to a request:
 
-- `reply` - stub out a response requiring no dependency on a real back-end
-- `continue` - modify or make assertions on the real response
-- `destroy` - destroy the request and respond with a network error
-- `redirect` - respond to the request with a redirect to a specified location
-- `on` - modify the response by attaching to events
+- `req.reply()` - stub out a response requiring no dependency on a real back-end
+- `req.continue()` - modify or make assertions on the real response
+- `req.destroy()` - destroy the request and respond with a network error
+- `req.redirect()` - respond to the request with a redirect to a specified location
+- `req.on()` - modify the response by attaching to events
 
 ##### Stubbing out a response (`req.reply()`)
 
