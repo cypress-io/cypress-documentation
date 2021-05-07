@@ -696,8 +696,8 @@ cy.intercept('POST', '/users', (req) => {
 })
 ```
 
-See example for throttling a response
-See more examples of events
+See example for [throttling a response](#Throttle-or-delay-response-all-incoming-responses)
+See more examples of [events](#Request-events)
 
 #### Returning a Promise
 
