@@ -608,9 +608,9 @@ The intercepted request passed to the route handler contains methods to dynamica
 - `redirect` - respond to the request with a redirect to a specified location
 - `on` - modify the response by attaching to events
 
-##### Stubbing out a response (`reply`)
+##### Stubbing out a response (`req.reply()`)
 
-The `reply` method takes a [`StaticResponse`][staticresponse] object as an input:
+`req.reply()` takes a [`StaticResponse`][staticresponse] object as the first argument:
 
 ```js
 // stub out the response without interacting with a real back-end
