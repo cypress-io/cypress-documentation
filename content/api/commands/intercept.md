@@ -234,7 +234,7 @@ cy.wait('@someRoute').then((interception) => {
 })
 ```
 
-##### You can chain [`.its()`](/api/commands/its) and [`.should()`](/api/commands/should) to assert against request/response cycles:
+You can chain [`.its()`](/api/commands/its) and [`.should()`](/api/commands/should) to assert against request/response cycles:
 
 ```js
 // assert that a request to this route was made with a body that included 'user'
@@ -287,7 +287,7 @@ const staticResponse = {
 cy.intercept('/projects', staticResponse)
 ```
 
-##### Stub a response with a JSON body
+Stub a response with a JSON body:
 
 ```js
 cy.intercept('/projects', {
@@ -295,7 +295,7 @@ cy.intercept('/projects', {
 })
 ```
 
-##### Stub headers, status code, and body all at once
+Stub headers, status code, and body all at once:
 
 ```js
 cy.intercept('/not-found', {
@@ -347,7 +347,7 @@ cy.intercept('/req-headers', (req) => {
 
 **Note:** the new header will NOT be shown in the browser's Network tab, as the request has already left the browser. You can still confirm the header was added by waiting on the intercept as shown below:
 
-##### Waiting on the intercept
+#### Waiting on the intercept
 
 ```js
 cy.intercept('/req-headers', (req) => {
@@ -608,7 +608,7 @@ The intercepted request passed to the route handler (hereafter referred to as `r
 - `req.redirect()` - respond to the request with a redirect to a specified location
 - `req.on()` - modify the response by attaching to events
 
-##### Stubbing out a response (`req.reply()`)
+Stubbing out a response (`reply`):
 
 `req.reply()` takes a [`StaticResponse`][staticresponse] object as the first argument:
 
@@ -656,7 +656,7 @@ Note: Calling `reply()` will end the request phase and stop the request from pro
 
 See also [Providing a stub response with `req.reply()`](#Providing-a-stub-response-with-req-reply)
 
-##### Modifying the real response (`continue`)
+Modifying the real response (`continue`):
 
 The `continue` method accepts a function which is passed an object representing the real response being intercepted on its way back to the client (your front-end application).
 
@@ -671,7 +671,7 @@ cy.intercept('POST', '/users', (req) => {
 
 See also [Controlling the outbound request with `req.continue()`](#Controlling-the-outbound-request-with-req-continue)
 
-##### Responding with a network error (`destroy`)
+Responding with a network error (`destroy`):
 
 ```js
 // dynamically destroy the request and respond with a network error
@@ -687,7 +687,7 @@ cy.intercept('POST', '/users', (req) => {
 })
 ```
 
-##### Responding with a new location (`redirect`)
+Responding with a new location (`redirect`):
 
 ```js
 // respond to this request with a redirect to a new 'location'
@@ -697,7 +697,7 @@ cy.intercept('GET', '/users', (req) => {
 })
 ```
 
-##### Responding by listening to events (`on`)
+Responding by listening to events (`on`):
 
 ```js
 cy.intercept('GET', '/users', (req) => {
@@ -1176,7 +1176,7 @@ This is useful against GraphQL endpoints to wait for specific Queries and Mutati
 
 Given that the `operationName` property is optional in GraphQL requests, we can `alias` with or without this property.
 
-##### With `operationName` property
+With `operationName` property:
 
 ```js
 cy.intercept('POST', '/graphql', (req) => {
@@ -1200,7 +1200,7 @@ cy.intercept('POST', '/graphql', (req) => {
 cy.wait('@gqlCreatePostMutation')
 ```
 
-##### Without `operationName` property
+Without `operationName` property:
 
 ```js
 cy.intercept('POST', '/graphql', (req) => {
