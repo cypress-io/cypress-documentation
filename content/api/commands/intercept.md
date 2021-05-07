@@ -510,7 +510,7 @@ Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/
 
 ### Request/Response Modification with `routeHandler`
 
-Specifying a `routeHandler` as the last argument to `cy.intercept` is what's required to leverage capabilities beyond just spying routes.
+To modify the outgoing request, stub a response, make assertions, etc., simply specify [`routeHandler`][arg-routehandler] as the last argument.
 
 <!-- TODO DX-188 emphasize the usage of StaticResponse as the routeHandler -->
 
