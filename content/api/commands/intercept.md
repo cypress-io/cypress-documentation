@@ -545,6 +545,8 @@ cy.intercept('POST', '/users', (req) => {
 
 #### Controlling the outgoing request
 
+The outgoing request, including its body, headers, etc., can be modified before it's sent.
+
 ```js
 // modify the request body before it's sent to its destination
 cy.intercept('POST', '/users', (req) => {
