@@ -670,9 +670,16 @@ cy.intercept('POST', '/users', (req) => {
 ##### Responding with a network error (`destroy`)
 
 ```js
-// destroy the request and respond with a network error
+// dynamically destroy the request and respond with a network error
 cy.intercept('POST', '/users', (req) => {
-  req.destroy()
+  if (mustDestroy(req)) {
+    req.destroy()
+  }
+
+  function mustDestroy(req) {
+    // code that determines whether to force a network error
+    // based on the contents of `req`
+  }
 })
 ```
 
