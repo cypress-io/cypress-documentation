@@ -5,16 +5,16 @@ containerClass: component-testing
 
 Recent years have seen an explosion in component based libraries (Vue, React) and frameworks built on top of them (Nuxt, Next). Cypress tests are written and behave the same regardless. Some frameworks require some additional configuration to work correctly with Cypress component testing.
 
-All the example projects described in this page can be found [here](https://github.com/lmiller1990/cypress-component-examples).
+All the example projects described in this page can be found [here](https://github.com/cypress-io/cypress-component-examples).
 
 ## React (Create React App)
 
-This guide assumes you've created your app using [Create React App](https://create-react-app.dev/docs/documentation-intro). You can find an example project [here](https://github.com/lmiller1990/cypress-component-examples/tree/main/create-react-app).
+This guide assumes you've created your app using [Create React App](https://create-react-app.dev/docs/documentation-intro). You can find an example project [here](https://github.com/cypress-io/cypress-component-examples/tree/main/create-react-app).
 
 Once you have a React project, you'll also need to install the Cypress Webpack Dev Server and React adapter, as well as some devDependencies:
 
 ```sh
-npm install --save-dev cypress @cypress/vue @cypress/webpack-dev-server html-webpack-plugin@4
+npm install --save-dev cypress @cypress/react @cypress/webpack-dev-server html-webpack-plugin@4
 ```
 
 <Alert type="info">
@@ -25,9 +25,11 @@ npm install --save-dev cypress @cypress/vue @cypress/webpack-dev-server html-web
 
 </Alert>
 
-Next configure the dev-server to use the same Webpack configuration used by Create React App. We can do this easily using the `react-scripts` plugin provided by Cypress:
+Next configure the dev-server to use the same Webpack configuration used by Create React App. We can do this easily using the `react-scripts` plugin provided by Cypress. Place the following in `cypress/plugins/index.js`, creating the relevant directories.
 
 ```js
+// cypress/plugins/index.js
+
 const injectDevServer = require('@cypress/react/plugins/react-scripts')
 
 module.exports = (on, config) => {
@@ -68,7 +70,7 @@ Cypress works with both Vue 2 and Vue 3. The configuration is almost identical.
 
 ### Vue 2 (Vue CLI)
 
-This guide assumes you've created your app using the [Vue CLI](https://cli.vuejs.org/). This documentation was written using Vue CLI v4.5.12. You can find an example project [here](https://github.com/lmiller1990/cypress-component-examples/tree/main/vue-cli-vue-2-cypress).
+This guide assumes you've created your app using the [Vue CLI](https://cli.vuejs.org/). This documentation was written using Vue CLI v4.5.12. You can find an example project [here](https://github.com/cypress-io/cypress-component-examples/tree/main/vue-cli-vue-2-cypress).
 
 You'll also need to install the Cypress Webpack Dev Server and Vue 2 adapter, as well as some devDependencies:
 
@@ -144,13 +146,13 @@ Start Cypress with `npx cypress open-ct` - the test runner will open. Select you
 
 ### Vue 3 (Vue CLI)
 
-The installation and configuration is the same as Vue 2 with the Vue CLI as described above. The only difference is the Vue adapter should be installed using `npm install @cypress/vue@next` - `@cypress/vue` target Vue 2, and the `next` branch targets Vue 3.
+The installation and configuration is the same as Vue 2 with the Vue CLI as described above. The only difference is the Vue adapter should be installed using `npm install @cypress/vue@next` - `@cypress/vue` targets Vue 2, and the `next` branch targets Vue 3.
 
-You can find an example project [here](https://github.com/lmiller1990/cypress-component-examples/tree/main/vue-cli-vue-3-cypress).
+You can find an example project [here](https://github.com/cypress-io/cypress-component-examples/tree/main/vue-cli-vue-3-cypress).
 
 ## Next.js
 
-It's possible to use Cypress with the latest version of Next.js, which uses Webpack 4, as well as with Webpack 5 via `next.config.js` with `webpack5: true`. You can find an example project [here](https://github.com/lmiller1990/cypress-component-examples/tree/main/nextjs-webpack-4).
+It's possible to use Cypress with the latest version of Next.js, which uses Webpack 4, as well as with Webpack 5 via `next.config.js` with `webpack5: true`. You can find an example project [here](https://github.com/cypress-io/cypress-component-examples/tree/main/nextjs-webpack-4).
 
 ### Next.js (Webpack 4)
 
@@ -236,7 +238,7 @@ Everything else is the same as configuring Cypress with Next.js and Webpack 4.
 
 ## Nuxt
 
-This guide assumes you've created your app using the [`create-nuxt-app`]. You can find the completed example project [here](https://github.com/lmiller1990/cypress-component-examples/tree/main/nuxt-vue-2-cypress).
+This guide assumes you've created your app using the [`create-nuxt-app`]. You can find the completed example project [here](https://github.com/cypress-io/cypress-component-examples/tree/main/nuxt-vue-2-cypress).
 
 Nuxt uses Vue 2 and Webpack under the hood, so you also need to install the Cypress Webpack Dev Server and Vue 2 adapter, as well as some devDependencies:
 
@@ -368,7 +370,7 @@ Start Cypress with `npx cypress open-ct` - the test runner will open. Select you
 
 ## Vite Based Projects (Vue, React)
 
-Cypress also ships a Vite based dev server, as opposed to a Webpack based on like the other examples on this page. This example uses a Vite project with React, created via `npm init @vitejs/app my-react-app -- --template react`. The configuration instructions are the same for Vue. There is an example React project [here](https://github.com/lmiller1990/cypress-component-examples/tree/main/vite-react) and a Vue project [here](https://github.com/lmiller1990/cypress-component-examples/tree/main/vite-vue).
+Cypress also ships a Vite based dev server, as opposed to a Webpack based on like the other examples on this page. This example uses a Vite project with React, created via `npm init @vitejs/app my-react-app -- --template react`. The configuration instructions are the same for Vue. There is an example React project [here](https://github.com/cypress-io/cypress-component-examples/tree/main/vite-react) and a Vue project [here](https://github.com/cypress-io/cypress-component-examples/tree/main/vite-vue).
 
 Inside of `cypress/plugins/index.js`, configure Cypress to use the Vite dev server:
 
