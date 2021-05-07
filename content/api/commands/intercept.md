@@ -667,6 +667,8 @@ cy.intercept('POST', '/users', (req) => {
 })
 ```
 
+See also [Controlling the outbound request with `req.continue()`](#Controlling-the-outbound-request-with-req-continue)
+
 ##### Responding with a network error (`destroy`)
 
 ```js
