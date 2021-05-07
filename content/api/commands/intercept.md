@@ -583,7 +583,7 @@ cy.wait('@createUser')
 
 <Alert type="warning">
 
-The request modification cannot be verified by inspecting the browser's network traffic, since the browser logs network traffic _before_ Cypress can intercept it.
+The request modification cannot be verified by inspecting the browser's network traffic (for example, in Chrome DevTools), since the browser logs network traffic _before_ Cypress can intercept it.
 
 </Alert>
 
