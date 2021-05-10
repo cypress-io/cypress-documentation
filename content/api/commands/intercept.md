@@ -608,7 +608,7 @@ The intercepted request passed to the route handler (hereafter referred to as `r
 - `req.redirect()` - respond to the request with a redirect to a specified location
 - `req.on()` - modify the response by attaching to events
 
-Stubbing out a response (`reply`):
+Stubbing out a response (`req.reply()`):
 
 `req.reply()` takes a [`StaticResponse`][staticresponse] object as the first argument:
 
