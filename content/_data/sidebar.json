@@ -59,7 +59,8 @@
       "github-actions": "github-actions.html",
       "gitlab-ci": "gitlab-ci.html",
       "bitbucket-pipelines": "bitbucket-pipelines.html",
-      "aws-codebuild": "aws-codebuild.html"
+      "aws-codebuild": "aws-codebuild.html",
+      "circleci": "circleci.html"
     },
     "component-testing": {
       "component-testing-introduction": "introduction.html",
