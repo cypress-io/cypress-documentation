@@ -61,6 +61,7 @@ Just like the [Command Line options](/guides/guides/command-line) for `cypress r
 | `reporterOptions` | _object_           | Specify [Mocha reporter](/guides/tooling/reporters) options                                                                                                        |
 | `spec`            | _string_           | Specify the specs to run, see examples below                                                                                                                       |
 | `tag`             | _string_           | Identify a run with a tag or tags                                                                                                                                  |
+| `testingType`     | _string_           | Specify the type of tests to execute; either `e2e` or `component`. Defaults to `e2e`                                                                               |
 
 ### Examples
 
@@ -261,16 +262,17 @@ node e2e-open-tests.js
 
 Just like the [Command Line options](/guides/guides/command-line), you can pass options that modify how Cypress runs.
 
-| Option       | Type               | Description                                                                            |
-| ------------ | ------------------ | -------------------------------------------------------------------------------------- |
-| `browser`    | _string_           | Specify a filesystem path to a custom browser                                          |
-| `config`     | _object_           | Specify [configuration](/guides/references/configuration)                              |
-| `configFile` | _string / boolean_ | Path to the config file to be used. If `false` is passed, no config file will be used. |
-| `detached`   | _boolean_          | Open Cypress in detached mode                                                          |
-| `env`        | _object_           | Specify [environment variables](/guides/guides/environment-variables)                  |
-| `global`     | _boolean_          | Run in global mode                                                                     |
-| `port`       | _number_           | Override default port                                                                  |
-| `project`    | _string_           | Path to a specific project                                                             |
+| Option        | Type               | Description                                                                            |
+| ------------- | ------------------ | -------------------------------------------------------------------------------------- |
+| `browser`     | _string_           | Specify a filesystem path to a custom browser                                          |
+| `config`      | _object_           | Specify [configuration](/guides/references/configuration)                              |
+| `configFile`  | _string / boolean_ | Path to the config file to be used. If `false` is passed, no config file will be used. |
+| `detached`    | _boolean_          | Open Cypress in detached mode                                                          |
+| `env`         | _object_           | Specify [environment variables](/guides/guides/environment-variables)                  |
+| `global`      | _boolean_          | Run in global mode                                                                     |
+| `port`        | _number_           | Override default port                                                                  |
+| `project`     | _string_           | Path to a specific project                                                             |
+| `testingType` | _string_           | Specify the type of tests to execute; either `e2e` or `component`. Defaults to `e2e`   |
 
 ### Example
 
@@ -316,6 +318,7 @@ We use CLI parsing and calling `cypress.run` to [repeat tests to find flaky test
 
 | Version                                       | Changes                                                |
 | --------------------------------------------- | ------------------------------------------------------ |
-| [5.0.0](/guides/references/changelog)         | Test results returned from `cypress.run()` changed.    |
+| [7.3.0](/guides/references/changelog#7-3-0)   | Added `testingType` configuration option.              |
+| [5.0.0](/guides/references/changelog#5-0-0)   | Test results returned from `cypress.run()` changed.    |
 | [4.11.0](/guides/references/changelog#4-11-0) | Added `cypress.cli` with `parseRunArguments` function. |
 | [4.9.0](/guides/references/changelog#4-9-0)   | Added `quiet` option to `cypress.run()`                |
