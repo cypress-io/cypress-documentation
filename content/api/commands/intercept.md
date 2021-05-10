@@ -538,7 +538,7 @@ From here, you can do several things with the intercepted request:
 
 #### Asserting on a request
 
-You can use the request handler callback to make an assertion on the Intercepted Request Object before it is sent.
+You can use the request handler callback to make an assertion on the [intercepted request object][req] before it is sent.
 
 ```js
 // match requests to create a user
