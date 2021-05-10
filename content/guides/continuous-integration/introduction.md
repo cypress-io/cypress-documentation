@@ -528,18 +528,6 @@ test:
         - npx mochawesome-merge --reportDir cypress/report/mochawesome-report > cypress/report/mochawesome.json
 ```
 
-### GitHub Actions
-
-We recommend using our official [cypress-io/github-action](https://github.com/cypress-io/github-action) to install, cache, and execute Cypress tests.
-
-<!-- textlint-disable -->
-
-<DocsVideo src="https://youtube.com/embed/gokM_zEmWLA"></DocsVideo>
-
-<!-- textlint-enable -->
-
-Read our tutorials [Triple Tested Static Site Deployed to GitHub Pages Using GitHub Actions](https://glebbahmutov.com/blog/triple-tested/) and [Drastically Simplify Testing on CI with Cypress GitHub Action](https://www.cypress.io/blog/2019/11/20/drastically-simplify-your-testing-with-cypress-github-action/).
-
 ### Netlify
 
 We recommend using our official [netlify-plugin-cypress](https://github.com/cypress-io/netlify-plugin-cypress) to execute end-to-end tests before and after deployment to Netlify platform. Read our tutorials [Test Sites Deployed To Netlify Using netlify-plugin-cypress](https://glebbahmutov.com/blog/test-netlify/) and [Run Cypress Tests on Netlify Using a Single Line](https://cypress.io/blog/2020/03/30/run-cypress-tests-on-netlify-using-a-single-line/).
