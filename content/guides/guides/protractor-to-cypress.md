@@ -388,7 +388,7 @@ You can learn more about how Cypress handles [assertions in our official documen
 
 Protractor's WebDriverJS API is based on promises, which are managed by a control flow. This [Control Flow](https://www.protractortest.org/#/control-flow) enables you to write asynchronous Protractor tests in a synchronous style.
 
-```jsx
+```js
 // Click on the element
 // This code looks synchronous!
 element(by.css('button')).click()
@@ -399,7 +399,7 @@ element(by.css('input')).sendKeys('my text')
 
 Protractor's Control Flow can be disabled, allowing you to write your test cases as asynchronous functions.
 
-```jsx
+```js
 // Wait for the button to be found and click it
 await element(by.css('button')).click()
 
