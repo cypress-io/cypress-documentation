@@ -331,7 +331,7 @@ cy.intercept('POST', '/login', (req) => {
 
 // dynamically set the alias
 cy.intercept('POST', '/login', (req) => {
-  req.body = 'username=janelane&password=secret123'
+  req.alias = 'login'
 })
 ```
 
