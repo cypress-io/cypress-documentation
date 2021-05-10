@@ -165,6 +165,33 @@ cypress run --record --key=abc123 --parallel
 
 [Read the full guide on parallelization.](/guides/guides/parallelization)
 
+### Official Cypress Docker Images
+
+We have [created](https://github.com/cypress-io/cypress-docker-images) an official [cypress/base](https://hub.docker.com/r/cypress/base/) container with all of the required dependencies installed. You can add Cypress and go! We are also adding images with browsers pre-installed under [cypress/browsers](https://hub.docker.com/r/cypress/browsers/) name. A typical Dockerfile would look like this:
+
+```text
+FROM cypress/base
+RUN npm install
+RUN $(npm bin)/cypress run
+```
+
+<Alert type="warning">
+
+Mounting a project directory with an existing `node_modules` into a `cypress/base` docker image **will not work**:
+
+```shell
+docker run -it -v /app:/app cypress/base:10 bash -c 'cypress run'
+Error: the cypress binary is not installed
+```
+
+Instead, you should build a docker container for your project's version of cypress.
+
+</Alert>
+
+#### Docker images & CI examples
+
+See our [examples](/examples/examples/docker) for additional information on our maintained images and configurations on several CI providers.
+
 ## Examples
 
 Cypress should run on **all** CI providers. We have provided some example projects and configuration for some CI providers to help you get started.
@@ -531,33 +558,6 @@ test:
 ### Netlify
 
 We recommend using our official [netlify-plugin-cypress](https://github.com/cypress-io/netlify-plugin-cypress) to execute end-to-end tests before and after deployment to Netlify platform. Read our tutorials [Test Sites Deployed To Netlify Using netlify-plugin-cypress](https://glebbahmutov.com/blog/test-netlify/) and [Run Cypress Tests on Netlify Using a Single Line](https://cypress.io/blog/2020/03/30/run-cypress-tests-on-netlify-using-a-single-line/).
-
-### Docker
-
-We have [created](https://github.com/cypress-io/cypress-docker-images) an official [cypress/base](https://hub.docker.com/r/cypress/base/) container with all of the required dependencies installed. You can add Cypress and go! We are also adding images with browsers pre-installed under [cypress/browsers](https://hub.docker.com/r/cypress/browsers/) name. A typical Dockerfile would look like this:
-
-```text
-FROM cypress/base
-RUN npm install
-RUN $(npm bin)/cypress run
-```
-
-<Alert type="warning">
-
-Mounting a project directory with an existing `node_modules` into a `cypress/base` docker image **will not work**:
-
-```shell
-docker run -it -v /app:/app cypress/base:10 bash -c 'cypress run'
-Error: the cypress binary is not installed
-```
-
-Instead, you should build a docker container for your project's version of cypress.
-
-</Alert>
-
-#### Docker images & CI examples
-
-See our [examples](/examples/examples/docker) for additional information on our maintained images and configurations on several CI providers.
 
 ## Advanced setup
 
