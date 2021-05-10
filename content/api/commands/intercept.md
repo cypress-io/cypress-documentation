@@ -594,7 +594,7 @@ The request modification cannot be verified by inspecting the browser's network 
 
 <Alert type="warning">
 
-`cy.intercept()` cannot be debugged using `cy.request()`](/api/commands/request)! Cypress only intercepts requests made by your front-end application.
+`cy.intercept()` cannot be debugged using [`cy.request()`](/api/commands/request)! Cypress only intercepts requests made by your front-end application.
 
 </Alert>
 
