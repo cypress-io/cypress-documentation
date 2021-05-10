@@ -850,7 +850,7 @@ cy.intercept('/billing', (req) => {
 
 Instead of passing a plain object or string to `req.reply()`, you can also pass a [`StaticResponse`][staticresponse] object. With a [`StaticResponse`][staticresponse], you can force a network error, delay/throttle the response, send a fixture, and more.
 
-#### Serve a dynamically chosen fixture with a delay of 500ms
+For example, the following code serves a dynamically chosen fixture with a delay of 500ms:
 
 ```js
 cy.intercept('/api/users/*', async (req) => {
