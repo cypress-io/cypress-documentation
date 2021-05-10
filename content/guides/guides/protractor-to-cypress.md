@@ -38,7 +38,7 @@ describe('Authorization tests', () => {
 
 <Badge type="success">After: Cypress</Badge>
 
-```jsx
+```js
 describe('Authorization Tests', () => {
   it('allows the user to signup for a new account', () => {
     cy.visit('/signup')
@@ -104,7 +104,7 @@ describe('Dashboard', () => {
 
 <Badge type="success">After: Cypress</Badge>
 
-```jsx
+```js
 describe('Dashboard', () => {
   it('should render dashboard', () => {
     cy.visit('/dashboard')
@@ -280,7 +280,7 @@ When you want to get access to more than one element on the page, you would need
 
 <Badge type="danger">Before: Protractor</Badge>
 
-```jsx
+```js
 // Get all list-item elements on the page
 element.all(by.tagName('li'))
 
@@ -293,7 +293,7 @@ element.all(by.name('field-name'))
 
 <Badge type="success">After: Cypress</Badge>
 
-```jsx
+```js
 // Get all list-item elements on the page
 cy.get('li')
 
@@ -322,7 +322,7 @@ The Selector Playground can be useful when you need to find a specific selector 
 
 <Badge type="danger">Before: Protractor</Badge>
 
-```jsx
+```js
 // Click on the element
 element(by.css('button')).click()
 
@@ -339,7 +339,7 @@ element(by.css('input')).getAttribute('value')
 
 <Badge type="success">After: Cypress</Badge>
 
-```jsx
+```js
 // Click on the element
 cy.get('button').click()
 
@@ -362,7 +362,7 @@ Similar to Protractor, Cypress enables use of human readable assertions.
 
 <Badge type="danger">Before: Protractor</Badge>
 
-```jsx
+```js
 describe('verify elements on a page', () => {
   it('verifies that a link is visible', () => {
     expect($('a.submit-link').isDisplayed()).toBe(true)
@@ -372,7 +372,7 @@ describe('verify elements on a page', () => {
 
 <Badge type="success">After: Cypress</Badge>
 
-```jsx
+```js
 describe('verify elements on a page', () => {
   it('verifies that a link is visible', () => {
     cy.get('a.submit-link').should('be.visible')
@@ -436,7 +436,7 @@ expect(by.css('.list-item').getText()).toEqual('my text')
 
 <Badge type="success">After: Cypress</Badge>
 
-```jsx
+```js
 // Clicking a button
 cy.get('button').click()
 // Make assertion. No waiting necessary!
@@ -449,7 +449,7 @@ Protractor doesn't offer a built-in solution for network spying. With Cypress, y
 
 For example, if you wanted to wait on a network request to complete before continuing your test, you could write the following:
 
-```jsx
+```js
 cy.intercept('/users/**')
 ```
 
@@ -459,13 +459,13 @@ Cypress will automatically wait for any request to `/users/**` to complete befor
 
 Cypress's [intercept API](/api/commands/intercept) also allows you to stub any network request for your app under test. You can use the [intercept API](/api/commands/intercept) to make assertions based on different simulated responses for your network requests. For example, you might want to simulate a 3rd-party API outage by forcing a network error and test your app under those conditions. With Cypress's [intercept API](/api/commands/intercept), this and more is possible!
 
-```jsx
+```js
 cy.intercept('GET', '/my-api', { forceNetworkError: true })
 ```
 
 You can also use the intercept API to stub a custom response for specific network requests:
 
-```jsx
+```js
 // requests to '/update' will be fulfilled with a body of 'success'
 cy.intercept('/update', 'success')
 ```
@@ -488,7 +488,7 @@ it('visits a page', () => {
 
 <Badge type="success">After: Cypress</Badge>
 
-```jsx
+```js
 it('visits a page', () => {
   cy.visit('/about')
   cy.go('forward')
@@ -500,7 +500,7 @@ However, Protractor assumes that all websites you want to visit are Angular apps
 
 <Badge type="danger">Before: Protractor</Badge>
 
-```jsx
+```js
 it('visit a non-Angular page', () => {
   browser.waitForAngularEnabled(false)
   browser.get('/about')
@@ -509,7 +509,7 @@ it('visit a non-Angular page', () => {
 
 <Badge type="success">After: Cypress</Badge>
 
-```jsx
+```js
 it('visit a non-Angular page', () => {
   cy.visit('/about')
 })
@@ -578,7 +578,7 @@ it('should display the username of a logged in user', () => {
 
 Cypress also provides a [Custom Command](/api/cypress-api/custom-commands) API to enable you to add methods to the `cy` global directly:
 
-```jsx
+```js
 Cypress.Commands.add('login', (username, password) => {
   cy.get('.username').type(username)
   cy.get('.password').type(password)
@@ -620,7 +620,7 @@ With Cypress however, because your tests are available through the browser dashb
 
 <Badge type="success">After: Cypress</Badge>
 
-```jsx
+```js
 describe('example test suite', () => {
   it('contains an error we need to debug', () => {
     cy.visit('/login')
