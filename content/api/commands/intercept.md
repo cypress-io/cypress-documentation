@@ -205,8 +205,8 @@ cy.wait('@searchForTerms')
 
 cy.intercept(
   {
-    // this RegExp matches any URL beginning with 'http://api.example.com/widgets'
-    url: /^http:\/\/api\.example\.com\/widgets/,
+    // this RegExp matches any URL beginning with 'http://api.example.com/' and ending with '/edit' or '/save'
+    url: /^http:\/\/api\.example\.com\/.*\/(edit|save)/,
     headers: {
       'x-requested-with': 'exampleClient',
     },
