@@ -316,6 +316,8 @@ For those who are big fans of [Protractor's Element Explorer functionality](http
 
 The Selector Playground can be useful when you need to find a specific selector to use in your Cypress tests.
 
+<DocsVideo src="/img/snippets/selector-playground.mp4" title="Selector Playground"></DocsVideo>
+
 ## How to Interact with DOM Elements
 
 <Badge type="danger">Before: Protractor</Badge>
@@ -386,7 +388,7 @@ You can learn more about how Cypress handles [assertions in our official documen
 
 ## WebDriver Control Flow vs Cypress
 
-Protractor's WebDriverJS API is based on promises, which are managed by a control flow. This [Control Flow](https://www.protractortest.org/#/control-flow) enables you to write asynchronous Protractor tests in a synchronous style.
+Protractor's WebDriverJS API is based on promises, which is managed by a control flow. This [Control Flow](https://www.protractortest.org/#/control-flow) enables you to write asynchronous Protractor tests in a synchronous style.
 
 ```js
 // Click on the element
