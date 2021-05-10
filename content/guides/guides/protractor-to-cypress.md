@@ -6,6 +6,10 @@ title: Protractor Migration Guide
 
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
+- Benefits of using Cypress in Angular apps
+- How Cypress can create reliable e2e tests for Angular apps
+- How to migrate Protractor tests to Cypress
+
 </Alert>
 
 ## Introduction
@@ -228,11 +232,7 @@ yarn run cypress
 
 It will start up Cypress and our Angular app at the same time!
 
-<DocsVideo
-src="/img/guides/protractor-to-cypress/npm-run-cypress.mp4"
-title="Cypress Tips and Tricks"
-
-> </DocsVideo>
+<DocsVideo src="/img/guides/protractor-to-cypress/npm-run-cypress.mp4" title="Cypress Tips and Tricks"></DocsVideo>
 
 ## Essentials
 
@@ -373,7 +373,7 @@ describe('verify elements on a page', () => {
 ```jsx
 describe('verify elements on a page', () => {
   it('verifies that a link is visible', () => {
-    cy.get('a.submit-link').should('be.visible)
+    cy.get('a.submit-link').should('be.visible')
   })
 })
 ```
