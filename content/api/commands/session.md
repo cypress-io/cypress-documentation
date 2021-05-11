@@ -38,6 +38,11 @@ cy.session(
       ],
       localStorage: [
         // local storage items to exclude
+      ],
+    },
+  }
+)
+```
 
 ### Arguments
 
@@ -63,13 +68,6 @@ See [SessionOptions]()
 ### Yields
 
 `session` yields session data (`SessionData`), which is an `object` with properties `cookies` and `localStorage`. See [SessionData]().
-
-
-      ],
-    },
-  }
-)
-```
 
 ## Examples
 
