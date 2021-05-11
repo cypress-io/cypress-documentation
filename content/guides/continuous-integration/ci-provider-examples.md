@@ -4,19 +4,14 @@ title: CI Provider Examples
 
 Cypress should run on **all** Continuous Integration (CI) providers. We have provided some example projects and configuration for some CI providers to help you get started.
 
-<!--
-| CI Provider                                                      | Example Project                                                                                  | Example Config                                                                                                             |
-| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
-| [Azure / VSTS CI / TeamFoundation](https://azure.microsoft.com/) | [cypress-example-kitchensink](https://github.com/bahmutov/cypress-example-kitchensink)           | [azure-ci.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/azure-ci.yml)                         |
-| [BitBucket](https://bitbucket.org/product/features/pipelines)    | [cypress-example-kitchensink](https://bitbucket.org/cypress-io/cypress-example-kitchensink)      | [bitbucket-pipelines.yml](https://bitbucket.org/cypress-io/cypress-example-kitchensink/src/master/bitbucket-pipelines.yml) |
-| [Buildkite](https://buildkite.com)                               | [cypress-example-kitchensink](https://github.com/cypress-io/cypress-example-kitchensink)         | [.buildkite/pipeline.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.buildkite/pipeline.yml)   |
--->
-
 # Table of Contents
 
 - [AppVeyor](#AppVeyor)
 - [AWS Amplify Console](#AWS-Amplify-Console)
 - [AWS CodeBuild](#AWS-CodeBuild)
+- [Azure Pipelines](#Azure-Pipelines)
+- [BitBucket](#BitBucket)
+- [Buildkite](#Buildkite)
 - [CircleCI](#CircleCI)
 - [CodeShip](#CodeShip)
 - [GitLab CI](#GitLab-CI)
@@ -50,25 +45,42 @@ Check out the full <Icon name="github"></Icon> [RWA AWS CodeBuild configuration]
 
 </Alert>
 
+## [Azure Pipelines](https://azure.microsoft.com/) (VSTS CI / TeamFoundation)
+
+- [Basic azure-ci.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/basic/azure-ci.yml)
+- [Parallel azure-ci.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/azure-ci.yml)
+
+## [BitBucket](https://bitbucket.org/product/features/pipelines)
+
+- [bitbucket-pipelines.yml](https://bitbucket.org/cypress-io/cypress-example-kitchensink/src/master/bitbucket-pipelines.yml)
+
+## [Buildkite](https://buildkite.com)
+
+- [.buildkite/pipeline.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.buildkite/pipeline.yml)
+
 ## [CircleCI](https://circleci.com)
 
 - [CircleCI Guide](circleci)
-- [.circleci/config.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.circleci/config.yml) |
+- [Basic .circleci/config.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/basic/.circleci/config.yml)
+- [Parallel .circleci/config.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.circleci/config.yml)
 
 ## [CodeShip Pro](https://codeship.com/features/pro)
 
 - [cypress-example-docker-codeship](https://github.com/cypress-io/cypress-example-docker-codeship)
+- [Basic](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/basic/codeship-pro)
+- [Parallel codeship-steps.yml](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/codeship-steps.yml)
+- [Parallel codeship-services.yml](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/codeship-services.yml)
 
 ## [GitLab CI](https://gitlab.com/)
 
 - [GitLab CI Guide](gitlab-ci)
-- [Basic .gitlab-ci.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/basic/.gitlab-ci.yml) |
-- [Parallel .gitlab-ci.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.gitlab-ci.yml) |
+- [Basic .gitlab-ci.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/basic/.gitlab-ci.yml)
+- [Parallel .gitlab-ci.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.gitlab-ci.yml)
 
 ## [Jenkins](https://jenkins.io/)
 
-- [Basic Jenkinsfile](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/basic/Jenkinsfile) |
-- [Parallel Jenkinsfile](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/Jenkinsfile) |
+- [Basic Jenkinsfile](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/basic/Jenkinsfile)
+- [Parallel Jenkinsfile](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/Jenkinsfile)
 
 ## [Netlify](https://www.netlify.com/)
 
@@ -85,4 +97,5 @@ We recommend using our official [netlify-plugin-cypress](https://github.com/cypr
 
 ## [TravisCI](https://travis-ci.org/)
 
-- [Basic .travis.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.travis.yml)
+- [Basic .travis.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/basic/.travis.yml)
+- [Parallel .travis.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.travis.yml)
