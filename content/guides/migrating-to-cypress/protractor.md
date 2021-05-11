@@ -1,5 +1,5 @@
 ---
-title: Protractor Migration Guide
+title: Migrating from Protractor to Cypress
 ---
 
 <Alert type="info">
@@ -154,7 +154,35 @@ In fact, as you work through migrating to Cypress, we believe that progressively
 
 ## Getting Started
 
-Like any library you would add to your application, we start by adding it as a dependency to our `package.json`.
+### Angular Schematic
+
+We recommend using our official Cypress Angular schematic to install Cypress in your Angular project:
+
+```shell
+ng add @cypress/schematic
+```
+
+With our schematic installed, you can run Cypress with the following commands:
+
+```shell
+ng e2e
+```
+
+```shell
+ng run {your-project-name}:cypress-open
+```
+
+These two commands do the same thing. They will launch the Cypress Test Runner in an Electron browser.
+
+```shell
+ng run {your-project-name}:cypress-run
+```
+
+This command will open the Cypress Test Runner and run your tests one time, with output to your terminal.
+
+### Manual Installation
+
+You can still install Cypress without using our official Angular schematic.
 
 <code-group>
   <code-block label="npm" active>
