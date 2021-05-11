@@ -98,7 +98,7 @@ All properties are optional. All properties that are set must match for the rout
 | pathname   | Like `path`, but without query parameters                                                       |
 | port       | HTTP request port(s) (`number` or `Array`)                                                      |
 | query      | Parsed query string (`object`)                                                                  |
-| times      | Match against the full URL (`number`)                                                           |
+| times      | Maximum number of times to match (`number`)                                                     |
 | url        | Full HTTP request URL                                                                           |
 
 #### <Icon name="angle-right"></Icon> routeHandler (<code>string | object | Function | [StaticResponse][staticresponse]</code>)
