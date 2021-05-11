@@ -66,19 +66,19 @@ As many developers can attest to, end-to-end testing is one of those things that
 
 When Protractor runs tests, the browser automation launches a browser instance and often runs through tests too fast for the human eye. Without additional configuration, this often leads to a reliance on lengthy terminal errors that can be expensive from a context-switching perspective.
 
-Video Placeholder
+<DocsVideo src="/img/guides/migrating-to-cypress/DevTools.mp4" title="interacting with tests in a browser"></DocsVideo>
 
 ### Faster feedback loops
 
 When it comes to your end-to-end tests, being able to see your tests as they run is critical to allowing you to iterate faster with confidence. Though this is not possible out of the box with Protractor, Cypress tests automatically re-run within the browser whenever they are saved which allows you to iterate faster with confidence.
 
-Video Placeholder
+<DocsVideo src="/img/guides/migrating-to-cypress/Auto-reloading.mp4" title="auto-reloading"></DocsVideo>
 
 ### Time travel through tests
 
 Rather than trying to decipher errors inside of your terminal, with Cypress you can debug your tests just like you would debug your application normally. In addition, Cypress allows you to see snapshots of your Angular application as the test is executed so you can debug your applications more easily.
 
-Video Placeholder
+<DocsVideo src="/img/guides/migrating-to-cypress/interactivity.mp4" title="Time travel debugging"></DocsVideo>
 
 ### Easily automate screenshots
 
@@ -112,8 +112,6 @@ describe('Dashboard', () => {
   })
 })
 ```
-
-Video Placeholder
 
 <Alert type="info">
 
@@ -167,6 +165,8 @@ With our schematic installed, you can run Cypress with the following commands:
 ```shell
 ng e2e
 ```
+
+or
 
 ```shell
 ng run {your-project-name}:cypress-open
