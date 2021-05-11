@@ -159,6 +159,7 @@
       "scrollto": "scrollto.html",
       "select": "select.html",
       "server": "server.html",
+      "session": "session.html",
       "setcookie": "setcookie.html",
       "shadow": "shadow.html",
       "should": "should.html",
