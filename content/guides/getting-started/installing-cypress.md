@@ -123,7 +123,6 @@ It is possible to download an old version from our CDN by suffixing the URL with
 
 </Alert>
 
-
 ### <Icon name="refresh"></Icon> Continuous integration
 
 Please read our [Continuous Integration](/guides/continuous-integration/introduction) docs for help installing Cypress in CI. When running in linux you'll need to install some [system dependencies](/guides/continuous-integration/introduction#Dependencies) or you can use our [Docker images](/examples/examples/docker) which have everything you need prebuilt.
@@ -349,6 +348,17 @@ CYPRESS_DOWNLOAD_MIRROR="https://www.example.com" cypress install
 ```
 
 Cypress will then attempt to download a binary with this format: `https://www.example.com/desktop/:version?platform=p`
+
+### Using a custom CA
+
+Cypress can be configured to use the `ca` and `cafile` options from your NPM config file to download the Cypress binary.
+
+For example, to use the CA at `/home/person/certs/ca.crt` when downloading Cypress, add the following to your `.npmrc`:
+
+```shell
+CYPRESS_DOWNLOAD_USE_CA=1
+ca=/home/person/certs/ca.crt
+```
 
 ### Opt out of sending exception data to Cypress
 

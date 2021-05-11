@@ -186,6 +186,7 @@ Cypress should run on **all** CI providers. We have provided some example projec
 | [Semaphore](https://semaphoreci.com/)                            |                                                                                                  |
 | [Shippable](https://app.shippable.com/)                          | [cypress-example-kitchensink](https://github.com/cypress-io/cypress-example-kitchensink)         | [shippable.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/shippable.yml)                       |
 | [TravisCI](https://travis-ci.org/)                               | [cypress-example-kitchensink](https://github.com/cypress-io/cypress-example-kitchensink)         | [.travis.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.travis.yml)                           |
+| [LayerCI](https://layerci.com)                                   | [cypress-example-layerci](https://github.com/bahmutov/cypress-example-layerci)                   | [Layerfile](https://github.com/bahmutov/cypress-example-layerci/blob/main/Layerfile)                                       |
 
 ### Travis
 

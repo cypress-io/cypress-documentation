@@ -23,7 +23,7 @@ We recently gave a "Best Practices" conference talk at AssertJS (February 2018).
 
 </Alert>
 
-## Folder Structure
+## Folder structure
 
 After adding a new project, Cypress will automatically scaffold out a suggested folder structure. By default it will create:
 
