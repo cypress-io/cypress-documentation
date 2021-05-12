@@ -50,7 +50,6 @@ describe('Guides', () => {
             // item is "Introduction"
             const sidebarItemMismatches = {
               Dashboard: 'Introduction',
-              Protractor: 'Migrating from Protractor to Cypress',
             }
 
             cy.contains(
@@ -77,7 +76,14 @@ describe('Guides', () => {
               'nuxt-link-exact-active nuxt-link-active active-sidebar-link'
             )
 
-            cy.title().should('equal', getTitle(pageTitle))
+            const titleExceptionMap = {
+              Protractor: 'Migrating from Protractor to Cypress',
+            }
+
+            cy.title().should(
+              'equal',
+              getTitle(titleExceptionMap[pageTitle] || pageTitle)
+            )
 
             cy.get('.main-content-title').contains(pageTitle)
 
