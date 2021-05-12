@@ -33,7 +33,7 @@ Check out the full <Icon name="github"></Icon> [RWA AWS CodeBuild configuration]
 
 <Icon name="book" color="gray"></Icon> [BitBucket Pipelines Guide](bitbucket-pipelines)
 <br />
-<Icon name="external-link-alt" color="gray"></Icon> [See BitBucket Pipelines + Cypress Dashboard in action](https://dashboard.cypress.io/projects/q1ovwz).
+<Icon name="external-link-alt" color="gray"></Icon> [See BitBucket Pipelines + Cypress Dashboard in action](https://dashboard.cypress.io/projects/q1ovwz)
 <br />
 <br />
 
@@ -41,9 +41,27 @@ Check out the full <Icon name="github"></Icon> [RWA AWS CodeBuild configuration]
 
 ##### <Icon name="graduation-cap"></Icon> Real World Example <Badge type="success">New</Badge>
 
-The Cypress [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses [BitBucket Pipelines](https://bitbucket.org/product/features/pipelines) to test over 300 test cases in parallel across 25 machines, multiple browsers and multiple device sizes with full code-coverage reporting and [Cypress Dashboard recording](https://dashboard.cypress.io/projects/zx15dm).
+The Cypress [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses [BitBucket Pipelines](https://bitbucket.org/product/features/pipelines) to test over 300 test cases in parallel across 25 machines, multiple browsers and multiple device sizes with full code-coverage reporting and [Cypress Dashboard recording](https://dashboard.cypress.io/projects/q1ovwz).
 
 Check out the full <Icon name="github"></Icon> [RWA BitBucket Pipelines configuration](https://github.com/cypress-io/cypress-realworld-app/blob/develop/bitbucket-pipelines.yml).
+
+</Alert>
+
+### [CircleCI](https://circleci.com)
+
+<Icon name="book" color="gray"></Icon> [CircleCI Guide](circleci)
+<br />
+<Icon name="external-link-alt" color="gray"></Icon> [See CircleCI + Cypress Dashboard in action](https://dashboard.cypress.io/projects/7s5okt)
+<br />
+<br />
+
+<Alert type="info">
+
+##### <Icon name="graduation-cap"></Icon> Real World Example <Badge type="success">New</Badge>
+
+The Cypress [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses [CircleCI](https://circleci.com) to test over 300 test cases in parallel across 25 machines, multiple browsers and multiple device sizes with full code-coverage reporting and [Cypress Dashboard recording](https://dashboard.cypress.io/projects/7s5okt).
+
+Check out the full <Icon name="github"></Icon> [RWA CircleCI configuration](https://github.com/cypress-io/cypress-realworld-app/blob/develop/.circleci/config.yml).
 
 </Alert>
 
@@ -69,20 +87,9 @@ Azure Pipelines was formerly called Visual Studio Team Services(VSTS) CI or Team
 - [Basic Example (azure-ci.yml)](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/basic/azure-ci.yml)
 - [Parallelized Example (azure-ci.yml)](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/azure-ci.yml)
 
-### [BitBucket](https://bitbucket.org/product/features/pipelines)
-
-- [BitBucket Pipelines Guide](bitbucket-pipelines)
-- [Parallel Example (bitbucket-pipelines.yml)](https://bitbucket.org/cypress-io/cypress-example-kitchensink/src/master/bitbucket-pipelines.yml)
-
 ### [Buildkite](https://buildkite.com)
 
 - [Parallel Example (.buildkite/pipeline.yml)](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.buildkite/pipeline.yml)
-
-### [CircleCI](https://circleci.com)
-
-- [CircleCI Guide](circleci)
-- [Basic .circleci/config.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/basic/.circleci/config.yml)
-- [Parallel .circleci/config.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.circleci/config.yml)
 
 ### [CodeShip Pro](https://codeship.com/features/pro)
 
