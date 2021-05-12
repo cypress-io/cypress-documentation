@@ -36,6 +36,7 @@ describe('Guides', () => {
              */
             const titleMismatches = {
               'dashboard-introduction': 'Dashboard',
+              'protractor-to-cypress': 'Migrating from Protractor to Cypress',
             }
 
             const pageTitle = titleMismatches[page] || guides[page]
@@ -49,6 +50,7 @@ describe('Guides', () => {
             // item is "Introduction"
             const sidebarItemMismatches = {
               Dashboard: 'Introduction',
+              Protractor: 'Migrating from Protractor to Cypress',
             }
 
             cy.contains(
