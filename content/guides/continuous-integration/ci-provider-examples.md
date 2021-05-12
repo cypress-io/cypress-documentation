@@ -156,3 +156,7 @@ We recommend using our official [netlify-plugin-cypress](https://github.com/cypr
 ### [AWS Amplify Console](https://aws.amazon.com/amplify/console)
 
 - [Basic Example (amplify.yml)](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/amplify.yml)
+
+### [LayerCI](https://layerci.com)
+
+- [cypress-example-layerci](https://github.com/bahmutov/cypress-example-layerci)
