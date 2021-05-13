@@ -177,7 +177,7 @@ If you are running Cypress tests using a Chromium-based browser, you can see ALL
 
 ### Set screen size when running headless
 
-When a browser runs headless, there is no physical display. You can override the default screen size of 1280x720 when running headless as shown below. This will affect the size of screenshots and videos taken during the run.
+When a browser runs headless, there is no physical display. You can override the default screen size of 1920x1080 when running headless as shown below. This will affect the size of screenshots and videos taken during the run.
 
 <Alert type="warning">
 
