@@ -56,6 +56,8 @@
     },
     "continuous-integration": {
       "continuous-integration-introduction": "introduction.html",
+      "ci-provider-examples": "ci-provider-examples.html",
+      "circleci": "circleci.html",
       "github-actions": "github-actions.html",
       "gitlab-ci": "gitlab-ci.html",
       "bitbucket-pipelines": "bitbucket-pipelines.html",

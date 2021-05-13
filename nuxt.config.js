@@ -144,6 +144,8 @@ export default {
         'faLongArrowAltUp',
         'faFolderOpen',
         'faStar',
+        'faBook',
+        'faExternalLinkAlt',
       ],
       brands: ['faGithub', 'faTwitter', 'faYoutube'],
     },

@@ -11,6 +11,12 @@ title: GitHub Actions
 
 </Alert>
 
+<!-- textlint-disable -->
+
+<DocsVideo src="https://youtube.com/embed/gokM_zEmWLA"></DocsVideo>
+
+<!-- textlint-enable -->
+
 GitHub offers developers [Actions](https://github.com/features/actions) that provide a way to **automate, customize, and execute your software development workflows** within your GitHub repository. Detailed documentation is available in the [GitHub Action Documentation](https://docs.github.com/en/actions).
 
 ## Cypress GitHub Action
