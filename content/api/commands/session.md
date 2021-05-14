@@ -94,19 +94,32 @@ See [SessionOptions]()
 
 `SessionData` is the [subject]() yielded by `session`. The `object` contains two properties - `cookies` and `localStorage`
 
-### Cookies
+### Cookie Object
 
-Derived from the JavaScript Web API reference for [`cookies.Cookie`](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/cookies/Cookie)
-| Key | Type | Description |
-|------------|------------------|----------------------------------------------------------------------------|
-| `name` | `string` | name of the cookie |
-| `value` | `string` | value of the cookie |
-| `path` | `string` | path of the cookie |
-| `domain` | `string` | domain the cookie belongs to |
-| `httpOnly` | `boolean` | cookie is inaccessible to client-side scripts |
-| `secure` | `boolean` | cookie scope is limited to secure channels (typically HTTPS) |
-| `expiry` | `number` | cookie expiration date (Unix timestamp). Not provided for session cookies. |
-| `sameSite` | `SameSiteStatus` | SameSite state of the cookie (`no_restriction`, `strict` or `lax`) |
+`cookies` is an array of `Cookie` objects containing the following properties:
+
+| Key        | Type             | Description                                                                   |
+| ---------- | ---------------- | ----------------------------------------------------------------------------- |
+| `name`     | `string`         | name of the cookie                                                            |
+| `value`    | `string`         | value of the cookie                                                           |
+| `path`     | `string`         | path of the cookie                                                            |
+| `domain`   | `string`         | domain the cookie belongs to                                                  |
+| `httpOnly` | `boolean`        | cookie is inaccessible to client-side scripts                                 |
+| `secure`   | `boolean`        | cookie scope is limited to secure channels (typically HTTPS)                  |
+| `expiry`   | `number`         | cookie expiration date ([Unix time](https://en.wikipedia.org/wiki/Unix_time)) |
+| `sameSite` | `SameSiteStatus` | SameSite state of the cookie (`no_restriction`, `strict` or `lax`)            |
+
+This is the same type of object yielded by [`getCookies`](/api/commands/getcookies).
+Those properties are derived from the JavaScript Browser APIs: Chrome [`Network.Cookie`](https://chromedevtools.github.io/devtools-protocol/tot/Network/#type-Cookie) and Firefox [`cookies.Cookie`](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/cookies/Cookie).
+
+### LocalStorageData Object
+
+`localStorage` is an array of `LocalStorageData` objects containing the following properties:
+
+| Key      | Type     | Description |
+| -------- | -------- | ----------- |
+| `origin` | `string` | origin      |
+| `value`  | `object` | value       |
 
 ## Notes
 
