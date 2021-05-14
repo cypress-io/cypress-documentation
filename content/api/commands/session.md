@@ -88,6 +88,30 @@ See [SessionOptions]()
 
 ## Examples
 
+### Defining a Session
+
+```js
+cy.session(
+  'Adam',
+  () => {
+    // code to generate a session goes here
+  },
+  {
+    validate: () => {
+      // code that returns `true` if the session is still valid
+    },
+    exclude: {
+      cookies: [
+        // cookies to exclude
+      ],
+      localStorage: [
+        // local storage items to exclude
+      ],
+    },
+  }
+)
+```
+
 ## SessionOptions
 
 ## SessionData
