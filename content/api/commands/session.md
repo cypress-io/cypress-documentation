@@ -182,8 +182,29 @@ Those properties are derived from the JavaScript Browser APIs: Chrome [`Network.
 | `origin` | `string` | origin      |
 | `value`  | `object` | value       |
 
+## Command Log
+
+### Session Definition(s)
+
+### Failed Validation
+
+### Session Usage
+
+## Dashboard
+
+A new concept!
+Just like the Command Log section, show how this is represented in the Dashboard
+
 ## Notes
 
 ## Rules
 
 ## See Also
+
+- [`Cypress.Cookies`](/api/cypress-api/cookies)
+- [`clearCookie`](/api/commands/clearcookie)
+- [`clearCookies`](/api/commands/clearcookies)
+- [`getCookie`](/api/commands/getcookie)
+- [`getCookies`](/api/commands/getcookies)
+- [`setCookie`](/api/commands/setcookie)
+- `clearLocalStorage`(/api/commands/clearlocalstorage)
