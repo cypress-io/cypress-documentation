@@ -12,7 +12,7 @@ title: CI Provider Examples
 
 For the following CI Providers we have in depth guides.
 
-### [CircleCI](https://circleci.com)
+### CircleCI
 
 <Icon name="book" color="gray"></Icon> [CircleCI Guide](circleci)
 <br />
@@ -30,7 +30,7 @@ Check out the full <Icon name="github"></Icon> [RWA CircleCI configuration](http
 
 </Alert>
 
-### [GitHub Actions](https://github.com)
+### GitHub Actions
 
 <Icon name="book" color="gray"></Icon> [GitHub Actions Guide](github-actions)
 <br />
@@ -48,7 +48,7 @@ Check out the full <Icon name="github"></Icon> [RWA GitHub Actions configuration
 
 </Alert>
 
-### [BitBucket](https://bitbucket.org/product/features/pipelines)
+### BitBucket
 
 <Icon name="book" color="gray"></Icon> [BitBucket Pipelines Guide](bitbucket-pipelines)
 <br />
@@ -66,7 +66,7 @@ Check out the full <Icon name="github"></Icon> [RWA BitBucket Pipelines configur
 
 </Alert>
 
-### [GitLab CI](https://gitlab.com/)
+### GitLab CI
 
 <Icon name="book" color="gray"></Icon> [GitLab CI Guide](gitlab-ci)
 <br />
@@ -84,7 +84,7 @@ Check out the full <Icon name="github"></Icon> [RWA GitLab CI configuration](htt
 
 </Alert>
 
-### [AWS CodeBuild](https://aws.amazon.com/codebuild)
+### AWS CodeBuild
 
 <Icon name="book" color="gray"></Icon> [AWS CodeBuild Guide](aws-codebuild)
 <br />
@@ -104,12 +104,12 @@ Check out the full <Icon name="github"></Icon> [RWA AWS CodeBuild configuration]
 
 ## Examples
 
-### [TravisCI](https://travis-ci.org/)
+### TravisCI
 
 - [Basic .travis.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/basic/.travis.yml)
 - [Parallel .travis.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.travis.yml)
 
-### [Azure Pipelines](https://azure.microsoft.com/)
+### Azure Pipelines
 
 <Alert type="info">
 <strong class="alert-header">Note</strong>
@@ -121,43 +121,43 @@ Azure Pipelines was formerly called Visual Studio Team Services(VSTS) CI or Team
 - [Basic Example (azure-ci.yml)](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/basic/azure-ci.yml)
 - [Parallelized Example (azure-ci.yml)](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/azure-ci.yml)
 
-### [Jenkins](https://jenkins.io/)
+### Jenkins
 
 - [Basic Jenkinsfile](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/basic/Jenkinsfile)
 - [Parallel Jenkinsfile](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/Jenkinsfile)
 
-### [Netlify](https://www.netlify.com/)
+### Netlify
 
 We recommend using our official [netlify-plugin-cypress](https://github.com/cypress-io/netlify-plugin-cypress) to execute end-to-end tests before and after deployment to Netlify platform. Read our tutorials [Test Sites Deployed To Netlify Using netlify-plugin-cypress](https://glebbahmutov.com/blog/test-netlify/) and [Run Cypress Tests on Netlify Using a Single Line](https://cypress.io/blog/2020/03/30/run-cypress-tests-on-netlify-using-a-single-line/).
 
-### [Buildkite](https://buildkite.com)
+### Buildkite
 
 - [Parallel Example (.buildkite/pipeline.yml)](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.buildkite/pipeline.yml)
 
-### [CodeShip Pro](https://codeship.com/features/pro)
+### CodeShip Pro
 
 - [cypress-example-docker-codeship](https://github.com/cypress-io/cypress-example-docker-codeship)
 - [Basic](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/basic/codeship-pro)
 - [Parallel codeship-steps.yml](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/codeship-steps.yml)
 - [Parallel codeship-services.yml](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/codeship-services.yml)
 
-### [Semaphore](semaphoreci.com)
+### Semaphore
 
 - [Basic .semaphore.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/basic/.semaphore.yml)
 - [Parallel .semaphore.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.semaphore/semaphore.yml)
 
-### [Shippable](https://app.shippable.com/)
+### Shippable
 
 - [shippable.yml](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/shippable.yml)
 
-### [AppVeyor](https://appveyor.com)
+### AppVeyor
 
 - [Basic Example (appveyor.yml)](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/appveyor.yml)
 
-### [AWS Amplify Console](https://aws.amazon.com/amplify/console)
+### AWS Amplify Console
 
 - [Basic Example (amplify.yml)](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/amplify.yml)
 
-### [LayerCI](https://layerci.com)
+### LayerCI
 
 - [cypress-example-layerci](https://github.com/bahmutov/cypress-example-layerci)
