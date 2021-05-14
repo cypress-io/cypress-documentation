@@ -84,7 +84,11 @@ See [SessionOptions]()
 
 ### Yields
 
-`session` yields session data (`SessionData`), which is an `object` with properties `cookies` and `localStorage`. See [SessionData]().
+`session` yields session data (`SessionData`), which is an `object` with properties `cookies` and `localStorage`. See [SessionData](#sessiondata).
+
+### Setup Function
+
+The contents of `setupFn` should be the steps to generate the session you want to preserve for later use. You can generate a session through the front-end UI or through a backend service or API.
 
 ## Examples
 
