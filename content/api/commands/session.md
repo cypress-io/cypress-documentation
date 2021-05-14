@@ -4,7 +4,24 @@ title: session
 
 This command is pretty much all you need.
 
-What is a session?
+#### What's a Session?
+
+A session is the state of your application that can be persisted by a browser's cookies and [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage). The "state" of your application can be
+
+- information about the current authenticated user
+  - authentication key
+  - session key
+  - permissions
+  - feature toggles
+  - location
+  - user behavior
+- settings that dictate how your application should appear or behave
+  - language
+  - currency
+  - color scheme
+  - accessibility features
+  - other UI preferences
+- form data
 
 ## Usage & Syntax
 
