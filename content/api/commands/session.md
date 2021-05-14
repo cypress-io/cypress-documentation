@@ -118,6 +118,39 @@ cy.session(
 
 ## SessionOptions
 
+### `validate` (`Function`)
+
+Data can become invalidated over time. For example, a user may only be authenticated for a finite duration after which the user must authenticate again. This expiration or invalidation can result in flaky tests. To remedy this, Cypress invokes `validate` on the session before using it. If the session is valid (`validate` returns `true`), then it will be used as is. Otherwise, if the session is invalid (`validate` returns `false`), then Cypress will execute the setup function first.
+
+### `exclude` (`object`)
+
+By default, Cypress preserves cookies and local storage _in their entirety_ when the setup function executes. If data needs to be excluded, you can specify it in the `cookies` or `localStorage` property accordingly.
+An exclusion can be expressed as either an `object`, `string` or `RegExp`. You can specify an array of exclusions or just one.
+
+#### `cookies` (`sessionExcludeFilterCookies`)
+
+```ts
+type sessionExcludeFilterCookies =
+  | {
+      domain?: string | RegExp
+      name?: string | RegExp
+    }
+  | string
+  | RegExp
+```
+
+#### `localStorage` (`sessionExcludeFilterLocalStorage`)
+
+```ts
+type sessionExcludeFilterLocalStorage =
+  | {
+      origin?: string | RegExp
+      key?: string | RegExp
+    }
+  | string
+  | RegExp
+```
+
 ## SessionData
 
 `SessionData` is the [subject]() yielded by `session`. The `object` contains two properties - `cookies` and `localStorage`
