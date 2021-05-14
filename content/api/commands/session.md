@@ -4,6 +4,10 @@ title: session
 
 This command is pretty much all you need.
 
+The `session` command is used to preserve browser state between tests.
+
+<!-- Technically it's more the application's state than the state of the browser. It's more like state *stored* in the browser. The tricky thing here is that we're only preserving cookies and local storage, so saying that we're saving "application state" is misleading. And kind of a bummer because it would be awesome if we did. For now we have app actions for that. Saying that this is a checkpoint or snapshot in time is also similarly ambiguous and misleading. -->
+
 #### What's a Session?
 
 A session is the state of your application that can be persisted by a browser's cookies and [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage). The "state" of your application can be
