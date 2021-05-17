@@ -694,7 +694,11 @@ The Cypress Dashboard goes a step further and helps you and your team to [detect
 
 For more information on how to create end-to-end tests with Cypress, be sure to check out [our official documentation here](/guides/overview/why-cypress.html).
 
-If you see any inaccuracies with this or feel something has been misrepresented, please [submit an issue here](https://github.com/cypress-io/cypress-documentation/issues/new).
+<Alert type="warning">
+
+If you see any inaccuracies with this guide or feel like something has been misrepresented, please [start a discussion here](https://github.com/cypress-io/cypress/discussions/new).
+
+</Alert>
 
 ## Angular Schematic Configuration
 
