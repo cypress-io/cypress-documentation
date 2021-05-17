@@ -202,11 +202,6 @@ Those properties are derived from the JavaScript Browser APIs: Chrome [`Network.
 
 ### Session Usage
 
-## Dashboard
-
-A new concept!
-Just like the Command Log section, show how this is represented in the Dashboard
-
 ## Notes
 
 ## Rules
