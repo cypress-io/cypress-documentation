@@ -2,19 +2,23 @@
 title: session
 ---
 
-This command is pretty much all you need.
+Use the `session` command to preserve the browser's state between tests. Once the steps to establish a session are performed, the session can be restored at a later time without executing those steps again.
 
-The `session` command is used to preserve browser state between tests.
+<!--
+Technically it's more the application's state or state *stored* in the browser. The tricky thing here is that we're only preserving cookies and local storage, so saying that we're saving "application state" is misleading. And kind of a bummer because it would be awesome if we did. For now we have app actions for that. Saying that this is a checkpoint or snapshot in time is also similarly ambiguous and misleading.
+-->
 
-<!-- Technically it's more the application's state than the state of the browser. It's more like state *stored* in the browser. The tricky thing here is that we're only preserving cookies and local storage, so saying that we're saving "application state" is misleading. And kind of a bummer because it would be awesome if we did. For now we have app actions for that. Saying that this is a checkpoint or snapshot in time is also similarly ambiguous and misleading. -->
+A session is persisted by a browser's cookies, [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) and [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
 
-#### What's a Session?
+When your front-end application makes a request and the response contains a `Set-Cookie` header, the browser sets that value as a cookie (or multiple cookies).
+Alternatively, your application may store a value (from a response, user input, etc.) in browser storage (`localStorage` or `sessionStorage`).
+Either way, this persisted data is used by your application and therefore affects its behavior.
 
-A session is the state of your application that can be persisted by a browser's cookies and [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage). The "state" of your application can be
+For example, if access to a page or application route requires authentication and a user were to navigate to that route, the application will look for some kind of authentication data persisted in the browser (like a session key) first. If the data doesn't exist, the user would encounter an error or be navigated to the route to authenticate (like a _Sign In_ page). Once the user signs in, the required authentication information is persisted in the browser and the user can navigate as expected.
 
-- information about the current authenticated user
-  - authentication key
-  - session key
+Other examples of state persisted in the browser:
+
+- information about the currently authenticated user
   - permissions
   - feature toggles
   - location
