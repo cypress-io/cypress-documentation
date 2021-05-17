@@ -255,7 +255,7 @@ Below we stub network calls using [cy.intercept()](/api/commands/intercept) to r
 ```js
 cy.intercept('/api/items', { fixture: 'items' }).as('getItems')
 // ... action
-cy.wait('@getUsers')
+cy.wait('@getItems')
 cy.mySnapshotCommand()
 ```
 
