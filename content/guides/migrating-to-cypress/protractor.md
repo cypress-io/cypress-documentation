@@ -14,11 +14,15 @@ title: Migrating from Protractor to Cypress
 
 ## Introduction
 
-Considering using Cypress but unsure of whether the migration is worth it for your Angular app? We got you covered here with this migration guide to help transition from Protractor to Cypress.
+Protractor has been a popular end-to-end testing tool for Angular and AngularJS apps. However, Protractor is [no longer included](https://blog.angular.io/angular-v12-is-now-available-32ed51fbfd49) in new Angular projects as of Angular 12. We've got you covered here with this migration guide to help you and your team transition from Protractor to Cypress.
 
-If you see any inaccuracies with this or feel something has been misrepresented, please [submit an issue here](https://github.com/cypress-io/cypress-documentation/issues/new).
+<Alert type="warning">
 
-To start, let's take a quick look at a common test case scenario: allowing a user to sign up for a new account.
+If you see any inaccuracies with this guide or feel like something has been misrepresented, please [start a discussion here](https://github.com/cypress-io/cypress/discussions/new).
+
+</Alert>
+
+To start, let's look at a quick code sample to see how approachable Cypress is coming from Protractor. In this scenario, we have a test to validate that a user can sign up for a new account.
 
 <Badge type="danger">Before: Protractor</Badge>
 
@@ -52,137 +56,75 @@ describe('Authorization Tests', () => {
 })
 ```
 
-## Why Choose Cypress over Protractor?
-
-A common question when teams are considering migrating to a different tool is why choose a different tool when something like Protractor is created specifically for Angular. After all, isn't a tailored tool to the framework better than something more generic like Cypress?
-
-While this logic holds true in many tool evaluations, end-to-end testing is different because **the value of end-to-end testing resides in ensuring that what the user will see and use on production works**. In other words, whether your application is created using AngularJS, Angular 2, or Angular 9, users will be unaware of this detail. After all, at the end of the day, the user cares primarily about one thing: "Does it work?"
-
 ## Benefits of Using Cypress
 
-As many developers can attest to, end-to-end testing is one of those things that they know they _should_ do, but often do not. Or if they do run tests, the tests are often flaky and often very expensive due to how long it can take to run. And while there are often ideals of complete code coverage, the realities of business and deadlines often take precedence and the tests are left unwritten, or worse, ignored when errors are being reported because they are not reliable. With Cypress, not only will your tests be reliable, but it provides developers with tools that make e2e testing an asset to development rather than a hindrance.
+As many developers can attest to, end-to-end testing is one of those things that they know they _should_ do, but often do not. Or if they do run tests, the tests are often flaky and often very expensive due to how long it can take to run. And while there are often ideals of complete code coverage, the realities of business and deadlines often take precedence and the tests are left unwritten, or worse, ignored when errors are being reported because they are not reliable. Not only does Cypress make sure that your tests will be reliable, but it provides developers with tools that make e2e testing an asset to development rather than a hindrance.
 
 ### Interact with your tests in a browser
 
 When Protractor runs tests, the browser automation launches a browser instance and often runs through tests too fast for the human eye. Without additional configuration, this often leads to a reliance on lengthy terminal errors that can be expensive from a context-switching perspective.
 
+With the [Cypress Test Runner](/guides/core-concepts/test-runner), your tests run in an interactive browser environment in real time. The Cypress Test Runner's [command log](/guides/core-concepts/test-runner#Command-Log) displays the tests from your test suite and their assertions. When you [click on a command or assertion](https://docs.cypress.io/guides/core-concepts/test-runner#Clicking-on-Commands) in the command log, the Cypress Test Runner displays a DOM snapshot from that point in time so you can see what the application under test looked like at the time of the test's execution. This allows you to see the **real rendered UI** and the behavior of the app under **real user interactions.** Since the app is loaded within a real browser, you can also manually explore its behavior while it is under the state of a desired test scenario.
+
+The Test Runner also helps you to write your tests by making it as easy as possible to find the right CSS selectors for the DOM elements in your application with its [Selector Playground](https://docs.cypress.io/guides/core-concepts/test-runner#Selector-Playground). The Selector Playground helps you cut down on time spent finding the right selectors so you can focus on what's important: writing tests that verify your app's logic.
+
 <DocsVideo src="/img/guides/migrating-to-cypress/DevTools.mp4" title="interacting with tests in a browser"></DocsVideo>
 
 ### Faster feedback loops
 
-When it comes to your end-to-end tests, being able to see your tests as they run is critical to allowing you to iterate faster with confidence. Though this is not possible out of the box with Protractor, Cypress tests automatically re-run within the browser whenever they are saved which allows you to iterate faster with confidence.
+When it comes to your end-to-end tests, being able to see your tests as they run is critical to allowing you to confidently iterate faster. With Cypress, your tests are automatically re-run upon file save as you are iterating on them.
+
+Having your code editor and application under test within a browser side-by-side (shown below) while re-running tests on save is a highly productive workflow. It provides an instant feedback loop that allows you to iterate faster with confidence.
 
 <DocsVideo src="/img/guides/migrating-to-cypress/Auto-reloading.mp4" title="auto-reloading"></DocsVideo>
 
 ### Time travel through tests
 
-Rather than trying to decipher errors inside of your terminal, with Cypress you can debug your tests just like you would debug your application normally. In addition, Cypress allows you to see snapshots of your Angular application as the test is executed so you can debug your applications more easily.
+The Cypress Test Runner gives you time travel capabilities to see exactly how your app was behaving at any point during test execution. Cypress takes DOM snapshots of your application under test as the Test Runner executes the commands and assertions in your tests. This enables you to view the **real UI** of your application at any point during your tests' execution. By clicking from one command to another in the [command log](/guides/core-concepts/test-runner#Command-Log), you can see which elements Cypress acted upon and how your application responded to the simulated **real user behavior**.
 
 <DocsVideo src="/img/guides/migrating-to-cypress/interactivity.mp4" title="Time travel debugging"></DocsVideo>
 
-### Easily automate screenshots
-
-Another powerful feature of end-to-end testing is the ability to capture screenshots and recording. While possible in both tools, Protractor requires you to manually tap into Node.js and has limited configuration options.
-
-<Badge type="danger">Before: Protractor</Badge>
-
-```js
-const fs = require('fs')
-
-describe('Dashboard', () => {
-  it('should render dashboard', () => {
-    browser.get('/dashboard')
-    browser.takeScreenshot().then((png) => {
-      const stream = fs.createWriteStream(filename)
-      writeScreenShot(png, 'dashboard.png')
-      stream.write(new Buffer(png, 'base64'))
-      stream.end()
-    })
-  })
-})
-```
-
-<Badge type="success">After: Cypress</Badge>
-
-```js
-describe('Dashboard', () => {
-  it('should render dashboard', () => {
-    cy.visit('/dashboard')
-    cy.screenshot('dashboard.png')
-  })
-})
-```
-
-<Alert type="info">
-
-For more information on what configuration options are available, be sure to check out the [official Cypress documentation on the screenshot command](/api/commands/screenshot).
-
-</Alert>
-
-## FAQs
-
-### Do I have to replace all of my tests with Cypress immediately?
-
-Absolutely not. While it might sound ideal to replace Protractor entirely, we know that most projects and teams still need to deliver features to customers and it's unrealistic to halt the team's progress.
-
-### Can Protractor and Cypress coexist in the same app?
-
-Yes! Your Protractor tests would continue to live in the `e2e` directory that Angular CLI scaffolded while all Cypress tests would live in a sibling folder named `cypress`.
-
-```
-.
-├── cypress
-├── e2e
-├── src
-├── .editorconfig
-├── .gitignore
-├── angular.json
-├── browserslist
-├── cypress.json
-├── karma.conf.js
-├── package.json
-├── README.md
-├── tsconfig.app.json
-├── tsconfig.json
-├── tsconfig.spec.json
-└── tslint.json
-```
-
-In fact, as you work through migrating to Cypress, we believe that progressively enhancing your e2e tests with Cypress is the best path forward to ensure that feature development is not impacted.
-
 ## Getting Started
 
-### Angular Schematic
+### Recommended Installation
 
-We recommend using our official Cypress Angular schematic to install Cypress in your Angular project:
+We recommend using our [official Cypress Angular schematic](https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic#readme) to add Cypress to your Angular project:
 
 ```shell
 ng add @cypress/schematic
 ```
 
-With our schematic installed, you can run Cypress with the following commands:
+This will install Cypress, add scripts for running Cypress in `run` and `open` mode, scaffold base Cypress files and directories, and (optional) prompt you to remove Protractor and reconfigure the default `ng e2e` command to use Cypress.
+
+With our schematic installed, you can run Cypress with the following command:
 
 ```shell
 ng e2e
 ```
 
-or
+If you are still using Protractor, your `ng e2e` command might already be running your Protractor tests. You can also use the following command to start Cypress:
 
 ```shell
 ng run {your-project-name}:cypress-open
 ```
 
-These two commands do the same thing. They will launch the Cypress Test Runner in an Electron browser.
+Both of these commands will launch the Cypress Test Runner in an Electron browser.
+
+You can also run Cypress headlessly in the Electron browser:
 
 ```shell
 ng run {your-project-name}:cypress-run
 ```
 
-This command will open the Cypress Test Runner and run your tests one time, with output to your terminal.
+<Alert type="info">
+
+Check out the [Cypress Angular Schematic](https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic#readme) documentation for more details like how to [configure your tests to run in a specific browser](https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic#running-the-builder-with-a-specific-browser) or [record test results](https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic#recording-test-results-to-the-cypress-dashboard) to the [Cypress Dashboard](https://docs.cypress.io/guides/dashboard/introduction).
+
+</Alert>
 
 ### Manual Installation
 
-You can still install Cypress without using our official Angular schematic.
+While we recommend using our official Angular schematic, you can still install Cypress manually.
 
 <code-group>
   <code-block label="npm" active>
@@ -201,7 +143,7 @@ yarn add -D cypress
   </code-block>
 </code-group>
 
-Then, since Cypress can run in parallel with your application, let's install [concurrently](https://www.npmjs.com/package/concurrently) to simplify our npm script.
+Then, since Cypress can run in parallel with your application, let's install [concurrently](https://www.npmjs.com/package/concurrently) to simplify our npm script. This is optional; however, you will need another way to serve your Angular app for Cypress to run tests against your application.
 
 <code-group>
   <code-block label="npm" active>
@@ -260,7 +202,7 @@ yarn run cypress
 
 It will start up Cypress and our Angular app at the same time!
 
-<DocsVideo src="/img/guides/protractor-to-cypress/npm-run-cypress.mp4" title="Cypress Tips and Tricks"></DocsVideo>
+Again, we highly recommend using our [Angular Schematic](https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic) to install Cypress, and we plan on adding new capabilities to it over time.
 
 ## Essentials
 
@@ -346,7 +288,7 @@ The Selector Playground can be useful when you need to find a specific selector 
 
 <DocsVideo src="/img/snippets/selector-playground.mp4" title="Selector Playground"></DocsVideo>
 
-## How to Interact with DOM Elements
+### How to Interact with DOM Elements
 
 <Badge type="danger">Before: Protractor</Badge>
 
@@ -384,7 +326,7 @@ cy.get('input').its('value')
 
 You can learn more about [interacting with DOM elements in our official documentation](/guides/core-concepts/interacting-with-elements.html).
 
-## Assertions
+### Assertions
 
 Similar to Protractor, Cypress enables use of human readable assertions.
 
@@ -471,7 +413,9 @@ cy.get('button').click()
 cy.get('.list-item').contains('my text')
 ```
 
-## Network Spies
+## Network Handling
+
+### Network Spying
 
 Protractor doesn't offer a built-in solution for network spying. With Cypress, you can leverage the [intercept API](/api/commands/intercept) to spy on and manage the behavior of any network request.
 
@@ -483,7 +427,7 @@ cy.intercept('/users/**')
 
 Cypress will automatically wait for any request to `/users/**` to complete before continuing your test.
 
-## Stubbing
+### Network Stubbing
 
 Cypress's [intercept API](/api/commands/intercept) also allows you to stub any network request for your app under test. You can use the [intercept API](/api/commands/intercept) to make assertions based on different simulated responses for your network requests. For example, you might want to simulate a 3rd-party API outage by forcing a network error and test your app under those conditions. With Cypress's [intercept API](/api/commands/intercept), this and more is possible!
 
@@ -657,7 +601,7 @@ describe('example test suite', () => {
 })
 ```
 
-Cypress can also be run in [headed mode](TODO) which displays the browser running your tests. By default, when running `cypress open`, the [Cypress Test Runner](/guides/core-concepts/test-runner) provides an interactive debugging experience while also displaying the application under test. The Cypress Test Runner can also be ran in [headless mode](/guides/guides/command-line#cypress-run-headless) which will force the browser to be hidden. This is especially useful when you want to run your Cypress tests as part of your Continuous Integration (CI) pipeline.
+Cypress can also be run in [headed mode](/guides/guides/launching-browsers#Electron-Browser) which displays the browser running your tests. By default, when running `cypress open`, the [Cypress Test Runner](/guides/core-concepts/test-runner) provides an interactive debugging experience while also displaying the application under test. The Cypress Test Runner can also be ran in [headless mode](/guides/guides/command-line#cypress-run-headless) which will force the browser to be hidden. This is especially useful when you want to run your Cypress tests as part of your Continuous Integration (CI) pipeline.
 
 For more information, check out our [official documentation on debugging](/guides/guides/debugging#Using-debugger)!
 
@@ -667,13 +611,21 @@ Cypress makes it easy to [run your tests in your Continuous Integration environm
 
 Check out our guides to run your Cypress tests in a [GitHub Action](/guides/continuous-integration/github-actions), [CircleCI](/guides/continuous-integration/introduction#CircleCI), [GitLab CI](/guides/continuous-integration/gitlab-ci), [Bitbucket Pipeline](/guides/continuous-integration/bitbucket-pipelines), or [AWS CodeBuild](/guides/continuous-integration/aws-codebuild).
 
+### Gain Visibility in Headless Mode with Screenshots and Videos
+
+Running browser tests in headless mode (locally or in continuous integration pipeline) can be a bit of a black-box without much visibility. When tests fail, error messages by themselves can often fall short in painting the picture of **why** something failed, especially if assertions were not explicit enough or too indirect. To understand the reason behind test failures it also helps to see the state of the app UI at the point of failure or see the events that led up to the failure.
+
+Cypress assists with debugging in headless mode, by automatically taking a screenshot of the app UI and command log at the exact point of test failure. To help see everything that happened prior to test failure, Cypress provides a video recording (as an MP4 file) of a full test spec run by default.
+
 ## Parallelization
 
 One of the worst things that can happen to a developer is to be forced to wait for a 2 hour end-to-end test suite to before verifying something works or not. Instead, the [Cypress Dashboard Service](/guides/dashboard/introduction) allows your tests to run in parallel. If your longest test only test a minute to run, this means that you've just cut down your testing by over 12,000%!
 
-This feature is available in Protractor and requires you to configure your application with multiple options (i.e., `sharedTestFiles`, `maxInstances`, etc.). An example is provided below:
+This feature is available in Protractor and requires you to configure your application with multiple options (i.e., `sharedTestFiles`, `maxInstances`, etc.). With Protractor your tests can be parallelized on a per-test basis. With Cypress, your tests can be [parallelized on a per spec file basis](https://docs.cypress.io/guides/guides/parallelization). This is an important distinction between Protractor and Cypress parallelization. One of the reasons why Cypress parallelizes tests per file because some users may write tests that build up state that subsequent tests, although we [do not recommend relying on the state of previous tests](/guides/references/best-practices#Having-tests-rely-on-the-state-of-previous-tests).
 
-<Badge type="danger">Before: Protractor</Badge>
+An example is provided below:
+
+**Parallelization with Protractor:**
 
 ```js
 // Example from https://developers.perfectomobile.com/display/PD/Protractor+parallel+execution
@@ -722,15 +674,15 @@ exports.config = {
 }
 ```
 
-However, with Cypress, all you need to do is pass the `--parallel` and `--record` flag to `cypress run`, and it will take care of the rest for you:
+**Parallelization with Cypress:**
 
-<Badge type="success">After: Cypress</Badge>
+However, with Cypress, all you need to do is pass the `--parallel` and `--record` flag to `cypress run`, and it will take care of the rest for you:
 
 ```bash
 cypress run --record --parallel
 ```
 
-For more information, check out our [official docs on parallelization](https://docs.cypress.io/guides/guides/parallelization#Overview)!
+For more information, check out our [official docs on parallelization](/guides/guides/parallelization#Overview)!
 
 ## Test Retries
 
@@ -743,3 +695,128 @@ The Cypress Dashboard goes a step further and helps you and your team to [detect
 For more information on how to create end-to-end tests with Cypress, be sure to check out [our official documentation here](/guides/overview/why-cypress.html).
 
 If you see any inaccuracies with this or feel something has been misrepresented, please [submit an issue here](https://github.com/cypress-io/cypress-documentation/issues/new).
+
+## Angular Schematic Configuration
+
+The [Cypress Angular Schematic](https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic#readme) has many configurable options to fit the needs of your project.
+
+### Running the builder with a specific browser
+
+Before running Cypress in `open` mode, ensure that you have started your application server using `ng serve`.
+
+```json
+"cypress-open": {
+  "builder": "@cypress/schematic:cypress",
+  "options": {
+    "watch": true,
+    "headless": false,
+    "browser": "chrome"
+  },
+  "configurations": {
+    "production": {
+      "devServerTarget": "{project-name}:serve:production"
+    }
+  }
+}
+```
+
+Read our docs to learn more about [launching browsers](http://on.cypress.io/launching-browsers) with Cypress.
+
+### Recording test results to the Cypress Dashboard
+
+We recommend setting your [Cypress Dashboard](https://docs.cypress.io/guides/dashboard/introduction) recording key as an environment variable and NOT as a builder option when running it in CI.
+
+```json
+"cypress-run": {
+  "builder": "@cypress/schematic:cypress",
+  "options": {
+    "devServerTarget": "{project-name}:serve",
+    "record": true,
+    "key": "your-cypress-dashboard-recording-key"
+  },
+  "configurations": {
+    "production": {
+      "devServerTarget": "{project-name}:production"
+    }
+  }
+}
+```
+
+Read our docs to learn more about [recording test results](http://on.cypress.io/recording-project-runs) to the [Cypress Dashboard](https://docs.cypress.io/guides/dashboard/introduction).
+
+### Specifying a custom `cypress.json` config file
+
+It may be useful to have different Cypress configuration files per environment (ie. development, staging, production).
+
+```json
+"cypress-run": {
+  "builder": "@cypress/schematic:cypress",
+  "options": {
+    "devServerTarget": "{project-name}:serve",
+    "configFile": "cypress.production.json"
+  },
+  "configurations": {
+    "production": {
+      "devServerTarget": "{project-name}:production"
+    }
+  }
+}
+```
+
+Read our docs to learn more about all the [configuration options](http://on.cypress.io/configuration) Cypress offers.
+
+### Running Cypress in parallel mode within CI
+
+```json
+"cypress-run": {
+  "builder": "@cypress/schematic:cypress",
+  "options": {
+    "devServerTarget": "{project-name}:serve",
+    "parallel": true,
+    "record": true,
+    "key": "your-cypress-dashboard-recording-key"
+  },
+  "configurations": {
+    "production": {
+      "devServerTarget": "{project-name}:production"
+    }
+  }
+}
+```
+
+Read our docs to learn more about speeding up test execution in CI via [Cypress parallelization](http://on.cypress.io/parallelization)
+
+### Questions or Issues?
+
+Visit our [plugins discussion](https://github.com/cypress-io/cypress/discussions/categories/plugins) to ask questions or report issues related to our Cypress Angular Schematic.
+
+## FAQs
+
+### Do I have to replace all of my tests with Cypress immediately?
+
+Absolutely not. While it might sound ideal to replace Protractor entirely, we know that most projects and teams still need to deliver features to customers and it's unrealistic to halt the team's progress.
+
+### Can Protractor and Cypress coexist in the same app?
+
+Yes! Your Protractor tests would continue to live in the `e2e` directory that Angular CLI scaffolded while all Cypress tests would live in a sibling folder named `cypress`.
+
+```
+.
+├── cypress
+├── e2e
+├── src
+├── .editorconfig
+├── .gitignore
+├── angular.json
+├── browserslist
+├── cypress.json
+├── karma.conf.js
+├── package.json
+├── README.md
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.spec.json
+└── tslint.json
+```
+
+In fact, as you work through migrating to Cypress, we believe that progressively enhancing your e2e tests with Cypress is the best path forward to ensure that feature development is not impacted.
