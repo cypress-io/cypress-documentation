@@ -422,7 +422,11 @@ Protractor doesn't offer a built-in solution for network spying. With Cypress, y
 For example, if you wanted to wait on a network request to complete before continuing your test, you could write the following:
 
 ```js
-cy.intercept('/users/**')
+it('should display a Load More button after fetching and displaying a list of users', () => {
+  cy.visit('/users')
+  cy.intercept('/users/**')
+  cy.get('button').contains('Load More')
+})
 ```
 
 Cypress will automatically wait for any request to `/users/**` to complete before continuing your test.
@@ -432,17 +436,31 @@ Cypress will automatically wait for any request to `/users/**` to complete befor
 Cypress's [intercept API](/api/commands/intercept) also allows you to stub any network request for your app under test. You can use the [intercept API](/api/commands/intercept) to make assertions based on different simulated responses for your network requests. For example, you might want to simulate a 3rd-party API outage by forcing a network error and test your app under those conditions. With Cypress's [intercept API](/api/commands/intercept), this and more is possible!
 
 ```js
-cy.intercept('GET', '/my-api', { forceNetworkError: true })
+it('should display a warning when the third-party API is down', () => {
+  cy.intercept(
+    'GET',
+    'https://api.openweathermap.org/data/2.5/weather?q=Atlanta',
+    { forceNetworkError: true }
+  )
+  cy.get('.weather-forecast').contains('Weather Forecast Unavailable')
+})
 ```
 
 You can also use the intercept API to stub a custom response for specific network requests:
 
 ```js
-// requests to '/update' will be fulfilled with a body of 'success'
-cy.intercept('/update', 'success')
+it('should display the message from the health-check API request on the status page', () => {
+  // requests to '/health-check' will be fulfilled with a body of 'operational'
+  cy.intercept('/health-check', 'operational')
+  cy.get('.status').contains('operational')
+})
 ```
 
+<Alert type="info">
+
 For more information, check out the [intercept API documentation](/api/commands/intercept).
+
+</Alert>
 
 ## Navigating Websites
 
