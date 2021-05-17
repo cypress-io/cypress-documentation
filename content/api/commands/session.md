@@ -98,46 +98,93 @@ See [SessionOptions]()
 
 `session` yields session data (`SessionData`), which is an `object` with properties `cookies` and `localStorage`. See [SessionData](#sessiondata).
 
-### Setup Function
-
-The contents of `setupFn` should be the steps to generate the session you want to preserve for later use. You can generate a session through the front-end UI or through a backend service or API.
-
 ## Examples
 
-### Defining a Session
+### Define a Session
+
+#### Name & Setup Function
+
+The `name` should represent the kind of session you're defining. For example, if you're setting up a session for a user with read-only permissions, then you might choose the name "read-only".
+The contents of `setupFn` should be the steps to generate the session you want to preserve for later use.
+
+```js
+cy.session('read-only', () => { signIn('Adam', 'Pa$$w0Rd') })
+
+function signIn(username, password) {
+  cy.intercept('POST', '/auth').as('signIn')
+  cy.visit('/sign-in')
+  cy.get('.username').type(username)
+  cy.get('.password').type(password)
+  cy.contains('.button', 'Sign In').click()
+  cy.wait('@signIn')
+})
+```
+
+#### SessionOptions
+
+The third and last argument you can optionally pass to `session` is `SessionOptions`.
+
+### `validate` (`Function`)
 
 ```js
 cy.session(
-  'Adam',
+  'read-only',
   () => {
-    // code to generate a session goes here
+    signIn('Adam', 'Pa$$w0Rd')
   },
   {
     validate: () => {
-      // code that returns `true` if the session is still valid
-    },
-    exclude: {
-      cookies: [
-        // cookies to exclude
-      ],
-      localStorage: [
-        // local storage items to exclude
-      ],
+      return cy.request('GET', '/profile').should((xhr) => {
+        expect(xhr.status).to.equal(200)
+      })
     },
   }
 )
 ```
 
-## SessionOptions
-
-### `validate` (`Function`)
-
 Data can become invalidated over time. For example, a user may only be authenticated for a finite duration after which the user must authenticate again. This expiration or invalidation can result in flaky tests. To remedy this, Cypress invokes `validate` on the session before using it. If the session is valid (`validate` returns `true`), then it will be used as is. Otherwise, if the session is invalid (`validate` returns `false`), then Cypress will execute the setup function first.
 
 ### `exclude` (`object`)
 
-By default, Cypress preserves cookies and local storage _in their entirety_ when the setup function executes. If data needs to be excluded, you can specify it in the `cookies` or `localStorage` property accordingly.
+By default, Cypress preserves cookies and browser storage _in their entirety_ when the setup function executes. If data needs to be excluded, you can specify it in the `cookies` or `localStorage` property accordingly.
+
+```js
+cy.session(
+  'read-only',
+  () => {
+    signIn('Adam', 'Pa$$w0Rd')
+  },
+  {
+    exclude: {
+      cookies: [],
+      localStorage: [],
+    },
+  }
+)
+```
+
 An exclusion can be expressed as either an `object`, `string` or `RegExp`. You can specify an array of exclusions or just one.
+
+```js
+{
+  cookies: {
+    domain: 'yahoo.com'
+  }
+}
+```
+
+```js
+{
+  cookies: [
+    {
+      domain: 'yahoo.com',
+    },
+    {
+      domain: 'google.com',
+    },
+  ]
+}
+```
 
 #### `cookies` (`sessionExcludeFilterCookies`)
 
@@ -149,6 +196,15 @@ type sessionExcludeFilterCookies =
     }
   | string
   | RegExp
+```
+
+```js
+{
+  localStorage: {
+    origin: 'myapp.com',
+    key: 'xstate-store'
+  }
+}
 ```
 
 #### `localStorage` (`sessionExcludeFilterLocalStorage`)
