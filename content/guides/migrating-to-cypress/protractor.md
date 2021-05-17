@@ -274,7 +274,11 @@ cy.get('.list-item')
 cy.get('input[name="field-name"]')
 ```
 
+<Alert type="info">
+
 You can learn more about [how to get DOM elements in our official documentation](/api/commands/get#Syntax).
+
+</Alert>
 
 ### Element Explorer
 
@@ -324,7 +328,11 @@ cy.get('input').clear()
 cy.get('input').its('value')
 ```
 
+<Alert type="info">
+
 You can learn more about [interacting with DOM elements in our official documentation](/guides/core-concepts/interacting-with-elements.html).
+
+</Alert>
 
 ### Assertions
 
@@ -354,7 +362,11 @@ But Cypress has one additional feature that can make a critical difference in th
 
 In the example above, if the submit link does not appear on the page at the exact moment when Protractor runs the test (which can be due to any number of factors including API calls, slow browser rendering, etc.), your test will fail. However, Cypress factors these conditions into its assertions and will only fail if the time goes beyond a reasonable amount.
 
+<Alert type="info">
+
 You can learn more about how Cypress handles [assertions in our official documentation](/guides/references/assertions).
+
+</Alert>
 
 ## WebDriver Control Flow vs Cypress
 
@@ -505,7 +517,11 @@ it('visit a non-Angular page', () => {
 })
 ```
 
+<Alert type="info">
+
 For more information, check out our [official documentation on navigation](https://example.cypress.io/commands/navigation)!
+
+</Alert>
 
 ## Using Page Objects
 
@@ -621,7 +637,11 @@ describe('example test suite', () => {
 
 Cypress can also be run in [headed mode](/guides/guides/launching-browsers#Electron-Browser) which displays the browser running your tests. By default, when running `cypress open`, the [Cypress Test Runner](/guides/core-concepts/test-runner) provides an interactive debugging experience while also displaying the application under test. The Cypress Test Runner can also be ran in [headless mode](/guides/guides/command-line#cypress-run-headless) which will force the browser to be hidden. This is especially useful when you want to run your Cypress tests as part of your Continuous Integration (CI) pipeline.
 
+<Alert type="info">
+
 For more information, check out our [official documentation on debugging](/guides/guides/debugging#Using-debugger)!
+
+</Alert>
 
 ## Continuous Integration
 
@@ -700,7 +720,11 @@ However, with Cypress, all you need to do is pass the `--parallel` and `--record
 cypress run --record --parallel
 ```
 
+<Alert type="info">
+
 For more information, check out our [official docs on parallelization](/guides/guides/parallelization#Overview)!
+
+</Alert>
 
 ## Test Retries
 
@@ -742,7 +766,11 @@ Before running Cypress in `open` mode, ensure that you have started your applica
 }
 ```
 
+<Alert type="info">
+
 Read our docs to learn more about [launching browsers](http://on.cypress.io/launching-browsers) with Cypress.
+
+</Alert>
 
 ### Recording test results to the Cypress Dashboard
 
@@ -764,7 +792,7 @@ We recommend setting your [Cypress Dashboard](https://docs.cypress.io/guides/das
 }
 ```
 
-Read our docs to learn more about [recording test results](http://on.cypress.io/recording-project-runs) to the [Cypress Dashboard](https://docs.cypress.io/guides/dashboard/introduction).
+Read our docs to learn more about [recording test results](http://on.cypress.io/recording-project-runs) to the [Cypress Dashboard](/guides/dashboard/introduction).
 
 ### Specifying a custom `cypress.json` config file
 
