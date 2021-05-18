@@ -256,9 +256,9 @@ For example, if access to a page or application route requires authentication an
 ## See Also
 
 - [`Cypress.Cookies`](/api/cypress-api/cookies)
-- [`clearCookie`](/api/commands/clearcookie)
-- [`clearCookies`](/api/commands/clearcookies)
-- [`getCookie`](/api/commands/getcookie)
-- [`getCookies`](/api/commands/getcookies)
-- [`setCookie`](/api/commands/setcookie)
-- `clearLocalStorage`(/api/commands/clearlocalstorage)
+- [`cy.clearCookie()`](/api/commands/clearcookie)
+- [`cy.clearCookies()`](/api/commands/clearcookies)
+- [`cy.getCookie()`](/api/commands/getcookie)
+- [`cy.getCookies()`](/api/commands/getcookies)
+- [`cy.setCookie()`](/api/commands/setcookie)
+- [`cy.clearLocalStorage()`](/api/commands/clearlocalstorage)
