@@ -2,34 +2,21 @@
 title: session
 ---
 
-Use the `session` command to preserve the browser's state between tests. Once the steps to establish a session are performed, the session can be restored at a later time without executing those steps again.
+Use the `session` command to preserve and restore sessions between tests. A session consists of [cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies), [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage), and [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
 
-<!--
-Technically it's more the application's state or state *stored* in the browser. The tricky thing here is that we're only preserving cookies and local storage, so saying that we're saving "application state" is misleading. And kind of a bummer because it would be awesome if we did. For now we have app actions for that. Saying that this is a checkpoint or snapshot in time is also similarly ambiguous and misleading.
--->
+Applications use session data to keep track of:
 
-A session is persisted by a browser's cookies, [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) and [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
+- information about the currently authenticated user (permissions, feature toggles, location, user behavior, etc.)
+- settings that dictate how your application should appear or behave (language, currency, color scheme, accessibility features, other UI preferences, etc.)
+- user inputs (form data, settings, etc.)
 
-When your front-end application makes a request and the response contains a `Set-Cookie` header, the browser sets that value as a cookie (or multiple cookies).
-Alternatively, your application may store a value (from a response, user input, etc.) in browser storage (`localStorage` or `sessionStorage`).
-Either way, this persisted data is used by your application and therefore affects its behavior.
+With `session`, once the steps required to establish a session are performed, the session can be restored at a later time without executing those steps again.
 
-For example, if access to a page or application route requires authentication and a user were to navigate to that route, the application will look for some kind of authentication data persisted in the browser (like a session key) first. If the data doesn't exist, the user would encounter an error or be navigated to the route to authenticate (like a _Sign In_ page). Once the user signs in, the required authentication information is persisted in the browser and the user can navigate as expected.
+<Alert type="warning">
 
-Other examples of state persisted in the browser:
+Cypress clears cookies and localStorage between tests.
 
-- information about the currently authenticated user
-  - permissions
-  - feature toggles
-  - location
-  - user behavior
-- settings that dictate how your application should appear or behave
-  - language
-  - currency
-  - color scheme
-  - accessibility features
-  - other UI preferences
-- form data
+</Alert>
 
 ## Usage & Syntax
 
@@ -259,6 +246,12 @@ Those properties are derived from the JavaScript Browser APIs: Chrome [`Network.
 ### Session Usage
 
 ## Notes
+
+When your front-end application makes a request and the response contains a `Set-Cookie` header, the browser sets that value as a cookie (or multiple cookies).
+Alternatively, your application may store a value (from a response, user input, etc.) in browser storage (`localStorage` or `sessionStorage`).
+Either way, this persisted data is used by your application and therefore affects its behavior.
+
+For example, if access to a page or application route requires authentication and a user were to navigate to that route, the application will look for some kind of authentication data persisted in the browser (like a session key) first. If the data doesn't exist, the user would encounter an error or be navigated to the route to authenticate (like a _Sign In_ page). Once the user signs in, the required authentication information is persisted in the browser and the user can navigate as expected.
 
 ## Rules
 
