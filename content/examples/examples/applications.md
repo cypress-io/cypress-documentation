@@ -97,7 +97,7 @@ A 3rd-party copy of Angular's Karma examples, enhanced for innovation activities
 
 - 100% code and tests implemented in TypeScript
 - CI setup using [Cypress CircleCI Orb](https://github.com/cypress-io/circleci-orb)
-- combined combined coverage with Jest and Cypress via [Cypress code coverage plugin](https://github.com/cypress-io/code-coverage)
+- Combined coverage with Jest and Cypress via [Cypress code coverage plugin](https://github.com/cypress-io/code-coverage)
 - linters and pre-commit hooks: Eslint, Prettier, Js-beautify, Husky
 - recording test results on Cypress Dashboard
 
