@@ -48,7 +48,7 @@ yum install -y xorg-x11-server-Xvfb gtk2-devel gtk3-devel libnotify-devel GConf2
 
 Docker images with all of the required dependencies installed are available under [cypress/base](https://github.com/cypress-io/cypress-docker-images)
 
-If you're running your projects in containers, then you'll want cypress in the container with the node process.
+If you're running your projects in containers, then you'll want Cypress in the container with the Node.js process.
 
 ```
   ui:
