@@ -62,7 +62,7 @@ As many developers can attest to, end-to-end testing is one of those things that
 
 ### Interact with your tests in a browser
 
-When Protractor runs tests, the browser automation launches a browser instance and often runs through tests too fast for the human eye. Without additional configuration, this often leads to a reliance on lengthy terminal errors that can be expensive from a context-switching perspective.
+When Protractor runs tests, the browser automation launches a browser instance and often runs through tests too fast for the human eye. Without additional configuration, this often leads to a reliance on lengthy terminal messages that can be expensive from a context-switching perspective.
 
 With the [Cypress Test Runner](/guides/core-concepts/test-runner), your tests run in an interactive browser environment in real time. The Cypress Test Runner's [command log](/guides/core-concepts/test-runner#Command-Log) displays the tests from your test suite and their assertions. When you [click on a command or assertion](https://docs.cypress.io/guides/core-concepts/test-runner#Clicking-on-Commands) in the command log, the Cypress Test Runner displays a DOM snapshot from that point in time so you can see what the application under test looked like at the time of the test's execution. This allows you to see the **real rendered UI** and the behavior of the app under **real user interactions.** Since the app is loaded within a real browser, you can also manually explore its behavior while it is under the state of a desired test scenario.
 
@@ -96,13 +96,13 @@ ng add @cypress/schematic
 
 This will install Cypress, add scripts for running Cypress in `run` and `open` mode, scaffold base Cypress files and directories, and (optional) prompt you to remove Protractor and reconfigure the default `ng e2e` command to use Cypress.
 
-With our schematic installed, you can run Cypress with the following command:
+With our schematic installed and Protractor removed, you can run Cypress in `open` mode with the following command:
 
 ```shell
 ng e2e
 ```
 
-If you are still using Protractor, your `ng e2e` command might already be running your Protractor tests. You can also use the following command to start Cypress:
+You can also use the following command to start Cypress in `open` mode:
 
 ```shell
 ng run {your-project-name}:cypress-open
@@ -110,7 +110,7 @@ ng run {your-project-name}:cypress-open
 
 Both of these commands will launch the Cypress Test Runner in an Electron browser.
 
-You can also run Cypress headlessly in the Electron browser:
+You can also launch Cypress via `run` mode, which runs headlessly in the Electron browser:
 
 ```shell
 ng run {your-project-name}:cypress-run
@@ -118,7 +118,7 @@ ng run {your-project-name}:cypress-run
 
 <Alert type="info">
 
-Check out the [Cypress Angular Schematic](https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic#readme) documentation for more details like how to [configure your tests to run in a specific browser](https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic#running-the-builder-with-a-specific-browser) or [record test results](https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic#recording-test-results-to-the-cypress-dashboard) to the [Cypress Dashboard](https://docs.cypress.io/guides/dashboard/introduction).
+Check out the [Cypress Angular Schematic](https://www.npmjs.com/package/@cypress/schematic) documentation for more details like how to [configure your tests to run in a specific browser](https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic#running-the-builder-with-a-specific-browser) or [record test results](https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic#recording-test-results-to-the-cypress-dashboard) to the [Cypress Dashboard](https://docs.cypress.io/guides/dashboard/introduction).
 
 </Alert>
 
@@ -358,7 +358,7 @@ describe('verify elements on a page', () => {
 })
 ```
 
-But Cypress has one additional feature that can make a critical difference in the reliability of your tests' assertions: [retry-ability](https://docs.cypress.io/guides/core-concepts/retry-ability). When your test fails an assertion or command, Cypress will mimic a real user with build-in wait times and multiple attempts at asserting your tests in order to minimize the amount of false negatives / positives.
+Cypress has one additional feature that can make a critical difference in the reliability of your tests' assertions: [retry-ability](https://docs.cypress.io/guides/core-concepts/retry-ability). When your test fails an assertion or command, Cypress will mimic a real user with build-in wait times and multiple attempts at asserting your tests in order to minimize the amount of false negatives / positives.
 
 In the example above, if the submit link does not appear on the page at the exact moment when Protractor runs the test (which can be due to any number of factors including API calls, slow browser rendering, etc.), your test will fail. However, Cypress factors these conditions into its assertions and will only fail if the time goes beyond a reasonable amount.
 
@@ -403,7 +403,9 @@ cy.get('input').type('my text')
 
 ## Automatic Retrying and Waiting
 
-Web applications are usually rarely synchronous. With Protractor, you may be accustomed to adding arbitrary timeouts or using the [waitForAngular](https://www.protractortest.org/#/api?view=ProtractorBrowser.prototype.waitForAngular) API to wait for Angular to finish rendering before attempting to interact with an element. With Cypress, commands that query the DOM are [automatically retried](/guides/core-concepts/retry-ability). Cypress will automatically wait and retry most commands until an element appears in the DOM. If an element is not [actionable](/guides/core-concepts/interacting-with-elements#Actionability) within the [`defaultCommandTimeout`](/guides/core-concepts/retry-ability#Timeouts) setting, the command will fail. This enables you to write tests without the need for arbitrary timeouts, enabling you to write more predictable tests.
+Web applications are usually rarely synchronous. With Protractor, you may be accustomed to adding arbitrary timeouts or using the [waitForAngular](https://www.protractortest.org/#/api?view=ProtractorBrowser.prototype.waitForAngular) API to wait for Angular to finish rendering before attempting to interact with an element.
+
+With Cypress, commands that query the DOM are [automatically retried](/guides/core-concepts/retry-ability). Cypress will automatically wait and retry most commands until an element appears in the DOM. If an element is not [actionable](/guides/core-concepts/interacting-with-elements#Actionability) within the [`defaultCommandTimeout`](/guides/core-concepts/retry-ability#Timeouts) setting, the command will fail. This enables you to write tests without the need for arbitrary timeouts, enabling you to write more predictable tests.
 
 <Badge type="danger">Before: Protractor</Badge>
 
@@ -551,7 +553,7 @@ const page = {
 
 it('should display the username of a logged in user', () => {
   page.login()
-  expect(by.css('.user').getText()).toEqual('my username')
+  expect(by.css('.username').getText()).toEqual('my username')
 })
 ```
 
@@ -657,9 +659,9 @@ Cypress assists with debugging in headless mode, by automatically taking a scree
 
 ## Parallelization
 
-One of the worst things that can happen to a developer is to be forced to wait for a 2 hour end-to-end test suite to before verifying something works or not. Instead, the [Cypress Dashboard Service](/guides/dashboard/introduction) allows your tests to run in parallel. If your longest test only test a minute to run, this means that you've just cut down your testing by over 12,000%!
+One of the worst things that can happen to a developer is to be forced to wait for a 2 hour end-to-end test suite to before verifying something works or not. Instead, the [Cypress Dashboard Service](/guides/dashboard/introduction) allows your tests to run in parallel. If your longest test only takes a minute to run, this means that you've just cut down your testing by over 12,000%!
 
-This feature is available in Protractor and requires you to configure your application with multiple options (i.e., `sharedTestFiles`, `maxInstances`, etc.). With Protractor your tests can be parallelized on a per-test basis. With Cypress, your tests can be [parallelized on a per spec file basis](https://docs.cypress.io/guides/guides/parallelization). This is an important distinction between Protractor and Cypress parallelization. One of the reasons why Cypress parallelizes tests per file because some users may write tests that build up state that subsequent tests, although we [do not recommend relying on the state of previous tests](/guides/references/best-practices#Having-tests-rely-on-the-state-of-previous-tests).
+This feature is available in Protractor and requires you to configure your application with multiple options (i.e., `sharedTestFiles`, `maxInstances`, etc.). With Protractor your tests can be parallelized on a per-test basis. With Cypress, your tests can be [parallelized on a per spec file basis](https://docs.cypress.io/guides/guides/parallelization). This is an important distinction between Protractor and Cypress parallelization. One of the reasons why Cypress parallelizes tests per file is because some users may write tests that build up state that subsequent tests, although we [do not recommend relying on the state of previous tests](/guides/references/best-practices#Having-tests-rely-on-the-state-of-previous-tests).
 
 An example is provided below:
 
@@ -714,7 +716,7 @@ exports.config = {
 
 **Parallelization with Cypress:**
 
-However, with Cypress, all you need to do is pass the `--parallel` and `--record` flag to `cypress run`, and it will take care of the rest for you:
+With Cypress, all you need to do is pass the `--parallel` and `--record` flag to `cypress run`, and it will take care of the rest for you:
 
 ```bash
 cypress run --record --parallel
@@ -813,7 +815,11 @@ It may be useful to have different Cypress configuration files per environment (
 }
 ```
 
+<Alert type="info">
+
 Read our docs to learn more about all the [configuration options](http://on.cypress.io/configuration) Cypress offers.
+
+</Alert>
 
 ### Running Cypress in parallel mode within CI
 
@@ -834,7 +840,11 @@ Read our docs to learn more about all the [configuration options](http://on.cypr
 }
 ```
 
+<Alert type="info">
+
 Read our docs to learn more about speeding up test execution in CI via [Cypress parallelization](http://on.cypress.io/parallelization)
+
+</Alert>
 
 ### Questions or Issues?
 
