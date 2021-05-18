@@ -1,5 +1,6 @@
 ---
 title: Cypress.spec
+menuTitle: spec
 ---
 
 `Cypress.spec` returns you the properties of the spec under test.

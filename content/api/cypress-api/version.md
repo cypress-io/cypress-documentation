@@ -1,5 +1,6 @@
 ---
 title: Cypress.version
+menuTitle: version
 ---
 
 `Cypress.version` returns you the current version of Cypress you are running.

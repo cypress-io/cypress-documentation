@@ -1,5 +1,6 @@
 ---
 title: Cypress.config
+menuTitle: config
 ---
 
 `get` and `set` configuration options _in your tests_.

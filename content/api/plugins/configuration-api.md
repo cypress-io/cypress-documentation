@@ -1,5 +1,6 @@
 ---
 title: Configuration API
+menuTitle: Configuration
 ---
 
 Cypress enables you to dynamically modify configuration values and environment variables from your plugins file.

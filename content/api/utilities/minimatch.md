@@ -1,5 +1,6 @@
 ---
 title: Cypress.minimatch
+menuTitle: minimatch
 ---
 
 Cypress automatically includes [minimatch](https://github.com/isaacs/minimatch) and exposes it as `Cypress.minimatch`.

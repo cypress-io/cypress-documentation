@@ -1,5 +1,6 @@
 ---
 title: Cypress.platform
+menuTitle: platform
 ---
 
 `Cypress.platform` returns the underlying OS name, as returned from Node's [`os.platform()`](https://nodejs.org/api/os.html#os_os_platform).

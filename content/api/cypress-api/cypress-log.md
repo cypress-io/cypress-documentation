@@ -1,5 +1,6 @@
 ---
 title: Cypress.log
+menuTitle: log
 ---
 
 This is the internal API for controlling what gets printed to the Command Log.

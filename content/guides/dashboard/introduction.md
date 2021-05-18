@@ -1,5 +1,6 @@
 ---
 title: Dashboard
+menuTitle: Introduction
 ---
 
 The [Cypress Dashboard](https://on.cypress.io/dashboard) is a service that gives you access to recorded test results - typically when running Cypress tests from your [CI provider](/guides/continuous-integration/introduction). The Dashboard provides you insight into what happened when your tests ran.

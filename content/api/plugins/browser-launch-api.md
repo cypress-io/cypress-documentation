@@ -1,5 +1,6 @@
 ---
 title: Browser Launch API
+menuTitle: Browser Launching
 ---
 
 Before Cypress launches a browser, it gives you the opportunity to modify the browser preferences, install extensions, add and remove command-line arguments, and modify other options from your [pluginsFile](/guides/tooling/plugins-guide).

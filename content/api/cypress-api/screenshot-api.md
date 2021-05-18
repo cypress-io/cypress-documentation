@@ -1,5 +1,6 @@
 ---
 title: Cypress.Screenshot
+menuTitle: Screenshot
 ---
 
 The Screenshot API allows you set defaults for how screenshots are captured during [.screenshot](/api/commands/screenshot) and automatic screenshots taken during test failures. You can set defaults for the following:

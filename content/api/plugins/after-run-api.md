@@ -1,5 +1,6 @@
 ---
 title: After Run API
+menuTitle: After Run
 ---
 
 The `after:run` event fires after a run is finished. When running cypress via `cypress open`, the event will fire when closing a project.

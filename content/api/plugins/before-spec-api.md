@@ -1,5 +1,6 @@
 ---
 title: Before Spec API
+menuTitle: Before Spec
 ---
 
 The `before:spec` event fires before a spec file is run. When running cypress via `cypress open`, the event will fire when the browser launches.

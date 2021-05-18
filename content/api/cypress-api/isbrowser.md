@@ -1,5 +1,6 @@
 ---
 title: Cypress.isBrowser
+menuTitle: isBrowser
 ---
 
 `Cypress.isBrowser` checks if the current browser matches the given name or filter.

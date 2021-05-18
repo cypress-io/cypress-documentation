@@ -1,5 +1,6 @@
 ---
 title: After Screenshot API
+menuTitle: After Screenshot
 ---
 
 After a screenshot is taken, you can get details about the screenshot via the `after:screenshot` plugin event. This event is called when a screenshot is taken with [`cy.screenshot()`](/api/commands/screenshot) or as a result of a test failure. The event is called after the screenshot image is written to disk.
