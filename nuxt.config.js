@@ -42,12 +42,13 @@ export default {
   env: {
     SANITY_PROJECT_ID: process.env.SANITY_PROJECT_ID,
     SANITY_AUTH_TOKEN: process.env.SANITY_AUTH_TOKEN,
+    FULLSTORY_ORG_ID: process.env.FULLSTORY_ORG_ID,
   },
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ['@/plugins/vue-scrollactive', '@/plugins/sanity-client'],
+  plugins: ['@/plugins/vue-scrollactive', '@/plugins/sanity-client', '~/plugins/fullstory.client.js'],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
