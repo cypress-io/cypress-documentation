@@ -20,7 +20,7 @@ Cypress clears cookies, `sessionStorage`, and `localStorage` between tests. A cl
 
 ## Usage & Syntax
 
-A session must be first be defined:
+A session must first be defined:
 
 ##### **Define the Session**
 
