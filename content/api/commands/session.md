@@ -33,7 +33,7 @@ Other examples of state persisted in the browser:
 
 ## Usage & Syntax
 
-A session must be first be defined:
+A session must first be defined:
 
 ##### **Define the Session**
 
