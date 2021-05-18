@@ -98,7 +98,7 @@ The contents of `setupFn` should be the steps to generate the session you want t
 cy.session('read-only', () => { signIn('Adam', 'Pa$$w0Rd') })
 
 function signIn(username, password) {
-  cy.intercept('POST', '/auth').as('signIn')
+  cy.intercept('POST', '/api/auth').as('signIn')
   cy.visit('/sign-in')
   cy.get('.username').type(username)
   cy.get('.password').type(password)
@@ -121,7 +121,7 @@ cy.session(
   },
   {
     validate: () => {
-      return cy.request('GET', '/profile').should((xhr) => {
+      return cy.request('GET', '/api/profile').should((xhr) => {
         expect(xhr.status).to.equal(200)
       })
     },
@@ -129,7 +129,7 @@ cy.session(
 )
 ```
 
-Data can become invalidated over time. For example, a user may only be authenticated for a finite duration after which the user must authenticate again. This expiration or invalidation can result in flaky tests. To remedy this, Cypress invokes `validate` on the session before using it. If the session is valid (`validate` returns `true`), then it will be used as is. Otherwise, if the session is invalid (`validate` returns `false`), then Cypress will execute the setup function first.
+Sessions can become invalidated over time. For example, a user may only be authenticated for a finite duration after which the user must authenticate again. This expiration or invalidation can result in flaky tests. To remedy this, Cypress invokes `validate` on the session before using it. If the session is valid (`validate` returns `true`), then it will be used as is. Otherwise, if the session is invalid (`validate` returns `false`), then Cypress will execute the setup function first.
 
 ### `exclude` (`object`)
 
@@ -166,9 +166,7 @@ An exclusion can be expressed as either an `object`, `string` or `RegExp`. You c
     {
       domain: 'yahoo.com',
     },
-    {
-      domain: 'google.com',
-    },
+    'domain=google.com',
   ]
 }
 ```
