@@ -109,7 +109,7 @@ function signIn(username, password) {
 
 #### SessionOptions
 
-The third and last argument you can optionally pass to `session` is `SessionOptions`.
+You can optionally pass `SessionOptions` to `session`.
 
 ### `validate` (`Function`)
 
