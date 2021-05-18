@@ -88,7 +88,7 @@ There are several published, open source plugins, listed in the [Visual Testing 
 
 ### Open source
 
-Listed in the [Visual Testing plugins](/plugins/directory#visual-testing) section.
+Listed in the [Visual Testing plugins](/plugins/directory#Visual%20Testing) section.
 
 ### Applitools
 
