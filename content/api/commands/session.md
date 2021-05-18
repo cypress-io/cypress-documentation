@@ -14,7 +14,7 @@ With `session`, once the steps required to establish a session are performed, th
 
 <Alert type="warning">
 
-Cypress clears cookies and localStorage between tests.
+Cypress clears cookies, `sessionStorage`, and `localStorage` between tests. A clean slate ensures that tests don't affect one another.
 
 </Alert>
 
