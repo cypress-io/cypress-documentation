@@ -223,7 +223,7 @@ type sessionExcludeFilterLocalStorage =
 | `expiry`   | `number`         | cookie expiration date ([Unix time](https://en.wikipedia.org/wiki/Unix_time)) |
 | `sameSite` | `SameSiteStatus` | SameSite state of the cookie (`no_restriction`, `strict` or `lax`)            |
 
-This is the same type of object yielded by [`getCookies`](/api/commands/getcookies).
+This is the same type of object yielded by [`cy.getCookies()`](/api/commands/getcookies).
 Those properties are derived from the JavaScript Browser APIs: Chrome [`Network.Cookie`](https://chromedevtools.github.io/devtools-protocol/tot/Network/#type-Cookie) and Firefox [`cookies.Cookie`](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/cookies/Cookie).
 
 ### LocalStorageData Object
