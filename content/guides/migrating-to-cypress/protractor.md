@@ -84,11 +84,17 @@ The Cypress Test Runner gives you time travel capabilities to see exactly how yo
 
 <DocsVideo src="/img/guides/migrating-to-cypress/interactivity.mp4" title="Time travel debugging"></DocsVideo>
 
+### Gain Visibility in Headless Mode with Screenshots and Videos
+
+Running browser tests in headless mode (locally or in continuous integration pipeline) can be a bit of a black-box without much visibility. When tests fail, error messages by themselves can often fall short in painting the picture of **why** something failed, especially if assertions were not explicit enough or too indirect. To understand the reason behind test failures it also helps to see the state of the app UI at the point of failure or see the events that led up to the failure.
+
+Cypress assists with debugging in headless mode, by automatically taking a screenshot of the app UI and command log at the exact point of test failure. To help see everything that happened prior to test failure, Cypress provides a video recording (as an MP4 file) of a full test spec run by default.
+
 ## Getting Started
 
 ### Recommended Installation
 
-We recommend using our [official Cypress Angular schematic](https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic#readme) to add Cypress to your Angular project:
+We recommend using our [official Cypress Angular schematic](https://www.npmjs.com/package/@cypress/schematic) to add Cypress to your Angular project:
 
 ```shell
 ng add @cypress/schematic
@@ -118,7 +124,7 @@ ng run {your-project-name}:cypress-run
 
 <Alert type="info">
 
-Check out the [Cypress Angular Schematic](https://www.npmjs.com/package/@cypress/schematic) documentation for more details like how to [configure your tests to run in a specific browser](https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic#running-the-builder-with-a-specific-browser) or [record test results](https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic#recording-test-results-to-the-cypress-dashboard) to the [Cypress Dashboard](https://docs.cypress.io/guides/dashboard/introduction).
+Check out the [Cypress Angular Schematic Configuration section](#Angular-Schematic-Configuration) documentation for more details like how to [configure your tests to run in a specific browser](#Running-the-builder-with-a-specific-browser) or [record test results](#Recording-test-results-to-the-Cypress-Dashboard) to the [Cypress Dashboard](https://docs.cypress.io/guides/dashboard/introduction).
 
 </Alert>
 
@@ -652,70 +658,11 @@ Cypress makes it easy to [run your tests in your Continuous Integration environm
 
 Check out our guides to run your Cypress tests in a [GitHub Action](/guides/continuous-integration/github-actions), [CircleCI](/guides/continuous-integration/introduction#CircleCI), [GitLab CI](/guides/continuous-integration/gitlab-ci), [Bitbucket Pipeline](/guides/continuous-integration/bitbucket-pipelines), or [AWS CodeBuild](/guides/continuous-integration/aws-codebuild).
 
-### Gain Visibility in Headless Mode with Screenshots and Videos
-
-Running browser tests in headless mode (locally or in continuous integration pipeline) can be a bit of a black-box without much visibility. When tests fail, error messages by themselves can often fall short in painting the picture of **why** something failed, especially if assertions were not explicit enough or too indirect. To understand the reason behind test failures it also helps to see the state of the app UI at the point of failure or see the events that led up to the failure.
-
-Cypress assists with debugging in headless mode, by automatically taking a screenshot of the app UI and command log at the exact point of test failure. To help see everything that happened prior to test failure, Cypress provides a video recording (as an MP4 file) of a full test spec run by default.
-
 ## Parallelization
 
-One of the worst things that can happen to a developer is to be forced to wait for a 2 hour end-to-end test suite to before verifying something works or not. Instead, the [Cypress Dashboard Service](/guides/dashboard/introduction) allows your tests to run in parallel. If your longest test only takes a minute to run, this means that you've just cut down your testing by over 12,000%!
+The [Cypress Dashboard Service](/guides/dashboard/introduction) allows you to run your test files in parallel across multiple CI machines.
 
-This feature is available in Protractor and requires you to configure your application with multiple options (i.e., `sharedTestFiles`, `maxInstances`, etc.). With Protractor your tests can be parallelized on a per-test basis. With Cypress, your tests can be [parallelized on a per spec file basis](https://docs.cypress.io/guides/guides/parallelization). This is an important distinction between Protractor and Cypress parallelization. One of the reasons why Cypress parallelizes tests per file is because some users may write tests that build up state that subsequent tests, although we [do not recommend relying on the state of previous tests](/guides/references/best-practices#Having-tests-rely-on-the-state-of-previous-tests).
-
-An example is provided below:
-
-**Parallelization with Protractor:**
-
-```js
-// Example from https://developers.perfectomobile.com/display/PD/Protractor+parallel+execution
-// An example configuration file.
-exports.config = {
-  seleniumAddress:
-    'https://cloudName.perfectomobile.com/nexperience/perfectomobile/wd/hub',
-
-  // Capabilities to be passed to the webdriver instance.
-  capabilities: {
-    browserName: 'chrome',
-
-    // allows different specs to run in parallel.
-    // If this is set to be true, specs will be sharded by file
-    // (i.e. all files to be run by this set of capabilities will run in parallel).
-    // Default is false.
-    sharedTestFiles: true,
-
-    // Maximum number of browser instances that can run in parallel for this
-    // set of capabilities. This is only needed if shardTestFiles is true.
-    // Default is 1.
-    maxInstances: 2,
-
-    // Cloud capabilities
-    user: 'user@perfectomobile.com',
-    password: 'password',
-
-    // Device capabilities
-    platformName: 'Android',
-    manufacturer: 'Samsung',
-    model: 'Galaxy S5',
-  },
-
-  // Framework to use. Jasmine is recommended.
-  framework: 'jasmine',
-
-  // Spec patterns are relative to the current working directly when
-  // protractor is called.
-  specs: ['spec.js', 'spec2.js'],
-
-  // Options to be passed to Jasmine.
-  jasmineNodeOpts: {
-    showColors: true,
-    defaultTimeoutInterval: 30000,
-  },
-}
-```
-
-**Parallelization with Cypress:**
+With Cypress, your tests can be [parallelized on a per spec file basis](https://docs.cypress.io/guides/guides/parallelization). This is an important distinction between Protractor and Cypress parallelization. One of the reasons why Cypress parallelizes tests per file is because some users may write tests that build up state that subsequent tests, although we [do not recommend relying on the state of previous tests](/guides/references/best-practices#Having-tests-rely-on-the-state-of-previous-tests).
 
 With Cypress, all you need to do is pass the `--parallel` and `--record` flag to `cypress run`, and it will take care of the rest for you:
 
@@ -725,7 +672,7 @@ cypress run --record --parallel
 
 <Alert type="info">
 
-For more information, check out our [official docs on parallelization](/guides/guides/parallelization#Overview)!
+For more information, check out our [docs on parallelization](/guides/guides/parallelization#Overview)!
 
 </Alert>
 
@@ -734,16 +681,6 @@ For more information, check out our [official docs on parallelization](/guides/g
 End-to-end tests can be complicated because modern web applications are also complex. You may find that some features of your web application are challenging to test or the tests sporadically fail. We call these tests "flaky." Cypress allows you to [retry failed tests](/guides/guides/test-retries). Sometimes tests will fail in a CI environment when they otherwise would pass on a developer's machine. Enabling test retries in your Cypress configuration can help you to get unblocked when unpredictable, flaky tests are occasionally failing.
 
 The Cypress Dashboard goes a step further and helps you and your team to [detect flaky tests](/guides/dashboard/flaky-test-management) that run in your CI/CD pipeline.
-
-## Next Steps
-
-For more information on how to create end-to-end tests with Cypress, be sure to check out [our official documentation here](/guides/overview/why-cypress.html).
-
-<Alert type="warning">
-
-If you see any inaccuracies with this guide or feel like something has been misrepresented, please [start a discussion here](https://github.com/cypress-io/cypress/discussions/new).
-
-</Alert>
 
 ## Angular Schematic Configuration
 
@@ -850,6 +787,16 @@ Read our docs to learn more about speeding up test execution in CI via [Cypress 
 ### Questions or Issues?
 
 Visit our [plugins discussion](https://github.com/cypress-io/cypress/discussions/categories/plugins) to ask questions or report issues related to our Cypress Angular Schematic.
+
+## Next Steps
+
+For more information on how to create end-to-end tests with Cypress, be sure to check out [our official documentation here](/guides/overview/why-cypress.html).
+
+<Alert type="warning">
+
+If you see any inaccuracies with this guide or feel like something has been misrepresented, please [start a discussion here](https://github.com/cypress-io/cypress/discussions/new).
+
+</Alert>
 
 ## FAQs
 
