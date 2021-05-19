@@ -255,6 +255,8 @@ cy.get('.todo-list li') // queries immediately, finds 1 <li>
   .should('contain', 'todo B') // never succeeds with only 1st <li>
 ```
 
+## Use retry-ability correctly
+
 Luckily, once we understand how retry-ability works and how only the last command is used for assertion retries, we can fix this test for good.
 
 ### Merging queries
@@ -278,6 +280,23 @@ it('adds two items', () => {
 To show the retries, I increased the application's artificial delay to 500ms. The test now always passes because the entire selector is retried. It finds 2 list elements when the second "todo B" is added to the DOM.
 
 <DocsImage src="/img/guides/retry-ability/combined-selectors.gif" alt="Combined selector" ></DocsImage>
+
+<Alert type="info">
+
+<strong class="alert-header">Use [`cy.contains`](/api/commands/contains)</strong>
+
+**Tip:** instead of `cy.get(selector).should('contain', text)` or `cy.get(selector).contains(text)` chain, we recommend using `cy.contains(selector, text)` which is retried automatically as a single command.
+
+```javascript
+cy.get('.new-todo').type('todo A{enter}')
+cy.contains('.todo-list li', 'todo A')
+cy.get('.new-todo').type('todo B{enter}')
+// you can use a regular expression
+// to match the text exactly
+cy.contains('.todo-list li', /^todo B$/)
+```
+
+</Alert>
 
 Similarly, when working with deeply nested JavaScript properties using the [`.its()`](/api/commands/its) command, try not to split it across multiple calls. Instead, combine property names into a single call using the `.` separator:
 
