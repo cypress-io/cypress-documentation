@@ -68,7 +68,7 @@ cy.session(
 
 #### <Icon name="angle-right"></Icon> setupFn (`Function`)
 
-`setupFn` is the function that, when executed, updates the browser's storage, cookies, or both, with data that Cypress can preserve so you can use the session again later without having to execute again - unless it's no longer valid (see [Validate]()).
+Cypress will preserve any storage and/or cookies that are set in the browser when `setupFn` is executed. This 'session' can be used later without having to execute the code within the `setupFn` again - unless it's no longer valid (see [Validate]()).
 
 #### <Icon name="angle-right"></Icon> sessionOptions (`SessionOptions`)
 
