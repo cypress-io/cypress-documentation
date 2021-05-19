@@ -631,7 +631,7 @@ describe('example test suite', () => {
 
 3. Use Chrome's DevTools devices to locate the correct target
 
-With Cypress however, because your tests are available through the browser dashboard, you can debug with DevTools without any additional configuration. Rather than rely solely on the `debugger` keyword, Cypress allows you to debug specific stages of your test by chaining the `debug()` command!
+With Cypress however, because your tests are available through the browser dashboard, you can debug with DevTools without any additional configuration. Rather than rely solely on the `debugger` keyword, Cypress allows you to debug specific stages of your test by chaining the `debug()` command.
 
 <Badge type="success">After: Cypress</Badge>
 
@@ -644,11 +644,11 @@ describe('example test suite', () => {
 })
 ```
 
-Cypress can also be run in [headed mode](/guides/guides/launching-browsers#Electron-Browser) which displays the browser running your tests. By default, when running `cypress open`, the [Cypress Test Runner](/guides/core-concepts/test-runner) provides an interactive debugging experience while also displaying the application under test. The Cypress Test Runner can also be ran in [headless mode](/guides/guides/command-line#cypress-run-headless) which will force the browser to be hidden. This is especially useful when you want to run your Cypress tests as part of your Continuous Integration (CI) pipeline.
+Cypress can also be run in [headed mode](/guides/guides/launching-browsers#Electron-Browser) which displays the browser running your tests. By default, when running `cypress open`, the [Cypress Test Runner](/guides/core-concepts/test-runner) provides an interactive debugging experience while also displaying the application under test. The Cypress Test Runner can also be ran in [headless mode](/guides/guides/command-line#cypress-run-headless) which will force the browser to be hidden.
 
 <Alert type="info">
 
-For more information, check out our [official documentation on debugging](/guides/guides/debugging#Using-debugger)!
+Check out our [documentation on debugging](/guides/guides/debugging#Using-debugger) to learn more.
 
 </Alert>
 
