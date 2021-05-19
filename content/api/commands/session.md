@@ -25,6 +25,7 @@ A session must first be defined:
 ##### **Define the Session**
 
 ```js
+cy.session(name, setupFn)
 cy.session(name, setupFn, sessionOptions)
 ```
 
