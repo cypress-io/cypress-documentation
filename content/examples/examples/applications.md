@@ -5,13 +5,14 @@ containerClass: examples
 
 Below is a list of complete applications tested in Cypress.
 
-| Name                          | JS          | Description                                                                                                   |
-| ----------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------- |
-| [Kitchen Sink](#Kitchen-Sink) | Vanilla     | Showcases every single Cypress command                                                                        |
-| [TodoMVC](#TodoMVC)           | React       | Compares the official TodoMVC Selenium tests to Cypress                                                       |
-| [Realworld](#Realworld)       | React       | Full end-to-end tests for the [gothinkster/realworld](https://github.com/gothinkster/realworld) "Conduit" app |
-| [Phonecat](#Phonecat)         | Angular 1.x | Compares the official Phonecat Protractor tests to Cypress                                                    |
-| [PieChopper](#PieChopper)     | Angular 1.x | Tests a fully featured application with many forms and modals                                                 |
+| Name                                      | JS          | Description                                                                                                   |
+| ----------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------- |
+| [Kitchen Sink](#Kitchen-Sink)             | Vanilla     | Showcases every single Cypress command                                                                        |
+| [TodoMVC](#TodoMVC)                       | React       | Compares the official TodoMVC Selenium tests to Cypress                                                       |
+| [Realworld](#Realworld)                   | React       | Full end-to-end tests for the [gothinkster/realworld](https://github.com/gothinkster/realworld) "Conduit" app |
+| [Phonecat](#Phonecat)                     | Angular 1.x | Compares the official Phonecat Protractor tests to Cypress                                                    |
+| [PieChopper](#PieChopper)                 | Angular 1.x | Tests a fully featured application with many forms and modals                                                 |
+| [Angular-playground](#Angular-playground) | Angular 11  | Full TypeScript project with code coverage                                                                    |
 
 ## Kitchen Sink
 
@@ -87,3 +88,19 @@ This is a single page application with a decent amount of features. The tests in
 - Stub responses from our back end using [`cy.route()`](/api/commands/route)
 
 <DocsImage src="/img/examples/public-project-piechopper.png" alt="Piechopper app tested in cypress" ></DocsImage>
+
+## Angular-playground
+
+<Icon name="github"></Icon> [https://github.com/muratkeremozcan/angular-playground](https://github.com/muratkeremozcan/angular-playground)
+
+A 3rd-party copy of Angular's Karma examples, enhanced for innovation activities, best practices and information sharing.
+
+- 100% code and tests implemented in TypeScript
+- CI setup using [Cypress CircleCI Orb](https://github.com/cypress-io/circleci-orb)
+- Combined coverage with Jest and Cypress via [Cypress code coverage plugin](https://github.com/cypress-io/code-coverage)
+- linters and pre-commit hooks: Eslint, Prettier, Js-beautify, Husky
+- recording test results on Cypress Dashboard
+
+## More examples
+
+To find more Cypress examples, search GitHub for [`topic:cypress-example`](https://github.com/search?q=topic%3Acypress-example). If the number of results is overwhelming, limit yourself to the examples created under Cypress organization [`topic:cypress-example user:cypress-io`](https://github.com/search?q=topic%3Acypress-example+user%3Acypress-io), or created by individual Cypress engineers, like [`topic:cypress-example user:bahmutov`](https://github.com/search?q=topic%3Acypress-example+user%3Abahmutov).

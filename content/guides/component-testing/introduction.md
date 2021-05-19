@@ -294,6 +294,8 @@ In the project we just built, this command will show the following results.
 
 To make the component tests part of your [continuous integration](/guides/continuous-integration/introduction) pipeline, add a script to run `npx cypress run-ct` to your CI configuration.
 
+For example, see the repo [cypress-react-component-example](https://github.com/bahmutov/cypress-react-component-example) that uses [Cypress GitHub Action](https://github.com/cypress-io/github-action) to first run the E2E tests, then run the component tests.
+
 ### Experimental
 
 The tools listed in this section are actively being developed. We will support early adoption of these projects in order to get community feedback. Please report issues against these projects in Github or contact us on [Discord](https://discord.gg/Cd4CdSx) for additional support.

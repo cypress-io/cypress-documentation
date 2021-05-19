@@ -38,7 +38,7 @@ module.exports = (on, config) => {
 }
 ```
 
-Lastly, tell Cypress where you find your test in `cypress.json`. In this example all the tests are in `src` and named `spec.js`:
+Lastly, tell Cypress where you find your test in `cypress.json`. In this example all the tests are in `src` and named `test.js`:
 
 ```json
 {
