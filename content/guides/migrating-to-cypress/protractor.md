@@ -454,7 +454,7 @@ it('should display a warning when the third-party API is down', () => {
   cy.intercept(
     'GET',
     'https://api.openweathermap.org/data/2.5/weather?q=Atlanta',
-    { forceNetworkError: true }
+    { statusCode: 500 }
   )
   cy.get('.weather-forecast').contains('Weather Forecast Unavailable')
 })
@@ -463,10 +463,11 @@ it('should display a warning when the third-party API is down', () => {
 You can also use the intercept API to stub a custom response for specific network requests:
 
 ```js
-it('should display the message from the health-check API request on the status page', () => {
-  // requests to '/health-check' will be fulfilled with a body of 'operational'
-  cy.intercept('/health-check', 'operational')
-  cy.get('.status').contains('operational')
+it('projects endpoint should return 2 projects', () => {
+  cy.intercept('/projects', {
+    body: [{ projectId: '1' }, { projectId: '2' }],
+  }).as('projects')
+  cy.wait('@projects').its('response.body').should('have.length', 2)
 })
 ```
 
