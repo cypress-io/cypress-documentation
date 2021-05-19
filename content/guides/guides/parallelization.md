@@ -258,7 +258,7 @@ Cypress currently uses the following CI environment variables to determine a CI 
 | AWS CodeBuild  | `CODEBUILD_INITIATOR`                    |
 | Bamboo         | `bamboo_buildNumber`                     |
 | Bitbucket      | `BITBUCKET_BUILD_NUMBER`                 |
-| Buildkite      | `BUILDKITE`                              |
+| Buildkite      | `BUILDKITE_BUILD_ID`                              |
 | Circle         | `CIRCLE_WORKFLOW_ID`, `CIRCLE_BUILD_NUM` |
 | Codeship       | `CI_BUILD_NUMBER`                        |
 | Codeship Basic | `CI_BUILD_NUMBER`                        |
