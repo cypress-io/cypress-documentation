@@ -708,13 +708,13 @@ Before running Cypress in `open` mode, ensure that you have started your applica
 
 <Alert type="info">
 
-Read our docs to learn more about [launching browsers](http://on.cypress.io/launching-browsers) with Cypress.
+Read the docs on [launching browsers](http://on.cypress.io/launching-browsers) to learn more.
 
 </Alert>
 
 ### Recording test results to the Cypress Dashboard
 
-We recommend setting your [Cypress Dashboard](https://docs.cypress.io/guides/dashboard/introduction) recording key as an environment variable and NOT as a builder option when running it in CI.
+We recommend setting your [Cypress Dashboard](https://docs.cypress.io/guides/dashboard/introduction) recording key as an environment variable and _NOT_ as a builder option when running it in CI.
 
 ```json
 "cypress-run": {
@@ -732,7 +732,7 @@ We recommend setting your [Cypress Dashboard](https://docs.cypress.io/guides/das
 }
 ```
 
-Read our docs to learn more about [recording test results](http://on.cypress.io/recording-project-runs) to the [Cypress Dashboard](/guides/dashboard/introduction).
+Read the docs on [recording test results](http://on.cypress.io/recording-project-runs) to the [Cypress Dashboard](/guides/dashboard/introduction) to learn more.
 
 ### Specifying a custom `cypress.json` config file
 
@@ -802,7 +802,7 @@ If you see any inaccuracies with this guide or feel like something has been misr
 
 ### Do I have to replace all of my tests with Cypress immediately?
 
-Absolutely not. While it might sound ideal to replace Protractor entirely, we know that most projects and teams still need to deliver features to customers and it's unrealistic to halt the team's progress.
+Absolutely not. While it might sound ideal to replace Protractor immediately, you can gradually migrate Protractor tests over to Cypress.
 
 ### Can Protractor and Cypress coexist in the same app?
 
