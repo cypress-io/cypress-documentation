@@ -47,6 +47,34 @@ export default {
       }
     })
 
+    const getPathSegments = (path) => {
+      const [topLevelDir, ...slugs] = path.split('/')
+    }
+
+    const convertListToMap = (list, map = {}) => {
+      const [key, ...children] = list
+    }
+
+    const sidebarItems = (
+      await $content('guides', { deep: true })
+        .only(['title', 'menuTitle'])
+        .sortBy('title', 'asc')
+        .sortBy('menuTitle', 'asc')
+        .fetch()
+    ).reduce((all, item) => {
+      const [_leadingSlash, _topLevelDir, ...slugs] = item.path.split('/')
+      console.log('slugs: ', slugs)
+      const [section, ...children] = slugs
+      return {
+        ...all,
+        ...convertListToMap(children),
+      }
+
+      return all.concat([slugs])
+    }, [])
+
+    console.log('sidebarItems: ', sidebarItems)
+
     if (!guide) {
       return error({ statusCode: 404, message: 'Guide not found' })
     }
