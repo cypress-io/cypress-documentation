@@ -597,6 +597,13 @@
           "badge": "community"
         },
         {
+          "name": "cypress-mailslurp",
+          "description": "Use test email accounts to send and receive emails in Cypress tests with MailSlurp.",
+          "link": "https://github.com/mailslurp/cypress-mailslurp",
+          "keywords": ["email", "mailslurp", "test", "commands"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-real-events",
           "description": "Fire native system events from Cypress like hover, swipe, etc",
           "link": "https://github.com/dmtrKovalenko/cypress-real-events",
