@@ -2,18 +2,17 @@
 title: intercept
 ---
 
-Cypress routes all HTTP requests - including `XMLHttpRequest` (XHR) and `fetch` - through its proxy. Use `cy.intercept` to manage the behavior of these requests, including:
+Cypress routes all HTTP traffic initiated with `XMLHttpRequest` (XHR) and `fetch` through its proxy. `cy.intercept` can be used to capture or even change the behavior or contents of this traffic, including:
 
-<!-- TODO DX-182 add links to examples -->
-
-- Waiting on HTTP requests to complete before executing commands.
-- Making assertions and modifying (statically or dynamically):
-  - the request made by your front-end application.
-  - the response from your back-end service.
+- Waiting on HTTP request-response sessions to complete.
+- Statically or dynamically modifying
+  - requests made by your front-end application.
+  - responses from your back-end service.
+- Making assertions on requests or responses.
 - Mocking all or some of your backend API by stubbing out responses.
-- Simulating different client connections by throttling data transfer rate.
-- Simulating back-end service bottlenecks by adding a delay to the response.
-- Simulating a 3rd-party API outage by forcing a network error.
+- Simulating different client connections by throttling data transfer rates.
+- Simulating back-end service bottlenecks by adding a response delays.
+- Simulating 3rd-party API outages or other problems by forcing network errors.
 
 <Alert type="warning">
 
