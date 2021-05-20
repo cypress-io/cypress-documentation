@@ -143,7 +143,7 @@ npm install --save-dev cypress
   <code-block label="yarn">
 
 ```bash
-yarn add -D cypress
+yarn add --dev cypress
 ```
 
   </code-block>
@@ -162,25 +162,21 @@ npm install --save-dev concurrently
   <code-block label="yarn">
 
 ```bash
-yarn add -D concurrently
+yarn add --dev concurrently
 ```
 
   </code-block>
 </code-group>
 
-Then we will update our `package.json` with the following script:
-
-```bash
-"cypress": "concurrently \"ng serve\" \"cypress open\""
-```
+Then we will update our `package.json` with the following scripts:
 
 ```json
 // Example package.json
 {
   "scripts": {
-    "e2e": "ng e2e",
-    "e2e:debug": "node --inspect-brk ./node_modules/.bin/protractor ./e2e/protractor.conf.js",
-    "cypress": "concurrently \"ng serve\" \"cypress open\""
+    "cy:open": "concurrently \"ng serve\" \"cypress open\"",
+    "cy:run": "concurrently \"ng serve\" \"cypress run\""
+
   },
   "dependencies": { ... },
   "devDependencies": { ... }
@@ -193,14 +189,14 @@ Now, when we run:
   <code-block label="npm" active>
 
 ```bash
-npm run cypress
+npm run cy:open
 ```
 
   </code-block>
   <code-block label="yarn">
 
 ```bash
-yarn run cypress
+yarn run cy:open
 ```
 
   </code-block>
