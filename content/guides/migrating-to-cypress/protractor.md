@@ -212,7 +212,7 @@ Again, we highly recommend using our [Angular Schematic](https://github.com/cypr
 
 #### Getting a single element on the page
 
-When it comes to e2e tests, one of the most common things you'll need to do is get one or more HTML elements on a page. Rather than split element fetching into multiple methods that you need to memorize, everything can be accomplished with `cy.get` while using CSS selectors to account for all use cases.
+When it comes to e2e tests, one of the most common things you'll need to do is get one or more HTML elements on a page. Rather than split element fetching into multiple methods that you need to memorize, everything can be accomplished with [`cy.get`](/api/commands/get) while using CSS selectors to account for all use cases.
 
 <Badge type="danger">Before: Protractor</Badge>
 
@@ -627,7 +627,7 @@ describe('example test suite', () => {
 
 3. Use Chrome's DevTools devices to locate the correct target
 
-With Cypress however, because your tests are available through the browser dashboard, you can debug with DevTools without any additional configuration. Rather than rely solely on the `debugger` keyword, Cypress allows you to debug specific stages of your test by chaining the `debug()` command.
+With Cypress however, because your tests are available through the browser dashboard, you can debug with DevTools without any additional configuration. Rather than rely solely on the `debugger` keyword, Cypress allows you to debug specific stages of your test by chaining the [`debug()`](/api/commands/debug) command.
 
 <Badge type="success">After: Cypress</Badge>
 
