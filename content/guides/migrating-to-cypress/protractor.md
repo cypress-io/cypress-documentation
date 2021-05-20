@@ -370,6 +370,32 @@ You can learn more about how Cypress handles [assertions in our official documen
 
 </Alert>
 
+## Automatic Retrying and Waiting
+
+Web applications are usually rarely synchronous. With Protractor, you may be accustomed to adding arbitrary timeouts or using the [waitForAngular](https://www.protractortest.org/#/api?view=ProtractorBrowser.prototype.waitForAngular) API to wait for Angular to finish rendering before attempting to interact with an element.
+
+With Cypress, commands that query the DOM are [automatically retried](/guides/core-concepts/retry-ability). Cypress will automatically wait and retry most commands until an element appears in the DOM. If an element is not [actionable](/guides/core-concepts/interacting-with-elements#Actionability) within the [`defaultCommandTimeout`](/guides/core-concepts/retry-ability#Timeouts) setting, the command will fail. This enables you to write tests without the need for arbitrary timeouts, enabling you to write more predictable tests.
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```js
+// Clicking a button
+element(by.css('button')).click()
+// Waiting for Angular to re-render the page
+browser.waitForAngular()
+// Make assertion after waiting for Angular to update
+expect(by.css('.list-item').getText()).toEqual('my text')
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```js
+// Clicking a button
+cy.get('button').click()
+// Make assertion. No waiting necessary!
+cy.get('.list-item').contains('my text')
+```
+
 ## WebDriver Control Flow vs Cypress
 
 Protractor's WebDriverJS API is based on promises, which is managed by a control flow. This [Control Flow](https://www.protractortest.org/#/control-flow) enables you to write asynchronous Protractor tests in a synchronous style.
@@ -401,32 +427,6 @@ cy.get('button').click()
 
 // Send keys to the element (usually an input)
 cy.get('input').type('my text')
-```
-
-## Automatic Retrying and Waiting
-
-Web applications are usually rarely synchronous. With Protractor, you may be accustomed to adding arbitrary timeouts or using the [waitForAngular](https://www.protractortest.org/#/api?view=ProtractorBrowser.prototype.waitForAngular) API to wait for Angular to finish rendering before attempting to interact with an element.
-
-With Cypress, commands that query the DOM are [automatically retried](/guides/core-concepts/retry-ability). Cypress will automatically wait and retry most commands until an element appears in the DOM. If an element is not [actionable](/guides/core-concepts/interacting-with-elements#Actionability) within the [`defaultCommandTimeout`](/guides/core-concepts/retry-ability#Timeouts) setting, the command will fail. This enables you to write tests without the need for arbitrary timeouts, enabling you to write more predictable tests.
-
-<Badge type="danger">Before: Protractor</Badge>
-
-```js
-// Clicking a button
-element(by.css('button')).click()
-// Waiting for Angular to re-render the page
-browser.waitForAngular()
-// Make assertion after waiting for Angular to update
-expect(by.css('.list-item').getText()).toEqual('my text')
-```
-
-<Badge type="success">After: Cypress</Badge>
-
-```js
-// Clicking a button
-cy.get('button').click()
-// Make assertion. No waiting necessary!
-cy.get('.list-item').contains('my text')
 ```
 
 ## Network Handling
