@@ -180,7 +180,7 @@ RUN $(npm bin)/cypress run
 Mounting a project directory with an existing `node_modules` into a `cypress/base` docker image **will not work**:
 
 ```shell
-docker run -it -v /app:/app cypress/base:10 bash -c 'cypress run'
+docker run -it -v /app:/app cypress/base:14.16.0 bash -c 'cypress run'
 Error: the cypress binary is not installed
 ```
 
