@@ -64,13 +64,12 @@ export default {
     ).reduce((all, item) => {
       const [_leadingSlash, _topLevelDir, ...slugs] = item.path.split('/')
       console.log('slugs: ', slugs)
-      const [section, ...children] = slugs
-      return {
-        ...all,
-        ...convertListToMap(children),
+      const obj = {
+        paths: slugs,
+        menuTitle: item.menuTitle,
       }
 
-      return all.concat([slugs])
+      return all.concat(obj)
     }, [])
 
     console.log('sidebarItems: ', sidebarItems)
