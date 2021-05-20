@@ -20,6 +20,18 @@
   @apply lg:gap-8;
 }
 
+.banner-margin {
+  padding-top: 88px;
+
+  @screen sm {
+    padding-top: 64px;
+  }
+
+  @screen md {
+    padding-top: 48px;
+  }
+}
+
 .main-content-article-wrapper {
   @apply w-full;
   @apply relative;

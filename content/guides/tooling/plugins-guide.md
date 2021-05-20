@@ -126,12 +126,6 @@ The [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) 
 
 </Alert>
 
-<Alert type="warning">
-
-⚠️ This code is part of the [plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
-
-</Alert>
-
 ```ts
 // cypress/plugins/index.ts
 

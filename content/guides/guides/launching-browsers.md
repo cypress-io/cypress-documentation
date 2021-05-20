@@ -208,7 +208,7 @@ If you modify the list of browsers, you can see the [resolved configuration](/gu
 
 ### Unsupported Browsers
 
-Many browsers such as Safari and Internet Explorer are not currently supported. Support for more browsers is on our roadmap. You can read an explanation about our future cross browser roadmap [here](https://github.com/cypress-io/cypress/issues/310).
+Some browsers such as Safari and Internet Explorer are not currently supported. Support for more browsers is on our roadmap.
 
 ## Browser Environment
 

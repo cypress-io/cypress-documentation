@@ -264,7 +264,7 @@ If you want to continue using the code to navigate to a different superdomain, t
 
 So if you cannot work around any of the issues using the suggested workarounds above, you may want to disable web security.
 
-One last thing to consider here is that every once in a while we discover bugs in Cypress that lead to cross-origin errors that can otherwise be fixed. If you think you're experiencing a bug, [open an issue](https://github.com/cypress-io/cypress/issues/new).
+One last thing to consider here is that every once in a while we discover bugs in Cypress that lead to cross-origin errors that can otherwise be fixed. If you think you're experiencing a bug, [open an issue](https://github.com/cypress-io/cypress/issues/new/choose).
 
 <Alert type="warning">
 

@@ -4,6 +4,7 @@ import AppHeader from '@/components/AppHeader'
 import TableOfContentsList from '@/components/TableOfContentsList'
 import Footer from '@/components/Footer'
 import { getMetaData, getMetaDescription, getTitle } from '../../../utils'
+import { fetchBanner } from '../../../utils/sanity'
 
 export default {
   components: {
@@ -55,12 +56,15 @@ export default {
       .fetch()
     const metaDescription = await getMetaDescription(rawContent.text)
 
+    const banner = await fetchBanner()
+
     return {
       algoliaSettings,
       guide,
       guideSidebar: items,
       path: 'references/error-messages',
       metaDescription,
+      banner,
     }
   },
   head() {
@@ -97,9 +101,15 @@ export default {
       :mobile-menu-items="guideSidebar"
       section="guides"
       :algolia-settings="algoliaSettings"
+      :banner="banner"
     />
-    <main class="main-content">
-      <AppSidebar :items="guideSidebar" section="guides" :path="path" />
+    <main :class="Boolean(banner) ? 'banner-margin' : ''" class="main-content">
+      <AppSidebar
+        :items="guideSidebar"
+        section="guides"
+        :path="path"
+        :has-banner="Boolean(banner)"
+      />
       <div class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
           <h1 class="main-content-title">{{ guide.title }}</h1>

@@ -12,12 +12,6 @@ Cypress enables you to dynamically modify configuration values and environment v
 
 </Alert>
 
-<Alert type="warning">
-
-⚠️ This code is part of the [plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
-
-</Alert>
-
 To modify configuration, you return an object from your plugins file exported function.
 
 ```javascript
@@ -32,7 +26,7 @@ module.exports = (on, config) => {
   // modify env var value
   config.env.ENVIRONMENT = 'staging'
 
-  // return config
+  // IMPORTANT return the updated config object
   return config
 }
 ```
@@ -234,3 +228,8 @@ module.exports = (on, config) => {
 | Version                               | Changes                                   |
 | ------------------------------------- | ----------------------------------------- |
 | [7.0.0](/guides/references/changelog) | Added `testingType` property to `config`. |
+
+## See also
+
+- The [Configuration](https://github.com/cypress-io/testing-workshop-cypress#intermediate) section of the Cypress Testing Workshop
+- blog post [Keep passwords secret in E2E tests](https://glebbahmutov.com/blog/keep-passwords-secret-in-e2e-tests/)

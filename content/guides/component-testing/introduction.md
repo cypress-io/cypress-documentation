@@ -119,7 +119,7 @@ npm install --save-dev cypress @cypress/vue @cypress/webpack-dev-server webpack-
 
 <alert type="info">
 
-If it's your first time using Cypress, check out the [main Getting Started documentation](guides/getting-started/installing-cypress).
+If it's your first time using Cypress, check out the [main Getting Started documentation](/guides/getting-started/installing-cypress).
 
 </alert>
 
@@ -293,6 +293,8 @@ In the project we just built, this command will show the following results.
 <DocsImage src="/img/guides/component-testing/run-result.png" alt="Result of headless test run" ></DocsImage>
 
 To make the component tests part of your [continuous integration](/guides/continuous-integration/introduction) pipeline, add a script to run `npx cypress run-ct` to your CI configuration.
+
+For example, see the repo [cypress-react-component-example](https://github.com/bahmutov/cypress-react-component-example) that uses [Cypress GitHub Action](https://github.com/cypress-io/github-action) to first run the E2E tests, then run the component tests.
 
 ### Experimental
 

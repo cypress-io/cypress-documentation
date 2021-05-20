@@ -28,6 +28,14 @@ phases:
     runtime-versions:
       nodejs: latest
     commands:
+      # Set COMMIT_INFO variables to send Git specifics to Cypress Dashboard when recording
+      # https://docs.cypress.io/guides/continuous-integration/introduction#Git-information
+      - export COMMIT_INFO_BRANCH="$(git rev-parse HEAD | xargs git name-rev | cut -d' ' -f2 | sed 's/remotes\/origin\///g')"
+      - export COMMIT_INFO_MESSAGE="$(git log -1 --pretty=%B)"
+      - export COMMIT_INFO_EMAIL="$(git log -1 --pretty=%ae)"
+      - export COMMIT_INFO_AUTHOR="$(git log -1 --pretty=%an)"
+      - export COMMIT_INFO_SHA="$(git log -1 --pretty=%H)"
+      - export COMMIT_INFO_REMOTE="$(git config --get remote.origin.url)"
       - npm ci
   pre_build:
     commands:
@@ -120,6 +128,14 @@ phases:
     runtime-versions:
       nodejs: latest
     commands:
+      # Set COMMIT_INFO variables to send Git specifics to Cypress Dashboard when recording
+      # https://docs.cypress.io/guides/continuous-integration/introduction#Git-information
+      - export COMMIT_INFO_BRANCH="$(git rev-parse HEAD | xargs git name-rev | cut -d' ' -f2 | sed 's/remotes\/origin\///g')"
+      - export COMMIT_INFO_MESSAGE="$(git log -1 --pretty=%B)"
+      - export COMMIT_INFO_EMAIL="$(git log -1 --pretty=%ae)"
+      - export COMMIT_INFO_AUTHOR="$(git log -1 --pretty=%an)"
+      - export COMMIT_INFO_SHA="$(git log -1 --pretty=%H)"
+      - export COMMIT_INFO_REMOTE="$(git config --get remote.origin.url)"
       - npm ci
   pre_build:
     commands:
@@ -199,6 +215,14 @@ batch:
 phases:
   install:
     commands:
+      # Set COMMIT_INFO variables to send Git specifics to Cypress Dashboard when recording
+      # https://docs.cypress.io/guides/continuous-integration/introduction#Git-information
+      - export COMMIT_INFO_BRANCH="$(git rev-parse HEAD | xargs git name-rev | cut -d' ' -f2 | sed 's/remotes\/origin\///g')"
+      - export COMMIT_INFO_MESSAGE="$(git log -1 --pretty=%B)"
+      - export COMMIT_INFO_EMAIL="$(git log -1 --pretty=%ae)"
+      - export COMMIT_INFO_AUTHOR="$(git log -1 --pretty=%an)"
+      - export COMMIT_INFO_SHA="$(git log -1 --pretty=%H)"
+      - export COMMIT_INFO_REMOTE="$(git config --get remote.origin.url)"
       - CY_GROUP=$(echo $CY_GROUP_SPEC | cut -d'|' -f1)
       - CY_BROWSER=$(echo $CY_GROUP_SPEC | cut -d'|' -f2)
       - CY_SPEC=$(echo $CY_GROUP_SPEC | cut -d'|' -f3)

@@ -70,6 +70,7 @@
       "web-security": "Web Security",
       "references": "References",
       "component-testing": "Component Testing",
+      "framework-configuration": "Framework Configuration",
       "configuration": "Configuration",
       "experiments": "Experiments",
       "proxy-configuration": "Proxy Configuration",
@@ -96,7 +97,9 @@
       "auth0-authentication": "Auth0 Authentication",
       "okta-authentication": "Okta Authentication",
       "amazon-cognito-authentication": "Amazon Cognito Authentication",
-      "google-authentication": "Google Authentication"
+      "google-authentication": "Google Authentication",
+      "circleci": "CircleCI",
+      "ci-provider-examples": "CI Provider Examples"
     },
     "api": {
       "api": "API",

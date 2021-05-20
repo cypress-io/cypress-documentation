@@ -305,7 +305,9 @@ Because `cy.fixture()` is asynchronous it is technically possible for there to b
 
 ## See also
 
+- [Guide: Variables and Aliases](/guides/core-concepts/variables-and-aliases)
 - [`cy.intercept()`](/api/commands/intercept)
 - [`.then()`](/api/commands/then)
 - [Recipe: Bootstrapping App Test Data](/examples/examples/recipes#Server-Communication)
 - [Fixtures](https://github.com/cypress-io/testing-workshop-cypress#fixtures) section of the Cypress Testing Workshop
+- [Blog: Load Fixtures from Cypress Custom Commands](https://glebbahmutov.com/blog/fixtures-in-custom-commands/) explains how to load or import fixtures to be used in the Cypress custom commands.

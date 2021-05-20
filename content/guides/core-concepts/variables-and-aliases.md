@@ -535,3 +535,7 @@ it('works in the second test', () => {
   cy.get('@exampleValue').should('equal', 'some value')
 })
 ```
+
+## See also
+
+- [Blog: Load Fixtures from Cypress Custom Commands](https://glebbahmutov.com/blog/fixtures-in-custom-commands/) explains how to load or import fixtures to be used in the Cypress custom commands.

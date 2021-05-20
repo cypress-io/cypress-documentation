@@ -60,17 +60,17 @@ When adding [custom commands](/api/cypress-api/custom-commands) to the `cy` obje
 
 For example if you add the command `cy.dataCy` into your [supportFile](/guides/references/configuration#Folders-Files) like this:
 
-```javascript
+```typescript
 // cypress/support/index.ts
 Cypress.Commands.add('dataCy', (value) => {
   return cy.get(`[data-cy=${value}]`)
 })
 ```
 
-Then you can add the `dataCy` command to the global Cypress Chainable interface (so called because commands are chained together) by creating a new TypeScript definitions file beside your [supportFile](/guides/references/configuration#Folders-Files), in this case at `cypress/support/index.d.ts`.
+Then you can add the `dataCy` command to the global Cypress Chainable interface (so called because commands are chained together) to your `cypress/support/index.ts` file.
 
 ```typescript
-// in cypress/support/index.d.ts
+// in cypress/support/index.ts
 // load type definitions that come with Cypress module
 /// <reference types="cypress" />
 
@@ -91,13 +91,10 @@ A nice detailed JSDoc comment above the method type will be really appreciated b
 
 </Alert>
 
-If your specs files are in TypeScript, you should include the TypeScript definition file, `cypress/support/index.d.ts`, with the rest of the source files.
+In your specs, you can now use the custom command as expected
 
-Even if your project is JavaScript only, the JavaScript specs can know about the new command by referencing the file using the special triple slash `reference path` comment.
-
-```javascript
+```typescript
 // from your cypress/integration/spec.ts
-/// <reference path="../support/index.d.ts" />
 it('works', () => {
   cy.visit('/')
   // IntelliSense and TS compiler should
@@ -108,6 +105,7 @@ it('works', () => {
 
 #### Examples:
 
+- Find [the standalone example](https://github.com/cypress-io/add-cypress-custom-command-in-typescript).
 - See [Adding Custom Commands](https://github.com/cypress-io/cypress-example-recipes#fundamentals) example recipe.
 - You can find an example with custom commands written in TypeScript in [omerose/cypress-support](https://github.com/omerose/cypress-support) repo.
 - Example project [cypress-example-todomvc custom commands](https://github.com/cypress-io/cypress-example-todomvc#custom-commands) uses custom commands to avoid boilerplate code.

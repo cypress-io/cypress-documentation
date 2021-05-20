@@ -106,9 +106,9 @@ For reference, here are [the variables](https://github.com/cypress-io/cypress/bl
 
 ## <Icon name="angle-right"></Icon> Can I delete a run from the Dashboard?
 
-We are working on implementing run deletion. [Track the issue.](https://github.com/cypress-io/cypress/issues/1839)
+You can [archive a run](guides/dashboard/runs#Archive-run) so that it does not display in the runs list or in analytics.
 
-**Note:** Deleting the recorded runs would have no effect on the amount of tests recorded and counted as your usage billed for the month.
+**Note:** Archiving the recorded runs has no effect on the amount of tests recorded and counted as your usage billed for the month.
 
 ## <Icon name="angle-right"></Icon> Can I delete my Cypress account?
 
