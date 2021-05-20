@@ -90,6 +90,12 @@ Running browser tests in headless mode (locally or in continuous integration pip
 
 Cypress assists with debugging in headless mode, by automatically taking a screenshot of the app UI and command log at the exact point of test failure. To help see everything that happened prior to test failure, Cypress provides a video recording (as an MP4 file) of a full test spec run by default.
 
+### Test Retries
+
+End-to-end tests can be complicated because modern web applications are also complex. You may find that some features of your web application are challenging to test or the tests sporadically fail. We call these tests "flaky." Cypress allows you to [retry failed tests](/guides/guides/test-retries). Sometimes tests will fail in a CI environment when they otherwise would pass on a developer's machine. Enabling test retries in your Cypress configuration can help you to get unblocked when unpredictable, flaky tests are occasionally failing.
+
+The Cypress Dashboard goes a step further and helps you and your team to [detect flaky tests](/guides/dashboard/flaky-test-management) that run in your CI/CD pipeline.
+
 ## Getting Started
 
 ### Recommended Installation
@@ -671,12 +677,6 @@ cypress run --record --parallel
 For more information, check out our [docs on parallelization](/guides/guides/parallelization#Overview)!
 
 </Alert>
-
-## Test Retries
-
-End-to-end tests can be complicated because modern web applications are also complex. You may find that some features of your web application are challenging to test or the tests sporadically fail. We call these tests "flaky." Cypress allows you to [retry failed tests](/guides/guides/test-retries). Sometimes tests will fail in a CI environment when they otherwise would pass on a developer's machine. Enabling test retries in your Cypress configuration can help you to get unblocked when unpredictable, flaky tests are occasionally failing.
-
-The Cypress Dashboard goes a step further and helps you and your team to [detect flaky tests](/guides/dashboard/flaky-test-management) that run in your CI/CD pipeline.
 
 ## Angular Schematic Configuration
 
