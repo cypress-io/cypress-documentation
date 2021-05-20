@@ -246,7 +246,7 @@ cy.get('#my-id')
 cy.get('input[name="field-name"]')
 ```
 
-### Getting multiple elements on a page
+#### Getting multiple elements on a page
 
 When you want to get access to more than one element on the page, you would need to chain the `.all()` method. However, in Cypress, no syntax change is necessary!
 
@@ -282,7 +282,7 @@ You can learn more about [how to get DOM elements in our official documentation]
 
 </Alert>
 
-### Element Explorer
+#### Selector Playground
 
 For those who are big fans of [Protractor's Element Explorer functionality](https://www.protractortest.org/#/debugging#enabled-control-flow), Cypress also provides you with a [Selector Playground](/guides/core-concepts/test-runner#Selector-Playground) that allows you to:
 
