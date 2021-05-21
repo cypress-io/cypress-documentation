@@ -234,6 +234,12 @@ element(by.id('my-id'))
 
 // Get an element using an input name selector.
 element(by.name('field-name'))
+
+//Get an element by the text it contains within a certain CSS selector
+element(by.cssContainingText('.my-class', 'text'))
+
+//Get the first element containing a specific text (only for link elements)
+element(by.linkText('text')
 ```
 
 <Badge type="success">After: Cypress</Badge>
@@ -250,6 +256,12 @@ cy.get('#my-id')
 
 // Get an element using an input name selector.
 cy.get('input[name="field-name"]')
+
+//Get an element by the text it contains within a certain CSS selector
+cy.get('.my-class').contains('text')
+
+//Get the first element containing a specific text (available for any element)
+cy.contains('text')
 ```
 
 <Alert type="info">
