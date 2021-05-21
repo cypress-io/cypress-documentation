@@ -247,8 +247,11 @@ cy.contains('#a-greeting', /^Hello/)
 ### Visibility
 
 ```javascript
-// retry until this button is visible
+// retry until every button element is visible
 cy.get('button').should('be.visible')
+// retry until there are 3 list items
+// and each list item is visible
+cy.get('.todo li').should('have.length', 3).and('be.visible')
 ```
 
 ### Existence
