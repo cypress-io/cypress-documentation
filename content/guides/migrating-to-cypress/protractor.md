@@ -391,26 +391,6 @@ You can learn more about [interacting with DOM elements in our official document
 
 Similar to Protractor, Cypress enables use of human readable assertions.
 
-<Badge type="danger">Before: Protractor</Badge>
-
-```js
-describe('verify elements on a page', () => {
-  it('verifies that a link is visible', () => {
-    expect($('a.submit-link').isDisplayed()).toBe(true)
-  })
-})
-```
-
-<Badge type="success">After: Cypress</Badge>
-
-```js
-describe('verify elements on a page', () => {
-  it('verifies that a link is visible', () => {
-    cy.get('a.submit-link').should('be.visible')
-  })
-})
-```
-
 Here are some common DOM element assertions with Cypress and equivalent assertions with Protractor.
 
 ### Length
@@ -596,6 +576,26 @@ cy.get('#example-input')
 ```
 
 Cypress has one additional feature that can make a critical difference in the reliability of your tests' assertions: [retry-ability](https://docs.cypress.io/guides/core-concepts/retry-ability). When your test fails an assertion or command, Cypress will mimic a real user with build-in wait times and multiple attempts at asserting your tests in order to minimize the amount of false negatives / positives.
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```js
+describe('verify elements on a page', () => {
+  it('verifies that a link is visible', () => {
+    expect($('a.submit-link').isDisplayed()).toBe(true)
+  })
+})
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```js
+describe('verify elements on a page', () => {
+  it('verifies that a link is visible', () => {
+    cy.get('a.submit-link').should('be.visible')
+  })
+})
+```
 
 In the example above, if the submit link does not appear on the page at the exact moment when Protractor runs the test (which can be due to any number of factors including API calls, slow browser rendering, etc.), your test will fail. However, Cypress factors these conditions into its assertions and will only fail if the time goes beyond a reasonable amount.
 
