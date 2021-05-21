@@ -264,6 +264,28 @@ cy.get('.my-class').contains('text')
 cy.contains('text')
 ```
 
+You can also get elements by their text value. This can be accomplished using [`cy.contains`](/api/commands/contains) while using CSS selectors to account for all use cases.
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```js
+//Get an element by the text it contains within a certain CSS selector
+element(by.cssContainingText('.my-class', 'text'))
+
+//Get the first element containing a specific text (only for link elements)
+element(by.linkText('text')
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```js
+//Get an element by the text it contains within a certain CSS selector
+cy.get('.my-class').contains('text')
+
+//Get the first element containing a specific text (available for any element)
+cy.contains('text')
+```
+
 <Alert type="info">
 
 While Protractor also allows for selection by XPath, Cypress doesn't support this out of the box. However, you can add the [cypress-xpath plugin](https://www.npmjs.com/package/cypress-xpath) to easily enable it.
@@ -299,6 +321,12 @@ cy.get('.list-item')
 // Find an element using an input name selector.
 cy.get('input[name="field-name"]')
 ```
+
+<Alert type="info">
+
+Another plugin that we recommend for selecting multiple elements is the [Cypress Testing Library](https://github.com/testing-library/cypress-testing-library). This extends Cypress by adding `findBy` and `findAllBy` commands.
+
+</Alert>
 
 <Alert type="info">
 
