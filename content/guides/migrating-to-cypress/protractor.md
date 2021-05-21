@@ -212,7 +212,7 @@ It will start up Cypress and our Angular app at the same time!
 
 Again, we highly recommend using our [Angular Schematic](https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic) to install Cypress, and we plan on adding new capabilities to it over time.
 
-## Essentials
+## Working with the DOM
 
 ### How to Get DOM Elements
 
