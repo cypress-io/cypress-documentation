@@ -1,6 +1,15 @@
 {
   "courses": [
     {
+      "title": "Advanced Cypress Tutorial",
+      "url": "https://testautomationu.applitools.com/advanced-cypress-tutorial",
+      "author": "Filip Hric",
+      "authorTwitter": "filip_hric",
+      "sourceName": "Test Automation University",
+      "sourceUrl": "https://testautomationu.applitools.com",
+      "free": true
+    },
+    {
       "title": "Testing Automation with Cypress - Advanced",
       "url": "https://www.udemy.com/course/testing-automation-with-cypress-advanced",
       "author": "Walmyr Lima e Silva Filho",
@@ -50,14 +59,6 @@
       "sourceName": "Learn2code",
       "sourceUrl": "https://www.learn2code.sk",
       "language": "Slovak"
-    },
-    {
-      "title": "Cypress test automation for people in a hurry",
-      "url": "https://www.udemy.com/course/cypress-test-automation-for-people-in-a-hurry/?referralCode=21A875FF429457CF641D",
-      "author": "Filip Hric",
-      "authorTwitter": "filip_hric",
-      "sourceName": "Udemy",
-      "sourceUrl": "https://www.udemy.com"
     },
     {
       "title": "Cypress: End-to-end JavaScript Testing",
