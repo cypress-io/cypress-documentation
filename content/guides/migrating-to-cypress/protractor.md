@@ -252,6 +252,12 @@ cy.get('#my-id')
 cy.get('input[name="field-name"]')
 ```
 
+<Alert type="info">
+
+While Protractor also allows for selection by XPath, Cypress doesn't support this out of the box. However, you can add the [cypress-xpath plugin](https://www.npmjs.com/package/cypress-xpath) to easily enable it.
+
+</Alert>
+
 #### Getting multiple elements on a page
 
 When you want to get access to more than one element on the page, you would need to chain the `.all()` method. However, in Cypress, no syntax change is necessary!
