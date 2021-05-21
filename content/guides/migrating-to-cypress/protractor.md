@@ -426,6 +426,55 @@ For more information, check out the [intercept API documentation](/api/commands/
 
 </Alert>
 
+## Navigating Websites
+
+When you want to visit a page, you can do so with the following code:
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```js
+it('visits a page', () => {
+  browser.get('/about')
+  browser.navigate().forward()
+  browser.navigate().back()
+})
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```js
+it('visits a page', () => {
+  cy.visit('/about')
+  cy.go('forward')
+  cy.go('back')
+})
+```
+
+However, Protractor assumes that all websites you want to visit are Angular apps. As a result, you have to take an extra step to disable this behavior. When you write Cypress tests though, you don't need to do any extra work!
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```js
+it('visit a non-Angular page', () => {
+  browser.waitForAngularEnabled(false)
+  browser.get('/about')
+})
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```js
+it('visit a non-Angular page', () => {
+  cy.visit('/about')
+})
+```
+
+<Alert type="info">
+
+For more information, check out our [official documentation on navigation](https://example.cypress.io/commands/navigation)!
+
+</Alert>
+
 ## Automatic Retrying and Waiting
 
 Web applications are usually rarely synchronous. With Protractor, you may be accustomed to adding arbitrary timeouts or using the [waitForAngular](https://www.protractortest.org/#/api?view=ProtractorBrowser.prototype.waitForAngular) API to wait for Angular to finish rendering before attempting to interact with an element.
@@ -484,55 +533,6 @@ cy.get('button').click()
 // Send keys to the element (usually an input)
 cy.get('input').type('my text')
 ```
-
-## Navigating Websites
-
-When you want to visit a page, you can do so with the following code:
-
-<Badge type="danger">Before: Protractor</Badge>
-
-```js
-it('visits a page', () => {
-  browser.get('/about')
-  browser.navigate().forward()
-  browser.navigate().back()
-})
-```
-
-<Badge type="success">After: Cypress</Badge>
-
-```js
-it('visits a page', () => {
-  cy.visit('/about')
-  cy.go('forward')
-  cy.go('back')
-})
-```
-
-However, Protractor assumes that all websites you want to visit are Angular apps. As a result, you have to take an extra step to disable this behavior. When you write Cypress tests though, you don't need to do any extra work!
-
-<Badge type="danger">Before: Protractor</Badge>
-
-```js
-it('visit a non-Angular page', () => {
-  browser.waitForAngularEnabled(false)
-  browser.get('/about')
-})
-```
-
-<Badge type="success">After: Cypress</Badge>
-
-```js
-it('visit a non-Angular page', () => {
-  cy.visit('/about')
-})
-```
-
-<Alert type="info">
-
-For more information, check out our [official documentation on navigation](https://example.cypress.io/commands/navigation)!
-
-</Alert>
 
 ## Using Page Objects
 
