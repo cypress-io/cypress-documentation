@@ -376,6 +376,56 @@ You can learn more about how Cypress handles [assertions in our official documen
 
 </Alert>
 
+## Network Handling
+
+### Network Spying
+
+Protractor doesn't offer a built-in solution for network spying. With Cypress, you can leverage the [intercept API](/api/commands/intercept) to spy on and manage the behavior of any network request.
+
+For example, if you wanted to wait on a network request to complete before continuing your test, you could write the following:
+
+```js
+it('should display a Load More button after fetching and displaying a list of users', () => {
+  cy.visit('/users')
+  cy.intercept('/users/**')
+  cy.get('button').contains('Load More')
+})
+```
+
+Cypress will automatically wait for any request to `/users/**` to complete before continuing your test.
+
+### Network Stubbing
+
+Cypress's [intercept API](/api/commands/intercept) also allows you to stub any network request for your app under test. You can use the [intercept API](/api/commands/intercept) to make assertions based on different simulated responses for your network requests. For example, you might want to simulate a 3rd-party API outage by forcing a network error and test your app under those conditions. With Cypress's [intercept API](/api/commands/intercept), this and more is possible!
+
+```js
+it('should display a warning when the third-party API is down', () => {
+  cy.intercept(
+    'GET',
+    'https://api.openweathermap.org/data/2.5/weather?q=Atlanta',
+    { statusCode: 500 }
+  )
+  cy.get('.weather-forecast').contains('Weather Forecast Unavailable')
+})
+```
+
+You can also use the intercept API to stub a custom response for specific network requests:
+
+```js
+it('projects endpoint should return 2 projects', () => {
+  cy.intercept('/projects', {
+    body: [{ projectId: '1' }, { projectId: '2' }],
+  }).as('projects')
+  cy.wait('@projects').its('response.body').should('have.length', 2)
+})
+```
+
+<Alert type="info">
+
+For more information, check out the [intercept API documentation](/api/commands/intercept).
+
+</Alert>
+
 ## Automatic Retrying and Waiting
 
 Web applications are usually rarely synchronous. With Protractor, you may be accustomed to adding arbitrary timeouts or using the [waitForAngular](https://www.protractortest.org/#/api?view=ProtractorBrowser.prototype.waitForAngular) API to wait for Angular to finish rendering before attempting to interact with an element.
@@ -434,56 +484,6 @@ cy.get('button').click()
 // Send keys to the element (usually an input)
 cy.get('input').type('my text')
 ```
-
-## Network Handling
-
-### Network Spying
-
-Protractor doesn't offer a built-in solution for network spying. With Cypress, you can leverage the [intercept API](/api/commands/intercept) to spy on and manage the behavior of any network request.
-
-For example, if you wanted to wait on a network request to complete before continuing your test, you could write the following:
-
-```js
-it('should display a Load More button after fetching and displaying a list of users', () => {
-  cy.visit('/users')
-  cy.intercept('/users/**')
-  cy.get('button').contains('Load More')
-})
-```
-
-Cypress will automatically wait for any request to `/users/**` to complete before continuing your test.
-
-### Network Stubbing
-
-Cypress's [intercept API](/api/commands/intercept) also allows you to stub any network request for your app under test. You can use the [intercept API](/api/commands/intercept) to make assertions based on different simulated responses for your network requests. For example, you might want to simulate a 3rd-party API outage by forcing a network error and test your app under those conditions. With Cypress's [intercept API](/api/commands/intercept), this and more is possible!
-
-```js
-it('should display a warning when the third-party API is down', () => {
-  cy.intercept(
-    'GET',
-    'https://api.openweathermap.org/data/2.5/weather?q=Atlanta',
-    { statusCode: 500 }
-  )
-  cy.get('.weather-forecast').contains('Weather Forecast Unavailable')
-})
-```
-
-You can also use the intercept API to stub a custom response for specific network requests:
-
-```js
-it('projects endpoint should return 2 projects', () => {
-  cy.intercept('/projects', {
-    body: [{ projectId: '1' }, { projectId: '2' }],
-  }).as('projects')
-  cy.wait('@projects').its('response.body').should('have.length', 2)
-})
-```
-
-<Alert type="info">
-
-For more information, check out the [intercept API documentation](/api/commands/intercept).
-
-</Alert>
 
 ## Navigating Websites
 
