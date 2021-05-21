@@ -268,20 +268,20 @@ You can also get elements by their text value. This can be accomplished using [`
 <Badge type="danger">Before: Protractor</Badge>
 
 ```js
-//Get an element by the text it contains within a certain CSS selector
+// Get an element by the text it contains within a certain CSS selector
 element(by.cssContainingText('.my-class', 'text'))
 
-//Get the first element containing a specific text (only for link elements)
-element(by.linkText('text')
+// Get the first element containing a specific text (only for link elements)
+element(by.linkText('text'))
 ```
 
 <Badge type="success">After: Cypress</Badge>
 
 ```js
-//Get an element by the text it contains within a certain CSS selector
+// Get an element by the text it contains within a certain CSS selector
 cy.get('.my-class').contains('text')
 
-//Get the first element containing a specific text (available for any element)
+// Get the first element containing a specific text (available for any element)
 cy.contains('text')
 ```
 
