@@ -90,6 +90,12 @@ Running browser tests in headless mode (locally or in continuous integration pip
 
 Cypress assists with debugging in headless mode, by automatically taking a screenshot of the app UI and command log at the exact point of test failure. To help see everything that happened prior to test failure, Cypress provides a video recording (as an MP4 file) of a full test spec run by default.
 
+### Test Retries
+
+End-to-end tests can be complicated because modern web applications are also complex. You may find that some features of your web application are challenging to test or the tests sporadically fail. We call these tests "flaky." Cypress allows you to [retry failed tests](/guides/guides/test-retries). Sometimes tests will fail in a CI environment when they otherwise would pass on a developer's machine. Enabling test retries in your Cypress configuration can help you to get unblocked when unpredictable, flaky tests are occasionally failing.
+
+The Cypress Dashboard goes a step further and helps you and your team to [detect flaky tests](/guides/dashboard/flaky-test-management) that run in your CI/CD pipeline.
+
 ## Getting Started
 
 ### Recommended Installation
@@ -168,19 +174,14 @@ yarn add --dev concurrently
   </code-block>
 </code-group>
 
-Then we will update our `package.json` with the following script:
-
-```bash
-"cypress:open": "concurrently \"ng serve\" \"cypress open\""
-"cypress:run": "concurrently \"ng serve\" \"cypress run \""
-```
+Then we will update our `package.json` with the following scripts:
 
 ```json
 // Example package.json
 {
   "scripts": {
-    "cypress:open": "concurrently \"ng serve\" \"cypress open\"",
-    "cypress:run": "concurrently \"ng serve\" \"cypress run \""
+    "cy:open": "concurrently \"ng serve\" \"cypress open\"",
+    "cy:run": "concurrently \"ng serve\" \"cypress run\""
   },
   "dependencies": { ... },
   "devDependencies": { ... }
@@ -193,14 +194,14 @@ Now, when we run:
   <code-block label="npm" active>
 
 ```bash
-npm run cypress:open
+npm run cy:open
 ```
 
   </code-block>
   <code-block label="yarn">
 
 ```bash
-yarn cypress:open
+yarn run cy:open
 ```
 
   </code-block>
@@ -210,13 +211,13 @@ It will start up Cypress and our Angular app at the same time.
 
 Again, we highly recommend using our [Angular Schematic](https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic) to install Cypress, and we plan on adding new capabilities to it over time.
 
-## Essentials
+## Working with the DOM
 
 ### How to Get DOM Elements
 
 #### Getting a single element on the page
 
-When it comes to e2e tests, one of the most common things you'll need to do is get one or more HTML elements on a page. Rather than split element fetching into multiple methods that you need to memorize, everything can be accomplished with `cy.get` while using CSS selectors to account for all use cases.
+When it comes to e2e tests, one of the most common things you'll need to do is get one or more HTML elements on a page. Rather than split element fetching into multiple methods that you need to memorize, everything can be accomplished with [`cy.get`](/api/commands/get) while using CSS selectors to account for all use cases.
 
 <Badge type="danger">Before: Protractor</Badge>
 
@@ -232,6 +233,12 @@ element(by.id('my-id'))
 
 // Get an element using an input name selector.
 element(by.name('field-name'))
+
+//Get an element by the text it contains within a certain CSS selector
+element(by.cssContainingText('.my-class', 'text'))
+
+//Get the first element containing a specific text (only for link elements)
+element(by.linkText('text')
 ```
 
 <Badge type="success">After: Cypress</Badge>
@@ -248,9 +255,43 @@ cy.get('#my-id')
 
 // Get an element using an input name selector.
 cy.get('input[name="field-name"]')
+
+//Get an element by the text it contains within a certain CSS selector
+cy.get('.my-class').contains('text')
+
+//Get the first element containing a specific text (available for any element)
+cy.contains('text')
 ```
 
-### Getting multiple elements on a page
+You can also get elements by their text value. This can be accomplished using [`cy.contains`](/api/commands/contains) while using CSS selectors to account for all use cases.
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```js
+//Get an element by the text it contains within a certain CSS selector
+element(by.cssContainingText('.my-class', 'text'))
+
+//Get the first element containing a specific text (only for link elements)
+element(by.linkText('text')
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```js
+//Get an element by the text it contains within a certain CSS selector
+cy.get('.my-class').contains('text')
+
+//Get the first element containing a specific text (available for any element)
+cy.contains('text')
+```
+
+<Alert type="info">
+
+While Protractor also allows for selection by XPath, Cypress doesn't support this out of the box. However, you can add the [cypress-xpath plugin](https://www.npmjs.com/package/cypress-xpath) to easily enable it.
+
+</Alert>
+
+#### Getting multiple elements on a page
 
 When you want to get access to more than one element on the page, you would need to chain the `.all()` method. However, in Cypress, no syntax change is necessary!
 
@@ -282,11 +323,17 @@ cy.get('input[name="field-name"]')
 
 <Alert type="info">
 
-You can learn more about [how to get DOM elements in our documentation](/api/commands/get#Syntax).
+Another plugin that we recommend for selecting multiple elements is the [Cypress Testing Library](https://github.com/testing-library/cypress-testing-library). This extends Cypress by adding `findBy` and `findAllBy` commands.
 
 </Alert>
 
-### Element Explorer
+<Alert type="info">
+
+You can learn more about [how to get DOM elements in our official documentation](/api/commands/get#Syntax).
+
+</Alert>
+
+#### Selector Playground
 
 For those who are big fans of [Protractor's Element Explorer functionality](https://www.protractortest.org/#/debugging#enabled-control-flow), Cypress also provides you with a [Selector Playground](/guides/core-concepts/test-runner#Selector-Playground) that allows you to:
 
@@ -530,65 +577,6 @@ You can learn more about how Cypress handles [assertions in our official documen
 
 </Alert>
 
-## WebDriver Control Flow vs Cypress
-
-Protractor's WebDriverJS API is based on promises, which is managed by a control flow. This [Control Flow](https://www.protractortest.org/#/control-flow) enables you to write asynchronous Protractor tests in a synchronous style.
-
-```js
-// Click on the element
-// This code looks synchronous!
-element(by.css('button')).click()
-
-// Send keys to the element (usually an input)
-element(by.css('input')).sendKeys('my text')
-```
-
-Protractor's Control Flow can be disabled, allowing you to write your test cases as asynchronous functions.
-
-```js
-// Wait for the button to be found and click it
-await element(by.css('button')).click()
-
-// Wait for the input to be found and type into the field
-await element(by.css('input')).sendKeys('my text')
-```
-
-Cypress commands are similar at first glance. Cypress commands are [not invoked immediately](/guides/core-concepts/introduction-to-cypress#Commands-Are-Asynchronous) and are enqueued to run at a later time. Cypress might look like promises, but the [Cypress API is not an exact implementation of Promises](/guides/core-concepts/introduction-to-cypress#Commands-Are-Not-Promises). The Control Flow example rewritten as a Cypress test would look something like this:
-
-```js
-// Click on the element
-cy.get('button').click()
-
-// Send keys to the element (usually an input)
-cy.get('input').type('my text')
-```
-
-## Automatic Retrying and Waiting
-
-Web applications are usually rarely synchronous. With Protractor, you may be accustomed to adding arbitrary timeouts or using the [waitForAngular](https://www.protractortest.org/#/api?view=ProtractorBrowser.prototype.waitForAngular) API to wait for Angular to finish rendering before attempting to interact with an element.
-
-With Cypress, commands that query the DOM are [automatically retried](/guides/core-concepts/retry-ability). Cypress will automatically wait and retry most commands until an element appears in the DOM. If an element is not [actionable](/guides/core-concepts/interacting-with-elements#Actionability) within the [`defaultCommandTimeout`](/guides/core-concepts/retry-ability#Timeouts) setting, the command will fail. This enables you to write tests without the need for arbitrary timeouts, enabling you to write more predictable tests.
-
-<Badge type="danger">Before: Protractor</Badge>
-
-```js
-// Clicking a button
-element(by.css('button')).click()
-// Waiting for Angular to re-render the page
-browser.waitForAngular()
-// Make assertion after waiting for Angular to update
-expect(by.css('.list-item').getText()).toEqual('my text')
-```
-
-<Badge type="success">After: Cypress</Badge>
-
-```js
-// Clicking a button
-cy.get('button').click()
-// Make assertion. No waiting necessary!
-cy.get('.list-item').contains('my text')
-```
-
 ## Network Handling
 
 ### Network Spying
@@ -687,6 +675,65 @@ it('visit a non-Angular page', () => {
 For more information, check out our [official documentation on navigation](https://example.cypress.io/commands/navigation)!
 
 </Alert>
+
+## Automatic Retrying and Waiting
+
+Web applications are usually rarely synchronous. With Protractor, you may be accustomed to adding arbitrary timeouts or using the [waitForAngular](https://www.protractortest.org/#/api?view=ProtractorBrowser.prototype.waitForAngular) API to wait for Angular to finish rendering before attempting to interact with an element.
+
+With Cypress, commands that query the DOM are [automatically retried](/guides/core-concepts/retry-ability). Cypress will automatically wait and retry most commands until an element appears in the DOM. If an element is not [actionable](/guides/core-concepts/interacting-with-elements#Actionability) within the [`defaultCommandTimeout`](/guides/core-concepts/retry-ability#Timeouts) setting, the command will fail. This enables you to write tests without the need for arbitrary timeouts, enabling you to write more predictable tests.
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```js
+// Clicking a button
+element(by.css('button')).click()
+// Waiting for Angular to re-render the page
+browser.waitForAngular()
+// Make assertion after waiting for Angular to update
+expect(by.css('.list-item').getText()).toEqual('my text')
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```js
+// Clicking a button
+cy.get('button').click()
+// Make assertion. No waiting necessary!
+cy.get('.list-item').contains('my text')
+```
+
+## WebDriver Control Flow vs Cypress
+
+Protractor's WebDriverJS API is based on promises, which is managed by a control flow. This [Control Flow](https://www.protractortest.org/#/control-flow) enables you to write asynchronous Protractor tests in a synchronous style.
+
+```js
+// Click on the element
+// This code looks synchronous!
+element(by.css('button')).click()
+
+// Send keys to the element (usually an input)
+element(by.css('input')).sendKeys('my text')
+```
+
+Protractor's Control Flow can be disabled, allowing you to write your test cases as asynchronous functions.
+
+```js
+// Wait for the button to be found and click it
+await element(by.css('button')).click()
+
+// Wait for the input to be found and type into the field
+await element(by.css('input')).sendKeys('my text')
+```
+
+Cypress commands are similar at first glance. Cypress commands are [not invoked immediately](/guides/core-concepts/introduction-to-cypress#Commands-Are-Asynchronous) and are enqueued to run at a later time. Cypress might look like promises, but the [Cypress API is not an exact implementation of Promises](/guides/core-concepts/introduction-to-cypress#Commands-Are-Not-Promises). The Control Flow example rewritten as a Cypress test would look something like this:
+
+```js
+// Click on the element
+cy.get('button').click()
+
+// Send keys to the element (usually an input)
+cy.get('input').type('my text')
+```
 
 ## Using Page Objects
 
@@ -787,7 +834,7 @@ describe('example test suite', () => {
 
 3. Use Chrome's DevTools devices to locate the correct target
 
-With Cypress however, because your tests are available through the browser dashboard, you can debug with DevTools without any additional configuration. Rather than rely solely on the `debugger` keyword, Cypress allows you to debug specific stages of your test by chaining the `debug()` command.
+With Cypress however, because your tests are available through the browser dashboard, you can debug with DevTools without any additional configuration. Rather than rely solely on the `debugger` keyword, Cypress allows you to debug specific stages of your test by chaining the [`debug()`](/api/commands/debug) command.
 
 <Badge type="success">After: Cypress</Badge>
 
@@ -831,12 +878,6 @@ cypress run --record --parallel
 For more information, check out our [docs on parallelization](/guides/guides/parallelization#Overview)!
 
 </Alert>
-
-## Test Retries
-
-End-to-end tests can be complicated because modern web applications are also complex. You may find that some features of your web application are challenging to test or the tests sporadically fail. We call these tests "flaky." Cypress allows you to [retry failed tests](/guides/guides/test-retries). Sometimes tests will fail in a CI environment when they otherwise would pass on a developer's machine. Enabling test retries in your Cypress configuration can help you to get unblocked when unpredictable, flaky tests are occasionally failing.
-
-The Cypress Dashboard goes a step further and helps you and your team to [detect flaky tests](/guides/dashboard/flaky-test-management) that run in your CI/CD pipeline.
 
 ## Angular Schematic Configuration
 
