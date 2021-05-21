@@ -567,6 +567,34 @@ cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
 cy.get('#accordion').should('not.have.css', 'display', 'none')
 ```
 
+### Disabled property
+
+```html
+<input type="text" id="example-input" disabled />
+```
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```javascript
+// assert the input is disabled
+expect(element(by.id('example-input')).isEnabled()).toBe(false)
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```javascript
+cy.get('#example-input')
+  .should('be.disabled')
+  // let's enable this element from the test
+  .invoke('prop', 'disabled', false)
+
+cy.get('#example-input')
+  // we can use "enabled" assertion
+  .should('be.enabled')
+  // or negate the "disabled" assertion
+  .and('not.be.disabled')
+```
+
 Cypress has one additional feature that can make a critical difference in the reliability of your tests' assertions: [retry-ability](https://docs.cypress.io/guides/core-concepts/retry-ability). When your test fails an assertion or command, Cypress will mimic a real user with build-in wait times and multiple attempts at asserting your tests in order to minimize the amount of false negatives / positives.
 
 In the example above, if the submit link does not appear on the page at the exact moment when Protractor runs the test (which can be due to any number of factors including API calls, slow browser rendering, etc.), your test will fail. However, Cypress factors these conditions into its assertions and will only fail if the time goes beyond a reasonable amount.
