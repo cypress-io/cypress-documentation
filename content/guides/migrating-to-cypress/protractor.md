@@ -80,7 +80,7 @@ Having your code editor and application under test within a browser side-by-side
 
 ### Time travel through tests
 
-The Cypress Test Runner gives you time travel capabilities to see exactly how your app was behaving at any point during test execution. Cypress takes DOM snapshots of your application under test as the Test Runner executes the commands and assertions in your tests. This enables you to view the **real UI** of your application at any point during your tests' execution. By clicking from one command to another in the [command log](/guides/core-concepts/test-runner#Command-Log), you can see which elements Cypress acted upon and how your application responded to the simulated **real user behavior**.
+The Cypress Test Runner gives you time travel capabilities to see exactly how your app was behaving at any point during test execution. (TODO: takes DOM snapshots before and after network requests) Cypress takes DOM snapshots of your application under test as the Test Runner executes the commands and assertions in your tests. This enables you to view the **real UI** of your application at any point during your tests' execution. By clicking from one command to another in the [command log](/guides/core-concepts/test-runner#Command-Log), you can see which elements Cypress acted upon and how your application responded to the simulated **real user behavior**.
 
 <DocsVideo src="/img/guides/migrating-to-cypress/interactivity.mp4" title="Time travel debugging"></DocsVideo>
 
@@ -143,7 +143,7 @@ npm install --save-dev cypress
   <code-block label="yarn">
 
 ```bash
-yarn add -D cypress
+yarn add --dev cypress
 ```
 
   </code-block>
@@ -162,7 +162,7 @@ npm install --save-dev concurrently
   <code-block label="yarn">
 
 ```bash
-yarn add -D concurrently
+yarn add --dev concurrently
 ```
 
   </code-block>
@@ -171,16 +171,16 @@ yarn add -D concurrently
 Then we will update our `package.json` with the following script:
 
 ```bash
-"cypress": "concurrently \"ng serve\" \"cypress open\""
+"cypress:open": "concurrently \"ng serve\" \"cypress open\""
+"cypress:run": "concurrently \"ng serve\" \"cypress run \""
 ```
 
 ```json
 // Example package.json
 {
   "scripts": {
-    "e2e": "ng e2e",
-    "e2e:debug": "node --inspect-brk ./node_modules/.bin/protractor ./e2e/protractor.conf.js",
-    "cypress": "concurrently \"ng serve\" \"cypress open\""
+    "cypress:open": "concurrently \"ng serve\" \"cypress open\"",
+    "cypress:run": "concurrently \"ng serve\" \"cypress run \""
   },
   "dependencies": { ... },
   "devDependencies": { ... }
@@ -193,20 +193,20 @@ Now, when we run:
   <code-block label="npm" active>
 
 ```bash
-npm run cypress
+npm run cypress:open
 ```
 
   </code-block>
   <code-block label="yarn">
 
 ```bash
-yarn run cypress
+yarn cypress:open
 ```
 
   </code-block>
 </code-group>
 
-It will start up Cypress and our Angular app at the same time!
+It will start up Cypress and our Angular app at the same time.
 
 Again, we highly recommend using our [Angular Schematic](https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic) to install Cypress, and we plan on adding new capabilities to it over time.
 
@@ -282,7 +282,7 @@ cy.get('input[name="field-name"]')
 
 <Alert type="info">
 
-You can learn more about [how to get DOM elements in our official documentation](/api/commands/get#Syntax).
+You can learn more about [how to get DOM elements in our documentation](/api/commands/get#Syntax).
 
 </Alert>
 
@@ -340,7 +340,7 @@ You can learn more about [interacting with DOM elements in our official document
 
 </Alert>
 
-### Assertions
+## Assertions
 
 Similar to Protractor, Cypress enables use of human readable assertions.
 
@@ -362,6 +362,162 @@ describe('verify elements on a page', () => {
     cy.get('a.submit-link').should('be.visible')
   })
 })
+```
+
+Here are some common DOM element assertions with Cypress and equivalent assertions with Protractor.
+
+### Length
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```javascript
+const list = element.all(by.css('li.selected'))
+expect(list.count()).toBe(3)
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```javascript
+// retry until we find 3 matching <li.selected>
+cy.get('li.selected').should('have.length', 3)
+```
+
+### Class
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```javascript
+expect(
+  element(by.tagName('form')).element(by.tagName('input')).getAttribute('class')
+).not.toContain('disabled')
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```javascript
+// retry until this input does not have class disabled
+cy.get('form').find('input').should('not.have.class', 'disabled')
+```
+
+### Value
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```javascript
+expect(element(by.tagName('textarea'))).getAttribute('value')).toBe('foo bar baz')
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```javascript
+// retry until this textarea has the correct value
+cy.get('textarea').should('have.value', 'foo bar baz')
+```
+
+### Text Content
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```javascript
+// assert the element's text content is exactly the given text
+expect(element(by.id('user-name')).getText()).toBe('Joe Smith')
+// assert the element's text includes the given substring
+expect(element(by.id('address')).getText()).toContain('Atlanta')
+// assert the span does not contain 'click me'
+const child = element(by.tagName('a')).getWebElement()
+const parent = child.getDriver().findElement(by.css('span.help'))
+expect(parent.getText()).not.toContain('click me')
+// assert that the greeting starts with "Hello"
+element(by.id('greeting').getText()).toMatch(/^Hello/)
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```javascript
+// assert the element's text content is exactly the given text
+cy.get('#user-name').should('have.text', 'Joe Smith')
+// assert the element's text includes the given substring
+cy.get('#address').should('include.text', 'Atlanta')
+// retry until this span does not contain 'click me'
+cy.get('a').parent('span.help').should('not.contain', 'click me')
+// the element's text should start with "Hello"
+cy.get('#greeting')
+  .invoke('text')
+  .should('match', /^Hello/)
+// tip: use cy.contains to find element with its text
+// matching the given regular expression
+cy.contains('#a-greeting', /^Hello/)
+```
+
+### Visibility
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```javascript
+// assert button is visible
+expect(element(by.tagName('button')).isDisplayed()).toBe(true)
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```javascript
+// retry until this button is visible
+cy.get('button').should('be.visible')
+```
+
+### Existence
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```javascript
+// assert the spinner no longer exists
+expect(element(by.id('loading')).isPresent()).toBe(false)
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```javascript
+// retry until loading spinner no longer exists
+cy.get('#loading').should('not.exist')
+```
+
+### State
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```javascript
+expect(element('input[type="radio"]').isSelected()).toBeTruthy()
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```javascript
+// retry until our radio is checked
+cy.get(':radio').should('be.checked')
+```
+
+### CSS
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```javascript
+// assert .completed has css style "line-through" for "text-decoration" property
+expect(element(by.css('.completed')).getCssValue('text-decoration')).toBe(
+  'line-through'
+)
+
+// assert the accordion does not have a "display: none"
+expect(element(by.id('accordion')).getCssValue('display')).not.toBe('none')
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```javascript
+// retry until .completed has matching css
+cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
+
+// retry while .accordion css has the "display: none" property
+cy.get('#accordion').should('not.have.css', 'display', 'none')
 ```
 
 Cypress has one additional feature that can make a critical difference in the reliability of your tests' assertions: [retry-ability](https://docs.cypress.io/guides/core-concepts/retry-ability). When your test fails an assertion or command, Cypress will mimic a real user with build-in wait times and multiple attempts at asserting your tests in order to minimize the amount of false negatives / positives.
