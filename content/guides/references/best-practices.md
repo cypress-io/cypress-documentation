@@ -284,7 +284,7 @@ Cypress can even load the received HTML email in its browser to verify the email
   alt="The test finds and clicks the Confirm registration button"></DocsImage>
 
 3. In other cases, you should try using [`cy.request()`](/api/commands/request) command to query the an endpoint on your server that tells you what email has been queued or delivered. That would give you a programmatic way to know without involving the UI. Your server would have to expose this endpoint.
-4. You could also use `cy.request()` to a 3rd party email recipient server that exposes an API to read off emails. You will then need the proper authentication credentials, which your server could provide, or you could use environment variables. Some email services already provide [Cypress plugins](https://on.cypress.io/plugins) to access emails.
+4. You could also use `cy.request()` to a 3rd party email recipient server that exposes an API to read off emails. You will then need the proper authentication credentials, which your server could provide, or you could use environment variables. Some email services already provide [Cypress plugins](/plugins/directory#Email) to access emails.
 
 ## Having tests rely on the state of previous tests
 
