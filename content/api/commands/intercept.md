@@ -138,23 +138,34 @@ All properties are optional but all those that are set must match for the reques
 
 See [examples](#With-RouteMatcher) below.
 
-#### <Icon name="angle-right"></Icon> response (<code>string | object | [StaticResponse][staticresponse]</code>)
+#### <Icon name="angle-right"></Icon> staticResponse (<code>[StaticResponse][staticresponse]</code>)
 
-- If a **string** is passed, requests to the route will be fulfilled with that string as the body. Passing `"foo"` is equivalent to using a [`StaticResponse`][staticresponse] object with `{ body: "foo" }`.
-- If a **[`StaticResponse`][staticresponse] object** is passed, requests to the route will be fulfilled with a response using the values supplied in the `StaticResponse`. A `StaticResponse` can define the body of the response, as well as the headers, HTTP status code, and more. See [Stubbing a response with a `StaticResponse` object](#With-a-StaticResponse-object) for an example of how this is used.
-- If an **object with no [`StaticResponse`][staticresponse] keys** is passed, it will be sent as a JSON response body. For example, passing `{ foo: 'bar' }` is equivalent to passing `{ body: { foo: 'bar' } }`.
+By passing in a `StaticResponse` as the last argument, you can [statically define (stub) a response](#Stubbing-a-response) for matching requests including the body of the response, as well as the headers and HTTP status code:
+
+| Option     | Description                                            |
+| ---------- | ------------------------------------------------------ |
+| statusCode | HTTP response status code                              |
+| headers    | HTTP response headers                                  |
+| body       | Serve a static string/JSON object as the response body |
+| fixture    | Serve a fixture as the HTTP response body              |
+
+`StaticResponse` also provides options for simulating a degraded or broken network connection:
+
+| Option            | Description                                                                 |
+| ----------------- | --------------------------------------------------------------------------- |
+| forceNetworkError | Force an error by destroying the browser connection                         |
+| delay             | Minimum network latency or delay to add to the response time (milliseconds) |
+| throttleKbps      | Maximum data transfer rate of the response (kilobits/second)                |
+
+**Note:** All properties are optional.
+
+See [Stubbing a response with a `StaticResponse` object](#With-a-StaticResponse-object) for an example.
 
 #### <Icon name="angle-right"></Icon> routeHandler (<code>Function</code>)
 
-The `routeHandler` defines what will happen with a request if a request is matched. It can be used to [statically define (stub) a response](#Stubbing-a-response) for matching requests, or a function can be passed to [dynamically intercept the outgoing request](#Intercepting-a-request).
+The `routeHandler` function will be called whenever a request is matched, with the first parameter being the request object. From inside the callback, you have access to the entire request-response sesssion where you can modify the outgoing request, send a response, access the real response, and more.
 
-<!-- FIXME ^ this doesn't link to an example of a dynamic intercept -->
-
-<!-- TODO update this to be more concise with links to examples -->
-
-- If a **callback** is passed, it will be called whenever a request matching this route is received, with the first parameter being the request object. From inside the callback, you can modify the outgoing request, send a response, access the real response, and much more. See ["Intercepted requests"][req] for more information.
-
-See [Request/Response Modification with `routeHandler`](#Request-Response-Modification-with-routeHandler).
+See ["Intercepted requests"][req] and [Request/Response Modification with `routeHandler`](#Request-Response-Modification-with-routeHandler).
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
