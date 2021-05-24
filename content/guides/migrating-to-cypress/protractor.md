@@ -910,9 +910,11 @@ Check out our [documentation on debugging](/guides/guides/debugging#Using-debugg
 
 ## Continuous Integration
 
-Cypress makes it easy to [run your tests in your Continuous Integration environment](/guides/continuous-integration/introduction).
+Cypress makes it easy to [run your tests in all Continuous Integration environments](/guides/continuous-integration/introduction).
 
-Check out our guides to run your Cypress tests in a [GitHub Action](/guides/continuous-integration/github-actions), [CircleCI](/guides/continuous-integration/introduction#CircleCI), [GitLab CI](/guides/continuous-integration/gitlab-ci), [Bitbucket Pipeline](/guides/continuous-integration/bitbucket-pipelines), or [AWS CodeBuild](/guides/continuous-integration/aws-codebuild).
+Check out our in-depth guides to run your Cypress tests in [GitHub Actions](/guides/continuous-integration/github-actions), [CircleCI](/guides/continuous-integration/introduction#CircleCI), [GitLab CI](/guides/continuous-integration/gitlab-ci), [Bitbucket Pipeline](/guides/continuous-integration/bitbucket-pipelines), or [AWS CodeBuild](/guides/continuous-integration/aws-codebuild).
+
+We also have code samples to get Cypress up and running in [many of the other popular CI environments](/guides/continuous-integration/ci-provider-examples). Even if your CI provider isn't listed, you can still run Cypress in your CI environment.
 
 ## Parallelization
 
