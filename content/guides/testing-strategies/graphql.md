@@ -1,5 +1,5 @@
 ---
-title: GraphQL
+title: Working with GraphQL
 ---
 
 <Alert type="info">
