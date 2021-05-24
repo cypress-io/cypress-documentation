@@ -9,6 +9,9 @@ export default {
       type: String,
       required: true,
     },
+    title: {
+      type: String,
+    },
     noBorder: {
       type: Boolean,
       default: false,
@@ -27,6 +30,7 @@ export default {
     :class="[$style.docsImage, { [$style.imageNoBorder]: noBorder }]"
     :src="filePath"
     :alt="alt"
+    :title="title"
   />
 </template>
 
