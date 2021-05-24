@@ -755,9 +755,11 @@ cy.get('button').click()
 cy.get('.list-item').contains('my text')
 ```
 
-## WebDriver Control Flow vs Cypress
+## Cypress vs WebDriver Control Flow
 
-Protractor's WebDriverJS API is based on promises, which is managed by a control flow. This [Control Flow](https://www.protractortest.org/#/control-flow) enables you to write asynchronous Protractor tests in a synchronous style.
+Cypress commands are similar to Protractor code at first glance. Cypress commands are [not invoked immediately](/guides/core-concepts/introduction-to-cypress#Commands-Are-Asynchronous) and are enqueued to run serially at a later time. Cypress commands might look like promises, but the [Cypress API is not an exact implementation of Promises](/guides/core-concepts/introduction-to-cypress#Commands-Are-Not-Promises). The modern web is asychronous, therefore you need to interact with modern web apps in an asynchronous fashion. This is why the Cypress API is asynchronous. This allows you to write deterministic tests since all of your commands are executed serially, enabling your tests to run predictably each time.
+
+In comparison, Protractor's WebDriverJS API is based on promises, which is managed by a control flow. This [Control Flow](https://www.protractortest.org/#/control-flow) enables you to write asynchronous Protractor tests in a synchronous style.
 
 ```js
 // Click on the element
@@ -778,7 +780,7 @@ await element(by.css('button')).click()
 await element(by.css('input')).sendKeys('my text')
 ```
 
-Cypress commands are similar at first glance. Cypress commands are [not invoked immediately](/guides/core-concepts/introduction-to-cypress#Commands-Are-Asynchronous) and are enqueued to run at a later time. Cypress might look like promises, but the [Cypress API is not an exact implementation of Promises](/guides/core-concepts/introduction-to-cypress#Commands-Are-Not-Promises). The Control Flow example rewritten as a Cypress test would look something like this:
+The Control Flow example rewritten as a Cypress test would look something like this:
 
 ```js
 // Click on the element
