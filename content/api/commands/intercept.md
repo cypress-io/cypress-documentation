@@ -63,12 +63,6 @@ cy.intercept('/users*', { hostname: 'localhost' }, (req) => {
 
 ### Arguments
 
-#### **<Icon name="angle-right"></Icon> url** **_(String, Glob, RegExp)_**
-
-Specify the URL to match. See [Matching `url`](#match-url) for examples.
-
-**Note:** This value can be passed in via [`routeMatcher`][arg-routematcher] instead.
-
 #### **<Icon name="angle-right"></Icon> method** **_(String)_**
 
 Specify the [HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`, etc.) to match on.
@@ -78,6 +72,12 @@ Specify the [HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Meth
 If no `method` is provided, Cypress will match _any_ HTTP method (`*`) by default.
 
 </Alert>
+
+#### **<Icon name="angle-right"></Icon> url** **_(String, Glob, RegExp)_**
+
+Specify the URL to match. See [Matching `url`](#match-url) for examples.
+
+**Note:** This value can be passed in via [`routeMatcher`][arg-routematcher] instead.
 
 #### **<Icon name="angle-right"></Icon> routeMatcher** **_(`RouteMatcher`)_**
 
