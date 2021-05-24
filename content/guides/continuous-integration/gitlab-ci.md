@@ -135,7 +135,6 @@ variables:
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
-    - .cache/*
     - cache/Cypress
     - node_modules
     - build
