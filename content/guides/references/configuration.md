@@ -344,7 +344,7 @@ You can set the `baseUrl` value for a single test:
 
 ```js
 it('navigates through the tab',
-  { baseUrl: Cypress.config('APP_AT') },
+  { baseUrl: Cypress.env('APP_AT') },
   () => {
     ...
   }
