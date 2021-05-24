@@ -520,6 +520,18 @@ Don't try to use your UI to check email. Instead opt to programmatically use 3rd
 
 </Alert>
 
+1. If your application is running locally and is sending the emails directly through an SMTP server, you can use a temporary local test SMTP server running inside Cypress Test Runner. Read the blog post ["Testing HTML Emails using Cypress"](https://www.cypress.io/blog/2021/05/11/testing-html-emails-using-cypress/) for details.
+2. If your application is using a 3rd party email service, or you cannot stub the SMTP requests, you can use a test email inbox with an API access. Read the blog post ["Full Testing of HTML Emails using SendGrid and Ethereal Accounts"](https://www.cypress.io/blog/2021/05/24/full-testing-of-html-emails-using-ethereal-accounts/) for details.
+
+Cypress can even load the received HTML email in its browser to verify the email's functionality and visual style:
+
+<DocsImage
+  src="/img/guides/references/email-test.png"
+  title="The HTML email loaded during the test"
+  alt="The test finds and clicks the Confirm registration button"></DocsImage>
+
+3. You can use a 3rd party email service that provides temporary email addresses for testing. Some of these services even offer a [Cypress plugin](/plugins/directory#Email) to access emails.
+
 ## <Icon name="angle-right"></Icon> How do I wait for multiple requests to the same url?
 
 You should set up an alias (using [`.as()`](/api/commands/as)) to a single [`cy.intercept()`](/api/commands/intercept) that matches all of the XHRs. You can then [`cy.wait()`](/api/commands/wait) on it multiple times. Cypress keeps track of how many matching requests there are.
