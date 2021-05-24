@@ -97,7 +97,7 @@
       "okta-authentication": "Okta Authentication",
       "amazon-cognito-authentication": "Amazon Cognito Authentication",
       "google-authentication": "Google Authentication",
-      "graphql": "GraphQL"
+      "graphql": "Working with GraphQL"
     },
     "api": {
       "api": "API",
