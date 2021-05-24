@@ -134,6 +134,14 @@ Check out the [Cypress Angular Schematic Configuration section](#Angular-Schemat
 
 </Alert>
 
+<Alert type="success">
+
+The [Cypress Angular Schematic](https://www.npmjs.com/package/@cypress/schematic) package was made possible by the original work of the [Briebug](https://briebug.com/) team and the contributors of [@briebug/cypress-schematic](https://www.npmjs.com/package/@briebug/cypress-schematic).
+
+@briebug/cypress-schematic served as the starting point for improvements and new functionality the Cypress team will continue to develop along with the community.
+
+</Alert>
+
 ### Manual Installation
 
 While we recommend using our official Angular schematic, you can still install Cypress manually.
@@ -359,9 +367,23 @@ element(by.css('input')).sendKeys('my text')
 // Clear the text in an element (usually an input).
 element(by.css('input')).clear()
 
-// Get the attribute of an element
-// Example: Get the value of an input
-element(by.css('input')).getAttribute('value')
+// Check the first checkbox on a page
+element.all(by.css('[type="checkbox"]')).first().click()
+
+// Check a radio button with the value "radio1"
+element(by.css('[type="radio"][value="radio1"]')).click()
+
+// Uncheck the first checkbox that is checked
+element.all(by.css('[type="checkbox"][checked="true"]')).first().click()
+
+// Select an option with the text value "my value" from a select list
+element(by.cssContainingText('option', 'my value')).click()
+
+// Scroll an element into view
+browser
+  .actions()
+  .mouseMove(element(by.id('my-id')))
+  .perform()
 ```
 
 <Badge type="success">After: Cypress</Badge>
@@ -376,9 +398,20 @@ cy.get('input').type('my text')
 // Clear the text in an element (usually an input)
 cy.get('input').clear()
 
-// Get the attribute of an element
-// Example: Get the value of an input
-cy.get('input').its('value')
+// Check the first checkbox on a page
+cy.get('[type="checkbox"]').first().check()
+
+// Check a radio button with the value "radio1"
+cy.get('[type="radio"]').check('radio1')
+
+// Uncheck the first checkbox that is not disabled
+cy.get('[type="checkbox"]').not('[disabled]').first().uncheck()
+
+// Select an option with the text value "my value" from a select list
+cy.get('select[name="optionsList"]').select('my value')
+
+// Scroll an element into view
+cy.get('#my-id').scrollIntoView()
 ```
 
 <Alert type="info">
