@@ -76,7 +76,7 @@ When it comes to your end-to-end tests, being able to see your tests as they run
 
 Having your code editor and application under test within a browser side-by-side (shown below) while re-running tests on save is a highly productive workflow. It provides an instant feedback loop that allows you to iterate faster with confidence.
 
-<DocsVideo src="/img/guides/migrating-to-cypress/Auto-reloading.mp4" title="auto-reloading"></DocsVideo>
+<DocsVideo src="/img/guides/migrating-to-cypress/codeframe-ex.webm" title="auto-reloading"></DocsVideo>
 
 ### Time travel through tests
 
@@ -866,49 +866,6 @@ it('should display the username of a logged in user', () => {
   cy.get('.username').contains('Matt')
 })
 ```
-
-## Debugging Tests
-
-In Protractor, per [the official docs](https://github.com/angular/protractor/blob/master/docs/debugging.md#disabled-control-flow), the process for debugging your tests interactively involves a few steps:
-
-1. Add `debugger` keyword to the test case that you want to debug
-
-<Badge type="danger">Before: Protractor</Badge>
-
-```js
-describe('example test suite', () => {
-  it('contains an error we need to debug', () => {
-    browser.get('/login')
-    debugger
-    element(by.css('#password-field')).sendKeys('testPassword1234')
-  })
-})
-```
-
-2. Set the inspector agent with a breakpoint flag and a config file
-
-3. Use Chrome's DevTools devices to locate the correct target
-
-With Cypress however, because your tests are available through the browser dashboard, you can debug with DevTools without any additional configuration. Rather than rely solely on the `debugger` keyword, Cypress allows you to debug specific stages of your test by chaining the [`debug()`](/api/commands/debug) command.
-
-<Badge type="success">After: Cypress</Badge>
-
-```js
-describe('example test suite', () => {
-  it('contains an error we need to debug', () => {
-    cy.visit('/login')
-    cy.get('#password-field')).debug().sendKeys('testPassword1234')
-  })
-})
-```
-
-Cypress can also be run in [headed mode](/guides/guides/launching-browsers#Electron-Browser) which displays the browser running your tests. By default, when running `cypress open`, the [Cypress Test Runner](/guides/core-concepts/test-runner) provides an interactive debugging experience while also displaying the application under test. The Cypress Test Runner can also be ran in [headless mode](/guides/guides/command-line#cypress-run-headless) which will force the browser to be hidden.
-
-<Alert type="info">
-
-Check out our [documentation on debugging](/guides/guides/debugging#Using-debugger) to learn more.
-
-</Alert>
 
 ## Continuous Integration
 
