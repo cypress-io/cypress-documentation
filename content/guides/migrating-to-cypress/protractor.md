@@ -599,9 +599,34 @@ describe('verify elements on a page', () => {
 
 In the example above, if the submit link does not appear on the page at the exact moment when Protractor runs the test (which can be due to any number of factors including API calls, slow browser rendering, etc.), your test will fail. However, Cypress factors these conditions into its assertions and will only fail if the time goes beyond a reasonable amount.
 
+## Negative assertions
+
+There are positive and negative assertions. Negative assertions have the "not" chainer prefixed to the assertion. Examples of negative assertions in both Protractor and Cypress:
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```javascript
+expect(
+  element(by.css('.todo'))
+    .getAttribute('class')
+    .then((classes) => {
+      return classes.split(' ').indexOf('completed') !== -1
+    })
+).not.toBe(true)
+
+expect(element(by.id('loading')).isDisplayed()).not.toBe(true)
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```javascript
+cy.get('.todo').should('not.have.class', 'completed')
+cy.get('#loading').should('not.be.visible')
+```
+
 <Alert type="info">
 
-You can learn more about how Cypress handles [assertions in our official documentation](/guides/references/assertions).
+Learn more about how Cypress handles [assertions](/guides/references/assertions).
 
 </Alert>
 
