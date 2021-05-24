@@ -32,9 +32,20 @@ cy.intercept(method, url)
 cy.intercept(routeMatcher)
 ```
 
-#### Request/Response Stubbing and Spying
+#### Response Stubbing and Spying
 
-`cy.intercept` can be also be leveraged to modify the outgoing request, stub a response, make assertions, etc., by specifying [`routeHandler`][arg-routehandler] as the last argument.
+Specify a response as the last argument to stub a response.
+
+```js
+cy.intercept(url, response)
+cy.intercept(method, url, response)
+cy.intercept(routeMatcher, response)
+cy.intercept(url, routeMatcher, response)
+```
+
+#### Request/Response Handling and Spying
+
+By specifying [`routeHandler`][arg-routehandler] as the last argument to `cy.intercept`, you'll have access to the entire request-response session, enabling you to modify the outgoing request, manipulate the real response, make assertions, etc.
 
 ```js
 cy.intercept(url, routeHandler)
@@ -102,17 +113,20 @@ All properties are optional. All properties that are set must match for the rout
 
 See [examples](#With-RouteMatcher) below.
 
-#### <Icon name="angle-right"></Icon> routeHandler (<code>string | object | Function | [StaticResponse][staticresponse]</code>)
+#### <Icon name="angle-right"></Icon> response (<code>string | object | [StaticResponse][staticresponse]</code>)
 
-The `routeHandler` defines what will happen with a request if the [routeMatcher](#routeMatcher-RouteMatcher) matches. It can be used to [statically define (stub) a response](#Stubbing-a-response) for matching requests, or a function can be passed to [dynamically intercept the outgoing request](#Intercepting-a-request).
+- If a **string** is passed, requests to the route will be fulfilled with that string as the body. Passing `"foo"` is equivalent to using a [`StaticResponse`][staticresponse] object with `{ body: "foo" }`.
+- If a **[`StaticResponse`][staticresponse] object** is passed, requests to the route will be fulfilled with a response using the values supplied in the `StaticResponse`. A `StaticResponse` can define the body of the response, as well as the headers, HTTP status code, and more. See [Stubbing a response with a `StaticResponse` object](#With-a-StaticResponse-object) for an example of how this is used.
+- If an **object with no [`StaticResponse`][staticresponse] keys** is passed, it will be sent as a JSON response body. For example, passing `{ foo: 'bar' }` is equivalent to passing `{ body: { foo: 'bar' } }`.
+
+#### <Icon name="angle-right"></Icon> routeHandler (<code>Function</code>)
+
+The `routeHandler` defines what will happen with a request if a request is matched. It can be used to [statically define (stub) a response](#Stubbing-a-response) for matching requests, or a function can be passed to [dynamically intercept the outgoing request](#Intercepting-a-request).
 
 <!-- FIXME ^ this doesn't link to an example of a dynamic intercept -->
 
 <!-- TODO update this to be more concise with links to examples -->
 
-- If a **string** is passed, requests to the route will be fulfilled with that string as the body. Passing `"foo"` is equivalent to using a [`StaticResponse`][staticresponse] object with `{ body: "foo" }`.
-- If a **[`StaticResponse`][staticresponse] object** is passed, requests to the route will be fulfilled with a response using the values supplied in the `StaticResponse`. A `StaticResponse` can define the body of the response, as well as the headers, HTTP status code, and more. See [Stubbing a response with a `StaticResponse` object](#With-a-StaticResponse-object) for an example of how this is used.
-- If an **object with no [`StaticResponse`][staticresponse] keys** is passed, it will be sent as a JSON response body. For example, passing `{ foo: 'bar' }` is equivalent to passing `{ body: { foo: 'bar' } }`.
 - If a **callback** is passed, it will be called whenever a request matching this route is received, with the first parameter being the request object. From inside the callback, you can modify the outgoing request, send a response, access the real response, and much more. See ["Intercepted requests"][req] for more information.
 
 See [Request/Response Modification with `routeHandler`](#Request-Response-Modification-with-routeHandler).
