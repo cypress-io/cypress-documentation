@@ -525,7 +525,7 @@ Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/
 
 ### Request/Response Modification with `routeHandler`
 
-To modify the outgoing request, stub a response, make assertions, etc., simply specify [`routeHandler`][arg-routehandler] as the last argument.
+Specify [`routeHandler`][arg-routehandler] as the last argument to modify the outgoing request, stub a response, make assertions, etc.
 
 <!-- TODO DX-188 emphasize the usage of StaticResponse as the routeHandler -->
 
