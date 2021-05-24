@@ -162,7 +162,7 @@ it('adds a todo', () => {
 
 ### Other
 
-Finally, through a large number of [official and 3rd party plugins](/plugins/directory) you can write Cypress [a11y](https://github.com/component-driven/cypress-axe), [visual](/plugins/directory#Visual%20Testing), and other types of tests.
+Finally, through a large number of [official and 3rd party plugins](/plugins/directory) you can write Cypress [a11y](https://github.com/component-driven/cypress-axe), [visual](/plugins/directory#Visual%20Testing), [email](/faq/questions/using-cypress-faq#How-do-I-check-that-an-email-was-sent-out) and other types of tests.
 
 ## Cypress in the Real World
 
