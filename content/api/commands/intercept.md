@@ -32,15 +32,44 @@ cy.intercept(method, url)
 cy.intercept(routeMatcher)
 ```
 
-#### Response Stubbing and Spying
-
-Specify a response as the last argument to stub a response.
+**<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```js
-cy.intercept(url, response)
-cy.intercept(method, url, response)
-cy.intercept(routeMatcher, response)
-cy.intercept(url, routeMatcher, response)
+cy.intercept('/users/**')
+cy.intercept('GET', '/users*')
+cy.intercept({
+  method: 'GET',
+  url: '/users*',
+  hostname: 'localhost',
+})
+```
+
+#### Response Stubbing and Spying
+
+Specify a response as the last argument to stub a response to the request.
+
+```js
+cy.intercept(url, staticResponse)
+cy.intercept(method, url, staticResponse)
+cy.intercept(routeMatcher, staticResponse)
+cy.intercept(url, routeMatcher, staticResponse)
+```
+
+**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+
+```js
+cy.intercept(
+  {
+    method: 'POST',
+    url: '/users*',
+  },
+  {
+    statusCode: 201,
+    body: {
+      name: 'Peter Pan',
+    },
+  }
+)
 ```
 
 #### Request/Response Handling and Spying
@@ -54,23 +83,19 @@ cy.intercept(routeMatcher, routeHandler)
 cy.intercept(url, routeMatcher, routeHandler)
 ```
 
+**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+
+```js
+cy.intercept('/users*', { hostname: 'localhost' }, (req) => {
+  /* do something with request and/or response */
+})
+```
+
 <Alert type="warning">
 
 All intercepts are automatically cleared before every test.
 
 </Alert>
-
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
-
-```js
-cy.intercept('/users/**')
-cy.intercept('GET', '/users*')
-cy.intercept({ method: 'get', url: '/users*', hostname: 'localhost' })
-cy.intercept({ method: 'POST', url: '/users*' }, { success: true })
-cy.intercept('/users*', { hostname: 'localhost' }, (req) => {
-  /* do something with request */
-})
-```
 
 ### Arguments
 
