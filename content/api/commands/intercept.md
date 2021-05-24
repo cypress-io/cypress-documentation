@@ -117,9 +117,9 @@ Specify the URL to match. See [Matching `url`](#match-url) for examples.
 
 #### **<Icon name="angle-right"></Icon> routeMatcher** **_(`RouteMatcher`)_**
 
-`routeMatcher` is an object used to match which incoming HTTP requests will be handled by this route.
+`routeMatcher` is an object used to match the incoming HTTP requests with this intercepted route.
 
-All properties are optional. All properties that are set must match for the route to handle a request. If a `string` is passed to any property, it will be glob-matched against the request using [`minimatch`](https://github.com/isaacs/minimatch).The available `routeMatcher` properties are listed below:
+All properties are optional but all those that are set must match for the request to be intercepted. And if a `string` is passed to any property, it will be glob-matched against the request using [`Cypress.minimatch`](/api/utilities/minimatch).
 
 | Option     | Description                                                                                     |
 | ---------- | ----------------------------------------------------------------------------------------------- |
