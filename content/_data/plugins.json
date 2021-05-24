@@ -616,6 +616,13 @@
           "link": "https://github.com/prma85/cypress-azure-keyvault",
           "keywords": ["testing", "azure", "keyvault", "secret"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-dummyattachfile",
+          "description": "Tiny cypress command to upload fast large files to an HTML input type-file",
+          "link": "https://github.com/alam-R/dummyAttachFile",
+          "keywords": ["commands", "file-upload"],
+          "badge": "community"
         }
       ]
     },
