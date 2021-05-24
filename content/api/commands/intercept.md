@@ -100,9 +100,15 @@ All properties are optional. All properties that are set must match for the rout
 | times      | Maximum number of times to match (`number`)                                                     |
 | url        | Full HTTP request URL                                                                           |
 
+See [examples](#With-RouteMatcher) below.
+
 #### <Icon name="angle-right"></Icon> routeHandler (<code>string | object | Function | [StaticResponse][staticresponse]</code>)
 
-The `routeHandler` defines what will happen with a request if the [routeMatcher](#routeMatcher-RouteMatcher) matches. It can be used to [statically define a response](#Stubbing-a-response) for matching requests, or a function can be passed to [dynamically intercept the outgoing request](#Intercepting-a-request).
+The `routeHandler` defines what will happen with a request if the [routeMatcher](#routeMatcher-RouteMatcher) matches. It can be used to [statically define (stub) a response](#Stubbing-a-response) for matching requests, or a function can be passed to [dynamically intercept the outgoing request](#Intercepting-a-request).
+
+<!-- FIXME ^ this doesn't link to an example of a dynamic intercept -->
+
+<!-- TODO update this to be more concise with links to examples -->
 
 - If a **string** is passed, requests to the route will be fulfilled with that string as the body. Passing `"foo"` is equivalent to using a [`StaticResponse`][staticresponse] object with `{ body: "foo" }`.
 - If a **[`StaticResponse`][staticresponse] object** is passed, requests to the route will be fulfilled with a response using the values supplied in the `StaticResponse`. A `StaticResponse` can define the body of the response, as well as the headers, HTTP status code, and more. See [Stubbing a response with a `StaticResponse` object](#With-a-StaticResponse-object) for an example of how this is used.
@@ -1062,7 +1068,9 @@ See ["Stubbing a response with a `StaticResponse` object"](#With-a-StaticRespons
 
 The lifecycle of a `cy.intercept()` interception begins when an HTTP request is sent from your app that matches one or more registered `cy.intercept()` routes. From there, each interception has two phases: request and response.
 
-`cy.intercept()` routes are matched in reverse order of definition, except for routes which are defined with `{ middleware: true }`, which always run first. This allows you to override existing `cy.intercept()` declarations by defining an overlapping `cy.intercept()`.
+`cy.intercept()` routes are matched in reverse order of definition, except for routes which are defined with `{ middleware: true }`, which always run first. This allows you to override existing `cy.intercept()` declarations by defining an overlapping `cy.intercept()`:
+
+<DocsImage src="/img/api/intercept/middleware-algo.png" alt="Middleware Algorithm" ></DocsImage>
 
 ### Request phase
 
