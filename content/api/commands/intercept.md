@@ -20,9 +20,9 @@ Cypress routes all HTTP traffic initiated with `XMLHttpRequest` (XHR) and `fetch
 
 </Alert>
 
-## Syntax and Usage
+## Usage
 
-#### Without `routeHandler` (Spying Only)
+#### Spying only
 
 `cy.intercept` can be used solely for spying: to passively listen for matching routes and apply [aliases](#Aliasing-a-Route) to them without manipulating the request or its response in any way. This alone is powerful as it allows you to [wait](#Waiting-on-a-request) for these requests, resulting in more reliable tests.
 
@@ -32,7 +32,7 @@ cy.intercept(method, url)
 cy.intercept(routeMatcher)
 ```
 
-#### With `routeHandler` (Request/Response Stubbing and Spying)
+#### Request/Response Stubbing and Spying
 
 `cy.intercept` can be also be leveraged to modify the outgoing request, stub a response, make assertions, etc., by specifying [`routeHandler`][arg-routehandler] as the last argument.
 
