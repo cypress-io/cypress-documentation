@@ -144,6 +144,8 @@ name: Cypress Tests with Dependency and Artifact Caching
 on: [push]
 
 jobs:
+  # install:
+  # ....
   cypress-run:
     runs-on: ubuntu-latest
     container: cypress/browsers:node12.18.3-chrome87-ff82
