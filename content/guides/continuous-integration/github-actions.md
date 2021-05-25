@@ -186,7 +186,7 @@ First, we'll define the `install` step that will be used by the worker jobs defi
 
 For the `steps`, notice that we pass `runTests: false` to the Cypress GitHub Action to instruct it to only install and cache Cypress and npm dependencies _without running the tests_.
 
-The [upload-artifact](https://github.com/marketplace/actions/upload-a-build-artifact) GitHub Action is included and will save the state of the `build` directory for the worker jobs.
+The [upload-artifact](https://github.com/marketplace/actions/upload-a-build-artifact) action will save the state of the `build` directory for the worker jobs.
 
 ```yaml
 name: Cypress Tests with installation job
