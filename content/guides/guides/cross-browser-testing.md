@@ -205,9 +205,16 @@ When considering to ignore or only run a particular test within a given browser,
 You can specify a browser to run or exclude by passing a matcher to the suite or test within the [test configuration](/guides/references/configuration#Test-Configuration). The `browser` option accepts the same arguments as [Cypress.isBrowser()](/api/cypress-api/isbrowser#Arguments).
 
 ```js
+// Run the test if Cypress is running
+// using the built-in Electron browser
+it('has access to clipboard', { browser: 'electron' }, () => {
+  ...
+})
+
 // Run the test if Cypress is run via Firefox
 it('Download extension in Firefox', { browser: 'firefox' }, () => {
-  cy.get('#dl-extension').should('contain', 'Download Firefox Extension')
+  cy.get('#dl-extension')
+    .should('contain', 'Download Firefox Extension')
 })
 
 // Run happy path tests if Cypress is run via Firefox
