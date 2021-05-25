@@ -102,7 +102,7 @@ The Cypress team maintains the official [Cypress GitHub Action](https://github.c
 
 <Alert type="info">
 
-Caching of dependencies and build artifacts between installation and worker jobs can be accomplished with the GitHub Actions [Upload/Download Artifact Actions](https://docs.github.com/en/actions/guides/storing-workflow-data-as-artifacts).
+Caching of dependencies and build artifacts between installation and worker jobs can be accomplished with the [Upload/Download Artifact Actions](https://docs.github.com/en/actions/guides/storing-workflow-data-as-artifacts).
 
 </Alert>
 
