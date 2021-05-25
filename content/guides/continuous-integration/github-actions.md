@@ -136,7 +136,7 @@ jobs:
           build: yarn build
 ```
 
-The [download-artifact](https://github.com/marketplace/actions/download-a-build-artifact) GitHub Action is included and will retrieve the `build` directory saved in the install job, as seen below in a worker job.
+The [download-artifact](https://github.com/marketplace/actions/download-a-build-artifact) action will retrieve the `build` directory saved in the install job, as seen below in a worker job.
 
 ```yaml
 name: Cypress Tests with Dependency and Artifact Caching
