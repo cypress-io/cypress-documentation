@@ -106,7 +106,7 @@ Caching of dependencies and build artifacts between installation and worker jobs
 
 </Alert>
 
-The `install` job below uses the [upload-artifact](https://github.com/marketplace/actions/upload-a-build-artifact) GitHub Action is included and will save the state of the `build` directory for the worker jobs.
+The `install` job below uses the [upload-artifact](https://github.com/marketplace/actions/upload-a-build-artifact) action and will save the state of the `build` directory for the worker jobs.
 
 ```yaml
 name: Cypress Tests with installation job
