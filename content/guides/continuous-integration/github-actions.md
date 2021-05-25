@@ -226,7 +226,7 @@ Next, we define the worker job named `ui-chrome-tests` that will run Cypress tes
 
 Using our [Cypress GitHub Action](https://github.com/marketplace/actions/cypress-io) we specify `install: false` since our dependencies and build were cached in our `install` job.
 
-The [download-artifact](https://github.com/marketplace/actions/download-a-build-artifact) GitHub Action is included and will retrieve the `build` directory saved in the install job.
+The [download-artifact](https://github.com/marketplace/actions/download-a-build-artifact) action will retrieve the `build` directory saved in the install job.
 
 </Alert>
 
