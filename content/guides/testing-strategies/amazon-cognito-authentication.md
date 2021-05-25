@@ -83,7 +83,7 @@ amplify push
 
 <strong class="alert-header">Note</strong>
 
-Use the `yarn dev:cogntio` command when starting the [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
+Use the `yarn dev:cognito` command when starting the [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
 
 </Alert>
 

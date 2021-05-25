@@ -60,6 +60,8 @@
       "network-requests": "Network Requests",
       "screenshots-and-videos": "Screenshots and Videos",
       "guides": "Guides",
+      "migrating-to-cypress": "Migrating to Cypress",
+      "protractor": "Protractor",
       "command-line": "Command Line",
       "test-retries": "Test Retries",
       "parallelization": "Parallelization",

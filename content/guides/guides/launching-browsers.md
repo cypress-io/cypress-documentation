@@ -11,8 +11,9 @@ When you run tests in Cypress, we launch a browser for you. This enables us to:
 
 When Cypress is initially run from the Test Runner, you can choose to run Cypress in a select number of browsers including:
 
-- [Canary](https://www.google.com/chrome/browser/canary.html)
-- [Chrome](https://www.google.com/chrome/browser/desktop/index.html)
+- [Chrome](https://www.google.com/chrome/)
+- [Chrome Beta](https://www.google.com/chrome/beta/)
+- [Chrome Canary](https://www.google.com/chrome/canary/)
 - [Chromium](https://www.chromium.org/Home)
 - [Edge](https://www.microsoft.com/edge)
 - [Edge Beta](https://www.microsoftedgeinsider.com/download)
@@ -65,6 +66,12 @@ You can also launch Chromium:
 
 ```shell
 cypress run --browser chromium
+```
+
+Or Chrome Beta:
+
+```shell
+cypress run --browser chrome:beta
 ```
 
 Or Chrome Canary:
