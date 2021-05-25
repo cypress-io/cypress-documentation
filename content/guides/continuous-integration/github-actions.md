@@ -98,7 +98,7 @@ jobs:
 
 ## Caching Dependencies and Build Artifacts
 
-The Cypress team maintains the official [Cypress GitHub Action](https://github.com/marketplace/actions/cypress-io) for running Cypress tests. This action provides npm installation, custom caching, additional configuration options and simplifies setup of advanced workflows with Cypress in the GitHub Actions platform.
+The Cypress team maintains the official [Cypress GitHub Action](https://github.com/marketplace/actions/cypress-io) for running Cypress tests. This action provides npm installation, custom caching, additional configuration options and simplifies setting up advanced workflows with Cypress in the GitHub Actions platform.
 
 <Alert type="info">
 
