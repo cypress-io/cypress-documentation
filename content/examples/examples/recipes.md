@@ -39,13 +39,15 @@ Recipes show you how to test common scenarios in Cypress.
 | [Form Interactions](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__form-interactions)              | Test form elements like input type `range`                                   |
 | [Drag and Drop](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__drag-drop)                          | Use `.trigger()` to test drag and drop                                       |
 | [Shadow DOM](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__shadow-dom)                            | Test elements within shadow DOM                                              |
-| [Website monitoring](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__performance-metrics)           | Utilize `cypress` to monitor your website                                    |
 | [Waiting for static resource](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__wait-for-resource)    | Shows how to wait for CSS, image, or any other static resource to load       |
 | [CSV load and table test](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__csv-table)                | Loads CSV file and compares objects against cells in a table                 |
 | [Evaluate performance metrics](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__performance-metrics) | Utilize Cypress to monitor a website                                         |
 | [Root style](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__root-style)                            | Trigger input color change that modifies CSS variable                        |
 | [Select widgets](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__select2)                           | Working with `<select>` elements and [Select2](https://select2.org/) widgets |
-| [File download](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__download)                           | Download and validate files                                                  |
+| [Lit Elements](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/testing-dom__lit-element)                         | Testing Lit Elements with Shadow DOM                                         |
+| [File download](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__download)                           | Download and validate CSV, Excel, text, Zip, and image files                 |
+| [Page reloads](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/testing-dom__page-reloads)                        | Avoiding `while` loop when dealing with randomness                           |
+| [Pagination](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__pagination)                            | Clicking the "Next" link until we reach the last page                        |
 
 ## Logging In
 
