@@ -92,6 +92,9 @@ Demo recipes from the blog posts at [Cypress blog](https://www.cypress.io/blog).
 | [Expect N assertions](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__assertion-counting)             | How to expect a certain number of assertions in a test                                                            |
 | [Browser notifications](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__notification)                 | How to test application that uses [`Notification`](https://developer.mozilla.org/en-US/docs/Web/API/notification) |
 | [Testing iframes](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__iframes)                            | Accessing elements in 3rd party iframe, spy and stub network calls from iframe                                    |
+| [Class decorators](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/blogs__class-decorator)                   | Using JavaScript class decorator to expose objects created by the application so they are reachable from tests    |
+| [Form Submit](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__form-submit)                            | Removing flake from the test where a page is reloaded after form submission                                       |
+| [Using Day.js instead of Moment.js](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__dayjs)            | Using [day.js](https://day.js.org/) library instead of the deprecated `Cypress.moment`                            |
 
 ## Stubbing and spying
 
