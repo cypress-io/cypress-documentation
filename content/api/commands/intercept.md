@@ -2,17 +2,13 @@
 title: intercept
 ---
 
-Cypress routes all HTTP traffic initiated with `XMLHttpRequest` (XHR) and `fetch` through its proxy. `cy.intercept` can be used to capture or even change the behavior or contents of this traffic, including:
+`cy.intercept` can be used to capture or even change the behavior or contents of network traffic.
 
-- Waiting on HTTP request-response sessions to complete.
-- Statically or dynamically modifying
-  - requests made by your front-end application.
-  - responses from your back-end service.
-- Making assertions on requests or responses.
-- Mocking all or some of your backend API by stubbing out responses.
-- Simulating different client connections by throttling data transfer rates.
-- Simulating back-end service bottlenecks by adding a response delays.
-- Simulating 3rd-party API outages or other problems by forcing network errors.
+<Alert type="warning">
+
+We highly recommend you read the [Network Requests](/guides/guides/network-requests) guide first.
+
+</Alert>
 
 <Alert type="warning">
 
@@ -20,17 +16,23 @@ Cypress routes all HTTP traffic initiated with `XMLHttpRequest` (XHR) and `fetch
 
 </Alert>
 
-## Usage
-
-#### Spying only
-
-`cy.intercept` can be used solely for spying: to passively listen for matching routes and apply [aliases](#Aliasing-a-Route) to them without manipulating the request or its response in any way. This alone is powerful as it allows you to [wait](#Waiting-on-a-request) for these requests, resulting in more reliable tests.
+## Syntax
 
 ```js
 cy.intercept(url)
 cy.intercept(method, url)
 cy.intercept(routeMatcher)
+cy.intercept(url, staticResponse)
+cy.intercept(method, url, staticResponse)
+cy.intercept(routeMatcher, staticResponse)
+cy.intercept(url, routeMatcher, staticResponse)
+cy.intercept(url, routeHandler)
+cy.intercept(method, url, routeHandler)
+cy.intercept(routeMatcher, routeHandler)
+cy.intercept(url, routeMatcher, routeHandler)
 ```
+
+### Usage
 
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
@@ -42,22 +44,6 @@ cy.intercept({
   url: '/users*',
   hostname: 'localhost',
 })
-```
-
-#### Response Stubbing and Spying
-
-Specify a response as the last argument to stub a response to the request.
-
-```js
-cy.intercept(url, staticResponse)
-cy.intercept(method, url, staticResponse)
-cy.intercept(routeMatcher, staticResponse)
-cy.intercept(url, routeMatcher, staticResponse)
-```
-
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
-
-```js
 cy.intercept(
   {
     method: 'POST',
@@ -70,22 +56,6 @@ cy.intercept(
     },
   }
 )
-```
-
-#### Request/Response Handling and Spying
-
-By specifying [`routeHandler`][arg-routehandler] as the last argument to `cy.intercept`, you'll have access to the entire request-response session, enabling you to modify the outgoing request, manipulate the real response, make assertions, etc.
-
-```js
-cy.intercept(url, routeHandler)
-cy.intercept(method, url, routeHandler)
-cy.intercept(routeMatcher, routeHandler)
-cy.intercept(url, routeMatcher, routeHandler)
-```
-
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
-
-```js
 cy.intercept('/users*', { hostname: 'localhost' }, (req) => {
   /* do something with request and/or response */
 })
@@ -174,6 +144,12 @@ See ["Intercepted requests"][req] and [Request/Response Modification with `route
 - Waiting on an aliased `cy.intercept()` route using [cy.wait()](/api/commands/wait) will yield an object that contains information about the matching request/response cycle. See [Using the yielded object](#Using-the-yielded-object) for examples of how to use this object.
 
 ## Examples
+
+<Alert type="info">
+
+`cy.intercept` can be used solely for spying: to passively listen for matching routes and apply [aliases](#Aliasing-a-Route) to them without manipulating the request or its response in any way. This alone is powerful as it allows you to [wait](#Waiting-on-a-request) for these requests, resulting in more reliable tests.
+
+</Alert>
 
 ### Matching `url`
 
@@ -370,6 +346,12 @@ cy.intercept('/not-found', {
 See ["`StaticResponse` objects"][staticresponse] for more information on `StaticResponse`s.
 
 ### Intercepting a request
+
+<Alert type="info">
+
+By specifying [`routeHandler`][arg-routehandler] as the last argument to `cy.intercept`, you'll have access to the entire request-response session, enabling you to modify the outgoing request, manipulate the real response, make assertions, etc.
+
+</Alert>
 
 #### Asserting on a request
 
