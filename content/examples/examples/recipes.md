@@ -98,14 +98,17 @@ Demo recipes from the blog posts at [Cypress blog](https://www.cypress.io/blog).
 
 ## Stubbing and spying
 
-| Recipe                                                                                                                                    | Description                                                     |
-| ----------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| [Stubbing Functions](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__functions)               | Use `cy.stub()` to test function calls                          |
-| [Stubbing `window.fetch`](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__window-fetch)       | Use `cy.stub()` to control fetch requests                       |
-| [Stub methods called on `window`](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__window)     | Use `cy.stub()` for methods called on `window`                  |
-| [Stubbing Google Analytics](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__google-analytics) | Use `cy.stub()` to test Google Analytics calls                  |
-| [Stub methods called on `console`](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__console)   | Use `cy.stub()` to test and control methods called on `console` |
-| [Stub resource loading](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing__resources)                   | Use `MutationObserver` to stub resource loading like `img` tags |
+| Recipe                                                                                                                                         | Description                                                           |
+| ---------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| [Stubbing Functions](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__functions)                    | Use `cy.stub()` to test function calls                                |
+| [Stubbing `window.fetch`](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__window-fetch)            | Use `cy.stub()` to control fetch requests                             |
+| [Stubbing using`cy.intercept`](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__intercept)          | Control network using `cy.intercept` API                              |
+| [Stubbing `window.open` and `console.log`](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__window) | Use `cy.stub()` and `cy.spy()` to test application behavior           |
+| [Stubbing `window.print`](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__window-print)            | Use `cy.stub() `to test `window.print` call made from the application |
+| [Stubbing Google Analytics](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__google-analytics)      | Use `cy.stub()` and `cy.intercept()` to test Google Analytics calls   |
+| [Stub methods called on `console`](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__console)        | Use `cy.stub()` to test and control methods called on `console`       |
+| [Stub resource loading](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing__resources)                        | Use `MutationObserver` to stub resource loading like `img` tags       |
+| [Stub `navigator.cookieEnabled` property](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing__navigator)      | Use `cy.stub()` to mock the `navigator.cookieEnabled` property        |
 
 ## Unit Testing
 
