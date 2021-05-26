@@ -121,11 +121,18 @@ Demo recipes from the blog posts at [Cypress blog](https://www.cypress.io/blog).
 
 ## Server Communication
 
-| Recipe                                                                                                                                                     | Description                                   |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| [Bootstrapping your App](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__bootstrapping-your-app)          | Seed your application with test data          |
-| [Seeding your Database in Node](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__seeding-database-in-node) | Seed your database with test data             |
-| [XHR assertions](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__xhr-assertions)                          | Spy and assert on application's network calls |
+| Recipe                                                                                                                                                     | Description                                                                                                                  |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| [Bootstrapping your App](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__bootstrapping-your-app)          | Seed your application with test data                                                                                         |
+| [Seeding your Database in Node](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__seeding-database-in-node) | Seed your database with test data                                                                                            |
+| [XHR assertions](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__xhr-assertions)                          | Spy and assert on application's network calls                                                                                |
+| [Visiting 2nd domain](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/server-communication__visit-2nd-domain)                   | Visiting two different domains from two different tests and passing value from one test to another                           |
+| [Pass value between specs](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/server-communication__pass-value-between-specs)      | Pass a value from spec to spec via the plugin file using `cy.task`                                                           |
+| [Stream test results](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/server-communication__stream-tests)                       | Streams each test result from the browser to the plugins to an external process via IPC                                      |
+| [Offline](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/server-communication__offline)                                        | Test web application when the network is offline                                                                             |
+| [Server timing](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/server-communication__server-timing)                            | Report server timing results from Cypress test                                                                               |
+| [Wait for API](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/server-communication__wait-for-api)                              | Call the backend using `cy.request` until it responds                                                                        |
+| [Making HTTP requests](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/server-communication__request)                           | How to use `cy.request`, `window.fetch`, and `cy.task` commands to make HTTP requests to the server with and without cookies |
 
 ## Other Cypress Recipes
 
