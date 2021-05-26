@@ -53,6 +53,7 @@ Recipes show you how to test common scenarios in Cypress.
 
 | Recipe                                                                                                                          | Description                                 |
 | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| [Basic Auth](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__basic-auth)                 | Log in using Basic Authentication           |
 | [Single Sign On](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__single-sign-on)         | Log in across multiple servers or providers |
 | [HTML Web Forms](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__html-web-forms)         | Log in with a basic HTML form               |
 | [XHR Web Forms](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/logging-in__xhr-web-forms)           | Log in using an XHR                         |
@@ -64,10 +65,12 @@ Also see [Authentication plugins](/plugins/directory#authentication) and watch [
 
 ## Preprocessors
 
-| Recipe                                                                                                                            | Description                                         |
-| --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
-| [Grep tests](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__grep)                      | Filter tests by name using Mocha-like `grep` syntax |
-| [Flow with Browserify](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__flow-browserify) | Add flow support with Browserify                    |
+| Recipe                                                                                                                                        | Description                                         |
+| --------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| [Grep tests](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__grep)                                  | Filter tests by name using Mocha-like `grep` syntax |
+| [Typescript with Browserify](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/preprocessors__typescript-browserify) | Add typescript support with browserify              |
+| [Typescript with Webpack](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/preprocessors__typescript-webpack)       | Add typescript support with webpack                 |
+| [Flow with Browserify](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__flow-browserify)             | Add flow support with Browserify                    |
 
 ## Blogs
 
