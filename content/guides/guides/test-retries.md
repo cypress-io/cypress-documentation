@@ -189,6 +189,38 @@ describe('User Login', () => {
 
 ```
 
+## Videos
+
+You can use Cypress's [`after:spec`](/api/plugins/after-spec-api) event listener that fires after each spec file is run to delete the recorded video for specs that had no retry attempts or failures. Deleting passing and non-retried videos after the run can save resource space on the machine as well as skip the time used to process, compress, and upload the video to the [Dashboard Service](/guides/dashboard/introduction).
+
+### Only upload videos for specs with failing or retried tests
+
+The example below shows how to delete the recorded video for specs that had no retry attempts or failures when using Cypress test retries.
+
+```js
+// plugins/index.js
+
+// need to install these dependencies
+// npm i lodash del --save-dev
+const _ = require('lodash')
+const del = require('del')
+
+module.exports = (on, config) => {
+  on('after:spec', (spec, results) => {
+    if (results && results.video) {
+      // Do we have failures for any retry attempts?
+      const failures = _.some(results.tests, (test) => {
+        return _.some(test.attempts, { state: 'failed' })
+      })
+      if (!failures) {
+        // delete the video if the spec passed and no tests retried
+        return del(results.video)
+      }
+    }
+  })
+}
+```
+
 ## Dashboard
 
 If you are using the [Cypress Dashboard](/guides/dashboard/introduction), information related to test retries is displayed on the Test Results tab for a run. Selecting the Flaky filter will show tests that retried and then passed during the run.

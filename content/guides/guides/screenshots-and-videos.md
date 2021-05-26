@@ -71,6 +71,42 @@ If you are an FFmpeg pro and want to see all the settings and debug messages dur
 
 </Alert>
 
+### Control which videos to keep and upload to Dashboard
+
+You may want to have more control over which videos you want to keep and upload to the Dashboard. Deleting videos after the run can save resource space on the machine as well as skip the time used to process, compress, and upload the video to the [Dashboard Service](/guides/dashboard/introduction).
+
+To only process videos in the case that a tests fail, you can set the [`videoUploadOnPasses`](/guides/references/configuration#Videos) configuration option to `false`.
+
+For more fine grained control, you can use Cypress's [`after:spec`](/api/plugins/after-spec-api) event listener that fires after each spec file is run and delete the video when certain conditions are met.
+
+#### Only upload videos for specs with failing or retried tests
+
+The example below shows how to delete the recorded video for specs that had no retry attempts or failures when using Cypress [test retries](/guides/guides/test-retries).
+
+```js
+// plugins/index.js
+
+// need to install these dependencies
+// npm i lodash del --save-dev
+const _ = require('lodash')
+const del = require('del')
+
+module.exports = (on, config) => {
+  on('after:spec', (spec, results) => {
+    if (results && results.video) {
+      // Do we have failures for any retry attempts?
+      const failures = _.some(results.tests, (test) => {
+        return _.some(test.attempts, { state: 'failed' })
+      })
+      if (!failures) {
+        // delete the video if the spec passed and no tests retried
+        return del(results.video)
+      }
+    }
+  })
+}
+```
+
 ## Now What?
 
 So you are capturing screenshots and recording videos of your test runs, now what?
