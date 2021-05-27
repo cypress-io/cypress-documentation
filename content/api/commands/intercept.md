@@ -52,18 +52,12 @@ cy.intercept({
   url: '/users*',
   hostname: 'localhost',
 })
-cy.intercept(
-  {
-    method: 'POST',
-    url: '/users*',
+cy.intercept('POST', '/users*', {
+  statusCode: 201,
+  body: {
+    name: 'Peter Pan',
   },
-  {
-    statusCode: 201,
-    body: {
-      name: 'Peter Pan',
-    },
-  }
-)
+})
 cy.intercept('/users*', { hostname: 'localhost' }, (req) => {
   /* do something with request and/or response */
 })
