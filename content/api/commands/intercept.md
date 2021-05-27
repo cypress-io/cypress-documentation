@@ -123,7 +123,7 @@ See [Stubbing a response with a `StaticResponse` object](#With-a-StaticResponse-
 
 #### <Icon name="angle-right"></Icon> routeHandler (<code>Function</code>)
 
-The `routeHandler` function will be called whenever a request is matched, with the first parameter being the request object. From inside the callback, you have access to the entire request-response sesssion where you can modify the outgoing request, send a response, access the real response, and more.
+The `routeHandler` function is called whenever a request is matched, with the first argument being the request object. From inside the callback, you have access to the entire request-response where you can modify the outgoing request, send a response, access the real response, and more.
 
 See ["Intercepted requests"][req] and [Request/Response Modification with `routeHandler`](#Request-Response-Modification-with-routeHandler).
 
