@@ -2,7 +2,7 @@
 title: intercept
 ---
 
-`cy.intercept` can be used to capture and even change the behavior or contents of network requests and responses.
+Capture or change the behavior or contents of network requests and responses.
 
 <Alert type="warning">
 
