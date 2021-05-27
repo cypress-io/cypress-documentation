@@ -79,7 +79,7 @@ Alternatively, specify the URL via the [`routeMatcher`][arg-routematcher] argume
 
 `routeMatcher` is an object used to match the incoming HTTP requests with this intercepted route.
 
-All properties are optional but all those that are set must match for the request to be intercepted. And if a `string` is passed to any property, it will be glob-matched against the request using [`Cypress.minimatch`](/api/utilities/minimatch).
+All properties are optional but all those that are set must match for the request to be intercepted. If a `string` is passed to any property, it will be glob-matched against the request using [`Cypress.minimatch`](/api/utilities/minimatch).
 
 | Option     | Description                                                                                     |
 | ---------- | ----------------------------------------------------------------------------------------------- |
@@ -100,7 +100,7 @@ See [examples](#With-RouteMatcher) below.
 
 #### <Icon name="angle-right"></Icon> staticResponse (<code>[StaticResponse][staticresponse]</code>)
 
-By passing in a `StaticResponse` as the last argument, you can [statically define (stub) a response](#Stubbing-a-response) for matching requests including the body of the response, as well as the headers and HTTP status code:
+By passing in a `StaticResponse` as the last argument, you can [statically define (stub) a response](#Stubbing-a-response) for matched requests including the body of the response, as well as the headers and HTTP status code:
 
 | Option     | Description                                            |
 | ---------- | ------------------------------------------------------ |
