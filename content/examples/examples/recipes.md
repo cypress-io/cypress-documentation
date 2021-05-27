@@ -48,6 +48,7 @@ Recipes show you how to test common scenarios in Cypress.
 | [File download](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__download)                           | Download and validate CSV, Excel, text, Zip, and image files                 |
 | [Page reloads](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/testing-dom__page-reloads)                        | Avoiding `while` loop when dealing with randomness                           |
 | [Pagination](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__pagination)                            | Clicking the "Next" link until we reach the last page                        |
+| [Clipboard](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__clipboard)                              | Copy and paste text into the clipboard from the test                         |
 
 ## Logging In
 
