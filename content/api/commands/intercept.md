@@ -22,10 +22,12 @@ We highly recommend you read the [Network Requests](/guides/guides/network-reque
 cy.intercept(url)
 cy.intercept(method, url)
 cy.intercept(routeMatcher)
+
 cy.intercept(url, staticResponse)
 cy.intercept(method, url, staticResponse)
 cy.intercept(routeMatcher, staticResponse)
 cy.intercept(url, routeMatcher, staticResponse)
+
 cy.intercept(url, routeHandler)
 cy.intercept(method, url, routeHandler)
 cy.intercept(routeMatcher, routeHandler)
