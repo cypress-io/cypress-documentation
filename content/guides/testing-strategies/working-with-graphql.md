@@ -28,33 +28,23 @@ First, we'll create a set of utility functions to help match and alias our queri
 // utils/graphql-test-utils.js
 
 // Utility to match GraphQL mutation based on the operation name
-export const hasMutation = (req, operationName) => {
+export const hasOperationName = (req, operationName) => {
   const { body } = req
   return (
-    body.hasOwnProperty('query') &&
-    body.query.includes(`mutation ${operationName}`)
-  )
-}
-
-// Utility to match GraphQL query based on the operation name
-export const hasQuery = (req, operationName) => {
-  const { body } = req
-  return (
-    body.hasOwnProperty('query') &&
-    body.query.includes(`query ${operationName}`)
+    body.hasOwnProperty('operationName') && body.operationName === operationName
   )
 }
 
 // Alias query if operationName matches
 export const aliasQuery = (req, operationName) => {
-  if (hasQuery(req, operationName)) {
+  if (hasOperationName(req, operationName)) {
     req.alias = `gql${operationName}Query`
   }
 }
 
 // Alias mutation if operationName matches
 export const aliasMutation = (req, operationName) => {
-  if (hasMutation(req, operationName)) {
+  if (hasOperationName(req, operationName)) {
     req.alias = `gql${operationName}Mutation`
   }
 }
@@ -65,7 +55,7 @@ In our test file, we can import these utilities and use them to alias the querie
 ```js
 // app.spec.js
 import {
-  hasQuery,
+  hasOperationName,
   aliasQuery,
   aliasMutation,
 } from '../utils/graphql-test-utils'
@@ -93,7 +83,7 @@ Expectations can be made against the response of an intercepted GraphQL query or
 
 ```js
 // app.spec.js
-import { hasQuery, aliasQuery } from '../utils/graphql-test-utils'
+import { hasOperationName, aliasQuery } from '../utils/graphql-test-utils'
 
 context('Tests', () => {
   beforeEach(() => {
@@ -122,7 +112,7 @@ In the test below, the response is modified to test the UI for a single page of 
 
 ```js
 // app.spec.js
-import { hasQuery, aliasQuery } from '../utils/graphql-test-utils'
+import { hasOperationName, aliasQuery } from '../utils/graphql-test-utils'
 
 context('Tests', () => {
   beforeEach(() => {
@@ -137,7 +127,7 @@ context('Tests', () => {
   it('should not display the load more button on the launches page', () => {
     cy.intercept('POST', apiGraphQL, (req) => {
       const { body } = req
-      if (hasQuery(req, 'GetLaunchList')) {
+      if (hasOperationName(req, 'GetLaunchList')) {
         // Declare the alias from the initial intercept in the beforeEach
         req.alias = 'gqlGetLaunchListQuery'
 
