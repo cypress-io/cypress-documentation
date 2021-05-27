@@ -2,7 +2,7 @@
 title: intercept
 ---
 
-`cy.intercept` can be used to capture or even change the behavior or contents of network traffic.
+`cy.intercept` can be used to capture and even change the behavior or contents of network requests and responses.
 
 <Alert type="warning">
 
@@ -13,6 +13,12 @@ We highly recommend you read the [Network Requests](/guides/guides/network-reque
 <Alert type="warning">
 
 `cy.intercept()` is the successor to `cy.route()` as of Cypress 6.0.0. See [Comparison to `cy.route`](#Comparison-to-cy-route).
+
+</Alert>
+
+<Alert type="warning">
+
+All intercepts are automatically cleared before every test.
 
 </Alert>
 
@@ -63,29 +69,17 @@ cy.intercept('/users*', { hostname: 'localhost' }, (req) => {
 })
 ```
 
-<Alert type="warning">
-
-All intercepts are automatically cleared before every test.
-
-</Alert>
-
 ### Arguments
 
 #### **<Icon name="angle-right"></Icon> method** **_(String)_**
 
-Specify the [HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`, etc.) to match on.
-
-<Alert type="bolt">
-
-If no `method` is provided, Cypress will match _any_ HTTP method (`*`) by default.
-
-</Alert>
+Specify the [HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`, etc.) to match on. This is an optional argument, but if no `method` is provided, Cypress will match _any_ HTTP method (`*`) by default.
 
 #### **<Icon name="angle-right"></Icon> url** **_(String, Glob, RegExp)_**
 
 Specify the URL to match. See [Matching `url`](#match-url) for examples.
 
-**Note:** This value can be passed in via [`routeMatcher`][arg-routematcher] instead.
+Alternatively, specify the URL via the [`routeMatcher`][arg-routematcher] argument (below).
 
 #### **<Icon name="angle-right"></Icon> routeMatcher** **_(`RouteMatcher`)_**
 
