@@ -1,5 +1,6 @@
 const SIDEBAR = './content/_data/sidebar.json'
 const SIDEBAR_EN = './content/_data/en.json'
+const { getTitle } = require('../../utils')
 
 describe('Guides', () => {
   beforeEach(() => {
@@ -15,7 +16,17 @@ describe('Guides', () => {
         cy.wrap(sidebarCategories).each((category) => {
           const pages = Object.keys(sidebarGuides[category])
 
-          cy.get('.app-sidebar').contains(guides[category])
+          cy.get('.app-sidebar')
+            .contains(guides[category])
+            .then(($category) => {
+              cy.get(`[data-test="${guides[category]}-children"]`).then(
+                ($ul) => {
+                  if ($ul.hasClass('hidden')) {
+                    cy.wrap($category).scrollIntoView().click()
+                  }
+                }
+              )
+            })
 
           cy.wrap(pages).each((page) => {
             /**
@@ -25,6 +36,7 @@ describe('Guides', () => {
              */
             const titleMismatches = {
               'dashboard-introduction': 'Dashboard',
+              'protractor-to-cypress': 'Migrating from Protractor to Cypress',
             }
 
             const pageTitle = titleMismatches[page] || guides[page]
@@ -64,7 +76,14 @@ describe('Guides', () => {
               'nuxt-link-exact-active nuxt-link-active active-sidebar-link'
             )
 
-            cy.title().should('equal', pageTitle)
+            const titleExceptionMap = {
+              Protractor: 'Migrating from Protractor to Cypress',
+            }
+
+            cy.title().should(
+              'equal',
+              getTitle(titleExceptionMap[pageTitle] || pageTitle)
+            )
 
             cy.get('.main-content-title').contains(pageTitle)
 

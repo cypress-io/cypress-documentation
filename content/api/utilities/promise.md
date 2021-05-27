@@ -92,7 +92,7 @@ window.addEventListener('unhandledrejection', (event) => {
 })
 ```
 
-**Note:** because this is the test `window` object, such listeners are NOT reset before every test. You can register such listener once using `before` hook in the spec file.
+**Note:** because this is the test `window` object, such listeners are NOT reset before every test. You can register such listeners once using the `before` hook in the spec file.
 
 ## See also
 

@@ -24,6 +24,14 @@ If the text contains a [non-breaking space](https://en.wikipedia.org/wiki/Non-br
 cy.get('div').should('have.text', 'Hello\u00a0world')
 ```
 
+You can also use the [cy.contains](/api/commands/contains) command which handles the non-breaking space entities
+
+```javascript
+cy.contains('div', 'Hello world')
+```
+
+**Tip:** watch the [Confirming the text with non breaking space entity](https://youtu.be/6CxZuolWlYM) video.
+
 If you'd like to work with the text prior to an assertion:
 
 ```javascript
@@ -478,7 +486,7 @@ It is possible to upload files in your application but it's different based on h
 cy.get('[data-cy="file-input"]').attachFile('data.json')
 ```
 
-You can read more about uploading files [here](https://github.com/cypress-io/cypress/issues/170).
+You can read more about uploading files in [this issue](https://github.com/cypress-io/cypress/issues/170).
 
 ## <Icon name="angle-right"></Icon> What is the projectId for?
 
@@ -512,12 +520,24 @@ Don't try to use your UI to check email. Instead opt to programmatically use 3rd
 
 </Alert>
 
+1. If your application is running locally and is sending the emails directly through an SMTP server, you can use a temporary local test SMTP server running inside Cypress Test Runner. Read the blog post ["Testing HTML Emails using Cypress"](https://www.cypress.io/blog/2021/05/11/testing-html-emails-using-cypress/) for details.
+2. If your application is using a 3rd party email service, or you cannot stub the SMTP requests, you can use a test email inbox with an API access. Read the blog post ["Full Testing of HTML Emails using SendGrid and Ethereal Accounts"](https://www.cypress.io/blog/2021/05/24/full-testing-of-html-emails-using-ethereal-accounts/) for details.
+
+Cypress can even load the received HTML email in its browser to verify the email's functionality and visual style:
+
+<DocsImage
+  src="/img/guides/references/email-test.png"
+  title="The HTML email loaded during the test"
+  alt="The test finds and clicks the Confirm registration button"></DocsImage>
+
+3. You can use a 3rd party email service that provides temporary email addresses for testing. Some of these services even offer a [Cypress plugin](/plugins/directory#Email) to access emails.
+
 ## <Icon name="angle-right"></Icon> How do I wait for multiple requests to the same url?
 
 You should set up an alias (using [`.as()`](/api/commands/as)) to a single [`cy.intercept()`](/api/commands/intercept) that matches all of the XHRs. You can then [`cy.wait()`](/api/commands/wait) on it multiple times. Cypress keeps track of how many matching requests there are.
 
 ```javascript
-cy.intercept('users').as('getUsers')
+cy.intercept('/users*').as('getUsers')
 cy.wait('@getUsers') // Wait for first GET to /users/
 cy.get('#list>li').should('have.length', 10)
 cy.get('#load-more-btn').click()
@@ -532,8 +552,6 @@ You can use [`cy.request()`](/api/commands/request), [`cy.exec()`](/api/commands
 You could also stub requests directly using [`cy.intercept()`](/api/commands/intercept) which avoids ever even needing to fuss with your database.
 
 ## <Icon name="angle-right"></Icon> How do I test elements inside an iframe?
-
-As of [0.20.0](https://github.com/cypress-io/cypress/issues/136#issuecomment-328100955) you can now wrap the elements of an iframe and work with them.
 
 We have an [open proposal](https://github.com/cypress-io/cypress/issues/685) to expand the APIs to support "switching into" an iframe and then back out of them.
 
@@ -551,7 +569,7 @@ Cypress.Cookies.defaults({
 })
 ```
 
-You **cannot** currently preserve localStorage across tests and can read more [here](https://github.com/cypress-io/cypress/issues/'461#issuecomment-325402086').
+You **cannot** currently preserve localStorage across tests and can read more in [this issue](https://github.com/cypress-io/cypress/issues/461#issuecomment-325402086).
 
 ## <Icon name="angle-right"></Icon> Some of my elements animate in; how do I work around that?
 
@@ -668,7 +686,9 @@ No. You cannot add a `.catch` error handler to a failed command. [Read more abou
 
 ## <Icon name="angle-right"></Icon> Is there a way to modify the screenshots/video resolution?
 
-Not at the moment. [There is an open issue for this.](https://github.com/cypress-io/cypress/issues/587)
+There is an [open issue](https://github.com/cypress-io/cypress/issues/587) for more easily configuring this.
+
+You can modify the screenshot and video size when running headlessly with [this workaround](/api/plugins/browser-launch-api#Set-screen-size-when-running-headless).
 
 ## <Icon name="angle-right"></Icon> Does Cypress support ES7?
 
@@ -690,11 +710,13 @@ Yes! Check out our [ESLint plugin](https://github.com/cypress-io/eslint-plugin-c
 
 ## <Icon name="angle-right"></Icon> When I visit my site directly, the certificate is verified, however the browser launched through Cypress is showing it as "Not Secure". Why?
 
-This is normal. Cypress modifies the traffic between your server and the browser. The browser notices this and displays a certificate warning. However, this is purely cosmetic and does not alter the way your application under test runs in any way, so you can safely ignore this warning.
+When using Cypress to test an HTTPS site, you might see a browser warning next to the browser URL. This is normal. Cypress modifies the traffic between your server and the browser. The browser notices this and displays a certificate warning. However, this is purely cosmetic and does not alter the way your application under test runs in any way, so you can safely ignore this warning. The network traffic between Cypress and the backend server still happens via HTTPS.
+
+See also the [Web Security](/guides/guides/web-security) guide.
 
 ## <Icon name="angle-right"></Icon> Is there an option to run Cypress in CI with Developer Tools open? We want to track network and console issues.
 
-No. This is definitely the motivation behind [this open issue](https://github.com/cypress-io/cypress/issues/448), but there is not a way to run Cypress in `cypress run` with Developer Tools open.
+No. There is not currently a way to run Cypress in `cypress run` with Developer Tools open. Refer to [this issue](https://github.com/cypress-io/cypress/issues/2024) if you'd like this feature.
 
 You may try running the tests locally and [select the Electron browser](/guides/guides/launching-browsers#Electron-Browser), that is as close as you will get with Developer Tools open and replicating the environment that was run during `cypress run`.
 
@@ -712,7 +734,7 @@ That being said, we use Cypress to test our own Desktop app's front end - by stu
 
 - Search existing [open issues](https://github.com/cypress-io/cypress/issues), it may already be reported!
 - Update Cypress. Your issue may have [already been fixed](/guides/references/changelog).
-- [open an issue](https://github.com/cypress-io/cypress/issues/new). Your best chance of getting a bug looked at quickly is to provide a repository with a reproducible bug that can be cloned and run.
+- [open an issue](https://github.com/cypress-io/cypress/issues/new/choose). Your best chance of getting a bug looked at quickly is to provide a repository with a reproducible bug that can be cloned and run.
 
 ## <Icon name="angle-right"></Icon> What are your best practices for organizing tests?
 
@@ -729,7 +751,7 @@ There is already a great section in [Custom Commands](/api/cypress-api/custom-co
 
 ## <Icon name="angle-right"></Icon> Can I print the list of commands from a test in the terminal?
 
-If a test fails, Cypress takes a screenshot image, but does not print the list of commands in the terminal, only the failed assertion. There is a user space plugin [cypress-failed-log](https://github.com/bahmutov/cypress-failed-log) that saves a JSON file with all commands from a failed test. We are also working on mirroring `console.log` messages from the browser in the terminal, see [#2078](https://github.com/cypress-io/cypress/issues/2078).
+If a test fails, Cypress takes a screenshot image, but does not print the list of commands in the terminal, only the failed assertion. There is a user space plugin [cypress-failed-log](https://github.com/bahmutov/cypress-failed-log) that saves a JSON file with all commands from a failed test.
 
 ## <Icon name="angle-right"></Icon> Can my tests interact with Redux / Vuex data store?
 

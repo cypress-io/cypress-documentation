@@ -3,9 +3,8 @@ import AppSidebar from '@/components/AppSidebar'
 import AppHeader from '@/components/AppHeader'
 import TableOfContentsList from '@/components/TableOfContentsList'
 import Footer from '@/components/Footer'
-import { getMetaData } from '../../../utils/getMetaData'
-import { getMetaDescription } from '../../../utils/getMetaDescription'
-
+import { getMetaData, getMetaDescription, getTitle } from '../../../utils'
+import { fetchBanner } from '../../../utils/sanity'
 
 export default {
   components: {
@@ -23,28 +22,30 @@ export default {
       sidebar: { guides: userFriendlyNameMap },
     } = await $content('_data/en').fetch()
 
-    const items = Object.keys(sidebar).map((key) => {return {
-      label: userFriendlyNameMap[key],
-      badge: '',
-      children: Object.keys(sidebar[key]).map((nestedKey) => {
-        let slug = nestedKey
+    const items = Object.keys(sidebar).map((key) => {
+      return {
+        label: userFriendlyNameMap[key],
+        badge: '',
+        children: Object.keys(sidebar[key]).map((nestedKey) => {
+          let slug = nestedKey
 
-        // Some slugs might not match the file name exactly.
-        // E.g. "dashboard-introduction.md" doesn't exist, but "introduction.md"
-        // within the "dashboard" directory does. This checks for instances of
-        // the directory name being included in the file name, and if so, removes it
-        // from the slug.
-        if (nestedKey.includes(key)) {
-          slug = nestedKey.replace(`${key}-`, '')
-        }
+          // Some slugs might not match the file name exactly.
+          // E.g. "dashboard-introduction.md" doesn't exist, but "introduction.md"
+          // within the "dashboard" directory does. This checks for instances of
+          // the directory name being included in the file name, and if so, removes it
+          // from the slug.
+          if (nestedKey.includes(key)) {
+            slug = nestedKey.replace(`${key}-`, '')
+          }
 
-        return {
-          slug,
-          label: userFriendlyNameMap[nestedKey],
-        }
-      }),
-      folder: key,
-    }})
+          return {
+            slug,
+            label: userFriendlyNameMap[nestedKey],
+          }
+        }),
+        folder: key,
+      }
+    })
 
     if (!guide) {
       return error({ statusCode: 404, message: 'Guide not found' })
@@ -52,8 +53,12 @@ export default {
 
     const toc = guide.toc.filter((item) => item.depth === 2)
 
-    const [rawContent] = await $content({ deep: true, text: true }).where({ path }).fetch()
+    const [rawContent] = await $content({ deep: true, text: true })
+      .where({ path })
+      .fetch()
     const metaDescription = await getMetaDescription(rawContent.text)
+
+    const banner = await fetchBanner()
 
     return {
       algoliaSettings,
@@ -61,32 +66,33 @@ export default {
       guideSidebar: items,
       path: 'references/best-practices',
       metaDescription,
+      banner,
     }
   },
   head() {
     return {
-      title: this.guide.title,
+      title: getTitle(this.guide.title),
       meta: this.meta,
       link: [
         {
           hid: 'canonical',
           rel: 'canonical',
-          href: `https://docs.cypress.io/guides/${this.path}`
-        }
-      ]
+          href: `https://docs.cypress.io/guides/${this.path}`,
+        },
+      ],
     }
   },
   computed: {
     meta() {
       const metaData = {
         type: 'article',
-        title: this.guide.title,
+        title: getTitle(this.guide.title),
         description: this.metaDescription,
         url: `https://docs.cypress.io/guides/${this.path}`,
       }
 
       return getMetaData(metaData)
-    }
+    },
   },
 }
 </script>
@@ -97,9 +103,15 @@ export default {
       :mobile-menu-items="guideSidebar"
       section="guides"
       :algolia-settings="algoliaSettings"
+      :banner="banner"
     />
-    <main class="main-content">
-      <AppSidebar :items="guideSidebar" section="guides" :path="path" />
+    <main :class="Boolean(banner) ? 'banner-margin' : ''" class="main-content">
+      <AppSidebar
+        :items="guideSidebar"
+        section="guides"
+        :path="path"
+        :has-banner="Boolean(banner)"
+      />
       <div class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
           <h1 class="main-content-title">{{ guide.title }}</h1>
@@ -113,7 +125,3 @@ export default {
     </main>
   </div>
 </template>
-
-<style lang="scss">
-@import '@/styles/content.scss';
-</style>

@@ -26,13 +26,11 @@ Cypress is a desktop application that is installed on your computer. The desktop
 
 If you're using `npm` to install Cypress, we support:
 
-- **Node.js** 10 or 12 and above
+- **Node.js** 12 or 14 and above
 
 #### Linux
 
 If you're using Linux, you'll want to have the required dependencies installed on your system.
-
-We also have an official [cypress/base](https://hub.docker.com/r/cypress/base/) Docker container with all of the required dependencies installed.
 
 #### Ubuntu/Debian
 
@@ -45,6 +43,21 @@ apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 lib
 ```shell
 yum install -y xorg-x11-server-Xvfb gtk2-devel gtk3-devel libnotify-devel GConf2 nss libXScrnSaver alsa-lib
 ```
+
+#### Docker
+
+Docker images with all of the required dependencies installed are available under [cypress/base](https://github.com/cypress-io/cypress-docker-images)
+
+If you're running your projects in containers, then you'll want Cypress in the container with the Node.js process.
+
+```
+  ui:
+    image: cypress/base:latest
+    # if targeting a specific node version, use e.g.
+    # image: cypress/base:14
+```
+
+`cypress/base` is a drop-in replacement for [base docker node images](https://hub.docker.com/_/node/).
 
 ## Installing
 
@@ -114,6 +127,14 @@ The direct download will always grab the latest available version. Your platform
 Then you can manually unzip and double click. Cypress will run without needing to install any dependencies.
 
 <DocsVideo src="/img/snippets/installing-global.mp4"></DocsVideo>
+
+<Alert type="info">
+
+<strong class="alert-header">Direct downloading for old versions</strong>
+
+It is possible to download an old version from our CDN by suffixing the URL with the desired version (ex. [https://download.cypress.io/desktop/6.8.0](https://download.cypress.io/desktop/6.8.0)).
+
+</Alert>
 
 ### <Icon name="refresh"></Icon> Continuous integration
 
@@ -340,6 +361,17 @@ CYPRESS_DOWNLOAD_MIRROR="https://www.example.com" cypress install
 ```
 
 Cypress will then attempt to download a binary with this format: `https://www.example.com/desktop/:version?platform=p`
+
+### Using a custom CA
+
+Cypress can be configured to use the `ca` and `cafile` options from your NPM config file to download the Cypress binary.
+
+For example, to use the CA at `/home/person/certs/ca.crt` when downloading Cypress, add the following to your `.npmrc`:
+
+```shell
+CYPRESS_DOWNLOAD_USE_CA=1
+ca=/home/person/certs/ca.crt
+```
 
 ### Opt out of sending exception data to Cypress
 

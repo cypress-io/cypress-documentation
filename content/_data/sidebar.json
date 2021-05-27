@@ -57,13 +57,19 @@
     },
     "continuous-integration": {
       "continuous-integration-introduction": "introduction.html",
+      "ci-provider-examples": "ci-provider-examples.html",
+      "circleci": "circleci.html",
       "github-actions": "github-actions.html",
       "gitlab-ci": "gitlab-ci.html",
       "bitbucket-pipelines": "bitbucket-pipelines.html",
       "aws-codebuild": "aws-codebuild.html"
     },
     "component-testing": {
-      "component-testing-introduction": "introduction.html"
+      "component-testing-introduction": "introduction.html",
+      "framework-configuration": "framework-configuration.html"
+    },
+    "migrating-to-cypress": {
+      "protractor": "protractor.html"
     },
     "tooling": {
       "IDE-integration": "IDE-integration.html",
@@ -188,7 +194,6 @@
       "$": "$.html",
       "blob": "blob.html",
       "minimatch": "minimatch.html",
-      "moment": "moment.html",
       "promise": "promise.html",
       "sinon": "sinon.html"
     },
@@ -208,6 +213,7 @@
       "cypress-log": "cypress-log.html",
       "platform": "platform.html",
       "spec": "spec.html",
+      "testing-type": "testing-type.html",
       "version": "version.html"
     },
     "plugins": {

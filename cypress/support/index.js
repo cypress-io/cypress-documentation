@@ -16,5 +16,10 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
+// in firefox, sometimes a page load will throw this uncaught exception
+// this has occured since docs moved to nuxt
+Cypress.on('uncaught:exception', (err) => {
+  if (err.message.includes('link.__prefetch')) {
+    return false
+  }
+})

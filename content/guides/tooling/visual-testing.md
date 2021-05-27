@@ -88,7 +88,7 @@ There are several published, open source plugins, listed in the [Visual Testing 
 
 ### Open source
 
-Listed in the [Visual Testing plugins](/plugins/directory#visual-testing) section.
+Listed in the [Visual Testing plugins](/plugins/directory#Visual%20Testing) section.
 
 ### Applitools
 
@@ -255,7 +255,7 @@ Below we stub network calls using [cy.intercept()](/api/commands/intercept) to r
 ```js
 cy.intercept('/api/items', { fixture: 'items' }).as('getItems')
 // ... action
-cy.wait('@getUsers')
+cy.wait('@getItems')
 cy.mySnapshotCommand()
 ```
 

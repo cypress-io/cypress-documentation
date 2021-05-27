@@ -1,15 +1,11 @@
-<script>
-export default {}
-</script>
-
 <template>
-  <div class="embed-container">
+  <div :class="$style.embedContainer">
     <slot />
   </div>
 </template>
 
-<style>
-.embed-container {
+<style module>
+.embedContainer {
   position: relative;
   padding-bottom: 56.25%;
   overflow: hidden;
@@ -20,9 +16,9 @@ export default {}
   border: 1px solid #ddd;
 }
 
-.embed-container iframe,
-.embed-container object,
-.embed-container embed {
+.embedContainer iframe,
+.embedContainer object,
+.embedContainer embed {
   position: absolute;
   top: 0;
   left: 0;

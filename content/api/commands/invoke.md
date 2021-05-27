@@ -182,6 +182,26 @@ For a full example where invoke is used to await async Vuex store actions, visit
 
 </Alert>
 
+### jQuery method
+
+If the parent command yields a jQuery element, we can invoke a jQuery method, like `attr`, `text`, or `val`. To confirm the element's `id` attribute for example:
+
+```html
+<div id="code-snippet">The code example</div>
+```
+
+```js
+cy.contains('The code example')
+  .invoke('attr', 'id')
+  .should('equal', 'code-snippet')
+```
+
+**Tip:** Cypress has a built-in Chai-jQuery assertion to confirm the attribute. The above example can be written simply as:
+
+```js
+cy.contains('The code example').should('have.attr', 'id', 'code-snippet')
+```
+
 ## Notes
 
 ### Third Party Plugins

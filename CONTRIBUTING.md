@@ -4,22 +4,33 @@ Thanks for taking the time to contribute! :smile:
 
 ## Table of Contents
 
-- [Code of Conduct](#code-of-conduct)
-- [Writing Documentation](#writing-documentation)
-  - [Using Vue Components](#using-vue-components)
-    - [Alerts](#alerts)
+- [Contributing to Cypress Documentation](#contributing-to-cypress-documentation)
+  - [Table of Contents](#table-of-contents)
+  - [Code of Conduct](#code-of-conduct)
+  - [Writing Documentation](#writing-documentation)
+    - [Using Vue Components](#using-vue-components)
+      - [Alerts](#alerts)
     - [Images](#images)
     - [Videos](#videos)
     - [Icons](#icons)
-  - [Adding Examples](#adding-examples)
-  - [Adding Plugins](#adding-plugins)
-  - [Adding Pages](#adding-pages)
-  - [Writing the Changelog](#writing-the-changelog)
-- [Committing Code](#committing-code)
-  - [Linting](#linting)
-  - [Pull Requests](#pull-requests)
-  - [Contributor License Agreement](#contributor-license-agreement)
-- [Deployment](#deployment)
+    - [Partials](#partials)
+      - [Writing a Partial](#writing-a-partial)
+      - [Using Partials](#using-partials)
+      - [When to use Partials instead of Vue components](#when-to-use-partials-instead-of-vue-components)
+      - [Limitations](#limitations)
+    - [Adding Examples](#adding-examples)
+    - [Adding Plugins](#adding-plugins)
+    - [Adding Pages](#adding-pages)
+    - [Deleting Pages](#deleting-pages)
+      - [A Worked Example](#a-worked-example)
+    - [Writing the Changelog](#writing-the-changelog)
+      - [Categories](#categories)
+  - [Committing Code](#committing-code)
+    - [Linting](#linting)
+    - [Pull Requests](#pull-requests)
+    - [Contributor License Agreement](#contributor-license-agreement)
+  - [Deployment](#deployment)
+    - [Trigger workflow build](#trigger-workflow-build)
 
 ## Code of Conduct
 
@@ -58,10 +69,12 @@ If you are starting a new page and want to add images, add a new folder to [`ass
 
 ```jsx
 <DocsImage
-  src="/assets/img/guides/tooling/coverage-object.png"
+  src="/img/guides/tooling/coverage-object.png"
   alt="code coverage object"
-/>
+></DocsImage>
 ```
+
+Typically you should include the `alt` and `title` attributes to give the user more information about the image.
 
 ### Videos
 
@@ -82,6 +95,52 @@ You can embed videos within the markdown with the [`<DocsVideo>`](/components/gl
 <Icon name="question-circle"></Icon>
 ```
 
+### Partials
+
+Partials are snippets of reusable markdown that can be inserted into other markdown files. You may want to use a partial when you are writing the same content across multiple markdown files.
+
+#### Writing a Partial
+
+A partial is a markdown file that you want to import and inject into another markdown file. They can contain any content that you would otherwise want to write in other markdown files.
+
+```md
+## My First Partial
+
+<Alert type="info">
+
+This is my reusable partial.
+
+</Alert>
+```
+
+#### Using Partials
+
+Partials can be imported into other markdown files with the `::include{file=FILE_NAME}` directive.
+
+```md
+## My Favorite Food
+
+### Pizza
+
+::include{file=path/to/pizza-recipe.md}
+```
+
+When the page is generated, the content of `path/to/pizza-recipe.md` will be injected into the markdown file.
+
+The `::include{file=FILE_NAME}` directive assumes that the `FILE_NAME` exists within the `content` directory. You must provide the path relative to the `content` directory as the `file` property. For example, if the partial `pizza-recipe.md` was located at `/content/recipes/pizza-recipe.md`, the `::include` directive would be `::include{file=recipes/pizza-recipe.md}`.
+
+#### When to use Partials instead of Vue components
+
+It is possible to create partials using Vue components in the markdown instead of using the `::include{file=FILE_NAME}` directive. However, there are downsides to this approach.
+
+Assume you have a `<Partial>` Vue component. If you wanted to introduce a `<Partial>` to a markdown file and let that partial add a new header to the page, you would need to add a header element to the `<Partial>` component. Due to how each page's table of contents is generated, this new header would not appear in the "On This Page" section that appears on the right-hand side of most documentation pages. The header would also be missing the anchor tag that is otherwise automatically inserted into all headers.
+
+For most use cases, you should use the `::include{file=FILE_NAME}` directive when you want to inject reusable markdown into multiple files. A `<Partial>` Vue component may be a better fit if you wish to add custom interactivity to reusable strings of text.
+
+#### Limitations
+
+When including the `::include{file=FILE_NAME}` directive in another markdown file, Nuxt's hot module reloading will automatically trigger the partial's content to be inserted into the markdown file. However, if you wish to make changes to the partial file itself, you will need to stop and restart the development server with `yarn start` to see the changes. This is because the custom remark plugin that is enabling this partial system is only ran when the server is started and not on each hot module reload.
+
 ### Adding Examples
 
 To add a course, blog, talk, podcast, or screencast to our docs, submit a [pull request](#Pull-Requests) with your data added to the corresponding [courses.json](/content/_data/courses.json), [blogs.json](/content/_data/blogs.json), [talks.json](/content/_data/talks.json), [podcasts.json](/content/_data/podcasts.json) or [screencasts.json](/content/_data/screencasts.json) file.
@@ -95,6 +154,23 @@ Add an associated image with the example within the [`assets/img`](/assets/img) 
 ### Adding Plugins
 
 To add a plugin, submit a [pull request](#Pull-Requests) with the corresponding data added to the [`plugins.json`](/content/_data/plugins.json) file. Your plugin should have a name, description, link to the plugin's code, as well as any keywords.
+
+We want to showcase plugins that work and have a good developer experience. This means that a good plugin generally has:
+
+1. Purpose of plugin articulated up front
+1. Installation guide
+1. Options and API are documented
+1. Easy to follow documentation. Users should not have to read the source code to get things working.
+
+Each plugin submitted to the plugins list should have the following:
+
+1. Integration tests with Cypress
+
+   - Demonstrates the plugin working
+   - Acts as real-world example usage
+
+2. CI pipeline
+3. Compatability with at least the latest major version of Cypress
 
 ### Adding Pages
 

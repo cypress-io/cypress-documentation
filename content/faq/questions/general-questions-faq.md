@@ -199,3 +199,49 @@ If there is a significant bug outside of our release schedule then we release a 
 ## <Icon name="angle-right"></Icon> What information is captured or transmitted when using the Cypress Test Runner?
 
 The Cypress Test Runner runs locally so no data is sent to Cypress aside from exception data, which can be disabled using the instructions [here](https://docs.cypress.io/guides/getting-started/installing-cypress.html#Opt-out-of-sending-exception-data-to-Cypress).
+
+## <Icon name="angle-right"></Icon> Can I write API tests using Cypress?
+
+Cypress is mainly designed to run end-to-end tests, but if you need to write a few tests that call the backend API using the [`cy.request()`](/api/commands/request) command ... who can stop you?
+
+```js
+it('adds a todo', () => {
+  cy.request({
+    url: '/todos',
+    method: 'POST',
+    body: {
+      title: 'Write REST API',
+    },
+  })
+    .its('body')
+    .should('deep.contain', {
+      title: 'Write REST API',
+      completed: false,
+    })
+})
+```
+
+Take a look at our [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) that uses quite a few such tests to verify the backend APIs.
+
+You can verify the responses using the built-in assertions and perform multiple calls. You can even write E2E tests that combine UI commands with API testing as needed:
+
+```js
+it('adds todos', () => {
+  // drive the application through its UI
+  cy.visit('/')
+  cy.get('.new-todo')
+    .type('write E2E tests{enter}')
+    .type('add API tests as needed{enter}')
+  // now confirm the server has 2 todo items
+  cy.request('/todos')
+    .its('body')
+    .should('have.length', 2)
+    .and((items) => {
+      // confirm the returned items
+    })
+})
+```
+
+Take a look at [Add GUI to your E2E API tests](https://www.cypress.io/blog/2017/11/07/add-gui-to-your-e2e-api-tests/) blog post, then at [cy-api](https://github.com/bahmutov/cy-api) plugin that pipes the request and response objects into the Test Runner's GUI for easier debugging.
+
+A good strategy for writing targeted API tests is to use them to reach the hard-to-test code not covered by other tests. You can find such places in the code using the [code coverage](/guides/tooling/code-coverage) as a guide. Watch the [Ship safer code with Cypress and Codecov](https://www.cypress.io/blog/2021/01/22/webcast-recording-ship-safer-code-with-cypress-and-codecov/) webinar where we show how to apply this strategy and reach the 100% fullstack code coverage via mostly E2E tests and a few targeted API and unit tests.

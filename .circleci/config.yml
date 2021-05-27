@@ -79,6 +79,20 @@ jobs:
       - run:
           name: Docsearch Scraper
           command: node ./cy_scripts/scrape.js
+  
+  publish-scheduled-sanity-content:
+    executor: node-executor
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}-{{ checksum "patches/vue-scrollactive+0.9.3.patch" }}-{{ checksum "patches/@docsearch+js+1.0.0-alpha.28.patch" }}-{{ checksum "patches/@nuxt+vue-app+2.14.12.patch" }}
+      - run:
+          name: Install Dependencies
+          command: yarn --frozen-lockfile
+      - run:
+          name: Check for scheduled sanity.io content to publish and invoke Netlify build hook if necessary
+          command: node ./scripts/sanity/publishContent.js
 
 workflows:
   version: 2
@@ -105,7 +119,6 @@ workflows:
           command-prefix: npx percy exec --
           yarn: true
           start: yarn start:ci
-          record: true
           parallel: true
           parallelism: 4
           ci-build-id: ${CIRCLE_SHA1:0:8}
@@ -113,6 +126,12 @@ workflows:
           requires:
             - build
             - Setup Linux
+          command: |
+            if [ -n "$DOCS_RECORD_KEY" ]; then
+              yarn cypress run --record --key $DOCS_RECORD_KEY --parallel
+            else
+              yarn cypress run
+            fi
 
       - build:
           filters:
@@ -136,3 +155,14 @@ workflows:
                 - master
     jobs:
       - broken-link-check-prod
+  
+  sanity-scheduled-content-check:
+    triggers:
+      - schedule:
+          cron: "* 0,12 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - publish-scheduled-sanity-content

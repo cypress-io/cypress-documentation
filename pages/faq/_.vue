@@ -4,8 +4,8 @@ import AppHeader from '../../components/AppHeader'
 import Footer from '../../components/Footer'
 import TableOfContents from '../../components/TableOfContents'
 import TableOfContentsList from '../../components/TableOfContentsList.vue'
-import { getMetaData } from '../../utils/getMetaData'
-import { getMetaDescription } from '../../utils/getMetaDescription'
+import { getMetaData, getMetaDescription, getTitle } from '../../utils'
+import { fetchBanner } from '../../utils/sanity'
 
 export default {
   components: {
@@ -24,24 +24,30 @@ export default {
       sidebar: { faq: userFriendlyNameMap },
     } = await $content('_data/en').fetch()
 
-    const faqSidebarItems = Object.keys(sidebar).map((key) => {return {
-      label: userFriendlyNameMap[key],
-      badge: '',
-      children: Object.keys(sidebar[key]).map((nestedKey) => {
-        return {
-          slug: nestedKey,
-          label: userFriendlyNameMap[nestedKey],
-        }
-      }),
-      folder: key,
-    }})
+    const faqSidebarItems = Object.keys(sidebar).map((key) => {
+      return {
+        label: userFriendlyNameMap[key],
+        badge: '',
+        children: Object.keys(sidebar[key]).map((nestedKey) => {
+          return {
+            slug: nestedKey,
+            label: userFriendlyNameMap[nestedKey],
+          }
+        }),
+        folder: key,
+      }
+    })
 
     if (!faqItem) {
       return error({ statusCode: 404, message: 'FAQ not found' })
     }
 
-    const [rawContent] = await $content({ deep: true, text: true }).where({ path }).fetch()
+    const [rawContent] = await $content({ deep: true, text: true })
+      .where({ path })
+      .fetch()
     const metaDescription = await getMetaDescription(rawContent.text)
+
+    const banner = await fetchBanner()
 
     return {
       algoliaSettings,
@@ -49,33 +55,34 @@ export default {
       faqSidebarItems,
       metaDescription,
       path: params.pathMatch,
+      banner,
     }
   },
   head() {
     return {
-      title: this.faqItem.title,
+      title: getTitle(this.faqItem.title),
       meta: this.meta,
       link: [
         {
           hid: 'canonical',
           rel: 'canonical',
-          href: `https://docs.cypress.io/faq/${this.$route.params.pathMatch}`
-        }
-      ]
+          href: `https://docs.cypress.io/faq/${this.$route.params.pathMatch}`,
+        },
+      ],
     }
   },
   computed: {
     meta() {
       const metaData = {
         type: 'article',
-        title: this.faqItem.title,
+        title: getTitle(this.faqItem.title),
         description: this.metaDescription,
-        url: `https://docs.cypress.io/faq/${this.$route.params.pathMatch}`
+        url: `https://docs.cypress.io/faq/${this.$route.params.pathMatch}`,
       }
 
       return getMetaData(metaData)
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -85,9 +92,15 @@ export default {
       :mobile-menu-items="faqSidebarItems"
       section="faq"
       :algolia-settings="algoliaSettings"
+      :banner="banner"
     />
-    <main class="main-content">
-      <AppSidebar :items="faqSidebarItems" section="faq" :path="path" />
+    <main :class="Boolean(banner) ? 'banner-margin' : ''" class="main-content">
+      <AppSidebar
+        :items="faqSidebarItems"
+        section="faq"
+        :path="path"
+        :has-banner="Boolean(banner)"
+      />
       <div class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
           <h1 class="main-content-title">{{ faqItem.title }}</h1>
@@ -102,7 +115,3 @@ export default {
     </main>
   </div>
 </template>
-
-<style lang="scss">
-@import '../../styles/content.scss';
-</style>

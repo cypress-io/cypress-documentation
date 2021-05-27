@@ -41,12 +41,6 @@ We recommend the following configuration in a [`tsconfig.json`](http://www.types
 
 The `"types"` will tell the TypeScript compiler to only include type definitions from Cypress. This will address instances where the project also uses `@types/chai` or `@types/jquery`. Since [Chai](/guides/references/bundled-tools#Chai) and [jQuery](/guides/references/bundled-tools#Other-Library-Utilities) are namespaces (globals), incompatible versions will cause the package manager (`yarn` or `npm`) to nest and include multiple definitions and cause conflicts.
 
-<Alert type="info">
-
-You can find an example of Jest and Cypress installed in the same project using a separate `tsconfig.json` file in the [cypress-io/cypress-and-jest-typescript-example](https://github.com/cypress-io/cypress-and-jest-typescript-example) repo.
-
-</Alert>
-
 <Alert type="warning">
 
 You may have to restart your IDE's TypeScript server if the setup above does not appear to work. For example:
@@ -66,17 +60,17 @@ When adding [custom commands](/api/cypress-api/custom-commands) to the `cy` obje
 
 For example if you add the command `cy.dataCy` into your [supportFile](/guides/references/configuration#Folders-Files) like this:
 
-```javascript
+```typescript
 // cypress/support/index.ts
 Cypress.Commands.add('dataCy', (value) => {
   return cy.get(`[data-cy=${value}]`)
 })
 ```
 
-Then you can add the `dataCy` command to the global Cypress Chainable interface (so called because commands are chained together) by creating a new TypeScript definitions file beside your [supportFile](/guides/references/configuration#Folders-Files), in this case at `cypress/support/index.d.ts`.
+Then you can add the `dataCy` command to the global Cypress Chainable interface (so called because commands are chained together) to your `cypress/support/index.ts` file.
 
 ```typescript
-// in cypress/support/index.d.ts
+// in cypress/support/index.ts
 // load type definitions that come with Cypress module
 /// <reference types="cypress" />
 
@@ -97,13 +91,10 @@ A nice detailed JSDoc comment above the method type will be really appreciated b
 
 </Alert>
 
-If your specs files are in TypeScript, you should include the TypeScript definition file, `cypress/support/index.d.ts`, with the rest of the source files.
+In your specs, you can now use the custom command as expected
 
-Even if your project is JavaScript only, the JavaScript specs can know about the new command by referencing the file using the special triple slash `reference path` comment.
-
-```javascript
+```typescript
 // from your cypress/integration/spec.ts
-/// <reference path="../support/index.d.ts" />
 it('works', () => {
   cy.visit('/')
   // IntelliSense and TS compiler should
@@ -114,6 +105,7 @@ it('works', () => {
 
 #### Examples:
 
+- Find [the standalone example](https://github.com/cypress-io/add-cypress-custom-command-in-typescript).
 - See [Adding Custom Commands](https://github.com/cypress-io/cypress-example-recipes#fundamentals) example recipe.
 - You can find an example with custom commands written in TypeScript in [omerose/cypress-support](https://github.com/omerose/cypress-support) repo.
 - Example project [cypress-example-todomvc custom commands](https://github.com/cypress-io/cypress-example-todomvc#custom-commands) uses custom commands to avoid boilerplate code.
@@ -136,6 +128,13 @@ You can utilize Cypress's type declarations in your [plugins file](/guides/tooli
  */
 module.exports = (on, config) => {}
 ```
+
+### Clashing types with Jest
+
+If you are using both Jest and Cypress in the same project, the TypeScript types registered globally by the two test runners can clash. For example, both Jest and Cypress provide the clashing types for the `describe` and `it` functions. Both Jest and Expect (bundled inside Cypress) provide the clashing types for the `expect` assertion, etc. There are two solutions to disentangle the types:
+
+1. Configure a separate `tsconfig.json` for E2E tests. See our example [cypress-io/cypress-and-jest-typescript-example](https://github.com/cypress-io/cypress-and-jest-typescript-example) repo.
+2. Remove Cypress global variables by using NPM package [local-cypress](https://github.com/bahmutov/local-cypress). Read the blog post [How to Avoid Using Global Cypress Variables](https://glebbahmutov.com/blog/local-cypress/) for details.
 
 ## History
 

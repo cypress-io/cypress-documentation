@@ -143,9 +143,9 @@ cy.get('#book-results').should('have.length', 1)
 When passing an array of aliases to `cy.wait()`, Cypress will wait for all requests to complete within the given `requestTimeout` and `responseTimeout`.
 
 ```javascript
-cy.intercept('users/*').as('getUsers')
-cy.intercept('activities/*').as('getActivities')
-cy.intercept('comments/*').as('getComments')
+cy.intercept('/users/*').as('getUsers')
+cy.intercept('/activities/*').as('getActivities')
+cy.intercept('/comments/*').as('getComments')
 cy.visit('/dashboard')
 
 cy.wait(['@getUsers', '@getActivities', '@getComments']).then(
@@ -161,9 +161,9 @@ cy.wait(['@getUsers', '@getActivities', '@getComments']).then(
 #### Using [`.spread()`](/api/commands/spread) to spread the array into multiple arguments.
 
 ```javascript
-cy.intercept('users/*').as('getUsers')
-cy.intercept('activities/*').as('getActivities')
-cy.intercept('comments/*').as('getComments')
+cy.intercept('/users/*').as('getUsers')
+cy.intercept('/activities/*').as('getActivities')
+cy.intercept('/comments/*').as('getComments')
 cy.wait(['@getUsers', '@getActivities', '@getComments']).spread(
   (getUsers, getActivities, getComments) => {
     // each interception is now an individual argument

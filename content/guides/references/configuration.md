@@ -24,13 +24,14 @@ The default behavior of Cypress can be modified by supplying any of the followin
 | ---------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `baseUrl`              | `null`                            | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL                                                                          |
 | `env`                  | `{}`                              | Any values to be set as [environment variables](/guides/guides/environment-variables)                                                                                                        |
+| `includeShadowDom`     | `false`                           | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get))                                 |
 | `numTestsKeptInMemory` | `50`                              | The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.           |
 | `port`                 | `null`                            | Port used to host Cypress. Normally this is a randomly generated port                                                                                                                        |
+| `redirectionLimit`     | `20`                              | The number of times that the application under test can redirect before erroring.                                                                                                            |
 | `reporter`             | `spec`                            | The [reporter](/guides/tooling/reporters) used during `cypress run`                                                                                                                          |
 | `reporterOptions`      | `null`                            | The [reporter options](/guides/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                           |
 | `retries`              | `{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. See [Test Retries](/guides/guides/test-retries) for more information. |
 | `watchForFileChanges`  | `true`                            | Whether Cypress will watch and restart tests on test file changes                                                                                                                            |
-| `includeShadowDom`     | `false`                           | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get))                                 |
 
 ### Timeouts
 
@@ -180,16 +181,64 @@ For more complex configuration objects, you may want to consider passing a [JSON
 cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.ts"]}'
 ```
 
+### Runner Specific Overrides
+
+You can override configuration for either the E2E or [Component Testing](/guides/component-testing/introduction/) runner using the `e2e` and `component` options.
+
+#### Examples
+
+Component Testing specific viewports in configuration file (`cypress.json` by default):
+
+```json
+{
+  "viewportHeight": 600,
+  "viewportWidth": 1000,
+  "component": {
+    "viewportHeight": 500,
+    "viewportWidth": 500
+  }
+}
+```
+
+E2E specific timeouts in configuration file (`cypress.json` by default):
+
+```json
+{
+  "defaultCommandTimeout": 5000,
+  "e2e": {
+    "defaultCommandTimeout": 10000
+  }
+}
+```
+
 ### Plugins
 
-You can programmatically modify configuration values using Node within the `pluginsFile`. This enables you to do things like:
+The Cypress plugins file runs in Node environment before the browser running a spec file launches, giving you the most flexibility to set the configuration values. This enables you to do things like:
 
 - Use `fs` and read off configuration values and dynamically change them.
 - Edit the list of browsers found by default by Cypress
+- Set config values by reading any custom environment variables
 
 While this may take a bit more work than other options - it yields you the most amount of flexibility and the ability to manage configuration however you'd like.
 
-[We've fully documented how to do this here.](/api/plugins/configuration-api)
+```js
+// cypress/plugins/index.js
+module.exports = (on, config) => {
+  // modify the config values
+  config.defaultCommandTimeout = 10000
+
+  // read an environment variable and
+  // pass its value to the specs
+  config.env.userName = process.env.TEST_USER || 'Joe'
+  // the specs will be able to access the above value
+  // by using Cypress.env('userName')
+
+  // IMPORTANT return the updated config object
+  return config
+}
+```
+
+We've fully documented how to set the configuration values from plugin file [here](/api/plugins/configuration-api).
 
 ### Environment Variables
 
@@ -291,6 +340,17 @@ describe(
 )
 ```
 
+You can set the `baseUrl` value for a single test:
+
+```js
+it('navigates through the tab',
+  { baseUrl: Cypress.env('APP_AT') },
+  () => {
+    ...
+  }
+)
+```
+
 #### Single test configuration
 
 If you want to target a test to run or be excluded when run in a specific browser, you can override the `browser` configuration within the test configuration. The `browser` option accepts the same arguments as [Cypress.isBrowser()](/api/cypress-api/isbrowser).
@@ -313,7 +373,7 @@ When you open a Cypress project, clicking on the **Settings** tab will display t
 - The [Cypress environment file](/guides/guides/environment-variables#Option-2-cypress-env-json)
 - System [environment variables](/guides/guides/environment-variables#Option-3-CYPRESS)
 - [Command Line arguments](/guides/guides/command-line)
-- [Plugin file](/api/plugins/configuration-api)
+- [Plugins file](/api/plugins/configuration-api)
 
 <DocsImage src="/img/guides/configuration/see-resolved-configuration.jpg" alt="See resolved configuration" ></DocsImage>
 
@@ -380,7 +440,7 @@ When Cypress blocks a request made to a matching host, it will automatically sen
 
 ### modifyObstructiveCode
 
-With this option enabled - Cypress will search through the response streams coming from your server on `.html` and `.js` files and replace code that [matches the following patterns.](https://github.com/cypress-io/cypress/issues/886#issuecomment-364779884)
+With this option enabled - Cypress will search through the response streams coming from your server on `.html` and `.js` files and replace code that matches patterns commonly found in framebusting.
 
 These script patterns are antiquated and deprecated security techniques to prevent clickjacking and framebusting. They are a relic of the past and are no longer necessary in modern browsers. However many sites and applications still implement them.
 
@@ -520,17 +580,20 @@ DEBUG=cypress:cli,cypress:server:specs
 
 | Version                                      | Changes                                                 |
 | -------------------------------------------- | ------------------------------------------------------- |
-| [6.1.0](/guides/references/changelog#6-1-0)  | Added option `scrollBehavior`                           |
+| [7.0.0](/guides/references/changelog#7-0-0)  | Added `e2e` and `component` options.                    |
+| [7.0.0](/guides/references/changelog#7-0-0)  | Added `redirectionLimit` option.                        |
+| [6.1.0](/guides/references/changelog#6-1-0)  | Added `scrollBehavior` option.                          |
 | [5.2.0](/guides/references/changelog#5-2-0)  | Added `includeShadowDom` option.                        |
-| [5.0.0](/guides/references/changelog)        | Added `retries` configuration.                          |
-| [5.0.0](/guides/references/changelog)        | Renamed `blacklistHosts` configuration to `blockHosts`. |
+| [5.0.0](/guides/references/changelog#5-0-0)  | Added `retries` configuration.                          |
+| [5.0.0](/guides/references/changelog#5-0-0)  | Renamed `blacklistHosts` configuration to `blockHosts`. |
 | [4.1.0](/guides/references/changelog#4-12-0) | Added `screenshotOnRunFailure` configuration.           |
 | [4.0.0](/guides/references/changelog#4-0-0)  | Added `firefoxGcInterval` configuration.                |
 | [3.5.0](/guides/references/changelog#3-5-0)  | Added `nodeVersion` configuration.                      |
 
 ## See also
 
-- [Cypress.config()](/api/cypress-api/config)
+- [Cypress.config()](/api/cypress-api/config) and [Cypress.env()](/api/cypress-api/env)
 - [Environment variables](/guides/guides/environment-variables)
 - [Environment Variables recipe](/examples/examples/recipes#Fundamentals)
 - [Extending the Cypress Config File](https://www.cypress.io/blog/2020/06/18/extending-the-cypress-config-file/) blog post and [@bahmutov/cypress-extends](https://github.com/bahmutov/cypress-extends) package.
+- Blog post [Keep passwords secret in E2E tests](https://glebbahmutov.com/blog/keep-passwords-secret-in-e2e-tests/)

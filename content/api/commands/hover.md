@@ -67,7 +67,10 @@ cy.get('.checkbox').check({ force: true })
 
 ## See also
 
+We show how to use the `.trigger` command and the [cypress-real-events](https://github.com/dmtrKovalenko/cypress-real-events) plugin to test elements with hover states in the video [Cypress hover example](https://www.youtube.com/watch?v=TZjphtLrRT4), with the source code available in the [bahmutov/cy-hover-example](https://github.com/bahmutov/cy-hover-example) repo.
+
 - [`.invoke()`](/api/commands/invoke)
 - [`.trigger()`](/api/commands/trigger)
 - [`cy.wrap()`](/api/commands/wrap)
 - [Recipe: Hover and Hidden Elements](/examples/examples/recipes#Testing-the-DOM)
+- blog post [Hover in Cypress](https://filiphric.com/hover-in-cypress) by Filip Hric

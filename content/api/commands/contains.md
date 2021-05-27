@@ -285,6 +285,8 @@ You can use a space character in `cy.contains()` to match text in the HTML that 
 cy.contains('Hello world')
 ```
 
+**Tip:** read about assertions against a text with non-breaking space entities in [How do I get an element's text contents?](/faq/questions/using-cypress-faq#How-do-I-get-an-element-s-text-contents)
+
 ### Single Element
 
 #### Only the _first_ matched element will be returned

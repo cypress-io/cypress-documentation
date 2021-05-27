@@ -35,16 +35,18 @@ export default {
 <template>
   <EmbedVimeo v-if="isVimeo" :src="src" :title="title" />
   <EmbedYouTube v-else-if="isYouTube" :src="src" :title="title" />
-  <video v-else class="docs-video" controls>
+  <video v-else :class="$style.docsVideo" controls>
     <source :src="filePath" />
   </video>
 </template>
 
-<style lang="scss">
-.docs-video {
+<style module>
+.docsVideo {
   @apply mb-4;
-  // stylelint-disable-next-line at-rule-no-unknown
-  @screen xl {
+}
+/* stylelint-disable-next-line at-rule-no-unknown */
+@screen xl {
+  .docsVideo {
     min-height: 380px;
   }
 }

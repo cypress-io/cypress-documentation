@@ -9,10 +9,13 @@ export default {
       type: String,
       required: true,
     },
+    title: {
+      type: String,
+    },
     noBorder: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
     filePath() {
@@ -23,14 +26,19 @@ export default {
 </script>
 
 <template>
-  <img class="docs-image" :class="{'image-no-border': noBorder}" :src="filePath" :alt="alt" />
+  <img
+    :class="[$style.docsImage, { [$style.imageNoBorder]: noBorder }]"
+    :src="filePath"
+    :alt="alt"
+    :title="title"
+  />
 </template>
 
-<style lang="scss">
-.docs-image {
+<style module>
+.docsImage {
   margin-bottom: 1rem;
 }
-.image-no-border {
+.imageNoBorder {
   border: none !important;
   box-shadow: none !important;
 }

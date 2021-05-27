@@ -227,6 +227,10 @@ cy.get('textarea').should('have.value', 'foo bar baz')
 ### Text Content
 
 ```javascript
+// assert the element's text content is exactly the given text
+cy.get('#user-name').should('have.text', 'Joe Smith')
+// assert the element's text includes the given substring
+cy.get('#address').should('include.text', 'Atlanta')
 // retry until this span does not contain 'click me'
 cy.get('a').parent('span.help').should('not.contain', 'click me')
 // the element's text should start with "Hello"
@@ -238,12 +242,28 @@ cy.get('#greeting')
 cy.contains('#a-greeting', /^Hello/)
 ```
 
+**Tip:** read about assertions against a text with non-breaking space entities in [How do I get an element's text contents?](/faq/questions/using-cypress-faq#How-do-I-get-an-element-s-text-contents)
+
 ### Visibility
 
 ```javascript
-// retry until this button is visible
-cy.get('button').should('be.visible')
+// retry until the button with id "form-submit" is visible
+cy.get('button#form-submit').should('be.visible')
+// retry until the list item with
+// text "write tests" is visible
+cy.contains('.todo li', 'write tests').should('be.visible')
 ```
+
+**Note:** if there are multiple elements, the assertions `be.visible` and `not.be.visible` act differently:
+
+```javascript
+// retry until SOME elements are visible
+cy.get('li').should('be.visible')
+// retry until EVERY element is invisible
+cy.get('li.hidden').should('not.be.visible')
+```
+
+Watch the short video ["Multiple elements and should('be.visible') assertion"](https://www.youtube.com/watch?v=LxkrhUEE2Qk) that shows how to correctly check the visibility of elements.
 
 ### Existence
 
