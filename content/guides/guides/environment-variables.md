@@ -56,7 +56,7 @@ There are 5 different ways to set environment variables. Each has a slightly dif
 
 - [Set in your configuration file](#Option-1-configuration-file)
 - [Create a `cypress.env.json`](#Option-2-cypress-env-json)
-- [Export as `CYPRESS_*`](#Option-3-CYPRESS)
+- [Export as `CYPRESS_*`](#Option-3-CYPRESS_)
 - [Pass in the CLI as `--env`](#Option-4-env)
 - [Set an environment variable within your plugins.](#Option-5-Plugins)
 - [Set an environment variable within test configuration.](#Option-6-Test-Configuration)
