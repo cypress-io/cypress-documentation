@@ -14,8 +14,9 @@ Replace a function, record its usage and control its behavior.
 
 ```javascript
 cy.stub()
-cy.stub(object, method)
-cy.stub(object, method, replacerFn)
+cy.stub(object, 'method')
+cy.stub(object, 'method').returns(value)
+cy.stub(object, 'method').callsFake(replacerFn)
 ```
 
 ### Usage
@@ -35,6 +36,18 @@ The `object` that has the `method` to be replaced.
 **<Icon name="angle-right"></Icon> method** **_(String)_**
 
 The name of the `method` on the `object` to be wrapped.
+
+**<Icon name="angle-right"></Icon> returns** **_( cypress chainable method )_**
+
+Chainable method to set the stubbed value
+
+**<Icon name="angle-right"></Icon> value** **_( any )_**
+
+The function used to replace the `method` on the `object`.
+
+**<Icon name="angle-right"></Icon> callsFake** **_( cypress chainable method )_**
+
+Chainable method to set a function to call instead of the original `'method'` function
 
 **<Icon name="angle-right"></Icon> replacerFn** **_(Function)_**
 
@@ -76,7 +89,7 @@ expect(util.addListeners).to.be.called
 // assume App.start calls util.addListeners
 let listenersAdded = false
 
-cy.stub(util, 'addListeners', () => {
+cy.stub(util, 'addListeners').callsFake( () => {
   listenersAdded = true
 })
 
