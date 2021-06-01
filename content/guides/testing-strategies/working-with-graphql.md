@@ -16,7 +16,7 @@ The strategies below follow best known practices for waiting and asserting again
 
 Waiting and asserting on GraphQL API requests rely on matching a query or mutation name in the POST body.
 
-As of version 7.0 of Cypress, [cy.intercept()](/api/commands/intercept) can override the response to a GraphQL query or mutation by declaring an intercept at the beginning of the test or closer to the expectation.
+Using [cy.intercept()](/api/commands/intercept) we can override the response to a GraphQL query or mutation by declaring an intercept at the beginning of the test or closer to the expectation.
 
 ## Alias multiple queries or mutations
 
@@ -54,11 +54,7 @@ In our test file, we can import these utilities and use them to alias the querie
 
 ```js
 // app.spec.js
-import {
-  hasOperationName,
-  aliasQuery,
-  aliasMutation,
-} from '../utils/graphql-test-utils'
+import { aliasQuery, aliasMutation } from '../utils/graphql-test-utils'
 
 context('Tests', () => {
   beforeEach(() => {
@@ -83,11 +79,11 @@ Expectations can be made against the response of an intercepted GraphQL query or
 
 ```js
 // app.spec.js
-import { hasOperationName, aliasQuery } from '../utils/graphql-test-utils'
+import { aliasQuery } from '../utils/graphql-test-utils'
 
 context('Tests', () => {
   beforeEach(() => {
-    cy.intercept('POST', apiGraphQL, (req) => {
+    cy.intercept('POST', 'http://localhost:3000/graphql', (req) => {
       // Queries
       aliasQuery(req, 'Login')
 
@@ -96,17 +92,15 @@ context('Tests', () => {
   })
 
   it('should verify login data', () => {
-    cy.wait('@gqlLoginQuery').then((resp) => {
-      expect(resp.response.body.data.login.id).to.exist
-      expect(resp.response.body.data.login.token).to.exist
-    })
+    cy.wait('@gqlLoginQuery')
+      .its('response.body.data.login')
+      .should('have.property', 'id')
+      .and('have.property', 'token')
   })
 })
 ```
 
 ## Modifying a Query or Mutation Response
-
-As of version 7.0 of Cypress, [cy.intercept()](/api/commands/intercept) can override the response to a GraphQL query or mutation by declaring an intercept in the test.
 
 In the test below, the response is modified to test the UI for a single page of results.
 
@@ -145,15 +139,15 @@ context('Tests', () => {
     // Must visit after cy.intercept
     cy.visit('/')
 
-    cy.wait('@gqlGetLaunchListQuery').then((resp) => {
-      expect(resp.response.body.data.launches.hasMore).to.be.false
-      expect(resp.response.body.data.launches.launches.length).to.be.lte(20)
-    })
+    cy.wait('@gqlGetLaunchListQuery')
+      .its('response.body.data.launches')
+      .should((launches) => {
+        expect(launches.hasMore).to.be.false
+        expect(launches.length).to.be.lte(20)
+      })
 
-    cy.getBySelLike('launch-list-tile').its('length').should('be.gte', 1)
-    cy.getBySelLike('launch-list-tile').its('length').should('be.lt', 20)
-
-    cy.getBySelLike('launches-load-more-button').should('not.exist')
+    cy.get('#launch-list').its('length').should('be.gte', 1).and('be.lt', 20)
+    cy.contains('button', 'Load More').should('not.exist')
   })
 })
 ```
