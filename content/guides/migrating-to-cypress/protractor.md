@@ -80,7 +80,7 @@ Having your code editor and application under test within a browser side-by-side
 
 ### Time travel through tests
 
-The Cypress Test Runner gives you time travel capabilities to see exactly how your app was behaving at any point during test execution. (TODO: takes DOM snapshots before and after network requests) Cypress takes DOM snapshots of your application under test as the Test Runner executes the commands and assertions in your tests. This enables you to view the **real UI** of your application at any point during your tests' execution. By clicking from one command to another in the [command log](/guides/core-concepts/test-runner#Command-Log), you can see which elements Cypress acted upon and how your application responded to the simulated **real user behavior**.
+The Cypress Test Runner gives you time travel capabilities to see exactly how your app was behaving at any point during test execution. Cypress takes DOM snapshots of your application under test as the Test Runner executes the commands and assertions in your tests. This enables you to view the **real UI** of your application at any point during your tests' execution. By clicking from one command to another in the [command log](/guides/core-concepts/test-runner#Command-Log), you can see which elements Cypress acted upon and how your application responded to the simulated **real user behavior**.
 
 <DocsVideo src="/img/guides/migrating-to-cypress/interactivity.mp4" title="Time travel debugging"></DocsVideo>
 
