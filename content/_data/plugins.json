@@ -135,13 +135,6 @@
           "badge": "official"
         },
         {
-          "name": "cypress-plugin-retries",
-          "description": "A Cypress plugin to retry failed tests.",
-          "link": "https://github.com/Bkucera/cypress-plugin-retries",
-          "keywords": ["cypress-plugin-retries"],
-          "badge": "verified"
-        },
-        {
           "name": "cly",
           "description": "A prototype of generating quicker project scaffolding for Cypress.",
           "link": "https://github.com/bahmutov/cly",
