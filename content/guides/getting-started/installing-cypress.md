@@ -57,8 +57,7 @@ If you're running your projects in containers, then you'll want Cypress in the c
     # image: cypress/base:14
 ```
 
-`cypress/base` is a drop-in replacement for [base docker node images](https://hub.docker.com/_/node/). 
-
+`cypress/base` is a drop-in replacement for [base docker node images](https://hub.docker.com/_/node/).
 
 ## Installing
 
