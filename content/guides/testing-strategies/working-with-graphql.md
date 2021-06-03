@@ -58,7 +58,7 @@ import { aliasQuery, aliasMutation } from '../utils/graphql-test-utils'
 
 context('Tests', () => {
   beforeEach(() => {
-    cy.intercept('POST', apiGraphQL, (req) => {
+    cy.intercept('POST', 'http://localhost:3000/graphql', (req) => {
       // Queries
       aliasQuery(req, 'GetLaunchList')
       aliasQuery(req, 'LaunchDetails')
@@ -110,7 +110,7 @@ import { hasOperationName, aliasQuery } from '../utils/graphql-test-utils'
 
 context('Tests', () => {
   beforeEach(() => {
-    cy.intercept('POST', apiGraphQL, (req) => {
+    cy.intercept('POST', 'http://localhost:3000/graphql', (req) => {
       // Queries
       aliasQuery(req, 'GetLaunchList')
 
@@ -119,7 +119,7 @@ context('Tests', () => {
   })
 
   it('should not display the load more button on the launches page', () => {
-    cy.intercept('POST', apiGraphQL, (req) => {
+    cy.intercept('POST', 'http://localhost:3000/graphql', (req) => {
       const { body } = req
       if (hasOperationName(req, 'GetLaunchList')) {
         // Declare the alias from the initial intercept in the beforeEach
