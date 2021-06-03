@@ -1241,6 +1241,11 @@ Unlike [cy.route()](/api/commands/route), `cy.intercept()`:
 - does not require calling [cy.server()](/api/commands/server) before use - in fact, `cy.server()` does not influence `cy.intercept()` at all.
 - does not have method set to `GET` by default, but intercepts `*` methods.
 
+## Command Log
+
+Intercepted routes appear at the top of the test. In addition to the method and route matcher, the table indicates whether the route is being stubbed, its alias and the number of times it matched in the given test.
+<DocsImage src="/img/api/intercept/intercept-routes.png" alt="Intercept Routes" ></DocsImage>
+
 ## History
 
 | Version                                     | Changes                                                                                                                                                                                                                                                                                              |
