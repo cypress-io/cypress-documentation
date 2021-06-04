@@ -1,6 +1,5 @@
 ---
 title: Cypress.Cookies
-menuTitle: Cookies
 ---
 
 `Cookies.preserveOnce()` and `Cookies.defaults()` enable you to control Cypress' cookie behavior.

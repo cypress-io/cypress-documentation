@@ -1,6 +1,5 @@
 ---
 title: Before Run API
-menuTitle: Before Run
 ---
 
 The `before:run` event fires before a run starts. When running cypress via `cypress open`, the event will fire when opening a project.

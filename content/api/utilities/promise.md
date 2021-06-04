@@ -1,6 +1,5 @@
 ---
 title: Cypress.Promise
-menuTitle: Promise
 ---
 
 Cypress automatically includes [Bluebird](https://github.com/petkaantonov/bluebird) and exposes it as `Cypress.Promise`.

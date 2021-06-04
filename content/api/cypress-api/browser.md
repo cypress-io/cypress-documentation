@@ -1,6 +1,5 @@
 ---
 title: Cypress.browser
-menuTitle: browser
 ---
 
 `Cypress.browser` returns you properties of the browser.

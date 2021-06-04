@@ -1,6 +1,5 @@
 ---
 title: Cypress.arch
-menuTitle: arch
 ---
 
 `Cypress.arch` returns you the CPU architecture name of the underlying OS, as returned from Node's [`os.arch()`](https://nodejs.org/api/os.html#os_os_arch).

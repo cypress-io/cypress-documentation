@@ -1,6 +1,5 @@
 ---
 title: Cypress.SelectorPlayground
-menuTitle: SelectorPlayground
 ---
 
 The [Selector Playground](/guides/core-concepts/test-runner#Selector-Playground) exposes APIs that enable you to:

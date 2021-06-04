@@ -1,6 +1,5 @@
 ---
 title: Cypress.Server
-menuTitle: Server
 ---
 
 <Alert type="warning">

@@ -1,6 +1,5 @@
 ---
 title: After Spec API
-menuTitle: After Spec
 ---
 
 The `after:spec` event fires after a spec file is run. When running cypress via `cypress open`, the event will fire when the browser closes.

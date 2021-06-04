@@ -1,6 +1,5 @@
 ---
 title: Cypress.isCy
-menuTitle: isCy
 ---
 
 `Cypress.isCy()` checks if a variable is a valid instance of `cy` or a `cy` chainable.

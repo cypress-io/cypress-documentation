@@ -1,6 +1,5 @@
 ---
 title: Cypress.sinon
-menuTitle: sinon
 ---
 
 Cypress automatically includes [Sinon.JS](http://sinonjs.org/) and exposes it as `Cypress.sinon`. Because commands [`cy.spy`](/api/commands/spy) and [`cy.stub`](/api/commands/stub) are already wrapping Sinon methods, the most common use for `Cypress.sinon` is to provide flexible [matchers](https://sinonjs.org/releases/latest/matchers/) when doing assertions.

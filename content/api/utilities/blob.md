@@ -1,6 +1,5 @@
 ---
 title: Cypress.Blob
-menuTitle: Blob
 ---
 
 Cypress automatically includes a [Blob](https://github.com/nolanlawson/blob-util) library and exposes it as `Cypress.Blob`.
