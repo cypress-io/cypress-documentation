@@ -191,6 +191,21 @@ cy.intercept('GET', '/users').as('getAllUsers')
 cy.intercept('POST', '/users').as('createUser')
 ```
 
+### Aliasing individual requests
+
+Aliases can be set on a per-request basis by setting the `alias` property of the intercepted request. This is especially useful when intercepting GraphQL requests:
+
+```js
+cy.intercept('POST', '/graphql', (req) => {
+  if (req.body.hasOwnProperty('query') && req.body.query.includes('mutation')) {
+    req.alias = 'gqlMutation'
+  }
+})
+
+// assert that a matching request has been made
+cy.wait('@gqlMutation')
+```
+
 <Alert type="info">
 
 For aliasing requests with GraphQL, see [Aliasing individual GraphQL requests](#Aliasing-individual-GraphQL-requests).
@@ -1194,21 +1209,6 @@ Cypress.minimatch('http://localhost/users?_limit=3', '/users?_limit=+(3|5)', {
 ```
 
 ## GraphQL
-
-#### Aliasing individual requests
-
-Aliases can be set on a per-request basis by setting the `alias` property of the intercepted request:
-
-```js
-cy.intercept('POST', '/graphql', (req) => {
-  if (req.body.hasOwnProperty('query') && req.body.query.includes('mutation')) {
-    req.alias = 'gqlMutation'
-  }
-})
-
-// assert that a matching request has been made
-cy.wait('@gqlMutation')
-```
 
 #### Aliasing individual GraphQL requests
 
