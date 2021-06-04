@@ -17,62 +17,8 @@ export default {
     const path = `/guides/${params.pathMatch || 'index'}`
     const { algolia: algoliaSettings } = await $content('settings').fetch()
     const [guide] = await $content({ deep: true }).where({ path }).fetch()
-    const { guides: sidebar } = await $content('_data/sidebar').fetch()
-    const {
-      sidebar: { guides: userFriendlyNameMap },
-    } = await $content('_data/en').fetch()
-
-    const items = Object.keys(sidebar).map((key) => {
-      return {
-        label: userFriendlyNameMap[key],
-        badge: '',
-        children: Object.keys(sidebar[key]).map((nestedKey) => {
-          let slug = nestedKey
-
-          // Some slugs might not match the file name exactly.
-          // E.g. "dashboard-introduction.md" doesn't exist, but "introduction.md"
-          // within the "dashboard" directory does. This checks for instances of
-          // the directory name being included in the file name, and if so, removes it
-          // from the slug.
-          if (nestedKey.includes(key)) {
-            slug = nestedKey.replace(`${key}-`, '')
-          }
-
-          return {
-            slug,
-            label: userFriendlyNameMap[nestedKey],
-          }
-        }),
-        folder: key,
-      }
-    })
-
-    const getPathSegments = (path) => {
-      const [topLevelDir, ...slugs] = path.split('/')
-    }
-
-    const convertListToMap = (list, map = {}) => {
-      const [key, ...children] = list
-    }
-
-    const sidebarItems = (
-      await $content('guides', { deep: true })
-        .only(['title', 'menuTitle'])
-        .sortBy('title', 'asc')
-        .sortBy('menuTitle', 'asc')
-        .fetch()
-    ).reduce((all, item) => {
-      const [_leadingSlash, _topLevelDir, ...slugs] = item.path.split('/')
-      console.log('slugs: ', slugs)
-      const obj = {
-        paths: slugs,
-        menuTitle: item.menuTitle,
-      }
-
-      return all.concat(obj)
-    }, [])
-
-    console.log('sidebarItems: ', sidebarItems)
+    const { guides } = await $content('_data/sidebar').fetch()
+    const sidebarItems = guides[0].children
 
     if (!guide) {
       return error({ statusCode: 404, message: 'Guide not found' })
@@ -88,7 +34,7 @@ export default {
     return {
       algoliaSettings,
       guide,
-      guideSidebar: items,
+      sidebarItems,
       metaDescription,
       path: params.pathMatch,
       banner,
@@ -127,7 +73,7 @@ export default {
 <template>
   <div class="w-full">
     <AppHeader
-      :mobile-menu-items="guideSidebar"
+      :mobile-menu-items="sidebarItems"
       section="guides"
       :banner="banner"
       :algolia-settings="algoliaSettings"
@@ -135,7 +81,7 @@ export default {
     <main :class="Boolean(banner) ? 'banner-margin' : ''" class="main-content">
       <AppSidebar
         :has-banner="Boolean(banner)"
-        :items="guideSidebar"
+        :items="sidebarItems"
         section="guides"
         :path="path"
       />

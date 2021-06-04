@@ -1,5 +1,5 @@
 ---
-title: Workshop
+title: Workshops
 containerClass: examples
 ---
 

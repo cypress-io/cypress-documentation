@@ -2,6 +2,7 @@
 import CollapsibleSidebarSection from './sidebar/CollapsibleSidebarSection'
 
 export default {
+  name: 'Root',
   components: {
     CollapsibleSidebarSection,
   },
@@ -43,13 +44,14 @@ export default {
       class="mt-5 pt-16 fixed top-0 bottom-0 left-0 right-0 overflow-y-auto lg:w-sidebar flex-grow flex flex-col overflow-y-auto hide-scroll"
     >
       <CollapsibleSidebarSection
-        v-for="(sidebarGroup, index) in items"
+        v-for="(group, index) in items"
         :key="`sidebar-group-${index}`"
-        :label="sidebarGroup.label"
-        :folder="sidebarGroup.folder"
+        :label="group.title"
+        :folder="group.slug"
         :section="section"
-        :children="sidebarGroup.children"
-        :initial-is-open="path.includes(sidebarGroup.folder)"
+        :parent-section="group.slug"
+        :children="group.children"
+        :initial-is-open="path.includes(group.slug)"
         :path="path"
       />
     </div>

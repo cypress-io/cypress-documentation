@@ -1,11 +1,15 @@
 <script>
-import { getSidebarItemLink } from './getSidebarItemLink'
-
 export default {
+  name: 'CollapsibleSidebarSection',
   props: {
     section: {
       type: String,
       required: true,
+    },
+    parentSection: {
+      type: String,
+      required: false,
+      default: '',
     },
     folder: {
       type: String,
@@ -18,7 +22,7 @@ export default {
     children: {
       /**
        * @type
-       * { label: string, slug: string }[]
+       * { title: string, slug: string }[]
        */
       type: Array,
       required: true,
@@ -32,6 +36,18 @@ export default {
       type: String,
       required: false,
       default: '',
+    },
+    /**
+     * @description
+     * Affects the amount of padding-left applied.
+     * This component can contain children of the same type,
+     * so each nested component of this type should be indented
+     * to the right.
+     */
+    depth: {
+      type: Number,
+      required: false,
+      default: 1,
     },
   },
   data() {
@@ -48,7 +64,6 @@ export default {
     this.scrollToActiveLink()
   },
   methods: {
-    getSidebarItemLink,
     toggleSection() {
       this.isOpen = !this.isOpen
     },
@@ -70,7 +85,15 @@ export default {
 </script>
 
 <template>
-  <div class="space-y-1 px-4 pb-4" :data-test="folder">
+  <div
+    :class="
+      depth > 1
+        ? `ml-${depth + 3} pl-2 border-l-2 border-gray-200`
+        : 'px-4 pb-4'
+    "
+    class="space-y-1"
+    :data-test="folder"
+  >
     <button
       class="group w-full flex items-center text-left px-2 pl-4 pr-1 text-lg font-bold bg-lightGray text-gray-600 hover:text-gray-900 hover:bg-gray-50 focus:outline-none"
       @click="toggleSection"
@@ -92,28 +115,38 @@ export default {
       class="space-y-1 m-0"
       :data-test="`${label}-children`"
     >
-      <li
+      <div
         v-for="(child, index) in children"
         :key="`collapsible-sidebar-section-${index}`"
       >
-        <nuxt-link
-          :to="
-            getSidebarItemLink({
-              section,
-              folder,
-              slug: child.slug,
-            })
+        <CollapsibleSidebarSection
+          v-if="child.children"
+          :label="child.title"
+          :folder="child.slug"
+          :section="
+            parentSection ? section.concat(`/`).concat(parentSection) : section
           "
-          :class="
-            path === `${folder}/${child.slug}`
-              ? 'active-sidebar-link'
-              : 'text-gray-600'
-          "
-          class="rounded-md group w-full flex items-center pl-4 pr-2 py-1 text-md font-medium hover:text-green transition-colors hover:bg-gray-50"
-        >
-          {{ child.label }}
-        </nuxt-link>
-      </li>
+          :parent-section="parentSection"
+          :children="child.children"
+          :initial-is-open="path.includes(child.slug)"
+          :path="path"
+          :name="child.slug"
+          :depth="depth + 1"
+        />
+        <li v-else>
+          <nuxt-link
+            :to="child.redirect || `/${section}/${folder}/${child.slug}`"
+            :class="
+              path.includes(`${folder}/${child.slug}`)
+                ? 'active-sidebar-link'
+                : 'text-gray-600'
+            "
+            class="rounded-md group w-full flex items-center pl-4 pr-2 py-1 text-md font-medium hover:text-green transition-colors hover:bg-gray-50"
+          >
+            {{ child.title }}
+          </nuxt-link>
+        </li>
+      </div>
     </ul>
   </div>
 </template>
