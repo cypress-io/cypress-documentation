@@ -135,13 +135,6 @@
           "badge": "official"
         },
         {
-          "name": "cypress-plugin-retries",
-          "description": "A Cypress plugin to retry failed tests.",
-          "link": "https://github.com/Bkucera/cypress-plugin-retries",
-          "keywords": ["cypress-plugin-retries"],
-          "badge": "verified"
-        },
-        {
           "name": "cly",
           "description": "A prototype of generating quicker project scaffolding for Cypress.",
           "link": "https://github.com/bahmutov/cly",
@@ -569,13 +562,6 @@
           "keywords": ["react", "commands", "locator"]
         },
         {
-          "name": "cypress-mailosaur",
-          "description": "Test email and SMS messages using Mailosaur",
-          "link": "https://github.com/mailosaur/cypress-mailosaur",
-          "keywords": ["email", "sms", "commands"],
-          "badge": "community"
-        },
-        {
           "name": "cypress-layout-inspector",
           "description": "A simple utility to provide layout testing functionality to Cypress via custom assertions.",
           "link": "https://github.com/msmps/cypress-layout-inspector",
@@ -587,20 +573,6 @@
           "description": "cy-dom-diff allows matching chunks of DOM against HTML; including dynamic content.",
           "link": "https://github.com/swimlane/cy-dom-diff",
           "keywords": ["dom", "assertions"],
-          "badge": "community"
-        },
-        {
-          "name": "cypress-maildev",
-          "description": "A bunch of Cypress commands in order to test your messages (SMS and Emails) by using Maildev REST API.",
-          "link": "https://github.com/Clebiez/cypress-maildev",
-          "keywords": ["email", "sms", "commands"],
-          "badge": "community"
-        },
-        {
-          "name": "cypress-mailslurp",
-          "description": "Use test email accounts to send and receive emails in Cypress tests with MailSlurp.",
-          "link": "https://github.com/mailslurp/cypress-mailslurp",
-          "keywords": ["email", "mailslurp", "test", "commands"],
           "badge": "community"
         },
         {
@@ -791,6 +763,13 @@
           "link": "https://github.com/echobind/bisonapp",
           "keywords": ["next.js", "react", "graphql", "prisma", "vercel"],
           "badge": "community"
+        },
+        {
+          "name": "@cypress/schematic",
+          "description": "Adds Cypress to your Angular project via the Angular CLI",
+          "link": "https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic",
+          "keywords": ["angular", "cli"],
+          "badge": "official"
         }
       ]
     },
@@ -1015,6 +994,32 @@
           "description": "A reporting tool which sends a message to Microsoft Teams with information about the latest cypress test execution results.",
           "link": "https://github.com/maritome/cypress-msteams-reporter",
           "keywords": ["reporter", "ms-teams", "allure-report"],
+          "badge": "community"
+        }
+      ]
+    },
+    {
+      "name": "Email",
+      "plugins": [
+        {
+          "name": "cypress-mailosaur",
+          "description": "Test email and SMS messages using Mailosaur",
+          "link": "https://github.com/mailosaur/cypress-mailosaur",
+          "keywords": ["email", "sms", "commands"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-maildev",
+          "description": "A bunch of Cypress commands in order to test your messages (SMS and Emails) by using Maildev REST API.",
+          "link": "https://github.com/Clebiez/cypress-maildev",
+          "keywords": ["email", "sms", "commands"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-mailslurp",
+          "description": "Use test email accounts to send and receive emails in Cypress tests with MailSlurp.",
+          "link": "https://github.com/mailslurp/cypress-mailslurp",
+          "keywords": ["email", "mailslurp", "test", "commands"],
           "badge": "community"
         }
       ]

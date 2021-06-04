@@ -4,23 +4,33 @@ Thanks for taking the time to contribute! :smile:
 
 ## Table of Contents
 
-- [Code of Conduct](#code-of-conduct)
-- [Writing Documentation](#writing-documentation)
-  - [Using Vue Components](#using-vue-components)
-    - [Alerts](#alerts)
+- [Contributing to Cypress Documentation](#contributing-to-cypress-documentation)
+  - [Table of Contents](#table-of-contents)
+  - [Code of Conduct](#code-of-conduct)
+  - [Writing Documentation](#writing-documentation)
+    - [Using Vue Components](#using-vue-components)
+      - [Alerts](#alerts)
     - [Images](#images)
     - [Videos](#videos)
     - [Icons](#icons)
-  - [Partials](#partials)
-  - [Adding Examples](#adding-examples)
-  - [Adding Plugins](#adding-plugins)
-  - [Adding Pages](#adding-pages)
-  - [Writing the Changelog](#writing-the-changelog)
-- [Committing Code](#committing-code)
-  - [Linting](#linting)
-  - [Pull Requests](#pull-requests)
-  - [Contributor License Agreement](#contributor-license-agreement)
-- [Deployment](#deployment)
+    - [Partials](#partials)
+      - [Writing a Partial](#writing-a-partial)
+      - [Using Partials](#using-partials)
+      - [When to use Partials instead of Vue components](#when-to-use-partials-instead-of-vue-components)
+      - [Limitations](#limitations)
+    - [Adding Examples](#adding-examples)
+    - [Adding Plugins](#adding-plugins)
+    - [Adding Pages](#adding-pages)
+    - [Deleting Pages](#deleting-pages)
+      - [A Worked Example](#a-worked-example)
+    - [Writing the Changelog](#writing-the-changelog)
+      - [Categories](#categories)
+  - [Committing Code](#committing-code)
+    - [Linting](#linting)
+    - [Pull Requests](#pull-requests)
+    - [Contributor License Agreement](#contributor-license-agreement)
+  - [Deployment](#deployment)
+    - [Trigger workflow build](#trigger-workflow-build)
 
 ## Code of Conduct
 
@@ -59,10 +69,12 @@ If you are starting a new page and want to add images, add a new folder to [`ass
 
 ```jsx
 <DocsImage
-  src="/assets/img/guides/tooling/coverage-object.png"
+  src="/img/guides/tooling/coverage-object.png"
   alt="code coverage object"
-/>
+></DocsImage>
 ```
+
+Typically you should include the `alt` and `title` attributes to give the user more information about the image.
 
 ### Videos
 

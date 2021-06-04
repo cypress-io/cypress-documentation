@@ -124,7 +124,7 @@ The separation of installation from test running is necessary when running paral
 First, we break the pipeline up into reusable chunks of configuration using a [YAML anchor](https://support.atlassian.com/bitbucket-cloud/docs/yaml-anchors/), `&e2e`. This will be used by the worker jobs.
 
 ```yaml
-image: cypress/base:10
+image: cypress/base:14.16.0
 
 ## job definition for running E2E tests in parallel
 e2e: &e2e
@@ -178,7 +178,7 @@ definitions:
 The complete `bitbucket-pipelines.yml` is below:
 
 ```yaml
-image: cypress/base:10
+image: cypress/base:14.16.0
 
 ## job definition for running E2E tests in parallel
 e2e: &e2e

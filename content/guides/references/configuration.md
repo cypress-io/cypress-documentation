@@ -340,6 +340,17 @@ describe(
 )
 ```
 
+You can set the `baseUrl` value for a single test:
+
+```js
+it('navigates through the tab',
+  { baseUrl: Cypress.env('APP_AT') },
+  () => {
+    ...
+  }
+)
+```
+
 #### Single test configuration
 
 If you want to target a test to run or be excluded when run in a specific browser, you can override the `browser` configuration within the test configuration. The `browser` option accepts the same arguments as [Cypress.isBrowser()](/api/cypress-api/isbrowser).

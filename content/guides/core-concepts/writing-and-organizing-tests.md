@@ -658,7 +658,7 @@ beforeEach(() => {
 })
 ```
 
-When Cypres starts executing the first test, the `beforeEach` hook fails. Now the first test is marked as **failed**. BUT if the `beforeEach` hook failed once, why would we execute it _again_ before the second test? It would just fail the same way! So Cypress _skips_ the remaining tests in that block, because they would also fail due to the `beforeEach` hook failure.
+When Cypress starts executing the first test, the `beforeEach` hook fails. Now the first test is marked as **failed**. BUT if the `beforeEach` hook failed once, why would we execute it _again_ before the second test? It would just fail the same way! So Cypress _skips_ the remaining tests in that block, because they would also fail due to the `beforeEach` hook failure.
 
 <DocsImage src="/img/guides/core-concepts/1-skipped.png" alt="Test runner showing a skipped test" ></DocsImage>
 

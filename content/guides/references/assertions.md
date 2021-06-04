@@ -247,9 +247,23 @@ cy.contains('#a-greeting', /^Hello/)
 ### Visibility
 
 ```javascript
-// retry until this button is visible
-cy.get('button').should('be.visible')
+// retry until the button with id "form-submit" is visible
+cy.get('button#form-submit').should('be.visible')
+// retry until the list item with
+// text "write tests" is visible
+cy.contains('.todo li', 'write tests').should('be.visible')
 ```
+
+**Note:** if there are multiple elements, the assertions `be.visible` and `not.be.visible` act differently:
+
+```javascript
+// retry until SOME elements are visible
+cy.get('li').should('be.visible')
+// retry until EVERY element is invisible
+cy.get('li.hidden').should('not.be.visible')
+```
+
+Watch the short video ["Multiple elements and should('be.visible') assertion"](https://www.youtube.com/watch?v=LxkrhUEE2Qk) that shows how to correctly check the visibility of elements.
 
 ### Existence
 

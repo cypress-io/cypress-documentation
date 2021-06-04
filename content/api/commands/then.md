@@ -144,11 +144,12 @@ cy.get('form')
 
 ```javascript
 cy.get('div')
-.then(($div) => {
-  return $div[0] // type => HTMLDivElement
-}).then(($div) => {
-  $div // type => JQuery<HTMLDivElement>
-})
+  .then(($div) => {
+    return $div[0] // type => HTMLDivElement
+  })
+  .then(($div) => {
+    $div // type => JQuery<HTMLDivElement>
+  })
 ```
 
 ### Promises
