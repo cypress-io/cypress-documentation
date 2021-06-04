@@ -208,7 +208,7 @@ cy.wait('@gqlMutation')
 
 <Alert type="info">
 
-For aliasing requests with GraphQL, see [Aliasing individual GraphQL requests](#Aliasing-individual-GraphQL-requests).
+For more guidance around aliasing requests with GraphQL, see [Working with GraphQL](/guides/testing-strategies/working-with-graphql)
 
 </Alert>
 
@@ -1206,68 +1206,6 @@ Cypress.minimatch('http://localhost/users?_limit=3', '/users?_limit=+(3|5)', {
   debug: true,
 })
 // true (plus debug messages)
-```
-
-## GraphQL
-
-#### Aliasing individual GraphQL requests
-
-Aliases can be set on a per-request basis by setting the `alias` property of the intercepted request.
-
-This is useful against GraphQL endpoints to wait for specific Queries and Mutations.
-
-Given that the `operationName` property is optional in GraphQL requests, we can `alias` with or without this property.
-
-With `operationName` property:
-
-```js
-cy.intercept('POST', '/graphql', (req) => {
-  if (req.body.operationName.includes('ListPosts')) {
-    req.alias = 'gqlListPostsQuery'
-  }
-})
-
-// assert that a matching request for the ListPosts Query has been made
-cy.wait('@gqlListPostsQuery')
-```
-
-```js
-cy.intercept('POST', '/graphql', (req) => {
-  if (req.body.operationName.includes('CreatePost')) {
-    req.alias = 'gqlCreatePostMutation'
-  }
-})
-
-// assert that a matching request for the CreatePost Mutation has been made
-cy.wait('@gqlCreatePostMutation')
-```
-
-Without `operationName` property:
-
-```js
-cy.intercept('POST', '/graphql', (req) => {
-  const { body } = req
-
-  if (body.hasOwnProperty('query') && body.query.includes('ListPosts')) {
-    req.alias = 'gqlListPostsQuery'
-  }
-})
-
-// assert that a matching request for the ListPosts Query has been made
-cy.wait('@gqlListPostsQuery')
-```
-
-```js
-cy.intercept('POST', '/graphql', (req) => {
-  const { body } = req
-
-  if (body.hasOwnProperty('query') && body.query.includes('CreatePost')) {
-    req.alias = 'gqlCreatePostMutation'
-  }
-})
-
-// assert that a matching request for the CreatePost Mutation has been made
-cy.wait('@gqlCreatePostMutation')
 ```
 
 ## Comparison to `cy.route()`
