@@ -588,6 +588,13 @@
           "link": "https://github.com/prma85/cypress-azure-keyvault",
           "keywords": ["testing", "azure", "keyvault", "secret"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-harvester",
+          "description": "Easliy work with html <table> elements, whether it be for test assertions or for web scarping purposes.",
+          "link": "https://github.com/ryanrosello-og/cypress-harvester",
+          "keywords": ["webscarping", "table", "validation"],
+          "badge": "community"
         }
       ]
     },
