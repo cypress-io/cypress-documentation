@@ -25,15 +25,18 @@ All intercepts are automatically cleared before every test.
 ## Syntax
 
 ```js
+// spying only
 cy.intercept(url)
 cy.intercept(method, url)
 cy.intercept(routeMatcher)
 
+// spying and response stubbing
 cy.intercept(url, staticResponse)
 cy.intercept(method, url, staticResponse)
 cy.intercept(routeMatcher, staticResponse)
 cy.intercept(url, routeMatcher, staticResponse)
 
+// spying, dynamic stubbing, request modification, etc.
 cy.intercept(url, routeHandler)
 cy.intercept(method, url, routeHandler)
 cy.intercept(routeMatcher, routeHandler)
@@ -45,6 +48,7 @@ cy.intercept(url, routeMatcher, routeHandler)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```js
+// spying
 cy.intercept('/users/**')
 cy.intercept('GET', '/users*')
 cy.intercept({
@@ -52,12 +56,16 @@ cy.intercept({
   url: '/users*',
   hostname: 'localhost',
 })
+
+// spying and response stubbing
 cy.intercept('POST', '/users*', {
   statusCode: 201,
   body: {
     name: 'Peter Pan',
   },
 })
+
+// spying, dynamic stubbing, request modification, etc.
 cy.intercept('/users*', { hostname: 'localhost' }, (req) => {
   /* do something with request and/or response */
 })
