@@ -8,6 +8,7 @@ title: GitHub Actions
 
 - How to run Cypress tests with GitHub Actions as part of CI/CD pipeline
 - How to parallelize Cypress test runs within GitHub Actions
+- How to cache build artifacts between installation jobs and worker jobs
 
 </Alert>
 
@@ -21,7 +22,7 @@ GitHub offers developers [Actions](https://github.com/features/actions) that pro
 
 ## Cypress GitHub Action
 
-Workflows can be packaged and shared as [GitHub Actions](https://github.com/features/actions). GitHub maintains many, such as the [checkout](https://github.com/marketplace/actions/checkout) and [cache](https://github.com/marketplace/actions/cache) actions used below.
+Workflows can be packaged and shared as [GitHub Actions](https://github.com/features/actions). GitHub maintains many, such as the [checkout](https://github.com/marketplace/actions/checkout) and [Upload/Download Artifact Actions](https://docs.github.com/en/actions/guides/storing-workflow-data-as-artifacts) actions used below.
 
 The Cypress team maintains the official [Cypress GitHub Action](https://github.com/marketplace/actions/cypress-io) for running Cypress tests. This action provides npm installation, custom caching, additional configuration options and simplifies setup of advanced workflows with Cypress in the GitHub Actions platform.
 
@@ -97,15 +98,45 @@ jobs:
 
 ## Caching Dependencies and Build Artifacts
 
-Dependencies and build artifacts maybe cached between jobs using the [cache](https://github.com/marketplace/actions/cache) GitHub Action.
-
-The job below includes a cache of `node_modules`, the Cypress binary in `~/.cache/Cypress` and the `build` directory. In addition, the `build` attribute is added to the Cypress GitHub Action to generate the build artifacts prior to the test run.
+The Cypress team maintains the official [Cypress GitHub Action](https://github.com/marketplace/actions/cypress-io) for running Cypress tests. This action provides npm installation, custom caching, additional configuration options and simplifies setting up advanced workflows with Cypress in the GitHub Actions platform.
 
 <Alert type="info">
 
-Caching of dependencies and build artifacts can be accomplished with the GitHub Actions [ Upload/Download Artifact Actions](https://docs.github.com/en/actions/guides/storing-workflow-data-as-artifacts), but uploading takes more time than using the [cache GitHub Action](https://github.com/marketplace/actions/cache).
+Caching of dependencies and build artifacts between installation and worker jobs can be accomplished with the [Upload/Download Artifact Actions](https://docs.github.com/en/actions/guides/storing-workflow-data-as-artifacts).
 
 </Alert>
+
+The `install` job below uses the [upload-artifact](https://github.com/marketplace/actions/upload-a-build-artifact) action and will save the state of the `build` directory for the worker jobs.
+
+```yaml
+name: Cypress Tests with installation job
+
+on: [push]
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node12.18.3-chrome87-ff82
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Save build folder
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          if-no-files-found: error
+          path: build
+
+      - name: Cypress install
+        uses: cypress-io/github-action@v2
+        with:
+          # Disable running of tests within install job
+          runTests: false
+          build: yarn build
+```
+
+The [download-artifact](https://github.com/marketplace/actions/download-a-build-artifact) action will retrieve the `build` directory saved in the install job, as seen below in a worker job.
 
 ```yaml
 name: Cypress Tests with Dependency and Artifact Caching
@@ -113,6 +144,8 @@ name: Cypress Tests with Dependency and Artifact Caching
 on: [push]
 
 jobs:
+  # install:
+  # ....
   cypress-run:
     runs-on: ubuntu-latest
     container: cypress/browsers:node12.18.3-chrome87-ff82
@@ -120,16 +153,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - uses: actions/cache@v2
-        id: yarn-build-cache
+      - name: Download the build folders
+        uses: actions/download-artifact@v2
         with:
-          path: |
-            node_modules
-            ~/.cache/Cypress
-            build
-          key: ${{ runner.os }}-node_modules-build-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-node_modules-build-
+          name: build
+          path: build
 
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
@@ -158,9 +186,9 @@ The separation of installation from test running is necessary when running paral
 
 First, we'll define the `install` step that will be used by the worker jobs defined in the matrix strategy.
 
-For the `steps`, notice that we pass `runTests: false` to the Cypress GitHub Action to instruct it to only install dependencies _without running the tests_.
+For the `steps`, notice that we pass `runTests: false` to the Cypress GitHub Action to instruct it to only install and cache Cypress and npm dependencies _without running the tests_.
 
-The [cache](https://github.com/marketplace/actions/cache) GitHub Action is included and will save the state of the `node_modules`, `~/.cache/Cypress` and `build` directories for the worker jobs.
+The [upload-artifact](https://github.com/marketplace/actions/upload-a-build-artifact) action will save the state of the `build` directory for the worker jobs.
 
 ```yaml
 name: Cypress Tests with installation job
@@ -175,16 +203,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - uses: actions/cache@v2
-        id: yarn-and-build-cache
+      - name: Save build folder
+        uses: actions/upload-artifact@v2
         with:
-          path: |
-            ~/.cache/Cypress
-            build
-            node_modules
-          key: ${{ runner.os }}-node_modules-build-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-node_modules-build-
+          name: build
+          if-no-files-found: error
+          path: build
 
       - name: Cypress install
         uses: cypress-io/github-action@v2
@@ -203,6 +227,8 @@ Next, we define the worker job named `ui-chrome-tests` that will run Cypress tes
 <strong class="alert-header">Note</strong>
 
 Using our [Cypress GitHub Action](https://github.com/marketplace/actions/cypress-io) we specify `install: false` since our dependencies and build were cached in our `install` job.
+
+The [download-artifact](https://github.com/marketplace/actions/download-a-build-artifact) action will retrieve the `build` directory saved in the install job.
 
 </Alert>
 
@@ -228,16 +254,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - uses: actions/cache@v2
-        id: yarn-and-build-cache
+      - name: Download the build folders
+        uses: actions/download-artifact@v2
         with:
-          path: |
-            ~/.cache/Cypress
-            build
-            node_modules
-          key: ${{ runner.os }}-node_modules-build-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-node_modules-build-
+          name: build
+          path: build
 
       - name: 'UI Tests - Chrome'
         uses: cypress-io/github-action@v2
@@ -296,27 +317,6 @@ ui-chrome-tests:
     matrix:
       # run copies of the current job in parallel
       containers: [1, 2, 3, 4, 5]
-```
-
-#### Ensure Cache Usage
-
-The [checkout](https://github.com/marketplace/actions/checkout) and [cache](https://github.com/marketplace/actions/cache) actions must be declared in each job as there is no state between the `install` job and other jobs (e.g. `ui-chrome-tests`) except what is persisted by cache.
-
-```yaml
-steps:
-  - name: Checkout
-    uses: actions/checkout@v2
-
-  - uses: actions/cache@v2
-    id: yarn-and-build-cache
-    with:
-      path: |
-        ~/.cache/Cypress
-        build
-        node_modules
-      key: ${{ runner.os }}-node_modules-build-${{ hashFiles('**/yarn.lock') }}
-      restore-keys: |
-        ${{ runner.os }}-node_modules-build-
 ```
 
 ## Using the Cypress Dashboard with GitHub Actions

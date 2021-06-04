@@ -205,6 +205,10 @@
             {
               "title": "Google Authentication",
               "slug": "google-authentication"
+            },
+            {
+              "title": "Working with GraphQL",
+              "slug": "working-with-graphql"
             }
           ]
         },

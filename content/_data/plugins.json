@@ -135,13 +135,6 @@
           "badge": "official"
         },
         {
-          "name": "cypress-plugin-retries",
-          "description": "A Cypress plugin to retry failed tests.",
-          "link": "https://github.com/Bkucera/cypress-plugin-retries",
-          "keywords": ["cypress-plugin-retries"],
-          "badge": "verified"
-        },
-        {
           "name": "cly",
           "description": "A prototype of generating quicker project scaffolding for Cypress.",
           "link": "https://github.com/bahmutov/cly",
@@ -770,6 +763,13 @@
           "link": "https://github.com/echobind/bisonapp",
           "keywords": ["next.js", "react", "graphql", "prisma", "vercel"],
           "badge": "community"
+        },
+        {
+          "name": "@cypress/schematic",
+          "description": "Adds Cypress to your Angular project via the Angular CLI",
+          "link": "https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic",
+          "keywords": ["angular", "cli"],
+          "badge": "official"
         }
       ]
     },

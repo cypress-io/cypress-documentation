@@ -101,7 +101,8 @@
       "amazon-cognito-authentication": "Amazon Cognito Authentication",
       "google-authentication": "Google Authentication",
       "circleci": "CircleCI",
-      "ci-provider-examples": "CI Provider Examples"
+      "ci-provider-examples": "CI Provider Examples",
+      "working-with-graphql": "Working with GraphQL"
     },
     "api": {
       "api": "API",
