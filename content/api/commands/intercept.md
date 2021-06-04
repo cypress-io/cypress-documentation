@@ -2,7 +2,7 @@
 title: intercept
 ---
 
-Capture or change the behavior or contents of network requests and responses.
+Spy and stub network requests and responses.
 
 <Alert type="warning">
 
