@@ -6,6 +6,7 @@ title: Introduction
 
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
+- What Continuous Integration is
 - How to run Cypress tests in Continuous Integration
 - How to configure Cypress in various CI Providers
 - How to record tests to the Cypress Dashboard
@@ -13,7 +14,9 @@ title: Introduction
 
 </Alert>
 
-<DocsVideo src="/img/snippets/running-in-ci.mp4"></DocsVideo>
+## What is Continuous Integration?
+
+<DocsVideo src="https://youtube.com/embed/USX6AntcPyg"></DocsVideo>
 
 ## Setting up CI
 
