@@ -15,6 +15,8 @@ title: CircleCI
 
 <DocsVideo src="https://youtube.com/embed/J-xbNtKgXfY"></DocsVideo>
 
+<DocsVideo src="/img/snippets/running-in-ci.mp4"></DocsVideo>
+
 <!-- textlint-enable -->
 
 ## Basic Setup

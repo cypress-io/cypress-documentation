@@ -12,8 +12,13 @@ title: GitHub Actions
 
 </Alert>
 
-
 <DocsVideo src="https://youtube.com/embed/videoseries?list=PL8GlT7H3xOcLJMIPhxlZ8W9kgbeMqW7cH"></DocsVideo>
+
+<!-- textlint-disable -->
+
+<DocsVideo src="https://youtube.com/embed/gokM_zEmWLA"></DocsVideo>
+
+<!-- textlint-enable -->
 
 GitHub offers developers [Actions](https://github.com/features/actions) that provide a way to **automate, customize, and execute your software development workflows** within your GitHub repository. Detailed documentation is available in the [GitHub Action Documentation](https://docs.github.com/en/actions).
 
