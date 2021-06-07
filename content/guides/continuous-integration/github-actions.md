@@ -12,6 +12,8 @@ title: GitHub Actions
 
 </Alert>
 
+<DocsVideo src="https://youtube.com/embed/videoseries?list=PL8GlT7H3xOcLJMIPhxlZ8W9kgbeMqW7cH"></DocsVideo>
+
 <!-- textlint-disable -->
 
 <DocsVideo src="https://youtube.com/embed/gokM_zEmWLA"></DocsVideo>
@@ -22,11 +24,15 @@ GitHub offers developers [Actions](https://github.com/features/actions) that pro
 
 ## Cypress GitHub Action
 
+<DocsVideo src="https://youtube.com/embed/N0TOFWy1Xvg"></DocsVideo>
+
 Workflows can be packaged and shared as [GitHub Actions](https://github.com/features/actions). GitHub maintains many, such as the [checkout](https://github.com/marketplace/actions/checkout) and [Upload/Download Artifact Actions](https://docs.github.com/en/actions/guides/storing-workflow-data-as-artifacts) actions used below.
 
 The Cypress team maintains the official [Cypress GitHub Action](https://github.com/marketplace/actions/cypress-io) for running Cypress tests. This action provides npm installation, custom caching, additional configuration options and simplifies setup of advanced workflows with Cypress in the GitHub Actions platform.
 
 ## Basic Setup
+
+<DocsVideo src="https://youtube.com/embed/vVr7DXDdUks"></DocsVideo>
 
 The example below is basic CI setup and job using the [Cypress GitHub Action](https://github.com/marketplace/actions/cypress-io) to run Cypress tests within the Electron browser. This GitHub Action configuration is placed within `.github/workflows/main.yml`.
 
@@ -170,6 +176,8 @@ jobs:
 ```
 
 ## Parallelization
+
+<DocsVideo src="https://youtube.com/embed/96Yn_IiQUJI"></DocsVideo>
 
 The [Cypress Dashboard](/guides/dashboard/introduction) offers the ability to [parallelize and group test runs](/guides/guides/parallelization) along with additional insights and [analytics](/guides/dashboard/analytics) for Cypress tests.
 
@@ -320,6 +328,8 @@ ui-chrome-tests:
 ```
 
 ## Using the Cypress Dashboard with GitHub Actions
+
+<DocsVideo src="https://youtube.com/embed/Oqq-_QZWzhg"></DocsVideo>
 
 In the GitHub Actions configuration we have defined in the previous section, we are leveraging three useful features of the [Cypress Dashboard](https://on.cypress.io/dashboard):
 
