@@ -12,7 +12,6 @@ title: GitHub Actions
 
 </Alert>
 
-## GitHub Actions + Cypress Tutorials
 
 <DocsVideo src="https://youtube.com/embed/videoseries?list=PL8GlT7H3xOcLJMIPhxlZ8W9kgbeMqW7cH"></DocsVideo>
 
