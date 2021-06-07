@@ -588,6 +588,13 @@
           "link": "https://github.com/prma85/cypress-azure-keyvault",
           "keywords": ["testing", "azure", "keyvault", "secret"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-rest-graphql",
+          "description": "Add visual output and helper functions for performing REST and graphQL queries",
+          "link": "https://github.com/BrandedEntertainmentNetwork/cypress-rest-graphql",
+          "keywords": ["api", "rest", "graphQL"],
+          "badge": "community"
         }
       ]
     },
