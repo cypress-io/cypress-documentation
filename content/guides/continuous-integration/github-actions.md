@@ -14,11 +14,19 @@ title: GitHub Actions
 
 <DocsVideo src="https://youtube.com/embed/videoseries?list=PL8GlT7H3xOcLJMIPhxlZ8W9kgbeMqW7cH"></DocsVideo>
 
-<!-- textlint-disable -->
+<Alert type="info">
 
-<DocsVideo src="https://youtube.com/embed/gokM_zEmWLA"></DocsVideo>
+## GitHub Actions + Cypress Screencasts
 
-<!-- textlint-enable -->
+1. [What is Continuous Integration?](https://youtu.be/USX6AntcPyg)
+2. [Actions & Workflows](https://youtu.be/N0TOFWy1Xvg)
+3. [Example App Overview](https://youtu.be/zGrAhZkCoUE)
+4. [Understanding how to configure a workflow](https://youtu.be/vVr7DXDdUks)
+5. [Running Tests in GitHub Actions CI/CD Workflow](https://youtu.be/23ZGSrmbV_4)
+6. [Debugging Test Failures in CI](https://youtu.be/Oqq-_QZWzhg)
+7. [Running Tests in Parallel](https://youtu.be/96Yn_IiQUJI)
+
+</Alert>
 
 GitHub offers developers [Actions](https://github.com/features/actions) that provide a way to **automate, customize, and execute your software development workflows** within your GitHub repository. Detailed documentation is available in the [GitHub Action Documentation](https://docs.github.com/en/actions).
 
@@ -351,3 +359,7 @@ A complete CI workflow against multiple browsers, viewports and operating system
 Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and refer to the [.github/workflows/main.yml](https://github.com/cypress-io/cypress-realworld-app/blob/develop/.github/workflows/main.yml) file.
 
 <DocsImage src="/img/guides/github-actions/rwa-run-matrix.png" alt="Cypress Real World App GitHub Actions Matrix"></DocsImage>
+
+## See also
+
+- [Test anything that runs in the browser with Cypress and GitHub Actions](https://www.youtube.com/watch?v=gokM_zEmWLA)
