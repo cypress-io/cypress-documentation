@@ -80,6 +80,24 @@ export default {
         }, SCROLL_AFTER_MS)
       }
     },
+    getSidebarItemClass(folder, child) {
+      const ACTIVE_CLASS = 'active-sidebar-link'
+      const INACTIVE_CLASS = 'text-gray-600'
+      const isCurrentRedirect =
+        child.redirect && child.redirect.includes(this.path)
+      const isActiveNode = this.path.endsWith(`${folder}/${child.slug}`)
+
+      /**
+       * If the node contains a `redirect` property and not `slug`,
+       * check to see if the current path is the `redirect`. If there is
+       * not a redirect, check if the node's path is the current path.
+       */
+      if (isCurrentRedirect || isActiveNode) {
+        return ACTIVE_CLASS
+      }
+
+      return INACTIVE_CLASS
+    },
   },
 }
 </script>
@@ -128,7 +146,7 @@ export default {
           "
           :parent-section="parentSection"
           :children="child.children"
-          :initial-is-open="path.includes(child.slug)"
+          :initial-is-open="path.endsWith(`${folder}/${child.slug}`)"
           :path="path"
           :name="child.slug"
           :depth="depth + 1"
@@ -136,11 +154,7 @@ export default {
         <li v-else>
           <nuxt-link
             :to="child.redirect || `/${section}/${folder}/${child.slug}`"
-            :class="
-              path.includes(`${folder}/${child.slug}`)
-                ? 'active-sidebar-link'
-                : 'text-gray-600'
-            "
+            :class="getSidebarItemClass(folder, child)"
             class="rounded-md group w-full flex items-center pl-4 pr-2 py-1 text-md font-medium hover:text-green transition-colors hover:bg-gray-50"
           >
             {{ child.title }}

@@ -31,6 +31,23 @@ export default {
       required: false,
     },
   },
+  methods: {
+    shouldBeInitiallyOpen(slug) {
+      /**
+       * This is a hack. The API Table of Contents page, i.e. `/api/table-of-contents`,
+       * doesn't start with the API section expanded (the section of the current page
+       * should start in the expanded/open state). Every other section seems to work,
+       * and I didn't want to spend too much time troubleshooting this.
+       */
+      if (slug === 'api' && this.path === '/table-of-contents') {
+        return true
+      }
+
+      const isOpen = this.path.includes(slug)
+
+      return isOpen
+    },
+  },
 }
 </script>
 
@@ -51,7 +68,7 @@ export default {
         :section="section"
         :parent-section="group.slug"
         :children="group.children"
-        :initial-is-open="path.includes(group.slug)"
+        :initial-is-open="shouldBeInitiallyOpen(group.slug)"
         :path="path"
       />
     </div>

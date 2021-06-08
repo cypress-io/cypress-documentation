@@ -75,6 +75,8 @@ describe('Guides', () => {
             'nuxt-link-exact-active nuxt-link-active active-sidebar-link'
           )
 
+          cy.get('.active-sidebar-link').should('have.length', 1)
+
           const titleExceptionMap = {
             Protractor: 'Migrating from Protractor to Cypress',
           }

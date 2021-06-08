@@ -47,15 +47,17 @@ describe('APIs', () => {
               `/api/${category.slug}/${page.slug}`
           )
 
-          // cy.contains(
-          //   page.slug === 'table-of-contents' || page.slug === 'all-assertions'
-          //     ? '.app-sidebar a'
-          //     : `.app-sidebar [data-test="${category.slug}"] a`,
-          //   page.slug === 'all-assertions' ? 'Assertions' : pageTitle
-          // ).should(
-          //   'have.class',
-          //   'nuxt-link-exact-active nuxt-link-active active-sidebar-link'
-          // )
+          cy.contains(
+            page.slug === 'table-of-contents' || page.slug === 'all-assertions'
+              ? '.app-sidebar a'
+              : `.app-sidebar [data-test="${category.slug}"] a`,
+            page.slug === 'all-assertions' ? 'Assertions' : pageTitle
+          ).should(
+            'have.class',
+            'nuxt-link-exact-active nuxt-link-active active-sidebar-link'
+          )
+
+          cy.get('.active-sidebar-link').should('have.length', 1)
 
           const titleAliases = {
             'all-assertions': 'Assertions',

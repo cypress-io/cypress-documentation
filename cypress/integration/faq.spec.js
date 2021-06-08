@@ -46,6 +46,8 @@ describe('FAQ', () => {
             'nuxt-link-exact-active nuxt-link-active active-sidebar-link'
           )
 
+          cy.get('.active-sidebar-link').should('have.length', 1)
+
           cy.title().should('equal', getTitle(pageTitle))
 
           cy.get('.main-content-title').contains(pageTitle)
