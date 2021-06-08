@@ -191,7 +191,6 @@ To delete a page:
 
 - Delete the page from the relevant directory under [`content`](/content).
 - Remove the link from the the [`sidebar.json`](/content/_data/sidebar.json).
-- Remove the translations for the sidebar link for each supported language (for English, this is located in [`en.json`](/content/_data/en.json)).
 - **REQUIRED**: Commit the change using git - we auto-remove the doc within each supported language, this auto-generation depends on the file being deleted in git, the build will not work until this is commited.
 - Build the documentation site locally so that you can visually inspect and make sure it was properly deleted.
 
@@ -203,35 +202,71 @@ API documentation for commands is in the [`content/api/commands`](/content/api/c
 
 1. Add a file called `privatestate.md` to that directory.
 2. Write the document. Look to the existing documentation to see how to structure the content.
-3. Open the [`content/_data/sidebar.json`](/content/_data/sidebar.json) file and add a link the new `privatestate` page. In this example we're adding a command so we'll add a link underneath the `api.commands` section.
+3. Open the [`content/_data/sidebar.json`](/content/_data/sidebar.json) file and add a link the new `privatestate` page. In this example we're adding a command so we'll add a link underneath the `api` section.
 
 ```json
-"api": {
-  "commands": {
-    "and": "and.html",
-    "as": "as.html",
-    "blur": "blur.html",
-    // ...
-    "privatestate": "privatestate.html"
+"api": [
+  {
+    "title": "API",
+    "slug": "api",
+    "children": [
+      {
+        "title": "Commands",
+        "slug": "commands",
+        "children": [
+          {
+            "title": "and",
+            "slug": "and"
+          },
+          {
+            "title": "as",
+            "slug": "as"
+          },
+          // ...
+          {
+            "title": "privateState",
+            "slug": "privatestate"
+          }
+        ]
+      }
+    ]
   }
-}
+]
 ```
 
-4. Open [`content/_data/en.json`](/content/_data/en.json) and add an English translation for that sidebar link's title. In this example we're adding a command so we'll add the following text:
+The `sidebar.json` file contains a tree-like structure of nodes. Each node contains a `title`, `slug`, and optionally a `redirect` property. The URLs for each node in the `sidebar.json` are determined by the placement of each node in the hierarchy. For example, the `privateState` node that we added in the previous example would have a generated URL of `/api/commands/privatestate` since `privateState` is a child of the `commands` node, which is a child of the `api` node.
+
+Because of this ability to nest nodes as children of other nodes, you can create a menu structure up to three (3) levels deep:
 
 ```json
-"sidebar": {
-  "api": {
-    "introduction": "Introduction"
-    "api": "API"
-    "commands": "Commands"
-    // ...
-    "privatestate": "privateState"
+"api": [
+  {
+    "title": "API",
+    "slug": "api",
+    "children": [
+      {
+        "title": "Commands",
+        "slug": "commands",
+        "children": [
+          {
+            "title": "Custom Commands",
+            "slug": "custom-commands",
+            "children": [
+              {
+                "title": "Writing a Custom Command",
+                "slug": "writing-a-custom-command"
+                // this node should not contain any children
+              }
+            ]
+          }
+        ]
+      }
+    ]
   }
-}
+]
 ```
 
-5. Submit a [pull request](#Pull-Requests) for your change.
+4. Submit a [pull request](#Pull-Requests) for your change.
 
 ### Writing the Changelog
 
