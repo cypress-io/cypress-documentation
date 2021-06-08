@@ -234,9 +234,19 @@ API documentation for commands is in the [`content/api/commands`](/content/api/c
 ]
 ```
 
-The `sidebar.json` file contains a tree-like structure of nodes. Each node contains a `title`, `slug`, and optionally a `redirect` property. The URLs for each node in the `sidebar.json` are determined by the placement of each node in the hierarchy. For example, the `privateState` node that we added in the previous example would have a generated URL of `/api/commands/privatestate` since `privateState` is a child of the `commands` node, which is a child of the `api` node.
+The `sidebar.json` file contains a tree-like structure of nodes. Each node contains a `title`, `slug`, and optionally a `redirect` property. The URLs for each node in the `sidebar.json` are determined by the placement of each node in the hierarchy. For example, the `privateState` node that we added in the previous example would have a generated URL of `/api/commands/privatestate` since `privateState` is a child of the `commands` node, which is a child of the `api` node. If the `privateState` node were to contain a `redirect` instead of a `slug` property, it would link to the path used as the `redirect`:
 
-Because of this ability to nest nodes as children of other nodes, you can create a menu structure up to three (3) levels deep:
+```json
+{
+  "title": "privateState",
+  "redirect": "/guides/overview/why-cypress"
+  // creates a link to the `/guides/overview/why-cypress` page
+}
+```
+
+> Note: If a node contains a `redirect` property, there is no need to add a `slug` property. The `redirect` property will always take precedence over the `slug`.
+
+The ability to nest nodes inside of other nodes gives you the ability to create a menu structure up to three (3) levels deep:
 
 ```json
 "api": [
