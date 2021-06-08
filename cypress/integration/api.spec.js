@@ -48,10 +48,13 @@ describe('APIs', () => {
           )
 
           cy.contains(
-            page.slug === 'table-of-contents' || page.slug === 'all-assertions'
+            page.slug === 'table-of-contents' ||
+              page.redirect === '/guides/references/assertions'
               ? '.app-sidebar a'
               : `.app-sidebar [data-test="${category.slug}"] a`,
-            page.slug === 'all-assertions' ? 'Assertions' : pageTitle
+            page.redirect === '/guides/references/assertions'
+              ? 'Assertions'
+              : pageTitle
           ).should(
             'have.class',
             'nuxt-link-exact-active nuxt-link-active active-sidebar-link'
