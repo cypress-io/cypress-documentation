@@ -32,7 +32,7 @@ export default {
             class="mb-4"
           >
             <NuxtLink
-              :to="item.redirect || `/${section.slug}/${item.slug}`"
+              :to="item.redirect || `/api/${section.slug}/${item.slug}`"
               class="text-blue border-b border-dotted hover:border-transparent"
             >
               {{ item.title }}
