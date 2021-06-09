@@ -851,8 +851,8 @@
               "slug": "before-run-api"
             },
             {
-              "title": "after-run-api",
-              "slug": "After Run"
+              "title": "After Run",
+              "slug": "after-run-api"
             },
             {
               "title": "Before Spec",
