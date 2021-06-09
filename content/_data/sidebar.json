@@ -829,48 +829,48 @@
               "slug": "version"
             }
           ]
-        }
-      ]
-    },
-    {
-      "title": "Plugins",
-      "slug": "plugins",
-      "children": [
-        {
-          "title": "Writing a Plugin",
-          "slug": "writing-a-plugin"
         },
         {
-          "title": "Configuration",
-          "slug": "configuration-api"
-        },
-        {
-          "title": "Preprocessors",
-          "slug": "preprocessors-api"
-        },
-        {
-          "title": "Before Run",
-          "slug": "before-run-api"
-        },
-        {
-          "title": "after-run-api",
-          "slug": "After Run"
-        },
-        {
-          "title": "Before Spec",
-          "slug": "before-spec-api"
-        },
-        {
-          "title": "After Spec",
-          "slug": "after-spec-api"
-        },
-        {
-          "title": "Browser Launching",
-          "slug": "browser-launch-api"
-        },
-        {
-          "title": "After Screenshot",
-          "slug": "after-screenshot-api"
+          "title": "Plugins",
+          "slug": "plugins",
+          "children": [
+            {
+              "title": "Writing a Plugin",
+              "slug": "writing-a-plugin"
+            },
+            {
+              "title": "Configuration",
+              "slug": "configuration-api"
+            },
+            {
+              "title": "Preprocessors",
+              "slug": "preprocessors-api"
+            },
+            {
+              "title": "Before Run",
+              "slug": "before-run-api"
+            },
+            {
+              "title": "after-run-api",
+              "slug": "After Run"
+            },
+            {
+              "title": "Before Spec",
+              "slug": "before-spec-api"
+            },
+            {
+              "title": "After Spec",
+              "slug": "after-spec-api"
+            },
+            {
+              "title": "Browser Launching",
+              "slug": "browser-launch-api"
+            },
+            {
+              "title": "After Screenshot",
+              "slug": "after-screenshot-api"
+            }
+          ]
         }
       ]
     }
