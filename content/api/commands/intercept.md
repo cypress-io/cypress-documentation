@@ -182,7 +182,7 @@ cy.intercept('GET', '/users')
 // ...but not this: POST http://localhost/users
 ```
 
-### Aliasing a Route
+### Aliasing an intercepted route
 
 While `cy.intercept` doesn't yield anything, you can chain [`.as`](/api/commands/as) to it to create an [alias](/guides/core-concepts/variables-and-aliases#Aliases) which can be used to [wait on a request](#Waiting-on-a-request).
 
@@ -246,7 +246,7 @@ cy.intercept({
 
 ### Waiting on a request
 
-Use [cy.wait()](/api/commands/wait) with `cy.intercept()` aliases to wait for the request/response cycle to complete.
+Use [cy.wait()](/api/commands/wait) with [aliasing an intercepted route](#aliasing-an-intercepted-route) to wait for the request/response cycle to complete.
 
 #### With URL
 
