@@ -212,6 +212,38 @@ For more guidance around aliasing requests with GraphQL, see [Working with Graph
 
 </Alert>
 
+### Matching `url` and `method` with [RouteMatcher](#routeMatcher-RouteMatcher)
+
+Specifying a `method` and `url` to match can also be acheived by passing the `routeMatcher` object into `cy.intercept` instead:
+
+```js
+// These both yield the same result:
+cy.intercept({ method: 'GET', url: '**/users' })
+cy.intercept('GET', '**/users')
+```
+
+### Pattern Matching
+
+```js
+// match updates to the `/users` endpoint
+cy.intercept({
+  method: '+(PUT|PATCH)',
+  url: '**/users/*',
+})
+// matches:
+//   PUT /users/1
+//   PATCH /users/1
+//   doesn't match
+//   GET /users
+//   GET /users/1
+
+// same as above, but using regex
+cy.intercept({
+  method: '/PUT|PATCH/',
+  url: '**/users/*',
+})
+```
+
 ### Waiting on a request
 
 Use [cy.wait()](/api/commands/wait) with `cy.intercept()` aliases to wait for the request/response cycle to complete.
