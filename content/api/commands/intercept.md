@@ -269,7 +269,7 @@ cy.intercept({
 cy.wait('@search')
 ```
 
-```ts
+```js
 cy.intercept({
   pathname: '/search',
   query: {
@@ -279,7 +279,9 @@ cy.intercept({
 // this 'cy.wait' will only resolve once a request is made to '/search'
 // with the query paramater 'q=some+terms'
 cy.wait('@searchForTerms')
+```
 
+```js
 cy.intercept(
   {
     // this RegExp matches any URL beginning with 'http://api.example.com/' and ending with '/edit' or '/save'
