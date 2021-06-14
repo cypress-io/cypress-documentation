@@ -468,10 +468,8 @@ cy.wait('@headers')
 
 You can add, modify or delete a header to all outgoing requests using a `beforeEach()` in the `cypress/support/index.js` file
 
-```ts
-// Code from Real World App (RWA)
+```js
 // cypress/support/index.ts
-import './commands'
 
 beforeEach(() => {
   cy.intercept(
@@ -481,14 +479,6 @@ beforeEach(() => {
   )
 })
 ```
-
-<Alert type="info">
-
-##### <Icon name="graduation-cap"></Icon> Real World Example
-
-Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and refer to the [cypress/support/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/support/index.ts) file for a working example.
-
-</Alert>
 
 #### Dynamically stubbing a response
 
@@ -592,29 +582,17 @@ cy.intercept('/users', (req) => {
 
 You can throttle or delay all incoming responses using a `beforeEach()` in the `cypress/support/index.js` file
 
-```ts
-// Code from Real World App (RWA)
+```js
 // cypress/support/index.ts
-import { isMobile } from './utils'
-import './commands'
-// Throttle API responses for mobile testing to simulate real world conditions
-if (isMobile()) {
-  cy.intercept({ url: 'http://localhost:3001/**', middleware: true }, (req) => {
-    req.on('response', (res) => {
-      // Throttle the response to 1 Mbps to simulate a mobile 3G connection
-      res.setThrottle(1000)
-    })
+
+// Throttle API responses to simulate real-world conditions
+cy.intercept({ url: 'http://localhost:3001/**', middleware: true }, (req) => {
+  req.on('response', (res) => {
+    // Throttle the response to 1 Mbps to simulate a mobile 3G connection
+    res.setThrottle(1000)
   })
-}
+})
 ```
-
-<Alert type="info">
-
-##### <Icon name="graduation-cap"></Icon> Real World Example
-
-Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and refer to the [cypress/support/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/support/index.ts) file for a working example.
-
-</Alert>
 
 ### Request/Response Modification with `routeHandler`
 
