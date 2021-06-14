@@ -396,11 +396,21 @@ cy.intercept('/not-found', {
 
 See also [`StaticResponse` objects][staticresponse].
 
-### Intercepting a request
+### Using the **`routeHandler`** function
+
+By specifying a [`routeHandler`][arg-routehandler] function as the last argument to `cy.intercept`, you'll have access to the entire request-response session, enabling you to modify the outgoing request, manipulate the real response, make assertions, etc.
+
+The `routeHandler` takes the incoming HTTP request (`IncomingHTTPRequest`) as the first argument.
+
+```js
+cy.intercept('/users*', (req) => {
+  /* do something with request and/or response */
+})
+```
 
 <Alert type="info">
 
-By specifying [`routeHandler`][arg-routehandler] as the last argument to `cy.intercept`, you'll have access to the entire request-response session, enabling you to modify the outgoing request, manipulate the real response, make assertions, etc.
+Throughout these examples we will refer to the incoming HTTP request as `req`. Those of you with [Express.js](https://expressjs.com/) [middleware](https://expressjs.com/en/guide/writing-middleware.html) experience should be familiar with this syntax.
 
 </Alert>
 
