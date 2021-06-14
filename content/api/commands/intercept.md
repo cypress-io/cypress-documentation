@@ -4,13 +4,13 @@ title: intercept
 
 Spy and stub network requests and responses.
 
-<Alert type="warning">
+<Alert type="info">
 
-We highly recommend you read the [Network Requests](/guides/guides/network-requests) guide first.
+**Tip**: We recommend you read the [Network Requests](/guides/guides/network-requests) guide first.
 
 </Alert>
 
-<Alert type="warning">
+<Alert type="bolt">
 
 `cy.intercept()` is the successor to `cy.route()` as of Cypress 6.0.0. See [Comparison to `cy.route`](#Comparison-to-cy-route).
 
