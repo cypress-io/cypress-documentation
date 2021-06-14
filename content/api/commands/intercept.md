@@ -129,6 +129,8 @@ By passing in a `StaticResponse` as the last argument, you can [statically defin
 
 See [Stubbing a response with a `StaticResponse` object](#With-a-StaticResponse-object) for an example.
 
+See also [`StaticResponse` objects](#StaticResponse-objects).
+
 #### <Icon name="angle-right"></Icon> routeHandler (<code>Function</code>)
 
 The `routeHandler` function is called whenever a request is matched, with the first argument being the request object. From inside the callback, you have access to the entire request-response where you can modify the outgoing request, send a response, access the real response, and more.
@@ -281,6 +283,8 @@ cy.intercept({
 cy.wait('@searchForTerms')
 ```
 
+<!-- TODO move these examples to more appropriate sections (DX-374) -->
+
 ```js
 cy.intercept(
   {
@@ -390,7 +394,7 @@ cy.intercept('/not-found', {
 })
 ```
 
-See ["`StaticResponse` objects"][staticresponse] for more information on `StaticResponse`s.
+See also [`StaticResponse` objects][staticresponse].
 
 ### Intercepting a request
 
@@ -1125,7 +1129,7 @@ Note: calling `res.send()` will end the response phase and stop the response fro
 
 A `StaticResponse` represents a stubbed response to an HTTP request. You can supply a `StaticResponse` to Cypress in 3 ways:
 
-- Directly to `cy.intercept()`, to stub a response to a route: `cy.intercept('/url', staticResponse)`
+- Directly to `cy.intercept()` as [`staticResponse`](#staticResponse-lt-code-gtStaticResponselt-code-gt), to stub a response to a route: `cy.intercept('/url', staticResponse)`
 - To [`req.reply()`][req-reply], to stub a response from a request handler: `req.reply(staticResponse)`
 - To [`res.send()`][res-send], to stub a response from a response handler: `res.send(staticResponse)`
 
