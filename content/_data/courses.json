@@ -1,6 +1,15 @@
 {
   "courses": [
     {
+      "title": "Boas práticas em automação de testes com Cypress",
+      "url": "https://www.udemy.com/course/boas-praticas-em-automacao-de-testes-com-cypress",
+      "author": "Walmyr Lima e Silva Filho",
+      "authorTwitter": "walmyrlimaesilv",
+      "sourceName": "Udemy",
+      "sourceUrl": "https://udemy.com"
+      "language": "Portuguese"
+    },
+    {
       "title": "Advanced Cypress Tutorial",
       "url": "https://testautomationu.applitools.com/advanced-cypress-tutorial",
       "author": "Filip Hric",
