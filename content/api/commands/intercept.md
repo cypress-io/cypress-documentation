@@ -342,6 +342,18 @@ Stub a response with a JSON body:
 cy.intercept('/projects', {
   body: [{ projectId: '1' }, { projectId: '2' }],
 })
+
+// If you want to stub only body, you can directly set it as an argument:
+cy.intercept(
+  '/projects', 
+  [{ projectId: '1' }, { projectId: '2' }]
+)
+
+// But empty object doesn't mean an empty JSON body, it's an empty StaticResponse:
+cy.intercept(
+  '/projects', 
+  {} // => StaticResponse
+)
 ```
 
 Stub headers, status code, and body all at once:
