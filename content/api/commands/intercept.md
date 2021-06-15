@@ -73,7 +73,7 @@ cy.intercept('/users*', { hostname: 'localhost' }, (req) => {
 
 ### Arguments
 
-#### **<Icon name="angle-right"></Icon> method** **_(String)_**
+#### **<Icon name="angle-right"></Icon> method** **_(String, Glob, RegExp)_**
 
 Specify the [HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`, etc.) to match on. This is an optional argument, but if no `method` is provided, Cypress will match _any_ HTTP method (`*`) by default.
 
@@ -197,7 +197,7 @@ cy.intercept('GET', '**/users')
 ### Pattern Matching
 
 ```js
-// match updates to the `/users` endpoint
+// match updates to the `/users` endpoint using glob matching
 cy.intercept({
   method: '+(PUT|PATCH)',
   url: '**/users/*',
