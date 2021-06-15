@@ -413,6 +413,7 @@ specify(name, config, fn)
 - `execTimeout`
 - `env` **note:** Provided environment variables will be merged with current environment variables.
 - `includeShadowDom`
+- `keystrokeDelay`
 - `requestTimeout`
 - `responseTimeout`
 - `retries`

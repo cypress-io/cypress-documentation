@@ -534,3 +534,4 @@ When clicking on `type` within the command log, the console outputs the followin
 - [`.click()`](/api/commands/click)
 - [`.focus()`](/api/commands/focus)
 - [`.submit()`](/api/commands/submit)
+- [`Cypress.Keyboard`](/api/cypress-api/keyboard-api)
