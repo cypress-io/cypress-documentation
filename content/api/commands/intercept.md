@@ -184,36 +184,6 @@ cy.intercept('GET', '/users')
 // ...but not this: POST http://localhost/users
 ```
 
-### Aliasing an intercepted route
-
-While `cy.intercept` doesn't yield anything, you can chain [`.as`](/api/commands/as) to it to create an [alias](/guides/core-concepts/variables-and-aliases#Aliases) which can be used to [wait on a request](#Waiting-on-a-request).
-
-```js
-cy.intercept('GET', '/users').as('getAllUsers')
-cy.intercept('POST', '/users').as('createUser')
-```
-
-### Aliasing individual requests
-
-Aliases can be set on a per-request basis by setting the `alias` property of the intercepted request. This is especially useful when intercepting GraphQL requests:
-
-```js
-cy.intercept('POST', '/graphql', (req) => {
-  if (req.body.hasOwnProperty('query') && req.body.query.includes('mutation')) {
-    req.alias = 'gqlMutation'
-  }
-})
-
-// assert that a matching request has been made
-cy.wait('@gqlMutation')
-```
-
-<Alert type="info">
-
-For more guidance around aliasing requests with GraphQL, see [Working with GraphQL](/guides/testing-strategies/working-with-graphql)
-
-</Alert>
-
 ### Matching `url` and `method` with [RouteMatcher](#routeMatcher-RouteMatcher)
 
 Specifying a `method` and `url` to match can also be acheived by passing the `routeMatcher` object into `cy.intercept` instead:
@@ -245,6 +215,36 @@ cy.intercept({
   url: '**/users/*',
 })
 ```
+
+### Aliasing an intercepted route
+
+While `cy.intercept` doesn't yield anything, you can chain [`.as`](/api/commands/as) to it to create an [alias](/guides/core-concepts/variables-and-aliases#Aliases) which can be used to [wait on a request](#Waiting-on-a-request).
+
+```js
+cy.intercept('GET', '/users').as('getAllUsers')
+cy.intercept('POST', '/users').as('createUser')
+```
+
+### Aliasing individual requests
+
+Aliases can be set on a per-request basis by setting the `alias` property of the intercepted request. This is especially useful when intercepting GraphQL requests:
+
+```js
+cy.intercept('POST', '/graphql', (req) => {
+  if (req.body.hasOwnProperty('query') && req.body.query.includes('mutation')) {
+    req.alias = 'gqlMutation'
+  }
+})
+
+// assert that a matching request has been made
+cy.wait('@gqlMutation')
+```
+
+<Alert type="info">
+
+For more guidance around aliasing requests with GraphQL, see [Working with GraphQL](/guides/testing-strategies/working-with-graphql)
+
+</Alert>
 
 ### Waiting on a request
 
