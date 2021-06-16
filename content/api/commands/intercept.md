@@ -4,13 +4,13 @@ title: intercept
 
 Spy and stub network requests and responses.
 
-<Alert type="warning">
+<Alert type="info">
 
-We highly recommend you read the [Network Requests](/guides/guides/network-requests) guide first.
+**Tip**: We recommend you read the [Network Requests](/guides/guides/network-requests) guide first.
 
 </Alert>
 
-<Alert type="warning">
+<Alert type="bolt">
 
 `cy.intercept()` is the successor to `cy.route()` as of Cypress 6.0.0. See [Comparison to `cy.route`](#Comparison-to-cy-route).
 
@@ -75,8 +75,13 @@ cy.intercept('/users*', { hostname: 'localhost' }, (req) => {
 
 #### **<Icon name="angle-right"></Icon> method** **_(String)_**
 
-Specify the [HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`, etc.) to match on. This is an optional argument, but if no `method` is provided, Cypress will match _any_ HTTP method (`*`) by default.
+Match the route to a specific [HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) (`GET`, `POST`, `PUT`, etc).
 
+<Alert type="bolt">
+
+If no method is defined Cypress will match all requests by default.
+
+</Alert>
 #### **<Icon name="angle-right"></Icon> url** **_(String, Glob, RegExp)_**
 
 Specify the URL to match. See [Matching `url`](#match-url) for examples.
@@ -128,6 +133,8 @@ By passing in a `StaticResponse` as the last argument, you can [statically defin
 **Note:** All properties are optional.
 
 See [Stubbing a response with a `StaticResponse` object](#With-a-StaticResponse-object) for an example.
+
+See also [`StaticResponse` objects](#StaticResponse-objects).
 
 #### <Icon name="angle-right"></Icon> routeHandler (<code>Function</code>)
 
@@ -182,7 +189,39 @@ cy.intercept('GET', '/users')
 // ...but not this: POST http://localhost/users
 ```
 
-### Aliasing a Route
+### Matching `url` and `method` with [RouteMatcher](#routeMatcher-RouteMatcher)
+
+Specifying a `method` and `url` to match can also be acheived by passing the `routeMatcher` object into `cy.intercept` instead:
+
+```js
+// These both yield the same result:
+cy.intercept({ method: 'GET', url: '**/users' })
+cy.intercept('GET', '**/users')
+```
+
+### Pattern Matching
+
+```js
+// match updates to the `/users` endpoint using glob matching
+cy.intercept({
+  method: '+(PUT|PATCH)',
+  url: '**/users/*',
+})
+// matches:
+//   PUT /users/1
+//   PATCH /users/1
+//   doesn't match
+//   GET /users
+//   GET /users/1
+
+// same as above, but using regex
+cy.intercept({
+  method: '/PUT|PATCH/',
+  url: '**/users/*',
+})
+```
+
+### Aliasing an intercepted route
 
 While `cy.intercept` doesn't yield anything, you can chain [`.as`](/api/commands/as) to it to create an [alias](/guides/core-concepts/variables-and-aliases#Aliases) which can be used to [wait on a request](#Waiting-on-a-request).
 
@@ -214,7 +253,7 @@ For more guidance around aliasing requests with GraphQL, see [Working with Graph
 
 ### Waiting on a request
 
-Use [cy.wait()](/api/commands/wait) with `cy.intercept()` aliases to wait for the request/response cycle to complete.
+Use [cy.wait()](/api/commands/wait) with [aliasing an intercepted route](#aliasing-an-intercepted-route) to wait for the request/response cycle to complete.
 
 #### With URL
 
@@ -237,7 +276,7 @@ cy.intercept({
 cy.wait('@search')
 ```
 
-```ts
+```js
 cy.intercept({
   pathname: '/search',
   query: {
@@ -247,7 +286,11 @@ cy.intercept({
 // this 'cy.wait' will only resolve once a request is made to '/search'
 // with the query paramater 'q=some+terms'
 cy.wait('@searchForTerms')
+```
 
+<!-- TODO move these examples to more appropriate sections (DX-374) -->
+
+```js
 cy.intercept(
   {
     // this RegExp matches any URL beginning with 'http://api.example.com/' and ending with '/edit' or '/save'
@@ -356,13 +399,23 @@ cy.intercept('/not-found', {
 })
 ```
 
-See ["`StaticResponse` objects"][staticresponse] for more information on `StaticResponse`s.
+See also [`StaticResponse` objects][staticresponse].
 
-### Intercepting a request
+### Using the **`routeHandler`** function
+
+By specifying a [`routeHandler`][arg-routehandler] function as the last argument to `cy.intercept`, you'll have access to the entire request-response session, enabling you to modify the outgoing request, manipulate the real response, make assertions, etc.
+
+The `routeHandler` takes the incoming HTTP request (`IncomingHTTPRequest`) as the first argument.
+
+```js
+cy.intercept('/users*', (req) => {
+  /* do something with request and/or response */
+})
+```
 
 <Alert type="info">
 
-By specifying [`routeHandler`][arg-routehandler] as the last argument to `cy.intercept`, you'll have access to the entire request-response session, enabling you to modify the outgoing request, manipulate the real response, make assertions, etc.
+Throughout these examples we will refer to the incoming HTTP request as `req`. Those of you with [Express.js](https://expressjs.com/) [middleware](https://expressjs.com/en/guide/writing-middleware.html) experience should be familiar with this syntax.
 
 </Alert>
 
@@ -420,10 +473,8 @@ cy.wait('@headers')
 
 You can add, modify or delete a header to all outgoing requests using a `beforeEach()` in the `cypress/support/index.js` file
 
-```ts
-// Code from Real World App (RWA)
+```js
 // cypress/support/index.ts
-import './commands'
 
 beforeEach(() => {
   cy.intercept(
@@ -433,14 +484,6 @@ beforeEach(() => {
   )
 })
 ```
-
-<Alert type="info">
-
-##### <Icon name="graduation-cap"></Icon> Real World Example
-
-Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and refer to the [cypress/support/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/support/index.ts) file for a working example.
-
-</Alert>
 
 #### Dynamically stubbing a response
 
@@ -544,29 +587,17 @@ cy.intercept('/users', (req) => {
 
 You can throttle or delay all incoming responses using a `beforeEach()` in the `cypress/support/index.js` file
 
-```ts
-// Code from Real World App (RWA)
+```js
 // cypress/support/index.ts
-import { isMobile } from './utils'
-import './commands'
-// Throttle API responses for mobile testing to simulate real world conditions
-if (isMobile()) {
-  cy.intercept({ url: 'http://localhost:3001/**', middleware: true }, (req) => {
-    req.on('response', (res) => {
-      // Throttle the response to 1 Mbps to simulate a mobile 3G connection
-      res.setThrottle(1000)
-    })
+
+// Throttle API responses to simulate real-world conditions
+cy.intercept({ url: 'http://localhost:3001/**', middleware: true }, (req) => {
+  req.on('response', (res) => {
+    // Throttle the response to 1 Mbps to simulate a mobile 3G connection
+    res.setThrottle(1000)
   })
-}
+})
 ```
-
-<Alert type="info">
-
-##### <Icon name="graduation-cap"></Icon> Real World Example
-
-Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and refer to the [cypress/support/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/support/index.ts) file for a working example.
-
-</Alert>
 
 ### Request/Response Modification with `routeHandler`
 
@@ -1091,7 +1122,7 @@ Note: calling `res.send()` will end the response phase and stop the response fro
 
 A `StaticResponse` represents a stubbed response to an HTTP request. You can supply a `StaticResponse` to Cypress in 3 ways:
 
-- Directly to `cy.intercept()`, to stub a response to a route: `cy.intercept('/url', staticResponse)`
+- Directly to `cy.intercept()` as [`staticResponse`](#staticResponse-lt-code-gtStaticResponselt-code-gt), to stub a response to a route: `cy.intercept('/url', staticResponse)`
 - To [`req.reply()`][req-reply], to stub a response from a request handler: `req.reply(staticResponse)`
 - To [`res.send()`][res-send], to stub a response from a response handler: `res.send(staticResponse)`
 
