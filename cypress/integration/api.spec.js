@@ -74,6 +74,7 @@ describe('APIs', () => {
             'custom-commands': 'Custom Commands',
             cookies: 'Cypress.Cookies',
             'screenshot-api': 'Cypress.Screenshot',
+            'keyboard-api': 'Cypress.Keyboard',
             'selector-playground-api': 'Cypress.SelectorPlayground',
             'cypress-server': 'Cypress.Server',
             arch: 'Cypress.arch',
