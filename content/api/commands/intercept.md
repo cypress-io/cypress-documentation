@@ -110,12 +110,12 @@ See [examples](#With-RouteMatcher) below.
 
 By passing in a `StaticResponse` as the last argument, you can [statically define (stub) a response](#Stubbing-a-response) for matched requests including the body of the response, as well as the headers and HTTP status code:
 
-| Option     | Description                                            |
-| ---------- | ------------------------------------------------------ |
-| statusCode | HTTP response status code                              |
-| headers    | HTTP response headers                                  |
-| body       | Serve a static string/JSON object as the response body |
-| fixture    | Serve a fixture as the HTTP response body              |
+| Option     | Description                                                      |
+| ---------- | ---------------------------------------------------------------- |
+| statusCode | HTTP response status code                                        |
+| headers    | HTTP response headers                                            |
+| body       | Serve a static response body (`object`, `string`, `ArrayBuffer`) |
+| fixture    | Serve a fixture as the HTTP response body                        |
 
 `StaticResponse` also provides options for simulating a degraded or broken network connection:
 
@@ -1100,7 +1100,7 @@ The following properties are available on `StaticResponse`. All properties are o
 | Option            | Description                                                                 |
 | ----------------- | --------------------------------------------------------------------------- |
 | fixture           | Serve a fixture as the HTTP response body                                   |
-| body              | Serve a static string/JSON object as the response body                      |
+| body              | Serve a static response body (`object`, `string`, `ArrayBuffer`)            |
 | headers           | HTTP response headers                                                       |
 | statusCode        | HTTP response status code                                                   |
 | forceNetworkError | Force an error by destroying the browser connection                         |
