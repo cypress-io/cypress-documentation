@@ -17,10 +17,8 @@ export default {
     const path = `/examples/${params.pathMatch || 'index'}`
     const { algolia: algoliaSettings } = await $content('settings').fetch()
     const [exampleItem] = await $content({ deep: true }).where({ path }).fetch()
-    const { examples: sidebar } = await $content('_data/sidebar').fetch()
-    const {
-      sidebar: { examples: userFriendlyNameMap },
-    } = await $content('_data/en').fetch()
+    const { examples } = await $content('_data/sidebar').fetch()
+    const sidebarItems = examples[0].children
     let mediaObject = {}
     let title = ''
 
@@ -47,31 +45,8 @@ export default {
         mediaObject = await $content(`_data/${mediaType}`).fetch()
       }
 
-      title = userFriendlyNameMap[filename]
+      title = mediaType[0].toUpperCase() + mediaType.slice(1)
     }
-
-    const items = Object.keys(sidebar).map((key) => {
-      return {
-        label: userFriendlyNameMap[key],
-        badge: '',
-        children: Object.keys(sidebar[key]).map((nestedKey) => {
-          // let slug = nestedKey
-          // Some slugs might not match the file name exactly.
-          // E.g. "dashboard-introduction.md" doesn't exist, but "introduction.md"
-          // within the "dashboard" directory does. This checks for instances of
-          // the directory name being included in the file name, and if so, removes it
-          // from the slug.
-          // if (nestedKey.includes(key)) {
-          //   slug = nestedKey.replace(`${key}-`, '')
-          // }
-          return {
-            slug: nestedKey,
-            label: userFriendlyNameMap[nestedKey],
-          }
-        }),
-        folder: key,
-      }
-    })
 
     if (!exampleItem) {
       return error({ statusCode: 404, message: 'Example not found' })
@@ -87,7 +62,7 @@ export default {
     return {
       algoliaSettings,
       exampleItem,
-      examplesSidebarItems: items,
+      sidebarItems,
       mediaObject,
       title,
       metaDescription,
@@ -153,14 +128,14 @@ export default {
 <template>
   <div class="w-full">
     <AppHeader
-      :mobile-menu-items="examplesSidebarItems"
+      :mobile-menu-items="sidebarItems"
       section="examples"
       :algolia-settings="algoliaSettings"
       :banner="banner"
     />
     <main :class="Boolean(banner) ? 'banner-margin' : ''" class="main-content">
       <AppSidebar
-        :items="examplesSidebarItems"
+        :items="sidebarItems"
         section="examples"
         :path="path"
         :has-banner="Boolean(banner)"

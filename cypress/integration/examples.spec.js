@@ -1,6 +1,5 @@
 const EXAMPLES_URL = '/examples/examples/recipes#Fundamentals'
 const SIDEBAR = './content/_data/sidebar.json'
-const SIDEBAR_EN = './content/_data/en.json'
 const { getTitle } = require('../../utils')
 
 describe('Examples', () => {
@@ -10,55 +9,62 @@ describe('Examples', () => {
   })
 
   it('contains a sidebar', () => {
-    cy.readFile(SIDEBAR).then(({ examples: sidebarExamples }) => {
-      cy.readFile(SIDEBAR_EN).then(({ sidebar: { examples } }) => {
-        const sidebarCategories = Object.keys(sidebarExamples)
+    cy.readFile(SIDEBAR).then(({ examples }) => {
+      const sidebarItems = examples[0].children
 
-        cy.wrap(sidebarCategories).each((category) => {
-          const pages = Object.keys(sidebarExamples[category])
+      cy.wrap(sidebarItems).each((category) => {
+        const pages = category.children
 
-          cy.get('.app-sidebar')
-            .contains(examples[category])
-            .then(($category) => {
-              cy.get(`[data-test="${examples[category]}-children"]`).then(
-                ($ul) => {
-                  if ($ul.hasClass('hidden')) {
-                    cy.wrap($category).scrollIntoView().click()
-                  }
-                }
-              )
+        cy.get('.app-sidebar')
+          .contains(category.title)
+          .then(($category) => {
+            cy.get(`[data-test="${category.title}-children"]`).then(($ul) => {
+              if ($ul.hasClass('hidden')) {
+                cy.wrap($category).scrollIntoView().click()
+              }
             })
-
-          cy.wrap(pages).each((page) => {
-            const pageTitle = examples[page]
-
-            cy.contains(
-              `.app-sidebar [data-test="${category}"] a`,
-              pageTitle
-            ).click({ force: true })
-
-            cy.location('pathname').should(
-              'equal',
-              `/examples/${category}/${page}`
-            )
-
-            cy.contains(
-              `.app-sidebar [data-test="${category}"] a`,
-              pageTitle
-            ).should(
-              'have.class',
-              'nuxt-link-exact-active nuxt-link-active active-sidebar-link'
-            )
-
-            cy.title().should('equal', getTitle(pageTitle))
-
-            cy.get('.main-content-title').contains(pageTitle)
-
-            cy.visualSnapshot(`/examples/${category}/${page}`)
           })
 
-          cy.visit(EXAMPLES_URL)
+        cy.wrap(pages).each((page) => {
+          const pageTitle = page.title
+
+          cy.contains(
+            `.app-sidebar [data-test="${category.slug}"] a`,
+            pageTitle
+          ).click({ force: true })
+
+          cy.location('pathname').should(
+            'equal',
+            `/examples/${category.slug}/${page.slug}`
+          )
+
+          cy.contains(
+            `.app-sidebar [data-test="${category.slug}"] a`,
+            pageTitle
+          ).should(
+            'have.class',
+            'nuxt-link-exact-active nuxt-link-active active-sidebar-link'
+          )
+
+          cy.get('.active-sidebar-link').should('have.length', 1)
+
+          const titleExceptionMap = {
+            tutorials: 'Tutorial Videos',
+          }
+
+          cy.title().should(
+            'equal',
+            getTitle(titleExceptionMap[page.slug] || pageTitle)
+          )
+
+          cy.get('.main-content-title').contains(
+            titleExceptionMap[page.slug] || pageTitle
+          )
+
+          cy.visualSnapshot(`/examples/${category.slug}/${page.slug}`)
         })
+
+        cy.visit(EXAMPLES_URL)
       })
     })
   })
