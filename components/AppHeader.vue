@@ -1,12 +1,13 @@
 <script>
+import AppHeaderMobileSection from './AppHeaderMobileSection.vue'
 import AppSearchAlgolia from './AppSearchAlgolia'
 import Banner from './Banner.vue'
-import { getSidebarItemLink } from './sidebar/getSidebarItemLink'
 
 export default {
   components: {
     AppSearchAlgolia,
     Banner,
+    AppHeaderMobileSection,
   },
   props: {
     mobileMenuItems: {
@@ -57,7 +58,6 @@ export default {
     }
   },
   methods: {
-    getSidebarItemLink,
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen
     },
@@ -197,36 +197,16 @@ export default {
           >
             GitHub
           </a>
-          <div
-            v-for="(navGroup, index) in mobileMenuItems"
+          <app-header-mobile-section
+            v-for="(group, index) in mobileMenuItems"
             :key="`navgroup-${index}`"
-          >
-            <h3
-              class="text-gray-300 block px-3 py-2 rounded-md text-base font-extrabold"
-            >
-              {{ navGroup.label }}
-              <Badge v-if="navGroup.badge">{{ navGroup.badge }}</Badge>
-            </h3>
-            <ul>
-              <li
-                v-for="(navGroupChild, navGroupChildIndex) in navGroup.children"
-                :key="`navgroup-child-${navGroupChildIndex}`"
-              >
-                <nuxt-link
-                  :to="
-                    getSidebarItemLink({
-                      section,
-                      folder: navGroup.folder,
-                      slug: navGroupChild.slug,
-                    })
-                  "
-                  class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                >
-                  {{ navGroupChild.label }}
-                </nuxt-link>
-              </li>
-            </ul>
-          </div>
+            :name="group.slug"
+            :title="group.title"
+            :folder="group.slug"
+            :section="section"
+            :parent-section="group.slug"
+            :children="group.children"
+          />
         </div>
       </div>
     </nav>

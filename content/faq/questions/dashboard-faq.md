@@ -29,9 +29,9 @@ Which [pricing tier](https://www.cypress.io/pricing) is best for you depends on 
 
 Tests are recorded when [cypress run](/guides/guides/command-line#cypress-run) is called with the `--record` flag while supplying the record `--key`. This means your [test run data](/guides/dashboard/runs) is being "recorded" to the Dashboard.
 
-We consider each time the `it()` function is called to be a single test. So you will generally have several tests recorded within each spec file and likely several spec files within a single run.
+We consider each time the `it()` function is called to be a single test. So you will generally have several tests recorded within each spec file and likely several spec files within a single run. Only the [passed and failed tests](/guides/core-concepts/writing-and-organizing-tests#Test-statuses) are counted. The pending and skipped tests are NOT counted.
 
-You can always see how many tests you've recorded from your organization's [Billing & Usage](/guides/dashboard/organizations#Billing-amp-Usage) page within the Dashboard.
+You can always see how many tests you've recorded from your organization's [Billing & Usage](/guides/dashboard/organizations#Billing-Usage) page within the Dashboard.
 
 ## <Icon name="angle-right"></Icon> What counts as a user?
 
