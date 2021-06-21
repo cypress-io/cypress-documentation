@@ -34,6 +34,7 @@ const injectDevServer = require('@cypress/react/plugins/react-scripts')
 
 module.exports = (on, config) => {
   injectDevServer(on, config)
+
   return config
 }
 ```
@@ -101,8 +102,6 @@ module.exports = (on, config) => {
       webpackConfig,
     })
   })
-
-  return config
 }
 ```
 
@@ -269,8 +268,6 @@ module.exports = (on, config) => {
       webpackConfig: getWebpackConfig(),
     })
   })
-
-  return config
 }
 ```
 
@@ -389,8 +386,6 @@ module.exports = (on, config) => {
       },
     })
   })
-
-  return config
 }
 ```
 

@@ -168,8 +168,6 @@ module.exports = (on, config) => {
       startDevServer({ options, webpackConfig })
     )
   }
-
-  return config
 }
 ```
 
@@ -190,8 +188,6 @@ module.exports = (on, config) => {
       startDevServer({ options, webpackConfig })
     )
   }
-
-  return config
 }
 ```
 
@@ -324,7 +320,6 @@ export default function (on, config) {
     }
     return startDevServer({ options, viteConfig })
   })
-  return config
 }
 ```
 
