@@ -856,7 +856,7 @@ Each API Command documents its behavior with assertions - such as how it retries
 
 ### Asserting in English
 
-Let's look at how you'd describe an assertion in english:
+Let's look at how you'd describe an assertion in English:
 
 > After clicking on this `<button>`, I expect its class to eventually be `active`.
 
@@ -866,7 +866,7 @@ To express this in Cypress you'd write:
 cy.get('button').click().should('have.class', 'active')
 ```
 
-This above test will pass even if the `.active` class is applied to the button asynchronously - or after a indeterminate period of time.
+This above test will pass even if the `.active` class is applied to the button asynchronously - or after an indeterminate period of time.
 
 ```javascript
 // even though we are adding the class
