@@ -873,6 +873,10 @@ The request object (`req`) has several properties from the HTTP request itself. 
    */
   url: string
   /**
+   * URL query string as object.
+   */
+  query: Record<string, string|number>
+  /**
    * The HTTP version used in the request. Read only.
    */
   httpVersion: string
