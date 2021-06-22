@@ -82,6 +82,7 @@ Match the route to a specific [HTTP method](https://developer.mozilla.org/en-US/
 If no method is defined Cypress will match all requests by default.
 
 </Alert>
+
 #### **<Icon name="angle-right"></Icon> url** **_(String, Glob, RegExp)_**
 
 Specify the URL to match. See [Matching `url`](#match-url) for examples.
