@@ -9,6 +9,7 @@ title: Installing Cypress
 - How to install Cypress via `npm`
 - How to install Cypress via direct download
 - How to version and run Cypress via `package.json`
+- How to run Cypress on `wsl2` in windows
 
 </Alert>
 
@@ -63,6 +64,48 @@ container with the Node.js process.
 
 `cypress/base` is a drop-in replacement for
 [base docker node images](https://hub.docker.com/_/node/).
+
+#### WSL2
+Install prerequisite packages using the command that relates to your linux distribution ([Ubuntu/Debian](#ubuntu/debian) or [CentOS](#centos)).
+
+We need to have an [X-server](https://en.wikipedia.org/wiki/X.Org_Server) to display GUI from the linux subsystem. There are a variety of X-servers
+available, here we are going to use VcXsrv, you can use any other similar tool.
+
+Download [VcXsrv](https://sourceforge.net/projects/vcxsrv/) and install. You can set the settings to your preference (Multiple windows and Start no client)
+is recommended, but on the page that lets you enable extra settings, disable access control. This is required as WSL2 has its own IP address, which changes often.
+
+<DocsImage src="/img/guides/vcxsrv-extra-settings.png" alt="Disable access control in vcxsrv" ></DocsImage>
+
+In your `.bashrc` (or equivalent such as `.zshrc`) set the `DISPLAY` environment variable. 
+
+```shell
+# set DISPLAY variable to the IP automatically assigned to WSL2
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
+```
+
+To confirm `DISPLAY` variable has been set, print it out in the terminal.
+
+```shell
+echo $DISPLAY
+# something like 172.17.224.1:0.0
+```
+
+The VcXsrv GUI uses D-BUS to internally communicate. Under the previous line in `.bashrc`, add the following:  
+
+```shell
+sudo /etc/init.d/dbus start &> /dev/null
+```
+
+Now linux user needs to be granted access to `dbus` without a password. To do so, use the `visido` command.
+
+```shell
+sudo visudo -f /etc/sudoers.d/dbus
+```
+
+In the editor that launches, add the following line with your username.  
+`<your_username> ALL = (root) NOPASSWD: /etc/init.d/dbus`  
+
+Finally, go to Windows Defender Firewall and enable all network connection for VcXsrv.
 
 ## Installing
 
