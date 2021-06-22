@@ -1,8 +1,10 @@
 <script>
+import Vue from 'vue'
 import AppSidebar from '../../components/AppSidebar'
 import TableOfContents from '../../components/TableOfContents'
 import Footer from '../../components/Footer'
 import ApiTableOfContents from '../../components/ApiTableOfContents.vue'
+import AppCopyButton from '../../components/AppCopyButton'
 import { getMetaData, getMetaDescription, getTitle } from '../../utils'
 import { fetchBanner } from '../../utils/sanity'
 
@@ -80,6 +82,24 @@ export default {
 
       return getMetaData(metaData)
     },
+  },
+  mounted() {
+    setTimeout(() => {
+      const blocks = document.getElementsByTagName('pre')
+
+      for (const block of blocks) {
+        const textContent =
+          block.parentElement.previousElementSibling.textContent
+
+        // only append copy button if not a demo of incorrect usage
+        if (!textContent.toLowerCase().includes('incorrect usage')) {
+          const CopyButton = Vue.extend(AppCopyButton)
+          const component = new CopyButton().$mount()
+
+          block.append(component.$el)
+        }
+      }
+    }, 100)
   },
   methods: {
     onToggleMenu() {

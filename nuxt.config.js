@@ -148,6 +148,7 @@ export default {
         'faStar',
         'faBook',
         'faExternalLinkAlt',
+        'faPaste',
       ],
       brands: ['faGithub', 'faTwitter', 'faYoutube'],
     },

@@ -65,6 +65,7 @@
     "bluebird": "^3.7.2",
     "broken-link-checker": "^0.7.8",
     "chalk": "^4.1.0",
+    "clipboardy": "^2.3.0",
     "common-tags": "^1.8.0",
     "cross-env": "^7.0.3",
     "cypress": "^7.0.0",

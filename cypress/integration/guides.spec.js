@@ -95,4 +95,13 @@ describe('Guides', () => {
       })
     })
   })
+
+  it('displays copy links in code blocks', () => {
+    cy.get('.nuxt-content-highlight').within(()=> {
+      cy.get('[data-test="copy-button-default"]').should('be.visible')
+    })
+
+    cy.get('[data-test="copy-button"]').first().click({force: true});
+    cy.task('getClipboard').should('contain', 'adds todos')
+  })
 })

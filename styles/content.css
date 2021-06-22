@@ -303,6 +303,12 @@
 
 .nuxt-content pre {
   @apply mb-6;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 /* #region Tables */
@@ -370,4 +376,8 @@ span.token.keyword.control-flow {
     height: 100%;
     background: rgb(252, 162, 162);
   }
+}
+
+.copy {
+  margin-left: 1rem;
 }
