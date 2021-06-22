@@ -149,7 +149,7 @@ The `cy.get` command always starts its search from the [cy.root](https://on.cypr
 ```js
 cy.get('#comparison')
   .get('div')
-  // finds the div.test-title outside the #parent
+  // finds the div.test-title outside the #comparison
   // and the div.feature inside
   .should('have.class', 'test-title')
   .and('have.class', 'feature')
