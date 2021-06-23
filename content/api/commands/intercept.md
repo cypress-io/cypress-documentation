@@ -260,6 +260,7 @@ Use [cy.wait()](/api/commands/wait) with [aliasing an intercepted route](#aliasi
 
 ```js
 cy.intercept('http://example.com/settings').as('getSettings')
+
 // once a request to get settings responds, 'cy.wait' will resolve
 cy.wait('@getSettings')
 ```
@@ -284,6 +285,7 @@ cy.intercept({
     q: 'some terms',
   },
 }).as('searchForTerms')
+
 // once any type of request with the '/search'
 // path name and the query paramater 'q=some+terms' responds,
 // 'cy.wait' will resolve
@@ -1041,33 +1043,28 @@ cy.intercept('/shop', (req) => {
   req.on('before:response', (res) => {
     /**
      * Emitted before `response` and before any `req.continue`
-     * handlers.
-     * Modifications to `res` will be applied to the incoming
-     * response.
-     * If a promise is returned, it will be awaited before
-     * processing other event handlers.
+     * handlers. Modifications to `res` will be applied to the
+     * incoming response. If a promise is returned, it will be
+     * awaited before processing other event handlers.
      */
   })
 
   req.on('response', (res) => {
     /**
      * Emitted after `before:response` and after any
-     * `req.continue` handlers - before the response is
-     * sent to the browser.
-     * Modifications to `res` will be applied to the
-     * incoming response.
-     * If a promise is returned, it will be awaited before
-     * processing other event handlers.
+     * `req.continue` handlers - before the response is sent
+     * to the browser. Modifications to `res` will be applied
+     * to the incoming response. If a promise is returned, it
+     * will be awaited before processing other event handlers.
      */
   })
 
   req.on('after:response', (res) => {
     /**
      * Emitted once the response to a request has finished
-     * sending to the browser.
-     * Modifications to `res` have no impact.
-     * If a promise is returned, it will be awaited before
-     * processing other event handlers.
+     * sending to the browser. Modifications to `res` have no
+     * impact. If a promise is returned, it will be awaited
+     * before processing other event handlers.
      */
   })
 })
