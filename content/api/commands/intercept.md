@@ -115,12 +115,12 @@ See [examples](#With-RouteMatcher) below.
 
 By passing in a `StaticResponse` as the last argument, you can [statically define (stub) a response](#Stubbing-a-response) for matched requests including the body of the response, as well as the headers and HTTP status code:
 
-| Option     | Description                                            |
-| ---------- | ------------------------------------------------------ |
-| statusCode | HTTP response status code                              |
-| headers    | HTTP response headers                                  |
-| body       | Serve a static string/JSON object as the response body |
-| fixture    | Serve a fixture as the HTTP response body              |
+| Option     | Description                                                      |
+| ---------- | ---------------------------------------------------------------- |
+| statusCode | HTTP response status code                                        |
+| headers    | HTTP response headers                                            |
+| body       | Serve a static response body (`object`, `string`, `ArrayBuffer`) |
+| fixture    | Serve a fixture as the HTTP response body                        |
 
 `StaticResponse` also provides options for simulating a degraded or broken network connection:
 
@@ -873,6 +873,10 @@ The request object (`req`) has several properties from the HTTP request itself. 
    */
   url: string
   /**
+   * URL query string as object.
+   */
+  query: Record<string, string|number>
+  /**
    * The HTTP version used in the request. Read only.
    */
   httpVersion: string
@@ -1131,7 +1135,7 @@ The following properties are available on `StaticResponse`. All properties are o
 | Option            | Description                                                                 |
 | ----------------- | --------------------------------------------------------------------------- |
 | fixture           | Serve a fixture as the HTTP response body                                   |
-| body              | Serve a static string/JSON object as the response body                      |
+| body              | Serve a static response body (`object`, `string`, `ArrayBuffer`)            |
 | headers           | HTTP response headers                                                       |
 | statusCode        | HTTP response status code                                                   |
 | forceNetworkError | Force an error by destroying the browser connection                         |
@@ -1251,6 +1255,7 @@ Unlike [cy.route()](/api/commands/route), `cy.intercept()`:
 
 | Version                                     | Changes                                                                                                                                                                                                                                                                                              |
 | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [7.6.0](/guides/references/changelog#7-0-0) | Added `query` option to `req` (The incoming request object yielded to request handler functions).                                                                                                                                                                                                    |
 | [7.0.0](/guides/references/changelog#7-0-0) | Removed `matchUrlAgainstPath` option from `RouteMatcher`, reversed handler ordering, added request events, removed substring URL matching, removed `cy.route2` alias, added `middleware` RouteMatcher option, renamed `res.delay()` to `res.setDelay()` and `res.throttle()` to `res.setThrottle()`. |
 | [6.4.0](/guides/references/changelog#6-4-0) | Renamed `delayMs` property to `delay` (backwards-compatible).                                                                                                                                                                                                                                        |
 | [6.2.0](/guides/references/changelog#6-2-0) | Added `matchUrlAgainstPath` option to `RouteMatcher`.                                                                                                                                                                                                                                                |

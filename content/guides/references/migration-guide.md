@@ -230,8 +230,6 @@ const webpackConfig = require('../webpack.config.js')
 
 module.exports = (on, config) => {
   on('file:preprocessor', webpackPreprocessor(options))
-
-  return config
 }
 ```
 
@@ -248,8 +246,6 @@ module.exports = (on, config) => {
   on('dev-server:start', (options) => {
     return startDevServer({ options, webpackConfig })
   })
-
-  return config
 }
 ```
 
@@ -293,8 +289,6 @@ module.exports = (on, config) => {
   on('dev-server:start', (options) => {
     return startDevServer({ options, webpackConfig })
   })
-
-  return config // you *must* return config
 }
 ```
 
@@ -312,8 +306,6 @@ module.exports = (on, config) => {
   on('dev-server:start', (options) => {
     return startDevServer({ options, webpackConfig })
   })
-
-  return config
 }
 ```
 
