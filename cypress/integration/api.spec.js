@@ -123,11 +123,11 @@ describe('APIs', () => {
     cy.visit('/api/commands/and')
 
     cy.get(':not(:contains("Incorrect Usage"))').next().within(()=> {
-      cy.get('[data-test="copy-button-default"]').should('be.visible')
+      cy.get('[data-test="copy-button"]').should('be.visible')
     })
 
     cy.get(':contains("Incorrect Usage")').next().within(() => {
-      cy.get('[data-test="copy-button-default"]').should('not.exist')
+      cy.get('[data-test="copy-button"]').should('not.exist')
     })
 
     cy.get('[data-test="copy-button"]').first().click({force: true});
