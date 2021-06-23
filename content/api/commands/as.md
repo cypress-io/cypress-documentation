@@ -58,13 +58,20 @@ it('disables on click', () => {
 
 ### Route
 
-Aliasing a route and then using [`cy.wait()`](/api/commands/wait) to wait for the aliased route.
+Aliasing an intercepted route defined with [`cy.intercept()`](/api/commands/intercept) and then using [`cy.wait()`](/api/commands/wait) to wait for the aliased route.
 
 ```javascript
-cy.intercept('PUT', '/users', { fixture: 'user' }).as('putUser')
+// `PUT` requests on the `/users` endpoint will be stubbed with
+// the `user` fixture and be aliased as `editUser`
+cy.intercept('PUT', '/users', { fixture: 'user' }).as('editUser')
+// we'll assume submitting `form` triggers a matching request
 cy.get('form').submit()
-cy.wait('@putUser').its('url').should('contain', 'users')
+// once a response comes back from the `editUser`
+// this `wait` will resolve with the subject containing `url`
+cy.wait('@editUser').its('url').should('contain', 'users')
 ```
+
+More examples of aliasing routes can be found [here](/api/commands/intercept#Aliasing-an-intercepted-route).
 
 ### Fixture
 
