@@ -105,7 +105,16 @@ sudo visudo -f /etc/sudoers.d/dbus
 In the editor that launches, add the following line with your username.  
 `<your_username> ALL = (root) NOPASSWD: /etc/init.d/dbus`  
 
-Finally, go to Windows Defender Firewall and enable all network connection for VcXsrv.
+Go to Control Panel > System and Security > Windows Defender Firewall > Inbound Rules > New Rule.
+
+<DocsImage src="/img/guides/windows-firewall-disable-vcxsrv.png" alt="Add rule to allow connections for vcxsrv" ></DocsImage>
+
+Select Program and click on next. On the This program path, browse and select path to VcxSrv. On the next page select allow the connection and click next.
+On the next page, select all three options (Domain, Private, Public).
+
+<DocsImage src="/img/guides/rule-application-selection.png" alt="Select inbound rule application cases for vcxsrv" ></DocsImage>
+
+Give the rule a suitable name and description and click finish. WSL2 should now be able to open a GUI from shell. 
 
 ## Installing
 
