@@ -71,8 +71,7 @@ Install prerequisite packages using the command that relates to your linux distr
 We need to have an [X-server](https://en.wikipedia.org/wiki/X.Org_Server) to display GUI from the linux subsystem. There are a variety of X-servers
 available, here we are going to use VcXsrv, you can use any other similar tool.
 
-Download [VcXsrv](https://sourceforge.net/projects/vcxsrv/) and install. You can set the settings to your preference (Multiple windows and Start no client)
-is recommended, but on the page that lets you enable extra settings, disable access control. This is required as WSL2 has its own IP address, which changes often.
+Download [VcXsrv](https://sourceforge.net/projects/vcxsrv/) and install. You can set the settings to your preference (Multiple windows and Start no client is recommended), but on the page that lets you enable extra settings, disable access control. This is required as WSL2 has its own IP address, which changes often.
 
 <DocsImage src="/img/guides/vcxsrv-extra-settings.png" alt="Disable access control in vcxsrv" ></DocsImage>
 
