@@ -56,7 +56,7 @@ it('disables on click', () => {
 })
 ```
 
-### Route
+### Intercept
 
 Aliasing an intercepted route defined with [`cy.intercept()`](/api/commands/intercept) and then using [`cy.wait()`](/api/commands/wait) to wait for the aliased route.
 
