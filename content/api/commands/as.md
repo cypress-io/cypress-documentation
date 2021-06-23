@@ -64,8 +64,10 @@ Aliasing an intercepted route defined with [`cy.intercept()`](/api/commands/inte
 // `PUT` requests on the `/users` endpoint will be stubbed with
 // the `user` fixture and be aliased as `editUser`
 cy.intercept('PUT', '/users', { fixture: 'user' }).as('editUser')
+
 // we'll assume submitting `form` triggers a matching request
 cy.get('form').submit()
+
 // once a response comes back from the `editUser`
 // this `wait` will resolve with the subject containing `url`
 cy.wait('@editUser').its('url').should('contain', 'users')
