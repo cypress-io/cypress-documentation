@@ -301,16 +301,6 @@
 
 /* #endregion Lists */
 
-.nuxt-content pre {
-  @apply mb-6;
-
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
 /* #region Tables */
 .nuxt-content table {
   @apply table-auto;
@@ -336,11 +326,7 @@
 
 .nuxt-content-highlight .line-numbers {
   border-radius: 6px;
-}
-
-.nuxt-content-highlight code {
-  flex: 85%;
-  overflow: auto;
+  padding: 1.5em 1em !important;
 }
 
 /* #region Syntax highlighting selection override */

@@ -96,7 +96,7 @@ export default {
           const CopyButton = Vue.extend(AppCopyButton)
           const component = new CopyButton().$mount()
 
-          block.append(component.$el)
+          block.prepend(component.$el)
         }
       }
     }, 100)

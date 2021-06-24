@@ -2,7 +2,7 @@
   <button
     ref="copy"
     :class="$style.copy"
-    class="copy rounded-t-md rounded-b-md text-sm text-white font-normal relative flex flex-row"
+    class="copy absolute rounded-md text-xs text-white font-normal flex flex-row self-end items-center"
     data-test="copy-button"
   >
     <Icon :name="state === 'copied' ? 'check-circle' : 'paste'" color="white" />
@@ -43,6 +43,8 @@ export default {
 
 <style module>
 .copy {
+  right: 0.25rem;
+  top: 0.25rem;
   border: 1px solid transparent;
   margin-left: 1rem;
   padding: 0.25rem 0.75rem;
