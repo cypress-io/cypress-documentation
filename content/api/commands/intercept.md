@@ -617,10 +617,10 @@ From here, you can do several things with the intercepted request:
 
 <!-- TODO DX-190 add links to examples -->
 
-- modify and make assertions on the request like its body, headers, URL, method, etc. ([example](/api/commands/intercept#Asserting-on-a-request-1))
-- stub out the response without interacting with a real back-end ([example](/api/commands/intercept#Stubbing-a-response))
-- pass the request through to its destination and modify or make assertions on the real response on its way back ([example](/api/commands/intercept#Intercepting-a-response))
-- attach listeners to various events on the request ([example](/api/commands/intercept#Request-events))
+- modify and make assertions on the request like its body, headers, URL, method, etc. ([example](#Asserting-on-a-request-1))
+- stub out the response without interacting with a real back-end ([example](#Controlling-the-response)
+- pass the request through to its destination and modify or make assertions on the real response on its way back ([example](#Controlling-the-response))
+- attach listeners to various events on the request ([example](#Controlling-the-response))
 
 #### Asserting on a request
 
