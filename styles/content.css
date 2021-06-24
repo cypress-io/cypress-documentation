@@ -338,6 +338,11 @@
   border-radius: 6px;
 }
 
+.nuxt-content-highlight code {
+  flex: 85%;
+  overflow: auto;
+}
+
 /* #region Syntax highlighting selection override */
 code[class*='language-']::-moz-selection,
 pre[class*='language-']::-moz-selection,
