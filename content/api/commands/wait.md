@@ -209,7 +209,7 @@ This means that when you begin waiting for an aliased request, Cypress will wait
 
 Once Cypress detects that a matching request has begun its request, it then switches over to the 2nd waiting period. This duration is configured by the [`responseTimeout`](/guides/references/configuration#Timeouts) option - which has a default of `30000` ms.
 
-This means Cypress will now wait up to 20 seconds for the external server to respond to this request. If no response is detected, you will get an error message that looks like this:
+This means Cypress will now wait up to 30 seconds for the external server to respond to this request. If no response is detected, you will get an error message that looks like this:
 
 <DocsImage src="/img/api/wait/timeout-error-when-waiting-for-route-response.png" alt="Timeout error for request wait" ></DocsImage>
 
