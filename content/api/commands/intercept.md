@@ -82,6 +82,7 @@ Match the route to a specific [HTTP method](https://developer.mozilla.org/en-US/
 If no method is defined Cypress will match all requests by default.
 
 </Alert>
+
 #### **<Icon name="angle-right"></Icon> url** **_(String, Glob, RegExp)_**
 
 Specify the URL to match. See [Matching `url`](#match-url) for examples.
@@ -259,7 +260,8 @@ Use [cy.wait()](/api/commands/wait) with [aliasing an intercepted route](#aliasi
 
 ```js
 cy.intercept('http://example.com/settings').as('getSettings')
-// once a request to http://example.com/settings responds, this 'cy.wait' will resolve
+
+// once a request to get settings responds, 'cy.wait' will resolve
 cy.wait('@getSettings')
 ```
 
@@ -271,8 +273,8 @@ cy.intercept({
   query: { q: 'expected terms' },
 }).as('search')
 
-// once any type of request to http://example.com/search with a querystring containing
-// 'q=expected+terms' responds, this 'cy.wait' will resolve
+// once any type of request to search with a querystring
+// containing 'q=expected+terms' responds, 'cy.wait' will resolve
 cy.wait('@search')
 ```
 
@@ -283,8 +285,10 @@ cy.intercept({
     q: 'some terms',
   },
 }).as('searchForTerms')
-// this 'cy.wait' will only resolve once a request is made to '/search'
-// with the query paramater 'q=some+terms'
+
+// once any type of request with the '/search'
+// path name and the query paramater 'q=some+terms' responds,
+// 'cy.wait' will resolve
 cy.wait('@searchForTerms')
 ```
 
@@ -293,27 +297,34 @@ cy.wait('@searchForTerms')
 ```js
 cy.intercept(
   {
-    // this RegExp matches any URL beginning with 'http://api.example.com/' and ending with '/edit' or '/save'
+    // this RegExp matches any URL beginning with
+    // 'http://api.example.com/' and ending with '/edit' or '/save'
     url: /^http:\/\/api\.example\.com\/.*\/(edit|save)/,
     headers: {
       'x-requested-with': 'exampleClient',
     },
   },
   (req) => {
-    // only requests to URLs starting with 'http://api.example.com/widgets'
-    // and having the header 'x-requested-with: exampleClient' will be intercepted
+    // only requests to URLs starting with
+    // 'http://api.example.com/widgets' and having the header
+    // 'x-requested-with: exampleClient' will be intercepted
   }
 })
 
-// in this example, the supplied URL `/users` is merged with the RouteMatcher
-// passed as the second argument
+// in this example, the supplied URL `/users` is merged with
+// the RouteMatcher passed as the second argument
 cy.intercept('/users', { middleware: true }, (req) => {
   req.headers['authorization'] = `Bearer ${bearerToken}`
 })
 
-// this example will cause 1 request to `/temporary-error` to receive a network error
-// and subsequent requests will not match this `RouteMatcher`
-cy.intercept('/temporary-error', { times: 1 }, { forceNetworkError: true })
+// this example will cause 1 request to `/temporary-error`
+// to receive a network error and subsequent requests will
+// not match this `RouteMatcher`
+cy.intercept(
+  '/temporary-error',
+  { times: 1 },
+  { forceNetworkError: true }
+)
 ```
 
 #### Using the yielded object
@@ -322,20 +333,24 @@ Using [cy.wait()](/api/commands/wait) on a `cy.intercept()` route alias yields a
 
 ```js
 cy.wait('@someRoute').then((interception) => {
-  // 'interception' is an object with properties 'id', 'request' and 'response'
+  // 'interception' is an object with properties
+  // 'id', 'request' and 'response'
 })
 ```
 
 You can chain [`.its()`](/api/commands/its) and [`.should()`](/api/commands/should) to assert against request/response cycles:
 
 ```js
-// assert that a request to this route was made with a body that included 'user'
+// assert that a request to this route
+// was made with a body that included 'user'
 cy.wait('@someRoute').its('request.body').should('include', 'user')
 
-// assert that a request to this route received a response with HTTP status 500
+// assert that a request to this route
+// received a response with HTTP status 500
 cy.wait('@someRoute').its('response.statusCode').should('eq', 500)
 
-// assert that a request to this route received a response body that includes 'id'
+// assert that a request to this route
+// received a response body that includes 'id'
 cy.wait('@someRoute').its('response.body').should('include', 'id')
 ```
 
@@ -346,7 +361,8 @@ You can use [cy.wait()](/api/commands/wait) to wait on requests that end with ne
 ```js
 cy.intercept('GET', '/should-err', { forceNetworkError: true }).as('err')
 
-// assert that this request happened, and that it ended in an error
+// assert that this request happened
+// and that it ended in an error
 cy.wait('@err').should('have.property', 'error')
 ```
 
@@ -355,7 +371,8 @@ cy.wait('@err').should('have.property', 'error')
 #### With a string
 
 ```js
-// requests to '/update' will be fulfilled with a body of "success"
+// requests to '/update' will be fulfilled
+// with a body of "success"
 cy.intercept('/update', 'success')
 ```
 
@@ -432,7 +449,8 @@ cy.intercept('POST', '/organization', (req) => {
 You can use the request handler callback to modify the [intercepted request object][req] before it is sent.
 
 ```js
-// set the request body to something different before it's sent to the destination
+// set the request body to something different
+// before it's sent to the destination
 cy.intercept('POST', '/login', (req) => {
   req.body = 'username=janelane&password=secret123'
 })
@@ -491,7 +509,8 @@ You can use the [`req.reply()`][req-reply] function to dynamically control the r
 
 ```js
 cy.intercept('/billing', (req) => {
-  // functions on 'req' can be used to dynamically respond to a request here
+  // functions on 'req' can be used to
+  // dynamically respond to a request here
 
   // send the request to the destination server
   req.reply()
@@ -499,7 +518,8 @@ cy.intercept('/billing', (req) => {
   // respond to the request with a JSON object
   req.reply({ plan: 'starter' })
 
-  // send the request to the destination server, and intercept the response
+  // send the request to the destination server
+  // and intercept the response
   req.continue((res) => {
     // 'res' represents the real destination's response
     // See "Intercepting a response" for more details and examples
@@ -528,20 +548,24 @@ cy.intercept('POST', '/login', (req) => {
 If [`req.reply()`][req-reply] or [`req.continue()`][req-continue] is not explicitly called inside of a request handler, requests will pass to the next request handler until none are left.
 
 ```js
-// you could have a top-level middleware handler that sets an auth token on all requests
-// setting `middleware: true` will cause this to always be called first
+// you could have a top-level middleware handler that
+// sets an auth token on all requests
+// but remember setting `middleware: true` will
+// cause this to always be called first
 cy.intercept('http://api.company.com/', { middleware: true }, (req) => {
   req.headers['authorization'] = `token ${token}`
 })
 
-// and then have another handler that more narrowly asserts on certain requests
+// and then have another handler that
+// more narrowly asserts on certain requests
 cy.intercept('POST', 'http://api.company.com/widgets', (req) => {
   expect(req.body).to.include('analytics')
 })
 
 // a POST request to http://api.company.com/widgets would hit both
-// of those callbacks, middleware first, then the request would be sent out
-// with the modified request headers to the real destination
+// of those callbacks, middleware first, then the request would be
+// sent out with the modified request headers to the
+// real destination
 ```
 
 ### Intercepting a response
@@ -550,7 +574,8 @@ Inside of a callback passed to `req.continue()`, you can access the destination 
 
 ```js
 cy.intercept('/integrations', (req) => {
-  // req.continue() with a callback will send the request to the destination server
+  // req.continue() with a callback will send the request to
+  // the destination server
   req.continue((res) => {
     // 'res' represents the real destination response
     // you can manipulate 'res' before it's sent to the browser
@@ -577,7 +602,8 @@ If a Promise is returned from the route callback, it will be awaited before send
 ```js
 cy.intercept('/users', (req) => {
   req.continue((res) => {
-    // the response will not be sent to the browser until 'waitForSomething()' resolves
+    // the response will not be sent to the browser until
+    // 'waitForSomething()' resolves
     return waitForSomething()
   })
 })
@@ -591,12 +617,19 @@ You can throttle or delay all incoming responses using a `beforeEach()` in the `
 // cypress/support/index.ts
 
 // Throttle API responses to simulate real-world conditions
-cy.intercept({ url: 'http://localhost:3001/**', middleware: true }, (req) => {
-  req.on('response', (res) => {
-    // Throttle the response to 1 Mbps to simulate a mobile 3G connection
-    res.setThrottle(1000)
-  })
-})
+cy.intercept(
+  {
+    url: 'http://localhost:3001/**',
+    middleware: true,
+  },
+  (req) => {
+    req.on('response', (res) => {
+      // Throttle the response to 1 Mbps to simulate a
+      // mobile 3G connection
+      res.setThrottle(1000)
+    })
+  }
+)
 ```
 
 ### Request/Response Modification with `routeHandler`
@@ -665,7 +698,8 @@ cy.intercept('POST', '/users', (req) => {
 }).as('createUser')
 
 cy.get('button.save').click()
-// you can see the headers in the console output by selecting this line in the command log:
+// you can see the headers in the console output by selecting
+// this line in the command log:
 cy.wait('@createUser')
   // ...or make an assertion:
   .its('request.headers')
@@ -729,9 +763,14 @@ See [`StaticResponse` objects][staticresponse] below for more information.
 The `reply` method also supports shorthand to avoid having to specify a `StaticResponse` object:
 
 ```js
-req.reply(body) // equivalent to `req.reply({ body })`
-req.reply(body, headers) // equivalent to `req.reply({ body, headers })`
-req.reply(statusCode, body, headers) // equivalent to `req.reply({ statusCode, body, headers})`
+// equivalent to `req.reply({ body })`
+req.reply(body)
+
+// equivalent to `req.reply({ body, headers })`
+req.reply(body, headers)
+
+// equivalent to `req.reply({ statusCode, body, headers})`
+req.reply(statusCode, body, headers)
 ```
 
 <Alert type="bolt">
@@ -747,7 +786,8 @@ Modifying the real response (`continue`):
 The `continue` method accepts a function which is passed an object representing the real response being intercepted on its way back to the client (your front-end application).
 
 ```js
-// pass the request through and make an assertion on the real response
+// pass the request through and make an assertion on
+// the real response
 cy.intercept('POST', '/users', (req) => {
   req.continue((res) => {
     expect(res.body).to.include('Peter Pan')
@@ -760,7 +800,8 @@ See also [Controlling the outbound request with `req.continue()`](#Controlling-t
 Responding with a network error (`destroy`):
 
 ```js
-// dynamically destroy the request and respond with a network error
+// dynamically destroy the request and
+// respond with a network error
 cy.intercept('POST', '/users', (req) => {
   if (mustDestroy(req)) {
     req.destroy()
@@ -816,7 +857,8 @@ cy.intercept('POST', '/users', (req) => {
 
 cy.intercept('POST', '/users', (req) => {
   req.continue((res) => {
-    // the response will not be sent to the browser until this resolves:
+    // the response will not be sent to the browser until
+    // `waitForSomething()` resolves:
     return waitForSomething()
   })
 })
@@ -825,7 +867,8 @@ cy.intercept('POST', '/users', (req) => {
 #### Stubbing a response with a string
 
 ```js
-// requests to create a user will be fulfilled with a body of 'success'
+// requests to create a user will be fulfilled
+// with a body of 'success'
 cy.intercept('POST', '/users', 'success')
 // { body: 'sucess' }
 ```
@@ -856,7 +899,8 @@ The request object (`req`) has several properties from the HTTP request itself. 
 {
   /**
    * The body of the request.
-   * If a JSON Content-Type was used and the body was valid JSON, this will be an object.
+   * If a JSON Content-Type was used and the body was valid JSON,
+   * this will be an object.
    * If the body was binary content, this will be a buffer.
    */
   body: string | object | any
@@ -888,18 +932,20 @@ The request object (`req`) has several properties from the HTTP request itself. 
 ```ts
 {
   /**
-   * If provided, the number of milliseconds before an upstream response to this request
-   * will time out and cause an error. By default, `responseTimeout` from config is used.
+   * If provided, the number of milliseconds before an upstream
+   * response to this request will time out and cause an error.
+   * By default, `responseTimeout` from config is used.
    */
   responseTimeout?: number
   /**
-   * Set if redirects should be followed when this request is made. By default, requests will
-   * not follow redirects before yielding the response (the 3xx redirect is yielded)
+   * Set if redirects should be followed when this request is made.
+   * By default, requests will not follow redirects before
+   * yielding the response (the 3xx redirect is yielded).
    */
   followRedirect?: boolean
   /**
-   * If set, `cy.wait` can be used to await the request/response cycle to complete for this
-   * request via `cy.wait('@alias')`.
+   * If set, `cy.wait` can be used to await the request/response
+   * cycle to complete for this request via `cy.wait('@alias')`.
    */
   alias?: string
 }
@@ -914,7 +960,8 @@ Calling `req.continue()` without any argument will cause the request to be sent 
 ```js
 cy.intercept('POST', '/submitStory', (req) => {
   req.body.storyName = 'some name'
-  // send the modified request and skip any other matching request handlers
+  // send the modified request and skip any other
+  // matching request handlers
   req.continue()
 })
 ```
@@ -933,7 +980,8 @@ For example, the following code stubs out a JSON response from a request interce
 cy.intercept('/billing', (req) => {
   // dynamically get billing plan name at request-time
   const planName = getPlanName()
-  // this object will automatically be JSON.stringified and sent as the response
+  // this object will automatically be JSON.stringified and
+  // sent as the response
   req.reply({ plan: planName })
 })
 ```
@@ -960,9 +1008,14 @@ See the [`StaticResponse` documentation][staticresponse] for more information on
 `req.reply()` also supports shorthand, similar to [`res.send()`][res-send], to avoid having to specify a `StaticResponse` object:
 
 ```js
-req.reply(body) // equivalent to `req.reply({ body })`
-req.reply(body, headers) // equivalent to `req.reply({ body, headers })`
-req.reply(statusCode, body, headers) // equivalent to `req.reply({ statusCode, body, headers})`
+// equivalent to `req.reply({ body })`
+req.reply(body)
+
+// equivalent to `req.reply({ body, headers })`
+req.reply(body, headers)
+
+// equivalent to `req.reply({ statusCode, body, headers})`
+req.reply(statusCode, body, headers)
 ```
 
 #### Convenience functions
@@ -997,25 +1050,29 @@ By calling `req.on`, you can subscribe to different events:
 cy.intercept('/shop', (req) => {
   req.on('before:response', (res) => {
     /**
-     * Emitted before `response` and before any `req.continue` handlers.
-     * Modifications to `res` will be applied to the incoming response.
-     * If a promise is returned, it will be awaited before processing other event handlers.
+     * Emitted before `response` and before any `req.continue`
+     * handlers. Modifications to `res` will be applied to the
+     * incoming response. If a promise is returned, it will be
+     * awaited before processing other event handlers.
      */
   })
 
   req.on('response', (res) => {
     /**
-     * Emitted after `before:response` and after any `req.continue` handlers - before the response is sent to the browser.
-     * Modifications to `res` will be applied to the incoming response.
-     * If a promise is returned, it will be awaited before processing other event handlers.
+     * Emitted after `before:response` and after any
+     * `req.continue` handlers - before the response is sent
+     * to the browser. Modifications to `res` will be applied
+     * to the incoming response. If a promise is returned, it
+     * will be awaited before processing other event handlers.
      */
   })
 
   req.on('after:response', (res) => {
     /**
-     * Emitted once the response to a request has finished sending to the browser.
-     * Modifications to `res` have no impact.
-     * If a promise is returned, it will be awaited before processing other event handlers.
+     * Emitted once the response to a request has finished
+     * sending to the browser. Modifications to `res` have no
+     * impact. If a promise is returned, it will be awaited
+     * before processing other event handlers.
      */
   })
 })
@@ -1035,18 +1092,23 @@ The response object, `res`, will be passed as the first argument to the handler 
 ```js
 cy.intercept('/url', (req) => {
   req.on('before:response', (res) => {
-    // this will be called before any `req.continue` or `response` handlers
+    // this will be called before any `req.continue` or
+    // `response` handlers
   })
 
   req.continue((res) => {
-    // this will be called after all `before:response` handlers and before any `response` handlers
-    // by calling `req.continue`, we signal that this request handler will be the last one, and that
-    // the request should be sent outgoing at this point. for that reason, there can only be one
+    // this will be called after all `before:response`
+    // handlers and before any `response` handlers
+    // by calling `req.continue`, we signal that this
+    // request handler will be the last one, and that
+    // the request should be sent outgoing at this point.
+    // for that reason, there can only be one
     // `req.continue` handler per request.
   })
 
   req.on('response', (res) => {
-    // this will be called after all `before:response` handlers and after the `req.continue` handler
+    // this will be called after all `before:response`
+    // handlers and after the `req.continue` handler
     // but before the response is sent to the browser
   })
 })
@@ -1098,9 +1160,14 @@ See the [`StaticResponse` documentation][staticresponse] for more information on
 `res.send()` also supports shorthand, similar to [`req.reply()`][req-reply], to avoid having to specify a `StaticResponse` object:
 
 ```js
-res.send(body) // equivalent to `res.send({ body })`
-res.send(body, headers) // equivalent to `res.send({ body, headers })`
-res.send(statusCode, body, headers) // equivalent to `res.send({ statusCode, body, headers})`
+// equivalent to `res.send({ body })`
+res.send(body)
+
+// equivalent to `res.send({ body, headers })`
+res.send(body, headers)
+
+// equivalent to `res.send({ statusCode, body, headers})`
+res.send(statusCode, body, headers)
 ```
 
 #### Convenience functions
@@ -1110,7 +1177,8 @@ There are also two convenience functions available on `res`:
 ```ts
 {
   /**
-   * Wait for 'delay' milliseconds before sending the response to the client.
+   * Wait for 'delay' milliseconds before sending the
+   * response to the client.
    */
   setDelay: (delay: number) => IncomingHttpResponse
   /**
