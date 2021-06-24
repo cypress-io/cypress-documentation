@@ -310,14 +310,6 @@ cy.intercept({
 cy.wait('@search')
 ```
 
-```js
-// in this example, the supplied URL `/users` is merged with
-// the RouteMatcher passed as the second argument
-cy.intercept('/users', { middleware: true }, (req) => {
-  req.headers['authorization'] = `Bearer ${bearerToken}`
-})
-```
-
 #### Using the yielded object
 
 Using [cy.wait()](/api/commands/wait) on a `cy.intercept()` route alias yields an interception object which represents the request/response cycle:
