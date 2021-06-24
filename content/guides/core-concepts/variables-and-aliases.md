@@ -442,9 +442,9 @@ When in doubt, you can _always_ issue a regular [`cy.get()`](/api/commands/get) 
 
 </Alert>
 
-### Routes
+### Intercepts
 
-Aliases can also be used with [routes](/api/commands/route). Aliasing your routes enables you to:
+Aliases can also be used with [cy.intercept()](/api/commands/intercept). Aliasing your intercepted routes enables you to:
 
 - ensure your application makes the intended requests
 - wait for your server to send the response
@@ -452,7 +452,7 @@ Aliases can also be used with [routes](/api/commands/route). Aliasing your route
 
 <DocsImage src="/img/guides/aliasing-routes.jpg" alt="Alias commands" ></DocsImage>
 
-Here's an example of aliasing a route and waiting on it to complete.
+Here's an example of aliasing an intercepted route and waiting on it to complete.
 
 ```js
 cy.intercept('POST', '/users', { id: 123 }).as('postUser')
