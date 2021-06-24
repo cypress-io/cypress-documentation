@@ -190,7 +190,7 @@ cy.intercept('GET', '/users')
 // ...but not this: POST http://localhost/users
 ```
 
-### Matching `url` and `method` with [RouteMatcher](#routeMatcher-RouteMatcher)
+### Matching with [RouteMatcher](#routeMatcher-RouteMatcher)
 
 Specifying a `method` and `url` to match can also be acheived by passing the `routeMatcher` object into `cy.intercept` instead:
 
@@ -198,6 +198,38 @@ Specifying a `method` and `url` to match can also be acheived by passing the `ro
 // These both yield the same result:
 cy.intercept({ method: 'GET', url: '**/users' })
 cy.intercept('GET', '**/users')
+```
+
+```js
+// Match any type of request with the pathname `/search`
+// and the query paramater 'q=some+terms'
+cy.intercept({
+  pathname: '/search',
+  query: {
+    q: 'some terms',
+  },
+}).as('searchForTerms')
+```
+
+```js
+cy.intercept(
+  {
+    // this RegExp matches any URL beginning with
+    // 'http://api.example.com/' and ending with '/edit' or '/save'
+    url: /^http:\/\/api\.example\.com\/.*\/(edit|save)/,
+    // matching requests must also contain this header
+    headers: {
+      'x-requested-with': 'exampleClient',
+    },
+  }
+})
+```
+
+```js
+// this example will cause 1 request to `/temporary-error`
+// to receive a network error and subsequent requests will
+// not match this `RouteMatcher`
+cy.intercept('/temporary-error', { times: 1 }, { forceNetworkError: true })
 ```
 
 ### Pattern Matching
@@ -276,55 +308,6 @@ cy.intercept({
 // once any type of request to search with a querystring
 // containing 'q=expected+terms' responds, 'cy.wait' will resolve
 cy.wait('@search')
-```
-
-```js
-cy.intercept({
-  pathname: '/search',
-  query: {
-    q: 'some terms',
-  },
-}).as('searchForTerms')
-
-// once any type of request with the '/search'
-// path name and the query paramater 'q=some+terms' responds,
-// 'cy.wait' will resolve
-cy.wait('@searchForTerms')
-```
-
-<!-- TODO move these examples to more appropriate sections (DX-374) -->
-
-```js
-cy.intercept(
-  {
-    // this RegExp matches any URL beginning with
-    // 'http://api.example.com/' and ending with '/edit' or '/save'
-    url: /^http:\/\/api\.example\.com\/.*\/(edit|save)/,
-    headers: {
-      'x-requested-with': 'exampleClient',
-    },
-  },
-  (req) => {
-    // only requests to URLs starting with
-    // 'http://api.example.com/widgets' and having the header
-    // 'x-requested-with: exampleClient' will be intercepted
-  }
-})
-
-// in this example, the supplied URL `/users` is merged with
-// the RouteMatcher passed as the second argument
-cy.intercept('/users', { middleware: true }, (req) => {
-  req.headers['authorization'] = `Bearer ${bearerToken}`
-})
-
-// this example will cause 1 request to `/temporary-error`
-// to receive a network error and subsequent requests will
-// not match this `RouteMatcher`
-cy.intercept(
-  '/temporary-error',
-  { times: 1 },
-  { forceNetworkError: true }
-)
 ```
 
 #### Using the yielded object
