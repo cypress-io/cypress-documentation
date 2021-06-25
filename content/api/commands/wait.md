@@ -112,8 +112,9 @@ cy.wait('@getAccount').then((interception) => {
 Each time we use `cy.wait()` for an alias, Cypress waits for the next nth matching request.
 
 ```javascript
-cy.intercept('/books', []).as('getBooks')
-cy.get('#search').type('Grendel')
+// stub an empty response to requests for books
+cy.intercept('GET', '/books', []).as('getBooks')
+cy.get('#search').type('Peter Pan')
 
 // wait for the first response to finish
 cy.wait('@getBooks')
@@ -122,17 +123,16 @@ cy.wait('@getBooks')
 // responded with an empty array first
 cy.get('#book-results').should('be.empty')
 
-// now re-define the /books response
-cy.intercept('/books', [{ name: 'Emperor of all maladies' }])
+// now the request (aliased again as `getBooks`) will return one book
+cy.intercept('GET', '/books', [{ name: 'Peter Pan' }]).as('getBooks')
 
-cy.get('#search').type('Emperor of')
+cy.get('#search').type('Peter Pan')
 
-// now when we wait for 'getBooks' again, Cypress will
+// when we wait for 'getBooks' again, Cypress will
 // automatically know to wait for the 2nd response
 cy.wait('@getBooks')
 
-// we responded with 1 book item so now we should
-// have one result
+// we responded with one book the second time
 cy.get('#book-results').should('have.length', 1)
 ```
 
