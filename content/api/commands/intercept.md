@@ -29,19 +29,29 @@ All intercepts are automatically cleared before every test.
 cy.intercept(url)
 cy.intercept(method, url)
 cy.intercept(routeMatcher)
+```
 
+See arguments [url](/api/commands/intercept#url-String-Glob-RegExp), [method](/api/commands/intercept#method-String) and [routeMatcher](/api/commands/intercept#routeMatcher-RouteMatcher)
+
+```js
 // spying and response stubbing
 cy.intercept(url, staticResponse)
 cy.intercept(method, url, staticResponse)
 cy.intercept(routeMatcher, staticResponse)
 cy.intercept(url, routeMatcher, staticResponse)
+```
 
+See [staticResponse](/api/commands/intercept#staticResponse-lt-code-gtStaticResponselt-code-gt) argument
+
+```js
 // spying, dynamic stubbing, request modification, etc.
 cy.intercept(url, routeHandler)
 cy.intercept(method, url, routeHandler)
 cy.intercept(routeMatcher, routeHandler)
 cy.intercept(url, routeMatcher, routeHandler)
 ```
+
+See [routeHandler](/api/commands/intercept#routeHandler-lt-code-gtFunctionlt-code-gt) argument
 
 ### Usage
 
