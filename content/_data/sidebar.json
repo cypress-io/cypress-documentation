@@ -313,6 +313,10 @@
               "slug": "configuration"
             },
             {
+              "title": "Client Certificates",
+              "slug": "certificates"
+            },
+            {
               "title": "Proxy Configuration",
               "slug": "proxy-configuration"
             },
