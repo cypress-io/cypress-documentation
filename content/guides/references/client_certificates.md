@@ -2,7 +2,7 @@
 title: Client Certificates
 ---
 
-It is possible in Cypress to configure CA and client certificates to use within tests on a per URL basis.
+Configure certificate authority (CA) and client certificates to use within tests on a per-URL basis.
 
 <Alert type="info">
 
