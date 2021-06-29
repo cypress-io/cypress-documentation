@@ -168,6 +168,7 @@
       "scrollto": "scrollTo",
       "select": "select",
       "server": "server",
+      "session": "session",
       "setcookie": "setCookie",
       "shadow": "shadow",
       "should": "should",
