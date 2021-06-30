@@ -35,8 +35,8 @@ visit a page in your application.
 ## Syntax
 
 ```javascript
-cy.session(id, setupFn)
-cy.session(id, setupFn, options)
+cy.session(id, setup)
+cy.session(id, setup, options)
 ```
 
 ### Usage
@@ -63,27 +63,6 @@ cy.session(...) // something
 ```
 -->
 
-#### Usage notes
-
-- The page is cleared and all active session data across all domains are cleared
-  automatically when `cy.session()` runs. This guarantees consistent behavior
-  whether a session is being created or restored. It also allows you to switch
-  sessions without first having to explicitly log out.
-
-|                      | Current page                                    | Active session data                             |
-| -------------------- | ----------------------------------------------- | ----------------------------------------------- |
-| Before `setupFn`     | <Icon name="check-circle" color="green"></Icon> | <Icon name="check-circle" color="green"></Icon> |
-| Before `validate`    | <Icon name="check-circle" color="green"></Icon> |                                                 |
-| After `cy.session()` | <Icon name="check-circle" color="green"></Icon> |                                                 |
-
-- Because calling `cy.session()` clears the current page, `cy.visit()` must
-  always be explicitly called afterwards to ensure a page is visited.
-- Once created, a session is cached for the duration of the spec file.
-- You can't modify a stored session after it has been cached, but you can always
-  create a new session with a different `id`.
-- It is a best practice to call `cy.session()` inside a wrapper function or
-  custom command.
-
 ### Arguments
 
 **<Icon name="angle-right"></Icon> id** **_(String, Array, Object)_**
@@ -95,10 +74,10 @@ value.
 
 <Alert type="info">
 
-Any variable that is used inside the `setupFn` function that could possibly
-change across tests in a single spec file should be specified in the `id`
-argument so that the session may be cached properly. This includes objects that
-may be mutated. If there are multiple variables, use an array.
+Any variable that is used inside the `setup` function that could possibly change
+across tests in a single spec file should be specified in the `id` argument so
+that the session may be cached properly. This includes objects that may be
+mutated. If there are multiple variables, use an array.
 
 </Alert>
 
@@ -110,22 +89,23 @@ serialize into an identifier, so exercise care with the data you specify as the
 
 </Alert>
 
-**<Icon name="angle-right"></Icon> setupFn** **_(Function)_**
+**<Icon name="angle-right"></Icon> setup** **_(Function)_**
 
 This function is called whenever a session for the given `id` hasn't yet been
-cached, or if it's no longer valid (see the `validate` option). After `setupFn`
+cached, or if it's no longer valid (see the `validate` option). After `setup`
 runs, Cypress will preserve all cookies, `sessionStorage`, and `localStorage`,
 so that subsequent calls to `cy.session()` with the same `id` will bypass this
 function and just restore the cached session data.
 
-The page is always cleared before `setupFn` runs.
+The page and all active session data (cookies, `localStorage` and
+`sessionStorage`) across all domains are always cleared before `setup` runs.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
-| Option     | Default     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| ---------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `log`      | `true`      | Displays the command in the Command log                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| `validate` | `undefined` | Validates the newly-created or restored session.<br><br>The `validate` function is run immediately after the `setupFn` function runs, and also every time `cy.session()` restores a cached session. If the `validate` function return `false`, throws an exception, returns a Promise that resolves to `false` or rejects, or contains any failing Cypress command, the session will be considered invalid, and `setupFn` will be re-run. However, if validation fails immediately after `setupFn` is run, the test will fail.<br><br>The page is always cleared before `validate` runs. |
+| Option     | Default     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| ---------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `log`      | `true`      | Displays the command in the Command log                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `validate` | `undefined` | Validates the newly-created or restored session.<br><br>The `validate` function is run immediately after the `setup` function runs, and also every time `cy.session()` restores a cached session. If the `validate` function return `false`, throws an exception, returns a Promise that resolves to `false` or rejects, or contains any failing Cypress command, the session will be considered invalid, and `setup` will be re-run. However, if validation fails immediately after `setup` is run, the test will fail.<br><br>The page is always cleared before `validate` runs. |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
@@ -195,8 +175,8 @@ Cypress.Commands.add(
 
 ### Updating an existing login helper function
 
-Adding session caching to your custom login command couldn't be easier. Just
-wrap the inside of the command with a call to `cy.session()`.
+Adding session caching to a login helper function is as simple as wrapping the
+inside of the function with a call to `cy.session()`.
 
 **Before**
 
@@ -259,7 +239,8 @@ _not_ cache the session, so that other things can be asserted about the login
 process.
 
 In this case, it can be helpful to create a custom login command that will
-conditionally cache the session:
+conditionally cache the session. However, wherever possible, it's better to
+[assert the session inside setup](#Asserting-the-session-inside-setup).
 
 ```javascript
 Cypress.Commands.add('login', (name, { cacheSession = true } = {}) => {
@@ -267,7 +248,6 @@ Cypress.Commands.add('login', (name, { cacheSession = true } = {}) => {
     cy.visit('/login')
     cy.get('input').type(name)
     cy.get('#login').click()
-    cy.url().should('contain', '/login-successful')
   }
   if (cacheSession) {
     cy.session(name, login)
@@ -294,11 +274,30 @@ describe('account details', () => {
 })
 ```
 
+### Asserting the session inside setup
+
+Because `cy.session()` caches session data immediately after the `setup`
+function completes, it's a best practice to assert that the login process has
+completed at the end of session setup, to ensure the function doesn't return too
+early.
+
+```javascript
+cy.session('user', () => {
+  cy.visit('/login')
+  cy.get('name').type('user')
+  cy.get('password').type('p4ssw0rd123')
+  cy.get('#submit').click()
+  // Wait for the post-login redirect to ensure that the
+  // session actually exists to be cached
+  cy.url().should('contain', '/home')
+})
+```
+
 ### Switching sessions inside tests
 
 Because `cy.session()` clears the page and all active session data before
-running `setupFn`, you can use it to easily switch between sessions without
-first needing to log the previous user out. This allows tests to more accurately
+running `setup`, you can use it to easily switch between sessions without first
+needing to log the previous user out. This allows tests to more accurately
 represent real-world scenarios and helps manage test run times.
 
 ```jsx
@@ -324,30 +323,11 @@ it('should transfer money between users', () => {
 })
 ```
 
-### Asserting the session inside setupFn
-
-Because `cy.session()` caches session data immediately after the `setupFn`
-function completes, it's a best practice to assert that the login process has
-completed at the end of session setup, to ensure the function doesn't return too
-early.
-
-```javascript
-cy.session('user', () => {
-  cy.visit('/login')
-  cy.get('name').type('user')
-  cy.get('password').type('p4ssw0rd123')
-  cy.get('#submit').click()
-  // Wait for the post-login redirect to ensure that the
-  // session actually exists to be cached
-  cy.url().should('contain', '/home')
-})
-```
-
 ### Validating the session
 
 If the `validate` function return `false`, throws an exception, returns a
 Promise that resolves to `false` or rejects, or contains any failing Cypress
-command, the session will be considered invalid, and `setupFn` will be re-run.
+command, the session will be considered invalid, and `setup` will be re-run.
 
 Here are a few `validate` examples:
 
@@ -376,10 +356,10 @@ function validate() {
 }
 ```
 
-### Modifying session data
+### Modifying session data before caching
 
 If you don't want to cache all session data (cookies, `localStorage` and
-`sessionStorage`), you can modify session data as-necessary in `setupFn`.
+`sessionStorage`), you can modify session data as-necessary in `setup`.
 
 ```javascript
 cy.session('user', () => {
@@ -396,7 +376,7 @@ cy.session('user', () => {
 })
 ```
 
-### Caching sessions via the correct id
+### Choosing the correct id to cache a session
 
 Any variable that is used inside the `setup` function that could possibly change
 throughout the spec file should be specified in the `id` argument. This includes
@@ -429,11 +409,11 @@ const login = (name, email, params = {}) => {
 }
 ```
 
-### Updating login functions that return a value
+### Updating a login function that returns a value
 
 If your custom login command returns a value that you use to assert in a test,
 wrapping it with `cy.session()` will break that test. However, it's usually easy
-to solve this by refactoring the login code to assert directly inside `setupFn`.
+to solve this by refactoring the login code to assert directly inside `setup`.
 
 **Before**
 
@@ -517,3 +497,54 @@ with the `Cypress.session.clearAllSavedSessions()` method or via the "Clear All
 Sessions" button in the Test Runner UI.
 
 **TODO: SHOW IMAGE**
+
+## Notes
+
+### Clearing the page and active session data
+
+The page is cleared and all active session data across all domains are cleared
+automatically when `cy.session()` runs. This guarantees consistent behavior
+whether a session is being created or restored. It also allows you to switch
+sessions without first having to explicitly log out.
+
+|                      |              Current page cleared               |           Active session data cleared           |
+| -------------------- | :---------------------------------------------: | :---------------------------------------------: |
+| Before `setup`       | <Icon name="check-circle" color="green"></Icon> | <Icon name="check-circle" color="green"></Icon> |
+| Before `validate`    | <Icon name="check-circle" color="green"></Icon> |                                                 |
+| After `cy.session()` | <Icon name="check-circle" color="green"></Icon> |                                                 |
+
+Because calling `cy.session()` clears the current page in addition to restoring
+cached session data, `cy.visit()` must always be explicitly called afterwards to
+ensure a page is visited.
+
+### Session caching
+
+Once created, a session for a given `id` is cached for the duration of the spec
+file. You can't modify a stored session after it has been cached, but you can
+always create a new session with a different `id`.
+
+In order to reduce development time, when running the Test Runner in "open"
+mode, sessions will be cached _between spec file runs_ as long as the `setup`
+function hasn't changed. However, if you want to explicitly clear all sessions,
+you can click the "Clear All Sessions" button in the Test Runner UI.
+
+For debugging purposes, all sessions can be cleared with the
+`Cypress.session.clearAllSavedSessions()` method.
+
+### Where to call `cy.session()`
+
+While it is possible to call `cy.session()` explicitly inside a test or
+`beforeEach`, it is considered a best practice to call `cy.session()` inside a
+reusable wrapper function or custom login command. See the
+[Updating an existing login custom command](#Updating-an-existing-login-custom-command)
+and
+[Updating an existing login helper function](#Updating-an-existing-login-helper-function)
+examples for more information.
+
+## Command Log
+
+TBD
+
+## See also
+
+- TBD
