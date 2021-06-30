@@ -43,7 +43,3 @@ You can manage this behavior in your project's **Project Settings** page.
 ## Uninstalling the GitLab integration
 
 You can remove this integration by visiting the **Integrations → GitLab** page of your organization. This will stop all commit checks and MR comments from Cypress.
-
-## Feedback
-
-Have ideas for how we can improve our GitLab Integration? [Let us know!](https://portal.productboard.com/cypress-io/1-cypress-dashboard/c/48-gitlab-integration?utm_medium=social&utm_source=portal_share)
