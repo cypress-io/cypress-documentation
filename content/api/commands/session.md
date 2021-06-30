@@ -122,10 +122,10 @@ The page is always cleared before `setupFn` runs.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
-| Option     | Default     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| ---------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `log`      | `true`      | Displays the command in the Command log                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `validate` | `undefined` | Validates the newly-created or restored session.<br><br>The `validate` function is run immediately after the `setupFn` function runs, and also every time `cy.session()` restores a cached session. If the `validate` function returns `false` or contains any failing Cypress command, the session will be considered invalid, and `setupFn` will be re-run. However, if validation fails immediately after `setupFn` is run, the test will fail.<br><br>The page is always cleared before `validate` runs. |
+| Option     | Default     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| ---------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `log`      | `true`      | Displays the command in the Command log                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `validate` | `undefined` | Validates the newly-created or restored session.<br><br>The `validate` function is run immediately after the `setupFn` function runs, and also every time `cy.session()` restores a cached session. If the `validate` function return `false`, throws an exception, returns a Promise that resolves to `false` or rejects, or contains any failing Cypress command, the session will be considered invalid, and `setupFn` will be re-run. However, if validation fails immediately after `setupFn` is run, the test will fail.<br><br>The page is always cleared before `validate` runs. |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
@@ -345,9 +345,9 @@ cy.session('user', () => {
 
 ### Validating the session
 
-If the `validate` function returns `false` or contains a failing Cypress
-command, the session will be considered invalid, and the `setupFn` will be
-re-run.
+If the `validate` function return `false`, throws an exception, returns a
+Promise that resolves to `false` or rejects, or contains any failing Cypress
+command, the session will be considered invalid, and `setupFn` will be re-run.
 
 Here are a few `validate` examples:
 
