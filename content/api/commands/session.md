@@ -44,24 +44,43 @@ cy.session(id, setup, options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-Cypress.Commands.add('login', (username, password) => {
-  cy.session([username, password], () => {
-    cy.visit('/login')
-    cy.get('[data-test=username]').type(username)
-    cy.get('[data-test=password]').type(password)
-    cy.get('form').contains('Log In').click()
-    cy.url().should('contain', '/login-successful')
+// Caching session when logging in via page visit
+cy.session(name, () => {
+  cy.visit('/login')
+  cy.get('[data-test=name]').type(name)
+  cy.get('[data-test=password]').type('s3cr3t')
+  cy.get('form').contains('Log In').click()
+  cy.url().should('contain', '/login-successful')
+})
+
+// Caching session when logging in via API
+cy.session([username, password], () => {
+  cy.request({
+    method: 'POST',
+    url: '/login',
+    body: { username, password },
+  }).then(({ body }) => {
+    window.localStorage.setItem('authToken', body.token)
   })
 })
 ```
 
-<!--
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.session(...) // something
+// visiting before calling cy.session() is redundant
+cy.visit('/login')
+cy.session(name, () => {
+  // need to call cy.visit() here because the page is blank here
+  cy.get('[data-test=name]').type(name)
+  cy.get('[data-test=password]').type('s3cr3t')
+  cy.get('form').contains('Log In').click()
+  // should assert that login was successful here
+})
+// should have asserted this inside the cy.session() setup
+// function because the page is blank here
+cy.url().should('contain', '/login-successful')
 ```
--->
 
 ### Arguments
 
