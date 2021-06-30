@@ -14,9 +14,9 @@ This document merely offers guidance on how to specify certificate file paths fo
 
 ## Structure within JSON config file
 
-To configure CA / client certificates within your cypress.env.json, you should add a section at the top level something like:
+To configure CA / client certificates within your [cypress.env.json](/guides/guides/environment-variables#Option-2-cypress-env-json), you should add a section at the top level something like:
 
-```
+```json
   "clientCertificates": [
     {
       "url": "https://a.host.com",
@@ -54,8 +54,17 @@ To configure CA / client certificates within your cypress.env.json, you should a
   ]
 }
 ```
-**Notes:**
- * The passhprase value must always point to a text file containing the phrase, not the phrase itself. 
- * URL is a required value for each certificate 'block' within the config
- * For any given URL block, you *must* specify either a PFX file, *or* a PEM format cert/key pair of files, but not both. 
- * As you can see above, wildcards are supported for the url value, but no other values. These wildcards must follow Javascript minimatch (https://github.com/isaacs/minimatch) rules
+## `clientCertificates` schema
+
+* The `clientCertificates` value is an **Array** of objects. Each object must have a `url` and `certs` property, and may have an optional `ca` property.
+  * `url` is a **String** used to match requests. Wildcards following [minimatch](https://github.com/isaacs/minimatch) rules are supported.
+  * `ca` is an optional **Array** of paths to one or more CA files to validate certs against, relative to project root.
+  * `certs` is an **Array** of objects.
+* Each object in the `certs` array can contain either
+  * a PEM format certificate/private key pair:
+    *  `cert` is a **String** path to the certificate file, relative to project root.
+    *  `key` is a **String** path to the private key file, relative to project root.
+    *  `passphrase` is an optional **String** path to a text file containing the passphrase, relative to project root.
+  * a PFX certificate container:
+    *  `pfx` is a **String** path to the certificate container, relative to project root.
+    *  `passphrase` is an optional **String** path to a text file containing the passphrase, relative to project root.
