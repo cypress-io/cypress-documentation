@@ -385,8 +385,32 @@
               "slug": "testing-your-first-app",
               "children": [
                 {
-                  "title": "Test",
-                  "slug": "test"
+                  "title": "TodoMVC App Install & Overview",
+                  "slug": "todomvc-app-install-and-overview"
+                },
+                {
+                  "title": "Install Cypress & Writing Our First Test",
+                  "slug": "installing-cypress-and-writing-our-first-test"
+                },
+                {
+                  "title": "Multiple Todo's and beforeEach()",
+                  "slug": "multiple-todos-and-before-each"
+                },
+                {
+                  "title": "How to use Cypress Commands",
+                  "slug": "how-to-user-cypress-commands"
+                },
+                {
+                  "title": "Cypress Log, Snapshot & Aliases",
+                  "slug": "cypress-log-snapshot-and-aliases"
+                },
+                {
+                  "title": "Negative Tests",
+                  "slug": "negative-tests"
+                },
+                {
+                  "title": "Wrap Up",
+                  "slug": "wrap-up"
                 }
               ]
             },
