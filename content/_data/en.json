@@ -104,7 +104,9 @@
       "ci-provider-examples": "CI Provider Examples",
       "working-with-graphql": "Working with GraphQL",
       "real-world-testing": "Real World Testing",
-      "foundations": "Foundations"
+      "foundations": "Foundations",
+      "testing-your-first-app": "Testing Your First App",
+      "real-world-examples": "Real World Examples"
     },
     "api": {
       "api": "API",
