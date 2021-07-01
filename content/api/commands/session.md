@@ -68,14 +68,16 @@ cy.session([username, password], () => {
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-// visiting before calling cy.session() is redundant
+// visiting before calling cy.session() is redundant, it needs to
+// be done inside the setup function
 cy.visit('/login')
 cy.session(name, () => {
   // need to call cy.visit() here because the page is blank here
   cy.get('[data-test=name]').type(name)
   cy.get('[data-test=password]').type('s3cr3t')
   cy.get('form').contains('Log In').click()
-  // should assert that login was successful here
+  // should assert that login was successful here to guarantee the
+  // login process completes before it is cached
 })
 // should have asserted this inside the cy.session() setup
 // function because the page is blank here
