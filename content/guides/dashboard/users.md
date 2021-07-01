@@ -67,4 +67,4 @@ Changes can be made to both the primary email address associated with your Dashb
 
 For updating the primary email address associated with your Dashboard, click your Profile picture in the upper left corner of the Organizations page. Select **Manage Profile**. Go to the **Email** field and select your preferred email address. _Note: The email list is limited to emails provided by login provider._
 
-If you would like to update the billing email address, that can be done via the **Billing & Usage** page within the [Dashboard](https://on.cypress.io/dashboard) or you contact them directly at [billing@cypress.io](mailto:support@cypress.io).
+If you would like to update the billing email address, that can be done via the **Billing & Usage** page within the [Dashboard](https://on.cypress.io/dashboard) or you contact them directly at [billing@cypress.io](mailto:billing@cypress.io).
