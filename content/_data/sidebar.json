@@ -363,8 +363,20 @@
               "slug": "foundations",
               "children": [
                 {
-                  "title": "Test",
-                  "slug": "test"
+                  "title": "What is Testing?",
+                  "slug": "what-is-testing"
+                },
+                {
+                  "title": "The Testing Pyramid",
+                  "slug": "the-testing-pyramid"
+                },
+                {
+                  "title": "Thinking Test First",
+                  "slug": "thinking-test-first"
+                },
+                {
+                  "title": "Testing FAQ's",
+                  "slug": "testing-faqs"
                 }
               ]
             },
