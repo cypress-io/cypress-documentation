@@ -433,6 +433,95 @@ const login = (name, email, params = {}) => {
 }
 ```
 
+### Where to call `cy.visit()`
+
+If you call `cy.visit()` immediately after `cy.setup()` in your login function
+or custom command, it will effectively behave the same as a login function
+without any session caching.
+
+```javascript
+const login = (name) => {
+  cy.session(name, () => {
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(name)
+    cy.get('[data-test=password]').type('s3cr3t')
+    cy.get('#submit').click()
+    cy.url().should('contain', '/home')
+  })
+  cy.visit('/home')
+}
+
+beforeEach(() => {
+  login('user')
+})
+
+it('should test something on the /home page', () => {
+  // assertions
+})
+
+it('should test something else on the /home page', () => {
+  // assertions
+})
+```
+
+But the moment you want to test something on another page, your test will be
+effectively calling `cy.visit()` twice in a row, which will result in slightly
+slower tests.
+
+```javascript
+// ...continued...
+
+it('should test something on the /other page', () => {
+  cy.visit('/other')
+  // assertions
+})
+```
+
+Tests will often be faster if you call `cy.visit()` only when necessary. This
+works especially well when
+[organizing tests into suites](/guides/core-concepts/writing-and-organizing-tests#Test-Structure)
+and calling `cy.visit()` after logging in inside a
+[`beforeEach`](/guides/core-concepts/writing-and-organizing-tests#Hooks) hook.
+
+```javascript
+const login = (name) => {
+  cy.session(name, () => {
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(name)
+    cy.get('[data-test=password]').type('s3cr3t')
+    cy.get('#submit').click()
+    cy.url().should('contain', '/home')
+  })
+  // no visit here
+}
+
+describe('home page tests', () => {
+  beforeEach(() => {
+    login('user')
+    cy.visit('/home')
+  })
+
+  it('should test something on the /home page', () => {
+    // assertions
+  })
+
+  it('should test something else on the /home page', () => {
+    // assertions
+  })
+})
+
+describe('other page tests', () => {
+  beforeEach(() => {
+    login('user')
+    cy.visit('/other')
+  })
+
+  it('should test something on the /other page', () => {
+    // assertions
+  })
+})
+```
+
 ### Updating a login function that returns a value
 
 If your custom login command returns a value that you use to assert in a test,
@@ -567,9 +656,18 @@ and
 [Updating an existing login helper function](#Updating-an-existing-login-helper-function)
 examples for more details.
 
-### Debugging sessions
+### Common Questions
 
-TBD
+#### Why are all my Cypress commands failing after calling `cy.session()`?
+
+Ensure that you're calling `cy.visit()` after calling `cy.session()`, otherwise
+your tests will be running on a blank page.
+
+#### Why am I seeing `401` errors after calling `cy.session()`?
+
+It's possible that your session has been invalidated. Be sure to specify a
+`validate` function so that `cy.session()` can validate and recreate the session
+if necessary.
 
 ## Command Log
 
