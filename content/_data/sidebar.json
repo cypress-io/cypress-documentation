@@ -419,8 +419,24 @@
               "slug": "real-world-examples",
               "children": [
                 {
-                  "title": "Test",
-                  "slug": "test"
+                  "title": "Real World App Overview",
+                  "slug": "real-world-app-overview"
+                },
+                {
+                  "title": "Unathenticated Users",
+                  "slug": "unathenticated-users"
+                },
+                {
+                  "title": "Login Errors",
+                  "slug": "login-errors"
+                },
+                {
+                  "title": "Invalid Users",
+                  "slug": "invalid-users"
+                },
+                {
+                  "title": "Sign-up, Login, Create Bank Account and Logout",
+                  "slug": "signup-login-create-bank-account-logout"
                 }
               ]
             }
