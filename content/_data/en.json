@@ -102,7 +102,9 @@
       "google-authentication": "Google Authentication",
       "circleci": "CircleCI",
       "ci-provider-examples": "CI Provider Examples",
-      "working-with-graphql": "Working with GraphQL"
+      "working-with-graphql": "Working with GraphQL",
+      "real-world-testing": "Real World Testing",
+      "foundations": "Foundations"
     },
     "api": {
       "api": "API",
