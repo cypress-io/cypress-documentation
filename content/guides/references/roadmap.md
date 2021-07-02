@@ -18,7 +18,3 @@ _Last updated Apr 28, 2021_
 | _Work in progress_ | **Visit multiple superdomains** | [#944](https://github.com/cypress-io/cypress/issues/944)   |                                                            |
 | _Work in progress_ | **Iframe Support**              | [#136](https://github.com/cypress-io/cypress/issues/136)   |                                                            |
 | _Work in progress_ | **WebKit Support**              | [#6422](https://github.com/cypress-io/cypress/issues/6422) |                                                            |
-
-### Dashboard Service
-
-Please see our official [Dashboard Product Board](https://portal.productboard.com/cypress-io/1-cypress-dashboard).
