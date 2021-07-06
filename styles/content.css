@@ -332,6 +332,15 @@
   border-radius: 6px;
 }
 
+div.code-toolbar > .toolbar {
+  right: 0.5em !important;
+}
+
+button.copy-to-clipboard-button {
+  padding: 0.2em 0.6em !important;
+  color: white !important;
+}
+
 /* #region Syntax highlighting selection override */
 code[class*='language-']::-moz-selection,
 pre[class*='language-']::-moz-selection,

@@ -14,9 +14,9 @@ export default {
 </script>
 
 <template>
-  <div :class="[active && 'active', $style.codeBlock]">
+  <prism :class="[active && 'active', $style.codeBlock]">
     <slot />
-  </div>
+  </prism>
 </template>
 
 <style module>
