@@ -46,6 +46,8 @@ The permissions for each user role for the Dashboard Service.
 | Edit project name                               |               | ✅ **Admin** | ✅ **Owner** |
 | Edit project status (private/public}            |               | ✅ **Admin** | ✅ **Owner** |
 | Add or delete record keys                       |               | ✅ **Admin** | ✅ **Owner** |
+| Set up GitHub Integration                       |               | ✅ **Admin** | ✅ **Owner** |
+| Set up Slack Integration                        |               | ✅ **Admin** | ✅ **Owner** |
 | Invite 'owner' to organization                  |               |              | ✅ **Owner** |
 | Edit 'owner' in organization                    |               |              | ✅ **Owner** |
 | Remove 'owner' from organization                |               |              | ✅ **Owner** |
@@ -54,6 +56,7 @@ The permissions for each user role for the Dashboard Service.
 | Delete organization                             |               |              | ✅ **Owner** |
 | Transfer project to another organization        |               |              | ✅ **Owner** |
 | Delete project                                  |               |              | ✅ **Owner** |
+| Set up SSO                                      |               |              | ✅ **Owner** |
 
 ## User requests
 
