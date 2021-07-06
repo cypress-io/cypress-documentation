@@ -436,7 +436,7 @@ Ok, we're done talking. Now dive in and get started testing your app!
 From here you may want to explore some more of our guides:
 
 - [Tutorial Videos](/examples/examples/tutorials) to watch step-by-step tutorial videos
-- [Cypress API](/api/api/table-of-contents) to learn what commands are available as you work
+- [Cypress API](/api/table-of-contents) to learn what commands are available as you work
 - [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress) explains how Cypress _really_ works
 - [Command Line](/guides/guides/command-line) for running all your tests outside via `cypress run`
 - [Continuous Integration](/guides/continuous-integration/introduction) for running Cypress in CI
