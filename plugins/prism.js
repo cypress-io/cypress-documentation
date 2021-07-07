@@ -1,6 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
 /* eslint-disable no-undef */
-import 'clipboard' // For the copy to clipboard plugin
+import 'clipboard'
 import Prism from 'prismjs'
 import Vue from 'vue'
 
@@ -28,7 +28,7 @@ import 'prismjs/plugins/line-highlight/prism-line-highlight.css'
 import 'prismjs/plugins/line-numbers/prism-line-numbers'
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 
-// Include some other plugins
+// Include th copy to clipboard plugin
 import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard'
 
 // eslint-disable-next-line vue/component-definition-name-casing

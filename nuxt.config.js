@@ -152,4 +152,7 @@ export default {
       brands: ['faGithub', 'faTwitter', 'faYoutube'],
     },
   },
+  purgeCSS: {
+    whitelist: [/^token/, /^pre/, /^code/]
+  }
 }
