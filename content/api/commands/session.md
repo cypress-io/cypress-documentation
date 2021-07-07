@@ -384,8 +384,8 @@ function validate() {
 
 ### Modifying session data before caching
 
-If you don't want to cache all session data (cookies, `localStorage` and
-`sessionStorage`), you can modify session data as-necessary in `setup`.
+If you want to change which session data is cached, you can modify cookies,
+`localStorage`, `sessionStorage` as-necessary in `setup`.
 
 ```javascript
 cy.session('user', () => {
@@ -399,6 +399,8 @@ cy.session('user', () => {
   cy.window().then((win) => {
     win.localStorage.removeItem('authToken')
   })
+  // Add session data we do want to cache
+  cy.setCookie('session_id', '189jd09sufh33aaiidhf99d09')
 })
 ```
 
