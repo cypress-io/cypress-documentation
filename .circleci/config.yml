@@ -29,7 +29,7 @@ commands:
       - run:
           name: Nuxt Build
           command: yarn build
-  
+
   link-check-changed-files:
     steps:
       - run:
@@ -56,7 +56,7 @@ jobs:
       - attach_workspace:
           at: ~/repo
       - link-check-changed-files
-  
+
   broken-link-check-prod:
     executor: node-executor
     working_directory: ~/repo
@@ -79,7 +79,7 @@ jobs:
       - run:
           name: Docsearch Scraper
           command: node ./cy_scripts/scrape.js
-  
+
   publish-scheduled-sanity-content:
     executor: node-executor
     steps:
@@ -103,7 +103,7 @@ workflows:
           yarn: true
           install-command: yarn --frozen-lockfile
           executor: with-chrome-and-firefox
-      
+
       - link-check-changed-files:
           name: 'Broken link checker'
           requires:
@@ -155,11 +155,11 @@ workflows:
                 - master
     jobs:
       - broken-link-check-prod
-  
+
   sanity-scheduled-content-check:
     triggers:
       - schedule:
-          cron: "* 0,12 * * *"
+          cron: "0 0,12 * * *"
           filters:
             branches:
               only:
