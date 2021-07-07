@@ -9,6 +9,8 @@ import 'prism-themes/themes/prism-material-oceanic.css'
 
 // Include language support
 import 'prismjs/components/prism-markup'
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-typescript';
 
 // Include the toolbar plugin
 import 'prismjs/plugins/toolbar/prism-toolbar'
@@ -18,13 +20,13 @@ import 'prismjs/plugins/toolbar/prism-toolbar.css'
 import 'prismjs/plugins/autolinker/prism-autolinker'
 import 'prismjs/plugins/autolinker/prism-autolinker.css'
 
-// Include the line numbers plugin
-import 'prismjs/plugins/line-numbers/prism-line-numbers'
-import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
-
 // Include the line highlight plugin
 import 'prismjs/plugins/line-highlight/prism-line-highlight'
 import 'prismjs/plugins/line-highlight/prism-line-highlight.css'
+
+// Include the line numbers plugin
+import 'prismjs/plugins/line-numbers/prism-line-numbers'
+import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 
 // Include some other plugins
 import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard'

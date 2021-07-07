@@ -337,8 +337,16 @@ div.code-toolbar > .toolbar {
 }
 
 button.copy-to-clipboard-button {
-  padding: 0.2em 0.6em !important;
   color: white !important;
+  padding: 0.25rem 0.75rem !important;
+}
+
+button.copy-to-clipboard-button:hover {
+  border: 1px solid #ddd;
+}
+
+button.copy-to-clipboard-button:focus {
+  outline: none !important;
 }
 
 /* #region Syntax highlighting selection override */
