@@ -21,7 +21,7 @@ export default {
     const [learnItem] = await $content({ deep: true }).where({ path }).fetch()
 
     if (!learnItem) {
-      return error({ statusCode: 404, message: 'FAQ not found' })
+      return error({ statusCode: 404, message: 'Document not found' })
     }
 
     const [rawContent] = await $content({ deep: true, text: true })
@@ -47,7 +47,7 @@ export default {
         {
           hid: 'canonical',
           rel: 'canonical',
-          href: `https://docs.cypress.io/faq/${this.$route.params.pathMatch}`,
+          href: `https://docs.cypress.io/learn/${this.$route.params.pathMatch}`,
         },
       ],
     }
@@ -58,7 +58,7 @@ export default {
         type: 'article',
         title: getTitle(this.learnItem.title),
         description: this.metaDescription,
-        url: `https://docs.cypress.io/faq/${this.$route.params.pathMatch}`,
+        url: `https://docs.cypress.io/learn/${this.$route.params.pathMatch}`,
       }
 
       return getMetaData(metaData)
@@ -70,7 +70,7 @@ export default {
 <template>
   <div class="w-full">
     <AppHeader
-      section="faq"
+      section="learn"
       :algolia-settings="algoliaSettings"
       :banner="banner"
     />
