@@ -633,6 +633,10 @@ This error likely appeared because:
 1. You do not have internet. Please ensure you have connectivity then try again.
 2. You are a developer that has forked our codebase and do not have access to run our API locally. Please read more about this in our [contributing doc](https://on.cypress.io/contributing).
 
+### <Icon name="exclamation-triangle" color="red"></Icon> Whoops, we can't run your tests
+
+See [Cypress detected policy settings on your computer that may cause issues](#Cypress-detected-policy-settings-on-your-computer-that-may-cause-issues) below.
+
 ### <Icon name="exclamation-triangle" color="red"></Icon> Cypress detected policy settings on your computer that may cause issues
 
 When Cypress launches Chrome, it attempts to launch it with a custom proxy server and browser extension. Certain group policies (GPOs) on Windows can prevent this from working as intended, which can cause tests to break.
