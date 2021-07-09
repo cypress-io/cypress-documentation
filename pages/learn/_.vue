@@ -77,14 +77,11 @@ export default {
     <main :class="Boolean(banner) ? 'banner-margin' : ''" class="main-content">
       <AppSidebar :path="path" :has-banner="Boolean(banner)" />
       <div class="main-content-article-wrapper">
-        <article class="main-content-article hide-scroll">
-          <h1 class="main-content-title">{{ learnItem.title }}</h1>
-          <div class="w-full flex flex-col justify-between">
-            <TableOfContentsList :toc="learnItem.toc" />
-            <nuxt-content :document="learnItem"></nuxt-content>
-            <Footer />
-          </div>
-        </article>
+        <div class="w-full flex flex-col justify-between">
+          <TableOfContentsList :toc="learnItem.toc" />
+          <nuxt-content :document="learnItem"></nuxt-content>
+          <Footer />
+        </div>
       </div>
       <TableOfContents />
     </main>
