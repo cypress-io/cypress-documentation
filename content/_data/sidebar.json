@@ -313,6 +313,10 @@
               "slug": "configuration"
             },
             {
+              "title": "Client Certificates",
+              "slug": "client-certificates"
+            },
+            {
               "title": "Proxy Configuration",
               "slug": "proxy-configuration"
             },
@@ -767,10 +771,6 @@
             {
               "title": "Cookies",
               "slug": "cookies"
-            },
-            {
-              "title": "Keyboard",
-              "slug": "keyboard-api"
             },
             {
               "title": "Screenshot",
