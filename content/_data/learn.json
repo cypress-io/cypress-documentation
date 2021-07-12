@@ -1,13 +1,129 @@
-[
-    {
-        "slug": "foundations",
-        "title": "Testing Foundations",
-        "children": [
-            {
-            "slug": "what-is-testing",
-            "title": "What is Testing?",
-            "description": "The basics of software testing practices."
-        }
-        ]
-    }
-]
+{
+  "foundations": {
+    "title": "Testing Foundations",
+    "slug": "testing-foundations",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    "children": [{
+        "title": "What is Testing?",
+        "slug": "what-is-testing",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      },
+      {
+        "title": "The Testing Pyramid",
+        "slug": "the-testing-pyramid",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      },
+      {
+        "title": "Thinking Test First",
+        "slug": "thinking-test-first",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      },
+      {
+        "title": "What do tests look like?",
+        "slug": "what-do-tests-look-like",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      },
+      {
+        "title": "Testing FAQ's",
+        "slug": "testing-faqs",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      }
+    ]
+  },
+
+  "fundamentals": {
+    "title": "Cypress Fundamentals",
+    "slug": "cypress-fundamentals",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    "children": [{
+        "title": "Cypress Runs in the Browser",
+        "slug": "cypress-runs-in-the-browser",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      },
+      {
+        "title": "Understanding the Asynchronous Nature of Cypress",
+        "slug": "understanding-the-asynchronous-nature-of-cypress",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      },
+      {
+        "title": "Aliases",
+        "slug": "aliases",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      },
+      {
+        "title": "Waiting & Retry-ability",
+        "slug": "waiting-and-retry-ability",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      },
+      {
+        "title": "Chaining Commands Together",
+        "slug": "chaining-commands-together",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      },
+      {
+        "title": "Best Practices",
+        "slug": "best-practices",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      }
+    ]
+  },
+
+  "testing": {
+    "title": "Testing Your First Application",
+    "slug": "testing-your-first-application",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    "children": [{
+        "title": "TodoMVC App Install & Overview",
+        "slug": "todomvc-app-install-and-overview",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      },
+      {
+        "title": "Installing Cypress & writing our first test",
+        "slug": "installing-cypress-and-writing-our-first-test",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      },
+      {
+        "title": "Multiple Todos & Before Each",
+        "slug": "multiple-todos-and-before-each",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      },
+      {
+        "title": "How to Use Cypress Commands",
+        "slug": "how-to-use-cypress-commands",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      },
+      {
+        "title": "Cypress Log, Snapshot & Aliases",
+        "slug": "cypress-log-snapshot-and-aliases",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      },
+      {
+        "title": "Negative Tests",
+        "slug": "negative-tests",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      },
+      {
+        "title": "Wrap Up",
+        "slug": "wrap-up",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      }
+    ]
+  },
+
+  "examples": {
+    "title": "Real World Examples",
+    "slug": "real-world-examples",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    "children": [{
+        "title": "Real World App Overview",
+        "slug": "real-world-app-overview",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      },
+      {
+        "title": "Unauthenticated Users",
+        "slug": "unauthenticated-users",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      }
+    ]
+  }
+}

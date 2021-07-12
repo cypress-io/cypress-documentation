@@ -2,6 +2,7 @@
 import AppSidebar from '../../components/AppSidebar'
 import AppHeader from '../../components/AppHeader'
 import Footer from '../../components/Footer'
+import LearnNavigation from '../../components/LearnNavigation.vue'
 import TableOfContents from '../../components/TableOfContents'
 import TableOfContentsList from '../../components/TableOfContentsList.vue'
 import { getMetaData, getMetaDescription, getTitle } from '../../utils'
@@ -12,6 +13,7 @@ export default {
     AppSidebar,
     AppHeader,
     Footer,
+    LearnNavigation,
     TableOfContents,
     TableOfContentsList,
   },
@@ -74,12 +76,14 @@ export default {
       :algolia-settings="algoliaSettings"
       :banner="banner"
     />
+    
     <main :class="Boolean(banner) ? 'banner-margin' : ''" class="main-content">
       <AppSidebar :path="path" :has-banner="Boolean(banner)" />
       <div class="main-content-article-wrapper">
         <div class="w-full flex flex-col justify-between">
           <TableOfContentsList :toc="learnItem.toc" />
-          <nuxt-content :document="learnItem"></nuxt-content>
+            <LearnNavigation />
+            <!-- <nuxt-content :document="learnItem"></nuxt-content> -->
           <Footer />
         </div>
       </div>
