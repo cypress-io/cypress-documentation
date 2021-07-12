@@ -22,7 +22,7 @@ export default {
           <!-- <div class="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-600" aria-hidden="true"></div> -->
           <div class="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-300" aria-hidden="true"></div>
           <!-- Complete Step -->
-          <a href="#" class="relative flex items-start group" style="border-bottom: 0;">
+          <a :href="`/learn/${learnNavData.foundations.slug}/intro`" class="relative flex items-start group" style="border-bottom: 0;">
             <!-- <span class="h-9 flex items-center"> -->
               <!-- <span class="relative z-10 w-8 h-8 flex items-center justify-center bg-gray-600 rounded-full group-hover:bg-gray-800"> -->
                 <!-- Heroicon name: solid/check -->
@@ -47,7 +47,7 @@ export default {
               <li v-for="(section, index) in learnNavData.foundations.children" :key="index" class="relative pb-10">
                 <div v-show="index + 1 < learnNavData.foundations.children.length" class="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-300" aria-hidden="true"></div>
                 <!-- Upcoming Step -->
-                <a href="#" class="relative flex items-start group">
+                <a :href="`/learn/${learnNavData.foundations.slug}/${section.slug}`" class="relative flex items-start group">
                   <span class="h-9 flex items-center" aria-hidden="true">
                     <span class="relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full group-hover:border-gray-400">
                       <span class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"></span>

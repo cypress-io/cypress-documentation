@@ -82,8 +82,8 @@ export default {
       <div class="main-content-article-wrapper">
         <div class="w-full flex flex-col justify-between">
           <TableOfContentsList :toc="learnItem.toc" />
+            <nuxt-content :document="learnItem"></nuxt-content>
             <LearnNavigation />
-            <!-- <nuxt-content :document="learnItem"></nuxt-content> -->
           <Footer />
         </div>
       </div>

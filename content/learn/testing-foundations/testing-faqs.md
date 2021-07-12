@@ -2,8 +2,6 @@
 
 # Do I need to write tests?
 
----
-
 Yes.
 
 After all, don't you want to make sure that your application or new feature is working the way it was intended to? How can you be sure that it is if you are not writing tests?
@@ -11,8 +9,6 @@ After all, don't you want to make sure that your application or new feature is w
 Ultimately, the whole point of writing tests is to give you confidence that your application is working properly. If you want to have this confidence, you need to write tests.
 
 # How many tests do you need?
-
----
 
 There is no easy way to answer this question, unfortunately the honest answer is... it depends. Remember testing is not a quantity game. Quality is far more important than quantity when it comes to testing. You want to make sure you are writing the right kinds of tests which will ensure that your application is functioning the way it is intended to. Larger applications will often have more tests than smaller ones since there is typically more things that need to be tested.
 
@@ -28,8 +24,6 @@ Ultimately, the whole point of writing tests is to give you confidence that your
 
 # There are so many testing frameworks out there, which ones do you choose?
 
----
-
 If you are brand new to testing and have never used a testing framework or tool before, then just makes things easy upon yourself and your team and choose whatever is popular. I know that on the surface that may seem like a terrible reason, but honestly you don't know any better if you are just starting out. Starting with the most popular tool means you will find the most documentation, stack overflow questions and answers, blog posts, screencasts etc about it. Don't choose some esoteric tool that someone just open sourced last week. Choose something that lots of people are using and have been using for a while. You want something that is battle tested and reliable.
 
 Remember, most of these tools all do the exact same thing so just start with the most popular one and go from there. If you and your team end up hating it and want to switch, at least you will know why and what to look out for in the next tool you choose.
@@ -37,8 +31,6 @@ Remember, most of these tools all do the exact same thing so just start with the
 If you would like to know what we recommend, then checkout Jest or Mocha for writing unit tests and Cypress for everything else. These tools are excellent and are easy to get up and running with quickly. In later videos we will show you how to setup, configure and start writing tests with them.
 
 # What do I do if i don't have enough time to write tests?
-
----
 
 If we had a nickel...
 
@@ -51,8 +43,6 @@ Next time you or your team need to implement a new feature, write tests for that
 Trust us. We know a thing or two about this.
 
 # What if my legacy code base is written in such a way that it is not testable?
-
----
 
 This is a very common problem and issue for a lot of people. When you inherit a legacy code base, especially one that does not have tests, it is not uncommon for the code to be written in such a way as to make it incredibly difficult, if not down right impossible to test.
 
