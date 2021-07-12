@@ -1,0 +1,13 @@
+[
+    {
+        "slug": "foundations",
+        "title": "Testing Foundations",
+        "children": [
+            {
+            "slug": "what-is-testing",
+            "title": "What is Testing?",
+            "description": "The basics of software testing practices."
+        }
+        ]
+    }
+]
