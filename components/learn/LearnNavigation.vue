@@ -15,14 +15,14 @@ export default {
 
 <template>
   <div>
-    <nav aria-label="Progress">
+    <nav v-if="learnNavData" aria-label="Progress">
       <ol class="overflow-hidden">
         <!-- Testing Foundations -->
         <li class="relative">
           <!-- <div class="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-600" aria-hidden="true"></div> -->
           <div class="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-300" aria-hidden="true"></div>
           
-          <a :href="`/learn/${learnNavData.foundations.slug}/intro`" class="relative flex items-center group" style="border-bottom: 0;">
+          <div class="relative flex items-center group" style="border-bottom: 0;">
             <!-- Complete Step -->
             <!-- <span class="h-9 flex items-center">
               <span class="relative z-10 w-8 h-8 flex items-center justify-center bg-gray-600 rounded-full group-hover:bg-gray-800">
@@ -48,7 +48,7 @@ export default {
               <span class="text-xs font-semibold tracking-wide uppercase">{{ learnNavData.foundations.title }}</span>
               <span class="text-sm text-gray-500">{{ learnNavData.foundations.description }}</span>
             </span>
-          </a>
+          </div>
 
           <!-- Sections -->
           <nav aria-label="TestingFoundations" class="pt-5 pl-5">

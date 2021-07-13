@@ -4,6 +4,11 @@
     "slug": "testing-foundations",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
     "children": [{
+        "title": "Intro",
+        "slug": "intro",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+      },
+      {
         "title": "What is Testing?",
         "slug": "what-is-testing",
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"

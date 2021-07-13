@@ -2,7 +2,8 @@
 import AppSidebar from '../../components/AppSidebar'
 import AppHeader from '../../components/AppHeader'
 import Footer from '../../components/Footer'
-import LearnNavigation from '../../components/LearnNavigation.vue'
+import LearnNextBtn from '../../components/learn/LearnNextBtn.vue'
+import LearnNavigation from '../../components/learn/LearnNavigation.vue'
 import TableOfContents from '../../components/TableOfContents'
 import TableOfContentsList from '../../components/TableOfContentsList.vue'
 import { getMetaData, getMetaDescription, getTitle } from '../../utils'
@@ -13,6 +14,7 @@ export default {
     AppSidebar,
     AppHeader,
     Footer,
+    LearnNextBtn,
     LearnNavigation,
     TableOfContents,
     TableOfContentsList,
@@ -83,6 +85,10 @@ export default {
         <div class="w-full flex flex-col justify-between">
           <TableOfContentsList :toc="learnItem.toc" />
             <nuxt-content :document="learnItem"></nuxt-content>
+            <LearnNextBtn />
+            <br />
+            <br />
+            <br />
             <LearnNavigation />
           <Footer />
         </div>
