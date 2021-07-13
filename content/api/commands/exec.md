@@ -124,6 +124,7 @@ cy.exec('npm run build', { timeout: 20000 })
 cy.exec('man bear pig', { failOnNonZeroExit: false }).then((obj) => {
   expect(obj.code).to.eq(1)
   expect(obj.stderr).to.contain('No manual entry for bear')
+})
 ```
 
 #### Specify environment variables
