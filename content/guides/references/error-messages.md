@@ -821,6 +821,32 @@ recover from browser crashes automatically, so tests can continue to run.
 
 ## Test Runner errors
 
+### <Icon name="exclamation-triangle" color="red"></Icon> Whoops, we can't run your tests
+
+This error may be seen when any of the following occur:
+
+**A policy setting blocks the Cypress proxy server or browser extension**
+
+- See
+  [Cypress detected policy settings on your computer that may cause issues](#Cypress-detected-policy-settings-on-your-computer-that-may-cause-issues).
+
+**The `--proxy-server` or `--load-extension` arguments have been changed**
+
+- When adding a plugin with the
+  [Browser Launch API](/api/plugins/browser-launch-api), it's possible for a
+  necessary command-line argument to be changed. If you're running into this
+  error, you can troubleshoot by inspecting `args` before and after the plugin
+  runs, either by using `console.log()` or by
+  [printing DEBUG logs](/guides/references/troubleshooting#Print-DEBUG-logs)
+  with `DEBUG=cypress:server:plugins,cypress:server:plugins:*`.
+
+**You visit the Cypress proxy URL outside of a Cypress browser.**
+
+- Don't copy the URL you see when launching a Cypress browser from the Test
+  Runner and open it in a non-Cypress browser. If you want to run your tests in
+  a different browser, follow the instructions in the
+  [Cross Browser Testing](/guides/guides/cross-browser-testing) guide.
+
 ### <Icon name="exclamation-triangle" color="red"></Icon> Cannot connect to API server
 
 Logging in, viewing runs, and setting up new projects to record requires
