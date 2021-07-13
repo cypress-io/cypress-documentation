@@ -43,8 +43,8 @@ export default {
 
             <!-- Upcoming Step -->
             <span v-else class="h-9 flex items-center" aria-hidden="true">
-              <span class="relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full group-hover:border-gray-400">
-                <span class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"></span>
+              <span class="relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full">
+                <span class="h-2.5 w-2.5 bg-transparent rounded-full"></span>
               </span>
             </span>
 
@@ -114,8 +114,8 @@ export default {
 
             <!-- Upcoming Step -->
             <span v-else class="h-9 flex items-center" aria-hidden="true">
-              <span class="relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full group-hover:border-gray-400">
-                <span class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"></span>
+              <span class="relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full">
+                <span class="h-2.5 w-2.5 bg-transparent rounded-full"></span>
               </span>
             </span>
 
@@ -185,8 +185,8 @@ export default {
 
             <!-- Upcoming Step -->
             <span v-else class="h-9 flex items-center" aria-hidden="true">
-              <span class="relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full group-hover:border-gray-400">
-                <span class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"></span>
+              <span class="relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full">
+                <span class="h-2.5 w-2.5 bg-transparent rounded-full"></span>
               </span>
             </span>
 
@@ -256,8 +256,8 @@ export default {
 
             <!-- Upcoming Step -->
             <span v-else class="h-9 flex items-center" aria-hidden="true">
-              <span class="relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full group-hover:border-gray-400">
-                <span class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"></span>
+              <span class="relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full">
+                <span class="h-2.5 w-2.5 bg-transparent rounded-full"></span>
               </span>
             </span>
 
