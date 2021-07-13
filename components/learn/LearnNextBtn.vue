@@ -12,11 +12,12 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapGetters } from 'vuex';
 
   export default {
     data() {
       return {
+        currentLearnSection: null,
         learnNavData: null,
       }
     },
@@ -25,31 +26,27 @@ import { mapMutations } from 'vuex';
 
       this.learnNavData = data
     },
-
-    mounted() {
-      this.$nextTick(() => {
-        this.updateCurrentLesson(this.$route.path)
-      })
+    
+    computed: {
+      ...mapGetters({
+        getterCurrentSection: 'learn/getterCurrentSection',
+      }),
     },
 
     methods: {
-      ...mapMutations({
-        updateCurrentLesson: 'learn/updateCurrentLesson'
-      }),
-
       goToNextLesson() {
         let currentRouteSlug = this.$route.path.split("/").pop()
-
-        this.learnNavData.foundations.children.forEach((lesson, index) => {
+        
+        this.learnNavData[this.getterCurrentSection].children.forEach((lesson, index) => {
           // After the final lesson, go back to /learn/index
-          if (lesson.slug === currentRouteSlug && index === this.learnNavData.foundations.children.length - 1) {
+          if (lesson.slug === currentRouteSlug && index === this.learnNavData[this.getterCurrentSection].children.length - 1) {
             this.$router.push('/learn/index')
 
             return
           }
 
           if (lesson.slug === currentRouteSlug) {
-            this.$router.push(`/learn/testing-foundations/${this.learnNavData.foundations.children[index + 1].slug}`)
+            this.$router.push(`/learn/${this.getterCurrentSection}/${this.learnNavData[this.getterCurrentSection].children[index + 1].slug}`)
           }
         })
       }

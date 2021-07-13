@@ -8,6 +8,7 @@ import TableOfContents from '../../components/TableOfContents'
 import TableOfContentsList from '../../components/TableOfContentsList.vue'
 import { getMetaData, getMetaDescription, getTitle } from '../../utils'
 import { fetchBanner } from '../../utils/sanity'
+import { mapMutations } from 'vuex';
 
 export default {
   components: {
@@ -68,6 +69,20 @@ export default {
       return getMetaData(metaData)
     },
   },
+  
+  created() {
+    this.$nextTick(() => {
+      this.updateCurrentLesson(this.$route.path)
+      this.updateCurrentSection(this.$route.path.split("/")[2])
+    })
+  },
+  
+  methods: {
+    ...mapMutations({
+      updateCurrentLesson: 'learn/updateCurrentLesson',
+      updateCurrentSection: 'learn/updateCurrentSection',
+    }),
+  }
 }
 </script>
 

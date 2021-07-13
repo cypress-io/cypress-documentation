@@ -1,4 +1,6 @@
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
@@ -10,6 +12,12 @@ export default {
 
     this.learnNavData = data
   },
+  
+  computed: {
+    ...mapGetters({
+      getterCurrentSection: 'learn/getterCurrentSection'
+    })
+  }
 }
 </script>
 
@@ -45,17 +53,17 @@ export default {
             </span>
             
             <span class="ml-4 min-w-0 flex flex-col">
-              <span class="text-xs font-semibold tracking-wide uppercase">{{ learnNavData.foundations.title }}</span>
-              <span class="text-sm text-gray-500">{{ learnNavData.foundations.description }}</span>
+              <span class="text-xs font-semibold tracking-wide uppercase">{{ learnNavData['testing-foundations'].title }}</span>
+              <span class="text-sm text-gray-500">{{ learnNavData['testing-foundations'].description }}</span>
             </span>
           </div>
 
           <!-- Sections -->
           <nav aria-label="TestingFoundations" class="pt-5 pl-5">
             <ol class="overflow-hidden">
-              <li v-for="(section, index) in learnNavData.foundations.children" :key="index" class="relative pb-10">
-                <div v-show="index + 1 < learnNavData.foundations.children.length" class="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-300" aria-hidden="true"></div>
-                <a :href="`/learn/${learnNavData.foundations.slug}/${section.slug}`" class="relative flex items-center group">
+              <li v-for="(section, index) in learnNavData['testing-foundations'].children" :key="index" class="relative pb-10">
+                <div v-show="index + 1 < learnNavData['testing-foundations'].children.length" class="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-300" aria-hidden="true"></div>
+                <a :href="`/learn/${learnNavData['testing-foundations'].slug}/${section.slug}`" class="relative flex items-center group">
                   
                   <!-- Completed Step -->
                   <!-- <span class="h-9 flex items-center">
@@ -91,25 +99,25 @@ export default {
         <li class="relative">
           <div class="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-300" aria-hidden="true"></div>
           <!-- Complete Step -->
-          <a :href="`/learn/${learnNavData.fundamentals.slug}/intro`" class="relative flex items-center group" style="border-bottom: 0;">
+          <div class="relative flex items-center group" style="border-bottom: 0;">
             <span class="h-9 flex items-center" aria-hidden="true">
               <span class="relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full group-hover:border-gray-400">
                 <span class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"></span>
               </span>
             </span>
             <span class="ml-4 min-w-0 flex flex-col">
-              <span class="text-xs font-semibold tracking-wide uppercase">{{ learnNavData.fundamentals.title }}</span>
-              <span class="text-sm text-gray-500">{{ learnNavData.fundamentals.description }}</span>
+              <span class="text-xs font-semibold tracking-wide uppercase">{{ learnNavData['cypress-fundamentals'].title }}</span>
+              <span class="text-sm text-gray-500">{{ learnNavData['cypress-fundamentals'].description }}</span>
             </span>
-          </a>
+          </div>
 
           <!-- Sections -->
           <nav aria-label="TestingFoundations" class="pt-5 pl-5">
             <ol class="overflow-hidden">
-              <li v-for="(section, index) in learnNavData.fundamentals.children" :key="index" class="relative pb-10">
-                <div v-show="index + 1 < learnNavData.fundamentals.children.length" class="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-300" aria-hidden="true"></div>
+              <li v-for="(section, index) in learnNavData['cypress-fundamentals'].children" :key="index" class="relative pb-10">
+                <div v-show="index + 1 < learnNavData['cypress-fundamentals'].children.length" class="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-300" aria-hidden="true"></div>
                 <!-- Upcoming Step -->
-                <a :href="`/learn/${learnNavData.fundamentals.slug}/${section.slug}`" class="relative flex items-center group">
+                <a :href="`/learn/${learnNavData['cypress-fundamentals'].slug}/${section.slug}`" class="relative flex items-center group">
                   <span class="h-9 flex items-center" aria-hidden="true">
                     <span class="relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full group-hover:border-gray-400">
                       <span class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"></span>
@@ -129,25 +137,25 @@ export default {
         <li class="relative">
           <div class="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-300" aria-hidden="true"></div>
           <!-- Complete Step -->
-          <a :href="`/learn/${learnNavData.testing.slug}/intro`" class="relative flex items-center group" style="border-bottom: 0;">
+          <div class="relative flex items-center group" style="border-bottom: 0;">
             <span class="h-9 flex items-center" aria-hidden="true">
               <span class="relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full group-hover:border-gray-400">
                 <span class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"></span>
               </span>
             </span>
             <span class="ml-4 min-w-0 flex flex-col">
-              <span class="text-xs font-semibold tracking-wide uppercase">{{ learnNavData.testing.title }}</span>
-              <span class="text-sm text-gray-500">{{ learnNavData.testing.description }}</span>
+              <span class="text-xs font-semibold tracking-wide uppercase">{{ learnNavData['testing-your-first-application'].title }}</span>
+              <span class="text-sm text-gray-500">{{ learnNavData['testing-your-first-application'].description }}</span>
             </span>
-          </a>
+          </div>
 
           <!-- Sections -->
           <nav aria-label="TestingFoundations" class="pt-5 pl-5">
             <ol class="overflow-hidden">
-              <li v-for="(section, index) in learnNavData.testing.children" :key="index" class="relative pb-10">
-                <div v-show="index + 1 < learnNavData.testing.children.length" class="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-300" aria-hidden="true"></div>
+              <li v-for="(section, index) in learnNavData['testing-your-first-application'].children" :key="index" class="relative pb-10">
+                <div v-show="index + 1 < learnNavData['testing-your-first-application'].children.length" class="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-300" aria-hidden="true"></div>
                 <!-- Upcoming Step -->
-                <a :href="`/learn/${learnNavData.testing.slug}/${section.slug}`" class="relative flex items-center group">
+                <a :href="`/learn/${learnNavData['testing-your-first-application'].slug}/${section.slug}`" class="relative flex items-center group">
                   <span class="h-9 flex items-center" aria-hidden="true">
                     <span class="relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full group-hover:border-gray-400">
                       <span class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"></span>
@@ -167,25 +175,25 @@ export default {
         <li class="relative">
           <!-- <div class="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-600" aria-hidden="true"></div> -->
           <!-- Complete Step -->
-          <a :href="`/learn/${learnNavData.examples.slug}/intro`" class="relative flex items-center group" style="border-bottom: 0;">
+          <div class="relative flex items-center group" style="border-bottom: 0;">
             <span class="h-9 flex items-center" aria-hidden="true">
               <span class="relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full group-hover:border-gray-400">
                 <span class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"></span>
               </span>
             </span>
             <span class="ml-4 min-w-0 flex flex-col">
-              <span class="text-xs font-semibold tracking-wide uppercase">{{ learnNavData.examples.title }}</span>
-              <span class="text-sm text-gray-500">{{ learnNavData.examples.description }}</span>
+              <span class="text-xs font-semibold tracking-wide uppercase">{{ learnNavData['real-world-examples'].title }}</span>
+              <span class="text-sm text-gray-500">{{ learnNavData['real-world-examples'].description }}</span>
             </span>
-          </a>
+          </div>
 
           <!-- Sections -->
           <nav aria-label="TestingFoundations" class="pt-5 pl-5">
             <ol class="overflow-hidden">
-              <li v-for="(section, index) in learnNavData.examples.children" :key="index" class="relative pb-10">
-                <div v-show="index + 1 < learnNavData.examples.children.length" class="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-300" aria-hidden="true"></div>
+              <li v-for="(section, index) in learnNavData['real-world-examples'].children" :key="index" class="relative pb-10">
+                <div v-show="index + 1 < learnNavData['real-world-examples'].children.length" class="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-300" aria-hidden="true"></div>
                 <!-- Upcoming Step -->
-                <a :href="`/learn/${learnNavData.examples.slug}/${section.slug}`" class="relative flex items-center group">
+                <a :href="`/learn/${learnNavData['real-world-examples'].slug}/${section.slug}`" class="relative flex items-center group">
                   <span class="h-9 flex items-center" aria-hidden="true">
                     <span class="relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full group-hover:border-gray-400">
                       <span class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"></span>
