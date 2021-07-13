@@ -2,6 +2,7 @@ export const state = () => {
   return {
     currentLesson: null,
     currentSection: null,
+    lessonsData: null,
 }}
 
 export const getters = {
@@ -11,6 +12,10 @@ export const getters = {
   
   getterCurrentSection: state => {
     return state.currentSection
+  },
+  
+  getterLessonsData: state => {
+    return state.lessonsData
   },
 }
 
@@ -22,10 +27,18 @@ export const mutations = {
   updateCurrentSection: (state, section) => {
     state.currentSection = section
   },
+  
+  updateLessonsData: (state, data) => {
+    state.lessonsData = data
+  },
 }
 
-// export const actions = {
-//   updateActionCurrentLesson({ commit }, lesson) {
-//     commit('updateCurrentLesson', lesson)
-//   }
-// }
+export const actions = {
+  async actionGetLessonsData({ commit, state }) {
+    if (state.lessonsData === null) {
+      const data = await this.$content('_data/learn').fetch()
+
+      commit('updateLessonsData', data)
+    }
+  }
+}
