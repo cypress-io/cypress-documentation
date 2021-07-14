@@ -76,6 +76,7 @@ export default {
     <nav
       :class="isMenuOpen ? 'h-full' : ''"
       class="w-full bg-gray-800 fixed top-0 left-0 overflow-y-auto z-20"
+      aria-label="Header"
     >
       <Banner v-if="Boolean(banner)" :banner="banner"></Banner>
       <div class="mx-auto px-2 sm:px-4 lg:px-8">

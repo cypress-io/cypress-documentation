@@ -52,9 +52,10 @@ export default {
 </script>
 
 <template>
-  <aside
+  <nav
     class="app-sidebar hide-scroll hidden lg:flex lg:w-sidebar lg:col-span-3 xl:col-span-2 top-0 left-0 bottom-0 flex-col border-r border-b border-gray-200 mt-16 bg-lightGray overflow-y-auto"
     role="navigation"
+    aria-label="Sidebar"
   >
     <div
       :class="hasBanner ? $style.bannerMargin : ''"
@@ -72,7 +73,7 @@ export default {
         :path="path"
       />
     </div>
-  </aside>
+  </nav>
 </template>
 
 <style module>

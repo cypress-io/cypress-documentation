@@ -133,7 +133,7 @@ export default {
       class="space-y-1 m-0"
       :data-test="`${label}-children`"
     >
-      <div
+      <li
         v-for="(child, index) in children"
         :key="`collapsible-sidebar-section-${index}`"
       >
@@ -151,16 +151,15 @@ export default {
           :name="child.slug"
           :depth="depth + 1"
         />
-        <li v-else>
-          <nuxt-link
-            :to="child.redirect || `/${section}/${folder}/${child.slug}`"
-            :class="getSidebarItemClass(folder, child)"
-            class="rounded-md group w-full flex items-center pl-4 pr-2 py-1 text-md font-medium hover:text-green transition-colors hover:bg-gray-50"
-          >
-            {{ child.title }}
-          </nuxt-link>
-        </li>
-      </div>
+        <nuxt-link
+          v-else
+          :to="child.redirect || `/${section}/${folder}/${child.slug}`"
+          :class="getSidebarItemClass(folder, child)"
+          class="rounded-md group w-full flex items-center pl-4 pr-2 py-1 text-md font-medium hover:text-green transition-colors hover:bg-gray-50"
+        >
+          {{ child.title }}
+        </nuxt-link>
+      </li>
     </ul>
   </div>
 </template>
