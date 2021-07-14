@@ -9,11 +9,11 @@ export const getters = {
   getterCurrentLesson: state => {
     return state.currentLesson
   },
-  
+
   getterCurrentSection: state => {
     return state.currentSection
   },
-  
+
   getterLessonsData: state => {
     return state.lessonsData
   },
@@ -23,11 +23,11 @@ export const mutations = {
   updateCurrentLesson: (state, lesson) => {
     state.currentLesson = lesson
   },
-  
+
   updateCurrentSection: (state, section) => {
     state.currentSection = section
   },
-  
+
   updateLessonsData: (state, data) => {
     state.lessonsData = data
   },
