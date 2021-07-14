@@ -52,7 +52,7 @@ export default {
   plugins: [
     '@/plugins/vue-scrollactive',
     '@/plugins/sanity-client', { src: '@/plugins/fullstory', mode: 'client' },
-    { src: '~/plugins/vuex-persist', ssr: false }
+    { src: '~/plugins/vuex-persist', mode: 'client' }
   ],
   /*
    ** Auto import components
