@@ -823,7 +823,9 @@ recover from browser crashes automatically, so tests can continue to run.
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> Whoops, we can't run your tests
 
-This error happens when Cypress detects that the browser automation is not connected, or that Cypress's internal proxy is being bypassed. This is caused by one of the following:
+This error happens when Cypress detects that the browser automation is not
+connected, or that Cypress's internal proxy is being bypassed. This is caused by
+one of the following:
 
 **A policy setting blocks the Cypress proxy server or browser extension**
 
