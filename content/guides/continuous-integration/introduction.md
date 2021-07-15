@@ -453,6 +453,16 @@ Cypress internally passes these Xvfb arguments, but if you are spawning your own
 
 </Alert>
 
+### Running headless tests without Xvfb
+
+Chromium based browsers and Firefox can spawn without Xvfb when run via the `--headless` flag. If you're testing against either of those browsers using the `--browser` flag, you can opt out of Cypress spawning an X11 server by setting the environment variable [`ELECTRON_RUN_AS_NODE=1`](https://www.electronjs.org/docs/api/environment-variables#electron_run_as_node).
+
+<Alert type="warning">
+
+Electron cannot be run without an X11 server. Cypress's default browser is Electron and won't be able to launch if you set this environment variable. Likewise, Cypress's interactive mode (running via `cypress open`) is run via Electron and cannot be opened without an X11 server.
+
+</Alert>
+
 ### Colors
 
 If you want colors to be disabled, you can pass the `NO_COLOR` environment variable to disable colors. You may want to do this if ASCII characters or colors are not properly formatted in your CI.
