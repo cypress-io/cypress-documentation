@@ -680,7 +680,7 @@ Clicking any session `id` in the panel will print that session's details to the 
 clicking the "Clear All Sessions" button will clear all saved sessions and re-run
 the spec file (see [Session caching](#Session-caching) for more details).
 
-<DocsImage src="/img/api/session/sessions-panel.png" alt="" ></DocsImage>
+<DocsImage src="/img/api/session/sessions-panel.png" alt="Sessions Instrument Panel" ></DocsImage>
 
 ### The command log
 
@@ -688,14 +688,14 @@ Whenever `cy.session()` is called, the command log will show one of the followin
 which includes the status of the session call along with the session `id` value:
 
 - No saved session was found, so a new session was created and saved:
-  <DocsImage src="/img/api/session/session-collapsed-new.png" alt="" ></DocsImage>
+  <DocsImage src="/img/api/session/session-collapsed-new.png" alt="New session (collapsed)"></DocsImage>
 
 - A saved session was found, and used:
-  <DocsImage src="/img/api/session/session-collapsed-saved.png" alt="" ></DocsImage>
+  <DocsImage src="/img/api/session/session-collapsed-saved.png" alt="Saved session (collapsed)"></DocsImage>
 
 - A saved session was found, but the `validate` function failed, so the session was
   recreated and saved:
-  <DocsImage src="/img/api/session/session-collapsed-recreated.png" alt="" ></DocsImage>
+  <DocsImage src="/img/api/session/session-collapsed-recreated.png" alt="Recreated session (collapsed)"></DocsImage>
 
 Note that in cases where the `validate` function fails immediately after `setup`
 creates the session, the test will fail with an error.
@@ -708,7 +708,7 @@ In this image, a saved session is restored, but when `/personal` is visited in t
 new session is created by visiting `/signin` where the user is logged in, after which,
 validation succeeds, and the session is made active for the remainder of the test.
 
-<DocsImage src="/img/api/session/session-expanded.png" alt="" ></DocsImage>
+<DocsImage src="/img/api/session/session-expanded.png" alt="Recreated session (expanded)"></DocsImage>
 
 ### Printing to the console
 
@@ -717,7 +717,7 @@ expanded session group in the command log will print that session's details to t
 console. This information contains the `id` along with any cached session data,
 including cookies, `localStorage` and `sessionStorage`.
 
-<DocsImage src="/img/api/session/print-session-to-console.png" alt="" ></DocsImage>
+<DocsImage src="/img/api/session/print-session-to-console.png" alt="Session console output"></DocsImage>
 
 ## See also
 
