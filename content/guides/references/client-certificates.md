@@ -31,7 +31,7 @@ Each object in the `certs` array can define either a **PEM format certificate/pr
 | Property     | Type     | Description                                                                           |
 | ------------ | -------- | ------------------------------------------------------------------------------------- |
 | `cert`       | `String` | Path to the certificate file, relative to project root.                               |
-| `key`        | `String` | _(Optional)_ Path to the private key file, relative to project root.                  |
+| `key`        | `String` | Path to the private key file, relative to project root.                               |
 | `passphrase` | `String` | _(Optional)_ Path to a text file containing the passphrase, relative to project root. |
 
 **A PFX certificate container can have the following properties:**
