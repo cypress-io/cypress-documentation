@@ -607,17 +607,9 @@ it('t3', ()=>{
 })
 ```
 
-### Explicitly clearing all sessions
-
-For diagnostic purposes, it's possible to explicitly clear all stored sessions
-with the `Cypress.session.clearAllSavedSessions()` method or via the "Clear All
-Sessions" button in the Test Runner UI.
-
-**TODO: SHOW IMAGE**
-
 ## Notes
 
-### Clearing the page and active session data
+### When the page and active session data are cleared
 
 The page is cleared and all active session data (cookies, `localStorage`, and
 `sessionStorage`) across all domains are cleared automatically when
@@ -635,7 +627,7 @@ Because calling `cy.session()` clears the current page in addition to restoring
 cached session data, [`cy.visit()`](/api/commands/visit) must always be
 explicitly called afterwards to ensure a page is visited.
 
-### Session caching
+### Session caching and clearing
 
 Once created, a session for a given `id` is cached for the duration of the spec
 file. You can't modify a stored session after it has been cached, but you can
@@ -643,8 +635,9 @@ always create a new session with a different `id`.
 
 In order to reduce development time, when running the Test Runner in "open"
 mode, sessions will be cached _between spec file runs_ as long as the `setup`
-function hasn't changed. However, if you want to explicitly clear all sessions,
-you can click the "Clear All Sessions" button in the Test Runner UI.
+function hasn't changed. However, if you want to explicitly clear all sessions
+and re-run the spec file, you can click the "Clear All Sessions" button in the
+[Instrument Panel](#The-Instrument-Panel).
 
 For debugging purposes, all sessions can be cleared with the
 `Cypress.session.clearAllSavedSessions()` method.
@@ -675,8 +668,58 @@ if necessary.
 
 ## Command Log
 
-TBD
+### The Instrument Panel
+
+<!-- GA TODO: update /guides/core-concepts/test-runner#Instrument-Panel -->
+
+Whenever a session is created or restored inside a test, an extra instrument panel
+is displayed at the top of the test to give more information about the state of your
+sessions.
+
+Clicking any session `id` in the panel will print that session's details to the console, and
+clicking the "Clear All Sessions" button will clear all saved sessions and re-run
+the spec file (see [Session caching](#Session-caching) for more details).
+
+<DocsImage src="/img/api/session/sessions-panel.png" alt="" ></DocsImage>
+
+### The command log
+
+Whenever `cy.session()` is called, the command log will show one of the following lines,
+which includes the status of the session call along with the session `id` value:
+
+- No saved session was found, so a new session was created and saved:
+  <DocsImage src="/img/api/session/session-collapsed-new.png" alt="" ></DocsImage>
+
+- A saved session was found, and used:
+  <DocsImage src="/img/api/session/session-collapsed-saved.png" alt="" ></DocsImage>
+
+- A saved session was found, but the `validate` function failed, so the session was
+  recreated and saved:
+  <DocsImage src="/img/api/session/session-collapsed-recreated.png" alt="" ></DocsImage>
+
+Note that in cases where the `validate` function fails immediately after `setup`
+creates the session, the test will fail with an error.
+
+Expanding the session group in the command log will show all of the commands that were
+run when creating and/or validating the session.
+
+In this image, a saved session is restored, but when `/personal` is visited in the
+`validate` function, the app redirects to `/signin`, which invalidates the session. A
+new session is created by visiting `/signin` where the user is logged in, after which,
+validation succeeds, and the session is made active for the remainder of the test.
+
+<DocsImage src="/img/api/session/session-expanded.png" alt="" ></DocsImage>
+
+### Printing to the console
+
+Clicking a session `id` in the Instrument Panel or clicking the first line under an
+expanded session group in the command log will print that session's details to the
+console. This information contains the `id` along with any cached session data,
+including cookies, `localStorage` and `sessionStorage`.
+
+<DocsImage src="/img/api/session/print-session-to-console.png" alt="" ></DocsImage>
 
 ## See also
 
-- TBD
+- [Custom Commands](/api/cypress-api/custom-commands)
+- [`cy.visit()`](/api/commands/visit)
