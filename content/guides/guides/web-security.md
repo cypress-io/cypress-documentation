@@ -27,8 +27,7 @@ Cypress does some pretty interesting things under the hood to make testing HTTPS
 
 You'll notice Chrome display a warning that the 'SSL certificate does not match'. This is normal and correct. Under the hood we act as our own CA authority and issue certificates dynamically in order to intercept requests otherwise impossible to access. We only do this for the superdomain currently under test, and bypass other traffic. That's why if you open a tab in Cypress to another host, the certificates match as expected.
 
-Note, that Cypress allows you to optionally specify CA / client certificate information for use with HTTPS sites. See [Configuring security certificates](/guides/references/certificates). If the remote server requests a client certificate for a configured URL, Cypress will supply it.
-
+Note, that Cypress allows you to optionally specify CA / client certificate information for use with HTTPS sites. See [Configuring client certificates](/guides/references/client-certificates). If the remote server requests a client certificate for a configured URL, Cypress will supply it.
 
 </Alert>
 
