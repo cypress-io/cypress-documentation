@@ -42,7 +42,8 @@ Pass in an options object to change the default behavior of `.scrollIntoView()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.scrollIntoView()` yields the same subject it was given from the previous command.</li></List>
+<List><li>`.scrollIntoView()` yields the same subject it was given from the
+previous command.</li></List>
 
 ## Examples
 
@@ -78,21 +79,28 @@ cy.get('#nav').scrollIntoView({ offset: { top: 150, left: 0 } })
 
 #### Snapshots do not reflect scroll behavior
 
-_Cypress does not reflect the accurate scroll positions of any elements within snapshots._ If you want to see the actual scrolling behavior in action, we recommend using [`.pause()`](/api/commands/pause) to walk through each command or [watching the video of the test run](/guides/guides/screenshots-and-videos#Videos).
+_Cypress does not reflect the accurate scroll positions of any elements within
+snapshots._ If you want to see the actual scrolling behavior in action, we
+recommend using [`.pause()`](/api/commands/pause) to walk through each command
+or
+[watching the video of the test run](/guides/guides/screenshots-and-videos#Videos).
 
 ## Rules
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.scrollIntoView()` requires being chained off a command that yields DOM element(s).</li></List>
+<List><li>`.scrollIntoView()` requires being chained off a command that yields
+DOM element(s).</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.scrollIntoView()` will automatically wait for assertions you have chained to pass</li></List>
+<List><li>`.scrollIntoView()` will automatically wait for assertions you have
+chained to pass</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.scrollIntoView()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`.scrollIntoView()` can time out waiting for assertions you've added
+to pass.</li></List>
 
 ## Command Log
 
@@ -106,7 +114,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/scrollintoview/command-log-for-scrollintoview.png" alt="command log scrollintoview" ></DocsImage>
 
-When clicking on the `scrollintoview` command within the command log, the console outputs the following:
+When clicking on the `scrollintoview` command within the command log, the
+console outputs the following:
 
 <DocsImage src="/img/api/scrollintoview/console-log-for-scrollintoview.png" alt="console.log scrollintoview" ></DocsImage>
 

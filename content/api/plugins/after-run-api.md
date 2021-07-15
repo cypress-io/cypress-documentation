@@ -2,21 +2,31 @@
 title: After Run API
 ---
 
-The `after:run` event fires after a run is finished. When running cypress via `cypress open`, the event will fire when closing a project.
+The `after:run` event fires after a run is finished. When running cypress via
+`cypress open`, the event will fire when closing a project.
 
-When running via `cypress run`, the event will fire each time `cypress run` executes. As a result, if running your specs in [parallel](/guides/guides/parallelization), the event will fire once for each machine on which `cypress run` is called.
+When running via `cypress run`, the event will fire each time `cypress run`
+executes. As a result, if running your specs in
+[parallel](/guides/guides/parallelization), the event will fire once for each
+machine on which `cypress run` is called.
 
 ## Syntax
 
 <Alert type="warning">
 
-⚠️ This code is part of the [plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
+⚠️ This code is part of the
+[plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files)
+and thus executes in the Node environment. You cannot call `Cypress` or `cy`
+commands in this file, but you do have the direct access to the file system and
+the rest of the operating system.
 
 </Alert>
 
 <Alert type="warning">
 
-⚠️ When running via `cypress open`, the `after:run` event only fires if the [experimentalInteractiveRunEvents flag](/guides/references/configuration#Experiments) is enabled.
+⚠️ When running via `cypress open`, the `after:run` event only fires if the
+[experimentalInteractiveRunEvents flag](/guides/references/configuration#Experiments)
+is enabled.
 
 </Alert>
 
@@ -28,13 +38,17 @@ on('after:run', (results) => {
 
 **<Icon name="angle-right"></Icon> results** **_(Object)_**
 
-Results of the run, including the total number of passes/failures/etc, the project config, and details about the browser and system. It is the same as the results object resolved by the [Module API](/guides/guides/module-api#Results).
+Results of the run, including the total number of passes/failures/etc, the
+project config, and details about the browser and system. It is the same as the
+results object resolved by the [Module API](/guides/guides/module-api#Results).
 
-Results are only provided when running via `cypress run`. When running via `cypress open`, the results will be undefined.
+Results are only provided when running via `cypress run`. When running via
+`cypress open`, the results will be undefined.
 
 ## Usage
 
-You can return a promise from the `after:run` event handler and it will be awaited before Cypress proceeds running your specs.
+You can return a promise from the `after:run` event handler and it will be
+awaited before Cypress proceeds running your specs.
 
 ### Log the number of passed tests of a run
 

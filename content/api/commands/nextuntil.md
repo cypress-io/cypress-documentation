@@ -2,11 +2,13 @@
 title: nextUntil
 ---
 
-Get all following siblings of each DOM element in a set of matched DOM elements up to, but not including, the element provided.
+Get all following siblings of each DOM element in a set of matched DOM elements
+up to, but not including, the element provided.
 
 <Alert type="info">
 
-The querying behavior of this command matches exactly how [`.nextUntil()`](http://api.jquery.com/nextUntil) works in jQuery.
+The querying behavior of this command matches exactly how
+[`.nextUntil()`](http://api.jquery.com/nextUntil) works in jQuery.
 
 </Alert>
 
@@ -95,15 +97,22 @@ cy.get('#veggies').nextUntil('#nuts')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.nextUntil()` requires being chained off a command that yields DOM element(s).</li></List>
+<List><li>`.nextUntil()` requires being chained off a command that yields DOM
+element(s).</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.nextUntil()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.nextUntil()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.nextUntil()` will automatically
+[retry](/guides/core-concepts/retry-ability) until the element(s)
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.nextUntil()`
+will automatically [retry](/guides/core-concepts/retry-ability) until all
+chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.nextUntil()` can time out waiting for the element(s) to [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.nextUntil()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`.nextUntil()` can time out waiting for the element(s) to
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.nextUntil()`
+can time out waiting for assertions you've added to pass.</li></List>
 
 ## Command Log
 
@@ -117,7 +126,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/nextuntil/find-next-elements-until-selector.png" alt="Command Log nextUntil" ></DocsImage>
 
-When clicking on `nextUntil` within the command log, the console outputs the following:
+When clicking on `nextUntil` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/nextuntil/console-log-of-next-elements-until.png" alt="Console Log nextUntil" ></DocsImage>
 

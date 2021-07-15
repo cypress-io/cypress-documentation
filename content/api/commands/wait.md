@@ -2,7 +2,8 @@
 title: wait
 ---
 
-Wait for a number of milliseconds or wait for an aliased resource to resolve before moving on to the next command.
+Wait for a number of milliseconds or wait for an aliased resource to resolve
+before moving on to the next command.
 
 ## Syntax
 
@@ -32,7 +33,8 @@ The amount of time to wait in milliseconds.
 
 **<Icon name="angle-right"></Icon> alias** **_(String)_**
 
-An aliased route as defined using the [`.as()`](/api/commands/as) command and referenced with the `@` character and the name of the alias.
+An aliased route as defined using the [`.as()`](/api/commands/as) command and
+referenced with the `@` character and the name of the alias.
 
 <Alert type="info">
 
@@ -44,7 +46,8 @@ An aliased route as defined using the [`.as()`](/api/commands/as) command and re
 
 **<Icon name="angle-right"></Icon> aliases** **_(Array)_**
 
-An array of aliased routes as defined using the [`.as()`](/api/commands/as) command and referenced with the `@` character and the name of the alias.
+An array of aliased routes as defined using the [`.as()`](/api/commands/as)
+command and referenced with the `@` character and the name of the alias.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -61,11 +64,13 @@ Pass in an options object to change the default behavior of `cy.wait()`.
 
 #### When given a `time` argument:
 
-<List><li>`cy.wait()` yields the same subject it was given from the previous command.</li></List>
+<List><li>`cy.wait()` yields the same subject it was given from the previous
+command.</li></List>
 
 #### When given an `alias` argument:
 
-<List><li>`cy.wait()` 'yields an object containing the HTTP request and response properties of the request' </li></List>
+<List><li>`cy.wait()` 'yields an object containing the HTTP request and response
+properties of the request' </li></List>
 
 ## Examples
 
@@ -81,17 +86,21 @@ cy.wait(2000) // wait for 2 seconds
 
 <strong class="alert-header">Anti-Pattern</strong>
 
-You almost **never** need to wait for an arbitrary period of time. There are always better ways to express this in Cypress.
+You almost **never** need to wait for an arbitrary period of time. There are
+always better ways to express this in Cypress.
 
-Read about [best practices](/guides/references/best-practices#Unnecessary-Waiting) here.
+Read about
+[best practices](/guides/references/best-practices#Unnecessary-Waiting) here.
 
 </Alert>
 
-Additionally, it is often much easier to use [`cy.debug()`](/api/commands/debug) or [`cy.pause()`](/api/commands/pause) when debugging your test code.
+Additionally, it is often much easier to use [`cy.debug()`](/api/commands/debug)
+or [`cy.pause()`](/api/commands/pause) when debugging your test code.
 
 ### Alias
 
-For a detailed explanation of aliasing, [read more about waiting on routes here](/guides/guides/network-requests#Waiting).
+For a detailed explanation of aliasing,
+[read more about waiting on routes here](/guides/guides/network-requests#Waiting).
 
 #### Wait for a specific request to respond
 
@@ -109,7 +118,8 @@ cy.wait('@getAccount').then((interception) => {
 
 #### Wait automatically increments responses
 
-Each time we use `cy.wait()` for an alias, Cypress waits for the next nth matching request.
+Each time we use `cy.wait()` for an alias, Cypress waits for the next nth
+matching request.
 
 ```javascript
 // stub an empty response to requests for books
@@ -140,7 +150,8 @@ cy.get('#book-results').should('have.length', 1)
 
 #### You can pass an array of aliases that will be waited on before resolving.
 
-When passing an array of aliases to `cy.wait()`, Cypress will wait for all requests to complete within the given `requestTimeout` and `responseTimeout`.
+When passing an array of aliases to `cy.wait()`, Cypress will wait for all
+requests to complete within the given `requestTimeout` and `responseTimeout`.
 
 ```javascript
 cy.intercept('/users/*').as('getUsers')
@@ -175,7 +186,8 @@ cy.wait(['@getUsers', '@getActivities', '@getComments']).spread(
 
 ### Nesting
 
-Cypress automatically waits for the network call to complete before proceeding to the next command.
+Cypress automatically waits for the network call to complete before proceeding
+to the next command.
 
 ```js
 // Anti-pattern: placing Cypress commands inside .then callbacks
@@ -193,45 +205,65 @@ cy.wait('@alias').its('response.statusCode').should('eq', 200)
 cy.get(...)
 ```
 
-Read [Guide: Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Commands-Run-Serially)
+Read
+[Guide: Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Commands-Run-Serially)
 
 ### Timeouts
 
 #### `requestTimeout` and `responseTimeout`
 
-When used with an alias, `cy.wait()` goes through two separate "waiting" periods.
+When used with an alias, `cy.wait()` goes through two separate "waiting"
+periods.
 
-The first period waits for a matching request to leave the browser. This duration is configured by the [`requestTimeout`](/guides/references/configuration#Timeouts) option - which has a default of `5000` ms.
+The first period waits for a matching request to leave the browser. This
+duration is configured by the
+[`requestTimeout`](/guides/references/configuration#Timeouts) option - which has
+a default of `5000` ms.
 
-This means that when you begin waiting for an aliased request, Cypress will wait up to 5 seconds for a matching request to be created. If no matching request is found, you will get an error message that looks like this:
+This means that when you begin waiting for an aliased request, Cypress will wait
+up to 5 seconds for a matching request to be created. If no matching request is
+found, you will get an error message that looks like this:
 
 <DocsImage src="/img/api/wait/error-for-no-matching-route-when-waiting-in-test.png" alt="Error for no matching request" ></DocsImage>
 
-Once Cypress detects that a matching request has begun its request, it then switches over to the 2nd waiting period. This duration is configured by the [`responseTimeout`](/guides/references/configuration#Timeouts) option - which has a default of `30000` ms.
+Once Cypress detects that a matching request has begun its request, it then
+switches over to the 2nd waiting period. This duration is configured by the
+[`responseTimeout`](/guides/references/configuration#Timeouts) option - which
+has a default of `30000` ms.
 
-This means Cypress will now wait up to 30 seconds for the external server to respond to this request. If no response is detected, you will get an error message that looks like this:
+This means Cypress will now wait up to 30 seconds for the external server to
+respond to this request. If no response is detected, you will get an error
+message that looks like this:
 
 <DocsImage src="/img/api/wait/timeout-error-when-waiting-for-route-response.png" alt="Timeout error for request wait" ></DocsImage>
 
-This gives you the best of both worlds - a fast error feedback loop when requests never go out and a much longer duration for the actual external response.
+This gives you the best of both worlds - a fast error feedback loop when
+requests never go out and a much longer duration for the actual external
+response.
 
 #### Using an Array of Aliases
 
-When passing an array of aliases to `cy.wait()`, Cypress will wait for all requests to complete within the given `requestTimeout` and `responseTimeout`.
+When passing an array of aliases to `cy.wait()`, Cypress will wait for all
+requests to complete within the given `requestTimeout` and `responseTimeout`.
 
 ## Rules
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>When passed a `time` argument `cy.wait()` can bechained off of `cy` or off another command..</li><li>When passed an `alias` argument `cy.wait()` requires being chained off of `cy`..</li></List>
+<List><li>When passed a `time` argument `cy.wait()` can bechained off of `cy` or
+off another command..</li><li>When passed an `alias` argument `cy.wait()`
+requires being chained off of `cy`..</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.wait()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`cy.wait()` will only run assertions you have chained once, and will
+not [retry](/guides/core-concepts/retry-ability).</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.wait()` can time out waiting for the request to go out.</li><li>`cy.wait()` can time out waiting for the response to return.</li></List>
+<List><li>`cy.wait()` can time out waiting for the request to go
+out.</li><li>`cy.wait()` can time out waiting for the response to
+return.</li></List>
 
 ## Command Log
 
@@ -247,7 +279,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/wait/command-log-when-waiting-for-aliased-route.png" alt="Command Log wait" ></DocsImage>
 
-When clicking on `wait` within the command log, the console outputs the following:
+When clicking on `wait` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/wait/wait-console-log-displays-all-the-data-of-the-route-request-and-response.png" alt="Console Log wait" ></DocsImage>
 

@@ -2,7 +2,8 @@
 title: each
 ---
 
-Iterate through an array like structure (arrays or objects with a `length` property).
+Iterate through an array like structure (arrays or objects with a `length`
+property).
 
 ## Syntax
 
@@ -39,7 +40,8 @@ Pass a function that is invoked with the following arguments:
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.each()` yields the same subject it was given from the previous command.</li></List>
+<List><li>`.each()` yields the same subject it was given from the previous
+command.</li></List>
 
 ## Examples
 
@@ -62,7 +64,8 @@ cy.get('ul>li').each(($el, index, $list) => {
 
 **_The original array is always yielded_**
 
-No matter what is returned in the callback function, `.each()` will always yield the original array.
+No matter what is returned in the callback function, `.each()` will always yield
+the original array.
 
 ```javascript
 cy.get('li')
@@ -79,7 +82,8 @@ cy.get('li')
 
 **_Promises are awaited_**
 
-If your callback function returns a `Promise`, it will be awaited before iterating over the next element in the collection.
+If your callback function returns a `Promise`, it will be awaited before
+iterating over the next element in the collection.
 
 ```javascript
 cy.wrap([1, 2, 3]).each((num, i, array) => {
@@ -97,7 +101,8 @@ cy.wrap([1, 2, 3]).each((num, i, array) => {
 
 **_Stop `each` prematurely_**
 
-You can stop the `.each()` loop early by returning `false` in the callback function.
+You can stop the `.each()` loop early by returning `false` in the callback
+function.
 
 ## Rules
 
@@ -107,11 +112,13 @@ You can stop the `.each()` loop early by returning `false` in the callback funct
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.each()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`.each()` will only run assertions you have chained once, and will not
+[retry](/guides/core-concepts/retry-ability).</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.each()` can time out waiting for a promise you've returned to resolve.</li></List>
+<List><li>`.each()` can time out waiting for a promise you've returned to
+resolve.</li></List>
 
 ## Command Log
 

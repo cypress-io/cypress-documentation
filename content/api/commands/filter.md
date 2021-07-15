@@ -12,7 +12,8 @@ Opposite of [`.not()`](/api/commands/not)
 
 <Alert type="info">
 
-The querying behavior of this command matches exactly how [`.filter()`](http://api.jquery.com/filter) works in jQuery.
+The querying behavior of this command matches exactly how
+[`.filter()`](http://api.jquery.com/filter) works in jQuery.
 
 </Alert>
 
@@ -82,7 +83,8 @@ cy.get('ul').find('>li').filter('.active')
 
 #### Filter by text
 
-You can use the [jQuery :contains](https://api.jquery.com/contains-selector/) selector to perform a case-sensitive text substring match.
+You can use the [jQuery :contains](https://api.jquery.com/contains-selector/)
+selector to perform a case-sensitive text substring match.
 
 ```html
 <ul>
@@ -102,7 +104,11 @@ cy.get('li').filter(':contains("Services")').should('have.length', 2)
 
 #### Non-breaking space
 
-If the HTML contains a [non-breaking space](https://en.wikipedia.org/wiki/Non-breaking_space) entity `&nbsp;` and the test uses the [jQuery :contains](https://api.jquery.com/contains-selector/) selector, then the test needs to use the Unicode value `\u00a0` instead of `&nbsp;`.
+If the HTML contains a
+[non-breaking space](https://en.wikipedia.org/wiki/Non-breaking_space) entity
+`&nbsp;` and the test uses the
+[jQuery :contains](https://api.jquery.com/contains-selector/) selector, then the
+test needs to use the Unicode value `\u00a0` instead of `&nbsp;`.
 
 ```html
 <div data-testid="testattr">
@@ -118,15 +124,22 @@ cy.get('[data-testid=testattr]').filter(':contains("Hello\u00a0world")')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.filter()` requires being chained off a command that yields DOM element(s).</li></List>
+<List><li>`.filter()` requires being chained off a command that yields DOM
+element(s).</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.filter()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.filter()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.filter()` will automatically
+[retry](/guides/core-concepts/retry-ability) until the element(s)
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.filter()`
+will automatically [retry](/guides/core-concepts/retry-ability) until all
+chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.filter()` can time out waiting for the element(s) to [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.filter()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`.filter()` can time out waiting for the element(s) to
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.filter()`
+can time out waiting for assertions you've added to pass.</li></List>
 
 ## Command Log
 
@@ -140,7 +153,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/filter/filter-el-by-selector.png" alt="Command Log filter" ></DocsImage>
 
-When clicking on the `filter` command within the command log, the console outputs the following:
+When clicking on the `filter` command within the command log, the console
+outputs the following:
 
 <DocsImage src="/img/api/filter/console-shows-list-and-filtered-element.png" alt="console.log filter" ></DocsImage>
 

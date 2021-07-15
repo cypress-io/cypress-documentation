@@ -6,7 +6,8 @@ Get all previous siblings of each DOM element in a set of matched DOM elements.
 
 <Alert type="info">
 
-The querying behavior of this command matches exactly how [`.prevAll()`](http://api.jquery.com/prevAll) works in jQuery.
+The querying behavior of this command matches exactly how
+[`.prevAll()`](http://api.jquery.com/prevAll) works in jQuery.
 
 </Alert>
 
@@ -97,15 +98,22 @@ cy.get('li').prevAll('.selected')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.prevAll()` requires being chained off a command that yields DOM element(s).</li></List>
+<List><li>`.prevAll()` requires being chained off a command that yields DOM
+element(s).</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.prevAll()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.prevAll()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.prevAll()` will automatically
+[retry](/guides/core-concepts/retry-ability) until the element(s)
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.prevAll()`
+will automatically [retry](/guides/core-concepts/retry-ability) until all
+chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.prevAll()` can time out waiting for the element(s) to [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.prevAll()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`.prevAll()` can time out waiting for the element(s) to
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.prevAll()`
+can time out waiting for assertions you've added to pass.</li></List>
 
 ## Command Log
 
@@ -119,7 +127,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/prevall/find-all-previous-elements-with-optional-selector.png" alt="Command Log prevAll" ></DocsImage>
 
-When clicking on `prevAll` within the command log, the console outputs the following:
+When clicking on `prevAll` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/prevall/console-log-all-previous-elements-traversed.png" alt="Console Log prevAll" ></DocsImage>
 

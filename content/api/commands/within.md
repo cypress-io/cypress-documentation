@@ -2,7 +2,8 @@
 title: within
 ---
 
-Scopes all subsequent cy commands to within this element. Useful when working within a particular group of elements such as a `<form>`.
+Scopes all subsequent cy commands to within this element. Useful when working
+within a particular group of elements such as a `<form>`.
 
 ## Syntax
 
@@ -42,7 +43,8 @@ Pass in an options object to change the default behavior of `.within()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.within()` yields the same subject it was given from the previous command.</li></List>
+<List><li>`.within()` yields the same subject it was given from the previous
+command.</li></List>
 
 Trying to return a different element the `.within` callback have no effect:
 
@@ -64,7 +66,9 @@ cy.get('#within-yields')
   .should('have.id', 'within-yields')
 ```
 
-Similarly, trying to change the subject by using the [cy.wrap](/api/commands/wrap) command inside the `.within` callback have no effect:
+Similarly, trying to change the subject by using the
+[cy.wrap](/api/commands/wrap) command inside the `.within` callback have no
+effect:
 
 ```html
 <div id="wrap-inside-within">
@@ -140,7 +144,9 @@ cy.contains('My first client')
 
 ### Temporarily escape
 
-You can temporarily escape the `.within` context by starting a new command chain with [cy.root](/api/commands/root) followed by [.closest](/api/commands/closest) commands.
+You can temporarily escape the `.within` context by starting a new command chain
+with [cy.root](/api/commands/root) followed by [.closest](/api/commands/closest)
+commands.
 
 ```html
 <section class="example">
@@ -173,7 +179,8 @@ cy.get('form').within(($form) => {
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.within()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`.within()` will only run assertions you have chained once, and will
+not [retry](/guides/core-concepts/retry-ability).</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
@@ -193,7 +200,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/within/go-within-other-dom-elements.png" alt="Command Log within" ></DocsImage>
 
-When clicking on the `within` command within the command log, the console outputs the following:
+When clicking on the `within` command within the command log, the console
+outputs the following:
 
 <DocsImage src="/img/api/within/within-shows-its-yield-in-console-log.png" alt="Console Log within" ></DocsImage>
 

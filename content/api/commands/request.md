@@ -28,16 +28,20 @@ cy.request('http://dev.local/seed')
 
 The URL to make the request to.
 
-If you provide a non fully qualified domain name (FQDN), Cypress will make its best guess as to which host you want `cy.request()` to use in the url.
+If you provide a non fully qualified domain name (FQDN), Cypress will make its
+best guess as to which host you want `cy.request()` to use in the url.
 
-1. If you make a `cy.request()` after visiting a page, Cypress assumes the url used for the `cy.visit()` is the host.
+1. If you make a `cy.request()` after visiting a page, Cypress assumes the url
+   used for the `cy.visit()` is the host.
 
 ```javascript
 cy.visit('http://localhost:8080/app')
 cy.request('users/1.json') //  url is  http://localhost:8080/users/1.json
 ```
 
-2. If you make a `cy.request()` prior to visiting a page, Cypress uses the host configured as the `baseUrl` property inside of of your [configuration file](/guides/references/configuration).
+2. If you make a `cy.request()` prior to visiting a page, Cypress uses the host
+   configured as the `baseUrl` property inside of of your
+   [configuration file](/guides/references/configuration).
 
 ```json
 // cypress.json
@@ -54,11 +58,13 @@ cy.request('seed/admin') // url is http://localhost:1234/seed/admin
 
 **<Icon name="angle-right"></Icon> body** **_(String, Object)_**
 
-A request `body` to be sent in the request. Cypress sets the `Accepts` request header and serializes the response body by the `encoding` option.
+A request `body` to be sent in the request. Cypress sets the `Accepts` request
+header and serializes the response body by the `encoding` option.
 
 **<Icon name="angle-right"></Icon> method** **_(String)_**
 
-Make a request using a specific method. If no method is defined, Cypress uses the `GET` method by default.
+Make a request using a specific method. If no method is defined, Cypress uses
+the `GET` method by default.
 
 Supported methods include:
 
@@ -111,11 +117,13 @@ Pass in an options object to change the default behavior of `cy.request()`.
 | `retryOnNetworkFailure`    | `true`                                                         | Whether Cypress should automatically retry transient network errors under the hood. Cypress will retry a request up to 4 times if this is set to true.                                                   |
 | `timeout`                  | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.request()` to resolve before [timing out](#Timeouts)                                                                                                                                |
 
-You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout` globally in [configuration](/guides/references/configuration).
+You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout`
+globally in [configuration](/guides/references/configuration).
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-`cy.request()` yields the `response` as an object literal containing properties such as:
+`cy.request()` yields the `response` as an object literal containing properties
+such as:
 
 - `status`
 - `body`
@@ -128,7 +136,8 @@ You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout` gl
 
 #### Make a `GET` request
 
-`cy.request()` is great for talking to an external endpoint before your tests to seed a database.
+`cy.request()` is great for talking to an external endpoint before your tests to
+seed a database.
 
 ```javascript
 beforeEach(() => {
@@ -138,7 +147,9 @@ beforeEach(() => {
 
 #### Issue an HTTP request
 
-Sometimes it's quicker to test the contents of a page rather than [`cy.visit()`](/api/commands/visit) and wait for the entire page and all of its resources to load.
+Sometimes it's quicker to test the contents of a page rather than
+[`cy.visit()`](/api/commands/visit) and wait for the entire page and all of its
+resources to load.
 
 ```javascript
 cy.request('/admin').its('body').should('include', '<h1>Admin</h1>')
@@ -181,9 +192,11 @@ cy.request('POST', 'http://localhost:8888/users/admin', { name: 'Jane' }).then(
 
 #### Request a page while disabling auto redirect
 
-To test the redirection behavior of a login without a session, `cy.request` can be used to check the `status` and `redirectedToUrl` property.
+To test the redirection behavior of a login without a session, `cy.request` can
+be used to check the `status` and `redirectedToUrl` property.
 
-The `redirectedToUrl` property is a special Cypress property that normalizes the URL the browser would normally follow during a redirect.
+The `redirectedToUrl` property is a special Cypress property that normalizes the
+URL the browser would normally follow during a redirect.
 
 ```javascript
 cy.request({
@@ -198,7 +211,9 @@ cy.request({
 
 #### Download a PDF file
 
-By passing the `encoding: binary` option, the `response.body` will be serialized binary content of the file. You can use this to access various file types via `.request()` like `.pdf`, `.zip`, or `.doc` files.
+By passing the `encoding: binary` option, the `response.body` will be serialized
+binary content of the file. You can use this to access various file types via
+`.request()` like `.pdf`, `.zip`, or `.doc` files.
 
 ```javascript
 cy.request({
@@ -211,7 +226,10 @@ cy.request({
 
 #### Get Data URL of an image
 
-By passing the `encoding: base64` option, the `response.body` will be base64-encoded content of the image. You can use this to construct a [Data URI](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) for use elsewhere.
+By passing the `encoding: base64` option, the `response.body` will be
+base64-encoded content of the image. You can use this to construct a
+[Data URI](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs)
+for use elsewhere.
 
 ```javascript
 cy.request({
@@ -227,9 +245,13 @@ cy.request({
 
 #### HTML form submissions using form option
 
-Oftentimes, once you have a proper e2e test around logging in, there's no reason to continue to `cy.visit()` the login and wait for the entire page to load all associated resources before running any other commands. Doing so can slow down our entire test suite.
+Oftentimes, once you have a proper e2e test around logging in, there's no reason
+to continue to `cy.visit()` the login and wait for the entire page to load all
+associated resources before running any other commands. Doing so can slow down
+our entire test suite.
 
-Using `cy.request()`, we can bypass all of this because it automatically gets and sets cookies as if the requests had come from the browser.
+Using `cy.request()`, we can bypass all of this because it automatically gets
+and sets cookies as if the requests had come from the browser.
 
 ```javascript
 cy.request({
@@ -258,9 +280,11 @@ cy.getCookie('cypress-session-cookie').should('exist')
 
 #### Call `cy.request()` over and over again
 
-This is useful when you're polling a server for a response that may take awhile to complete.
+This is useful when you're polling a server for a response that may take awhile
+to complete.
 
-All we're really doing here is creating a recursive function. Nothing more complicated than that.
+All we're really doing here is creating a recursive function. Nothing more
+complicated than that.
 
 ```js
 // a regular ol' function folks
@@ -294,13 +318,17 @@ cy
 
 #### Request is not displayed in the Network Tab of Developer Tools
 
-Cypress does not _actually_ make an XHR request from the browser. We are actually making the HTTP request from the Cypress Test Runner (in Node). So, you won't see the request inside of your Developer Tools.
+Cypress does not _actually_ make an XHR request from the browser. We are
+actually making the HTTP request from the Cypress Test Runner (in Node). So, you
+won't see the request inside of your Developer Tools.
 
 ### CORS
 
 #### CORS is bypassed
 
-Normally when the browser detects a cross-origin HTTP request, it will send an `OPTIONS` preflight check to ensure the server allows cross-origin requests, but `cy.request()` bypasses CORS entirely.
+Normally when the browser detects a cross-origin HTTP request, it will send an
+`OPTIONS` preflight check to ensure the server allows cross-origin requests, but
+`cy.request()` bypasses CORS entirely.
 
 ```javascript
 // we can make requests to any external server, no problem.
@@ -313,31 +341,42 @@ cy.request('https://www.google.com/webhp?#q=cypress.io+cors')
 
 #### Cookies are automatically sent and received
 
-Before sending the HTTP request, we automatically attach cookies that would have otherwise been attached had the request come from the browser. Additionally, if a response has a `Set-Cookie` header, these are automatically set back on the browser cookies.
+Before sending the HTTP request, we automatically attach cookies that would have
+otherwise been attached had the request come from the browser. Additionally, if
+a response has a `Set-Cookie` header, these are automatically set back on the
+browser cookies.
 
-In other words, `cy.request()` transparently performs all of the underlying functions as if it came from the browser.
+In other words, `cy.request()` transparently performs all of the underlying
+functions as if it came from the browser.
 
 ### [`cy.intercept()`](/api/commands/intercept), [`cy.server()`](/api/commands/server), and [`cy.route()`](/api/commands/route)
 
 #### `cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.route()` or `cy.intercept()`
 
-`cy.server()` and any configuration passed to [`cy.server()`](/api/commands/server) has no effect on `cy.request()`.
+`cy.server()` and any configuration passed to
+[`cy.server()`](/api/commands/server) has no effect on `cy.request()`.
 
-The intention of `cy.request()` is to be used for checking endpoints on an actual, running server without having to start the front end application.
+The intention of `cy.request()` is to be used for checking endpoints on an
+actual, running server without having to start the front end application.
 
 ## Rules
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.request()` requires being chained off of `cy`.</li><li>`cy.request()` requires that the server sends a response.</li><li>`cy.request()` requires that the response status code be `2xx` or `3xx` or `failOnStatusCode` is `true`.</li></List>
+<List><li>`cy.request()` requires being chained off of
+`cy`.</li><li>`cy.request()` requires that the server sends a
+response.</li><li>`cy.request()` requires that the response status code be `2xx`
+or `3xx` or `failOnStatusCode` is `true`.</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.request()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`cy.request()` will only run assertions you have chained once, and
+will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.request()` can time out waiting for the server to respond.</li></List>
+<List><li>`cy.request()` can time out waiting for the server to
+respond.</li></List>
 
 ## Command Log
 
@@ -356,7 +395,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/request/testing-request-url-and-its-response-body-headers.png" alt="Command Log request" ></DocsImage>
 
-When clicking on `request` within the command log, the console outputs the following:
+When clicking on `request` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/request/console-log-request-response-body-headers-status-url.png" alt="Console Log request" ></DocsImage>
 

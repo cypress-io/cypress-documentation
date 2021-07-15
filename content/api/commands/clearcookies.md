@@ -6,7 +6,9 @@ Clear all browser cookies for current domain and subdomain.
 
 <Alert type="warning">
 
-Cypress automatically clears all cookies _before_ each test to prevent state from being shared across tests. You shouldn't need to use this command unless you're using it to clear a specific cookie inside a single test.
+Cypress automatically clears all cookies _before_ each test to prevent state
+from being shared across tests. You shouldn't need to use this command unless
+you're using it to clear a specific cookie inside a single test.
 
 </Alert>
 
@@ -38,7 +40,8 @@ Pass in an options object to change the default behavior of `cy.clearCookies()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.clearCookies()` yields `null`.</li><li>`cy.clearCookies()` cannot be chained further.</li></List>
+<List><li>`cy.clearCookies()` yields `null`.</li><li>`cy.clearCookies()` cannot
+be chained further.</li></List>
 
 ## Examples
 
@@ -46,7 +49,9 @@ Pass in an options object to change the default behavior of `cy.clearCookies()`.
 
 #### Clear all cookies after logging in
 
-In this example, on first login our server sends us back a session cookie. After invoking `cy.clearCookies()` this clears the session cookie, and upon navigating to an unauthorized page, our server should have redirected us back to login.
+In this example, on first login our server sends us back a session cookie. After
+invoking `cy.clearCookies()` this clears the session cookie, and upon navigating
+to an unauthorized page, our server should have redirected us back to login.
 
 ```javascript
 // assume we just logged in
@@ -73,7 +78,9 @@ cy.url().should('include', 'login')
 
 <Alert type="warning">
 
-Because `cy.clearCookies()` is asynchronous it is technically possible for there to be a timeout while talking to the internal Cypress automation APIs. But for practical purposes it should never happen.
+Because `cy.clearCookies()` is asynchronous it is technically possible for there
+to be a timeout while talking to the internal Cypress automation APIs. But for
+practical purposes it should never happen.
 
 </Alert>
 
@@ -91,7 +98,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/clearcookies/clear-all-cookies-in-cypress-tests.png" alt="Command Log" ></DocsImage>
 
-When clicking on `clearCookies` within the command log, the console outputs the following:
+When clicking on `clearCookies` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/clearcookies/inspect-cleared-cookies-in-console.png" alt="Console Log" ></DocsImage>
 

@@ -2,15 +2,23 @@
 title: After Screenshot API
 ---
 
-After a screenshot is taken, you can get details about the screenshot via the `after:screenshot` plugin event. This event is called when a screenshot is taken with [`cy.screenshot()`](/api/commands/screenshot) or as a result of a test failure. The event is called after the screenshot image is written to disk.
+After a screenshot is taken, you can get details about the screenshot via the
+`after:screenshot` plugin event. This event is called when a screenshot is taken
+with [`cy.screenshot()`](/api/commands/screenshot) or as a result of a test
+failure. The event is called after the screenshot image is written to disk.
 
-This allows you to record those details, manipulate the image as needed, and return the updated details about the image.
+This allows you to record those details, manipulate the image as needed, and
+return the updated details about the image.
 
 ## Syntax
 
 <Alert type="warning">
 
-⚠️ This code is part of the [plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
+⚠️ This code is part of the
+[plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files)
+and thus executes in the Node environment. You cannot call `Cypress` or `cy`
+commands in this file, but you do have the direct access to the file system and
+the rest of the operating system.
 
 </Alert>
 
@@ -22,7 +30,8 @@ on('after:screenshot', (details) => {
 
 **<Icon name="angle-right"></Icon> details** **_(object)_**
 
-An object describing the screenshot that was taken, with the following properties:
+An object describing the screenshot that was taken, with the following
+properties:
 
 | Property     | Type      | Description                                                                                                                                                                 |
 | ------------ | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -42,21 +51,32 @@ An object describing the screenshot that was taken, with the following propertie
 
 ### Modify screenshot details
 
-Using your [pluginsFile](/guides/tooling/plugins-guide) you can tap into the `after:screenshot` event.
+Using your [pluginsFile](/guides/tooling/plugins-guide) you can tap into the
+`after:screenshot` event.
 
-If you change the `path`, `size` or `dimensions` of the image, you'll want to update the new values so that the details are correctly reported in the test results. _Any other properties besides `path`, `size`, and `dimensions` will be ignored._
+If you change the `path`, `size` or `dimensions` of the image, you'll want to
+update the new values so that the details are correctly reported in the test
+results. _Any other properties besides `path`, `size`, and `dimensions` will be
+ignored._
 
-You can return an object or a promise that resolves to an object from the callback function. _Any type of returned value other than an object will be ignored._ The object can contain the following properties:
+You can return an object or a promise that resolves to an object from the
+callback function. _Any type of returned value other than an object will be
+ignored._ The object can contain the following properties:
 
 - **path**: The absolute path to the current location of the image
 - **size**: The size of the current image file (in bytes)
-- **dimensions**: The width and height of the current image in pixels (as an object with the shape `{ width: 100, height: 50 }`)
+- **dimensions**: The width and height of the current image in pixels (as an
+  object with the shape `{ width: 100, height: 50 }`)
 
-The properties will be merged into the screenshot details and passed to the `onAfterScreenshot` callback (if defined with [Cypress.Screenshot.defaults()](/api/cypress-api/screenshot-api) and/or [cy.screenshot()](/api/commands/screenshot)).
+The properties will be merged into the screenshot details and passed to the
+`onAfterScreenshot` callback (if defined with
+[Cypress.Screenshot.defaults()](/api/cypress-api/screenshot-api) and/or
+[cy.screenshot()](/api/commands/screenshot)).
 
 #### Modify screenshot path
 
-If you move the location of the screenshot image, you'll want to specify the new `path` of the image.
+If you move the location of the screenshot image, you'll want to specify the new
+`path` of the image.
 
 ```js
 // cypress/plugins/index.js
