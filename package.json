@@ -10,7 +10,7 @@
   "scripts": {
     "build": "nuxt generate",
     "copy": "bash ./scripts/clone-current-docs.sh",
-    "start:dev": "cross-env NODE_ENV=development nuxt",
+    "start": "cross-env NODE_ENV=development nuxt",
     "start:ci": "cross-env NODE_ENV=test yarn build && cd dist/ && yarn serve:dist",
     "changed-files-broken-link-checker:ci": "node scripts/changedFilesBrokenLinkChecker.js",
     "broken-link-checker:prod": "node scripts/recursiveBrokenLinkChecker.js",
@@ -23,8 +23,8 @@
     "make-empty-commit": "node node_modules/make-empty-github-commit/bin/empty.js --repo cypress-io/docs",
     "postinstall": "husky install; patch-package",
     "dev": "nuxt",
-    "start": "nuxt start",
-    "generate": "nuxt generate"
+    "start:nuxt": "nuxt start",
+    "analyze": "yarn nuxt build --analyze"
   },
   "lint-staged": {
     "*.{js,vue}": "eslint --cache --fix",
