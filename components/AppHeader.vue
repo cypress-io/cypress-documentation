@@ -43,7 +43,7 @@ export default {
         },
         {
           label: 'Plugins',
-          path: '/plugins',
+          path: '/plugins/directory',
         },
         {
           label: 'Examples',
