@@ -7,7 +7,7 @@ export default {
     trailingSlash: undefined,
   },
   generate: {
-    routes: ['404'],
+    fallback: true
   },
   /*
    ** Nuxt target
