@@ -1,14 +1,10 @@
 import { getMetaData } from './utils/getMetaData'
-import { redirects } from './redirects'
 
 const meta = getMetaData()
 
 export default {
   router: {
     trailingSlash: undefined,
-    extendRoutes(routes, resolve) {
-      routes.push(...redirects)
-    },
   },
   generate: {
     routes: ['404'],
