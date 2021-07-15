@@ -102,6 +102,7 @@ export default {
       prism: {
         theme: 'prism-themes/themes/prism-material-oceanic.css',
       },
+      liveEdit: false
     },
   },
   /*
