@@ -104,12 +104,11 @@ export default {
 
 <template>
   <div
-    :class="
-      depth > 1
-        ? `ml-${depth + 3} pl-2 border-l-2 border-gray-200`
-        : 'px-4 pb-4'
-    "
-    class="space-y-1"
+    :class="[
+      'space-y-1', 
+      (depth > 1 ? `ml-${depth + 3} pl-2 border-l-2 border-gray-200` : 'px-4 pb-4'), 
+      (isOpen ? 'relative' : 'flex items-baseline')
+    ]"
     :data-test="folder"
   >
     <button
@@ -117,16 +116,20 @@ export default {
       @click="toggleSection"
     >
       {{ label }}
-      <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
-      <svg
-        :class="isOpen ? 'text-gray-400 rotate-90' : 'text-gray-300'"
-        class="ml-auto h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
-        viewBox="0 0 20 20"
-        aria-hidden="true"
-      >
-        <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
-      </svg>
     </button>
+
+    <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
+    <svg
+      :class="[
+        'ml-auto h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150', 
+        (isOpen ? 'text-gray-400 rotate-90 absolute top-0 right-4' : 'text-gray-300 relative')
+      ]"
+      viewBox="0 0 20 20"
+      aria-hidden="true"
+    >
+      <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
+    </svg>
+
     <!-- Expandable link section, show/hide based on state. -->
     <ul
       :class="isOpen ? '' : 'hidden'"
