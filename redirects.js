@@ -23,8 +23,4 @@ export const redirects = [
     path: '/plugins',
     redirect: '/plugins/directory',
   },
-  {
-    path: '/guides/dashboard/dashboard-introduction',
-    redirect: '/guides/dashboard/introduction',
-  },
 ]
