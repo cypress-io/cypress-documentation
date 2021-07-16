@@ -74,7 +74,8 @@ cy.session([username, password], () => {
 // be done inside the setup function
 cy.visit('/login')
 cy.session(name, () => {
-  // need to call cy.visit() here because the page is blank here
+  // need to call cy.visit() here because the page is blank when
+  // the setup function runs
   cy.get('[data-test=name]').type(name)
   cy.get('[data-test=password]').type('s3cr3t')
   cy.get('form').contains('Log In').click()
