@@ -11,7 +11,7 @@ in order to reduce test setup times.
 <Alert type="warning">
 
 The `cy.session()` API is currently experimental, and can be enabled by setting
-the `experimentalSessionSupport` flag to `true` in the Cypress config or by
+the [`experimentalSessionSupport`](/guides/references/experiments) flag to `true` in the Cypress config or by
 using [`Cypress.config()`](/api/cypress-api/config) at the top of a spec file.
 
 Enabling this flag does the following:
@@ -19,9 +19,9 @@ Enabling this flag does the following:
 - It enables the `cy.session()` API for use in tests.
 - It adds the following new behaviors (that will be the default in a future
   major update of Cypress) at the beginning of each test:
-  - The page is cleared (by setting it to `about:blank`)
+  - The page is cleared (by setting it to `about:blank`).
   - All active session data (cookies, `localStorage` and `sessionStorage`)
-    across all domains are cleared
+    across all domains are cleared.
 - It overrides the
   [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
   [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
@@ -112,7 +112,7 @@ serialize into an identifier, so exercise care with the data you specify.
 **<Icon name="angle-right"></Icon> setup** **_(Function)_**
 
 This function is called whenever a session for the given `id` hasn't yet been
-cached, or if it's no longer valid (see the `validate` option). After `setup`
+cached, or if it's no longer valid (see the `validate` option). After `setup`
 runs, Cypress will preserve all cookies, `sessionStorage`, and `localStorage`,
 so that subsequent calls to `cy.session()` with the same `id` will bypass
 `setup` and just restore the cached session data.
@@ -122,10 +122,10 @@ The page and all active session data (cookies, `localStorage` and
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
-| Option     | Default     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| ---------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `log`      | `true`      | Displays the command in the Command log                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| `validate` | `undefined` | Validates the newly-created or restored session.<br><br>The `validate` function is run immediately after the `setup` function runs, and also every time `cy.session()` restores a cached session. If the `validate` function return `false`, throws an exception, returns a Promise that resolves to `false` or rejects, or contains any failing Cypress command, the session will be considered invalid, and `setup` will be re-run. If validation fails immediately after `setup` runs, the test will fail.<br><br>The page is always cleared before `validate` runs. |
+| Option     | Default     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| ---------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `log`      | `true`      | Displays the command in the Command log                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `validate` | `undefined` | Validates the newly-created or restored session.<br><br>The `validate` function is run immediately after the `setup` function runs, and also every time `cy.session()` restores a cached session. If the `validate` function returns `false`, throws an exception, returns a Promise that resolves to `false` or rejects, or contains any failing Cypress command, the session will be considered invalid, and `setup` will be re-run. If validation fails immediately after `setup` runs, the test will fail.<br><br>The page is always cleared before `validate` runs. |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
@@ -136,8 +136,8 @@ The page and all active session data (cookies, `localStorage` and
 
 ### Updating an existing login custom command
 
-Adding session caching to your login
-[custom command](/api/cypress-api/custom-commands) couldn't be easier. Just wrap
+You can add session caching to your login
+[custom command](/api/cypress-api/custom-commands). Wrap
 the inside of the command with a call to `cy.session()`.
 
 **Before**
@@ -196,7 +196,7 @@ Cypress.Commands.add(
 
 ### Updating an existing login helper function
 
-Adding session caching to a login helper function is as simple as wrapping the
+You can add session caching to a login helper function by wrapping the
 inside of the function with a call to `cy.session()`.
 
 **Before**
