@@ -439,6 +439,43 @@ const login = (name, email, params = {}) => {
 }
 ```
 
+### Multiple login commands
+
+A more complex app may require multiple login commands, which may require multiple
+uses of `cy.session()`. However, because the `id` value is used as a unique identifier
+to save and restore sessions, it's very important that it's actually unique per session.
+
+In the following example, if the resulting session data that `loginByForm` and `loginByApi` create
+is different _in any way_, it would be a mistake to specify `[name, password]` as the `id`
+for both, because there would be no way to distinguish between the sessions created by
+`loginByForm("user", "p4ssw0rd")` and `loginByApi("user", "p4ssw0rd")`. Instead, you can
+modify the `id` to differentiate its value between both login functions, so that each will
+always be cached uniquely.
+
+```javascript
+const loginByForm = (name, password) => {
+  cy.session(['loginByForm', name, password], () => {
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(name)
+    cy.get('[data-test=password]').type(password)
+    cy.get('#submit').click()
+    cy.url().should('contain', '/home')
+  })
+}
+
+const loginByApi = (name, password) => {
+  cy.session(['loginByApi', name, password], () => {
+    cy.request({
+      method: 'POST',
+      url: '/api/login',
+      body: { name, password },
+    }).then(({ body }) => {
+      window.localStorage.setItem('authToken', body.token)
+    })
+  })
+}
+```
+
 ### Where to call `cy.visit()`
 
 If you call `cy.visit()` immediately after `cy.setup()` in your login function
