@@ -12,9 +12,38 @@ This document merely offers guidance on how to specify certificate file paths fo
 
 </Alert>
 
-## Structure within JSON config file
+## Syntax
 
-To configure CA / client certificates within your [cypress.env.json](/guides/guides/environment-variables#Option-2-cypress-env-json), you should add a section at the top level something like:
+**<Icon name="angle-right"></Icon> clientCertificates** **_(Object[])_**
+
+An array of objects defining the certificates. Each object must have the following properties
+
+| Property | Type       | Description                                                                                                              |
+| -------- | ---------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `url`    | `String`   | URL to match requests against. Wildcards following [minimatch](https://github.com/isaacs/minimatch) rules are supported. |
+| `ca`     | `Array`    | _(Optional)_ Paths to one or more CA files to validate certs against, relative to project root.                          |
+| `certs`  | `Object[]` | A PEM format certificate/private key pair or PFX certificate container                                                   |
+
+Each object in the `certs` array can define either a **PEM format certificate/private key pair** or a **PFX certificate container**.
+
+**A PEM format certificate/private key pair can have the following properties:**
+
+| Property     | Type     | Description                                                                           |
+| ------------ | -------- | ------------------------------------------------------------------------------------- |
+| `cert`       | `String` | Path to the certificate file, relative to project root.                               |
+| `key`        | `String` | Path to the private key file, relative to project root.                               |
+| `passphrase` | `String` | _(Optional)_ Path to a text file containing the passphrase, relative to project root. |
+
+**A PFX certificate container can have the following properties:**
+
+| Property     | Type     | Description                                                                           |
+| ------------ | -------- | ------------------------------------------------------------------------------------- |
+| `pfx`        | `String` | Path to the certificate container, relative to project root.                          |
+| `passphrase` | `String` | _(Optional)_ Path to a text file containing the passphrase, relative to project root. |
+
+## Usage
+
+To configure CA / client certificates within your configuration file (`cypress.json` by default), you can add the `clientCertificates` key to define an array of client certificates as shown below:
 
 ```json
   "clientCertificates": [
@@ -54,17 +83,9 @@ To configure CA / client certificates within your [cypress.env.json](/guides/gui
   ]
 }
 ```
-## `clientCertificates` schema
 
-* The `clientCertificates` value is an **Array** of objects. Each object must have a `url` and `certs` property, and may have an optional `ca` property.
-  * `url` is a **String** used to match requests. Wildcards following [minimatch](https://github.com/isaacs/minimatch) rules are supported.
-  * `ca` is an optional **Array** of paths to one or more CA files to validate certs against, relative to project root.
-  * `certs` is an **Array** of objects.
-* Each object in the `certs` array can contain either
-  * a PEM format certificate/private key pair:
-    *  `cert` is a **String** path to the certificate file, relative to project root.
-    *  `key` is a **String** path to the private key file, relative to project root.
-    *  `passphrase` is an optional **String** path to a text file containing the passphrase, relative to project root.
-  * a PFX certificate container:
-    *  `pfx` is a **String** path to the certificate container, relative to project root.
-    *  `passphrase` is an optional **String** path to a text file containing the passphrase, relative to project root.
+## History
+
+| Version                                     | Changes                                         |
+| ------------------------------------------- | ----------------------------------------------- |
+| [8.0.0](/guides/references/changelog#8-0-0) | Added Client Certificates configuration options |
