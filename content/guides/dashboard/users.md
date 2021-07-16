@@ -46,6 +46,8 @@ The permissions for each user role for the Dashboard Service.
 | Edit project name                               |               | ✅ **Admin** | ✅ **Owner** |
 | Edit project status (private/public}            |               | ✅ **Admin** | ✅ **Owner** |
 | Add or delete record keys                       |               | ✅ **Admin** | ✅ **Owner** |
+| Set up GitHub Integration                       |               | ✅ **Admin** | ✅ **Owner** |
+| Set up Slack Integration                        |               | ✅ **Admin** | ✅ **Owner** |
 | Invite 'owner' to organization                  |               |              | ✅ **Owner** |
 | Edit 'owner' in organization                    |               |              | ✅ **Owner** |
 | Remove 'owner' from organization                |               |              | ✅ **Owner** |
@@ -54,9 +56,18 @@ The permissions for each user role for the Dashboard Service.
 | Delete organization                             |               |              | ✅ **Owner** |
 | Transfer project to another organization        |               |              | ✅ **Owner** |
 | Delete project                                  |               |              | ✅ **Owner** |
+| Set up SSO                                      |               |              | ✅ **Owner** |
 
 ## User requests
 
 Users can "request" access to a given organization. If a developer on your team has access to Cypress and your project's source code - they can request to be given access to your organization. This means instead of you having to invite team members up front, they can request access and you can choose to accept or deny them access.
 
 <DocsImage src="/img/dashboard/request-access-to-organization.png" alt="Request access to project" ></DocsImage>
+
+## User updates
+
+Changes can be made to both the primary email address associated with your Dashboard account and the email address for billing notifications.
+
+For updating the primary email address associated with your Dashboard, click your Profile picture in the upper left corner of the Organizations page. Select **Manage Profile**. Go to the **Email** field and select your preferred email address. _Note: The email list is limited to emails provided by login provider._
+
+If you would like to update the billing email address, that can be done via the **Billing & Usage** page within the [Dashboard](https://on.cypress.io/dashboard) or you contact them directly at [billing@cypress.io](mailto:billing@cypress.io).

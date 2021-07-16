@@ -8,7 +8,7 @@ The [Cypress Dashboard](https://on.cypress.io/dashboard) can integrate your Cypr
 
 <Alert type="info">
 
-GitHub Enterprise's On-premise platform is currently not supported. If you're interested in an integration with GitHub Enterprise's On-premise platform, please add your interest to our [Dashboard Product Board](https://portal.productboard.com/cypress-io/1-cypress-dashboard).
+GitHub Enterprise's On-premise platform is currently not supported.
 
 </Alert>
 
@@ -143,10 +143,6 @@ You can uninstall the Cypress GitHub app from GitHub by performing the following
 2. Click on **Installed GitHub Apps**.
 3. Click **Configure** beside the Cypress app.
 4. Click **Uninstall** below the "Uninstall Cypress" section.
-
-## Got Feedback?
-
-If you have any insights or feedback on how to improve Cypress GitHub Integration, please reach out via our official [Dashboard Product Board](https://portal.productboard.com/cypress-io/1-cypress-dashboard/c/9-github-status-checks-and-pull-request-comments).
 
 ## See also
 
