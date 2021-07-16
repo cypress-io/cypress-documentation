@@ -829,6 +829,10 @@
               "slug": "platform"
             },
             {
+              "title": "session",
+              "slug": "session"
+            },
+            {
               "title": "spec",
               "slug": "spec"
             },

@@ -12,13 +12,14 @@ in order to reduce test setup times.
 
 <strong class="alert-header"><Icon name="exclamation-triangle"></Icon> Experimental</strong>
 
-The `cy.session()` API is currently experimental, and can be enabled by setting
+The `session` API is currently experimental, and can be enabled by setting
 the [`experimentalSessionSupport`](/guides/references/experiments) flag to `true` in the Cypress config or by
 using [`Cypress.config()`](/api/cypress-api/config) at the top of a spec file.
 
 Enabling this flag does the following:
 
-- It enables the `cy.session()` API for use in tests.
+- It adds the [`cy.session()`](/api/commands/session) command for use in tests.
+- It adds the [`Cypress.session`](/api/cypress-api/session) API.
 - It adds the following new behaviors (that will be the default in a future
   major update of Cypress) at the beginning of each test:
   - The page is cleared (by setting it to `about:blank`).
@@ -655,7 +656,7 @@ sessions and re-run the spec file by clicking the "Clear All Sessions" button in
 the [Instrument Panel](#The-Instrument-Panel).
 
 For debugging purposes, all sessions can be cleared with the
-`Cypress.session.clearAllSavedSessions()` method.
+[`Cypress.session.clearAllSavedSessions()`](/api/cypress-api/session) method.
 
 ### Where to call `cy.session()`
 
@@ -837,4 +838,5 @@ including cookies, `localStorage` and `sessionStorage`.
 
 - [Authenticate faster in tests with the cy.session command](https://cypress-io.ghost.io/blog/authenticate-faster-in-tests-cy-session-command/)
 - [Custom Commands](/api/cypress-api/custom-commands)
+- [`Cypress.session`](/api/cypress-api/session)
 - [`cy.visit()`](/api/commands/visit)
