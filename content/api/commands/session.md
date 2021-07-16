@@ -10,6 +10,8 @@ in order to reduce test setup times.
 
 <Alert type="warning">
 
+<strong class="alert-header"><Icon name="exclamation-triangle"></Icon> Experimental</strong>
+
 The `cy.session()` API is currently experimental, and can be enabled by setting
 the `experimentalSessionSupport` flag to `true` in the Cypress config or by
 using [`Cypress.config()`](/api/cypress-api/config) at the top of a spec file.
