@@ -835,5 +835,6 @@ including cookies, `localStorage` and `sessionStorage`.
 
 ## See also
 
+- [Authenticate faster in tests with the cy.session command](https://cypress-io.ghost.io/blog/authenticate-faster-in-tests-cy-session-command/)
 - [Custom Commands](/api/cypress-api/custom-commands)
 - [`cy.visit()`](/api/commands/visit)
