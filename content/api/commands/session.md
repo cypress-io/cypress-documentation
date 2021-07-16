@@ -10,11 +10,13 @@ in order to reduce test setup times.
 
 <Alert type="warning">
 
-<strong class="alert-header"><Icon name="exclamation-triangle"></Icon> Experimental</strong>
+<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
+Experimental</strong>
 
-The `session` API is currently experimental, and can be enabled by setting
-the [`experimentalSessionSupport`](/guides/references/experiments) flag to `true` in the Cypress config or by
-using [`Cypress.config()`](/api/cypress-api/config) at the top of a spec file.
+The `session` API is currently experimental, and can be enabled by setting the
+[`experimentalSessionSupport`](/guides/references/experiments) flag to `true` in
+the Cypress config or by using [`Cypress.config()`](/api/cypress-api/config) at
+the top of a spec file.
 
 Enabling this flag does the following:
 
@@ -94,16 +96,16 @@ cy.url().should('contain', '/login-successful')
 
 A unique identifier that will be used to cache and restore a given session. In
 simple cases, a `String` value is sufficient. In order to simplify generation of
-more complex ids, if you pass an `Array` or `Object`, Cypress will generate an id
-for you by deterministically stringifying the value you pass in. For example, if
-you pass `['Jane', '123', 'admin']`, an id of `["Jane","123","admin"]` will be generated
-for you.
+more complex ids, if you pass an `Array` or `Object`, Cypress will generate an
+id for you by deterministically stringifying the value you pass in. For example,
+if you pass `['Jane', '123', 'admin']`, an id of `["Jane","123","admin"]` will
+be generated for you.
 
 <Alert type="info">
 
-See the [choosing the correct id to cache a
-session](#Choosing-the-correct-id-to-cache-a-session) section for a more thorough
-explanation with examples.
+See the
+[choosing the correct id to cache a session](#Choosing-the-correct-id-to-cache-a-session)
+section for a more thorough explanation with examples.
 
 </Alert>
 
@@ -142,8 +144,8 @@ The page and all active session data (cookies, `localStorage` and
 ### Updating an existing login custom command
 
 You can add session caching to your login
-[custom command](/api/cypress-api/custom-commands). Wrap
-the inside of the command with a call to `cy.session()`.
+[custom command](/api/cypress-api/custom-commands). Wrap the inside of the
+command with a call to `cy.session()`.
 
 **Before**
 
@@ -201,8 +203,8 @@ Cypress.Commands.add(
 
 ### Updating an existing login helper function
 
-You can add session caching to a login helper function by wrapping the
-inside of the function with a call to `cy.session()`.
+You can add session caching to a login helper function by wrapping the inside of
+the function with a call to `cy.session()`.
 
 **Before**
 
@@ -411,16 +413,18 @@ cy.session('user', () => {
 
 ### Multiple login commands
 
-A more complex app may require multiple login commands, which may require multiple
-uses of `cy.session()`. However, because the `id` value is used as a unique identifier
-to save and restore sessions, it's very important that it's actually unique per session.
+A more complex app may require multiple login commands, which may require
+multiple uses of `cy.session()`. However, because the `id` value is used as a
+unique identifier to save and restore sessions, it's very important that it's
+actually unique per session.
 
-In the following example, if the resulting session data that `loginByForm` and `loginByApi` create
-is different _in any way_, it would be a mistake to specify `[name, password]` as the `id`
-for both, because there would be no way to distinguish between the sessions created by
-`loginByForm("user", "p4ssw0rd")` and `loginByApi("user", "p4ssw0rd")`. Instead, you can
-modify the `id` to differentiate its value between both login functions, so that each will
-always be cached uniquely.
+In the following example, if the resulting session data that `loginByForm` and
+`loginByApi` create is different _in any way_, it would be a mistake to specify
+`[name, password]` as the `id` for both, because there would be no way to
+distinguish between the sessions created by `loginByForm("user", "p4ssw0rd")`
+and `loginByApi("user", "p4ssw0rd")`. Instead, you can modify the `id` to
+differentiate its value between both login functions, so that each will always
+be cached uniquely.
 
 ```javascript
 const loginByForm = (name, password) => {
@@ -670,8 +674,8 @@ examples for more details.
 
 ### Choosing the correct id to cache a session
 
-In order for sessions to be cached uniquely, the [`id` argument](#Arguments) must
-be unique for each new session created.
+In order for sessions to be cached uniquely, the [`id` argument](#Arguments)
+must be unique for each new session created.
 
 ```javascript
 // If your session setup code uses a string variable, pass in the
@@ -711,9 +715,9 @@ const login = (name, email) => {
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
-If you have custom `login` code that uses multiple parameters (in this example, a name,
-a token, and a password), in order to be able to log in many different users, but the
-`id` only included one of them (in this example, `name`):
+If you have custom `login` code that uses multiple parameters (in this example,
+a name, a token, and a password), in order to be able to log in many different
+users, but the `id` only included one of them (in this example, `name`):
 
 ```js
 const login = (name, token, password) => {
@@ -727,31 +731,32 @@ const login = (name, token, password) => {
 }
 ```
 
-If you ran this, `user1` would be logged in with `token1` and `p4ssw0rd`, and a session
-would be created and cached using `"user1"` as the `id`.
+If you ran this, `user1` would be logged in with `token1` and `p4ssw0rd`, and a
+session would be created and cached using `"user1"` as the `id`.
 
 ```js
 login('user1', 'token1', 'p4ssw0rd')
 ```
 
-Now let's say you wanted to try to log in the same user, but with a different token
-and/or password, and expect a different session to be created and cached. You run this,
-but because `cy.session()` is only being passed `name` as its `id`, it won't create a new
-session, but will instead load the saved session for `"user1"`.
+Now let's say you wanted to try to log in the same user, but with a different
+token and/or password, and expect a different session to be created and cached.
+You run this, but because `cy.session()` is only being passed `name` as its
+`id`, it won't create a new session, but will instead load the saved session for
+`"user1"`.
 
 ```js
 login('user1', 'different-token', 'p4ssw0rd')
 ```
 
-In summary, you need to ensure that the `id` is created
-from all the parameters that are used inside the `setup` function that may change, otherwise
-`id` values may collide and create unexpected results.
+In summary, you need to ensure that the `id` is created from all the parameters
+that are used inside the `setup` function that may change, otherwise `id` values
+may collide and create unexpected results.
 
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 In this example, setting the `id` to `[name, token, password]` guarantees that
-calling `login()` with different `name`, `token` and `password` values will create and
-cache unique sessions.
+calling `login()` with different `name`, `token` and `password` values will
+create and cache unique sessions.
 
 ```js
 const login = (name, token, password) => {
@@ -784,20 +789,22 @@ if necessary.
 
 <!-- GA TODO: update /guides/core-concepts/test-runner#Instrument-Panel -->
 
-Whenever a session is created or restored inside a test, an extra instrument panel
-is displayed at the top of the test to give more information about the state of your
-sessions.
+Whenever a session is created or restored inside a test, an extra instrument
+panel is displayed at the top of the test to give more information about the
+state of your sessions.
 
-Clicking any session `id` in the panel will print that session's details to the console, and
-clicking the "Clear All Sessions" button will clear all saved sessions and re-run
-the spec file (see [Session caching](#Session-caching) for more details).
+Clicking any session `id` in the panel will print that session's details to the
+console, and clicking the "Clear All Sessions" button will clear all saved
+sessions and re-run the spec file (see [Session caching](#Session-caching) for
+more details).
 
 <DocsImage src="/img/api/session/sessions-panel.png" alt="Sessions Instrument Panel" ></DocsImage>
 
 ### The command log
 
-Whenever `cy.session()` is called, the command log will show one of the following lines,
-which includes the status of the session call along with the session `id` value:
+Whenever `cy.session()` is called, the command log will show one of the
+following lines, which includes the status of the session call along with the
+session `id` value:
 
 - No saved session was found, so a new session was created and saved:
   <DocsImage src="/img/api/session/session-collapsed-new.png" alt="New session (collapsed)"></DocsImage>
@@ -805,29 +812,30 @@ which includes the status of the session call along with the session `id` value:
 - A saved session was found, and used:
   <DocsImage src="/img/api/session/session-collapsed-saved.png" alt="Saved session (collapsed)"></DocsImage>
 
-- A saved session was found, but the `validate` function failed, so the session was
-  recreated and saved:
+- A saved session was found, but the `validate` function failed, so the session
+  was recreated and saved:
   <DocsImage src="/img/api/session/session-collapsed-recreated.png" alt="Recreated session (collapsed)"></DocsImage>
 
 Note that in cases where the `validate` function fails immediately after `setup`
 creates the session, the test will fail with an error.
 
-Expanding the session group in the command log will show all of the commands that were
-run when creating and/or validating the session.
+Expanding the session group in the command log will show all of the commands
+that were run when creating and/or validating the session.
 
-In this image, a saved session is restored, but when `/personal` is visited in the
-`validate` function, the app redirects to `/signin`, which invalidates the session. A
-new session is created by visiting `/signin` where the user is logged in, after which,
-validation succeeds, and the session is made active for the remainder of the test.
+In this image, a saved session is restored, but when `/personal` is visited in
+the `validate` function, the app redirects to `/signin`, which invalidates the
+session. A new session is created by visiting `/signin` where the user is logged
+in, after which, validation succeeds, and the session is made active for the
+remainder of the test.
 
 <DocsImage src="/img/api/session/session-expanded.png" alt="Recreated session (expanded)"></DocsImage>
 
 ### Printing to the console
 
-Clicking a session `id` in the Instrument Panel or clicking the first line under an
-expanded session group in the command log will print that session's details to the
-console. This information contains the `id` along with any cached session data,
-including cookies, `localStorage` and `sessionStorage`.
+Clicking a session `id` in the Instrument Panel or clicking the first line under
+an expanded session group in the command log will print that session's details
+to the console. This information contains the `id` along with any cached session
+data, including cookies, `localStorage` and `sessionStorage`.
 
 <DocsImage src="/img/api/session/print-session-to-console.png" alt="Session console output"></DocsImage>
 

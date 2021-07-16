@@ -7,11 +7,13 @@ be used alongside the [`cy.session()`](/api/commands/session) command.
 
 <Alert type="warning">
 
-<strong class="alert-header"><Icon name="exclamation-triangle"></Icon> Experimental</strong>
+<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
+Experimental</strong>
 
-The `session` API is currently experimental, and can be enabled by setting
-the [`experimentalSessionSupport`](/guides/references/experiments) flag to `true` in the Cypress config or by
-using [`Cypress.config()`](/api/cypress-api/config) at the top of a spec file.
+The `session` API is currently experimental, and can be enabled by setting the
+[`experimentalSessionSupport`](/guides/references/experiments) flag to `true` in
+the Cypress config or by using [`Cypress.config()`](/api/cypress-api/config) at
+the top of a spec file.
 
 Enabling this flag does the following:
 
