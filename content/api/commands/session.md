@@ -103,6 +103,10 @@ across tests in a single spec file should be specified in the `id` argument so
 that the session may be cached properly. This includes objects that may be
 mutated. If there are multiple variables, use an array.
 
+See the [choosing the correct id to cache a
+session](#Choosing-the-correct-id-to-cache-a-session) section for a more thorough
+explanation.
+
 </Alert>
 
 <Alert type="warning">
@@ -407,39 +411,6 @@ cy.session('user', () => {
 })
 ```
 
-### Choosing the correct id to cache a session
-
-Any variable that is used inside the `setup` function that could possibly change
-throughout the spec file should be specified in the `id` argument. This includes
-objects that may be mutated. If there are multiple variables, use an array.
-
-```javascript
-// If your session setup code uses a string variable, pass in the
-// string as the id
-const login = (name) => {
-  cy.session(name, () => {
-    loginWith(name)
-  })
-}
-
-// If your session setup code uses a single object, pass in the
-// object as the id and it will be serialized into an identifier
-const login = (params = {}) => {
-  cy.session(params, () => {
-    loginWith(params)
-  })
-}
-
-// If your session setup code uses multiple variables, pass in an
-// array of those variables and it will be serialized into an
-// identifier
-const login = (name, email, params = {}) => {
-  cy.session([name, email, params], () => {
-    loginWith(name, email, params)
-  })
-}
-```
-
 ### Multiple login commands
 
 A more complex app may require multiple login commands, which may require multiple
@@ -696,6 +667,105 @@ function. See the
 and
 [Updating an existing login helper function](#Updating-an-existing-login-helper-function)
 examples for more details.
+
+### Choosing the correct id to cache a session
+
+Any variable that is used inside the `setup` function that impacts the created session
+that could possibly change throughout the spec file should be specified in the `id`
+argument. This includes objects that may be mutated. If there are multiple variables,
+use an array.
+
+```javascript
+// If your session setup code uses a string variable, pass in the
+// string as the id
+const login = (name) => {
+  cy.session(name, () => {
+    loginWith(name)
+  })
+}
+
+// If your session setup code uses a single object, pass in the
+// object as the id and it will be serialized into an identifier
+const login = (params = {}) => {
+  cy.session(params, () => {
+    loginWith(params)
+  })
+}
+
+// If your session setup code uses multiple variables, pass in an
+// array of those variables and it will be serialized into an
+// identifier
+const login = (name, email, params = {}) => {
+  cy.session([name, email, params], () => {
+    loginWith(name, email, params)
+  })
+}
+
+// If your session setup code uses external constants, they don't
+// need to be included in the id, since they will never change
+const API_KEY = 'I_AM_AN_API_KEY'
+const login = (name, email) => {
+  cy.session([name, email], () => {
+    loginWith(name, email, API_KEY)
+  })
+}
+```
+
+**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+
+If you have custom `login` code that uses multiple parameters (in this example, a name,
+a token, and a password), in order to be able to log in many different users, but the
+`id` only included one of them (in this example, `name`):
+
+```js
+const login = (name, token, password) => {
+  cy.session(name, () => {
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(name)
+    cy.get('[data-test=token]').type(token)
+    cy.get('[data-test=password]').type(password)
+    cy.get('#submit').click()
+  })
+}
+```
+
+If you ran this, `user1` would be logged in with `token1` and `p4ssw0rd`, and a session
+would be created and cached using `"user1"` as the `id`.
+
+```js
+login('user1', 'token1', 'p4ssw0rd')
+```
+
+Now let's say you wanted to try to log in the same user, but with a different token
+and/or password, and expect a different session to be created and cached. You run this,
+but because `cy.session()` is only being passed `name` as its `id`, it won't create a new
+session, but will instead load the saved session for `"user1"`.
+
+```js
+login('user1', 'different-token', 'p4ssw0rd')
+```
+
+In order for sessions to be cached uniquely, You need to ensure that the `id` is created
+from all the parameters that are used inside the `setup` function that may change, otherwise
+`id` values may collide and create unexpected results.
+
+**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+
+In this example, setting the `id` to `[name, token, password]` guarantees that
+calling `login()` with different `name`, `token` and `password` values will create and
+cache unique sessions.
+
+```js
+const login = (name, token, password) => {
+  cy.session([name, token, password], () => {
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(name)
+    cy.get('[data-test=token]').type(token)
+    cy.get('[data-test=password]').type(password)
+    cy.get('#submit').click()
+  })
+}
+```
 
 ### Common Questions
 
