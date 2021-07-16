@@ -93,20 +93,17 @@ cy.url().should('contain', '/login-successful')
 **<Icon name="angle-right"></Icon> id** **_(String, Array, Object)_**
 
 A unique identifier that will be used to cache and restore a given session. In
-simple cases, a `String` value is sufficient. If an `Array` or `Object` is
-passed as the `id`, an identifier will be deterministically generated from that
-value.
+simple cases, a `String` value is sufficient. In order to simplify generation of
+more complex ids, if you pass an `Array` or `Object`, Cypress will generate an id
+for you by deterministically stringifying the value you pass in. For example, if
+you pass `['Jane', '123', 'admin']`, an id of `["Jane","123","admin"]` will be generated
+for you.
 
 <Alert type="info">
 
-Any variable that is used inside the `setup` function that could possibly change
-across tests in a single spec file should be specified in the `id` argument so
-that the session may be cached properly. This includes objects that may be
-mutated. If there are multiple variables, use an array.
-
 See the [choosing the correct id to cache a
 session](#Choosing-the-correct-id-to-cache-a-session) section for a more thorough
-explanation.
+explanation with examples.
 
 </Alert>
 
@@ -655,6 +652,8 @@ When running the Test Runner in "open" mode, you can explicitly clear all
 sessions and re-run the spec file by clicking the "Clear All Sessions" button in
 the [Instrument Panel](#The-Instrument-Panel).
 
+<DocsImage src="/img/api/session/sessions-panel.png" alt="Sessions Instrument Panel" ></DocsImage>
+
 For debugging purposes, all sessions can be cleared with the
 [`Cypress.session.clearAllSavedSessions()`](/api/cypress-api/session) method.
 
@@ -671,10 +670,8 @@ examples for more details.
 
 ### Choosing the correct id to cache a session
 
-Any variable that is used inside the `setup` function that impacts the created session
-that could possibly change throughout the spec file should be specified in the `id`
-argument. This includes objects that may be mutated. If there are multiple variables,
-use an array.
+In order for sessions to be cached uniquely, the [`id` argument](#Arguments) must
+be unique for each new session created.
 
 ```javascript
 // If your session setup code uses a string variable, pass in the
@@ -746,7 +743,7 @@ session, but will instead load the saved session for `"user1"`.
 login('user1', 'different-token', 'p4ssw0rd')
 ```
 
-In order for sessions to be cached uniquely, You need to ensure that the `id` is created
+In summary, you need to ensure that the `id` is created
 from all the parameters that are used inside the `setup` function that may change, otherwise
 `id` values may collide and create unexpected results.
 
