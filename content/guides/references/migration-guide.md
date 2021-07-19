@@ -13,16 +13,21 @@ When running `cypress run` previous to 8.0, some browsers would launch headed
 while others were launched headless by default. In 8.0, we've normalized all
 browsers to launch as headless by default.
 
+This could cause a couple of changes to your existing runs:
+
+- You may see the screenshot or video resolution of runs during `cypress run`
+  change to the default of 1280x720. This is because headless browsers use the
+  set screen size as opposed to the browser's size when opening headed.
+- Chrome extensions will not load during a `--headless` run. If your run depends
+  on a Chrome extension being loaded during `cypress run`, you should explicitly
+  pass the `--headed` flag.
+
 You can now remove the use of the `--headless` flag during `cypress run` as this
 is the default for all browsers.
 
 You should also update any use of the `isHeaded` or `isHeadless` property on
 [`Cypress.browser`](/api/cypress-api/browser) or the
 [browser launch API](/api/plugins/browser-launch-api) accordingly.
-
-You may see the screenshot or video resolution of runs during `cypress run`
-change. This is because headless browsers use the set screen size as opposed to
-the browser's size when opening headed.
 
 <Badge type="danger">Before</Badge> run headless browser
 
