@@ -131,6 +131,8 @@ export default {
         'faCode',
         'faCog',
         'faCogs',
+        'faCopy',
+        'faCrosshairs',
         'faDownload',
         'faExclamationTriangle',
         'faExternalLinkAlt',
