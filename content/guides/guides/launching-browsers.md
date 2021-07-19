@@ -55,7 +55,7 @@ The Electron browser has the advantage of coming baked into Cypress and does not
 need to be installed separately.
 
 By default, when running [cypress run](/guides/guides/command-line#cypress-run)
-from the CLI, we will launch Electron headlessly.
+from the CLI, we will launch all browsers headlessly.
 
 #### You can also launch Electron headed:
 
@@ -81,8 +81,8 @@ cypress run --browser chrome
 To use this command in CI, you need to install the browser you want - or use one
 of our [docker images](/examples/examples/docker).
 
-By default, we will launch Chrome in headed mode. To run Chrome headlessly, you
-can pass the `--headless` argument to `cypress run`.
+By default, we will launch Chrome in headlessly during `cypress run`. To run
+Chrome headed, you can pass the `--headed` argument to `cypress run`.
 
 You can also launch Chromium:
 
@@ -134,8 +134,8 @@ cypress run --browser firefox:nightly
 To use this command in CI, you need to install these other browsers - or use one
 of our [docker images](/examples/examples/docker).
 
-By default, we will launch Firefox in headed mode. To run Firefox headlessly,
-you can pass the `--headless` argument to `cypress run`.
+By default, we will launch Firefox headlessly during `cypress run`. To run
+Firefox headed, you can pass the `--headed` argument to `cypress run`.
 
 ### Launching by a path
 
