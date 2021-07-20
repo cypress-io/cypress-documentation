@@ -9,7 +9,8 @@ When you run tests in Cypress, we launch a browser for you. This enables us to:
 
 ## Browsers
 
-When Cypress is initially run from the Test Runner, you can choose to run Cypress in a select number of browsers including:
+When Cypress is initially run from the Test Runner, you can choose to run
+Cypress in a select number of browsers including:
 
 - [Chrome](https://www.google.com/chrome/)
 - [Chrome Beta](https://www.google.com/chrome/beta/)
@@ -24,21 +25,37 @@ When Cypress is initially run from the Test Runner, you can choose to run Cypres
 - [Firefox Developer Edition](https://www.mozilla.org/firefox/developer/)
 - [Firefox Nightly](https://www.mozilla.org/firefox/nightly/)
 
-Cypress automatically detects available browsers on your OS. You can switch the browser in the Test Runner by using the drop down in the top right corner:
+Cypress automatically detects available browsers on your OS. You can switch the
+browser in the Test Runner by using the drop down in the top right corner:
 
 <DocsImage src="/img/guides/browser-list-dropdown.png" alt="Select a different browser" ></DocsImage>
 
+### Browser versions supported
+
+Cypress supports the browser versions below:
+
+- Chrome 64 and above.
+- Edge 79 and above.
+- Firefox 86 and above.
+
 ### Download specific Chrome version
 
-The Chrome browser is evergreen - meaning it will automatically update itself, sometimes causing a breaking change in your automated tests. We host [chromium.cypress.io](https://chromium.cypress.io) with links to download a specific released version of Chrome (dev, Canary and stable) for every platform.
+The Chrome browser is evergreen - meaning it will automatically update itself,
+sometimes causing a breaking change in your automated tests. We host
+[chromium.cypress.io](https://chromium.cypress.io) with links to download a
+specific released version of Chrome (dev, Canary and stable) for every platform.
 
 ### Electron Browser
 
-In addition to the browsers found on your system, you'll notice that Electron is an available browser. The Electron browser is a version of Chromium that comes with [Electron](https://electron.atom.io/).
+In addition to the browsers found on your system, you'll notice that Electron is
+an available browser. The Electron browser is a version of Chromium that comes
+with [Electron](https://electron.atom.io/).
 
-The Electron browser has the advantage of coming baked into Cypress and does not need to be installed separately.
+The Electron browser has the advantage of coming baked into Cypress and does not
+need to be installed separately.
 
-By default, when running [cypress run](/guides/guides/command-line#cypress-run) from the CLI, we will launch Electron headlessly.
+By default, when running [cypress run](/guides/guides/command-line#cypress-run)
+from the CLI, we will launch all browsers headlessly.
 
 #### You can also launch Electron headed:
 
@@ -46,11 +63,14 @@ By default, when running [cypress run](/guides/guides/command-line#cypress-run) 
 cypress run --headed
 ```
 
-Because Electron is the default browser - it is typically run in CI. If you are seeing failures in CI, to easily debug them you may want to run locally with the `--headed` option.
+Because Electron is the default browser - it is typically run in CI. If you are
+seeing failures in CI, to easily debug them you may want to run locally with the
+`--headed` option.
 
 ### Chrome Browsers
 
-All Chrome\* flavored browsers will be detected and are supported above Chrome 64.
+All Chrome\* flavored browsers will be detected and are supported above
+Chrome 64.
 
 You can launch Chrome like this:
 
@@ -58,9 +78,11 @@ You can launch Chrome like this:
 cypress run --browser chrome
 ```
 
-To use this command in CI, you need to install the browser you want - or use one of our [docker images](/examples/examples/docker).
+To use this command in CI, you need to install the browser you want - or use one
+of our [docker images](/examples/examples/docker).
 
-By default, we will launch Chrome in headed mode. To run Chrome headlessly, you can pass the `--headless` argument to `cypress run`.
+By default, we will launch Chrome in headlessly during `cypress run`. To run
+Chrome headed, you can pass the `--headed` argument to `cypress run`.
 
 You can also launch Chromium:
 
@@ -109,9 +131,11 @@ cypress run --browser firefox:dev
 cypress run --browser firefox:nightly
 ```
 
-To use this command in CI, you need to install these other browsers - or use one of our [docker images](/examples/examples/docker).
+To use this command in CI, you need to install these other browsers - or use one
+of our [docker images](/examples/examples/docker).
 
-By default, we will launch Firefox in headed mode. To run Firefox headlessly, you can pass the `--headless` argument to `cypress run`.
+By default, we will launch Firefox headlessly during `cypress run`. To run
+Firefox headed, you can pass the `--headed` argument to `cypress run`.
 
 ### Launching by a path
 
@@ -125,7 +149,8 @@ cypress run --browser /usr/bin/chromium
 cypress open --browser /usr/bin/chromium
 ```
 
-Cypress will automatically detect the type of browser supplied and launch it for you.
+Cypress will automatically detect the type of browser supplied and launch it for
+you.
 
 [See the Command Line guide for more information about the `--browser` arguments](/guides/guides/command-line#cypress-run-browser-lt-browser-name-or-path-gt)
 
@@ -133,11 +158,15 @@ Cypress will automatically detect the type of browser supplied and launch it for
 
 ### Customize available browsers
 
-Sometimes you might want to modify the list of browsers found before running tests.
+Sometimes you might want to modify the list of browsers found before running
+tests.
 
-For example, your web application might _only_ be designed to work in a Chrome browser, and not inside the Electron browser.
+For example, your web application might _only_ be designed to work in a Chrome
+browser, and not inside the Electron browser.
 
-In the plugins file, you can filter the list of browsers passed inside the `config` object and return the list of browsers you want available for selection during `cypress open`.
+In the plugins file, you can filter the list of browsers passed inside the
+`config` object and return the list of browsers you want available for selection
+during `cypress open`.
 
 ```javascript
 // cypress/plugins/index.js
@@ -159,17 +188,23 @@ module.exports = (on, config) => {
 }
 ```
 
-When you open the Test Runner in a project that uses the above modifications to your plugins file, only the Chrome browsers found on the system will display in the list of available browsers.
+When you open the Test Runner in a project that uses the above modifications to
+your plugins file, only the Chrome browsers found on the system will display in
+the list of available browsers.
 
 <DocsImage src="/img/guides/plugins/chrome-browsers-only.png" alt="Filtered list of Chrome browsers" ></DocsImage>
 
 <Alert type="info">
 
-If you return an empty list of browsers or `browsers: null`, the default list will be restored automatically.
+If you return an empty list of browsers or `browsers: null`, the default list
+will be restored automatically.
 
 </Alert>
 
-If you have installed a Chromium-based browser like [Brave](https://brave.com/), [Vivaldi](https://vivaldi.com/) you can add them to the list of returned browsers. Here is a plugins file that inserts a local Brave browser into the returned list.
+If you have installed a Chromium-based browser like [Brave](https://brave.com/),
+[Vivaldi](https://vivaldi.com/) you can add them to the list of returned
+browsers. Here is a plugins file that inserts a local Brave browser into the
+returned list.
 
 ```javascript
 // cypress/plugins/index.js
@@ -207,23 +242,30 @@ module.exports = (on, config) => {
 
 <DocsImage src="/img/guides/plugins/brave-browser.png" alt="List of browsers includes Brave browser" ></DocsImage>
 
-Once selected, the Brave browser is detected using the same approach as any other browser of the `chromium` family.
+Once selected, the Brave browser is detected using the same approach as any
+other browser of the `chromium` family.
 
 <DocsImage src="/img/guides/plugins/brave-running-tests.png" alt="Brave browser executing end-to-end tests" ></DocsImage>
 
-If you modify the list of browsers, you can see the [resolved configuration](/guides/references/configuration#Resolved-Configuration) in the **Settings** tab of the Test Runner.
+If you modify the list of browsers, you can see the
+[resolved configuration](/guides/references/configuration#Resolved-Configuration)
+in the **Settings** tab of the Test Runner.
 
 ### Unsupported Browsers
 
-Some browsers such as Safari and Internet Explorer are not currently supported. Support for more browsers is on our roadmap.
+Some browsers such as Safari and Internet Explorer are not currently supported.
+Support for more browsers is on our roadmap.
 
 ## Browser Environment
 
-Cypress launches the browser in a way that's different from a regular browser environment. But it launches in a way that we believe makes testing _more reliable_ and _accessible_.
+Cypress launches the browser in a way that's different from a regular browser
+environment. But it launches in a way that we believe makes testing _more
+reliable_ and _accessible_.
 
 ### Launching Browsers
 
-When Cypress goes to launch your browser it will give you an opportunity to modify the arguments used to launch the browser.
+When Cypress goes to launch your browser it will give you an opportunity to
+modify the arguments used to launch the browser.
 
 This enables you to do things like:
 
@@ -234,19 +276,25 @@ This enables you to do things like:
 
 ### Cypress Profile
 
-Cypress generates its own isolated profile apart from your normal browser profile. This means things like `history` entries, `cookies`, and `3rd party extensions` from your regular browsing session will not affect your tests in Cypress.
+Cypress generates its own isolated profile apart from your normal browser
+profile. This means things like `history` entries, `cookies`, and
+`3rd party extensions` from your regular browsing session will not affect your
+tests in Cypress.
 
 <Alert type="warning">
 
 <strong class="alert-header">Wait, I need my developer extensions!</strong>
 
-That's no problem - you have to reinstall them **once** in the Cypress launched browser. We'll continue to use this Cypress testing profile on subsequent launches so all of your configuration will be preserved.
+That's no problem - you have to reinstall them **once** in the Cypress launched
+browser. We'll continue to use this Cypress testing profile on subsequent
+launches so all of your configuration will be preserved.
 
 </Alert>
 
 ### Disabled Barriers
 
-Cypress automatically disables certain functionality in the Cypress launched browser that tend to get in the way of automated testing.
+Cypress automatically disables certain functionality in the Cypress launched
+browser that tend to get in the way of automated testing.
 
 #### The Cypress launched browser automatically:
 
@@ -263,21 +311,29 @@ Cypress automatically disables certain functionality in the Cypress launched bro
 - Disables prompts requesting permission to use devices like cameras or mics
 - Disables user gesture requirements for autoplaying videos.
 
-You can see all of the default chrome command line switches we send [here](https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/browsers/chrome.ts#L36).
+You can see all of the default chrome command line switches we send
+[here](https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/browsers/chrome.ts#L36).
 
 ## Browser Icon
 
-You might notice that if you already have the browser open you will see two of the same browser icons in your dock.
+You might notice that if you already have the browser open you will see two of
+the same browser icons in your dock.
 
 <DocsVideo src="/img/snippets/switching-between-cypress-and-other-chrome-browser.mp4"></DocsVideo>
 
-We understand that when Cypress is running in its own profile it can be difficult to tell the difference between your normal browser and Cypress.
+We understand that when Cypress is running in its own profile it can be
+difficult to tell the difference between your normal browser and Cypress.
 
-For this reason you may find downloading and using a browser's release channel versions (Dev, Canary, etc) useful. These browsers have different icons from the standard stable browser, making them more distinguishable. You can also use the bundled [Electron browser](#Electron-Browser), which does not have a dock icon.
+For this reason you may find downloading and using a browser's release channel
+versions (Dev, Canary, etc) useful. These browsers have different icons from the
+standard stable browser, making them more distinguishable. You can also use the
+bundled [Electron browser](#Electron-Browser), which does not have a dock icon.
 
 <DocsVideo src="/img/snippets/switching-cypress-browser-and-canary-browser.mp4"></DocsVideo>
 
-Additionally, in Chrome-based browsers, we've made the browser spawned by Cypress look different than regular sessions. You'll see a darker theme around the chrome of the browser. You'll always be able to visually distinguish these.
+Additionally, in Chrome-based browsers, we've made the browser spawned by
+Cypress look different than regular sessions. You'll see a darker theme around
+the chrome of the browser. You'll always be able to visually distinguish these.
 
 <DocsImage src="/img/guides/cypress-browser-chrome.png" alt="Cypress Browser with darker chrome" ></DocsImage>
 

@@ -23,6 +23,7 @@ The default behavior of Cypress can be modified by supplying any of the followin
 | Option                 | Default                           | Description                                                                                                                                                                                  |
 | ---------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `baseUrl`              | `null`                            | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL                                                                          |
+| `clientCertificates`   | `[]`                              | An optional array of [client certificates](/guides/references/client-certificates)                                                                                                           |
 | `env`                  | `{}`                              | Any values to be set as [environment variables](/guides/guides/environment-variables)                                                                                                        |
 | `includeShadowDom`     | `false`                           | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get))                                 |
 | `numTestsKeptInMemory` | `50`                              | The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.           |
@@ -580,6 +581,7 @@ DEBUG=cypress:cli,cypress:server:specs
 
 | Version                                      | Changes                                                 |
 | -------------------------------------------- | ------------------------------------------------------- |
+| [8.0.0](/guides/references/changelog#8-0-0)  | Added `clientCertificates` option                       |
 | [7.0.0](/guides/references/changelog#7-0-0)  | Added `e2e` and `component` options.                    |
 | [7.0.0](/guides/references/changelog#7-0-0)  | Added `redirectionLimit` option.                        |
 | [6.1.0](/guides/references/changelog#6-1-0)  | Added `scrollBehavior` option.                          |
