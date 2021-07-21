@@ -64,7 +64,8 @@ Our test can confirm the property was properly set.
 cy.window().its('tags.foo').should('equal', 'bar')
 ```
 
-**Note:** Cypress commands are asynchronous, so you cannot check a property value before the Cypress commands ran.
+**Note:** Cypress commands are asynchronous, so you cannot check a property
+value before the Cypress commands ran.
 
 ```javascript
 it('equals bar', () => {
@@ -100,7 +101,8 @@ it('equals bar', () => {
 
 ### Start tests when app is ready
 
-If an application takes a while to start, it might "signal" its readiness by setting a property that Cypress can wait for.
+If an application takes a while to start, it might "signal" its readiness by
+setting a property that Cypress can wait for.
 
 ```javascript
 // app.js
@@ -110,7 +112,8 @@ if (window.Cypress) {
 }
 ```
 
-Cypress Test Runner can wait for the property `window.appReady` to be `true` before every test
+Cypress Test Runner can wait for the property `window.appReady` to be `true`
+before every test
 
 ```javascript
 // spec.js
@@ -124,9 +127,15 @@ beforeEach(() => {
 
 <strong class="alert-header">When Can The Test Start?</strong>
 
-[This blog post](https://www.cypress.io/blog/2018/02/05/when-can-the-test-start/) explains how to use `cy.window()` to spy on the DOM `prototype` to detect when the application starts adding event listeners to the DOM elements. When this happens for the first time, the Test Runner knows that the application has started and the tests can begin.
+[This blog post](https://www.cypress.io/blog/2018/02/05/when-can-the-test-start/)
+explains how to use `cy.window()` to spy on the DOM `prototype` to detect when
+the application starts adding event listeners to the DOM elements. When this
+happens for the first time, the Test Runner knows that the application has
+started and the tests can begin.
 
-See [Set flag to start tests](https://glebbahmutov.com/blog/set-flag-to-start-tests/) for more examples.
+See
+[Set flag to start tests](https://glebbahmutov.com/blog/set-flag-to-start-tests/)
+for more examples.
 
 </Alert>
 
@@ -142,7 +151,8 @@ cy.window({ timeout: 10000 }).should('have.property', 'foo')
 
 ### Cypress uses 2 different windows.
 
-Let's say you want to check the type of the events. You might write code like below:
+Let's say you want to check the type of the events. You might write code like
+below:
 
 ```js
 it('test', (done) => {
@@ -159,9 +169,13 @@ it('test', (done) => {
 })
 ```
 
-It fails. But the interesting thing is that the type of `event` is `KeyboardEvent` when you `console.log(event)`.
+It fails. But the interesting thing is that the type of `event` is
+`KeyboardEvent` when you `console.log(event)`.
 
-It's because the Test Runner uses an `iframe` to load the application under test. In other words, the `KeyboardEvent` used in the the code above and the `KeyboardEvent` class from which the `event` variable is constructed are different `KeyboardEvent`s.
+It's because the Test Runner uses an `iframe` to load the application under
+test. In other words, the `KeyboardEvent` used in the the code above and the
+`KeyboardEvent` class from which the `event` variable is constructed are
+different `KeyboardEvent`s.
 
 That's why the test should be written like this.
 
@@ -190,11 +204,14 @@ it('should trigger KeyboardEvent with .type inside Cypress event listener', (don
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.window()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`cy.window()` will automatically
+[retry](/guides/core-concepts/retry-ability) until all chained assertions have
+passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.window()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`cy.window()` can time out waiting for assertions you've added to
+pass.</li></List>
 
 ## Command Log
 
@@ -208,7 +225,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/window/window-command-log-for-cypress-tests.png" alt="Command Log window" ></DocsImage>
 
-When clicking on `window` within the command log, the console outputs the following:
+When clicking on `window` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/window/console-shows-the-applications-window-object-being-tested.png" alt="Console Log window" ></DocsImage>
 

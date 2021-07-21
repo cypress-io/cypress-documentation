@@ -81,15 +81,22 @@ cy.get('li').siblings('.active')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.siblings()` requires being chained off a command that yields DOM element(s).</li></List>
+<List><li>`.siblings()` requires being chained off a command that yields DOM
+element(s).</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.siblings()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.siblings()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.siblings()` will automatically
+[retry](/guides/core-concepts/retry-ability) until the element(s)
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.siblings()`
+will automatically [retry](/guides/core-concepts/retry-ability) until all
+chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.siblings()` can time out waiting for the element(s) to [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.siblings()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`.siblings()` can time out waiting for the element(s) to
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.siblings()`
+can time out waiting for assertions you've added to pass.</li></List>
 
 ## Command Log
 
@@ -103,7 +110,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/siblings/find-siblings-of-dom-elements-to-test.png" alt="Command Log siblings" ></DocsImage>
 
-When clicking on `siblings` within the command log, the console outputs the following:
+When clicking on `siblings` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/siblings/console-log-of-sibling-elements.png" alt="Console Log siblings" ></DocsImage>
 

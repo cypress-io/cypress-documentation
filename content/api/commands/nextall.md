@@ -6,7 +6,8 @@ Get all following siblings of each DOM element in a set of matched DOM elements.
 
 <Alert type="info">
 
-The querying behavior of this command matches exactly how [`.nextAll()`](http://api.jquery.com/nextAll) works in jQuery.
+The querying behavior of this command matches exactly how
+[`.nextAll()`](http://api.jquery.com/nextAll) works in jQuery.
 
 </Alert>
 
@@ -97,15 +98,22 @@ cy.get('li').nextAll('.selected')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.nextAll()` requires being chained off a command that yields DOM element(s).</li></List>
+<List><li>`.nextAll()` requires being chained off a command that yields DOM
+element(s).</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.nextAll()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.nextAll()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.nextAll()` will automatically
+[retry](/guides/core-concepts/retry-ability) until the element(s)
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.nextAll()`
+will automatically [retry](/guides/core-concepts/retry-ability) until all
+chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.nextAll()` can time out waiting for the element(s) to [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.nextAll()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`.nextAll()` can time out waiting for the element(s) to
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.nextAll()`
+can time out waiting for assertions you've added to pass.</li></List>
 
 ## Command Log
 
@@ -119,7 +127,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/nextall/next-all-traversal-command-for-the-dom.png" alt="Command Log nextAll" ></DocsImage>
 
-When clicking on `nextAll` within the command log, the console outputs the following:
+When clicking on `nextAll` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/nextall/all-next-elements-are-logged-in-console.png" alt="Console Log nextAll" ></DocsImage>
 

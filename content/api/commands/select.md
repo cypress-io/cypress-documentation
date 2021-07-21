@@ -50,7 +50,8 @@ Pass in an options object to change the default behavior of `.select()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.select()` yields the same subject it was given from the previous command.</li></List>
+<List><li>`.select()` yields the same subject it was given from the previous
+command.</li></List>
 
 ## Examples
 
@@ -148,7 +149,11 @@ cy.get('select')
 
 #### Force select a disabled `<select>`
 
-Passing `{ force: true }` to `.select()` will override the actionability checks for selecting a disabled `<select>`. However, it will not override the actionability checks for selecting a disabled `<option>` or an option within a disabled `<optgroup>`. See [this issue](https://github.com/cypress-io/cypress/issues/107) for more detail.
+Passing `{ force: true }` to `.select()` will override the actionability checks
+for selecting a disabled `<select>`. However, it will not override the
+actionability checks for selecting a disabled `<option>` or an option within a
+disabled `<optgroup>`. See
+[this issue](https://github.com/cypress-io/cypress/issues/107) for more detail.
 
 ```html
 <select disabled>
@@ -170,7 +175,8 @@ cy.get('select')
 
 ### Selected option
 
-You can get the currently selected option using the jQuery's [:selected selector](https://api.jquery.com/selected-selector/).
+You can get the currently selected option using the jQuery's
+[:selected selector](https://api.jquery.com/selected-selector/).
 
 ```html
 <select id="name">
@@ -188,23 +194,34 @@ cy.get('select#name option:selected').should('have.text', 'Peter')
 
 ### Actionability
 
-`.select()` is an action command that follows the rules [defined here](/guides/core-concepts/interacting-with-elements).
+`.select()` is an action command that follows the rules
+[defined here](/guides/core-concepts/interacting-with-elements).
 
-However, passing `{ force: true }` to `.select()` will not override the actionability checks for selecting a disabled `<option>` or an option within a disabled `<optgroup>`. See [this issue](https://github.com/cypress-io/cypress/issues/107) for more detail.
+However, passing `{ force: true }` to `.select()` will not override the
+actionability checks for selecting a disabled `<option>` or an option within a
+disabled `<optgroup>`. See
+[this issue](https://github.com/cypress-io/cypress/issues/107) for more detail.
 
 ## Rules
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.select()` requires being chained off a command that yields DOM element(s).</li><li>`.select()` requires the element to be a `select`.</li></List>
+<List><li>`.select()` requires being chained off a command that yields DOM
+element(s).</li><li>`.select()` requires the element to be a
+`select`.</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.select()` will automatically wait for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.select()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.select()` will automatically wait for the element to reach an
+[actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.select()`
+will automatically [retry](/guides/core-concepts/retry-ability) until all
+chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.select()` can time out waiting for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.select()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`.select()` can time out waiting for the element to reach an
+[actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.select()`
+can time out waiting for assertions you've added to pass.</li></List>
 
 ## Command Log
 
@@ -218,11 +235,13 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/select/select-homer-option-from-browser-dropdown.png" alt="Command Log select" ></DocsImage>
 
-When clicking on `select` within the command log, the console outputs the following:
+When clicking on `select` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/select/console-log-for-select-shows-option-and-any-events-caused-from-clicking.png" alt="Console Log select" ></DocsImage>
 
 ## See also
 
-- Read [Working with Select elements and Select2 widgets in Cypress](https://www.cypress.io/blog/2020/03/20/working-with-select-elements-and-select2-widgets-in-cypress/)
+- Read
+  [Working with Select elements and Select2 widgets in Cypress](https://www.cypress.io/blog/2020/03/20/working-with-select-elements-and-select2-widgets-in-cypress/)
 - [`.click()`](/api/commands/click)

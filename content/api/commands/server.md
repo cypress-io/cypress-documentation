@@ -2,22 +2,36 @@
 title: server
 ---
 
-Start a server to begin routing responses to [cy.route()](/api/commands/route) and to change the behavior of network requests.
+Start a server to begin routing responses to [cy.route()](/api/commands/route)
+and to change the behavior of network requests.
 
 <Alert type="warning">
 
-⚠️ **`cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0**. In a future release, support for `cy.server()` and `cy.route()` will be moved to a plugin. Consider using [`cy.intercept()`](/api/commands/intercept.html) instead. See our guide on [Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide.html#Migrating-cy-route-to-cy-intercept)
+⚠️ **`cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0**. In a
+future release, support for `cy.server()` and `cy.route()` will be moved to a
+plugin. Consider using [`cy.intercept()`](/api/commands/intercept.html) instead.
+See our guide on
+[Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide.html#Migrating-cy-route-to-cy-intercept)
 
 </Alert>
 
 <Alert type="warning">
 
-⚠️ `cy.route()` and `cy.server()` only support intercepting XMLHttpRequests. Requests using the Fetch API and other types of network requests like page loads and `<script>` tags will not be intercepted by `cy.route()` and `cy.server()`.
+⚠️ `cy.route()` and `cy.server()` only support intercepting XMLHttpRequests.
+Requests using the Fetch API and other types of network requests like page loads
+and `<script>` tags will not be intercepted by `cy.route()` and `cy.server()`.
 
-**To support requests using the Fetch API you can use one of the solutions below:**
+**To support requests using the Fetch API you can use one of the solutions
+below:**
 
-- Use [`cy.intercept()`](/api/commands/intercept.html) which supports requests using the Fetch API and other types of network requests like page loads. See [`cy.intercept()`](/api/commands/intercept.html).
-- Polyfill `window.fetch` to spy on and stub requests using `cy.route()` and `cy.server()` by enabling [`experimentalFetchPolyfill`](https://on.cypress.io/experimental). See [#95](https://github.com/cypress-io/cypress/issues/95) for more details and temporary workarounds.
+- Use [`cy.intercept()`](/api/commands/intercept.html) which supports requests
+  using the Fetch API and other types of network requests like page loads. See
+  [`cy.intercept()`](/api/commands/intercept.html).
+- Polyfill `window.fetch` to spy on and stub requests using `cy.route()` and
+  `cy.server()` by enabling
+  [`experimentalFetchPolyfill`](https://on.cypress.io/experimental). See
+  [#95](https://github.com/cypress-io/cypress/issues/95) for more details and
+  temporary workarounds.
 
 </Alert>
 
@@ -40,7 +54,8 @@ cy.server()
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
-Pass in an options object to change the default behavior of `cy.server()`. These options are used for 2 different purposes:
+Pass in an options object to change the default behavior of `cy.server()`. These
+options are used for 2 different purposes:
 
 - As defaults that are merged into [`cy.route()`](/api/commands/route).
 - As configuration behavior for _all_ requests.
@@ -72,7 +87,8 @@ Pass in an options object to change the default behavior of `cy.server()`. These
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.server()` yields `null`.</li><li>`cy.server()` cannot be chained further.</li></List>
+<List><li>`cy.server()` yields `null`.</li><li>`cy.server()` cannot be chained
+further.</li></List>
 
 ## Examples
 
@@ -80,8 +96,10 @@ Pass in an options object to change the default behavior of `cy.server()`. These
 
 #### After starting a server:
 
-- Any request that does **NOT** match a [`cy.route()`](/api/commands/route) will [pass through to the server](/guides/guides/network-requests#Use-Server-Responses).
-- Any request that matches the `options.ignore` function will **NOT** be logged or stubbed.
+- Any request that does **NOT** match a [`cy.route()`](/api/commands/route) will
+  [pass through to the server](/guides/guides/network-requests#Use-Server-Responses).
+- Any request that matches the `options.ignore` function will **NOT** be logged
+  or stubbed.
 - You will see requests named as `(XHR Stub)` or `(XHR)` in the Command Log.
 
 ```javascript
@@ -92,9 +110,12 @@ cy.server()
 
 #### Change defaults for [`cy.route()`](/api/commands/route)
 
-By default [`cy.route()`](/api/commands/route) inherits some of its options from `cy.server()`.
+By default [`cy.route()`](/api/commands/route) inherits some of its options from
+`cy.server()`.
 
-In this example, our matching requests will be delayed 1000ms and have a status of `422`, but its `response` will be what was set in [`cy.route()`](/api/commands/route).
+In this example, our matching requests will be delayed 1000ms and have a status
+of `422`, but its `response` will be what was set in
+[`cy.route()`](/api/commands/route).
 
 ```javascript
 cy.server({
@@ -109,7 +130,9 @@ cy.route('/users/', { errors: 'Name cannot be blank' })
 
 #### Change the default delay for all routes
 
-Adding delay can help simulate real world network latency. Normally stubbed responses return in under 20ms. Adding a delay can help you visualize how your application's state reacts to requests that are in flight.
+Adding delay can help simulate real world network latency. Normally stubbed
+responses return in under 20ms. Adding a delay can help you visualize how your
+application's state reacts to requests that are in flight.
 
 ```javascript
 // delay each route's response 1500ms
@@ -118,7 +141,8 @@ cy.server({ delay: 1500 })
 
 #### Send 404s on unmatched requests
 
-If you'd like Cypress to automatically send requests that do _NOT_ match routes the following response:
+If you'd like Cypress to automatically send requests that do _NOT_ match routes
+the following response:
 
 | Status | Body | Headers |
 | ------ | ---- | ------- |
@@ -144,11 +168,14 @@ $(() => {
 
 #### Change the default response headers for all routes
 
-When you stub requests, you can automatically control their response `headers`. This is useful when you want to send back meta data in the `headers`, such as _pagination_ or _token_ information.
+When you stub requests, you can automatically control their response `headers`.
+This is useful when you want to send back meta data in the `headers`, such as
+_pagination_ or _token_ information.
 
 <Alert type="info">
 
-Cypress automatically sets `Content-Length` and `Content-Type` based on the response `body` you stub.
+Cypress automatically sets `Content-Length` and `Content-Type` based on the
+response `body` you stub.
 
 </Alert>
 
@@ -195,11 +222,15 @@ cy.server({
 
 #### Change the default filtering
 
-`cy.server()` comes with an `ignore` function that by default filters out any requests that are for static assets like `.html`, `.js`, `.jsx`, and `.css`.
+`cy.server()` comes with an `ignore` function that by default filters out any
+requests that are for static assets like `.html`, `.js`, `.jsx`, and `.css`.
 
-Any request that passes the `ignore` will be ignored - it will not be logged nor will it be stubbed in any way (even if it matches a specific [`cy.route()`](/api/commands/route)).
+Any request that passes the `ignore` will be ignored - it will not be logged nor
+will it be stubbed in any way (even if it matches a specific
+[`cy.route()`](/api/commands/route)).
 
-The idea is that we never want to interfere with static assets that are fetched via Ajax.
+The idea is that we never want to interfere with static assets that are fetched
+via Ajax.
 
 **The default filter function in Cypress is:**
 
@@ -226,11 +257,16 @@ cy.server({
 })
 ```
 
-If you would like to change the default option for **ALL** `cy.server()` you [can change this option permanently](/api/cypress-api/cypress-server#Options).
+If you would like to change the default option for **ALL** `cy.server()` you
+[can change this option permanently](/api/cypress-api/cypress-server#Options).
 
 #### Turn off the server after you've started it
 
-You can disable all stubbing and its effects and restore it to the default behavior as a test is running. By setting `enable` to `false`, this disables stubbing routes and XHR's will no longer show up as (XHR Stub) in the Command Log. However, routing aliases can continue to be used and will continue to match requests, but will not affect responses.
+You can disable all stubbing and its effects and restore it to the default
+behavior as a test is running. By setting `enable` to `false`, this disables
+stubbing routes and XHR's will no longer show up as (XHR Stub) in the Command
+Log. However, routing aliases can continue to be used and will continue to match
+requests, but will not affect responses.
 
 ```javascript
 cy.server()
@@ -244,19 +280,28 @@ cy.server({ enable: false })
 
 #### Server persists until the next test runs
 
-Cypress automatically continues to persist the server and routing configuration even after a test ends. This means you can continue to use your application and still benefit from stubbing or other server configuration.
+Cypress automatically continues to persist the server and routing configuration
+even after a test ends. This means you can continue to use your application and
+still benefit from stubbing or other server configuration.
 
-However between tests, when a new test runs, the previous configuration is restored to a clean state. No configuration leaks between tests.
+However between tests, when a new test runs, the previous configuration is
+restored to a clean state. No configuration leaks between tests.
 
 #### Outstanding requests are automatically aborted between tests
 
-When a new test runs, any outstanding requests still in flight are automatically aborted. In fact this happens by default whether or not you've even started a `cy.server()`.
+When a new test runs, any outstanding requests still in flight are automatically
+aborted. In fact this happens by default whether or not you've even started a
+`cy.server()`.
 
 ### `cy.visit()`
 
 #### Server can be started before you [`cy.visit()`](/api/commands/visit)
 
-Oftentimes your application may make initial requests immediately when it loads (such as authenticating a user). Cypress makes it possible to start your server and define routes before a [cy.visit()](/api/commands/visit). Upon the next visit, the server + routes will be instantly applied before your application loads.
+Oftentimes your application may make initial requests immediately when it loads
+(such as authenticating a user). Cypress makes it possible to start your server
+and define routes before a [cy.visit()](/api/commands/visit). Upon the next
+visit, the server + routes will be instantly applied before your application
+loads.
 
 You can [read more about XHR strategy here](/guides/guides/network-requests).
 
@@ -264,9 +309,12 @@ You can [read more about XHR strategy here](/guides/guides/network-requests).
 
 #### `cy.server()` does not effect [cy.request()](/api/commands/request)
 
-`cy.server()` and any configuration passed to `cy.server()` has no effect on [cy.request()](/api/commands/request).
+`cy.server()` and any configuration passed to `cy.server()` has no effect on
+[cy.request()](/api/commands/request).
 
-The intention of [cy.request()](/api/commands/request) is to be used for checking endpoints on an actual, running server without having to start the front end application.
+The intention of [cy.request()](/api/commands/request) is to be used for
+checking endpoints on an actual, running server without having to start the
+front end application.
 
 ## Rules
 

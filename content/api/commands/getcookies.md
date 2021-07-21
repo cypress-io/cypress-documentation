@@ -32,7 +32,8 @@ Pass in an options object to change the default behavior of `cy.getCookies()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-`cy.getCookies()` yields an array of cookie objects. Each cookie object has the following properties:
+`cy.getCookies()` yields an array of cookie objects. Each cookie object has the
+following properties:
 
 - `domain`
 - `expiry` _(if specified)_
@@ -70,7 +71,8 @@ cy.getCookies()
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `cy.getCookies()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).
+- `cy.getCookies()` will only run assertions you have chained once, and will not
+  [retry](/guides/core-concepts/retry-ability).
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
@@ -78,7 +80,9 @@ cy.getCookies()
 
 <Alert type="warning">
 
-Because `cy.getCookies()` is asynchronous it is technically possible for there to be a timeout while talking to the internal Cypress automation APIs. But for practical purposes it should never happen.
+Because `cy.getCookies()` is asynchronous it is technically possible for there
+to be a timeout while talking to the internal Cypress automation APIs. But for
+practical purposes it should never happen.
 
 </Alert>
 
@@ -101,7 +105,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/getcookies/get-browser-cookies-and-inspect-all-properties.png" alt="Command Log getcookies" ></DocsImage>
 
-When clicking on `getCookies` within the command log, the console outputs the following:
+When clicking on `getCookies` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/getcookies/test-application-cookies.png" alt="Console Log getcookies" ></DocsImage>
 

@@ -27,7 +27,8 @@ cy.location('port') // Get the port of the location object
 
 **<Icon name="angle-right"></Icon> key** **_(String)_**
 
-A key on the location object. Returns this value instead of the full location object.
+A key on the location object. Returns this value instead of the full location
+object.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -86,7 +87,8 @@ cy.location().should((loc) => {
 
 #### Check location for query params and pathname
 
-We can yield the location object within a [`.should()`](/api/commands/should) command and work with it directly.
+We can yield the location object within a [`.should()`](/api/commands/should)
+command and work with it directly.
 
 ```javascript
 cy.get('#search').type('niklas{enter}')
@@ -113,9 +115,14 @@ cy.location('pathname').should('eq', '/login')
 
 #### No need to use `window.location`
 
-Cypress automatically normalizes the `cy.location()` command and strips out extraneous values and properties found in `window.location`. Also, the object literal yielded by `cy.location()` is a basic object literal, not the special `window.location` object.
+Cypress automatically normalizes the `cy.location()` command and strips out
+extraneous values and properties found in `window.location`. Also, the object
+literal yielded by `cy.location()` is a basic object literal, not the special
+`window.location` object.
 
-When changing properties on the real `window.location` object, it forces the browser to navigate away. In Cypress, the object yielded is a plain object, so changing its properties will have no effect on navigation.
+When changing properties on the real `window.location` object, it forces the
+browser to navigate away. In Cypress, the object yielded is a plain object, so
+changing its properties will have no effect on navigation.
 
 #### Console output of `window.location`
 
@@ -145,11 +152,14 @@ cy.location().then((loc) => {
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.location()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`cy.location()` will automatically
+[retry](/guides/core-concepts/retry-ability) until all chained assertions have
+passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.location()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`cy.location()` can time out waiting for assertions you've added to
+pass.</li></List>
 
 ## Command Log
 
@@ -165,7 +175,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/location/make-assertion-about-location-url-in-tests.png" alt="Command Log of Cypress location command" ></DocsImage>
 
-When clicking on `location` within the command log, the console outputs the following:
+When clicking on `location` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/location/location-object-in-console-log.png" alt="Console Log of Cypress location command" ></DocsImage>
 

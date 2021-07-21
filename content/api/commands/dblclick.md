@@ -36,7 +36,9 @@ cy.window().dblclick() // Errors, 'window' does not yield DOM element
 
 **<Icon name="angle-right"></Icon> position** **_(String)_**
 
-The position where the double click should be issued. The `center` position is the default position. Valid positions are `topLeft`, `top`, `topRight`, `left`, `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
+The position where the double click should be issued. The `center` position is
+the default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
+`center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
 <DocsImage src="/img/api/coordinates-diagram.jpg" alt="cypress-command-positions-diagram" ></DocsImage>
 
@@ -68,7 +70,8 @@ Pass in an options object to change the default behavior of `.dblclick()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.dblclick()` yields the same subject it was given from the previous command.</li></List>
+<List><li>`.dblclick()` yields the same subject it was given from the previous
+command.</li></List>
 
 ## Examples
 
@@ -94,7 +97,8 @@ cy.get('button').dblclick('bottom')
 
 #### Specify coordinates relative to the top left corner
 
-The double click below will be issued inside of the element (30px from the left and 10px from the top).
+The double click below will be issued inside of the element (30px from the left
+and 10px from the top).
 
 ```javascript
 cy.get('button').dblclick(30, 10)
@@ -104,7 +108,9 @@ cy.get('button').dblclick(30, 10)
 
 #### Force a double click regardless of its actionable state
 
-Forcing a double click overrides the [actionable checks](/guides/core-concepts/interacting-with-elements#Forcing) Cypress applies and will automatically fire the events.
+Forcing a double click overrides the
+[actionable checks](/guides/core-concepts/interacting-with-elements#Forcing)
+Cypress applies and will automatically fire the events.
 
 ```javascript
 cy.get('button').dblclick({ force: true })
@@ -124,7 +130,9 @@ cy.get('button').dblclick(60, 60, { force: true })
 
 #### Double click all buttons found on the page
 
-By default, Cypress will iteratively apply the double click to each element and will also log to the [Command Log](/guides/core-concepts/test-runner#Command-Log) multiple times.
+By default, Cypress will iteratively apply the double click to each element and
+will also log to the
+[Command Log](/guides/core-concepts/test-runner#Command-Log) multiple times.
 
 You can turn this off by passing `multiple: false` to `.dblclick()`.
 
@@ -134,11 +142,15 @@ cy.get('button').dblclick({ multiple: false })
 
 #### Double click with key combinations
 
-The `.dblclick()` command may also be fired with key modifiers in order to simulate holding key combinations while double clicking, such as `SHIFT + double click`.
+The `.dblclick()` command may also be fired with key modifiers in order to
+simulate holding key combinations while double clicking, such as
+`SHIFT + double click`.
 
 <Alert type="info">
 
-You can also use key combinations during [.type()](/api/commands/type). This offers options to hold down keys across multiple commands. See [Key Combinations](/api/commands/type#Key-Combinations) for more information.
+You can also use key combinations during [.type()](/api/commands/type). This
+offers options to hold down keys across multiple commands. See
+[Key Combinations](/api/commands/type#Key-Combinations) for more information.
 
 </Alert>
 
@@ -166,21 +178,28 @@ cy.get('li:first').dblclick({
 
 #### The element must first reach actionability
 
-`.dblclick()` is an "action command" that follows all the rules [defined here](/guides/core-concepts/interacting-with-elements).
+`.dblclick()` is an "action command" that follows all the rules
+[defined here](/guides/core-concepts/interacting-with-elements).
 
 ## Rules
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.dblclick()` requires being chained off a command that yields DOM element(s).</li></List>
+<List><li>`.dblclick()` requires being chained off a command that yields DOM
+element(s).</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.dblclick()` will automatically wait for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.dblclick()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.dblclick()` will automatically wait for the element to reach an
+[actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.dblclick()`
+will automatically [retry](/guides/core-concepts/retry-ability) until all
+chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.dblclick()` can time out waiting for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.dblclick()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`.dblclick()` can time out waiting for the element to reach an
+[actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.dblclick()`
+can time out waiting for assertions you've added to pass.</li></List>
 
 ## Command Log
 
@@ -194,7 +213,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/dblclick/double-click-in-testing.png" alt="Command Log dblclick" ></DocsImage>
 
-When clicking on `dblclick` within the command log, the console outputs the following:
+When clicking on `dblclick` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/dblclick/element-double-clicked-on.png" alt="console.log dblclick" ></DocsImage>
 

@@ -6,7 +6,8 @@ Invoke a function on the previously yielded subject.
 
 <Alert type="info">
 
-If you want to get a property that is not a function on the previously yielded subject, use [`.its()`](/api/commands/its).
+If you want to get a property that is not a function on the previously yielded
+subject, use [`.its()`](/api/commands/its).
 
 </Alert>
 
@@ -53,7 +54,8 @@ Pass in an options object to change the default behavior of `.invoke()`.
 
 **<Icon name="angle-right"></Icon> args...**
 
-Additional arguments to be given to the function call. There is no limit to the number of arguments.
+Additional arguments to be given to the function call. There is no limit to the
+number of arguments.
 
 ## Examples
 
@@ -79,7 +81,8 @@ cy.wrap({ foo: fn }).invoke('foo').should('eq', 'bar') // true
 
 #### Properties that are functions are invoked
 
-In the example below, we use `.invoke()` to force a hidden div to be `'display: block'` so we can interact with its children elements.
+In the example below, we use `.invoke()` to force a hidden div to be
+`'display: block'` so we can interact with its children elements.
 
 ```javascript
 cy.get('div.container')
@@ -129,7 +132,8 @@ cy.get('img').invoke('attr', 'src').should('include', 'myLogo')
 
 ### Arrays
 
-In the above examples, the subject was an object, but `cy.invoke` also works on arrays and allows using numerical index to pick a function to run.
+In the above examples, the subject was an object, but `cy.invoke` also works on
+arrays and allows using numerical index to pick a function to run.
 
 ```javascript
 const reverse = (s) => Cypress._.reverse(s)
@@ -141,8 +145,10 @@ cy.wrap([reverse, double]).invoke(1, 4).should('eq', 16)
 
 ### Invoking an async function
 
-In this example we have a little text input field and we invoke an async action which will disable this input field.
-`.invoke()` will then wait until the Promise resolves and only then will continue executing to check if it really has been disabled.
+In this example we have a little text input field and we invoke an async action
+which will disable this input field. `.invoke()` will then wait until the
+Promise resolves and only then will continue executing to check if it really has
+been disabled.
 
 Our input field
 
@@ -178,13 +184,17 @@ cy.get('[data-cy=my-text-input]').should('be.disabled')
 
 <Alert type="info">
 
-For a full example where invoke is used to await async Vuex store actions, visit the recipe: [Vue + Vuex + REST](https://github.com/cypress-io/cypress-example-recipes)
+For a full example where invoke is used to await async Vuex store actions, visit
+the recipe:
+[Vue + Vuex + REST](https://github.com/cypress-io/cypress-example-recipes)
 
 </Alert>
 
 ### jQuery method
 
-If the parent command yields a jQuery element, we can invoke a jQuery method, like `attr`, `text`, or `val`. To confirm the element's `id` attribute for example:
+If the parent command yields a jQuery element, we can invoke a jQuery method,
+like `attr`, `text`, or `val`. To confirm the element's `id` attribute for
+example:
 
 ```html
 <div id="code-snippet">The code example</div>
@@ -196,7 +206,8 @@ cy.contains('The code example')
   .should('equal', 'code-snippet')
 ```
 
-**Tip:** Cypress has a built-in Chai-jQuery assertion to confirm the attribute. The above example can be written simply as:
+**Tip:** Cypress has a built-in Chai-jQuery assertion to confirm the attribute.
+The above example can be written simply as:
 
 ```js
 cy.contains('The code example').should('have.attr', 'id', 'code-snippet')
@@ -208,7 +219,8 @@ cy.contains('The code example').should('have.attr', 'id', 'code-snippet')
 
 #### Using a Kendo DropDown
 
-If you are using `jQuery` then the `jQuery` wrapped elements will automatically have your 3rd party plugins available to be called.
+If you are using `jQuery` then the `jQuery` wrapped elements will automatically
+have your 3rd party plugins available to be called.
 
 ```javascript
 cy.get('input')
@@ -231,7 +243,9 @@ cy.get('input')
 
 ### Retries
 
-`.invoke()` automatically retries invoking the specified method until the returned value satisfies the attached assertions. The example below passes after 1 second.
+`.invoke()` automatically retries invoking the specified method until the
+returned value satisfies the attached assertions. The example below passes after
+1 second.
 
 ```javascript
 let message = 'hello'
@@ -261,11 +275,17 @@ cy.wrap(english).invoke('greeting').should('equal', 'bye')
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.invoke()` will wait for the `function` to exist on the subject before running.</li><li>`.invoke()` will wait for the promise to resolve if the invoked `function` returns a promise.</li><li>`.invoke()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.invoke()` will wait for the `function` to exist on the subject
+before running.</li><li>`.invoke()` will wait for the promise to resolve if the
+invoked `function` returns a promise.</li><li>`.invoke()` will automatically
+[retry](/guides/core-concepts/retry-ability) until all chained assertions have
+passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.invoke()` can time out waiting for assertions you've added to pass.</li><li>`.invoke()` can time out waiting for a promise you've returned to resolve.</li></List>
+<List><li>`.invoke()` can time out waiting for assertions you've added to
+pass.</li><li>`.invoke()` can time out waiting for a promise you've returned to
+resolve.</li></List>
 
 ## Command Log
 
@@ -282,7 +302,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/invoke/invoke-jquery-show-on-element-for-testing.png" alt="Command Log for invoke" ></DocsImage>
 
-When clicking on `invoke` within the command log, the console outputs the following:
+When clicking on `invoke` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/invoke/log-function-invoked-and-return.png" alt="Console Log for invoke" ></DocsImage>
 

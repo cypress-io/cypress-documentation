@@ -2,11 +2,17 @@
 title: Custom Commands
 ---
 
-Cypress comes with its own API for creating custom commands and overwriting existing commands. The built in Cypress commands use the very same API that's defined below.
+Cypress comes with its own API for creating custom commands and overwriting
+existing commands. The built in Cypress commands use the very same API that's
+defined below.
 
 <Alert type="info">
 
-A great place to define or overwrite commands is in your `cypress/support/commands.js` file, since it is loaded before any test files are evaluated via an import statement in your [supportFile](/guides/references/configuration#Folders-Files) (`cypress/support/index.js` by default).
+A great place to define or overwrite commands is in your
+`cypress/support/commands.js` file, since it is loaded before any test files are
+evaluated via an import statement in your
+[supportFile](/guides/references/configuration#Folders-Files)
+(`cypress/support/index.js` by default).
 
 </Alert>
 
@@ -43,7 +49,8 @@ Pass in an options object to define the implicit behavior of the custom command.
 
 <Alert type="warning">
 
-`options` is only supported for use in `Cypress.Commands.add()` and not supported for use in `Cypress.Commands.overwrite()`
+`options` is only supported for use in `Cypress.Commands.add()` and not
+supported for use in `Cypress.Commands.overwrite()`
 
 </Alert>
 
@@ -57,19 +64,23 @@ The `prevSubject` accepts the following values:
 - `true`: receives the previous subject: **_(child command)_**
 - `optional`: may start a chain, or use an existing chain: **_(dual command)_**
 
-In addition to controlling the command's implicit behavior you can also add declarative subject validations such as:
+In addition to controlling the command's implicit behavior you can also add
+declarative subject validations such as:
 
 - `element`: requires the previous subject be a DOM element
 - `document`: requires the previous subject be the document
 - `window`: requires the previous subject be the window
 
-Internally our built in commands make use of every single one of these combinations above.
+Internally our built in commands make use of every single one of these
+combinations above.
 
 ## Examples
 
 ### Parent Commands
 
-Parent commands always **begin** a new chain of commands. Even if you've chained it off of a previous command, parent commands will always start a new chain, and ignore previously yielded subjects.
+Parent commands always **begin** a new chain of commands. Even if you've chained
+it off of a previous command, parent commands will always start a new chain, and
+ignore previously yielded subjects.
 
 Examples of parent commands:
 
@@ -105,7 +116,9 @@ cy.checkToken('abc123')
 
 #### Download a file
 
-Originally used in [cypress-downloadfile](https://github.com/Xvier/cypress-downloadfile), this command calls other Cypress commands.
+Originally used in
+[cypress-downloadfile](https://github.com/Xvier/cypress-downloadfile), this
+command calls other Cypress commands.
 
 ```javascript
 Cypress.Commands.add('downloadFile', (url, directory, fileName) => {
@@ -268,13 +281,15 @@ cy.createUser({
 
 <strong class="alert-header">Command Log</strong>
 
-Did you know that you can control how your custom commands appear in the Command Log? Read more about [Command Logging](#Command-Logging).
+Did you know that you can control how your custom commands appear in the Command
+Log? Read more about [Command Logging](#Command-Logging).
 
 </Alert>
 
 ### Child Commands
 
-Child commands are always chained off of a **parent** command, or another **child** command.
+Child commands are always chained off of a **parent** command, or another
+**child** command.
 
 The previous subject will automatically be yielded to the callback function.
 
@@ -324,7 +339,8 @@ cy.get('button')
   })
 ```
 
-By setting the `{ prevSubject: true }`, our new `.console()` command will require a subject.
+By setting the `{ prevSubject: true }`, our new `.console()` command will
+require a subject.
 
 Invoking it like this would error:
 
@@ -334,15 +350,21 @@ cy.console() // error about how you can't call console without a subject
 
 <Alert type="info">
 
-Whenever you're using a child command you likely want to use [cy.wrap()](/api/commands/wrap) on the subject. Wrapping it enables you to immediately use more Cypress commands on that subject.
+Whenever you're using a child command you likely want to use
+[cy.wrap()](/api/commands/wrap) on the subject. Wrapping it enables you to
+immediately use more Cypress commands on that subject.
 
 </Alert>
 
 ### Dual Commands
 
-A dual command can either start a chain of commands or be chained off of an existing one. It is basically the hybrid between both a parent and a child command. You will likely rarely use this, and only a handful of our internal commands use this.
+A dual command can either start a chain of commands or be chained off of an
+existing one. It is basically the hybrid between both a parent and a child
+command. You will likely rarely use this, and only a handful of our internal
+commands use this.
 
-Nevertheless, it is useful if your command can work in multiple ways - either with an existing subject or without one.
+Nevertheless, it is useful if your command can work in multiple ways - either
+with an existing subject or without one.
 
 Examples of dual commands:
 
@@ -379,7 +401,9 @@ cy.get('#dialog').dismiss() // with subject
 
 ### Overwrite Existing Commands
 
-You can also modify the behavior of existing Cypress commands. This is useful to always set some defaults to avoid creating another command that ends up using the original.
+You can also modify the behavior of existing Cypress commands. This is useful to
+always set some defaults to avoid creating another command that ends up using
+the original.
 
 #### Overwrite `visit` command
 
@@ -405,9 +429,16 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
 
 <Alert type="info">
 
-We see many of our users creating their own `visitApp` command. We commonly see that all you're doing is swapping out base urls for `development` vs `production` environments.
+We see many of our users creating their own `visitApp` command. We commonly see
+that all you're doing is swapping out base urls for `development` vs
+`production` environments.
 
-This is usually unnecessary because Cypress is already configured to swap out a `baseUrl` that both [cy.visit()](/api/commands/visit) and [cy.request()](/api/commands/request) use. Set the `baseUrl` configuration property in your [configuration](/guides/references/configuration) file (`cypress.json` by default) and override it with the `CYPRESS_BASE_URL` environment variable.
+This is usually unnecessary because Cypress is already configured to swap out a
+`baseUrl` that both [cy.visit()](/api/commands/visit) and
+[cy.request()](/api/commands/request) use. Set the `baseUrl` configuration
+property in your [configuration](/guides/references/configuration) file
+(`cypress.json` by default) and override it with the `CYPRESS_BASE_URL`
+environment variable.
 
 For more complex use cases feel free to overwrite existing commands.
 
@@ -415,7 +446,9 @@ For more complex use cases feel free to overwrite existing commands.
 
 #### Overwrite `type` command
 
-If you are typing into a password field, the password input is masked automatically within your application. But [.type()](/api/commands/type) automatically logs any typed content into the Test Runner's Command Log.
+If you are typing into a password field, the password input is masked
+automatically within your application. But [.type()](/api/commands/type)
+automatically logs any typed content into the Test Runner's Command Log.
 
 ```js
 cy.get('#username').type('username@email.com')
@@ -424,7 +457,10 @@ cy.get('#password').type('superSecret123')
 
 <DocsImage src="/img/api/custom-commands/custom-command-type-no-masked-password.png"></DocsImage>
 
-You may want to mask some values passed to the [.type()](/api/commands/type) command so that sensitive data does not display in screenshots or videos of your test run. This example overwrites the [.type()](/api/commands/type) command to allow you to mask sensitive data in the Test Runner's Command Log.
+You may want to mask some values passed to the [.type()](/api/commands/type)
+command so that sensitive data does not display in screenshots or videos of your
+test run. This example overwrites the [.type()](/api/commands/type) command to
+allow you to mask sensitive data in the Test Runner's Command Log.
 
 ```js
 Cypress.Commands.overwrite('type', (originalFn, element, text, options) => {
@@ -448,7 +484,8 @@ cy.get('#username').type('username@email.com')
 cy.get('#password').type('superSecret123', { sensitive: true })
 ```
 
-Now our sensitive password is not printed to the Test Runner's Command Log when `sensitive: true` is passed as an option to [.type()](/api/commands/type).
+Now our sensitive password is not printed to the Test Runner's Command Log when
+`sensitive: true` is passed as an option to [.type()](/api/commands/type).
 
 <DocsImage src="/img/api/custom-commands/custom-command-type-masked-password.png"></DocsImage>
 
@@ -456,13 +493,16 @@ Now our sensitive password is not printed to the Test Runner's Command Log when 
 
 <strong class="alert-header">Keep passwords secret blog</strong>
 
-Check out [this blog](https://glebbahmutov.com/blog/keep-passwords-secret-in-e2e-tests/) to explore another way to keep passwords secret within your tests.
+Check out
+[this blog](https://glebbahmutov.com/blog/keep-passwords-secret-in-e2e-tests/)
+to explore another way to keep passwords secret within your tests.
 
 </Alert>
 
 #### Overwrite `screenshot` command
 
-This example overwrites [cy.screenshot()](/api/commands/screenshot) to always wait until a certain element is visible.
+This example overwrites [cy.screenshot()](/api/commands/screenshot) to always
+wait until a certain element is visible.
 
 ```javascript
 Cypress.Commands.overwrite(
@@ -484,7 +524,8 @@ Cypress.Commands.overwrite(
 
 #### Overwrite `contains` command
 
-This example overwrites [.contains()](/api/commands/contains) to always have the `matchCase` option set to `false`.
+This example overwrites [.contains()](/api/commands/contains) to always have the
+`matchCase` option set to `false`.
 
 ```js
 Cypress.Commands.overwrite(
@@ -506,17 +547,20 @@ Cypress.Commands.overwrite(
 
 ## Validations
 
-As noted in the [Arguments](#Arguments) above, you can also set `prevSubject` to one of:
+As noted in the [Arguments](#Arguments) above, you can also set `prevSubject` to
+one of:
 
 - `element`
 - `document`
 - `window`
 
-When doing so Cypress will automatically validate your subject to ensure it conforms to one of those types.
+When doing so Cypress will automatically validate your subject to ensure it
+conforms to one of those types.
 
 <Alert type="info">
 
-Adding validations is optional. Passing `{ prevSubject: true }` will require a subject, but not validate its type.
+Adding validations is optional. Passing `{ prevSubject: true }` will require a
+subject, but not validate its type.
 
 </Alert>
 
@@ -636,19 +680,31 @@ cy.wrap(null).contains() // has subject, but not `element`, will error
 
 ### Command Logging
 
-When creating your own custom command, you can control how it appears and behaves in the Command Log.
+When creating your own custom command, you can control how it appears and
+behaves in the Command Log.
 
-Take advantage of the [`Cypress.log()`](/api/cypress-api/cypress-log) API. When you're issuing many internal Cypress commands, consider passing `{ log: false }` to those commands, and programmatically controlling your custom command. This will cleanup the Command Log and be much more visually appealing and understandable.
+Take advantage of the [`Cypress.log()`](/api/cypress-api/cypress-log) API. When
+you're issuing many internal Cypress commands, consider passing `{ log: false }`
+to those commands, and programmatically controlling your custom command. This
+will cleanup the Command Log and be much more visually appealing and
+understandable.
 
 ### Best Practices
 
 #### 1. Don't make everything a custom command
 
-Custom commands work well when you're needing to describe behavior that's desirable across **all of your tests**. Examples would be a `cy.setup()` or `cy.login()` or extending your application's behavior like `cy.get('.dropdown').dropdown('Apples')`. These are specific to your application and can be used everywhere.
+Custom commands work well when you're needing to describe behavior that's
+desirable across **all of your tests**. Examples would be a `cy.setup()` or
+`cy.login()` or extending your application's behavior like
+`cy.get('.dropdown').dropdown('Apples')`. These are specific to your application
+and can be used everywhere.
 
-However, this pattern can be used and abused. Let's not forget - writing Cypress tests is **JavaScript**, and it's often more efficient to write a function for repeatable behavior that's specific to only **a single spec file**.
+However, this pattern can be used and abused. Let's not forget - writing Cypress
+tests is **JavaScript**, and it's often more efficient to write a function for
+repeatable behavior that's specific to only **a single spec file**.
 
-If you're working on a `search_spec.js` file and want to compose several repeatable actions together, you should first ask yourself:
+If you're working on a `search_spec.js` file and want to compose several
+repeatable actions together, you should first ask yourself:
 
 > Can this be written as a function?
 
@@ -742,38 +798,64 @@ it('paginates many search results', () => {
 
 #### 2. Don't overcomplicate things
 
-Every custom command you write is generally an abstraction over a series of internal commands. That means you and your team members exert much more mental effort to understand what your custom command does.
+Every custom command you write is generally an abstraction over a series of
+internal commands. That means you and your team members exert much more mental
+effort to understand what your custom command does.
 
-There's no reason to add this level of complexity when you're only wrapping a couple commands.
+There's no reason to add this level of complexity when you're only wrapping a
+couple commands.
 
 Don't do things like:
 
-- **<Icon name="exclamation-triangle" color="red"></Icon>** `cy.clickButton(selector)`
+- **<Icon name="exclamation-triangle" color="red"></Icon>**
+  `cy.clickButton(selector)`
 - **<Icon name="exclamation-triangle" color="red"></Icon>** `.shouldBeVisible()`
 
-This first custom command is wrapping `cy.get(selector).click()`. Going down this route would lead to creating dozens or even hundreds of custom commands to cover every possible combination of element interactions. It's completely unnecessary.
+This first custom command is wrapping `cy.get(selector).click()`. Going down
+this route would lead to creating dozens or even hundreds of custom commands to
+cover every possible combination of element interactions. It's completely
+unnecessary.
 
-The `.shouldBeVisible()` custom command isn't worth the trouble or abstraction when you can already use: `.should('be.visible')`
+The `.shouldBeVisible()` custom command isn't worth the trouble or abstraction
+when you can already use: `.should('be.visible')`
 
-Testing in Cypress is all about **readability** and **simplicity**. You don't have to do that much actual programming to get a lot done. You also don't need to worry about keeping your code as DRY as possible. Test code serves a different purpose than app code. Understandability and debuggability should be prioritized above all else.
+Testing in Cypress is all about **readability** and **simplicity**. You don't
+have to do that much actual programming to get a lot done. You also don't need
+to worry about keeping your code as DRY as possible. Test code serves a
+different purpose than app code. Understandability and debuggability should be
+prioritized above all else.
 
-Try not to overcomplicate things and create too many abstractions. When in doubt, use a regular function for individual spec files.
+Try not to overcomplicate things and create too many abstractions. When in
+doubt, use a regular function for individual spec files.
 
 #### 3. Don't do too much in a single command
 
-Make your custom commands composable and as unopinionated as possible. Cramming too much into them makes them inflexible and requires more and more options passing to control their behavior.
+Make your custom commands composable and as unopinionated as possible. Cramming
+too much into them makes them inflexible and requires more and more options
+passing to control their behavior.
 
-Try to add either zero or as few assertions as possible in your custom command. Those tend to shape your command into a much more rigid structure. Sometimes this is unavoidable, but a best practice is to let the calling code choose when and how to use assertions.
+Try to add either zero or as few assertions as possible in your custom command.
+Those tend to shape your command into a much more rigid structure. Sometimes
+this is unavoidable, but a best practice is to let the calling code choose when
+and how to use assertions.
 
 #### 4. Skip your UI as much as possible
 
-Custom commands are a great way to abstract away setup (specific to your app). When doing those kinds of tasks, skip as much of the UI as possible. Use [`cy.request()`](/api/commands/request) to login, set cookies or localStorage directly, stub and mock your applications functions, and / or trigger events programmatically.
+Custom commands are a great way to abstract away setup (specific to your app).
+When doing those kinds of tasks, skip as much of the UI as possible. Use
+[`cy.request()`](/api/commands/request) to login, set cookies or localStorage
+directly, stub and mock your applications functions, and / or trigger events
+programmatically.
 
-Having custom commands repeat the same UI actions over and over again is slow, and unnecessary. Try to take as many shortcuts as possible.
+Having custom commands repeat the same UI actions over and over again is slow,
+and unnecessary. Try to take as many shortcuts as possible.
 
 #### 5. Write TypeScript definitions
 
-You can describe the method signature for your custom command, allowing IntelliSense to show helpful documentation. See the [`cypress-example-todomvc`](https://github.com/cypress-io/cypress-example-todomvc#cypress-intellisense) repository for a working example.
+You can describe the method signature for your custom command, allowing
+IntelliSense to show helpful documentation. See the
+[`cypress-example-todomvc`](https://github.com/cypress-io/cypress-example-todomvc#cypress-intellisense)
+repository for a working example.
 
 ## History
 
@@ -783,9 +865,15 @@ You can describe the method signature for your custom command, allowing IntelliS
 
 ## See also
 
-- See how to add [TypeScript support for custom commands](/guides/tooling/typescript-support#Types-for-custom-commands)
-- Blog posts [Writing a Custom Cypress Command](https://glebbahmutov.com/blog/writing-custom-cypress-command/) and [How to Publish Custom Cypress Command on NPM](https://glebbahmutov.com/blog/publishing-cypress-command/).
+- See how to add
+  [TypeScript support for custom commands](/guides/tooling/typescript-support#Types-for-custom-commands)
+- Blog posts
+  [Writing a Custom Cypress Command](https://glebbahmutov.com/blog/writing-custom-cypress-command/)
+  and
+  [How to Publish Custom Cypress Command on NPM](https://glebbahmutov.com/blog/publishing-cypress-command/).
 - [Plugins using custom commands](/plugins/directory#custom-commands)
-- [`cypress-xpath`](https://github.com/cypress-io/cypress-xpath) adds a `cy.xpath()` command and shows best practices for writing custom commands: retries, logging, and TypeScript definition.
+- [`cypress-xpath`](https://github.com/cypress-io/cypress-xpath) adds a
+  `cy.xpath()` command and shows best practices for writing custom commands:
+  retries, logging, and TypeScript definition.
 - [Cypress.log()](/api/cypress-api/cypress-log)
 - [Recipe: Logging In](/examples/examples/recipes)

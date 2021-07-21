@@ -17,6 +17,7 @@
     "serve:dist": "node scripts/server.js",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint:style": "stylelint **/*.{vue,css} --ignore-path .gitignore",
+    "lint:markdown": "prettier --write '**/*.md'",
     "lint": "yarn lint:js && yarn lint:style",
     "test": "./node_modules/.bin/cypress open",
     "transform": "node scripts/transform.js",

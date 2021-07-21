@@ -33,7 +33,8 @@ cy.exec('npm run build')
 
 **<Icon name="angle-right"></Icon> command** **_(String)_**
 
-The system command to be executed from the project root (the directory that contains the default `cypress.json` configuration file).
+The system command to be executed from the project root (the directory that
+contains the default `cypress.json` configuration file).
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -58,7 +59,9 @@ Pass in an options object to change the default behavior of `cy.exec()`.
 
 ### Command
 
-`cy.exec()` provides an escape hatch for running arbitrary system commands, so you can take actions necessary for your test outside the scope of Cypress. This is great for:
+`cy.exec()` provides an escape hatch for running arbitrary system commands, so
+you can take actions necessary for your test outside the scope of Cypress. This
+is great for:
 
 - Running build scripts
 - Seeding your test database
@@ -109,9 +112,11 @@ cy.wait('@postComment').then(({ response }) => {
 
 #### Change the timeout
 
-You can increase the time allowed to execute the command, although _we don't recommend executing commands that take a long time to exit_.
+You can increase the time allowed to execute the command, although _we don't
+recommend executing commands that take a long time to exit_.
 
-Cypress will _not_ continue running any other commands until `cy.exec()` has finished, so a long-running command will drastically slow down your test cycle.
+Cypress will _not_ continue running any other commands until `cy.exec()` has
+finished, so a long-running command will drastically slow down your test cycle.
 
 ```javascript
 // will fail if script takes longer than 20 seconds to finish
@@ -146,11 +151,14 @@ cy.exec('echo $USERNAME', { env: { USERNAME: 'johndoe' } })
 - A task that runs a watch
 - Any process that needs to be manually interrupted to stop
 
-A command must exit within the `execTimeout` or Cypress will kill the command's process and fail the current test.
+A command must exit within the `execTimeout` or Cypress will kill the command's
+process and fail the current test.
 
 ### Reset timeout via `Cypress.config()`
 
-You can change the timeout of `cy.exec()` for the remainder of the tests by setting the new values for `execTimeout` within [Cypress.config()](/api/cypress-api/config).
+You can change the timeout of `cy.exec()` for the remainder of the tests by
+setting the new values for `execTimeout` within
+[Cypress.config()](/api/cypress-api/config).
 
 ```js
 Cypress.config('execTimeout', 30000)
@@ -159,9 +167,12 @@ Cypress.config('execTimeout') // => 30000
 
 ### Set timeout in the test configuration
 
-You can configure the `cy.exec()` timeout within a suite or test by passing the new configuration value within the [test configuration](/guides/references/configuration#Test-Configuration).
+You can configure the `cy.exec()` timeout within a suite or test by passing the
+new configuration value within the
+[test configuration](/guides/references/configuration#Test-Configuration).
 
-This will set the timeout throughout the duration of the tests, then return it to the default `execTimeout` when complete.
+This will set the timeout throughout the duration of the tests, then return it
+to the default `execTimeout` when complete.
 
 ```js
 describe('has data available from database', { execTimeout: 90000 }, () => {
@@ -181,15 +192,20 @@ describe('has data available from database', { execTimeout: 90000 }, () => {
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.exec()` requires being chained off of `cy`.</li><li>`cy.exec()` requires the executed system command to eventually exit.</li><li>`cy.exec()` requires that the exit code be `0` when `failOnNonZeroExit` is `true`.</li></List>
+<List><li>`cy.exec()` requires being chained off of `cy`.</li><li>`cy.exec()`
+requires the executed system command to eventually exit.</li><li>`cy.exec()`
+requires that the exit code be `0` when `failOnNonZeroExit` is
+`true`.</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.exec()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`cy.exec()` will only run assertions you have chained once, and will
+not [retry](/guides/core-concepts/retry-ability).</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.exec()` can time out waiting for the system command to exist.</li></List>
+<List><li>`cy.exec()` can time out waiting for the system command to
+exist.</li></List>
 
 ## Command Log
 
@@ -207,7 +223,8 @@ The command above will display in the Command Log as:
 
 <DocsImage src="/img/api/exec/exec-cat-in-shell.png" alt="Command Log exec" ></DocsImage>
 
-When clicking on the `exec` command within the command log, the console outputs the following:
+When clicking on the `exec` command within the command log, the console outputs
+the following:
 
 <DocsImage src="/img/api/exec/console-shows-code-shell-stderr-and-stdout-for-exec.png" alt="console.log exec" ></DocsImage>
 

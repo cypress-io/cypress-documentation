@@ -6,7 +6,8 @@ Get the immediately preceding sibling of each element in a set of the elements.
 
 <Alert type="info">
 
-The querying behavior of this command matches exactly how [`.prev()`](http://api.jquery.com/prev) works in jQuery.
+The querying behavior of this command matches exactly how
+[`.prev()`](http://api.jquery.com/prev) works in jQuery.
 
 </Alert>
 
@@ -97,15 +98,22 @@ cy.get('li').prev('.active')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.prev()` requires being chained off a command that yields DOM element(s).</li></List>
+<List><li>`.prev()` requires being chained off a command that yields DOM
+element(s).</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.prev()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.prev()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.prev()` will automatically
+[retry](/guides/core-concepts/retry-ability) until the element(s)
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.prev()`
+will automatically [retry](/guides/core-concepts/retry-ability) until all
+chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.prev()` can time out waiting for the element(s) to [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.prev()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`.prev()` can time out waiting for the element(s) to
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.prev()`
+can time out waiting for assertions you've added to pass.</li></List>
 
 ## Command Log
 
@@ -119,7 +127,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/prev/find-prev-element-in-list-of-els.png" alt="Command Log prev" ></DocsImage>
 
-When clicking on `prev` within the command log, the console outputs the following:
+When clicking on `prev` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/prev/previous-element-in-console-log.png" alt="Console Log prev" ></DocsImage>
 

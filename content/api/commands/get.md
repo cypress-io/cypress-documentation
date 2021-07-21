@@ -2,11 +2,13 @@
 title: get
 ---
 
-Get one or more DOM elements by selector or [alias](/guides/core-concepts/variables-and-aliases).
+Get one or more DOM elements by selector or
+[alias](/guides/core-concepts/variables-and-aliases).
 
 <Alert type="info">
 
-The querying behavior of this command is similar to how [`$(...)`](http://api.jquery.com/jQuery/) works in jQuery.
+The querying behavior of this command is similar to how
+[`$(...)`](http://api.jquery.com/jQuery/) works in jQuery.
 
 </Alert>
 
@@ -35,11 +37,14 @@ A selector used to filter matching DOM elements.
 
 **<Icon name="angle-right"></Icon> alias** **_(String)_**
 
-An alias as defined using the [`.as()`](/api/commands/as) command and referenced with the `@` character and the name of the alias.
+An alias as defined using the [`.as()`](/api/commands/as) command and referenced
+with the `@` character and the name of the alias.
 
-You can use `cy.get()` for aliases of primitives, regular objects, or even DOM elements.
+You can use `cy.get()` for aliases of primitives, regular objects, or even DOM
+elements.
 
-When using aliases with DOM elements, Cypress will query the DOM again if the previously aliased DOM element has gone stale.
+When using aliases with DOM elements, Cypress will query the DOM again if the
+previously aliased DOM element has gone stale.
 
 <Alert type="info">
 
@@ -126,7 +131,9 @@ cy.get('#id\\.\\.\\.1234') // escape the character with \\
 
 #### `cy.get()` in the [`.within()`](/api/commands/within) command
 
-Since `cy.get()` is chained off of `cy`, it always looks for the selector within the entire `document`. The only exception is when used inside a [.within()](/api/commands/within) command.
+Since `cy.get()` is chained off of `cy`, it always looks for the selector within
+the entire `document`. The only exception is when used inside a
+[.within()](/api/commands/within) command.
 
 ```javascript
 cy.get('form').within(() => {
@@ -137,7 +144,11 @@ cy.get('form').within(() => {
 
 ### Get vs Find
 
-The `cy.get` command always starts its search from the [cy.root](https://on.cypress.io/root) element. In most cases, it is the `document` element, unless used inside the [.within()](/api/commands/within) command. The [.find](https://on.cypress.io/find) command starts its search from the current subject.
+The `cy.get` command always starts its search from the
+[cy.root](https://on.cypress.io/root) element. In most cases, it is the
+`document` element, unless used inside the [.within()](/api/commands/within)
+command. The [.find](https://on.cypress.io/find) command starts its search from
+the current subject.
 
 ```html
 <div class="test-title">cy.get vs .find</div>
@@ -163,7 +174,8 @@ cy.get('#comparison')
 
 ### Alias
 
-For a detailed explanation of aliasing, [read more about aliasing here](/guides/core-concepts/variables-and-aliases#Aliases).
+For a detailed explanation of aliasing,
+[read more about aliasing here](/guides/core-concepts/variables-and-aliases#Aliases).
 
 #### Get the aliased 'todos' elements
 
@@ -210,15 +222,22 @@ it('disables on click', () => {
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.get()` requires being chained off a command that yields DOM element(s).</li></List>
+<List><li>`cy.get()` requires being chained off a command that yields DOM
+element(s).</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.get()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`cy.get()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`cy.get()` will automatically
+[retry](/guides/core-concepts/retry-ability) until the element(s)
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`cy.get()`
+will automatically [retry](/guides/core-concepts/retry-ability) until all
+chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.get()` can time out waiting for the element(s) to [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`cy.get()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`cy.get()` can time out waiting for the element(s) to
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`cy.get()`
+can time out waiting for assertions you've added to pass.</li></List>
 
 ## Command Log
 
@@ -232,7 +251,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/get/get-element-and-make-an-assertion.png" alt="Command Log get" ></DocsImage>
 
-When clicking on the `get` command within the command log, the console outputs the following:
+When clicking on the `get` command within the command log, the console outputs
+the following:
 
 <DocsImage src="/img/api/get/console-log-get-command-and-elements-found.png" alt="Console Log get" ></DocsImage>
 

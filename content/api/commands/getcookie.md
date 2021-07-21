@@ -109,7 +109,10 @@ cy.get('#submit')
 
 <Alert type="info">
 
-Check out our example recipes using `cy.getCookie()` to test [logging in using HTML web forms](/examples/examples/recipes#Logging-In), [logging in using XHR web forms](/examples/examples/recipes#Logging-In) and [logging in with single sign on](/examples/examples/recipes#Logging-In)
+Check out our example recipes using `cy.getCookie()` to test
+[logging in using HTML web forms](/examples/examples/recipes#Logging-In),
+[logging in using XHR web forms](/examples/examples/recipes#Logging-In) and
+[logging in with single sign on](/examples/examples/recipes#Logging-In)
 
 </Alert>
 
@@ -121,7 +124,8 @@ Check out our example recipes using `cy.getCookie()` to test [logging in using H
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `cy.getCookie()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).
+- `cy.getCookie()` will only run assertions you have chained once, and will not
+  [retry](/guides/core-concepts/retry-ability).
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
@@ -129,7 +133,9 @@ Check out our example recipes using `cy.getCookie()` to test [logging in using H
 
 <Alert type="warning">
 
-Because `cy.getCookie()` is asynchronous it is technically possible for there to be a timeout while talking to the internal Cypress automation APIs. But for practical purposes it should never happen.
+Because `cy.getCookie()` is asynchronous it is technically possible for there to
+be a timeout while talking to the internal Cypress automation APIs. But for
+practical purposes it should never happen.
 
 </Alert>
 
@@ -143,7 +149,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/getcookie/get-browser-cookie-and-make-assertions-about-object.png" alt="Command Log getcookie" ></DocsImage>
 
-When clicking on `getCookie` within the command log, the console outputs the following:
+When clicking on `getCookie` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/getcookie/inspect-cookie-object-properties-in-console.png" alt="Console Log getcookie" ></DocsImage>
 

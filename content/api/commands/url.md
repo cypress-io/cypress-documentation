@@ -72,7 +72,8 @@ cy.location('href') // these yield the same string
 
 #### URL versus href
 
-Given the remote URL, `http://localhost:8000/index.html`, all 3 of these assertions are the same.
+Given the remote URL, `http://localhost:8000/index.html`, all 3 of these
+assertions are the same.
 
 ```javascript
 cy.location('href').should('include', '/index.html')
@@ -84,15 +85,20 @@ cy.url().should('include', '/index.html')
 
 `href` and `toString` come from the `window.location` spec.
 
-But you may be wondering where the URL property comes from. Per the `window.location` spec, there actually isn't a URL property on the `location` object.
+But you may be wondering where the URL property comes from. Per the
+`window.location` spec, there actually isn't a URL property on the `location`
+object.
 
-`cy.url()` exists because it's what most developers naturally assume would return them the full current URL. We almost never refer to the URL as an `href`.
+`cy.url()` exists because it's what most developers naturally assume would
+return them the full current URL. We almost never refer to the URL as an `href`.
 
 #### Hardcoded versus using the configuration object
 
-Instead of hardcoding the URL you can use the `baseUrl` of the [Cypress configuration](/guides/references/configuration).
+Instead of hardcoding the URL you can use the `baseUrl` of the
+[Cypress configuration](/guides/references/configuration).
 
-Given the remote URL, `http://localhost:8000/index.html`, these assertions are the same.
+Given the remote URL, `http://localhost:8000/index.html`, these assertions are
+the same.
 
 ```javascript
 cy.url().should('eq', 'http://localhost:8000/index.html')
@@ -113,11 +119,14 @@ cy.url().should('contain', '#users/new')
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.url()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`cy.url()` will automatically
+[retry](/guides/core-concepts/retry-ability) until all chained assertions have
+passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.url()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`cy.url()` can time out waiting for assertions you've added to
+pass.</li></List>
 
 ## Command Log
 

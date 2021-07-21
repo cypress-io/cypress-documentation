@@ -60,11 +60,14 @@ cy.document().its('contentType').should('eq', 'text/html')
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.document()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`cy.document()` will automatically
+[retry](/guides/core-concepts/retry-ability) until all chained assertions have
+passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.document()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`cy.document()` can time out waiting for assertions you've added to
+pass.</li></List>
 
 ## Command Log
 
@@ -78,7 +81,8 @@ The command above will display in the Command Log as:
 
 <DocsImage src="/img/api/document/get-document-of-application-in-command-log.png" alt="Command log document" ></DocsImage>
 
-When clicking on `document` within the command log, the console outputs the following:
+When clicking on `document` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/document/console-yields-the-document-of-aut.png" alt="console.log document" ></DocsImage>
 

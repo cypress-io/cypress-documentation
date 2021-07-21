@@ -6,7 +6,8 @@ Control the size and orientation of the screen for your application.
 
 <Alert type="info">
 
-You can set the viewport's width and height globally by defining `viewportWidth` and `viewportHeight` in the [configuration](/guides/references/configuration).
+You can set the viewport's width and height globally by defining `viewportWidth`
+and `viewportHeight` in the [configuration](/guides/references/configuration).
 
 </Alert>
 
@@ -65,7 +66,8 @@ A preset dimension to set the viewport. Preset supports the following options:
 
 **<Icon name="angle-right"></Icon> orientation** **_(String)_**
 
-The orientation of the screen. The _default orientation_ is `portrait`. Pass `landscape` as the orientation to reverse the width/height.
+The orientation of the screen. The _default orientation_ is `portrait`. Pass
+`landscape` as the orientation to reverse the width/height.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -77,7 +79,8 @@ Pass in an options object to change the default behavior of `cy.viewport()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.viewport()` yields `null`.</li><li>`cy.viewport()` cannot be chained further.</li></List>
+<List><li>`cy.viewport()` yields `null`.</li><li>`cy.viewport()` cannot be
+chained further.</li></List>
 
 ## Examples
 
@@ -175,21 +178,26 @@ cy.viewport('iphone-6', 'landscape')
 
 #### `devicePixelRatio` is not simulated
 
-Follow [#7075](https://github.com/cypress-io/cypress/issues/7075) if you need this supported.
+Follow [#7075](https://github.com/cypress-io/cypress/issues/7075) if you need
+this supported.
 
 ### Restores
 
 #### Cypress will restore the viewport in the snapshot
 
-When hovering over each command, Cypress will automatically display the snapshot in the viewport dimensions that existed when that command ran.
+When hovering over each command, Cypress will automatically display the snapshot
+in the viewport dimensions that existed when that command ran.
 
 ### Defaults
 
 #### Default sizing
 
-By default, until you issue a `cy.viewport()` command, Cypress sets the width to `1000px` and the height to `660px` by default.
+By default, until you issue a `cy.viewport()` command, Cypress sets the width to
+`1000px` and the height to `660px` by default.
 
-You can [change these default dimensions](/guides/references/configuration#Viewport) by adding the following to your configuration file (`cypress.json` by default):
+You can
+[change these default dimensions](/guides/references/configuration#Viewport) by
+adding the following to your configuration file (`cypress.json` by default):
 
 ```json
 {
@@ -198,21 +206,29 @@ You can [change these default dimensions](/guides/references/configuration#Viewp
 }
 ```
 
-Additionally, Cypress automatically sets the viewport to its default size between each test.
+Additionally, Cypress automatically sets the viewport to its default size
+between each test.
 
 ### Scaling
 
 #### Auto Scaling
 
-By default, if your screen is not large enough to display all of the current dimension's pixels, Cypress will scale and center your application within the Cypress runner to accommodate.
+By default, if your screen is not large enough to display all of the current
+dimension's pixels, Cypress will scale and center your application within the
+Cypress runner to accommodate.
 
-Scaling the app should not affect any calculations or behavior of your application (in fact it won't even know it's being scaled).
+Scaling the app should not affect any calculations or behavior of your
+application (in fact it won't even know it's being scaled).
 
-The upsides to this are that tests should consistently pass or fail regardless of a developers' screen size. Tests will also consistently run in `CI` because all of the viewports will be the same no matter what machine Cypress runs on.
+The upsides to this are that tests should consistently pass or fail regardless
+of a developers' screen size. Tests will also consistently run in `CI` because
+all of the viewports will be the same no matter what machine Cypress runs on.
 
 ### Reset viewport via `Cypress.config()`
 
-You can change the size of the viewport height and width for the remainder of the tests by setting the new values for `viewportHeight` or `viewportWidth` within [Cypress.config()](/api/cypress-api/config).
+You can change the size of the viewport height and width for the remainder of
+the tests by setting the new values for `viewportHeight` or `viewportWidth`
+within [Cypress.config()](/api/cypress-api/config).
 
 ```js
 Cypress.config('viewportWidth', 800)
@@ -221,9 +237,12 @@ Cypress.config('viewportWidth') // => 800
 
 ### Set viewport in the test configuration
 
-You can configure the size of the viewport height and width within a suite or test by passing the new configuration value within the [test configuration](/guides/references/configuration#Test-Configuration).
+You can configure the size of the viewport height and width within a suite or
+test by passing the new configuration value within the
+[test configuration](/guides/references/configuration#Test-Configuration).
 
-This will set the height and width throughout the duration of the tests, then return it to the default `viewportHeight` and `viewportWidth` when complete.
+This will set the height and width throughout the duration of the tests, then
+return it to the default `viewportHeight` and `viewportWidth` when complete.
 
 ```js
 describe(
@@ -277,7 +296,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/viewport/viewport-size-width-and-height-changes-and-is-shown-in-the-commands.png" alt="Command Log viewport" ></DocsImage>
 
-When clicking on `viewport` within the command log, the console outputs the following:
+When clicking on `viewport` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/viewport/console-log-shows-width-and-height-of-tested-viewport.png" alt="Console Log viewport" ></DocsImage>
 
@@ -294,7 +314,12 @@ When clicking on `viewport` within the command log, the console outputs the foll
 
 ## See also
 
-- Read blog post [Use meaningful smoke tests](https://www.cypress.io/blog/2019/12/06/use-meaningful-smoke-tests/) where we run the same test with different viewport resolutions
-- Read blog post [Generate High-Resolution Videos and Screenshots](https://www.cypress.io/blog/2021/03/01/generate-high-resolution-videos-and-screenshots/) to learn how to change the browser's window size to capture screenshots and videos with more detail
+- Read blog post
+  [Use meaningful smoke tests](https://www.cypress.io/blog/2019/12/06/use-meaningful-smoke-tests/)
+  where we run the same test with different viewport resolutions
+- Read blog post
+  [Generate High-Resolution Videos and Screenshots](https://www.cypress.io/blog/2021/03/01/generate-high-resolution-videos-and-screenshots/)
+  to learn how to change the browser's window size to capture screenshots and
+  videos with more detail
 - [Configuration](/guides/references/configuration)
 - [Cypress.config()](/api/cypress-api/config)
