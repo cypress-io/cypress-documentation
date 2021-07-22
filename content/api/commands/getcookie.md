@@ -41,6 +41,7 @@ Pass in an options object to change the default behavior of `cy.getCookie()`.
 - `domain`
 - `expiry` _(if specified)_
 - `httpOnly`
+- `hostOnly` _(if specified)_
 - `name`
 - `path`
 - `sameSite` _(if specified)_
@@ -158,6 +159,7 @@ following:
 
 | Version                                     | Changes                                                                                            |
 | ------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| [8.1.0](/guides/references/changelog#8-1-0) | Added `hostOnly` property.                                                                         |
 | [5.0.0](/guides/references/changelog#5-0-0) | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.            |
 | [4.3.0](/guides/references/changelog#4-3-0) | Added `sameSite` property when the `experimentalGetCookiesSameSite` configuration value is `true`. |
 

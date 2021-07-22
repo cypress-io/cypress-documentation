@@ -33,12 +33,14 @@ The value of the cookie to set.
 
 Pass in an options object to change the default behavior of `cy.setCookie()`.
 
-| Option     | Default                                                        | Description                                                                                                                                                                                                           |
-| ---------- | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `log`      | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                                                                                                                              |
-| `domain`   | `window.location.hostname`                                     | The domain the cookie is visible to                                                                                                                                                                                   |
-| `expiry`   | 20 years into the future                                       | When the cookie expires, specified in seconds since [Unix Epoch](https://en.wikipedia.org/wiki/Unix_time).                                                                                                            |
-| `httpOnly` | `false`                                                        | Whether the cookie is an HTTP only cookie                                                                                                                                                                             |
+| Option     | Default                    | Description                                                                                                |
+| ---------- | -------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `log`      | `true`                     | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                   |
+| `domain`   | `window.location.hostname` | The domain the cookie is visible to                                                                        |
+| `expiry`   | 20 years into the future   | When the cookie expires, specified in seconds since [Unix Epoch](https://en.wikipedia.org/wiki/Unix_time). |
+| `httpOnly` | `false`                    | Whether the cookie is an HTTP only cookie                                                                  |
+| `hostOnly` | `false`                    | Whether the cookie should apply only to the supplied domain, not subdomains.                               | S |
+
 | `path`     | `/`                                                            | The cookie path                                                                                                                                                                                                       |
 | `secure`   | `false`                                                        | Whether the cookie is a secure cookie                                                                                                                                                                                 |
 | `timeout`  | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.setCookie()` to resolve before [timing out](#Timeouts)                                                                                                                                           |
@@ -51,6 +53,7 @@ Pass in an options object to change the default behavior of `cy.setCookie()`.
 - `domain`
 - `expiry` _(if specified)_
 - `httpOnly`
+- `hostOnly` _(if specified)_
 - `name`
 - `path`
 - `sameSite` _(if specified)_
@@ -117,6 +120,7 @@ following:
 
 | Version                                       | Changes                                                                                                                                          |
 | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [8.1.0](/guides/references/changelog#8-1-0)   | Added `hostOnly` property.                                                                                                                       |
 | [5.0.0](/guides/references/changelog#5-0-0)   | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.                                                          |
 | [4.3.0](/guides/references/changelog#4-3-0)   | Added `sameSite` property when the [experimentalGetCookiesSameSite](/guides/references/configuration#Experiments) configuration value is `true`. |
 | [0.16.0](/guides/references/changelog#0-16-0) | `cy.setCookie()` command added                                                                                                                   |
