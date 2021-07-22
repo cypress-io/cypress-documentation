@@ -81,7 +81,8 @@ cy.getCookie('session_id').should(
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `cy.setCookie()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).
+- `cy.setCookie()` will only run assertions you have chained once, and will not
+  [retry](/guides/core-concepts/retry-ability).
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
@@ -89,7 +90,9 @@ cy.getCookie('session_id').should(
 
 <Alert type="warning">
 
-Because `cy.setCookie()` is asynchronous it is technically possible for there to be a timeout while talking to the internal Cypress automation APIs. But for practical purposes it should never happen.
+Because `cy.setCookie()` is asynchronous it is technically possible for there to
+be a timeout while talking to the internal Cypress automation APIs. But for
+practical purposes it should never happen.
 
 </Alert>
 
@@ -105,7 +108,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/setcookie/set-cookie-on-browser-for-testing.png" alt="Command Log setcookie" ></DocsImage>
 
-When clicking on `setCookie` within the command log, the console outputs the following:
+When clicking on `setCookie` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/setcookie/see-cookie-properties-expiry-domain-and-others-in-test.png" alt="Console Log setcookie" ></DocsImage>
 

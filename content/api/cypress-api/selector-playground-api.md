@@ -2,7 +2,8 @@
 title: Cypress.SelectorPlayground
 ---
 
-The [Selector Playground](/guides/core-concepts/test-runner#Selector-Playground) exposes APIs that enable you to:
+The [Selector Playground](/guides/core-concepts/test-runner#Selector-Playground)
+exposes APIs that enable you to:
 
 - Change the default selector strategy
 - Override the selectors that are returned per element
@@ -38,7 +39,8 @@ An object containing any or all of the following options:
 
 **<Icon name="angle-right"></Icon> $el** **_(Object)_**
 
-The [jQuery element](http://api.jquery.com/Types/#jQuery) that you want to get the selector value for.
+The [jQuery element](http://api.jquery.com/Types/#jQuery) that you want to get
+the selector value for.
 
 ## Examples
 
@@ -54,7 +56,8 @@ Cypress.SelectorPlayground.defaults({
 
 ### onElement Callback
 
-Set a custom function for determining the selector for an element. Falls back to default behavior if returning a falsey value.
+Set a custom function for determining the selector for an element. Falls back to
+default behavior if returning a falsey value.
 
 ```javascript
 Cypress.SelectorPlayground.defaults({
@@ -70,7 +73,8 @@ Cypress.SelectorPlayground.defaults({
 
 ### Get Selector
 
-Returns you the selector value for a given element as determined by the selector strategy.
+Returns you the selector value for a given element as determined by the selector
+strategy.
 
 For example, consider this HTML fragment.
 
@@ -78,14 +82,16 @@ For example, consider this HTML fragment.
 <button id="bingo" class="number3">Cup of tea</button>
 ```
 
-With the default selector strategy, the selector value will be `'#bingo'` because IDs have priority over classes.
+With the default selector strategy, the selector value will be `'#bingo'`
+because IDs have priority over classes.
 
 ```js
 const $el = Cypress.$('button')
 const selector = Cypress.SelectorPlayground.getSelector($el) // '#bingo'
 ```
 
-With a custom selector strategy that favours classes, the selector value will be `'.number3'`.
+With a custom selector strategy that favours classes, the selector value will be
+`'.number3'`.
 
 ```js
 Cypress.SelectorPlayground.defaults({

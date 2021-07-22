@@ -4,12 +4,14 @@ title: parents
 
 Get the parent DOM elements of a set of DOM elements.
 
-Please note that `.parents()` travels multiple levels up the DOM tree as opposed to the [.parent
-()](/api/commands/parent) command which travels a single level up the DOM tree.
+Please note that `.parents()` travels multiple levels up the DOM tree as opposed
+to the [.parent ()](/api/commands/parent) command which travels a single level
+up the DOM tree.
 
 <Alert type="info">
 
-The querying behavior of this command matches exactly how [`.parents()`](http://api.jquery.com/parents) works in jQuery.
+The querying behavior of this command matches exactly how
+[`.parents()`](http://api.jquery.com/parents) works in jQuery.
 
 </Alert>
 
@@ -94,15 +96,22 @@ cy.get('li.active').parents('.main-nav')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.parents()` requires being chained off a command that yields DOM element(s).</li></List>
+<List><li>`.parents()` requires being chained off a command that yields DOM
+element(s).</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.parents()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.parents()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.parents()` will automatically
+[retry](/guides/core-concepts/retry-ability) until the element(s)
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.parents()`
+will automatically [retry](/guides/core-concepts/retry-ability) until all
+chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.parents()` can time out waiting for the element(s) to [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.parents()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`.parents()` can time out waiting for the element(s) to
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.parents()`
+can time out waiting for assertions you've added to pass.</li></List>
 
 ## Command Log
 
@@ -114,7 +123,8 @@ cy.get('li.active').parents()
 
 <DocsImage src="/img/api/parents/get-all-parents-of-a-dom-element.png" alt="Command Log parents" ></DocsImage>
 
-When clicking on the `parents` command within the command log, the console outputs the following:
+When clicking on the `parents` command within the command log, the console
+outputs the following:
 
 <DocsImage src="/img/api/parents/parents-elements-displayed-in-devtools-console.png" alt="Console Log parents" ></DocsImage>
 

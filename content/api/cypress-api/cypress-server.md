@@ -4,11 +4,16 @@ title: Cypress.Server
 
 <Alert type="warning">
 
-⚠️ **`cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0**. In a future release, support for `cy.server()` and `cy.route()` will be moved to a plugin. Consider using [`cy.intercept()`](/api/commands/intercept.html) instead. See our guide on [Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide.html#Migrating-cy-route-to-cy-intercept)
+⚠️ **`cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0**. In a
+future release, support for `cy.server()` and `cy.route()` will be moved to a
+plugin. Consider using [`cy.intercept()`](/api/commands/intercept.html) instead.
+See our guide on
+[Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide.html#Migrating-cy-route-to-cy-intercept)
 
 </Alert>
 
-Permanently change the default options for all [`cy.server()`](/api/commands/server) instances
+Permanently change the default options for all
+[`cy.server()`](/api/commands/server) instances
 
 ## Syntax
 
@@ -43,7 +48,8 @@ Cypress.Server.defaults({
 
 **Where to put server configuration**
 
-A great place to put this configuration is in your `cypress/support/index.js` file, since it is loaded before any test files are evaluated.
+A great place to put this configuration is in your `cypress/support/index.js`
+file, since it is loaded before any test files are evaluated.
 
 ## See also
 

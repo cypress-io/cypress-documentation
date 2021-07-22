@@ -16,9 +16,11 @@ title: Cypress.config
 
 <strong class="alert-header">Scope</strong>
 
-Configuration set using `Cypress.config` _is only in scope for the current spec file._
+Configuration set using `Cypress.config` _is only in scope for the current spec
+file._
 
-Cypress runs each spec file in isolation: the browser is exited between specs. Configuration changed in one spec won't be visible in other specs.
+Cypress runs each spec file in isolation: the browser is exited between specs.
+Configuration changed in one spec won't be visible in other specs.
 
 </Alert>
 
@@ -26,7 +28,8 @@ Cypress runs each spec file in isolation: the browser is exited between specs. C
 
 <strong class="alert-header">Note</strong>
 
-Not all configuration values can be changed during runtime. See [Notes](#Notes) below for details.
+Not all configuration values can be changed during runtime. See [Notes](#Notes)
+below for details.
 
 </Alert>
 
@@ -95,7 +98,8 @@ Cypress.config('pageLoadTimeout') // => 60000
 
 <strong class="alert-header">Scope</strong>
 
-Remember, any changes that you make to configuration using this API will only be in effect for the remainder of the tests _in the same spec file._
+Remember, any changes that you make to configuration using this API will only be
+in effect for the remainder of the tests _in the same spec file._
 
 </Alert>
 
@@ -136,21 +140,38 @@ Cypress.config() // => {defaultCommandTimeout: 10000, viewportHeight: 900, ...}
 
 ### Not all config values can be changed at all times
 
-Some configuration values cannot be changed while running a test. Anything that's not directly under Cypress's control - like timeouts, `userAgent`, or environment variables - will be ignored at run-time.
+Some configuration values cannot be changed while running a test. Anything
+that's not directly under Cypress's control - like timeouts, `userAgent`, or
+environment variables - will be ignored at run-time.
 
 ### Test Configuration
 
-To apply specific Cypress [configuration](/guides/references/configuration) values to a suite or test, you can pass a [test configuration](/guides/references/configuration#Test-Configuration) object to the test or suite function.
+To apply specific Cypress [configuration](/guides/references/configuration)
+values to a suite or test, you can pass a
+[test configuration](/guides/references/configuration#Test-Configuration) object
+to the test or suite function.
 
-While `Cypress.config()` changes configuration values through the entire spec file, using test configuration will only change configuration values during the suite or test where they are set. The values will then reset to the previous default values after the suite or test is complete.
+While `Cypress.config()` changes configuration values through the entire spec
+file, using test configuration will only change configuration values during the
+suite or test where they are set. The values will then reset to the previous
+default values after the suite or test is complete.
 
-See the full guide on [test configuration](/api/cypress-api/config#Test-Configuration).
+See the full guide on
+[test configuration](/api/cypress-api/config#Test-Configuration).
 
 ### Why is it `Cypress.config` and not `cy.config`?
 
-As a rule of thumb anything you call from `Cypress` affects global state. Anything you call from `cy` affects local state.
+As a rule of thumb anything you call from `Cypress` affects global state.
+Anything you call from `cy` affects local state.
 
-Since the configuration added or changed by `Cypress.config` is only in scope for the current spec file, you'd think that it should be `cy.config` and not `Cypress.config`&hellip;and you'd be right. The fact that `Cypress.config` affects local state is an artifact of the API evolving over time: `Cypress.config` used to affect global state&mdash;configuration added in one test spec file was available in other specs&mdash;but the Cypress team wisely made each spec run in isolation in [`3.0.0`](/guides/references/changelog#3-0-0) and by that time `Cypress.config` was public API.
+Since the configuration added or changed by `Cypress.config` is only in scope
+for the current spec file, you'd think that it should be `cy.config` and not
+`Cypress.config`&hellip;and you'd be right. The fact that `Cypress.config`
+affects local state is an artifact of the API evolving over time:
+`Cypress.config` used to affect global state&mdash;configuration added in one
+test spec file was available in other specs&mdash;but the Cypress team wisely
+made each spec run in isolation in [`3.0.0`](/guides/references/changelog#3-0-0)
+and by that time `Cypress.config` was public API.
 
 ## History
 

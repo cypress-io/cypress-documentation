@@ -5,15 +5,18 @@ containerClass: examples
 
 ## Images
 
-<Icon name="github"></Icon> [https://github.com/cypress-io/cypress-docker-images](https://github.com/cypress-io/cypress-docker-images)
+<Icon name="github"></Icon>
+[https://github.com/cypress-io/cypress-docker-images](https://github.com/cypress-io/cypress-docker-images)
 
 This repo holds various Docker images for running Cypress locally and in CI.
 
 There are Docker images:
 
-- `cypress/base:<Node version>` has the operating system dependencies required to run Cypress.
+- `cypress/base:<Node version>` has the operating system dependencies required
+  to run Cypress.
 - `cypress/browsers:<tag>` extends the base images with pre-installed browsers.
-- `cypress/included:<Cypress version>` extends the base images with pre-installed Cypress versions.
+- `cypress/included:<Cypress version>` extends the base images with
+  pre-installed Cypress versions.
 
 ## Examples
 

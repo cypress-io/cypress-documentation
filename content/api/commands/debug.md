@@ -43,7 +43,8 @@ Pass in an options object to change the default behavior of `.debug()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.debug()` yields the same subject it was given from the previous command.</li></List>
+<List><li>`.debug()` yields the same subject it was given from the previous
+command.</li></List>
 
 ## Examples
 
@@ -59,11 +60,14 @@ cy.get('a').debug().should('have.attr', 'href')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.debug()` can bechained off of `cy` or off another command.</li></List>
+<List><li>`.debug()` can bechained off of `cy` or off another
+command.</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.debug()` is a utility command.</li><li>`.debug()` will not run assertions. Assertions will pass through as if this command did not exist.</li></List>
+<List><li>`.debug()` is a utility command.</li><li>`.debug()` will not run
+assertions. Assertions will pass through as if this command did not
+exist.</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
@@ -81,7 +85,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/debug/how-debug-displays-in-command-log.png" alt="Command Log debug" ></DocsImage>
 
-When clicking on the `debug` command within the command log, the console outputs the following:
+When clicking on the `debug` command within the command log, the console outputs
+the following:
 
 <DocsImage src="/img/api/debug/console-gives-all-debug-info-for-command.png" alt="console.log debug" ></DocsImage>
 

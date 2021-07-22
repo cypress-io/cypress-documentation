@@ -6,7 +6,8 @@ Get the first DOM element within a set of DOM elements.
 
 <Alert type="info">
 
-The querying behavior of this command matches exactly how [`.first()`](http://api.jquery.com/first) works in jQuery.
+The querying behavior of this command matches exactly how
+[`.first()`](http://api.jquery.com/first) works in jQuery.
 
 </Alert>
 
@@ -71,15 +72,22 @@ cy.get('li').first()
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.first()` requires being chained off a command that yields DOM element(s).</li></List>
+<List><li>`.first()` requires being chained off a command that yields DOM
+element(s).</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.first()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.first()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.first()` will automatically
+[retry](/guides/core-concepts/retry-ability) until the element(s)
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.first()`
+will automatically [retry](/guides/core-concepts/retry-ability) until all
+chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.first()` can time out waiting for the element(s) to [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.first()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`.first()` can time out waiting for the element(s) to
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.first()`
+can time out waiting for assertions you've added to pass.</li></List>
 
 ## Command Log
 
@@ -93,7 +101,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/first/get-the-first-in-list-of-elements.png" alt="Command Log first" ></DocsImage>
 
-When clicking on `first` within the command log, the console outputs the following:
+When clicking on `first` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/first/console-log-the-first-element.png" alt="console.log first" ></DocsImage>
 

@@ -2,19 +2,26 @@
 title: Before Spec API
 ---
 
-The `before:spec` event fires before a spec file is run. When running cypress via `cypress open`, the event will fire when the browser launches.
+The `before:spec` event fires before a spec file is run. When running cypress
+via `cypress open`, the event will fire when the browser launches.
 
 ## Syntax
 
 <Alert type="warning">
 
-⚠️ This code is part of the [plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
+⚠️ This code is part of the
+[plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files)
+and thus executes in the Node environment. You cannot call `Cypress` or `cy`
+commands in this file, but you do have the direct access to the file system and
+the rest of the operating system.
 
 </Alert>
 
 <Alert type="warning">
 
-⚠️ When running via `cypress open`, the `before:spec` event only fires if the [experimentalInteractiveRunEvents flag](/guides/references/configuration#Experiments) is enabled.
+⚠️ When running via `cypress open`, the `before:spec` event only fires if the
+[experimentalInteractiveRunEvents flag](/guides/references/configuration#Experiments)
+is enabled.
 
 </Alert>
 
@@ -36,7 +43,8 @@ Details of the spec file, including the following properties:
 
 ## Usage
 
-You can return a promise from the `before:spec` event handler and it will be awaited before Cypress proceeds running the spec.
+You can return a promise from the `before:spec` event handler and it will be
+awaited before Cypress proceeds running the spec.
 
 ### Log the relative spec path to stdout before the spec is run
 

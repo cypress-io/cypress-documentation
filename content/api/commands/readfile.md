@@ -25,11 +25,13 @@ cy.readFile('menu.json')
 
 **<Icon name="angle-right"></Icon> filePath** **_(String)_**
 
-A path to a file within the project root (the directory that contains the default `cypress.json` configuration file).
+A path to a file within the project root (the directory that contains the
+default `cypress.json` configuration file).
 
 **<Icon name="angle-right"></Icon> encoding** **_(String)_**
 
-The encoding to be used when reading the file. The following encodings are supported:
+The encoding to be used when reading the file. The following encodings are
+supported:
 
 - `ascii`
 - `base64`
@@ -141,7 +143,9 @@ cy.readFile('audio/sound.mp3', 'base64').then((mp3) => {
 
 #### Default file existence assertion
 
-By default, `cy.readFile()` asserts that the file exists and will fail if it does not exist. It will retry reading the file if it does not initially exist until the file exists or the command times out.
+By default, `cy.readFile()` asserts that the file exists and will fail if it
+does not exist. It will retry reading the file if it does not initially exist
+until the file exists or the command times out.
 
 ```javascript
 // will fail after the defaultCommandTimeout is reached
@@ -165,7 +169,8 @@ cy.readFile('does-not-exist.yaml').should('not.exist')
 
 #### Automatic retries
 
-`cy.readFile()` will continue to read the file until it passes all of its assertions.
+`cy.readFile()` will continue to read the file until it passes all of its
+assertions.
 
 ```javascript
 // if this assertion fails cy.readFile will poll the file
@@ -177,15 +182,21 @@ cy.readFile('some/nested/path/story.txt').should('eq', 'Once upon a time...')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.readFile()` requires being chained off of `cy`.</li><li>`cy.readFile()` requires the file must exist.</li><li>`cy.readFile()` requires the file be successfully read from disk.</li></List>
+<List><li>`cy.readFile()` requires being chained off of
+`cy`.</li><li>`cy.readFile()` requires the file must
+exist.</li><li>`cy.readFile()` requires the file be successfully read from
+disk.</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.readFile()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`cy.readFile()` will automatically
+[retry](/guides/core-concepts/retry-ability) until all chained assertions have
+passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.readFile()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`cy.readFile()` can time out waiting for assertions you've added to
+pass.</li></List>
 
 ## Command Log
 
@@ -199,7 +210,8 @@ The command above will display in the Command Log as:
 
 <DocsImage src="/img/api/readfile/readfile-can-get-content-of-system-files-in-tests.png" alt="Command Log readFile" ></DocsImage>
 
-When clicking on the `readFile` command within the command log, the console outputs the following:
+When clicking on the `readFile` command within the command log, the console
+outputs the following:
 
 <DocsImage src="/img/api/readfile/console-log-shows-content-from-file-formatted-as-javascript.png" alt="Console Log readFile" ></DocsImage>
 
