@@ -1499,6 +1499,44 @@ Unlike [cy.route()](/api/commands/route), `cy.intercept()`:
   fact, `cy.server()` does not influence `cy.intercept()` at all.
 - does not have method set to `GET` by default, but intercepts `*` methods.
 
+## `cy.intercept()` and request caching
+
+`cy.intercept()` intercepts requests at the network layer. This can cause
+confusion when trying to intercept a request that has already been cached by the
+browser. If a request is served from the browser cache, it will never hit the
+network layer, and `cy.intercept()` will never fire.
+
+To see if this is affecting your app, check the Developer Tools. In the
+following example, all of the requests circled in red have been served from
+cache, and will not send an HTTP request. Thus, they cannot be intercepted by
+`cy.intercept()`:
+
+<DocsImage src="/img/api/intercept/devtools-cached-responses.png" alt="Screenshot of Chrome DevTools showing cached responses." ></DocsImage>
+
+If you would like to intercept resources that normally send cache headers, here
+are some workarounds:
+
+- Turn off cache headers on your development server when in testing mode.
+- Disable caching on responses by adding a top-level `cy.intercept()` that
+  removes cache headers from desired requests. For example:
+  ```ts
+  beforeEach(() => {
+    cy.intercept(
+      'https://api.example.com/**/*',
+      { middleware: true },
+      (req) => {
+        req.on('before:response', (res) => {
+          // force all API responses to not be cached
+          res.headers['cache-control'] = 'no-store'
+        })
+      }
+    )
+  })
+  ```
+- Chromium-family browsers only: Use `remote:debugger:protocol` to disable cache
+  entirely. For more information, see
+  [this comment on issue #14459](https://github.com/cypress-io/cypress/issues/14459#issuecomment-768616195)
+
 ## History
 
 | Version                                     | Changes                                                                                                                                                                                                                                                                                              |
