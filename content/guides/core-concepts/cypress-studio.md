@@ -184,7 +184,7 @@ describe('Cypress Studio Demo', () => {
 
   it('create new transaction', () => {
     /* ==== Generated with Cypress Studio ==== */
-    cy.get('.MuiButton-label > .MuiSvgIcon-root').click()
+    cy.get('[data-test=nav-top-new-transaction]').click()
     cy.get('[data-test=user-list-search-input]').clear()
     cy.get('[data-test=user-list-search-input]').type('dev')
     cy.get(
