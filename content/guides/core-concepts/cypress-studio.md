@@ -288,5 +288,5 @@ file.
 
 | Version                                     | Changes                              |
 | ------------------------------------------- | ------------------------------------ |
-| [8.1.0](/guides/references/changelog#8-1-0) | Added ability to generate assertions            |
+| [8.1.0](/guides/references/changelog#8-1-0) | Added ability to generate assertions |
 | [6.3.0](/guides/references/changelog#6-3-0) | Added Cypress Studio as experimental |

@@ -26,11 +26,13 @@ cy.end() // Does not make sense to chain off 'cy'
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.end()` yields `null`.</li><li>`.end()` cannot be chained further.</li></List>
+<List><li>`.end()` yields `null`.</li><li>`.end()` cannot be chained
+further.</li></List>
 
 ## Examples
 
-`.end()` is useful when you want to end a chain of commands and force the next command to not receive what was yielded in the previous command.
+`.end()` is useful when you want to end a chain of commands and force the next
+command to not receive what was yielded in the previous command.
 
 ```javascript
 cy.contains('User: Cheryl')

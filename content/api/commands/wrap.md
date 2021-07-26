@@ -2,7 +2,8 @@
 title: wrap
 ---
 
-Yield the object passed into `.wrap()`. If the object is a promise, yield its resolved value.
+Yield the object passed into `.wrap()`. If the object is a promise, yield its
+resolved value.
 
 ## Syntax
 
@@ -81,7 +82,11 @@ cy.get('button').then(($button) => {
 
 ### Promises
 
-You can wrap promises returned by the application code. Cypress commands will automatically wait for the promise to resolve before continuing with the yielded value to the next command or assertion. See the [Logging in using application code](/examples/examples/recipes#Logging-In) recipe for the full example.
+You can wrap promises returned by the application code. Cypress commands will
+automatically wait for the promise to resolve before continuing with the yielded
+value to the next command or assertion. See the
+[Logging in using application code](/examples/examples/recipes#Logging-In)
+recipe for the full example.
 
 #### Simple example
 
@@ -134,13 +139,18 @@ it('can assert against resolved object using .should', () => {
 })
 ```
 
-**Note:** `.wrap()` will not synchronize asynchronous function calls for you. For example, given the following example:
+**Note:** `.wrap()` will not synchronize asynchronous function calls for you.
+For example, given the following example:
 
-- You have two async functions `async function foo() {...}` and `async function bar() {...}`
+- You have two async functions `async function foo() {...}` and
+  `async function bar() {...}`
 - You need to make sure `foo()` has resolved first before invoking `bar()`
-- `bar()` is also dependent on some data that is created while after calling other Cypress commands.
+- `bar()` is also dependent on some data that is created while after calling
+  other Cypress commands.
 
-**<Icon name="exclamation-triangle" color="red"></Icon>** If you wrap the asynchronous functions in `cy.wrap()`, then `bar()` may be called prematurely before the required data is available:
+**<Icon name="exclamation-triangle" color="red"></Icon>** If you wrap the
+asynchronous functions in `cy.wrap()`, then `bar()` may be called prematurely
+before the required data is available:
 
 ```javascript
 cy.wrap(foo())
@@ -154,9 +164,12 @@ cy.get('some-submit-button').click()
 cy.wrap(bar()) // DON'T DO THIS
 ```
 
-This behavior is due to the function invocation `foo()` and `bar()`, which call the functions immediately to return a Promise.
+This behavior is due to the function invocation `foo()` and `bar()`, which call
+the functions immediately to return a Promise.
 
-**<Icon name="check-circle" color="green"></Icon>** If you want `bar()` to execute after `foo()` and the [cy.get()](/api/commands/get) commands, one solution is to chain off the final command using [.then()](/api/commands/then):
+**<Icon name="check-circle" color="green"></Icon>** If you want `bar()` to
+execute after `foo()` and the [cy.get()](/api/commands/get) commands, one
+solution is to chain off the final command using [.then()](/api/commands/then):
 
 ```javascript
 cy.wrap(foo())
@@ -180,11 +193,16 @@ cy.get('some-submit-button')
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.wrap()`, when its argument is a promise, will automatically wait until the promise resolves. If the promise is rejected, `cy.wrap()` will fail the test.</li><li>`cy.wrap()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`cy.wrap()`, when its argument is a promise, will automatically wait
+until the promise resolves. If the promise is rejected, `cy.wrap()` will fail
+the test.</li><li>`cy.wrap()` will automatically
+[retry](/guides/core-concepts/retry-ability) until all chained assertions have
+passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.wrap()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`cy.wrap()` can time out waiting for assertions you've added to
+pass.</li></List>
 
 ## Command Log
 
@@ -198,7 +216,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/wrap/wrapped-object-in-cypress-tests.png" alt="Command Log wrap" ></DocsImage>
 
-When clicking on the `wrap` command within the command log, the console outputs the following:
+When clicking on the `wrap` command within the command log, the console outputs
+the following:
 
 <DocsImage src="/img/api/wrap/console-log-only-shows-yield-of-wrap.png" alt="Console Log wrap" ></DocsImage>
 
@@ -216,5 +235,7 @@ When clicking on the `wrap` command within the command log, the console outputs 
 - [`.should()`](/api/commands/should)
 - [`.spread()`](/api/commands/spread)
 - [`.then()`](/api/commands/then)
-- [Logging In: Using application code](/examples/examples/recipes#Logging-In) recipe
-- [Unit Testing: Application Code](/examples/examples/recipes#Unit-Testing) recipe
+- [Logging In: Using application code](/examples/examples/recipes#Logging-In)
+  recipe
+- [Unit Testing: Application Code](/examples/examples/recipes#Unit-Testing)
+  recipe

@@ -24,8 +24,11 @@ if (semver.gte(Cypress.version, '1.1.3')) {
 }
 ```
 
-**Hint:** you can use [semver](https://github.com/npm/node-semver#readme) library to work with semantic versions.
+**Hint:** you can use [semver](https://github.com/npm/node-semver#readme)
+library to work with semantic versions.
 
 ## See also
 
-To find the version of the Electron component, or the bundled Node version, use the Cypress CLI command [cypress version](/guides/guides/command-line#cypress-version).
+To find the version of the Electron component, or the bundled Node version, use
+the Cypress CLI command
+[cypress version](/guides/guides/command-line#cypress-version).

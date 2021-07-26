@@ -2,7 +2,9 @@
 title: Cypress.Promise
 ---
 
-Cypress automatically includes [Bluebird](https://github.com/petkaantonov/bluebird) and exposes it as `Cypress.Promise`.
+Cypress automatically includes
+[Bluebird](https://github.com/petkaantonov/bluebird) and exposes it as
+`Cypress.Promise`.
 
 Instantiate a new bluebird promise.
 
@@ -28,7 +30,9 @@ new cy.Promise(...)  // Errors, cannot be chained off 'cy'
 
 ## Examples
 
-Use `Cypress.Promise` to create promises. Cypress is promise aware so if you return a promise from inside of commands like [`.then()`](/api/commands/then), Cypress will not continue until those promises resolve.
+Use `Cypress.Promise` to create promises. Cypress is promise aware so if you
+return a promise from inside of commands like [`.then()`](/api/commands/then),
+Cypress will not continue until those promises resolve.
 
 ### Basic Promise
 
@@ -74,9 +78,12 @@ it('waits for promises to resolve', () => {
 
 ### Rejected test promises do not fail tests
 
-If the test code has an unhandled rejected promise, it does not automatically fail the test. If you do want to fail the test if there is an unhandled rejected promise in the test code you have to do one of two things:
+If the test code has an unhandled rejected promise, it does not automatically
+fail the test. If you do want to fail the test if there is an unhandled rejected
+promise in the test code you have to do one of two things:
 
-If you use `Cypress.Promise` in your test code, register a callback using Bluebird's API
+If you use `Cypress.Promise` in your test code, register a callback using
+Bluebird's API
 
 ```javascript
 Cypress.Promise.onPossiblyUnhandledRejection((error, promise) => {
@@ -84,7 +91,8 @@ Cypress.Promise.onPossiblyUnhandledRejection((error, promise) => {
 })
 ```
 
-If you use native built-in promises in your test code, register an event listener on the test `window` object:
+If you use native built-in promises in your test code, register an event
+listener on the test `window` object:
 
 ```javascript
 window.addEventListener('unhandledrejection', (event) => {
@@ -92,7 +100,9 @@ window.addEventListener('unhandledrejection', (event) => {
 })
 ```
 
-**Note:** because this is the test `window` object, such listeners are NOT reset before every test. You can register such listeners once using the `before` hook in the spec file.
+**Note:** because this is the test `window` object, such listeners are NOT reset
+before every test. You can register such listeners once using the `before` hook
+in the spec file.
 
 ## See also
 

@@ -62,7 +62,8 @@ Pass in an options object to change the default behavior of `.check()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.check()` yields the same subject it was given from the previous command.</li></List>
+<List><li>`.check()` yields the same subject it was given from the previous
+command.</li></List>
 
 ## Examples
 
@@ -124,7 +125,8 @@ cy.get('form input').check(['subscribe', 'accept'])
 
 #### Check an invisible checkbox
 
-You can ignore Cypress' default behavior of checking that the element is visible, clickable and not disabled by setting `force` to `true` in the options.
+You can ignore Cypress' default behavior of checking that the element is
+visible, clickable and not disabled by setting `force` to `true` in the options.
 
 ```javascript
 cy.get('.action-checkboxes')
@@ -135,7 +137,8 @@ cy.get('.action-checkboxes')
 
 ### Find checked option
 
-You can get the currently checked option using the jQuery's [:checked selector](https://api.jquery.com/checked-selector/).
+You can get the currently checked option using the jQuery's
+[:checked selector](https://api.jquery.com/checked-selector/).
 
 ```html
 <form id="pick-fruit">
@@ -155,21 +158,29 @@ cy.get('#pick-fruit :checked').should('be.checked').and('have.value', 'apple')
 
 #### The element must first reach actionability
 
-`.check()` is an "action command" that follows all the rules [defined here](/guides/core-concepts/interacting-with-elements).
+`.check()` is an "action command" that follows all the rules
+[defined here](/guides/core-concepts/interacting-with-elements).
 
 ## Rules
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.check()` requires being chained off a command that yields DOM element(s).</li><li>`.check()` requires the element to have type `checkbox` or `radio`.</li></List>
+<List><li>`.check()` requires being chained off a command that yields DOM
+element(s).</li><li>`.check()` requires the element to have type `checkbox` or
+`radio`.</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.check()` will automatically wait for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.check()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.check()` will automatically wait for the element to reach an
+[actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.check()`
+will automatically [retry](/guides/core-concepts/retry-ability) until all
+chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.check()` can time out waiting for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.check()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`.check()` can time out waiting for the element to reach an
+[actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.check()`
+can time out waiting for assertions you've added to pass.</li></List>
 
 ## Command Log
 
@@ -183,7 +194,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/check/check-checkbox-in-cypress.png" alt="Command log for check" ></DocsImage>
 
-When clicking on `check` within the command log, the console outputs the following:
+When clicking on `check` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/check/console-showing-events-on-check.png" alt="console.log for check" ></DocsImage>
 

@@ -25,7 +25,8 @@ cy.reload()
 
 **<Icon name="angle-right"></Icon> forceReload** **_(Boolean)_**
 
-Whether to reload the current page without using the cache. `true` forces the reload without cache.
+Whether to reload the current page without using the cache. `true` forces the
+reload without cache.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -36,7 +37,8 @@ Whether to reload the current page without using the cache. `true` forces the re
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.reload()` 'yields the `window` object after the page finishes loading' </li></List>
+<List><li>`cy.reload()` 'yields the `window` object after the page finishes
+loading' </li></List>
 
 ## Examples
 
@@ -64,15 +66,22 @@ cy.reload(true)
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.reload()` requires being chained off of `cy`.</li><li>`cy.reload()` requires the response to be `content-type: text/html`.</li><li>`cy.reload()` requires the response code to be `2xx` after following redirects.</li><li>`cy.reload()` requires the load `load` event to eventually fire.</li></List>
+<List><li>`cy.reload()` requires being chained off of
+`cy`.</li><li>`cy.reload()` requires the response to be
+`content-type: text/html`.</li><li>`cy.reload()` requires the response code to
+be `2xx` after following redirects.</li><li>`cy.reload()` requires the load
+`load` event to eventually fire.</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.reload()` will automatically wait for assertions you have chained to pass</li></List>
+<List><li>`cy.reload()` will automatically wait for assertions you have chained
+to pass</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.reload()` can time out waiting for the page to fire its `load` event.</li><li>`cy.reload()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`cy.reload()` can time out waiting for the page to fire its `load`
+event.</li><li>`cy.reload()` can time out waiting for assertions you've added to
+pass.</li></List>
 
 ## Command Log
 
@@ -86,7 +95,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/reload/test-page-after-reload-button.png" alt="Command Log reload" ></DocsImage>
 
-When clicking on `reload` within the command log, the console outputs the following:
+When clicking on `reload` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/reload/command-log-for-reload-cypress.png" alt="Console Log reload" ></DocsImage>
 

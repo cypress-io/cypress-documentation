@@ -6,9 +6,13 @@ title: Cypress.dom
 
 <Alert type="warning">
 
-There are actually dozens of methods attached to `Cypress.dom` that are not documented below. These methods are used internally by Cypress in nearly every single built in command.
+There are actually dozens of methods attached to `Cypress.dom` that are not
+documented below. These methods are used internally by Cypress in nearly every
+single built in command.
 
-We suggest [reading through the source code here](https://github.com/cypress-io/cypress/blob/develop/packages/driver/src/dom/index.js) to see all of the methods and what they do.
+We suggest
+[reading through the source code here](https://github.com/cypress-io/cypress/blob/develop/packages/driver/src/dom/index.js)
+to see all of the methods and what they do.
 
 </Alert>
 
@@ -32,7 +36,8 @@ cy.get('button').then(($el) => {
 
 ### Is descendent
 
-**Returns a boolean indicating whether an element is a descendent of another element.**
+**Returns a boolean indicating whether an element is a descendent of another
+element.**
 
 ```javascript
 cy.get('div').then(($el) => {
@@ -84,7 +89,9 @@ cy.get('p').then(($el) => {
 
 **Returns a boolean indicating whether an element can receive focus.**
 
-Cypress internally uses this method _everywhere_ to figure out whether an element is hidden, [mostly for actionability](/guides/core-concepts/interacting-with-elements).
+Cypress internally uses this method _everywhere_ to figure out whether an
+element is hidden,
+[mostly for actionability](/guides/core-concepts/interacting-with-elements).
 
 ```javascript
 cy.get('input').then(($el) => {
@@ -106,7 +113,9 @@ cy.get('button').then(($el) => {
 
 **Returns a boolean indicating whether an element is hidden.**
 
-Cypress internally uses this method _everywhere_ to figure out whether an element is hidden, [mostly for actionability](/guides/core-concepts/interacting-with-elements).
+Cypress internally uses this method _everywhere_ to figure out whether an
+element is hidden,
+[mostly for actionability](/guides/core-concepts/interacting-with-elements).
 
 ```javascript
 cy.get('p').then(($el) => {
@@ -128,7 +137,9 @@ cy.get('input').then(($el) => {
 
 **Returns a boolean indicating whether an element is scrollable.**
 
-Cypress internally uses this method _everywhere_ to figure out whether an element can be scrolled, [mostly for actionability](/guides/core-concepts/interacting-with-elements).
+Cypress internally uses this method _everywhere_ to figure out whether an
+element can be scrolled,
+[mostly for actionability](/guides/core-concepts/interacting-with-elements).
 
 ```javascript
 cy.get('body').then(($el) => {
@@ -146,7 +157,10 @@ cy.get('img').then(($el) => {
 })
 ```
 
-**Tip:** if a Cypress test fails with "element is not visible" error, but you are sure the element should be visible, you can debug the visibility check yourself by stepping through the `Cypress.dom.isVisible` code, see [Debug the Element Visibility Problems in Cypress](https://glebbahmutov.com/blog/debug-visibility/).
+**Tip:** if a Cypress test fails with "element is not visible" error, but you
+are sure the element should be visible, you can debug the visibility check
+yourself by stepping through the `Cypress.dom.isVisible` code, see
+[Debug the Element Visibility Problems in Cypress](https://glebbahmutov.com/blog/debug-visibility/).
 
 ### Is window
 
@@ -180,4 +194,7 @@ cy.get('p').then(($el) => {
 
 ## See also
 
-- Read the blog post [Debug the Element Visibility Problems in Cypress](https://glebbahmutov.com/blog/debug-visibility/) to see how you can call these methods from the DevTools console to step through their logic.
+- Read the blog post
+  [Debug the Element Visibility Problems in Cypress](https://glebbahmutov.com/blog/debug-visibility/)
+  to see how you can call these methods from the DevTools console to step
+  through their logic.

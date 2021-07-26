@@ -2,13 +2,16 @@
 title: Client Certificates
 ---
 
-Configure certificate authority (CA) and client certificates to use within tests on a per-URL basis.
+Configure certificate authority (CA) and client certificates to use within tests
+on a per-URL basis.
 
 <Alert type="info">
 
 <strong class="alert-header">Document Scope</strong>
 
-This document merely offers guidance on how to specify certificate file paths for given test URLs. Details around the content and purpose of such files are not within the scope of Cypress documentation.
+This document merely offers guidance on how to specify certificate file paths
+for given test URLs. Details around the content and purpose of such files are
+not within the scope of Cypress documentation.
 
 </Alert>
 
@@ -16,7 +19,8 @@ This document merely offers guidance on how to specify certificate file paths fo
 
 **<Icon name="angle-right"></Icon> clientCertificates** **_(Object[])_**
 
-An array of objects defining the certificates. Each object must have the following properties
+An array of objects defining the certificates. Each object must have the
+following properties
 
 | Property | Type       | Description                                                                                                              |
 | -------- | ---------- | ------------------------------------------------------------------------------------------------------------------------ |
@@ -24,7 +28,8 @@ An array of objects defining the certificates. Each object must have the followi
 | `ca`     | `Array`    | _(Optional)_ Paths to one or more CA files to validate certs against, relative to project root.                          |
 | `certs`  | `Object[]` | A PEM format certificate/private key pair or PFX certificate container                                                   |
 
-Each object in the `certs` array can define either a **PEM format certificate/private key pair** or a **PFX certificate container**.
+Each object in the `certs` array can define either a **PEM format
+certificate/private key pair** or a **PFX certificate container**.
 
 **A PEM format certificate/private key pair can have the following properties:**
 
@@ -43,7 +48,9 @@ Each object in the `certs` array can define either a **PEM format certificate/pr
 
 ## Usage
 
-To configure CA / client certificates within your configuration file (`cypress.json` by default), you can add the `clientCertificates` key to define an array of client certificates as shown below:
+To configure CA / client certificates within your configuration file
+(`cypress.json` by default), you can add the `clientCertificates` key to define
+an array of client certificates as shown below:
 
 ```json
   "clientCertificates": [

@@ -2,21 +2,30 @@
 title: Before Run API
 ---
 
-The `before:run` event fires before a run starts. When running cypress via `cypress open`, the event will fire when opening a project.
+The `before:run` event fires before a run starts. When running cypress via
+`cypress open`, the event will fire when opening a project.
 
-The event will fire each time `cypress run` executes. As a result, if running your specs in [parallel](/guides/guides/parallelization), the event will fire once for each machine on which the tests are run.
+The event will fire each time `cypress run` executes. As a result, if running
+your specs in [parallel](/guides/guides/parallelization), the event will fire
+once for each machine on which the tests are run.
 
 ## Syntax
 
 <Alert type="warning">
 
-⚠️ This code is part of the [plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
+⚠️ This code is part of the
+[plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files)
+and thus executes in the Node environment. You cannot call `Cypress` or `cy`
+commands in this file, but you do have the direct access to the file system and
+the rest of the operating system.
 
 </Alert>
 
 <Alert type="warning">
 
-⚠️ When running via `cypress open`, the `before:run` event only fires if the [experimentalInteractiveRunEvents flag](/guides/references/configuration#Experiments) is enabled.
+⚠️ When running via `cypress open`, the `before:run` event only fires if the
+[experimentalInteractiveRunEvents flag](/guides/references/configuration#Experiments)
+is enabled.
 
 </Alert>
 
@@ -28,11 +37,13 @@ on('before:run', (details) => {
 
 **<Icon name="angle-right"></Icon> details** **_(Object)_**
 
-Details of the run, including the project config, system information, and the version of Cypress. More details are included when running via `cypress run`.
+Details of the run, including the project config, system information, and the
+version of Cypress. More details are included when running via `cypress run`.
 
 ## Usage
 
-You can return a promise from the `before:run` event handler and it will be awaited before Cypress proceeds running your specs.
+You can return a promise from the `before:run` event handler and it will be
+awaited before Cypress proceeds running your specs.
 
 ### Log the browser and the number of specs that will be run
 

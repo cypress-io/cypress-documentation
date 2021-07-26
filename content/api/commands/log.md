@@ -23,15 +23,18 @@ cy.log('created new user')
 
 **<Icon name="angle-right"></Icon> message** **_(String)_**
 
-Message to be printed to Cypress Command Log. Accepts a Markdown formatted message.
+Message to be printed to Cypress Command Log. Accepts a Markdown formatted
+message.
 
 **<Icon name="angle-right"></Icon> args...**
 
-Additional arguments to be printed to the Cypress Command Log. There is no limit to the number of arguments.
+Additional arguments to be printed to the Cypress Command Log. There is no limit
+to the number of arguments.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.log()` yields `null`.</li><li>`cy.log()` cannot be chained further.</li></List>
+<List><li>`cy.log()` yields `null`.</li><li>`cy.log()` cannot be chained
+further.</li></List>
 
 ## Examples
 
@@ -80,7 +83,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/log/custom-command-log-with-any-message.png" alt="Command Log log" ></DocsImage>
 
-When clicking on `log` within the command log, the console outputs the following:
+When clicking on `log` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/log/console-shows-logs-message-and-any-arguments.png" alt="Console Log log" ></DocsImage>
 

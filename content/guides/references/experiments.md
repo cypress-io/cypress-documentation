@@ -2,17 +2,24 @@
 title: Experiments
 ---
 
-If you'd like to try out what we're working on in the [Test Runner](/guides/core-concepts/test-runner), you can enable beta features for your project by turning on the experimental features you'd like to try.
+If you'd like to try out what we're working on in the
+[Test Runner](/guides/core-concepts/test-runner), you can enable beta features
+for your project by turning on the experimental features you'd like to try.
 
 <Alert type="warning">
 
-⚠️ The experimental features might change or ultimately be removed without making it into the core product. Our primary goal for experiments is to collect real-world feedback during their development.
+⚠️ The experimental features might change or ultimately be removed without
+making it into the core product. Our primary goal for experiments is to collect
+real-world feedback during their development.
 
 </Alert>
 
 ## Configuration
 
-You can pass the [configuration](/guides/references/configuration) options below to enable or disable experiments. See our [Configuration Guide](/guides/references/configuration) on how to pass configuration to Cypress.
+You can pass the [configuration](/guides/references/configuration) options below
+to enable or disable experiments. See our
+[Configuration Guide](/guides/references/configuration) on how to pass
+configuration to Cypress.
 
 | Option                             | Default | Description                                                                                                                                                                                                                                                                                             |
 | ---------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

@@ -6,7 +6,8 @@ Get A DOM element at a specific index in an array of elements.
 
 <Alert type="info">
 
-The querying behavior of this command matches exactly how [`.eq()`](https://api.jquery.com/eq) works in jQuery.
+The querying behavior of this command matches exactly how
+[`.eq()`](https://api.jquery.com/eq) works in jQuery.
 
 </Alert>
 
@@ -39,11 +40,13 @@ cy.getCookies().eq(4) // Errors, 'getCookies' does not yield DOM element
 
 **<Icon name="angle-right"></Icon> index** **_(Number)_**
 
-A number indicating the index to find the element at within an array of elements. Starts with 0.
+A number indicating the index to find the element at within an array of
+elements. Starts with 0.
 
 **<Icon name="angle-right"></Icon> indexFromEnd** **_(Number)_**
 
-A negative number indicating the index position from the end to find the element at within an array of elements.
+A negative number indicating the index position from the end to find the element
+at within an array of elements.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -127,15 +130,22 @@ cy.get('li').eq(-2).should('contain', 'sphynx') // true
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.eq()` requires being chained off a command that yields DOM element(s).</li></List>
+<List><li>`.eq()` requires being chained off a command that yields DOM
+element(s).</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.eq()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.eq()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.eq()` will automatically
+[retry](/guides/core-concepts/retry-ability) until the element(s)
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.eq()`
+will automatically [retry](/guides/core-concepts/retry-ability) until all
+chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.eq()` can time out waiting for the element(s) to [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.eq()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`.eq()` can time out waiting for the element(s) to
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.eq()`
+can time out waiting for assertions you've added to pass.</li></List>
 
 ## Command Log
 
@@ -149,7 +159,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/eq/find-element-at-index.png" alt="Command log eq" ></DocsImage>
 
-When clicking on the `eq` command within the command log, the console outputs the following:
+When clicking on the `eq` command within the command log, the console outputs
+the following:
 
 <DocsImage src="/img/api/eq/see-element-and-list-when-using-eq.png" alt="console.log eq" ></DocsImage>
 

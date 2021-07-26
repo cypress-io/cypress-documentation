@@ -51,15 +51,27 @@ cy.get('.shadow-host').shadow().find('.my-button').click()
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.shadow()` requires being chained off a command that yields a DOM element that is a shadow host (i.e. has a shadow root directly attached to it).</li></List>
+<List><li>`.shadow()` requires being chained off a command that yields a DOM
+element that is a shadow host (i.e. has a shadow root directly attached to
+it).</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.shadow()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.shadow()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) host(s) a shadow root.</li><li>`.shadow()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.shadow()` will automatically
+[retry](/guides/core-concepts/retry-ability) until the element(s)
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.shadow()`
+will automatically [retry](/guides/core-concepts/retry-ability) until the
+element(s) host(s) a shadow root.</li><li>`.shadow()` will automatically
+[retry](/guides/core-concepts/retry-ability) until all chained assertions have
+passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.shadow()` can time out waiting for the element(s) to [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.shadow()` can time out waiting for the element(s) to host a shadow root.</li><li>`.shadow()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`.shadow()` can time out waiting for the element(s) to
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.shadow()`
+can time out waiting for the element(s) to host a shadow
+root.</li><li>`.shadow()` can time out waiting for assertions you've added to
+pass.</li></List>
 
 ## Command Log
 
@@ -73,7 +85,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/shadow/shadow-command-log.png" alt="Command Log shadow" ></DocsImage>
 
-When clicking on the `shadow` command within the command log, the console outputs the following:
+When clicking on the `shadow` command within the command log, the console
+outputs the following:
 
 <DocsImage src="/img/api/shadow/shadow-in-console.png" alt="console.log shadow" ></DocsImage>
 
@@ -81,5 +94,6 @@ When clicking on the `shadow` command within the command log, the console output
 
 - [`cy.get()`](/api/commands/get#Arguments) with `includeShadowDom` option
 - [`cy.find()`](/api/commands/find#Arguments) with `includeShadowDom` option
-- [`cy.contains()`](/api/commands/contains#Arguments) with `includeShadowDom` option
+- [`cy.contains()`](/api/commands/contains#Arguments) with `includeShadowDom`
+  option
 - [`includeShadowDom` config option](/guides/references/configuration#Global)

@@ -4,7 +4,9 @@ title: Roadmap
 
 ## Upcoming features
 
-Our team is always planning and working on really "big" upcoming features. Priorities can change as we move forward, but here is an outline of where Cypress is headed now.
+Our team is always planning and working on really "big" upcoming features.
+Priorities can change as we move forward, but here is an outline of where
+Cypress is headed now.
 
 ### Test Runner
 

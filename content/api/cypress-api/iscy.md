@@ -2,9 +2,11 @@
 title: Cypress.isCy
 ---
 
-`Cypress.isCy()` checks if a variable is a valid instance of `cy` or a `cy` chainable.
+`Cypress.isCy()` checks if a variable is a valid instance of `cy` or a `cy`
+chainable.
 
-This utility may be useful when writing [plugins](/api/plugins/writing-a-plugin) for Cypress and you want to determine if a value is a valid Cypress chainable.
+This utility may be useful when writing [plugins](/api/plugins/writing-a-plugin)
+for Cypress and you want to determine if a value is a valid Cypress chainable.
 
 ## Syntax
 
