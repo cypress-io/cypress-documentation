@@ -725,6 +725,10 @@
               "slug": "within"
             },
             {
+              "title": "wrap",
+              "slug": "wrap"
+            },
+            {
               "title": "writeFile",
               "slug": "writefile"
             }
