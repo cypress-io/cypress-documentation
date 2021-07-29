@@ -33,11 +33,11 @@ configuration to Cypress.
 
 | Version                                     | Changes                                                                                                                      |
 | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| [7.1.0](/guides/references/changelog#6-3-0) | Added support for `experimentalInteractiveRunEvents`.                                                                        |
+| [7.1.0](/guides/references/changelog#7-1-0) | Added support for `experimentalInteractiveRunEvents`.                                                                        |
 | [7.0.0](/guides/references/changelog#7-0-0) | Removed `experimentalComponentTesting` and made it the default behavior.                                                     |
 | [6.7.0](/guides/references/changelog#6-7-0) | Removed `experimentalRunEvents` and made it the default behavior.                                                            |
 | [6.3.0](/guides/references/changelog#6-3-0) | Added support for `experimentalStudio`.                                                                                      |
-| [6.2.0](/guides/references/changelog#6-3-0) | Added support for `experimentalRunEvents`.                                                                                   |
+| [6.2.0](/guides/references/changelog#6-2-0) | Added support for `experimentalRunEvents`.                                                                                   |
 | [6.0.0](/guides/references/changelog#6-0-0) | Removed `experimentalNetworkStubbing` and made it the default behavior when using [cy.intercept()](/api/commands/intercept). |
 | [6.0.0](/guides/references/changelog#6-0-0) | Deprecated `experimentalFetchPolyfill`.                                                                                      |
 | [5.2.0](/guides/references/changelog#5-2-0) | Removed `experimentalShadowDomSupport` and made it the default behavior.                                                     |
