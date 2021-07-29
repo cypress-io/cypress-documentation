@@ -126,9 +126,10 @@ cy.exec('npm run build', { timeout: 20000 })
 #### Choose to not fail on non-zero exit and assert on code and stderr
 
 ```javascript
-cy.exec('man bear pig', { failOnNonZeroExit: false }).then((obj) => {
-  expect(obj.code).to.eq(1)
-  expect(obj.stderr).to.contain('No manual entry for bear')
+cy.exec('man bear pig', { failOnNonZeroExit: false }).then((result) => {
+  expect(result.code).to.eq(1)
+  expect(result.stderr).to.contain('No manual entry for bear')
+})
 ```
 
 #### Specify environment variables
