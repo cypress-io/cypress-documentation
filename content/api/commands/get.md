@@ -160,7 +160,7 @@ the current subject.
 ```js
 cy.get('#comparison')
   .get('div')
-  // finds the div.test-title outside the #parent
+  // finds the div.test-title outside the #comparison
   // and the div.feature inside
   .should('have.class', 'test-title')
   .and('have.class', 'feature')
