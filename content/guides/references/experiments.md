@@ -33,6 +33,7 @@ configuration to Cypress.
 
 | Version                                     | Changes                                                                                                                      |
 | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| [8.2.0](/guides/references/changelog#8-2-0) | Added support for `experimentalSessionSupport`.                                                                              |
 | [7.1.0](/guides/references/changelog#7-1-0) | Added support for `experimentalInteractiveRunEvents`.                                                                        |
 | [7.0.0](/guides/references/changelog#7-0-0) | Removed `experimentalComponentTesting` and made it the default behavior.                                                     |
 | [6.7.0](/guides/references/changelog#6-7-0) | Removed `experimentalRunEvents` and made it the default behavior.                                                            |
