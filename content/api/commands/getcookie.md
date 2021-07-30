@@ -159,7 +159,7 @@ following:
 
 | Version                                     | Changes                                                                                            |
 | ------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| [8.1.0](/guides/references/changelog#8-1-0) | Added `hostOnly` property.                                                                         |
+| [8.2.0](/guides/references/changelog#8-2-0) | Added `hostOnly` property.                                                                         |
 | [5.0.0](/guides/references/changelog#5-0-0) | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.            |
 | [4.3.0](/guides/references/changelog#4-3-0) | Added `sameSite` property when the `experimentalGetCookiesSameSite` configuration value is `true`. |
 
