@@ -589,6 +589,13 @@ crashing.
 
 ### Running headless tests without Xvfb
 
+<Alert type="warning">
+
+Using the `ELECTRON_RUN_AS_NODE=1` env var is experimental and not fully tested,
+so may not work in all environments.
+
+</Alert>
+
 Chromium based browsers and Firefox can spawn without Xvfb when run via the
 `--headless` flag. If you're testing against either of those browsers using the
 `--browser` flag, you can opt out of Cypress spawning an X11 server by setting
