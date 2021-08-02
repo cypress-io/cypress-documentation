@@ -2,7 +2,7 @@
 title: Cypress.currentTest
 ---
 
-`Cypress.currentTest` returns the currently executing test instance with
+`Cypress.currentTest` is an object representing the currently executing test instance, with
 properties to access the title of the test.
 
 ## Syntax
