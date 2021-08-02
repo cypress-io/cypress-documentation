@@ -211,6 +211,7 @@
       "env": "env",
       "isbrowser": "isBrowser",
       "iscy": "isCy",
+      "currenttest": "currentTest",
       "custom-commands": "Commands",
       "cookies": "Cookies",
       "dom": "dom",

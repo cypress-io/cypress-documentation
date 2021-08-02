@@ -24,6 +24,7 @@
     "/api/cypress-api/arch": "Cypress.arch",
     "/api/cypress-api/browser": "Cypress.browser",
     "/api/cypress-api/config": "Cypress.config",
+    "/api/cypress-api/currenttest": "Cypress.currentTest",
     "/api/cypress-api/dom": "Cypress.dom",
     "/api/cypress-api/env": "Cypress.env",
     "/api/cypress-api/isbrowser": "Cypress.isBrowser",
