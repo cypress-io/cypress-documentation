@@ -12,6 +12,7 @@ hooks](/guides/core-concepts/writing-and-organizing-tests#Hooks),
 and will be `null` outside of tests and test hooks.
 
 </Alert>
+
 ## Syntax
 
 ```javascript
