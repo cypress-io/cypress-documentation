@@ -8,13 +8,13 @@ properties to access the title of the test.
 ## Syntax
 
 ```javascript
-// returns object with title and titlePath properties
+// an object with title and titlePath properties
 Cypress.currentTest
 
-// returns title of current test
+// the title of the current test
 Cypress.currentTest.title
 
-// returns array with current test title path
+// an array with the current test's title path
 Cypress.currentTest.titlePath
 ```
 
