@@ -78,21 +78,21 @@ Cypress is encoding the captured video and possibly uploading it to the
 Dashboard.
 
 If the machine is encoding the video slowly (which is often the case for virtual
-machines that use a single core), the encoding might take a long time. In this
+machines that use less CPU cores), the encoding might take a long time. In this
 case, you can modify the
 [`videoCompression`](/guides/references/configuration#Videos) configuration to
 make the encoding a little bit faster. Here are some common scenarios:
 
-**Use minimal compression**
+**Change compression value**
 
 ```json
 {
-  "videoCompression": 0
+  "videoCompression": 15
 }
 ```
 
-The compression step will be skipped completely, so the video will be large, but
-the processing should be faster.
+A lower `videoCompression` value will spend less time compressing and result in
+a bigger video file size.
 
 **Disable compression**
 
@@ -101,6 +101,9 @@ the processing should be faster.
   "videoCompression": false
 }
 ```
+
+The compression step will be skipped completely, so the video will be large, but
+the processing should be faster.
 
 <Alert type="info">
 
