@@ -841,7 +841,7 @@ data, including cookies, `localStorage` and `sessionStorage`.
 
 ## See also
 
-- [Authenticate faster in tests with the cy.session command](https://cypress.io/blog/2021/08/02/authenticate-faster-in-tests-cy-session-command/)
+- [Authenticate faster in tests with the cy.session command](https://cypress.io/blog/2021/08/03/authenticate-faster-in-tests-cy-session-command/)
 - [Custom Commands](/api/cypress-api/custom-commands)
 - [`Cypress.session`](/api/cypress-api/session)
 - [`cy.visit()`](/api/commands/visit)
