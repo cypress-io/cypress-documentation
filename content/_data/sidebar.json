@@ -801,6 +801,10 @@
               "slug": "config"
             },
             {
+              "title": "currentTest",
+              "slug": "currenttest"
+            },
+            {
               "title": "dom",
               "slug": "dom"
             },
