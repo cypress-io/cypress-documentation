@@ -641,6 +641,10 @@
               "slug": "server"
             },
             {
+              "title": "session",
+              "slug": "session"
+            },
+            {
               "title": "setCookie",
               "slug": "setcookie"
             },
@@ -827,6 +831,10 @@
             {
               "title": "platform",
               "slug": "platform"
+            },
+            {
+              "title": "session",
+              "slug": "session"
             },
             {
               "title": "spec",
