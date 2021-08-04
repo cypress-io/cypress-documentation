@@ -641,6 +641,10 @@
               "slug": "server"
             },
             {
+              "title": "session",
+              "slug": "session"
+            },
+            {
               "title": "setCookie",
               "slug": "setcookie"
             },
@@ -801,6 +805,10 @@
               "slug": "config"
             },
             {
+              "title": "currentTest",
+              "slug": "currenttest"
+            },
+            {
               "title": "dom",
               "slug": "dom"
             },
@@ -823,6 +831,10 @@
             {
               "title": "platform",
               "slug": "platform"
+            },
+            {
+              "title": "session",
+              "slug": "session"
             },
             {
               "title": "spec",
