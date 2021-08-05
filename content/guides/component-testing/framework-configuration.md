@@ -192,10 +192,10 @@ You can find an example project
 
 ### Next.js (Webpack 4)
 
-this guide assumes you've created your app using the
+This guide assumes you've created your app using the
 [`create-next-app`](https://nextjs.org/docs/api-reference/create-next-app) tool.
-although next.js is webpack based, it doesn't it as a direct dependency, so
-you'll need to install it. you'll also need to install the cypress webpack dev
+Although Next.js is webpack based, it doesn't have it as a direct dependency, so
+you'll need to install it. You'll also need to install the cypress webpack dev
 server and react adapter:
 
 ```sh
