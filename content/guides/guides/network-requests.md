@@ -205,7 +205,7 @@ cy.intercept(
 When you use [`cy.intercept()`](/api/commands/intercept) to define a route,
 Cypress displays this under "Routes" in the Command Log.
 
-<DocsImage src="/img/guides/server-routing-table.png" alt="Routing Table" ></DocsImage>
+<DocsImage src="/img/guides/server-routing-table.png" alt="Routing Table"></DocsImage>
 
 When a new test runs, Cypress will restore the default behavior and remove all
 routes and stubs. For a complete reference of the API and options, refer to the
@@ -404,7 +404,7 @@ it('test', () => {
 })
 -->
 
-<DocsImage src="/img/guides/clear-source-of-failure.png" alt="Wait Failure" ></DocsImage>
+<DocsImage src="/img/guides/clear-source-of-failure.png" alt="Wait Failure"></DocsImage>
 
 Now we know exactly why our test failed. It had nothing to do with the DOM.
 Instead we can see that either our request never went out or a request went out
@@ -490,8 +490,94 @@ console
 cy.wait('@new-user').then(console.log)
 ```
 
+## Command Log
+
+Cypress logs all `XMLHttpRequest`s and `fetch`es made by the application under
+test in the Command Log. Here is an example of what this looks like:
+
+<!--
+    cy.visit('https://jsonplaceholder.cypress.io')
+    .then(() => {
+        fetch('https://jsonplaceholder.cypress.io/users?limit=100')
+        Cypress.$.get('https://jsonplaceholder.cypress.io/todos/1', { cache: true })
+    })
+-->
+
+<DocsImage src="/img/guides/network-requests/command-log-requests.png" alt="Screenshot of fetch and XHR requests"></DocsImage>
+
+The circular indicator on the left side indicates if the request went to the
+destination server or not. If the circle is solid, the request went to the
+destination server; if it is outlined, the response was stubbed by
+`cy.intercept()` or `cy.route()` and not sent outbound.
+
+If we re-run our previous test to make the same requests, but this time, add a
+`cy.intercept()` to stub the response to `/users`, we can see that the indicator
+changes. After adding the following line:
+
+```js
+cy.intercept('/users*', ['user1', 'user2']).as('getUsers')
+```
+
+The Command Log will look like this:
+
+<!--
+    cy.intercept('/users*', ['user1', 'user2']).as('getUsers')
+    cy.visit('https://jsonplaceholder.cypress.io')
+    .then(() => {
+        fetch('https://jsonplaceholder.cypress.io/users?limit=100')
+        Cypress.$.get('https://jsonplaceholder.cypress.io/todos/1')
+    })
+-->
+
+<DocsImage src="/img/guides/network-requests/command-log-stubbed.png" alt="Screenshot of stubbed fetch and unstubbed XHR requests"></DocsImage>
+
+The `fetch` request now has an open circle, to indicate that it has been
+stubbed. Also, note that the alias for the `cy.intercept()` is now displayed on
+the right-hand side of the Command Log. If you mouse over the alias, you can see
+more information about how the request was handled:
+
+<DocsImage src="/img/guides/network-requests/command-log-stubbed-tooltip.png" alt="Screenshot of stubbed fetch request with tooltip and unstubbed XHR request"></DocsImage>
+
+Additionally, the request will be flagged if the request and/or response was
+modified by a `cy.intercept()` handler function. If we add this code to modify
+outgoing requests to `/users`:
+
+```js
+cy.intercept('/users*', (req) => {
+  req.headers['authorization'] = 'bearer my-bearer-auth-token'
+}).as('addAuthHeader')
+```
+
+The request log for `/users` will reflect that the `req` object was modified,
+but the request was still fulfilled from the destination (filled indicator):
+
+<!--
+    cy.intercept('/users*', (req) => {
+        req.headers['authorization'] = 'bearer my-bearer-auth-token'
+    }).as('addAuthHeader')
+    cy.visit('https://jsonplaceholder.cypress.io')
+    .then(() => {
+        fetch('https://jsonplaceholder.cypress.io/users?limit=100')
+    })>
+-->
+
+<DocsImage src="/img/guides/network-requests/command-log-req-modified.png" alt="Screenshot of request that has had the req modified"></DocsImage>
+
+As you can see, "req modified" is displayed in the badge, to indicate the
+request object was modified. "res modified" and "req + res modified" can also be
+displayed, depending on if `res` was modified inside of a `req.continue()`
+callback.
+
+As with all command logs, logs for network requests can be clicked to display
+additional information in the Console. For example, after clicking the previous
+request for `/users?limit=100` and opening Developer Tools, we can see the
+following:
+
+<DocsImage src="/img/guides/network-requests/request-console-props.png" alt="Screenshot of request that has had the req modified"></DocsImage>
+
 ## See also
 
+- [`cy.intercept()` docs](/api/commands/intercept)
 - [Network requests in Kitchen Sink example](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples/network_requests.spec.js)
 - [See how to make a request with `cy.request()`](/api/commands/request)
 - [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
