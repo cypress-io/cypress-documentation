@@ -199,7 +199,7 @@ cy.intercept(
     url: '/users/*', // that have a URL that matches '/users/*'
   },
   [] // and force the response to be: []
-)
+).as('getUsers')
 ```
 
 When you use [`cy.intercept()`](/api/commands/intercept) to define a route,
