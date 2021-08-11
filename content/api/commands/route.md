@@ -572,8 +572,30 @@ cy.route(/teams/, 'fixtures:teams').as('teamsGet')
 
 Whenever you start a server and add routes, Cypress will display a new
 Instrument Log called _Routes_. It will list the routing table in the Instrument
-Log, including the `method`, `url`, `stubbed`, `alias` and number of matched
-requests:
+Log, including the `method`, matched URL pattern, `stubbed`, `alias` and number
+of matched requests:
+
+<!--
+it('cy.route command log', () => {
+    cy.server()
+    cy.route(/accounts/).as('accountsGet')
+    cy.route(/company/, 'fixtures:company').as('companyGet')
+    cy.route(/teams/, 'fixtures:teams').as('teamsGet')
+    cy.window().then(({ XMLHttpRequest }) => {
+        const xhr = new XMLHttpRequest()
+        xhr.open('GET', '/accounts?page=1')
+        xhr.send()
+
+        const xhr2 = new XMLHttpRequest()
+        xhr2.open('GET', '/company')
+        xhr2.send()
+
+        const xhr3 = new XMLHttpRequest()
+        xhr3.open('GET', '/teams?page=1')
+        xhr3.send()
+    })
+})
+-->
 
 <DocsImage src="/img/api/route/routing-table-displayed-in-command-log-for-cy-route.png" alt="Command Log routing table" ></DocsImage>
 
@@ -582,10 +604,12 @@ whether they matched a routing alias:
 
 <DocsImage src="/img/api/route/some-xhr-responses-including-200-and-500-status-codes.png" alt="Command Log XHR alias route" ></DocsImage>
 
-When clicking on `XHR Stub` within the Command Log, the console outputs the
-following:
+The circular indicator is filled if the request went to the destination server,
+but unfilled if the request was stubbed with a response.
 
 <DocsImage src="/img/api/route/console-log-shows-status-duration-response-request-and-other-data-for-routing.png" alt="Console Log XHR alias route" ></DocsImage>
+
+[Read more about request logging in Cypress.](/guides/guides/network-requests#Command-Log)
 
 ## History
 
