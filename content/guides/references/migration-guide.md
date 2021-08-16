@@ -5,7 +5,7 @@ title: Migration Guide
 ## Migrating to Cypress 8.0
 
 This guide details the changes and how to change your code to migrate to Cypress
-7.0. [See the full changelog for 8.0](/guides/references/changelog#8-0-0).
+8.0. [See the full changelog for 8.0](/guides/references/changelog#8-0-0).
 
 ### `cypress run` runs all browsers `--headless`
 
