@@ -98,6 +98,18 @@ state of your tests.
 
 ### Routes
 
+<!-- Code to reproduce screenshot:
+it('intercept command log', () => {
+    cy.intercept('GET', '/comments/1').as('getComment')
+    .intercept('POST', '/comments').as('postComment')
+    .intercept('PUT', /comments\/\d+/, 'res').as('putComment')
+
+    cy.then(() => {
+        Cypress.$.get('/comments/1')
+    })
+})
+-->
+
 <DocsImage src="/img/guides/instrument-panel-routes.png" alt="Routes Instrument Panel" ></DocsImage>
 
 ### Stubs

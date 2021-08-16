@@ -1537,6 +1537,50 @@ are some workarounds:
   entirely. For more information, see
   [this comment on issue #14459](https://github.com/cypress-io/cypress/issues/14459#issuecomment-768616195)
 
+## Command Log
+
+```javascript
+cy.intercept('/accounts*').as('accountsGet')
+cy.intercept('/company', { companyId: 1 }).as('companyGet')
+cy.intercept('/teams*', [{ teamId: 2 }]).as('teamsGet')
+```
+
+Whenever you create `cy.intercept()` rules, Cypress will display a new
+Instrument Panel called _Routes_. It will list the routing table in the
+Instrument Panel, including the `method`, `RouteMatcher`, if the route is
+stubbed, any alias, and number of matched requests:
+
+<!-- Code to reproduce screenshot:
+it('cy.intercept command log', () => {
+    cy.intercept('/accounts*').as('accountsGet')
+    cy.intercept('/company', { companyId: 1 }).as('companyGet')
+    cy.intercept('/teams*', [{ teamId: 2 }]).as('teamsGet')
+    cy.then(() => {
+        fetch('/accounts?page=1')
+        fetch('/company')
+        fetch('/teams?page=1')
+    })
+})
+-->
+
+<DocsImage src="/img/api/intercept/command-log-routes-ui.png" alt="Screenshot of Command Log Routes UI"></DocsImage>
+
+When HTTP requests are made, Cypress will log them in the Command Log and
+indicate whether they matched a `cy.intercept()` by the presence of a yellow
+badge on the right hand side:
+
+<DocsImage src="/img/api/intercept/command-log-fetches.png" alt="Screenshot of example fetches"></DocsImage>
+
+The circular indicator is filled if the request went to the destination server,
+but unfilled if the request was stubbed with a response.
+
+Clicking on a request that matched a `cy.intercept()` will print additional
+information about the request and response to the console:
+
+<DocsImage src="/img/api/intercept/console-props.png" alt="Screenshot of cy.intercept console output"></DocsImage>
+
+[Read more about request logging in Cypress.](/guides/guides/network-requests#Command-Log)
+
 ## History
 
 | Version                                     | Changes                                                                                                                                                                                                                                                                                              |
