@@ -1546,11 +1546,11 @@ cy.intercept('/teams*', [{ teamId: 2 }]).as('teamsGet')
 ```
 
 Whenever you create `cy.intercept()` rules, Cypress will display a new
-Instrument Log called _Routes_. It will list the routing table in the Instrument
-Log, including the `method`, `RouteMatcher`, if the route is stubbed, any alias,
-and number of matched requests:
+Instrument Panel called _Routes_. It will list the routing table in the
+Instrument Panel, including the `method`, `RouteMatcher`, if the route is
+stubbed, any alias, and number of matched requests:
 
-<!--
+<!-- Code to reproduce screenshot:
 it('cy.intercept command log', () => {
     cy.intercept('/accounts*').as('accountsGet')
     cy.intercept('/company', { companyId: 1 }).as('companyGet')

@@ -571,11 +571,11 @@ cy.route(/teams/, 'fixtures:teams').as('teamsGet')
 ```
 
 Whenever you start a server and add routes, Cypress will display a new
-Instrument Log called _Routes_. It will list the routing table in the Instrument
-Log, including the `method`, matched URL pattern, `stubbed`, `alias` and number
-of matched requests:
+Instrument Panel called _Routes_. It will list the routing table in the
+Instrument Panel, including the `method`, matched URL pattern, `stubbed`,
+`alias` and number of matched requests:
 
-<!--
+<!-- Code to reproduce screenshot:
 it('cy.route command log', () => {
     cy.server()
     cy.route(/accounts/).as('accountsGet')

@@ -495,7 +495,7 @@ cy.wait('@new-user').then(console.log)
 Cypress logs all `XMLHttpRequest`s and `fetch`es made by the application under
 test in the Command Log. Here is an example of what this looks like:
 
-<!--
+<!-- Code to reproduce screenshot:
     cy.visit('https://jsonplaceholder.cypress.io')
     .then(() => {
         fetch('https://jsonplaceholder.cypress.io/users?limit=100')
@@ -520,7 +520,7 @@ cy.intercept('/users*', ['user1', 'user2']).as('getUsers')
 
 The Command Log will look like this:
 
-<!--
+<!-- Code to reproduce screenshot:
     cy.intercept('/users*', ['user1', 'user2']).as('getUsers')
     cy.visit('https://jsonplaceholder.cypress.io')
     .then(() => {
@@ -551,7 +551,7 @@ cy.intercept('/users*', (req) => {
 The request log for `/users` will reflect that the `req` object was modified,
 but the request was still fulfilled from the destination (filled indicator):
 
-<!--
+<!-- Code to reproduce screenshot:
     cy.intercept('/users*', (req) => {
         req.headers['authorization'] = 'bearer my-bearer-auth-token'
     }).as('addAuthHeader')

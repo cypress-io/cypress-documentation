@@ -98,7 +98,7 @@ state of your tests.
 
 ### Routes
 
-<!--
+<!-- Code to reproduce screenshot:
 it('intercept command log', () => {
     cy.intercept('GET', '/comments/1').as('getComment')
     .intercept('POST', '/comments').as('postComment')

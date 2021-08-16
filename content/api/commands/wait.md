@@ -277,7 +277,7 @@ cy.wait('@userPut').its('request.url').should('include', 'users')
 
 The `cy.wait()` will display in the Command Log as:
 
-<!--
+<!-- Code to reproduce screenshot:
 it('assets/img/api/wait/command-log-when-waiting-for-aliased-route.png', () => {
     cy.intercept('PUT', /users/, {}).as('userPut')
     cy.then(() => {
