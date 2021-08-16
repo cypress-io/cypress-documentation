@@ -1575,7 +1575,7 @@ The circular indicator is filled if the request went to the destination server,
 but unfilled if the request was stubbed with a response.
 
 Clicking on a request that matched a `cy.intercept()` will print additional
-information about the request and response:
+information about the request and response to the console:
 
 <DocsImage src="/img/api/intercept/console-props.png" alt="Screenshot of cy.intercept console output"></DocsImage>
 
