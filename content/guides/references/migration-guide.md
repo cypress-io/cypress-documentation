@@ -560,7 +560,7 @@ it('renders a Button', () => {
 // In the majority of modern style-loaders,
 // these styles will be injected into document.head when they're imported below
 require('./index.scss')
-require('tailwindcss/dist/tailwindcss.min.css')
+require('tailwindcss/dist/tailwind.min.css')
 
 const { mount } = require('@cypress/react')
 const Button = require('./Button')
