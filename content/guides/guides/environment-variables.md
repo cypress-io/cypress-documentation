@@ -232,7 +232,7 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 ### Option #4: `--env`
 
-Lastly you can pass in environment variables as options when
+You can pass in environment variables as options when
 [using the CLI tool](/guides/guides/command-line#cypress-run).
 
 Values here will overwrite all other conflicting environment variables.
