@@ -59,7 +59,7 @@ CYPRESS_BASE_URL=https://staging.app.com cypress run
 
 ## Setting
 
-There are 5 different ways to set environment variables. Each has a slightly
+There are different ways to set environment variables. Each has a slightly
 different use case.
 
 **_To summarize you can:_**
