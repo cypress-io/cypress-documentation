@@ -86,7 +86,33 @@ example project and place the above
 
 As of version 0.2, CodeBuild does not provide a way to specify a custom image
 for single build configurations. One way to solve this is using an
-[AWS CodeBuild build-list strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-list).
+[AWS CodeBuild batch build-list strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-list).
+
+</Alert>
+
+<Alert type="info">
+<strong class="alert-header">Enabling batch builds in the CodeBuild UI for the project</strong>
+<br />
+<br />
+
+Per the
+[AWS CodeBuild batch build documentation](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html),
+AWS CodeBuild creates a separate build for each possible configuration
+combination for a
+[batch build-list strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-list).
+Therefore, AWS CodeBuild projects must be created or updated to run batch
+configuration.
+
+Follow these steps to enable batch configuration for existing AWS CodeBuild
+projects:
+
+- Navigate to the AWS CodeBuild Console
+- Select the project
+- Click "Edit" --> "Batch Configuration"
+- Create "New service Role" and enter the name of the role
+- Leave all other options as optional
+- Click "Update batch configuration"
+- Start the Build
 
 </Alert>
 
@@ -224,13 +250,39 @@ additional insights and [analytics](/guides/dashboard/analytics) for Cypress
 tests.
 
 AWS CodeBuild offers a
-[build-matrix strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix)
+[batch build-matrix strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix)
 for declaring different job configurations for a single job definition. The
-[build-matrix strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix)
+[batch build-matrix strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix)
 provides an option to specify a container image for the job. Jobs declared
 within a build-matrix strategy can run in parallel which enables us run
 multiples instances of Cypress at same time as we will see later in this
 section.
+
+<Alert type="info">
+<strong class="alert-header">Enabling batch builds in the CodeBuild UI for the project</strong>
+<br />
+<br />
+
+Per the
+[AWS CodeBuild batch build documentation](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html),
+AWS CodeBuild creates a separate build for each possible configuration
+combination for a
+[batch build-matrix strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix).
+Therefore, AWS CodeBuild projects must be created or updated to run batch
+configuration.
+
+Follow these steps to enable batch configuration for existing AWS CodeBuild
+projects:
+
+- Navigate to the AWS CodeBuild Console
+- Select the project
+- Click "Edit" --> "Batch Configuration"
+- Create "New service Role" and enter the name of the role
+- Leave all other options as optional
+- Click "Update batch configuration"
+- Start the Build
+
+</Alert>
 
 The Cypress team maintains the official
 [Docker Images](https://github.com/cypress-io/cypress-docker-images) for running
@@ -340,7 +392,7 @@ batch:
 
 The `WORKERS` array is filled with filler (or _dummy_) items to provision the
 desired number of CI machine instances within the
-[build-matrix strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix)
+[batch build-matrix strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix)
 and will provide 5 workers to each group defined in the `CY_GROUP_SPEC`.
 
 </Alert>
