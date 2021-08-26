@@ -410,13 +410,10 @@ the event spec:
 
 - `keydown`
 - `keypress`
-- `beforeinput`\*
+- `beforeinput`
 - `textInput`
 - `input`
 - `keyup`
-
-\* Firefox does not support the `beforeinput` event
-[MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/beforeinput_event)
 
 Additionally `change` events will be fired either when the `{enter}` key is
 pressed (and the value has changed since the last focus event), or whenever the
