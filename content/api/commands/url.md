@@ -58,7 +58,7 @@ cy.url().should('eq', 'http://localhost:8000/users/1/edit') // => true
 
 ### `decode` option
 
-When the URL contains non-ASCII characters, use `decode` option.
+When the URL contains non-ASCII characters, use the `decode` option.
 
 ```javascript
 // For the curious, '사랑' means 'love' in Korean.
