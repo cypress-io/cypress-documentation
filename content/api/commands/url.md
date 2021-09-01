@@ -35,6 +35,7 @@ Pass in an options object to change the default behavior of `cy.url()`.
 
 | Option    | Default                                                              | Description                                                                              |
 | --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `decode`  | `false`                                                              | Decode URL 
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.url()` to resolve before [timing out](#Timeouts)                    |
 
@@ -53,6 +54,15 @@ Pass in an options object to change the default behavior of `cy.url()`.
 cy.get('#user-edit a').click()
 cy.url().should('include', '/users/1/edit') // => true
 cy.url().should('eq', 'http://localhost:8000/users/1/edit') // => true
+```
+
+### `decode` option
+
+When the URL contains non-ASCII characters, use the `decode` option.
+
+```javascript
+// For the curious, '사랑' means 'love' in Korean.
+cy.url({ decode: true }).should('contain', '사랑')
 ```
 
 ## Notes
