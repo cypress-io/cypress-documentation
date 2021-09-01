@@ -313,6 +313,10 @@
               "slug": "configuration"
             },
             {
+              "title": "Client Certificates",
+              "slug": "client-certificates"
+            },
+            {
               "title": "Proxy Configuration",
               "slug": "proxy-configuration"
             },
@@ -637,6 +641,10 @@
               "slug": "server"
             },
             {
+              "title": "session",
+              "slug": "session"
+            },
+            {
               "title": "setCookie",
               "slug": "setcookie"
             },
@@ -721,6 +729,10 @@
               "slug": "within"
             },
             {
+              "title": "wrap",
+              "slug": "wrap"
+            },
+            {
               "title": "writeFile",
               "slug": "writefile"
             }
@@ -769,10 +781,6 @@
               "slug": "cookies"
             },
             {
-              "title": "Keyboard",
-              "slug": "keyboard-api"
-            },
-            {
               "title": "Screenshot",
               "slug": "screenshot-api"
             },
@@ -797,6 +805,10 @@
               "slug": "config"
             },
             {
+              "title": "currentTest",
+              "slug": "currenttest"
+            },
+            {
               "title": "dom",
               "slug": "dom"
             },
@@ -819,6 +831,10 @@
             {
               "title": "platform",
               "slug": "platform"
+            },
+            {
+              "title": "session",
+              "slug": "session"
             },
             {
               "title": "spec",

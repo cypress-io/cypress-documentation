@@ -4,9 +4,13 @@ title: Environment Variables
 
 <Alert type="warning">
 
-<strong class="alert-header">Difference between OS-level and Cypress environment variables</strong>
+<strong class="alert-header">Difference between OS-level and Cypress environment
+variables</strong>
 
-In Cypress, "environment variables" are variables that are accessible via `Cypress.env`. These are not the same as OS-level environment variables. However, [it is possible to set Cypress environment variables from OS-level environment variables](/guides/guides/environment-variables.html#Option-3-CYPRESS).
+In Cypress, "environment variables" are variables that are accessible via
+`Cypress.env`. These are not the same as OS-level environment variables.
+However,
+[it is possible to set Cypress environment variables from OS-level environment variables](/guides/guides/environment-variables#Option-3-CYPRESS).
 
 </Alert>
 
@@ -34,13 +38,18 @@ cy.request(Cypress.env('EXTERNAL_API')) // points to a dynamic env var
 
 <strong class="alert-header">Using 'baseUrl'</strong>
 
-Environment variables are great at pointing to external services and servers, or storing password or other credentials.
+Environment variables are great at pointing to external services and servers, or
+storing password or other credentials.
 
-However, you **do not** need to use environment variables to point to the origin and domain under test. Use `baseUrl` instead of environment variables.
+However, you **do not** need to use environment variables to point to the origin
+and domain under test. Use `baseUrl` instead of environment variables.
 
-[`cy.visit()`](/api/commands/visit) and [`cy.request()`](/api/commands/request) are automatically prefixed with this value - avoiding the need to specify them.
+[`cy.visit()`](/api/commands/visit) and [`cy.request()`](/api/commands/request)
+are automatically prefixed with this value - avoiding the need to specify them.
 
-`baseUrl` can be set in your configuration file (`cypress.json` by default) - and then you can set an environment variable in your OS to override it like shown below.
+`baseUrl` can be set in your configuration file (`cypress.json` by default) -
+and then you can set an environment variable in your OS to override it like
+shown below.
 
 ```shell
 CYPRESS_BASE_URL=https://staging.app.com cypress run
@@ -50,7 +59,8 @@ CYPRESS_BASE_URL=https://staging.app.com cypress run
 
 ## Setting
 
-There are 5 different ways to set environment variables. Each has a slightly different use case.
+There are different ways to set environment variables. Each has a slightly
+different use case.
 
 **_To summarize you can:_**
 
@@ -61,13 +71,19 @@ There are 5 different ways to set environment variables. Each has a slightly dif
 - [Set an environment variable within your plugins.](#Option-5-Plugins)
 - [Set an environment variable within test configuration.](#Option-6-Test-Configuration)
 
-Don't feel obligated to pick just one method. It is common to use one strategy for local development but another when running in [CI](/guides/continuous-integration/introduction).
+Don't feel obligated to pick just one method. It is common to use one strategy
+for local development but another when running in
+[CI](/guides/continuous-integration/introduction).
 
-When your tests are running, you can use the [`Cypress.env`](/api/cypress-api/env) function to access the values of your environment variables.
+When your tests are running, you can use the
+[`Cypress.env`](/api/cypress-api/env) function to access the values of your
+environment variables.
 
 ### Option #1: configuration file
 
-Any key/value you set in your [configuration file (`cypress.json` by default)](/guides/references/configuration) under the `env` key will become an environment variable.
+Any key/value you set in your
+[configuration file (`cypress.json` by default)](/guides/references/configuration)
+under the `env` key will become an environment variable.
 
 ```json
 {
@@ -93,7 +109,8 @@ Cypress.env('products_url') // '/products'
 
 <strong class="alert-header">Benefits</strong>
 
-- Great for values that need to be checked into source control and remain the same on all machines.
+- Great for values that need to be checked into source control and remain the
+  same on all machines.
 
 </Alert>
 
@@ -107,9 +124,13 @@ Cypress.env('products_url') // '/products'
 
 ### Option #2: `cypress.env.json`
 
-You can create your own `cypress.env.json` file that Cypress will automatically check. Values in here will overwrite conflicting environment variables in your [configuration file (`cypress.json` by default)](/guides/references/configuration).
+You can create your own `cypress.env.json` file that Cypress will automatically
+check. Values in here will overwrite conflicting environment variables in your
+[configuration file (`cypress.json` by default)](/guides/references/configuration).
 
-This strategy is useful because if you add `cypress.env.json` to your `.gitignore` file, the values in here can be different for each developer machine.
+This strategy is useful because if you add `cypress.env.json` to your
+`.gitignore` file, the values in here can be different for each developer
+machine.
 
 ```json
 {
@@ -135,7 +156,8 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 - Dedicated file just for environment variables.
 - Enables you to generate this file from other build processes.
 - Values can be different on each machine (if not checked into source control).
-- Supports nested fields (objects), e.g. `{ testUser: { name: '...', email: '...' } }`.
+- Supports nested fields (objects), e.g.
+  `{ testUser: { name: '...', email: '...' } }`.
 
 </Alert>
 
@@ -150,15 +172,19 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 ### Option #3: `CYPRESS_*`
 
-Any OS-level environment variable on your machine that starts with either `CYPRESS_` or `cypress_` will automatically be added to Cypress' environment variables and made available to you.
+Any OS-level environment variable on your machine that starts with either
+`CYPRESS_` or `cypress_` will automatically be added to Cypress' environment
+variables and made available to you.
 
-Conflicting values will override values from your configuration file (`cypress.json` by default) and `cypress.env.json` files.
+Conflicting values will override values from your configuration file
+(`cypress.json` by default) and `cypress.env.json` files.
 
 Cypress will _strip off_ the `CYPRESS_` when adding your environment variables.
 
 <Alert type="danger">
 
-The environment variable `CYPRESS_INTERNAL_ENV` is reserved and should not be set.
+The environment variable `CYPRESS_INTERNAL_ENV` is reserved and should not be
+set.
 
 </Alert>
 
@@ -206,11 +232,13 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 ### Option #4: `--env`
 
-Lastly you can pass in environment variables as options when [using the CLI tool](/guides/guides/command-line#cypress-run).
+You can pass in environment variables as options when
+[using the CLI tool](/guides/guides/command-line#cypress-run).
 
 Values here will overwrite all other conflicting environment variables.
 
-You can use the `--env` argument for [cypress run](/guides/guides/command-line#cypress-run).
+You can use the `--env` argument for
+[cypress run](/guides/guides/command-line#cypress-run).
 
 <Alert type="warning">
 
@@ -256,9 +284,14 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 ### Option #5: Plugins
 
-Instead of setting environment variables in a file, you can use plugins to dynamically set them with Node code. This enables you to do things like use `fs` and read off configuration values and dynamically change them.
+Instead of setting environment variables in a file, you can use plugins to
+dynamically set them with Node code. This enables you to do things like use `fs`
+and read off configuration values and dynamically change them.
 
-For example, if you use the [dotenv](https://github.com/motdotla/dotenv#readme) package to read the `.env` file, you could then grab the needed environment variables from the `process.env` object and place them into `config.env` to make available in the tests:
+For example, if you use the [dotenv](https://github.com/motdotla/dotenv#readme)
+package to read the `.env` file, you could then grab the needed environment
+variables from the `process.env` object and place them into `config.env` to make
+available in the tests:
 
 ```
 // .env file
@@ -307,7 +340,9 @@ it('has username to use', () => {
 
 ### Option #6: Test Configuration
 
-You can set environment variables for specific suites or tests by passing the `env` values to the [test configuration](/guides/references/configuration#Test-Configuration).
+You can set environment variables for specific suites or tests by passing the
+`env` values to the
+[test configuration](/guides/references/configuration#Test-Configuration).
 
 #### Suite of test configuration
 
@@ -373,9 +408,12 @@ it(
 
 ## Overriding Configuration
 
-If your environment variables match a standard configuration key, then instead of setting an `environment variable` they will instead override the configuration value.
+If your environment variables match a standard configuration key, then instead
+of setting an `environment variable` they will instead override the
+configuration value.
 
-**_Change the `baseUrl` configuration value / not set env var in `Cypress.env()`_**
+**_Change the `baseUrl` configuration value / not set env var in
+`Cypress.env()`_**
 
 ```shell
 export CYPRESS_BASE_URL=http://localhost:8080
@@ -387,7 +425,8 @@ export CYPRESS_BASE_URL=http://localhost:8080
 export CYPRESS_FOO=bar
 ```
 
-You can [read more about how environment variables can change configuration here](/guides/references/configuration).
+You can
+[read more about how environment variables can change configuration here](/guides/references/configuration).
 
 ## See also
 

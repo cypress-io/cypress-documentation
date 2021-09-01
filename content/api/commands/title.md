@@ -32,7 +32,8 @@ Pass in an options object to change the default behavior of `cy.title()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.title()` 'yields the `document.title` property of the current page' </li></List>
+<List><li>`cy.title()` 'yields the `document.title` property of the current
+page' </li></List>
 
 ## Examples
 
@@ -52,11 +53,14 @@ cy.title().should('eq', 'My Awesome Application')
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.title()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`cy.title()` will automatically
+[retry](/guides/core-concepts/retry-ability) until all chained assertions have
+passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.title()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`cy.title()` can time out waiting for assertions you've added to
+pass.</li></List>
 
 ## Command Log
 
@@ -70,7 +74,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/title/test-title-of-website-or-webapp.png" alt="Command Log title" ></DocsImage>
 
-When clicking on `title` within the command log, the console outputs the following:
+When clicking on `title` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/title/see-the-string-yielded-in-the-console.png" alt="Console Log title" ></DocsImage>
 

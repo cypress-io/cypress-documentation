@@ -1,6 +1,15 @@
 {
   "courses": [
     {
+      "title": "Testes end-to-end com Cypress",
+      "url": "https://www.udemy.com/course/testes-end-to-end-com-cypress",
+      "author": "Walmyr Lima e Silva Filho",
+      "authorTwitter": "walmyrlimaesilv",
+      "sourceName": "Udemy",
+      "sourceUrl": "https://udemy.com",
+      "language": "Portuguese"
+    },
+    {
       "title": "Boas práticas em automação de testes com Cypress",
       "url": "https://www.udemy.com/course/boas-praticas-em-automacao-de-testes-com-cypress",
       "author": "Walmyr Lima e Silva Filho",

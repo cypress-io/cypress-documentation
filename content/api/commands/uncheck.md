@@ -55,7 +55,8 @@ Pass in an options object to change the default behavior of `.uncheck()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.uncheck()` yields the same subject it was given from the previous command.</li></List>
+<List><li>`.uncheck()` yields the same subject it was given from the previous
+command.</li></List>
 
 ## Examples
 
@@ -95,21 +96,29 @@ cy.get('[type="checkbox"]').uncheck(['ga', 'ca'])
 
 #### The element must first reach actionability
 
-`.uncheck()` is an "action command" that follows all the rules [defined here](/guides/core-concepts/interacting-with-elements).
+`.uncheck()` is an "action command" that follows all the rules
+[defined here](/guides/core-concepts/interacting-with-elements).
 
 ## Rules
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.uncheck()` requires being chained off a command that yields DOM element(s).</li><li>.uncheck() requires the element to have type `checkbox`.</li></List>
+<List><li>`.uncheck()` requires being chained off a command that yields DOM
+element(s).</li><li>.uncheck() requires the element to have type
+`checkbox`.</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.uncheck()` will automatically wait for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.uncheck()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.uncheck()` will automatically wait for the element to reach an
+[actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.uncheck()`
+will automatically [retry](/guides/core-concepts/retry-ability) until all
+chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.uncheck()` can time out waiting for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.uncheck()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`.uncheck()` can time out waiting for the element to reach an
+[actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.uncheck()`
+can time out waiting for assertions you've added to pass.</li></List>
 
 ## Command Log
 
@@ -127,7 +136,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/uncheck/test-unchecking-a-checkbox.png" alt="Command Log uncheck" ></DocsImage>
 
-When clicking on `uncheck` within the command log, the console outputs the following:
+When clicking on `uncheck` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/uncheck/console-shows-events-from-clicking-the-checkbox.png" alt="Console Log uncheck" ></DocsImage>
 

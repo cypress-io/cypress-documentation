@@ -2,7 +2,11 @@
 title: Assertions
 ---
 
-Cypress bundles the popular [Chai](/guides/references/assertions#Chai) assertion library, as well as helpful extensions for [Sinon](/guides/references/assertions#Sinon-Chai) and [jQuery](/guides/references/assertions#Chai-jQuery), bringing you dozens of powerful assertions for free.
+Cypress bundles the popular [Chai](/guides/references/assertions#Chai) assertion
+library, as well as helpful extensions for
+[Sinon](/guides/references/assertions#Sinon-Chai) and
+[jQuery](/guides/references/assertions#Chai-jQuery), bringing you dozens of
+powerful assertions for free.
 
 <Alert type="info">
 
@@ -10,17 +14,23 @@ Cypress bundles the popular [Chai](/guides/references/assertions#Chai) assertion
 
 This document is only a reference to every assertion Cypress supports.
 
-If you're looking to understand **how** to use these assertions please read about assertions in our [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Assertions) guide.
+If you're looking to understand **how** to use these assertions please read
+about assertions in our
+[Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Assertions)
+guide.
 
 </Alert>
 
 ## Chai
 
-<Icon name="github"></Icon> [https://github.com/chaijs/chai](https://github.com/chaijs/chai)
+<Icon name="github"></Icon>
+[https://github.com/chaijs/chai](https://github.com/chaijs/chai)
 
 ### BDD Assertions
 
-These chainers are available for BDD assertions (`expect`/`should`). Aliases listed can be used interchangeably with their original chainer. You can see the entire list of available BDD Chai assertions [here](http://chaijs.com/api/bdd/).
+These chainers are available for BDD assertions (`expect`/`should`). Aliases
+listed can be used interchangeably with their original chainer. You can see the
+entire list of available BDD Chai assertions [here](http://chaijs.com/api/bdd/).
 
 | Chainer                                                                                                              | Example                                                                                                                               |
 | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
@@ -68,7 +78,8 @@ These chainers are available for BDD assertions (`expect`/`should`). Aliases lis
 | increase(_function_) <br><small class="aliases"><strong>Aliases: </strong>increases</small>                          | `expect(fn).to.increase(obj, 'val')`                                                                                                  |
 | decrease(_function_) <br><small class="aliases"><strong>Aliases: </strong>decreases</small>                          | `expect(fn).to.decrease(obj, 'val')`                                                                                                  |
 
-These getters are also available for BDD assertions. They don't actually do anything, but they enable you to write clear, english sentences.
+These getters are also available for BDD assertions. They don't actually do
+anything, but they enable you to write clear, english sentences.
 
 | Chainable getters                                                                           |
 | ------------------------------------------------------------------------------------------- |
@@ -76,7 +87,8 @@ These getters are also available for BDD assertions. They don't actually do anyt
 
 ### TDD Assertions
 
-These assertions are available for TDD assertions (`assert`). You can see the entire list of available Chai assertions [here](http://chaijs.com/api/assert/).
+These assertions are available for TDD assertions (`assert`). You can see the
+entire list of available Chai assertions [here](http://chaijs.com/api/assert/).
 
 | Assertion                                                   | Example                                                |
 | ----------------------------------------------------------- | ------------------------------------------------------ |
@@ -122,11 +134,13 @@ These assertions are available for TDD assertions (`assert`). You can see the en
 
 ## Chai-jQuery
 
-<Icon name="github"></Icon> [https://github.com/chaijs/chai-jquery](https://github.com/chaijs/chai-jquery)
+<Icon name="github"></Icon>
+[https://github.com/chaijs/chai-jquery](https://github.com/chaijs/chai-jquery)
 
 These chainers are available when asserting about a DOM object.
 
-You will commonly use these chainers after using DOM commands like: [`cy.get()`](/api/commands/get), [`cy.contains()`](/api/commands/contains), etc.
+You will commonly use these chainers after using DOM commands like:
+[`cy.get()`](/api/commands/get), [`cy.contains()`](/api/commands/contains), etc.
 
 <!-- textlint-disable -->
 
@@ -158,9 +172,11 @@ You will commonly use these chainers after using DOM commands like: [`cy.get()`]
 
 ## Sinon-Chai
 
-<Icon name="github"></Icon> [https://github.com/domenic/sinon-chai](https://github.com/domenic/sinon-chai)
+<Icon name="github"></Icon>
+[https://github.com/domenic/sinon-chai](https://github.com/domenic/sinon-chai)
 
-These chainers are used on assertions with [`cy.stub()`](/api/commands/stub) and [`cy.spy()`](/api/commands/spy).
+These chainers are used on assertions with [`cy.stub()`](/api/commands/stub) and
+[`cy.spy()`](/api/commands/spy).
 
 | Sinon.JS property/method | Assertion                                                               |
 | ------------------------ | ----------------------------------------------------------------------- |
@@ -188,10 +204,13 @@ These chainers are used on assertions with [`cy.stub()`](/api/commands/stub) and
 
 ## Adding New Assertions
 
-Because we are using `chai`, that means you can extend it however you'd like. Cypress will "just work" with new assertions added to `chai`. You can:
+Because we are using `chai`, that means you can extend it however you'd like.
+Cypress will "just work" with new assertions added to `chai`. You can:
 
-- Write your own `chai` assertions as [documented here](http://chaijs.com/api/plugins/).
-- npm install any existing `chai` library and import into your test file or support file.
+- Write your own `chai` assertions as
+  [documented here](http://chaijs.com/api/plugins/).
+- npm install any existing `chai` library and import into your test file or
+  support file.
 
 <Alert type="info">
 
@@ -201,7 +220,10 @@ Because we are using `chai`, that means you can extend it however you'd like. Cy
 
 ## Common Assertions
 
-Here is a list of common element assertions. Notice how we use these assertions (listed above) with [`.should()`](/api/commands/should). You may also want to read about how Cypress [retries](/guides/core-concepts/retry-ability) assertions.
+Here is a list of common element assertions. Notice how we use these assertions
+(listed above) with [`.should()`](/api/commands/should). You may also want to
+read about how Cypress [retries](/guides/core-concepts/retry-ability)
+assertions.
 
 ### Length
 
@@ -242,7 +264,9 @@ cy.get('#greeting')
 cy.contains('#a-greeting', /^Hello/)
 ```
 
-**Tip:** read about assertions against a text with non-breaking space entities in [How do I get an element's text contents?](/faq/questions/using-cypress-faq#How-do-I-get-an-element-s-text-contents)
+**Tip:** read about assertions against a text with non-breaking space entities
+in
+[How do I get an element's text contents?](/faq/questions/using-cypress-faq#How-do-I-get-an-element-s-text-contents)
 
 ### Visibility
 
@@ -254,7 +278,8 @@ cy.get('button#form-submit').should('be.visible')
 cy.contains('.todo li', 'write tests').should('be.visible')
 ```
 
-**Note:** if there are multiple elements, the assertions `be.visible` and `not.be.visible` act differently:
+**Note:** if there are multiple elements, the assertions `be.visible` and
+`not.be.visible` act differently:
 
 ```javascript
 // retry until SOME elements are visible
@@ -263,7 +288,9 @@ cy.get('li').should('be.visible')
 cy.get('li.hidden').should('not.be.visible')
 ```
 
-Watch the short video ["Multiple elements and should('be.visible') assertion"](https://www.youtube.com/watch?v=LxkrhUEE2Qk) that shows how to correctly check the visibility of elements.
+Watch the short video
+["Multiple elements and should('be.visible') assertion"](https://www.youtube.com/watch?v=LxkrhUEE2Qk)
+that shows how to correctly check the visibility of elements.
 
 ### Existence
 
@@ -318,7 +345,8 @@ There are positive and negative assertions. Examples of positive assertions are:
 cy.get('.todo-item').should('have.length', 2).and('have.class', 'completed')
 ```
 
-The negative assertions have the "not" chainer prefixed to the assertion. Examples of negative assertions are:
+The negative assertions have the "not" chainer prefixed to the assertion.
+Examples of negative assertions are:
 
 ```javascript
 cy.contains('first todo').should('not.have.class', 'completed')
@@ -327,13 +355,18 @@ cy.get('#loading').should('not.be.visible')
 
 #### ⚠️ False passing tests
 
-Negative assertions may pass for reasons you weren't expecting. Let's say we want to test that a Todo list app adds a new Todo item after typing the Todo and pressing enter.
+Negative assertions may pass for reasons you weren't expecting. Let's say we
+want to test that a Todo list app adds a new Todo item after typing the Todo and
+pressing enter.
 
 **Positive assertions**
 
-When adding an element to the list and using a **positive assertion**, the test asserts a specific number of Todo items in our application.
+When adding an element to the list and using a **positive assertion**, the test
+asserts a specific number of Todo items in our application.
 
-The test below may still falsely pass if the application behaves unexpectedly, like adding a blank Todo, instead of adding the new Todo with the text "Write tests".
+The test below may still falsely pass if the application behaves unexpectedly,
+like adding a blank Todo, instead of adding the new Todo with the text "Write
+tests".
 
 ```javascript
 cy.get('li.todo').should('have.length', 2)
@@ -345,9 +378,11 @@ cy.get('li.todo').should('have.length', 3)
 
 **Negative assertions**
 
-But when using a **negative assertion** in the test below, the test can falsely pass when the application behaves in multiple unexpected ways:
+But when using a **negative assertion** in the test below, the test can falsely
+pass when the application behaves in multiple unexpected ways:
 
-- The app deletes the entire list of Todo items instead of inserting the 3rd Todo
+- The app deletes the entire list of Todo items instead of inserting the 3rd
+  Todo
 - The app deletes a Todo instead of adding a new Todo
 - The app adds a blank Todo
 - An infinite variety of possible application mistakes
@@ -362,7 +397,10 @@ cy.get('li.todo').should('not.have.length', 2)
 
 **Recommendation**
 
-We recommend using negative assertions to verify that a specific condition is no longer present after the application performs an action. For example, when a previously completed item is unchecked, we might verify that a CSS class is removed.
+We recommend using negative assertions to verify that a specific condition is no
+longer present after the application performs an action. For example, when a
+previously completed item is unchecked, we might verify that a CSS class is
+removed.
 
 ```javascript
 // at first the item is marked completed
@@ -375,11 +413,16 @@ cy.contains('li.todo', 'Write tests')
 cy.contains('li.todo', 'Write tests').should('not.have.class', 'completed')
 ```
 
-For more examples, please read the blog post [Be Careful With Negative Assertions](https://glebbahmutov.com/blog/negative-assertions/).
+For more examples, please read the blog post
+[Be Careful With Negative Assertions](https://glebbahmutov.com/blog/negative-assertions/).
 
 ## Should callback
 
-If built-in assertions are not enough, you can write your own assertion function and pass it as a callback to the `.should()` command. Cypress will automatically [retry](/guides/core-concepts/retry-ability) the callback function until it passes or the command times out. See the [`.should()`](/api/commands/should#Function) documentation.
+If built-in assertions are not enough, you can write your own assertion function
+and pass it as a callback to the `.should()` command. Cypress will automatically
+[retry](/guides/core-concepts/retry-ability) the callback function until it
+passes or the command times out. See the
+[`.should()`](/api/commands/should#Function) documentation.
 
 ```html
 <div class="main-abc123 heading-xyz987">Introduction</div>
@@ -413,7 +456,10 @@ cy.get('.assertions-link')
   .and('include', 'cypress.io')
 ```
 
-Note that all chained assertions will use the same reference to the original subject. For example, if you wanted to test a loading element that first appears and then disappears, the following WILL NOT WORK because the same element cannot be visible and invisible at the same time:
+Note that all chained assertions will use the same reference to the original
+subject. For example, if you wanted to test a loading element that first appears
+and then disappears, the following WILL NOT WORK because the same element cannot
+be visible and invisible at the same time:
 
 ```js
 // ⛔️ DOES NOT WORK
@@ -432,4 +478,5 @@ cy.get('#loading').should('not.be.visible')
 
 - [Guide: Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Assertions)
 - [cypress-example-kitchensink Assertions](https://example.cypress.io/commands/assertions)
-- [Cypress should callback](https://glebbahmutov.com/blog/cypress-should-callback/) blog post
+- [Cypress should callback](https://glebbahmutov.com/blog/cypress-should-callback/)
+  blog post

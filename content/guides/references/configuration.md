@@ -4,25 +4,35 @@ title: Configuration
 
 ## cypress.json
 
-The first time you open Cypress Test Runner, it creates the `cypress.json` configuration file. This JSON file is used to store any configuration values you supply. If you [configure your tests to record](/guides/dashboard/projects#Setup) the results to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction) the `projectId` will be written in this file too.
+The first time you open Cypress Test Runner, it creates the `cypress.json`
+configuration file. This JSON file is used to store any configuration values you
+supply. If you
+[configure your tests to record](/guides/dashboard/projects#Setup) the results
+to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction) the
+`projectId` will be written in this file too.
 
 <Alert type="warning">
 
 <strong class="alert-header">Change Configuration File</strong>
 
-You can change the configuration file or turn off the use of a configuration file by using the [`--config-file` flag](/guides/guides/command-line#cypress-open-config-file-lt-config-file-gt).
+You can change the configuration file or turn off the use of a configuration
+file by using the
+[`--config-file` flag](/guides/guides/command-line#cypress-open-config-file-lt-config-file-gt).
 
 </Alert>
 
 ## Options
 
-The default behavior of Cypress can be modified by supplying any of the following configuration options. Below is a list of available options and their default values.
+The default behavior of Cypress can be modified by supplying any of the
+following configuration options. Below is a list of available options and their
+default values.
 
 ### Global
 
 | Option                 | Default                           | Description                                                                                                                                                                                  |
 | ---------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `baseUrl`              | `null`                            | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL                                                                          |
+| `clientCertificates`   | `[]`                              | An optional array of [client certificates](/guides/references/client-certificates)                                                                                                           |
 | `env`                  | `{}`                              | Any values to be set as [environment variables](/guides/guides/environment-variables)                                                                                                        |
 | `includeShadowDom`     | `false`                           | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get))                                 |
 | `numTestsKeptInMemory` | `50`                              | The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.           |
@@ -39,7 +49,8 @@ The default behavior of Cypress can be modified by supplying any of the followin
 
 <strong class="alert-header">Core Concept</strong>
 
-[Timeouts are a core concept](/guides/core-concepts/introduction-to-cypress#Timeouts) you should understand well. The default values listed here are meaningful.
+[Timeouts are a core concept](/guides/core-concepts/introduction-to-cypress#Timeouts)
+you should understand well. The default values listed here are meaningful.
 
 </Alert>
 
@@ -75,7 +86,8 @@ The default behavior of Cypress can be modified by supplying any of the followin
 | `screenshotsFolder`      | `cypress/screenshots` | Path to folder where screenshots will be saved from [`cy.screenshot()`](/api/commands/screenshot) command or after a test fails during `cypress run` |
 | `trashAssetsBeforeRuns`  | `true`                | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`.         |
 
-For more options regarding screenshots, view the [Cypress.Screenshot API](/api/cypress-api/screenshot-api).
+For more options regarding screenshots, view the
+[Cypress.Screenshot API](/api/cypress-api/screenshot-api).
 
 ### Videos
 
@@ -119,7 +131,8 @@ For more options regarding screenshots, view the [Cypress.Screenshot API](/api/c
 | `waitForAnimations`          | `true`  | Whether to wait for elements to finish animating before executing commands                                                                                                       |
 | `scrollBehavior`             | `top`   | Viewport position to which an element should be scrolled before executing commands. Can be `'center'`, `'top'`, `'bottom'`, `'nearest'`, or `false`. `false` disables scrolling. |
 
-For more information, see the docs on [actionability](/guides/core-concepts/interacting-with-elements#Actionability).
+For more information, see the docs on
+[actionability](/guides/core-concepts/interacting-with-elements#Actionability).
 
 ### Node version
 
@@ -129,11 +142,17 @@ For more information, see the docs on [actionability](/guides/core-concepts/inte
 
 The Node version printed in the Node.js Version panel is used in Cypress to:
 
-- Build files in the [integrationFolder](/guides/references/configuration#Folders-Files).
-- Build files in the [supportFile](/guides/references/configuration#Folders-Files).
-- Execute code in the [pluginsFile](/guides/references/configuration#Folders-Files).
+- Build files in the
+  [integrationFolder](/guides/references/configuration#Folders-Files).
+- Build files in the
+  [supportFile](/guides/references/configuration#Folders-Files).
+- Execute code in the
+  [pluginsFile](/guides/references/configuration#Folders-Files).
 
-Cypress comes automatically bundled with a set Node version by default. You can see the bundled version by running the [`cypress version`](/guides/guides/command-line#cypress-version) command, for example:
+Cypress comes automatically bundled with a set Node version by default. You can
+see the bundled version by running the
+[`cypress version`](/guides/guides/command-line#cypress-version) command, for
+example:
 
 ```shell
 npx cypress version
@@ -143,23 +162,34 @@ Electron version: 11.1.1
 Bundled Node version: 12.18.3
 ```
 
-You may want to use a different Node version if the code executing from the plugins file requires features present in a different Node version from the Node version bundled with Cypress. You can use the Node version detected on your system by setting the [nodeVersion](/guides/references/configuration#Node-version) configuration to `system`. For example, you need to use the system Node if you want to load `node-sass` or `sqlite3` modules from your plugins file.
+You may want to use a different Node version if the code executing from the
+plugins file requires features present in a different Node version from the Node
+version bundled with Cypress. You can use the Node version detected on your
+system by setting the
+[nodeVersion](/guides/references/configuration#Node-version) configuration to
+`system`. For example, you need to use the system Node if you want to load
+`node-sass` or `sqlite3` modules from your plugins file.
 
 <DocsImage src="/img/guides/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Test Runner" ></DocsImage>
 
 ### Experiments
 
-Configuration might include experimental options currently being tested. See [Experiments](/guides/references/experiments) page.
+Configuration might include experimental options currently being tested. See
+[Experiments](/guides/references/experiments) page.
 
 ## Overriding Options
 
-Cypress gives you the option to dynamically alter configuration values. This is helpful when running Cypress in multiple environments and on multiple developer machines.
+Cypress gives you the option to dynamically alter configuration values. This is
+helpful when running Cypress in multiple environments and on multiple developer
+machines.
 
-This gives you the option to do things like override the `baseUrl` or environment variables.
+This gives you the option to do things like override the `baseUrl` or
+environment variables.
 
 ### Command Line
 
-When [running Cypress from the Command Line](/guides/guides/command-line) you can pass a `--config` flag.
+When [running Cypress from the Command Line](/guides/guides/command-line) you
+can pass a `--config` flag.
 
 #### Examples:
 
@@ -175,7 +205,9 @@ cypress run --config integrationFolder=tests,videoUploadOnPasses=false
 cypress run --browser firefox --config viewportWidth=1280,viewportHeight=720
 ```
 
-For more complex configuration objects, you may want to consider passing a [JSON.stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) object surrounded by single quotes.
+For more complex configuration objects, you may want to consider passing a
+[JSON.stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+object surrounded by single quotes.
 
 ```shell
 cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.ts"]}'
@@ -183,11 +215,14 @@ cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*
 
 ### Runner Specific Overrides
 
-You can override configuration for either the E2E or [Component Testing](/guides/component-testing/introduction/) runner using the `e2e` and `component` options.
+You can override configuration for either the E2E or
+[Component Testing](/guides/component-testing/introduction/) runner using the
+`e2e` and `component` options.
 
 #### Examples
 
-Component Testing specific viewports in configuration file (`cypress.json` by default):
+Component Testing specific viewports in configuration file (`cypress.json` by
+default):
 
 ```json
 {
@@ -213,13 +248,17 @@ E2E specific timeouts in configuration file (`cypress.json` by default):
 
 ### Plugins
 
-The Cypress plugins file runs in Node environment before the browser running a spec file launches, giving you the most flexibility to set the configuration values. This enables you to do things like:
+The Cypress plugins file runs in Node environment before the browser running a
+spec file launches, giving you the most flexibility to set the configuration
+values. This enables you to do things like:
 
 - Use `fs` and read off configuration values and dynamically change them.
 - Edit the list of browsers found by default by Cypress
 - Set config values by reading any custom environment variables
 
-While this may take a bit more work than other options - it yields you the most amount of flexibility and the ability to manage configuration however you'd like.
+While this may take a bit more work than other options - it yields you the most
+amount of flexibility and the ability to manage configuration however you'd
+like.
 
 ```js
 // cypress/plugins/index.js
@@ -238,13 +277,19 @@ module.exports = (on, config) => {
 }
 ```
 
-We've fully documented how to set the configuration values from plugin file [here](/api/plugins/configuration-api).
+We've fully documented how to set the configuration values from plugin file
+[here](/api/plugins/configuration-api).
 
 ### Environment Variables
 
-You can also use [environment variables](/guides/guides/environment-variables) to override configuration values. This is especially useful in [Continuous Integration](/guides/continuous-integration/introduction) or when working locally. This gives you the ability to change configuration options without modifying any code or build scripts.
+You can also use [environment variables](/guides/guides/environment-variables)
+to override configuration values. This is especially useful in
+[Continuous Integration](/guides/continuous-integration/introduction) or when
+working locally. This gives you the ability to change configuration options
+without modifying any code or build scripts.
 
-By default, any environment variable that matches a corresponding configuration key will override the configuration file (`cypress.json` by default) value.
+By default, any environment variable that matches a corresponding configuration
+key will override the configuration file (`cypress.json` by default) value.
 
 ```shell
 export CYPRESS_VIEWPORT_WIDTH=800
@@ -254,7 +299,10 @@ export CYPRESS_VIEWPORT_WIDTH=800
 export CYPRESS_VIEWPORT_HEIGHT=600
 ```
 
-We automatically normalize both the key and the value. Cypress will _strip off_ the `CYPRESS_`, camelcase any keys and automatically convert values into `Number` or `Boolean`. Make sure to prefix your environment variables with `CYPRESS_` else they will be ignored.
+We automatically normalize both the key and the value. Cypress will _strip off_
+the `CYPRESS_`, camelcase any keys and automatically convert values into
+`Number` or `Boolean`. Make sure to prefix your environment variables with
+`CYPRESS_` else they will be ignored.
 
 #### Both options below are valid
 
@@ -268,21 +316,25 @@ export CYPRESS_PAGE_LOAD_TIMEOUT=100000
 
 <Alert type="warning">
 
-Environment variables that do not match configuration keys will instead be set as regular environment variables for use in your tests with `Cypress.env()`.
+Environment variables that do not match configuration keys will instead be set
+as regular environment variables for use in your tests with `Cypress.env()`.
 
-You can [read more about Environment Variables](/guides/guides/environment-variables).
+You can
+[read more about Environment Variables](/guides/guides/environment-variables).
 
 </Alert>
 
 ### `Cypress.config()`
 
-You can also override configuration values within your test using [`Cypress.config()`](/api/cypress-api/config).
+You can also override configuration values within your test using
+[`Cypress.config()`](/api/cypress-api/config).
 
 <Alert type="warning">
 
 <strong class="alert-header">Scope</strong>
 
-Configuration set using `Cypress.config` _is only in scope for the current spec file._
+Configuration set using `Cypress.config` _is only in scope for the current spec
+file._
 
 </Alert>
 
@@ -294,18 +346,27 @@ Cypress.config('pageLoadTimeout') // => 100000
 
 ### Test Configuration
 
-To apply specific Cypress [configuration](/guides/references/configuration) values to a suite or test, pass a configuration object to the test or suite function as the second argument.
+To apply specific Cypress [configuration](/guides/references/configuration)
+values to a suite or test, pass a configuration object to the test or suite
+function as the second argument.
 
-The configuration values passed in will only take effect during the suite or test where they are set. The values will then reset to the previous default values after the suite or test is complete.
+The configuration values passed in will only take effect during the suite or
+test where they are set. The values will then reset to the previous default
+values after the suite or test is complete.
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Note:** Some configuration values are readonly and cannot be changed via test configuration. The following configuration values **can be changed** via per test configuration:
+<Icon name="exclamation-triangle" color="red"></Icon> **Note:** Some
+configuration values are readonly and cannot be changed via test configuration.
+The following configuration values **can be changed** via per test
+configuration:
 
 - `animationDistanceThreshold`
 - `baseUrl`
-- `browser` **note:** filters whether the tests or a suite of tests runs depending on the current browser
+- `browser` **note:** filters whether the tests or a suite of tests runs
+  depending on the current browser
 - `defaultCommandTimeout`
 - `execTimeout`
-- `env` **note:** Provided environment variables will be merged with current environment variables.
+- `env` **note:** Provided environment variables will be merged with current
+  environment variables.
 - `includeShadowDom`
 - `requestTimeout`
 - `responseTimeout`
@@ -317,7 +378,8 @@ The configuration values passed in will only take effect during the suite or tes
 
 #### Suite configuration
 
-You can configure the number of times to retries a suite of tests if they fail during `cypress run` and `cypress open` separately.
+You can configure the number of times to retries a suite of tests if they fail
+during `cypress run` and `cypress open` separately.
 
 ```js
 describe(
@@ -353,7 +415,10 @@ it('navigates through the tab',
 
 #### Single test configuration
 
-If you want to target a test to run or be excluded when run in a specific browser, you can override the `browser` configuration within the test configuration. The `browser` option accepts the same arguments as [Cypress.isBrowser()](/api/cypress-api/isbrowser).
+If you want to target a test to run or be excluded when run in a specific
+browser, you can override the `browser` configuration within the test
+configuration. The `browser` option accepts the same arguments as
+[Cypress.isBrowser()](/api/cypress-api/isbrowser).
 
 ```js
 it('Show warning outside Chrome', { browser: '!chrome' }, () => {
@@ -366,12 +431,17 @@ it('Show warning outside Chrome', { browser: '!chrome' }, () => {
 
 ## Resolved Configuration
 
-When you open a Cypress project, clicking on the **Settings** tab will display the resolved configuration to you. This helps you to understand and see where different values came from. Each set value is highlighted to show where the value has been set via the following ways:
+When you open a Cypress project, clicking on the **Settings** tab will display
+the resolved configuration to you. This helps you to understand and see where
+different values came from. Each set value is highlighted to show where the
+value has been set via the following ways:
 
 - Default value
 - The [configuration file](/guides/references/configuration)
-- The [Cypress environment file](/guides/guides/environment-variables#Option-2-cypress-env-json)
-- System [environment variables](/guides/guides/environment-variables#Option-3-CYPRESS)
+- The
+  [Cypress environment file](/guides/guides/environment-variables#Option-2-cypress-env-json)
+- System
+  [environment variables](/guides/guides/environment-variables#Option-3-CYPRESS)
 - [Command Line arguments](/guides/guides/command-line)
 - [Plugins file](/api/plugins/configuration-api)
 
@@ -381,22 +451,28 @@ When you open a Cypress project, clicking on the **Settings** tab will display t
 
 ### blockHosts
 
-By passing a string or array of strings you can block requests made to one or more hosts.
+By passing a string or array of strings you can block requests made to one or
+more hosts.
 
-To see a working example of this please check out our [Stubbing Google Analytics Recipe](/examples/examples/recipes#Stubbing-and-spying).
+To see a working example of this please check out our
+[Stubbing Google Analytics Recipe](/examples/examples/recipes#Stubbing-and-spying).
 
 To block a host:
 
 - <Icon name="check-circle" color="green"></Icon> Pass only the host
 - <Icon name="check-circle" color="green"></Icon> Use wildcard `*` patterns
-- <Icon name="check-circle" color="green"></Icon> Include the port other than `80` and `443`
-- <Icon name="exclamation-triangle" color="red"></Icon> Do **NOT** include protocol: `http://` or `https://`
+- <Icon name="check-circle" color="green"></Icon> Include the port other than
+  `80` and `443`
+- <Icon name="exclamation-triangle" color="red"></Icon> Do **NOT** include
+  protocol: `http://` or `https://`
 
 <Alert type="info">
 
-Not sure what a part of the URL a host is? [Use this guide as a reference.](https://nodejs.org/api/url.html#url_url_strings_and_url_objects)
+Not sure what a part of the URL a host is?
+[Use this guide as a reference.](https://nodejs.org/api/url.html#url_url_strings_and_url_objects)
 
-When blocking a host, we use [`minimatch`](/api/utilities/minimatch) to check the host. When in doubt you can test whether something matches yourself.
+When blocking a host, we use [`minimatch`](/api/utilities/minimatch) to check
+the host. When in doubt you can test whether something matches yourself.
 
 </Alert>
 
@@ -418,7 +494,8 @@ www.google-analytics.com
 localhost:1234
 ```
 
-Because `localhost:1234` uses a port other than `80` and `443` it **must be included**.
+Because `localhost:1234` uses a port other than `80` and `443` it **must be
+included**.
 
 <Alert type="warning">
 
@@ -430,53 +507,86 @@ For instance given a URL: `https://google.com/search?q=cypress`
 
 - <Icon name="check-circle" color="green"></Icon> Matches `google.com`
 - <Icon name="check-circle" color="green"></Icon> Matches `*google.com`
-- <Icon name="exclamation-triangle" color="red"></Icon> Does NOT match `*.google.com`
+- <Icon name="exclamation-triangle" color="red"></Icon> Does NOT match
+  `*.google.com`
 
 </Alert>
 
-When Cypress blocks a request made to a matching host, it will automatically send a `503` status code. As a convenience it also sets a `x-cypress-matched-blocked-host` header so you can see which rule it matched.
+When Cypress blocks a request made to a matching host, it will automatically
+send a `503` status code. As a convenience it also sets a
+`x-cypress-matched-blocked-host` header so you can see which rule it matched.
 
 <DocsImage src="/img/guides/blocked-host.png" alt="Network tab of dev tools with analytics.js request selected and the response header highlighted " ></DocsImage>
 
 ### modifyObstructiveCode
 
-With this option enabled - Cypress will search through the response streams coming from your server on `.html` and `.js` files and replace code that matches patterns commonly found in framebusting.
+With this option enabled - Cypress will search through the response streams
+coming from your server on `.html` and `.js` files and replace code that matches
+patterns commonly found in framebusting.
 
-These script patterns are antiquated and deprecated security techniques to prevent clickjacking and framebusting. They are a relic of the past and are no longer necessary in modern browsers. However many sites and applications still implement them.
+These script patterns are antiquated and deprecated security techniques to
+prevent clickjacking and framebusting. They are a relic of the past and are no
+longer necessary in modern browsers. However many sites and applications still
+implement them.
 
-These techniques prevent Cypress from working, and they can be safely removed without altering any of your application's behavior.
+These techniques prevent Cypress from working, and they can be safely removed
+without altering any of your application's behavior.
 
-Cypress modifies these scripts at the network level, and therefore there is a tiny performance cost to search the response streams for these patterns.
+Cypress modifies these scripts at the network level, and therefore there is a
+tiny performance cost to search the response streams for these patterns.
 
-You can turn this option off if the application or site you're testing **does not** implement these security measures. Additionally it's possible that the patterns we search for may accidentally rewrite valid JS code. If that's the case, please disable this option.
+You can turn this option off if the application or site you're testing **does
+not** implement these security measures. Additionally it's possible that the
+patterns we search for may accidentally rewrite valid JS code. If that's the
+case, please disable this option.
 
 ### firefoxGcInterval
 
 <Alert type="warning">
 
-The following section only applies if you are using a version of Firefox older than Firefox 80. `firefoxGcInterval` has no effect if you are using Firefox 80 or newer, since the garbage collection bug was fixed in Firefox 80. It is recommended to upgrade your version of Firefox to avoid this workaround.
+The following section only applies if you are using a version of Firefox older
+than Firefox 80. `firefoxGcInterval` has no effect if you are using Firefox 80
+or newer, since the garbage collection bug was fixed in Firefox 80. It is
+recommended to upgrade your version of Firefox to avoid this workaround.
 
 </Alert>
 
-Firefox versions 79 and earlier have a [bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1608501) where it does not run its internal garbage collection (GC) fast enough, which can lead to consuming all available system memory and crashing.
+Firefox versions 79 and earlier have a
+[bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1608501) where it does not
+run its internal garbage collection (GC) fast enough, which can lead to
+consuming all available system memory and crashing.
 
-Cypress prevents Firefox from crashing by forcing Firefox to run its GC cleanup routines between tests.
+Cypress prevents Firefox from crashing by forcing Firefox to run its GC cleanup
+routines between tests.
 
-Running GC is an expensive and **blocking** routine. It adds significant time to the overall run, and causes Firefox to "freeze" for the duration of GC cleanup. This causes the browser not to respond to any user input.
+Running GC is an expensive and **blocking** routine. It adds significant time to
+the overall run, and causes Firefox to "freeze" for the duration of GC cleanup.
+This causes the browser not to respond to any user input.
 
-Cypress runs GC cleanup during [cypress run](/guides/guides/command-line#cypress-run) only because we don't expect users to interact with the browser - since this is typically run in CI. We've disabled running GC during [cypress open](/guides/guides/command-line#cypress-open) because users typically interact with the browser.
+Cypress runs GC cleanup during
+[cypress run](/guides/guides/command-line#cypress-run) only because we don't
+expect users to interact with the browser - since this is typically run in CI.
+We've disabled running GC during
+[cypress open](/guides/guides/command-line#cypress-open) because users typically
+interact with the browser.
 
-Because GC adds additional time to the overall run, we've added the amount of time this routine has taken to the bottom of the Command Log in the Test Runner.
+Because GC adds additional time to the overall run, we've added the amount of
+time this routine has taken to the bottom of the Command Log in the Test Runner.
 
 <DocsImage src="/img/guides/firefox-gc-interval-in-command-log.jpg" alt="GC duration shown"></DocsImage>
 
 #### Configuration
 
-You can control how often GC cleanup runs via the `firefoxGcInterval` configuration value.
+You can control how often GC cleanup runs via the `firefoxGcInterval`
+configuration value.
 
-`firefoxGcInterval` controls whether Cypress forces Firefox to run GC cleanup and how frequently.
+`firefoxGcInterval` controls whether Cypress forces Firefox to run GC cleanup
+and how frequently.
 
-By default, we force GC cleanup between every test during [cypress run](/guides/guides/command-line#cypress-run), but do not run any GC cleanup during [cypress open](/guides/guides/command-line#cypress-open) using the configuration value below:
+By default, we force GC cleanup between every test during
+[cypress run](/guides/guides/command-line#cypress-run), but do not run any GC
+cleanup during [cypress open](/guides/guides/command-line#cypress-open) using
+the configuration value below:
 
 ```json
 {
@@ -487,10 +597,15 @@ By default, we force GC cleanup between every test during [cypress run](/guides/
 }
 ```
 
-You can override how often Cypress runs GC cleanup by setting the `firefoxGcInterval` config value to:
+You can override how often Cypress runs GC cleanup by setting the
+`firefoxGcInterval` config value to:
 
-- `null`, to disable it for both [cypress run](/guides/guides/command-line#cypress-run) and [cypress open](/guides/guides/command-line#cypress-open)
-- a `number`, which sets the interval for both [cypress run](/guides/guides/command-line#cypress-run) and [cypress open](/guides/guides/command-line#cypress-open)
+- `null`, to disable it for both
+  [cypress run](/guides/guides/command-line#cypress-run) and
+  [cypress open](/guides/guides/command-line#cypress-open)
+- a `number`, which sets the interval for both
+  [cypress run](/guides/guides/command-line#cypress-run) and
+  [cypress open](/guides/guides/command-line#cypress-open)
 - an `object` to set different intervals for each mode
 
 **Examples**
@@ -503,7 +618,9 @@ Turn off GC cleanup all modes
 }
 ```
 
-Run GC cleanup before every other test during [cypress run](/guides/guides/command-line#cypress-run) and [cypress open](/guides/guides/command-line#cypress-open)
+Run GC cleanup before every other test during
+[cypress run](/guides/guides/command-line#cypress-run) and
+[cypress open](/guides/guides/command-line#cypress-open)
 
 ```json
 {
@@ -511,7 +628,9 @@ Run GC cleanup before every other test during [cypress run](/guides/guides/comma
 }
 ```
 
-Run GC cleanup before every 3rd test during [cypress run](/guides/guides/command-line#cypress-run) and disable running GC cleanup during [cypress open](/guides/guides/command-line#cypress-open).
+Run GC cleanup before every 3rd test during
+[cypress run](/guides/guides/command-line#cypress-run) and disable running GC
+cleanup during [cypress open](/guides/guides/command-line#cypress-open).
 
 ```json
 {
@@ -524,7 +643,10 @@ Run GC cleanup before every 3rd test during [cypress run](/guides/guides/command
 
 ### isInteractive
 
-You can open Cypress in the interactive mode via the `cypress open` command, and in run mode via the `cypress run` command. To detect the mode from your test code you can query the `isInteractive` property on [Cypress.config](/api/cypress-api/config).
+You can open Cypress in the interactive mode via the `cypress open` command, and
+in run mode via the `cypress run` command. To detect the mode from your test
+code you can query the `isInteractive` property on
+[Cypress.config](/api/cypress-api/config).
 
 ```javascript
 if (Cypress.config('isInteractive')) {
@@ -536,13 +658,16 @@ if (Cypress.config('isInteractive')) {
 
 ### Intelligent Code Completion
 
-IntelliSense is available for Cypress while editing your configuration file. [Learn how to set up Intelligent Code Completion.](/guides/tooling/IDE-integration#Intelligent-Code-Completion)
+IntelliSense is available for Cypress while editing your configuration file.
+[Learn how to set up Intelligent Code Completion.](/guides/tooling/IDE-integration#Intelligent-Code-Completion)
 
 ## Common problems
 
 #### <Icon name="angle-right"></Icon> `baseUrl` is not set
 
-Make sure you do not accidentally place the <code>baseUrl</code> or another top-level config variable into the <code>env</code> block. The following configuration is <i>incorrect</i> and WILL NOT WORK:
+Make sure you do not accidentally place the <code>baseUrl</code> or another
+top-level config variable into the <code>env</code> block. The following
+configuration is <i>incorrect</i> and WILL NOT WORK:
 
 ```javascript
 // ⛔️ DOES NOT WORK
@@ -554,7 +679,8 @@ Make sure you do not accidentally place the <code>baseUrl</code> or another top-
 }
 ```
 
-Solution: place the `baseUrl` property at the top level, outside the `env` object.
+Solution: place the `baseUrl` property at the top level, outside the `env`
+object.
 
 ```javascript
 // ✅ THE CORRECT WAY
@@ -566,11 +692,15 @@ Solution: place the `baseUrl` property at the top level, outside the `env` objec
 }
 ```
 
-You can also find a few tips on setting the `baseUrl` in this [short video](https://www.youtube.com/watch?v=f5UaXuAc52c).
+You can also find a few tips on setting the `baseUrl` in this
+[short video](https://www.youtube.com/watch?v=f5UaXuAc52c).
 
 #### <Icon name="angle-right"></Icon> Test files not found when using `spec` parameter
 
-When using the `--spec <path or mask>` argument, make it relative to the project's folder. If the specs are still missing, run Cypress with [DEBUG logs](/guides/references/troubleshooting#Print-DEBUG-logs) with the following setting to see how the Test Runner is looking for spec files:
+When using the `--spec <path or mask>` argument, make it relative to the
+project's folder. If the specs are still missing, run Cypress with
+[DEBUG logs](/guides/references/troubleshooting#Print-DEBUG-logs) with the
+following setting to see how the Test Runner is looking for spec files:
 
 ```shell
 DEBUG=cypress:cli,cypress:server:specs
@@ -580,6 +710,7 @@ DEBUG=cypress:cli,cypress:server:specs
 
 | Version                                      | Changes                                                 |
 | -------------------------------------------- | ------------------------------------------------------- |
+| [8.0.0](/guides/references/changelog#8-0-0)  | Added `clientCertificates` option                       |
 | [7.0.0](/guides/references/changelog#7-0-0)  | Added `e2e` and `component` options.                    |
 | [7.0.0](/guides/references/changelog#7-0-0)  | Added `redirectionLimit` option.                        |
 | [6.1.0](/guides/references/changelog#6-1-0)  | Added `scrollBehavior` option.                          |
@@ -592,8 +723,13 @@ DEBUG=cypress:cli,cypress:server:specs
 
 ## See also
 
-- [Cypress.config()](/api/cypress-api/config) and [Cypress.env()](/api/cypress-api/env)
+- [Cypress.config()](/api/cypress-api/config) and
+  [Cypress.env()](/api/cypress-api/env)
 - [Environment variables](/guides/guides/environment-variables)
 - [Environment Variables recipe](/examples/examples/recipes#Fundamentals)
-- [Extending the Cypress Config File](https://www.cypress.io/blog/2020/06/18/extending-the-cypress-config-file/) blog post and [@bahmutov/cypress-extends](https://github.com/bahmutov/cypress-extends) package.
-- Blog post [Keep passwords secret in E2E tests](https://glebbahmutov.com/blog/keep-passwords-secret-in-e2e-tests/)
+- [Extending the Cypress Config File](https://www.cypress.io/blog/2020/06/18/extending-the-cypress-config-file/)
+  blog post and
+  [@bahmutov/cypress-extends](https://github.com/bahmutov/cypress-extends)
+  package.
+- Blog post
+  [Keep passwords secret in E2E tests](https://glebbahmutov.com/blog/keep-passwords-secret-in-e2e-tests/)

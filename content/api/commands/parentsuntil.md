@@ -2,11 +2,13 @@
 title: parentsUntil
 ---
 
-Get all ancestors of each DOM element in a set of matched DOM elements up to, but not including, the element provided.
+Get all ancestors of each DOM element in a set of matched DOM elements up to,
+but not including, the element provided.
 
 <Alert type="info">
 
-The querying behavior of this command matches exactly how [`.parentsUntil()`](http://api.jquery.com/parentsUntil) works in jQuery.
+The querying behavior of this command matches exactly how
+[`.parentsUntil()`](http://api.jquery.com/parentsUntil) works in jQuery.
 
 </Alert>
 
@@ -94,15 +96,22 @@ cy.get('.active').parentsUntil('.nav')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.parentsUntil()` requires being chained off a command that yields DOM element(s).</li></List>
+<List><li>`.parentsUntil()` requires being chained off a command that yields DOM
+element(s).</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.parentsUntil()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.parentsUntil()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.parentsUntil()` will automatically
+[retry](/guides/core-concepts/retry-ability) until the element(s)
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.parentsUntil()`
+will automatically [retry](/guides/core-concepts/retry-ability) until all
+chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.parentsUntil()` can time out waiting for the element(s) to [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.parentsUntil()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`.parentsUntil()` can time out waiting for the element(s) to
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.parentsUntil()`
+can time out waiting for assertions you've added to pass.</li></List>
 
 ## Command Log
 
@@ -116,7 +125,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/parentsuntil/get-all-parents-until-nav-selector.png" alt="Command Log parentsUntil" ></DocsImage>
 
-When clicking on `parentsUntil` within the command log, the console outputs the following:
+When clicking on `parentsUntil` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/parentsuntil/show-parents-until-nav-in-console.png" alt="Console Log parentsUntil" ></DocsImage>
 

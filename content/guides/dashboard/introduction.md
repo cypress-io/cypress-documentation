@@ -2,7 +2,10 @@
 title: Dashboard
 ---
 
-The [Cypress Dashboard](https://on.cypress.io/dashboard) is a service that gives you access to recorded test results - typically when running Cypress tests from your [CI provider](/guides/continuous-integration/introduction). The Dashboard provides you insight into what happened when your tests ran.
+The [Cypress Dashboard](https://on.cypress.io/dashboard) is a service that gives
+you access to recorded test results - typically when running Cypress tests from
+your [CI provider](/guides/continuous-integration/introduction). The Dashboard
+provides you insight into what happened when your tests ran.
 
 <!-- textlint-disable -->
 
@@ -14,9 +17,15 @@ The [Cypress Dashboard](https://on.cypress.io/dashboard) is a service that gives
 
 ##### <Icon name="graduation-cap"></Icon> Real World Example <Badge type="success">New</Badge>
 
-The Cypress [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) leverages the [Cypress Dashboard in CI](https://dashboard.cypress.io/projects/7s5okt) to test over 300 test cases in parallel across 25 machines, multiple browsers, multiple device sizes, and multiple operating systems.
+The Cypress
+[Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
+leverages the
+[Cypress Dashboard in CI](https://dashboard.cypress.io/projects/7s5okt) to test
+over 300 test cases in parallel across 25 machines, multiple browsers, multiple
+device sizes, and multiple operating systems.
 
-Check out the <Icon name="github"></Icon> [Real World App Dashboard](https://dashboard.cypress.io/projects/7s5okt).
+Check out the <Icon name="github"></Icon>
+[Real World App Dashboard](https://dashboard.cypress.io/projects/7s5okt).
 
 </Alert>
 
@@ -38,9 +47,12 @@ From the Dashboard you can:
 
 - See the number of failed, passing, pending and skipped tests.
 - Get the entire stack trace of failed tests.
-- View screenshots taken when tests fail or when using [`cy.screenshot()`](/api/commands/screenshot).
-- Watch a video of your entire test run or a video clip at the point of test failure.
-- See how fast your spec files ran within CI including whether they were run in parallel.
+- View screenshots taken when tests fail or when using
+  [`cy.screenshot()`](/api/commands/screenshot).
+- Watch a video of your entire test run or a video clip at the point of test
+  failure.
+- See how fast your spec files ran within CI including whether they were run in
+  parallel.
 - See related groupings of tests.
 
 <DocsImage src="/img/dashboard/dashboard-runs-list.png" alt="Dashboard Screenshot" ></DocsImage>
@@ -50,7 +62,8 @@ From the Dashboard you can:
 From the Dashboard you can:
 
 - [Cancel runs](/guides/dashboard/runs#Cancel-run) currently in progress
-- [Archive runs](/guides/dashboard/runs#Archive-run) in a canceled or errored state
+- [Archive runs](/guides/dashboard/runs#Archive-run) in a canceled or errored
+  state
 
 ### Manage organizations
 
@@ -71,8 +84,10 @@ From the Dashboard you can:
 
 From the Dashboard you can:
 
-- Integrate your Cypress tests with your GitHub workflow via commit [status checks](/guides/dashboard/github-integration#Status-checks)
-- Integrate Cypress into GitHub via [pull requests](/guides/dashboard/github-integration#Pull-request-comments)
+- Integrate your Cypress tests with your GitHub workflow via commit
+  [status checks](/guides/dashboard/github-integration#Status-checks)
+- Integrate Cypress into GitHub via
+  [pull requests](/guides/dashboard/github-integration#Pull-request-comments)
 
 ### Integrate with Slack
 
@@ -82,13 +97,16 @@ From the Dashboard you can:
 
 #### See tests runs in the Test Runner
 
-Additionally we've integrated the tests run into the Cypress [Test Runner](/guides/core-concepts/test-runner). This means you can see the tests run in the _Runs_ tab from within every project.
+Additionally we've integrated the tests run into the Cypress
+[Test Runner](/guides/core-concepts/test-runner). This means you can see the
+tests run in the _Runs_ tab from within every project.
 
 <DocsImage src="/img/dashboard/runs-list-in-desktop-gui.png" alt="Runs List" ></DocsImage>
 
 <Alert type="info">
 
-<strong class="alert-header">Have a question you don't see answered here?</strong>
+<strong class="alert-header">Have a question you don't see answered
+here?</strong>
 
 [We have answered some common questions about the Dashboard Service in our FAQ.](/faq/questions/dashboard-faq).
 
@@ -96,7 +114,8 @@ Additionally we've integrated the tests run into the Cypress [Test Runner](/guid
 
 ## Example projects
 
-Once you log in to the [Dashboard Service](https://on.cypress.io/dashboard) you can view any [public project](/guides/dashboard/projects#Public-vs-Private).
+Once you log in to the [Dashboard Service](https://on.cypress.io/dashboard) you
+can view any [public project](/guides/dashboard/projects#Public-vs-Private).
 
 **Here are some of our own public projects you can view:**
 

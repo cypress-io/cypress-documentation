@@ -36,7 +36,9 @@ cy.window().click() // Errors, 'window' does not yield DOM element
 
 **<Icon name="angle-right"></Icon> position** **_(String)_**
 
-The position where the click should be issued. The `center` position is the default position. Valid positions are `topLeft`, `top`, `topRight`, `left`, `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
+The position where the click should be issued. The `center` position is the
+default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
+`center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
 <DocsImage src="/img/api/coordinates-diagram.jpg" alt="cypress-command-positions-diagram" ></DocsImage>
 
@@ -68,7 +70,8 @@ Pass in an options object to change the default behavior of `.click()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.click()` yields the same subject it was given from the previous command.</li></List>
+<List><li>`.click()` yields the same subject it was given from the previous
+command.</li></List>
 
 ## Examples
 
@@ -94,7 +97,8 @@ cy.get('img').click('topRight')
 
 #### Specify explicit coordinates relative to the top left corner
 
-The click below will be issued inside of the element (15px from the left and 40px from the top).
+The click below will be issued inside of the element (15px from the left and
+40px from the top).
 
 ```javascript
 cy.get('#top-banner').click(15, 40)
@@ -104,7 +108,9 @@ cy.get('#top-banner').click(15, 40)
 
 #### Force a click regardless of its actionable state
 
-Forcing a click overrides the [actionable checks](/guides/core-concepts/interacting-with-elements#Forcing) Cypress applies and will automatically fire the events.
+Forcing a click overrides the
+[actionable checks](/guides/core-concepts/interacting-with-elements#Forcing)
+Cypress applies and will automatically fire the events.
 
 ```javascript
 cy.get('.close').as('closeBtn')
@@ -125,7 +131,10 @@ cy.get('#footer .next').click(5, 60, { force: true })
 
 #### Click all elements with id starting with 'btn'
 
-By default, Cypress will error if you're trying to click multiple elements. By passing `{ multiple: true }` Cypress will iteratively apply the click to each element and will also log to the [Command Log](/guides/core-concepts/test-runner#Command-Log) multiple times.
+By default, Cypress will error if you're trying to click multiple elements. By
+passing `{ multiple: true }` Cypress will iteratively apply the click to each
+element and will also log to the
+[Command Log](/guides/core-concepts/test-runner#Command-Log) multiple times.
 
 ```javascript
 cy.get('[id^=btn]').click({ multiple: true })
@@ -133,11 +142,14 @@ cy.get('[id^=btn]').click({ multiple: true })
 
 #### Click with key combinations
 
-The `.click()` command may also be fired with key modifiers in order to simulate holding key combinations while clicking, such as `ALT + click`.
+The `.click()` command may also be fired with key modifiers in order to simulate
+holding key combinations while clicking, such as `ALT + click`.
 
 <Alert type="info">
 
-You can also use key combinations during [.type()](/api/commands/type). This offers options to hold down keys across multiple commands. See [Key Combinations](/api/commands/type#Key-Combinations) for more information.
+You can also use key combinations during [.type()](/api/commands/type). This
+offers options to hold down keys across multiple commands. See
+[Key Combinations](/api/commands/type#Key-Combinations) for more information.
 
 </Alert>
 
@@ -165,35 +177,47 @@ cy.get('li:first').click({
 
 #### The element must first reach actionability
 
-`.click()` is an "action command" that follows all the rules [defined here](/guides/core-concepts/interacting-with-elements).
+`.click()` is an "action command" that follows all the rules
+[defined here](/guides/core-concepts/interacting-with-elements).
 
 ### Focus
 
 #### Focus is given to the first focusable element
 
-For example, clicking a `<span>` inside of a `<button>` gives the focus to the button, since that's what would happen in a real user scenario.
+For example, clicking a `<span>` inside of a `<button>` gives the focus to the
+button, since that's what would happen in a real user scenario.
 
-However, Cypress additionally handles situations where a child descendent is clicked inside of a focusable parent, but actually isn't visually inside the parent (per the CSS Object Model). In those cases if no focusable parent is found the window is given focus instead (which matches real browser behavior).
+However, Cypress additionally handles situations where a child descendent is
+clicked inside of a focusable parent, but actually isn't visually inside the
+parent (per the CSS Object Model). In those cases if no focusable parent is
+found the window is given focus instead (which matches real browser behavior).
 
 ### Cancellation
 
 #### Mousedown cancellation will not cause focus
 
-If the mousedown event has its default action prevented (`e.preventDefault()`) then the element will not receive focus as per the spec.
+If the mousedown event has its default action prevented (`e.preventDefault()`)
+then the element will not receive focus as per the spec.
 
 ## Rules
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.click()` requires being chained off a command that yields DOM element(s).</li></List>
+<List><li>`.click()` requires being chained off a command that yields DOM
+element(s).</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.click()` will automatically wait for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.click()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.click()` will automatically wait for the element to reach an
+[actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.click()`
+will automatically [retry](/guides/core-concepts/retry-ability) until all
+chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.click()` can time out waiting for the element to reach an [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.click()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`.click()` can time out waiting for the element to reach an
+[actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.click()`
+can time out waiting for assertions you've added to pass.</li></List>
 
 ## Command Log
 
@@ -207,7 +231,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/click/click-button-in-form-during-test.png" alt="Command log for click" ></DocsImage>
 
-When clicking on `click` within the command log, the console outputs the following:
+When clicking on `click` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/click/click-coords-and-events-in-console.png" alt="console.log for click" ></DocsImage>
 

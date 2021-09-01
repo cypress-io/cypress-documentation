@@ -2,7 +2,8 @@
 title: Cypress.isBrowser
 ---
 
-`Cypress.isBrowser` checks if the current browser matches the given name or filter.
+`Cypress.isBrowser` checks if the current browser matches the given name or
+filter.
 
 ## Syntax
 
@@ -16,15 +17,19 @@ Cypress.isBrowser(filter)
 
 **<Icon name="angle-right"></Icon> matcher** **_(String)_**
 
-The name of the browser (case-insensitive) you want to check against. Name can be prepended with a `!` character to inverse the check.
+The name of the browser (case-insensitive) you want to check against. Name can
+be prepended with a `!` character to inverse the check.
 
 **<Icon name="angle-right"></Icon> matchers** **_(Array)_**
 
-An array of the names of the browsers (case-insensitive) you want to check against. Name can be prepended with a `!` character to inverse the check.
+An array of the names of the browsers (case-insensitive) you want to check
+against. Name can be prepended with a `!` character to inverse the check.
 
 **<Icon name="angle-right"></Icon> filter** **_(Object or Array)_**
 
-Filter one or multiple browsers by the browser properties. You can inspect the current browser's properties by using the [Cypress.browser](/api/cypress-api/browser). Supported properties are:
+Filter one or multiple browsers by the browser properties. You can inspect the
+current browser's properties by using the
+[Cypress.browser](/api/cypress-api/browser). Supported properties are:
 
 | Property       | Type      | Description                                                           |
 | -------------- | --------- | --------------------------------------------------------------------- |
@@ -145,7 +150,11 @@ it('test', () => {
 
 #### Test configuration: `browser`
 
-If you want to target a test or suite to run or be excluded when run in a specific browser, we suggest passing the `browser` within the [test configuration](/guides/references/configuration#Test-Configuration). The `browser` option accepts the same [arguments](#Arguments) as `Cypress.isBrowser()`.
+If you want to target a test or suite to run or be excluded when run in a
+specific browser, we suggest passing the `browser` within the
+[test configuration](/guides/references/configuration#Test-Configuration). The
+`browser` option accepts the same [arguments](#Arguments) as
+`Cypress.isBrowser()`.
 
 ```js
 it('Download extension in Firefox', { browser: 'firefox' }, () => {

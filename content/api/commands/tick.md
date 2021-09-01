@@ -2,11 +2,13 @@
 title: tick
 ---
 
-Move time after overriding a native time function with [`cy.clock()`](/api/commands/clock).
+Move time after overriding a native time function with
+[`cy.clock()`](/api/commands/clock).
 
 <Alert type="warning">
 
-[`cy.clock()`](/api/commands/clock) must be called before `cy.tick()` in order to override native time functions first.
+[`cy.clock()`](/api/commands/clock) must be called before `cy.tick()` in order
+to override native time functions first.
 
 </Alert>
 
@@ -28,7 +30,8 @@ cy.tick(500)
 
 **<Icon name="angle-right"></Icon> milliseconds** **_(Number)_**
 
-The number of `milliseconds` to move the clock. Any timers within the affected range of time will be called.
+The number of `milliseconds` to move the clock. Any timers within the affected
+range of time will be called.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -44,13 +47,16 @@ Pass in an options object to change the default behavior of `cy.tick()`.
 
 - **`clock.tick(milliseconds)`**
 
-  Move the clock a number of milliseconds. Any timers within the affected range of time will be called.
+  Move the clock a number of milliseconds. Any timers within the affected range
+  of time will be called.
 
 - **`clock.restore()`**
 
-  Restore all overridden native functions. This is automatically called between tests, so should not generally be needed.
+  Restore all overridden native functions. This is automatically called between
+  tests, so should not generally be needed.
 
-You can also access the `clock` object via `this.clock` in a [`.then()`](/api/commands/then) callback.
+You can also access the `clock` object via `this.clock` in a
+[`.then()`](/api/commands/then) callback.
 
 ## Examples
 
@@ -85,7 +91,9 @@ cy.get('#header').should('have.text', 'Hello, World')
 
 ### Restore clock
 
-You can restore the clock and allow your application to resume normally without manipulating native global functions related to time. This is automatically called between tests.
+You can restore the clock and allow your application to resume normally without
+manipulating native global functions related to time. This is automatically
+called between tests.
 
 ```javascript
 cy.clock()
@@ -101,7 +109,8 @@ cy.clock().then((clock) => {
 // more test code here
 ```
 
-You could also restore by using [.invoke()](/api/commands/invoke) to invoke the `restore` function.
+You could also restore by using [.invoke()](/api/commands/invoke) to invoke the
+`restore` function.
 
 ```js
 cy.clock().invoke('restore')
@@ -111,11 +120,14 @@ cy.clock().invoke('restore')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.tick()` requires being chained off of `cy`.</li><li>`cy.tick()` requires that `cy.clock()` be called before it.</li></List>
+<List><li>`cy.tick()` requires being chained off of `cy`.</li><li>`cy.tick()`
+requires that `cy.clock()` be called before it.</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.tick()` is a utility command.</li><li>`cy.tick()` will not run assertions. Assertions will pass through as if this command did not exist.</li></List>
+<List><li>`cy.tick()` is a utility command.</li><li>`cy.tick()` will not run
+assertions. Assertions will pass through as if this command did not
+exist.</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
@@ -134,7 +146,8 @@ The command above will display in the Command Log as:
 
 <DocsImage src="/img/api/tick/tick-machine-clock-1-second-in-time.png" alt="Console Log tick" ></DocsImage>
 
-When clicking on the `tick` command within the command log, the console outputs the following:
+When clicking on the `tick` command within the command log, the console outputs
+the following:
 
 <DocsImage src="/img/api/tick/console-shows-same-clock-object-as-clock-command.png" alt="Console Log tick" ></DocsImage>
 

@@ -6,7 +6,8 @@ Replace a function, record its usage and control its behavior.
 
 <Alert type="info">
 
-**Note:** `.stub()` assumes you are already familiar with our guide: [Stubs, Spies, and Clocks](/guides/guides/stubs-spies-and-clocks)
+**Note:** `.stub()` assumes you are already familiar with our guide:
+[Stubs, Spies, and Clocks](/guides/guides/stubs-spies-and-clocks)
 
 </Alert>
 
@@ -42,9 +43,11 @@ The function used to replace the `method` on the `object`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-Unlike most Cypress commands, `cy.stub()` is _synchronous_ and returns a value (the stub) instead of a Promise-like chain-able object.
+Unlike most Cypress commands, `cy.stub()` is _synchronous_ and returns a value
+(the stub) instead of a Promise-like chain-able object.
 
-`cy.stub()` returns a [Sinon.js stub](http://sinonjs.org). All methods found on [Sinon.js](http://sinonjs.org) spies and stubs are supported.
+`cy.stub()` returns a [Sinon.js stub](http://sinonjs.org). All methods found on
+[Sinon.js](http://sinonjs.org) spies and stubs are supported.
 
 ## Examples
 
@@ -116,7 +119,9 @@ cy.get('.name').should('have.value', 'my custom message')
 
 #### Disable logging to Command Log
 
-You can chain a `.log(bool)` method to disable `cy.stub()` calls from being shown in the Command Log. This may be useful when your stubs are called an excessive number of times.
+You can chain a `.log(bool)` method to disable `cy.stub()` calls from being
+shown in the Command Log. This may be useful when your stubs are called an
+excessive number of times.
 
 ```javascript
 const obj = {
@@ -135,7 +140,8 @@ const stub = cy.stub(obj, 'foo').log(false)
 
 ### Aliases
 
-Adding an alias using [`.as()`](/api/commands/as) to stubs makes them easier to identify in error messages and Cypress's command log.
+Adding an alias using [`.as()`](/api/commands/as) to stubs makes them easier to
+identify in error messages and Cypress's command log.
 
 ```javascript
 const obj = {
@@ -159,13 +165,20 @@ You will see the following in the command log:
 
 #### Automatic reset/restore between tests
 
-`cy.stub()` creates stubs in a [sandbox](http://sinonjs.org/releases/v2.0.0/sandbox/), so all stubs created are automatically reset/restored between tests without you having to explicitly reset/restore them.
+`cy.stub()` creates stubs in a
+[sandbox](http://sinonjs.org/releases/v2.0.0/sandbox/), so all stubs created are
+automatically reset/restored between tests without you having to explicitly
+reset/restore them.
 
 ### Differences
 
 #### Difference between cy.spy() and cy.stub()
 
-The main difference between `cy.spy()` and [`cy.stub()`](/api/commands/stub) is that `cy.spy()` does not replace the method, it only wraps it. So, while invocations are recorded, the original method is still called. This can be very useful when testing methods on native browser objects. You can verify a method is being called by your test and still have the original method action invoked.
+The main difference between `cy.spy()` and [`cy.stub()`](/api/commands/stub) is
+that `cy.spy()` does not replace the method, it only wraps it. So, while
+invocations are recorded, the original method is still called. This can be very
+useful when testing methods on native browser objects. You can verify a method
+is being called by your test and still have the original method action invoked.
 
 ## Rules
 
@@ -199,7 +212,8 @@ The command above will display in the Command Log as:
 
 <DocsImage src="/img/api/stub/stub-in-command-log.png" alt="Command Log stub" ></DocsImage>
 
-When clicking on the `(stub-1)` event within the command log, the console outputs the following:
+When clicking on the `(stub-1)` event within the command log, the console
+outputs the following:
 
 <DocsImage src="/img/api/stub/inspect-the-stubbed-object-and-any-calls-or-arguments-made.png" alt="Console Log stub" ></DocsImage>
 

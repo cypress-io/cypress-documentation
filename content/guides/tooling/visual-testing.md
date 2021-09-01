@@ -14,7 +14,11 @@ title: Visual Testing
 
 ## Functional vs visual testing
 
-Cypress is a _functional_ Test Runner. It drives the web application the way a user would, and checks if the app _functions_ as expected: if the expected message appears, an element is removed, or a CSS class is added after the appropriate user action. A typical Cypress test, for example, can check if a toggled "Todo" item gets a class of "completed" after the `.toggle` is checked:
+Cypress is a _functional_ Test Runner. It drives the web application the way a
+user would, and checks if the app _functions_ as expected: if the expected
+message appears, an element is removed, or a CSS class is added after the
+appropriate user action. A typical Cypress test, for example, can check if a
+toggled "Todo" item gets a class of "completed" after the `.toggle` is checked:
 
 ```js
 it('completes todo', () => {
@@ -29,24 +33,39 @@ it('completes todo', () => {
 
 <DocsImage src="/img/guides/visual-testing/completed-test.gif" alt="Passing Cypress functional test" ></DocsImage>
 
-Cypress does NOT see how the page actually looks though. For example, Cypress will not see if the CSS class `completed` grays out the label element and adds a strike-through line.
+Cypress does NOT see how the page actually looks though. For example, Cypress
+will not see if the CSS class `completed` grays out the label element and adds a
+strike-through line.
 
 <DocsImage src="/img/guides/visual-testing/completed-item.png" alt="Completed item style" ></DocsImage>
 
-You could technically write a functional test asserting the CSS properties using the [`have.css` assertion](/guides/references/assertions#CSS), but these may quickly become cumbersome to write and maintain, especially when visual styles rely on a lot of CSS styles.
+You could technically write a functional test asserting the CSS properties using
+the [`have.css` assertion](/guides/references/assertions#CSS), but these may
+quickly become cumbersome to write and maintain, especially when visual styles
+rely on a lot of CSS styles.
 
 ```js
 cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
 cy.get('.completed').should('have.css', 'color', 'rgb(217,217,217)')
 ```
 
-Your visual styles may also rely on more than CSS, perhaps you want to ensure an SVG or image has rendered correctly or shapes were correctly drawn to a canvas.
+Your visual styles may also rely on more than CSS, perhaps you want to ensure an
+SVG or image has rendered correctly or shapes were correctly drawn to a canvas.
 
-Luckily, Cypress gives a stable platform for [writing plugins](/guides/tooling/plugins-guide) that _can perform visual testing_.
+Luckily, Cypress gives a stable platform for
+[writing plugins](/guides/tooling/plugins-guide) that _can perform visual
+testing_.
 
-Typically such plugins take an image snapshot of the entire application under test or a specific element, and then compare the image to a previously approved baseline image. If the images are the same (within a set pixel tolerance), it is determined that the web application looks the same to the user. If there are differences, then there has been some change to the DOM layout, fonts, colors or other visual properties that needs to be investigated.
+Typically such plugins take an image snapshot of the entire application under
+test or a specific element, and then compare the image to a previously approved
+baseline image. If the images are the same (within a set pixel tolerance), it is
+determined that the web application looks the same to the user. If there are
+differences, then there has been some change to the DOM layout, fonts, colors or
+other visual properties that needs to be investigated.
 
-For example, one can use the [cypress-plugin-snapshots](https://github.com/meinaart/cypress-plugin-snapshots) plugin and catch the following visual regression:
+For example, one can use the
+[cypress-plugin-snapshots](https://github.com/meinaart/cypress-plugin-snapshots)
+plugin and catch the following visual regression:
 
 ```css
 .todo-list li.completed label {
@@ -74,21 +93,29 @@ it('completes todo', () => {
 })
 ```
 
-This open source plugin compares the baseline and the current images side by side within the Cypress Test Runner if pixel difference is above the threshold; notice how the baseline image (_Expected result_) has the label text with the line through, while the new image (_Actual result_) does not have it.
+This open source plugin compares the baseline and the current images side by
+side within the Cypress Test Runner if pixel difference is above the threshold;
+notice how the baseline image (_Expected result_) has the label text with the
+line through, while the new image (_Actual result_) does not have it.
 
 <DocsImage src="/img/guides/visual-testing/diff.png" alt="Baseline vs current image" ></DocsImage>
 
-Like most image comparison tools, the plugin also shows a difference view on mouse hover:
+Like most image comparison tools, the plugin also shows a difference view on
+mouse hover:
 
 <DocsImage src="/img/guides/visual-testing/diff-2.png" alt="Highlighted changes" ></DocsImage>
 
 ## Tooling
 
-There are several published, open source plugins, listed in the [Visual Testing plugins](/plugins/directory#visual-testing) section, and several commercial companies have developed visual testing solutions on top of the Cypress Test Runner listed below.
+There are several published, open source plugins, listed in the
+[Visual Testing plugins](/plugins/directory#visual-testing) section, and several
+commercial companies have developed visual testing solutions on top of the
+Cypress Test Runner listed below.
 
 ### Open source
 
-Listed in the [Visual Testing plugins](/plugins/directory#Visual%20Testing) section.
+Listed in the [Visual Testing plugins](/plugins/directory#Visual%20Testing)
+section.
 
 ### Applitools
 
@@ -100,7 +127,8 @@ First joint webinar with Applitools
 
 <!-- textlint-enable -->
 
-Second joint webinar with Applitools with a focus on [Component Testing](/guides/component-testing/introduction)
+Second joint webinar with Applitools with a focus on
+[Component Testing](/guides/component-testing/introduction)
 
 <!-- textlint-disable -->
 
@@ -108,7 +136,8 @@ Second joint webinar with Applitools with a focus on [Component Testing](/guides
 
 <!-- textlint-enable -->
 
-<Icon name="external-link"></Icon> [https://applitools.com](https://applitools.com/)
+<Icon name="external-link-alt"></Icon>
+[https://applitools.com](https://applitools.com/)
 
 | Resource                                                                     | Description                                                                                                                                                   |
 | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -125,15 +154,21 @@ Second joint webinar with Applitools with a focus on [Component Testing](/guides
 
 <!-- textlint-enable -->
 
-<Icon name="external-link"></Icon> [https://percy.io](https://percy.io/)
+<Icon name="external-link-alt"></Icon> [https://percy.io](https://percy.io/)
 
 <Alert type="info">
 
 ##### <Icon name="graduation-cap"></Icon> Real World Example <Badge type="success">New</Badge>
 
-The Cypress [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses the `cy.percySnapshot()` command provided by the [Cypress Percy plugin](https://github.com/percy/percy-cypress) to take visual snapshots throughout the user journey end-to-end tests
+The Cypress
+[Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses
+the `cy.percySnapshot()` command provided by the
+[Cypress Percy plugin](https://github.com/percy/percy-cypress) to take visual
+snapshots throughout the user journey end-to-end tests
 
-Check out the [Real World App test suites](https://github.com/cypress-io/cypress-realworld-app/tree/develop/cypress/tests/ui) to see these Percy and Cypress in action.
+Check out the
+[Real World App test suites](https://github.com/cypress-io/cypress-realworld-app/tree/develop/cypress/tests/ui)
+to see these Percy and Cypress in action.
 
 </Alert>
 
@@ -154,7 +189,7 @@ Check out the [Real World App test suites](https://github.com/cypress-io/cypress
 
 <!-- textlint-enable -->
 
-<Icon name="external-link"></Icon> [https://happo.io/](https://happo.io/)
+<Icon name="external-link-alt"></Icon> [https://happo.io/](https://happo.io/)
 
 | Resource                                                                             | Description                                                                                                                                 |
 | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -165,14 +200,21 @@ Check out the [Real World App test suites](https://github.com/cypress-io/cypress
 
 ### Do It Yourself
 
-Even if you decide to skip using a 3rd party image storage and comparison service, you can still perform visual testing. Follow these examples
+Even if you decide to skip using a 3rd party image storage and comparison
+service, you can still perform visual testing. Follow these examples
 
-- [Visual Regression testing with Cypress and cypress-image-snapshot](https://medium.com/norwich-node-user-group/visual-regression-testing-with-cypress-io-and-cypress-image-snapshot-99c520ccc595) tutorial.
-- [Visual testing for React components using open source tools](https://glebbahmutov.com/blog/open-source-visual-testing-of-components/) with companion [videos](https://www.youtube.com/playlist?list=PLP9o9QNnQuAYhotnIDEUQNXuvXL7ZmlyZ).
+- [Visual Regression testing with Cypress and cypress-image-snapshot](https://medium.com/norwich-node-user-group/visual-regression-testing-with-cypress-io-and-cypress-image-snapshot-99c520ccc595)
+  tutorial.
+- [Visual testing for React components using open source tools](https://glebbahmutov.com/blog/open-source-visual-testing-of-components/)
+  with companion
+  [videos](https://www.youtube.com/playlist?list=PLP9o9QNnQuAYhotnIDEUQNXuvXL7ZmlyZ).
 
 <Alert type="warning">
 
-You will want to consider the development costs of implementing a visual testing tool yourself versus using an external 3rd party provider. Storing, reviewing and analyzing image differences are non-trivial tasks and they can quickly become a chore when going with a DIY solution.
+You will want to consider the development costs of implementing a visual testing
+tool yourself versus using an external 3rd party provider. Storing, reviewing
+and analyzing image differences are non-trivial tasks and they can quickly
+become a chore when going with a DIY solution.
 
 </Alert>
 
@@ -182,7 +224,8 @@ As a general rule there are some best practices when visual testing.
 
 ### Recognize the need for visual testing
 
-**<Icon name="exclamation-triangle" color="red"></Icon> assertions that verify style properties**
+**<Icon name="exclamation-triangle" color="red"></Icon> assertions that verify
+style properties**
 
 ```js
 cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
@@ -191,13 +234,16 @@ cy.get('.user-info').should('have.css', 'display', 'none')
 ...
 ```
 
-If your end-to-end tests become full of assertions checking visibility, color and other style properties, it might be time to start using visual diffing to verify the page appearance.
+If your end-to-end tests become full of assertions checking visibility, color
+and other style properties, it might be time to start using visual diffing to
+verify the page appearance.
 
 ### DOM state
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Take a snapshot after you confirm the page is done changing.
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Take a
+snapshot after you confirm the page is done changing.
 
 </Alert>
 
@@ -228,11 +274,14 @@ cy.mySnapshotCommand()
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Control the timestamp inside the application under test.
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Control the
+timestamp inside the application under test.
 
 </Alert>
 
-Below we freeze the operating system's time to `Jan 1, 2018` using [cy.clock()](/api/commands/clock) to ensure all images displaying dates and times match.
+Below we freeze the operating system's time to `Jan 1, 2018` using
+[cy.clock()](/api/commands/clock) to ensure all images displaying dates and
+times match.
 
 ```js
 const now = new Date(2018, 1, 1)
@@ -246,11 +295,15 @@ cy.mySnapshotCommand()
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use [cy.fixture()](/api/commands/fixture) and network mocking to set the application state.
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use
+[cy.fixture()](/api/commands/fixture) and network mocking to set the application
+state.
 
 </Alert>
 
-Below we stub network calls using [cy.intercept()](/api/commands/intercept) to return the same response data for each XHR request. This ensures that the data displayed in our application images does not change.
+Below we stub network calls using [cy.intercept()](/api/commands/intercept) to
+return the same response data for each XHR request. This ensures that the data
+displayed in our application images does not change.
 
 ```js
 cy.intercept('/api/items', { fixture: 'items' }).as('getItems')
@@ -263,21 +316,29 @@ cy.mySnapshotCommand()
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use visual diffing to check individual DOM elements rather than the entire page.
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use visual
+diffing to check individual DOM elements rather than the entire page.
 
 </Alert>
 
-Targeting specific DOM element will help avoid visual changes from component "X" breaking tests in other unrelated components.
+Targeting specific DOM element will help avoid visual changes from component "X"
+breaking tests in other unrelated components.
 
 ### Component testing
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use [Component Testing plugins](/plugins/directory) to test the individual components functionality in addition to end-to-end and visual tests.
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use
+[Component Testing plugins](/plugins/directory) to test the individual
+components functionality in addition to end-to-end and visual tests.
 
 </Alert>
 
-If you are working on React components, read [Visual testing for React components using open source tools](https://glebbahmutov.com/blog/open-source-visual-testing-of-components/), browse [slides](https://slides.com/bahmutov/i-see-what-is-going-on), and watch the [companion videos](https://www.youtube.com/playlist?list=PLP9o9QNnQuAYhotnIDEUQNXuvXL7ZmlyZ).
+If you are working on React components, read
+[Visual testing for React components using open source tools](https://glebbahmutov.com/blog/open-source-visual-testing-of-components/),
+browse [slides](https://slides.com/bahmutov/i-see-what-is-going-on), and watch
+the
+[companion videos](https://www.youtube.com/playlist?list=PLP9o9QNnQuAYhotnIDEUQNXuvXL7ZmlyZ).
 
 ## See also
 
@@ -287,6 +348,11 @@ If you are working on React components, read [Visual testing for React component
 - [Plugins](/guides/tooling/plugins-guide)
 - [Visual Testing Plugins](/plugins/directory#visual-testing)
 - [Writing a Plugin](/api/plugins/writing-a-plugin)
-- <Icon name="github"></Icon> [Cypress Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) is a full stack example application that demonstrates **best practices and scalable strategies with Cypress in practical and realistic scenarios**.
-- Read the blog post [Debug a Flaky Visual Regression Test](https://www.cypress.io/blog/2020/10/02/debug-a-flaky-visual-regression-test/)
-- Read the blog post [Canvas Visual Testing with Retries](https://glebbahmutov.com/blog/canvas-testing/)
+- <Icon name="github"></Icon>
+  [Cypress Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
+  is a full stack example application that demonstrates **best practices and
+  scalable strategies with Cypress in practical and realistic scenarios**.
+- Read the blog post
+  [Debug a Flaky Visual Regression Test](https://www.cypress.io/blog/2020/10/02/debug-a-flaky-visual-regression-test/)
+- Read the blog post
+  [Canvas Visual Testing with Retries](https://glebbahmutov.com/blog/canvas-testing/)

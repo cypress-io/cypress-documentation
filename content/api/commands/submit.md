@@ -6,7 +6,8 @@ Submit a form.
 
 <Alert type="warning">
 
-The [subject](/guides/core-concepts/introduction-to-cypress#Subject-Management) must be a `<form>`.
+The [subject](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+must be a `<form>`.
 
 </Alert>
 
@@ -45,7 +46,8 @@ Pass in an options object to change the default behavior of `.submit()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.submit()` yields the same subject it was given from the previous command.</li></List>
+<List><li>`.submit()` yields the same subject it was given from the previous
+command.</li></List>
 
 ## Example
 
@@ -68,31 +70,44 @@ cy.get('#contact').submit()
 
 ### Submit is not an action command
 
-`.submit()` is not implemented like other action commands, and does not follow the same rules of [waiting for actionability](/guides/core-concepts/interacting-with-elements).
+`.submit()` is not implemented like other action commands, and does not follow
+the same rules of
+[waiting for actionability](/guides/core-concepts/interacting-with-elements).
 
-`.submit()` is a helpful command used as a shortcut. Normally a user has to perform a different "action" to submit a form. It could be clicking a submit `<button>`, or pressing `enter` on a keyboard.
+`.submit()` is a helpful command used as a shortcut. Normally a user has to
+perform a different "action" to submit a form. It could be clicking a submit
+`<button>`, or pressing `enter` on a keyboard.
 
-Oftentimes using `.submit()` directly is more concise and conveys what you're trying to test.
+Oftentimes using `.submit()` directly is more concise and conveys what you're
+trying to test.
 
-If you want the other guarantees of waiting for an element to become actionable, you should use a different command like [`.click()`](/api/commands/click) or [`.type()`](/api/commands/type).
+If you want the other guarantees of waiting for an element to become actionable,
+you should use a different command like [`.click()`](/api/commands/click) or
+[`.type()`](/api/commands/type).
 
 ### Submit will fail if there are form validation errors
 
-If the form being submitted includes inputs with [client-side validation](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation) and that validation fails, `.submit()` will fail and list the validation failures.
+If the form being submitted includes inputs with
+[client-side validation](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation)
+and that validation fails, `.submit()` will fail and list the validation
+failures.
 
 ## Rules
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.submit()` requires being chained off a command that yields DOM element(s).</li><li>`.submit()` requires the element to be a `form`.</li></List>
+<List><li>`.submit()` requires being chained off a command that yields DOM
+element(s).</li><li>`.submit()` requires the element to be a `form`.</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.submit()` will automatically wait for assertions you have chained to pass</li></List>
+<List><li>`.submit()` will automatically wait for assertions you have chained to
+pass</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.submit()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`.submit()` can time out waiting for assertions you've added to
+pass.</li></List>
 
 ## Command Log
 
@@ -107,7 +122,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/submit/form-submit-shows-in-command-log-of-cypress.png" alt="Command Log submit" ></DocsImage>
 
-When clicking on `submit` within the command log, the console outputs the following:
+When clicking on `submit` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/submit/console-shows-what-form-was-submitted.png" alt="Console Log submit" ></DocsImage>
 

@@ -42,7 +42,8 @@ Pass in an options object to change the default behavior of `cy.hash()`.
 
 #### When the current URL contains a hash:
 
-<List><li>`cy.hash()` "yields the current URL's hash (including the `#` character)" </li></List>
+<List><li>`cy.hash()` "yields the current URL's hash (including the `#`
+character)" </li></List>
 
 #### When the current URL does not contain a hash:
 
@@ -82,11 +83,14 @@ cy.hash().should('match', /users\/.+$/) // => true
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.hash()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`cy.hash()` will automatically
+[retry](/guides/core-concepts/retry-ability) until all chained assertions have
+passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.hash()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`cy.hash()` can time out waiting for assertions you've added to
+pass.</li></List>
 
 ## Command Log
 
@@ -100,7 +104,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/hash/test-url-hash-for-users-page.png" alt="Command Log for hash" ></DocsImage>
 
-When clicking on `hash` within the command log, the console outputs the following:
+When clicking on `hash` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/hash/hash-command-yields-url-after-hash.png" alt="Console Log for hash" ></DocsImage>
 

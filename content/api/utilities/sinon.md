@@ -2,7 +2,11 @@
 title: Cypress.sinon
 ---
 
-Cypress automatically includes [Sinon.JS](http://sinonjs.org/) and exposes it as `Cypress.sinon`. Because commands [`cy.spy`](/api/commands/spy) and [`cy.stub`](/api/commands/stub) are already wrapping Sinon methods, the most common use for `Cypress.sinon` is to provide flexible [matchers](https://sinonjs.org/releases/latest/matchers/) when doing assertions.
+Cypress automatically includes [Sinon.JS](http://sinonjs.org/) and exposes it as
+`Cypress.sinon`. Because commands [`cy.spy`](/api/commands/spy) and
+[`cy.stub`](/api/commands/stub) are already wrapping Sinon methods, the most
+common use for `Cypress.sinon` is to provide flexible
+[matchers](https://sinonjs.org/releases/latest/matchers/) when doing assertions.
 
 ## Syntax
 
@@ -29,7 +33,10 @@ cy.sinon.match.string // Errors, cannot be chained off 'cy'
 
 ### `match.string`
 
-This example comes from the recipe [Root style](https://github.com/cypress-io/cypress-example-recipes#testing-the-dom). Imagine an application code where the method `setProperty` is called to change a CSS variable:
+This example comes from the recipe
+[Root style](https://github.com/cypress-io/cypress-example-recipes#testing-the-dom).
+Imagine an application code where the method `setProperty` is called to change a
+CSS variable:
 
 ```js
 document.querySelector('input[type=color]').addEventListener('change', (e) => {
@@ -40,7 +47,9 @@ document.querySelector('input[type=color]').addEventListener('change', (e) => {
 })
 ```
 
-We can write a test to confirm that the method `setProperty` was called with two strings; we don't care about value of the first string, but we do want to check if it was indeed a string.
+We can write a test to confirm that the method `setProperty` was called with two
+strings; we don't care about value of the first string, but we do want to check
+if it was indeed a string.
 
 ```javascript
 cy.document()
@@ -62,8 +71,10 @@ cy.get('@setColor').should(
 
 ## See also
 
-- [Spies, stubs & clocks](https://example.cypress.io/commands/spies-stubs-clocks) example page
-- [Sinon matchers](https://sinonjs.org/releases/latest/matchers/) documentation page
+- [Spies, stubs & clocks](https://example.cypress.io/commands/spies-stubs-clocks)
+  example page
+- [Sinon matchers](https://sinonjs.org/releases/latest/matchers/) documentation
+  page
 - [Bundled Tools](/guides/references/bundled-tools)
 - [`cy.spy()`](/api/commands/spy)
 - [`cy.stub()`](/api/commands/stub)

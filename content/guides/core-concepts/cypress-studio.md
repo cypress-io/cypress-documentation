@@ -13,15 +13,23 @@ title: Cypress Studio
 
 ## Overview
 
-Cypress Studio provides a visual way to generate tests within the Test Runner, by _recording interactions_ against the application under test.
+Cypress Studio provides a visual way to generate tests within the Test Runner,
+by _recording interactions_ against the application under test.
 
-The [`.click()`](/api/commands/click), [`.type()`](/api/commands/type), [`.check()`](/api/commands/check), [`.uncheck()`](/api/commands/uncheck), and [`.select()`](/api/commands/select) Cypress commands are supported and will generate test code when interacting with the DOM inside of the Cypress Studio.
+The [`.click()`](/api/commands/click), [`.type()`](/api/commands/type),
+[`.check()`](/api/commands/check), [`.uncheck()`](/api/commands/uncheck), and
+[`.select()`](/api/commands/select) Cypress commands are supported and will
+generate test code when interacting with the DOM inside of the Cypress Studio.
+You can also generate assertions by right clicking on an element that you would
+like to assert on.
 
 ## Using Cypress Studio
 
 <Alert type="info">
 
-Cypress Studio is an experimental feature and can be enabled by adding the [experimentalStudio](/guides/references/experiments) attribute to your configuration file (`cypress.json` by default).
+Cypress Studio is an experimental feature and can be enabled by adding the
+[experimentalStudio](/guides/references/experiments) attribute to your
+configuration file (`cypress.json` by default).
 
 </Alert>
 
@@ -31,11 +39,17 @@ Cypress Studio is an experimental feature and can be enabled by adding the [expe
 }
 ```
 
-The Cypress <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) is an open source project implementing a payment application to demonstrate real-world usage of Cypress testing methods, patterns, and workflows. It will be used to demonstrate the functionality of Cypress Studio below.
+The Cypress <Icon name="github"></Icon>
+[Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) is
+an open source project implementing a payment application to demonstrate
+real-world usage of Cypress testing methods, patterns, and workflows. It will be
+used to demonstrate the functionality of Cypress Studio below.
 
 ### Extending a Test
 
-You can extend any preexisting test or start by creating a new test in your [integrationFolder](/guides/references/configuration#Folders-Files) (`cypress/integration` by default) with the following test scaffolding.
+You can extend any preexisting test or start by creating a new test in your
+[integrationFolder](/guides/references/configuration#Folders-Files)
+(`cypress/integration` by default) with the following test scaffolding.
 
 ```js
 // Code from Real World App (RWA)
@@ -60,75 +74,100 @@ describe('Cypress Studio Demo', () => {
 
 ##### <Icon name="graduation-cap"></Icon> Real World Example
 
-Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and refer to the [cypress/tests/demo/cypress-studio.spec.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts) file.
+Clone the <Icon name="github"></Icon>
+[Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and
+refer to the
+[cypress/tests/demo/cypress-studio.spec.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts)
+file.
 
 </Alert>
 
 #### Step 1 - Run the spec
 
-We will use Cypress Studio to perform a "New Transaction" user journey. First, launch the Test Runner and run the spec created in the previous step.
+We will use Cypress Studio to perform a "New Transaction" user journey. First,
+launch the Test Runner and run the spec created in the previous step.
 
 <DocsImage src="/img/guides/cypress-studio/run-spec-1.png" alt="Cypress Studio" no-border></DocsImage>
 
-Once the tests complete their run, hover over a test in the Command Log to reveal an "Add Commands to Test" button.
+#### Step 2 - Launch Cypress Studio
+
+Once the tests complete their run, hover over a test in the Command Log to
+reveal an "Add Commands to Test" button.
 
 Clicking on "Add Commands to Test" will launch the Cypress Studio.
 
 <Alert type="info">
 
-Cypress Studio is directly integrated with the [Command Log](/guides/core-concepts/test-runner#Command-Log).
+Cypress Studio is directly integrated with the
+[Command Log](/guides/core-concepts/test-runner#Command-Log).
 
 </Alert>
 
-<DocsImage src="/img/guides/cypress-studio/run-spec-2.png" alt="Cypress Studio" no-border></DocsImage>
-
-#### Step 2 - Launch Cypress Studio
+<DocsImage src="/img/guides/cypress-studio/extend-activate-studio.png" alt="Activate Cypress Studio" no-border></DocsImage>
 
 <Alert type="success">
 
-Cypress will automatically execute all hooks and currently present test code, and then the test can be extended from that point on (e.g. We are logged into the application inside the `beforeEach` block).
+Cypress will automatically execute all hooks and currently present test code,
+and then the test can be extended from that point on (e.g. We are logged into
+the application inside the `beforeEach` block).
 
 </Alert>
 
-Next, the Test Runner will execute the test in isolation and pause after the last command in the test.
+Next, the Test Runner will execute the test in isolation and pause after the
+last command in the test.
 
-<DocsImage src="/img/guides/cypress-studio/extend-new-transaction-ready.png" alt="Cypress Studio Ready" no-border></DocsImage>
+<DocsImage src="/img/guides/cypress-studio/extend-ready.png" alt="Cypress Studio Ready" no-border></DocsImage>
 
 Now, we can begin updating the test to create a new transaction between users.
 
 #### Step 3 - Interact with the Application
 
-To record actions, begin interacting with the application. Here we will click on the first name input and as a result we will see the click recorded in the Command Log.
+To record actions, begin interacting with the application. Here we will click on
+the "New" button on the right side of the header and as a result we will see our
+click recorded in the Command Log.
 
-<DocsImage src="/img/guides/cypress-studio/extend-new-transaction-user-list.png" alt="Cypress Studio Extend Test" no-border></DocsImage>
+<DocsImage src="/img/guides/cypress-studio/extend-click-new-transaction.png" alt="Cypress Studio Recording Click" no-border></DocsImage>
 
-Next, we can type the name of a user to pay and click on the user in the results.
+Next, we can start typing in the name of a user that we want to pay.
 
-<DocsImage src="/img/guides/cypress-studio/extend-new-transaction-click-user.png" alt="Cypress Studio Extend Test" no-border></DocsImage>
+<DocsImage src="/img/guides/cypress-studio/extend-type-user-name.png" alt="Cypress Studio Recording Type" no-border></DocsImage>
 
-We will complete the transaction form by clicking on and typing in the amount and description inputs.
+Once we see the name come up in the results, we want to add an assertion to
+ensure that our search function works correctly. Right clicking on the user's
+name will bring up a menu from which we can add an assertion to check that the
+element contains the correct text (the user's name).
 
-<DocsImage src="/img/guides/cypress-studio/extend-new-transaction-form.png" alt="Cypress Studio Extend Test" no-border></DocsImage>
+<DocsImage src="/img/guides/cypress-studio/extend-assert-user-name.png" alt="Cypress Studio Add Assertion" no-border></DocsImage>
 
-<Alert type="success">
+We can then click on that user in order to progress to the next screen. We will
+complete the transaction form by clicking on and typing in the amount and
+description inputs.
 
-Notice the commands generated in the Command Log.
+<DocsImage src="/img/guides/cypress-studio/extend-type-transaction-form.png" alt="Cypress Studio Recording Type" no-border></DocsImage>
 
-</Alert>
+<Alert type="success">Notice the commands generated in the Command Log.</Alert>
 
-Finally, we will click the "Pay" button.
+Now it's time to complete the transaction. You might have noticed that the "Pay"
+button was disabled before we typed into the inputs. To make sure that our form
+validation works properly, let's add an assertion to make sure the "Pay" button
+is enabled.
 
-<DocsImage src="/img/guides/cypress-studio/extend-new-transaction-pay.png" alt="Cypress Studio Extend Test" no-border></DocsImage>
+<DocsImage src="/img/guides/cypress-studio/extend-assert-button-enabled.png" alt="Cypress Studio Add Assertion" no-border></DocsImage>
 
-We are presented with a confirmation page of our new transaction.
+Finally, we will click the "Pay" button and get presented with a confirmation
+page of our new transaction.
 
-<DocsImage src="/img/guides/cypress-studio/extend-new-transaction-confirmation.png" alt="Cypress Studio Extend Test Confirmation" no-border></DocsImage>
+<DocsImage src="/img/guides/cypress-studio/extend-save-test.png" alt="Cypress Studio Save Commands" no-border></DocsImage>
 
-To discard the interactions, click the "Cancel" button to exit Cypress Studio. If satisfied with the interactions with the application, click "Save Commands" and the test code will be saved to your spec file.
+To discard the interactions, click the "Cancel" button to exit Cypress Studio.
+If satisfied with the interactions with the application, click "Save Commands"
+and the test code will be saved to your spec file. Alternatively you can choose
+the "copy" button in order to copy the generated commands to your clipboard.
 
 #### Generated Test Code
 
-Viewing our test code, we can see that the test is updated after clicking "Save Commands" with the actions we recorded in Cypress Studio.
+Viewing our test code, we can see that the test is updated after clicking "Save
+Commands" with the actions we recorded in Cypress Studio.
 
 ```js
 // Code from Real World App (RWA)
@@ -146,15 +185,18 @@ describe('Cypress Studio Demo', () => {
   it('create new transaction', () => {
     /* ==== Generated with Cypress Studio ==== */
     cy.get('[data-test=nav-top-new-transaction]').click()
-    cy.get('[data-test=user-list-search-input]').click()
+    cy.get('[data-test=user-list-search-input]').clear()
     cy.get('[data-test=user-list-search-input]').type('dev')
-    cy.get('[data-test=user-list-item-tsHF6_D5oQ]').click()
-    cy.get('#amount').type('$25')
-    cy.get('#transaction-create-description-input').click()
-    cy.get('#transaction-create-description-input').type('Sushi dinner')
     cy.get(
-      '[data-test=transaction-create-submit-payment] > .MuiButton-label'
-    ).click()
+      '[data-test=user-list-item-tsHF6_D5oQ] > .MuiListItemText-root > .MuiListItemText-primary'
+    ).should('have.text', 'Devon Becker')
+    cy.get('[data-test=user-list-item-tsHF6_D5oQ]').click()
+    cy.get('#amount').clear()
+    cy.get('#amount').type('$25')
+    cy.get('#transaction-create-description-input').clear()
+    cy.get('#transaction-create-description-input').type('Sushi dinner')
+    cy.get('[data-test=transaction-create-submit-payment]').should('be.enabled')
+    cy.get('[data-test=transaction-create-submit-payment]').click()
     /* ==== End Cypress Studio ==== */
   })
 })
@@ -162,11 +204,13 @@ describe('Cypress Studio Demo', () => {
 
 ### Adding a New Test
 
-You can add a new test to any existing `describe` or `context` block, by clicking "Add New Test" on our defined `describe` block.
+You can add a new test to any existing `describe` or `context` block, by
+clicking "Add New Test" on our defined `describe` block.
 
 <DocsImage src="/img/guides/cypress-studio/add-test-1.png" alt="Cypress Studio Add Test" no-border></DocsImage>
 
-We are launched into Cypress Studio and can begin interacting with our application to generate the test.
+We are launched into Cypress Studio and can begin interacting with our
+application to generate the test.
 
 For this test, we will add a new bank account. Our interactions are as follows:
 
@@ -181,7 +225,9 @@ For this test, we will add a new bank account. Our interactions are as follows:
 
 To discard the interactions, click the "Cancel" button to exit Cypress Studio.
 
-If satisfied with the interactions with the application, click "Save Commands" and prompt will ask for the name of the test. Click "Save Test" and the test will be saved to the file.
+If satisfied with the interactions with the application, click "Save Commands"
+and prompt will ask for the name of the test. Click "Save Test" and the test
+will be saved to the file.
 
 <DocsImage src="/img/guides/cypress-studio/add-test-save-test.png" alt="Cypress Studio Add Test Completed Run" no-border></DocsImage>
 
@@ -189,7 +235,8 @@ Once saved, the file will be run again in Cypress.
 
 <DocsImage src="/img/guides/cypress-studio/add-test-final.png" alt="Cypress Studio Add Test Completed Run" no-border></DocsImage>
 
-Finally, viewing our test code, we can see that the test is updated after clicking "Save Commands" with the actions we recorded in Cypress Studio.
+Finally, viewing our test code, we can see that the test is updated after
+clicking "Save Commands" with the actions we recorded in Cypress Studio.
 
 ```js
 // Code from Real World App (RWA)
@@ -229,7 +276,11 @@ describe('Cypress Studio Demo', () => {
 
 ##### <Icon name="graduation-cap"></Icon> Real World Example
 
-Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and refer to the [cypress/tests/demo/cypress-studio.spec.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts) file.
+Clone the <Icon name="github"></Icon>
+[Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and
+refer to the
+[cypress/tests/demo/cypress-studio.spec.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts)
+file.
 
 </Alert>
 
@@ -237,4 +288,5 @@ Clone the <Icon name="github"></Icon> [Real World App (RWA)](https://github.com/
 
 | Version                                     | Changes                              |
 | ------------------------------------------- | ------------------------------------ |
+| [8.1.0](/guides/references/changelog#8-1-0) | Added ability to generate assertions |
 | [6.3.0](/guides/references/changelog#6-3-0) | Added Cypress Studio as experimental |
