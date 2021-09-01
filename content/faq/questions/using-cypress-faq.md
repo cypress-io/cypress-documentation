@@ -714,7 +714,7 @@ fuss with your database.
 
 ## <Icon name="angle-right"></Icon> How do I test elements inside an iframe?
 
-We have an [open proposal](https://github.com/cypress-io/cypress/issues/685) to
+We have an [open proposal](https://github.com/cypress-io/cypress/issues/136) to
 expand the APIs to support "switching into" an iframe and then back out of them.
 
 ## <Icon name="angle-right"></Icon> How do I preserve cookies / localStorage in between my tests?
