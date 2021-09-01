@@ -366,7 +366,7 @@ actual, running server without having to start the front end application.
 <List><li>`cy.request()` requires being chained off of
 `cy`.</li><li>`cy.request()` requires that the server sends a
 response.</li><li>`cy.request()` requires that the response status code be `2xx`
-or `3xx` or `failOnStatusCode` is `true`.</li></List>
+or `3xx` when `failOnStatusCode` is `true`.</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 

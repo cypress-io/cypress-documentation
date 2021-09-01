@@ -98,7 +98,7 @@ const createRequestListItems = (cmd) => {return [
   `${codify(cmd)} requires that the server sends a response.`,
   `${codify(cmd)} requires that the response status code be ${codify(
     '2xx'
-  )} or ${codify('3xx')} or ${codify('failOnStatusCode')} is ${codify(
+  )} or ${codify('3xx')} when ${codify('failOnStatusCode')} is ${codify(
     'true'
   )}.`,
 ]}
