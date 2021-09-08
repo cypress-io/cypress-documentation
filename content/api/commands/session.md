@@ -191,12 +191,11 @@ Cypress.Commands.add(
       }).then(({ body }) => {
         window.localStorage.setItem('authToken', body.token)
       })
+    }, {
+      validate() {
+        cy.request('/whoami').its('statusCode').should('eq', 200)
+      },
     })
-  },
-  {
-    validate() {
-      cy.request('/whoami').its('statusCode').should('eq', 200)
-    },
   }
 )
 ```
