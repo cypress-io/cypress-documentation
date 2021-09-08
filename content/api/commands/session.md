@@ -193,7 +193,7 @@ Cypress.Commands.add(
       })
     }, {
       validate() {
-        cy.request('/whoami').its('statusCode').should('eq', 200)
+        cy.request('/whoami').its('status').should('eq', 200)
       },
     })
   }
@@ -371,7 +371,7 @@ function validate() {
 
 // Make an API request that returns a 200 only when logged in
 function validate() {
-  cy.request('/api/user').its('statusCode').should('eq', 200)
+  cy.request('/api/user').its('status').should('eq', 200)
 }
 
 // Run any Cypress command that fails if the user is not logged in
@@ -598,7 +598,7 @@ const login = (name) => {
       cy.request('/whoami', {
         headers: { 'Authorization' : localStorage.token }
         method: 'POST'
-      }).its('statusCode').should('equal', '200')
+      }).its('status').should('equal', '200')
     }
   })
 }
