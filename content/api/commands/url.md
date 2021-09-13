@@ -35,7 +35,7 @@ Pass in an options object to change the default behavior of `cy.url()`.
 
 | Option    | Default                                                              | Description                                                                              |
 | --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `decode`  | `false`                                                              | Decode URL 
+| `decode`  | `false`                                                              | Decode URL                                                                               |
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.url()` to resolve before [timing out](#Timeouts)                    |
 
@@ -152,6 +152,7 @@ When clicking on URL within the Command Log, the console outputs the following:
 
 | Version                                       | Changes                  |
 | --------------------------------------------- | ------------------------ |
+| [8.4.0](/guides/references/changelog#8-4-0)   | `decode` option added    |
 | [< 0.3.3](/guides/references/changelog#0-3-3) | `cy.url()` command added |
 
 ## See also
