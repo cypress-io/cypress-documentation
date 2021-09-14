@@ -313,6 +313,10 @@
               "slug": "configuration"
             },
             {
+              "title": "Legacy Configuration",
+              "slug": "legacy-configuration"
+            },
+            {
               "title": "Client Certificates",
               "slug": "client-certificates"
             },
