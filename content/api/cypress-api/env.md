@@ -63,7 +63,7 @@ Set multiple environment variables with an object literal.
 
 ### No Arguments
 
-#### Get all environment variables from configuration file (`cypress.json` by default)
+#### Get all environment variables from configuration file
 
 ```json
 {
@@ -80,7 +80,7 @@ Cypress.env() // => {foo: "bar", baz: "quux"}
 
 ### Name
 
-#### Return a single environment variable from configuration file (`cypress.json` by default)
+#### Return a single environment variable from configuration file
 
 <Alert type="warning">
 
@@ -103,7 +103,7 @@ Cypress.env('MY_ID') // => 123
 
 ### Name and Value
 
-#### Change environment variables from configuration file (`cypress.json` by default) from within your tests
+#### Change environment variables from configuration file from within your tests
 
 <Alert type="warning">
 
@@ -131,7 +131,7 @@ Cypress.env('host') // => http://server.dev.local
 
 ### Object
 
-#### Override multiple values from configuration file (`cypress.json` by default) by passing an object literal.
+#### Override multiple values from configuration file by passing an object literal.
 
 ```javascript
 // cypress.json

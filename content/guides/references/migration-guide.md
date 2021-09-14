@@ -267,7 +267,7 @@ it.
 limited to configuration and there are no breaking changes to the `mount` API.
 The migration guide contains the following steps:
 
-1. [Update your configuration file, `cypress.json` by default, to remove `experimentalComponentTesting`](/guides/references/migration-guide#1-Remove-experimentalComponentTesting-config)
+1. [Update your configuration file to remove `experimentalComponentTesting`](/guides/references/migration-guide#1-Remove-experimentalComponentTesting-config)
 2. [Install updated dependencies](/guides/references/migration-guide##2-Install-component-testing-dependencies)
 3. [Update the plugins file](/guides/references/migration-guide#3-Update-plugins-file-to-use-dev-server-start)
 4. [Use CLI commands to launch](/guides/references/migration-guide#4-Use-CLI-commands-to-launch)
@@ -1307,8 +1307,8 @@ The `blacklistHosts` configuration has been renamed to
 behavior.
 
 This should be updated in all places where Cypress configuration can be set
-including the via the configuration file (`cypress.json` by default), command
-line arguments, the `pluginsFile`, `Cypress.config()` or environment variables.
+including the via the configuration file, command line arguments, the
+`pluginsFile`, `Cypress.config()` or environment variables.
 
 <Badge type="danger">Before</Badge> `blacklistHosts` configuration in
 `cypress.json`

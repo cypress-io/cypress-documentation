@@ -197,7 +197,7 @@ By default, until you issue a `cy.viewport()` command, Cypress sets the width to
 
 You can
 [change these default dimensions](/guides/references/configuration#Viewport) by
-adding the following to your configuration file (`cypress.json` by default):
+adding the following to your configuration file:
 
 ```json
 {

@@ -300,8 +300,7 @@ reload, we recommend putting the above tests in separate spec files.
 #### Visit is automatically prefixed with `baseUrl`
 
 Configure `baseUrl` in the your
-[configuration](/guides/references/configuration) file (`cypress.json` by
-default) to prevent repeating yourself in every `cy.visit()` command.
+[configuration](/guides/references/configuration) file to prevent repeating yourself in every `cy.visit()` command.
 
 ```json
 {

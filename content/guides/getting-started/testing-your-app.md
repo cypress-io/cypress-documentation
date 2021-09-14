@@ -143,7 +143,7 @@ application. Luckily, Cypress provides a
 leverage that now.
 
 Open up your [configuration file](/guides/references/configuration)
-(`cypress.json` in your project directory, by default) It starts out empty:
+ It starts out empty:
 
 ```json
 {}

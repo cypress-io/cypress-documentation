@@ -57,8 +57,7 @@ Make sure you [install](/guides/getting-started/installing-cypress) and
    record key.
    <DocsImage src="/img/dashboard/projects/setup-a-project-5.png" alt="Record Instructions" no-border></DocsImage>
 9. After setting up your project, Cypress inserts a unique
-   [projectId](#Identification) into your configuration file, `cypress.json` by
-   default. If you're using source control, we recommend that you check your
+   [projectId](#Identification) into your configuration file. If you're using source control, we recommend that you check your
    configuration file, including the `projectId`, into source control.
 10. Within [Continuous Integration](/guides/continuous-integration/introduction)
     or from your local computer's terminal pass the displayed

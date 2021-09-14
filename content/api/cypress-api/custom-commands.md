@@ -437,7 +437,7 @@ This is usually unnecessary because Cypress is already configured to swap out a
 `baseUrl` that both [cy.visit()](/api/commands/visit) and
 [cy.request()](/api/commands/request) use. Set the `baseUrl` configuration
 property in your [configuration](/guides/references/configuration) file
-(`cypress.json` by default) and override it with the `CYPRESS_BASE_URL`
+ and override it with the `CYPRESS_BASE_URL`
 environment variable.
 
 For more complex use cases feel free to overwrite existing commands.

@@ -103,7 +103,7 @@ attempt for review and debugging if desired.
 Typically you will want to define different retry attempts for `cypress run`
 versus `cypress open`. You can configure this in your
 [configuration file](/guides/guides/command-line#cypress-open-config-file-lt-config-file-gt)
-(`cypress.json` by default) by passing the `retries` option an object with the
+ by passing the `retries` option an object with the
 following options:
 
 - `runMode` allows you to define the number of test retries when running
@@ -129,7 +129,7 @@ following options:
 If you want to configure the retry attempts for all tests run in both
 `cypress run` and `cypress open`, you can configure this in your
 [configuration file](/guides/guides/command-line#cypress-open-config-file-lt-config-file-gt)
-(`cypress.json` by default) by defining the `retries` property and setting the
+ by defining the `retries` property and setting the
 desired number of retries.
 
 ```jsx

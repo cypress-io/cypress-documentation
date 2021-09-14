@@ -309,7 +309,7 @@ cy.get('#modal button').click({ waitForAnimations: false })
 You can globally disable animation error checking, or increase the threshold by
 modifying the [configuration](/guides/references/configuration).
 
-#### Configuration file (`cypress.json` by default)
+#### configuration file
 
 ```json
 {
@@ -770,9 +770,9 @@ origin-policy, Cypress is unable to communicate with it, and thus fails.
 
 If you find yourself stuck and can't work around these issues you can set
 `chromeWebSecurity` to `false` in your
-[configuration file (`cypress.json` by default)](/guides/references/configuration)
-when running in Chrome family browsers (this setting will not work in other
-browsers). Before doing so you should really understand and
+[configuration file](/guides/references/configuration) when running in Chrome
+family browsers (this setting will not work in other browsers). Before doing so
+you should really understand and
 [read about the reasoning here](/guides/guides/web-security).
 
 ```json
