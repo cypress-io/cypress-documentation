@@ -34,7 +34,7 @@ cy.exec('npm run build')
 **<Icon name="angle-right"></Icon> command** **_(String)_**
 
 The system command to be executed from the project root (the directory that
-contains the default `cypress.json` configuration file).
+contains the default configuration file).
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -210,7 +210,7 @@ exist.</li></List>
 
 ## Command Log
 
-**_List the contents of the default `cypress.json` configuration file_**
+**_List the contents of the default configuration file_**
 
 ```javascript
 if (Cypress.platform === 'win32') {

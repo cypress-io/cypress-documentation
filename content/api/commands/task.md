@@ -494,7 +494,7 @@ not [retry](/guides/core-concepts/retry-ability).</li></List>
 
 ## Command Log
 
-#### List the contents of the default `cypress.json` configuration file
+#### List the contents of the default configuration file
 
 ```javascript
 cy.task('readJson', 'cypress.json')
