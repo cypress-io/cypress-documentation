@@ -726,7 +726,7 @@ DEBUG=cypress:cli,cypress:server:specs
   [Cypress.env()](/api/cypress-api/env)
 - [Environment variables](/guides/guides/environment-variables)
 - [Environment Variables recipe](/examples/examples/recipes#Fundamentals)
-- [Extending the Cypress Config File](https://www.cypress.io/blog/2020/06/18/extending-the-cypress-config-file/)
+- [Extending the Cypress Configuration File](https://www.cypress.io/blog/2020/06/18/extending-the-cypress-config-file/)
   blog post and
   [@bahmutov/cypress-extends](https://github.com/bahmutov/cypress-extends)
   package.

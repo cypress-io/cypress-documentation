@@ -1170,7 +1170,7 @@ Read the docs on
 [recording test results](http://on.cypress.io/recording-project-runs) to the
 [Cypress Dashboard](/guides/dashboard/introduction) to learn more.
 
-### Specifying a custom configuration file config file
+### Specifying a custom configuration file
 
 It may be useful to have different Cypress configuration files per environment
 (ie. development, staging, production).
