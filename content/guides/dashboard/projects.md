@@ -57,8 +57,9 @@ Make sure you [install](/guides/getting-started/installing-cypress) and
    record key.
    <DocsImage src="/img/dashboard/projects/setup-a-project-5.png" alt="Record Instructions" no-border></DocsImage>
 9. After setting up your project, Cypress inserts a unique
-   [projectId](#Identification) into your configuration file. If you're using source control, we recommend that you check your
-   configuration file, including the `projectId`, into source control.
+   [projectId](#Identification) into your configuration file. If you're using
+   source control, we recommend that you check your configuration file,
+   including the `projectId`, into source control.
 10. Within [Continuous Integration](/guides/continuous-integration/introduction)
     or from your local computer's terminal pass the displayed
     [Record Key](#Identification) while running the
@@ -108,8 +109,8 @@ This helps us uniquely identify your project. If you manually alter this,
 **Cypress will no longer be able to identify your project or find the recorded
 builds for it**.
 
-If you're using source control, we recommend that you check your configuration file,
-including the `projectId`, into source control. If you don't want your
+If you're using source control, we recommend that you check your configuration
+file, including the `projectId`, into source control. If you don't want your
 `projectId` visible in your source code you can set it as an environment
 variable using the name `CYPRESS_PROJECT_ID`. The exact mechanism for doing so
 depends on your system but could be something like:

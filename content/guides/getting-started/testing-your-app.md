@@ -142,8 +142,8 @@ application. Luckily, Cypress provides a
 [configuration option](/guides/references/configuration) for this. Let's
 leverage that now.
 
-Open up your [configuration file](/guides/references/configuration)
- It starts out empty:
+Open up your [configuration file](/guides/references/configuration) It starts
+out empty:
 
 ```json
 {}

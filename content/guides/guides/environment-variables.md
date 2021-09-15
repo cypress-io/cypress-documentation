@@ -175,8 +175,8 @@ Any OS-level environment variable on your machine that starts with either
 `CYPRESS_` or `cypress_` will automatically be added to Cypress' environment
 variables and made available to you.
 
-Conflicting values will override values from your configuration file
- and `cypress.env.json` files.
+Conflicting values will override values from your configuration file and
+`cypress.env.json` files.
 
 Cypress will _strip off_ the `CYPRESS_` when adding your environment variables.
 

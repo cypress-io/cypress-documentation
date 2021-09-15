@@ -26,7 +26,7 @@ cy.readFile('menu.json')
 **<Icon name="angle-right"></Icon> filePath** **_(String)_**
 
 A path to a file within the project root (the directory that contains the
-default configuration file).
+default [configuration file](/guides/references/configuration)).
 
 **<Icon name="angle-right"></Icon> encoding** **_(String)_**
 

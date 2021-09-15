@@ -607,10 +607,10 @@ if (global.__coverage__) {
 ```
 
 In order for the `@cypress/code-coverage` plugin to know that it should request
-the back end coverage, add the new endpoint to the configuration file environment
-settings under `env.codeCoverage.url` key. For example, if the application back
-end is running at port 3000 and we are using the default "GET /**coverage**"
-endpoint, set the following:
+the back end coverage, add the new endpoint to the configuration file
+environment settings under `env.codeCoverage.url` key. For example, if the
+application back end is running at port 3000 and we are using the default "GET
+/**coverage**" endpoint, set the following:
 
 ```json
 {

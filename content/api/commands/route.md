@@ -98,9 +98,9 @@ default `cy.route()` inherits its options from
 | `url`        | `null`  | String or RegExp url to match against request urls                                |
 
 You can also set options for all [`cy.wait()`](/api/commands/wait)'s
-`requestTimeout` and `responseTimeout` globally in
-[configuration](/guides/references/configuration) to control how long to wait
-for the request and response of a supplied route.
+`requestTimeout` and `responseTimeout` globally in the
+[configuration file](/guides/references/configuration) to control how long to
+wait for the request and response of a supplied route.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 

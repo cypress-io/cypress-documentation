@@ -180,8 +180,7 @@ We need to install additional dependencies:
 npm install --save-dev cypress-multi-reporters mocha-junit-reporter
 ```
 
-Specify your reporter and reporterOptions in your configuration file
- or via the
+Specify your reporter and reporterOptions in your configuration file or via the
 [command line](/guides/guides/command-line).
 
 #### Configuration file
@@ -263,7 +262,7 @@ We need to configure the reporter in your
 [configuration file](/guides/references/configuration) to skip the HTML report
 generation and save each individual JSON file in the `cypress/results` folder.
 
-#### Configuration file
+#### Configuration file]
 
 ```json
 {

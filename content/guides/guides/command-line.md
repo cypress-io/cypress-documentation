@@ -128,7 +128,7 @@ cypress run [options]
 | `--reporter`, `-r`         | [Specify a Mocha reporter](#cypress-run-reporter-lt-reporter-gt)                                                                                                                           |
 | `--reporter-options`, `-o` | [Specify Mocha reporter options](#cypress-run-reporter-lt-reporter-gt)                                                                                                                     |
 | `--spec`, `-s`             | [Specify the spec files to run](#cypress-run-spec-lt-spec-gt)                                                                                                                              |
-| `--tag`, `-t`              | [Identify a run with a tag or tags](#cypress-run-tag-lt-tag-gt)                                                                                                                          |
+| `--tag`, `-t`              | [Identify a run with a tag or tags](#cypress-run-tag-lt-tag-gt)                                                                                                                            |
 
 #### `cypress run --browser <browser-name-or-path>`
 
@@ -201,7 +201,7 @@ You can specify a path to a file where
 [configuration](/guides/references/configuration) values are set.
 
 ```shell
-cypress run --config-file tests/<configuration-file>
+cypress run --config-file tests/cypress-config.json
 ```
 
 You can pass `false` to disable the use of a configuration file entirely.
@@ -390,7 +390,7 @@ app/
       cypress/
         integration/
           spec.js
-      configuration file
+      cypress.json
 ```
 
 If we are in the `app` folder, we can run the specs using the following command
@@ -530,7 +530,7 @@ You can specify a path to a file where
 [configuration](/guides/references/configuration) values are set.
 
 ```shell
-cypress open --config-file tests/<configuration-file>
+cypress open --config-file tests/cypress-config.json
 ```
 
 You can pass `false` to disable the use of a configuration file entirely.

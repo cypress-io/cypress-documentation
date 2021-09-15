@@ -103,11 +103,12 @@ written with the Cypress End-to-End test runner, you may want to configure some
 Component Testing specific defaults.
 
 You can configure or override Component Testing defaults in your
-[configuration file](/guides/references/configuration) using the `component` key.
+[configuration file](/guides/references/configuration) using the `component`
+key.
 
 For example, if you would like to use a different viewport size or target
-different test files for Component Testing, your configuration file might look like
-this:
+different test files for Component Testing, your configuration file might look
+like this:
 
 ```json
 {

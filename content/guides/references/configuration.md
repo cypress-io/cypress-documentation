@@ -345,7 +345,7 @@ Cypress.config('pageLoadTimeout') // => 100000
 
 ### Test Configuration
 
-To apply specific Cypress [configuration](/guides/references/configuration)
+To apply specific Cypress [configuration file](/guides/references/configuration)
 values to a suite or test, pass a configuration object to the test or suite
 function as the second argument.
 

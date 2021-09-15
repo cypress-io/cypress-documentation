@@ -48,7 +48,7 @@ testing.
 By default, Cypress keeps 50 tests worth of snapshots and command data for time
 traveling. If you are seeing extremely high memory consumption in your browser,
 you may want to lower the `numTestsKeptInMemory` in your
-[configuration](/guides/references/configuration#Global).
+[configuration file](/guides/references/configuration#Global).
 
 </Alert>
 

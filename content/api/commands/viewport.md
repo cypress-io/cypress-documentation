@@ -7,7 +7,8 @@ Control the size and orientation of the screen for your application.
 <Alert type="info">
 
 You can set the viewport's width and height globally by defining `viewportWidth`
-and `viewportHeight` in the [configuration](/guides/references/configuration).
+and `viewportHeight` in the
+[configuration file](/guides/references/configuration).
 
 </Alert>
 

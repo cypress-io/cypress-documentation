@@ -134,7 +134,7 @@ Cypress.env('host') // => http://server.dev.local
 #### Override multiple values from configuration file by passing an object literal.
 
 ```javascript
-// configuration file
+// cypress.json
 {
   "env": {
     "foo": "bar",
@@ -217,4 +217,4 @@ isolation in [`3.0.0`](/guides/references/changelog#3-0-0) and by that time
 ## See also
 
 - The [Environment Variable](/guides/guides/environment-variables) guide
-- [configuration](/guides/references/configuration)
+- [configuration file](/guides/references/configuration)
