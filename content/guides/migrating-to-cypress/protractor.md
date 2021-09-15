@@ -154,8 +154,8 @@ complex. You may find that some features of your web application are challenging
 to test or the tests sporadically fail. We call these tests "flaky." Cypress
 allows you to [retry failed tests](/guides/guides/test-retries). Sometimes tests
 will fail in a CI environment when they otherwise would pass on a developer's
-machine. Enabling test retries in your Cypress configuration can help you to get
-unblocked when unpredictable, flaky tests are occasionally failing.
+machine. Enabling test retries in your Cypress configuration file can help you
+to get unblocked when unpredictable, flaky tests are occasionally failing.
 
 The Cypress Dashboard goes a step further and helps you and your team to
 [detect flaky tests](/guides/dashboard/flaky-test-management) that run in your
