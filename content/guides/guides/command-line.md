@@ -390,7 +390,7 @@ app/
       cypress/
         integration/
           spec.js
-      cypress.json
+      configuration file
 ```
 
 If we are in the `app` folder, we can run the specs using the following command

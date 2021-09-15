@@ -2,9 +2,9 @@
 title: Configuration
 ---
 
-## cypress.json
+## configuration file
 
-The first time you open Cypress Test Runner, it creates the `cypress.json`
+The first time you open Cypress Test Runner, it creates the configuration file
 configuration file. This JSON file is used to store any configuration values you
 supply. If you
 [configure your tests to record](/guides/dashboard/projects#Setup) the results

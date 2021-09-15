@@ -202,7 +202,7 @@ extra configuration or plugins for JSON schema support.
 
 To set up in [Visual Studio Code](https://code.visualstudio.com/) you can open
 `Preferences / Settings / User Settings` and add the `json.schemas` property.
-Make sure to replace `cypress.json` with your configuration file if not the
+Make sure to replace configuration file with your configuration file if not the
 default.
 
 ```json

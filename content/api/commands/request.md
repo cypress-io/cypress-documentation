@@ -44,7 +44,7 @@ cy.request('users/1.json') //  url is  http://localhost:8080/users/1.json
    [configuration file](/guides/references/configuration).
 
 ```json
-// cypress.json
+// configuration file
 {
   "baseUrl": "http://localhost:1234"
 }

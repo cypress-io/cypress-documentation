@@ -94,9 +94,9 @@ together to uniquely identify projects.
 ### Project ID
 
 Once you set up your project to record, we generate a unique `projectId` for
-your project and automatically insert it into your `cypress.json` file.
+your project and automatically insert it into your configuration file file.
 
-#### The `projectId` is a 6 character string in your `cypress.json`
+#### The `projectId` is a 6 character string in your configuration file
 
 ```json
 {
@@ -108,7 +108,7 @@ This helps us uniquely identify your project. If you manually alter this,
 **Cypress will no longer be able to identify your project or find the recorded
 builds for it**.
 
-If you're using source control, we recommend that you check your `cypress.json`,
+If you're using source control, we recommend that you check your configuration file,
 including the `projectId`, into source control. If you don't want your
 `projectId` visible in your source code you can set it as an environment
 variable using the name `CYPRESS_PROJECT_ID`. The exact mechanism for doing so

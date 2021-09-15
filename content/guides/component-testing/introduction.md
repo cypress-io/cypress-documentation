@@ -106,7 +106,7 @@ You can configure or override Component Testing defaults in your
 [configuration file](/guides/references/configuration) using the `component` key.
 
 For example, if you would like to use a different viewport size or target
-different test files for Component Testing, your `cypress.json` might look like
+different test files for Component Testing, your configuration file might look like
 this:
 
 ```json

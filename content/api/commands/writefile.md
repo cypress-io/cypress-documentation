@@ -26,7 +26,7 @@ cy.writeFile('menu.json')
 **<Icon name="angle-right"></Icon> filePath** **_(String)_**
 
 A path to a file within the project root (the directory that contains the
-default `cypress.json`).
+default configuration file).
 
 **<Icon name="angle-right"></Icon> contents** **_(String, Array, or Object)_**
 
