@@ -4,9 +4,8 @@ title: Configuration
 
 ## configuration file
 
-The first time you open Cypress Test Runner, it creates the configuration file
-configuration file. This JSON file is used to store any configuration values you
-supply. If you
+The first time you open Cypress Test Runner, it creates the configuration file.
+This file is used to store any configuration values you supply. If you
 [configure your tests to record](/guides/dashboard/projects#Setup) the results
 to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction) the
 `projectId` will be written in this file too.
@@ -345,9 +344,8 @@ Cypress.config('pageLoadTimeout') // => 100000
 
 ### Test Configuration
 
-To apply specific Cypress [configuration file](/guides/references/configuration)
-values to a suite or test, pass a configuration object to the test or suite
-function as the second argument.
+To apply specific Cypress configuration values to a suite or test, pass a
+configuration object to the test or suite function as the second argument.
 
 The configuration values passed in will only take effect during the suite or
 test where they are set. The values will then reset to the previous default
@@ -436,7 +434,7 @@ different values came from. Each set value is highlighted to show where the
 value has been set via the following ways:
 
 - Default value
-- The [configuration file](/guides/references/configuration)
+- The configuration file /guides/references/configuration
 - The
   [Cypress environment file](/guides/guides/environment-variables#Option-2-cypress-env-json)
 - System
