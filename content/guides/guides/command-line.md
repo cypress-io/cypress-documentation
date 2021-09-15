@@ -195,13 +195,13 @@ testing locally and in dedicated CI jobs. Examples:
 
 </Alert>
 
-#### `cypress run --config-file <config-file>`
+#### `cypress run --config-file <configuration-file>`
 
-You can specify a path to a JSON file where
+You can specify a path to a file where
 [configuration](/guides/references/configuration) values are set.
 
 ```shell
-cypress run --config-file tests/cypress-config.json
+cypress run --config-file tests/<configuration-file>
 ```
 
 You can pass `false` to disable the use of a configuration file entirely.
@@ -524,13 +524,13 @@ configuration file.
 cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
 ```
 
-#### `cypress open --config-file <config-file>`
+#### `cypress open --config-file <configuration-file>`
 
-You can specify a path to a JSON file where
+You can specify a path to a file where
 [configuration](/guides/references/configuration) values are set.
 
 ```shell
-cypress open --config-file tests/cypress-config.json
+cypress open --config-file tests/<configuration-file>
 ```
 
 You can pass `false` to disable the use of a configuration file entirely.

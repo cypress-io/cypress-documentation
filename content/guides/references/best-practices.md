@@ -935,7 +935,7 @@ can result in a 'flash' or 'reload' when your tests first start.
 By setting the `baseUrl`, you can avoid this reload altogether. Cypress will
 load the main window in the `baseUrl` you specified as soon as your tests start.
 
-### configuration file
+### Configuration file
 
 ```json
 {
