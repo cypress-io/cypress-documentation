@@ -90,7 +90,7 @@ export default {
       remarkPlugins: (_defaultPlugins) => {
         return [
           'remark-directive',
-          '~/scripts/remarkPartialPlugin.js',
+          '~/scripts/remark-directives.js',
           'remark-squeeze-paragraphs',
           'remark-slug',
           'remark-autolink-headings',

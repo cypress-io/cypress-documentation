@@ -103,6 +103,10 @@ workflows:
           yarn: true
           install-command: yarn --frozen-lockfile
           executor: with-chrome-and-firefox
+          post-steps:
+            - run:
+                name: 'Unit tests'
+                command: yarn test:unit --ci --runInBand
 
       - link-check-changed-files:
           name: 'Broken link checker'
