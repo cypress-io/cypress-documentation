@@ -2,7 +2,7 @@
 title: Configuration
 ---
 
-## configuration file
+## Configuration file
 
 The first time you open Cypress Test Runner, it creates the configuration file.
 This file is used to store any configuration values you supply. If you

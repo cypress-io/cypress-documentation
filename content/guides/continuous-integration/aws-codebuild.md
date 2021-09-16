@@ -307,7 +307,7 @@ list of items specific to each group for the build.
 The fields are delimited by a pipe (`|`) character as follows:
 
 ```yaml
-## Group Name | Browser | Specs | Cypress Configuration File Options (optional)
+## Group Name | Browser | Specs | Cypress Configuration options (optional)
 
 'UI - Chrome -
 Mobile|chrome|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'

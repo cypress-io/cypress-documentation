@@ -494,10 +494,10 @@ not [retry](/guides/core-concepts/retry-ability).</li></List>
 
 ## Command Log
 
-#### List the contents of the default [configuration file](/guides/references/configuration)
+#### List the contents of your package.json file
 
 ```javascript
-cy.task('readJson', 'cypress.json')
+cy.task('readJson', 'package.json')
 ```
 
 The command above will display in the Command Log as:

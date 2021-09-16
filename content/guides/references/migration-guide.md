@@ -1307,11 +1307,10 @@ The `blacklistHosts` configuration has been renamed to
 behavior.
 
 This should be updated in all places where Cypress configuration can be set
-including the via the configuration file, command line arguments, the
-`pluginsFile`, `Cypress.config()` or environment variables.
+including via the configuration file, command line arguments, the `pluginsFile`,
+`Cypress.config()` or environment variables.
 
-<Badge type="danger">Before</Badge> `blacklistHosts` configuration in
-`cypress.json`
+<Badge type="danger">Before</Badge> `blacklistHosts` configuration
 
 ```json
 {
@@ -1319,7 +1318,7 @@ including the via the configuration file, command line arguments, the
 }
 ```
 
-<Badge type="success">After</Badge> `blockHosts` configuration in `cypress.json`
+<Badge type="success">After</Badge> `blockHosts` configuration
 
 ```json
 {

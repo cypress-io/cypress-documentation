@@ -78,15 +78,11 @@ Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, ..
 
 ### Name
 
-<<<<<<< HEAD
-
 #### Return a single configuration option from [configuration](/guides/references/configuration) file
 
 =======
 
 #### Return a single configuration option from [configuration file](/guides/references/configuration) file
-
-> > > > > > > da4eb3476 (updated configuration page links & link text)
 
 ```json
 {
@@ -126,7 +122,7 @@ Cypress.config('viewportWidth') // => 800
 
 ### Object
 
-#### Override multiple options from [configuration file](/guides/references/configuration) by passing an object literal
+#### Override multiple options from the configuration file by passing an object literal
 
 ```json
 {
