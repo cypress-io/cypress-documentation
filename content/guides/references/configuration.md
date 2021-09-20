@@ -224,27 +224,35 @@ You can override configuration for either the E2E or
 Component Testing specific viewports in configuration file (`cypress.json` by
 default):
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "viewportHeight": 600,
-  "viewportWidth": 1000,
-  "component": {
-    "viewportHeight": 500,
-    "viewportWidth": 500
+  viewportHeight: 600,
+  viewportWidth: 1000,
+  component: {
+    viewportHeight: 500,
+    viewportWidth: 500
   }
 }
 ```
+
+:::
 
 E2E specific timeouts in configuration file (`cypress.json` by default):
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "defaultCommandTimeout": 5000,
-  "e2e": {
-    "defaultCommandTimeout": 10000
+  defaultCommandTimeout: 5000,
+  e2e: {
+    defaultCommandTimeout: 10000
   }
 }
 ```
+
+:::
 
 ### Plugins
 
@@ -588,14 +596,18 @@ By default, we force GC cleanup between every test during
 cleanup during [cypress open](/guides/guides/command-line#cypress-open) using
 the configuration value below:
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "firefoxGcInterval": {
-    "runMode": 1,
-    "openMode": null
+  firefoxGcInterval: {
+    runMode: 1,
+    openMode: null
   }
 }
 ```
+
+:::
 
 You can override how often Cypress runs GC cleanup by setting the
 `firefoxGcInterval` config value to:
@@ -612,34 +624,46 @@ You can override how often Cypress runs GC cleanup by setting the
 
 Turn off GC cleanup all modes
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "firefoxGcInterval": null
+  firefoxGcInterval: null
 }
 ```
+
+:::
 
 Run GC cleanup before every other test during
 [cypress run](/guides/guides/command-line#cypress-run) and
 [cypress open](/guides/guides/command-line#cypress-open)
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "firefoxGcInterval": 2
+  firefoxGcInterval: 2
 }
 ```
+
+:::
 
 Run GC cleanup before every 3rd test during
 [cypress run](/guides/guides/command-line#cypress-run) and disable running GC
 cleanup during [cypress open](/guides/guides/command-line#cypress-open).
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "firefoxGcInterval": {
-    "runMode": 3,
-    "openMode": null
+  firefoxGcInterval: {
+    runMode: 3,
+    openMode: null
   }
 }
 ```
+
+:::
 
 ### isInteractive
 
@@ -669,28 +693,36 @@ Make sure you do not accidentally place the <code>baseUrl</code> or another
 top-level config variable into the <code>env</code> block. The following
 configuration is <i>incorrect</i> and WILL NOT WORK:
 
-```javascript
-// ⛔️ DOES NOT WORK
+:::cypress-config-example
+
+```js
 {
-  "env": {
-    "baseUrl": "http://localhost:3030",
-    "FOO": "bar"
+  // ⛔️ DOES NOT WORK
+  env: {
+    baseUrl: "http://localhost:3030",
+    FOO: "bar"
   }
 }
 ```
+
+:::
 
 Solution: place the `baseUrl` property at the top level, outside the `env`
 object.
 
-```javascript
-// ✅ THE CORRECT WAY
+:::cypress-config-example
+
+```js
 {
-  "baseUrl": "http://localhost:3030",
-  "env": {
-    "FOO": "bar"
+  // ✅ THE CORRECT WAY
+  baseUrl: "http://localhost:3030",
+  env: {
+    FOO: "bar"
   }
 }
 ```
+
+:::
 
 You can also find a few tips on setting the `baseUrl` in this
 [short video](https://www.youtube.com/watch?v=f5UaXuAc52c).

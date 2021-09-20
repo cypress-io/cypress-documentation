@@ -65,14 +65,18 @@ Set multiple environment variables with an object literal.
 
 #### Get all environment variables from configuration file (`cypress.json` by default)
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "env": {
-    "foo": "bar",
-    "baz": "quux"
+  env: {
+    foo: "bar",
+    baz: "quux"
   }
 }
 ```
+
+:::
 
 ```javascript
 Cypress.env() // => {foo: "bar", baz: "quux"}
@@ -114,14 +118,18 @@ only be in effect for the remainder of the tests _in the same spec file._
 
 </Alert>
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "env": {
-    "foo": "bar",
-    "baz": "quux"
+  env: {
+    foo: "bar",
+    baz: "quux"
   }
 }
 ```
+
+:::
 
 ```javascript
 Cypress.env('host', 'http://server.dev.local')
@@ -133,15 +141,18 @@ Cypress.env('host') // => http://server.dev.local
 
 #### Override multiple values from configuration file (`cypress.json` by default) by passing an object literal.
 
-```javascript
-// cypress.json
+:::cypress-config-example
+
+```js
 {
-  "env": {
-    "foo": "bar",
-    "baz": "quux"
+  env: {
+    foo: "bar",
+    baz: "quux"
   }
 }
 ```
+
+:::
 
 ```javascript
 Cypress.env({

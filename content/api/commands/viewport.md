@@ -199,12 +199,17 @@ You can
 [change these default dimensions](/guides/references/configuration#Viewport) by
 adding the following to your configuration file (`cypress.json` by default):
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "viewportWidth": 1000,
-  "viewportHeight": 660
+  viewportWidth: 1000,
+  viewportHeight: 660
 }
+
 ```
+
+:::
 
 Additionally, Cypress automatically sets the viewport to its default size
 between each test.

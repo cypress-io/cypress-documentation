@@ -145,17 +145,26 @@ leverage that now.
 Open up your [configuration file](/guides/references/configuration)
 (`cypress.json` in your project directory, by default) It starts out empty:
 
-```json
-{}
+:::cypress-config-example
+
+```js
+{
+}
 ```
+
+:::
 
 Let's add the `baseUrl` option.
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "baseUrl": "http://localhost:8080"
+  baseUrl: 'http://localhost:8080'
 }
 ```
+
+:::
 
 This will automatically **prefix** [`cy.visit()`](/api/commands/visit) and
 [`cy.request()`](/api/commands/request) commands with this baseUrl.
