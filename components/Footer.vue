@@ -5,27 +5,10 @@ export default {
   components: {
     Icon,
   },
-  data() {
-    return {
-      joke: "",
-    }
-  },
-  async fetch() {
-    const res = await fetch('https://icanhazdadjoke.com/', {
-      headers: {
-        'Accept': 'application/json'
-      }
-    })
-    const data = await res.json()
-
-    this.joke = data.joke
-  },
-  fetchOnServer: true,
 }
 </script>
 <template>
   <footer class="bg-white clear-both">
-    <div data-test="joke">{{ joke }}</div>
     <div class="max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
       <nav
         class="-mx-5 -my-2 flex flex-wrap justify-center"

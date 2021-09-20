@@ -31,7 +31,15 @@ export default {
 
     const banner = await fetchBanner()
 
+    const { joke }= await fetch('https://icanhazdadjoke.com/', {
+      headers: {
+        'Accept': 'application/json'
+      }
+    }).then(res => res.json())
+
+
     return {
+      joke,
       algoliaSettings,
       guide,
       sidebarItems,
@@ -91,6 +99,7 @@ export default {
             {{ (guide && guide.title) || 'Cypress Documentation' }}
           </h1>
           <nuxt-content :document="guide"></nuxt-content>
+          <div data-test="joke">{{ joke }}</div>
           <Footer />
         </article>
       </div>
