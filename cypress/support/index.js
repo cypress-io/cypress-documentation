@@ -15,6 +15,7 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+import '@cypress/mock-ssr/mockSSRCommands'
 
 // in firefox, sometimes a page load will throw this uncaught exception
 // this has occured since docs moved to nuxt
