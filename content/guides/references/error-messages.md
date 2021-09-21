@@ -309,7 +309,7 @@ cy.get('#modal button').click({ waitForAnimations: false })
 You can globally disable animation error checking, or increase the threshold by
 modifying the [configuration file](/guides/references/configuration).
 
-#### configuration file
+#### Configuration file
 
 ```json
 {

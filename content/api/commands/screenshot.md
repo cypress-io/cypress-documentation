@@ -113,7 +113,7 @@ cy.screenshot('actions/login/clicking-login')
 ```javascript
 // screenshot will be clipped 20px from the top and left
 // to the dimensions 400px x 300px
-cy.screenshot({ clip: { x: 20, y: 20, width: 400, height: 300 } })
+cy.screenshot({ clip: { x: 20, y: 20, width: 400, height: 300 }})
 ```
 
 ### Screenshot an element

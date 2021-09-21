@@ -26,7 +26,7 @@ Cypress has the ability to automatically retry failed tests to mitigate flaky
 tests from failing entire test runs or CI builds.
 
 Test retries is **disabled by default**, and you can
-[enable it within your configuration file](/guides/guides/test-retries#Configure-Test-Retries).
+[enable it within your Cypress configuration file](/guides/guides/test-retries#Configure-Test-Retries).
 
 </Alert>
 
