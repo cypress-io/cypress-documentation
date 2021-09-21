@@ -21,14 +21,13 @@ cypress/plugins/index.js
 
 The plugins file must export a function with the following signature:
 
-```javascript
-// cypress/plugins/index.js
+:::cypress-plugin-example
 
-// export a function
-module.exports = (on, config) => {
-  // configure plugins here
-}
+```javascript
+// configure plugins here
 ```
+
+:::
 
 <Alert type="warning">
 
@@ -61,13 +60,15 @@ that Cypress exposes.
 
 Registering to listen on an event looks like this:
 
+:::cypress-plugin-example
+
 ```javascript
-module.exports = (on, config) => {
-  on('<event>', (arg1, arg2) => {
-    // plugin stuff here
-  })
-}
+on('<event>', (arg1, arg2) => {
+  // plugin stuff here
+})
 ```
+
+:::
 
 Each event documents its own argument signature. To understand how to use them,
 please [refer to the docs for each one](#List-of-events).

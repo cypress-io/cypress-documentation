@@ -1,6 +1,6 @@
 function processNode(node, { error }) {
   const { children = [] } = node
-  
+
   if (children.length < 1 || children.length > 2
     || !children.every(({ type }) => type === 'code')) {
     return error(`Expected 1 or 2 code blocks inside directive`)
@@ -13,7 +13,7 @@ function processNode(node, { error }) {
     header = ''
     functionBody = children[0].value.trim()
   } else {
-    header = children[0].value.trim()
+    header = `${children[0].value.trim()  }\n`
     functionBody = children[1].value.trim()
   }
   

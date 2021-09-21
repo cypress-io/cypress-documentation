@@ -20,22 +20,23 @@ the rest of the operating system.
 To modify configuration, you return an object from your plugins file exported
 function.
 
-```javascript
-// cypress/plugins/index.js
-module.exports = (on, config) => {
-  console.log(config) // see everything in here!
+:::cypress-plugin-example
 
-  // modify config values
-  config.defaultCommandTimeout = 10000
-  config.baseUrl = 'https://staging.acme.com'
+```js
+console.log(config) // see everything in here!
 
-  // modify env var value
-  config.env.ENVIRONMENT = 'staging'
+// modify config values
+config.defaultCommandTimeout = 10000
+config.baseUrl = 'https://staging.acme.com'
 
-  // IMPORTANT return the updated config object
-  return config
-}
+// modify env var value
+config.env.ENVIRONMENT = 'staging'
+
+// IMPORTANT return the updated config object
+return config
 ```
+
+:::
 
 Whenever you return an object from your `pluginFile`, Cypress will take this and
 "diff" it against the original configuration and automatically set the resolved
@@ -87,25 +88,26 @@ In the plugins file, you can filter the list of browsers passed inside the
 `config` object and return the list of browsers you want available for selection
 during `cypress open`.
 
+:::cypress-plugin-example
+
 ```javascript
-// cypress/plugins/index.js
-module.exports = (on, config) => {
-  // inside config.browsers array each object has information like
-  // {
-  //   name: 'chrome',
-  //   family: 'chromium',
-  //   channel: 'canary',
-  //   displayName: 'Canary',
-  //   version: '80.0.3966.0',
-  //   path:
-  //    '/Applications/Canary.app/Contents/MacOS/Canary',
-  //   majorVersion: 80
-  // }
-  return {
-    browsers: config.browsers.filter((b) => b.family === 'chromium'),
-  }
+// inside config.browsers array each object has information like
+// {
+//   name: 'chrome',
+//   family: 'chromium',
+//   channel: 'canary',
+//   displayName: 'Canary',
+//   version: '80.0.3966.0',
+//   path:
+//    '/Applications/Canary.app/Contents/MacOS/Canary',
+//   majorVersion: 80
+// }
+return {
+  browsers: config.browsers.filter((b) => b.family === 'chromium'),
 }
 ```
+
+:::
 
 When you open the Test Runner in a project that uses the above modifications to
 your plugins file, only the Chrome browsers found on the system will display in

@@ -260,22 +260,23 @@ While this may take a bit more work than other options - it yields you the most
 amount of flexibility and the ability to manage configuration however you'd
 like.
 
+:::cypress-plugin-example
+
 ```js
-// cypress/plugins/index.js
-module.exports = (on, config) => {
-  // modify the config values
-  config.defaultCommandTimeout = 10000
+// modify the config values
+config.defaultCommandTimeout = 10000
 
-  // read an environment variable and
-  // pass its value to the specs
-  config.env.userName = process.env.TEST_USER || 'Joe'
-  // the specs will be able to access the above value
-  // by using Cypress.env('userName')
+// read an environment variable and
+// pass its value to the specs
+config.env.userName = process.env.TEST_USER || 'Joe'
+// the specs will be able to access the above value
+// by using Cypress.env('userName')
 
-  // IMPORTANT return the updated config object
-  return config
-}
+// IMPORTANT return the updated config object
+return config
 ```
+
+:::
 
 We've fully documented how to set the configuration values from plugin file
 [here](/api/plugins/configuration-api).

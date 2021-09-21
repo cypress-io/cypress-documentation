@@ -168,25 +168,26 @@ In the plugins file, you can filter the list of browsers passed inside the
 `config` object and return the list of browsers you want available for selection
 during `cypress open`.
 
+:::cypress-plugin-example
+
 ```javascript
-// cypress/plugins/index.js
-module.exports = (on, config) => {
-  // inside config.browsers array each object has information like
-  // {
-  //   name: 'chrome',
-  //   channel: 'canary',
-  //   family: 'chromium',
-  //   displayName: 'Canary',
-  //   version: '80.0.3966.0',
-  //   path:
-  //    '/Applications/Canary.app/Contents/MacOS/Canary',
-  //   majorVersion: 80
-  // }
-  return {
-    browsers: config.browsers.filter((b) => b.family === 'chromium'),
-  }
+// inside config.browsers array each object has information like
+// {
+//   name: 'chrome',
+//   channel: 'canary',
+//   family: 'chromium',
+//   displayName: 'Canary',
+//   version: '80.0.3966.0',
+//   path:
+//    '/Applications/Canary.app/Contents/MacOS/Canary',
+//   majorVersion: 80
+// }
+return {
+  browsers: config.browsers.filter((b) => b.family === 'chromium'),
 }
 ```
+
+:::
 
 When you open the Test Runner in a project that uses the above modifications to
 your plugins file, only the Chrome browsers found on the system will display in
@@ -206,8 +207,9 @@ If you have installed a Chromium-based browser like [Brave](https://brave.com/),
 browsers. Here is a plugins file that inserts a local Brave browser into the
 returned list.
 
-```javascript
-// cypress/plugins/index.js
+:::cypress-plugin-example
+
+```js
 const execa = require('execa')
 const findBrowser = () => {
   // the path is hard-coded for simplicity
@@ -230,15 +232,17 @@ const findBrowser = () => {
     }
   })
 }
-
-module.exports = (on, config) => {
-  return findBrowser().then((browser) => {
-    return {
-      browsers: config.browsers.concat(browser),
-    }
-  })
-}
 ```
+
+```js
+return findBrowser().then((browser) => {
+  return {
+    browsers: config.browsers.concat(browser),
+  }
+})
+```
+
+:::
 
 <DocsImage src="/img/guides/plugins/brave-browser.png" alt="List of browsers includes Brave browser" ></DocsImage>
 

@@ -116,23 +116,25 @@ REACT_APP_GOOGLE_CLIENT_SECRET = 'your-client-secret'
 GOOGLE_REFRESH_TOKEN = 'your-refresh-token'
 ```
 
-```jsx
-// cypress/plugins/index.js
+:::cypress-plugin-example
+
+```js
 // initial imports ...
-
 dotenv.config()
-
-export default (on, config) => {
-  // ...
-  config.env.googleRefreshToken = process.env.GOOGLE_REFRESH_TOKEN
-  config.env.googleClientId = process.env.REACT_APP_GOOGLE_CLIENTID
-  config.env.googleClientSecret = process.env.REACT_APP_GOOGLE_CLIENT_SECRET
-
-  // plugins code ...
-
-  return config
-}
 ```
+
+```js
+// ...
+config.env.googleRefreshToken = process.env.GOOGLE_REFRESH_TOKEN
+config.env.googleClientId = process.env.REACT_APP_GOOGLE_CLIENTID
+config.env.googleClientSecret = process.env.REACT_APP_GOOGLE_CLIENT_SECRET
+
+// plugins code ...
+
+return config
+```
+
+:::
 
 ## Custom Command for Google Authentication
 
