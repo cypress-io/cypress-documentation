@@ -1,6 +1,14 @@
 {
   "courses": [
     {
+      "title": "Master Cypress in 15 minutes a day",
+      "url": "https://www.udemy.com/course/master-cypress-in-15-minutes-a-day/?referralCode=ABCA60A105F514D5A413",
+      "author": "Maurice de Beijer",
+      "authorTwitter": "mauricedb",
+      "sourceName": "Udemy",
+      "sourceUrl": "https://udemy.com"
+    },
+    {
       "title": "Testes end-to-end com Cypress",
       "url": "https://www.udemy.com/course/testes-end-to-end-com-cypress",
       "author": "Walmyr Lima e Silva Filho",
