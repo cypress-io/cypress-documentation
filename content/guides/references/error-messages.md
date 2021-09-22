@@ -783,7 +783,7 @@ browsers). Before doing so you should really understand and
 
 ```js
 {
-  "chromeWebSecurity": false
+  chromeWebSecurity: false
 }
 ```
 

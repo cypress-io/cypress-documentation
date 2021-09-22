@@ -70,8 +70,8 @@ Set multiple environment variables with an object literal.
 ```js
 {
   env: {
-    foo: "bar",
-    baz: "quux"
+    foo: 'bar',
+    baz: 'quux'
   }
 }
 ```
@@ -79,7 +79,7 @@ Set multiple environment variables with an object literal.
 :::
 
 ```javascript
-Cypress.env() // => {foo: "bar", baz: "quux"}
+Cypress.env() // => {foo: 'bar', baz: 'quux'}
 ```
 
 ### Name
@@ -123,8 +123,8 @@ only be in effect for the remainder of the tests _in the same spec file._
 ```js
 {
   env: {
-    foo: "bar",
-    baz: "quux"
+    foo: 'bar',
+    baz: 'quux'
   }
 }
 ```
@@ -146,8 +146,8 @@ Cypress.env('host') // => http://server.dev.local
 ```js
 {
   env: {
-    foo: "bar",
-    baz: "quux"
+    foo: 'bar',
+    baz: 'quux'
   }
 }
 ```
@@ -160,7 +160,7 @@ Cypress.env({
   foo: 'foo',
 })
 
-Cypress.env() // => {foo: "foo", baz: "quux", host: "http://server.dev.local"}
+Cypress.env() // => {foo: 'foo', baz: 'quux', host: 'http://server.dev.local'}
 ```
 
 ### From a plugin

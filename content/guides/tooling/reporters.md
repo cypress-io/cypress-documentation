@@ -109,9 +109,9 @@ into an XML file.
 
 ```js
 {
-  reporter: "junit",
+  reporter: 'junit',
   reporterOptions: {
-    mochaFile: "results/my-test-output.xml",
+    mochaFile: 'results/my-test-output.xml',
     toConsole: true
   }
 }
@@ -144,9 +144,9 @@ the [mochawesome-merge](https://github.com/antontelesh/mochawesome-merge) tool.
 
 ```js
 {
-  reporter: "junit",
+  reporter: 'junit',
   reporterOptions: {
-    mochaFile: "results/my-test-output-[hash].xml"
+    mochaFile: 'results/my-test-output-[hash].xml'
   }
 }
 ```
@@ -207,9 +207,9 @@ Specify your reporter and reporterOptions in your configuration file
 
 ```js
 {
-  reporter: "cypress-multi-reporters",
+  reporter: 'cypress-multi-reporters',
   reporterOptions: {
-    configFile: "reporter-config.json"
+    configFile: 'reporter-config.json'
   }
 }
 ```
@@ -231,9 +231,9 @@ reporter to save separate XML files.
 
 ```js
 {
-  reporterEnabled: "spec, mocha-junit-reporter",
+  reporterEnabled: 'spec, mocha-junit-reporter',
   mochaJunitReporterReporterOptions: {
-    mochaFile: "cypress/results/results-[hash].xml"
+    mochaFile: 'cypress/results/results-[hash].xml'
   }
 }
 ```
@@ -295,9 +295,9 @@ to skip the HTML report generation and save each individual JSON file in the
 
 ```js
 {
-  reporter: "mochawesome",
+  reporter: 'mochawesome',
   reporterOptions: {
-    reportDir: "cypress/results",
+    reportDir: 'cypress/results',
     overwrite: false,
     html: false,
     json: true
