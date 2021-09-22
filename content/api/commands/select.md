@@ -32,11 +32,11 @@ cy.location().select() // Errors, 'location' does not yield <select> element
 
 **<Icon name="angle-right"></Icon> value** **_(String)_**
 
-The `value` or text content of the `<option>` to be selected.
+The `value`, `index`, or text content of the `<option>` to be selected.
 
 **<Icon name="angle-right"></Icon> values** **_(Array)_**
 
-An array of `values` or text contents of the `<option>`s to be selected.
+An array of `values`, `indexes`, or text contents of the `<option>`s to be selected.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -89,6 +89,23 @@ cy.get('select').select('apples').should('have.value', '456')
 cy.get('select').select('456').should('have.value', '456')
 ```
 
+### Index
+
+#### Select the `option` with index 0
+
+```html
+<select>
+  <option value="456">apples</option>
+  <option value="457">oranges</option>
+  <option value="458">bananas</option>
+</select>
+```
+
+```javascript
+// yields <option value="456">apples</option>
+cy.get('select').select(0).should('have.value', '456')
+```
+
 ### Select multiple options
 
 #### Select the options with the texts "apples" and "bananas"
@@ -121,6 +138,23 @@ cy.get('select')
 ```javascript
 cy.get('select')
   .select(['456', '457'])
+  .invoke('val')
+  .should('deep.equal', ['456', '457'])
+```
+
+#### Select the options with the indexes 0 and 1
+
+```html
+<select multiple>
+  <option value="456">apples</option>
+  <option value="457">oranges</option>
+  <option value="458">bananas</option>
+</select>
+```
+
+```javascript
+cy.get('select')
+  .select([0, 1])
   .invoke('val')
   .should('deep.equal', ['456', '457'])
 ```
