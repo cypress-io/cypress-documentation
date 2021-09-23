@@ -48,7 +48,7 @@ certificate/private key pair** or a **PFX certificate container**.
 
 ## Usage
 
-To configure CA / client certificates within your configuration file, you can
+To configure CA / client certificates within your Cypress configuration, you can
 add the `clientCertificates` key to define an array of client certificates as
 shown below:
 

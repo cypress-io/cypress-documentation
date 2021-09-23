@@ -154,7 +154,7 @@ complex. You may find that some features of your web application are challenging
 to test or the tests sporadically fail. We call these tests "flaky." Cypress
 allows you to [retry failed tests](/guides/guides/test-retries). Sometimes tests
 will fail in a CI environment when they otherwise would pass on a developer's
-machine. Enabling test retries in your Cypress configuration file can help you
+machine. Enabling test retries in the Cypress configuration can help you
 to get unblocked when unpredictable, flaky tests are occasionally failing.
 
 The Cypress Dashboard goes a step further and helps you and your team to
@@ -1170,7 +1170,7 @@ Read the docs on
 [recording test results](http://on.cypress.io/recording-project-runs) to the
 [Cypress Dashboard](/guides/dashboard/introduction) to learn more.
 
-### Specifying a custom configuration file
+### Specifying a custom Cypress configuration file
 
 It may be useful to have different Cypress configuration files per environment
 (ie. development, staging, production).
@@ -1264,7 +1264,7 @@ named `cypress`.
 ├── .gitignore
 ├── angular.json
 ├── browserslist
-├── configuration file
+├── cypress.config.js
 ├── karma.conf.js
 ├── package.json
 ├── README.md

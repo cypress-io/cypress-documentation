@@ -34,7 +34,7 @@ cy.exec('npm run build')
 **<Icon name="angle-right"></Icon> command** **_(String)_**
 
 The system command to be executed from the project root (the directory that
-contains the Cypress [configuration file](/guides/references/configuration)).
+contains the [Cypress configuration file](/guides/references/configuration)).
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 

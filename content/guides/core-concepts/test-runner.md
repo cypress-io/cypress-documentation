@@ -48,7 +48,7 @@ testing.
 By default, Cypress keeps 50 tests worth of snapshots and command data for time
 traveling. If you are seeing extremely high memory consumption in your browser,
 you may want to lower the `numTestsKeptInMemory` in your
-[configuration file](/guides/references/configuration#Global).
+[Cypress configuration](/guides/references/configuration#Global).
 
 </Alert>
 
@@ -146,7 +146,7 @@ DOM is completely available for debugging.
 The AUT also displays in the size and orientation specified in your tests. You
 can change the size or orientation with the
 [`cy.viewport()`](/api/commands/viewport) command or in your
-[Cypress configuration file](/guides/references/configuration#Viewport). If the
+[Cypress configuration](/guides/references/configuration#Viewport). If the
 AUT does not fit within the current browser window, it is scaled appropriately
 to fit within the window.
 

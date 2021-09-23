@@ -393,7 +393,7 @@ cy.task('queryDatabase', { dbName, query })
 // in plugins/index.js
 const mysql = require('mysql')
 // the connection strings for different databases could
-// come from a configuration file, or from environment variables
+// come from the Cypress configuration or from environment variables
 const connections = {
   stagingA: {
     host: 'staging.my.co',

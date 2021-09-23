@@ -29,7 +29,7 @@ like to assert on.
 
 Cypress Studio is an experimental feature and can be enabled by adding the
 [experimentalStudio](/guides/references/experiments) attribute to your
-configuration file.
+Cypress configuration.
 
 </Alert>
 

@@ -70,7 +70,7 @@ command.</li></List>
 
 The screenshot will be stored in the `cypress/screenshots` folder by default.
 You can change the directory where screenshots are saved in your
-[configuration file](/guides/references/configuration#Folders-Files).
+[Cypress configuration](/guides/references/configuration#Folders-Files).
 
 ### No Args
 

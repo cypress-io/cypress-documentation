@@ -75,7 +75,7 @@ please [refer to the docs for each one](#List-of-events).
 ### config
 
 `config` is the resolved
-[Cypress configuration file](/guides/references/configuration) of the opened
+[Cypress configuration](/guides/references/configuration) of the opened
 project.
 
 This configuration contains all of the values that get passed into the browser
@@ -97,7 +97,7 @@ of the standard configuration. **These values are read only and cannot be
 modified from the plugins file.**
 
 - `configFile`: The absolute path to the
-  [configuration file](/guides/references/configuration). See the
+  [Cypress configuration file](/guides/references/configuration). See the
   [--config-file](guides/guides/command-line#cypress-open) and
   [configFile](guides/guides/module-api) docs for more information on this
   value.

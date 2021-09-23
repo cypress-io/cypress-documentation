@@ -181,7 +181,7 @@ with the following configuration should get intelligent code completion working.
 
 #### Features:
 
-When editing the [configuration file](/guides/references/configuration), you can
+When editing the [Cypress configuration file](/guides/references/configuration), you can
 use our [json schema file](https://on.cypress.io/cypress.schema.json) to get
 intelligent tooltips in your IDE for each configuration property.
 
@@ -202,7 +202,7 @@ extra configuration or plugins for JSON schema support.
 
 To set up in [Visual Studio Code](https://code.visualstudio.com/) you can open
 `Preferences / Settings / User Settings` and add the `json.schemas` property.
-Make sure to replace configuration file with your configuration file if not the
+Make sure to replace `cypress.json` with your configuration file if not the
 default.
 
 ```json

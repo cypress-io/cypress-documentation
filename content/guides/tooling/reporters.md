@@ -35,7 +35,7 @@ of our open source
 You can load
 [custom Mocha reporters](https://mochajs.org/api/tutorial-custom-reporter.html)
 through a relative or absolute path. These can be specified in your
-configuration file or via the [command line](/guides/guides/command-line).
+Cypress configuration file or via the [command line](/guides/guides/command-line).
 
 For example, if you have the following directory structure:
 
@@ -49,7 +49,7 @@ For example, if you have the following directory structure:
 
 You would specify the path to your custom reporter in either of the ways below.
 
-#### Configuration file
+#### Cypress configuration
 
 ```json
 {
@@ -67,7 +67,7 @@ cypress run --reporter reporters/custom.js
 
 When using custom reporters via npm, specify the package name.
 
-#### Configuration file
+#### Cypress configuration
 
 ```json
 {
@@ -84,7 +84,7 @@ cypress run --reporter mochawesome
 ## Reporter Options
 
 Some reporters accept options that customize their behavior. These can be
-specified in your configuration file or via
+specified in your Cypress configuration or via
 [command line](/guides/guides/command-line) options.
 
 Reporter options differ depending on the reporter (and may not be supported at
@@ -94,7 +94,7 @@ which options are supported.
 The below configuration will output the JUnit report to `STDOUT` and save it
 into an XML file.
 
-#### Configuration file
+#### Cypress configuration
 
 ```json
 {
@@ -125,7 +125,7 @@ party tool. For example, for the
 [Mochawesome](https://github.com/adamgruber/mochawesome) reporter, you can use
 the [mochawesome-merge](https://github.com/antontelesh/mochawesome-merge) tool.
 
-#### Configuration file
+#### Cypress configuration
 
 ```json
 {
@@ -180,10 +180,10 @@ We need to install additional dependencies:
 npm install --save-dev cypress-multi-reporters mocha-junit-reporter
 ```
 
-Specify your reporter and reporterOptions in your configuration file or via the
+Specify your reporter and reporterOptions in your Cypress configuration or via the
 [command line](/guides/guides/command-line).
 
-#### Configuration file
+#### Cypress configuration
 
 ```json
 {
@@ -259,10 +259,10 @@ npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generato
 ```
 
 We need to configure the reporter in your
-[configuration file](/guides/references/configuration) to skip the HTML report
+[Cypress configuration](/guides/references/configuration) to skip the HTML report
 generation and save each individual JSON file in the `cypress/results` folder.
 
-#### Configuration file
+#### Cypress configuration
 
 ```json
 {

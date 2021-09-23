@@ -2,9 +2,9 @@
 title: Configuration
 ---
 
-## Configuration file
+## Cypress configuration file
 
-The first time you open Cypress Test Runner, it creates the configuration file.
+The first time you open Cypress Test Runner, it creates the Cypress configuration file.
 This file is used to store any configuration values you supply. If you
 [configure your tests to record](/guides/dashboard/projects#Setup) the results
 to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction) the
@@ -220,7 +220,7 @@ You can override configuration for either the E2E or
 
 #### Examples
 
-Component Testing specific viewports in configuration file:
+Component Testing specific viewports in the Cypress configuration:
 
 ```json
 {
@@ -233,7 +233,7 @@ Component Testing specific viewports in configuration file:
 }
 ```
 
-E2E specific timeouts in configuration file:
+E2E specific timeouts in the Cypress configuration:
 
 ```json
 {
@@ -287,7 +287,7 @@ working locally. This gives you the ability to change configuration options
 without modifying any code or build scripts.
 
 By default, any environment variable that matches a corresponding configuration
-key will override the configuration file value.
+key will override the Cypress configuration file value.
 
 ```shell
 export CYPRESS_VIEWPORT_WIDTH=800
@@ -434,7 +434,7 @@ different values came from. Each set value is highlighted to show where the
 value has been set via the following ways:
 
 - Default value
-- The configuration file /guides/references/configuration
+- [Cypress configuration file](/guides/references/configuration)
 - The
   [Cypress environment file](/guides/guides/environment-variables#Option-2-cypress-env-json)
 - System

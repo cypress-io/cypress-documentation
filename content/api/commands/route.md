@@ -99,7 +99,7 @@ default `cy.route()` inherits its options from
 
 You can also set options for all [`cy.wait()`](/api/commands/wait)'s
 `requestTimeout` and `responseTimeout` globally in the
-[configuration file](/guides/references/configuration) to control how long to
+[Cypress configuration](/guides/references/configuration) to control how long to
 wait for the request and response of a supplied route.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)

@@ -16,7 +16,7 @@ real-world feedback during their development.
 
 ## Configuration
 
-You can pass the [configuration file](/guides/references/configuration) options
+You can pass the [Cypress configuration](/guides/references/configuration) options
 below to enable or disable experiments. See our
 [Configuration Guide](/guides/references/configuration) on how to pass
 configuration to Cypress.

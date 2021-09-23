@@ -118,7 +118,7 @@ Pass in an options object to change the default behavior of `cy.request()`.
 | `timeout`                  | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.request()` to resolve before [timing out](#Timeouts)                                                                                                                                |
 
 You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout`
-globally in the [configuration file](/guides/references/configuration).
+globally in the [Cypress configuration](/guides/references/configuration).
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 

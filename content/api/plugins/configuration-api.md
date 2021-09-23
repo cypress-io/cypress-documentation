@@ -49,7 +49,7 @@ The `config` object also includes the following extra values that are not part
 of the standard configuration. **These values are read only and cannot be
 modified from the plugins file.**
 
-- `configFile`: The absolute path to the config file. See the
+- `configFile`: The absolute path to the Cypress configuration file. See the
   [--config-file](guides/guides/command-line#cypress-open) and
   [configFile](guides/guides/module-api) docs for more information on this
   value.

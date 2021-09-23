@@ -105,7 +105,7 @@ return them the full current URL. We almost never refer to the URL as an `href`.
 #### Hardcoded versus using the configuration object
 
 Instead of hardcoding the URL you can use the `baseUrl` of the
-[Cypress configuration file](/guides/references/configuration).
+[Cypress configuration](/guides/references/configuration).
 
 Given the remote URL, `http://localhost:8000/index.html`, these assertions are
 the same.

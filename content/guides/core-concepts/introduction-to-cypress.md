@@ -840,7 +840,7 @@ that expect particular things to take much longer like
 out.
 
 These commands have their own particular timeout values which are documented in
-our [configuration file](/guides/references/configuration).
+the [Cypress configuration](/guides/references/configuration).
 
 <Alert type="success">
 
