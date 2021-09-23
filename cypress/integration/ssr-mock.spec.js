@@ -1,7 +1,6 @@
 /// <reference types="cypress" />
 
-it('getServerSideProps returns mock', () => {
-  //cy.intercept('https://icanhazdadjoke.com').as('joke')
+it('should mock ssr content', () => {
   const joke = 'Our wedding was so beautiful, even the cake was in tiers.'
 
   cy.mockSSR({
@@ -17,8 +16,6 @@ it('getServerSideProps returns mock', () => {
   })
 
   cy.visit('/')
-
-  //cy.wait('@joke')
 
   cy.get('[data-test=joke]').should('contain', joke)
 })
