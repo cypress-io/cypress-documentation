@@ -9,6 +9,7 @@
 const path = require('path')
 const express = require('express')
 const fs = require('fs')
+const { cypressMockMiddleware } = require('@cypress/mock-ssr')
 
 const app = express()
 
@@ -35,6 +36,7 @@ const logger = (req, res, next) => {
 
 const DIRECTORY_TO_SERVE = path.join(__dirname, '../dist')
 
+app.use(cypressMockMiddleware())
 app.use((req, _res, next) => {
   const maybeDirectory = `${DIRECTORY_TO_SERVE}${req.path}`
 
