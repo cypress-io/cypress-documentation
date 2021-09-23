@@ -1967,7 +1967,7 @@
     lodash "^4.17.15"
     shelljs "^0.8.3"
 
-"@cypress/mock-ssr@https://github.com/cypress-io/cypress-mock-ssr":
+"@cypress/mock-ssr@https://github.com/cypress-io/cypress-mock-ssr#master":
   version "0.0.0"
   resolved "https://github.com/cypress-io/cypress-mock-ssr#2e2541b96f2555d5c848ec03e0f5af4e1a167227"
   dependencies:
