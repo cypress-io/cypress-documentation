@@ -38,25 +38,28 @@ folder structure. By default it will create:
 
   /integration
     /examples
-      - actions.spec.js
-      - aliasing.spec.js
-      - assertions.spec.js
-      - connectors.spec.js
-      - cookies.spec.js
-      - cypress_api.spec.js
-      - files.spec.js
-      - local_storage.spec.js
-      - location.spec.js
-      - misc.spec.js
-      - navigation.spec.js
-      - network_requests.spec.js
-      - querying.spec.js
-      - spies_stubs_clocks.spec.js
-      - traversal.spec.js
-      - utilities.spec.js
-      - viewport.spec.js
-      - waiting.spec.js
-      - window.spec.js
+      /1-getting-started
+        - todo.spec.js
+      /2-advanced-examples
+        - actions.spec.js
+        - aliasing.spec.js
+        - assertions.spec.js
+        - connectors.spec.js
+        - cookies.spec.js
+        - cypress_api.spec.js
+        - files.spec.js
+        - local_storage.spec.js
+        - location.spec.js
+        - misc.spec.js
+        - navigation.spec.js
+        - network_requests.spec.js
+        - querying.spec.js
+        - spies_stubs_clocks.spec.js
+        - traversal.spec.js
+        - utilities.spec.js
+        - viewport.spec.js
+        - waiting.spec.js
+        - window.spec.js
 
   /plugins
     - index.js
