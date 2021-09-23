@@ -150,15 +150,58 @@ cy.get('select')
 #### Force select a disabled `<select>`
 
 Passing `{ force: true }` to `.select()` will override the actionability checks
-for selecting a disabled `<select>`. However, it will not override the
-actionability checks for selecting a disabled `<option>` or an option within a
-disabled `<optgroup>`. See
-[this issue](https://github.com/cypress-io/cypress/issues/107) for more detail.
+for selecting a disabled `<select>`.
 
 ```html
 <select disabled>
   <optgroup label="Veggies">
     <option value="okra">Okra</option>
+    <option value="zucchini">Zucchini</option>
+  </optgroup>
+
+  <optgroup></optgroup>
+</select>
+```
+
+```javascript
+cy.get('select')
+  .select('okra', { force: true })
+  .invoke('val')
+  .should('eq', 'okra')
+```
+
+#### Force select a disabled `<optgroup>`
+
+Passing `{ force: true }` to `.select()` will override the actionability checks
+for selecting a disabled `<optgroup>`.
+
+```html
+<select>
+  <optgroup label="Veggies" disabled>
+    <option value="okra">Okra</option>
+    <option value="zucchini">Zucchini</option>
+  </optgroup>
+
+  <optgroup></optgroup>
+</select>
+```
+
+```javascript
+cy.get('select')
+  .select('okra', { force: true })
+  .invoke('val')
+  .should('eq', 'okra')
+```
+
+#### Force select a disabled `<option>`
+
+Passing `{ force: true }` to `.select()` will override the actionability checks
+for selecting a disabled `<option>`.
+
+```html
+<select>
+  <optgroup label="Veggies">
+    <option value="okra" disabled>Okra</option>
     <option value="zucchini">Zucchini</option>
   </optgroup>
 
