@@ -69,7 +69,7 @@ command.</li></List>
 ## Examples
 
 The screenshot will be stored in the `cypress/screenshots` folder by default.
-You can change the directory where screenshots are saved in your
+You can change the directory where screenshots are saved in the
 [Cypress configuration](/guides/references/configuration#Folders-Files).
 
 ### No Args
@@ -113,7 +113,7 @@ cy.screenshot('actions/login/clicking-login')
 ```javascript
 // screenshot will be clipped 20px from the top and left
 // to the dimensions 400px x 300px
-cy.screenshot({ clip: { x: 20, y: 20, width: 400, height: 300 }})
+cy.screenshot({ clip: { x: 20, y: 20, width: 400, height: 300 } })
 ```
 
 ### Screenshot an element
