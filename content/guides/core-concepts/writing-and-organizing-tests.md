@@ -117,7 +117,7 @@ Check out our recipe using
 </Alert>
 
 To see an example of every command used in Cypress, open the
-[`example` folder](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples)
+[`2-advanced-examples` folder](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/cypress/integration/2-advanced-examples)
 within your `cypress/integration` folder.
 
 To start writing tests for your app, create a new file like `app_spec.js` within
