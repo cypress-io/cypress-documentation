@@ -1180,7 +1180,7 @@ It may be useful to have different Cypress configuration files per environment
   "builder": "@cypress/schematic:cypress",
   "options": {
     "devServerTarget": "{project-name}:serve",
-    "configFile": "cypress.production.config.json"
+    "configFile": "cypress.production.config.js"
   },
   "configurations": {
     "production": {
