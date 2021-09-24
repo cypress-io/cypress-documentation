@@ -23,6 +23,34 @@ projects and tests run for the organization.
 
 <DocsImage src="/img/dashboard/invite-user-dialog.png" alt="Invite User dialog" ></DocsImage>
 
+### Sign Up with an Invitation:
+
+Upon receiving the email, click **"Accept Invitation"** to be redirected to the
+Cypress Dashboard. From there, you will have the choice of authenitication type:
+
+- **Basic** (Google or GitHub)
+- **Social** (Email and Password)
+- **Single Sign On**
+
+#### **Sign Up with Basic Authentication**
+
+1. Click **"Don't have an account? Sign Up"**
+2. Click **"Sign up with Email"**
+3. Type your **email address** and make a **password**
+4. Click **"Sign Up"**
+
+#### **Sign Up with Social Authentication**
+
+1. Click **"Don't have an account? Sign Up"**
+2. Click **"Sign up with Google"** or **"Sign up with Google"**
+3. You may need to verify via your Social provider depending on your personal
+   settings
+
+#### **Sign Up with Single Sign On (SSO) Authentication**
+
+Refer to our
+[Enterprise SSO Guide](https://on.cypress.io/organizations#Slack-Integration)
+
 ## User roles
 
 Users can be assigned roles that affect their access to certain features of the
