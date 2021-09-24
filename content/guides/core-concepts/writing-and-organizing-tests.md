@@ -72,8 +72,8 @@ While Cypress allows you to configure where your tests, fixtures, and support
 files are located, if you're starting your first project, we recommend you use
 the above structure.
 
-You can modify the folder configuration in your configuration file. See
-the [Cypress configuration](/guides/references/configuration#Folders-Files) for more
+You can modify the folder configuration in your configuration file. See the
+[Cypress configuration](/guides/references/configuration#Folders-Files) for more
 detail.
 
 <Alert type="info">
@@ -500,10 +500,9 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 
 ### Test Configuration
 
-To apply a specific
-[Cypress configuration](/guides/references/configuration) value to a suite or test,
-pass a configuration object to the test or suite function as the second
-argument.
+To apply a specific [Cypress configuration](/guides/references/configuration)
+value to a suite or test, pass a configuration object to the test or suite
+function as the second argument.
 
 This configuration will take effect during the suite or tests where they are set
 then return to their previous default values after the suite or tests are

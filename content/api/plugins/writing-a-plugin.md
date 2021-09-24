@@ -75,8 +75,7 @@ please [refer to the docs for each one](#List-of-events).
 ### config
 
 `config` is the resolved
-[Cypress configuration](/guides/references/configuration) of the opened
-project.
+[Cypress configuration](/guides/references/configuration) of the opened project.
 
 This configuration contains all of the values that get passed into the browser
 for your project.

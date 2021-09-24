@@ -34,8 +34,8 @@ of our open source
 
 You can load
 [custom Mocha reporters](https://mochajs.org/api/tutorial-custom-reporter.html)
-through a relative or absolute path. These can be specified in your
-Cypress configuration file or via the [command line](/guides/guides/command-line).
+through a relative or absolute path. These can be specified in your Cypress
+configuration file or via the [command line](/guides/guides/command-line).
 
 For example, if you have the following directory structure:
 
@@ -180,8 +180,8 @@ We need to install additional dependencies:
 npm install --save-dev cypress-multi-reporters mocha-junit-reporter
 ```
 
-Specify your reporter and reporterOptions in your Cypress configuration or via the
-[command line](/guides/guides/command-line).
+Specify your reporter and reporterOptions in your Cypress configuration or via
+the [command line](/guides/guides/command-line).
 
 #### Cypress configuration
 
@@ -259,8 +259,9 @@ npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generato
 ```
 
 We need to configure the reporter in your
-[Cypress configuration](/guides/references/configuration) to skip the HTML report
-generation and save each individual JSON file in the `cypress/results` folder.
+[Cypress configuration](/guides/references/configuration) to skip the HTML
+report generation and save each individual JSON file in the `cypress/results`
+folder.
 
 #### Cypress configuration
 

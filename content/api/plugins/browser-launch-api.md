@@ -209,9 +209,9 @@ affect the size of screenshots and videos taken during the run.
 
 This setting changes the display size of the screen and does not affect the
 `viewportWidth` and `viewportHeight` set in the
-[Cypress configuration](/guides/references/configuration). The `viewportWidth` and
-`viewportHeight` only affect the size of the application under test displayed
-inside the Test Runner. Read the blog post
+[Cypress configuration](/guides/references/configuration). The `viewportWidth`
+and `viewportHeight` only affect the size of the application under test
+displayed inside the Test Runner. Read the blog post
 [Generate High-Resolution Videos and Screenshots](https://www.cypress.io/blog/2021/03/01/generate-high-resolution-videos-and-screenshots/)
 for details.
 

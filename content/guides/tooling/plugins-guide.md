@@ -34,8 +34,8 @@ You can [check out the API docs here](/api/plugins/writing-a-plugin).
 ### Configuration
 
 With plugins, you can programmatically alter the resolved configuration and
-environment variables that come from
-the [Cypress configuration file](/guides/references/configuration),
+environment variables that come from the
+[Cypress configuration file](/guides/references/configuration),
 [`cypress.env.json`](/guides/guides/environment-variables#Option-2-cypress-env-json),
 the [command line](/guides/guides/command-line), or system environment
 variables.

@@ -107,8 +107,8 @@ You can configure or override Component Testing defaults in your
 key.
 
 For example, if you would like to use a different viewport size or target
-different test files for Component Testing, your Cypress configuration might look
-like this:
+different test files for Component Testing, your Cypress configuration might
+look like this:
 
 ```json
 {
@@ -163,8 +163,9 @@ If it's your first time using Cypress, check out the
 </alert>
 
 Once installed, you need to configure how Cypress will locate component spec
-files. In the following Cypress configuration, all components test files contained
-within the `src` directory and match the glob given in the `testFiles` key.
+files. In the following Cypress configuration, all components test files
+contained within the `src` directory and match the glob given in the `testFiles`
+key.
 
 ```json
 {

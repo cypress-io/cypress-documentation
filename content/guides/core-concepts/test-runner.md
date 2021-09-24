@@ -146,9 +146,9 @@ DOM is completely available for debugging.
 The AUT also displays in the size and orientation specified in your tests. You
 can change the size or orientation with the
 [`cy.viewport()`](/api/commands/viewport) command or in your
-[Cypress configuration](/guides/references/configuration#Viewport). If the
-AUT does not fit within the current browser window, it is scaled appropriately
-to fit within the window.
+[Cypress configuration](/guides/references/configuration#Viewport). If the AUT
+does not fit within the current browser window, it is scaled appropriately to
+fit within the window.
 
 The current size and scale of the AUT is displayed in the top right corner of
 the window.

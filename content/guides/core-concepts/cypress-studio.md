@@ -28,8 +28,8 @@ like to assert on.
 <Alert type="info">
 
 Cypress Studio is an experimental feature and can be enabled by adding the
-[experimentalStudio](/guides/references/experiments) attribute to your
-Cypress configuration.
+[experimentalStudio](/guides/references/experiments) attribute to your Cypress
+configuration.
 
 </Alert>
 

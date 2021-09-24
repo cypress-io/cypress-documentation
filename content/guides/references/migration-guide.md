@@ -1307,8 +1307,8 @@ The `blacklistHosts` configuration has been renamed to
 behavior.
 
 This should be updated in all places where Cypress configuration can be set
-including via the Cypress configuration file, command line arguments, the `pluginsFile`,
-`Cypress.config()` or environment variables.
+including via the Cypress configuration file, command line arguments, the
+`pluginsFile`, `Cypress.config()` or environment variables.
 
 <Badge type="danger">Before</Badge> `blacklistHosts` configuration
 

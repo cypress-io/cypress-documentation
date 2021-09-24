@@ -81,8 +81,8 @@ environment variables.
 ### Option #1: configuration file
 
 Any key/value you set in your
-[Cypress configuration](/guides/references/configuration) under the `env` key will
-become an environment variable.
+[Cypress configuration](/guides/references/configuration) under the `env` key
+will become an environment variable.
 
 ```json
 {

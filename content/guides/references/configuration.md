@@ -4,8 +4,9 @@ title: Configuration
 
 ## Cypress configuration file
 
-The first time you open Cypress Test Runner, it creates the Cypress configuration file.
-This file is used to store any configuration values you supply. If you
+The first time you open Cypress Test Runner, it creates the Cypress
+configuration file. This file is used to store any configuration values you
+supply. If you
 [configure your tests to record](/guides/dashboard/projects#Setup) the results
 to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction) the
 `projectId` will be written in this file too.
