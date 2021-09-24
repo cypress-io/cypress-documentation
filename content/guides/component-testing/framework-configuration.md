@@ -51,8 +51,8 @@ module.exports = (on, config) => {
 }
 ```
 
-Lastly, tell Cypress where you find your test in `cypress.json`. In this example
-all the tests are in `src` and named `test.js`:
+Lastly, tell Cypress where to find your test in the Cypress configuration. In
+this example all the tests are in `src` and named `test.js`:
 
 ```json
 {
@@ -140,8 +140,8 @@ for more information.
 
 </Alert>
 
-Lastly, tell Cypress where you find your test in `cypress.json`. In this example
-all the tests are in `src` and named `spec.js`:
+Lastly, tell Cypress where to find your test in the Cypress configuration. In
+this example all the tests are in `src` and named `spec.js`:
 
 ```json
 {
@@ -225,8 +225,8 @@ module.exports = (on, config) => {
 }
 ```
 
-Lastly, tell Cypress where you find your test in `cypress.json`. In this example
-all the tests are in `cypress/pages`:
+Lastly, tell Cypress where to find your test in the Cypress configuration. In
+this example all the tests are in `cypress/pages`:
 
 ```json
 {
@@ -330,9 +330,9 @@ module.exports = (on, config) => {
 }
 ```
 
-Lastly, tell Cypress where you find your tests in `cypress.json`. While it's
-possible to mount components in the `pages` directory, generally you will want
-to be more granular with your component tests - full page tests are best
+Lastly, tell Cypress where to find your test in the Cypress configuration. While
+it's possible to mount components in the `pages` directory, generally you will
+want to be more granular with your component tests - full page tests are best
 implemented with Cypress e2e runner.
 
 In this example we specify the `componentFolder` as `components`, the default
@@ -465,8 +465,8 @@ module.exports = (on, config) => {
 }
 ```
 
-Lastly, tell Cypress where you find your test in `cypress.json`. In this example
-all the tests are in `src` and named `spec.jsx`:
+Lastly, tell Cypress where to find your test in the Cypress configuration. In
+this example all the tests are in `src` and named `spec.jsx`:
 
 ```json
 {

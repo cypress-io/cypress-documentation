@@ -2,10 +2,10 @@
 title: Configuration
 ---
 
-## cypress.json
+## Cypress configuration file
 
-The first time you open Cypress Test Runner, it creates the `cypress.json`
-configuration file. This JSON file is used to store any configuration values you
+The first time you open Cypress Test Runner, it creates the Cypress
+configuration file. This file is used to store any configuration values you
 supply. If you
 [configure your tests to record](/guides/dashboard/projects#Setup) the results
 to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction) the
@@ -221,8 +221,7 @@ You can override configuration for either the E2E or
 
 #### Examples
 
-Component Testing specific viewports in configuration file (`cypress.json` by
-default):
+Component Testing specific viewports in the Cypress configuration:
 
 ```json
 {
@@ -235,7 +234,7 @@ default):
 }
 ```
 
-E2E specific timeouts in configuration file (`cypress.json` by default):
+E2E specific timeouts in the Cypress configuration:
 
 ```json
 {
@@ -289,7 +288,7 @@ working locally. This gives you the ability to change configuration options
 without modifying any code or build scripts.
 
 By default, any environment variable that matches a corresponding configuration
-key will override the configuration file (`cypress.json` by default) value.
+key will override the Cypress configuration file value.
 
 ```shell
 export CYPRESS_VIEWPORT_WIDTH=800
@@ -346,9 +345,8 @@ Cypress.config('pageLoadTimeout') // => 100000
 
 ### Test Configuration
 
-To apply specific Cypress [configuration](/guides/references/configuration)
-values to a suite or test, pass a configuration object to the test or suite
-function as the second argument.
+To apply specific Cypress configuration values to a suite or test, pass a
+configuration object to the test or suite function as the second argument.
 
 The configuration values passed in will only take effect during the suite or
 test where they are set. The values will then reset to the previous default
@@ -437,7 +435,7 @@ different values came from. Each set value is highlighted to show where the
 value has been set via the following ways:
 
 - Default value
-- The [configuration file](/guides/references/configuration)
+- [Cypress configuration file](/guides/references/configuration)
 - The
   [Cypress environment file](/guides/guides/environment-variables#Option-2-cypress-env-json)
 - System
@@ -727,7 +725,7 @@ DEBUG=cypress:cli,cypress:server:specs
   [Cypress.env()](/api/cypress-api/env)
 - [Environment variables](/guides/guides/environment-variables)
 - [Environment Variables recipe](/examples/examples/recipes#Fundamentals)
-- [Extending the Cypress Config File](https://www.cypress.io/blog/2020/06/18/extending-the-cypress-config-file/)
+- [Extending the Cypress Configuration File](https://www.cypress.io/blog/2020/06/18/extending-the-cypress-config-file/)
   blog post and
   [@bahmutov/cypress-extends](https://github.com/bahmutov/cypress-extends)
   package.

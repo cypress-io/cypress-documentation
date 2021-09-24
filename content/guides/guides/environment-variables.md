@@ -47,9 +47,8 @@ and domain under test. Use `baseUrl` instead of environment variables.
 [`cy.visit()`](/api/commands/visit) and [`cy.request()`](/api/commands/request)
 are automatically prefixed with this value - avoiding the need to specify them.
 
-`baseUrl` can be set in your configuration file (`cypress.json` by default) -
-and then you can set an environment variable in your OS to override it like
-shown below.
+`baseUrl` can be set in the Cypress configuration file - and then you can set an
+environment variable in your OS to override it like shown below.
 
 ```shell
 CYPRESS_BASE_URL=https://staging.app.com cypress run
@@ -82,8 +81,8 @@ environment variables.
 ### Option #1: configuration file
 
 Any key/value you set in your
-[configuration file (`cypress.json` by default)](/guides/references/configuration)
-under the `env` key will become an environment variable.
+[Cypress configuration](/guides/references/configuration) under the `env` key
+will become an environment variable.
 
 ```json
 {
@@ -126,7 +125,7 @@ Cypress.env('products_url') // '/products'
 
 You can create your own `cypress.env.json` file that Cypress will automatically
 check. Values in here will overwrite conflicting environment variables in your
-[configuration file (`cypress.json` by default)](/guides/references/configuration).
+[Cypress configuration](/guides/references/configuration).
 
 This strategy is useful because if you add `cypress.env.json` to your
 `.gitignore` file, the values in here can be different for each developer
@@ -176,8 +175,8 @@ Any OS-level environment variable on your machine that starts with either
 `CYPRESS_` or `cypress_` will automatically be added to Cypress' environment
 variables and made available to you.
 
-Conflicting values will override values from your configuration file
-(`cypress.json` by default) and `cypress.env.json` files.
+Conflicting values will override values from the Cypress configuration file and
+`cypress.env.json` files.
 
 Cypress will _strip off_ the `CYPRESS_` when adding your environment variables.
 

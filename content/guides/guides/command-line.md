@@ -128,7 +128,7 @@ cypress run [options]
 | `--reporter`, `-r`         | [Specify a Mocha reporter](#cypress-run-reporter-lt-reporter-gt)                                                                                                                           |
 | `--reporter-options`, `-o` | [Specify Mocha reporter options](#cypress-run-reporter-lt-reporter-gt)                                                                                                                     |
 | `--spec`, `-s`             | [Specify the spec files to run](#cypress-run-spec-lt-spec-gt)                                                                                                                              |
-| `--tag`, `-t`              | [Identify a run with a tag or tags](#cypress-run-tag-lt-tag-gt)                                                                                                                          |
+| `--tag`, `-t`              | [Identify a run with a tag or tags](#cypress-run-tag-lt-tag-gt)                                                                                                                            |
 
 #### `cypress run --browser <browser-name-or-path>`
 
@@ -195,11 +195,10 @@ testing locally and in dedicated CI jobs. Examples:
 
 </Alert>
 
-#### `cypress run --config-file <config-file>`
+#### `cypress run --config-file <configuration-file>`
 
-You can specify a path to a JSON file where
-[configuration](/guides/references/configuration) values are set. This defaults
-to `cypress.json`.
+You can specify a path to a file where
+[Cypress configuration](/guides/references/configuration) values are set.
 
 ```shell
 cypress run --config-file tests/cypress-config.json
@@ -481,8 +480,7 @@ cypress open [options]
 
 Options passed to `cypress open` will automatically be applied to the project
 you open. These persist on all projects until you quit the Cypress Test Runner.
-These options will also override values in your configuration file
-(`cypress.json` by default).
+These options will also override values in the Cypress configuration file.
 
 | Option                | Description                                                                                                                   |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
@@ -526,11 +524,10 @@ configuration file.
 cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
 ```
 
-#### `cypress open --config-file <config-file>`
+#### `cypress open --config-file <configuration-file>`
 
-You can specify a path to a JSON file where
-[configuration](/guides/references/configuration) values are set. This defaults
-to `cypress.json`.
+You can specify a path to a file where
+[Cypress configuration](/guides/references/configuration) values are set.
 
 ```shell
 cypress open --config-file tests/cypress-config.json

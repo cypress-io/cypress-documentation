@@ -26,7 +26,7 @@ cy.readFile('menu.json')
 **<Icon name="angle-right"></Icon> filePath** **_(String)_**
 
 A path to a file within the project root (the directory that contains the
-default `cypress.json` configuration file).
+[Cypress configuration file](/guides/references/configuration)).
 
 **<Icon name="angle-right"></Icon> encoding** **_(String)_**
 
@@ -200,10 +200,10 @@ pass.</li></List>
 
 ## Command Log
 
-**_List the contents of the default `cypress.json` configuration file_**
+**_List the contents of your package.json file”_**
 
 ```javascript
-cy.readFile('cypress.json')
+cy.readFile('package.json')
 ```
 
 The command above will display in the Command Log as:

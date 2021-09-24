@@ -60,7 +60,7 @@ Set multiple configuration options with an object literal.
 
 ### No Arguments
 
-#### Get all configuration options from [configuration](/guides/references/configuration) file (`cypress.json` by default)
+#### Get all configuration options from the [Cypress configuration](/guides/references/configuration)
 
 :::cypress-config-example
 
@@ -82,7 +82,7 @@ Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, ..
 
 ### Name
 
-#### Return a single configuration option from [configuration](/guides/references/configuration) file (`cypress.json` by default)
+#### Return a single configuration option from the [Cypress configuration](/guides/references/configuration)
 
 :::cypress-config-example
 
@@ -100,7 +100,7 @@ Cypress.config('pageLoadTimeout') // => 60000
 
 ### Name and Value
 
-#### Change the values of configuration options from configuration file (`cypress.json` by default) from within your tests
+#### Change the values of configuration options from the [Cypress configuration](/guides/references/configuration) from within your tests
 
 <Alert type="warning">
 
@@ -130,7 +130,7 @@ Cypress.config('viewportWidth') // => 800
 
 ### Object
 
-#### Override multiple options from configuration file (`cypress.json` by default) by passing an object literal
+#### Override multiple options from the [Cypress configuration](/guides/references/configuration) by passing an object
 
 :::cypress-config-example
 
@@ -197,6 +197,6 @@ and by that time `Cypress.config` was public API.
 
 ## See also
 
-- [configuration](/guides/references/configuration)
+- [Cypress configuration](/guides/references/configuration)
 - The [Environment Variable](/guides/guides/environment-variables) guide
 - [Test Configuration](/guides/references/configuration#Test-Configuration)
