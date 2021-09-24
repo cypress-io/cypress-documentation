@@ -3,7 +3,7 @@ function processNode(node, { error }) {
   const { attributes } = node
   const noComment = 'noComment' in attributes
   const { configProp = 'e2e' } = attributes
-  
+
   if (
     children.length < 1 ||
     children.length > 2 ||
@@ -15,7 +15,9 @@ function processNode(node, { error }) {
   let header
   let functionBody
   let testingType = configProp
-  let configComment = noComment ? '' : `// setupNodeEvents can be defined in either the e2e or component
+  let configComment = noComment
+    ? ''
+    : `// setupNodeEvents can be defined in either the e2e or component
   // configuration
   `
 
