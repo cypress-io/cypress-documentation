@@ -9,6 +9,8 @@ const externalLinks = require('remark-external-links')
 const remarkFootnotes = require('remark-footnotes')
 const gfm = require('remark-gfm')
 
+const isDev = process.env.NODE_ENV === 'development'
+
 const processor = unified()
   .use(markdown)
   .use(remark2rehype)
@@ -19,12 +21,24 @@ const processor = unified()
   .use(remarkFootnotes)
   .use(gfm)
 
+function addDirectives() {
+  addDirective('./directives/include')
+  addDirective('./directives/cypress-config-example')
+}
+
 const directivesByType = {}
 
-addDirective(require('./directives/include'))
-addDirective(require('./directives/cypress-config-example'))
+// This allows updating a directive file while developing in "yarn start"
+// without needing to restart the server. Note that after the directive
+// file is saved, the page you're viewing will also need to be re-saved
+// to force Nuxt to update its cache.
+function addDirective(filePath) {
+  if (isDev) {
+    delete require.cache[require.resolve(filePath)]
+  }
 
-function addDirective({ type, name, processNode }) {
+  const { type, name, processNode } = require(filePath)
+
   if (!directivesByType[type]) {
     directivesByType[type] = {}
   }
@@ -32,9 +46,17 @@ function addDirective({ type, name, processNode }) {
   directivesByType[type][name] = processNode
 }
 
+if (!isDev) {
+  addDirectives()
+}
+
 module.exports = function directiveAttacher() {
   /* eslint-disable no-console */
   return function transform(tree, file) {
+    if (isDev) {
+      addDirectives()
+    }
+
     function processNode(node, index, parent) {
       const { type, name } = node
 
