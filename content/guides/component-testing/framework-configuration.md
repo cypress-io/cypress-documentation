@@ -39,7 +39,7 @@ Create React App. We can do this easily using the `react-scripts` plugin
 provided by Cypress. Place the following in `cypress/plugins/index.js`, creating
 the relevant directories.
 
-:::cypress-plugin-example
+:::cypress-plugin-example{configProp=component noComment}
 
 ```js
 const injectDevServer = require('@cypress/react/plugins/react-scripts')
@@ -115,7 +115,7 @@ Next configure the dev-server to use the same Webpack configuration used by Vue
 CLI. Place the following in `cypress/plugins/index.js`, creating the relevant
 directories.
 
-:::cypress-plugin-example
+:::cypress-plugin-example{configProp=component noComment}
 
 ```js
 const { startDevServer } = require('@cypress/webpack-dev-server')
@@ -219,7 +219,7 @@ Next configure the dev-server using the Next.js adapter shipped with
 `@cypress/react` by adding the following code to `cypress/plugins/index.js`,
 creating the relevant directories:
 
-:::cypress-plugin-example
+:::cypress-plugin-example{configProp=component noComment}
 
 ```js
 const injectDevServer = require('@cypress/react/plugins/next')
@@ -321,7 +321,7 @@ Next configure the dev-server to use the same Webpack configuration used by
 Nuxt. Place the following in `cypress/plugins/index.js`, creating the relevant
 directories.
 
-:::cypress-plugin-example
+:::cypress-plugin-example{configProp=component noComment}
 
 ```js
 const { startDevServer } = require('@cypress/webpack-dev-server')
@@ -457,7 +457,7 @@ and a Vue project
 Inside of `cypress/plugins/index.js`, configure Cypress to use the Vite dev
 server:
 
-:::cypress-plugin-example
+:::cypress-plugin-example{configProp=component noComment}
 
 ```js
 const path = require('path')

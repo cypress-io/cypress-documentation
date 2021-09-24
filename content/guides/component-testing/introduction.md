@@ -184,7 +184,7 @@ example, if you are using Create React App, you will need to use the
 
 ### React (using CRA)
 
-:::cypress-plugin-example
+:::cypress-plugin-example{configProp=component noComment}
 
 ```js
 if (config.testingType === 'component') {
@@ -198,7 +198,7 @@ return config
 
 ### Vue (using vue-cli)
 
-:::cypress-plugin-example
+:::cypress-plugin-example{configProp=component noComment}
 
 ```js
 if (config.testingType === 'component') {
@@ -217,7 +217,7 @@ if (config.testingType === 'component') {
 
 ### Generic Webpack
 
-:::cypress-plugin-example
+:::cypress-plugin-example{configProp=component noComment}
 
 ```js
 if (config.testingType === 'component') {
