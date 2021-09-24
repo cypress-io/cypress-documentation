@@ -403,8 +403,12 @@ Still here? That's cool, let's disable web security!
 
 #### Set `chromeWebSecurity` to `false` in the [Cypress configuration](/guides/references/configuration)
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "chromeWebSecurity": false
+  chromeWebSecurity: false
 }
 ```
+
+:::

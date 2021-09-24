@@ -272,11 +272,15 @@ group of tests, disable the `baseUrl` using
 [per-test configuration](/guides/references/configuration#Test-Configuration).
 Imagine this Cypress configuration:
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "baseUrl": "https://example.cypress.io"
+  baseUrl: 'https://example.cypress.io'
 }
 ```
+
+:::
 
 The first test visits the `baseUrl`, while the second test visits the local
 file.
@@ -304,11 +308,15 @@ Configure `baseUrl` in the your
 [Cypress configuration](/guides/references/configuration) to prevent repeating
 yourself in every `cy.visit()` command.
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "baseUrl": "http://localhost:3000/#/"
+  baseUrl: 'http://localhost:3000/#/'
 }
 ```
+
+:::
 
 ```javascript
 cy.visit('dashboard') // Visits http://localhost:3000/#/dashboard

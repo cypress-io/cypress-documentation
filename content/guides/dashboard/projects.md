@@ -99,11 +99,15 @@ your project and automatically insert it into your Cypress configuration file.
 
 #### The `projectId` is a 6 character string in your Cypress configuration
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "projectId": "a7bq2k"
+  projectId: 'a7bq2k'
 }
 ```
+
+:::
 
 This helps us uniquely identify your project. If you manually alter this,
 **Cypress will no longer be able to identify your project or find the recorded

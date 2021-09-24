@@ -937,11 +937,15 @@ load the main window in the `baseUrl` you specified as soon as your tests start.
 
 ### Cypress configuration file
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "baseUrl": "http://localhost:8484"
+  baseUrl: 'http://localhost:8484'
 }
 ```
+
+:::
 
 ### With `baseUrl` set, Cypress loads main window in `baseUrl`
 

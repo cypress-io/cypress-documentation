@@ -62,11 +62,15 @@ Set multiple configuration options with an object literal.
 
 #### Get all configuration options from the [Cypress configuration](/guides/references/configuration)
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "defaultCommandTimeout": 10000
+  defaultCommandTimeout: 10000
 }
 ```
+
+:::
 
 <!-- textlint-disable -->
 
@@ -80,11 +84,15 @@ Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, ..
 
 #### Return a single configuration option from the [Cypress configuration](/guides/references/configuration)
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "pageLoadTimeout": 60000
+  pageLoadTimeout: 60000
 }
 ```
+
+:::
 
 ```javascript
 Cypress.config('pageLoadTimeout') // => 60000
@@ -103,12 +111,16 @@ in effect for the remainder of the tests _in the same spec file._
 
 </Alert>
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "viewportWidth": 1280,
-  "viewportHeight": 720
+  viewportWidth: 1280,
+  viewportHeight: 720
 }
 ```
+
+:::
 
 ```javascript
 Cypress.config('viewportWidth', 800)
@@ -120,12 +132,16 @@ Cypress.config('viewportWidth') // => 800
 
 #### Override multiple options from the [Cypress configuration](/guides/references/configuration) by passing an object
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "defaultCommandTimeout": 4000,
-  "pageLoadTimeout": 30000
+  defaultCommandTimeout: 4000,
+  pageLoadTimeout: 30000
 }
 ```
+
+:::
 
 ```javascript
 Cypress.config({

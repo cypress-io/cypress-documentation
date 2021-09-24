@@ -33,11 +33,15 @@ configuration.
 
 </Alert>
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "experimentalStudio": true
+  experimentalStudio: true
 }
 ```
+
+:::
 
 The Cypress <Icon name="github"></Icon>
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) is

@@ -22,6 +22,7 @@ const processor = unified()
 const directivesByType = {}
 
 addDirective(require('./directives/include'))
+addDirective(require('./directives/cypress-config-example'))
 
 function addDirective({ type, name, processNode }) {
   if (!directivesByType[type]) {
