@@ -9,6 +9,7 @@
     "/guides/dashboard/introduction": "Dashboard",
     "/guides/migrating-to-cypress/protractor": "Migrating from Protractor to Cypress",
     "/guides/references/assertions": "Assertions",
+    "/guides/references/legacy-configuration": "Configuration (Legacy)",
     "/api/utilities/_": "Cypress._",
     "/api/utilities/$": "Cypress.$",
     "/api/utilities/minimatch": "Cypress.minimatch",
