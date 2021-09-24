@@ -626,11 +626,15 @@ Cypress and typically is found in your
 [configuration file (`cypress.json` by default)](/guides/references/configuration)
 file.
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "projectId": "a7bq2k"
+  projectId: 'a7bq2k'
 }
 ```
+
+:::
 
 For further detail see the
 [Identification](/guides/dashboard/projects#Identification) section of the

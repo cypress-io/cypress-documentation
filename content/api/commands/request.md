@@ -43,12 +43,15 @@ cy.request('users/1.json') //  url is  http://localhost:8080/users/1.json
    configured as the `baseUrl` property inside of of your
    [configuration file](/guides/references/configuration).
 
-```json
-// cypress.json
+:::cypress-config-example
+
+```js
 {
-  "baseUrl": "http://localhost:1234"
+  baseUrl: 'http://localhost:1234'
 }
 ```
+
+:::
 
 ```javascript
 cy.request('seed/admin') // url is http://localhost:1234/seed/admin

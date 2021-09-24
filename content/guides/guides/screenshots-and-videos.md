@@ -85,22 +85,30 @@ make the encoding a little bit faster. Here are some common scenarios:
 
 **Change compression value**
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "videoCompression": 15
+  videoCompression: 15
 }
 ```
+
+:::
 
 A lower `videoCompression` value will spend less time compressing and result in
 a bigger video file size.
 
 **Disable compression**
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "videoCompression": false
+  videoCompression: false
 }
 ```
+
+:::
 
 The compression step will be skipped completely, so the video will be large, but
 the processing should be faster.
