@@ -493,7 +493,6 @@ export default appAuth0
 ## Auth0 Rate Limiting Logins
 
 Be aware of the rate limit statement in the Auth0 documentation:
-
 [Auth0 Rate Limit](https://auth0.com/docs/connections/database/rate-limits) -
 "If a user attempts to login 20 times per minute as the same user from the same
 location, regardless of having the correct credentials, the rate limit will come
@@ -503,57 +502,18 @@ This limit can be reached as the size of a test suite grows along with enabling
 [parallelized runs](https://on.cypress.io/parallelization) to speed up test run
 duration.
 
-If you run into this rate limit, a programmatic approach can be added to the
-`loginByAuth0` command to clear a blocked IP prior to the test run.
+There's nothing you can do to remove this limit once it has been imposed.
 
-Next you'll need to obtain a
-[API token](https://auth0.com/docs/api/management/v2/tokens) to interact with
-the [Auth0 Management API](https://auth0.com/docs/api/management/v2). This token
-is a JSON Web Token (JWT) and it contains specific granted permissions for the
-API.
+You need to wait until you are not rate-limited.
 
-Add this token as environment variable `AUTH0_MGMT_API_TOKEN` to our
-[Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app)
-`.env` with your API token.
+In general, you can avoid being rate limited by abiding by Auth0s
+[rate limit policy](https://auth0.com/docs/support/policies/rate-limit-policy).
 
-```jsx
-// .env
-// ... additional keys
-AUTH0_MGMT_API_TOKEN = 'YOUR-MANAGEMENT-API-TOKEN'
-```
+Auth0 sends HTTP response headers regarding the maximum number of requests
+available, the number of remaining requests and a
+[timestamp](https://en.wikipedia.org/wiki/Unix_time) of when the rate limit will
+reset.
 
-With this token in place, we can add interaction with the
-[Auth0 Anomaly remove the blocked IP address endpoint](https://auth0.com/docs/api/management/v2#!/Anomaly/delete_ips_by_id)
-to our `loginByAuth0Api` command. This will send a delete request to
-[Auth0 Management API](https://auth0.com/docs/api/management/v2) anomaly
-endpoint to unblock an IP that may become blocked during the test run.
-
-<Alert type="info">
-
-<strong class="alert-header">Tip</strong>
-
-[icanhazip.com](http://icanhazip.com/) is a free, hosted service to find a
-system's current external IP address.
-
-</Alert>
-
-```jsx
-Cypress.Commands.add('loginByAuth0Api', (username, password) => {
-  // Useful when rate limited by Auth0
-  cy.exec('curl -4 icanhazip.com')
-    .its('stdout')
-    .then((ip) => {
-      cy.request({
-        method: 'DELETE',
-        url: `https://${Cypress.env(
-          'auth0_domain'
-        )}/api/v2/anomaly/blocks/ips/${ip}`,
-        auth: {
-          bearer: Cypress.env('auth0_mgmt_api_token'),
-        },
-      })
-    })
-
-  // ... remaining loginByAuth0Api command
-})
-```
+You can learn more about this
+[here](https://auth0.com/docs/support/policies/rate-limit-policy#review-http-response-headers)
+in their official documentation.
