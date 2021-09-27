@@ -908,8 +908,7 @@ We have
 <Alert type="success">
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Set a
-`baseUrl` in your
-[configuration file (`cypress.json` by default)](/guides/references/configuration).
+`baseUrl` in your [Cypress configuration](/guides/references/configuration).
 
 </Alert>
 
@@ -936,13 +935,17 @@ can result in a 'flash' or 'reload' when your tests first start.
 By setting the `baseUrl`, you can avoid this reload altogether. Cypress will
 load the main window in the `baseUrl` you specified as soon as your tests start.
 
-### Configuration file (`cypress.json` by default)
+### Cypress configuration file
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "baseUrl": "http://localhost:8484"
+  baseUrl: 'http://localhost:8484'
 }
 ```
+
+:::
 
 ### With `baseUrl` set, Cypress loads main window in `baseUrl`
 

@@ -27,8 +27,9 @@ taken during `cypress open`.
 
 Capturing of screenshots when a test fails can be turned off entirely by setting
 [`screenshotOnRunFailure`](/guides/references/configuration#Screenshots) to
-`false` from within your [configuration](/guides/references/configuration) or by
-setting `screenshotOnRunFailure` to `false` in the
+`false` from within the
+[Cypress configuration](/guides/references/configuration) or by setting
+`screenshotOnRunFailure` to `false` in the
 [Cypress.Screenshot.defaults()](/api/cypress-api/screenshot-api).
 
 Screenshots are stored in the
@@ -85,22 +86,30 @@ make the encoding a little bit faster. Here are some common scenarios:
 
 **Change compression value**
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "videoCompression": 15
+  videoCompression: 15
 }
 ```
+
+:::
 
 A lower `videoCompression` value will spend less time compressing and result in
 a bigger video file size.
 
 **Disable compression**
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "videoCompression": false
+  videoCompression: false
 }
 ```
+
+:::
 
 The compression step will be skipped completely, so the video will be large, but
 the processing should be faster.

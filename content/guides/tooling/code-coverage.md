@@ -609,20 +609,24 @@ if (global.__coverage__) {
 ```
 
 In order for the `@cypress/code-coverage` plugin to know that it should request
-the back end coverage, add the new endpoint to the `cypress.json` environment
-settings under `env.codeCoverage.url` key. For example, if the application back
-end is running at port 3000 and we are using the default "GET /**coverage**"
-endpoint, set the following:
+the back end coverage, add the new endpoint to the Cypress configuration
+environment settings under `env.codeCoverage.url` key. For example, if the
+application back end is running at port 3000 and we are using the default "GET
+/**coverage**" endpoint, set the following:
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "env": {
-    "codeCoverage": {
-      "url": "http://localhost:3000/__coverage__"
+  env: {
+    codeCoverage: {
+      url: 'http://localhost:3000/__coverage__'
     }
   }
 }
 ```
+
+:::
 
 From now on, the front end code coverage collected during end-to-end tests will
 be merged with the code coverage from the instrumented back end code and saved

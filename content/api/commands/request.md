@@ -43,12 +43,15 @@ cy.request('users/1.json') //  url is  http://localhost:8080/users/1.json
    configured as the `baseUrl` property inside of of your
    [configuration file](/guides/references/configuration).
 
-```json
-// cypress.json
+:::cypress-config-example
+
+```js
 {
-  "baseUrl": "http://localhost:1234"
+  baseUrl: 'http://localhost:1234'
 }
 ```
+
+:::
 
 ```javascript
 cy.request('seed/admin') // url is http://localhost:1234/seed/admin
@@ -118,7 +121,7 @@ Pass in an options object to change the default behavior of `cy.request()`.
 | `timeout`                  | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.request()` to resolve before [timing out](#Timeouts)                                                                                                                                |
 
 You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout`
-globally in [configuration](/guides/references/configuration).
+globally in the [Cypress configuration](/guides/references/configuration).
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 

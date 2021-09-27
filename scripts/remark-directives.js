@@ -23,6 +23,7 @@ const directivesByType = {}
 
 addDirective(require('./directives/include'))
 addDirective(require('./directives/cypress-plugin-example'))
+addDirective(require('./directives/cypress-config-example'))
 
 function addDirective({ type, name, processNode }) {
   if (!directivesByType[type]) {

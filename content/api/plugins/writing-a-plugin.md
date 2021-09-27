@@ -96,9 +96,11 @@ The `config` object also includes the following extra values that are not part
 of the standard configuration. **These values are read only and cannot be
 modified from the plugins file.**
 
-- `configFile`: The absolute path to the config file. By default, this is
-  `<projectRoot>/cypress.json`, but may be a custom path or `false` if using the
-  [`--config-file` flag](/guides/guides/command-line#cypress-open-config-file-lt-config-file-gt).
+- `configFile`: The absolute path to the
+  [Cypress configuration file](/guides/references/configuration). See the
+  [--config-file](guides/guides/command-line#cypress-open) and
+  [configFile](guides/guides/module-api) docs for more information on this
+  value.
 - `projectRoot`: The absolute path to the root of the project (e.g.
   `/Users/me/dev/my-project`)
 - `version`: The version number of Cypress. This can be used to handle breaking

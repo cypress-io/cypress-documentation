@@ -1,11 +1,26 @@
 ---
-title: Configuration
+title: Configuration (Legacy)
 ---
 
-## Cypress configuration file
+<Alert type="warning">
 
-The first time you open Cypress Test Runner, it creates the Cypress
-configuration file. This file is used to store any configuration values you
+<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
+Deprecated</strong>
+
+Configuring Cypress via `cypress.json` is deprecated as of Cypress CFG_VERSION.
+We recommend that you update your configuration. Please see the
+[new configuration guide](/guides/references/configuration) and the
+[migration guide](/guides/references/migration-guide) for more information on
+how to update your configuration.
+
+Support for `cypress.json` will be removed in a future version of Cypress.
+
+</Alert>
+
+## cypress.json
+
+The first time you open Cypress Test Runner, it creates the `cypress.json`
+configuration file. This JSON file is used to store any configuration values you
 supply. If you
 [configure your tests to record](/guides/dashboard/projects#Setup) the results
 to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction) the
@@ -221,7 +236,8 @@ You can override configuration for either the E2E or
 
 #### Examples
 
-Component Testing specific viewports in the Cypress configuration:
+Component Testing specific viewports in configuration file (`cypress.json` by
+default):
 
 ```json
 {
@@ -234,7 +250,7 @@ Component Testing specific viewports in the Cypress configuration:
 }
 ```
 
-E2E specific timeouts in the Cypress configuration:
+E2E specific timeouts in configuration file (`cypress.json` by default):
 
 ```json
 {
@@ -246,6 +262,22 @@ E2E specific timeouts in the Cypress configuration:
 ```
 
 ### Plugins
+
+<Alert type="warning">
+
+<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
+Deprecated</strong>
+
+Configuring plugins via `cypress/plugins/index.js` is deprecated as of Cypress
+CFG_VERSION. We recommend that you update your configuration. Please see the
+[plugins guide](/guides/tooling/plugins-guide) and the
+[migration guide](/guides/references/migration-guide) for more information on
+how to update your configuration.
+
+Support for `cypress/plugins/index.js` will be removed in a future version of
+Cypress.
+
+</Alert>
 
 The Cypress plugins file runs in Node environment before the browser running a
 spec file launches, giving you the most flexibility to set the configuration
@@ -288,7 +320,7 @@ working locally. This gives you the ability to change configuration options
 without modifying any code or build scripts.
 
 By default, any environment variable that matches a corresponding configuration
-key will override the Cypress configuration file value.
+key will override the configuration file (`cypress.json` by default) value.
 
 ```shell
 export CYPRESS_VIEWPORT_WIDTH=800
@@ -345,8 +377,9 @@ Cypress.config('pageLoadTimeout') // => 100000
 
 ### Test Configuration
 
-To apply specific Cypress configuration values to a suite or test, pass a
-configuration object to the test or suite function as the second argument.
+To apply specific Cypress [configuration](/guides/references/configuration)
+values to a suite or test, pass a configuration object to the test or suite
+function as the second argument.
 
 The configuration values passed in will only take effect during the suite or
 test where they are set. The values will then reset to the previous default
@@ -435,7 +468,7 @@ different values came from. Each set value is highlighted to show where the
 value has been set via the following ways:
 
 - Default value
-- [Cypress configuration file](/guides/references/configuration)
+- The [configuration file](/guides/references/configuration)
 - The
   [Cypress environment file](/guides/guides/environment-variables#Option-2-cypress-env-json)
 - System
@@ -725,7 +758,7 @@ DEBUG=cypress:cli,cypress:server:specs
   [Cypress.env()](/api/cypress-api/env)
 - [Environment variables](/guides/guides/environment-variables)
 - [Environment Variables recipe](/examples/examples/recipes#Fundamentals)
-- [Extending the Cypress Configuration File](https://www.cypress.io/blog/2020/06/18/extending-the-cypress-config-file/)
+- [Extending the Cypress Config File](https://www.cypress.io/blog/2020/06/18/extending-the-cypress-config-file/)
   blog post and
   [@bahmutov/cypress-extends](https://github.com/bahmutov/cypress-extends)
   package.

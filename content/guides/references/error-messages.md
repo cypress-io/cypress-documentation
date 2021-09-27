@@ -307,16 +307,20 @@ cy.get('#modal button').click({ waitForAnimations: false })
 ```
 
 You can globally disable animation error checking, or increase the threshold by
-modifying the [configuration](/guides/references/configuration).
+modifying the [Cypress configuration](/guides/references/configuration).
 
-#### Configuration file (`cypress.json` by default)
+#### Cypress configuration file
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "waitForAnimations": false,
-  "animationDistanceThreshold": 50
+  waitForAnimations: false,
+  animationDistanceThreshold: 50
 }
 ```
+
+:::
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> The test has finished but Cypress still has commands in its queue
 
@@ -770,16 +774,20 @@ origin-policy, Cypress is unable to communicate with it, and thus fails.
 
 If you find yourself stuck and can't work around these issues you can set
 `chromeWebSecurity` to `false` in your
-[configuration file (`cypress.json` by default)](/guides/references/configuration)
-when running in Chrome family browsers (this setting will not work in other
-browsers). Before doing so you should really understand and
+[Cypress configuration](/guides/references/configuration) when running in Chrome
+family browsers (this setting will not work in other browsers). Before doing so
+you should really understand and
 [read about the reasoning here](/guides/guides/web-security).
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "chromeWebSecurity": false
+  chromeWebSecurity: false
 }
 ```
+
+:::
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> Cypress detected that an uncaught error was thrown from a cross-origin script.
 

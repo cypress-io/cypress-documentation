@@ -414,7 +414,7 @@ cy.task('queryDatabase', { dbName, query })
 ```js
 const mysql = require('mysql')
 // the connection strings for different databases could
-// come from a config file, or from environment variables
+// come from the Cypress configuration or from environment variables
 const connections = {
   stagingA: {
     host: 'staging.my.co',
@@ -519,10 +519,10 @@ not [retry](/guides/core-concepts/retry-ability).</li></List>
 
 ## Command Log
 
-#### List the contents of the default `cypress.json` configuration file
+#### List the contents of your package.json file
 
 ```javascript
-cy.task('readJson', 'cypress.json')
+cy.task('readJson', 'package.json')
 ```
 
 The command above will display in the Command Log as:
