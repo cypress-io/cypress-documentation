@@ -152,19 +152,30 @@ instructions.
 
 ### Types for plugins
 
-You can utilize Cypress's type declarations in your
-[plugins file](/guides/tooling/plugins-guide) by annotating it like the
-following:
+You can utilize Cypress's type declarations by annotating the
+[Cypress configuration](/guides/references/configuration) like the following:
+
+#### cypress.config.ts
 
 ```javascript
-// cypress/plugins/index.ts
-
 /// <reference types="cypress" />
+
+import { defineConfig } from 'cypress'
 
 /**
  * @type {Cypress.PluginConfig}
  */
-module.exports = (on, config) => {}
+export default defineConfig({
+  // setupNodeEvents can be defined in either the e2e or component
+  // configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      {
+        baseUrl: 'http://localhost:1234'
+      }
+    })
+  }
+})
 ```
 
 ### Clashing types with Jest
