@@ -30,7 +30,7 @@ cy.location().select() // Errors, 'location' does not yield <select> element
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> value** **_(String)_**
+**<Icon name="angle-right"></Icon> value** **_(String, Number)_**
 
 The `value`, `index`, or text content of the `<option>` to be selected.
 
