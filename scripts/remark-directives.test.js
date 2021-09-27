@@ -66,7 +66,8 @@ describe('::include', () => {
 
     expect(logger.error).toHaveBeenCalledWith(
       '[::include]',
-      expect.stringMatching(/"file" attribute/)
+      expect.stringMatching(/"file" attribute/),
+      expect.anything()
     )
 
     expect(result).toBe('<h1>aaa</h1>\n<h2>bbb</h2>')
@@ -83,7 +84,8 @@ describe('::include', () => {
         new Error(
           `ENOENT: no such file or directory, open '${CONTENT_PATH}/invalid'`
         )
-      )
+      ),
+      expect.anything()
     )
 
     expect(logger.error).toHaveBeenCalled()

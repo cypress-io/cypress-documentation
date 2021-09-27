@@ -169,4 +169,29 @@ export default {
       brands: ['faGithub', 'faTwitter', 'faYoutube'],
     },
   },
+  hooks: {
+    // Override some default nuxt behavior to allow remark plugins to access
+    // the path of the file being parsed, for better error logging.
+    'content:file:beforeInsert'(document, database) {
+      if (!database.markdown._generateBody) {
+        let path
+
+        // https://github.com/nuxt/content/blob/main/packages/content/parsers/markdown/index.js
+        database.extendParser = {
+          ...database.extendParser,
+          '.md'(data, obj) {
+            path = obj.path
+
+            return database.markdown.toJSON(data)
+          },
+        }
+
+        // https://github.com/nuxt/content/blob/main/packages/content/parsers/markdown/index.js
+        database.markdown._generateBody = database.markdown.generateBody
+        database.markdown.generateBody = (content, data) => {
+          return database.markdown._generateBody(content, { ...data, path })
+        }
+      }
+    },
+  },
 }
