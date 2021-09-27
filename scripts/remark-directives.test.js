@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 const fs = require('fs')
 const path = require('path')
 const unified = require('unified')
@@ -9,8 +7,16 @@ const remarkRehype = require('remark-rehype')
 const rehypeStringify = require('rehype-stringify')
 
 const directives = require('./remark-directives')
+const { logger } = directives
 
 jest.mock('fs')
+jest.mock('consola', () => {
+  const consola = jest.requireActual('consola')
+
+  consola.pauseLogs()
+
+  return consola
+})
 
 const CONTENT_PATH = path.join(__dirname, '../content')
 
@@ -28,9 +34,7 @@ const processText = (text) => {
 }
 
 beforeEach(() => {
-  jest.resetAllMocks()
-  jest.spyOn(console, 'error')
-  jest.spyOn(console, 'warn')
+  logger.mockTypes(() => jest.fn())
 })
 
 describe('::include', () => {
@@ -60,8 +64,8 @@ describe('::include', () => {
   it('should log an error and remove directive if file attribute is omitted', async () => {
     const result = await processText('# aaa\n::include\n## bbb')
 
-    expect(console.error).toHaveBeenCalledWith(
-      '[include directive]',
+    expect(logger.error).toHaveBeenCalledWith(
+      '[::include]',
       expect.stringMatching(/"file" attribute/)
     )
 
@@ -72,8 +76,8 @@ describe('::include', () => {
     fs.readFileSync.mockImplementation(jest.requireActual('fs').readFileSync)
     const result = await processText('# aaa\n::include{file=invalid}\n## bbb')
 
-    expect(console.error).toHaveBeenCalledWith(
-      '[include directive]',
+    expect(logger.error).toHaveBeenCalledWith(
+      '[::include]',
       expect.stringMatching(/Failed to read file: invalid/),
       expect.objectContaining(
         new Error(
@@ -82,7 +86,7 @@ describe('::include', () => {
       )
     )
 
-    expect(console.error).toHaveBeenCalled()
+    expect(logger.error).toHaveBeenCalled()
     expect(result).toBe('<h1>aaa</h1>\n<h2>bbb</h2>')
   })
 })
