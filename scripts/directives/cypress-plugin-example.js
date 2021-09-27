@@ -9,7 +9,10 @@ function processNode(node, { error }) {
     children.length > 2 ||
     !children.every(({ type }) => type === 'code')
   ) {
-    return error(`Expected 1 or 2 code blocks inside directive`)
+    return error(
+      `Expected 1 or 2 code blocks inside directive, instead got`,
+      children.map((o) => o.type)
+    )
   }
 
   let header
