@@ -743,9 +743,9 @@ beforeEach(function () {
 > [cypress/tests/ui/auth.spec.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui/auth.spec.ts)_
 
 The `db:seed` task is defined within the
-[plugins file](/guides/core-concepts/writing-and-organizing-tests#Plugin-files)
-of the project, and in this case sends a request to a dedicated back end API of
-the app to appropriately re-seed the database.
+[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function of the
+project, and in this case sends a request to a dedicated back end API of the app
+to appropriately re-seed the database.
 
 ```ts
 // cypress/plugins/index.ts
