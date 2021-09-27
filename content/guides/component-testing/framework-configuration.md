@@ -51,6 +51,8 @@ injectDevServer(on, config)
 return config
 ```
 
+:::
+
 Lastly, tell Cypress where to find your test in the Cypress configuration. In
 this example all the tests are in `src` and named `test.js`:
 
@@ -229,6 +231,8 @@ injectDevServer(on, config)
 return config
 ```
 
+:::
+
 Lastly, tell Cypress where to find your test in the Cypress configuration. In
 this example all the tests are in `cypress/pages`:
 
@@ -333,6 +337,8 @@ on('dev-server:start', async (options) => {
   })
 })
 ```
+
+:::
 
 Lastly, tell Cypress where to find your test in the Cypress configuration. While
 it's possible to mount components in the `pages` directory, generally you will
@@ -468,6 +474,8 @@ on('dev-server:start', (options) => {
   })
 })
 ```
+
+:::
 
 Lastly, tell Cypress where to find your test in the Cypress configuration. In
 this example all the tests are in `src` and named `spec.jsx`:
