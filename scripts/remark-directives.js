@@ -72,11 +72,14 @@ const fileCache = {}
 
 module.exports = function directiveAttacher() {
   return function transform(tree, file) {
+    // This value comes from the content:file:beforeInsert hook in nuxt.config.js
+    const filePath = file.data.path || '(unknown)'
+
     // Ensure directives aren't reloaded in dev mode until files have been
     // processed at least once, to reduce startup time and console spam.
     // If you don't see a directive update, try reloading the .md file.
-    if (!fileCache[file]) {
-      fileCache[file] = true
+    if (!fileCache[filePath]) {
+      fileCache[filePath] = true
     } else if (isDev) {
       loadDirectives()
     }
@@ -89,7 +92,7 @@ module.exports = function directiveAttacher() {
       if (fn) {
         const prefix = `[${getDisplay(type, name)}]`
         const error = (...args) => {
-          logger.error(prefix, ...args)
+          logger.error(prefix, ...args, `\n\nFile being parsed: ${filePath}`)
         }
         const warn = (...args) => {
           logger.warn(prefix, ...args)
