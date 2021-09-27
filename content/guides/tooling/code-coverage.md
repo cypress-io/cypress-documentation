@@ -302,17 +302,18 @@ Then add the code below to your
 import '@cypress/code-coverage/support'
 ```
 
-```js
-// cypress/plugins/index.js
-module.exports = (on, config) => {
-  require('@cypress/code-coverage/task')(on, config)
-  // include any other plugin code...
+:::cypress-plugin-example
 
-  // It's IMPORTANT to return the config object
-  // with any changed environment variables
-  return config
-}
+```js
+require('@cypress/code-coverage/task')(on, config)
+// include any other plugin code...
+
+// It's IMPORTANT to return the config object
+// with any changed environment variables
+return config
 ```
+
+:::
 
 When you run the Cypress tests now, you should see a few commands after the
 tests finish. We have highlighted these commands using a green rectangle below.
@@ -484,19 +485,20 @@ can use the
 again to do this by adding the code below to your
 [pluginsFile](/guides/references/configuration#Folders-Files).
 
-```javascript
-// cypress/plugins/index.js
-module.exports = (on, config) => {
-  require('@cypress/code-coverage/task')(on, config)
-  // tell Cypress to use .babelrc file
-  // and instrument the specs files
-  // only the extra application files will be instrumented
-  // not the spec files themselves
-  on('file:preprocessor', require('@cypress/code-coverage/use-babelrc'))
+:::cypress-plugin-example
 
-  return config
-}
+```javascript
+require('@cypress/code-coverage/task')(on, config)
+// tell Cypress to use .babelrc file
+// and instrument the specs files
+// only the extra application files will be instrumented
+// not the spec files themselves
+on('file:preprocessor', require('@cypress/code-coverage/use-babelrc'))
+
+return config
 ```
+
+:::
 
 For reference, the `.babelrc` file is shared between the example application and
 the spec files, thus Cypress tests are transpiled the same way the application

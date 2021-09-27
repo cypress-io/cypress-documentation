@@ -30,18 +30,19 @@ cy.task(event, arg, options)
 cy.task('log', 'This will be output to the terminal')
 ```
 
-```javascript
-// in plugins file
-module.exports = (on, config) => {
-  on('task', {
-    log(message) {
-      console.log(message)
+:::cypress-plugin-example
 
-      return null
-    },
-  })
-}
+```javascript
+on('task', {
+  log(message) {
+    console.log(message)
+
+    return null
+  },
+})
 ```
+
+:::
 
 The `task` plugin event handler can return a value or a promise. The command
 will fail if `undefined` is returned or if the promise is resolved with
@@ -73,19 +74,20 @@ If you need to pass multiple arguments, use an object
 cy.task('hello', { greeting: 'Hello', name: 'World' })
 ```
 
-```javascript
-// in plugins/index.js
-module.exports = (on, config) => {
-  on('task', {
-    // deconstruct the individual properties
-    hello({ greeting, name }) {
-      console.log('%s, %s', greeting, name)
+:::cypress-plugin-example
 
-      return null
-    },
-  })
-}
+```js
+on('task', {
+  // deconstruct the individual properties
+  hello({ greeting, name }) {
+    console.log('%s, %s', greeting, name)
+
+    return null
+  },
+})
 ```
+
+:::
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -123,22 +125,25 @@ need to read a file that might not exist, use `cy.task`.
 cy.task('readFileMaybe', 'my-file.txt').then((textOrNull) => { ... })
 ```
 
+:::cypress-plugin-example
+
 ```javascript
-// in plugins/index.js
 const fs = require('fs')
-
-module.exports = (on, config) => {
-  on('task', {
-    readFileMaybe(filename) {
-      if (fs.existsSync(filename)) {
-        return fs.readFileSync(filename, 'utf8')
-      }
-
-      return null
-    },
-  })
-}
 ```
+
+```js
+on('task', {
+  readFileMaybe(filename) {
+    if (fs.existsSync(filename)) {
+      return fs.readFileSync(filename, 'utf8')
+    }
+
+    return null
+  },
+})
+```
+
+:::
 
 ### Return number of files in the folder
 
@@ -147,26 +152,29 @@ module.exports = (on, config) => {
 cy.task('countFiles', 'cypress/downloads').then((count) => { ... })
 ```
 
+:::cypress-plugin-example
+
 ```javascript
-// in plugins/index.js
 const fs = require('fs')
-
-module.exports = (on, config) => {
-  on('task', {
-    countFiles(folderName) {
-      return new Promise((resolve, reject) => {
-        fs.readdir(folderName, (err, files) => {
-          if (err) {
-            return reject(err)
-          }
-
-          resolve(files.length)
-        })
-      })
-    },
-  })
-}
 ```
+
+```js
+on('task', {
+  countFiles(folderName) {
+    return new Promise((resolve, reject) => {
+      fs.readdir(folderName, (err, files) => {
+        if (err) {
+          return reject(err)
+        }
+
+        resolve(files.length)
+      })
+    })
+  },
+})
+```
+
+:::
 
 ### Seed a database
 
@@ -184,20 +192,23 @@ describe('e2e', () => {
 })
 ```
 
-```javascript
-// in plugins/index.js
+:::cypress-plugin-example
+
+```js
 // we require some code in our app that
 // is responsible for seeding our database
 const db = require('../../server/src/db')
-
-module.exports = (on, config) => {
-  on('task', {
-    'defaults:db': () => {
-      return db.seed('defaults')
-    },
-  })
-}
 ```
+
+```js
+on('task', {
+  'defaults:db': () => {
+    return db.seed('defaults')
+  },
+})
+```
+
+:::
 
 ### Return a Promise from an asynchronous task
 
@@ -206,19 +217,20 @@ module.exports = (on, config) => {
 cy.task('pause', 1000)
 ```
 
+:::cypress-plugin-example
+
 ```javascript
-// in plugins/index.js
-module.exports = (on, config) => {
-  on('task', {
-    pause(ms) {
-      return new Promise((resolve) => {
-        // tasks should not resolve with undefined
-        setTimeout(() => resolve(null), ms)
-      })
-    },
-  })
-}
+on('task', {
+  pause(ms) {
+    return new Promise((resolve) => {
+      // tasks should not resolve with undefined
+      setTimeout(() => resolve(null), ms)
+    })
+  },
+})
 ```
+
+:::
 
 ### Save a variable across non same-origin URL visits
 
@@ -253,21 +265,24 @@ describe('Href visit', () => {
 })
 ```
 
-```javascript
-// in plugins/index.js
-let href
+:::cypress-plugin-example
 
-module.exports = (on, config) => {
-  on('task', {
-    setHref: (val) => {
-      return (href = val)
-    },
-    getHref: () => {
-      return href
-    },
-  })
-}
+```js
+let href
 ```
+
+```js
+on('task', {
+  setHref: (val) => {
+    return (href = val)
+  },
+  getHref: () => {
+    return href
+  },
+})
+```
+
+:::
 
 ### Command options
 
@@ -306,8 +321,9 @@ are using
 [cypress-skip-and-only-ui](https://github.com/bahmutov/cypress-skip-and-only-ui)
 plugin and want to install your own task to read a file that might not exist:
 
-```javascript
-// in plugins/index.js file
+:::cypress-plugin-example
+
+```js
 const skipAndOnlyTask = require('cypress-skip-and-only-ui/task')
 const fs = require('fs')
 const myTask = {
@@ -319,12 +335,16 @@ const myTask = {
     return null
   },
 }
+```
 
+```js
 // register plugin's task
 on('task', skipAndOnlyTask)
 // and register my own task
 on('task', myTask)
 ```
+
+:::
 
 See [#2284](https://github.com/cypress-io/cypress/issues/2284) for
 implementation.
@@ -389,8 +409,9 @@ const query = 'SELECT * FROM users'
 cy.task('queryDatabase', { dbName, query })
 ```
 
-```javascript
-// in plugins/index.js
+:::cypress-plugin-example
+
+```js
 const mysql = require('mysql')
 // the connection strings for different databases could
 // come from the Cypress configuration or from environment variables
@@ -427,21 +448,24 @@ function queryDB(connectionInfo, query) {
     })
   })
 }
-module.exports = (on, config) => {
-  on('task', {
-    // destructure the argument into the individual fields
-    queryDatabase({ dbName, query }) {
-      const connectionInfo = connections[dbName]
-
-      if (!connectionInfo) {
-        throw new Error(`Do not have DB connection under name ${dbName}`)
-      }
-
-      return queryDB(connectionInfo, query)
-    },
-  })
-}
 ```
+
+```js
+on('task', {
+  // destructure the argument into the individual fields
+  queryDatabase({ dbName, query }) {
+    const connectionInfo = connections[dbName]
+
+    if (!connectionInfo) {
+      throw new Error(`Do not have DB connection under name ${dbName}`)
+    }
+
+    return queryDB(connectionInfo, query)
+  },
+})
+```
+
+:::
 
 ### Argument should be serializable
 
@@ -460,21 +484,22 @@ cy.task('date', new Date()).then((s) => {
 })
 ```
 
-```javascript
-// in plugins/index.js
-module.exports = (on, config) => {
-  on('task', {
-    date(s) {
-      // s is a string, so convert it to Date
-      const d = new Date(s)
+:::cypress-plugin-example
 
-      // do something with the date
-      // and return it back
-      return d
-    },
-  })
-}
+```javascript
+on('task', {
+  date(s) {
+    // s is a string, so convert it to Date
+    const d = new Date(s)
+
+    // do something with the date
+    // and return it back
+    return d
+  },
+})
 ```
+
+:::
 
 ## Rules
 

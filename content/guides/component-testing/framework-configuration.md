@@ -39,17 +39,19 @@ Create React App. We can do this easily using the `react-scripts` plugin
 provided by Cypress. Place the following in `cypress/plugins/index.js`, creating
 the relevant directories.
 
+:::cypress-plugin-example{configProp=component noComment}
+
 ```js
-// cypress/plugins/index.js
-
 const injectDevServer = require('@cypress/react/plugins/react-scripts')
-
-module.exports = (on, config) => {
-  injectDevServer(on, config)
-
-  return config
-}
 ```
+
+```js
+injectDevServer(on, config)
+
+return config
+```
+
+:::
 
 Lastly, tell Cypress where to find your test in the Cypress configuration. In
 this example all the tests are in `src` and named `test.js`:
@@ -113,21 +115,23 @@ Next configure the dev-server to use the same Webpack configuration used by Vue
 CLI. Place the following in `cypress/plugins/index.js`, creating the relevant
 directories.
 
-```js
-// cypress/plugins/index.js
+:::cypress-plugin-example{configProp=component noComment}
 
+```js
 const { startDevServer } = require('@cypress/webpack-dev-server')
 const webpackConfig = require('@vue/cli-service/webpack.config')
-
-module.exports = (on, config) => {
-  on('dev-server:start', (options) => {
-    return startDevServer({
-      options,
-      webpackConfig,
-    })
-  })
-}
 ```
+
+```js
+on('dev-server:start', (options) => {
+  return startDevServer({
+    options,
+    webpackConfig,
+  })
+})
+```
+
+:::
 
 <Alert type="warning">
 
@@ -215,15 +219,19 @@ Next configure the dev-server using the Next.js adapter shipped with
 `@cypress/react` by adding the following code to `cypress/plugins/index.js`,
 creating the relevant directories:
 
+:::cypress-plugin-example{configProp=component noComment}
+
 ```js
 const injectDevServer = require('@cypress/react/plugins/next')
-
-module.exports = (on, config) => {
-  injectDevServer(on, config)
-
-  return config
-}
 ```
+
+```js
+injectDevServer(on, config)
+
+return config
+```
+
+:::
 
 Lastly, tell Cypress where to find your test in the Cypress configuration. In
 this example all the tests are in `cypress/pages`:
@@ -313,22 +321,24 @@ Next configure the dev-server to use the same Webpack configuration used by
 Nuxt. Place the following in `cypress/plugins/index.js`, creating the relevant
 directories.
 
-```js
-// cypress/plugins/index.js
+:::cypress-plugin-example{configProp=component noComment}
 
+```js
 const { startDevServer } = require('@cypress/webpack-dev-server')
 const { getWebpackConfig } = require('nuxt')
-
-module.exports = (on, config) => {
-  on('dev-server:start', async (options) => {
-    const webpackConfig = await getWebpackConfig()
-    return startDevServer({
-      options,
-      webpackConfig,
-    })
-  })
-}
 ```
+
+```js
+on('dev-server:start', async (options) => {
+  const webpackConfig = await getWebpackConfig()
+  return startDevServer({
+    options,
+    webpackConfig,
+  })
+})
+```
+
+:::
 
 Lastly, tell Cypress where to find your test in the Cypress configuration. While
 it's possible to mount components in the `pages` directory, generally you will
@@ -447,23 +457,25 @@ and a Vue project
 Inside of `cypress/plugins/index.js`, configure Cypress to use the Vite dev
 server:
 
-```js
-// cypress/plugins/index.js
+:::cypress-plugin-example{configProp=component noComment}
 
+```js
 const path = require('path')
 const { startDevServer } = require('@cypress/vite-dev-server')
-
-module.exports = (on, config) => {
-  on('dev-server:start', (options) => {
-    return startDevServer({
-      options,
-      viteConfig: {
-        configFile: path.resolve(__dirname, '..', '..', 'vite.config.js'),
-      },
-    })
-  })
-}
 ```
+
+```js
+on('dev-server:start', (options) => {
+  return startDevServer({
+    options,
+    viteConfig: {
+      configFile: path.resolve(__dirname, '..', '..', 'vite.config.js'),
+    },
+  })
+})
+```
+
+:::
 
 Lastly, tell Cypress where to find your test in the Cypress configuration. In
 this example all the tests are in `src` and named `spec.jsx`:

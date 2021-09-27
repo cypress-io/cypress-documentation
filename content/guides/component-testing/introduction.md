@@ -182,63 +182,57 @@ Cypress plugins in our [plugins guide](/guides/tooling/plugins-guide). For
 example, if you are using Create React App, you will need to use the
 `react-scripts` plugin as shown below in your `cypress/plugins/index.js` file.
 
-<code-group>
-  <code-block label="React (using CRA)" active>
+### React (using CRA)
+
+:::cypress-plugin-example{configProp=component noComment}
 
 ```js
-// cypress/plugins/index.js
+if (config.testingType === 'component') {
+  require('@cypress/react/plugins/react-scripts')(on, config)
+}
 
-module.exports = (on, config) => {
-  if (config.testingType === 'component') {
-    require('@cypress/react/plugins/react-scripts')(on, config)
-  }
+return config
+```
 
-  return config
+:::
+
+### Vue (using vue-cli)
+
+:::cypress-plugin-example{configProp=component noComment}
+
+```js
+if (config.testingType === 'component') {
+  const { startDevServer } = require('@cypress/webpack-dev-server')
+
+  // Vue's Webpack configuration
+  const webpackConfig = require('@vue/cli-service/webpack.config.js')
+
+  on('dev-server:start', (options) =>
+    startDevServer({ options, webpackConfig })
+  )
 }
 ```
 
-  </code-block>
-  <code-block label="Vue (using vue-cli)">
+:::
+
+### Generic Webpack
+
+:::cypress-plugin-example{configProp=component noComment}
 
 ```js
-// cypress/plugins/index.js
+if (config.testingType === 'component') {
+  const { startDevServer } = require('@cypress/webpack-dev-server')
 
-module.exports = (on, config) => {
-  if (config.testingType === 'component') {
-    const { startDevServer } = require('@cypress/webpack-dev-server')
+  // Your project's Webpack configuration
+  const webpackConfig = require('../../webpack.config.js')
 
-    // Vue's Webpack configuration
-    const webpackConfig = require('@vue/cli-service/webpack.config.js')
-
-    on('dev-server:start', (options) =>
-      startDevServer({ options, webpackConfig })
-    )
-  }
+  on('dev-server:start', (options) =>
+    startDevServer({ options, webpackConfig })
+  )
 }
 ```
 
-  </code-block>
-  <code-block label="Generic Webpack">
-
-```js
-// cypress/plugins/index.js
-
-module.exports = (on, config) => {
-  if (config.testingType === 'component') {
-    const { startDevServer } = require('@cypress/webpack-dev-server')
-
-    // Your project's Webpack configuration
-    const webpackConfig = require('../../webpack.config.js')
-
-    on('dev-server:start', (options) =>
-      startDevServer({ options, webpackConfig })
-    )
-  }
-}
-```
-
-  </code-block>
-</code-group>
+:::
 
 Note we have a conditional check against `config.testingType`. This is useful if
 your project is already using existing plugins for the End-to-end runner, and

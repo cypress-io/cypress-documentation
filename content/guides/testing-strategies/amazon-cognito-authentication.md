@@ -136,25 +136,27 @@ First, we need to configure Cypress to use the
 the `aws-exports.js` supplied during the
 [AWS Amplify CLI](https://docs.amplify.aws/CLI) build process.
 
-```jsx
-// cypress/plugins/index.js
-// initial imports ...
+:::cypress-plugin-example
 
+```js
+// initial imports ...
 const awsConfig = require(path.join(__dirname, '../../aws-exports-es5.js'))
 
 dotenv.config()
-
-export default (on, config) => {
-  // ...
-  config.env.cognito_username = process.env.AWS_COGNITO_USERNAME
-  config.env.cognito_password = process.env.AWS_COGNITO_PASSWORD
-  config.env.awsConfig = awsConfig.default
-
-  // plugins code ...
-
-  return config
-}
 ```
+
+```js
+// ...
+config.env.cognito_username = process.env.AWS_COGNITO_USERNAME
+config.env.cognito_password = process.env.AWS_COGNITO_PASSWORD
+config.env.awsConfig = awsConfig.default
+
+// plugins code ...
+
+return config
+```
+
+:::
 
 ## Custom Command for Amazon Cognito Authentication
 

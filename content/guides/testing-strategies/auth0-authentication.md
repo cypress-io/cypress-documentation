@@ -91,27 +91,29 @@ To have access to test user credentials within our tests we need to configure
 Cypress to use the [Auth0](https://auth0.com) environment variables set in
 `.env` inside of the `cypress/plugins/index.js` file.
 
-```jsx
-// cypress/plugins/index.js
+:::cypress-plugin-example
+
+```js
 // initial imports ...
-
 dotenv.config()
-
-export default (on, config) => {
-  // ...
-  config.env.auth0_username = process.env.AUTH0_USERNAME
-  config.env.auth0_password = process.env.AUTH0_PASSWORD
-  config.env.auth0_domain = process.env.REACT_APP_AUTH0_DOMAIN
-  config.env.auth0_audience = process.env.REACT_APP_AUTH0_AUDIENCE
-  config.env.auth0_scope = process.env.REACT_APP_AUTH0_SCOPE
-  config.env.auth0_client_id = process.env.REACT_APP_AUTH0_CLIENTID
-  config.env.auth0_client_secret = process.env.AUTH0_CLIENT_SECRETD
-
-  // plugins code ...
-
-  return config
-}
 ```
+
+```js
+// ...
+config.env.auth0_username = process.env.AUTH0_USERNAME
+config.env.auth0_password = process.env.AUTH0_PASSWORD
+config.env.auth0_domain = process.env.REACT_APP_AUTH0_DOMAIN
+config.env.auth0_audience = process.env.REACT_APP_AUTH0_AUDIENCE
+config.env.auth0_scope = process.env.REACT_APP_AUTH0_SCOPE
+config.env.auth0_client_id = process.env.REACT_APP_AUTH0_CLIENTID
+config.env.auth0_client_secret = process.env.AUTH0_CLIENT_SECRETD
+
+// plugins code ...
+
+return config
+```
+
+:::
 
 ## Custom Command for Auth0 Authentication
 

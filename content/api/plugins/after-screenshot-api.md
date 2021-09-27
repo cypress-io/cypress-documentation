@@ -78,30 +78,33 @@ The properties will be merged into the screenshot details and passed to the
 If you move the location of the screenshot image, you'll want to specify the new
 `path` of the image.
 
+:::cypress-plugin-example
+
 ```js
-// cypress/plugins/index.js
 const fs = require('fs')
+```
 
-module.exports = (on, config) => {
-  on('after:screenshot', (details) => {
-    console.log(details) // print all details to terminal
+```js
+on('after:screenshot', (details) => {
+  console.log(details) // print all details to terminal
 
-    const newPath = '/new/path/to/screenshot.png'
+  const newPath = '/new/path/to/screenshot.png'
 
-    return new Promise((resolve, reject) => {
-      // fs.rename moves the file to the existing directory 'new/path/to'
-      // and renames the image to 'screenshot.png'
-      fs.rename(details.path, newPath, (err) => {
-        if (err) return reject(err)
+  return new Promise((resolve, reject) => {
+    // fs.rename moves the file to the existing directory 'new/path/to'
+    // and renames the image to 'screenshot.png'
+    fs.rename(details.path, newPath, (err) => {
+      if (err) return reject(err)
 
-        // because we renamed and moved the image, resolve with the new path
-        // so it is accurate in the test results
-        resolve({ path: newPath })
-      })
+      // because we renamed and moved the image, resolve with the new path
+      // so it is accurate in the test results
+      resolve({ path: newPath })
     })
   })
-}
+})
 ```
+
+:::
 
 ## See also
 
