@@ -11,7 +11,7 @@ const autolinkHeadings = require('remark-autolink-headings')
 const externalLinks = require('remark-external-links')
 const remarkFootnotes = require('remark-footnotes')
 const gfm = require('remark-gfm')
-const logger = require('consola').withScope('remark-directives')
+const logger = require('consola').withTag('remark-directives')
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -110,3 +110,6 @@ module.exports = function directiveAttacher() {
     visit(tree, processNode)
   }
 }
+
+// For testing
+module.exports.logger = logger
