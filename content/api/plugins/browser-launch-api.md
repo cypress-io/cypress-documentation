@@ -5,7 +5,7 @@ title: Browser Launch API
 Before Cypress launches a browser, it gives you the opportunity to modify the
 browser preferences, install extensions, add and remove command-line arguments,
 and modify other options from the
-[setupNodeEvents](guides/tooling/plugins-guide#Using-a-plugin) function.
+[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function.
 
 ## Syntax
 
@@ -57,7 +57,7 @@ following properties:
 
 ### Modify browser launch arguments, preferences, and extensions
 
-Using the [setupNodeEvents](guides/tooling/plugins-guide#Using-a-plugin)
+Using the [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin)
 function you can tap into the `before:browser:launch` event and modify how
 Cypress launches the browser (e.g. modify arguments, user preferences, and
 extensions).

@@ -237,7 +237,7 @@ at your disposal.
 
 How you choose to edit the configuration is up to you. You don't have to read
 off of the file system - you could store them all in memory inside of
-[setupNodeEvents](guides/tooling/plugins-guide#Using-a-plugin) if you wanted.
+[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) if you wanted.
 
 ### Runner Specific Plugins
 

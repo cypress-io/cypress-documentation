@@ -127,7 +127,7 @@ modified from `setupNodeEvents`.**
 
 ## Execution context
 
-[setupNodeEvents](guides/tooling/plugins-guide#Using-a-plugin) is invoked when
+[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) is invoked when
 Cypress opens a project.
 
 Cypress does this by spawning an independent `child_process` which then
@@ -199,8 +199,8 @@ console.log(process.cwd()) // /Users/janelane/Dev/my-project
 
 ## Error handling
 
-Cypress spawns [setupNodeEvents](guides/tooling/plugins-guide#Using-a-plugin) in
-its own child process so it is isolated away from the context that Cypress
+Cypress spawns [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin)
+in its own child process so it is isolated away from the context that Cypress
 itself runs in. That means you cannot accidentally modify or change Cypress's
 own execution in any way.
 
