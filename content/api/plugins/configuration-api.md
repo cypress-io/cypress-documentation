@@ -17,8 +17,8 @@ the rest of the operating system.
 
 </Alert>
 
-To modify configuration, you return a config object within this exported
-function.
+To modify configuration, you return a config object from `setupNodeEvents`
+within this exported function.
 
 :::cypress-plugin-example
 
@@ -38,9 +38,9 @@ return config
 
 :::
 
-Whenever you return an object from your `pluginFile`, Cypress will take this and
-"diff" it against the original configuration and automatically set the resolved
-values to point to what you returned.
+Whenever you return an object from your `setupNodeEvents`, Cypress will take
+this and "diff" it against the original configuration and automatically set the
+resolved values to point to what you returned.
 
 If you don't return an object, then configuration will not be modified.
 
@@ -48,7 +48,7 @@ If you don't return an object, then configuration will not be modified.
 
 The `config` object also includes the following extra values that are not part
 of the standard configuration. **These values are read only and cannot be
-modified from `setupNodeEvents` in the Cypress configuration.**
+modified from the `setupNodeEvents` function in the Cypress configuration.**
 
 - `configFile`: The absolute path to the Cypress configuration file. See the
   [--config-file](guides/guides/command-line#cypress-open) and
@@ -85,9 +85,9 @@ for more information on how this works.
 
 </Alert>
 
-In `setupNodeEvents`, you can filter the list of browsers passed inside the
-`config` object and return the list of browsers you want available for selection
-during `cypress open`.
+In [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin), you can
+filter the list of browsers passed inside the `config` object and return the
+list of browsers you want available for selection during `cypress open`.
 
 :::cypress-plugin-example
 

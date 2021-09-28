@@ -180,7 +180,11 @@ You will also need to configure the component testing framework of your choice
 by installing the corresponding component testing plugin. Read more about
 Cypress plugins in our [plugins guide](/guides/tooling/plugins-guide). For
 example, if you are using Create React App, you will need to use the
-`react-scripts` plugin as shown below in your `cypress/plugins/index.js` file.
+`react-scripts` plugin as shown below.
+
+Note we have a conditional check against `config.testingType`. This is useful if
+your project is using the legacy plugins file for the End-to-end runner, and you
+don't want them to conflict.
 
 ### React (using CRA)
 
@@ -233,10 +237,6 @@ if (config.testingType === 'component') {
 ```
 
 :::
-
-Note we have a conditional check against `config.testingType`. This is useful if
-your project is already using existing plugins for the End-to-end runner, and
-you don't want them to conflict.
 
 If you have a different React development environment from Create React App,
 such as Next.js, or use a Vue template other than vue-cli, you will need to
@@ -364,7 +364,7 @@ Please report issues against these projects in Github or contact us on
 #### Vite
 
 For a quick-start, please take a look at the boilerplate repositories below. To
-setup a project from scratch please check out the below plugins file.
+setup a project from scratch please check out the below configuration.
 
 **From Boilerplate**
 

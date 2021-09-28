@@ -205,9 +205,8 @@ will be restored automatically.
 
 If you have installed a Chromium-based browser like [Brave](https://brave.com/),
 [Vivaldi](https://vivaldi.com/) you can add them to the list of returned
-browsers. Here is a
-[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function that
-inserts a local Brave browser into the returned list.
+browsers. Here is a configuration that inserts a local Brave browser into the
+returned list.
 
 :::cypress-plugin-example
 
