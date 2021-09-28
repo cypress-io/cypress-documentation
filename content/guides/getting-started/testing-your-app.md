@@ -228,7 +228,7 @@ facilitate this with Cypress:**
 
 - [`cy.exec()`](/api/commands/exec) - to run system commands
 - [`cy.task()`](/api/commands/task) - to run code in Node via the
-  [pluginsFile](/guides/references/configuration#Folders-Files)
+  [setupNodeEvents](guides/tooling/plugins-guide#Using-a-plugin) function
 - [`cy.request()`](/api/commands/request) - to make HTTP requests
 
 If you're running `node.js` on your server, you might add a `before` or

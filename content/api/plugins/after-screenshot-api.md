@@ -51,8 +51,8 @@ properties:
 
 ### Modify screenshot details
 
-Using your [pluginsFile](/guides/tooling/plugins-guide) you can tap into the
-`after:screenshot` event.
+Using [setupNodeEvents](guides/tooling/plugins-guide#Using-a-plugin) you can tap
+into the `after:screenshot` event.
 
 If you change the `path`, `size` or `dimensions` of the image, you'll want to
 update the new values so that the details are correctly reported in the test

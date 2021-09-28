@@ -819,7 +819,7 @@ by setting the [nodeVersion](/guides/references/configuration#Node-version) in
 your configuration.
 
 - [`cy.task()`](/api/commands/task) to run code in Node via the
-  [pluginsFile](/guides/references/configuration#Folders-Files)
+  [setupNodeEvents](guides/tooling/plugins-guide#Using-a-plugin) function
 - [`cy.exec()`](/api/commands/exec) to execute a shell command
 
 [Check out the "Node Modules" example recipe.](/examples/examples/recipes#Fundamentals)
