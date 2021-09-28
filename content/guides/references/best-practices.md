@@ -747,9 +747,9 @@ The `db:seed` task is defined within the
 project, and in this case sends a request to a dedicated back end API of the app
 to appropriately re-seed the database.
 
-```ts
-// cypress/plugins/index.ts
+:::cypress-plugin-example
 
+```js
 on('task', {
   async 'db:seed'() {
     // Send request to backend API to re-seed database with test data
@@ -759,6 +759,8 @@ on('task', {
   //...
 })
 ```
+
+:::
 
 > _<Icon name="github"></Icon> Source:
 > [cypress/plugins/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/plugins/index.ts)_

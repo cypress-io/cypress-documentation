@@ -184,18 +184,20 @@ You can also `require` local files relative to your project.
 
 **Then you could do any of the following in `setupNodeEvents`:**
 
-```js
-// cypress/plugins/index.js
+:::cypress-plugin-example
 
+```js
 const _ = require('lodash') // yup, dev dependencies
 const path = require('path') // yup, built in node modules
 const debug = require('debug') // yup, dependencies
 const User = require('../../lib/models/user') // yup, relative local modules
 
-console.log(__dirname) // /Users/janelane/Dev/my-project/cypress/plugins/index.js
+console.log(__dirname) // /Users/janelane/Dev/my-project
 
 console.log(process.cwd()) // /Users/janelane/Dev/my-project
 ```
+
+:::
 
 ## Error handling
 

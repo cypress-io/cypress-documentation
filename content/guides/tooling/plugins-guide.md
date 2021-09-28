@@ -171,9 +171,9 @@ the rest of the operating system.
 
 </Alert>
 
-```ts
-// cypress/plugins/index.ts
+:::cypress-plugin-example
 
+```js
   on("task", {
     async "db:seed"() {
       // seed database with test data
@@ -192,6 +192,8 @@ the rest of the operating system.
   // ..
 };
 ```
+
+:::
 
 > _<Icon name="github"></Icon> Source:
 > [cypress/plugins/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/plugins/index.ts)_

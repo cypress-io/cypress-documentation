@@ -76,14 +76,15 @@ the rest of the operating system.
 To use a preprocessor, you should bind to the `file:preprocessor` event in your
 [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function:
 
+:::cypress-plugin-example
+
 ```javascript
-// plugins file
-module.exports = (on, config) => {
-  on('file:preprocessor', (file) => {
-    // ...
-  })
-}
+on('file:preprocessor', (file) => {
+  // ...
+})
 ```
+
+:::
 
 ### The callback function should return one of the following:
 
