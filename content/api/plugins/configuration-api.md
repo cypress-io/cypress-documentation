@@ -48,7 +48,7 @@ If you don't return an object, then configuration will not be modified.
 
 The `config` object also includes the following extra values that are not part
 of the standard configuration. **These values are read only and cannot be
-modified from the `setupNodeEvents` in the Cypress configuration.**
+modified from `setupNodeEvents` in the Cypress configuration.**
 
 - `configFile`: The absolute path to the Cypress configuration file. See the
   [--config-file](guides/guides/command-line#cypress-open) and
@@ -236,8 +236,8 @@ This is a less complicated example. Remember - you have the full power of Node
 at your disposal.
 
 How you choose to edit the configuration is up to you. You don't have to read
-off of the file system - you could store them all in memory inside of your
-`pluginsFile` if you wanted.
+off of the file system - you could store them all in memory inside of
+[setupNodeEvents](guides/tooling/plugins-guide#Using-a-plugin) if you wanted.
 
 ### Runner Specific Plugins
 

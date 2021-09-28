@@ -94,7 +94,7 @@ environment you're running in.
 
 The `config` object also includes the following extra values that are not part
 of the standard configuration. **These values are read only and cannot be
-modified from the `setupNodeEvents` function.**
+modified from `setupNodeEvents`.**
 
 - `configFile`: The absolute path to the
   [Cypress configuration file](/guides/references/configuration). See the
@@ -127,10 +127,11 @@ modified from the `setupNodeEvents` function.**
 
 ## Execution context
 
-Your `pluginsFile` is invoked when Cypress opens a project.
+[setupNodeEvents](guides/tooling/plugins-guide#Using-a-plugin) is invoked when
+Cypress opens a project.
 
 Cypress does this by spawning an independent `child_process` which then
-`requires` in your `pluginsFile`. This is similar to the way Visual Studio Code
+`requires` in `setupNodeEvents`. This is similar to the way Visual Studio Code
 or Atom works.
 
 You will need to keep in mind it is **Cypress who is requiring your file** - not
@@ -161,9 +162,9 @@ the default `bundled`
 
 ### npm modules
 
-When Cypress executes your `pluginsFile` it will execute with `process.cwd()`
-set to your project's path. Additionally - you will be able to `require` **any
-node module** you have installed.
+When Cypress executes `setupNodeEvents` it will execute with `process.cwd()` set
+to your project's path. Additionally - you will be able to `require` **any node
+module** you have installed.
 
 You can also `require` local files relative to your project.
 
@@ -181,7 +182,7 @@ You can also `require` local files relative to your project.
 }
 ```
 
-**Then you could do any of the following in your `pluginsFile`:**
+**Then you could do any of the following in `setupNodeEvents`:**
 
 ```js
 // cypress/plugins/index.js
@@ -198,11 +199,12 @@ console.log(process.cwd()) // /Users/janelane/Dev/my-project
 
 ## Error handling
 
-Cypress spawns your `pluginsFile` in its own child process so it is isolated
-away from the context that Cypress itself runs in. That means you cannot
-accidentally modify or change Cypress's own execution in any way.
+Cypress spawns [setupNodeEvents](guides/tooling/plugins-guide#Using-a-plugin) in
+its own child process so it is isolated away from the context that Cypress
+itself runs in. That means you cannot accidentally modify or change Cypress's
+own execution in any way.
 
-If your `pluginsFile` has an uncaught exception, an unhandled rejection from a
+If `setupNodeEvents` has an uncaught exception, an unhandled rejection from a
 promise, or a syntax error - we will automatically catch those and display them
 to you inside of the console and even in the Test Runner itself.
 
@@ -213,8 +215,8 @@ Errors from your plugins _will not crash_ Cypress.
 Normally when writing code in Node, you typically have to restart the process
 after changing any files.
 
-With Cypress, we automatically watch your `pluginsFile` and any changes made
-will take effect immediately. We will read the file in and execute the exported
+With Cypress, we automatically watch `setupNodeEvents` and any changes made will
+take effect immediately. We will read the file in and execute the exported
 function again.
 
 This enables you to iterate on plugin code even with Cypress already running.
