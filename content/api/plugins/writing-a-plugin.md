@@ -94,7 +94,7 @@ environment you're running in.
 
 The `config` object also includes the following extra values that are not part
 of the standard configuration. **These values are read only and cannot be
-modified from the plugins file.**
+modified from the `setupNodeEvents` function.**
 
 - `configFile`: The absolute path to the
   [Cypress configuration file](/guides/references/configuration). See the

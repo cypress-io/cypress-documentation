@@ -58,9 +58,6 @@ folder structure. By default it will create:
       - waiting.spec.js
       - window.spec.js
 
-  /plugins
-    - index.js
-
   /support
     - commands.js
     - index.js

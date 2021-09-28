@@ -3,7 +3,7 @@ title: Configuration API
 ---
 
 Cypress enables you to dynamically modify configuration values and environment
-variables from your plugins file.
+variables from your Cypress configuration.
 
 ## Usage
 
@@ -17,7 +17,7 @@ the rest of the operating system.
 
 </Alert>
 
-To modify configuration, you return an object from your plugins file exported
+To modify configuration, you return a config object within this exported
 function.
 
 :::cypress-plugin-example
@@ -48,7 +48,7 @@ If you don't return an object, then configuration will not be modified.
 
 The `config` object also includes the following extra values that are not part
 of the standard configuration. **These values are read only and cannot be
-modified from the plugins file.**
+modified from the `setupNodeEvents` in the Cypress configuration.**
 
 - `configFile`: The absolute path to the Cypress configuration file. See the
   [--config-file](guides/guides/command-line#cypress-open) and
@@ -85,7 +85,7 @@ for more information on how this works.
 
 </Alert>
 
-In the plugins file, you can filter the list of browsers passed inside the
+In `setupNodeEvents`, you can filter the list of browsers passed inside the
 `config` object and return the list of browsers you want available for selection
 during `cypress open`.
 
@@ -110,9 +110,9 @@ return {
 
 :::
 
-When you open the Test Runner in a project that uses the above modifications to
-your plugins file, only the Chrome browsers found on the system will display in
-the list of available browsers.
+When you open the Test Runner in a project that uses the above modifications,
+only the Chrome browsers found on the system will display in the list of
+available browsers.
 
 <DocsImage src="/img/guides/plugins/chrome-browsers-only.png" alt="Filtered list of Chrome browsers" ></DocsImage>
 
