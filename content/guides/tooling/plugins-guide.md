@@ -161,15 +161,7 @@ The [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
 uses [tasks](/api/commands/task) to re-seed its database, and to filter/find
 test data for various testing scenarios.
 
-<Alert type="warning">
-
-⚠️ This code is part of the
-[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function and
-thus executes in the Node environment. You cannot call `Cypress` or `cy`
-commands in this file, but you do have the direct access to the file system and
-the rest of the operating system.
-
-</Alert>
+::include{file=partials/warning-setup-node-events.md}
 
 :::cypress-plugin-example
 

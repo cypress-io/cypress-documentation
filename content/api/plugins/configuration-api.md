@@ -7,15 +7,7 @@ variables from your Cypress configuration.
 
 ## Usage
 
-<Alert type="warning">
-
-⚠️ This code is part of the
-[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function and
-thus executes in the Node environment. You cannot call `Cypress` or `cy`
-commands in this file, but you do have the direct access to the file system and
-the rest of the operating system.
-
-</Alert>
+::include{file=partials/warning-setup-node-events.md}
 
 To modify configuration, you return a config object from `setupNodeEvents`
 within this exported function.
@@ -38,9 +30,9 @@ return config
 
 :::
 
-Whenever you return an object from your `setupNodeEvents` function, Cypress will take
-this and "diff" it against the original configuration and automatically set the
-resolved values to point to what you returned.
+Whenever you return an object from your `setupNodeEvents` function, Cypress will
+take this and "diff" it against the original configuration and automatically set
+the resolved values to point to what you returned.
 
 If you don't return an object, then configuration will not be modified.
 

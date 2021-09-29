@@ -157,7 +157,7 @@ You can utilize Cypress's type declarations by annotating the
 
 #### cypress.config.ts
 
-```javascript
+```typescript
 /// <reference types="cypress" />
 
 import { defineConfig } from 'cypress'
