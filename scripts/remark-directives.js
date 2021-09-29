@@ -59,16 +59,15 @@ function loadDirective(filePath) {
     directivesByType[type] = {}
   }
 
-  logger.success(
-    directivesByType[type][name] ? 'Reloaded directive' : 'Loaded directive',
-    getDisplay(type, name)
-  )
+  if (!directivesByType[type][name]) {
+    logger.success('Loaded directive', getDisplay(type, name))
+  }
 
   directivesByType[type][name] = processNode
 }
 
 loadDirectives()
-const fileCache = {}
+const filePathSeen = {}
 
 module.exports = function directiveAttacher() {
   return function transform(tree, file) {
@@ -76,10 +75,9 @@ module.exports = function directiveAttacher() {
     const filePath = file.data.path || '(unknown)'
 
     // Ensure directives aren't reloaded in dev mode until files have been
-    // processed at least once, to reduce startup time and console spam.
-    // If you don't see a directive update, try reloading the .md file.
-    if (!fileCache[filePath]) {
-      fileCache[filePath] = true
+    // processed at least once, to reduce startup time.
+    if (!filePathSeen[filePath]) {
+      filePathSeen[filePath] = true
     } else if (isDev) {
       loadDirectives()
     }
