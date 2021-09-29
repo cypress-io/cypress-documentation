@@ -17,11 +17,15 @@ is enabled.
 
 </Alert>
 
+:::cypress-plugin-example
+
 ```js
 on('after:spec', (spec, results) => {
   /* ... */
 })
 ```
+
+:::
 
 **<Icon name="angle-right"></Icon> spec** **_(Object)_**
 

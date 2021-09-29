@@ -11,11 +11,15 @@ and modify other options from the
 
 ::include{file=partials/warning-setup-node-events.md}
 
+:::cypress-plugin-example
+
 ```js
 on('before:browser:launch', (browser = {}, launchOptions) => {
   /* ... */
 })
 ```
+
+:::
 
 **<Icon name="angle-right"></Icon> browser** **_(object)_**
 

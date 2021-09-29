@@ -22,11 +22,15 @@ is enabled.
 
 </Alert>
 
+:::cypress-plugin-example
+
 ```js
 on('after:run', (results) => {
   /* ... */
 })
 ```
+
+:::
 
 **<Icon name="angle-right"></Icon> results** **_(Object)_**
 

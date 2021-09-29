@@ -21,11 +21,15 @@ is enabled.
 
 </Alert>
 
+:::cypress-plugin-example
+
 ```js
 on('before:run', (details) => {
   /* ... */
 })
 ```
+
+:::
 
 **<Icon name="angle-right"></Icon> details** **_(Object)_**
 

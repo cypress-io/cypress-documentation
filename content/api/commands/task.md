@@ -57,7 +57,7 @@ the given event has been handled.
 **<Icon name="angle-right"></Icon> event** **_(String)_**
 
 An event name to be handled via the `task` event in the
-[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin).
+[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function.
 
 **<Icon name="angle-right"></Icon> arg** **_(Object)_**
 

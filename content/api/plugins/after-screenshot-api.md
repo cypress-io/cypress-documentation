@@ -14,11 +14,15 @@ return the updated details about the image.
 
 ::include{file=partials/warning-setup-node-events.md}
 
+:::cypress-plugin-example
+
 ```js
 on('after:screenshot', (details) => {
   /* ... */
 })
 ```
+
+:::
 
 **<Icon name="angle-right"></Icon> details** **_(object)_**
 
