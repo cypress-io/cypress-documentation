@@ -121,6 +121,14 @@ in the **Settings** tab of the Test Runner.
 
 ### Switch between multiple configuration files
 
+<Alert type="warning">
+
+This section is only applicatble to the legacy `cypress.json` configuration.
+Learn more about the preferred
+[Cypress configuration](/guides/references/configuration).
+
+</Alert>
+
 This means you can do things like store multiple configuration files and switch
 between them like:
 
