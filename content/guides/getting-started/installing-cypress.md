@@ -21,7 +21,7 @@ application supports these operating systems:
 
 - **macOS** 10.9 and above _(64-bit only)_
 - **Linux** Ubuntu 12.04 and above, Fedora 21 and Debian 8 _(64-bit only)_
-- **Windows** 7 and above
+- **Windows** 7 and above _(64-bit only)_
 
 #### Node.js
 
