@@ -254,3 +254,8 @@ addition to the documentation below, refer to the Microsoft Guides for
 
 🎉 Your integration is now complete! You can invite all of the users in your
 organization to sign in through your SSO provider.
+
+🚨 **_Note:_ All SSO Users are initailly added with the User Role of Member.**
+If a User needs different User Role permissions, this can be changed via the
+Cypress Dashboard by a current member with the
+[User Role](https://on.cypress.io/users#User-roles) of Owner or Admin.
