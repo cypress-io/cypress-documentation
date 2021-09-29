@@ -390,7 +390,7 @@ app/
       cypress/
         integration/
           spec.js
-      cypress.json
+      cypress.config.js
 ```
 
 If we are in the `app` folder, we can run the specs using the following command
@@ -530,7 +530,7 @@ You can specify a path to a file where
 [Cypress configuration](/guides/references/configuration) values are set.
 
 ```shell
-cypress open --config-file tests/cypress-config.json
+cypress open --config-file tests/cypress.config.js
 ```
 
 You can pass `false` to disable the use of a configuration file entirely.

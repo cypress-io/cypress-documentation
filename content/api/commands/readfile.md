@@ -200,7 +200,7 @@ pass.</li></List>
 
 ## Command Log
 
-**_List the contents of your package.json file”_**
+**_List the contents of your package.json file_**
 
 ```javascript
 cy.readFile('package.json')
