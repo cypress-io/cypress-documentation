@@ -38,7 +38,7 @@ return config
 
 :::
 
-Whenever you return an object from your `setupNodeEvents`, Cypress will take
+Whenever you return an object from your `setupNodeEvents` function, Cypress will take
 this and "diff" it against the original configuration and automatically set the
 resolved values to point to what you returned.
 

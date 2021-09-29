@@ -101,7 +101,7 @@ Pass in an options object to change the default behavior of `cy.task()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 `cy.task()` yields the value returned or resolved by the `task` event in
-[setupNodeEvents](/guides/references/configuration#Folders-Files).
+[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin).
 
 ## Examples
 

@@ -162,19 +162,8 @@ You can utilize Cypress's type declarations by annotating the
 
 import { defineConfig } from 'cypress'
 
-/**
- * @type {Cypress.PluginConfig}
- */
 export default defineConfig({
-  // setupNodeEvents can be defined in either the e2e or component
-  // configuration
-  e2e: {
-    setupNodeEvents(on, config) {
-      {
-        baseUrl: 'http://localhost:1234'
-      }
-    })
-  }
+  // config options
 })
 ```
 
