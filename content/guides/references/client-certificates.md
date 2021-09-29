@@ -52,44 +52,47 @@ To configure CA / client certificates within your Cypress configuration, you can
 add the `clientCertificates` key to define an array of client certificates as
 shown below:
 
-```json
-  "clientCertificates": [
+:::cypress-config-example
+
+```js
+{
+  clientCertificates: [
     {
-      "url": "https://a.host.com",
-      "ca": [
-          "certs/ca.pem"
+      url: 'https://a.host.com',
+      ca: ['certs/ca.pem'],
+      certs: [
+        {
+          cert: 'certs/cert.pem',
+          key: 'certs/private.key',
+          passphrase: 'certs/pem-passphrase.txt',
+        },
       ],
-      "certs": [
-        {
-          "cert": "certs/cert.pem",
-          "key": "certs/private.key",
-          "passphrase": "certs/pem-passphrase.txt"
-        }
-      ]
     },
     {
-      "url": "https://b.host.com/a_base_route/**",
-      "ca": [],
-      "certs": [
+      url: 'https://b.host.com/a_base_route/**',
+      ca: [],
+      certs: [
         {
-          "pfx": "/home/tester/certs/cert.pfx",
-          "passphrase": "/home/tester/certs/pfx-passphrase.txt"
-        }
-      ]
+          pfx: '/home/tester/certs/cert.pfx',
+          passphrase: '/home/tester/certs/pfx-passphrase.txt',
+        },
+      ],
     },
     {
-      "url": "https://a.host.*.com/",
-      "ca": [],
-      "certs": [
+      url: 'https://a.host.*.com/',
+      ca: [],
+      certs: [
         {
-          "pfx": "certs/cert.pfx",
-          "passphrase": "certs/pfx-passphrase.txt"
-        }
-      ]
-    }
+          pfx: 'certs/cert.pfx',
+          passphrase: 'certs/pfx-passphrase.txt',
+        },
+      ],
+    },
   ]
 }
 ```
+
+:::
 
 ## History
 
