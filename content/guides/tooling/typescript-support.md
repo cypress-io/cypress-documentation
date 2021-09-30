@@ -152,6 +152,8 @@ instructions.
 
 ### Types for plugins
 
+::include{file=partials/warning-plugins-file.md}
+
 You can utilize Cypress's type declarations in your
 [plugins file](/guides/tooling/plugins-guide) by annotating it like the
 following:
