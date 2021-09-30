@@ -84,15 +84,19 @@ Any key/value you set in your
 [Cypress configuration](/guides/references/configuration) under the `env` key
 will become an environment variable.
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "projectId": "128076ed-9868-4e98-9cef-98dd8b705d75",
-  "env": {
-    "login_url": "/login",
-    "products_url": "/products"
+  projectId: '128076ed-9868-4e98-9cef-98dd8b705d75',
+  env: {
+    login_url: '/login',
+    products_url: '/products'
   }
 }
 ```
+
+:::
 
 #### Test file
 
@@ -171,14 +175,9 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 ### Option #3: `CYPRESS_*`
 
-Any OS-level environment variable on your machine that starts with either
-`CYPRESS_` or `cypress_` will automatically be added to Cypress' environment
-variables and made available to you.
-
-Conflicting values will override values from the Cypress configuration file and
-`cypress.env.json` files.
-
-Cypress will _strip off_ the `CYPRESS_` when adding your environment variables.
+Any exported environment variables set on the command line or in your CI
+provider that start with either `CYPRESS_` or `cypress_` will automatically be
+parsed by Cypress.
 
 <Alert type="danger">
 
@@ -187,19 +186,50 @@ set.
 
 </Alert>
 
-#### Export cypress env variables from the command line
+#### Overriding configuration options
+
+Environment variables that match a corresponding configuration option will
+override any value set in the
+[Cypress configuration](/guides/references/configuration).
+
+<Alert type="info">
+
+Cypress automatically normalizes both the key and the value. The leading
+`CYPRESS_` or `cypress_` is removed and the remaining name is camelCased, while
+values are converted to `Number` or `Boolean` wherever possible.
+
+</Alert>
+
+For example, these enviroment variables in the command line will override any
+`viewportWidth` or `viewportHeight` options set in the Cypress configuration:
+
+```shell
+export CYPRESS_VIEWPORT_WIDTH=800
+export CYPRESS_VIEWPORT_HEIGHT=600
+```
+
+#### Overriding environment variables
+
+Environment variables that do not match configuration options will be set as
+environment variables for use in tests with
+[`Cypress.env()`](/api/cypress-api/env), and will override any existing values
+in the Cypress configuration `env` object and `cypress.env.json` files.
+
+<Alert type="info">
+
+Cypress automatically removes the leading `CYPRESS_` or `cypress_` from any
+environment variable name specified in this way.
+
+</Alert>
+
+For example, these environment variables in the command line:
 
 ```shell
 export CYPRESS_HOST=laura.dev.local
-```
-
-```shell
 export cypress_api_server=http://localhost:8888/api/v1/
 ```
 
-#### In test file
-
-In your test file you should omit `CYPRESS_` or `cypress_` prefix
+Will yield these results inside a test file:
 
 ```javascript
 Cypress.env() // {HOST: 'laura.dev.local', api_server: 'http://localhost:8888/api/v1'}
@@ -283,6 +313,8 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 ### Option #5: Plugins
 
+::include{file=partials/warning-plugins-file.md}
+
 Instead of setting environment variables in a file, you can use plugins to
 dynamically set them with Node code. This enables you to do things like use `fs`
 and read off configuration values and dynamically change them.
@@ -297,21 +329,17 @@ available in the tests:
 USER_NAME=aTester
 ```
 
-:::cypress-plugin-example
-
 ```js
 require('dotenv').config()
+
+module.exports = (on, config) => {
+  // copy any needed variables from process.env to config.env
+  config.env.username = process.env.USER_NAME
+
+  // do not forget to return the changed config object!
+  return config
+}
 ```
-
-```js
-// copy any needed variables from process.env to config.env
-config.env.username = process.env.USER_NAME
-
-// do not forget to return the changed config object!
-return config
-```
-
-:::
 
 ```js
 // integration/spec.js
