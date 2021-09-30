@@ -595,6 +595,13 @@
           "link": "https://github.com/BrandedEntertainmentNetwork/cypress-rest-graphql",
           "keywords": ["api", "rest", "graphQL"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-data-session",
+          "description": "Cypress command for flexible test data setup",
+          "link": "https://github.com/bahmutov/cypress-data-session",
+          "keywords": ["commands"],
+          "badge": "community"
         }
       ]
     },
