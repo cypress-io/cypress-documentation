@@ -164,9 +164,9 @@ tests.
 For example, your web application might _only_ be designed to work in a Chrome
 browser, and not inside the Electron browser.
 
-In the plugins file, you can filter the list of browsers passed inside the
-`config` object and return the list of browsers you want available for selection
-during `cypress open`.
+In the [setupNodeEvents](/api/plugins/configuration-api) function, you can
+filter the list of browsers passed inside the `config` object and return the
+list of browsers you want available for selection during `cypress open`.
 
 :::cypress-plugin-example
 
@@ -190,8 +190,8 @@ return {
 :::
 
 When you open the Test Runner in a project that uses the above modifications to
-your plugins file, only the Chrome browsers found on the system will display in
-the list of available browsers.
+the setupNodeEvents function, only the Chrome browsers found on the system will
+display in the list of available browsers.
 
 <DocsImage src="/img/guides/plugins/chrome-browsers-only.png" alt="Filtered list of Chrome browsers" ></DocsImage>
 
@@ -204,7 +204,7 @@ will be restored automatically.
 
 If you have installed a Chromium-based browser like [Brave](https://brave.com/),
 [Vivaldi](https://vivaldi.com/) you can add them to the list of returned
-browsers. Here is a plugins file that inserts a local Brave browser into the
+browsers. Here is a configuration that inserts a local Brave browser into the
 returned list.
 
 :::cypress-plugin-example

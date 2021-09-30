@@ -293,9 +293,9 @@ documentation for up-to-date installation instructions.
 npm install -D @cypress/code-coverage
 ```
 
-Then add the code below to your
+Then add the code below to the
 [supportFile](/guides/references/configuration#Folders-Files) and
-[pluginsFile](/guides/references/configuration#Folders-Files).
+[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function.
 
 ```js
 // cypress/support/index.js
@@ -482,8 +482,8 @@ to use the same `.babelrc` with
 and tell the Cypress built-in bundler to use `.babelrc` when bundling specs. One
 can use the
 [`@cypress/code-coverage`](https://github.com/cypress-io/code-coverage) plugin
-again to do this by adding the code below to your
-[pluginsFile](/guides/references/configuration#Folders-Files).
+again to do this by adding the code below to the
+[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function.
 
 :::cypress-plugin-example
 

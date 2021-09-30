@@ -4,25 +4,22 @@ title: Browser Launch API
 
 Before Cypress launches a browser, it gives you the opportunity to modify the
 browser preferences, install extensions, add and remove command-line arguments,
-and modify other options from your [pluginsFile](/guides/tooling/plugins-guide).
+and modify other options from the
+[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function.
 
 ## Syntax
 
-<Alert type="warning">
+::include{file=partials/warning-setup-node-events.md}
 
-⚠️ This code is part of the
-[plugins file](/guides/core-concepts/writing-and-organizing-tests#Plugin-files)
-and thus executes in the Node environment. You cannot call `Cypress` or `cy`
-commands in this file, but you do have the direct access to the file system and
-the rest of the operating system.
-
-</Alert>
+:::cypress-plugin-example
 
 ```js
 on('before:browser:launch', (browser = {}, launchOptions) => {
   /* ... */
 })
 ```
+
+:::
 
 **<Icon name="angle-right"></Icon> browser** **_(object)_**
 
@@ -56,9 +53,10 @@ following properties:
 
 ### Modify browser launch arguments, preferences, and extensions
 
-Using your [pluginsFile](/guides/tooling/plugins-guide) you can tap into the
-`before:browser:launch` event and modify how Cypress launches the browser (e.g.
-modify arguments, user preferences, and extensions).
+Using the [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin)
+function you can tap into the `before:browser:launch` event and modify how
+Cypress launches the browser (e.g. modify arguments, user preferences, and
+extensions).
 
 This event will yield you the `browser` object, which gives you information
 about the browser, and the `launchOptions` object, which allows you to modify

@@ -3,22 +3,14 @@ title: Configuration API
 ---
 
 Cypress enables you to dynamically modify configuration values and environment
-variables from your plugins file.
+variables from your Cypress configuration.
 
 ## Usage
 
-<Alert type="warning">
+::include{file=partials/warning-setup-node-events.md}
 
-⚠️ This code is part of the
-[plugins file](/guides/core-concepts/writing-and-organizing-tests#Plugin-files)
-and thus executes in the Node environment. You cannot call `Cypress` or `cy`
-commands in this file, but you do have the direct access to the file system and
-the rest of the operating system.
-
-</Alert>
-
-To modify configuration, you return an object from your plugins file exported
-function.
+To modify configuration, you return a config object from `setupNodeEvents`
+within this exported function.
 
 :::cypress-plugin-example
 
@@ -38,9 +30,9 @@ return config
 
 :::
 
-Whenever you return an object from your `pluginFile`, Cypress will take this and
-"diff" it against the original configuration and automatically set the resolved
-values to point to what you returned.
+Whenever you return an object from your `setupNodeEvents` function, Cypress will
+take this and "diff" it against the original configuration and automatically set
+the resolved values to point to what you returned.
 
 If you don't return an object, then configuration will not be modified.
 
@@ -48,7 +40,7 @@ If you don't return an object, then configuration will not be modified.
 
 The `config` object also includes the following extra values that are not part
 of the standard configuration. **These values are read only and cannot be
-modified from the plugins file.**
+modified from the `setupNodeEvents` function in the Cypress configuration.**
 
 - `configFile`: The absolute path to the Cypress configuration file. See the
   [--config-file](guides/guides/command-line#cypress-open) and
@@ -85,9 +77,9 @@ for more information on how this works.
 
 </Alert>
 
-In the plugins file, you can filter the list of browsers passed inside the
-`config` object and return the list of browsers you want available for selection
-during `cypress open`.
+In [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin), you can
+filter the list of browsers passed inside the `config` object and return the
+list of browsers you want available for selection during `cypress open`.
 
 :::cypress-plugin-example
 
@@ -110,9 +102,9 @@ return {
 
 :::
 
-When you open the Test Runner in a project that uses the above modifications to
-your plugins file, only the Chrome browsers found on the system will display in
-the list of available browsers.
+When you open the Test Runner in a project that uses the above modifications,
+only the Chrome browsers found on the system will display in the list of
+available browsers.
 
 <DocsImage src="/img/guides/plugins/chrome-browsers-only.png" alt="Filtered list of Chrome browsers" ></DocsImage>
 
@@ -139,7 +131,9 @@ between them like:
 How you choose to organize your configuration and environment variables is up to
 you.
 
-```javascript
+:::cypress-plugin-example
+
+```js
 // promisified fs module
 const fs = require('fs-extra')
 const path = require('path')
@@ -149,15 +143,16 @@ function getConfigurationByFile(file) {
 
   return fs.readJson(pathToConfigFile)
 }
-
-// plugins file
-module.exports = (on, config) => {
-  // accept a configFile value or use development by default
-  const file = config.env.configFile || 'development'
-
-  return getConfigurationByFile(file)
-}
 ```
+
+```js
+// accept a configFile value or use development by default
+const file = config.env.configFile || 'development'
+
+return getConfigurationByFile(file)
+```
+
+:::
 
 You could now swap out configuration + environment variables like so:
 
@@ -236,8 +231,8 @@ This is a less complicated example. Remember - you have the full power of Node
 at your disposal.
 
 How you choose to edit the configuration is up to you. You don't have to read
-off of the file system - you could store them all in memory inside of your
-`pluginsFile` if you wanted.
+off of the file system - you could store them all in memory inside of
+[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) if you wanted.
 
 ### Runner Specific Plugins
 

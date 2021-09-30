@@ -12,21 +12,17 @@ return the updated details about the image.
 
 ## Syntax
 
-<Alert type="warning">
+::include{file=partials/warning-setup-node-events.md}
 
-⚠️ This code is part of the
-[plugins file](/guides/core-concepts/writing-and-organizing-tests#Plugin-files)
-and thus executes in the Node environment. You cannot call `Cypress` or `cy`
-commands in this file, but you do have the direct access to the file system and
-the rest of the operating system.
-
-</Alert>
+:::cypress-plugin-example
 
 ```js
 on('after:screenshot', (details) => {
   /* ... */
 })
 ```
+
+:::
 
 **<Icon name="angle-right"></Icon> details** **_(object)_**
 
@@ -51,8 +47,8 @@ properties:
 
 ### Modify screenshot details
 
-Using your [pluginsFile](/guides/tooling/plugins-guide) you can tap into the
-`after:screenshot` event.
+Using [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) you can
+tap into the `after:screenshot` event.
 
 If you change the `path`, `size` or `dimensions` of the image, you'll want to
 update the new values so that the details are correctly reported in the test
