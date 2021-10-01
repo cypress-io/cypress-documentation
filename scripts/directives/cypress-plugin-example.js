@@ -52,7 +52,7 @@ function processNode(node, { _require, error }) {
       `,
     },
     {
-      label: 'cypress/plugins/index.js',
+      label: 'plugins file (deprecated)',
       language: 'js',
       alert: endent`
         <Alert type="warning">

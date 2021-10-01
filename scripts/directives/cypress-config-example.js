@@ -59,7 +59,7 @@ function processNode(node, { _require, error, warn }) {
       `,
     },
     {
-      label: 'cypress.json',
+      label: 'cypress.json (deprecated)',
       language: 'json',
       alert: endent`
         <Alert type="warning">
