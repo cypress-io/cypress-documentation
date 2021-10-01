@@ -112,7 +112,7 @@ cypress run [options]
 | `--browser`, `-b`          | [Run Cypress in the browser with the given name. If a filesystem path is supplied, Cypress will attempt to use the browser at that path.](#cypress-run-browser-lt-browser-name-or-path-gt) |
 | `--ci-build-id`            | [Specify a unique identifier for a run to enable grouping or parallelization.](#cypress-run-ci-build-id-lt-id-gt)                                                                          |
 | `--config`, `-c`           | [Specify configuration](#cypress-run-config-lt-config-gt)                                                                                                                                  |
-| `--config-file`, `-C`      | [Specify configuration file](#cypress-run-config-file-lt-config-file-gt)                                                                                                                   |
+| `--config-file`, `-C`      | [Specify configuration file](#cypress-run-config-file-lt-configuration-file-gt)                                                                                                            |
 | `--env`, `-e`              | [Specify environment variables](#cypress-run-env-lt-env-gt)                                                                                                                                |
 | `--group`                  | [Group recorded tests together under a single run](#cypress-run-group-lt-name-gt)                                                                                                          |
 | `--headed`                 | [Displays the browser instead of running headlessly](#cypress-run-headed)                                                                                                                  |
@@ -169,11 +169,19 @@ Only valid when providing a `--group` or `--parallel` flag. Read our
 #### `cypress run --config <config>`
 
 Set [configuration](/guides/references/configuration) values. Separate multiple
-values with a comma. The values set here override any values set in your
+values with commas. The values set here override any values set in your
 configuration file.
 
 ```shell
 cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
+```
+
+For more complex configuration objects, you may want to consider passing a
+[JSON.stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+object surrounded by single quotes.
+
+```shell
+cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.ts"]}'
 ```
 
 <Alert type="info">
