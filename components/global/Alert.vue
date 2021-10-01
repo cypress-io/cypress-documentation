@@ -111,6 +111,20 @@ h2 {
   background-color: rgb(220, 241, 247);
 }
 
+/* #region inside-code-block-component */
+
+:global(.code-block) .alert {
+  @apply px-6;
+  @apply py-4;
+  @apply mb-0;
+}
+
+:global(.code-block) .alert p {
+  @apply text-sm;
+}
+
+/* #endregion inside-code-block-component */
+
 /* #region success */
 
 .success {

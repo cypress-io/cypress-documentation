@@ -15,7 +15,7 @@ export default {
 
 <template>
   <div :class="[active && 'active', $style.codeBlock]">
-    <div v-if="true" :class="$style.alert">
+    <div v-if="true" :class="['code-block', $style.alert]">
       <slot name="alert"></slot>
     </div>
     <slot></slot>
@@ -40,10 +40,6 @@ export default {
 
   /* There doesn't seem to be any way to get this bg color from the prism theme */
   background: #263238;
-}
-
-.alert > div {
-  margin-bottom: 0;
 }
 
 /* I couldn't figure out how to get the "alert" slot to conditionally display */
