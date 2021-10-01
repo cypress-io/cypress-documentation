@@ -1,6 +1,7 @@
 // Requires https://github.com/remarkjs/remark-directive
 // Also see https://talk.commonmark.org/t/generic-directives-plugins-syntax/444
 
+const path = require('path')
 const unified = require('unified')
 const visit = require('unist-util-visit')
 const markdown = require('remark-parse')
@@ -14,6 +15,16 @@ const gfm = require('remark-gfm')
 const logger = require('consola').withTag('remark-directives')
 
 const isDev = process.env.NODE_ENV === 'development'
+
+const _require = (baseDir, filePath) => {
+  const fullPath = path.join(baseDir, filePath)
+
+  if (isDev) {
+    delete require.cache[require.resolve(fullPath)]
+  }
+
+  return require(fullPath)
+}
 
 const processor = unified()
   .use(markdown)
@@ -49,11 +60,7 @@ const directivesByType = {}
 // file is saved, the page you're viewing will also need to be re-saved
 // to force Nuxt to update its cache.
 function loadDirective(filePath) {
-  if (isDev) {
-    delete require.cache[require.resolve(filePath)]
-  }
-
-  const { type, name, processNode } = require(filePath)
+  const { type, name, processNode } = _require(__dirname, filePath)
 
   if (!directivesByType[type]) {
     directivesByType[type] = {}
@@ -99,7 +106,7 @@ module.exports = function directiveAttacher() {
         let result = { children: [] }
 
         try {
-          result = fn(node, { index, parent, processor, error, warn })
+          result = fn(node, { _require, index, parent, processor, error, warn })
         } catch (err) {
           return error(err)
         }
