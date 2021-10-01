@@ -1,88 +1,80 @@
-function processNode(node, { error }) {
-  const { children = [] } = node
-  const { attributes } = node
+const endent = require('endent').default
+
+function processNode(node, { _require, error }) {
+  const helpers = _require(__dirname, './helpers/example-helpers')
+  const { attributes, children = [] } = node
+
+  const { errorArgs, header, body } = helpers.getHeaderAndBody(children)
+
+  if (errorArgs) {
+    return error(...errorArgs)
+  }
+
   const noComment = 'noComment' in attributes
   const { configProp = 'e2e' } = attributes
+  let configPropAndComment = noComment
+    ? configProp
+    : endent`
+        // setupNodeEvents can be defined in either
+        // the e2e or component configuration
+        ${configProp}
+      `
 
-  if (
-    children.length < 1 ||
-    children.length > 2 ||
-    !children.every(({ type }) => type === 'code')
-  ) {
-    return error(
-      `Expected 1 or 2 code blocks inside directive, instead got`,
-      children.map((o) => o.type)
-    )
-  }
+  return helpers.getCodeGroup(
+    {
+      label: 'cypress.config.js',
+      language: 'js',
+      body: endent`
+        const { defineConfig } = require('cypress')
+        ${header}
+        module.exports = defineConfig({
+          ${configPropAndComment}: {
+            setupNodeEvents(on, config) {
+              ${body}
+            }
+          }
+        })
+      `,
+    },
+    {
+      label: 'cypress.config.ts',
+      language: 'ts',
+      body: endent`
+        import { defineConfig } from 'cypress'
+        ${header}
+        export default defineConfig({
+          ${configPropAndComment}: {
+            setupNodeEvents(on, config) {
+              ${body}
+            }
+          }
+        })
+      `,
+    },
+    {
+      label: 'cypress/plugins/index.js',
+      language: 'js',
+      alert: endent`
+        <Alert type="warning">
+        
+        <strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
+        Deprecated</strong>
 
-  let header
-  let functionBody
-  let testingType = configProp
-  let configComment = noComment
-    ? ''
-    : `// setupNodeEvents can be defined in either the e2e or component
-  // configuration
-  `
+        The plugins file is deprecated as of Cypress CFG_VERSION. We recommend
+        that you update your configuration. Please see the
+        [plugins guide](/guides/tooling/plugins-guide) and the
+        [migration guide](/guides/references/migration-guide) for more information.
 
-  if (children.length === 1) {
-    header = ''
-    functionBody = children[0].value.trim()
-  } else {
-    header = `\n${children[0].value.trim()}\n`
-    functionBody = children[1].value.trim()
-  }
-
-  const indent = (str, numSpaces) => {
-    const padding = ' '.repeat(numSpaces)
-
-    return str
-      .split('\n')
-      .map((line) => `${padding}${line}`)
-      .join('\n')
-  }
-
-  return `<code-group>
-<code-block label="cypress.config.js" active>
-
-\`\`\`js
-const { defineConfig } = require('cypress')
-${header}
-module.exports = defineConfig({
-  ${configComment}${testingType}: {
-    setupNodeEvents(on, config) {
-${indent(functionBody, 6)}
+        </Alert>
+      `,
+      body: endent`
+        ${header}
+        module.exports = (on, config) => {
+          ${body}
+        }
+      `,
     }
-  }
-})
-\`\`\`
-
-</code-block>
-<code-block label="cypress.config.ts">
-
-\`\`\`ts
-import { defineConfig } from 'cypress'
-${header}
-export default defineConfig({
-  ${configComment}${testingType}: {
-    setupNodeEvents(on, config) {
-${indent(functionBody, 6)}
-    }
-  }
-})
-\`\`\`
-
-</code-block>
-<code-block label="plugins/index.js (deprecated)">
-
-\`\`\`js
-${header}
-module.exports = (on, config) => {
-${indent(functionBody, 2)}
-}
-\`\`\`
-
-</code-block>
-</code-group>`
+  )
 }
 
 module.exports = {
