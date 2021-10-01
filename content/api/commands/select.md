@@ -159,6 +159,12 @@ cy.get('select')
   .should('deep.equal', ['456', '457'])
 ```
 
+<Alert type="info">
+
+**Note:** Passing an array into `cy.select()` will select only the options matching values in the array, leaving all other options unselected (even those that were previously selected). In the same manner, calling `cy.select([])` with an empty array will clear selections on all options.
+
+</Alert>
+
 ### Force select
 
 #### Force select a hidden `<select>`
