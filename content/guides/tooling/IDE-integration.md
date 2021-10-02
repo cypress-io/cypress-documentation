@@ -71,6 +71,8 @@ RubyMine, and WebStorm.
 
 ## Intelligent Code Completion
 
+::include{file=partials/warning-cypress-json.md}
+
 ### Writing Tests
 
 #### Features
