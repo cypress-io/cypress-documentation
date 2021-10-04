@@ -71,8 +71,6 @@ RubyMine, and WebStorm.
 
 ## Intelligent Code Completion
 
-::include{file=partials/warning-cypress-json.md}
-
 ### Writing Tests
 
 #### Features
@@ -180,6 +178,8 @@ with the following configuration should get intelligent code completion working.
 ```
 
 ### Configuration
+
+::include{file=partials/warning-cypress-json.md}
 
 #### Features:
 
