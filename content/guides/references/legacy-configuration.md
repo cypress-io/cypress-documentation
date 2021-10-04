@@ -19,7 +19,7 @@ to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction) the
 
 You can change the configuration file or turn off the use of a configuration
 file by using the
-[`--config-file` flag](/guides/guides/command-line#cypress-open-config-file-lt-config-file-gt).
+[`--config-file` flag](/guides/guides/command-line#cypress-open-config-file-lt-configuration-file-gt).
 
 </Alert>
 
@@ -712,18 +712,9 @@ DEBUG=cypress:cli,cypress:server:specs
 
 ## History
 
-| Version                                      | Changes                                                 |
-| -------------------------------------------- | ------------------------------------------------------- |
-| [8.0.0](/guides/references/changelog#8-0-0)  | Added `clientCertificates` option                       |
-| [7.0.0](/guides/references/changelog#7-0-0)  | Added `e2e` and `component` options.                    |
-| [7.0.0](/guides/references/changelog#7-0-0)  | Added `redirectionLimit` option.                        |
-| [6.1.0](/guides/references/changelog#6-1-0)  | Added `scrollBehavior` option.                          |
-| [5.2.0](/guides/references/changelog#5-2-0)  | Added `includeShadowDom` option.                        |
-| [5.0.0](/guides/references/changelog#5-0-0)  | Added `retries` configuration.                          |
-| [5.0.0](/guides/references/changelog#5-0-0)  | Renamed `blacklistHosts` configuration to `blockHosts`. |
-| [4.1.0](/guides/references/changelog#4-12-0) | Added `screenshotOnRunFailure` configuration.           |
-| [4.0.0](/guides/references/changelog#4-0-0)  | Added `firefoxGcInterval` configuration.                |
-| [3.5.0](/guides/references/changelog#3-5-0)  | Added `nodeVersion` configuration.                      |
+| Version                                                                 | Changes                                              |
+| ----------------------------------------------------------------------- | ---------------------------------------------------- |
+| [CFG_VERSION](/guides/references/changelog#CFG_VERSION_CHANGED_TO_HASH) | Added page due to deprecation of `cypress.json` file |
 
 ## See also
 

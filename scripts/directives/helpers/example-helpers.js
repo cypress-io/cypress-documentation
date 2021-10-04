@@ -1,5 +1,35 @@
 const endent = require('endent').default
 
+exports.normalizeAttributes = (attributes) => {
+  return Object.entries(attributes).reduce((acc, [key, value]) => {
+    // {foo=true} or {foo}
+    if (value === 'true' || value === '') {
+      value = true
+    }
+    // {foo=false}
+    else if (value === 'false') {
+      value = false
+    }
+    // {foo=123.45}
+    else if (!isNaN(Number(value)) && String(Number(value)) === value) {
+      value = Number(value)
+    }
+
+    return {
+      ...acc,
+      [key]: value,
+    }
+  }, {})
+}
+
+exports.getNodeProperties = ({ children = [], attributes, ...rest }) => {
+  return {
+    ...rest,
+    children,
+    attributes: exports.normalizeAttributes(attributes),
+  }
+}
+
 exports.getHeaderAndBody = (children) => {
   if (
     children.length < 1 ||
@@ -28,7 +58,7 @@ exports.getHeaderAndBody = (children) => {
 }
 
 exports.getCodeGroup = (...blocks) => {
-  const filterFn = ({ body }) => body !== false
+  const filterFn = (obj) => obj && obj.body
   const mapFn = ({ label, language, alert = '', body }, i) => {
     const alertCode = alert && `<template v-slot:alert>${alert}</template>`
 
