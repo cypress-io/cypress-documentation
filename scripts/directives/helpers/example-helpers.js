@@ -58,7 +58,7 @@ exports.getHeaderAndBody = (children) => {
 }
 
 exports.getCodeGroup = (...blocks) => {
-  const filterFn = (obj) => obj?.body
+  const filterFn = (obj) => obj && obj.body
   const mapFn = ({ label, language, alert = '', body }, i) => {
     const alertCode = alert && `<template v-slot:alert>${alert}</template>`
 
