@@ -547,7 +547,6 @@ extension.
 
 ```js
 const { startDevServer } = require('@cypress/vite-dev-server')
-const path = require('path')
 ```
 
 ```js
@@ -555,10 +554,7 @@ const path = require('path')
   component: {
     devServer(cypressDevServerConfig) {
       return startDevServer({
-        options: cypressDevServerConfig,
-        viteConfig: {
-          configFile: path.resolve(__dirname, './vite.config.js'),
-        },
+        options: cypressDevServerConfig
       })
     },
     componentFolder: 'src',
@@ -578,16 +574,10 @@ const path = require('path')
 
 ```js
 const { startDevServer } = require('@cypress/vite-dev-server')
-const path = require('path')
 
 module.exports = (on, config) => {
   on('dev-server:start', (options) => {
-    return startDevServer({
-      options,
-      viteConfig: {
-        configFile: path.resolve(__dirname, '../../vite.config.js'),
-      },
-    })
+    return startDevServer({ options })
   })
 }
 ```
