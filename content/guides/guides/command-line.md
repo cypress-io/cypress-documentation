@@ -181,7 +181,7 @@ For more complex configuration objects, you may want to consider passing a
 object surrounded by single quotes.
 
 ```shell
-cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.ts"]}'
+cypress run --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.ts"]}'
 ```
 
 <Alert type="info">
@@ -494,7 +494,7 @@ These options will also override values in the Cypress configuration file.
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | `--browser`, `-b`     | [Path to a custom browser to be added to the list of available browsers in Cypress](#cypress-open-browser-lt-browser-path-gt) |
 | `--config`, `-c`      | [Specify configuration](#cypress-open-config-lt-config-gt)                                                                    |
-| `--config-file`, `-C` | [Specify configuration file](#cypress-open-config-file-lt-config-file-gt)                                                     |
+| `--config-file`, `-C` | [Specify configuration file](#cypress-open-config-file-lt-configuration-file-gt)                                              |
 | `--detached`, `-d`    | Open Cypress in detached mode                                                                                                 |
 | `--env`, `-e`         | [Specify environment variables](#cypress-open-env-lt-env-gt)                                                                  |
 | `--global`            | [Run in global mode](#cypress-open-global)                                                                                    |
@@ -529,7 +529,15 @@ values with a comma. The values set here override any values set in your
 configuration file.
 
 ```shell
-cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
+cypress open --config pageLoadTimeout=100000,watchForFileChanges=false
+```
+
+For more complex configuration objects, you may want to consider passing a
+[JSON.stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+object surrounded by single quotes.
+
+```shell
+cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.ts"]}'
 ```
 
 #### `cypress open --config-file <configuration-file>`

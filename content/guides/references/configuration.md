@@ -36,7 +36,7 @@ Support for `cypress.json` will be removed in a future version of Cypress.
 
 You can change the configuration file or turn off the use of a configuration
 file by using the
-[`--config-file` flag](/guides/guides/command-line#cypress-open-config-file-lt-config-file-gt).
+[`--config-file` flag](/guides/guides/command-line#cypress-open-config-file-lt-configuration-file-gt).
 
 </Alert>
 
