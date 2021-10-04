@@ -11,17 +11,17 @@ const replacer = (key, value) => {
 
 function processNode(node, { _require, error, warn }) {
   const helpers = _require(__dirname, './helpers/example-helpers')
-  const { attributes, children = [] } = node
+  const { attributes, children } = helpers.getNodeProperties(node)
   const { errorArgs, header, body } = helpers.getHeaderAndBody(children)
 
   if (errorArgs) {
     return error(...errorArgs)
   }
 
-  const noJson = header !== '' || 'noJson' in attributes
+  const showConfigJson = !header && !attributes.noJson
   let configObj
 
-  if (!noJson) {
+  if (showConfigJson) {
     try {
       configObj = vm.runInNewContext(`(${body})`, {})
     } catch (err) {
@@ -31,7 +31,7 @@ function processNode(node, { _require, error, warn }) {
 
   let jsonBody = false
 
-  if (!noJson) {
+  if (showConfigJson) {
     try {
       jsonBody = JSON.stringify(configObj, replacer, 2)
     } catch (err) {
