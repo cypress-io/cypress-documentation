@@ -110,17 +110,21 @@ For example, if you would like to use a different viewport size or target
 different test files for Component Testing, your Cypress configuration might
 look like this:
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "testFiles": "cypress/integration/*.spec.js",
-  "component": {
-    "componentFolder": "src",
-    "testFiles": ".*/__tests__/.*spec.tsx",
-    "viewportHeight": 500,
-    "viewportWidth": 700
+  testFiles: "cypress/integration/*.spec.js",
+  component: {
+    componentFolder: "src",
+    testFiles: ".*/__tests__/.*spec.tsx",
+    viewportHeight: 500,
+    viewportWidth: 700
   }
 }
 ```
+
+:::
 
 The Component Testing runner will use all the configuration at the root level of
 your configuration file and apply any Component Testing specific overrides.
@@ -167,14 +171,18 @@ files. In the following Cypress configuration, all components test files
 contained within the `src` directory and match the glob given in the `testFiles`
 key.
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "component": {
-    "componentFolder": "src",
-    "testFiles": "**/*spec.{js,jsx,ts,tsx}"
+  component: {
+    componentFolder: "src",
+    testFiles: "**/*spec.{js,jsx,ts,tsx}"
   }
 }
 ```
+
+:::
 
 You will also need to configure the component testing framework of your choice
 by installing the corresponding component testing plugin. Read more about

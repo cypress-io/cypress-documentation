@@ -121,6 +121,8 @@ in the **Settings** tab of the Test Runner.
 
 ### Switch between multiple configuration files
 
+::include{file=partials/warning-plugins-file.md}
+
 This means you can do things like store multiple configuration files and switch
 between them like:
 
@@ -131,9 +133,7 @@ between them like:
 How you choose to organize your configuration and environment variables is up to
 you.
 
-:::cypress-plugin-example
-
-```js
+```javascript
 // promisified fs module
 const fs = require('fs-extra')
 const path = require('path')
@@ -143,16 +143,15 @@ function getConfigurationByFile(file) {
 
   return fs.readJson(pathToConfigFile)
 }
+
+// plugins file
+module.exports = (on, config) => {
+  // accept a configFile value or use development by default
+  const file = config.env.configFile || 'development'
+
+  return getConfigurationByFile(file)
+}
 ```
-
-```js
-// accept a configFile value or use development by default
-const file = config.env.configFile || 'development'
-
-return getConfigurationByFile(file)
-```
-
-:::
 
 You could now swap out configuration + environment variables like so:
 
