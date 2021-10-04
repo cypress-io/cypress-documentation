@@ -539,13 +539,46 @@ send a `503` status code. As a convenience it also sets a
 
 ### devServer / devServerConfig
 
-CONTENT_TBD
+The `devServer` function is a required [`component`](#component) runner specific
+option, and allows you to register a component testing dev server. It receives a
+`cypressDevServerConfig` argument which is passed to the dev server module.
 
-`devServer`: Required function used to configure the component testing dev
-server.
+:::cypress-config-example{noJson}
 
-`devServerConfig`: Optional dev server configuration. Config options will be
-determined by the dev server.
+```js
+{
+  component: {
+    devServer(cypressDevServerConfig) {
+      // start dev server here
+    },
+  },
+}
+```
+
+:::
+
+The `devServerConfig` object is optional and specific to the dev server that
+you've specified. If provided, it will be passed into the `devServer` function
+as the second argument.
+
+:::cypress-config-example{noJson}
+
+```js
+{
+  component: {
+    devServer(cypressDevServerConfig, devServerConfig) {
+      // this ^ devServerConfig is the same as the one below
+    },
+    devServerConfig: {/* optional config object */},
+  },
+}
+```
+
+:::
+
+See the
+[component testing framework configuration guide](/guides/component-testing/framework-configuration)
+for specific examples.
 
 ### firefoxGcInterval
 
@@ -703,10 +736,38 @@ case, please disable this option.
 
 ### setupNodeEvents
 
-CONTENT_TBD
+The `setupNodeEvents` function allows you to tap into, modify, or extend the
+internal behavior of Cypress using the [`on`](/api/plugins/writing-a-plugin#on)
+and [`config`](/api/plugins/writing-a-plugin#config) arguments, and is valid as
+an [`e2e`](#e2e) or [`component`](#component) runner specific option.
 
-Function in which node events can be registered and config can be modified.
-Takes the place of the (deprecated) plugins file.
+<Alert type="info">
+
+This function was added in Cypress CFG_VERSION to replace the deprecated plugins
+file.
+
+</Alert>
+
+:::cypress-config-example{noJson}
+
+```js
+{
+  e2e: {
+    setupNodeEvents(on, config) {
+      // e2e testing node events setup code
+    },
+  },
+  component: {
+    setupNodeEvents(on, config) {
+      // component testing node events setup code
+    },
+  },
+}
+```
+
+:::
+
+See the [plugins guide](/guides/tooling/plugins-guide) for more information.
 
 ## Common problems
 
