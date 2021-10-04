@@ -56,16 +56,12 @@ return config
 Lastly, tell Cypress where to find your test in the Cypress configuration. In
 this example all the tests are in `src` and named `test.js`:
 
-:::cypress-config-example
-
-```js
+```json
 {
-  testFiles: "**/*.test.{js,ts,jsx,tsx}",
-  componentFolder: "src"
+  "testFiles": "**/*.test.{js,ts,jsx,tsx}",
+  "componentFolder": "src"
 }
 ```
-
-:::
 
 Finally, add a test. We will replace the default test (using Testing Library)
 with one using Cypress:
@@ -151,16 +147,12 @@ for more information.
 Lastly, tell Cypress where to find your test in the Cypress configuration. In
 this example all the tests are in `src` and named `spec.js`:
 
-:::cypress-config-example
-
-```js
+```json
 {
-  testFiles: "**/*.spec.js",
-  componentFolder: "src"
+  "testFiles": "**/*.spec.js",
+  "componentFolder": "src"
 }
 ```
-
-:::
 
 Finally, add a test:
 
@@ -244,16 +236,12 @@ return config
 Lastly, tell Cypress where to find your test in the Cypress configuration. In
 this example all the tests are in `cypress/pages`:
 
-:::cypress-config-example
-
-```js
+```json
 {
-  testFiles: "*_/_.spec.{js,jsx}",
-  componentFolder: "cypress/pages"
+  "testFiles": "*_/_.spec.{js,jsx}",
+  "componentFolder": "cypress/pages"
 }
 ```
-
-:::
 
 Finally, add a test in `cypress/pages`:
 
@@ -360,16 +348,12 @@ implemented with Cypress e2e runner.
 In this example we specify the `componentFolder` as `components`, the default
 for Nuxt.
 
-:::cypress-config-example
-
-```js
+```json
 {
-  testFiles: "**/*.spec.js",
-  componentFolder: "components"
+  "testFiles": "**/*.spec.js",
+  "componentFolder": "components"
 }
 ```
-
-:::
 
 Finally, add a component and test:
 
@@ -496,16 +480,12 @@ on('dev-server:start', (options) => {
 Lastly, tell Cypress where to find your test in the Cypress configuration. In
 this example all the tests are in `src` and named `spec.jsx`:
 
-:::cypress-config-example
-
-```js
+```json
 {
-  testFiles: "**/*.spec.jsx",
-  componentFolder: "src"
+  "testFiles": "**/*.spec.jsx",
+  "componentFolder": "src"
 }
 ```
-
-:::
 
 Finally, add a test in `src/App.spec.jsx`:
 
