@@ -179,6 +179,8 @@ with the following configuration should get intelligent code completion working.
 
 ### Configuration
 
+::include{file=partials/warning-cypress-json.md}
+
 #### Features:
 
 When editing the [Cypress configuration file](/guides/references/configuration),
