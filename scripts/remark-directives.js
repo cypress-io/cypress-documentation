@@ -50,6 +50,7 @@ const getDisplay = (type, name) => {
 function loadDirectives() {
   loadDirective('./directives/include')
   loadDirective('./directives/cypress-config-example')
+  loadDirective('./directives/cypress-config-plugin-example')
   loadDirective('./directives/cypress-plugin-example')
 }
 

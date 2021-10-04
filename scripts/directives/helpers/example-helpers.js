@@ -57,6 +57,41 @@ exports.getHeaderAndBody = (children) => {
   return { header, body }
 }
 
+exports.getCodeBlocks = (children, { count, min, max } = {}) => {
+  const hasCount = typeof count === 'number'
+
+  if (!hasCount && (typeof min !== 'number' || typeof max !== 'number')) {
+    const errorArgs = [
+      `Expected either "count" or "min" + "max" options, instead got`,
+      { count, min, max },
+    ]
+
+    return { errorArgs }
+  }
+
+  if (hasCount) {
+    min = max = count
+  }
+
+  if (
+    children.length < min ||
+    children.length > max ||
+    !children.every(({ type }) => type === 'code')
+  ) {
+    const countText = hasCount ? count : `${min}-${max}`
+    const errorArgs = [
+      `Expected ${countText} code blocks inside directive, instead got`,
+      children.map((o) => o.type),
+    ]
+
+    return { errorArgs }
+  }
+
+  const parts = children.map(({ value }) => value.trim())
+
+  return { parts }
+}
+
 exports.getCodeGroup = (...blocks) => {
   const filterFn = (obj) => obj && obj.body
   const mapFn = ({ label, language, alert = '', body }, i) => {
