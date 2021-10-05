@@ -60,7 +60,7 @@ cy.get('a').debug().should('have.attr', 'href')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.debug()` can bechained off of `cy` or off another
+<List><li>`.debug()` can be chained off of `cy` or off another
 command.</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)

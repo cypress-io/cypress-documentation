@@ -250,7 +250,7 @@ requests to complete within the given `requestTimeout` and `responseTimeout`.
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>When passed a `time` argument `cy.wait()` can bechained off of `cy` or
+<List><li>When passed a `time` argument `cy.wait()` can be chained off of `cy` or
 off another command..</li><li>When passed an `alias` argument `cy.wait()`
 requires being chained off of `cy`..</li></List>
 
