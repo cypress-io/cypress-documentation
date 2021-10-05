@@ -1002,6 +1002,13 @@
           "link": "https://github.com/maritome/cypress-msteams-reporter",
           "keywords": ["reporter", "ms-teams", "allure-report"],
           "badge": "community"
+        },
+        {
+          "name": "@saucelabs/cypress-plugin",
+          "description": "Sauce Labs reporting tool. A reporting tool which uploads results and artifacts to Sauce Labs.",
+          "link": "https://github.com/saucelabs/sauce-cypress-plugin",
+          "keywords": ["reporter", "saucelabs"],
+          "badge": "community"
         }
       ]
     },
