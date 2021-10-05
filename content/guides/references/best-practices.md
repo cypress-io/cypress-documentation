@@ -769,8 +769,8 @@ The same practice above can be used for any type of database (PostgreSQL,
 MongoDB, etc.). In this example, a request is sent to a back end API, but you
 could also interact directly with your database with direct queries, custom
 libraries, etc. If you already have non-JavaScript methods of handling or
-interacting with your database, you can use `[cy.exec](/api/commands/exec)`,
-instead of `[cy.task](/api/commands/task)`, to execute any system command or
+interacting with your database, you can use [`cy.exec`](/api/commands/exec),
+instead of [`cy.task`](/api/commands/task), to execute any system command or
 script.
 
 ## Unnecessary Waiting

@@ -578,7 +578,7 @@ following:
 ## See also
 
 - [`cy.intercept()` docs](/api/commands/intercept)
-- [Network requests in Kitchen Sink example](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/examples/network_requests.spec.js)
+- [Network requests in Kitchen Sink example](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/2-advanced-examples/network_requests.spec.js)
 - [See how to make a request with `cy.request()`](/api/commands/request)
 - [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
   test suites to see Cypress network handling in action.

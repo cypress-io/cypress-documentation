@@ -29,7 +29,7 @@
     "*.{js,vue}": "eslint --cache --fix",
     "*.{css,vue}": "stylelint",
     "*.css": "stylelint --fix",
-    "*.md": "prettier --write"
+    "*.{md, json}": "prettier --write"
   },
   "dependencies": {
     "@docsearch/css": "^1.0.0-alpha.28",
