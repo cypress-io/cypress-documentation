@@ -77,9 +77,9 @@ it('renders learn react link', () => {
 })
 ```
 
-Start Cypress with `npx cypress open-ct` - the test runner will open. Select
+Start Cypress with `npx cypress open --component` - the test runner will open. Select
 your test to execute it and see the rendered output. You can also run the tests
-without opening a browser with `npx cypress run-ct`.
+without opening a browser with `npx cypress run --component`.
 
 ## Vue (Vue CLI)
 
@@ -169,9 +169,9 @@ it('renders a message', () => {
 })
 ```
 
-Start Cypress with `npx cypress open-ct` - the test runner will open. Select
+Start Cypress with `npx cypress open --component` - the test runner will open. Select
 your test to execute it and see the rendered output. You can also run the tests
-without opening a browser with `npx cypress run-ct`.
+without opening a browser with `npx cypress run --component`.
 
 ### Vue 3 (Vue CLI)
 
@@ -248,9 +248,9 @@ it('Renders page component', () => {
 })
 ```
 
-Start Cypress with `npx cypress open-ct` - the test runner will open. Select
+Start Cypress with `npx cypress open --component` - the test runner will open. Select
 your test to execute it and see the rendered output. You can also run the tests
-without opening a browser with `npx cypress run-ct`.
+without opening a browser with `npx cypress run --component`.
 
 <Alert type="warning">
 
@@ -429,9 +429,9 @@ _not_ applied. In this example, the `fetch` hook is not automatically applied,
 so we used the `mocks` mounting option to specify the three component states
 (loading, error and success) and test each one in isolation.
 
-Start Cypress with `npx cypress open-ct` - the test runner will open. Select
+Start Cypress with `npx cypress open --component` - the test runner will open. Select
 your test to execute it and see the rendered output. You can also run the tests
-without opening a browser with `npx cypress run-ct`.
+without opening a browser with `npx cypress run --component`.
 
 ## Vite Based Projects (Vue, React)
 
@@ -488,6 +488,6 @@ it('renders learn react link', () => {
 })
 ```
 
-Start Cypress with `npx cypress open-ct` - the test runner will open. Select
+Start Cypress with `npx cypress open --component` - the test runner will open. Select
 your test to execute it and see the rendered output. You can also run the tests
-without opening a browser with `npx cypress run-ct`.
+without opening a browser with `npx cypress run --component`.

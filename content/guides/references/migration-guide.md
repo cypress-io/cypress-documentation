@@ -470,14 +470,14 @@ module.exports = (on, config) => {
 To run your component tests you _must_ use the dedicated component testing
 subcommands.
 
-- `cypress open-ct`
-- `cypress run-ct`
+- `cypress open --component`
+- `cypress run --component`
 
 <Alert type="info">
 
 Component tests will no longer be picked up when launching Cypress from
-`cypress open` or `cypress run`. Please use `cypress open-ct` or
-`cypress run-ct`.
+`cypress open` or `cypress run`. Please use `cypress open --component` or
+`cypress run --component`.
 
 </Alert>
 
@@ -493,10 +493,10 @@ Runner and executes component tests. End-to-end tests are run separately.
 
 ```shell
 # open component testing runner
-cypress open-ct
+cypress open --component
 
 # run all component tests
-cypress run-ct
+cypress run --component
 
 # e2e tests
 cypress open
@@ -576,7 +576,7 @@ it('renders a Button', () => {
 
 Previously, the Desktop GUI displayed _both_ end-to-end and component tests.
 Now, component tests are only displayed when launching via the component
-testing-specific subcommands. `cypress open-ct` (or `run-ct` in CI)
+testing-specific subcommands. `cypress open --component` (or `run --component` in CI)
 
 #### Executing all or some component tests
 
@@ -585,7 +585,7 @@ component tests. In 7.0, this is possible with the `--headed` command and a spec
 glob, like so:
 
 ```sh
-cypress run-ct --headed --spec **/some-folder/*spec.*
+cypress run --component --headed --spec **/some-folder/*spec.*
 ```
 
 #### Coverage
