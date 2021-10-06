@@ -165,6 +165,8 @@ Cypress.env() // => {foo: 'foo', baz: 'quux', host: 'http://server.dev.local'}
 
 ### From a plugin
 
+::include{file=partials/warning-plugins-file.md}
+
 Here's an example that uses `Cypress.env` to access an environment variable
 that's been
 [dynamically set in a plugin](/guides/guides/environment-variables#Option-5-Plugins).
