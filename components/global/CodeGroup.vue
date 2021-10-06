@@ -14,8 +14,8 @@
         ) in codeBlocks"
         ref="tabs"
         :key="label"
-        class="px-4 py-3 text-gray-400 font-bold font-mono outline-none"
-        :class="[activeTabIndex === i && 'active']"
+        class="px-4 py-3 text-gray-400 font-bold font-mono"
+        :class="[$style.button, activeTabIndex === i && 'active']"
         @click="updateTabs(i)"
       >
         {{ label }}
@@ -85,8 +85,8 @@ export default {
 </script>
 
 <style module>
-button {
-  outline: none;
+.button {
+  outline: none !important;
 }
 
 .highlightUnderline {
