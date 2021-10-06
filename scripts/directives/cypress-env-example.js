@@ -16,10 +16,10 @@ function processNode(node, { _require, error, warn }) {
     return bodyData
       .map(([key, val]) => {
         if (key.includes('awsConfig')) {
-          return `config.env.${key}: ${val}`
+          return `${key}: ${val}`
         }
 
-        return `config.env.${key}: process.env.${val}`
+        return `${key}: process.env.${val}`
       })
       .join(',\n')
   }
@@ -68,7 +68,7 @@ function processNode(node, { _require, error, warn }) {
       `,
     },
     {
-      label: 'plugins/index.js',
+      label: 'cypress/plugins/index.js',
       language: 'js',
       alert: endent`
       <Alert type="warning">
