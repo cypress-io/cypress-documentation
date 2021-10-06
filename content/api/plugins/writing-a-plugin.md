@@ -13,13 +13,15 @@ The Plugins API allows you to hook into and extend Cypress behavior.
 
 ## Plugins API
 
-To get started, open up this file:
+The [`setupNodeEvents`](/guides/references/configuration#setupNodeEvents)
+function receives 2 arguments: [`on`](#on) and [`config`](#config). It can
+return a synchronous value or can also return a Promise, which will be awaited
+until it resolves. This enables you to perform asynchronous actions such as
+reading files in from the filesystem.
 
-```text
-cypress/plugins/index.js
-```
-
-The plugins file must export a function with the following signature:
+If you return or resolve with an object, Cypress will then merge this object
+into the `config` which enables you to overwrite configuration or environment
+variables.
 
 :::cypress-plugin-example
 
@@ -28,22 +30,6 @@ The plugins file must export a function with the following signature:
 ```
 
 :::
-
-::include{file=partials/warning-setup-node-events.md}
-
-The exported function is called whenever a project is opened either with
-[cypress open](/guides/guides/command-line#cypress-open) or
-[cypress run](/guides/guides/command-line#cypress-run).
-
-Your function will receive 2 arguments: `on` and `config`.
-
-You can return a synchronous function, or you can also return a Promise, and it
-will be awaited until it resolves. This enables you to perform asynchronous
-actions in your exported function such as reading files in from the filesystem.
-
-If you return or resolve with an object, Cypress will then merge this object
-into the `config` which enables you to overwrite configuration or environment
-variables.
 
 ### on
 

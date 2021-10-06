@@ -743,8 +743,8 @@ an [`e2e`](#e2e) or [`component`](#component) runner specific option.
 
 <Alert type="info">
 
-This function was added in Cypress CFG_VERSION to replace the deprecated plugins
-file.
+This function was added in Cypress CFG_VERSION to replace the deprecated
+[plugins file](/guides/references/legacy-configuration#Plugins).
 
 </Alert>
 

@@ -190,6 +190,8 @@ To learn more about videos and settings available, see
 
 ### Plugins file
 
+::include{file=partials/warning-plugins-file.md}
+
 The plugins file is a special file that executes in Node before the project is
 loaded, before the browser launches, and during your test execution. While the
 Cypress tests execute in the browser, the plugins file runs in the background
