@@ -10,11 +10,26 @@ export default {
       default: false,
     },
   },
+  data() {
+    return {
+      activeState: this.active,
+    }
+  },
+  beforeMount() {
+    if (this.$parent && this.$parent.registerCodeBlock) {
+      this.$parent.registerCodeBlock(this)
+    }
+  },
+  methods: {
+    setActiveState(state) {
+      this.activeState = state
+    },
+  },
 }
 </script>
 
 <template>
-  <div :class="[active && 'active', $style.codeBlock]">
+  <div :class="[activeState && $style.active, $style.codeBlock]">
     <div v-if="true" :class="['code-block', $style.alert]">
       <slot name="alert"></slot>
     </div>
@@ -27,11 +42,11 @@ export default {
   display: none;
 }
 
-:global(.active) {
+.active {
   display: block;
 }
 
-:global(.active .line-numbers) {
+.active .line-numbers {
   @apply mt-0;
 }
 
