@@ -13,23 +13,27 @@ function processNode(node, { _require, error, warn }) {
   const bodyData = Object.entries(JSON.parse(bodyJson))
 
   function envProperties(bodyData) {
-    return bodyData.map(([key, val]) => {
-      if (key.includes('awsConfig')) {
-        return `config.env.${key}: ${val}`
-      }
+    return bodyData
+      .map(([key, val]) => {
+        if (key.includes('awsConfig')) {
+          return `config.env.${key}: ${val}`
+        }
 
-      return `config.env.${key}: process.env.${val}`
-    }).join(',\n')
+        return `config.env.${key}: process.env.${val}`
+      })
+      .join(',\n')
   }
 
   function envFunctionLines(bodyData) {
-    return bodyData.map(([key, val]) => {
-      if (key.includes('awsConfig')) {
-        return `config.env.${key} = ${val}`
-      }
+    return bodyData
+      .map(([key, val]) => {
+        if (key.includes('awsConfig')) {
+          return `config.env.${key} = ${val}`
+        }
 
-      return `config.env.${key} = process.env.${val}`
-    }).join('\n')
+        return `config.env.${key} = process.env.${val}`
+      })
+      .join('\n')
   }
 
   return helpers.getCodeGroup(
