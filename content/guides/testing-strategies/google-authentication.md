@@ -106,8 +106,8 @@ refresh token to be used with testing.
 ## Setting Google app credentials in Cypress
 
 To have access to test user credentials within our tests we need to configure
-Cypress to use the [Google](https://google.com) environment variables set in
-`.env` inside of the Cypress configuration.
+Cypress to use the [Google](https://google.com) environment variables set in the
+`.env` file.
 
 ```jsx
 // .env
@@ -119,8 +119,8 @@ GOOGLE_REFRESH_TOKEN = 'your-refresh-token'
 :::cypress-env-example
 
 ```js
-// initial imports ...
-dotenv.config()
+// Populate process.env with values from .env file
+require('dotenv').config()
 ```
 
 ```json

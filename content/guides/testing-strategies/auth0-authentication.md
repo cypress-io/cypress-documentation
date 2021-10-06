@@ -88,14 +88,14 @@ you can make as many users needed to test your specific application.
 ## Setting Auth0 app credentials in Cypress
 
 To have access to test user credentials within our tests we need to configure
-Cypress to use the [Auth0](https://auth0.com) environment variables set in
-`.env` inside of the Cypress configuration.
+Cypress to use the [Auth0](https://auth0.com) environment variables set in the
+`.env` file.
 
 :::cypress-env-example
 
 ```js
-// initial imports ...
-dotenv.config()
+// Populate process.env with values from .env file
+require('dotenv').config()
 ```
 
 ```json
@@ -106,7 +106,7 @@ dotenv.config()
   "auth0_audience": "REACT_APP_AUTH0_AUDIENCE",
   "auth0_scope": "REACT_APP_AUTH0_SCOPE",
   "auth0_client_id": "REACT_APP_AUTH0_CLIENTID",
-  "auth0_client_secret": "AUTH0_CLIENT_SECRETD"
+  "auth0_client_secret": "AUTH0_CLIENT_SECRET"
 }
 ```
 
