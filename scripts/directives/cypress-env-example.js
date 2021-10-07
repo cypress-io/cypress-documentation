@@ -68,7 +68,7 @@ function processNode(node, { _require, error, warn }) {
       `,
     },
     {
-      label: 'cypress/plugins/index.js',
+      label: 'plugins file (deprecated)',
       language: 'js',
       alert: endent`
       <Alert type="warning">
@@ -84,6 +84,7 @@ function processNode(node, { _require, error, warn }) {
       </Alert>
       `,
       body: endent`
+        // cypress/plugins/index.js
         ${header}
 
         module.exports = (on, config) => {
