@@ -2,7 +2,7 @@ const endent = require('endent').default
 
 function processNode(node, { _require, error, warn }) {
   const helpers = _require(__dirname, './helpers/example-helpers')
-  const { children } = helpers.getNodeProperties(node)
+  const { attributes, children = [] } = helpers.getNodeProperties(node)
   const { errorArgs, parts } = helpers.getCodeBlocks(children, { count: 2 })
 
   if (errorArgs) {
@@ -12,10 +12,13 @@ function processNode(node, { _require, error, warn }) {
   const [header, bodyJson] = parts
   const bodyData = Object.entries(JSON.parse(bodyJson))
 
+  const hasPrefixkeys = 'noPrefixKeys' in attributes
+  const { noPrefixKeys } = attributes
+
   function envProperties(bodyData) {
     return bodyData
       .map(([key, val]) => {
-        if (key.includes('awsConfig')) {
+        if (hasPrefixkeys && noPrefixKeys.includes(key)) {
           return `${key}: ${val}`
         }
 
@@ -27,7 +30,7 @@ function processNode(node, { _require, error, warn }) {
   function envFunctionLines(bodyData) {
     return bodyData
       .map(([key, val]) => {
-        if (key.includes('awsConfig')) {
+        if (hasPrefixkeys && noPrefixKeys.includes(key)) {
           return `config.env.${key} = ${val}`
         }
 

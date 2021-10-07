@@ -135,7 +135,7 @@ First, we need to configure Cypress to use the
 `.env` file. In addition, we are using the `aws-exports.js` supplied during the
 [AWS Amplify CLI](https://docs.amplify.aws/CLI) build process.
 
-:::cypress-env-example
+:::cypress-env-example{noPrefixKeys=awsConfig}
 
 ```js
 // Populate process.env with values from .env file
