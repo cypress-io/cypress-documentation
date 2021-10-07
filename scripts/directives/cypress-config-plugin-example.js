@@ -52,11 +52,11 @@ function processNode(node, { _require, error, warn }) {
       body: endent`
         // cypress.json (deprecated)
 
-        WEIRD_WORKAROUND_SORRY${cypressJson}
+        __FIX_INDENT__${cypressJson}
 
         // plugins file (deprecated)
 
-        WEIRD_WORKAROUND_SORRY${pluginsFile}
+        __FIX_INDENT__${pluginsFile}
       `,
     }
   )

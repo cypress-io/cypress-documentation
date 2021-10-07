@@ -128,5 +128,5 @@ exports.getCodeGroup = (...blocks) => {
   // console.log(result)
 
   // Workaround for https://github.com/indentjs/endent/issues/10
-  return result.replace(/WEIRD_WORKAROUND_SORRY/g, '')
+  return result.replace(/__FIX_INDENT__/g, '')
 }
