@@ -1,13 +1,5 @@
 const endent = require('endent').default
 
-const replacer = (key, value) => {
-  if (typeof value === 'function') {
-    throw new Error(`Function values not supported in json: ${key}`)
-  }
-
-  return value
-}
-
 function processNode(node, { _require, error, warn }) {
   const helpers = _require(__dirname, './helpers/example-helpers')
   const { children } = helpers.getNodeProperties(node)
