@@ -1,23 +1,34 @@
 const endent = require('endent').default
 
+const normalizeValue = (value, { emptyStringIsTrue = true } = {}) => {
+  // {foo=bar,123,true,false}
+  if (/,/.test(value)) {
+    return value.split(',').map(str => normalizeValue(str, {emptyStringIsTrue: false}))
+  }
+
+  // {foo=true} or {foo}
+  if (value === 'true' || (emptyStringIsTrue && value === '')) {
+    return true
+  }
+
+  // {foo=false}
+  if (value === 'false') {
+    return false
+  }
+
+  // {foo=123.45}
+  if (!isNaN(Number(value)) && String(Number(value)) === value) {
+    return Number(value)
+  }
+
+  return value
+}
+
 exports.normalizeAttributes = (attributes) => {
   return Object.entries(attributes).reduce((acc, [key, value]) => {
-    // {foo=true} or {foo}
-    if (value === 'true' || value === '') {
-      value = true
-    }
-    // {foo=false}
-    else if (value === 'false') {
-      value = false
-    }
-    // {foo=123.45}
-    else if (!isNaN(Number(value)) && String(Number(value)) === value) {
-      value = Number(value)
-    }
-
     return {
       ...acc,
-      [key]: value,
+      [key]: normalizeValue(value),
     }
   }, {})
 }
