@@ -852,7 +852,7 @@ the timeout is reached, the test will fail.
 
 </Alert>
 
-### Commands Are Promises
+### Commands Are Not Promises
 
 This is the big secret of Cypress: we've taken our favorite pattern for
 composing JavaScript code, Promises, and built them right into the fabric of
@@ -899,18 +899,10 @@ it('changes the URL when "awesome" is clicked', () => {
 ```
 
 Big difference! In addition to reading much cleaner, Cypress does more than
-this, because **Promises themselves have no concepts of
-[retry-ability](/guides/core-concepts/retry-ability)**.
-
-Without [**retry-ability**](/guides/core-concepts/retry-ability), assertions
-would randomly fail. This would lead to flaky, inconsistent results. This is
-also why we cannot use new JS features like `async / await`.
-
-Cypress cannot yield you primitive values isolated away from other commands.
-That is because Cypress commands act internally like an asynchronous stream of
-data that only resolve after being affected and modified **by other commands**.
-This means we cannot yield you discrete values in chunks because we have to know
-everything about what you expect before handing off a value.
+this. Almost all commands come with built-in
+[retry-ability](/guides/core-concepts/retry-ability)**. Without
+[**retry-ability**](/guides/core-concepts/retry-ability), assertions
+would randomly fail. This would lead to flaky, inconsistent results.
 
 These design patterns ensure we can create **deterministic**, **repeatable**,
 **consistent** tests that are **flake free**.
@@ -930,14 +922,15 @@ read our [Core Concept Guide](/guides/core-concepts/variables-and-aliases).
 
 </Alert>
 
-### Commands Are Not Promises
+### Commands Are Really Not Promises
 
-The Cypress API is not an exact 1:1 implementation of Promises. They have
-Promise like qualities and yet there are important differences you should be
+The Cypress API is similar to promises visually, but it is actually a command
+queue, managing async coordination for you. Commands have some Promise like
+qualities, but yet there are important differences you should be
 aware of.
 
 1. You cannot **race** or run multiple commands at the same time (in parallel).
-2. You cannot 'accidentally' forget to return or chain a command.
+2. You cannot accidentally forget to return or chain a command.
 3. You cannot add a `.catch` error handler to a failed command.
 
 There are _very_ specific reasons these limitations are built into the Cypress
@@ -994,9 +987,9 @@ return fs.readFile('/foo.txt', 'utf8').then((txt) => {
 ```
 
 The reason this is even possible to do in the Promise world is because you have
-the power to execute multiple asynchronous actions in parallel. Under the hood,
-each promise 'chain' returns a promise instance that tracks the relationship
-between linked parent and child instances.
+the power to execute multiple asynchronous actions in parallel. Each promise
+'chain' returns a promise instance that tracks the relationship between linked
+parent and child instances.
 
 Because Cypress enforces commands to run _only_ serially, you do not need to be
 concerned with this in Cypress. We enqueue all commands onto a _global_
@@ -1020,12 +1013,10 @@ You might be wondering:
 > does (or doesn't) exist, I choose what to do?
 
 The problem with this question is that this type of conditional control flow
-ends up being non-deterministic. This means it's impossible for a script (or
-robot), to follow it 100% consistently.
-
-In general, there are only a handful of very specific situations where you _can_
-create control flow. Asking to recover from errors is actually the same as
-asking for another `if/else` control flow.
+ends up being non-deterministic. This means different test runs may behave
+differently, which makes them less deterministic and consistent. In general,
+there are only a handful of very specific situations where you _can_
+create control flow using Cypress commands.
 
 With that said, as long as you are aware of the potential pitfalls with control
 flow, it is possible to do this in Cypress!
