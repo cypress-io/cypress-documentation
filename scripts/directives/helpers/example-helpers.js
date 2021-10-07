@@ -103,6 +103,13 @@ exports.getCodeBlocks = (children, { count, min, max } = {}) => {
   return { parts }
 }
 
+exports.adjustPluginsFileContent = (code) => {
+  // Change require('./ to require('../../
+  code = code.replace(/require\((['"])\.\//g, 'require($1../../')
+
+  return code
+}
+
 exports.getCodeGroup = (...blocks) => {
   const filterFn = (obj) => obj && obj.body
   const mapFn = ({ label, language, alert = '', body }, i) => {

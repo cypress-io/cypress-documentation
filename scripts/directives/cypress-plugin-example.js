@@ -68,9 +68,9 @@ function processNode(node, { _require, error }) {
         </Alert>
       `,
       body: endent`
-        ${header}
+        ${helpers.adjustPluginsFileContent(header)}
         module.exports = (on, config) => {
-          ${body}
+          ${helpers.adjustPluginsFileContent(body)}
         }
       `,
     }
