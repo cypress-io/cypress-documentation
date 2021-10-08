@@ -1,23 +1,34 @@
 const endent = require('endent').default
 
+const normalizeValue = (value, { emptyStringIsTrue = true } = {}) => {
+  // {foo=bar,123,true,false}
+  if (/,/.test(value)) {
+    return value.split(',').map(str => normalizeValue(str, {emptyStringIsTrue: false}))
+  }
+
+  // {foo=true} or {foo}
+  if (value === 'true' || (emptyStringIsTrue && value === '')) {
+    return true
+  }
+
+  // {foo=false}
+  if (value === 'false') {
+    return false
+  }
+
+  // {foo=123.45}
+  if (!isNaN(Number(value)) && String(Number(value)) === value) {
+    return Number(value)
+  }
+
+  return value
+}
+
 exports.normalizeAttributes = (attributes) => {
   return Object.entries(attributes).reduce((acc, [key, value]) => {
-    // {foo=true} or {foo}
-    if (value === 'true' || value === '') {
-      value = true
-    }
-    // {foo=false}
-    else if (value === 'false') {
-      value = false
-    }
-    // {foo=123.45}
-    else if (!isNaN(Number(value)) && String(Number(value)) === value) {
-      value = Number(value)
-    }
-
     return {
       ...acc,
-      [key]: value,
+      [key]: normalizeValue(value),
     }
   }, {})
 }
@@ -92,6 +103,13 @@ exports.getCodeBlocks = (children, { count, min, max } = {}) => {
   return { parts }
 }
 
+exports.adjustPluginsFileContent = (code) => {
+  // Change require('./ to require('../../
+  code = code.replace(/require\((['"])\.\//g, 'require($1../../')
+
+  return code
+}
+
 exports.getCodeGroup = (...blocks) => {
   const filterFn = (obj) => obj && obj.body
   const mapFn = ({ label, language, alert = '', body }, i) => {
@@ -117,5 +135,5 @@ exports.getCodeGroup = (...blocks) => {
   // console.log(result)
 
   // Workaround for https://github.com/indentjs/endent/issues/10
-  return result.replace(/WEIRD_WORKAROUND_SORRY/g, '')
+  return result.replace(/__FIX_INDENT__/g, '')
 }

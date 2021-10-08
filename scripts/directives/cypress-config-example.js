@@ -74,8 +74,7 @@ function processNode(node, { _require, error, warn }) {
 
         </Alert>
       `,
-      // Workaround for https://github.com/indentjs/endent/issues/10
-      body: jsonBody && `WEIRD_WORKAROUND_SORRY${jsonBody}`,
+      body: jsonBody && `__FIX_INDENT__${jsonBody}`,
     }
   )
 }
