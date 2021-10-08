@@ -4,6 +4,18 @@
   </div>
 </template>
 
+<script>
+import { onFileChange } from '../utils/file-change-server/client'
+
+export default {
+  mounted() {
+    if (process.env.NODE_ENV === 'development') {
+      onFileChange({ onPath: (path) => this.$router.push(path) })
+    }
+  },
+}
+</script>
+
 <style>
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',

@@ -11,6 +11,7 @@
     "build": "nuxt generate && mv dist/404/index.html dist/404.html && rm -rf dist/404",
     "copy": "bash ./scripts/clone-current-docs.sh",
     "start": "cross-env NODE_ENV=development nuxt",
+    "start:file-change-server": "node ./utils/file-change-server/server",
     "start:ci": "cross-env NODE_ENV=test yarn build && cd dist/ && yarn serve:dist",
     "changed-files-broken-link-checker:ci": "node scripts/changedFilesBrokenLinkChecker.js",
     "broken-link-checker:prod": "node scripts/recursiveBrokenLinkChecker.js",
@@ -68,6 +69,7 @@
     "bluebird": "^3.7.2",
     "broken-link-checker": "^0.7.8",
     "chalk": "^4.1.0",
+    "chokidar": "^3.5.2",
     "common-tags": "^1.8.0",
     "cross-env": "^7.0.3",
     "cypress": "^8.3.0",
@@ -96,6 +98,7 @@
     "stylelint-config-css-modules": "^2.2.0",
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-config-standard": "^20.0.0",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+    "ws": "^8.2.3"
   }
 }
