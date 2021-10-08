@@ -69,7 +69,8 @@ function processNode(node, { _require, error, warn }) {
       `,
       body: endent`
         // cypress/plugins/index.js
-        ${header}
+        
+        ${helpers.adjustPluginsFileContent(header)}
 
         module.exports = (on, config) => {
           ${envFunctionLines(bodyData)}
