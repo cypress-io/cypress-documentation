@@ -208,6 +208,11 @@ cy.readFile('package.json')
 
 The command above will display in the Command Log as:
 
+<!-- Code to reproduce screenshot:
+  in spec file:
+  use cy.readFile('package.json') as shown in the example above
+-->
+
 <DocsImage src="/img/api/readfile/readfile-can-get-content-of-system-files-in-tests.png" alt="Command Log readFile" ></DocsImage>
 
 When clicking on the `readFile` command within the command log, the console

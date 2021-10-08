@@ -529,6 +529,10 @@ cy.task('countFiles', 'cypress/integration')
 
 The command above will display in the Command Log as:
 
+<!-- Code to reproduce screenshot:
+configure the countFiles task in the Cypress configuration and call it in a spec file as shown in above example
+-->
+
 <DocsImage src="/img/api/task/task-count-files.png" alt="Command Log task" ></DocsImage>
 
 When clicking on the `task` command within the command log, the console outputs
