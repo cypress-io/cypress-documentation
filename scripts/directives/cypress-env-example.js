@@ -26,7 +26,7 @@ function processNode(node, { _require, error, warn }) {
 
   const envFunctionLines = () => {
     return bodyData
-      .map(([key, val]) => `config.env.${key}: ${getValue(key, val)}`)
+      .map(([key, val]) => `config.env.${key} = ${getValue(key, val)}`)
       .join('\n')
   }
 
