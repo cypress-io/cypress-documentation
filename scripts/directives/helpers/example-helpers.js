@@ -3,7 +3,9 @@ const endent = require('endent').default
 const normalizeValue = (value, { emptyStringIsTrue = true } = {}) => {
   // {foo=bar,123,true,false}
   if (/,/.test(value)) {
-    return value.split(',').map(str => normalizeValue(str, {emptyStringIsTrue: false}))
+    return value
+      .split(',')
+      .map((str) => normalizeValue(str, { emptyStringIsTrue: false }))
   }
 
   // {foo=true} or {foo}
