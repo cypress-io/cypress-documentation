@@ -14,29 +14,11 @@ function processNode(node, { _require, error, warn }) {
 
   const { noPrefixKeys = [] } = attributes
 
-  function envProperties(bodyData) {
-    return bodyData
-      .map(([key, val]) => {
-        if (noPrefixKeys.includes(key)) {
-          return `${key}: ${val}`
-        }
+  const getValue = (key, val) => noPrefixKeys.includes(key) ? val : `process.env.${val}`
 
-        return `${key}: process.env.${val}`
-      })
-      .join(',\n')
-  }
+  const envProperties = () => bodyData.map(([key, val]) => `${key}: ${getValue(key, val)}`).join(',\n')
 
-  function envFunctionLines(bodyData) {
-    return bodyData
-      .map(([key, val]) => {
-        if (noPrefixKeys.includes(key)) {
-          return `config.env.${key} = ${val}`
-        }
-
-        return `config.env.${key} = process.env.${val}`
-      })
-      .join('\n')
-  }
+  const envFunctionLines = () => bodyData.map(([key, val]) => `config.env.${key}: ${getValue(key, val)}`).join('\n')
 
   return helpers.getCodeGroup(
     {
