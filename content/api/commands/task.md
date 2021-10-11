@@ -519,9 +519,9 @@ not [retry](/guides/core-concepts/retry-ability).</li></List>
 
 ## Command Log
 
-This is the same
+This example uses the
 [Return number of files in the folder](#Return-number-of-files-in-the-folder)
-task seen above.
+task defined above.
 
 ```javascript
 cy.task('countFiles', 'cypress/integration')
