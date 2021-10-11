@@ -519,15 +519,21 @@ not [retry](/guides/core-concepts/retry-ability).</li></List>
 
 ## Command Log
 
-#### List the contents of your package.json file
+This example uses the
+[Return number of files in the folder](#Return-number-of-files-in-the-folder)
+task defined above.
 
 ```javascript
-cy.task('readJson', 'package.json')
+cy.task('countFiles', 'cypress/integration')
 ```
 
 The command above will display in the Command Log as:
 
-<DocsImage src="/img/api/task/task-read-cypress-json.png" alt="Command Log task" ></DocsImage>
+<!-- Code to reproduce screenshot:
+configure the countFiles task in the Cypress configuration and call it in a spec file as shown in above example
+-->
+
+<DocsImage src="/img/api/task/task-count-files.png" alt="Command Log task" ></DocsImage>
 
 When clicking on the `task` command within the command log, the console outputs
 the following:
