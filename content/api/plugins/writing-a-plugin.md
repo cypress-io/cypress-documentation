@@ -16,10 +16,12 @@ The Plugins API allows you to hook into and extend Cypress behavior.
 ## Plugins API
 
 The [`setupNodeEvents`](/guides/references/configuration#setupNodeEvents)
-function receives 2 arguments: [`on`](#on) and [`config`](#config). It can
-return a synchronous value or can also return a Promise, which will be awaited
-until it resolves. This enables you to perform asynchronous actions such as
-reading files in from the filesystem.
+function (or deprecated
+[plugins file](/guides/references/legacy-configuration#Plugins) function)
+receives 2 arguments: [`on`](#on) and [`config`](#config). It can return a
+synchronous value or can also return a Promise, which will be awaited until it
+resolves. This enables you to perform asynchronous actions such as reading files
+in from the filesystem.
 
 If you return or resolve with an object, Cypress will then merge this object
 into the `config` which enables you to overwrite configuration or environment
@@ -103,7 +105,9 @@ modified from the plugins file.**
 ## Execution context
 
 The [`setupNodeEvents`](/guides/references/configuration#setupNodeEvents)
-function is invoked when Cypress opens a project.
+function (or deprecated
+[plugins file](/guides/references/legacy-configuration#Plugins) function) is
+invoked when Cypress opens a project.
 
 Cypress does this by spawning an independent `child_process` which then
 `requires` the [Cypress configuration file](/guides/references/configuration).
@@ -139,9 +143,10 @@ the default `bundled`
 
 When Cypress executes the
 [`setupNodeEvents`](/guides/references/configuration#setupNodeEvents) function
-it will execute with `process.cwd()` set to your project's path. Additionally -
-you will be able to `require` **any node module** you have installed, including
-local files inside your project.
+(or deprecated [plugins file](/guides/references/legacy-configuration#Plugins)
+function) it will execute with `process.cwd()` set to your project's path.
+Additionally - you will be able to `require` **any node module** you have
+installed, including local files inside your project.
 
 For example, if your `package.json` looked like this:
 
@@ -181,9 +186,11 @@ itself runs in. That means you cannot accidentally modify or change Cypress's
 own execution in any way.
 
 If your [`setupNodeEvents`](/guides/references/configuration#setupNodeEvents)
-function has an uncaught exception, an unhandled rejection from a promise, or a
-syntax error - Cypress will automatically catch those and display them to you
-inside of the console and even in the Test Runner itself.
+function (or deprecated
+[plugins file](/guides/references/legacy-configuration#Plugins) function) has an
+uncaught exception, an unhandled rejection from a promise, or a syntax error -
+Cypress will automatically catch those and display them to you inside of the
+console and even in the Test Runner itself.
 
 Errors in your `setupNodeEvents` function _will not crash_ Cypress.
 
