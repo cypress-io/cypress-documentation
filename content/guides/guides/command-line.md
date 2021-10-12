@@ -209,7 +209,7 @@ You can specify a path to a file where
 [Cypress configuration](/guides/references/configuration) values are set.
 
 ```shell
-cypress run --config-file tests/cypress-config.json
+cypress run --config-file tests/cypress.config.js
 ```
 
 You can pass `false` to disable the use of a configuration file entirely.
