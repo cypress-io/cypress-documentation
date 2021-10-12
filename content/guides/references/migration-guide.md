@@ -2,6 +2,87 @@
 title: Migration Guide
 ---
 
+## Migrating to Cypress CFG_VERSION
+
+This guide details the changes and how to change your code to migrate to Cypress
+CFG_VERSION. [See the full changelog for
+CFG_VERSION](/guides/references/changelog#CFG_VERSION_CHANGED_TO_HASH.
+
+### Configuration file changes
+
+Cypress now supports JavaScript and TypeScript configuration files! By default,
+Cypress will automatically load a `cypress.config.js` or `cypress.config.ts`
+file in the project root if one exists. The
+[Configuration guide](/guides/references/configuration) has been updated to
+reflect these changes, and explains them in greater detail.
+
+The `cypress.json` configuration file is now deprecated. Documentation for
+`cypress.json` is now available in the
+[Legacy Configuration guide](/guides/references/legacy-configuration). Support
+for `cypress.json` will be removed in a future version of Cypress.
+
+Related notes:
+
+- If no config file exists when you open the Cypress Test Runner, a
+  [`cypress.config.js`](/guides/references/configuration#Configuration-file)
+  file will now be auto-generated for you.
+- A
+  [`defineConfig`](/guides/references/configuration#Intelligent-Code-Completion)
+  helper function is now exported by Cypress, which provides automatic code
+  completion for configuration in many popular code editors.
+- Many pages and examples throughout the documentation have been updated to show
+  configuration in `cypress.config.js`, `cypress.config.ts` and `cypress.json`.
+  For example:
+
+:::cypress-config-example
+
+```js
+{
+  baseUrl: 'http://localhost:1234'
+}
+```
+
+:::
+
+### Plugins file deprecation
+
+Because Cypress now supports JavaScript and TypeScript configuration files, a
+separate "plugins file" (which defaulted to `cypress/plugins/index.js`) is no
+longer needed! You can do everything you used to do in the plugins file directly
+inside of the [Cypress configuration file](/guides/references/configuration).
+
+Accordingly, the plugins file is now deprecated. It has been replaced with the
+new [`setupNodeEvents`](/guides/references/configuration#setupNodeEvents)
+function and the
+[`devServer` and `devServerConfig`](/guides/references/configuration#devServer-devServerConfig)
+options.
+
+Related notes:
+
+- The `setupNodeEvents` function is functionally equivalent to the function
+  exported from the plugins file; it takes the same `on` and `config` arguments,
+  and should return the same value.
+- The `devServer` and `devServerConfig` options are specific to component
+  testing, and offer a much more streamlined and consistent way to configure a
+  dev server than using the plugins file.
+- Many pages and examples throughout the documentation have been updated to show
+  configuration in `setupNodeEvents` as well as the plugins file. For example:
+
+:::cypress-plugin-example
+
+```js
+// bind to the event we care about
+on('<event>', (arg1, arg2) => {
+  // plugin stuff here
+})
+```
+
+:::
+
+### Config option changes
+
+CONTENT_TBD
+
 ## Migrating to Cypress 8.0
 
 This guide details the changes and how to change your code to migrate to Cypress
