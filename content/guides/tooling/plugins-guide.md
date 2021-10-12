@@ -215,23 +215,15 @@ npm install <plugin name> --save-dev
 
 ## Using a plugin
 
-Whether you install an npm module, or want to write your own code - you should
-do all of that in this file:
+There are two ways to use a plugin in Cypress:
 
-```text
-cypress/plugins/index.js
-```
+1. As of Cypress CFG_VERSION, it is recommended that you add your plugin to the
+   the [`setupNodeEvents`](/guides/references/configuration#setupNodeEvents)
+   function in the [Cypress configuration](/guides/references/configuration).
+2. If you're using an older version of Cypress, you can add your plugin to the
+   (deprecated) [plugins file](/guides/references/legacy-configuration#Plugins).
 
-<Alert type="info">
-
-By default Cypress seeds this file for new projects, but if you have an existing
-project create this file yourself.
-
-</Alert>
-
-Inside of this file, you will export a function. Cypress will call this
-function, pass you the project's configuration, and enable you to bind to the
-events exposed.
+Here's an example of what this might look like:
 
 :::cypress-plugin-example
 
@@ -244,5 +236,5 @@ on('<event>', (arg1, arg2) => {
 
 :::
 
-For more information on writing plugins, please
-[check out our API docs here](/api/plugins/writing-a-plugin).
+For information on writing plugins, please check out our
+[Writing a Plugin](/api/plugins/writing-a-plugin) guide.

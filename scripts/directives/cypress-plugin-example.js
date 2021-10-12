@@ -68,6 +68,7 @@ function processNode(node, { _require, error }) {
         </Alert>
       `,
       body: endent`
+        // cypress/plugins/index.js
         ${helpers.adjustPluginsFileContent(header)}
         module.exports = (on, config) => {
           ${helpers.adjustPluginsFileContent(body)}
