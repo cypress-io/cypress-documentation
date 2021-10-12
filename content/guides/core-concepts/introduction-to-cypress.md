@@ -852,95 +852,40 @@ the timeout is reached, the test will fail.
 
 </Alert>
 
-### Commands Are Not Promises
+### The Cypress Command Queue
 
-This is the big secret of Cypress: we've taken our favorite pattern for
-composing JavaScript code, Promises, and built them right into the fabric of
-Cypress. Above, when we say we're enqueuing actions to be taken later, we could
-restate that as "adding Promises to a chain of Promises".
+While the API may look similar to Promises, with it's `then()` syntax, Cypress
+commands are not promises - they are serial commands passed into a central
+queue, to be executed asynchronously at a later date. These commands are
+designed to deliver deterministic, repeatable and consistent tests.
 
-Let's compare the prior example to a fictional version of it as raw,
-Promise-based code:
-
-#### Noisy Promise demonstration. Not valid code.
-
-```js
-it('changes the URL when "awesome" is clicked', () => {
-  // THIS IS NOT VALID CODE.
-  // THIS IS JUST FOR DEMONSTRATION.
-  return cy
-    .visit('/my/resource/path')
-    .then(() => {
-      return cy.get('.awesome-selector')
-    })
-    .then(($element) => {
-      // not analogous
-      return cy.click($element)
-    })
-    .then(() => {
-      return cy.url()
-    })
-    .then((url) => {
-      expect(url).to.eq('/my/resource/path#awesomeness')
-    })
-})
-```
-
-#### How Cypress really looks, Promises wrapped up and hidden from us.
-
-```javascript
-it('changes the URL when "awesome" is clicked', () => {
-  cy.visit('/my/resource/path')
-
-  cy.get('.awesome-selector').click()
-
-  cy.url().should('include', '/my/resource/path#awesomeness')
-})
-```
-
-Big difference! In addition to reading much cleaner, Cypress does more than
-this. Almost all commands come with built-in
+Almost all commands come with built-in
 [retry-ability](/guides/core-concepts/retry-ability)**. Without
 [**retry-ability**](/guides/core-concepts/retry-ability), assertions
 would randomly fail. This would lead to flaky, inconsistent results.
 
-These design patterns ensure we can create **deterministic**, **repeatable**,
-**consistent** tests that are **flake free**.
-
 <Alert type="info">
 
-Cypress is built using Promises that come from
-[Bluebird](http://bluebirdjs.com/). However, Cypress commands do not return
-these typical Promise instances. Instead we return what's called a `Chainer`
-that acts like a layer sitting on top of the internal Promise instances.
-
-For this reason you cannot **ever** return or assign anything useful from
-Cypress commands.
-
-If you'd like to learn more about handling asynchronous Cypress Commands please
-read our [Core Concept Guide](/guides/core-concepts/variables-and-aliases).
+While Cypress is built using Promises that come from
+[Bluebird](http://bluebirdjs.com/), these are not what we expose
+as commands and assertions on `cy`. If you'd like to learn more about
+handling asynchronous Cypress Commands please read our
+[Core Concept Guide](/guides/core-concepts/variables-and-aliases).
 
 </Alert>
 
-### Commands Are Really Not Promises
-
-The Cypress API is similar to promises visually, but it is actually a command
-queue, managing async coordination for you. Commands have some Promise like
-qualities, but yet there are important differences you should be
-aware of.
+Commands also have some design choices that developers used to promise-based
+testing may find unexpected. They are intentional decisions on Cypress' part,
+not technical limitations.
 
 1. You cannot **race** or run multiple commands at the same time (in parallel).
-2. You cannot accidentally forget to return or chain a command.
-3. You cannot add a `.catch` error handler to a failed command.
+2. You cannot add a `.catch` error handler to a failed command.
 
-There are _very_ specific reasons these limitations are built into the Cypress
-API.
-
-The whole intention of Cypress (and what makes it very different from other
+The whole purpose of Cypress (and what makes it very different from other
 testing tools) is to create consistent, non-flaky tests that perform identically
 from one run to the next. Making this happen isn't free - there are some
 trade-offs we make that may initially seem unfamiliar to developers accustomed
-to working with Promises.
+to working with Promises or other libraries.
 
 Let's take a look at each trade-off in depth:
 
@@ -963,43 +908,6 @@ commands is not possible because commands must be run in a controlled, serial
 manner in order to create consistency. Because integration and e2e tests
 primarily mimic the actions of a real user, Cypress models its command execution
 model after a real user working step by step.
-
-#### You cannot accidentally forget to return or chain a command
-
-In real promises it's very easy to 'lose' a nested Promise if you don't return
-it or chain it correctly.
-
-Let's imagine the following Node code:
-
-```js
-// assuming we've promisified our fs module
-return fs.readFile('/foo.txt', 'utf8').then((txt) => {
-  // oops we forgot to chain / return this Promise
-  // so it essentially becomes 'lost'.
-  // this can create bizarre race conditions and
-  // bugs that are difficult to track down
-  fs.writeFile('/foo.txt', txt.replace('foo', 'bar'))
-
-  return fs.readFile('/bar.json').then((json) => {
-    // ...
-  })
-})
-```
-
-The reason this is even possible to do in the Promise world is because you have
-the power to execute multiple asynchronous actions in parallel. Each promise
-'chain' returns a promise instance that tracks the relationship between linked
-parent and child instances.
-
-Because Cypress enforces commands to run _only_ serially, you do not need to be
-concerned with this in Cypress. We enqueue all commands onto a _global_
-singleton. Because there is only ever a single command queue instance, it's
-impossible for commands to ever be _'lost'_.
-
-You can think of Cypress as "queueing" every command. Eventually they'll get run
-and in the exact order they were used, 100% of the time.
-
-There is no need to ever `return` Cypress commands.
 
 #### You cannot add a `.catch` error handler to a failed command
 
