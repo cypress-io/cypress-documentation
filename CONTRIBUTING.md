@@ -22,10 +22,10 @@ Thanks for taking the time to contribute! :smile:
     - [Adding Pages](#adding-pages)
       - [A Worked Example](#a-worked-example)
     - [Deleting Pages](#deleting-pages)
-  - [Committing Code](#committing-code)
-    - [Pull Requests](#pull-requests)
     - [Writing the Changelog](#writing-the-changelog)
       - [Categories](#categories)
+  - [Committing Code](#committing-code)
+    - [Pull Requests](#pull-requests)
     - [Contributor License Agreement](#contributor-license-agreement)
   - [Deployment](#deployment)
     - [Trigger workflow build](#trigger-workflow-build)
@@ -374,6 +374,30 @@ To delete a page:
 - Build the documentation site locally so that you can visually inspect and make
   sure it was properly deleted.
 
+### Writing the Changelog
+
+When adding to the Changelog, create a new file in
+[`content/_changelogs`](/content/_changelogs) named as the version number. Be
+sure to follow the category structure defined below (in this order). Each bullet
+point in the list should _always_ be associated to an issue on the
+[`cypress`](https://github.com/cypress-io/cypress) repo and link to that issue
+(except for Documentation changes).
+
+#### Categories
+
+- **Summary** - If it is a large release, you may write a summary explaining
+  what the point of this release is (mostly used for breaking releases)
+- **Breaking Changes** - The users current implementation of Cypress may break
+  after updating.
+- **Deprecations** - Features have been deprecated, but will not break after
+  updating.
+- **Features** - A new feature
+- **Bugfixes** - A bug existed in Cypress and a PR fixed the issue
+- **Misc** - Not a feature or bugfix, but work that was done. May be internal
+  work that was done and associated with an issue
+- **Documentation Changes** - our docs were updated based on behavior changes in
+  release
+
 ## Committing Code
 
 ### Pull Requests
@@ -410,30 +434,6 @@ open a pull request (PR) from your repo to the
   `https://$BRANCH_NAME--cypress-docs.netlify.app` where `$BRANCH_NAME` is your
   git branch name. For example, if my branch was named `my-branch`, my branch
   preview will be available at `https://my-branch--cypress-docs.netlify.app`.
-
-### Writing the Changelog
-
-When adding to the Changelog, create a new file in
-[`content/_changelogs`](/content/_changelogs) named as the version number. Be
-sure to follow the category structure defined below (in this order). Each bullet
-point in the list should _always_ be associated to an issue on the
-[`cypress`](https://github.com/cypress-io/cypress) repo and link to that issue
-(except for Documentation changes).
-
-#### Categories
-
-- **Summary** - If it is a large release, you may write a summary explaining
-  what the point of this release is (mostly used for breaking releases)
-- **Breaking Changes** - The users current implementation of Cypress may break
-  after updating.
-- **Deprecations** - Features have been deprecated, but will not break after
-  updating.
-- **Features** - A new feature
-- **Bugfixes** - A bug existed in Cypress and a PR fixed the issue
-- **Misc** - Not a feature or bugfix, but work that was done. May be internal
-  work that was done and associated with an issue
-- **Documentation Changes** - our docs were updated based on behavior changes in
-  release
 
 ### Contributor License Agreement
 

@@ -58,13 +58,15 @@ Javascript code is linted with [ESLint](https://eslint.org/).
 
 CSS code is linted with [stylelint](https://stylelint.io/).
 
+Markdown is formatted with [Prettier](https://prettier.io/).
+
 ```sh
 yarn lint
 ```
 
 #### Unit Tests
 
-Javascirpt code is unit tested with [Jest](https://jestjs.io/).
+Javascript code is unit tested with [Jest](https://jestjs.io/).
 
 ```sh
 yarn test:unit
@@ -74,7 +76,7 @@ yarn test:unit
 
 We use Cypress itself to test the documentation.
 
-Start the server and run the tests:
+Run the tests:
 
 ```sh
 yarn test
