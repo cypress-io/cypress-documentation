@@ -5,29 +5,27 @@ Thanks for taking the time to contribute! :smile:
 ## Table of Contents
 
 - [Contributing to Cypress Documentation](#contributing-to-cypress-documentation)
-  - [Table of Contents](#table-of-contents)
   - [Code of Conduct](#code-of-conduct)
   - [Writing Documentation](#writing-documentation)
     - [Using Vue Components](#using-vue-components)
       - [Alerts](#alerts)
-    - [Images](#images)
-    - [Videos](#videos)
-    - [Icons](#icons)
+      - [Images](#images)
+      - [Videos](#videos)
+      - [Icons](#icons)
     - [Partials](#partials)
       - [Writing a Partial](#writing-a-partial)
       - [Using Partials](#using-partials)
-      - [When to use Partials instead of Vue components](#when-to-use-partials-instead-of-vue-components)
       - [Limitations](#limitations)
+    - [When to use Partials instead of Vue components](#when-to-use-partials-instead-of-vue-components)
     - [Adding Examples](#adding-examples)
     - [Adding Plugins](#adding-plugins)
     - [Adding Pages](#adding-pages)
-    - [Deleting Pages](#deleting-pages)
       - [A Worked Example](#a-worked-example)
+    - [Deleting Pages](#deleting-pages)
+  - [Committing Code](#committing-code)
+    - [Pull Requests](#pull-requests)
     - [Writing the Changelog](#writing-the-changelog)
       - [Categories](#categories)
-  - [Committing Code](#committing-code)
-    - [Linting](#linting)
-    - [Pull Requests](#pull-requests)
     - [Contributor License Agreement](#contributor-license-agreement)
   - [Deployment](#deployment)
     - [Trigger workflow build](#trigger-workflow-build)
@@ -35,7 +33,7 @@ Thanks for taking the time to contribute! :smile:
 ## Code of Conduct
 
 All contributors are expected to abide by our
-[Code of Conduct](https://github.com/cypress-io/cypress/wiki/code-of-conduct).
+[Code of Conduct](https://github.com/cypress-io/cypress/blob/develop/CODE_OF_CONDUCT.md).
 
 ## Writing Documentation
 
@@ -75,7 +73,7 @@ prop to `info`, `tip`, `warning`, or `danger`.
 <Alert type="info">This is an important message.</Alert>
 ```
 
-### Images
+#### Images
 
 If you are starting a new page and want to add images, add a new folder to
 [`assets/img`](/assets/img). For example when adding a new "Code Coverage" page
@@ -94,7 +92,7 @@ include the image using the
 Typically you should include the `alt` and `title` attributes to give the user
 more information about the image.
 
-### Videos
+#### Videos
 
 You can embed videos within the markdown with the
 [`<DocsVideo>`](/components/global/DocsVideo.vue) component. Currently, it
@@ -110,10 +108,11 @@ accessibility reasons.
 >
 ```
 
-### Icons
+#### Icons
 
-[Font Awesome](https://fontawesome.com/) icons can be used within markdown. Set
-the `name` prop to the name of the Font Awesome icon. Make sure that the icon
+[Font Awesome](https://fontawesome.com/) icons can be used within markdown by
+using the [`<Icon>`](/components/global/Icon.vue) component. Set the `name` prop
+to the name of the Font Awesome icon you want to use. Make sure that the icon
 appears in the list of imported icons within the `nuxt.config.js` file under the
 `fontawesome` key.
 
@@ -165,7 +164,17 @@ within the `content` directory. You must provide the path relative to the
 `pizza-recipe.md` was located at `/content/recipes/pizza-recipe.md`, the
 `::include` directive would be `::include{file=recipes/pizza-recipe.md}`.
 
-#### When to use Partials instead of Vue components
+#### Limitations
+
+When including the `::include{file=FILE_NAME}` directive in another markdown
+file, Nuxt's hot module reloading will automatically trigger the partial's
+content to be inserted into the markdown file. However, if you wish to make
+changes to the partial file itself, you will need to stop and restart the
+development server with `yarn start` to see the changes. This is because the
+custom remark plugin that is enabling this partial system is only ran when the
+server is started and not on each hot module reload.
+
+### When to use Partials instead of Vue components
 
 It is possible to create partials using Vue components in the markdown instead
 of using the `::include{file=FILE_NAME}` directive. However, there are downsides
@@ -183,16 +192,6 @@ For most use cases, you should use the `::include{file=FILE_NAME}` directive
 when you want to inject reusable markdown into multiple files. A `<Partial>` Vue
 component may be a better fit if you wish to add custom interactivity to
 reusable strings of text.
-
-#### Limitations
-
-When including the `::include{file=FILE_NAME}` directive in another markdown
-file, Nuxt's hot module reloading will automatically trigger the partial's
-content to be inserted into the markdown file. However, if you wish to make
-changes to the partial file itself, you will need to stop and restart the
-development server with `yarn start` to see the changes. This is because the
-custom remark plugin that is enabling this partial system is only ran when the
-server is started and not on each hot module reload.
 
 ### Adding Examples
 
@@ -240,12 +239,13 @@ Each plugin submitted to the plugins list should have the following:
 
 ### Adding Pages
 
-To add a page such as a new guide or API documentation:
+To add a page, such as a new guide or API documentation:
 
 - Add the new page to the relevant directory under [`content`](/content).
 - Link to your new page in the [`sidebar.json`](/content/_data/sidebar.json).
-- Add translations for the sidebar link for each supported language (for
-  English, this is located in [`en.json`](/content/_data/en.json)).
+- Add translations for the sidebar link for each supported language. Currently
+  only English is supported and this is located in
+  [`en.json`](/content/_data/en.json)).
 - Build the documentation site locally so that you can visually inspect your new
   page and the links to it.
 - **REQUIRED**: Commit the new file using git - we auto-generate the doc to
@@ -265,18 +265,6 @@ To add a page such as a new guide or API documentation:
 > specific layout I want to create. The page will then be accessible at the
 > route `/guides/my-dashboard-guide`.
 
-### Deleting Pages
-
-To delete a page:
-
-- Delete the page from the relevant directory under [`content`](/content).
-- Remove the link from the the [`sidebar.json`](/content/_data/sidebar.json).
-- **REQUIRED**: Commit the change using git - we auto-remove the doc within each
-  supported language, this auto-generation depends on the file being deleted in
-  git, the build will not work until this is commited.
-- Build the documentation site locally so that you can visually inspect and make
-  sure it was properly deleted.
-
 #### A Worked Example
 
 Let's imagine that the Cypress team has just added a new command called
@@ -289,10 +277,10 @@ API documentation for commands is in the
 2. Write the document. Look to the existing documentation to see how to
    structure the content.
 3. Open the [`content/_data/sidebar.json`](/content/_data/sidebar.json) file and
-   add a link the new `privatestate` page. In this example we're adding a
-   command so we'll add a link underneath the `api` section.
+   add a link the new `privatestate` page. In this example, we're adding a
+   command, so we'll add a link underneath the `api` section.
 
-```json
+```diff
 "api": [
   {
     "title": "API",
@@ -311,10 +299,10 @@ API documentation for commands is in the
             "slug": "as"
           },
           // ...
-          {
-            "title": "privateState",
-            "slug": "privatestate"
-          }
++         {
++           "title": "privateState",
++           "slug": "privatestate"
++         }
         ]
       }
     ]
@@ -374,7 +362,54 @@ a menu structure up to three (3) levels deep:
 ]
 ```
 
-4. Submit a [pull request](#Pull-Requests) for your change.
+### Deleting Pages
+
+To delete a page:
+
+- Delete the page from the relevant directory under [`content`](/content).
+- Remove the link from the the [`sidebar.json`](/content/_data/sidebar.json).
+- **REQUIRED**: Commit the change using git - we auto-remove the doc within each
+  supported language, this auto-generation depends on the file being deleted in
+  git, the build will not work until this is commited.
+- Build the documentation site locally so that you can visually inspect and make
+  sure it was properly deleted.
+
+## Committing Code
+
+### Pull Requests
+
+You should push your local changes to your forked GitHub repository and then
+open a pull request (PR) from your repo to the
+`cypress-io/cypress-documentation` repo.
+
+- The PR should be from your repository to the appropriate branch in the
+  `cypress-io/cypress-documentation` repository.
+  - For documation changes that are not tied to a feature release, open a PRs
+    against the `master` branch.
+  - For documentation additions for unreleased features, open a PR against the
+    corrsponding `X.Y.Z-release` branch. Once the release it performed, this
+    branch will be merged into master by the releaser.
+- When opening a PR for a specific issue already open, please use the
+  `closes #issueNumber` syntax in the pull request description&mdash;for
+  example, `closes #138`&mdash;so that the issue will be
+  [automatically closed](https://help.github.com/articles/closing-issues-using-keywords/)
+  when the PR is merged.
+- Please check the "Allow edits from maintainers" checkbox when submitting your
+  PR. This will make it easier for the maintainers to make minor adjustments, to
+  help with tests or any other changes we may need.
+  ![Allow edits from maintainers checkbox](https://user-images.githubusercontent.com/1271181/31393427-b3105d44-ada9-11e7-80f2-0dac51e3919e.png)
+- All PRs against `master` will automatically create a deploy preview URL with
+  Netlify. The deploy preview can be accessed via the PR's
+  `netlify-cypress-docs/deploy-preview` status check:
+
+![Netlify deploy preview status check](https://user-images.githubusercontent.com/11802078/113176533-36b79680-9212-11eb-8aec-898d0f5047df.png)
+
+- All branches will automatically create a branch deploy preview. The branch
+  deploy previews do not appear as a GitHub status check like deploy previews.
+  You can view your branch's deploy preview by visiting
+  `https://$BRANCH_NAME--cypress-docs.netlify.app` where `$BRANCH_NAME` is your
+  git branch name. For example, if my branch was named `my-branch`, my branch
+  preview will be available at `https://my-branch--cypress-docs.netlify.app`.
 
 ### Writing the Changelog
 
@@ -399,42 +434,6 @@ point in the list should _always_ be associated to an issue on the
   work that was done and associated with an issue
 - **Documentation Changes** - our docs were updated based on behavior changes in
   release
-
-## Committing Code
-
-### Linting
-
-Javascript code is linted with [ESLint](https://eslint.org/).
-
-### Pull Requests
-
-You should push your local changes to your forked GitHub repository and then
-open a pull request (PR) from your repo to the
-`cypress-io/cypress-documentation` repo.
-
-- The PR should be from your repository to the `master` branch in
-  `cypress-io/cypress-documentation`
-- When opening a PR for a specific issue already open, please use the
-  `closes #issueNumber` syntax in the pull request description&mdash;for
-  example, `closes #138`&mdash;so that the issue will be
-  [automatically closed](https://help.github.com/articles/closing-issues-using-keywords/)
-  when the PR is merged.
-- Please check the "Allow edits from maintainers" checkbox when submitting your
-  PR. This will make it easier for the maintainers to make minor adjustments, to
-  help with tests or any other changes we may need.
-  ![Allow edits from maintainers checkbox](https://user-images.githubusercontent.com/1271181/31393427-b3105d44-ada9-11e7-80f2-0dac51e3919e.png)
-- All PRs against `master` will automatically create a deploy preview URL with
-  Netlify. The deploy preview can be accessed via the PR's
-  `netlify-cypress-docs/deploy-preview` status check:
-
-![Netlify deploy preview status check](https://user-images.githubusercontent.com/11802078/113176533-36b79680-9212-11eb-8aec-898d0f5047df.png)
-
-- All branches will automatically create a branch deploy preview. The branch
-  deploy previews do not appear as a GitHub status check like deploy previews.
-  You can view your branch's deploy preview by visiting
-  `https://$BRANCH_NAME--cypress-docs.netlify.app` where `$BRANCH_NAME` is your
-  git branch name. For example, if my branch was named `my-branch`, my branch
-  preview will be available at `https://my-branch--cypress-docs.netlify.app`.
 
 ### Contributor License Agreement
 
