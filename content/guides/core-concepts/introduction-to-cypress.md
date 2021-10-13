@@ -874,7 +874,7 @@ handling asynchronous Cypress Commands please read our
 
 </Alert>
 
-Commands also have some design choices that developers used to promise-based
+Commands also have some design choices that developers who are used to promise-based
 testing may find unexpected. They are intentional decisions on Cypress' part,
 not technical limitations.
 
