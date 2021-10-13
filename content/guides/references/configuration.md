@@ -41,7 +41,7 @@ default values.
 | `reporter`             | `spec`                            | The [reporter](/guides/tooling/reporters) used during `cypress run`                                                                                                                          |
 | `reporterOptions`      | `null`                            | The [reporter options](/guides/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                           |
 | `retries`              | `{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. See [Test Retries](/guides/guides/test-retries) for more information. |
-| `slowTestThreshold`    | `10000`                           | Time, in milliseconds, for the mocha reporter to consider a test "slow" during `cypress run`. Tests running longer still succeed, but the reporter will mark them as slow (usually in red).  |
+| `slowTestThreshold`    | `10000`                           | Time, in milliseconds, to consider a test "slow" during `cypress run`. You will often want to configure this differently for component and e2e testing.                                      |
 | `watchForFileChanges`  | `true`                            | Whether Cypress will watch and restart tests on test file changes                                                                                                                            |
 
 ### Timeouts
@@ -236,13 +236,17 @@ default):
 }
 ```
 
-E2E specific timeouts in configuration file (`cypress.json` by default):
+Testing type specific timeouts in configuration file (`cypress.json` by default):
 
 ```json
 {
   "defaultCommandTimeout": 5000,
   "e2e": {
-    "defaultCommandTimeout": 10000
+    "defaultCommandTimeout": 10000,
+    "slowTestThreshold": 5000
+  },
+  "component": {
+    "slowTestThreshold": 150
   }
 }
 ```

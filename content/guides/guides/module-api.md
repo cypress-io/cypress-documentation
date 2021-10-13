@@ -64,7 +64,7 @@ Just like the [Command Line options](/guides/guides/command-line) for
 | `record`            | _boolean_          | Whether to record the test run                                                                                                                                     |
 | `reporter`          | _string_           | Specify a [Mocha reporter](/guides/tooling/reporters)                                                                                                              |
 | `reporterOptions`   | _object_           | Specify [Mocha reporter](/guides/tooling/reporters) options                                                                                                        |
-| `slowTestThreshold` | _number_           | Time, in milliseconds, for the mocha reporter to consider a test "slow" during `cypress run`. Tests running longer still succeed.                                  |
+| `slowTestThreshold` | _number_           | Time, in milliseconds, to consider a test "slow" during `cypress run`. You will often want to set this separately for component and e2e testing.                   |
 | `spec`              | _string_           | Specify the specs to run, see examples below                                                                                                                       |
 | `tag`               | _string_           | Identify a run with a tag or tags                                                                                                                                  |
 | `testingType`       | _string_           | Specify the type of tests to execute; either `e2e` or `component`. Defaults to `e2e`                                                                               |
