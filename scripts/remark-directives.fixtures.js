@@ -16,6 +16,16 @@ that you update your configuration. Please see the
 <a href="/guides/references/migration-guide">migration guide</a> for more information.</p>
 </alert>`
 
+const CYPRESS_JSON_PLUGINS_FILE_ALERT = `<alert type="warning">
+<p><strong class="alert-header"><icon name="exclamation-triangle"></icon>
+Deprecated</strong></p>
+<p>The <code>cypress.json</code> file and plugins file are deprecated as of Cypress
+CFG_VERSION. We recommend that you update your configuration. Please see the
+<a href="/guides/references/configuration">new configuration guide</a>,
+<a href="/guides/tooling/plugins-guide">plugins guide</a> and the
+<a href="/guides/references/migration-guide">migration guide</a> for more information.</p>
+</alert>`
+
 // ==============================================================================
 
 const cce = exports['cypress-config-example'] = {}
@@ -342,6 +352,71 @@ module.exports = (on, config) => {
   on('something', () => {
     require('../../bar')(foo, config)
   })
+}`
+})
+
+// ==============================================================================
+
+const ccpe = exports['cypress-config-plugin-example'] = {}
+
+const cypressConfigPluginExample = ({tab1, tab2, tab3}) => {
+  return `<h1>aaa</h1>
+<code-group>
+<code-block label="cypress.config.js" active>
+<pre><code class="language-js">${tab1}
+</code></pre>
+</code-block>
+<code-block label="cypress.config.ts">
+<pre><code class="language-ts">${tab2}
+</code></pre>
+</code-block>
+<code-block label="cypress.json &amp; plugins file">
+<template v-slot:alert>${CYPRESS_JSON_PLUGINS_FILE_ALERT}
+</template>
+<pre><code class="language-js">${tab3}
+</code></pre>
+</code-block>
+</code-group>
+<h2>bbb</h2>`
+}
+
+ccpe.threeTabs = cypressConfigPluginExample({
+tab1: `const { defineConfig } = require('cypress')
+const { devServer } = require('@cypress/react/plugins/react-scripts')
+
+module.exports = defineConfig({
+  component: {
+    devServer,
+    componentFolder: 'src',
+    testFiles: '**/*.test.{js,ts,jsx,tsx}'
+  }
+})`,
+tab2: `import { defineConfig } from 'cypress'
+const { devServer } = require('@cypress/react/plugins/react-scripts')
+
+export default defineConfig({
+  component: {
+    devServer,
+    componentFolder: 'src',
+    testFiles: '**/*.test.{js,ts,jsx,tsx}'
+  }
+})`,
+tab3: `// cypress.json (deprecated)
+
+{
+  "component": {
+    "componentFolder": "src",
+    "testFiles": "**/*.test.{js,ts,jsx,tsx}"
+  }
+}
+
+// plugins file (deprecated)
+
+const injectDevServer = require('@cypress/react/plugins/react-scripts')
+
+module.exports = (on, config) => {
+  injectDevServer(on, config)
+  return config
 }`
 })
 

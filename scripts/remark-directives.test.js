@@ -52,7 +52,7 @@ const processText = (text) => {
     .use(gfm)
     .use(remarkRehype, { handlers, allowDangerousHtml: true })
     .use(rehypeRaw)
-    .use(rehypeStringify, { collapseEmptyAttributes: true })
+    .use(rehypeStringify, { collapseEmptyAttributes: true, entities: { useNamedReferences: true } })
     .process(text)
     .then((file) => {
       return file.contents
@@ -392,6 +392,55 @@ describe(':::cypress-plugin-example', () => {
     )
 
     expect(result).toBe('<h1>aaa</h1>\n<h2>bbb</h2>')
+  })
+})
+
+describe(':::cypress-config-plugin-example', () => {
+  const ccpeFixtures = fixtures['cypress-config-plugin-example']
+
+  it('should render all 3 tabs correctly', async () => {
+    const text = endent`
+    # aaa
+    :::cypress-config-plugin-example
+
+    \`\`\`js
+    const { devServer } = require('@cypress/react/plugins/react-scripts')
+    \`\`\`
+
+    \`\`\`js
+    {
+      component: {
+        devServer,
+        componentFolder: 'src',
+        testFiles: '**/*.test.{js,ts,jsx,tsx}'
+      }
+    }
+    \`\`\`
+
+    \`\`\`json
+    {
+      "component": {
+        "componentFolder": "src",
+        "testFiles": "**/*.test.{js,ts,jsx,tsx}"
+      }
+    }
+    \`\`\`
+
+    \`\`\`js
+    const injectDevServer = require('@cypress/react/plugins/react-scripts')
+
+    module.exports = (on, config) => {
+      injectDevServer(on, config)
+      return config
+    }
+    \`\`\`
+
+    :::
+    ## bbb
+    `
+    const result = await processText(text)
+
+    expect(result).toBe(ccpeFixtures.threeTabs)
   })
 
 })
