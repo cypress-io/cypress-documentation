@@ -3,10 +3,18 @@ const path = require('path')
 const unified = require('unified')
 const remarkParse = require('remark-parse')
 const remarkDirective = require('remark-directive')
+const squeezeParagraphs = require('remark-squeeze-paragraphs')
+const externalLinks = require('remark-external-links')
+const remarkFootnotes = require('remark-footnotes')
+const gfm = require('remark-gfm')
 const remarkRehype = require('remark-rehype')
+const rehypeRaw = require('rehype-raw')
 const rehypeStringify = require('rehype-stringify')
+const handlersFn = require('@nuxt/content/parsers/markdown/handlers')
+const endent = require('endent').default
 
 const directives = require('./remark-directives')
+const fixtures = require('./remark-directives.fixtures')
 const { logger } = directives
 
 jest.mock('fs')
@@ -20,13 +28,31 @@ jest.mock('consola', () => {
 
 const CONTENT_PATH = path.join(__dirname, '../content')
 
+// Reproduce as much of the nuxt-content markdown processing pipeline as
+// possible, minus anything that would unnecessarily bloat the output like
+// remark-slug or remark-autolink-headings.
+//
+// See:
+// - this project's nuxt.config.js
+// - https://github.com/nuxt/content/blob/main/packages/content/lib/utils.js
+// - https://github.com/nuxt/content/blob/main/packages/content/parsers/markdown/index.js
 const processText = (text) => {
+  const handlers = handlersFn()
+
+  // Don't use the nuxt-content code formatting
+  delete handlers.code
+
   return unified()
     .use(remarkParse)
     .use(remarkDirective)
     .use(directives)
-    .use(remarkRehype)
-    .use(rehypeStringify)
+    .use(squeezeParagraphs)
+    .use(externalLinks)
+    .use(remarkFootnotes)
+    .use(gfm)
+    .use(remarkRehype, { handlers, allowDangerousHtml: true })
+    .use(rehypeRaw)
+    .use(rehypeStringify, { collapseEmptyAttributes: true })
     .process(text)
     .then((file) => {
       return file.contents
@@ -89,6 +115,156 @@ describe('::include', () => {
     )
 
     expect(logger.error).toHaveBeenCalled()
+    expect(result).toBe('<h1>aaa</h1>\n<h2>bbb</h2>')
+  })
+})
+
+describe(':::cypress-config-example', () => {
+  const cceFixtures = fixtures['cypress-config-example']
+
+  it('should render js config object in 3 tabs', async () => {
+    const text = endent`
+    # aaa
+    :::cypress-config-example
+
+    \`\`\`js
+    {
+      foo: 123,
+      prop: {
+        bar: true
+      }
+    }
+    \`\`\`
+
+    :::
+    ## bbb
+    `
+    const result = await processText(text)
+
+    expect(result).toBe(cceFixtures.codeBlock)
+  })
+
+  it('should render js config object with header in 2 tabs', async () => {
+    const text = endent`
+    # aaa
+    :::cypress-config-example
+
+    \`\`\`js
+    const { foo } = require('foo')
+    \`\`\`
+
+    \`\`\`js
+    {
+      foo: 123,
+      prop: {
+        bar: true
+      }
+    }
+    \`\`\`
+
+    :::
+    ## bbb
+    `
+    const result = await processText(text)
+
+    expect(result).toBe(cceFixtures.codeBlockWithHeader)
+  })
+
+  it('should render js object with functions in 2 tabs', async () => {
+    const text = endent`
+    # aaa
+    :::cypress-config-example
+
+    \`\`\`js
+    {
+      foo: 123,
+      prop: {
+        bar() {
+          // code
+        }
+      }
+    }
+    \`\`\`
+
+    :::
+    ## bbb
+    `
+    const result = await processText(text)
+
+    expect(logger.warn).toHaveBeenCalledWith(
+      '[:::cypress-config-example]',
+      expect.stringMatching(/skipping cypress.json tab/)
+    )
+
+    expect(result).toBe(cceFixtures.codeBlockWithFunction)
+  })
+
+  it('should render js object in 2 tabs when noJson is specified', async () => {
+    const text = endent`
+    # aaa
+    :::cypress-config-example{noJson}
+
+    \`\`\`js
+    {
+      foo: 123,
+      prop: {
+        bar: true
+      }
+    }
+    \`\`\`
+
+    :::
+    ## bbb
+    `
+    const result = await processText(text)
+
+    expect(logger.warn).not.toHaveBeenCalled()
+
+    expect(result).toBe(cceFixtures.codeBlockWithNoJson)
+  })
+
+  it('should log an error and remove directive if code blocks are omitted', async () => {
+    const text = endent`
+    # aaa
+    :::cypress-config-example
+    :::
+    ## bbb
+    `
+    const result = await processText(text)
+
+    expect(logger.error).toHaveBeenCalledWith(
+      '[:::cypress-config-example]',
+      expect.stringMatching(/Expected 1 or 2 code blocks inside directive, instead got/),
+      [],
+      expect.anything()
+    )
+
+    expect(result).toBe('<h1>aaa</h1>\n<h2>bbb</h2>')
+  })
+
+  it('should log an error and remove directive if code cannot be parsed', async () => {
+    const text = endent`
+    # aaa
+    :::cypress-config-example
+
+    \`\`\`js
+    xyz
+    \`\`\`
+
+    :::
+    ## bbb
+    `
+    const result = await processText(text)
+
+    expect(logger.error).toHaveBeenCalledWith(
+      '[:::cypress-config-example]',
+      expect.stringMatching(/Unable to parse code/),
+      expect.objectContaining(
+        new Error('ReferenceError: xyz is not defined')
+      ),
+      expect.anything()
+    )
+
     expect(result).toBe('<h1>aaa</h1>\n<h2>bbb</h2>')
   })
 })
