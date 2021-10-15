@@ -268,3 +268,130 @@ describe(':::cypress-config-example', () => {
     expect(result).toBe('<h1>aaa</h1>\n<h2>bbb</h2>')
   })
 })
+
+describe(':::cypress-plugin-example', () => {
+  const cpeFixtures = fixtures['cypress-plugin-example']
+
+  it('should render function body in all 3 tabs', async () => {
+    const text = endent`
+    # aaa
+    :::cypress-plugin-example
+
+    \`\`\`js
+    on('something', () => {
+      someThing(config)
+    })
+      \`\`\`
+
+    :::
+    ## bbb
+    `
+    const result = await processText(text)
+
+    expect(result).toBe(cpeFixtures.functionBody)
+  })
+
+  it('should use component object if specified', async () => {
+    const text = endent`
+    # aaa
+    :::cypress-plugin-example{configProp=component}
+
+    \`\`\`js
+    on('something', () => {
+      someThing(config)
+    })
+      \`\`\`
+
+    :::
+    ## bbb
+    `
+    const result = await processText(text)
+
+    expect(result).toBe(cpeFixtures.functionBodyComponent)
+  })
+
+  it('should omit comment if specified', async () => {
+    const text = endent`
+    # aaa
+    :::cypress-plugin-example{noComment}
+
+    \`\`\`js
+    on('something', () => {
+      someThing(config)
+    })
+      \`\`\`
+
+    :::
+    ## bbb
+    `
+    const result = await processText(text)
+
+    expect(result).toBe(cpeFixtures.functionBodyNoComment)
+  })
+
+  it('should render header and body in all 3 tabs', async () => {
+    const text = endent`
+    # aaa
+    :::cypress-plugin-example
+
+    \`\`\`js
+    const { foo } = require('foo')
+    \`\`\`
+
+    \`\`\`js
+    on('something', () => {
+      foo(config)
+    })
+      \`\`\`
+
+    :::
+    ## bbb
+    `
+    const result = await processText(text)
+
+    expect(result).toBe(cpeFixtures.functionBodyAndHeader)
+  })
+
+  it('should adjust header and body content in plugins file tab', async () => {
+    const text = endent`
+    # aaa
+    :::cypress-plugin-example
+
+    \`\`\`js
+    const { foo } = require('./foo')
+    \`\`\`
+
+    \`\`\`js
+    on('something', () => {
+      require('./bar')(foo, config)
+    })
+  \`\`\`
+
+    :::
+    ## bbb
+    `
+    const result = await processText(text)
+
+    expect(result).toBe(cpeFixtures.functionBodyAndHeaderAdjustedForPluginsFile)
+  })
+
+  it('should log an error and remove directive if code blocks are omitted', async () => {
+    const text = endent`
+    # aaa
+    :::cypress-plugin-example
+    :::
+    ## bbb
+    `
+    const result = await processText(text)
+
+    expect(logger.error).toHaveBeenCalledWith(
+      '[:::cypress-plugin-example]',
+      expect.stringMatching(/Expected 1 or 2 code blocks inside directive, instead got/),
+      [],
+      expect.anything()
+    )
+
+    expect(result).toBe('<h1>aaa</h1>\n<h2>bbb</h2>')
+  })
+
+})
