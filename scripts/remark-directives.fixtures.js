@@ -16,50 +16,58 @@ that you update your configuration. Please see the
 <a href="/guides/references/migration-guide">migration guide</a> for more information.</p>
 </alert>`
 
+// ==============================================================================
+
 const cce = exports['cypress-config-example'] = {}
 
-cce.codeBlock = `<h1>aaa</h1>
+const cypressConfigExample = ({ tab1, tab2, tab3 }) => {
+  return `<h1>aaa</h1>
 <code-group>
 <code-block label="cypress.config.js" active>
-<pre><code class="language-js">const { defineConfig } = require('cypress')
+<pre><code class="language-js">${tab1}
+</code></pre>
+</code-block>
+<code-block label="cypress.config.ts">
+<pre><code class="language-ts">${tab2}
+</code></pre>
+</code-block>
+${tab3 ? `<code-block label="cypress.json (deprecated)">
+<template v-slot:alert>${CYPRESS_JSON_ALERT}
+</template>
+<pre><code class="language-json">${tab3}
+</code></pre>
+</code-block>
+` : ''}</code-group>
+<h2>bbb</h2>`
+}
+
+cce.codeBlock = cypressConfigExample({
+tab1: `const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
   foo: 123,
   prop: {
     bar: true
   }
-})
-</code></pre>
-</code-block>
-<code-block label="cypress.config.ts">
-<pre><code class="language-ts">import { defineConfig } from 'cypress'
+})`,
+tab2: `import { defineConfig } from 'cypress'
 
 export default defineConfig({
   foo: 123,
   prop: {
     bar: true
   }
-})
-</code></pre>
-</code-block>
-<code-block label="cypress.json (deprecated)">
-<template v-slot:alert>${CYPRESS_JSON_ALERT}
-</template>
-<pre><code class="language-json">{
+})`,
+tab3: `{
   "foo": 123,
   "prop": {
     "bar": true
   }
-}
-</code></pre>
-</code-block>
-</code-group>
-<h2>bbb</h2>`
+}`
+})
 
-cce.codeBlockWithHeader = `<h1>aaa</h1>
-<code-group>
-<code-block label="cypress.config.js" active>
-<pre><code class="language-js">const { defineConfig } = require('cypress')
+cce.codeBlockWithHeader = cypressConfigExample({
+tab1: `const { defineConfig } = require('cypress')
 
 const { foo } = require('foo')
 
@@ -68,11 +76,8 @@ module.exports = defineConfig({
   prop: {
     bar: true
   }
-})
-</code></pre>
-</code-block>
-<code-block label="cypress.config.ts">
-<pre><code class="language-ts">import { defineConfig } from 'cypress'
+})`,
+tab2: `import { defineConfig } from 'cypress'
 
 const { foo } = require('foo')
 
@@ -81,16 +86,12 @@ export default defineConfig({
   prop: {
     bar: true
   }
+})`
 })
-</code></pre>
-</code-block>
-</code-group>
-<h2>bbb</h2>`
 
-cce.codeBlockWithFunction = `<h1>aaa</h1>
-<code-group>
-<code-block label="cypress.config.js" active>
-<pre><code class="language-js">const { defineConfig } = require('cypress')
+
+cce.codeBlockWithFunction = cypressConfigExample({
+tab1: `const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
   foo: 123,
@@ -99,11 +100,8 @@ module.exports = defineConfig({
       // code
     }
   }
-})
-</code></pre>
-</code-block>
-<code-block label="cypress.config.ts">
-<pre><code class="language-ts">import { defineConfig } from 'cypress'
+})`,
+tab2: `import { defineConfig } from 'cypress'
 
 export default defineConfig({
   foo: 123,
@@ -112,45 +110,55 @@ export default defineConfig({
       // code
     }
   }
+})`
 })
-</code></pre>
-</code-block>
-</code-group>
-<h2>bbb</h2>`
 
-cce.codeBlockWithNoJson = `<h1>aaa</h1>
-<code-group>
-<code-block label="cypress.config.js" active>
-<pre><code class="language-js">const { defineConfig } = require('cypress')
+cce.codeBlockWithNoJson = cypressConfigExample({
+tab1: `const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
   foo: 123,
   prop: {
     bar: true
   }
-})
-</code></pre>
-</code-block>
-<code-block label="cypress.config.ts">
-<pre><code class="language-ts">import { defineConfig } from 'cypress'
+})`,
+tab2: `import { defineConfig } from 'cypress'
 
 export default defineConfig({
   foo: 123,
   prop: {
     bar: true
   }
+})`
 })
-</code></pre>
-</code-block>
-</code-group>
-<h2>bbb</h2>`
+
+// ==============================================================================
 
 const cpe = exports['cypress-plugin-example'] = {}
 
-cpe.functionBody = `<h1>aaa</h1>
+const cypressPluginExample = ({ tab1, tab2, tab3 }) => {
+  return `<h1>aaa</h1>
 <code-group>
 <code-block label="cypress.config.js" active>
-<pre><code class="language-js">const { defineConfig } = require('cypress')
+<pre><code class="language-js">${tab1}
+</code></pre>
+</code-block>
+<code-block label="cypress.config.ts">
+<pre><code class="language-ts">${tab2}
+</code></pre>
+</code-block>
+${tab3 ? `<code-block label="plugins file (deprecated)">
+<template v-slot:alert>${PLUGINS_FILE_ALERT}
+</template>
+<pre><code class="language-js">${tab3}
+</code></pre>
+</code-block>
+` : ''}</code-group>
+<h2>bbb</h2>`
+}
+
+cpe.functionBody = cypressPluginExample({
+tab1: `const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
   // setupNodeEvents can be defined in either
@@ -162,11 +170,8 @@ module.exports = defineConfig({
       })
     }
   }
-})
-</code></pre>
-</code-block>
-<code-block label="cypress.config.ts">
-<pre><code class="language-ts">import { defineConfig } from 'cypress'
+})`,
+tab2: `import { defineConfig } from 'cypress'
 
 export default defineConfig({
   // setupNodeEvents can be defined in either
@@ -178,28 +183,18 @@ export default defineConfig({
       })
     }
   }
-})
-</code></pre>
-</code-block>
-<code-block label="plugins file (deprecated)">
-<template v-slot:alert>${PLUGINS_FILE_ALERT}
-</template>
-<pre><code class="language-js">// cypress/plugins/index.js
+})`,
+tab3: `// cypress/plugins/index.js
 
 module.exports = (on, config) => {
   on('something', () => {
     someThing(config)
   })
-}
-</code></pre>
-</code-block>
-</code-group>
-<h2>bbb</h2>`
+}`
+})
 
-cpe.functionBodyComponent = `<h1>aaa</h1>
-<code-group>
-<code-block label="cypress.config.js" active>
-<pre><code class="language-js">const { defineConfig } = require('cypress')
+cpe.functionBodyComponent = cypressPluginExample({
+tab1: `const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
   // setupNodeEvents can be defined in either
@@ -211,11 +206,8 @@ module.exports = defineConfig({
       })
     }
   }
-})
-</code></pre>
-</code-block>
-<code-block label="cypress.config.ts">
-<pre><code class="language-ts">import { defineConfig } from 'cypress'
+})`,
+tab2: `import { defineConfig } from 'cypress'
 
 export default defineConfig({
   // setupNodeEvents can be defined in either
@@ -227,28 +219,18 @@ export default defineConfig({
       })
     }
   }
-})
-</code></pre>
-</code-block>
-<code-block label="plugins file (deprecated)">
-<template v-slot:alert>${PLUGINS_FILE_ALERT}
-</template>
-<pre><code class="language-js">// cypress/plugins/index.js
+})`,
+tab3: `// cypress/plugins/index.js
 
 module.exports = (on, config) => {
   on('something', () => {
     someThing(config)
   })
-}
-</code></pre>
-</code-block>
-</code-group>
-<h2>bbb</h2>`
+}`
+})
 
-cpe.functionBodyNoComment = `<h1>aaa</h1>
-<code-group>
-<code-block label="cypress.config.js" active>
-<pre><code class="language-js">const { defineConfig } = require('cypress')
+cpe.functionBodyNoComment = cypressPluginExample({
+tab1: `const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
   e2e: {
@@ -258,11 +240,8 @@ module.exports = defineConfig({
       })
     }
   }
-})
-</code></pre>
-</code-block>
-<code-block label="cypress.config.ts">
-<pre><code class="language-ts">import { defineConfig } from 'cypress'
+})`,
+tab2: `import { defineConfig } from 'cypress'
 
 export default defineConfig({
   e2e: {
@@ -272,28 +251,18 @@ export default defineConfig({
       })
     }
   }
-})
-</code></pre>
-</code-block>
-<code-block label="plugins file (deprecated)">
-<template v-slot:alert>${PLUGINS_FILE_ALERT}
-</template>
-<pre><code class="language-js">// cypress/plugins/index.js
+})`,
+tab3: `// cypress/plugins/index.js
 
 module.exports = (on, config) => {
   on('something', () => {
     someThing(config)
   })
-}
-</code></pre>
-</code-block>
-</code-group>
-<h2>bbb</h2>`
+}`
+})
 
-cpe.functionBodyAndHeader = `<h1>aaa</h1>
-<code-group>
-<code-block label="cypress.config.js" active>
-<pre><code class="language-js">const { defineConfig } = require('cypress')
+cpe.functionBodyAndHeader = cypressPluginExample({
+tab1: `const { defineConfig } = require('cypress')
 
 const { foo } = require('foo')
 
@@ -307,11 +276,8 @@ module.exports = defineConfig({
       })
     }
   }
-})
-</code></pre>
-</code-block>
-<code-block label="cypress.config.ts">
-<pre><code class="language-ts">import { defineConfig } from 'cypress'
+})`,
+tab2: `import { defineConfig } from 'cypress'
 
 const { foo } = require('foo')
 
@@ -325,13 +291,8 @@ export default defineConfig({
       })
     }
   }
-})
-</code></pre>
-</code-block>
-<code-block label="plugins file (deprecated)">
-<template v-slot:alert>${PLUGINS_FILE_ALERT}
-</template>
-<pre><code class="language-js">// cypress/plugins/index.js
+})`,
+tab3: `// cypress/plugins/index.js
 
 const { foo } = require('foo')
 
@@ -339,16 +300,11 @@ module.exports = (on, config) => {
   on('something', () => {
     foo(config)
   })
-}
-</code></pre>
-</code-block>
-</code-group>
-<h2>bbb</h2>`
+}`
+})
 
-cpe.functionBodyAndHeaderAdjustedForPluginsFile = `<h1>aaa</h1>
-<code-group>
-<code-block label="cypress.config.js" active>
-<pre><code class="language-js">const { defineConfig } = require('cypress')
+cpe.functionBodyAndHeaderAdjustedForPluginsFile = cypressPluginExample({
+tab1: `const { defineConfig } = require('cypress')
 
 const { foo } = require('./foo')
 
@@ -362,11 +318,8 @@ module.exports = defineConfig({
       })
     }
   }
-})
-</code></pre>
-</code-block>
-<code-block label="cypress.config.ts">
-<pre><code class="language-ts">import { defineConfig } from 'cypress'
+})`,
+tab2: `import { defineConfig } from 'cypress'
 
 const { foo } = require('./foo')
 
@@ -380,13 +333,8 @@ export default defineConfig({
       })
     }
   }
-})
-</code></pre>
-</code-block>
-<code-block label="plugins file (deprecated)">
-<template v-slot:alert>${PLUGINS_FILE_ALERT}
-</template>
-<pre><code class="language-js">// cypress/plugins/index.js
+})`,
+tab3: `// cypress/plugins/index.js
 
 const { foo } = require('../../foo')
 
@@ -394,8 +342,7 @@ module.exports = (on, config) => {
   on('something', () => {
     require('../../bar')(foo, config)
   })
-}
-</code></pre>
-</code-block>
-</code-group>
-<h2>bbb</h2>`
+}`
+})
+
+// ==============================================================================
