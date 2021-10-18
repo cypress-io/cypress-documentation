@@ -52,7 +52,10 @@ const processText = (text) => {
     .use(gfm)
     .use(remarkRehype, { handlers, allowDangerousHtml: true })
     .use(rehypeRaw)
-    .use(rehypeStringify, { collapseEmptyAttributes: true, entities: { useNamedReferences: true } })
+    .use(rehypeStringify, {
+      collapseEmptyAttributes: true,
+      entities: { useNamedReferences: true },
+    })
     .process(text)
     .then((file) => {
       return file.contents
@@ -234,7 +237,9 @@ describe(':::cypress-config-example', () => {
 
     expect(logger.error).toHaveBeenCalledWith(
       '[:::cypress-config-example]',
-      expect.stringMatching(/Expected 1 or 2 code blocks inside directive, instead got/),
+      expect.stringMatching(
+        /Expected 1 or 2 code blocks inside directive, instead got/
+      ),
       [],
       expect.anything()
     )
@@ -259,9 +264,7 @@ describe(':::cypress-config-example', () => {
     expect(logger.error).toHaveBeenCalledWith(
       '[:::cypress-config-example]',
       expect.stringMatching(/Unable to parse code/),
-      expect.objectContaining(
-        new Error('ReferenceError: xyz is not defined')
-      ),
+      expect.objectContaining(new Error('ReferenceError: xyz is not defined')),
       expect.anything()
     )
 
@@ -386,7 +389,9 @@ describe(':::cypress-plugin-example', () => {
 
     expect(logger.error).toHaveBeenCalledWith(
       '[:::cypress-plugin-example]',
-      expect.stringMatching(/Expected 1 or 2 code blocks inside directive, instead got/),
+      expect.stringMatching(
+        /Expected 1 or 2 code blocks inside directive, instead got/
+      ),
       [],
       expect.anything()
     )
@@ -442,5 +447,4 @@ describe(':::cypress-config-plugin-example', () => {
 
     expect(result).toBe(ccpeFixtures.threeTabs)
   })
-
 })
