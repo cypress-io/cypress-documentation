@@ -428,3 +428,139 @@ module.exports = (on, config) => {
 })
 
 // ==============================================================================
+
+const cee = (exports['cypress-env-example'] = {})
+
+const cypressEnvExample = ({ tab1, tab2, tab3 }) => {
+  return `<h1>aaa</h1>
+<code-group>
+<code-block label="cypress.config.js" active>
+<pre><code class="language-js">${tab1}
+</code></pre>
+</code-block>
+<code-block label="cypress.config.ts">
+<pre><code class="language-ts">${tab2}
+</code></pre>
+</code-block>
+<code-block label="plugins file (deprecated)">
+<template v-slot:alert>${PLUGINS_FILE_ALERT}
+</template>
+<pre><code class="language-js">${tab3}
+</code></pre>
+</code-block>
+</code-group>
+<h2>bbb</h2>`
+}
+
+cee.headerAndVars = cypressEnvExample({
+  tab1: `const { defineConfig } = require('cypress')
+
+// Populate process.env with values from .env file
+require('dotenv').config()
+
+module.exports = defineConfig({
+  env: {
+    auth_username: process.env.AUTH_USERNAME,
+    auth_password: process.env.AUTH_PASSWORD,
+    okta_domain: process.env.REACT_APP_OKTA_DOMAIN,
+    okta_client_id: process.env.REACT_APP_OKTA_CLIENTID
+  }
+})`,
+  tab2: `import { defineConfig } from 'cypress'
+
+// Populate process.env with values from .env file
+require('dotenv').config()
+
+export default defineConfig({
+  env: {
+    auth_username: process.env.AUTH_USERNAME,
+    auth_password: process.env.AUTH_PASSWORD,
+    okta_domain: process.env.REACT_APP_OKTA_DOMAIN,
+    okta_client_id: process.env.REACT_APP_OKTA_CLIENTID
+  }
+})`,
+  tab3: `// cypress/plugins/index.js
+
+// Populate process.env with values from .env file
+require('dotenv').config()
+
+module.exports = (on, config) => {
+  config.env.auth_username = process.env.AUTH_USERNAME
+  config.env.auth_password = process.env.AUTH_PASSWORD
+  config.env.okta_domain = process.env.REACT_APP_OKTA_DOMAIN
+  config.env.okta_client_id = process.env.REACT_APP_OKTA_CLIENTID
+  return config
+}`,
+})
+
+cee.headerAdjustedForPluginsFile = cypressEnvExample({
+  tab1: `const { defineConfig } = require('cypress')
+
+// AWS exports
+const awsConfig = require('./aws-exports-es5.js')
+
+module.exports = defineConfig({
+  env: {
+    cognito_username: process.env.AWS_COGNITO_USERNAME,
+    cognito_password: process.env.AWS_COGNITO_PASSWORD
+  }
+})`,
+  tab2: `import { defineConfig } from 'cypress'
+
+// AWS exports
+const awsConfig = require('./aws-exports-es5.js')
+
+export default defineConfig({
+  env: {
+    cognito_username: process.env.AWS_COGNITO_USERNAME,
+    cognito_password: process.env.AWS_COGNITO_PASSWORD
+  }
+})`,
+  tab3: `// cypress/plugins/index.js
+
+// AWS exports
+const awsConfig = require('../../aws-exports-es5.js')
+
+module.exports = (on, config) => {
+  config.env.cognito_username = process.env.AWS_COGNITO_USERNAME
+  config.env.cognito_password = process.env.AWS_COGNITO_PASSWORD
+  return config
+}`,
+})
+
+cee.noPrefixKeys = cypressEnvExample({
+  tab1: `const { defineConfig } = require('cypress')
+
+const example = require('example')
+
+module.exports = defineConfig({
+  env: {
+    foo: example.foo,
+    bar: example.bar,
+    baz: process.env.BAZ_ENV_VAR
+  }
+})`,
+  tab2: `import { defineConfig } from 'cypress'
+
+const example = require('example')
+
+export default defineConfig({
+  env: {
+    foo: example.foo,
+    bar: example.bar,
+    baz: process.env.BAZ_ENV_VAR
+  }
+})`,
+  tab3: `// cypress/plugins/index.js
+
+const example = require('example')
+
+module.exports = (on, config) => {
+  config.env.foo = example.foo
+  config.env.bar = example.bar
+  config.env.baz = process.env.BAZ_ENV_VAR
+  return config
+}`,
+})
+
+// ==============================================================================

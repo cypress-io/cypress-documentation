@@ -54,7 +54,7 @@ function processNode(node, { _require, error, warn }) {
 
         ${header}
 
-        module.exports = defineConfig({
+        export default defineConfig({
           env: {
             ${envProperties(bodyData)}
           }

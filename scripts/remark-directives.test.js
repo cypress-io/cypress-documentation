@@ -448,3 +448,84 @@ describe(':::cypress-config-plugin-example', () => {
     expect(result).toBe(ccpeFixtures.threeTabs)
   })
 })
+
+describe(':::cypress-env-example', () => {
+  const ceeFixtures = fixtures['cypress-env-example']
+
+  it('should header and vars across 3 tabs', async () => {
+    const text = endent`
+    # aaa
+    :::cypress-env-example
+
+    \`\`\`js
+    // Populate process.env with values from .env file
+    require('dotenv').config()
+    \`\`\`
+
+    \`\`\`json
+    {
+      "auth_username": "AUTH_USERNAME",
+      "auth_password": "AUTH_PASSWORD",
+      "okta_domain": "REACT_APP_OKTA_DOMAIN",
+      "okta_client_id": "REACT_APP_OKTA_CLIENTID"
+    }
+    \`\`\`
+
+    :::
+    ## bbb
+    `
+    const result = await processText(text)
+
+    expect(result).toBe(ceeFixtures.headerAndVars)
+  })
+
+  it('should adjust header in plugins file tab', async () => {
+    const text = endent`
+    # aaa
+    :::cypress-env-example
+
+    \`\`\`js
+    // AWS exports
+    const awsConfig = require('./aws-exports-es5.js')
+    \`\`\`
+
+    \`\`\`json
+    {
+      "cognito_username": "AWS_COGNITO_USERNAME",
+      "cognito_password": "AWS_COGNITO_PASSWORD"
+    }
+    \`\`\`
+
+    :::
+    ## bbb
+    `
+    const result = await processText(text)
+
+    expect(result).toBe(ceeFixtures.headerAdjustedForPluginsFile)
+  })
+
+  it('should omit prefix from specified keys', async () => {
+    const text = endent`
+    # aaa
+    :::cypress-env-example{noPrefixKeys=foo,bar}
+
+    \`\`\`js
+    const example = require('example')
+    \`\`\`
+
+    \`\`\`json
+    {
+      "foo": "example.foo",
+      "bar": "example.bar",
+      "baz": "BAZ_ENV_VAR"
+    }
+    \`\`\`
+
+    :::
+    ## bbb
+    `
+    const result = await processText(text)
+
+    expect(result).toBe(ceeFixtures.noPrefixKeys)
+  })
+})
