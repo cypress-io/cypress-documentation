@@ -316,8 +316,8 @@ to install Cypress, and we plan on adding new capabilities to it over time.
 When it comes to e2e tests, one of the most common things you'll need to do is
 get one or more HTML elements on a page. Rather than split element fetching into
 multiple methods that you need to memorize, everything can be accomplished with
-[`cy.get`](/api/commands/get) while using CSS selectors to account for all use
-cases.
+[`cy.get`](/api/commands/get) while using CSS selectors or the preferred
+[**data attribute**](https://on.cypress.io/selecting-elements)
 
 <Badge type="danger">Before: Protractor</Badge>
 
