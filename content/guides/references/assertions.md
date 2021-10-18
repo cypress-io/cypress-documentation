@@ -268,6 +268,19 @@ cy.contains('#a-greeting', /^Hello/)
 in
 [How do I get an element's text contents?](/faq/questions/using-cypress-faq#How-do-I-get-an-element-s-text-contents)
 
+**Note:** When multiple elements are retrieved with `cy.get()`, the concatenated text of them is used.
+
+```html
+<div>123</div>
+<div>456</div>
+<div>789</div>
+```
+
+```javascript
+cy.get('div').should('have.text', '123') // fail because '123456789' != '123'
+cy.get('div').should('have.text', '123456789') // pass
+```
+
 ### Visibility
 
 ```javascript
