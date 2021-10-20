@@ -235,7 +235,7 @@ Each plugin submitted to the plugins list should have the following:
    - Acts as real-world example usage
 
 2. CI pipeline
-3. Compatability with at least the latest major version of Cypress
+3. Compatibility with at least the latest major version of Cypress
 
 ### Adding Pages
 
@@ -243,14 +243,8 @@ To add a page, such as a new guide or API documentation:
 
 - Add the new page to the relevant directory under [`content`](/content).
 - Link to your new page in the [`sidebar.json`](/content/_data/sidebar.json).
-- Add translations for the sidebar link for each supported language. Currently
-  only English is supported and this is located in
-  [`en.json`](/content/_data/en.json)).
 - Build the documentation site locally so that you can visually inspect your new
   page and the links to it.
-- **REQUIRED**: Commit the new file using git - we auto-generate the doc to
-  display within each supported language, this auto-generation depends on the
-  file existing in git.
 - Submit a [pull request](#Pull-Requests) for your change.
 
 > Note: If you need to change the overall layout of a page, you should create a
@@ -368,9 +362,6 @@ To delete a page:
 
 - Delete the page from the relevant directory under [`content`](/content).
 - Remove the link from the the [`sidebar.json`](/content/_data/sidebar.json).
-- **REQUIRED**: Commit the change using git - we auto-remove the doc within each
-  supported language, this auto-generation depends on the file being deleted in
-  git, the build will not work until this is commited.
 - Build the documentation site locally so that you can visually inspect and make
   sure it was properly deleted.
 
@@ -408,10 +399,10 @@ open a pull request (PR) from your repo to the
 
 - The PR should be from your repository to the appropriate branch in the
   `cypress-io/cypress-documentation` repository.
-  - For documation changes that are not tied to a feature release, open a PRs
+  - For documentation changes that are not tied to a feature release, open a PRs
     against the `master` branch.
   - For documentation additions for unreleased features, open a PR against the
-    corrsponding `X.Y.Z-release` branch. Once the release it performed, this
+    corresponding `X.Y.Z-release` branch. Once the release it performed, this
     branch will be merged into master by the releaser.
 - When opening a PR for a specific issue already open, please use the
   `closes #issueNumber` syntax in the pull request description&mdash;for
