@@ -411,7 +411,7 @@ open a pull request (PR) from your repo to the
   - For documation changes that are not tied to a feature release, open a PRs
     against the `master` branch.
   - For documentation additions for unreleased features, open a PR against the
-    corrsponding `X.Y.Z-release` branch. Once the release it performed, this
+    corresponding `X.Y.Z-release` branch. Once the release is performed, this
     branch will be merged into master by the releaser.
 - When opening a PR for a specific issue already open, please use the
   `closes #issueNumber` syntax in the pull request description&mdash;for
