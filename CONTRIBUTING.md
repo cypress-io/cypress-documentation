@@ -408,7 +408,7 @@ open a pull request (PR) from your repo to the
 
 - The PR should be from your repository to the appropriate branch in the
   `cypress-io/cypress-documentation` repository.
-  - For documation changes that are not tied to a feature release, open a PRs
+  - For documentation changes that are not tied to a feature release, open a PRs
     against the `master` branch.
   - For documentation additions for unreleased features, open a PR against the
     corresponding `X.Y.Z-release` branch. Once the release is performed, this
