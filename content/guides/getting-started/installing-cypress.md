@@ -99,9 +99,9 @@ downloaded. As of version `3.0`, the binary is downloaded to a global cache
 directory to be used across projects.
 
 System proxy properties `http_proxy`, `https_proxy` and `no_proxy` are respected
-for the download of the Cypress binary. You can also use the npm properties 
-`npm_config_proxy` and `npm_config_https_proxy`. Those have lower priority, so 
-they will only be used if the system properties are being resolved to not use a 
+for the download of the Cypress binary. You can also use the npm properties
+`npm_config_proxy` and `npm_config_https_proxy`. Those have lower priority, so
+they will only be used if the system properties are being resolved to not use a
 proxy.
 
 </Alert>
