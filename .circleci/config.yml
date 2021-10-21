@@ -123,7 +123,7 @@ workflows:
             - build
 
       - lint:
-          name: 'Lint JS/CSS/Markdown'
+          name: "Lint JS/CSS/Markdown"
           requires:
             - build
 
