@@ -182,7 +182,7 @@ Let's take a look at an example below.
 #### Application JavaScript
 
 ```javascript
-$('button').click(() => {
+$('button').click(function () {
   // when the <button> is clicked
   // we remove the button from the DOM
   $(this).remove()
