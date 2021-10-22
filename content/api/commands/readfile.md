@@ -33,17 +33,20 @@ default `cypress.json` configuration file).
 The encoding to be used when reading the file. The following encodings are
 supported:
 
-- `ascii`
-- `base64`
-- `binary`
-- `hex`
-- `latin1`
-- `utf8`
-- `utf-8`
-- `ucs2`
-- `ucs-2`
-- `utf16le`
-- `utf-16le`
+- `'ascii'`
+- `'base64'`
+- `'binary'`
+- `'hex'`
+- `'latin1'`
+- `'utf8'`
+- `'utf-8'`
+- `'ucs2'`
+- `'ucs-2'`
+- `'utf16le'`
+- `'utf-16le'`
+- `null`
+
+Using `null` explicitly will return the file as a `Buffer`, regardless of file extension.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -56,7 +59,7 @@ Pass in an options object to change the default behavior of `cy.readFile()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.readFile()` 'yields the contents of the file' </li></List>
+<List><li>`cy.readFile()` yields the contents of the file.</li></List>
 
 ## Examples
 
@@ -123,6 +126,16 @@ cy.readFile('path/to/logo.png', 'base64').then((logo) => {
   // logo will be encoded as base64
   // and should look something like this:
   // aIJKnwxydrB10NVWqhlmmC+ZiWs7otHotSAAAOw==...
+})
+```
+
+#### Read
+
+```javascript
+cy.fixture('path/to/logo.png', null).then((logo) => {
+  // logo will be read as a buffer
+  // and should look something like this:
+  // Buffer([0, 0, ...])
 })
 ```
 
@@ -218,6 +231,6 @@ outputs the following:
 ## See also
 
 - [`cy.exec()`](/api/commands/exec)
-- [`cy.fixture()`](/api/commands/fixture)
+- [`cy.fixture()`](/api/commands/fixture) for a similar command with caching
 - [`cy.task()`](/api/commands/task)
 - [`cy.writeFile()`](/api/commands/writefile)
