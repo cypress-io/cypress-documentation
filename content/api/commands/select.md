@@ -36,7 +36,8 @@ The `value`, `index`, or text content of the `<option>` to be selected.
 
 **<Icon name="angle-right"></Icon> values** **_(Array)_**
 
-An array of `values`, `indexes`, or text contents of the `<option>`s to be selected.
+An array of `values`, `indexes`, or text contents of the `<option>`s to be
+selected.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -158,6 +159,15 @@ cy.get('select')
   .invoke('val')
   .should('deep.equal', ['456', '457'])
 ```
+
+<Alert type="info">
+
+**Note:** Passing an array into `cy.select()` will select only the options
+matching values in the array, leaving all other options unselected (even those
+that were previously selected). In the same manner, calling `cy.select([])` with
+an empty array will clear selections on all options.
+
+</Alert>
 
 ### Force select
 
