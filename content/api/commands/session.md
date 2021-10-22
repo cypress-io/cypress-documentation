@@ -598,7 +598,7 @@ const login = (name) => {
       cy.request('/whoami', {
         headers: { 'Authorization' : localStorage.token }
         method: 'POST'
-      }).its('status').should('equal', '200')
+      }).its('status').should('equal', 200)
     }
   })
 }
