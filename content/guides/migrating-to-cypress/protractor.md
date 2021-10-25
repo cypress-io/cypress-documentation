@@ -1223,6 +1223,14 @@ Read our docs to learn more about speeding up test execution in CI via
 
 </Alert>
 
+### Code Coverage
+
+As you write more and more end-to-end tests, you will find yourself wondering -
+do I need to write more tests? Are there parts of the application still
+untested? Are there parts of the application that perhaps are tested too much?
+This [code coverage guide](https://on.cypress.io/code-coverage) is an excellent
+resource to learn how to add code coverage.
+
 ### Questions or Issues?
 
 Visit our
