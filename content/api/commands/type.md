@@ -23,7 +23,7 @@ cy.get('input').type('Hello, World') // Type 'Hello, World' into the 'input'
 
 ```javascript
 cy.type('Welcome') // Errors, cannot be chained off 'cy'
-cy.url().type('www.cypress.io') // Errors, 'url' does not yield DOM element
+cy.clock().type('www.cypress.io') // Errors, 'clock' does not yield DOM elements
 ```
 
 ### Arguments

@@ -36,7 +36,7 @@ cy.get('td').filter('.users') // Yield all el's with class '.users'
 
 ```javascript
 cy.filter('.animated') // Errors, cannot be chained off 'cy'
-cy.location().filter() // Errors, 'location' does not yield DOM element
+cy.clock().filter() // Errors, 'clock' does not yield DOM elements
 ```
 
 ### Arguments

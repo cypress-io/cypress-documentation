@@ -129,8 +129,8 @@ cy.get('button').then(($btn) => {
       // inspect $select <object>
       debugger
 
-      cy.url().should((url) => {
-        // inspect the url <string>
+      cy.clock().then(($clock) => {
+        // inspect $clock <object>
         debugger
 
         $btn // is still available

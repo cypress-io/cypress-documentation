@@ -25,7 +25,7 @@ cy.get('select').select('user-1') // Select the 'user-1' option
 
 ```javascript
 cy.select('John Adams') // Errors, cannot be chained off 'cy'
-cy.location().select() // Errors, 'location' does not yield <select> element
+cy.clock().select() // Errors, 'clock' does not yield a <select> element
 ```
 
 ### Arguments
@@ -36,7 +36,8 @@ The `value`, `index`, or text content of the `<option>` to be selected.
 
 **<Icon name="angle-right"></Icon> values** **_(Array)_**
 
-An array of `values`, `indexes`, or text contents of the `<option>`s to be selected.
+An array of `values`, `indexes`, or text contents of the `<option>`s to be
+selected.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
