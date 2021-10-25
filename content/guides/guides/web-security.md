@@ -1,5 +1,6 @@
 ---
 title: Web Security
+e2eSpecific: true
 ---
 
 Browsers adhere to a strict

@@ -1,5 +1,6 @@
 ---
 title: location
+e2eSpecific: true
 ---
 
 Get the global `window.location` object of the page that is currently active.

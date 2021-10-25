@@ -1,5 +1,6 @@
 ---
 title: Okta Authentication
+e2eSpecific: true
 ---
 
 <Alert type="info">

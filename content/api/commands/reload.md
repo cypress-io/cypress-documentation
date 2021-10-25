@@ -1,5 +1,6 @@
 ---
 title: reload
+e2eSpecific: true
 ---
 
 Reload the page.

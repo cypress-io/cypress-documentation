@@ -3,6 +3,7 @@ import AppSidebar from '../../components/AppSidebar'
 import TableOfContents from '../../components/TableOfContents'
 import Footer from '../../components/Footer'
 import ApiTableOfContents from '../../components/ApiTableOfContents.vue'
+import E2E from '../../components/global/E2E'
 import { getMetaData, getMetaDescription, getTitle } from '../../utils'
 import { fetchBanner } from '../../utils/sanity'
 
@@ -12,6 +13,7 @@ export default {
     TableOfContents,
     ApiTableOfContents,
     Footer,
+    E2E
   },
   async asyncData({ $content, app, params, redirect, error }) {
     const path = `/api/${params.pathMatch || 'index'}`
@@ -107,6 +109,7 @@ export default {
       <div class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
           <h1 class="main-content-title">{{ apiPageContent.title }}</h1>
+          <E2E v-if="apiPageContent.e2eSpecific" />
           <nuxt-content v-if="!isApiToc" :document="apiPageContent" />
           <ApiTableOfContents v-if="isApiToc" />
           <Footer />
