@@ -1,29 +1,31 @@
-<!-- Thanks for contributing! -->
-## Purpose of Pull Request
+<!---
+Thanks for creating a Pull Request 💖!
 
-### Problem description
+Please read the following before submitting:
+- PRs that adds new external dependencies might take a while to review.
+- Keep your PR as small as possible.
+- Limit your PR to one type (docs, refactor, ci, or bugfix)
+-->
 
-<!-- Update "[ ]" to "[x]" to check a box -->
-- [ ] Bug report
-- [ ] Content update
-- [ ] Process update (build, deployment, ... )
+# :octocat: Github Issue 
 
-<!-- Paste a link here if referencing an issue otherwise describe the issue -->
+Closes # <!-- Github issue # here -->
 
-### Acceptance criteria
+## 📝 Purpose of Pull Request
 
-<!-- Describe how the PR resolves the issue -->
+> Add a brief description
 
-## How to Setup
+## 🤔 How to Setup
+### 📄 Page(s) to test
 
-### Page(s) to test
+> Please provide links to the changes if applicable
 
-http://localhost:3000
+### ✅ Steps to run pull request
 
-### Steps to run pull request
+> Please describe the behavior or changes to run this PR
 
-- Navigate to...
+## 📸 Proof of Change
 
-## Proof of Change
+> Place screenshots or GIFs of visual changes if applicable
 
-<!-- Place screenshots of GIFs of visual changes -->
+## 📝 Additional Information
