@@ -7,7 +7,7 @@ Please read the following before submitting:
 - Limit your PR to one type (docs, refactor, ci, or bugfix)
 -->
 
-# :octocat: Github Issue 
+# Github Issue :octocat:
 
 Closes # <!-- Github issue # here -->
 
@@ -16,6 +16,7 @@ Closes # <!-- Github issue # here -->
 > Add a brief description
 
 ## 🤔 How to Setup
+
 ### 📄 Page(s) to test
 
 > Please provide links to the changes if applicable
