@@ -286,6 +286,12 @@ Log? Read more about [Command Logging](#Command-Logging).
 
 </Alert>
 
+<Alert type="warning">
+
+Note that `Cypress.Commands.add()` will throw an error when trying to add a custom command with the same name as an existing built-in Cypress command. In order to override the behavior of an existing command, `Cypress.Commands.overwrite()` should be used instead. For more information, read the section [Overwrite Existing Commands](#Overwrite-Existing-Commands).
+
+</Alert>
+
 ### Child Commands
 
 Child commands are always chained off of a **parent** command, or another
