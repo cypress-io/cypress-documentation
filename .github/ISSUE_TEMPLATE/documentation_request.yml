@@ -25,6 +25,6 @@ body:
       label: "Description"
       description:
         "What about the subject's documentation should be added or changed?"
-      placeholder: "Add a usage example of RadioGroup in action"
+      placeholder: "Update Guides with new 'Migrating to Cypress' page"
     validations:
       required: true
