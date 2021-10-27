@@ -26,7 +26,7 @@ cy.readFile('menu.json')
 **<Icon name="angle-right"></Icon> filePath** **_(String)_**
 
 A path to a file within the project root (the directory that contains the
-default `cypress.json` configuration file).
+[Cypress configuration file](/guides/references/configuration)).
 
 **<Icon name="angle-right"></Icon> encoding** **_(String)_**
 
@@ -200,13 +200,18 @@ pass.</li></List>
 
 ## Command Log
 
-**_List the contents of the default `cypress.json` configuration file_**
+**_List the contents of your package.json file_**
 
 ```javascript
-cy.readFile('cypress.json')
+cy.readFile('package.json')
 ```
 
 The command above will display in the Command Log as:
+
+<!-- Code to reproduce screenshot:
+  in spec file:
+  use cy.readFile('package.json') as shown in the example above
+-->
 
 <DocsImage src="/img/api/readfile/readfile-can-get-content-of-system-files-in-tests.png" alt="Command Log readFile" ></DocsImage>
 

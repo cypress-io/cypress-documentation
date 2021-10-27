@@ -50,7 +50,7 @@ Just like the [Command Line options](/guides/guides/command-line) for
 | `browser`         | _string_           | Specify different browser to run tests in, either by name or by filesystem path                                                                                    |
 | `ciBuildId`       | _string_           | Specify a unique identifier for a run to enable [grouping](/guides/guides/parallelization#Grouping-test-runs) or [parallelization](/guides/guides/parallelization) |
 | `config`          | _object_           | Specify [configuration](/guides/references/configuration)                                                                                                          |
-| `configFile`      | _string / boolean_ | Path to the config file to be used. If `false` is passed, no config file will be used.                                                                             |
+| `configFile`      | _string / boolean_ | Path to the [configuration file](/guides/references/configuration#Configuration-file) to be used. If `false` is passed, no config file will be used.               |
 | `env`             | _object_           | Specify [environment variables](/guides/guides/environment-variables)                                                                                              |
 | `group`           | _string_           | [Group](/guides/guides/parallelization#Grouping-test-runs) recorded tests together under a single run                                                              |
 | `headed`          | _boolean_          | Displays the browser instead of running headlessly                                                                                                                 |
@@ -279,17 +279,17 @@ node e2e-open-tests.js
 Just like the [Command Line options](/guides/guides/command-line), you can pass
 options that modify how Cypress runs.
 
-| Option        | Type               | Description                                                                            |
-| ------------- | ------------------ | -------------------------------------------------------------------------------------- |
-| `browser`     | _string_           | Specify a filesystem path to a custom browser                                          |
-| `config`      | _object_           | Specify [configuration](/guides/references/configuration)                              |
-| `configFile`  | _string / boolean_ | Path to the config file to be used. If `false` is passed, no config file will be used. |
-| `detached`    | _boolean_          | Open Cypress in detached mode                                                          |
-| `env`         | _object_           | Specify [environment variables](/guides/guides/environment-variables)                  |
-| `global`      | _boolean_          | Run in global mode                                                                     |
-| `port`        | _number_           | Override default port                                                                  |
-| `project`     | _string_           | Path to a specific project                                                             |
-| `testingType` | _string_           | Specify the type of tests to execute; either `e2e` or `component`. Defaults to `e2e`   |
+| Option        | Type               | Description                                                                                                                                          |
+| ------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `browser`     | _string_           | Specify a filesystem path to a custom browser                                                                                                        |
+| `config`      | _object_           | Specify [configuration](/guides/references/configuration)                                                                                            |
+| `configFile`  | _string / boolean_ | Path to the [configuration file](/guides/references/configuration#Configuration-file) to be used. If `false` is passed, no config file will be used. |
+| `detached`    | _boolean_          | Open Cypress in detached mode                                                                                                                        |
+| `env`         | _object_           | Specify [environment variables](/guides/guides/environment-variables)                                                                                |
+| `global`      | _boolean_          | Run in global mode                                                                                                                                   |
+| `port`        | _number_           | Override default port                                                                                                                                |
+| `project`     | _string_           | Path to a specific project                                                                                                                           |
+| `testingType` | _string_           | Specify the type of tests to execute; either `e2e` or `component`. Defaults to `e2e`                                                                 |
 
 ### Example
 

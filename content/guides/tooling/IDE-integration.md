@@ -179,10 +179,11 @@ with the following configuration should get intelligent code completion working.
 
 ### Configuration
 
+::include{file=partials/warning-cypress-json.md}
+
 #### Features:
 
-When editing the
-[configuration file (`cypress.json` by default)](/guides/references/configuration),
+When editing the [Cypress configuration file](/guides/references/configuration),
 you can use our [json schema file](https://on.cypress.io/cypress.schema.json) to
 get intelligent tooltips in your IDE for each configuration property.
 

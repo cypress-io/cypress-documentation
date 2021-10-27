@@ -34,7 +34,7 @@ cy.exec('npm run build')
 **<Icon name="angle-right"></Icon> command** **_(String)_**
 
 The system command to be executed from the project root (the directory that
-contains the default `cypress.json` configuration file).
+contains the [Cypress configuration file](/guides/references/configuration)).
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -210,13 +210,13 @@ exist.</li></List>
 
 ## Command Log
 
-**_List the contents of the default `cypress.json` configuration file_**
+**_List the contents of your package.json file_**
 
 ```javascript
 if (Cypress.platform === 'win32') {
-  cy.exec('print cypress.json').its('stderr').should('be.empty')
+  cy.exec('print package.json').its('stderr').should('be.empty')
 } else {
-  cy.exec('cat cypress.json').its('stderr').should('be.empty')
+  cy.exec('cat package.json').its('stderr').should('be.empty')
 }
 ```
 

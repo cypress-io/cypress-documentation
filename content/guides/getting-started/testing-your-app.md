@@ -143,19 +143,18 @@ application. Luckily, Cypress provides a
 leverage that now.
 
 Open up your [configuration file](/guides/references/configuration)
-(`cypress.json` in your project directory, by default) It starts out empty:
+(`cypress.json` in your project directory, by default) It starts out empty, but
+let's add the `baseUrl` option.
 
-```json
-{}
-```
+:::cypress-config-example
 
-Let's add the `baseUrl` option.
-
-```json
+```js
 {
-  "baseUrl": "http://localhost:8080"
+  baseUrl: 'http://localhost:8080'
 }
 ```
+
+:::
 
 This will automatically **prefix** [`cy.visit()`](/api/commands/visit) and
 [`cy.request()`](/api/commands/request) commands with this baseUrl.
@@ -229,7 +228,7 @@ facilitate this with Cypress:**
 
 - [`cy.exec()`](/api/commands/exec) - to run system commands
 - [`cy.task()`](/api/commands/task) - to run code in Node via the
-  [pluginsFile](/guides/references/configuration#Folders-Files)
+  [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function
 - [`cy.request()`](/api/commands/request) - to make HTTP requests
 
 If you're running `node.js` on your server, you might add a `before` or

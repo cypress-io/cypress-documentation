@@ -7,15 +7,7 @@ The `after:spec` event fires after a spec file is run. When running cypress via
 
 ## Syntax
 
-<Alert type="warning">
-
-⚠️ This code is part of the
-[plugins file](/guides/core-concepts/writing-and-organizing-tests#Plugin-files)
-and thus executes in the Node environment. You cannot call `Cypress` or `cy`
-commands in this file, but you do have the direct access to the file system and
-the rest of the operating system.
-
-</Alert>
+::include{file=partials/warning-setup-node-events.md}
 
 <Alert type="warning">
 
@@ -25,11 +17,15 @@ is enabled.
 
 </Alert>
 
+:::cypress-plugin-example
+
 ```js
 on('after:spec', (spec, results) => {
   /* ... */
 })
 ```
+
+:::
 
 **<Icon name="angle-right"></Icon> spec** **_(Object)_**
 
@@ -108,23 +104,25 @@ Dashboard.
 The example below shows how to delete the recorded video for specs with no
 failing tests.
 
-```javascript
-// plugins/index.js
+:::cypress-plugin-example
 
+```javascript
 // need to install the "del" module as a dependency
 // npm i del --save-dev
 const del = require('del')
-
-module.exports = (on, config) => {
-  on('after:spec', (spec, results) => {
-    if (results && results.stats.failures === 0 && results.video) {
-      // `del()` returns a promise, so it's important to return it to ensure
-      // deleting the video is finished before moving on
-      return del(results.video)
-    }
-  })
-}
 ```
+
+```js
+on('after:spec', (spec, results) => {
+  if (results && results.stats.failures === 0 && results.video) {
+    // `del()` returns a promise, so it's important to return it to ensure
+    // deleting the video is finished before moving on
+    return del(results.video)
+  }
+})
+```
+
+:::
 
 ### Delete the recorded video if no tests retried
 
@@ -135,29 +133,31 @@ Dashboard.
 The example below shows how to delete the recorded video for specs that had no
 retry attempts when using Cypress [test retries](/guides/guides/test-retries).
 
-```javascript
-// plugins/index.js
+:::cypress-plugin-example
 
+```js
 // need to install these dependencies
 // npm i lodash del --save-dev
 const _ = require('lodash')
 const del = require('del')
-
-module.exports = (on, config) => {
-  on('after:spec', (spec, results) => {
-    if (results && results.video) {
-      // Do we have failures for any retry attempts?
-      const failures = _.some(results.tests, (test) => {
-        return _.some(test.attempts, { state: 'failed' })
-      })
-      if (!failures) {
-        // delete the video if the spec passed and no tests retried
-        return del(results.video)
-      }
-    }
-  })
-}
 ```
+
+```js
+on('after:spec', (spec, results) => {
+  if (results && results.video) {
+    // Do we have failures for any retry attempts?
+    const failures = _.some(results.tests, (test) => {
+      return _.some(test.attempts, { state: 'failed' })
+    })
+    if (!failures) {
+      // delete the video if the spec passed and no tests retried
+      return del(results.video)
+    }
+  }
+})
+```
+
+:::
 
 ## See also
 

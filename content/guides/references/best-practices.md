@@ -743,13 +743,13 @@ beforeEach(function () {
 > [cypress/tests/ui/auth.spec.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui/auth.spec.ts)_
 
 The `db:seed` task is defined within the
-[plugins file](/guides/core-concepts/writing-and-organizing-tests#Plugin-files)
-of the project, and in this case sends a request to a dedicated back end API of
-the app to appropriately re-seed the database.
+[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function of the
+project, and in this case sends a request to a dedicated back end API of the app
+to appropriately re-seed the database.
 
-```ts
-// cypress/plugins/index.ts
+:::cypress-plugin-example
 
+```js
 on('task', {
   async 'db:seed'() {
     // Send request to backend API to re-seed database with test data
@@ -759,6 +759,8 @@ on('task', {
   //...
 })
 ```
+
+:::
 
 > _<Icon name="github"></Icon> Source:
 > [cypress/plugins/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/plugins/index.ts)_
@@ -908,8 +910,7 @@ We have
 <Alert type="success">
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Set a
-`baseUrl` in your
-[configuration file (`cypress.json` by default)](/guides/references/configuration).
+`baseUrl` in your [Cypress configuration](/guides/references/configuration).
 
 </Alert>
 
@@ -936,13 +937,17 @@ can result in a 'flash' or 'reload' when your tests first start.
 By setting the `baseUrl`, you can avoid this reload altogether. Cypress will
 load the main window in the `baseUrl` you specified as soon as your tests start.
 
-### Configuration file (`cypress.json` by default)
+### Cypress configuration file
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "baseUrl": "http://localhost:8484"
+  baseUrl: 'http://localhost:8484'
 }
 ```
+
+:::
 
 ### With `baseUrl` set, Cypress loads main window in `baseUrl`
 

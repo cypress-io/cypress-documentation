@@ -315,7 +315,6 @@ want to enable them
 | `cypress:net-stubbing*`         | Network interception in the proxy layer                               |
 | `cypress:server:reporter`       | Problems with test reporters                                          |
 | `cypress:server:preprocessor`   | Processing specs                                                      |
-| `cypress:server:plugins`        | Running the plugins file and bundling specs                           |
 | `cypress:server:socket-e2e`     | Watching spec files                                                   |
 | `cypress:server:task`           | Invoking the `cy.task()` command                                      |
 | `cypress:server:socket-base`    | Debugging `cy.request()` command                                      |

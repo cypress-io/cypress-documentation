@@ -113,7 +113,7 @@ cypress run [options]
 | `--ci-build-id`            | [Specify a unique identifier for a run to enable grouping or parallelization.](#cypress-run-ci-build-id-lt-id-gt)                                                                          |
 | `--component`              | [Run component tests](/guides/component-testing/introduction)                                                                                                                               |
 | `--config`, `-c`           | [Specify configuration](#cypress-run-config-lt-config-gt)                                                                                                                                  |
-| `--config-file`, `-C`      | [Specify configuration file](#cypress-run-config-file-lt-config-file-gt)                                                                                                                   |
+| `--config-file`, `-C`      | [Specify configuration file](#cypress-run-config-file-lt-configuration-file-gt)                                                                                                                 |
 | `--e2e`                    | Run end to end tests (default)                                                                                                                                                             |
 | `--env`, `-e`              | [Specify environment variables](#cypress-run-env-lt-env-gt)                                                                                                                                |
 | `--group`                  | [Group recorded tests together under a single run](#cypress-run-group-lt-name-gt)                                                                                                          |
@@ -130,7 +130,7 @@ cypress run [options]
 | `--reporter`, `-r`         | [Specify a Mocha reporter](#cypress-run-reporter-lt-reporter-gt)                                                                                                                           |
 | `--reporter-options`, `-o` | [Specify Mocha reporter options](#cypress-run-reporter-lt-reporter-gt)                                                                                                                     |
 | `--spec`, `-s`             | [Specify the spec files to run](#cypress-run-spec-lt-spec-gt)                                                                                                                              |
-| `--tag`, `-t`              | [Identify a run with a tag or tags](#cypress-run-tag-lt-tag-gt)                                                                                                                          |
+| `--tag`, `-t`              | [Identify a run with a tag or tags](#cypress-run-tag-lt-tag-gt)                                                                                                                            |
 
 #### `cypress run --browser <browser-name-or-path>`
 
@@ -171,11 +171,19 @@ Only valid when providing a `--group` or `--parallel` flag. Read our
 #### `cypress run --config <config>`
 
 Set [configuration](/guides/references/configuration) values. Separate multiple
-values with a comma. The values set here override any values set in your
+values with commas. The values set here override any values set in your
 configuration file.
 
 ```shell
 cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
+```
+
+For more complex configuration objects, you may want to consider passing a
+[JSON.stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+object surrounded by single quotes.
+
+```shell
+cypress run --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.ts"]}'
 ```
 
 <Alert type="info">
@@ -197,14 +205,13 @@ testing locally and in dedicated CI jobs. Examples:
 
 </Alert>
 
-#### `cypress run --config-file <config-file>`
+#### `cypress run --config-file <configuration-file>`
 
-You can specify a path to a JSON file where
-[configuration](/guides/references/configuration) values are set. This defaults
-to `cypress.json`.
+You can specify a path to a file where
+[Cypress configuration](/guides/references/configuration) values are set.
 
 ```shell
-cypress run --config-file tests/cypress-config.json
+cypress run --config-file tests/cypress.config.js
 ```
 
 You can pass `false` to disable the use of a configuration file entirely.
@@ -393,7 +400,7 @@ app/
       cypress/
         integration/
           spec.js
-      cypress.json
+      cypress.config.js
 ```
 
 If we are in the `app` folder, we can run the specs using the following command
@@ -483,15 +490,14 @@ cypress open [options]
 
 Options passed to `cypress open` will automatically be applied to the project
 you open. These persist on all projects until you quit the Cypress Test Runner.
-These options will also override values in your configuration file
-(`cypress.json` by default).
+These options will also override values in the Cypress configuration file.
 
 | Option                | Description                                                                                                                   |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | `--browser`, `-b`     | [Path to a custom browser to be added to the list of available browsers in Cypress](#cypress-open-browser-lt-browser-path-gt) |
 | `--component`         | [Run component tests](/guides/component-testing/introduction)                                                                 |
 | `--config`, `-c`      | [Specify configuration](#cypress-open-config-lt-config-gt)                                                                    |
-| `--config-file`, `-C` | [Specify configuration file](#cypress-open-config-file-lt-config-file-gt)                                                     |
+| `--config-file`, `-C` | [Specify configuration file](#cypress-open-config-file-lt-configuration-file-gt)                                              |
 | `--detached`, `-d`    | Open Cypress in detached mode                                                                                                 |
 | `--e2e`               | Run end to end tests (default)                                                                                                |
 | `--env`, `-e`         | [Specify environment variables](#cypress-open-env-lt-env-gt)                                                                  |
@@ -527,17 +533,24 @@ values with a comma. The values set here override any values set in your
 configuration file.
 
 ```shell
-cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
+cypress open --config pageLoadTimeout=100000,watchForFileChanges=false
 ```
 
-#### `cypress open --config-file <config-file>`
-
-You can specify a path to a JSON file where
-[configuration](/guides/references/configuration) values are set. This defaults
-to `cypress.json`.
+For more complex configuration objects, you may want to consider passing a
+[JSON.stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+object surrounded by single quotes.
 
 ```shell
-cypress open --config-file tests/cypress-config.json
+cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.ts"]}'
+```
+
+#### `cypress open --config-file <configuration-file>`
+
+You can specify a path to a file where
+[Cypress configuration](/guides/references/configuration) values are set.
+
+```shell
+cypress open --config-file tests/cypress.config.js
 ```
 
 You can pass `false` to disable the use of a configuration file entirely.

@@ -401,10 +401,14 @@ restriction.
 
 Still here? That's cool, let's disable web security!
 
-#### Set `chromeWebSecurity` to `false` in your [configuration file (`cypress.json` by default)](/guides/references/configuration)
+#### Set `chromeWebSecurity` to `false` in the [Cypress configuration](/guides/references/configuration)
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "chromeWebSecurity": false
+  chromeWebSecurity: false
 }
 ```
+
+:::

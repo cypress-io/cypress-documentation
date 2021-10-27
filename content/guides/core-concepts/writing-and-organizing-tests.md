@@ -61,9 +61,6 @@ folder structure. By default it will create:
         - waiting.spec.js
         - window.spec.js
 
-  /plugins
-    - index.js
-
   /support
     - commands.js
     - index.js
@@ -75,8 +72,9 @@ While Cypress allows you to configure where your tests, fixtures, and support
 files are located, if you're starting your first project, we recommend you use
 the above structure.
 
-You can modify the folder configuration in your configuration file. See
-[configuration](/guides/references/configuration#Folders-Files) for more detail.
+You can modify the folder configuration in your configuration file. See the
+[Cypress configuration](/guides/references/configuration#Folders-Files) for more
+detail.
 
 <Alert type="info">
 
@@ -88,8 +86,8 @@ Cypress will create a
 [`videosFolder`](/guides/references/configuration#Videos) to store the
 screenshots and videos taken during the testing of your application. Many users
 will opt to add these folders to their `.gitignore` file. Additionally, if you
-are storing sensitive environment variables in your configuration file
-(`cypress.json` by default) or
+are storing sensitive environment variables in your
+[Cypress configuration](/guides/references/configuration) or
 [`cypress.env.json`](/guides/guides/environment-variables#Option-2-cypress-env-json),
 these should also be ignored when you check into source control.
 
@@ -191,6 +189,8 @@ To learn more about videos and settings available, see
 [Screenshots and Videos](/guides/guides/screenshots-and-videos#Screenshots)
 
 ### Plugins file
+
+::include{file=partials/warning-plugins-file.md}
 
 The plugins file is a special file that executes in Node before the project is
 loaded, before the browser launches, and during your test execution. While the
@@ -502,7 +502,7 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 
 ### Test Configuration
 
-To apply a specific Cypress [configuration](/guides/references/configuration)
+To apply a specific [Cypress configuration](/guides/references/configuration)
 value to a suite or test, pass a configuration object to the test or suite
 function as the second argument.
 
@@ -872,7 +872,7 @@ behavior.
 
 #### Files
 
-- [Configuration file (`cypress.json`) by default](/guides/references/configuration)
+- [Cypress configuration](/guides/references/configuration)
 - [cypress.env.json](/guides/guides/environment-variables)
 
 #### Folders

@@ -103,24 +103,28 @@ written with the Cypress End-to-End test runner, you may want to configure some
 Component Testing specific defaults.
 
 You can configure or override Component Testing defaults in your
-[configuration file](/guides/references/configuration) (`cypress.json` by
-default) using the `component` key.
+[Cypress configuration](/guides/references/configuration) using the `component`
+key.
 
 For example, if you would like to use a different viewport size or target
-different test files for Component Testing, your `cypress.json` might look like
-this:
+different test files for Component Testing, your Cypress configuration might
+look like this:
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "testFiles": "cypress/integration/*.spec.js",
-  "component": {
-    "componentFolder": "src",
-    "testFiles": ".*/__tests__/.*spec.tsx",
-    "viewportHeight": 500,
-    "viewportWidth": 700
+  testFiles: "cypress/integration/*.spec.js",
+  component: {
+    componentFolder: "src",
+    testFiles: ".*/__tests__/.*spec.tsx",
+    viewportHeight: 500,
+    viewportWidth: 700
   }
 }
 ```
+
+:::
 
 The Component Testing runner will use all the configuration at the root level of
 your configuration file and apply any Component Testing specific overrides.
@@ -163,86 +167,84 @@ If it's your first time using Cypress, check out the
 </alert>
 
 Once installed, you need to configure how Cypress will locate component spec
-files. In the following configuration file (`cypress.json` by default), all
-components test files contained within the `src` directory and match the glob
-given in the `testFiles` key.
+files. In the following Cypress configuration, all components test files
+contained within the `src` directory and match the glob given in the `testFiles`
+key.
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "component": {
-    "componentFolder": "src",
-    "testFiles": "**/*spec.{js,jsx,ts,tsx}"
+  component: {
+    componentFolder: "src",
+    testFiles: "**/*spec.{js,jsx,ts,tsx}"
   }
 }
 ```
+
+:::
 
 You will also need to configure the component testing framework of your choice
 by installing the corresponding component testing plugin. Read more about
 Cypress plugins in our [plugins guide](/guides/tooling/plugins-guide). For
 example, if you are using Create React App, you will need to use the
-`react-scripts` plugin as shown below in your `cypress/plugins/index.js` file.
-
-<code-group>
-  <code-block label="React (using CRA)" active>
-
-```js
-// cypress/plugins/index.js
-
-module.exports = (on, config) => {
-  if (config.testingType === 'component') {
-    require('@cypress/react/plugins/react-scripts')(on, config)
-  }
-
-  return config
-}
-```
-
-  </code-block>
-  <code-block label="Vue (using vue-cli)">
-
-```js
-// cypress/plugins/index.js
-
-module.exports = (on, config) => {
-  if (config.testingType === 'component') {
-    const { startDevServer } = require('@cypress/webpack-dev-server')
-
-    // Vue's Webpack configuration
-    const webpackConfig = require('@vue/cli-service/webpack.config.js')
-
-    on('dev-server:start', (options) =>
-      startDevServer({ options, webpackConfig })
-    )
-  }
-}
-```
-
-  </code-block>
-  <code-block label="Generic Webpack">
-
-```js
-// cypress/plugins/index.js
-
-module.exports = (on, config) => {
-  if (config.testingType === 'component') {
-    const { startDevServer } = require('@cypress/webpack-dev-server')
-
-    // Your project's Webpack configuration
-    const webpackConfig = require('../../webpack.config.js')
-
-    on('dev-server:start', (options) =>
-      startDevServer({ options, webpackConfig })
-    )
-  }
-}
-```
-
-  </code-block>
-</code-group>
+`react-scripts` plugin as shown below.
 
 Note we have a conditional check against `config.testingType`. This is useful if
-your project is already using existing plugins for the End-to-end runner, and
-you don't want them to conflict.
+your project is using the legacy plugins file for the End-to-end runner, and you
+don't want them to conflict.
+
+### React (using CRA)
+
+:::cypress-plugin-example{configProp=component noComment}
+
+```js
+if (config.testingType === 'component') {
+  require('@cypress/react/plugins/react-scripts')(on, config)
+}
+
+return config
+```
+
+:::
+
+### Vue (using vue-cli)
+
+:::cypress-plugin-example{configProp=component noComment}
+
+```js
+if (config.testingType === 'component') {
+  const { startDevServer } = require('@cypress/webpack-dev-server')
+
+  // Vue's Webpack configuration
+  const webpackConfig = require('@vue/cli-service/webpack.config.js')
+
+  on('dev-server:start', (options) =>
+    startDevServer({ options, webpackConfig })
+  )
+}
+```
+
+:::
+
+### Generic Webpack
+
+:::cypress-plugin-example{configProp=component noComment}
+
+```js
+if (config.testingType === 'component') {
+  const { startDevServer } = require('@cypress/webpack-dev-server')
+
+  // Your project's Webpack configuration
+  const webpackConfig = require('../../webpack.config.js')
+
+  on('dev-server:start', (options) =>
+    startDevServer({ options, webpackConfig })
+  )
+}
+```
+
+:::
 
 If you have a different React development environment from Create React App,
 such as Next.js, or use a Vue template other than vue-cli, you will need to
@@ -370,7 +372,7 @@ Please report issues against these projects in Github or contact us on
 #### Vite
 
 For a quick-start, please take a look at the boilerplate repositories below. To
-setup a project from scratch please check out the below plugins file.
+setup a project from scratch please check out the below configuration.
 
 **From Boilerplate**
 

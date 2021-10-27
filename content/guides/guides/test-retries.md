@@ -101,10 +101,9 @@ attempt for review and debugging if desired.
 ### Global Configuration
 
 Typically you will want to define different retry attempts for `cypress run`
-versus `cypress open`. You can configure this in your
-[configuration file](/guides/guides/command-line#cypress-open-config-file-lt-config-file-gt)
-(`cypress.json` by default) by passing the `retries` option an object with the
-following options:
+versus `cypress open`. You can configure this in the
+[Cypress configuration](/guides/guides/command-line#cypress-open-config-file-lt-configuration-file-gt)
+by passing the `retries` option an object with the following options:
 
 - `runMode` allows you to define the number of test retries when running
   `cypress run`
@@ -127,10 +126,9 @@ following options:
 #### Configure retry attempts for all modes
 
 If you want to configure the retry attempts for all tests run in both
-`cypress run` and `cypress open`, you can configure this in your
-[configuration file](/guides/guides/command-line#cypress-open-config-file-lt-config-file-gt)
-(`cypress.json` by default) by defining the `retries` property and setting the
-desired number of retries.
+`cypress run` and `cypress open`, you can configure this in the
+[Cypress configuration](/guides/guides/command-line#cypress-open-config-file-lt-configuration-file-gt)
+by defining the `retries` property and setting the desired number of retries.
 
 ```jsx
 {
@@ -248,29 +246,31 @@ used to process, compress, and upload the video to the
 The example below shows how to delete the recorded video for specs that had no
 retry attempts or failures when using Cypress test retries.
 
-```js
-// plugins/index.js
+:::cypress-plugin-example
 
+```js
 // need to install these dependencies
 // npm i lodash del --save-dev
 const _ = require('lodash')
 const del = require('del')
-
-module.exports = (on, config) => {
-  on('after:spec', (spec, results) => {
-    if (results && results.video) {
-      // Do we have failures for any retry attempts?
-      const failures = _.some(results.tests, (test) => {
-        return _.some(test.attempts, { state: 'failed' })
-      })
-      if (!failures) {
-        // delete the video if the spec passed and no tests retried
-        return del(results.video)
-      }
-    }
-  })
-}
 ```
+
+```js
+on('after:spec', (spec, results) => {
+  if (results && results.video) {
+    // Do we have failures for any retry attempts?
+    const failures = _.some(results.tests, (test) => {
+      return _.some(test.attempts, { state: 'failed' })
+    })
+    if (!failures) {
+      // delete the video if the spec passed and no tests retried
+      return del(results.video)
+    }
+  }
+})
+```
+
+:::
 
 ## Dashboard
 
