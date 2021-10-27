@@ -1,8 +1,8 @@
 diff --git a/node_modules/@nuxt/vue-app/template/App.js b/node_modules/@nuxt/vue-app/template/App.js
-index 1cd3be1..295805e 100644
+index c8f7c95..09ef19d 100644
 --- a/node_modules/@nuxt/vue-app/template/App.js
 +++ b/node_modules/@nuxt/vue-app/template/App.js
-@@ -44,9 +44,6 @@ export default {
+@@ -43,9 +43,6 @@ export default {
      <% if (features.layouts) { %>
      const layoutEl = h(this.layout || 'nuxt')
      const templateEl = h('div', {

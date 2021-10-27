@@ -88,7 +88,6 @@
     "postcss": "^7",
     "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.0.5",
-    "rehype": "11.0.0",
     "remark": "^13.0.0",
     "request-promise": "^4.2.6",
     "strip-markdown": "^4.0.0",
