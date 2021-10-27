@@ -87,9 +87,12 @@ export default {
       />
       <div class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
-          <h1 class="main-content-title">
-            {{ (guide && guide.title) || 'Cypress Documentation' }}
-          </h1>
+          <div class="main-content-header">
+            <h1>
+              {{ (guide && guide.title) || 'Cypress Documentation' }}
+            </h1>
+            <E2EOnlyBadge v-if="guide.e2eSpecific" />
+          </div>
           <nuxt-content :document="guide"></nuxt-content>
           <Footer />
         </article>

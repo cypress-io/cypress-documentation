@@ -142,7 +142,7 @@ export default {
       />
       <div class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
-          <h1 class="main-content-title">Changelog</h1>
+          <h1 class="main-content-header">Changelog</h1>
           <nuxt-content
             v-for="(changelog, index) in changelogs"
             :key="`changelog-${index}`"

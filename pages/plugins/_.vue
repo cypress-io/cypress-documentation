@@ -74,7 +74,7 @@ export default {
     <main :class="Boolean(banner) ? $style.bannerMargin : ''" class="pt-16">
       <div class="mt-16 mx-16">
         <article class="w-full">
-          <h1 class="main-content-title">{{ pluginDoc.title }}</h1>
+          <h1 class="main-content-header">{{ pluginDoc.title }}</h1>
           <nuxt-content :document="pluginDoc"></nuxt-content>
           <PluginsList :list="plugins" />
           <Footer />

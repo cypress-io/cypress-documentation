@@ -142,7 +142,7 @@ export default {
       />
       <div v-if="mediaObjectIsEmpty" class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
-          <h1 class="main-content-title">{{ exampleItem.title }}</h1>
+          <h1 class="main-content-header">{{ exampleItem.title }}</h1>
           <nuxt-content :document="exampleItem"></nuxt-content>
           <Footer />
         </article>
@@ -155,7 +155,7 @@ export default {
       <!-- /* Projects */ -->
       <div v-if="isProjects" class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll nuxt-content">
-          <h1 class="main-content-title">{{ title }}</h1>
+          <h1 class="main-content-header">{{ title }}</h1>
           <p>{{ mediaObject.description }}</p>
           <ul>
             <li v-for="item in mediaObject.projects" :key="`${item.url}`">
@@ -176,7 +176,7 @@ export default {
       <!-- /* Courses */ -->
       <div v-if="isCourses" class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll nuxt-content">
-          <h1 class="main-content-title">{{ title }}</h1>
+          <h1 class="main-content-header">{{ title }}</h1>
           <p>
             Online courses from that teach end-to-end testing with Cypress over
             multiple videos. <strong>Note:</strong> Some of the courses require
@@ -216,7 +216,7 @@ export default {
       <!-- /* Webinars */ -->
       <div v-if="isWebinars" class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll nuxt-content">
-          <h1 class="main-content-title">{{ title }}</h1>
+          <h1 class="main-content-header">{{ title }}</h1>
           <div class="mb-14">
             <ul>
               <li v-for="item in mediaObject.small" :key="`${item.url}`">
@@ -261,7 +261,7 @@ export default {
       <!-- /* Blogs */ -->
       <div v-if="isBlogs" class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll nuxt-content">
-          <h1 class="main-content-title">{{ title }}</h1>
+          <h1 class="main-content-header">{{ title }}</h1>
           <div class="mb-14">
             <ul>
               <li v-for="item in mediaObject.small" :key="`${item.url}`">
@@ -310,7 +310,7 @@ export default {
       <!-- /* Talks */ -->
       <div v-if="isTalks" class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll nuxt-content">
-          <h1 class="main-content-title">{{ title }}</h1>
+          <h1 class="main-content-header">{{ title }}</h1>
           <div class="mb-14">
             <ul>
               <li v-for="item in mediaObject.small" :key="`${item.url}`">
@@ -372,7 +372,7 @@ export default {
       <!-- /* Podcasts */ -->
       <div v-if="isPodcasts" class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll nuxt-content">
-          <h1 class="main-content-title">{{ title }}</h1>
+          <h1 class="main-content-header">{{ title }}</h1>
           <div class="mb-14">
             <ul>
               <li v-for="item in mediaObject.small" :key="`${item.url}`">
@@ -428,7 +428,7 @@ export default {
       <!-- /* Screencasts */ -->
       <div v-if="isScreencasts" class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll nuxt-content">
-          <h1 class="main-content-title">{{ title }}</h1>
+          <h1 class="main-content-header">{{ title }}</h1>
           <div class="mb-14">
             <ul>
               <li v-for="item in mediaObject.small" :key="`${item.url}`">

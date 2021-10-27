@@ -87,7 +87,7 @@ export default {
       />
       <div class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
-          <h1 class="main-content-title">{{ guide.title }}</h1>
+          <h1 class="main-content-header">{{ guide.title }}</h1>
           <div class="w-full flex flex-col justify-between">
             <TableOfContentsList :toc="guide.toc" />
             <nuxt-content :document="guide"></nuxt-content>

@@ -106,9 +106,9 @@ export default {
       />
       <div class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
-          <div class="flex justify-between items-center">
-            <h1 class="main-content-title">{{ apiPageContent.title }}</h1>
-            <E2E v-if="apiPageContent.e2eSpecific" />
+          <div class="main-content-header">
+            <h1>{{ apiPageContent.title }}</h1>
+            <E2EOnlyBadge v-if="apiPageContent.e2eSpecific" />
           </div>
           <nuxt-content v-if="!isApiToc" :document="apiPageContent" />
           <ApiTableOfContents v-if="isApiToc" />
