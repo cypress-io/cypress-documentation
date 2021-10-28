@@ -53,6 +53,7 @@ function loadDirectives() {
   loadDirective('./directives/cypress-config-plugin-example')
   loadDirective('./directives/cypress-plugin-example')
   loadDirective('./directives/cypress-env-example')
+  loadDirective('./directives/cypress-visit-mount-test-example')
 }
 
 const directivesByType = {}
