@@ -111,8 +111,10 @@ cypress run [options]
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `--browser`, `-b`          | [Run Cypress in the browser with the given name. If a filesystem path is supplied, Cypress will attempt to use the browser at that path.](#cypress-run-browser-lt-browser-name-or-path-gt) |
 | `--ci-build-id`            | [Specify a unique identifier for a run to enable grouping or parallelization.](#cypress-run-ci-build-id-lt-id-gt)                                                                          |
+| `--component`              | [Run component tests](/guides/component-testing/introduction)                                                                                                                               |
 | `--config`, `-c`           | [Specify configuration](#cypress-run-config-lt-config-gt)                                                                                                                                  |
-| `--config-file`, `-C`      | [Specify configuration file](#cypress-run-config-file-lt-configuration-file-gt)                                                                                                            |
+| `--config-file`, `-C`      | [Specify configuration file](#cypress-run-config-file-lt-configuration-file-gt)                                                                                                                 |
+| `--e2e`                    | Run end to end tests (default)                                                                                                                                                             |
 | `--env`, `-e`              | [Specify environment variables](#cypress-run-env-lt-env-gt)                                                                                                                                |
 | `--group`                  | [Group recorded tests together under a single run](#cypress-run-group-lt-name-gt)                                                                                                          |
 | `--headed`                 | [Displays the browser instead of running headlessly](#cypress-run-headed)                                                                                                                  |
@@ -493,9 +495,11 @@ These options will also override values in the Cypress configuration file.
 | Option                | Description                                                                                                                   |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | `--browser`, `-b`     | [Path to a custom browser to be added to the list of available browsers in Cypress](#cypress-open-browser-lt-browser-path-gt) |
+| `--component`         | [Run component tests](/guides/component-testing/introduction)                                                                 |
 | `--config`, `-c`      | [Specify configuration](#cypress-open-config-lt-config-gt)                                                                    |
 | `--config-file`, `-C` | [Specify configuration file](#cypress-open-config-file-lt-configuration-file-gt)                                              |
 | `--detached`, `-d`    | Open Cypress in detached mode                                                                                                 |
+| `--e2e`               | Run end to end tests (default)                                                                                                |
 | `--env`, `-e`         | [Specify environment variables](#cypress-open-env-lt-env-gt)                                                                  |
 | `--global`            | [Run in global mode](#cypress-open-global)                                                                                    |
 | `--help`, `-h`        | Output usage information                                                                                                      |

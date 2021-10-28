@@ -328,7 +328,7 @@ style across frameworks!
 - Open Cypress in Component Testing mode:
 
 ```shell
-npx cypress open-ct
+npx cypress open --component
 ```
 
 - Select the spec file in the sidebar. You should see the following:
@@ -346,7 +346,7 @@ terminal, like when we run our tests in continuous integration.
 To run all component tests in the terminal, run the command below:
 
 ```shell
-npx cypress run-ct
+npx cypress run --component
 ```
 
 In the project we just built, this command will show the following results.
@@ -355,7 +355,7 @@ In the project we just built, this command will show the following results.
 
 To make the component tests part of your
 [continuous integration](/guides/continuous-integration/introduction) pipeline,
-add a script to run `npx cypress run-ct` to your CI configuration.
+add a script to run `npx cypress run --component` to your CI configuration.
 
 For example, see the repo
 [cypress-react-component-example](https://github.com/bahmutov/cypress-react-component-example)
@@ -399,7 +399,7 @@ export default function (on, config) {
 }
 ```
 
-Exactly like Webpack, you should start Cypress with `yarn cypress open-ct`.
+Exactly like Webpack, you should start Cypress with `yarn cypress open --component`.
 Writing component tests when using Vite is _exactly_ the same as when using
 Webpack. Minor differences may occur depending on the
 
@@ -418,7 +418,7 @@ work around any issues. Please log any issues in Github.
 **Collecting logs**
 
 To debug any Vite issues, run Cypress using
-`DEBUG=cypress:* yarn cypress open-ct`.
+`DEBUG=cypress:* yarn cypress open --component`.
 
 **Compiling your project**
 
