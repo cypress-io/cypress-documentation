@@ -2,9 +2,10 @@
 import AppSidebar from '@/components/AppSidebar'
 import AppHeader from '@/components/AppHeader'
 import TableOfContents from '@/components/TableOfContents'
-import Badge from '../../components/global/Badge.vue'
-import { getMetaData, getMetaDescription, getTitle } from '../../utils'
-import { fetchBanner } from '../../utils/sanity'
+import Badge from '@/components/global/Badge'
+import MainContentHeader from '@/components/MainContentHeader'
+import { getMetaData, getMetaDescription, getTitle } from '@/utils'
+import { fetchBanner } from '@/utils/sanity'
 
 export default {
   components: {
@@ -12,6 +13,7 @@ export default {
     AppHeader,
     TableOfContents,
     Badge,
+    MainContentHeader
   },
   async asyncData({ $content, app, params, error }) {
     const path = `/examples/${params.pathMatch || 'index'}`
@@ -142,7 +144,7 @@ export default {
       />
       <div v-if="mediaObjectIsEmpty" class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
-          <h1 class="main-content-header">{{ exampleItem.title }}</h1>
+          <MainContentHeader :title="exampleItem.title" />
           <nuxt-content :document="exampleItem"></nuxt-content>
           <Footer />
         </article>
@@ -155,7 +157,7 @@ export default {
       <!-- /* Projects */ -->
       <div v-if="isProjects" class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll nuxt-content">
-          <h1 class="main-content-header">{{ title }}</h1>
+          <MainContentHeader :title="title" />
           <p>{{ mediaObject.description }}</p>
           <ul>
             <li v-for="item in mediaObject.projects" :key="`${item.url}`">
@@ -176,7 +178,7 @@ export default {
       <!-- /* Courses */ -->
       <div v-if="isCourses" class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll nuxt-content">
-          <h1 class="main-content-header">{{ title }}</h1>
+          <MainContentHeader :title="title" />
           <p>
             Online courses from that teach end-to-end testing with Cypress over
             multiple videos. <strong>Note:</strong> Some of the courses require
@@ -216,7 +218,7 @@ export default {
       <!-- /* Webinars */ -->
       <div v-if="isWebinars" class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll nuxt-content">
-          <h1 class="main-content-header">{{ title }}</h1>
+          <MainContentHeader :title="title" />
           <div class="mb-14">
             <ul>
               <li v-for="item in mediaObject.small" :key="`${item.url}`">
@@ -261,7 +263,7 @@ export default {
       <!-- /* Blogs */ -->
       <div v-if="isBlogs" class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll nuxt-content">
-          <h1 class="main-content-header">{{ title }}</h1>
+          <MainContentHeader :title="title" />
           <div class="mb-14">
             <ul>
               <li v-for="item in mediaObject.small" :key="`${item.url}`">
@@ -310,7 +312,7 @@ export default {
       <!-- /* Talks */ -->
       <div v-if="isTalks" class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll nuxt-content">
-          <h1 class="main-content-header">{{ title }}</h1>
+          <MainContentHeader :title="title" />
           <div class="mb-14">
             <ul>
               <li v-for="item in mediaObject.small" :key="`${item.url}`">
@@ -372,7 +374,7 @@ export default {
       <!-- /* Podcasts */ -->
       <div v-if="isPodcasts" class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll nuxt-content">
-          <h1 class="main-content-header">{{ title }}</h1>
+          <MainContentHeader :title="title" />
           <div class="mb-14">
             <ul>
               <li v-for="item in mediaObject.small" :key="`${item.url}`">
@@ -428,7 +430,7 @@ export default {
       <!-- /* Screencasts */ -->
       <div v-if="isScreencasts" class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll nuxt-content">
-          <h1 class="main-content-header">{{ title }}</h1>
+          <MainContentHeader :title="title" />
           <div class="mb-14">
             <ul>
               <li v-for="item in mediaObject.small" :key="`${item.url}`">

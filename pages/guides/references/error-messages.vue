@@ -3,8 +3,9 @@ import AppSidebar from '@/components/AppSidebar'
 import AppHeader from '@/components/AppHeader'
 import TableOfContentsList from '@/components/TableOfContentsList'
 import Footer from '@/components/Footer'
-import { getMetaData, getMetaDescription, getTitle } from '../../../utils'
-import { fetchBanner } from '../../../utils/sanity'
+import MainContentHeader from '@/components/MainContentHeader'
+import { getMetaData, getMetaDescription, getTitle } from '@/utils'
+import { fetchBanner } from '@/utils/sanity'
 
 export default {
   components: {
@@ -12,6 +13,7 @@ export default {
     AppHeader,
     TableOfContentsList,
     Footer,
+    MainContentHeader
   },
   async asyncData({ $content, app, params, error }) {
     const path = '/guides/references/error-messages'
@@ -85,7 +87,7 @@ export default {
       />
       <div class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
-          <h1 class="main-content-header">{{ guide.title }}</h1>
+          <MainContentHeader :title="guide.title" />
           <div class="w-full flex flex-col justify-between">
             <TableOfContentsList :toc="guide.toc" />
             <nuxt-content :document="guide"></nuxt-content>

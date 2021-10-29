@@ -1,10 +1,11 @@
 <script>
-import AppSidebar from '../../../components/AppSidebar'
-import AppHeader from '../../../components/AppHeader'
-import TableOfContents from '../../../components/TableOfContents'
-import Footer from '../../../components/Footer'
-import { getMetaData, getMetaDescription, getTitle } from '../../../utils'
-import { fetchBanner } from '../../../utils/sanity'
+import AppSidebar from '@/components/AppSidebar'
+import AppHeader from '@/components/AppHeader'
+import TableOfContents from '@/components/TableOfContents'
+import Footer from '@/components/Footer'
+import MainContentHeader from '@/components/MainContentHeader'
+import { getMetaData, getMetaDescription, getTitle } from '@/utils'
+import { fetchBanner } from '@/utils/sanity'
 
 const sortChangelogs = (a, b) => {
   // descending order
@@ -48,6 +49,7 @@ export default {
     AppHeader,
     TableOfContents,
     Footer,
+    MainContentHeader
   },
   async asyncData({ $content, app, params, error }) {
     const { algolia: algoliaSettings } = await $content('settings').fetch()
@@ -142,7 +144,7 @@ export default {
       />
       <div class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
-          <h1 class="main-content-header">Changelog</h1>
+          <MainContentHeader :title="'Changelog'" />
           <nuxt-content
             v-for="(changelog, index) in changelogs"
             :key="`changelog-${index}`"
