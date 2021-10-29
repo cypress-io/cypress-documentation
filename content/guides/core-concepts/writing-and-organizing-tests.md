@@ -624,8 +624,7 @@ it('should redirect unauthenticated user to sign-in page', {
       openMode: 2
     }
   } () => {
-    cy.visit('/')
-    // ...
+    // test code...
   })
 })
 ```
