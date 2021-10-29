@@ -26,7 +26,7 @@ cy.get('li').siblings('.active') // Yield all li's siblings with class '.active'
 
 ```javascript
 cy.siblings('.error') // Errors, cannot be chained off 'cy'
-cy.location().siblings() // Errors, 'location' does not yield DOM element
+cy.clock().siblings() // Errors, 'clock' does not yield DOM elements
 ```
 
 ### Arguments

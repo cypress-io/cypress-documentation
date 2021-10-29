@@ -35,7 +35,7 @@ cy.get('div').nextUntil('.warning') // Yield siblings after 'div' until '.warnin
 
 ```javascript
 cy.nextUntil() // Errors, cannot be chained off 'cy'
-cy.location().nextUntil('path') // Errors, 'location' does not yield DOM element
+cy.clock().nextUntil('path') // Errors, 'clock' does not yield DOM elements
 ```
 
 ### Arguments

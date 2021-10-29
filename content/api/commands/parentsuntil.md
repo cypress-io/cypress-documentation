@@ -35,7 +35,7 @@ cy.get('p').parentsUntil('.article') // Yield parents of 'p' until '.article'
 
 ```javascript
 cy.parentsUntil() // Errors, cannot be chained off 'cy'
-cy.location().parentsUntil('href') // Errors, 'location' does not yield DOM element
+cy.clock().parentsUntil('href') // Errors, 'clock' does not yield DOM elements
 ```
 
 ### Arguments

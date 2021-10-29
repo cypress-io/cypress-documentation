@@ -32,7 +32,7 @@ cy.focused().clear() // Clear focused input/textarea
 ```javascript
 cy.clear() // Errors, cannot be chained off 'cy'
 cy.get('nav').clear() // Errors, 'get' doesn't yield input or textarea
-cy.url().clear() // Errors, 'url' doesn't yield DOM element
+cy.clock().clear() // Errors, 'clock' does not yield DOM elements
 ```
 
 ### Arguments

@@ -105,7 +105,6 @@ describe('Some Tests', () => {
     // these cypress commands below
     // are running outside of a test and cypress
     // throws an error
-    cy.visit('http://localhost:8080')
     cy.get('h1').should('contain', 'todos')
   })
 })

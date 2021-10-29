@@ -32,7 +32,7 @@ cy.get('nav').children() // Yield children of nav
 
 ```javascript
 cy.children() // Errors, cannot be chained off 'cy'
-cy.location().children() // Errors, 'location' does not yield DOM element
+cy.clock().children() // Errors, 'clock' does not yield DOM elements
 ```
 
 ### Arguments

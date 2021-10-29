@@ -36,7 +36,7 @@ cy.get('aside').parents() // Yield parents of aside
 
 ```javascript
 cy.parents() // Errors, cannot be chained off 'cy'
-cy.go('back').parents() // Errors, 'go' does not yield DOM element
+cy.clock().parents() // Errors, 'clock' does not yield DOM elements
 ```
 
 ### Arguments

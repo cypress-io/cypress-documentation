@@ -36,7 +36,7 @@ cy.get('input').not('.required') // Yield all inputs without class '.required'
 
 ```javascript
 cy.not('.icon') // Errors, cannot be chained off 'cy'
-cy.location().not() // Errors, 'location' does not yield DOM element
+cy.clock().not() // Errors, 'clock' does not yield DOM elements
 ```
 
 ### Arguments

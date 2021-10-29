@@ -31,7 +31,7 @@ cy.get('td').closest('.filled') // Yield closest el with class '.filled'
 
 ```javascript
 cy.closest('.active') // Errors, cannot be chained off 'cy'
-cy.url().closest() // Errors, 'url' does not yield DOM element
+cy.clock().closest() // Errors, 'clock' does not yield DOM elements
 ```
 
 ### Arguments

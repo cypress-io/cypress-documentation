@@ -27,7 +27,7 @@ cy.get('a').trigger('mousedown') // Trigger mousedown event on link
 
 ```javascript
 cy.trigger('touchstart') // Errors, cannot be chained off 'cy'
-cy.location().trigger('mouseleave') // Errors, 'location' does not yield DOM element
+cy.clock().trigger('mouseleave') // Errors, 'clock' does not yield DOM elements
 ```
 
 ### Arguments
