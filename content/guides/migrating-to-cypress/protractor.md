@@ -1,5 +1,6 @@
 ---
 title: Migrating from Protractor to Cypress
+e2eSpecific: true
 ---
 
 <Alert type="info">

@@ -1,5 +1,6 @@
 ---
 title: hash
+e2eSpecific: true
 ---
 
 Get the current URL hash of the page that is currently active.

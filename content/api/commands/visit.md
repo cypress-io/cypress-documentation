@@ -1,5 +1,6 @@
 ---
 title: visit
+e2eSpecific: true
 ---
 
 Visit a remote URL.

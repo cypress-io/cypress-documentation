@@ -65,7 +65,11 @@
   }
 }
 
-.main-content-title {
+.main-content-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
   border-bottom-width: 1px;
   border-bottom-color: rgb(238, 238, 238);
   color: var(--font-color-black);

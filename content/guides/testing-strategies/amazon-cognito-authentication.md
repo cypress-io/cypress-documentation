@@ -1,5 +1,6 @@
 ---
 title: Amazon Cognito Authentication
+e2eSpecific: true
 ---
 
 <Alert type="info">
