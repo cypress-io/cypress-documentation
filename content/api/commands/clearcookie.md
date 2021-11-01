@@ -1,6 +1,5 @@
 ---
 title: clearCookie
-e2eSpecific: true
 ---
 
 Clear a specific browser cookie.

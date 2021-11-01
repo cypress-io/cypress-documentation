@@ -1,6 +1,5 @@
 ---
 title: clearCookies
-e2eSpecific: true
 ---
 
 Clear all browser cookies for current domain and subdomain.

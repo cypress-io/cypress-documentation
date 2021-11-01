@@ -1,6 +1,5 @@
 ---
 title: Working with GraphQL
-e2eSpecific: true
 ---
 
 <Alert type="info">
