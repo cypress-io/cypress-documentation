@@ -144,7 +144,7 @@ export default {
       />
       <div class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
-          <MainContentHeader :title="'Changelog'" />
+          <MainContentHeader title="Changelog" />
           <nuxt-content
             v-for="(changelog, index) in changelogs"
             :key="`changelog-${index}`"
