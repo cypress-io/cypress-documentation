@@ -523,7 +523,7 @@ values with a comma. The values set here override any values set in your
 configuration file.
 
 ```shell
-cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
+cypress open --config pageLoadTimeout=100000,watchForFileChanges=false
 ```
 
 #### `cypress open --config-file <config-file>`
