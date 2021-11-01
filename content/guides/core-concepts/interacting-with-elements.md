@@ -201,8 +201,7 @@ configuration option. This can be useful if the element is covered up when
 aligned to the top of the viewport, or if you just prefer the element to be
 centered during scrolling of action commands. Accepted values are `'center'`,
 `'top'`, `'bottom'`, `'nearest'`, and `false`, with `false` disabling scrolling
-altogether. Note that if the `scrollBehavior` option is not explicitly set,
-Cypress will automatically try different `scrollBehavior` options in order to make the element visible. 
+altogether.
 
 ### Coordinates
 
