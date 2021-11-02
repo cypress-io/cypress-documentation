@@ -141,8 +141,9 @@ Cypress.
 
 <strong class="alert-header">Node version</strong>
 
-Keep in mind - code executed in plugins **may** be executed by the Node version
-that comes bundled in Cypress itself.
+As of version 9.0.0, Cypress will use the same version of node that was used to launch the cypress App via the CLI.
+
+Prior to version 9.0.0, Cypress would use the version of node bundled with Cypress itself.
 
 This version of Node has **nothing to do** with your locally installed versions.
 Therefore you may want to write Node code which is compatible with this version

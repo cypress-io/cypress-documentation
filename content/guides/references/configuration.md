@@ -137,9 +137,11 @@ For more information, see the docs on
 
 ### Node version
 
+The `nodeVersion` configuration option is deprecated and will be removed in the next major release of Cypress. Please remove this option from `cypress.json`.
+
 | Option        | Default   | Description                                                                                                                                                                                                         |
 | ------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `nodeVersion` | `bundled` | If set to `system`, Cypress will try to find a Node executable on your path to use when executing your [plugins](/guides/tooling/plugins-guide). Otherwise, Cypress will use the Node version bundled with Cypress. |
+| `nodeVersion` | `system` | Can be `system` or `bundled`. If set to `system`, Cypress will try to use the same node executable that launched the cli to execute your [plugins](/guides/tooling/plugins-guide). Otherwise, Cypress will use the Node version bundled with Cypress. If set to `bundled` Cypress will use the version bundled with Cypress |
 
 The Node version printed in the Node.js Version panel is used in Cypress to:
 
@@ -149,27 +151,6 @@ The Node version printed in the Node.js Version panel is used in Cypress to:
   [supportFile](/guides/references/configuration#Folders-Files).
 - Execute code in the
   [pluginsFile](/guides/references/configuration#Folders-Files).
-
-Cypress comes automatically bundled with a set Node version by default. You can
-see the bundled version by running the
-[`cypress version`](/guides/guides/command-line#cypress-version) command, for
-example:
-
-```shell
-npx cypress version
-Cypress package version: 6.2.1
-Cypress binary version: 6.2.1
-Electron version: 11.1.1
-Bundled Node version: 12.18.3
-```
-
-You may want to use a different Node version if the code executing from the
-plugins file requires features present in a different Node version from the Node
-version bundled with Cypress. You can use the Node version detected on your
-system by setting the
-[nodeVersion](/guides/references/configuration#Node-version) configuration to
-`system`. For example, you need to use the system Node if you want to load
-`node-sass` or `sqlite3` modules from your plugins file.
 
 <DocsImage src="/img/guides/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Test Runner" ></DocsImage>
 
