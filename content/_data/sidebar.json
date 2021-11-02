@@ -27,12 +27,38 @@
               "slug": "installing-cypress"
             },
             {
+              "title": "End-to-End Testing"
+            },
+            {
               "title": "Writing Your First Test",
-              "slug": "writing-your-first-test"
+              "slug": "writing-your-first-end-to-end-test"
             },
             {
               "title": "Testing Your App",
               "slug": "testing-your-app"
+            },
+            {
+              "title": "Component Testing"
+            },
+            {
+              "title": "Framework Configuration",
+              "slug": "component-framework-configuration"
+            },
+            {
+              "title": "Writing Your First Test",
+              "slug": "writing-your-first-component-test"
+            },
+            {
+              "title": "Getting Components to Work",
+              "slug": "getting-components-to-work"
+            },
+            {
+              "title": "Rendering Components Correctly",
+              "slug": "rendering-components-correctly"
+            },
+            {
+              "title": "Creating a cy.mount Command",
+              "slug": "creating-a-cy-mount-command"
             }
           ]
         },
@@ -243,20 +269,6 @@
             {
               "title": "AWS CodeBuild",
               "slug": "aws-codebuild"
-            }
-          ]
-        },
-        {
-          "title": "Component Testing",
-          "slug": "component-testing",
-          "children": [
-            {
-              "title": "Introduction",
-              "slug": "introduction"
-            },
-            {
-              "title": "Framework Configuration",
-              "slug": "framework-configuration"
             }
           ]
         },
