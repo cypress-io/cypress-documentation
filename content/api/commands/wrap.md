@@ -108,7 +108,7 @@ it('should wait for promises to resolve', () => {
 
 <DocsImage src="/img/api/wrap/cypress-wrapped-promise-waits-to-resolve.gif" alt="Wrap of promises" ></DocsImage>
 
-#### Application example
+#### Application example <E2EOnlyBadge />
 
 ```javascript
 // import application code for logging in

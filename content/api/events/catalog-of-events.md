@@ -43,7 +43,7 @@ These are the most useful events for you to listen to.
 
 | Event            | Details                                                                                                                                                                                                                     |
 | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Name:**        | `window:before:load`                                                                                                                                                                                                        |
+| **Name:**        | `window:before:load` <E2EOnlyBadge />                                                                                                                                                                                       |
 | **Yields:**      | the remote window **(Object)**                                                                                                                                                                                              |
 | **Description:** | Fires as the page begins to load, but before any of your applications JavaScript has executed. This fires at the exact same time as `cy.visit()` `onBeforeLoad` callback. Useful to modify the window on a page transition. |
 
@@ -55,13 +55,13 @@ These are the most useful events for you to listen to.
 
 | Event            | Details                                                                                                                                                                            |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Name:**        | `window:before:unload`                                                                                                                                                             |
+| **Name:**        | `window:before:unload` <E2EOnlyBadge />                                                                                                                                            |
 | **Yields:**      | the actual beforeunload event **(Object)**                                                                                                                                         |
 | **Description:** | Fires when your application is about to navigate away. The real event object is provided to you. Your app may have set a `returnValue` on the event, which is useful to assert on. |
 
 | Event            | Details                                                                                                                                  |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| **Name:**        | `window:unload`                                                                                                                          |
+| **Name:**        | `window:unload` <E2EOnlyBadge />                                                                                                         |
 | **Yields:**      | the actual unload event **(Object)**                                                                                                     |
 | **Description:** | Fires when your application has unloaded and is navigating away. The real event object is provided to you. This event is not cancelable. |
 
@@ -76,10 +76,10 @@ These are the most useful events for you to listen to.
 These events come from Cypress as it issues commands and reacts to their state.
 These are all useful to listen to for debugging purposes.
 
-| Event            | Details                                                                                                                                                                                                                                                                                                                                                                                                 |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Name:**        | `fail`                                                                                                                                                                                                                                                                                                                                                                                                  |
-| **Yields:**      | the error **(Object)**, Mocha runnable **(Object)**                                                                                                                                                                                                                                                                                                                                                     |
+| Event            | Details                                                                                                                                                                                                                                                                                                                                                   |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Name:**        | `fail`                                                                                                                                                                                                                                                                                                                                                    |
+| **Yields:**      | the error **(Object)**, Mocha runnable **(Object)**                                                                                                                                                                                                                                                                                                       |
 | **Description:** | Fires when the test has failed. Binding to this event without rethrowing the error will prevent the test from failing. However this is **strongly discouraged**. Tests should never legitimately fail. This event exists because it's extremely useful for debugging purposes. See our recipe [Handling errors](/examples/examples/recipes#Fundamentals). |
 
 | Event            | Details                                                                                                                                                              |
@@ -282,7 +282,7 @@ Read
 [Cypress Metaprogramming](https://glebbahmutov.com/blog/cy-metaprogramming/) for
 more examples.
 
-### Page Navigation
+### Page Navigation <E2EOnlyBadge />
 
 #### Test that your application was redirected
 
@@ -314,7 +314,7 @@ it('redirects to another page on click', (done) => {
 })
 ```
 
-### Window Before Load
+### Window Before Load <E2EOnlyBadge />
 
 #### Modify your Application before it loads after page transitions
 

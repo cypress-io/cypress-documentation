@@ -120,7 +120,7 @@ it('intercept command log', () => {
 
 <DocsImage src="/img/guides/instrument-panel-spies.png" alt="Spies Instrument Panel" ></DocsImage>
 
-## Application Under Test
+## Application Under Test <E2EOnlyBadge />
 
 The righthand side of the Test Runner is used to display the Application Under
 Test (AUT): the application that was navigated to using a

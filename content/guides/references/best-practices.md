@@ -808,7 +808,7 @@ cy.request('http://localhost:8080/db/seed')
 cy.wait(5000) // <--- this is unnecessary
 ```
 
-### Unnecessary wait for `cy.visit()`
+### Unnecessary wait for `cy.visit()` <E2EOnlyBadge />
 
 Waiting for this is unnecessary because the [cy.visit()](/api/commands/visit)
 resolves once the page fires its `load` event. By that time all of your assets
