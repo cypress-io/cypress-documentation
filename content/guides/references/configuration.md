@@ -137,11 +137,11 @@ For more information, see the docs on
 
 ### Node version
 
-The `nodeVersion` configuration option is deprecated and will be removed in the next major release of Cypress. Please remove this option from `cypress.json`.
+The `nodeVersion` configuration option is deprecated and will be removed in a future version of Cypress. Please remove this option from your configuration file.
 
 | Option        | Default   | Description                                                                                                                                                                                                         |
 | ------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `nodeVersion` | `system` | Can be `system` or `bundled`. If set to `system`, Cypress will try to use the same node executable that launched the cli to execute your [plugins](/guides/tooling/plugins-guide). Otherwise, Cypress will use the Node version bundled with Cypress. If set to `bundled` Cypress will use the version bundled with Cypress |
+| `nodeVersion` | `system` | Can be `system` or `bundled`. If set to `system`, Cypress will try to use the same Node version that launched Cypress to execute your [plugins](/guides/tooling/plugins-guide). If that can't be determined, Cypress will use the Node version bundled with Cypress. If set to `bundled` Cypress will use the version bundled with Cypress |
 
 The Node version printed in the Node.js Version panel is used in Cypress to:
 
