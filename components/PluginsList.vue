@@ -90,6 +90,7 @@ export default {
 .plugins a {
   border-bottom: 0;
 }
+
 .plugins a:hover {
   border-bottom: 0;
 }

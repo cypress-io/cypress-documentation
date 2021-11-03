@@ -1,5 +1,5 @@
 <script>
-import CollapsibleSidebarSection from './sidebar/CollapsibleSidebarSection'
+import CollapsibleSidebarSection from './CollapsibleSidebarSection'
 
 export default {
   name: 'Root',
