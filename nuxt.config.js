@@ -1,7 +1,9 @@
+import { GenerateTOC } from './utils/webpack-plugins/generateTOC';
 import { getMetaData } from './utils/getMetaData'
 import { redirects } from './redirects'
 
 const meta = getMetaData()
+const isDevelopmentMode = process.env.NODE_ENV === 'development'
 
 export default {
   router: {
@@ -49,7 +51,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ['@/plugins/vue-scrollactive', '@/plugins/sanity-client', {src: '@/plugins/fullstory', mode: 'client'}],
+  plugins: ['@/plugins/vue-scrollactive', '@/plugins/sanity-client', { src: '@/plugins/fullstory', mode: 'client' }],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -110,7 +112,18 @@ export default {
    ** See https://nuxtjs.org/api/configuration-build/
    */
   build: {
-    loadingScreen: process.env.NODE_ENV === 'development',
+    loadingScreen: isDevelopmentMode,
+    /*
+    ** Add Webpack plugins
+    ** See https://nuxtjs.org/docs/configuration-glossary/configuration-build/#plugins
+    */
+    plugins: [
+      ...(isDevelopmentMode
+        ? [
+          new GenerateTOC()
+        ]
+        : []),
+    ]
   },
   /*
    ** Font Awesome Configuration
