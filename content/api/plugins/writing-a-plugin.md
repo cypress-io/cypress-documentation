@@ -141,19 +141,7 @@ Cypress.
 
 <strong class="alert-header">Node version</strong>
 
-As of version 9.0.0, Cypress will use the same version of node that was used to launch the cypress App via the CLI.
-
-Prior to version 9.0.0, Cypress would use the version of node bundled with Cypress itself.
-
-This version of Node has **nothing to do** with your locally installed versions.
-Therefore you may want to write Node code which is compatible with this version
-or document that the user of your plugin will need to set a specific
-[nodeVersion](/guides/references/configuration#Node-version) in their
-configuration.
-
-You can find the current Node version we use when the `nodeVersion` is set to
-the default `bundled`
-[here](https://github.com/cypress-io/cypress/blob/master/.node-version).
+As of version 9.0.0, Cypress will use the same Node version that launched Cypress to execute your plugins.
 
 </Alert>
 
