@@ -42,7 +42,7 @@
     "@sanity/client": "^2.8.0",
     "@tailwindcss/forms": "^0.2.1",
     "deepdash": "^5.3.5",
-    "nuxt": "2.15.0",
+    "nuxt": "2.15.2",
     "nuxt-build-optimisations": "1.0.3",
     "prism-themes": "^1.4.0",
     "remark-directive": "^1.0.1",
