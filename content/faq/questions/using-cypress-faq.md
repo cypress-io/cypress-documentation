@@ -811,9 +811,7 @@ You can `require` or `import` them as you're accustomed to. We preprocess your
 spec files with webpack and Babel.
 
 We recommend utilizing one of the following to execute code outside of the
-browser. Furthermore, you can use your own Node version during code excecution
-by setting the [nodeVersion](/guides/references/configuration#Node-version) in
-your configuration.
+browser.
 
 - [`cy.task()`](/api/commands/task) to run code in Node via the
   [pluginsFile](/guides/references/configuration#Folders-Files)
