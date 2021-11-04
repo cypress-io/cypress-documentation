@@ -130,20 +130,8 @@ Cypress does this by spawning an independent `child_process` which then
 `requires` in your `pluginsFile`. This is similar to the way Visual Studio Code
 or Atom works.
 
-You will need to keep in mind it is **Cypress who is requiring your file** - not
-your local project, not your local Node version, and not anything else under
-your control.
-
-Because of this, this global context and the version of Node is controlled under
+The code in this file will be executed using the the Node version that launched
 Cypress.
-
-<Alert type="warning">
-
-<strong class="alert-header">Node version</strong>
-
-As of version 9.0.0, Cypress will use the same Node version that launched Cypress to execute your plugins.
-
-</Alert>
 
 ### npm modules
 
