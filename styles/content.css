@@ -77,7 +77,7 @@
   @apply font-bold;
   @apply mt-10;
   @apply mb-6;
-  @apply pb-3;
+  @apply pb-2;
 
   @screen md {
     @apply text-5xl;
@@ -152,6 +152,14 @@
   @apply text-3xl;
 }
 
+/* vertical alignment for 'hint' badge beside h2
+   section titles using flexbox become 
+   problematic on some pages, e.g FAQ's */
+.nuxt-content > h2 > div {
+  margin: 0.25rem 0;
+  vertical-align: middle;
+}
+
 .nuxt-content > h2,
 .nuxt-content > h3,
 .nuxt-content > h4 {
@@ -165,11 +173,17 @@
   @apply text-2xl;
   @apply font-bold;
   @apply mt-8;
+  @apply flex;
+  @apply flex-wrap;
+  @apply items-center;
 }
 
 .nuxt-content > h4 {
   @apply text-xl;
   @apply font-medium;
+  @apply flex;
+  @apply flex-wrap;
+  @apply items-center;
 }
 
 .nuxt-content h2 > em,
