@@ -85,14 +85,26 @@ setInterval(() => {
 }, 1000)
 ```
 
-```javascript
-cy.clock()
+:::cypress-visit-mount-test-example
+
+```js
 cy.visit('/index.html')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
+```js
+cy.clock()
+__VISIT_MOUNT_PLACEHOLDER__
 cy.tick(1000)
 cy.get('#seconds-elapsed').should('have.text', '1 seconds')
 cy.tick(1000)
 cy.get('#seconds-elapsed').should('have.text', '2 seconds')
 ```
+
+:::
 
 #### Access the clock object to synchronously move time
 
@@ -157,13 +169,25 @@ cy.get('.timer').then(($timer) => {
 $('#date').text(new Date().toJSON())
 ```
 
-```javascript
+:::cypress-visit-mount-test-example
+
+```js
+cy.visit('/index.html')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
+```js
 const now = new Date(2017, 3, 14).getTime() // April 14, 2017 timestamp
 
 cy.clock(now)
-cy.visit('/index.html')
+__VISIT_MOUNT_PLACEHOLDER__
 cy.get('#date').contains('2017-04-14')
 ```
+
+:::
 
 ### Function names
 
@@ -197,9 +221,19 @@ You can restore the clock and allow your application to resume normally without
 manipulating native global functions related to time. This is automatically
 called between tests.
 
-```javascript
-cy.clock()
+:::cypress-visit-mount-test-example
+
+```js
 cy.visit('http://localhost:3333')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
+```js
+cy.clock()
+__VISIT_MOUNT_PLACEHOLDER__
 cy.get('#search').type('Acme Company')
 cy.tick(1000)
 // more test code here
@@ -210,6 +244,8 @@ cy.clock().then((clock) => {
 })
 // more test code here
 ```
+
+:::
 
 You could also restore by using [.invoke()](/api/commands/invoke) to invoke the
 `restore` function.

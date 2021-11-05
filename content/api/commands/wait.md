@@ -104,17 +104,29 @@ For a detailed explanation of aliasing,
 
 #### Wait for a specific request to respond
 
-```javascript
+:::cypress-visit-mount-test-example
+
+```js
+cy.visit('/accounts/123')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
+```js
 // Wait for the route aliased as 'getAccount' to respond
 // without changing or stubbing its response
 cy.intercept('/accounts/*').as('getAccount')
-cy.visit('/accounts/123')
+__VISIT_MOUNT_PLACEHOLDER__
 cy.wait('@getAccount').then((interception) => {
   // we can now access the low level interception
   // that contains the request body,
   // response body, status, etc
 })
 ```
+
+:::
 
 #### Wait automatically increments responses
 
@@ -153,11 +165,21 @@ cy.get('#book-results').should('have.length', 1)
 When passing an array of aliases to `cy.wait()`, Cypress will wait for all
 requests to complete within the given `requestTimeout` and `responseTimeout`.
 
-```javascript
+:::cypress-visit-mount-test-example
+
+```js
+cy.visit('/dashboard')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
+```js
 cy.intercept('/users/*').as('getUsers')
 cy.intercept('/activities/*').as('getActivities')
 cy.intercept('/comments/*').as('getComments')
-cy.visit('/dashboard')
+__VISIT_MOUNT_PLACEHOLDER__
 
 cy.wait(['@getUsers', '@getActivities', '@getComments']).then(
   (interceptions) => {
@@ -168,6 +190,8 @@ cy.wait(['@getUsers', '@getActivities', '@getComments']).then(
   }
 )
 ```
+
+:::
 
 #### Using [`.spread()`](/api/commands/spread) to spread the array into multiple arguments.
 

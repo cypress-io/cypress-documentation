@@ -358,13 +358,23 @@ the browser.
 
 ## Code coverage as a guide
 
-Even a single end-to-end test can cover a lot of the application code. For
-example, let's run the following test that adds a few items, then marks one of
-them as completed.
+Even a single test can cover a lot of the application code. For example, let's
+run the following test that adds a few items, then marks one of them as
+completed.
 
-```javascript
+:::cypress-visit-mount-test-example
+
+```js
+cy.visit('/')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
+```js
 it('adds and completes todos', () => {
-  cy.visit('/')
+  __VISIT_MOUNT_PLACEHOLDER__
   cy.get('.new-todo')
     .type('write code{enter}')
     .type('write tests{enter}')
@@ -377,6 +387,8 @@ it('adds and completes todos', () => {
   cy.get('.todo').first().should('have.class', 'completed')
 })
 ```
+
+:::
 
 After running the test and opening the HTML report, we see 76% code coverage in
 our application.

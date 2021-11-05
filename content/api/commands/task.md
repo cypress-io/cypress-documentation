@@ -178,12 +178,21 @@ on('task', {
 
 ### Seed a database
 
-```javascript
-// in test
-describe('e2e', () => {
+:::cypress-visit-mount-test-example
+
+```js
+cy.visit('/')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
+```js
+describe('seed DB and test', () => {
   beforeEach(() => {
     cy.task('defaults:db')
-    cy.visit('/')
+    __VISIT_MOUNT_PLACEHOLDER__
   })
 
   it('displays article values', () => {
@@ -191,6 +200,8 @@ describe('e2e', () => {
   })
 })
 ```
+
+:::
 
 :::cypress-plugin-example
 
@@ -242,11 +253,20 @@ same-origin URLs.
 We can save the variable and retrieve the saved variable outside of the test
 using `cy.task()` as shown below.
 
-```javascript
-// in test
+:::cypress-visit-mount-test-example
+
+```js
+cy.visit('https://www.mywebapp.com')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
+```js
 describe('Href visit', () => {
   it('captures href', () => {
-    cy.visit('https://www.mywebapp.com')
+    __VISIT_MOUNT_PLACEHOLDER__
     cy.get('a')
       .invoke('attr', 'href')
       .then((href) => {
@@ -264,6 +284,8 @@ describe('Href visit', () => {
   })
 })
 ```
+
+:::
 
 :::cypress-plugin-example
 

@@ -176,17 +176,29 @@ cy.fixture('users').then((json) => {
 
 You can modify fixture data directly before passing it along to a route.
 
-```javascript
+:::cypress-visit-mount-test-example
+
+```js
+cy.visit('/users')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
+```js
 cy.fixture('user').then((user) => {
   user.firstName = 'Jane'
   cy.intercept('GET', '/users/1', user).as('getUser')
 })
 
-cy.visit('/users')
+__VISIT_MOUNT_PLACEHOLDER__
 cy.wait('@getUser').then(({ request }) => {
   expect(request.body.firstName).to.eq('Jane')
 })
 ```
+
+:::
 
 ## Notes
 

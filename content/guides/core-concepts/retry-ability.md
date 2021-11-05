@@ -33,9 +33,19 @@ There are two types of methods you can call in your Cypress tests: **commands**
 and **assertions**. For example, there are 6 commands and 2 assertions in the
 test below.
 
-```javascript
+:::cypress-visit-mount-test-example
+
+```js
+cy.visit('/')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
+```js
 it('creates 2 items', () => {
-  cy.visit('/') // command
+  __VISIT_MOUNT_PLACEHOLDER__ // command
   cy.focused() // command
     .should('have.class', 'new-todo') // assertion
 
@@ -47,6 +57,8 @@ it('creates 2 items', () => {
     .should('have.length', 2) // assertion
 })
 ```
+
+:::
 
 The [Command Log](/guides/core-concepts/test-runner#Command-Log) shows both
 commands and assertions with passing assertions showing in green.
@@ -263,9 +275,19 @@ cy.get('#ssr-error', { timeout: 0 }).should('not.exist')
 
 Here is a short test that demonstrates some flake.
 
-```javascript
+:::cypress-visit-mount-test-example
+
+```js
+cy.visit('/')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
+```js
 it('adds two items', () => {
-  cy.visit('/')
+  __VISIT_MOUNT_PLACEHOLDER__
 
   cy.get('.new-todo').type('todo A{enter}')
   cy.get('.todo-list li').find('label').should('contain', 'todo A')
@@ -274,6 +296,8 @@ it('adds two items', () => {
   cy.get('.todo-list li').find('label').should('contain', 'todo B')
 })
 ```
+
+:::
 
 The test passes in Cypress without a hitch.
 
@@ -369,9 +393,19 @@ that query elements. In our case we first query elements using `cy.get()` and
 then query from that list of elements using `.find()`. We can combine two
 separate queries into one - forcing the combined query to be retried.
 
-```javascript
+:::cypress-visit-mount-test-example
+
+```js
+cy.visit('/')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
+```js
 it('adds two items', () => {
-  cy.visit('/')
+  __VISIT_MOUNT_PLACEHOLDER__
 
   cy.get('.new-todo').type('todo A{enter}')
   cy.get('.todo-list li label') // 1 query command
@@ -382,6 +416,8 @@ it('adds two items', () => {
     .should('contain', 'todo B') // assertion
 })
 ```
+
+:::
 
 To show the retries, I increased the application's artificial delay to 500ms.
 The test now always passes because the entire selector is retried. It finds 2
@@ -440,9 +476,19 @@ There is another way to fix our flaky test. Whenever you write a longer test, we
 recommend alternating commands with assertions. In this case, I will add an
 assertion after the `cy.get()` command, but before the `.find()` command.
 
-```javascript
+:::cypress-visit-mount-test-example
+
+```js
+cy.visit('/')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
+```js
 it('adds two items', () => {
-  cy.visit('/')
+  __VISIT_MOUNT_PLACEHOLDER__
 
   cy.get('.new-todo').type('todo A{enter}')
   cy.get('.todo-list li') // command
@@ -457,6 +503,8 @@ it('adds two items', () => {
     .should('contain', 'todo B') // assertion
 })
 ```
+
+:::
 
 <DocsImage src="/img/guides/retry-ability/alternating.png" alt="Passing test" ></DocsImage>
 

@@ -260,10 +260,20 @@ entire `window.document` object in your open console using
 </html>
 ```
 
+:::cypress-visit-mount-test-example
+
+```js
+cy.visit('/')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
 ```js
 describe('The Document Metadata', () => {
   beforeEach(() => {
-    cy.visit('/')
+    __VISIT_MOUNT_PLACEHOLDER__
   })
 
   it('looks inside the head content using `cy.document()`', () => {
@@ -288,6 +298,8 @@ describe('The Document Metadata', () => {
   })
 })
 ```
+
+:::
 
 ## <Icon name="angle-right"></Icon> Can I check that a form's HTML form validation is shown when an input is invalid?
 

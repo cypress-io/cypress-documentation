@@ -115,6 +115,16 @@ context('Tests', () => {
 In the test below, the response is modified to test the UI for a single page of
 results.
 
+:::cypress-visit-mount-test-example
+
+```js
+cy.visit('/')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
 ```js
 // app.spec.js
 import { hasOperationName, aliasQuery } from '../utils/graphql-test-utils'
@@ -147,8 +157,7 @@ context('Tests', () => {
       }
     })
 
-    // Must visit after cy.intercept
-    cy.visit('/')
+    __VISIT_MOUNT_PLACEHOLDER__
 
     cy.wait('@gqlGetLaunchListQuery')
       .its('response.body.data.launches')
@@ -162,3 +171,5 @@ context('Tests', () => {
   })
 })
 ```
+
+:::

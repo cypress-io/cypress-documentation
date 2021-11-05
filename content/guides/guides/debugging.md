@@ -25,15 +25,27 @@ browser makes available to you, like `document`, `window`, and `debugger`.
 Based on those statements, you might be tempted to throw a `debugger` into your
 test, like so:
 
+:::cypress-visit-mount-test-example
+
+```js
+cy.visit('/my/page/path')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
 ```js
 it('let me debug like a fiend', () => {
-  cy.visit('/my/page/path')
+  __VISIT_MOUNT_PLACEHOLDER__
 
   cy.get('.selector-in-question')
 
   debugger // Doesn't work
 })
 ```
+
+:::
 
 This may not work exactly as you are expecting. As you may remember from the
 [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress), `cy`

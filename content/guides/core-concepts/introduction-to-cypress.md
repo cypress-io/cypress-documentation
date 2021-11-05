@@ -31,10 +31,20 @@ After you're done, we suggest watching some of our <Icon name="video"></Icon>
 Simplicity is all about getting more done with less typing. Let's look at an
 example:
 
+:::cypress-visit-mount-test-example
+
+```js
+cy.visit('/posts/new')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
 ```js
 describe('Post Resource', () => {
   it('Creating a New Post', () => {
-    cy.visit('/posts/new') // 1.
+    __VISIT_MOUNT_PLACEHOLDER__ // 1.
 
     cy.get('input.post-title') // 2.
       .type('My First Post') // 3.
@@ -53,6 +63,8 @@ describe('Post Resource', () => {
   })
 })
 ```
+
+:::
 
 Can you read this? If you did, it might sound something like this:
 
@@ -515,9 +527,19 @@ is what we mean when we say Cypress commands are asynchronous.
 
 #### Take this short test, for example:
 
+:::cypress-visit-mount-test-example
+
+```js
+cy.visit('/my/resource/path')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
 ```js
 it('changes the URL when "awesome" is clicked', () => {
-  cy.visit('/my/resource/path') // Nothing happens yet
+  __VISIT_MOUNT_PLACEHOLDER__ // Nothing happens yet
 
   cy.get('.awesome-selector') // Still nothing happening
     .click() // Nope, nothing
@@ -530,6 +552,8 @@ it('changes the URL when "awesome" is clicked', () => {
 // We've queued all of these commands and now
 // Cypress will begin running them in order!
 ```
+
+:::
 
 Cypress doesn't kick off the browser automation magic until the test function
 exits.
@@ -791,9 +815,19 @@ commands that were enqueued using the `cy.*` command chains.
 
 #### Let's take another look at an example
 
+:::cypress-visit-mount-test-example
+
+```js
+cy.visit('/my/resource/path')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
 ```js
 it('changes the URL when "awesome" is clicked', () => {
-  cy.visit('/my/resource/path') // 1.
+  __VISIT_MOUNT_PLACEHOLDER__ // 1.
 
   cy.get('.awesome-selector') // 2.
     .click() // 3.
@@ -802,6 +836,8 @@ it('changes the URL when "awesome" is clicked', () => {
     .should('include', '/my/resource/path#awesomeness') // 5.
 })
 ```
+
+:::
 
 The test above would cause an execution in this order:
 
@@ -1106,8 +1142,18 @@ basic part of testing?
 
 #### Consider this example:
 
+:::cypress-visit-mount-test-example
+
 ```js
 cy.visit('/home')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
+```js
+__VISIT_MOUNT_PLACEHOLDER__
 
 cy.get('.main-menu').contains('New Project').click()
 
@@ -1115,6 +1161,8 @@ cy.get('.title').type('My Awesome Project')
 
 cy.get('form').submit()
 ```
+
+:::
 
 Without a single explicit assertion, there are dozens of ways this test can
 fail! Here's a few:
