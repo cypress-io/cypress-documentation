@@ -378,6 +378,16 @@ You can set environment variables for specific suites or tests by passing the
 
 #### Suite of test configuration
 
+:::cypress-visit-mount-test-example
+
+```js
+cy.visit(`https://docs.cypress.io/${Cypress.env('language')}/`)
+```
+
+```js
+cy.mount(<MyComponent lang={Cypress.env('language')} />)
+```
+
 ```js
 // change environment variable for single suite of tests
 describe(
@@ -389,12 +399,14 @@ describe(
   },
   () => {
     it('displays Spanish', () => {
-      cy.visit(`https://docs.cypress.io/${Cypress.env('language')}/`)
+      __VISIT_MOUNT_PLACEHOLDER__
       cy.contains('¿Por qué Cypress?')
     })
   }
 )
 ```
+
+:::
 
 #### Single test configuration
 
