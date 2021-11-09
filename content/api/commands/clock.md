@@ -92,7 +92,7 @@ cy.visit('/index.html')
 ```
 
 ```js
-cy.mount(<MyComponent />)
+mount(<MyComponent />)
 ```
 
 ```js
@@ -164,11 +164,6 @@ cy.get('.timer').then(($timer) => {
 
 #### Specify a now timestamp
 
-```javascript
-// your app code
-$('#date').text(new Date().toJSON())
-```
-
 :::cypress-visit-mount-test-example
 
 ```js
@@ -176,15 +171,15 @@ cy.visit('/index.html')
 ```
 
 ```js
-cy.mount(<MyComponent />)
+mount(<DatePicker id="date" selected={now} />) // component renders according to the date prop
 ```
 
 ```js
-const now = new Date(2017, 3, 14).getTime() // April 14, 2017 timestamp
+const now = new Date(2021, 3, 14) // April 14, 2021 timestamp
 
 cy.clock(now)
 __VISIT_MOUNT_PLACEHOLDER__
-cy.get('#date').contains('2017-04-14')
+cy.get('#date').should('have.value', '04/14/2021')
 ```
 
 :::
@@ -228,7 +223,7 @@ cy.visit('http://localhost:3333')
 ```
 
 ```js
-cy.mount(<MyComponent />)
+mount(<MyComponent />)
 ```
 
 ```js

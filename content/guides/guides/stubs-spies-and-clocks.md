@@ -150,12 +150,24 @@ With [cy.clock()](/api/commands/clock) you can control:
 Once you've enabled [`cy.clock()`](/api/commands/clock) you can control time by
 **ticking** it ahead by milliseconds.
 
-```javascript
-cy.clock()
+:::cypress-visit-mount-test-example
+
+```js
 cy.visit('http://localhost:3333')
+```
+
+```js
+mount(<MyComponent />)
+```
+
+```js
+cy.clock()
+__VISIT_MOUNT_PLACEHOLDER__
 cy.get('#search').type('Acme Company')
 cy.tick(1000)
 ```
+
+:::
 
 You can call [`cy.clock()`](/api/commands/clock) **prior** to visiting your
 application and we will automatically bind it to the application on the next
@@ -169,11 +181,20 @@ You can restore the clock and allow your application to resume normally without
 manipulating native global functions related to time. This is automatically
 called between tests.
 
-```javascript
-cy.clock()
+:::cypress-visit-mount-test-example
+
+```js
 cy.visit('http://localhost:3333')
+```
+
+```js
+mount(<MyComponent />)
+```
+
+```js
+cy.clock()
+__VISIT_MOUNT_PLACEHOLDER__
 cy.get('#search').type('Acme Company')
-cy.tick(1000)
 // more test code here
 
 // restore the clock
@@ -182,6 +203,8 @@ cy.clock().then((clock) => {
 })
 // more test code here
 ```
+
+:::
 
 You could also restore by using [.invoke()](/api/commands/invoke) to invoke the
 `restore` function.
