@@ -160,6 +160,11 @@
   vertical-align: middle;
 }
 
+/* h4 section titles with `emphasis` */
+.nuxt-content > h4 > code {
+  margin-left: 0.25rem;
+}
+
 .nuxt-content > h2,
 .nuxt-content > h3,
 .nuxt-content > h4 {
