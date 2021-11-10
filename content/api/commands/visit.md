@@ -265,7 +265,7 @@ cy.visit('app/index.html')
 
 #### Visit local file when `baseUrl` is set
 
-If you have `baseUrl` set, but need to visit a local file in a single test or a group of tests, set the `baseUrl` to `null` by using [a test-test configuration override](/guides/references/configuration#Test-time-overrides). Imagine our `cypress.json` file:
+If you have `baseUrl` set, but need to visit a local file in a single test or a group of tests, set the `baseUrl` to `null` by using [a test-test configuration override](/guides/references/configuration#Test-time-overrides). Given our `cypress.json` file:
 
 ```json
 {
