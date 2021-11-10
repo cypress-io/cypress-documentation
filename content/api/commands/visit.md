@@ -45,7 +45,7 @@ cy.visit({
 The URL to visit.
 
 Cypress will prefix the URL with the `baseUrl` configured in your
-[global configuration](/guides/references/configuration#Global) if you've set one.
+[global configuration](/guides/references/configuration#Global) if set.
 
 If the the baseUrl has not been set, you will need to specify a fully qualified url or Cypress will attempt to
 act as your web server. See the [prefixes notes](#prefixes) for more details.
