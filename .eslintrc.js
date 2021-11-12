@@ -1,9 +1,10 @@
 module.exports = {
-  parser: "vue-eslint-parser",
+  ignorePatterns: ['_cypress-nextjs-docs'],
+  parser: 'vue-eslint-parser',
   parserOptions: {
-    "parser": "babel-eslint",
-    "ecmaVersion": 8,
-    "sourceType": "module"
+    parser: 'babel-eslint',
+    ecmaVersion: 8,
+    sourceType: 'module',
   },
   plugins: ['cypress', '@cypress/dev', 'jest'],
   extends: [

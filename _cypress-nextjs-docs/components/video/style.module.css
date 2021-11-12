@@ -1,0 +1,10 @@
+.docsVideo {
+  @apply mb-4;
+}
+
+/* stylelint-disable-next-line at-rule-no-unknown */
+@screen xl {
+  .docsVideo {
+    min-height: 380px;
+  }
+}

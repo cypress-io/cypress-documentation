@@ -1,0 +1,77 @@
+{
+  "extends": ["config:base"],
+  "baseBranch": "main",
+  "automerge": false,
+  "commitMessage": "{{semanticPrefix}}Update {{depName}} to {{newVersion}} 🌟",
+  "prTitle": "{{semanticPrefix}}{{#if isPin}}Pin{{else}}Update{{/if}} dependency {{depName}} to version {{#if isRange}}{{newVersion}}{{else}}{{#if isMajor}}{{newVersionMajor}}.x{{else}}{{newVersion}}{{/if}}{{/if}} 🌟",
+  "major": {
+    "automerge": false
+  },
+  "minor": {
+    "automerge": false
+  },
+  "prHourlyLimit": 1,
+  "updateNotScheduled": false,
+  "timezone": "America/New_York",
+  "masterIssue": true,
+  "schedule": ["every weekend"],
+  "packageRules": [
+    {
+      "packageNames": ["cypress"],
+      "schedule": ["every weekday"]
+    },
+    {
+      "groupName": "automergeTypesMinor",
+      "automerge": true,
+      "major": { "automerge": false },
+      "matchPackagePatterns": ["^@types/"]
+    },
+    {
+      "groupName": "devDeps",
+      "description": "automerge minor updates of widely used libraries in devDeps",
+      "automerge": true,
+      "matchUpdateTypes": ["minor"],
+      "matchDepTypes": ["devDependencies"]
+    },
+    {
+      "groupName": "Typescript",
+      "matchPackageNames": ["typescript", "ts-node", "tsconfig-paths"]
+    },
+    {
+      "groupName": "React",
+      "matchPackageNames": ["react", "react-dom"]
+    },
+    {
+      "groupName": "Tailwind",
+      "matchPackagePatterns": [
+        "@headlessui/react",
+        "@heroicons/react",
+        "tailwindcss",
+        "postcss",
+        "autoprefixer"
+      ]
+    },
+    {
+      "groupName": "Next",
+      "matchPackageNames": ["next"],
+      "matchPackagePatterns": ["^next-", "^@zeit/next-"]
+    },
+    {
+      "groupName": "Xstate",
+      "matchPackageNames": ["xstate", "@xstate/react"]
+    },
+    {
+      "groupName": "ESLint and Prettier",
+      "matchPackageNames": ["eslint", "prettier"],
+      "matchPackagePatterns": ["^eslint-config-", "^eslint-plugin-"]
+    },
+    {
+      "groupName": "Misc FE libs",
+      "matchPackageNames": ["gray-matter", "slugify", "markdown-toc-unlazy"]
+    },
+    {
+      "groupName": "Misc dev tooling",
+      "matchPackageNames": ["husky", "mocha", "chai", "pretty-quick"]
+    }
+  ]
+}

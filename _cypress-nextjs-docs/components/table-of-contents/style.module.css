@@ -1,0 +1,20 @@
+.bannerMargin {
+  padding-top: 64px;
+}
+
+.tocHeading {
+  @apply mb-2;
+  @apply pt-5;
+  @apply text-gray-500;
+  @apply uppercase;
+  @apply tracking-wider;
+  @apply font-bold;
+  @apply text-xs;
+}
+
+.scrollactiveItemActive {
+  border-color: #04c38d;
+  @apply text-gray-500;
+  @apply font-bold;
+  @apply border-l-4;
+}
