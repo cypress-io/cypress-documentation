@@ -13,6 +13,10 @@
               "slug": "why-cypress"
             },
             {
+              "title": "Choosing E2E or Component Tests",
+              "slug": "choosing-e2e-or-ct"
+            },
+            {
               "title": "Key Differences",
               "slug": "key-differences"
             }
