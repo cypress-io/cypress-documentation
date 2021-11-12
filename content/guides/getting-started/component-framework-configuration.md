@@ -2,10 +2,9 @@
 title: Framework Configuration
 ---
 
-Recent years have seen an explosion in component based libraries (Vue, React)
-and frameworks built on top of them (Nuxt, Next). Cypress tests are written and
-behave the same regardless. Some frameworks require some additional
-configuration to work correctly with Cypress component testing.
+Cypress component tests are written and behave the same regardless of framework
+choice (Vue, React, Nuxt, Next); however, some frameworks require additional
+configuration to work correctly.
 
 All the example projects described in this page can be found
 [here](https://github.com/cypress-io/cypress-component-examples).
