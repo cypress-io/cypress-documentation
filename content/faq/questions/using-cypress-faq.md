@@ -202,7 +202,7 @@ you can pass to most action commands.
 This is the single most important guide for understanding how to test with
 Cypress.
 
-## <Icon name="angle-right"></Icon> How do I wait for my application to load?
+## <Icon name="angle-right"></Icon> How do I wait for my application to load? <E2EOnlyBadge />
 
 We have seen many different iterations of this question. The answers can be
 varied depending on how your application behaves and the circumstances under
@@ -785,7 +785,7 @@ this behavior in your application.
 
 Yes, you can. We provide an [example here](/api/commands/viewport#Width-Height).
 
-## <Icon name="angle-right"></Icon> Can I run the same tests on multiple subdomains?
+## <Icon name="angle-right"></Icon> Can I run the same tests on multiple subdomains? <E2EOnlyBadge />
 
 Yes. In this example, we loop through an array of urls and make assertions on
 the logo.

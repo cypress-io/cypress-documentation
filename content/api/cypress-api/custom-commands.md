@@ -234,7 +234,7 @@ Cypress.Commands.add('logout', () => {
 })
 ```
 
-#### Log out command using `localStorage`
+#### Log out command using `localStorage` <E2EOnlyBadge />
 
 ```js
 Cypress.Commands.add('logout', () => {

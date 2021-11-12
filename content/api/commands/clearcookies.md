@@ -47,7 +47,7 @@ be chained further.</li></List>
 
 ### No Args
 
-#### Clear all cookies after logging in
+#### Clear all cookies after logging in <E2EOnlyBadge />
 
 In this example, on first login our server sends us back a session cookie. After
 invoking `cy.clearCookies()` this clears the session cookie, and upon navigating

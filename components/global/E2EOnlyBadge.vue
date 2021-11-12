@@ -1,5 +1,13 @@
+<script>
+import Badge from './Badge'
+
+export default {
+  components: {
+    Badge
+  }
+}
+</script>
+
 <template>
-  <span class="items-center px-3 py-0.5 mt-5 mb-3 rounded-full text-sm font-medium bg-lightGreen text-contrastGreen">
-    End-to-End Only
-  </span>
+  <Badge type="hint">End-to-End Only</Badge>
 </template>

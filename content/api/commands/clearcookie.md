@@ -51,7 +51,7 @@ chained further.</li></List>
 
 ### No Args
 
-#### Clear a cookie after logging in
+#### Clear a cookie after logging in <E2EOnlyBadge />
 
 In this example, on first login, our server sends us back a session cookie.
 After invoking `cy.clearCookie('session_id')`, this clears the session cookie.
