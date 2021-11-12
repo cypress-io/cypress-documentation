@@ -1,12 +1,10 @@
 ---
 title: Framework Configuration
-containerClass: component-testing
 ---
 
-Recent years have seen an explosion in component based libraries (Vue, React)
-and frameworks built on top of them (Nuxt, Next). Cypress tests are written and
-behave the same regardless. Some frameworks require some additional
-configuration to work correctly with Cypress component testing.
+Cypress component tests are written and behave the same regardless of framework
+choice (Vue, React, Nuxt, Next); however, some frameworks require additional
+configuration to work correctly.
 
 All the example projects described in this page can be found
 [here](https://github.com/cypress-io/cypress-component-examples).
@@ -95,9 +93,9 @@ it('renders learn react link', () => {
 })
 ```
 
-Start Cypress with `npx cypress open --component` - the test runner will open. Select
-your test to execute it and see the rendered output. You can also run the tests
-without opening a browser with `npx cypress run --component`.
+Start Cypress with `npx cypress open --component` - the test runner will open.
+Select your test to execute it and see the rendered output. You can also run the
+tests without opening a browser with `npx cypress run --component`.
 
 ## Vue (Vue CLI)
 
@@ -212,9 +210,9 @@ it('renders a message', () => {
 })
 ```
 
-Start Cypress with `npx cypress open --component` - the test runner will open. Select
-your test to execute it and see the rendered output. You can also run the tests
-without opening a browser with `npx cypress run --component`.
+Start Cypress with `npx cypress open --component` - the test runner will open.
+Select your test to execute it and see the rendered output. You can also run the
+tests without opening a browser with `npx cypress run --component`.
 
 ### Vue 3 (Vue CLI)
 
@@ -313,9 +311,9 @@ it('Renders page component', () => {
 })
 ```
 
-Start Cypress with `npx cypress open --component` - the test runner will open. Select
-your test to execute it and see the rendered output. You can also run the tests
-without opening a browser with `npx cypress run --component`.
+Start Cypress with `npx cypress open --component` - the test runner will open.
+Select your test to execute it and see the rendered output. You can also run the
+tests without opening a browser with `npx cypress run --component`.
 
 <Alert type="warning">
 
@@ -522,9 +520,9 @@ _not_ applied. In this example, the `fetch` hook is not automatically applied,
 so we used the `mocks` mounting option to specify the three component states
 (loading, error and success) and test each one in isolation.
 
-Start Cypress with `npx cypress open --component` - the test runner will open. Select
-your test to execute it and see the rendered output. You can also run the tests
-without opening a browser with `npx cypress run --component`.
+Start Cypress with `npx cypress open --component` - the test runner will open.
+Select your test to execute it and see the rendered output. You can also run the
+tests without opening a browser with `npx cypress run --component`.
 
 ## Vite Based Projects (Vue, React)
 
@@ -599,6 +597,6 @@ it('renders learn react link', () => {
 })
 ```
 
-Start Cypress with `npx cypress open --component` - the test runner will open. Select
-your test to execute it and see the rendered output. You can also run the tests
-without opening a browser with `npx cypress run --component`.
+Start Cypress with `npx cypress open --component` - the test runner will open.
+Select your test to execute it and see the rendered output. You can also run the
+tests without opening a browser with `npx cypress run --component`.

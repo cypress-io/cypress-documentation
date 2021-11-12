@@ -1,5 +1,5 @@
 ---
-title: Writing Your First Test
+title: Writing Your First End-to-End Test
 ---
 
 <Alert type="info">
