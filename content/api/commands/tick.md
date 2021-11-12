@@ -73,25 +73,13 @@ window.addIntro = () => {
 }
 ```
 
-:::cypress-visit-mount-test-example
-
-```js
-cy.visit('/index.html')
-```
-
-```js
-mount(<MyComponent />)
-```
-
-```js
+```javascript
 cy.clock()
-__VISIT_MOUNT_PLACEHOLDER__
+cy.visit('/index.html')
 cy.window().invoke('addIntro')
 cy.tick(500)
 cy.get('#header').should('have.text', 'Hello, World')
 ```
-
-:::
 
 #### Using `cy.clock()` with `cy.tick()`
 
@@ -107,19 +95,9 @@ You can restore the clock and allow your application to resume normally without
 manipulating native global functions related to time. This is automatically
 called between tests.
 
-:::cypress-visit-mount-test-example
-
-```js
-cy.visit('http://localhost:3333')
-```
-
-```js
-mount(<MyComponent />)
-```
-
-```js
+```javascript
 cy.clock()
-__VISIT_MOUNT_PLACEHOLDER__
+cy.visit('http://localhost:3333')
 cy.get('#search').type('Acme Company')
 cy.tick(1000)
 // more test code here
@@ -130,8 +108,6 @@ cy.clock().then((clock) => {
 })
 // more test code here
 ```
-
-:::
 
 You could also restore by using [.invoke()](/api/commands/invoke) to invoke the
 `restore` function.
