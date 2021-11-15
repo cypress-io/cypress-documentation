@@ -8,7 +8,9 @@ title: 'Choosing a Testing Type: End-to-end or Component Tests?'
 
 - What is end-to-end testing and component testing
 - Considerations for each testing type
-- How to choose which test type based on your scenario </Alert>
+- How to choose which test type based on your scenario
+
+</Alert>
 
 One of the first decisions you will need to make on your testing journey is what
 type of test to create. Cypress offers two options: end-to-end (e2e) and
@@ -62,7 +64,9 @@ on how to handle this complexity.
 
 - Validating critical workflows like authentication and purchasing
 - Ensuring data is persisted and displayed through multiple screens
-- Running Smoke Tests and System Checks before deployment </Alert>
+- Running Smoke Tests and System Checks before deployment
+
+</Alert>
 
 ## What is Component Testing?
 
@@ -110,4 +114,6 @@ tests specializing in what they do best.
 - Testing a date picker works properly for a variety of scenarios
 - That a form shows and hides specific sections based on input
 - Testing components coming out of a design system
-- Testing logic not tied to a component (like unit tests!) </Alert>
+- Testing logic not tied to a component (like unit tests!)
+
+</Alert>
