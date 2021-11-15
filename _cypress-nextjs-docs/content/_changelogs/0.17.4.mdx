@@ -1,0 +1,32 @@
+## 0.17.4
+
+_Released 09/12/2016_
+
+**Breaking Changes:**
+
+- Using subsequent [`cy.visit()`](/api/commands/visit)'s _in the same test_ will
+  not necessarily force a full page refresh. If all that changed was the hash of
+  a url, then the hash changes will take affect **without** a full page refresh.
+  This matches the behavior of a real browser. Previously
+  [`cy.visit()`](/api/commands/visit) always forced a full page refresh and this
+  was not correct.
+
+**Features:**
+
+- Using [`cy.visit()`](/api/commands/visit) now acts _exactly_ how modifying the
+  URL in a real browser works. This means that if you visit a url with a hash in
+  it, instead of forcing a full page refresh, it will now modify the hash route
+  as if you had manually changed it. This more accurately reflects real user
+  behavior. Previously this was impossible to do with Cypress other than
+  manually altering `window.location.hash`.
+
+**Bugfixes:**
+
+- Fixed a regression in `0.17.2` which caused **separate** tests that were
+  visiting the same URL not to actually visit the new URL and eventually time
+  out. We've updated some of our internal QA processes around this because we
+  rarely have regressions and they are a pretty big deal. Fixes
+  [#225](https://github.com/cypress-io/cypress/issues/225).
+- Fixed displaying `(null)` contentType when a
+  [`cy.visit()`](/api/commands/visit) returned a `404` status code. We now only
+  display `contentType` when one exists.

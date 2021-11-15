@@ -1,0 +1,48 @@
+## 0.19.2
+
+_Released 04/16/2017_
+
+**Features:**
+
+- You can now run your tests in the
+  [Electron browser](/guides/guides/launching-browsers#Electron-Browser) that
+  comes built with Cypress. You will see it as an option in the browser
+  dropdown. This is the same browser that Cypress uses when running
+  `cypress run`. This is useful for debugging issues that only occur during
+  headless runs. Addresses
+  [#452](https://github.com/cypress-io/cypress/issues/452).
+- New traversal commands [`.nextAll()`](/api/commands/nextall),
+  [`.nextUntil()`](/api/commands/nextuntil),
+  [`.parentsUntil()`](/api/commands/parentsuntil),
+  [`.prevAll()`](/api/commands/prevall), and
+  [`.prevUntil()`](/api/commands/prevuntil) have been added. Addresses
+  [#432](https://github.com/cypress-io/cypress/issues/432).
+
+**Bugfixes:**
+
+- An error is now thrown if an `undefined` value is mistakenly passed into
+  [`cy.wait()`](/api/commands/wait). Previously, it would set the command
+  timeout to an unimaginably large number of ms. Fixes
+  [#332](https://github.com/cypress-io/cypress/issues/332)
+- Fixed issue where the contents of `state.json` were emptied, which would cause
+  a crash and loss of state information. Fixes
+  [#473](https://github.com/cypress-io/cypress/issues/473) and
+  [#474](https://github.com/cypress-io/cypress/issues/474).
+- We no longer write the chrome extension within `node_modules`, and instead
+  write this to the proper OS specific `appData` folder. Fixes
+  [#245](https://github.com/cypress-io/cypress/issues/245) and
+  [#290](https://github.com/cypress-io/cypress/issues/290).
+
+**Misc:**
+
+- Error handling for invalid arguments passed to
+  [`cy.wait()`](/api/commands/wait) have been improved and will now suggest
+  valid arguments that are acceptable.
+- Browsers in the browser dropdown now have colored icons, which help visually
+  distinguish the variants of Chrome.
+- Increased timeout for browser to make a connection when running during
+  `cypress run` from 10 seconds to 30 seconds.
+- Internally refactored how browsers are added and spawned in preparation of us
+  adding cross browser support.
+- Switching specs in the GUI now closes the browser and respawns it and
+  refocuses it.

@@ -1,0 +1,44 @@
+## 0.17.1
+
+_Released 08/31/2016_
+
+**Features:**
+
+- You can now pass keyboard modifiers such as `ctrl`, `cmd`, `shift`, and `alt`
+  to [`.type()`](/api/commands/type). In addition we've added support for not
+  "releasing" these keys so they can affect other actions such as
+  [`.click()`](/api/commands/click). Addresses
+  [#196](https://github.com/cypress-io/cypress/issues/196).
+- You can now type into the `<body>` or `document` as opposed to previously
+  _having_ to target a valid focusable element. This is useful in situations
+  where you're testing keyboard shortcuts and do not want to target a specific
+  element. Addresses [#150](https://github.com/cypress-io/cypress/issues/150).
+- There is a new command [`cy.readFile()`](/api/commands/readfile) that reads
+  files on your file system and changes the subject to the contents. Addresses
+  [#179](https://github.com/cypress-io/cypress/issues/179).
+- There is a new command [`cy.writeFile()`](/api/commands/writefile) that
+  creates and/or writes contents to files on your file system. Addresses
+  [#179](https://github.com/cypress-io/cypress/issues/179).
+
+**Bugfixes:**
+
+- [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) now works
+  correctly. The driver was still referencing the old `commandTimeout` value.
+- The `__cypress.initial` cookie should now be removed during any
+  [`cy.visit()`](/api/commands/visit), which should fix some edge cases with the
+  proxy accidentally injecting content when it shouldn't. We also added a ton
+  more e2e tests covering these edge cases and other behavior.
+- The proxy now restricts its injection to only `Content-Type: text/html`
+  headers so it will not accidentally inject into the wrong responses.
+
+**Misc:**
+
+- All [`cy.fixture()`](/api/commands/fixture) extensions are now supported and
+  Cypress will no longer throw on extensions it doesn't recognize. For known
+  fixture extensions we'll continue to apply a default `encoding` and for
+  everything else it will default to `utf8`. Fixes
+  [#200](https://github.com/cypress-io/cypress/issues/200).
+- [`cy.fixture()`](/api/commands/fixture) now accepts `encoding` as a 2nd
+  optional argument.
+- We now display a keyboard 'modifiers' column when clicking on a
+  [`.type()`](/api/commands/type) in the Command Log.

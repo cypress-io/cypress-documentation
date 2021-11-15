@@ -1,0 +1,19 @@
+## 2.0.2
+
+_Released 2/17/2018_
+
+**Bugfixes:**
+
+- Fixed more edge cases where legitimate JavaScript code was being modified
+  unexpectedly by the
+  [modifyObstructiveCode](/guides/references/configuration#Browser)
+  configuration. We've tightened up the RegExp even more and added 40 popular JS
+  libraries to test against to ensure they are not modified. Fixes
+  [#1334](https://github.com/cypress-io/cypress/issues/1334).
+- Fixed an edge case when hooks such as `beforeEach` or `afterEach` threw an
+  **identical** error message, Cypress would hang indefinitely and never finish
+  running the tests. Fixes
+  [#674](https://github.com/cypress-io/cypress/issues/674).
+- Fixed bug when `Errors` that threw with no arguments: `throw new Error()` and
+  had their messages appended would duplicate the message over and over again.
+  Fixes [#1338](https://github.com/cypress-io/cypress/issues/1338).

@@ -1,0 +1,85 @@
+## 6.4.0
+
+_Released 2/1/2021_
+
+**Features:**
+
+- There's now a [Command Log](/guides/core-concepts/test-runner#Command-Log)
+  entry in the Test Runner for when a file is downloaded. Addresses
+  [#14749](https://github.com/cypress-io/cypress/issues/14749).
+
+**Deprecations:**
+
+- The `delayMs` option for [cy.intercept()](/api/commands/intercept) has been
+  renamed to `delay`. `delayMs` will still work, but it is deprecated and will
+  be removed in a future release. Addresses
+  [#14822](https://github.com/cypress-io/cypress/issues/14822).
+
+**Bugfixes:**
+
+- Fixed an issue causing a webpack compilation error when a `browserslist` is
+  present in project root. Addresses
+  [#8864](https://github.com/cypress-io/cypress/issues/8864).
+- Fixed an issue with [cy.intercept()](/api/commands/intercept) where aliases
+  set via `req.alias` containing a period character would not work as expected.
+  Addresses [#14444](https://github.com/cypress-io/cypress/issues/14444).
+- Fixed an issue where delays set using
+  [cy.intercept()](/api/commands/intercept) would not work as expected.
+  Addresses [#14446](https://github.com/cypress-io/cypress/issues/14446) and
+  [#14511](https://github.com/cypress-io/cypress/issues/14511).
+- Reverted a change to how the Chrome DevTools Protocol is established. Instead
+  of using stdio and then falling back to TCP, Cypress now only uses TCP to try
+  to connect to Chrome DevTools Protocol. Addresses
+  [#14819](https://github.com/cypress-io/cypress/issues/14819).
+- We now better handle spec paths containing special characters so they properly
+  show in the code frame and work when interacting via your IDE. Addresses
+  [#14659](https://github.com/cypress-io/cypress/issues/14659).
+- We addressed several issues with the experimental
+  [Cypress Studio](/guides/core-concepts/cypress-studio). To enable the Cypress
+  Studio you can set `experimentalStudio` to `true` in your Cypress
+  configuration. Issues addressed:
+  - Cypress Studio now prompts to start adding commands after visiting an
+    inputted url. Addresses
+    [#14688](https://github.com/cypress-io/cypress/issues/14688).
+  - Empty `.type()` commands will no longer be generated when tabbing through
+    inputs. Addresses
+    [#14684](https://github.com/cypress-io/cypress/issues/14684).
+  - Cypress Studio no longer prompt to enter a URL if the test is in an errored
+    state. Addresses
+    [#14686](https://github.com/cypress-io/cypress/issues/14686).
+  - Cypress Studio now reloads tests when `watchForFileChanges` is `false`.
+    Addresses [#14744](https://github.com/cypress-io/cypress/issues/14744).
+  - An empty `.click()` command will no longer be added before `.type()` in
+    Cypress Studio when it is followed by typed characters. Addresses
+    [#14685](https://github.com/cypress-io/cypress/issues/14685).
+  - Cypress Studio will now use the correct selector for an element even if the
+    click event changed the selectors. Addresses
+    [#14658](https://github.com/cypress-io/cypress/issues/14658).
+  - Multi-select `selects` are now supported in Cypress Studio. Addresses
+    [#14743](https://github.com/cypress-io/cypress/issues/14743).
+  - There's an improved UI for command failures within Cypress Studio. Addresses
+    [#14691](https://github.com/cypress-io/cypress/issues/14691).
+  - The Selector Playground is now closed automatically when Cypress Studio is
+    opened. [#14689](https://github.com/cypress-io/cypress/issues/14689).
+
+**Misc:**
+
+- The "no specs found" error now displays which directory it searched for specs.
+  Addresses [#14532](https://github.com/cypress-io/cypress/issues/14532).
+- More types for the resolved config property have been added. Addresses
+  [#14392](https://github.com/cypress-io/cypress/issues/14392).
+
+**Dependency Updates:**
+
+- Upgraded `@cypress/get-windows-proxy` to version `1.6.2`. Addressed in
+  [#14711](https://github.com/cypress-io/cypress/issues/14711).
+- Upgraded `electron` to version `11.2.1`. Addressed in
+  [#14764](https://github.com/cypress-io/cypress/issues/14764).
+- Upgraded `recast` to version `0.20.4`. Addressed in
+  [#14623](https://github.com/cypress-io/cypress/issues/14623).
+- Upgraded `registry-js` to version `1.13.0`. Addressed in
+  [#14668](https://github.com/cypress-io/cypress/issues/14668).
+- Upgraded `semantic-release` to version `17.2.3`. Addressed in
+  [#14713](https://github.com/cypress-io/cypress/issues/14713).
+- Upgraded `systeminformation` to version `4.31.1`. Addressed in
+  [#14715](https://github.com/cypress-io/cypress/issues/14715).

@@ -1,0 +1,54 @@
+## 1.2.0
+
+_Released 12/14/2017_
+
+**Features:**
+
+- Plugins can now return a `Promise` and modify the yielded `config` to set new
+  configuration values and environment variables. Fixes
+  [#1042](https://github.com/cypress-io/cypress/issues/1042) and
+  [#909](https://github.com/cypress-io/cypress/issues/909) and
+  [#576](https://github.com/cypress-io/cypress/issues/576).
+- There is a new [userAgent](/guides/references/configuration#Browser) option in
+  `cypress.json`. This enables you to change the `userAgent` of the browser for
+  the entire browsing session. Fixes
+  [#364](https://github.com/cypress-io/cypress/issues/364).
+- There is a new [blacklistHosts](/guides/references/configuration#Browser)
+  option in `cypress.json` that allows you to block requests made to those
+  hosts. Blocked requests will respond with a `503` status code. This is useful
+  for blocking 3rd party domains like Google Analytics. We have added a
+  [new 'Stubbing Google Analytics' recipe](/examples/examples/recipes#Stubbing-and-spying)
+  demonstrating this. Fixes
+  [#442](https://github.com/cypress-io/cypress/issues/442).
+- Added chai assertions in TypeScript to generate autocompletion. Fixes
+  [#1073](https://github.com/cypress-io/cypress/issues/1073).
+
+**Bugfixes:**
+
+- Updated TypeScript definitions to more accurately match the current Cypress
+  API. Fixes [#1050](https://github.com/cypress-io/cypress/issues/1050). Also
+  note that if you were extending Cypress in TypeScript the `Chainer` interface
+  changed. Please read {% issue '1048#issuecomment-351891910' %} to understand
+  what you will need to update.
+
+**Misc:**
+
+- Renamed `environmentVariables` to `env` in the Desktop GUI. Fixes
+  [#1052](https://github.com/cypress-io/cypress/issues/1052).
+- [Cypress.config()](/guides/references/configuration#Cypress-config) now
+  returns a complete set of configuration values. Fixes
+  [#509](https://github.com/cypress-io/cypress/issues/509).
+- Added TypeScript typings for bundled Cypress tools like `$`, `_`, etc. Fixes
+  [#1046](https://github.com/cypress-io/cypress/issues/1046).
+- Some error messages were made more passive. Fixes
+  [#1025](https://github.com/cypress-io/cypress/issues/1025).
+
+**Documentation Changes:**
+
+- [Added `Configuration API`](/api/plugins/configuration-api)
+- [Added `Recipes`](/examples/examples/recipes)
+- [Updated `Configuration`](/guides/references/configuration)
+- [Updated `Environment Variables`](/guides/guides/environment-variables)
+- [Updated `Using Cypress FAQ`](/faq/questions/using-cypress-faq)
+- [Updated `Plugins Guide`](/guides/tooling/plugins-guide)
+- [Updated `Writing a Plugin API`](/api/plugins/writing-a-plugin)

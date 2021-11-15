@@ -1,0 +1,23 @@
+## 6.0.1
+
+_Released 11/30/2020_
+
+**Bugfixes:**
+
+- Chromium based browsers on version 87 will no longer show recorded videos as
+  frozen or blank. Fixes
+  [#9265](https://github.com/cypress-io/cypress/issues/9265).
+- We fixed a regression introduced in
+  [5.0.0](/guides/references/changelog#5-0-0) that would cause an
+  `Option 'sourceMap' cannot be specified with option 'inlineSourceMap'` error
+  to throw when setting `sourceMap` in your tsconfig. Fixes
+  [#8477](https://github.com/cypress-io/cypress/issues/8477).
+- [cy.screenshot()](/api/commands/screenshot) no longer throws an
+  `"offset" is out of range` error when Cypress attempts to crop the image.
+  Fixes [#2034](https://github.com/cypress-io/cypress/issues/2034).
+- [cy.screenshot()](/api/commands/screenshot) types won't mistakenly display the
+  command as deprecated. Fixes
+  [#9303](https://github.com/cypress-io/cypress/issues/9303).
+- Lower-cased HTTP methods can now be used with
+  [cy.intercept()](/api/commands/intercept). Fixes
+  [#9313](https://github.com/cypress-io/cypress/issues/9313).

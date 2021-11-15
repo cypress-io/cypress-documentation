@@ -1,0 +1,16 @@
+## 0.11.8
+
+_Released 09/25/2015_
+
+**Features:**
+
+- Added [`cy.request()`](/api/commands/request) command which can issue XHR
+  requests. The request is generated outside of the browser, and bypasses all
+  CORS restrictions. Great for talking to an API for seeding, querying,
+  building, etc.
+
+**Bugfixes:**
+
+- Prevented edge case with [`cy.fixture()`](/api/commands/fixture) where it
+  would not be able to be canceled without throwing an unhandled rejection
+  error.

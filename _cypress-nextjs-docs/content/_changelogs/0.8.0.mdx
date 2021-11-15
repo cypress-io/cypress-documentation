@@ -1,0 +1,59 @@
+## 0.8.0
+
+_Released 06/26/2015_
+
+**Summary:**
+
+- [`.type()`](/api/commands/type) now implements all DOM events to simulate
+  every aspect of typing on a real keyboard.
+- All of the [type docs have been updated](/api/commands/type.html) to reflect
+  these changes.
+
+**Features:**
+
+- [`.type()`](/api/commands/type) now outputs "Key Events Table" which is a
+  `console.table` of every key typed, the `charCode`, all vents that fired, and
+  whether any were `preventedDefault`.
+- [`.type()`](/api/commands/type) now accepts the following special character
+  sequences: `{selectall}`, `{del}`, `{backspace}`, `{esc}`, `{{}`, `{enter}`,
+  `{leftarrow}`, `{rightarrow}`.
+- [`.type()`](/api/commands/type) implements `cursor` and `selection` and
+  `range` accurately like a real keyboard.
+- [`.type()`](/api/commands/type) now fires change events exactly like real
+  browsers when `{enter}` is used.
+- [`.type()`](/api/commands/type) will fire `textInput` and `input` events
+  exactly like a real browser. Fixes
+  [#7](https://github.com/cypress-io/cypress/issues/7).
+- [`.type()`](/api/commands/type) now follows all of the spec in regards to
+  `preventingDefault` on any event that would insert a character such as
+  `keydown`, `keypress`, `textInput`.
+- [`.type()`](/api/commands/type) events should be `100%` identical to real
+  browser `KeyboardEvents` including `charCode`, `which`, `keyCode`, `data`,
+  etc.
+- [`.type()`](/api/commands/type) now inserts a small delay `10ms` between each
+  keystroke to simulate a real user typing.
+- `input` events are now correctly fired when
+  [`.select()`](/api/commands/select) chooses an `<option>`.
+- `change` events are now fired exactly how a browser does (when an input loses
+  focus and its value has changed since its last focus event). You'll see these
+  fire after you use [`.blur()`](/api/commands/blur) directly, or use another
+  `action command` on another element.
+
+**Bugfixes:**
+
+- Using [`.type()`](/api/commands/type) in an `input[type=number]` will no
+  longer prepend the value. Fixes
+  [#26](https://github.com/cypress-io/cypress/issues/26).
+- `[contenteditable]` elements can now be focused and blurred.
+- `aborting` during [`.click()`](/api/commands/click) /
+  [`.dblclick()`](/api/commands/dblclick) now correctly cancels remaining queued
+  click/dblclick events.
+
+**Misc:**
+
+- `console.groups` are now collapsed by default.
+- [`.type()`](/api/commands/type) now validates the chars and will throw on
+  anything other than a string or finite number.
+- [`.type()`](/api/commands/type) now throws on empty strings.
+- Removed several libs that used to handle typing simulation and rewrote typing
+  from scratch.

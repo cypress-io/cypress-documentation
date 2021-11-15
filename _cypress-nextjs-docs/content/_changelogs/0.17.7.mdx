@@ -1,0 +1,27 @@
+## 0.17.7
+
+_Released 10/12/2016_
+
+**Features:**
+
+- There is now a new
+  [`chromeWebSecurity`](/guides/references/configuration#Browser) option you can
+  set in `cypress.json` to turn off Chrome's Web Security features. We've
+  written a brand new reference that details why and how you could use this.
+  [Cypress Web Security](/guides/guides/web-security). This option can be used
+  for accessing `cross origin` `<iframes>` or if your application needs to test
+  navigation across super domains. Fixes
+  [#262](https://github.com/cypress-io/cypress/issues/262).
+
+**Bugfixes:**
+
+- We now capture `cross origin` errors correctly instead of these showing as
+  `Uncaught DOMExceptions` in the console. Fixes
+  [#261](https://github.com/cypress-io/cypress/issues/261).
+- We no longer trash the wrong folder on OSX in-app updates (when a project is
+  open). Sorry about this! Fixes
+  [#260](https://github.com/cypress-io/cypress/issues/260).
+- [`cy.visit()`](/api/commands/visit) urls with domain-like segments (which
+  weren't actually the domain) no longer cause Cypress to think you're trying to
+  navigate to a different superdomain. Fixes
+  [#255](https://github.com/cypress-io/cypress/issues/255).

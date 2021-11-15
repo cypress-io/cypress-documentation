@@ -1,0 +1,26 @@
+## 0.17.3
+
+_Released 09/11/2016_
+
+**Features:**
+
+- When `visible` assertions such as `should('be.visible')` fail we now print the
+  reason Cypress thought the element was invisible. Matches what Cypress prints
+  out when attempting to interact with invisible elements. Fixes
+  [#221](https://github.com/cypress-io/cypress/issues/221).
+
+**Bugfixes:**
+
+- Prevent `Host` header from having its port appended when request was for port
+  `80` or `443` which lead to 3rd party reverse proxy problems such as with
+  `zeit.co` hosting. Fixes
+  [#222](https://github.com/cypress-io/cypress/issues/222).
+- Send valid http response errors, and display new lines correctly. Fixes
+  [#218](https://github.com/cypress-io/cypress/issues/218).
+- Correctly inject on `5xx` http response codes. Fixes
+  [#217](https://github.com/cypress-io/cypress/issues/217).
+- Correctly inject on `4xx` and other bad http response codes when using Cypress
+  as the file server. Fixes
+  [#219](https://github.com/cypress-io/cypress/issues/219).
+- Correctly inject on `gzip` errors from 3rd party servers doing unintended
+  things. Fixes [#220](https://github.com/cypress-io/cypress/issues/220).

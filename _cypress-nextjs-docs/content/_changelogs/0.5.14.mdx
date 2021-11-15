@@ -1,0 +1,29 @@
+## 0.5.14
+
+_Released 05/06/2015_
+
+**Features:**
+
+- Cypress now works with JS applications that use `pushState` and `replaceState`
+  routing (commonly known as `HTML5 History`) without having to change any
+  application code.
+- Cypress now always updates the remote URL whenever your application changes
+  its URL through the vast variety of ways it can do this.
+
+**Bugfixes:**
+
+- Removed `iframe` and `link[rel=stylesheet]` elements during DOM revert.
+- Server instrument now correctly displays the number of responses their
+  corresponding routes have had.
+- Spies/Stubs/Mocks instrument now correctly displays the number of calls their
+  corresponding methods have had.
+- When users navigate between pages with commands, like
+  [`.click()`](/api/commands/click), Cypress now correctly waits until the age
+  has finished loading before running more commands. Previously this waited for
+  the `unload` event, which did not fire synchronously, and ow we bind to
+  `beforeunload` which does. Additionally Cypress checks to ensure
+  `beforeunload` did not return a non-undefined value.
+
+**Misc:**
+
+- More changes to prepare for server adapters,

@@ -1,0 +1,40 @@
+## 0.6.0
+
+_Released 05/14/2015_
+
+**Features:**
+
+- Pushstate application routing now works 100% reliably with NO hacky overrides
+  in all browsers.
+- All incompatible `a` / `link` / `form` elements are transparently rewritten to
+  be compatible including FQDN and protocol-less `href` / `src`.
+- Cookies are automatically cleared between page refreshes, during app startup,
+  and leaving the test page.
+- 3rd Party cookies are now additionally cleared. All cookies are now accessible
+  to the client in preparation for
+  [`cy.clearCookies()`](/api/commands/clearcookies).
+- Manual navigation after tests run now works reliably.
+- Navigating between full page refreshes during tests now works reliably.
+
+**Bugfixes:**
+
+- Server-side redirects are now completely transparently handled and supported.
+- URLs are no longer altered in any weird way.
+- Problematic `headers` are now automatically stripped from remote responses.
+- 3rd party `headers` are now properly proxied onto all responses.
+- Custom headers and other headers "of interest" are rewritten for transparent
+  compatibility.
+- `gzip` compression now handled and proxied correctly.
+
+**Misc:**
+
+- Completely overhauled the URL and proxy system used to serve remote
+  applications.
+- Drastically simplified the architecture required for proxying.
+- Improved reliability for displaying the remote url.
+- Namespaced all cypress internal routes.
+- Many internal development / debugging processes improved.
+- Added 100+ new tests surrounding serving remote content and processing
+  requests.
+- Renamed all remaining old references to `eclectus`.
+- All responses are now streamed using `content-encoding: chunked`.

@@ -1,0 +1,20 @@
+## 0.5.7
+
+_Released 04/23/2015_
+
+**Features:**
+
+- The insanity that is URL parsing to figure out absolute, relative,
+  absolute-path-relative, http, sub domains, and local files should work in most
+  cases. In other words, Cypress has implemented the vast majority of url
+  parsing based on the [w3c URL spec](https://url.spec.whatwg.org).
+
+**Bugfixes:**
+
+- Prevent reverting the DOM while tests are running. Fixes
+  [#28](https://github.com/cypress-io/cypress/issues/28).
+- Fix edge case with forced focusing / blurring an element when document is not
+  in focus and the element is no longer in the DOM.
+- Visiting relative paths which are served from your file system works again.
+- Visiting absolute paths in the iframe now displays the correct URL in the
+  address bar again.

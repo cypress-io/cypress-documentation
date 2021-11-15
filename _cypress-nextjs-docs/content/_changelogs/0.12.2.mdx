@@ -1,0 +1,22 @@
+## 0.12.2
+
+_Released 11/01/2015_
+
+**Features:**
+
+- There is now a `cy.cmd` and `cy.command` method which enables you to invoke
+  commands by their string name. This is most useful when using _namespaced_
+  custom commands. So `Cypress.addParentCommand("dashboard.setSlider", ...)` can
+  be accessed by `cy.cmd("dashboard.setSlider", arg1, arg2)`. (Docs have not
+  been written yet).
+- `Environment Variable` support has been added and can be accessed in your
+  tests with [`Cypress.env`](/api/cypress-api/env). The docs have been written
+  [Environment Variable](/guides/guides/environment-variables) and
+  [here](/api/cypress-api/env).
+
+**Misc:**
+
+- The URL property on all XHR's is now completely decoded, even on URLs which
+  were originally encoded. The reason is for easier assertions and debugging.
+  This URL property is specific to Cypress and does not actually affect the
+  underlying XHR.

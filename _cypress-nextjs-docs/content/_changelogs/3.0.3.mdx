@@ -1,0 +1,160 @@
+## 3.0.3
+
+_Released 7/30/2018_
+
+**Bugfixes:**
+
+- Reverted the Chrome argument that disabled `RootLayerScrolling` which was used
+  to prevent the application under test from "shaking" due to a bug in versions
+  66 and 67. This workaround inadvertently created a different and much more
+  severe bug in Chrome 68 that would miscalculate pointer coordinates. This led
+  to Cypress giving confusing errors about elements being covered up on action.
+  This is still a bug in Chrome, and is fixed in Canary but has not yet been
+  released to the stable Chrome 68 channel. Nevertheless, removing the
+  `RootLayerScrolling` flag does fix it. We did several experiments to try to
+  ensure that the "shaking" behavior does not exhibit itself in Chrome 68. We
+  have limited the `--disable-blink-features=RootLayerScrolling` flag to Chrome
+  66 and Chrome 67. Fixes
+  [#2223](https://github.com/cypress-io/cypress/issues/2223) and
+  [#2215](https://github.com/cypress-io/cypress/issues/2215) and
+  [#2037](https://github.com/cypress-io/cypress/issues/2037).
+- Fixed another bug with Chrome that caused the `chromeWebSecurity: false`
+  option to not be respected. This was due to Chrome progressively rolling out
+  trials of a new option that attempts to isolate sites (and iframes) in their
+  own child process if their origins are different. Fixes
+  [#1951](https://github.com/cypress-io/cypress/issues/1951) and
+  [#2001](https://github.com/cypress-io/cypress/issues/2001) and
+  [#715](https://github.com/cypress-io/cypress/issues/715).
+- Fixed Cypress hanging in CI due to excessive and unnecessary globbing. We
+  finally tracked down this issue which made it appear as if Cypress was
+  "hanging" after closing a spec file and then attempting to open the next one.
+  Fixes [#2183](https://github.com/cypress-io/cypress/issues/2183) and
+  [#1905](https://github.com/cypress-io/cypress/issues/1905) and
+  [#1912](https://github.com/cypress-io/cypress/issues/1912).
+- We are now properly serializing nested object arguments when using the
+  [Module API](/guides/guides/module-api) via `cypress.open()` or
+  `cypress.run()`. Passing nested objects in `reporterOptions` now works
+  correctly. This is especially useful when using `mocha-multi-reporters`. In
+  addition to fixing the [Module API](/guides/guides/module-api), we are now
+  also properly handling nested arguments from the
+  [Command Line](/guides/guides/command-line). In order to pass nested objects
+  within CLI params you must pass stringified JSON. This is useful for
+  properties such as `blacklistHosts`. Fixes
+  [#1348](https://github.com/cypress-io/cypress/issues/1348) and
+  [#1357](https://github.com/cypress-io/cypress/issues/1357) and
+  [#2221](https://github.com/cypress-io/cypress/issues/2221).
+- Fixed a bug causing screenshots saved via
+  [cy.screenshot()](/api/commands/screenshot) to be in different folders when
+  you ran using [cypress open](/guides/guides/command-line#cypress-open) vs
+  [cypress run](/guides/guides/command-line#cypress-run) . Fixes
+  [#2091](https://github.com/cypress-io/cypress/issues/2091).
+- Fixed bugs with Electron losing focus when running headlessly via
+  [cypress run](/guides/guides/command-line#cypress-run) after navigation. Now
+  the browser will always act as if it is focused no matter what and in all
+  situations when running headlessly. If you were seeing focus related problems
+  when running headlessly, this should fix them. Fixes issue
+  [#2190](https://github.com/cypress-io/cypress/issues/2190).
+- Fixed using when using [cy.click()](/api/commands/click) on an element that
+  bound to the `focus` event while the browser was currently _out of focus_. We
+  have now normalized **all focus and blur events** to behave the same as if the
+  browser is always in focus. This should fix the other batch of `blur` and
+  `focus` issues that users have been experiencing. Fixes
+  [#549](https://github.com/cypress-io/cypress/issues/549) and
+  [#2198](https://github.com/cypress-io/cypress/issues/2198).
+- Fixed the vast majority of known issues with [.type()](/api/commands/type).
+  Fixes [#1241](https://github.com/cypress-io/cypress/issues/1241).
+- Using [.type()](/api/commands/type) on an input of type `email` or `number`
+  will no longer fire unnecessary additional `blur` and `focus` events. Fixes
+  [#2210](https://github.com/cypress-io/cypress/issues/2210).
+- Fixed [.type()](/api/commands/type) breaking on chains when passing the same
+  `options` references. Fixes
+  [#365](https://github.com/cypress-io/cypress/issues/365).
+- Fixed an issue with [.clear()](/api/commands/clear) not behaving the same as
+  `cy.type('{selectall}{backspace}')`. Fixes
+  [#420](https://github.com/cypress-io/cypress/issues/420).
+- Fixed a bug with issuing an additional `blur` and `click` event when chaining
+  `.clear().type(...)`. Fixes
+  [#593](https://github.com/cypress-io/cypress/issues/593).
+- Fixed many issues with typing into `[contenteditable]` elements. WYSIWYG,
+  [Draft.js](https://draftjs.org/) based, and other HTML editors now work
+  correctly. Fixes [#596](https://github.com/cypress-io/cypress/issues/596) and
+  [#1686](https://github.com/cypress-io/cypress/issues/1686) and
+  [#2096](https://github.com/cypress-io/cypress/issues/2096).
+- The caret now correctly moves on `[contenteditable]` elements. Fixes
+  [#1108](https://github.com/cypress-io/cypress/issues/1108).
+- Fixed [.type()](/api/commands/type) inserting a rogue `<br>` tag after the
+  first letter in `[contenteditable]` elements. Fixes
+  [#1926](https://github.com/cypress-io/cypress/issues/1926).
+- Fixed issue where change events with [.type()](/api/commands/type) would not
+  fire correctly for many more situations and edge cases. Fixes
+  [#651](https://github.com/cypress-io/cypress/issues/651).
+- Fixed issues with typing into JS based text-mask plugins. Basically anything
+  that would alter the `.value` in response to certain events now works
+  correctly. Fixes [#940](https://github.com/cypress-io/cypress/issues/940) and
+  [#1684](https://github.com/cypress-io/cypress/issues/1684).
+- Using [.clear()](/api/commands/clear) on an input with a `maxlength` attribute
+  now works. Fixes [#1002](https://github.com/cypress-io/cypress/issues/1002)
+  and [#2056](https://github.com/cypress-io/cypress/issues/2056).
+- Fixed issues with [.type()](/api/commands/type) not firing the `change` event
+  on `input[type=number]`. Fixes
+  [#1171](https://github.com/cypress-io/cypress/issues/1171).
+- Fixed other event related issues with [.type()](/api/commands/type) that were
+  not firing correctly. Fixes
+  [#1209](https://github.com/cypress-io/cypress/issues/1209).
+- Fixed even more issues with [.type()](/api/commands/type) not inserting
+  characters on `input[type=number]`. Fixes
+  [#1381](https://github.com/cypress-io/cypress/issues/1381).
+- Fixed not being able to type negative numbers into `input[type=number]`
+  elements. Fixes [#2173](https://github.com/cypress-io/cypress/issues/2173).
+- Fixed `selectionStart` and `selectionEnd` with [.type()](/api/commands/type)
+  when using `{leftarrow}` or `{rightarrow}`. Fixes
+  [#1234](https://github.com/cypress-io/cypress/issues/1234).
+- Fixed not being able to type into a `datetime-local` input. Fixes
+  [#1366](https://github.com/cypress-io/cypress/issues/1366).
+- Calling [.focus()](/api/commands/focus) or [.blur()](/api/commands/blur) on
+  [cy.window()](/api/commands/window) no longer fires blur events on the
+  `activeElement` or causes it to become `body`. Fixes
+  [#2234](https://github.com/cypress-io/cypress/issues/2234).
+- Using `cy.get('body').click()` now correctly changes the `activeElement` back
+  to `body` and causes the existing `activeElement` to receive `blur`. Fixes
+  [#2236](https://github.com/cypress-io/cypress/issues/2236).
+
+**Misc:**
+
+- We've loosened up the restrictions surrounding what we consider a typeable
+  element. You can now type into inputs with invalid `type` attributes because
+  the browser does still consider them regular `text` inputs and allows you to
+  type into them. Fixes
+  [#586](https://github.com/cypress-io/cypress/issues/586).
+- Using `{uparrow}` or `{downarrow}` with [.type()](/api/commands/type) on an
+  `input[type=number]` element now increments or decrements the number
+  configured via the `step` attribute. Fixes
+  [#2110](https://github.com/cypress-io/cypress/issues/2110).
+- Using `{uparrow}` or `{downarrow}` with [.type()](/api/commands/type) now
+  correctly moves the cursor on `textarea` or `[contenteditable]` elements.
+  Fixes [#2187](https://github.com/cypress-io/cypress/issues/2187).
+- You can now use [.focus()](/api/commands/focus) or
+  [.blur()](/api/commands/blur) on `cy.get('body')`. Fixes
+  [#2235](https://github.com/cypress-io/cypress/issues/2235).
+- Bumped the version in `junit` reporter dep from `1.12.1` to `1.17.0` which
+  adds a few new features. Fixes
+  [#2238](https://github.com/cypress-io/cypress/issues/2238).
+- Bumped deps that `npm audit` was yelling about. Fixes
+  [#1701](https://github.com/cypress-io/cypress/issues/1701).
+- Runs showing up in the `Runs` tab now more closely match how they display in
+  the Dashboard. Fixes
+  [#2060](https://github.com/cypress-io/cypress/issues/2060).
+- Added more debug logs. Fixes
+  [#2108](https://github.com/cypress-io/cypress/issues/2108).
+- When recording to the Dashboard we now more accurately collect commit details
+  when it is missing from the local `git` data. Fixes
+  [#2129](https://github.com/cypress-io/cypress/issues/2129) and
+  [#2073](https://github.com/cypress-io/cypress/issues/2073).
+- Updated build in example kitchen sink to `1.0.2`. Fixes
+  [#2139](https://github.com/cypress-io/cypress/issues/2139).
+- Updated the json-schema describing `videoCompression`. Allowing it to be a
+  boolean. Fixes [#2140](https://github.com/cypress-io/cypress/issues/2140).
+
+**Documentation Changes:**
+
+- [New "Module API" doc](/guides/guides/module-api)

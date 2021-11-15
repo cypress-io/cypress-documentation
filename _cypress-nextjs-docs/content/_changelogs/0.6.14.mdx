@@ -1,0 +1,28 @@
+## 0.6.14
+
+_Released 06/11/2015_
+
+**Features:**
+
+- Command logging has been upgraded to support "page events", which are
+  different than commands. Now events which happen (XHR/page load/url
+  change/spies/stubs/mocks) log out visually differently and do not use a
+  command number. This should be easier to parse what was a real command and
+  what was a page event.
+- When the url changes this is now logged as a page event, and its `onConsole`
+  logs what caused it to change.
+
+**Misc:**
+
+- Internal refactor / improvements to support long lived runnable objects to
+  work with page events.
+- Request Commands (now page events) have now been renamed to 'XHR'.
+- [`cy.document()`](/api/commands/document) now returns the raw document object
+  instead of a jQuery wrapped document object.
+- When [`.its()`](/api/commands/its) or [`.invoke()`](/api/commands/invoke)
+  fails it will include the current subject n the `onConsole` log.
+- [`cy.wait()`](/api/commands/wait) now logs out when its referenced aliases,
+  and its `onConsole` output displays the XHR return values.
+- [`cy.hash()`](/api/commands/hash) and [`cy.url()`](/api/commands/url) no
+  longer pass the return value as the command log's `message`, which made no
+  sense and was unlike every other command.

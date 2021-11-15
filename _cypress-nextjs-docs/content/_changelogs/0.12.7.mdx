@@ -1,0 +1,12 @@
+## 0.12.7
+
+_Released 11/30/2015_
+
+**Bugfixes:**
+
+- Prevent passing `{multiple: true}` incorrectly showing up in Command Log.
+  Fixes [#88](https://github.com/cypress-io/cypress/issues/88).
+- Properly allow resource like XHR's which have query params such as jquery's
+  `{cache: false}` option.
+- Correctly take into account `<base>` tag on XHR's. Fixes
+  [#89](https://github.com/cypress-io/cypress/issues/89).

@@ -1,0 +1,46 @@
+## 0.12.6
+
+_Released 11/29/2015_
+
+**Features:**
+
+- There are now [Getting Started](/guides/getting-started/installing-cypress)
+  docs including [configuration](/guides/references/configuration) for
+  `cypress.json`
+- Cypress now silently restarts the server whenever it detects a change to
+  `cypress.json` - meaning you no longer have to manually reboot the server for
+  changes to be picked up.
+- There is a new [`Cypress.config`](/api/cypress-api/config) interface - akin to
+  [`Cypress.env`](/api/cypress-api/env) which provides access to configuration
+  values.
+
+**Bugfixes:**
+
+- Setup/Teardown code was not properly running on nested Mocha `before`hooks
+  which caused the error: `The XHR server is unavailable or missing...`. Fixes
+  [#80](https://github.com/cypress-io/cypress/issues/80) and
+  [#86](https://github.com/cypress-io/cypress/issues/86).
+- Prevent accidental mutation of [`cy.server()`](/api/commands/server) options
+  when [`cy.route()`](/api/commands/route) was provided options. Fixes
+  [#84](https://github.com/cypress-io/cypress/issues/84) and
+  [#85](https://github.com/cypress-io/cypress/issues/85).
+- Using [`cy.title()`](/api/commands/title) would incorrectly search the
+  `<body>` for title elements, and is now restricted to only searching in the
+  `<head>`
+- Cross-Origin requests are now proxied by Cypress. In other words their URL's
+  are transparently rewritten which bypasses CORS problems. This is a quick fix
+  which should satisfy most of the problems users were having with CORS
+  requests. However there is a much bigger change coming in `0.14.0` where the
+  entire proxy layer will be rewritten to accommodate CORS, `window.fetch` and
+  `domain cookies` flawlessly. As it stands Cypress is prone to errors in
+  complex setups.
+
+**Misc:**
+
+- Exposed `visitTimeout` and `requestTimeout`
+  [configuration](/guides/references/configuration).
+- Increased `visitTimeout` from `20s` to `30s`.
+- [`.click()`](/api/commands/click) will now throw if you are attempting to
+  click more than 1 element. Pass `{multiple: true}` to enable this behavior
+  again. Each element will be clicked serially and inserted into the Command
+  Log.

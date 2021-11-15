@@ -5,20 +5,20 @@ import Head from "next/head"
 import path from "path"
 import rehypeSlug from "rehype-slug"
 import rehypePrism from "@mapbox/rehype-prism"
-import Layout from "../../components/Layout"
-import VideoYouTube from "../../components/video-youtube"
-import Video from "../../components/video"
-import Icon from "../../components/icon"
-import Alert from "../../components/alert"
-import DocsImage from "../../components/docs-image"
-import DocsVideo from "../../components/docs-video"
-import Badge from "../../components/badge"
+import Layout from "@/components/Layout"
+import VideoYouTube from "@/components/video-youtube"
+import Video from "@/components/video"
+import Icon from "@/components/icon"
+import Alert from "@/components/alert"
+import DocsImage from "@/components/docs-image"
+import DocsVideo from "@/components/docs-video"
+import Badge from "@/components/badge"
 import {
   GUIDES_PATH,
   allContentFilePaths,
   getToCForMarkdown,
-} from "../../utils/mdxUtils"
-import guidesSidebarJson from "../../data/sidebar.json"
+} from "@/utils/mdxUtils"
+import guidesSidebarJson from "@/data/sidebar.json"
 
 // Custom components/renderers to pass to MDX.
 // Since the MDX files aren't loaded by webpack, they have no knowledge of how
@@ -29,7 +29,7 @@ const components = {
   // It also works with dynamically-imported components, which is especially
   // useful for conditionally loading components for certain routes.
   // See the notes in README.md for more details.
-  //TestComponent: dynamic(() => import('../../components/TestComponent')),
+  //TestComponent: dynamic(() => import('@/components/TestComponent')),
   Head,
   VideoYouTube,
   Video,

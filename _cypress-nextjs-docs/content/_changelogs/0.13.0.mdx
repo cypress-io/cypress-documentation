@@ -1,0 +1,44 @@
+## 0.13.0
+
+_Released 12/9/2015_
+
+**Summary:**
+
+- Though it may not look like much, this upgrade was a long time in the making.
+  There were limitations in the way we were currently handling headless / CI
+  builds which restricted our ability to make updates or fix bugs. Additionally
+  CI runs would randomly crash for no good reason. We decided to split out the
+  headless / CI process into its own independent Chromium application which is
+  now independently controlled, and is much more reliable. This upgrade enables
+  us to handle CI features coming down the pipe and was necessary for moving
+  forward.
+
+**Features:**
+
+- Upgraded `Chromium` for headless and CI runs from `41` to `45`.
+- You will now see better stack traces and errors during `cypress run` / in CI.
+  No more `undefined is not a function` errors.
+- Ported all links to use the new Cypress CDN.
+- [Documentation to CLI](/guides/guides/command-line).
+
+**Bugfixes:**
+
+- New chromium upgrade prevents synchronous XHR freezes.
+- New chromium upgrade fixes situation where extremely long CI runs would
+  sometimes randomly crash.
+- Fixed problem with rewriting content on elements which contained `<svg>`
+  elements.
+
+**Breaking Changes:**
+
+- Temporarily ignoring the `--reporter` option for headless / CI runs. Currently
+  it is locked to the `spec` reporter, which is the default. This will be fixed
+  in the next few patch releases.
+- ~~Accessing `window.history.go()`, `window.history.back()`,
+  `window.history.forward()` will throw an error during `cypress run` / CI. This
+  is a regression that will be fixed - hopefully very soon.~~ This is fixed in
+  [`0.13.3`](#0-13-3)
+- While this new Chromium application passes our internal tests, it may crop up
+  other regressions we aren't aware of. If you're experiencing different
+  behavior in CI vs running locally in Chrome, this may be an indication of
+  these.

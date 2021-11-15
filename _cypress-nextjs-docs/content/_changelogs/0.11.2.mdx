@@ -1,0 +1,13 @@
+## 0.11.2
+
+_Released 09/14/2015_
+
+**Bugfixes:**
+
+- Prevented bug where the assertion message: `expected <x> element to exist`
+  would log over and over again when Cypress retried querying for a DOM element.
+
+**Misc:**
+
+- [`.root()`](/api/commands/root) now outputs its subject when clicking on its
+  command log. Fixes [#55](https://github.com/cypress-io/cypress/issues/55).

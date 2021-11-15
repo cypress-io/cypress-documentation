@@ -1,0 +1,72 @@
+## 3.6.1
+
+_Released 11/08/2019_
+
+**Bugfixes:**
+
+- The Electron browser no longer hangs when testing applications that have a
+  prompt in a `beforeunload` handler. Fixes
+  [#2118](https://github.com/cypress-io/cypress/issues/2118).
+- We fixed a regression in [3.5.0](#3-5-0) where HTTP redirects could cause
+  strange behavior, including cookies not being set as expected, leading to
+  authentication issues and other problems. Fixes
+  [#5436](https://github.com/cypress-io/cypress/issues/5436) and
+  [#5432](https://github.com/cypress-io/cypress/issues/5432).
+- When using [cy.setCookie()](/api/commands/setcookie) with the same `options`
+  Object, Cypress now correctly sets the new cookie instead of the one passed
+  into a previous [cy.setCookie()](/api/commands/setcookie). Fixes
+  [#2701](https://github.com/cypress-io/cypress/issues/2701).
+- We fixed a regression in [3.5.0](#3-5-0) where
+  [cy.clearCookie()](/api/commands/clearcookie) would not act as expected when
+  using certain `baseUrls`. Fixes
+  [#5453](https://github.com/cypress-io/cypress/issues/5453).
+- Cypress no longer crashes with the error
+  `Failed to parse or set cookie named "xxx"` when loading certain websites.
+  Fixes [#4990](https://github.com/cypress-io/cypress/issues/4990).
+- Cypress now sends the expected headers or request body in a
+  [cy.visit()](/api/commands/visit) to an HTTPS URL using the default port, 443.
+  Fixes [#5367](https://github.com/cypress-io/cypress/issues/5367).
+- We fixed a regression in [3.6.0](#3-6-0) where Cypress would crash with
+  `TypeError: Cannot read property 'length' of null` on some network requests.
+  Fixes [#5585](https://github.com/cypress-io/cypress/issues/5585).
+- We fixed a regression in [3.5.0](#3-5-0) that caused the red target to be
+  rendered incorrectly when specifying offset coordinates to
+  [.click()](/api/commands/click). Fixes
+  [#5635](https://github.com/cypress-io/cypress/issues/5635).
+- We fixed a regression in [3.6.0](#3-6-0) that was causing an incorrect element
+  to receive the `click` event during action commands. Fixes
+  [#5578](https://github.com/cypress-io/cypress/issues/5578).
+- We fixed a regression in [3.5.0](#3-5-0) causing text after using modifier
+  keys in [.type()](/api/commands/type) to not be typed. Fixes
+  [#5622](https://github.com/cypress-io/cypress/issues/5622).
+- Elements with `backface-visibility: hidden;` are now accounted for when
+  asserting on the elemtent's visibility. Fixes
+  [#2985](https://github.com/cypress-io/cypress/issues/2985).
+- We fixed a bug where a failed Cypress commands would incorrectly throw
+  `cannot read property 'replace' of undefined` if the error's stack was
+  `undefined`. Fixes [#1669](https://github.com/cypress-io/cypress/issues/1669).
+- The 'Log In' modal within Cypress when setting up a project now correctly
+  closes when manually closed. Fixes
+  [#5631](https://github.com/cypress-io/cypress/issues/5631).
+
+**Misc:**
+
+- We improved the user experience around inspecting events fired during
+  [.click()](/api/commands/click) and [.type()](/api/commands/type) commands
+  within the console. Addresses
+  [#5553](https://github.com/cypress-io/cypress/issues/5553).
+- We increased the timeout when connecting to the "Developer Tools Protocol"
+  from 5 seconds to 20 seconds and also added logging for when the connection
+  takes longer than 5 seconds. Addresses
+  [#5610](https://github.com/cypress-io/cypress/issues/5610).
+- There is no longer a warning about `Promise.defer` appearing in stderr when
+  running with video recording enabled. Addresses
+  [#5611](https://github.com/cypress-io/cypress/issues/5611).
+- Types for [.rightclick()](/api/commands/rightclick) and
+  [.dblclick()](/api/commands/dblclick) have been updated to correctly reflect
+  their accepted options. Addresses
+  [#5617](https://github.com/cypress-io/cypress/issues/5617).
+- We're continuing to make progress in converting our codebase from CoffeeScript
+  to JavaScript. Addresses
+  [#2690](https://github.com/cypress-io/cypress/issues/2690) in
+  [#5556](https://github.com/cypress-io/cypress/pull/5556)

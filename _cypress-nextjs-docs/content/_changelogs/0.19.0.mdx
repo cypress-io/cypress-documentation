@@ -1,0 +1,84 @@
+## 0.19.0
+
+_Released 02/11/2017_
+
+**Notes:**
+
+- We have updated all of the docs related to these changes. The
+  [CI Docs](/guides/continuous-integration/introduction) got a much needed
+  facelift.
+- There is a new docs section related to the
+  [Dashboard](/guides/dashboard/introduction) and the new features.
+
+**Overview:**
+
+- We have officially released our [Dashboard](https://on.cypress.io/dashboard)
+  which is our service that will display recorded runs.
+- This service has now been fully integrated into the Desktop Application. There
+  is a new on-boarding process that helps you setup projects for recording.
+
+**Breaking Changes:**
+
+- We have done our very best to create as little breaking changes as possible.
+- You will need to download a new [cypress-cli](/guides/guides/command-line) -
+  version `0.13.1`.
+- Older CLI versions will continue to work on `0.19.0` except for the
+  [cypress open](/guides/guides/command-line#cypress-open) command - and will we
+  print a warning to nudge you to upgrade.
+- Newer CLI versions will not work on versions of Cypress < `0.19.0` (but we
+  don't know why this would ever even happen).
+
+**Features:**
+
+- There is a new [Dashboard](https://on.cypress.io/dashboard) service that
+  displays your recorded runs.
+- The [Dashboard](https://on.cypress.io/dashboard) enables you to view your
+  recorded runs, manage projects, create organizations, invite users and set
+  permissions.
+- Projects are either **public** with their runs being publicly viewable by
+  anyone, or **private** which restricts their access to only users you've
+  invited. All **existing** projects were set to **private** by default.
+- When you invite users (from the Dashboard) we will **automatically** allow
+  them. This means you can invite all of your teammates (or anyone else). They
+  can start using Cypress without talking to us.
+- We now list all of the recorded runs directly in the Test Runner under a new
+  `Runs` tab. Fixes [#236](https://github.com/cypress-io/cypress/issues/236).
+- Your list of projects in the Test Runner now displays their last recorded run
+  status - passing, failing, pending, running, etc.
+- We've changed the "Config" tab to now be called "Settings". We added two new
+  sections to the "Settings" tab which displays your `projectId` and your Record
+  Key. These sections do a much better job explaining what these are and how you
+  use them.
+- You no longer have to use `cypress get:key` to get your Record Key. We now
+  display this in your "Settings" tab and also in the
+  [Dashboard](https://on.cypress.io/dashboard).
+- Projects will no longer automatically acquire a `projectId` when being added.
+  There is now a very explicit **opt-in** process where you setup your project
+  to record. This should make it much clearer what's going on behind the scenes.
+- [cypress run](/guides/guides/command-line#cypress-run) now behaves likes
+  `cypress ci` previously did and downloads + installs Cypress if it's not
+  already installed.
+- `cypress ci` now works in OSX, and also works in Linux in Desktop flavors
+  (like Ubuntu).
+
+**Misc:**
+
+- [cypress run](/guides/guides/command-line#cypress-run) will now download and
+  install Cypress if it is not already installed.
+- We renamed `CYPRESS_CI_KEY` TO `CYPRESS_RECORD_KEY`. This makes it clearer
+  what this key actually does - and the fact that it can be run anywhere
+  irrespective of CI. We still look for the old named key but will print a
+  warning if we detect it.
+- We print a warning when using an older CLI tool version. Fixes
+  [#424](https://github.com/cypress-io/cypress/issues/424).
+- We've improved many of the error messages related to recording runs. Fixes
+  [#423](https://github.com/cypress-io/cypress/issues/423).
+- `cypress ci` has been deprecated. You now use
+  [`cypress run --record --key <record_key>`](/guides/guides/command-line#cypress-run).
+  The key you used to pass to `cypress ci` is the same key. We've consolidated
+  these commands into just
+  [cypress run](/guides/guides/command-line#cypress-run) which makes it simpler
+  and clearer. Their only difference is that passing `--record` to
+  [cypress run](/guides/guides/command-line#cypress-run) will **record** the
+  build to our Dashboard. Fixes
+  [#417](https://github.com/cypress-io/cypress/issues/417).

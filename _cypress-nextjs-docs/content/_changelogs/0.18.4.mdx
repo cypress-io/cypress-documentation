@@ -1,0 +1,24 @@
+## 0.18.4
+
+_Released 12/28/2016_
+
+**Bugfixes:**
+
+- Prevent [`cy.url()`](/api/commands/url) from accessing the URL during
+  transition phase and throwing an error. Fixes
+  [#356](https://github.com/cypress-io/cypress/issues/356).
+- Stubbed functions now serialize correctly when switching domains on a
+  [`cy.visit()`](/api/commands/visit). Fixes
+  [#354](https://github.com/cypress-io/cypress/issues/354).
+- Fixed a handful of scenarios and edge cases where cookies were not properly
+  synchronized between external requests and the browser. This led to situations
+  where cookies were either duplicated on requests, or were not sent. Fixes
+  [#357](https://github.com/cypress-io/cypress/issues/357) and
+  [#361](https://github.com/cypress-io/cypress/issues/361) and
+  [#362](https://github.com/cypress-io/cypress/issues/362).
+
+**Misc:**
+
+- [`cy.request()`](/api/commands/request) now favors `baseUrl` config over
+  remote origin when you do not pass a fully qualified URL. Fixes
+  [#360](https://github.com/cypress-io/cypress/issues/360).

@@ -1,0 +1,86 @@
+## 5.2.0
+
+_Released 9/15/2020_
+
+**Features:**
+
+- Added the configuration option `includeShadowDom` for enabling shadow DOM
+  querying globally, per-suite, per-test, or programmatically. Addresses
+  [#8442](https://github.com/cypress-io/cypress/issues/8442).
+- Added a `followRedirect` option to request interception with
+  [`cy.route2()`](http), allowing redirects to be followed before continuing to
+  response interception. Addresses
+  [#7967](https://github.com/cypress-io/cypress/issues/7967).
+- Added the capability to specify `delayMs` and `throttleKbps` when stubbing
+  static responses with [`cy.route2()`](http). Addresses
+  [#7661](https://github.com/cypress-io/cypress/issues/7661).
+- Installing Cypress pre-releases no longer requires setting the
+  `CYPRESS_BINARY_INSTALL` environment variable. Addresses
+  [#8482](https://github.com/cypress-io/cypress/issues/8482).
+
+**Performance Improvements:**
+
+- Fixed a performance issue which led to CPU bottlenecking during Cypress runs.
+  Addresses [#8012](https://github.com/cypress-io/cypress/issues/8012) and
+  [#8297](https://github.com/cypress-io/cypress/issues/8297).
+
+**Bugfixes:**
+
+- Fixed an issue where using TypeScript path aliases in the plugins file would
+  error. Addresses [#8555](https://github.com/cypress-io/cypress/issues/8555).
+- Fixed an issue where using `cy.contains()` within a shadow root would not
+  yield the correct element. Addresses
+  [#8494](https://github.com/cypress-io/cypress/issues/8494).
+- Fixed an issue where querying the shadow DOM in a `cy.within()` callback would
+  throw the error `root.getRootNode is not a function`. Addresses
+  [#8478](https://github.com/cypress-io/cypress/issues/8478).
+- Fixed an issue with `cy.type()` `{moveToStart}/{moveToEnd}` special characters
+  moving the cursor to the current line instead of the entire text editable when
+  typing in a `contenteditable` element. Addresses
+  [#8465](https://github.com/cypress-io/cypress/issues/8465).
+- Fixed an issue where typing into a manually-focused number input would prepend
+  the number instead of appending it. Addresses
+  [#7170](https://github.com/cypress-io/cypress/issues/7170).
+- `cy.type()` now fires a `KeyboardEvent` event instead of an `Event` event.
+  Addresses [#6125](https://github.com/cypress-io/cypress/issues/6125) and
+  [#5650](https://github.com/cypress-io/cypress/issues/5650).
+- Fixed long selectors in the selector playground text input overflowing other
+  page elements. Addresses
+  [#8247](https://github.com/cypress-io/cypress/issues/8247) and
+  [#4184](https://github.com/cypress-io/cypress/issues/4184).
+- Fixed an issue where assertions on `cy.getCookie()` would be called twice.
+  Addresses [#6672](https://github.com/cypress-io/cypress/issues/6672).
+- Fixed an issue that caused the "Open in IDE" button on hooks and tests not to
+  appear in Firefox. Addresses
+  [#8257](https://github.com/cypress-io/cypress/issues/8257).
+- Fixed an issue causing Cypress to hang on test retry in run mode with certain
+  assertions. Addresses
+  [#8363](https://github.com/cypress-io/cypress/issues/8363).
+
+**Documentation Changes:**
+
+- Fixed examples of delaying and throttling responses with
+  [`cy.route2()`](http). Addresses
+  [#8489](https://github.com/cypress-io/cypress/issues/8489).
+- Added examples of using a response function with [`cy.route2()`](http).
+  Addresses [#8468](https://github.com/cypress-io/cypress/issues/8468).
+- Removed unmaintained languages. English docs is the only supported language by
+  the Cypress team. We greatly appreciate the contributions from the community
+  for other languages, but these docs are largely stale, unmaintained, and
+  partial. The Cypress team will seek out more scalable docs internalization
+  implementation in the future.
+
+**Misc:**
+
+- The `experimentalShadowDomSupport` configuration flag has been removed. It is
+  no longer necessary to enable shadow DOM testing.
+- Improved the error message when the subject provided to `cy.shadow()` is not a
+  shadow host. Addresses
+  [#8530](https://github.com/cypress-io/cypress/issues/8530).
+- Improved the error message when the Cypress binary is not executable. It now
+  recommends trying to clear the cache and re-install. Addresses
+  [#8397](https://github.com/cypress-io/cypress/issues/8397).
+- Added missing type declarations for the [`cy.route2()`](http) command.
+- Updated the type declaration for `Cypress.Commands.add()`, adding `Promise` to
+  the list of allowed return types. Addresses
+  [#7807](https://github.com/cypress-io/cypress/issues/7807).

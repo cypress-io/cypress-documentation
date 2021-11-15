@@ -1,0 +1,43 @@
+## 6.2.1
+
+_Released 1/4/2021_
+
+**Bugfixes:**
+
+- Test retries, when retrying on several failed tests, will no longer cause
+  hanging during `cypress run`. Fixes
+  [#9040](https://github.com/cypress-io/cypress/issues/9040).
+- `multipart/form-data` is no longer wrongly encoded when using
+  [cy.intercept()](/api/commands/intercept). This should prevent
+  `Unexpected end of multipart data` errors on the back end service where the
+  request was pointing to. Fixes
+  [#9359](https://github.com/cypress-io/cypress/issues/9359).
+- [cy.contains()](/api/commands/contains) no longer throws an error when a
+  single quote is used inside its argument when RegExp. Fixes
+  [#8626](https://github.com/cypress-io/cypress/issues/8626).
+- Passing `capture: 'runner'` to a [cy.screenshot()](/api/commands/screenshot)
+  command inside [.within()](/api/commands/within) now screenshots the entire
+  Test Runner as expected. Fixes
+  [#14253](https://github.com/cypress-io/cypress/issues/14253).
+- [Cypress.dom.isJquery()](/api/cypress-api/dom#Is-jQuery) now always returns a
+  boolean instead of `undefined` sometimes. Fixes
+  [#14278](https://github.com/cypress-io/cypress/issues/14278).
+- `calledOnceWith` and `calledOnceWithExactly` sinon matchers no longer throw an
+  error when used within Cypress. Fixes
+  [#9644](https://github.com/cypress-io/cypress/issues/9644).
+- We now pass `--disable-backgrounding-occluded-windows` as a default flag to
+  Chrome to prevent backgrounding rendering when the Cypress window is occluded.
+  Fixes [#9604](https://github.com/cypress-io/cypress/issues/9604).
+
+**Misc:**
+
+- After login, if a name is undefined on your profile, the Test Runner will show
+  the profile's email and link to instructions to update the name. Addresses
+  [#14288](https://github.com/cypress-io/cypress/issues/14288).
+
+**Dependency Updates:**
+
+- Upgraded `devtools-protocol` from `0.0.734984` to `0.0.839267`. Addressed in
+  [#14353](https://github.com/cypress-io/cypress/issues/14353).
+- Upgraded `electron` from `11.0.3` to `11.1.1`. Addressed in
+  [#14352](https://github.com/cypress-io/cypress/issues/14352).

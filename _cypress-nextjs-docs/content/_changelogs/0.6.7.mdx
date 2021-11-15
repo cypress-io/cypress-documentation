@@ -1,0 +1,40 @@
+## 0.6.7
+
+_Released 06/04/2015_
+
+**Features:**
+
+- When reverting the DOM, associated command elements are now automatically
+  scrolled into view.
+- Hitboxes are now displayed on the screen based on the actual coordinates where
+  an `action command` event took place.
+- Click events now display event information about the `mousedown` / `mouseup` /
+  `click` default action + propagation in the command console.
+- Preventing default action on `mousedown` will no longer give focus as per the
+  spec.
+- Click events are now issued in the exact center of an element (taking into
+  account 2d transforms) and provide the coordinates in the command console and
+  in the actual event
+- Click events now take into account whether the associated element is being
+  covered up by another element, and will retry or fail with an exact error
+  message if the click was unable to be issued due to this reason.
+- Click events will now intelligently provide `focus` to the first focusable
+  element on the stack at the click coordinates, or will give `focus` to the
+  window.
+- Click events will issue the click to the topmost element based on the click
+  coordinates and not necessarily to the element you requested to e clicked
+  (which simulates exactly how a real click works). If this happens it is noted
+  in the command console and provides the `Actual Element Clicked`.
+
+**Bugfixes:**
+
+- When hover over commands element layers (2d transforms like rotation) are now
+  taken into account and displayed correctly.
+- There was a bug when checking / unchecking `:checkbox` where it did not
+  properly receive focus.
+
+**Misc:**
+
+- Click events are now replicated _almost_ identically to the W3C click spec.
+  They should behave for all intents and purposes, identically to real clicks in
+  the browser.

@@ -1,0 +1,9 @@
+## 0.7.2
+
+_Released 06/17/2015_
+
+**Bugfixes:**
+
+- Removed factoring in the total time a test has been running when determining
+  when its command timeout. This fixes a bug where commands down he chain would
+  timeout earlier than their specified `{timeout: num}` option.

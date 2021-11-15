@@ -1,0 +1,22 @@
+## 0.17.10
+
+_Released 11/07/2016_
+
+**Bugfixes:**
+
+- Fixed switching between two different spec files from the desktop app causing
+  `document.domain` to be wrong. Fixes
+  [#276](https://github.com/cypress-io/cypress/issues/276).
+- Fixed inserting the string `null` into [`cy.request()`](/api/commands/request)
+  urls when providing a `baseUrl` in `cypress.json` while origin could not be
+  determined. Fixes [#274](https://github.com/cypress-io/cypress/issues/274).
+- Fixed incorrect error message on reverse visibility assertions. Fixes
+  [#275](https://github.com/cypress-io/cypress/issues/275).
+
+**Misc:**
+
+- We've improved the way we inject content into `<html>` responses by filtering
+  the underlying HTTP request headers. We no longer inject content into
+  templates which were loaded via XHR. Fixes
+  [#257](https://github.com/cypress-io/cypress/issues/257) and
+  [#288](https://github.com/cypress-io/cypress/issues/288).

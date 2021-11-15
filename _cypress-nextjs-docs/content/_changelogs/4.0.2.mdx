@@ -1,0 +1,35 @@
+## 4.0.2
+
+_Released 2/14/2020_
+
+**Bugfixes:**
+
+- We fixed a bug where tests in Firefox would not open on macOS if another
+  instance of Firefox was open. Fixes
+  [#6380](https://github.com/cypress-io/cypress/issues/6380).
+- We fixed a regression in [4.0.0](#4-0-0) where using
+  `.should('not.contain', ...)` chained after a
+  [.contains()](/api/commands/contains) would produce unexpected results. Fixes
+  [#6384](https://github.com/cypress-io/cypress/issues/6384).
+- We fixed a regression in [4.0.0](#4-0-0) where non-top-level `require()`s in
+  tests no longer worked. Fixes
+  [#6403](https://github.com/cypress-io/cypress/issues/6403).
+- Re-running a failed workflow in GitHub Actions now properly generates a new
+  Dashboard run. Fixes
+  [#6450](https://github.com/cypress-io/cypress/issues/6450).
+
+**Misc:**
+
+- We fixed incorrect type definitions for
+  [Cypress.isBrowser](/api/cypress-api/isbrowser). Addresses
+  [#6447](https://github.com/cypress-io/cypress/issues/6447).
+- We improved the error experience when launching a browser fails. Addresses
+  [#6432](https://github.com/cypress-io/cypress/issues/6432).
+- We improved the error experience when visiting the Cypress server outside of a
+  Cypress-launched browser. Addresses
+  [#6435](https://github.com/cypress-io/cypress/issues/6435).
+
+**Dependency Updates**
+
+- Upgraded `@cypress/browserify-preprocessor` from `2.1.1` to `2.1.4`. Addressed
+  in [#6419](https://github.com/cypress-io/cypress/pull/6419).

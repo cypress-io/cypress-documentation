@@ -1,0 +1,9 @@
+## 0.19.3
+
+_Released 06/14/2017_
+
+**Bugfixes:**
+
+- Server's that send `Content-Encoding: br` no longer cause Cypress to fail due
+  to incorrect decoding. Cypress now strips encodings it cannot accept. Fixes
+  [#535](https://github.com/cypress-io/cypress/issues/535).

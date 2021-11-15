@@ -1,0 +1,21 @@
+## 0.11.11
+
+_Released 10/04/2015_
+
+**Bugfixes:**
+
+- Snapshots of [`.type()`](/api/commands/type) and
+  [`.select()`](/api/commands/select) are no longer incorrect due to taking
+  snapshots too early. Fixes
+  [#22](https://github.com/cypress-io/cypress/issues/22).
+- Passing `{force: true}` to [`.blur()`](/api/commands/blur) now logs correctly
+  in the Command Log.
+
+**Misc:**
+
+- Added delays on some tooltips.
+- The URL will now highlight in a yellow background during a revert DOM
+  snapshot.
+- Moved snapshot message to be affixed to the bottom of the remote app in
+  preparation for cycling through multiple snapshots.
+- Cleaned up the URL by removing some unused content.

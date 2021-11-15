@@ -1,0 +1,26 @@
+## 0.6.5
+
+_Released 05/23/2015_
+
+**Features:**
+
+- When Cypress detects a regular HTTP page loading event (where we're leaving
+  the current page and requesting a new one) it will now insert a `loading`
+  command which indicates to the user Cypress has stopped running commands until
+  the new page loads.
+- If for some reason this new page errors Cypress will display the initial 500
+  error messages just like [`cy.visit()`](/api/commands/visit).
+- Cypress now waits `20s` (which matches [`cy.visit()`](/api/commands/visit))
+  for the new page to load instead of `4s` previously.
+
+**Bugfixes:**
+
+- [`.submit()`](/api/commands/submit) will actually submit the form for real
+  now, instead of just firing the submit event. Now it's been upgraded to be
+  able to be canceled or have its returnValue set to false and will not submit
+  the form. Don't ask how I missed this one. I as once a young naive programmer
+  who trusted the DOM not to be the abomination it actually is.
+
+**Misc:**
+
+- No longer send back a 500 message when initial response status code is 4xx.

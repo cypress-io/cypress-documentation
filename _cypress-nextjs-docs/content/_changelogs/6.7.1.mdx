@@ -1,0 +1,13 @@
+## 6.7.1
+
+_Released 3/15/2021_
+
+**Bugfixes:**
+
+- Interacting with an element that requires scrolling within an element with
+  `scroll-behavior: smooth` no longer fails Cypress's actionability check. Fixes
+  [#15453](https://github.com/cypress-io/cypress/issues/15453).
+- A regression in [6.7.0](#6-7-0) has been fixed so that the `projectId` will be
+  written correctly to the `cypress.json` file on initial creation without an
+  extra config object. Fixes
+  [#15497](https://github.com/cypress-io/cypress/issues/15497).

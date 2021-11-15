@@ -1,0 +1,40 @@
+## 3.1.2
+
+_Released 11/18/2018_
+
+**Bugfixes:**
+
+- Fixed a regression caused in `3.1.1` where we attempted to set a property on
+  an invalid cookie sent from a server. Fixes
+  [#2724](https://github.com/cypress-io/cypress/issues/2724).
+- Fixed Cypress not correctly aborting long running connections (such as server
+  sent events) on proxied requests. Fixes
+  [#2612](https://github.com/cypress-io/cypress/issues/2612).
+- Fixed bug where tests were failing due to assertions causing Cypress to
+  accidentally iterate through cross-origin iframes. If you were seeing "random"
+  cross-origin errors, this likely fixes those issues. Fixes
+  [#2784](https://github.com/cypress-io/cypress/issues/2784).
+- Fixed incorrectly setting `charCode` and `keyCode` when using
+  [`.type()`](/api/commands/type) on a few different special characters such as
+  `{`. Fixes [#2105](https://github.com/cypress-io/cypress/issues/2105).
+- Fixed another regression in `3.1.1` where passing `undefined` to a
+  `setTimeout` caused Cypress to error. Fixes
+  [#2719](https://github.com/cypress-io/cypress/issues/2719).
+- Fixed a bug in node core where Cypress would not show up in `Windows` for
+  users on `node >= 11`. Fixes
+  [#2667](https://github.com/cypress-io/cypress/issues/2667).
+- Fixed a bug with trashing assets in linux that caused recursive `.Trash` files
+  to show up. We now have opted to actually `rm -rf` the files in linux because
+  trashing is too inconsistent between linux distros. Fixes
+  [#2742](https://github.com/cypress-io/cypress/issues/2742).
+
+**Misc**
+
+- Added type definitions for `Cypress.moment()`. Fixes
+  [#2746](https://github.com/cypress-io/cypress/issues/2746).
+- We now display better error messages in the CLI when runs exceed billing
+  limits. Fixes [#1689](https://github.com/cypress-io/cypress/issues/1689).
+
+**Dependency Updates**
+
+- Removed `progress` [#2733](https://github.com/cypress-io/cypress/issues/2733).

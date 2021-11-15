@@ -1,0 +1,27 @@
+## 0.13.8
+
+_Released 01/24/2016_
+
+**Features:**
+
+- Added [`cy.reload()`](/api/commands/reload) command which does a full page
+  refresh. This is the same as the user hitting the 'Reload' button.
+  Additionally it matches the same argument signature as
+  `window.location.reload`.
+
+**Bugfixes:**
+
+- Fixed situation where [`cy.viewport()`](/api/commands/viewport) would not
+  restore correctly between tests. Previously this would cause subsequent tests
+  to be issued at the modified `cy.viewport()`. Now viewport is automatically
+  restored to the settings in your `cypress.json` file.
+
+**Misc:**
+
+- Using [`.its()`](/api/commands/its) on a function or
+  [`.invoke()`](/api/commands/invoke) on a property now logs a deprecation
+  warning. In the next major release this will become a full error. It is
+  valuable to make a distinction whether you're operating on a property vs a
+  function, and this change improves overall readability with less confusion.
+- Cypress deprecations and warnings are now prefixed with: `Cypress Warning:` to
+  indicate this message is coming from Cypress

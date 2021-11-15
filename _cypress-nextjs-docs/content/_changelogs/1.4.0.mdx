@@ -1,0 +1,24 @@
+## 1.4.0
+
+_Released 12/19/2017_
+
+**Features:**
+
+- There is now a Search Bar in the Desktop GUI that enables you to filter the
+  list of specs. Helpful for projects with a ton of spec files. Fixes
+  [#1098](https://github.com/cypress-io/cypress/issues/1098).
+
+**Bugfixes:**
+
+- The seeded `example_spec.js` file no longer fails in Windows on the
+  [cy.exec()](/api/commands/exec) test. It now conditionally runs a command
+  appropriate for Windows. Fixes
+  [#1097](https://github.com/cypress-io/cypress/issues/1097).
+- Trying to log in to Cypress no longer causes the app to crash. This area has
+  had many more tests added. Fixes
+  [#1093](https://github.com/cypress-io/cypress/issues/1093).
+- Some minor improvements to TypeScript definitions around
+  [.then()](/api/commands/then). Fixes
+  [#1084](https://github.com/cypress-io/cypress/issues/1084).
+- The Selector Playground now works correctly in the Electron browser. Fixes
+  [#1086](https://github.com/cypress-io/cypress/issues/1086).

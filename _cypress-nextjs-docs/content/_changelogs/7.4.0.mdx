@@ -1,0 +1,55 @@
+## 7.4.0
+
+_Released 05/24/2021_
+
+**Features:**
+
+- Cypress now detects and supports testing in the Chrome Beta browser. Addresses
+  [#16376](https://github.com/cypress-io/cypress/issues/16376).
+- There are new keyboard shortcuts to continue (c) and to go to the next test
+  (n) when the Test Runner is paused via `.pause()` and to toggle auto-scrolling
+  of the Test Runner (a). Addresses
+  [#248](https://github.com/cypress-io/cypress/issues/248).
+
+**Bugfixes:**
+
+- [`cy.request()`](/api/commands/request) can now send binary files in form
+  data. Fixes [#1647](https://github.com/cypress-io/cypress/issues/1647).
+- [`cy.request()`](/api/commands/request) can now send blob data. Fixes
+  [#6178](https://github.com/cypress-io/cypress/issues/6178).
+- Fixed an issue where [`cy.wait()`](/api/commands/wait) could yield the
+  incorrect result when used with [`cy.intercept()`](/api/commands/intercept)
+  and several simultaneous requests. Fixes
+  [#16451](https://github.com/cypress-io/cypress/issues/16451).
+- Improved the way that [`cy.intercept()`](/api/commands/intercept) matchers are
+  displayed in the Command Log when using `RouteMatcher` properties besides
+  `url` and `method`. Fixes
+  [#9403](https://github.com/cypress-io/cypress/issues/9403).
+- [`cy.intercept()`](/api/commands/intercept) argument validation has been
+  improved. Invalid hostnames and extra arguments passed to `cy.intercept()` now
+  result in an error. Addressed in
+  [#16577](https://github.com/cypress-io/cypress/issues/16577).
+- [`cy.screenshot()`](/api/commands/screenshot) no longer incorrectly captures
+  parts of the Test Runner UI during component testing. Fixes
+  [#16543](https://github.com/cypress-io/cypress/issues/16543).
+- Spec files that containing spaces in the path will now properly open during
+  `cypress open-ct`. Fixes
+  [#16278](https://github.com/cypress-io/cypress/issues/16278).
+- Cypress now correctly uses the `componentFolder` and `testFiles` values from
+  returned from plugins in the component testing runner. Fixes
+  [#16424](https://github.com/cypress-io/cypress/issues/16424).
+- Video recordings in Chrome, Chromium, and Electron browsers will no longer
+  drop frames, with the frequency increasing along with the length of the video.
+  Fixes [#16648](https://github.com/cypress-io/cypress/issues/16648).
+- Tests located outside of the `projectRoot` will now open in IDE and generate
+  studio commands when saved. Fixes
+  [#16255](https://github.com/cypress-io/cypress/issues/16255).
+- `config` in the plugins file will now display in alphabetical order. Fixes
+  [#16564](https://github.com/cypress-io/cypress/issues/16564).
+
+**Dependency Updates:**
+
+- Upgraded `dependency-tree` from `7.0.2` to `8.1.0`. Addressed in
+  [#16464](https://github.com/cypress-io/cypress/issues/16464).
+- Upgraded `extract-zip` from `1.7.0` to `2.0.1`. Fixes
+  [#6896](https://github.com/cypress-io/cypress/issues/6896)

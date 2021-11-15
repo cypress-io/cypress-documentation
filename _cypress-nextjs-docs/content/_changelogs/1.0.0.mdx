@@ -1,0 +1,57 @@
+## 1.0.0
+
+_Released 10/09/2017_
+
+**Summary:**
+
+- `1.0.0` marks our transition out of a **private** beta and into a **public**
+  beta. We've lifted all the restrictions for using Cypress. It is now
+  accessible to everyone. Until we are out of beta, the
+  [Dashboard Service](/guides/dashboard/introduction) will continue to be free.
+- We will continue to follow `semver` from this point on (and also a bit more
+  rigorously).
+- Cypress is now [open source](https://github.com/cypress-io/cypress)! This
+  project is licensed under the terms of the
+  [MIT License](https://github.com/cypress-io/cypress/blob/develop/LICENSE.md).
+- We have a [Contributing Guideline](https://on.cypress.io/contributing) to help
+  contributors get started as well as
+  [issues labeled `first-timers-only`](https://github.com/cypress-io/cypress/labels/first-timers-only)
+  for those wanting to contribute right away.
+- You can now use the Test Runner application without logging in. Some areas of
+  the application still require logging in through GitHub, like the 'Runs' tab
+  and viewing the project's 'Record Key'. The only places where login is
+  required is when it interacts with our external servers. Naturally these
+  places are optional and will not affect the local test writing + running
+  experience.
+- We've removed the requirement of filling out an early adopter form and
+  approval for logging in with GitHub to Cypress.
+- [www.cypress.io](https://www.cypress.io) has an all new design to help new
+  visitors get started quickly and understand our future pricing more clearly.
+- We are still updating the docs to reflect the `1.0.0` release.
+
+**Features:**
+
+- Windows is now supported. We have been running it successfully on EC2 and all
+  of our example projects are also running in CI with AppVeyor. It is still
+  super beta (we're aware of a couple issues already) and we're still updating
+  our own infrastructure to manage and test it as comprehensively as we do OSX
+  and Linux. We are only building a 32bit version of Windows, but will soon be
+  building a 64bit as well. As of today the Windows binary is about 2x the size
+  of what it will be. Unzipping takes a long time, we are sorry. Fixes
+  [#74](https://github.com/cypress-io/cypress/issues/74) and
+  [#444](https://github.com/cypress-io/cypress/issues/444).
+
+**Misc:**
+
+- Added the `Beta` flag everywhere (since we are still technically in beta).
+- Reduced the frequency the app checked for updates. Fixes
+  [#713](https://github.com/cypress-io/cypress/issues/713).
+- The CLI now sends `arch` parameter to the download server so we can build and
+  serve multiple binaries for Windows + Linux.
+
+**Documentation Changes:**
+
+- [Updated "Installing Cypress"](/guides/getting-started/installing-cypress)
+- [Updated "Writing your First Test"](/guides/getting-started/writing-your-first-test)
+- Added a 10 minute Getting Started video that
+  [Andrew Van Slaars](https://github.com/avanslaars) created.

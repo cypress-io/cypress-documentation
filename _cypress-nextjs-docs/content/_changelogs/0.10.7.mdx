@@ -1,0 +1,14 @@
+## 0.10.7
+
+_Released 08/16/2015_
+
+**Features:**
+
+- `port` can now be specified as a CLI argument and will override any values
+  stored in `cypress.json`.
+
+**Misc:**
+
+- When running through the CLI, Cypress will now display an error if the
+  server's port is currently in use. Previously this would not output an error
+  and the process would just hang.
