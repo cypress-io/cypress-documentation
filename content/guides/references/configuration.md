@@ -379,7 +379,7 @@ it(name, config, fn)
 specify(name, config, fn)
 ```
 
-##### Suite-specific configuration
+##### Suite configuration
 
 If you want to target a suite of tests to run or be excluded when run in a specific browser, you can override
 the `browser` configuration within the suite configuration. The `browser` option accepts the same arguments as
@@ -401,6 +401,7 @@ describe(
     it('should redirect unauthenticated user to sign-in page', () => {
       // ...
     })
+
     it('allows user to login', () => {
       // ...
     })
@@ -408,7 +409,7 @@ describe(
 )
 ```
 
-##### Test-specific configuration
+##### Single test configuration
 
 If you want to target a test to run or be excluded when run in a specific
 browser, you can override the `browser` configuration within the test
