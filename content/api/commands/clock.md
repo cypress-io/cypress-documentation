@@ -236,7 +236,7 @@ not override the time functions of any `iframe` embedded on the page.
 
 ### Behavior
 
-#### clock behavior before<br />`cy.visit()` or `mount(<MyComponent />)`
+#### clock behavior before `cy.visit()`
 
 If you call `cy.clock()` before visiting a page with
 [`cy.visit()`](/api/commands/visit), the page's native global functions will be
@@ -245,10 +245,12 @@ overridden on window load, before any of your app code runs. So even if
 via [`cy.tick()`](/api/commands/tick). This also applies if, during the course
 of a test, the page under test is reloaded or changed.
 
-Using the `mount` command in a Cypress Component Test will render your component
-but does not affect the behavior of the page or window object. This means you
-can call `cy.clock()` before `mount(<MyComponent />)` and then test the
-component against any changes you've made to the yielded `clock` object.
+#### clock behavior before `mount()`
+
+Using the `mount()` command in a Cypress Component Test will render your
+component but does not affect the behavior of the page or window object. This
+means you can `mount` directly after calling `cy.clock()` to test the component
+against any changes you've made to the yielded clock object.
 
 ## Rules
 
