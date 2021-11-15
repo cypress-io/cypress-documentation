@@ -332,7 +332,7 @@ You can
 
 ## Test-time overrides
 
-We provide two options for override the configuration while your test are running, `Cypress.config()` and
+We provide two options to override the configuration while your test are running, `Cypress.config()` and
 suite-specific or test-specific configuration overrides.
 
 <Icon name="exclamation-triangle" color="red"></Icon> **Note:** Some
@@ -366,7 +366,7 @@ You can also override configuration values within your test using
 
 
 This changes the configuration _for the remaining execution of the current spec file_.
-The values will reset to the previous default values after spec has complete.
+The values will reset to the previous default values after the spec has complete.
 
 
 ```javascript

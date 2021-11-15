@@ -156,22 +156,21 @@ file, using test configuration will only change configuration values during the
 suite or test where they are set. The values will then reset to the previous
 default values after the suite or test is complete.
 
-See the full guide on [test-time configuration](/api/cypress-api/config#Test-time-overrides).
+See the full guide on [test-time configuration](/guides/references/configuration#Test-time-overrides).
 
 ## `Cypress.config()` executes Synchronously
 
 It's important to note that `Cypress.config()` executes synchronously and will not wait for the Cypress commands above it to execute.
-If you need to update your configuration mid-test, be sure to either chain the command the
-[asynchronously Cypress command](/guides/core-concepts/introduction-to-cypress#Commands-Are-Asynchronous) before it or wrap execute it with
-the `cy.then` Cypress command to correctly queue.
+If you need to update your configuration mid-test, be sure to either chain the
+[asynchronously Cypress command](/guides/core-concepts/introduction-to-cypress#Commands-Are-Asynchronous) before it.
 
 ```javascript
 it('using cy.then', () => {
   cy.visit('/my-test_page')
   cy.click('#download-html')
-  cy.then(() => {
-    Cypress.config('baseUrl', 'null')
-  })
+    .then(() => {
+      Cypress.config('baseUrl', 'null')
+    })
   cy.visit('/downloads/contents.html')
 })
 ```
