@@ -5,7 +5,7 @@ title: Cypress.testingType
 `Cypress.testingType` returns the current testing type, determined by the Test
 Runner chosen to run. The `Cypress.testingType` returns `e2e` for Cypress Test
 Runner `integration` tests, or `component` for experimental
-[Component Testing](guides/component-testing/introduction).
+[Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing).
 
 ## Syntax
 

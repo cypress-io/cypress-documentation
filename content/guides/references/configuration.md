@@ -292,7 +292,8 @@ See the [Command Line](/guides/guides/command-line) guide for more examples.
 
 In addition to setting [Runner Specific Options](#Runner-Specific-Options), you
 can override other configuration options for either the E2E or
-[Component Testing](/guides/component-testing/introduction/) runners.
+[Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing)
+runners.
 
 For example:
 
@@ -577,7 +578,7 @@ as the second argument.
 :::
 
 See the
-[component testing framework configuration guide](/guides/component-testing/framework-configuration)
+[component testing framework configuration guide](/guides/getting-started/component-framework-configuration)
 for specific examples.
 
 ### firefoxGcInterval
