@@ -1,6 +1,14 @@
 {
   "courses": [
     {
+      "title": "Test network edge cases with .intercept() command in Cypress",
+      "url": "https://egghead.io/courses/test-network-edge-cases-with-cy-intercept-command-in-cypress-0fd94c68",
+      "author": "Filip Hric",
+      "authorTwitter": "filip_hric",
+      "sourceName": "egghead.io",
+      "sourceUrl": "https://egghead.io"
+    },
+    {
       "title": "Master Cypress in 15 minutes a day",
       "url": "https://www.udemy.com/course/master-cypress-in-15-minutes-a-day/?referralCode=ABCA60A105F514D5A413",
       "author": "Maurice de Beijer",
