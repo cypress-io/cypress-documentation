@@ -2,7 +2,9 @@
 title: clock
 ---
 
-`cy.clock()` overrides native global functions related to time allowing them to be controlled synchronously via [`cy.tick()`](/api/commands/tick) or the yielded `clock` object. This includes controlling:
+`cy.clock()` overrides native global functions related to time allowing them to
+be controlled synchronously via [`cy.tick()`](/api/commands/tick) or the yielded
+`clock` object. This includes controlling:
 
 - `setTimeout`
 - `clearTimeout`
@@ -10,7 +12,9 @@ title: clock
 - `clearInterval`
 - `Date` Objects
 
-The clock starts at the unix epoch (timestamp of 0). This means that when you instantiate `new Date` in your application, it will have a time of `January 1st, 1970`.
+The clock starts at the unix epoch (timestamp of 0). This means that when you
+instantiate `new Date` in your application, it will have a time of
+`January 1st, 1970`.
 
 ## Syntax
 
@@ -55,13 +59,16 @@ Pass in an options object to change the default behavior of `cy.clock()`.
 
 - **`clock.tick(milliseconds)`**
 
-  Move the clock the specified number of `milliseconds`. Any timers within the affected range of time will be called.
+  Move the clock the specified number of `milliseconds`. Any timers within the
+  affected range of time will be called.
 
 - **`clock.restore()`**
 
-  Restore all overridden native functions. This is automatically called between tests, so should not generally be needed.
+  Restore all overridden native functions. This is automatically called between
+  tests, so should not generally be needed.
 
-You can also access the `clock` object via `this.clock` in a [`.then()`](/api/commands/then) callback.
+You can also access the `clock` object via `this.clock` in a
+[`.then()`](/api/commands/then) callback.
 
 ## Examples
 
@@ -89,7 +96,8 @@ cy.get('#seconds-elapsed').should('have.text', '2 seconds')
 
 #### Access the clock object to synchronously move time
 
-In most cases, it's easier to use [`cy.tick()`](/api/commands/tick) to move time, but you can also use the `clock` object yielded by `cy.clock()`.
+In most cases, it's easier to use [`cy.tick()`](/api/commands/tick) to move
+time, but you can also use the `clock` object yielded by `cy.clock()`.
 
 ```javascript
 cy.clock().then((clock) => {
@@ -107,7 +115,8 @@ cy.clock().then((clock) => {
 })
 ```
 
-The clock object is also available via `this.clock` in any [`.then()`](/api/commands/then) callback.
+The clock object is also available via `this.clock` in any
+[`.then()`](/api/commands/then) callback.
 
 ```javascript
 cy.clock()
@@ -119,7 +128,9 @@ cy.get('form').then(($form) => {
 
 #### Access the clock object to restore native functions
 
-In general, it should not be necessary to manually restore the native functions that `cy.clock()` overrides since this is done automatically between tests. But if you need to, the `clock` object yield has a `.restore()` method.
+In general, it should not be necessary to manually restore the native functions
+that `cy.clock()` overrides since this is done automatically between tests. But
+if you need to, the `clock` object yield has a `.restore()` method.
 
 ```javascript
 cy.clock().then((clock) => {
@@ -158,13 +169,15 @@ cy.get('#date').contains('2017-04-14')
 
 #### Specify which functions to override
 
-This example below will only override `setTimeout` and `clearTimeout` and leave the other time-related functions as they are.
+This example below will only override `setTimeout` and `clearTimeout` and leave
+the other time-related functions as they are.
 
 ```javascript
 cy.clock(null, ['setTimeout', 'clearTimeout'])
 ```
 
-Note that you must specify `Date` in order to override the current datetime. The example below affects the current datetime without affecting scheduled timers.
+Note that you must specify `Date` in order to override the current datetime. The
+example below affects the current datetime without affecting scheduled timers.
 
 ```javascript
 cy.clock(Date.UTC(2018, 10, 30), ['Date'])
@@ -180,7 +193,9 @@ cy.clock(Date.UTC(2018, 10, 30), ['Date'])
 
 ### Restore clock
 
-You can restore the clock and allow your application to resume normally without manipulating native global functions related to time. This is automatically called between tests.
+You can restore the clock and allow your application to resume normally without
+manipulating native global functions related to time. This is automatically
+called between tests.
 
 ```javascript
 cy.clock()
@@ -196,7 +211,8 @@ cy.clock().then((clock) => {
 // more test code here
 ```
 
-You could also restore by using [.invoke()](/api/commands/invoke) to invoke the `restore` function.
+You could also restore by using [.invoke()](/api/commands/invoke) to invoke the
+`restore` function.
 
 ```js
 cy.clock().invoke('restore')
@@ -208,13 +224,19 @@ cy.clock().invoke('restore')
 
 #### iframes not supported
 
-Note that `cy.clock()` only applies to the `top` window on a web page. It will not override the time functions of any `iframe` embedded on the page.
+Note that `cy.clock()` only applies to the `top` window on a web page. It will
+not override the time functions of any `iframe` embedded on the page.
 
 ### Behavior
 
 #### clock behavior before `cy.visit()`
 
-If you call `cy.clock()` before visiting a page with [`cy.visit()`](/api/commands/visit), the page's native global functions will be overridden on window load, before any of your app code runs, so even if `setTimeout`, for example, is called on page load, it can still be controlled via [`cy.tick()`](/api/commands/tick). This also applies if, during the course of a test, the page under test is reloaded or changed.
+If you call `cy.clock()` before visiting a page with
+[`cy.visit()`](/api/commands/visit), the page's native global functions will be
+overridden on window load, before any of your app code runs, so even if
+`setTimeout`, for example, is called on page load, it can still be controlled
+via [`cy.tick()`](/api/commands/tick). This also applies if, during the course
+of a test, the page under test is reloaded or changed.
 
 ## Rules
 
@@ -224,7 +246,9 @@ If you call `cy.clock()` before visiting a page with [`cy.visit()`](/api/command
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.clock()` is a utility command.</li><li>`cy.clock()` will not run assertions. Assertions will pass through as if this command did not exist.</li></List>
+<List><li>`cy.clock()` is a utility command.</li><li>`cy.clock()` will not run
+assertions. Assertions will pass through as if this command did not
+exist.</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
@@ -243,7 +267,8 @@ The command above will display in the Command Log as:
 
 <DocsImage src="/img/api/clock/clock-displays-in-command-log.png" alt="Command Log clock" ></DocsImage>
 
-When clicking on the `clock` command within the command log, the console outputs the following:
+When clicking on the `clock` command within the command log, the console outputs
+the following:
 
 <DocsImage src="/img/api/clock/clock-displays-methods-replaced-in-console.png" alt="console.log clock command" ></DocsImage>
 

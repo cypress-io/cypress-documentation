@@ -28,9 +28,12 @@ cy.fixture('logo.png').then((logo) => {
 
 **<Icon name="angle-right"></Icon> filePath** **_(String)_**
 
-A path to a file within the [`fixturesFolder`](/guides/references/configuration#Folders-Files) , which defaults to `cypress/fixtures`.
+A path to a file within the
+[`fixturesFolder`](/guides/references/configuration#Folders-Files) , which
+defaults to `cypress/fixtures`.
 
-You can nest fixtures within folders and reference them by defining the path from the fixturesFolder:
+You can nest fixtures within folders and reference them by defining the path
+from the fixturesFolder:
 
 ```javascript
 cy.fixture('users/admin.json') // Get data from {fixturesFolder}/users/admin.json
@@ -38,19 +41,23 @@ cy.fixture('users/admin.json') // Get data from {fixturesFolder}/users/admin.jso
 
 **<Icon name="angle-right"></Icon> encoding** **_(String)_**
 
-The encoding to be used when reading the file. The following encodings are supported:
+The encoding to be used when reading the file. The following encodings are
+supported:
 
-- `ascii`
-- `base64`
-- `binary`
-- `hex`
-- `latin1`
-- `utf8`
-- `utf-8`
-- `ucs2`
-- `ucs-2`
-- `utf16le`
-- `utf-16le`
+- `'ascii'`
+- `'base64'`
+- `'binary'`
+- `'hex'`
+- `'latin1'`
+- `'utf8'`
+- `'utf-8'`
+- `'ucs2'`
+- `'ucs-2'`
+- `'utf16le'`
+- `'utf-16le'`
+- `null`
+
+Using `null` explicitly will return the fixture as a `Buffer`, regardless of file extension.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -62,7 +69,8 @@ Pass in an options object to change the default behavior of `cy.fixture()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-`cy.fixture()` yields the contents of the file. Formatting is determined by its file extension.
+`cy.fixture()` yields the contents of the file. Formatting is determined by its
+file extension.
 
 ## Examples
 
@@ -76,7 +84,10 @@ cy.fixture('users.json').as('usersData')
 
 #### Omit the fixture file's extension
 
-When no extension is passed to `cy.fixture()`, Cypress will search for files with the specified name within the [`fixturesFolder`](/guides/references/configuration#Folders-Files) (which defaults to `cypress/fixtures`) and resolve the first one.
+When no extension is passed to `cy.fixture()`, Cypress will search for files
+with the specified name within the
+[`fixturesFolder`](/guides/references/configuration#Folders-Files) (which
+defaults to `cypress/fixtures`) and resolve the first one.
 
 ```javascript
 cy.fixture('admin').as('adminJSON')
@@ -100,7 +111,8 @@ The example above would resolve in the following order:
 
 #### Use import statement
 
-If you are loading a JSON fixture, you can simply use the `import` statement and let the bundler load it:
+If you are loading a JSON fixture, you can simply use the `import` statement and
+let the bundler load it:
 
 ```js
 // cypress/integration/spec.js
@@ -114,7 +126,7 @@ it('loads the same object', () => {
 
 ### Images
 
-#### Image fixtures are sent as `base64`
+#### Image fixtures are sent as `base64` by default
 
 ```javascript
 cy.fixture('images/logo.png').then((logo) => {
@@ -127,10 +139,10 @@ cy.fixture('images/logo.png').then((logo) => {
 #### Change encoding of Image fixture
 
 ```javascript
-cy.fixture('images/logo.png', 'binary').then((logo) => {
-  // logo will be encoded as binary
+cy.fixture('images/logo.png', null).then((logo) => {
+  // logo will be read as a buffer
   // and should look something like this:
-  // 000000000000000000000000000000000000000000...
+  // Buffer([0, 0, ...])
 })
 ```
 
@@ -185,7 +197,9 @@ cy.wait('@getUser').then(({ request }) => {
 
 #### Using the `fixture` `StaticResponse` property
 
-Fixtures can also be referenced directly without using the `.fixture()` command by using the special property `fixture` on the [`cy.intercept()`](/api/commands/intercept) `StaticResponse` object.
+Fixtures can also be referenced directly without using the `.fixture()` command
+by using the special property `fixture` on the
+[`cy.intercept()`](/api/commands/intercept) `StaticResponse` object.
 
 ```javascript
 cy.intercept('GET', '/users/**', { fixture: 'users' })
@@ -195,7 +209,8 @@ cy.intercept('GET', '/users/**', { fixture: 'users' })
 
 #### Automated File Validation
 
-Cypress automatically validates your fixtures. If your `.json`, `.js`, or `.coffee` files contain syntax errors, they will be shown in the Command Log.
+Cypress automatically validates your fixtures. If your `.json`, `.js`, or
+`.coffee` files contain syntax errors, they will be shown in the Command Log.
 
 ### Encoding
 
@@ -217,11 +232,15 @@ Cypress automatically determines the encoding for the following file types:
 - `.tiff`
 - `.zip`
 
-For other types of files, they will be read as `utf8` by default, unless specified in the second argument of `cy.fixture()`.
+For other types of files, they will be read as `utf8` by default, unless
+specified in the second argument of `cy.fixture()`. You can specify `null`
+as the encoding in order to read the file as a `Buffer` instead.
 
 ### `this` context
 
-If you store and access the fixture data using `this` test context object, make sure to use `function () { ... }` callbacks. Otherwise the test engine will NOT have `this` pointing at the test context.
+If you store and access the fixture data using `this` test context object, make
+sure to use `function () { ... }` callbacks. Otherwise the test engine will NOT
+have `this` pointing at the test context.
 
 ```javascript
 describe('User page', () => {
@@ -243,9 +262,15 @@ describe('User page', () => {
 
 ### Loaded just once
 
-Please keep in mind that fixture files are assumed to be unchanged during the test, and thus the Test Runner loads them just once. Even if you overwrite the fixture file itself, the already loaded fixture data remains the same.
+Please keep in mind that fixture files are assumed to be unchanged during the
+test, and thus the Test Runner loads them just once. Even if you overwrite the
+fixture file itself, the already loaded fixture data remains the same.
 
-For example, if you want to reply to a network request with different object, the following **will not work**:
+If you wish to dynamically change the contents of a file during your tests,
+consider [`cy.readFile()`](/api/commands/readFile) instead.
+
+For example, if you want to reply to a network request with different object,
+the following **will not work**:
 
 ```js
 // 🚨 DOES NOT WORK
@@ -261,7 +286,8 @@ cy.wait('@todo').then(() => {
 // from the todo.json file and NOT { "title": "New data" }
 ```
 
-In this situation, avoid using the fixture file and instead respond to the network request with the object
+In this situation, avoid using the fixture file and instead respond to the
+network request with the object
 
 ```js
 // ✅ RESPOND WITH OBJECT
@@ -287,7 +313,8 @@ cy.fixture('todo.json').then((todo) => {
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.fixture()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`cy.fixture()` will only run assertions you have chained once, and
+will not [retry](/guides/core-concepts/retry-ability).</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
@@ -295,7 +322,9 @@ cy.fixture('todo.json').then((todo) => {
 
 <Alert type="warning">
 
-Because `cy.fixture()` is asynchronous it is technically possible for there to be a timeout while talking to the internal Cypress automation APIs. But for practical purposes it should never happen.
+Because `cy.fixture()` is asynchronous it is technically possible for there to
+be a timeout while talking to the internal Cypress automation APIs. But for
+practical purposes it should never happen.
 
 </Alert>
 
@@ -308,6 +337,10 @@ Because `cy.fixture()` is asynchronous it is technically possible for there to b
 - [Guide: Variables and Aliases](/guides/core-concepts/variables-and-aliases)
 - [`cy.intercept()`](/api/commands/intercept)
 - [`.then()`](/api/commands/then)
+- [`.readFile()`](/api/commands/readFile) for a similar command without caching and with builtin retryability
 - [Recipe: Bootstrapping App Test Data](/examples/examples/recipes#Server-Communication)
-- [Fixtures](https://github.com/cypress-io/testing-workshop-cypress#fixtures) section of the Cypress Testing Workshop
-- [Blog: Load Fixtures from Cypress Custom Commands](https://glebbahmutov.com/blog/fixtures-in-custom-commands/) explains how to load or import fixtures to be used in the Cypress custom commands.
+- [Fixtures](https://github.com/cypress-io/testing-workshop-cypress#fixtures)
+  section of the Cypress Testing Workshop
+- [Blog: Load Fixtures from Cypress Custom Commands](https://glebbahmutov.com/blog/fixtures-in-custom-commands/)
+  explains how to load or import fixtures to be used in the Cypress custom
+  commands.

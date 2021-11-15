@@ -2,11 +2,15 @@
 title: TypeScript
 ---
 
-Cypress ships with [official type declarations](https://github.com/cypress-io/cypress/tree/develop/cli/types) for [TypeScript](https://www.typescriptlang.org/). This allows you to write your tests in TypeScript.
+Cypress ships with
+[official type declarations](https://github.com/cypress-io/cypress/tree/develop/cli/types)
+for [TypeScript](https://www.typescriptlang.org/). This allows you to write your
+tests in TypeScript.
 
 ### Install TypeScript
 
-You'll need to have TypeScript 3.4+ installed within your project to have TypeScript support within Cypress.
+You'll need to have TypeScript 3.4+ installed within your project to have
+TypeScript support within Cypress.
 
 #### With npm
 
@@ -22,11 +26,22 @@ yarn add --dev typescript
 
 ### Set up your dev environment
 
-Please refer to your code editor in [TypeScript's Editor Support doc](https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support) and follow the instructions for your IDE to get TypeScript support and [intelligent code completion](/guides/tooling/IDE-integration#Intelligent-Code-Completion) configured in your developer environment before continuing. TypeScript support is built in for [Visual Studio Code](https://code.visualstudio.com/), [Visual Studio](https://www.visualstudio.com/), and [WebStorm](https://www.jetbrains.com/webstorm/) - all other editors require extra setup.
+Please refer to your code editor in
+[TypeScript's Editor Support doc](https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support)
+and follow the instructions for your IDE to get TypeScript support and
+[intelligent code completion](/guides/tooling/IDE-integration#Intelligent-Code-Completion)
+configured in your developer environment before continuing. TypeScript support
+is built in for [Visual Studio Code](https://code.visualstudio.com/),
+[Visual Studio](https://www.visualstudio.com/), and
+[WebStorm](https://www.jetbrains.com/webstorm/) - all other editors require
+extra setup.
 
 ### Configure tsconfig.json
 
-We recommend the following configuration in a [`tsconfig.json`](http://www.typescriptlang.org/docs/handbook/tsconfig-json.html) inside your [`cypress` folder](/guides/core-concepts/writing-and-organizing-tests#Folder-Structure).
+We recommend the following configuration in a
+[`tsconfig.json`](http://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
+inside your
+[`cypress` folder](/guides/core-concepts/writing-and-organizing-tests#Folder-Structure).
 
 ```json
 {
@@ -39,11 +54,18 @@ We recommend the following configuration in a [`tsconfig.json`](http://www.types
 }
 ```
 
-The `"types"` will tell the TypeScript compiler to only include type definitions from Cypress. This will address instances where the project also uses `@types/chai` or `@types/jquery`. Since [Chai](/guides/references/bundled-tools#Chai) and [jQuery](/guides/references/bundled-tools#Other-Library-Utilities) are namespaces (globals), incompatible versions will cause the package manager (`yarn` or `npm`) to nest and include multiple definitions and cause conflicts.
+The `"types"` will tell the TypeScript compiler to only include type definitions
+from Cypress. This will address instances where the project also uses
+`@types/chai` or `@types/jquery`. Since
+[Chai](/guides/references/bundled-tools#Chai) and
+[jQuery](/guides/references/bundled-tools#Other-Library-Utilities) are
+namespaces (globals), incompatible versions will cause the package manager
+(`yarn` or `npm`) to nest and include multiple definitions and cause conflicts.
 
 <Alert type="warning">
 
-You may have to restart your IDE's TypeScript server if the setup above does not appear to work. For example:
+You may have to restart your IDE's TypeScript server if the setup above does not
+appear to work. For example:
 
 VS Code (within a .ts or .js file):
 
@@ -56,9 +78,11 @@ If that does not work, try restarting the IDE.
 
 ### Types for custom commands
 
-When adding [custom commands](/api/cypress-api/custom-commands) to the `cy` object, you can manually add their types to avoid TypeScript errors.
+When adding [custom commands](/api/cypress-api/custom-commands) to the `cy`
+object, you can manually add their types to avoid TypeScript errors.
 
-For example if you add the command `cy.dataCy` into your [supportFile](/guides/references/configuration#Folders-Files) like this:
+For example if you add the command `cy.dataCy` into your
+[supportFile](/guides/references/configuration#Folders-Files) like this:
 
 ```typescript
 // cypress/support/index.ts
@@ -67,7 +91,9 @@ Cypress.Commands.add('dataCy', (value) => {
 })
 ```
 
-Then you can add the `dataCy` command to the global Cypress Chainable interface (so called because commands are chained together) to your `cypress/support/index.ts` file.
+Then you can add the `dataCy` command to the global Cypress Chainable interface
+(so called because commands are chained together) to your
+`cypress/support/index.ts` file.
 
 ```typescript
 // in cypress/support/index.ts
@@ -87,7 +113,8 @@ declare namespace Cypress {
 
 <Alert type="info">
 
-A nice detailed JSDoc comment above the method type will be really appreciated by any users of your custom command.
+A nice detailed JSDoc comment above the method type will be really appreciated
+by any users of your custom command.
 
 </Alert>
 
@@ -105,18 +132,29 @@ it('works', () => {
 
 #### Examples:
 
-- Find [the standalone example](https://github.com/cypress-io/add-cypress-custom-command-in-typescript).
-- See [Adding Custom Commands](https://github.com/cypress-io/cypress-example-recipes#fundamentals) example recipe.
-- You can find an example with custom commands written in TypeScript in [omerose/cypress-support](https://github.com/omerose/cypress-support) repo.
-- Example project [cypress-example-todomvc custom commands](https://github.com/cypress-io/cypress-example-todomvc#custom-commands) uses custom commands to avoid boilerplate code.
+- Find
+  [the standalone example](https://github.com/cypress-io/add-cypress-custom-command-in-typescript).
+- See
+  [Adding Custom Commands](https://github.com/cypress-io/cypress-example-recipes#fundamentals)
+  example recipe.
+- You can find an example with custom commands written in TypeScript in
+  [omerose/cypress-support](https://github.com/omerose/cypress-support) repo.
+- Example project
+  [cypress-example-todomvc custom commands](https://github.com/cypress-io/cypress-example-todomvc#custom-commands)
+  uses custom commands to avoid boilerplate code.
 
 ### Types for custom assertions
 
-If you extend Cypress assertions, you can extend the assertion types to make the TypeScript compiler understand the new methods. See the [Recipe: Adding Chai Assertions](/examples/examples/recipes#Fundamentals) for instructions.
+If you extend Cypress assertions, you can extend the assertion types to make the
+TypeScript compiler understand the new methods. See the
+[Recipe: Adding Chai Assertions](/examples/examples/recipes#Fundamentals) for
+instructions.
 
 ### Types for plugins
 
-You can utilize Cypress's type declarations in your [plugins file](/guides/tooling/plugins-guide) by annotating it like the following:
+You can utilize Cypress's type declarations in your
+[plugins file](/guides/tooling/plugins-guide) by annotating it like the
+following:
 
 ```javascript
 // cypress/plugins/index.ts
@@ -131,10 +169,20 @@ module.exports = (on, config) => {}
 
 ### Clashing types with Jest
 
-If you are using both Jest and Cypress in the same project, the TypeScript types registered globally by the two test runners can clash. For example, both Jest and Cypress provide the clashing types for the `describe` and `it` functions. Both Jest and Expect (bundled inside Cypress) provide the clashing types for the `expect` assertion, etc. There are two solutions to disentangle the types:
+If you are using both Jest and Cypress in the same project, the TypeScript types
+registered globally by the two test runners can clash. For example, both Jest
+and Cypress provide the clashing types for the `describe` and `it` functions.
+Both Jest and Expect (bundled inside Cypress) provide the clashing types for the
+`expect` assertion, etc. There are two solutions to disentangle the types:
 
-1. Configure a separate `tsconfig.json` for E2E tests. See our example [cypress-io/cypress-and-jest-typescript-example](https://github.com/cypress-io/cypress-and-jest-typescript-example) repo.
-2. Remove Cypress global variables by using NPM package [local-cypress](https://github.com/bahmutov/local-cypress). Read the blog post [How to Avoid Using Global Cypress Variables](https://glebbahmutov.com/blog/local-cypress/) for details.
+1. Configure a separate `tsconfig.json` for E2E tests. See our example
+   [cypress-io/cypress-and-jest-typescript-example](https://github.com/cypress-io/cypress-and-jest-typescript-example)
+   repo.
+2. Remove Cypress global variables by using NPM package
+   [local-cypress](https://github.com/bahmutov/local-cypress). Read the blog
+   post
+   [How to Avoid Using Global Cypress Variables](https://glebbahmutov.com/blog/local-cypress/)
+   for details.
 
 ## History
 

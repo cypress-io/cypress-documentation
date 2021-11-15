@@ -2,19 +2,26 @@
 title: After Spec API
 ---
 
-The `after:spec` event fires after a spec file is run. When running cypress via `cypress open`, the event will fire when the browser closes.
+The `after:spec` event fires after a spec file is run. When running cypress via
+`cypress open`, the event will fire when the browser closes.
 
 ## Syntax
 
 <Alert type="warning">
 
-⚠️ This code is part of the [plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
+⚠️ This code is part of the
+[plugins file](/guides/core-concepts/writing-and-organizing-tests#Plugin-files)
+and thus executes in the Node environment. You cannot call `Cypress` or `cy`
+commands in this file, but you do have the direct access to the file system and
+the rest of the operating system.
 
 </Alert>
 
 <Alert type="warning">
 
-⚠️ When running via `cypress open`, the `after:spec` event only fires if the [experimentalInteractiveRunEvents flag](/guides/references/configuration#Experiments) is enabled.
+⚠️ When running via `cypress open`, the `after:spec` event only fires if the
+[experimentalInteractiveRunEvents flag](/guides/references/configuration#Experiments)
+is enabled.
 
 </Alert>
 
@@ -36,13 +43,17 @@ Details of the spec file, including the following properties:
 
 **<Icon name="angle-right"></Icon> results** **_(Object)_**
 
-Details of the spec file's results, including numbers of passes/failures/etc and details on the tests themselves.
+Details of the spec file's results, including numbers of passes/failures/etc and
+details on the tests themselves.
 
-Results are only provided when running via `cypress run`. When running via `cypress open`, the results will be undefined.
+Results are only provided when running via `cypress run`. When running via
+`cypress open`, the results will be undefined.
 
 ## Usage
 
-You can return a promise from the `after:spec` event handler and it will be awaited before Cypress proceeds with processing the spec's video or moving on to further specs if there are any.
+You can return a promise from the `after:spec` event handler and it will be
+awaited before Cypress proceeds with processing the spec's video or moving on to
+further specs if there are any.
 
 ### Log the relative spec path to stdout after the spec is run
 
@@ -90,9 +101,12 @@ module.exports = (on, config) => {
 
 ### Delete the recorded video if the spec passed
 
-You can delete the recorded video for a spec when certain conditions are met. This will skip the compression and uploading of the video when recording to the Dashboard.
+You can delete the recorded video for a spec when certain conditions are met.
+This will skip the compression and uploading of the video when recording to the
+Dashboard.
 
-The example below shows how to delete the recorded video for specs with no failing tests.
+The example below shows how to delete the recorded video for specs with no
+failing tests.
 
 ```javascript
 // plugins/index.js
@@ -114,9 +128,12 @@ module.exports = (on, config) => {
 
 ### Delete the recorded video if no tests retried
 
-You can delete the recorded video for a spec when certain conditions are met. This will skip the compression and uploading of the video when recording to the Dashboard.
+You can delete the recorded video for a spec when certain conditions are met.
+This will skip the compression and uploading of the video when recording to the
+Dashboard.
 
-The example below shows how to delete the recorded video for specs that had no retry attempts when using Cypress [test retries](/guides/guides/test-retries).
+The example below shows how to delete the recorded video for specs that had no
+retry attempts when using Cypress [test retries](/guides/guides/test-retries).
 
 ```javascript
 // plugins/index.js

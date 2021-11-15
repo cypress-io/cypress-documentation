@@ -2,13 +2,19 @@
 title: Browser Launch API
 ---
 
-Before Cypress launches a browser, it gives you the opportunity to modify the browser preferences, install extensions, add and remove command-line arguments, and modify other options from your [pluginsFile](/guides/tooling/plugins-guide).
+Before Cypress launches a browser, it gives you the opportunity to modify the
+browser preferences, install extensions, add and remove command-line arguments,
+and modify other options from your [pluginsFile](/guides/tooling/plugins-guide).
 
 ## Syntax
 
 <Alert type="warning">
 
-⚠️ This code is part of the [plugins file](/guides/core-concepts/writing-and-organizing-tests.html#Plugin-files) and thus executes in the Node environment. You cannot call `Cypress` or `cy` commands in this file, but you do have the direct access to the file system and the rest of the operating system.
+⚠️ This code is part of the
+[plugins file](/guides/core-concepts/writing-and-organizing-tests#Plugin-files)
+and thus executes in the Node environment. You cannot call `Cypress` or `cy`
+commands in this file, but you do have the direct access to the file system and
+the rest of the operating system.
 
 </Alert>
 
@@ -37,7 +43,8 @@ An object describing the browser being launched, with the following properties:
 
 **<Icon name="angle-right"></Icon> launchOptions** **_(object)_**
 
-Options that can be modified to control how the browser is launched, with the following properties:
+Options that can be modified to control how the browser is launched, with the
+following properties:
 
 | Property      | Type       | Description                                                                                                                                                                                                                                  |
 | ------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -49,11 +56,16 @@ Options that can be modified to control how the browser is launched, with the fo
 
 ### Modify browser launch arguments, preferences, and extensions
 
-Using your [pluginsFile](/guides/tooling/plugins-guide) you can tap into the `before:browser:launch` event and modify how Cypress launches the browser (e.g. modify arguments, user preferences, and extensions).
+Using your [pluginsFile](/guides/tooling/plugins-guide) you can tap into the
+`before:browser:launch` event and modify how Cypress launches the browser (e.g.
+modify arguments, user preferences, and extensions).
 
-This event will yield you the `browser` object, which gives you information about the browser, and the `launchOptions` object, which allows you to modify how the browser is launched.
+This event will yield you the `browser` object, which gives you information
+about the browser, and the `launchOptions` object, which allows you to modify
+how the browser is launched.
 
-The returned `launchOptions` object will become the new launch options for the browser.
+The returned `launchOptions` object will become the new launch options for the
+browser.
 
 #### Modify browser launch arguments:
 
@@ -114,7 +126,8 @@ Here are preferences available for the currently supported browsers:
 
 - [Chromium-based browsers](https://src.chromium.org/viewvc/chrome/trunk/src/chrome/common/pref_names.cc?view=markup)
 - [Electron](https://github.com/electron/electron/blob/master/docs/api/browser-window.md#new-browserwindowoptions)
-- Firefox: visit `about:config` URL within your Firefox browser to see all available preferences.
+- Firefox: visit `about:config` URL within your Firefox browser to see all
+  available preferences.
 
 ```js
 // cypress/plugins/index.js
@@ -149,9 +162,15 @@ module.exports = (on, config) => {
 
 ### Modify Electron app switches
 
-Cypress Test Runner is an Electron application, and its behavior (and the behavior of the bundled-in Electron browser) can be customized using command line switches. The supported switches depend on the Electron version, see [Electron documentation](https://www.electronjs.org/docs/api/command-line-switches).
+Cypress Test Runner is an Electron application, and its behavior (and the
+behavior of the bundled-in Electron browser) can be customized using command
+line switches. The supported switches depend on the Electron version, see
+[Electron documentation](https://www.electronjs.org/docs/api/command-line-switches).
 
-You can pass Electron-specific launch arguments using the `ELECTRON_EXTRA_LAUNCH_ARGS` environment variable. For example, to disable HTTP browser cache and ignore certificate errors, you can set the environment variables before running Cypress like below:
+You can pass Electron-specific launch arguments using the
+`ELECTRON_EXTRA_LAUNCH_ARGS` environment variable. For example, to disable HTTP
+browser cache and ignore certificate errors, you can set the environment
+variables before running Cypress like below:
 
 #### Linux/OSX
 
@@ -165,11 +184,16 @@ export ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --lang=es
 set ELECTRON_EXTRA_LAUNCH_ARGS=--disable-http-cache --lang=es
 ```
 
-Cypress already sets some the Electron command line switches internally. See file [packages/server/lib/environment.js](https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/environment.js). There is no way to see all currently set switches after Electron's launch.
+Cypress already sets some the Electron command line switches internally. See
+file
+[packages/server/lib/environment.js](https://github.com/cypress-io/cypress/blob/develop/packages/server/lib/environment.js).
+There is no way to see all currently set switches after Electron's launch.
 
 ### See all Chrome browser switches
 
-If you are running Cypress tests using a Chromium-based browser, you can see ALL currently set command line switches and the browser version information by opening a new tab and typing `chrome://version` url.
+If you are running Cypress tests using a Chromium-based browser, you can see ALL
+currently set command line switches and the browser version information by
+opening a new tab and typing `chrome://version` url.
 
 <DocsImage src="/img/api/chrome-switches.png" alt="See all Chrome switches" ></DocsImage>
 
@@ -177,11 +201,19 @@ If you are running Cypress tests using a Chromium-based browser, you can see ALL
 
 ### Set screen size when running headless
 
-When a browser runs headless, there is no physical display. You can override the default screen size of 1920x1080 when running headless as shown below. This will affect the size of screenshots and videos taken during the run.
+When a browser runs headless, there is no physical display. You can override the
+default screen size of 1280x720 when running headless as shown below. This will
+affect the size of screenshots and videos taken during the run.
 
 <Alert type="warning">
 
-This setting changes the display size of the screen and does not affect the `viewportWidth` and `viewportHeight` set in the [configuration](/guides/references/configuration). The `viewportWidth` and `viewportHeight` only affect the size of the application under test displayed inside the Test Runner. Read the blog post [Generate High-Resolution Videos and Screenshots](https://www.cypress.io/blog/2021/03/01/generate-high-resolution-videos-and-screenshots/) for details.
+This setting changes the display size of the screen and does not affect the
+`viewportWidth` and `viewportHeight` set in the
+[configuration](/guides/references/configuration). The `viewportWidth` and
+`viewportHeight` only affect the size of the application under test displayed
+inside the Test Runner. Read the blog post
+[Generate High-Resolution Videos and Screenshots](https://www.cypress.io/blog/2021/03/01/generate-high-resolution-videos-and-screenshots/)
+for details.
 
 </Alert>
 
@@ -219,6 +251,24 @@ module.exports = (on, config) => {
 }
 ```
 
+### Override the device pixel ratio
+
+```js
+// cypress/plugins/index.js
+module.exports = (on, config) => {
+  on('before:browser:launch', (browser, launchOptions) => {
+    if (browser.name === 'chrome' && browser.isHeadless) {
+      // force screen to behave like retina
+      // when running Chrome headless browsers
+      // (2560x1440 in size by default)
+      launchOptions.args.push('--force-device-scale-factor=2')
+    }
+
+    return launchOptions
+  })
+}
+```
+
 ### Start fullscreen
 
 ```js
@@ -242,11 +292,14 @@ module.exports = (on, config) => {
 
 ### Use fake video for webcam testing
 
-By default, Cypress passes the Chrome command line switch to enable a fake video for a media stream. This is to better enable testing webcam functionality without having to have the necessary hardware to test.
+By default, Cypress passes the Chrome command line switch to enable a fake video
+for a media stream. This is to better enable testing webcam functionality
+without having to have the necessary hardware to test.
 
 <DocsImage src="/img/api/browser-launch-fake-video.gif" alt="Enable fake video for testing" ></DocsImage>
 
-You can however send your own video file for testing by passing a Chrome command line switch pointing to a video file.
+You can however send your own video file for testing by passing a Chrome command
+line switch pointing to a video file.
 
 ```js
 // cypress/plugins/index.js
@@ -269,7 +322,8 @@ module.exports = (on, config) => {
 
 ### Support unique file download mime types
 
-Cypress supports a myriad of mime types when testing file downloads, but in case you have a unique one, you can add support for it.
+Cypress supports a myriad of mime types when testing file downloads, but in case
+you have a unique one, you can add support for it.
 
 ```js
 module.exports = (on) => {
@@ -299,7 +353,8 @@ module.exports = (on) => {
 
 ### Set a Firefox flag
 
-If we need to set a particular Firefox flag, like `browser.send_pings` we can do it via preferences
+If we need to set a particular Firefox flag, like `browser.send_pings` we can do
+it via preferences
 
 ```js
 module.exports = (on) => {
@@ -313,7 +368,8 @@ module.exports = (on) => {
 }
 ```
 
-The above example comes from the blog post [How to Test Anchor Ping](https://glebbahmutov.com/blog/anchor-ping/).
+The above example comes from the blog post
+[How to Test Anchor Ping](https://glebbahmutov.com/blog/anchor-ping/).
 
 ## History
 

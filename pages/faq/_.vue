@@ -19,24 +19,8 @@ export default {
     const path = `/faq/${params.pathMatch || 'index'}`
     const { algolia: algoliaSettings } = await $content('settings').fetch()
     const [faqItem] = await $content({ deep: true }).where({ path }).fetch()
-    const { faq: sidebar } = await $content('_data/sidebar').fetch()
-    const {
-      sidebar: { faq: userFriendlyNameMap },
-    } = await $content('_data/en').fetch()
-
-    const faqSidebarItems = Object.keys(sidebar).map((key) => {
-      return {
-        label: userFriendlyNameMap[key],
-        badge: '',
-        children: Object.keys(sidebar[key]).map((nestedKey) => {
-          return {
-            slug: nestedKey,
-            label: userFriendlyNameMap[nestedKey],
-          }
-        }),
-        folder: key,
-      }
-    })
+    const { faq } = await $content('_data/sidebar').fetch()
+    const sidebarItems = faq[0].children
 
     if (!faqItem) {
       return error({ statusCode: 404, message: 'FAQ not found' })
@@ -52,7 +36,7 @@ export default {
     return {
       algoliaSettings,
       faqItem,
-      faqSidebarItems,
+      sidebarItems,
       metaDescription,
       path: params.pathMatch,
       banner,
@@ -89,14 +73,14 @@ export default {
 <template>
   <div class="w-full">
     <AppHeader
-      :mobile-menu-items="faqSidebarItems"
+      :mobile-menu-items="sidebarItems"
       section="faq"
       :algolia-settings="algoliaSettings"
       :banner="banner"
     />
     <main :class="Boolean(banner) ? 'banner-margin' : ''" class="main-content">
       <AppSidebar
-        :items="faqSidebarItems"
+        :items="sidebarItems"
         section="faq"
         :path="path"
         :has-banner="Boolean(banner)"

@@ -2,7 +2,9 @@
 title: contains
 ---
 
-Get the DOM element containing the text. DOM elements can contain _more_ than the desired text and still match. Additionally, Cypress [prefers some DOM elements](#Notes) over the deepest element found.
+Get the DOM element containing the text. DOM elements can contain _more_ than
+the desired text and still match. Additionally, Cypress
+[prefers some DOM elements](#Notes) over the deepest element found.
 
 ## Syntax
 
@@ -44,7 +46,10 @@ Get the DOM element containing the content.
 
 **<Icon name="angle-right"></Icon> selector** **_(String selector)_**
 
-Specify a selector to filter DOM elements containing the text. Cypress will _ignore_ its [default preference order](#Notes) for the specified selector. Using a selector allows you to return more _shallow_ elements (higher in the tree) that contain the specific text.
+Specify a selector to filter DOM elements containing the text. Cypress will
+_ignore_ its [default preference order](#Notes) for the specified selector.
+Using a selector allows you to return more _shallow_ elements (higher in the
+tree) that contain the specific text.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -82,7 +87,8 @@ cy.contains('apples')
 
 #### Find the `input[type='submit']` by value
 
-Get the form element and search in its descendants for the content "submit the form!"
+Get the form element and search in its descendants for the content "submit the
+form!"
 
 ```html
 <div id="main">
@@ -109,7 +115,9 @@ cy.get('form').contains('submit the form!').click()
 
 #### Find the first element containing a number
 
-Even though the `<span>` is the deepest element that contains a "4", Cypress automatically yields `<button>` elements over spans because of its [preferred element order](#Preferences).
+Even though the `<span>` is the deepest element that contains a "4", Cypress
+automatically yields `<button>` elements over spans because of its
+[preferred element order](#Preferences).
 
 ```html
 <button class="btn btn-primary" type="button">
@@ -143,9 +151,11 @@ cy.contains(/^b\w+/)
 
 #### Specify a selector to return a specific element
 
-Technically the `<html>`, `<body>`, `<ul>`, and first `<li>` in the example below all contain "apples".
+Technically the `<html>`, `<body>`, `<ul>`, and first `<li>` in the example
+below all contain "apples".
 
-Normally Cypress would return the first `<li>` since that is the _deepest_ element that contains "apples".
+Normally Cypress would return the first `<li>` since that is the _deepest_
+element that contains "apples".
 
 To override the element that is yielded we can pass 'ul' as the selector.
 
@@ -168,7 +178,9 @@ cy.contains('ul', 'apples')
 
 #### Keep the form as the subject
 
-Here's an example that uses the selector to ensure that the `<form>` remains the [subject](/guides/core-concepts/introduction-to-cypress#Subject-Management) for future chaining.
+Here's an example that uses the selector to ensure that the `<form>` remains the
+[subject](/guides/core-concepts/introduction-to-cypress#Subject-Management) for
+future chaining.
 
 ```html
 <form>
@@ -186,7 +198,9 @@ cy.get('form') // yields <form>...</form>
   .submit() // yields <form>...</form>
 ```
 
-Without the explicit selector the subject would change to be the `<button>`. Using the explicit selector ensures that chained commands will have the `<form>` as the subject.
+Without the explicit selector the subject would change to be the `<button>`.
+Using the explicit selector ensures that chained commands will have the `<form>`
+as the subject.
 
 ### Case Sensitivity
 
@@ -205,7 +219,8 @@ cy.get('div').contains('capital sentence', { matchCase: false }) // pass
 
 ### Scopes
 
-`.contains()` acts differently whether it's starting a series of commands or being chained off an existing series.
+`.contains()` acts differently whether it's starting a series of commands or
+being chained off an existing series.
 
 #### When starting a series of commands:
 
@@ -225,18 +240,22 @@ cy.get('#checkout-container').contains('Buy Now')
 
 #### Be wary of chaining multiple contains
 
-Let's imagine a scenario where you click a button to delete a user and a dialog appears asking you to confirm this deletion.
+Let's imagine a scenario where you click a button to delete a user and a dialog
+appears asking you to confirm this deletion.
 
 ```javascript
 // This doesn't work as intended
 cy.contains('Delete User').click().contains('Yes, Delete!').click()
 ```
 
-Because the second `.contains()` is chained off of a command that yielded the `<button>`, Cypress will look inside of the `<button>` for the new content.
+Because the second `.contains()` is chained off of a command that yielded the
+`<button>`, Cypress will look inside of the `<button>` for the new content.
 
-In other words, Cypress will look inside of the `<button>` containing "Delete User" for the content: "Yes, Delete!", which is not what we intended.
+In other words, Cypress will look inside of the `<button>` containing "Delete
+User" for the content: "Yes, Delete!", which is not what we intended.
 
-What you want to do is call `cy` again, which automatically creates a new chain scoped to the `document`.
+What you want to do is call `cy` again, which automatically creates a new chain
+scoped to the `document`.
 
 ```javascript
 cy.contains('Delete User').click()
@@ -245,7 +264,8 @@ cy.contains('Yes, Delete!').click()
 
 ### Leading, trailing, duplicate whitespaces aren't ignored in `<pre>` tag
 
-Unlike other tags, `<pre>` doesn't ignore leading, trailing, or duplicate whitespaces as shown below:
+Unlike other tags, `<pre>` doesn't ignore leading, trailing, or duplicate
+whitespaces as shown below:
 
 ```html
 <!--Code for test-->
@@ -274,7 +294,8 @@ cy.get('pre').contains('                 Hello,           World      !') // pass
 
 ### Non-breaking space
 
-You can use a space character in `cy.contains()` to match text in the HTML that uses a non-breaking space entity `&nbsp;`.
+You can use a space character in `cy.contains()` to match text in the HTML that
+uses a non-breaking space entity `&nbsp;`.
 
 ```html
 <span>Hello&nbsp;world</span>
@@ -285,7 +306,9 @@ You can use a space character in `cy.contains()` to match text in the HTML that 
 cy.contains('Hello world')
 ```
 
-**Tip:** read about assertions against a text with non-breaking space entities in [How do I get an element's text contents?](/faq/questions/using-cypress-faq#How-do-I-get-an-element-s-text-contents)
+**Tip:** read about assertions against a text with non-breaking space entities
+in
+[How do I get an element's text contents?](/faq/questions/using-cypress-faq#How-do-I-get-an-element-s-text-contents)
 
 ### Single Element
 
@@ -304,14 +327,16 @@ cy.contains('Hello world')
 </div>
 ```
 
-The below example will return the `<li>` in the `#header` since that is the _first_ element that contains the text "Jane Lane".
+The below example will return the `<li>` in the `#header` since that is the
+_first_ element that contains the text "Jane Lane".
 
 ```javascript
 // yields #header li
 cy.contains('Jane Lane')
 ```
 
-If you wanted to select the `<span>` instead, you could narrow the elements yielded before the `.contains()`.
+If you wanted to select the `<span>` instead, you could narrow the elements
+yielded before the `.contains()`.
 
 ```javascript
 // yields <span>
@@ -329,11 +354,13 @@ cy.get('#main').contains('Jane Lane')
 - `a`
 - `label`
 
-Cypress will ignore this element preference order if you pass a selector argument to `.contains()`.
+Cypress will ignore this element preference order if you pass a selector
+argument to `.contains()`.
 
 #### Favor of `<button>` over other deeper elements
 
-Even though the `<span>` is the deepest element that contains "Search", Cypress yields `<button>` elements over spans.
+Even though the `<span>` is the deepest element that contains "Search", Cypress
+yields `<button>` elements over spans.
 
 ```html
 <form>
@@ -351,7 +378,8 @@ cy.contains('Search').children('i').should('have.class', 'fa-search')
 
 #### Favor of `<a>` over other deeper elements
 
-Even though the `<span>` is the deepest element that contains "Sign Out", Cypress yields anchor elements over spans.
+Even though the `<span>` is the deepest element that contains "Sign Out",
+Cypress yields anchor elements over spans.
 
 ```html
 <nav>
@@ -371,7 +399,8 @@ cy.get('nav').contains('Sign Out').should('have.attr', 'href', '/signout')
 
 #### Favor of `<label>` over other deeper elements
 
-Even though the `<span>` is the deepest element that contains "Age", Cypress yields `<label>` elements over `<span>`.
+Even though the `<span>` is the deepest element that contains "Age", Cypress
+yields `<label>` elements over `<span>`.
 
 ```html
 <form>
@@ -395,15 +424,22 @@ cy.contains('Age').find('input').type('29')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.contains()` can be chained off of `cy` or off a command that yields DOM element(s).</li></List>
+<List><li>`.contains()` can be chained off of `cy` or off a command that yields
+DOM element(s).</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.contains()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.contains()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.contains()` will automatically
+[retry](/guides/core-concepts/retry-ability) until the element(s)
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.contains()`
+will automatically [retry](/guides/core-concepts/retry-ability) until all
+chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.contains()` can time out waiting for the element(s) to [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.contains()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`.contains()` can time out waiting for the element(s) to
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.contains()`
+can time out waiting for assertions you've added to pass.</li></List>
 
 ## Command Log
 
@@ -417,7 +453,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/contains/find-el-that-contains-text.png" alt="Command Log contains" ></DocsImage>
 
-When clicking on the `contains` command within the command log, the console outputs the following:
+When clicking on the `contains` command within the command log, the console
+outputs the following:
 
 <DocsImage src="/img/api/contains/see-elements-found-from-contains-in-console.png" alt="console.log contains" ></DocsImage>
 

@@ -135,13 +135,6 @@
           "badge": "official"
         },
         {
-          "name": "cypress-plugin-retries",
-          "description": "A Cypress plugin to retry failed tests.",
-          "link": "https://github.com/Bkucera/cypress-plugin-retries",
-          "keywords": ["cypress-plugin-retries"],
-          "badge": "verified"
-        },
-        {
           "name": "cly",
           "description": "A prototype of generating quicker project scaffolding for Cypress.",
           "link": "https://github.com/bahmutov/cly",
@@ -312,7 +305,8 @@
           "name": "cypress-tags",
           "description": "Use custom tags to slice up Cypress test runs",
           "link": "https://github.com/annaet/cypress-tags",
-          "keywords": ["test", "tag", "browserify"]
+          "keywords": ["test", "tag", "browserify"],
+          "badge": "community"
         },
         {
           "name": "@swimlane/cy-mockapi",
@@ -594,6 +588,13 @@
           "description": "Cypress custom command to get keys from Azure Key Vaults.",
           "link": "https://github.com/prma85/cypress-azure-keyvault",
           "keywords": ["testing", "azure", "keyvault", "secret"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-rest-graphql",
+          "description": "Add visual output and helper functions for performing REST and graphQL queries",
+          "link": "https://github.com/BrandedEntertainmentNetwork/cypress-rest-graphql",
+          "keywords": ["api", "rest", "graphQL"],
           "badge": "community"
         }
       ]

@@ -101,7 +101,8 @@
       "amazon-cognito-authentication": "Amazon Cognito Authentication",
       "google-authentication": "Google Authentication",
       "circleci": "CircleCI",
-      "ci-provider-examples": "CI Provider Examples"
+      "ci-provider-examples": "CI Provider Examples",
+      "working-with-graphql": "Working with GraphQL"
     },
     "api": {
       "api": "API",
@@ -167,6 +168,7 @@
       "scrollto": "scrollTo",
       "select": "select",
       "server": "server",
+      "session": "session",
       "setcookie": "setCookie",
       "shadow": "shadow",
       "should": "should",
@@ -210,6 +212,7 @@
       "env": "env",
       "isbrowser": "isBrowser",
       "iscy": "isCy",
+      "currenttest": "currentTest",
       "custom-commands": "Commands",
       "cookies": "Cookies",
       "dom": "dom",
@@ -232,7 +235,8 @@
       "selector-playground-api": "SelectorPlayground",
       "screenshot-api": "Screenshot",
       "after-screenshot-api": "After Screenshot",
-      "spec": "spec"
+      "spec": "spec",
+      "keyboard-api": "Keyboard"
     },
     "examples": {
       "examples": "Examples",

@@ -2,11 +2,14 @@
 title: as
 ---
 
-Assign an alias for later use. Reference the alias later within a [`cy.get()`](/api/commands/get) or [`cy.wait()`](/api/commands/wait) command with an `@` prefix.
+Assign an alias for later use. Reference the alias later within a
+[`cy.get()`](/api/commands/get) or [`cy.wait()`](/api/commands/wait) command
+with an `@` prefix.
 
 <Alert type="info">
 
-**Note:** `.as()` assumes you are already familiar with core concepts such as [aliases](/guides/core-concepts/variables-and-aliases)
+**Note:** `.as()` assumes you are already familiar with core concepts such as
+[aliases](/guides/core-concepts/variables-and-aliases)
 
 </Alert>
 
@@ -37,17 +40,21 @@ cy.as('foo') // Errors, cannot be chained off 'cy'
 
 **<Icon name="angle-right"></Icon> aliasName** **_(String)_**
 
-The name of the alias to be referenced later within a [`cy.get()`](/api/commands/get) or [`cy.wait()`](/api/commands/wait) command using an `@` prefix.
+The name of the alias to be referenced later within a
+[`cy.get()`](/api/commands/get) or [`cy.wait()`](/api/commands/wait) command
+using an `@` prefix.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.as()` yields the same subject it was given from the previous command.</li></List>
+<List><li>`.as()` yields the same subject it was given from the previous
+command.</li></List>
 
 ## Examples
 
 ### DOM element
 
-Aliasing a DOM element and then using [`cy.get()`](/api/commands/get) to access the aliased element.
+Aliasing a DOM element and then using [`cy.get()`](/api/commands/get) to access
+the aliased element.
 
 ```javascript
 it('disables on click', () => {
@@ -56,19 +63,32 @@ it('disables on click', () => {
 })
 ```
 
-### Route
+### Intercept
 
-Aliasing a route and then using [`cy.wait()`](/api/commands/wait) to wait for the aliased route.
+Aliasing an intercepted route defined with
+[`cy.intercept()`](/api/commands/intercept) and then using
+[`cy.wait()`](/api/commands/wait) to wait for the aliased route.
 
 ```javascript
-cy.intercept('PUT', '/users', { fixture: 'user' }).as('putUser')
+// `PUT` requests on the `/users` endpoint will be stubbed with
+// the `user` fixture and be aliased as `editUser`
+cy.intercept('PUT', '/users', { fixture: 'user' }).as('editUser')
+
+// we'll assume submitting `form` triggers a matching request
 cy.get('form').submit()
-cy.wait('@putUser').its('url').should('contain', 'users')
+
+// once a response comes back from the `editUser`
+// this `wait` will resolve with the subject containing `url`
+cy.wait('@editUser').its('url').should('contain', 'users')
 ```
+
+More examples of aliasing routes can be found
+[here](/api/commands/intercept#Aliasing-an-intercepted-route).
 
 ### Fixture
 
-Aliasing [`cy.fixture()`](/api/commands/fixture) data and then using `this` to access it via the alias.
+Aliasing [`cy.fixture()`](/api/commands/fixture) data and then using `this` to
+access it via the alias.
 
 ```javascript
 beforeEach(() => {
@@ -82,7 +102,11 @@ it('the users fixture is bound to this.admins', function () {
 
 <Alert type="warning">
 
-Note the use of the standard function syntax. Using [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) to access aliases via `this` won't work because of [the lexical binding](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#No_separate_this) of `this`.
+Note the use of the standard function syntax. Using
+[arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
+to access aliases via `this` won't work because of
+[the lexical binding](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#No_separate_this)
+of `this`.
 
 </Alert>
 
@@ -92,7 +116,8 @@ Note the use of the standard function syntax. Using [arrow functions](https://de
 
 <Alert type="warning">
 
-**Note:** all aliases are reset before each test. See the [aliases guide](/guides/core-concepts/variables-and-aliases) for details.
+**Note:** all aliases are reset before each test. See the
+[aliases guide](/guides/core-concepts/variables-and-aliases) for details.
 
 </Alert>
 
@@ -100,15 +125,20 @@ Note the use of the standard function syntax. Using [arrow functions](https://de
 
 #### Alias names cannot match some reserved words.
 
-Some strings are not allowed as alias names since they are reserved words in Cypress. These words include: `test`, `runnable`, `timeout`, `slow`, `skip`, and `inspect`.
+Some strings are not allowed as alias names since they are reserved words in
+Cypress. These words include: `test`, `runnable`, `timeout`, `slow`, `skip`, and
+`inspect`.
 
 ### `as` is asynchronous
 
 Remember that **Cypress commands are async**, including `.as()`.
 
-Because of this you cannot _synchronously_ access anything you have aliased. You must use other asynchronous commands such as [`.then()`](/api/commands/then) to access what you've aliased.
+Because of this you cannot _synchronously_ access anything you have aliased. You
+must use other asynchronous commands such as [`.then()`](/api/commands/then) to
+access what you've aliased.
 
-Here are some further examples of using `.as()` that illustrate the asynchronous behavior.
+Here are some further examples of using `.as()` that illustrate the asynchronous
+behavior.
 
 ```javascript
 describe('A fixture', () => {
@@ -148,7 +178,8 @@ describe('A fixture', () => {
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.as()` is a utility command.</li><li>`.as()` will not run assertions. Assertions will pass through as if this command did not exist.</li></List>
+<List><li>`.as()` is a utility command.</li><li>`.as()` will not run assertions.
+Assertions will pass through as if this command did not exist.</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 

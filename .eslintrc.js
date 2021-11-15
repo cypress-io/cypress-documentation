@@ -5,7 +5,7 @@ module.exports = {
     "ecmaVersion": 8,
     "sourceType": "module"
   },
-  plugins: ['cypress', '@cypress/dev'],
+  plugins: ['cypress', '@cypress/dev', 'jest'],
   extends: [
     'plugin:vue/recommended',
     'plugin:@cypress/dev/general',
@@ -16,5 +16,6 @@ module.exports = {
     es6: true,
     node: true,
     'cypress/globals': true,
+    'jest/globals': true,
   },
 }

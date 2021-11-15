@@ -6,7 +6,9 @@ Clear data in localStorage for current domain and subdomain.
 
 <Alert type="warning">
 
-Cypress automatically runs this command _before_ each test to prevent state from being shared across tests. You shouldn't need to use this command unless you're using it to clear localStorage inside a single test.
+Cypress automatically runs this command _before_ each test to prevent state from
+being shared across tests. You shouldn't need to use this command unless you're
+using it to clear localStorage inside a single test.
 
 </Alert>
 
@@ -35,7 +37,8 @@ Specify key to be cleared in localStorage.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
-Pass in an options object to change the default behavior of `cy.clearLocalStorage()`.
+Pass in an options object to change the default behavior of
+`cy.clearLocalStorage()`.
 
 | Option | Default | Description                                                                              |
 | ------ | ------- | ---------------------------------------------------------------------------------------- |
@@ -43,7 +46,8 @@ Pass in an options object to change the default behavior of `cy.clearLocalStorag
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.clearLocalStorage()` yields `null`.</li><li>`cy.clearLocalStorage()` cannot be chained further.</li></List>
+<List><li>`cy.clearLocalStorage()` yields
+`null`.</li><li>`cy.clearLocalStorage()` cannot be chained further.</li></List>
 
 ## Examples
 
@@ -73,11 +77,13 @@ cy.clearLocalStorage(/app-/)
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.clearLocalStorage()` requires being chained off of `cy`.</li></List>
+<List><li>`cy.clearLocalStorage()` requires being chained off of
+`cy`.</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.clearLocalStorage()` cannot have any assertions chained.</li></List>
+<List><li>`cy.clearLocalStorage()` cannot have any assertions
+chained.</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
@@ -97,7 +103,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/clearlocalstorage/clear-ls-localstorage-in-command-log.png" alt="Command log for clearLocalStorage" ></DocsImage>
 
-When clicking on `clearLocalStorage` within the command log, the console outputs the following:
+When clicking on `clearLocalStorage` within the command log, the console outputs
+the following:
 
 <DocsImage src="/img/api/clearlocalstorage/local-storage-object-shown-in-console.png" alt="console.log for clearLocalStorage" ></DocsImage>
 

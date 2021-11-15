@@ -1,259 +1,1002 @@
 {
-  "guides": {
-    "overview": {
-      "why-cypress": "why-cypress.html",
-      "key-differences": "key-differences.html"
-    },
-    "getting-started": {
-      "installing-cypress": "installing-cypress.html",
-      "writing-your-first-test": "writing-your-first-test.html",
-      "testing-your-app": "testing-your-app.html"
-    },
-    "core-concepts": {
-      "introduction-to-cypress": "introduction-to-cypress.html",
-      "writing-and-organizing-tests": "writing-and-organizing-tests.html",
-      "retry-ability": "retry-ability.html",
-      "interacting-with-elements": "interacting-with-elements.html",
-      "variables-and-aliases": "variables-and-aliases.html",
-      "conditional-testing": "conditional-testing.html",
-      "test-runner": "test-runner.html",
-      "cypress-studio": "cypress-studio.html"
-    },
-    "dashboard": {
-      "dashboard-introduction": "introduction.html",
-      "projects": "projects.html",
-      "runs": "runs.html",
-      "organizations": "organizations.html",
-      "users": "users.html",
-      "bitbucket-integration": "bitbucket-integration.html",
-      "github-integration": "github-integration.html",
-      "gitlab-integration": "gitlab-integration.html",
-      "jira-integration": "jira-integration.html",
-      "slack-integration": "slack-integration.html",
-      "analytics": "analytics.html",
-      "flaky-test-management": "flaky-test-management.html",
-      "smart-orchestration": "smart-orchestration.html"
-    },
-    "guides": {
-      "command-line": "command-line.html",
-      "module-api": "module-api.html",
-      "debugging": "debugging.html",
-      "network-requests": "network-requests.html",
-      "test-retries": "test-retries.html",
-      "parallelization": "parallelization.html",
-      "environment-variables": "environment-variables.html",
-      "stubs-spies-and-clocks": "stubs-spies-and-clocks.html",
-      "screenshots-and-videos": "screenshots-and-videos.html",
-      "launching-browsers": "launching-browsers.html",
-      "cross-browser-testing": "cross-browser-testing.html",
-      "web-security": "web-security.html"
-    },
-    "testing-strategies": {
-      "auth0-authentication": "auth0-authentication.html",
-      "amazon-cognito-authentication": "amazon-cognito-authentication.html",
-      "okta-authentication": "okta-authentication.html",
-      "google-authentication": "google-authentication.html"
-    },
-    "continuous-integration": {
-      "continuous-integration-introduction": "introduction.html",
-      "ci-provider-examples": "ci-provider-examples.html",
-      "circleci": "circleci.html",
-      "github-actions": "github-actions.html",
-      "gitlab-ci": "gitlab-ci.html",
-      "bitbucket-pipelines": "bitbucket-pipelines.html",
-      "aws-codebuild": "aws-codebuild.html"
-    },
-    "component-testing": {
-      "component-testing-introduction": "introduction.html",
-      "framework-configuration": "framework-configuration.html"
-    },
-    "migrating-to-cypress": {
-      "protractor": "protractor.html"
-    },
-    "tooling": {
-      "IDE-integration": "IDE-integration.html",
-      "plugins-guide": "plugins-guide.html",
-      "reporters": "reporters.html",
-      "typescript-support": "typescript-support.html",
-      "visual-testing": "visual-testing.html",
-      "code-coverage": "code-coverage.html"
-    },
-    "references": {
-      "assertions": "assertions.html",
-      "configuration": "configuration.html",
-      "proxy-configuration": "proxy-configuration.html",
-      "best-practices": "best-practices.html",
-      "error-messages": "error-messages.html",
-      "bundled-tools": "bundled-tools.html",
-      "trade-offs": "trade-offs.html",
-      "troubleshooting": "troubleshooting.html",
-      "changelog": "changelog.html",
-      "migration-guide": "migration-guide.html",
-      "roadmap": "roadmap.html",
-      "experiments": "experiments.html"
+  "guides": [
+    {
+      "title": "Guides",
+      "slug": "guides",
+      "children": [
+        {
+          "title": "Overview",
+          "slug": "overview",
+          "children": [
+            {
+              "title": "Why Cypress?",
+              "slug": "why-cypress"
+            },
+            {
+              "title": "Key Differences",
+              "slug": "key-differences"
+            }
+          ]
+        },
+        {
+          "title": "Getting Started",
+          "slug": "getting-started",
+          "children": [
+            {
+              "title": "Installing Cypress",
+              "slug": "installing-cypress"
+            },
+            {
+              "title": "Writing Your First Test",
+              "slug": "writing-your-first-test"
+            },
+            {
+              "title": "Testing Your App",
+              "slug": "testing-your-app"
+            }
+          ]
+        },
+        {
+          "title": "Core Concepts",
+          "slug": "core-concepts",
+          "children": [
+            {
+              "title": "Introduction to Cypress",
+              "slug": "introduction-to-cypress"
+            },
+            {
+              "title": "Writing and Organizing Tests",
+              "slug": "writing-and-organizing-tests"
+            },
+            {
+              "title": "Retry-ability",
+              "slug": "retry-ability"
+            },
+            {
+              "title": "Interacting with Elements",
+              "slug": "interacting-with-elements"
+            },
+            {
+              "title": "Variables and Aliases",
+              "slug": "variables-and-aliases"
+            },
+            {
+              "title": "Conditional Testing",
+              "slug": "conditional-testing"
+            },
+            {
+              "title": "The Test Runner",
+              "slug": "test-runner"
+            },
+            {
+              "title": "Cypress Studio",
+              "slug": "cypress-studio"
+            }
+          ]
+        },
+        {
+          "title": "Dashboard",
+          "slug": "dashboard",
+          "children": [
+            {
+              "title": "Introduction",
+              "slug": "introduction"
+            },
+            {
+              "title": "Projects",
+              "slug": "projects"
+            },
+            {
+              "title": "Runs",
+              "slug": "runs"
+            },
+            {
+              "title": "Organizations",
+              "slug": "organizations"
+            },
+            {
+              "title": "Users",
+              "slug": "users"
+            },
+            {
+              "title": "Bitbucket Integration",
+              "slug": "bitbucket-integration"
+            },
+            {
+              "title": "GitHub Integration",
+              "slug": "github-integration"
+            },
+            {
+              "title": "GitLab Integration",
+              "slug": "gitlab-integration"
+            },
+            {
+              "title": "Jira Integration",
+              "slug": "jira-integration"
+            },
+            {
+              "title": "Slack Integration",
+              "slug": "slack-integration"
+            },
+            {
+              "title": "Analytics",
+              "slug": "analytics"
+            },
+            {
+              "title": "Flaky Test Management",
+              "slug": "flaky-test-management"
+            },
+            {
+              "title": "Smart Orchestration",
+              "slug": "smart-orchestration"
+            }
+          ]
+        },
+        {
+          "title": "Guides",
+          "slug": "guides",
+          "children": [
+            {
+              "title": "Command Line",
+              "slug": "command-line"
+            },
+            {
+              "title": "Module API",
+              "slug": "module-api"
+            },
+            {
+              "title": "Debugging",
+              "slug": "debugging"
+            },
+            {
+              "title": "Network Requests",
+              "slug": "network-requests"
+            },
+            {
+              "title": "Test Retries",
+              "slug": "test-retries"
+            },
+            {
+              "title": "Parallelization",
+              "slug": "parallelization"
+            },
+            {
+              "title": "Environment Variables",
+              "slug": "environment-variables"
+            },
+            {
+              "title": "Stubs, Spies, and Clocks",
+              "slug": "stubs-spies-and-clocks"
+            },
+            {
+              "title": "Screenshots and Videos",
+              "slug": "screenshots-and-videos"
+            },
+            {
+              "title": "Launching Browsers",
+              "slug": "launching-browsers"
+            },
+            {
+              "title": "Cross Browser Testing",
+              "slug": "cross-browser-testing"
+            },
+            {
+              "title": "Web Security",
+              "slug": "web-security"
+            }
+          ]
+        },
+        {
+          "title": "Testing Strategies",
+          "slug": "testing-strategies",
+          "children": [
+            {
+              "title": "Auth0 Authentication",
+              "slug": "auth0-authentication"
+            },
+            {
+              "title": "Amazon Cognito Authentication",
+              "slug": "amazon-cognito-authentication"
+            },
+            {
+              "title": "Okta Authentication",
+              "slug": "okta-authentication"
+            },
+            {
+              "title": "Google Authentication",
+              "slug": "google-authentication"
+            },
+            {
+              "title": "Working with GraphQL",
+              "slug": "working-with-graphql"
+            }
+          ]
+        },
+        {
+          "title": "Continuous Integration",
+          "slug": "continuous-integration",
+          "children": [
+            {
+              "title": "Introduction",
+              "slug": "introduction"
+            },
+            {
+              "title": "CI Provider Examples",
+              "slug": "ci-provider-examples"
+            },
+            {
+              "title": "CircleCI",
+              "slug": "circleci"
+            },
+            {
+              "title": "GitHub Actions",
+              "slug": "github-actions"
+            },
+            {
+              "title": "GitLab CI",
+              "slug": "gitlab-ci"
+            },
+            {
+              "title": "Bitbucket Pipelines",
+              "slug": "bitbucket-pipelines"
+            },
+            {
+              "title": "AWS CodeBuild",
+              "slug": "aws-codebuild"
+            }
+          ]
+        },
+        {
+          "title": "Component Testing",
+          "slug": "component-testing",
+          "children": [
+            {
+              "title": "Introduction",
+              "slug": "introduction"
+            },
+            {
+              "title": "Framework Configuration",
+              "slug": "framework-configuration"
+            }
+          ]
+        },
+        {
+          "title": "Migrating to Cypress",
+          "slug": "migrating-to-cypress",
+          "children": [
+            {
+              "title": "Protractor",
+              "slug": "protractor"
+            }
+          ]
+        },
+        {
+          "title": "Tooling",
+          "slug": "tooling",
+          "children": [
+            {
+              "title": "IDE Integration",
+              "slug": "IDE-integration"
+            },
+            {
+              "title": "Plugins",
+              "slug": "plugins-guide"
+            },
+            {
+              "title": "Reporters",
+              "slug": "reporters"
+            },
+            {
+              "title": "TypeScript",
+              "slug": "typescript-support"
+            },
+            {
+              "title": "Visual Testing",
+              "slug": "visual-testing"
+            },
+            {
+              "title": "Code Coverage",
+              "slug": "code-coverage"
+            }
+          ]
+        },
+        {
+          "title": "References",
+          "slug": "references",
+          "children": [
+            {
+              "title": "Assertions",
+              "slug": "assertions"
+            },
+            {
+              "title": "Configuration",
+              "slug": "configuration"
+            },
+            {
+              "title": "Client Certificates",
+              "slug": "client-certificates"
+            },
+            {
+              "title": "Proxy Configuration",
+              "slug": "proxy-configuration"
+            },
+            {
+              "title": "Best Practices",
+              "slug": "best-practices"
+            },
+            {
+              "title": "Error Messages",
+              "slug": "error-messages"
+            },
+            {
+              "title": "Bundled Tools",
+              "slug": "bundled-tools"
+            },
+            {
+              "title": "Trade-offs",
+              "slug": "trade-offs"
+            },
+            {
+              "title": "Troubleshooting",
+              "slug": "troubleshooting"
+            },
+            {
+              "title": "Changelog",
+              "slug": "changelog"
+            },
+            {
+              "title": "Migration Guide",
+              "slug": "migration-guide"
+            },
+            {
+              "title": "Roadmap",
+              "slug": "roadmap"
+            },
+            {
+              "title": "Experiments",
+              "slug": "experiments"
+            }
+          ]
+        }
+      ]
     }
-  },
-  "api": {
-    "api": {
-      "table-of-contents": "table-of-contents.html"
-    },
-    "events": {
-      "catalog-of-events": "catalog-of-events.html"
-    },
-    "assertions": {
-      "all-assertions": "assertions.html"
-    },
-    "commands": {
-      "and": "and.html",
-      "as": "as.html",
-      "blur": "blur.html",
-      "check": "check.html",
-      "children": "children.html",
-      "clear": "clear.html",
-      "clearcookie": "clearcookie.html",
-      "clearcookies": "clearcookies.html",
-      "clearlocalstorage": "clearlocalstorage.html",
-      "click": "click.html",
-      "clock": "clock.html",
-      "closest": "closest.html",
-      "contains": "contains.html",
-      "dblclick": "dblclick.html",
-      "debug": "debug.html",
-      "document": "document.html",
-      "each": "each.html",
-      "end": "end.html",
-      "eq": "eq.html",
-      "exec": "exec.html",
-      "filter": "filter.html",
-      "find": "find.html",
-      "first": "first.html",
-      "fixture": "fixture.html",
-      "focus": "focus.html",
-      "focused": "focused.html",
-      "get": "get.html",
-      "getcookie": "getcookie.html",
-      "getcookies": "getcookies.html",
-      "go": "go.html",
-      "hash": "hash.html",
-      "hover": "hover.html",
-      "intercept": "intercept.html",
-      "invoke": "invoke.html",
-      "its": "its.html",
-      "last": "last.html",
-      "location": "location.html",
-      "log": "log.html",
-      "next": "next.html",
-      "nextall": "nextall.html",
-      "nextuntil": "nextuntil.html",
-      "not": "not.html",
-      "parent": "parent.html",
-      "parents": "parents.html",
-      "parentsuntil": "parentsuntil.html",
-      "pause": "pause.html",
-      "prev": "prev.html",
-      "prevall": "prevall.html",
-      "prevuntil": "prevuntil.html",
-      "readfile": "readfile.html",
-      "reload": "reload.html",
-      "request": "request.html",
-      "rightclick": "rightclick.html",
-      "root": "root.html",
-      "route": "route.html",
-      "screenshot": "screenshot.html",
-      "scrollintoview": "scrollintoview.html",
-      "scrollto": "scrollto.html",
-      "select": "select.html",
-      "server": "server.html",
-      "setcookie": "setcookie.html",
-      "shadow": "shadow.html",
-      "should": "should.html",
-      "siblings": "siblings.html",
-      "spread": "spread.html",
-      "spy": "spy.html",
-      "stub": "stub.html",
-      "submit": "submit.html",
-      "task": "task.html",
-      "then": "then.html",
-      "tick": "tick.html",
-      "title": "title.html",
-      "trigger": "trigger.html",
-      "type": "type.html",
-      "uncheck": "uncheck.html",
-      "url": "url.html",
-      "viewport": "viewport.html",
-      "visit": "visit.html",
-      "wait": "wait.html",
-      "window": "window.html",
-      "within": "within.html",
-      "wrap": "wrap.html",
-      "writefile": "writefile.html"
-    },
-    "utilities": {
-      "_": "_.html",
-      "$": "$.html",
-      "blob": "blob.html",
-      "minimatch": "minimatch.html",
-      "promise": "promise.html",
-      "sinon": "sinon.html"
-    },
-    "cypress-api": {
-      "custom-commands": "custom-commands.html",
-      "cookies": "cookies.html",
-      "screenshot-api": "screenshot-api.html",
-      "selector-playground-api": "selector-playground-api.html",
-      "cypress-server": "cypress-server.html",
-      "arch": "arch.html",
-      "browser": "browser.html",
-      "config": "config.html",
-      "dom": "dom.html",
-      "env": "env.html",
-      "isbrowser": "isbrowser.html",
-      "iscy": "iscy.html",
-      "cypress-log": "cypress-log.html",
-      "platform": "platform.html",
-      "spec": "spec.html",
-      "testing-type": "testing-type.html",
-      "version": "version.html"
-    },
-    "plugins": {
-      "writing-a-plugin": "writing-a-plugin.html",
-      "configuration-api": "configuration-api.html",
-      "preprocessors-api": "preprocessors-api.html",
-      "before-run-api": "before-run-api.html",
-      "after-run-api": "after-run-api.html",
-      "before-spec-api": "before-spec-api.html",
-      "after-spec-api": "after-spec-api.html",
-      "browser-launch-api": "browser-launch-api.html",
-      "after-screenshot-api": "after-screenshot-api.html"
+  ],
+  "api": [
+    {
+      "title": "API",
+      "slug": "api",
+      "children": [
+        {
+          "title": "API",
+          "slug": "api",
+          "children": [
+            {
+              "title": "Table of Contents",
+              "redirect": "/api/table-of-contents"
+            }
+          ]
+        },
+        {
+          "title": "Events",
+          "slug": "events",
+          "children": [
+            {
+              "title": "Catalog of Events",
+              "slug": "catalog-of-events"
+            }
+          ]
+        },
+        {
+          "title": "Assertions",
+          "slug": "assertions",
+          "children": [
+            {
+              "title": "All Assertions",
+              "redirect": "/guides/references/assertions"
+            }
+          ]
+        },
+        {
+          "title": "Commands",
+          "slug": "commands",
+          "children": [
+            {
+              "title": "and",
+              "slug": "and"
+            },
+            {
+              "title": "as",
+              "slug": "as"
+            },
+            {
+              "title": "blur",
+              "slug": "blur"
+            },
+            {
+              "title": "check",
+              "slug": "check"
+            },
+            {
+              "title": "children",
+              "slug": "children"
+            },
+            {
+              "title": "clear",
+              "slug": "clear"
+            },
+            {
+              "title": "clearCookie",
+              "slug": "clearcookie"
+            },
+            {
+              "title": "clearCookies",
+              "slug": "clearcookies"
+            },
+            {
+              "title": "clearLocalStorage",
+              "slug": "clearlocalstorage"
+            },
+            {
+              "title": "click",
+              "slug": "click"
+            },
+            {
+              "title": "clock",
+              "slug": "clock"
+            },
+            {
+              "title": "closest",
+              "slug": "closest"
+            },
+            {
+              "title": "contains",
+              "slug": "contains"
+            },
+            {
+              "title": "dblclick",
+              "slug": "dblclick"
+            },
+            {
+              "title": "debug",
+              "slug": "debug"
+            },
+            {
+              "title": "document",
+              "slug": "document"
+            },
+            {
+              "title": "each",
+              "slug": "each"
+            },
+            {
+              "title": "end",
+              "slug": "end"
+            },
+            {
+              "title": "eq",
+              "slug": "eq"
+            },
+            {
+              "title": "exec",
+              "slug": "exec"
+            },
+            {
+              "title": "filter",
+              "slug": "filter"
+            },
+            {
+              "title": "find",
+              "slug": "find"
+            },
+            {
+              "title": "first",
+              "slug": "first"
+            },
+            {
+              "title": "fixture",
+              "slug": "fixture"
+            },
+            {
+              "title": "focus",
+              "slug": "focus"
+            },
+            {
+              "title": "focused",
+              "slug": "focused"
+            },
+            {
+              "title": "get",
+              "slug": "get"
+            },
+            {
+              "title": "getCookie",
+              "slug": "getcookie"
+            },
+            {
+              "title": "getCookies",
+              "slug": "getcookies"
+            },
+            {
+              "title": "go",
+              "slug": "go"
+            },
+            {
+              "title": "hash",
+              "slug": "hash"
+            },
+            {
+              "title": "hover",
+              "slug": "hover"
+            },
+            {
+              "title": "intercept",
+              "slug": "intercept"
+            },
+            {
+              "title": "invoke",
+              "slug": "invoke"
+            },
+            {
+              "title": "its",
+              "slug": "its"
+            },
+            {
+              "title": "last",
+              "slug": "last"
+            },
+            {
+              "title": "location",
+              "slug": "location"
+            },
+            {
+              "title": "log",
+              "slug": "log"
+            },
+            {
+              "title": "next",
+              "slug": "next"
+            },
+            {
+              "title": "nextAll",
+              "slug": "nextall"
+            },
+            {
+              "title": "nextUntil",
+              "slug": "nextuntil"
+            },
+            {
+              "title": "not",
+              "slug": "not"
+            },
+            {
+              "title": "parent",
+              "slug": "parent"
+            },
+            {
+              "title": "parents",
+              "slug": "parents"
+            },
+            {
+              "title": "parentsUntil",
+              "slug": "parentsuntil"
+            },
+            {
+              "title": "pause",
+              "slug": "pause"
+            },
+            {
+              "title": "prev",
+              "slug": "prev"
+            },
+            {
+              "title": "prevAll",
+              "slug": "prevall"
+            },
+            {
+              "title": "prevUntil",
+              "slug": "prevuntil"
+            },
+            {
+              "title": "readFile",
+              "slug": "readfile"
+            },
+            {
+              "title": "reload",
+              "slug": "reload"
+            },
+            {
+              "title": "request",
+              "slug": "request"
+            },
+            {
+              "title": "rightclick",
+              "slug": "rightclick"
+            },
+            {
+              "title": "root",
+              "slug": "root"
+            },
+            {
+              "title": "route",
+              "slug": "route"
+            },
+            {
+              "title": "screenshot",
+              "slug": "screenshot"
+            },
+            {
+              "title": "scrollIntoView",
+              "slug": "scrollintoview"
+            },
+            {
+              "title": "scrollTo",
+              "slug": "scrollto"
+            },
+            {
+              "title": "select",
+              "slug": "select"
+            },
+            {
+              "title": "server",
+              "slug": "server"
+            },
+            {
+              "title": "session",
+              "slug": "session"
+            },
+            {
+              "title": "setCookie",
+              "slug": "setcookie"
+            },
+            {
+              "title": "shadow",
+              "slug": "shadow"
+            },
+            {
+              "title": "should",
+              "slug": "should"
+            },
+            {
+              "title": "siblings",
+              "slug": "siblings"
+            },
+            {
+              "title": "spread",
+              "slug": "spread"
+            },
+            {
+              "title": "spy",
+              "slug": "spy"
+            },
+            {
+              "title": "stub",
+              "slug": "stub"
+            },
+            {
+              "title": "submit",
+              "slug": "submit"
+            },
+            {
+              "title": "task",
+              "slug": "task"
+            },
+            {
+              "title": "then",
+              "slug": "then"
+            },
+            {
+              "title": "tick",
+              "slug": "tick"
+            },
+            {
+              "title": "title",
+              "slug": "title"
+            },
+            {
+              "title": "trigger",
+              "slug": "trigger"
+            },
+            {
+              "title": "type",
+              "slug": "type"
+            },
+            {
+              "title": "uncheck",
+              "slug": "uncheck"
+            },
+            {
+              "title": "url",
+              "slug": "url"
+            },
+            {
+              "title": "viewport",
+              "slug": "viewport"
+            },
+            {
+              "title": "visit",
+              "slug": "visit"
+            },
+            {
+              "title": "wait",
+              "slug": "wait"
+            },
+            {
+              "title": "window",
+              "slug": "window"
+            },
+            {
+              "title": "within",
+              "slug": "within"
+            },
+            {
+              "title": "wrap",
+              "slug": "wrap"
+            },
+            {
+              "title": "writeFile",
+              "slug": "writefile"
+            }
+          ]
+        },
+        {
+          "title": "Utilities",
+          "slug": "utilities",
+          "children": [
+            {
+              "title": "_",
+              "slug": "_"
+            },
+            {
+              "title": "$",
+              "slug": "$"
+            },
+            {
+              "title": "Blob",
+              "slug": "blob"
+            },
+            {
+              "title": "minimatch",
+              "slug": "minimatch"
+            },
+            {
+              "title": "Promise",
+              "slug": "promise"
+            },
+            {
+              "title": "sinon",
+              "slug": "sinon"
+            }
+          ]
+        },
+        {
+          "title": "Cypress API",
+          "slug": "cypress-api",
+          "children": [
+            {
+              "title": "Commands",
+              "slug": "custom-commands"
+            },
+            {
+              "title": "Cookies",
+              "slug": "cookies"
+            },
+            {
+              "title": "Screenshot",
+              "slug": "screenshot-api"
+            },
+            {
+              "title": "SelectorPlayground",
+              "slug": "selector-playground-api"
+            },
+            {
+              "title": "Server",
+              "slug": "cypress-server"
+            },
+            {
+              "title": "arch",
+              "slug": "arch"
+            },
+            {
+              "title": "browser",
+              "slug": "browser"
+            },
+            {
+              "title": "config",
+              "slug": "config"
+            },
+            {
+              "title": "currentTest",
+              "slug": "currenttest"
+            },
+            {
+              "title": "dom",
+              "slug": "dom"
+            },
+            {
+              "title": "env",
+              "slug": "env"
+            },
+            {
+              "title": "isBrowser",
+              "slug": "isbrowser"
+            },
+            {
+              "title": "isCy",
+              "slug": "iscy"
+            },
+            {
+              "title": "log",
+              "slug": "cypress-log"
+            },
+            {
+              "title": "platform",
+              "slug": "platform"
+            },
+            {
+              "title": "session",
+              "slug": "session"
+            },
+            {
+              "title": "spec",
+              "slug": "spec"
+            },
+            {
+              "title": "testingType",
+              "slug": "testing-type"
+            },
+            {
+              "title": "version",
+              "slug": "version"
+            }
+          ]
+        },
+        {
+          "title": "Plugins",
+          "slug": "plugins",
+          "children": [
+            {
+              "title": "Writing a Plugin",
+              "slug": "writing-a-plugin"
+            },
+            {
+              "title": "Configuration",
+              "slug": "configuration-api"
+            },
+            {
+              "title": "Preprocessors",
+              "slug": "preprocessors-api"
+            },
+            {
+              "title": "Before Run",
+              "slug": "before-run-api"
+            },
+            {
+              "title": "After Run",
+              "slug": "after-run-api"
+            },
+            {
+              "title": "Before Spec",
+              "slug": "before-spec-api"
+            },
+            {
+              "title": "After Spec",
+              "slug": "after-spec-api"
+            },
+            {
+              "title": "Browser Launching",
+              "slug": "browser-launch-api"
+            },
+            {
+              "title": "After Screenshot",
+              "slug": "after-screenshot-api"
+            }
+          ]
+        }
+      ]
     }
-  },
-  "plugins": {
-    "plugins": "index.html"
-  },
-  "examples": {
-    "examples": {
-      "recipes": "recipes.html",
-      "tutorials": "tutorials.html",
-      "applications": "applications.html",
-      "docker": "docker.html",
-      "workshop": "workshop.html",
-      "projects-media": "projects-media.html"
-    },
-    "media": {
-      "courses-media": "courses-media.html",
-      "webinars-media": "webinars-media.html",
-      "blogs-media": "blogs-media.html",
-      "talks-media": "talks-media.html",
-      "podcasts-media": "podcasts-media.html",
-      "screencasts-media": "screencasts-media.html"
+  ],
+  "plugins": [
+    {
+      "title": "Plugins",
+      "slug": "plugins"
     }
-  },
-  "faq": {
-    "questions": {
-      "using-cypress-faq": "using-cypress-faq.html",
-      "general-questions-faq": "general-questions-faq.html",
-      "dashboard-faq": "dashboard-faq.html",
-      "company-faq": "company-faq.html"
+  ],
+  "examples": [
+    {
+      "title": "Examples",
+      "slug": "examples",
+      "children": [
+        {
+          "title": "Examples",
+          "slug": "examples",
+          "children": [
+            {
+              "title": "Recipes",
+              "slug": "recipes"
+            },
+            {
+              "title": "Tutorials",
+              "slug": "tutorials"
+            },
+            {
+              "title": "Applications",
+              "slug": "applications"
+            },
+            {
+              "title": "Docker",
+              "slug": "docker"
+            },
+            {
+              "title": "Workshops",
+              "slug": "workshop"
+            },
+            {
+              "title": "Projects",
+              "slug": "projects-media"
+            }
+          ]
+        },
+        {
+          "title": "Media",
+          "slug": "media",
+          "children": [
+            {
+              "title": "Courses",
+              "slug": "courses-media"
+            },
+            {
+              "title": "Webinars",
+              "slug": "webinars-media"
+            },
+            {
+              "title": "Blogs",
+              "slug": "blogs-media"
+            },
+            {
+              "title": "Talks",
+              "slug": "talks-media"
+            },
+            {
+              "title": "Podcasts",
+              "slug": "podcasts-media"
+            },
+            {
+              "title": "Screencasts",
+              "slug": "screencasts-media"
+            }
+          ]
+        }
+      ]
     }
-  }
+  ],
+  "faq": [
+    {
+      "title": "FAQ",
+      "slug": "faq",
+      "children": [
+        {
+          "title": "FAQ",
+          "slug": "questions",
+          "children": [
+            {
+              "title": "Using Cypress",
+              "slug": "using-cypress-faq"
+            },
+            {
+              "title": "General Questions",
+              "slug": "general-questions-faq"
+            },
+            {
+              "title": "Dashboard",
+              "slug": "dashboard-faq"
+            },
+            {
+              "title": "Company",
+              "slug": "company-faq"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

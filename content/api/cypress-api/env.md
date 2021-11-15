@@ -6,7 +6,8 @@ title: Cypress.env
 
 <Alert type="info">
 
-The [Environment Variable](/guides/guides/environment-variables) guide explains the other ways you can set them _outside of your tests_.
+The [Environment Variable](/guides/guides/environment-variables) guide explains
+the other ways you can set them _outside of your tests_.
 
 </Alert>
 
@@ -14,17 +15,24 @@ The [Environment Variable](/guides/guides/environment-variables) guide explains 
 
 <strong class="alert-header">Scope</strong>
 
-Environment variables set using `Cypress.env` _are only in scope for the current spec file._
+Environment variables set using `Cypress.env` _are only in scope for the current
+spec file._
 
-Cypress runs each spec file in isolation: the browser is exited between specs. Environment variables added or changed in one spec won't be visible in other specs.
+Cypress runs each spec file in isolation: the browser is exited between specs.
+Environment variables added or changed in one spec won't be visible in other
+specs.
 
 </Alert>
 
 <Alert type="warning">
 
-<strong class="alert-header">Difference between OS-level and Cypress environment variables</strong>
+<strong class="alert-header">Difference between OS-level and Cypress environment
+variables</strong>
 
-In Cypress, "environment variables" are variables that are accessible via `Cypress.env`. These are not the same as OS-level environment variables. However, [it is possible to set Cypress environment variables from OS-level environment variables](/guides/guides/environment-variables.html#Option-3-CYPRESS).
+In Cypress, "environment variables" are variables that are accessible via
+`Cypress.env`. These are not the same as OS-level environment variables.
+However,
+[it is possible to set Cypress environment variables from OS-level environment variables](/guides/guides/environment-variables.html#Option-3-CYPRESS).
 
 </Alert>
 
@@ -78,7 +86,8 @@ Cypress.env() // => {foo: "bar", baz: "quux"}
 
 <strong class="alert-header">Boolean</strong>
 
-We automatically normalize both the key and the value when passed via the command line. Cypress will automatically convert values into Number or Boolean.
+We automatically normalize both the key and the value when passed via the
+command line. Cypress will automatically convert values into Number or Boolean.
 
 </Alert>
 
@@ -100,7 +109,8 @@ Cypress.env('MY_ID') // => 123
 
 <strong class="alert-header">Scope</strong>
 
-Remember, any changes that you make to environment variables using this API will only be in effect for the remainder of the tests _in the same spec file._
+Remember, any changes that you make to environment variables using this API will
+only be in effect for the remainder of the tests _in the same spec file._
 
 </Alert>
 
@@ -144,9 +154,12 @@ Cypress.env() // => {foo: "foo", baz: "quux", host: "http://server.dev.local"}
 
 ### From a plugin
 
-Here's an example that uses `Cypress.env` to access an environment variable that's been [dynamically set in a plugin](/guides/guides/environment-variables#Option-5-Plugins).
+Here's an example that uses `Cypress.env` to access an environment variable
+that's been
+[dynamically set in a plugin](/guides/guides/environment-variables#Option-5-Plugins).
 
-Use this approach to grab the value of an environment variable _once_ before any of the tests in your spec run.
+Use this approach to grab the value of an environment variable _once_ before any
+of the tests in your spec run.
 
 ```js
 // cypress/plugins/index.js
@@ -177,19 +190,29 @@ describe('Environment variable set in plugin', () => {
 
 ### Why would I ever need to use environment variables?
 
-The [Environment Variables](/guides/guides/environment-variables) guide explains common use cases.
+The [Environment Variables](/guides/guides/environment-variables) guide explains
+common use cases.
 
 ### Can I pass in environment variables from the command line?
 
 Yes. You can do that and much more.
 
-The [Environment Variables](/guides/guides/environment-variables) guide explains the other ways you can set environment variables for your tests.
+The [Environment Variables](/guides/guides/environment-variables) guide explains
+the other ways you can set environment variables for your tests.
 
 ### Why is it `Cypress.env` and not `cy.env`?
 
-As a rule of thumb anything you call from `Cypress` affects global state. Anything you call from `cy` affects local state.
+As a rule of thumb anything you call from `Cypress` affects global state.
+Anything you call from `cy` affects local state.
 
-Since the environment variables added or changed by `Cypress.env` are only in scope for the current spec file, you'd think that it should be `cy.env` and not `Cypress.env`&hellip; and you'd be right. The fact that `Cypress.env` affects local state is an artifact of the API evolving over time: `Cypress.env` used to affect global state&mdash;environment variables added in one test spec file were available in other specs&mdash;but the Cypress team wisely made each spec run in isolation in [`3.0.0`](/guides/references/changelog#3-0-0) and by that time `Cypress.env` was public API.
+Since the environment variables added or changed by `Cypress.env` are only in
+scope for the current spec file, you'd think that it should be `cy.env` and not
+`Cypress.env`&hellip; and you'd be right. The fact that `Cypress.env` affects
+local state is an artifact of the API evolving over time: `Cypress.env` used to
+affect global state&mdash;environment variables added in one test spec file were
+available in other specs&mdash;but the Cypress team wisely made each spec run in
+isolation in [`3.0.0`](/guides/references/changelog#3-0-0) and by that time
+`Cypress.env` was public API.
 
 ## See also
 

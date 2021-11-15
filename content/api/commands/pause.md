@@ -2,11 +2,14 @@
 title: pause
 ---
 
-Stop `cy` commands from running and allow interaction with the application under test. You can then "resume" running all commands or choose to step through the "next" commands from the Command Log.
+Stop `cy` commands from running and allow interaction with the application under
+test. You can then "resume" running all commands or choose to step through the
+"next" commands from the Command Log.
 
 <Alert type="info">
 
-This does not set a `debugger` in your code, unlike [`.debug()`](/api/commands/debug)
+This does not set a `debugger` in your code, unlike
+[`.debug()`](/api/commands/debug)
 
 </Alert>
 
@@ -41,7 +44,8 @@ Pass in an options object to change the default behavior of `.pause()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.pause()` yields the same subject it was given from the previous command.</li></List>
+<List><li>`.pause()` yields the same subject it was given from the previous
+command.</li></List>
 
 ## Examples
 
@@ -61,11 +65,14 @@ cy.get('button').should('not.be.disabled')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.pause()` can bechained off of `cy` or off another command.</li></List>
+<List><li>`.pause()` can be chained off of `cy` or off another
+command.</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.pause()` is a utility command.</li><li>`.pause()` will not run assertions. Assertions will pass through as if this command did not exist.</li></List>
+<List><li>`.pause()` is a utility command.</li><li>`.pause()` will not run
+assertions. Assertions will pass through as if this command did not
+exist.</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
@@ -91,7 +98,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/pause/initial-pause-in-gui-highlights-the-pause-command.png" alt="Pause command on intial pause" ></DocsImage>
 
-When clicking on "Next: 'click'" at the top of the Command Log, the Command Log will run only the next command and pause again.
+When clicking on "Next: 'click'" at the top of the Command Log, the Command Log
+will run only the next command and pause again.
 
 #### Click "Next"
 

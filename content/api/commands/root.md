@@ -37,7 +37,9 @@ Pass in an options object to change the default behavior of `.root()`.
 
 `.root()` yields the root DOM element.
 
-The root element yielded is `<html>` by default. However, when calling `.root()` from a [`.within()`](/api/commands/within) command, the root element will point to the element you are "within".
+The root element yielded is `<html>` by default. However, when calling `.root()`
+from a [`.within()`](/api/commands/within) command, the root element will point
+to the element you are "within".
 
 ## Examples
 
@@ -69,11 +71,14 @@ cy.get('form').within(($form) => {
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.root()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`cy.root()` will automatically
+[retry](/guides/core-concepts/retry-ability) until all chained assertions have
+passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.root()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`cy.root()` can time out waiting for assertions you've added to
+pass.</li></List>
 
 ## Command Log
 
@@ -91,7 +96,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/root/find-root-element-and-assert.png" alt="Command Log root" ></DocsImage>
 
-When clicking on the `root` command within the command log, the console outputs the following:
+When clicking on the `root` command within the command log, the console outputs
+the following:
 
 <DocsImage src="/img/api/root/console-log-root-which-is-usually-the-main-document.png" alt="Console Log root" ></DocsImage>
 

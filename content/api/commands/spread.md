@@ -6,7 +6,8 @@ Expand an array into multiple arguments.
 
 <Alert type="info">
 
-Identical to [`.then()`](/api/commands/then), but always expects an array-like structure as its subject.
+Identical to [`.then()`](/api/commands/then), but always expects an array-like
+structure as its subject.
 
 </Alert>
 
@@ -48,7 +49,10 @@ Pass in an options object to change the default behavior of `.spread()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.spread()` 'yields the return value of your callback function' </li><li>`.spread()` wll not change the subject if `null` or `undefined` is returned.</li></List>
+<List><li>`.spread()` 'yields the return value of your callback function'
+
+</li><li>`.spread()` wll not change the subject if `null` or `undefined` is
+returned.</li></List>
 
 ## Examples
 
@@ -81,15 +85,19 @@ cy.getCookies().spread((cookie1, cookie2, cookie3) => {
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.spread()` requires being chained off a previous command.</li><li>`.spread()` requires being chained off a command that yields an array-like structure.</li></List>
+<List><li>`.spread()` requires being chained off a previous
+command.</li><li>`.spread()` requires being chained off a command that yields an
+array-like structure.</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.spread()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`.spread()` will only run assertions you have chained once, and will
+not [retry](/guides/core-concepts/retry-ability).</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.spread()` can time out waiting for a promise you've returned to resolve.</li></List>
+<List><li>`.spread()` can time out waiting for a promise you've returned to
+resolve.</li></List>
 
 ## Command Log
 

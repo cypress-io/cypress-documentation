@@ -2,7 +2,8 @@
 title: should
 ---
 
-Create an assertion. Assertions are automatically retried until they pass or time out.
+Create an assertion. Assertions are automatically retried until they pass or
+time out.
 
 <Alert type="info">
 
@@ -12,7 +13,8 @@ An alias of [`.and()`](/api/commands/and)
 
 <Alert type="info">
 
-**Note:** `.should()` assumes you are already familiar with core concepts such as [assertions](/guides/core-concepts/introduction-to-cypress#Assertions)
+**Note:** `.should()` assumes you are already familiar with core concepts such
+as [assertions](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 </Alert>
 
@@ -45,7 +47,9 @@ cy.should('eq', '42') // Should not be chained off 'cy'
 
 **<Icon name="angle-right"></Icon> chainers** **_(String)_**
 
-Any valid chainer that comes from [Chai](/guides/references/assertions#Chai) or [Chai-jQuery](/guides/references/assertions#Chai-jQuery) or [Sinon-Chai](/guides/references/assertions#Sinon-Chai).
+Any valid chainer that comes from [Chai](/guides/references/assertions#Chai) or
+[Chai-jQuery](/guides/references/assertions#Chai-jQuery) or
+[Sinon-Chai](/guides/references/assertions#Sinon-Chai).
 
 **<Icon name="angle-right"></Icon> value** **_(String)_**
 
@@ -57,18 +61,22 @@ A method to be called on the chainer.
 
 **<Icon name="angle-right"></Icon> callbackFn** **_(Function)_**
 
-Pass a function that can have any number of explicit assertions within it. Whatever was passed to the function is what is yielded.
+Pass a function that can have any number of explicit assertions within it.
+Whatever was passed to the function is what is yielded.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>In most cases, `.should()` yields the same subject it was given from the previous command.</li></List>
+<List><li>In most cases, `.should()` yields the same subject it was given from
+the previous command.</li></List>
 
 ```javascript
 cy.get('nav') // yields <nav>
   .should('be.visible') // yields <nav>
 ```
 
-However, some chainers change the subject. In the example below, the second `.should()` yields the string `sans-serif` because the chainer `have.css, 'font-family'` changes the subject.
+However, some chainers change the subject. In the example below, the second
+`.should()` yields the string `sans-serif` because the chainer
+`have.css, 'font-family'` changes the subject.
 
 ```javascript
 cy.get('nav') // yields <nav>
@@ -136,7 +144,8 @@ cy.get('#header a').should('have.attr', 'href')
 cy.get('#header a').should('have.attr', 'href', '/users')
 ```
 
-**Note:** the `have.attr` assertion changes the subject from the original element to the attribute's value
+**Note:** the `have.attr` assertion changes the subject from the original
+element to the attribute's value
 
 ```javascript
 cy.get('#header a') // yields the element
@@ -155,9 +164,13 @@ cy.get('#input-receives-focus').should('have.focus') // equivalent to should('be
 
 ### Function
 
-Passing a function to `.should()` enables you to make multiple assertions on the yielded subject. This also gives you the opportunity to _massage_ what you'd like to assert on.
+Passing a function to `.should()` enables you to make multiple assertions on the
+yielded subject. This also gives you the opportunity to _massage_ what you'd
+like to assert on.
 
-Be sure _not_ to include any code that has side effects in your callback function. The callback function will be retried over and over again until no assertions within it throw.
+Be sure _not_ to include any code that has side effects in your callback
+function. The callback function will be retried over and over again until no
+assertions within it throw.
 
 #### Verify length, content, and classes from multiple `<p>`
 
@@ -192,7 +205,9 @@ cy.get('p').should(($p) => {
 })
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Warning** Any value returned from a `.should()` callback function will be ignored. The original subject will be yielded to the next command.
+**<Icon name="exclamation-triangle" color="red"></Icon> Warning** Any value
+returned from a `.should()` callback function will be ignored. The original
+subject will be yielded to the next command.
 
 ```js
 cy.get('p')
@@ -253,7 +268,8 @@ cy.get('.docs-header')
 
 #### Assert text content of 3 elements
 
-Example below first asserts that there are 3 elements, and then checks the text content of each one.
+Example below first asserts that there are 3 elements, and then checks the text
+content of each one.
 
 ```html
 <ul class="connectors-list">
@@ -274,11 +290,14 @@ cy.get('.connectors-list > li').should(($lis) => {
 
 <Alert type="info">
 
-Read [Cypress should callback](https://glebbahmutov.com/blog/cypress-should-callback/) blog post to see more variations of the above example.
+Read
+[Cypress should callback](https://glebbahmutov.com/blog/cypress-should-callback/)
+blog post to see more variations of the above example.
 
 </Alert>
 
-For clarity you can pass a string message as a second argument to any `expect` assertion, see [Chai#expect](https://www.chaijs.com/guide/styles/#expect).
+For clarity you can pass a string message as a second argument to any `expect`
+assertion, see [Chai#expect](https://www.chaijs.com/guide/styles/#expect).
 
 ```javascript
 cy.get('.connectors-list > li').should(($lis) => {
@@ -289,13 +308,16 @@ cy.get('.connectors-list > li').should(($lis) => {
 })
 ```
 
-These string messages will be shown in the Command Log giving each assertion more context.
+These string messages will be shown in the Command Log giving each assertion
+more context.
 
 <DocsImage src="/img/api/should/expect-with-message.png" alt="Expect assertions with messages" ></DocsImage>
 
 #### Compare text values of two elements
 
-The example below gets the text contained within one element and saves it in a closure variable. Then the test gets the text in another element and asserts that the two text values are the same after normalizing.
+The example below gets the text contained within one element and saves it in a
+closure variable. Then the test gets the text in another element and asserts
+that the two text values are the same after normalizing.
 
 ```html
 <div class="company-details">
@@ -334,7 +356,8 @@ cy.get('.company-details')
 
 Cypress makes it easier to chain assertions together.
 
-In this example we use [`.and()`](/api/commands/and) which is identical to `.should()`.
+In this example we use [`.and()`](/api/commands/and) which is identical to
+`.should()`.
 
 ```javascript
 // our subject is not changed by our first assertion,
@@ -348,7 +371,7 @@ Cypress won't resolve your commands until all of its assertions pass.
 
 ```javascript
 // Application Code
-$('button').click(() => {
+$('button').click(function () {
   $button = $(this)
 
   setTimeout(() => {
@@ -370,11 +393,15 @@ cy.get('button')
 
 #### How do I know which assertions change the subject and which keep it the same?
 
-The chainers that come from [Chai](/guides/references/bundled-tools#Chai) or [Chai-jQuery](/guides/references/bundled-tools#Chai-jQuery) will always document what they return.
+The chainers that come from [Chai](/guides/references/bundled-tools#Chai) or
+[Chai-jQuery](/guides/references/bundled-tools#Chai-jQuery) will always document
+what they return.
 
 #### Using a callback function will not change what is yielded
 
-Whatever is returned in the function is ignored. Cypress always forces the command to yield the value from the previous cy command's yield (which in the example below is `<button>`)
+Whatever is returned in the function is ignored. Cypress always forces the
+command to yield the value from the previous cy command's yield (which in the
+example below is `<button>`)
 
 ```javascript
 cy.get('button')
@@ -392,9 +419,13 @@ cy.get('button')
 
 ### What's the difference between `.then()` and `.should()`/`.and()`?
 
-Using `.then()` allows you to use the yielded subject in a callback function and should be used when you need to manipulate some values or do some actions.
+Using `.then()` allows you to use the yielded subject in a callback function and
+should be used when you need to manipulate some values or do some actions.
 
-When using a callback function with `.should()` or `.and()`, on the other hand, there is special logic to rerun the callback function until no assertions throw within it. You should be careful of side affects in a `.should()` or `.and()` callback function that you would not want performed multiple times.
+When using a callback function with `.should()` or `.and()`, on the other hand,
+there is special logic to rerun the callback function until no assertions throw
+within it. You should be careful of side affects in a `.should()` or `.and()`
+callback function that you would not want performed multiple times.
 
 ## Rules
 
@@ -404,7 +435,9 @@ When using a callback function with `.should()` or `.and()`, on the other hand, 
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.should()` will continue to [retry](/guides/core-concepts/retry-ability) its specified assertions until it times out.</li></List>
+<List><li>`.should()` will continue to
+[retry](/guides/core-concepts/retry-ability) its specified assertions until it
+times out.</li></List>
 
 ```javascript
 cy.get('input', { timeout: 10000 }).should('have.value', '10')
@@ -435,7 +468,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/should/should-command-shows-up-as-assert-for-each-assertion.png" alt="Command Log should" ></DocsImage>
 
-When clicking on `assert` within the command log, the console outputs the following:
+When clicking on `assert` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/should/assertion-in-console-log-shows-actual-versus-expected-data.png" alt="Console Log should" ></DocsImage>
 

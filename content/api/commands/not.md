@@ -12,7 +12,8 @@ Opposite of [`.filter()`](/api/commands/filter)
 
 <Alert type="info">
 
-The querying behavior of this command matches exactly how [`.not()`](http://api.jquery.com/not) works in jQuery.
+The querying behavior of this command matches exactly how
+[`.not()`](http://api.jquery.com/not) works in jQuery.
 
 </Alert>
 
@@ -81,15 +82,22 @@ cy.get('ul>li').not('.active').should('have.length', 4) // true
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.not()` requires being chained off a command that yields DOM element(s).</li></List>
+<List><li>`.not()` requires being chained off a command that yields DOM
+element(s).</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.not()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.not()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed</li></List>
+<List><li>`.not()` will automatically
+[retry](/guides/core-concepts/retry-ability) until the element(s)
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.not()`
+will automatically [retry](/guides/core-concepts/retry-ability) until all
+chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.not()` can time out waiting for the element(s) to [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.not()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`.not()` can time out waiting for the element(s) to
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.not()`
+can time out waiting for assertions you've added to pass.</li></List>
 
 ## Command Log
 
@@ -103,7 +111,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/not/filter-elements-with-not-and-optional-selector.png" alt="Command Log not" ></DocsImage>
 
-When clicking on `not` within the command log, the console outputs the following:
+When clicking on `not` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/not/log-elements-found-when-using-cy-not.png" alt="Console Log not" ></DocsImage>
 

@@ -4,20 +4,24 @@ title: Catalog of Events
 
 Cypress emits a series of events as it runs in your browser.
 
-These events are useful not only to control your application's behavior, but also for debugging purposes.
+These events are useful not only to control your application's behavior, but
+also for debugging purposes.
 
 Here are some examples you can do with these events:
 
 - Listen for `uncaught exceptions` and prevent Cypress from failing the test
 - Listen for `alert` or `confirm` calls and change the `confirm` behavior
-- Listen for `window:before:load` events and modify the `window` before any of your app code runs between page transitions
-- Listen for `command:retry` events to understand why Cypress is internally retrying for debugging purposes
+- Listen for `window:before:load` events and modify the `window` before any of
+  your app code runs between page transitions
+- Listen for `command:retry` events to understand why Cypress is internally
+  retrying for debugging purposes
 
 ## Event Types
 
 ### App Events
 
-These events come from the application currently under test (your application). These are the most useful events for you to listen to.
+These events come from the application currently under test (your application).
+These are the most useful events for you to listen to.
 
 | Event            | Details                                                                                                                                                                                                                                                                                                                                           |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -69,13 +73,14 @@ These events come from the application currently under test (your application). 
 
 ### Cypress Events
 
-These events come from Cypress as it issues commands and reacts to their state. These are all useful to listen to for debugging purposes.
+These events come from Cypress as it issues commands and reacts to their state.
+These are all useful to listen to for debugging purposes.
 
-| Event            | Details                                                                                                                                                                                                                                                                                                                                                                                                 |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Name:**        | `fail`                                                                                                                                                                                                                                                                                                                                                                                                  |
-| **Yields:**      | the error **(Object)**, Mocha runnable **(Object)**                                                                                                                                                                                                                                                                                                                                                     |
-| **Description:** | Fires when the test has failed. It is technically possible to prevent the test from actually failing by binding to this event and invoking an async `done` callback. However this is **strongly discouraged**. Tests should never legitimately fail. This event exists because it's extremely useful for debugging purposes. See our recipe [Handling errors](/examples/examples/recipes#Fundamentals). |
+| Event            | Details                                                                                                                                                                                                                                                                                                                                                   |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Name:**        | `fail`                                                                                                                                                                                                                                                                                                                                                    |
+| **Yields:**      | the error **(Object)**, Mocha runnable **(Object)**                                                                                                                                                                                                                                                                                                       |
+| **Description:** | Fires when the test has failed. Binding to this event without rethrowing the error will prevent the test from failing. However this is **strongly discouraged**. Tests should never legitimately fail. This event exists because it's extremely useful for debugging purposes. See our recipe [Handling errors](/examples/examples/recipes#Fundamentals). |
 
 | Event            | Details                                                                                                                                                              |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -139,11 +144,14 @@ These events come from Cypress as it issues commands and reacts to their state. 
 
 ### Other Events
 
-There are a myriad of other events Cypress fires to communicate with the Node server process, automation servers, mocha, the runner, and the reporter. They are strictly internal to the way Cypress works and not useful for users.
+There are a myriad of other events Cypress fires to communicate with the Node
+server process, automation servers, mocha, the runner, and the reporter. They
+are strictly internal to the way Cypress works and not useful for users.
 
 ## Binding to Events
 
-Both the global `Cypress` and `cy` objects are standard Node event emitters. That means you can use the following methods to bind and unbind from events.
+Both the global `Cypress` and `cy` objects are standard Node event emitters.
+That means you can use the following methods to bind and unbind from events.
 
 - [on](https://nodejs.org/api/events.html#events_emitter_on_eventname_listener)
 - [once](https://nodejs.org/api/events.html#events_emitter_once_eventname_listener)
@@ -154,13 +162,20 @@ It's important to understand why you'd want to bind to either `Cypress` or `cy`.
 
 ### Cypress
 
-Cypress is a global object that persists for the entirety of all of your tests. Any events you bind to Cypress will apply to all tests, and will not be unbound unless you manually unbind them.
+Cypress is a global object that persists for the entirety of all of your tests.
+Any events you bind to Cypress will apply to all tests, and will not be unbound
+unless you manually unbind them.
 
-This is useful when you're debugging and want to add a single "catch-all" event to track down things like test failures, or uncaught exceptions from your application.
+This is useful when you're debugging and want to add a single "catch-all" event
+to track down things like test failures, or uncaught exceptions from your
+application.
 
 ### cy
 
-The `cy` object is bound to each individual test. Events bound to `cy` will **automatically** be removed when the test ends. You don't have to worry about cleanup, and your event listeners will only be called for the duration of the single test.
+The `cy` object is bound to each individual test. Events bound to `cy` will
+**automatically** be removed when the test ends. You don't have to worry about
+cleanup, and your event listeners will only be called for the duration of the
+single test.
 
 ## Examples
 
@@ -263,7 +278,9 @@ it('calls the "fail" callback when this test fails', () => {
 })
 ```
 
-Read [Cypress Metaprogramming](https://glebbahmutov.com/blog/cy-metaprogramming/) for more examples.
+Read
+[Cypress Metaprogramming](https://glebbahmutov.com/blog/cy-metaprogramming/) for
+more examples.
 
 ### Page Navigation
 
@@ -337,7 +354,8 @@ it('can modify the window prior to page load on all pages', () => {
 
 #### Control whether you accept or reject confirmations
 
-This enables you to test how your application reacts to accepted confirmations and rejected confirmations.
+This enables you to test how your application reacts to accepted confirmations
+and rejected confirmations.
 
 <!-- textlint-disable -->
 
@@ -428,7 +446,8 @@ it('could also use a stub instead of imperative code', () => {
 
 #### Assert on the alert text
 
-Cypress automatically accepts alerts but you can still assert on the text content.
+Cypress automatically accepts alerts but you can still assert on the text
+content.
 
 ```javascript
 // app code
@@ -457,14 +476,18 @@ it('can assert on the alert text content', () => {
 
 ### Logging All Events
 
-Cypress uses the [`debug`](https://github.com/visionmedia/debug) node module for both the back end server process, and for everything running in the browser (called the driver).
+Cypress uses the [`debug`](https://github.com/visionmedia/debug) node module for
+both the back end server process, and for everything running in the browser
+(called the driver).
 
-If you'd like to see (the huge) stream of events that Cypress emits you can pop open your Dev Tools and write this line in the console.
+If you'd like to see (the huge) stream of events that Cypress emits you can pop
+open your Dev Tools and write this line in the console.
 
 ```javascript
 localStorage.debug = 'cypress:*'
 ```
 
-Reload the browser and turn on 'Verbose' logs to see debug messages within the Developer Tools console.
+Reload the browser and turn on 'Verbose' logs to see debug messages within the
+Developer Tools console.
 
 <DocsImage src="/img/api/catalog-of-events/console-log-events-debug.png" alt="console log events for debugging" ></DocsImage>

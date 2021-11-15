@@ -25,7 +25,9 @@ cy.go('back')
 
 The direction to navigate.
 
-You can use `back` or `forward` to go one step back or forward. You could also navigate to a specific history position (`-1` goes back one page, `1` goes forward one page, etc).
+You can use `back` or `forward` to go one step back or forward. You could also
+navigate to a specific history position (`-1` goes back one page, `1` goes
+forward one page, etc).
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -38,7 +40,9 @@ Pass in an options object to change the default behavior of `cy.go()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.go()` 'yields the `window` object after the page finishes loading' </li></List>
+<List><li>`cy.go()` 'yields the `window` object after the page finishes loading'
+
+</li></List>
 
 ## Examples
 
@@ -74,23 +78,32 @@ cy.go(1) // equivalent to clicking forward button
 
 #### Refreshing and loading the page
 
-If going forward or back causes a full page refresh, Cypress will wait for the new page to load before moving on to new commands.
+If going forward or back causes a full page refresh, Cypress will wait for the
+new page to load before moving on to new commands.
 
-Cypress additionally handles situations where a page load was not caused (such as hash routing) and will resolve immediately.
+Cypress additionally handles situations where a page load was not caused (such
+as hash routing) and will resolve immediately.
 
 ## Rules
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.go()` requires being chained off of `cy`.</li><li>`cy.go()` requires the response to be `content-type: text/html`.</li><li>`cy.go()` requires the response code to be `2xx` after following redirects.</li><li>`cy.go()` requires the load `load` event to eventually fire.</li></List>
+<List><li>`cy.go()` requires being chained off of `cy`.</li><li>`cy.go()`
+requires the response to be `content-type: text/html`.</li><li>`cy.go()`
+requires the response code to be `2xx` after following
+redirects.</li><li>`cy.go()` requires the load `load` event to eventually
+fire.</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.go()` will automatically wait for assertions you have chained to pass</li></List>
+<List><li>`cy.go()` will automatically wait for assertions you have chained to
+pass</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.go()` can time out waiting for the page to fire its `load` event.</li><li>`cy.go()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`cy.go()` can time out waiting for the page to fire its `load`
+event.</li><li>`cy.go()` can time out waiting for assertions you've added to
+pass.</li></List>
 
 ## Command Log
 
@@ -104,7 +117,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/go/test-showing-go-back-browser-button.png" alt="Command Log go" ></DocsImage>
 
-When clicking on the `go` command within the command log, the console outputs the following:
+When clicking on the `go` command within the command log, the console outputs
+the following:
 
 <DocsImage src="/img/api/go/window-is-logged-when-go-back-in-browser-history.png" alt="console Log go" ></DocsImage>
 

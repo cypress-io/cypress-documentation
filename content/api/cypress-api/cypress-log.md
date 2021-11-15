@@ -4,7 +4,8 @@ title: Cypress.log
 
 This is the internal API for controlling what gets printed to the Command Log.
 
-Useful when writing your own [custom commands](/api/cypress-api/custom-commands).
+Useful when writing your own
+[custom commands](/api/cypress-api/custom-commands).
 
 ## Syntax
 
@@ -28,7 +29,8 @@ Pass in an options object to `Cypress.log()`.
 
 ## Examples
 
-We want the Command Log and the console in the DevTools to log specific properties of our custom command.
+We want the Command Log and the console in the DevTools to log specific
+properties of our custom command.
 
 ```javascript
 Cypress.Commands.add('setSessionStorage', (key, value) => {
@@ -55,7 +57,8 @@ Cypress.Commands.add('setSessionStorage', (key, value) => {
 })
 ```
 
-The code above displays in the Command Log as shown below, with the console properties shown on click of the command.
+The code above displays in the Command Log as shown below, with the console
+properties shown on click of the command.
 
 <DocsImage src="/img/api/Cypress.log-custom-logging-and-console.png" alt="Custom logging of custom command" ></DocsImage>
 

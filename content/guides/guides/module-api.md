@@ -2,7 +2,9 @@
 title: Module API
 ---
 
-You can require Cypress as a node module from your application under test and run Cypress via Node.js. This can be useful when you want access to the test results directly after the run. With this workflow, for example, you can:
+You can require Cypress as a node module from your application under test and
+run Cypress via Node.js. This can be useful when you want access to the test
+results directly after the run. With this workflow, for example, you can:
 
 - Send a notification about failing tests with included screenshot images
 - Rerun a single failing spec file
@@ -10,7 +12,8 @@ You can require Cypress as a node module from your application under test and ru
 
 ## `cypress.run()`
 
-Runs Cypress tests via Node.js and resolve with all test results. See the [Cypress Module API recipe](https://github.com/cypress-io/cypress-example-recipes#fundamentals).
+Runs Cypress tests via Node.js and resolve with all test results. See the
+[Cypress Module API recipe](https://github.com/cypress-io/cypress-example-recipes#fundamentals).
 
 ```javascript
 // e2e-run-tests.js
@@ -30,7 +33,8 @@ cypress.run({
 })
 ```
 
-You can then run Cypress by running the following in your terminal or an npm script:
+You can then run Cypress by running the following in your terminal or an npm
+script:
 
 ```shell
 node e2e-run-tests.js
@@ -38,36 +42,39 @@ node e2e-run-tests.js
 
 ### Options
 
-Just like the [Command Line options](/guides/guides/command-line) for `cypress run`, you can pass options that modify how Cypress runs.
+Just like the [Command Line options](/guides/guides/command-line) for
+`cypress run`, you can pass options that modify how Cypress runs.
 
-| Option            | Type               | Description                                                                                                                                                        |
-| ----------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `browser`         | _string_           | Specify different browser to run tests in, either by name or by filesystem path                                                                                    |
-| `ciBuildId`       | _string_           | Specify a unique identifier for a run to enable [grouping](/guides/guides/parallelization#Grouping-test-runs) or [parallelization](/guides/guides/parallelization) |
-| `config`          | _object_           | Specify [configuration](/guides/references/configuration)                                                                                                          |
-| `configFile`      | _string / boolean_ | Path to the config file to be used. If `false` is passed, no config file will be used.                                                                             |
-| `env`             | _object_           | Specify [environment variables](/guides/guides/environment-variables)                                                                                              |
-| `group`           | _string_           | [Group](/guides/guides/parallelization#Grouping-test-runs) recorded tests together under a single run                                                              |
-| `headed`          | _boolean_          | Displays the browser instead of running headlessly (default Firefox and Chromium-based browsers)                                                                   |
-| `headless`        | _boolean_          | Hide the browser instead of running headed (defaults for Electron)                                                                                                 |
-| `key`             | _string_           | Specify your secret record key                                                                                                                                     |
-| `exit`            | _boolean_          | Whether to close Cypress after all tests run                                                                                                                       |
-| `parallel`        | _boolean_          | Run recorded specs in [parallel](/guides/guides/parallelization) across multiple machines                                                                          |
-| `port`            | _number_           | Override default port                                                                                                                                              |
-| `project`         | _string_           | Path to a specific project                                                                                                                                         |
-| `quiet`           | _boolean_          | If passed, Cypress output will not be printed to `stdout`. Only output from the configured [Mocha reporter](/guides/tooling/reporters) will print.                 |
-| `record`          | _boolean_          | Whether to record the test run                                                                                                                                     |
-| `reporter`        | _string_           | Specify a [Mocha reporter](/guides/tooling/reporters)                                                                                                              |
-| `reporterOptions` | _object_           | Specify [Mocha reporter](/guides/tooling/reporters) options                                                                                                        |
-| `spec`            | _string_           | Specify the specs to run, see examples below                                                                                                                       |
-| `tag`             | _string_           | Identify a run with a tag or tags                                                                                                                                  |
-| `testingType`     | _string_           | Specify the type of tests to execute; either `e2e` or `component`. Defaults to `e2e`                                                                               |
+| Option              | Type               | Description                                                                                                                                                                                                       |
+| ------------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `browser`           | _string_           | Specify different browser to run tests in, either by name or by filesystem path                                                                                                                                   |
+| `ciBuildId`         | _string_           | Specify a unique identifier for a run to enable [grouping](/guides/guides/parallelization#Grouping-test-runs) or [parallelization](/guides/guides/parallelization)                                                |
+| `config`            | _object_           | Specify [configuration](/guides/references/configuration)                                                                                                                                                         |
+| `configFile`        | _string / boolean_ | Path to the config file to be used. If `false` is passed, no config file will be used.                                                                                                                            |
+| `env`               | _object_           | Specify [environment variables](/guides/guides/environment-variables)                                                                                                                                             |
+| `group`             | _string_           | [Group](/guides/guides/parallelization#Grouping-test-runs) recorded tests together under a single run                                                                                                             |
+| `headed`            | _boolean_          | Displays the browser instead of running headlessly                                                                                                                                                                |
+| `headless`          | _boolean_          | Hide the browser instead of running headed (default during `cypress run`)                                                                                                                                         |
+| `key`               | _string_           | Specify your secret record key                                                                                                                                                                                    |
+| `exit`              | _boolean_          | Whether to close Cypress after all tests run                                                                                                                                                                      |
+| `parallel`          | _boolean_          | Run recorded specs in [parallel](/guides/guides/parallelization) across multiple machines                                                                                                                         |
+| `port`              | _number_           | Override default port                                                                                                                                                                                             |
+| `project`           | _string_           | Path to a specific project                                                                                                                                                                                        |
+| `quiet`             | _boolean_          | If passed, Cypress output will not be printed to `stdout`. Only output from the configured [Mocha reporter](/guides/tooling/reporters) will print.                                                                |
+| `record`            | _boolean_          | Whether to record the test run                                                                                                                                                                                    |
+| `reporter`          | _string_           | Specify a [Mocha reporter](/guides/tooling/reporters)                                                                                                                                                             |
+| `reporterOptions`   | _object_           | Specify [Mocha reporter](/guides/tooling/reporters) options                                                                                                                                                       |
+| `slowTestThreshold` | _number_           | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter. You will often want to set this separately for component and e2e testing. |
+| `spec`              | _string_           | Specify the specs to run, see examples below                                                                                                                                                                      |
+| `tag`               | _string_           | Identify a run with a tag or tags                                                                                                                                                                                 |
+| `testingType`       | _string_           | Specify the type of tests to execute; either `e2e` or `component`. Defaults to `e2e`                                                                                                                              |
 
 ### Examples
 
 #### Run a single spec file
 
-Here is an example of programmatically running a spec file. Note that the file path is relative to the current working directory.
+Here is an example of programmatically running a spec file. Note that the file
+path is relative to the current working directory.
 
 ```js
 // e2e-run-tests.js
@@ -86,7 +93,8 @@ cypress
   })
 ```
 
-You can then run Cypress by running the following in your terminal or an npm script:
+You can then run Cypress by running the following in your terminal or an npm
+script:
 
 ```shell
 node e2e-run-tests.js
@@ -107,7 +115,8 @@ cypress.run({
 
 #### Use modern syntax
 
-If your Node version allows you can use the modern `async / await` syntax to wait for the Promise returned by the `cypress.run` method.
+If your Node version allows you can use the modern `async / await` syntax to
+wait for the Promise returned by the `cypress.run` method.
 
 ```js
 const cypress = require('cypress')
@@ -120,7 +129,8 @@ const cypress = require('cypress')
 
 ### Results
 
-`cypress.run()` returns a `Promise` that resolves with an object containing the tests results. A typical run could return something like this:
+`cypress.run()` returns a `Promise` that resolves with an object containing the
+tests results. A typical run could return something like this:
 
 ```json
 {
@@ -194,13 +204,18 @@ const cypress = require('cypress')
 }
 ```
 
-You can find the TypeScript definition for the results object in the [`cypress/cli/types` folder](https://github.com/cypress-io/cypress/tree/develop/cli/types).
+You can find the TypeScript definition for the results object in the
+[`cypress/cli/types` folder](https://github.com/cypress-io/cypress/tree/develop/cli/types).
 
 ### Handling errors
 
-Even when tests fail, the `Promise` resolves with the test results. The `Promise` is only rejected if Cypress cannot run for some reason (for example if a binary has not been installed or it cannot find a module dependency). In that case, the `Promise` will be rejected with a detailed error.
+Even when tests fail, the `Promise` resolves with the test results. The
+`Promise` is only rejected if Cypress cannot run for some reason (for example if
+a binary has not been installed or it cannot find a module dependency). In that
+case, the `Promise` will be rejected with a detailed error.
 
-There is a third option - Cypress could run, but the tests could not start for some reason. In that case the resolved value is an object with two fields
+There is a third option - Cypress could run, but the tests could not start for
+some reason. In that case the resolved value is an object with two fields
 
 ```js
 {
@@ -209,7 +224,8 @@ There is a third option - Cypress could run, but the tests could not start for s
 }
 ```
 
-In order to handle these possible errors, you can add a `catch` to `cypress.run()`:
+In order to handle these possible errors, you can add a `catch` to
+`cypress.run()`:
 
 ```js
 // e2e-run-tests.js
@@ -252,7 +268,8 @@ cypress.open({
 })
 ```
 
-You can then open Cypress by running the following in your terminal or an npm script:
+You can then open Cypress by running the following in your terminal or an npm
+script:
 
 ```shell
 node e2e-open-tests.js
@@ -260,7 +277,8 @@ node e2e-open-tests.js
 
 ### Options
 
-Just like the [Command Line options](/guides/guides/command-line), you can pass options that modify how Cypress runs.
+Just like the [Command Line options](/guides/guides/command-line), you can pass
+options that modify how Cypress runs.
 
 | Option        | Type               | Description                                                                            |
 | ------------- | ------------------ | -------------------------------------------------------------------------------------- |
@@ -283,7 +301,8 @@ const cypress = require('cypress')
 cypress.open({})
 ```
 
-You can then open Cypress by running the following in your terminal or an npm script:
+You can then open Cypress by running the following in your terminal or an npm
+script:
 
 ```shell
 node e2e-open-tests.js
@@ -293,7 +312,10 @@ node e2e-open-tests.js
 
 ### `parseRunArguments()`
 
-If you are writing a tool that wraps around the `cypress.run()` command, you might want to parse user-supplied command line arguments using the same logic as `cypress run` uses. In that case, you can use the included `parseRunArguments` function.
+If you are writing a tool that wraps around the `cypress.run()` command, you
+might want to parse user-supplied command line arguments using the same logic as
+`cypress run` uses. In that case, you can use the included `parseRunArguments`
+function.
 
 ```javascript
 // wrapper.js
@@ -310,14 +332,22 @@ An example use running from your terminal could be:
 node ./wrapper cypress run --browser chrome --config ...
 ```
 
-**Note:** the arguments passed to `parseRunArguments` should start with `cypress run`.
+**Note:** the arguments passed to `parseRunArguments` should start with
+`cypress run`.
 
-We use CLI parsing and calling `cypress.run` to [repeat tests to find flaky tests](https://github.com/bahmutov/cypress-repeat) and to [validate test numbers after a test run](https://github.com/bahmutov/cypress-expect). Read [Wrap Cypress Using npm Module API](https://glebbahmutov.com/blog/wrap-cypress-using-npm/) for more examples.
+We use CLI parsing and calling `cypress.run` to
+[repeat tests to find flaky tests](https://github.com/bahmutov/cypress-repeat)
+and to
+[validate test numbers after a test run](https://github.com/bahmutov/cypress-expect).
+Read
+[Wrap Cypress Using npm Module API](https://glebbahmutov.com/blog/wrap-cypress-using-npm/)
+for more examples.
 
 ## History
 
 | Version                                       | Changes                                                |
 | --------------------------------------------- | ------------------------------------------------------ |
+| [8.7.0](/guides/references/changelog#8-7-0)   | Added `slowTestThreshold` configuration option.        |
 | [7.3.0](/guides/references/changelog#7-3-0)   | Added `testingType` configuration option.              |
 | [5.0.0](/guides/references/changelog#5-0-0)   | Test results returned from `cypress.run()` changed.    |
 | [4.11.0](/guides/references/changelog#4-11-0) | Added `cypress.cli` with `parseRunArguments` function. |

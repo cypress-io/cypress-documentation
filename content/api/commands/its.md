@@ -6,7 +6,8 @@ Get a property's value on the previously yielded subject.
 
 <Alert type="info">
 
-If you want to call a `function` on the previously yielded subject, use [`.invoke()`](/api/commands/invoke).
+If you want to call a `function` on the previously yielded subject, use
+[`.invoke()`](/api/commands/invoke).
 
 </Alert>
 
@@ -122,7 +123,8 @@ cy.wrap({ getNum: fn }).its('getNum').should('be.a', 'function')
 
 #### Access function properties
 
-You can access functions to then drill into their own properties instead of invoking them.
+You can access functions to then drill into their own properties instead of
+invoking them.
 
 ```javascript
 // Your app code
@@ -195,11 +197,15 @@ cy.window().its('evilProp').should('not.exist')
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.its()` will automatically [retry](/guides/core-concepts/retry-ability) until it has a property that is not `null` or `undefined`.</li></List>
+<List><li>`.its()` will automatically
+[retry](/guides/core-concepts/retry-ability) until it has a property that is not
+`null` or `undefined`.</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.its()` can time out waiting for the property to exist.</li><li>`.its()` can time out waiting for assertions you've added to pass.</li></List>
+<List><li>`.its()` can time out waiting for the property to
+exist.</li><li>`.its()` can time out waiting for assertions you've added to
+pass.</li></List>
 
 ## Command Log
 
@@ -223,7 +229,8 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/its/xhr-response-its-response-body-for-testing.png" alt="Command Log for its" ></DocsImage>
 
-When clicking on `its` within the command log, the console outputs the following:
+When clicking on `its` within the command log, the console outputs the
+following:
 
 <DocsImage src="/img/api/its/response-body-yielded-with-its-command-log.png" alt="Console Log for its" ></DocsImage>
 

@@ -15,13 +15,18 @@ title: CircleCI
 
 <DocsVideo src="https://youtube.com/embed/J-xbNtKgXfY"></DocsVideo>
 
+<DocsVideo src="/img/snippets/running-in-ci.mp4"></DocsVideo>
+
 <!-- textlint-enable -->
 
 ## Basic Setup
 
-The [Cypress CircleCI Orb](https://github.com/cypress-io/circleci-orb) is a piece of configuration set in your `.circleci/config.yml` file to correctly install, cache and run Cypress with very little effort.
+The [Cypress CircleCI Orb](https://github.com/cypress-io/circleci-orb) is a
+piece of configuration set in your `.circleci/config.yml` file to correctly
+install, cache and run Cypress with very little effort.
 
-Full documentation can be found at the [`cypress-io/circleci-orb`](https://github.com/cypress-io/circleci-orb) repo.
+Full documentation can be found at the
+[`cypress-io/circleci-orb`](https://github.com/cypress-io/circleci-orb) repo.
 
 A typical project can have:
 
@@ -41,7 +46,9 @@ workflows:
 
 ## Parallelization
 
-A more complex project that needs to install dependencies, build an application and run tests across 4 CI machines [in parallel](/guides/guides/parallelization) may have:
+A more complex project that needs to install dependencies, build an application
+and run tests across 4 CI machines [in parallel](/guides/guides/parallelization)
+may have:
 
 ```yaml
 version: 2.1
@@ -62,17 +69,30 @@ workflows:
           start: 'npm start' # start server before running tests
 ```
 
-In all cases, you are using `run` and `install` job definitions that Cypress provides inside the orb. Using the orb brings simplicity and static checks of parameters to CircleCI configuration.
+In all cases, you are using `run` and `install` job definitions that Cypress
+provides inside the orb. Using the orb brings simplicity and static checks of
+parameters to CircleCI configuration.
 
-You can find multiple examples at [our orb examples page](https://github.com/cypress-io/circleci-orb/blob/master/docs/examples.md) and in the [cypress-example-circleci-orb](https://github.com/cypress-io/cypress-example-circleci-orb) project.
+You can find multiple examples at
+[our orb examples page](https://github.com/cypress-io/circleci-orb/blob/master/docs/examples.md)
+and in the
+[cypress-example-circleci-orb](https://github.com/cypress-io/cypress-example-circleci-orb)
+project.
 
 <Alert type="info">
 
 ##### <Icon name="graduation-cap"></Icon> Real World Example <Badge type="success">New</Badge>
 
-The Cypress [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses the Circle CI [Cypress Orb](https://github.com/cypress-io/circleci-orb), Codecov Orb, and Windows Orb to test over 300 test cases in parallel across 25 machines, multiple browsers, multiple device sizes, and multiple operating systems with full code-coverage reporting and [Cypress Dashboard recording](https://dashboard.cypress.io/projects/7s5okt).
+The Cypress
+[Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses
+the Circle CI [Cypress Orb](https://github.com/cypress-io/circleci-orb), Codecov
+Orb, and Windows Orb to test over 300 test cases in parallel across 25 machines,
+multiple browsers, multiple device sizes, and multiple operating systems with
+full code-coverage reporting and
+[Cypress Dashboard recording](https://dashboard.cypress.io/projects/7s5okt).
 
-Check out the full <Icon name="github"></Icon> [RWA Circle CI configuration](https://github.com/cypress-io/cypress-realworld-app/blob/develop/.circleci/config.yml).
+Check out the full <Icon name="github"></Icon>
+[RWA Circle CI configuration](https://github.com/cypress-io/cypress-realworld-app/blob/develop/.circleci/config.yml).
 
 </Alert>
 
@@ -138,8 +158,12 @@ jobs:
       - run: $(yarn bin)/cypress run --record --key <record_key>
 ```
 
-Find the complete CircleCI v2 example with caching and artifact upload in the [cypress-example-docker-circle](https://github.com/cypress-io/cypress-example-docker-circle) repo.
+Find the complete CircleCI v2 example with caching and artifact upload in the
+[cypress-example-docker-circle](https://github.com/cypress-io/cypress-example-docker-circle)
+repo.
 
 #### RAM Disk
 
-You can speed up Cypress test jobs by using CircleCI RAM disk, read [Start CircleCI Machines Faster by Using RAM Disk](https://glebbahmutov.com/blog/circle-ram-disk/) blog post.
+You can speed up Cypress test jobs by using CircleCI RAM disk, read
+[Start CircleCI Machines Faster by Using RAM Disk](https://glebbahmutov.com/blog/circle-ram-disk/)
+blog post.

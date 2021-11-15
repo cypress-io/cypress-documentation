@@ -6,13 +6,16 @@ Enables you to work with the subject yielded from the previous command.
 
 <Alert type="info">
 
-**Note:** `.then()` assumes you are already familiar with core concepts such as [closures](/guides/core-concepts/variables-and-aliases#Closures).
+**Note:** `.then()` assumes you are already familiar with core concepts such as
+[closures](/guides/core-concepts/variables-and-aliases#Closures).
 
 </Alert>
 
 <Alert type="info">
 
-**Note:** Prefer [`.should()` with callback](/api/commands/should#Function) over `.then()` for assertions as they are automatically rerun until no assertions throw within it but be aware of [differences](/api/commands/should#Differences).
+**Note:** Prefer [`.should()` with callback](/api/commands/should#Function) over
+`.then()` for assertions as they are automatically rerun until no assertions
+throw within it but be aware of [differences](/api/commands/should#Differences).
 
 </Alert>
 
@@ -48,19 +51,28 @@ Pass a function that takes the previously yielded subject as its first argument.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-`.then()` is modeled identically to the way Promises work in JavaScript. Whatever is returned from the callback function becomes the new subject and will flow into the next command (with the exception of `undefined`).
+`.then()` is modeled identically to the way Promises work in JavaScript.
+Whatever is returned from the callback function becomes the new subject and will
+flow into the next command (with the exception of `undefined`).
 
-Additionally, the result of the last Cypress command in the callback function will be yielded as the new subject and flow into the next command if there is no `return`.
+Additionally, the result of the last Cypress command in the callback function
+will be yielded as the new subject and flow into the next command if there is no
+`return`.
 
-When `undefined` is returned by the callback function, the subject will not be modified and will instead carry over to the next command.
+When `undefined` is returned by the callback function, the subject will not be
+modified and will instead carry over to the next command.
 
-Just like Promises, you can return any compatible "thenable" (anything that has a `.then()` interface) and Cypress will wait for that to resolve before continuing forward through the chain of commands.
+Just like Promises, you can return any compatible "thenable" (anything that has
+a `.then()` interface) and Cypress will wait for that to resolve before
+continuing forward through the chain of commands.
 
 ## Examples
 
 <Alert type="info">
 
-We have several more examples in our [Core Concepts Guide](/guides/core-concepts/variables-and-aliases) which go into the various ways you can use `.then()` to store, compare, and debug values.
+We have several more examples in our
+[Core Concepts Guide](/guides/core-concepts/variables-and-aliases) which go into
+the various ways you can use `.then()` to store, compare, and debug values.
 
 </Alert>
 
@@ -144,11 +156,12 @@ cy.get('form')
 
 ```javascript
 cy.get('div')
-.then(($div) => {
-  return $div[0] // type => HTMLDivElement
-}).then(($div) => {
-  $div // type => JQuery<HTMLDivElement>
-})
+  .then(($div) => {
+    return $div[0] // type => HTMLDivElement
+  })
+  .then(($div) => {
+    $div // type => JQuery<HTMLDivElement>
+  })
 ```
 
 ### Promises
@@ -203,9 +216,13 @@ cy.get('button')
 
 ### What's the difference between `.then()` and `.should()`/`.and()`?
 
-Using `.then()` allows you to use the yielded subject in a callback function and should be used when you need to manipulate some values or do some actions.
+Using `.then()` allows you to use the yielded subject in a callback function and
+should be used when you need to manipulate some values or do some actions.
 
-When using a callback function with `.should()` or `.and()`, on the other hand, there is special logic to rerun the callback function until no assertions throw within it. You should be careful of side affects in a `.should()` or `.and()` callback function that you would not want performed multiple times.
+When using a callback function with `.should()` or `.and()`, on the other hand,
+there is special logic to rerun the callback function until no assertions throw
+within it. You should be careful of side affects in a `.should()` or `.and()`
+callback function that you would not want performed multiple times.
 
 ## Rules
 
@@ -215,11 +232,13 @@ When using a callback function with `.should()` or `.and()`, on the other hand, 
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.then()` will only run assertions you have chained once, and will not [retry](/guides/core-concepts/retry-ability).</li></List>
+<List><li>`.then()` will only run assertions you have chained once, and will not
+[retry](/guides/core-concepts/retry-ability).</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.then()` can time out waiting for a promise you've returned to resolve.</li></List>
+<List><li>`.then()` can time out waiting for a promise you've returned to
+resolve.</li></List>
 
 ## Command Log
 
