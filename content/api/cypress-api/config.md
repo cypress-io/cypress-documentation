@@ -143,7 +143,7 @@ Cypress.config() // => {defaultCommandTimeout: 10000, viewportHeight: 900, ...}
 Some configuration values are readonly and cannot be changed while running a test. Anything
 that's not directly under Cypress's control - like timeouts, `userAgent`, or
 environment variables - will be ignored at run-time. Be sure to review the list of
-[test-time configuration options](/guides/references/configuration##Test-time-overrides)
+[test configuration options](/guides/references/configuration##Test-Configuration).
 
 ## Test Configuration vs `Cypress.config()`
 
@@ -156,7 +156,7 @@ file, using test configuration will only change configuration values during the
 suite or test where they are set. The values will then reset to the previous
 default values after the suite or test is complete.
 
-See the full guide on [test-time configuration](/guides/references/configuration#Test-time-overrides).
+See the full guide on [test configuration](/guides/references/configuration#Test-Configuration).
 
 ## `Cypress.config()` executes Synchronously
 

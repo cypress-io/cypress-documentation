@@ -317,7 +317,7 @@ You can
 
 </Alert>
 
-## Test-time overrides
+## Test Configuration
 
 We provide two options to override the configuration while your test are running, `Cypress.config()` and
 suite-specific or test-specific configuration overrides.
@@ -362,7 +362,7 @@ Cypress.config('pageLoadTimeout', 100000)
 Cypress.config('pageLoadTimeout') // => 100000
 ```
 
-#### Test Configuration
+#### Test-specific Configuration
 
 To apply specific Cypress [configuration](/guides/references/configuration)
 values to a suite or test, pass a configuration object to the test or suite
@@ -383,7 +383,7 @@ it(name, config, fn)
 specify(name, config, fn)
 ```
 
-##### Suite configuration
+##### Suite-specific configuration
 
 If you want to target a suite of tests to run or be excluded when run in a specific browser, you can override
 the `browser` configuration within the suite configuration. The `browser` option accepts the same arguments as

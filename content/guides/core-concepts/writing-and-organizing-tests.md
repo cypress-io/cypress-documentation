@@ -502,13 +502,57 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 
 ### Test Configuration
 
-It is possible to apply [test-time configuration](/guides/references/configuration#Test-time-overrides) values during test execution.
+To apply a specific Cypress [configuration](/guides/references/configuration)
+value to a suite or test, pass a configuration object to the test or suite
+function as the second argument.
 
-For example, if you want to target a suite of tests to run or be excluded when run in a specific browser, you can override
-the `browser` configuration within the suite configuration. The `browser` option accepts the same arguments as
-[`Cypress.isBrowser()`](/api/cypress-api/isbrowser).
+This configuration will take effect during the suite or tests where they are set
+then return to their previous default values after the suite or tests are
+complete.
 
-The following suite of tests will be skipped if running tests in the Chrome browser.
+#### Syntax
+
+```javascript
+describe(name, config, fn)
+context(name, config, fn)
+it(name, config, fn)
+specify(name, config, fn)
+```
+
+
+### Test Configuration
+
+It is possible to apply [test configuration](/guides/references/configuration#Test-Configuration) values during test execution.
+
+This configuration will take effect during the suite or tests where they are set
+then return to their previous default values after the suite or tests are
+complete.
+
+#### Syntax
+
+```javascript
+describe(name, config, fn)
+context(name, config, fn)
+it(name, config, fn)
+specify(name, config, fn)
+```
+
+#### Allowed config values
+
+<Icon name="exclamation-triangle" color="red"></Icon> **Note:** Some
+configuration values are readonly and cannot be changed via test configuration.
+Be sure to review the list of
+[test configuration options](/guides/references/configuration##Test-Configuration).
+
+#### Suite configuration
+
+If you want to target a suite of tests to run or be excluded when run in a
+specific browser, you can override the `browser` configuration within the suite
+configuration. The `browser` option accepts the same arguments as
+[Cypress.isBrowser()](/api/cypress-api/isbrowser).
+
+The following suite of tests will be skipped if running tests in Chrome
+browsers.
 
 ```js
 describe('When NOT in Chrome', { browser: '!chrome' }, () => {
@@ -527,6 +571,64 @@ describe('When NOT in Chrome', { browser: '!chrome' }, () => {
 })
 ```
 
+The following suite of tests will only execute when running in the Firefox
+browser. It will overwrite the viewport resolution in one of the tests, and will
+merge any current environment variables with the provided ones.
+
+```js
+describe(
+  'When in Firefox',
+  {
+    browser: 'firefox',
+    viewportWidth: 1024,
+    viewportHeight: 700,
+    env: {
+      DEMO: true,
+      API: 'http://localhost:9000',
+    },
+  },
+  () => {
+    it('Sets the expected viewport and API url', () => {
+      expect(cy.config('viewportWidth')).to.equal(1024)
+      expect(cy.config('viewportHeight')).to.equal(700)
+      expect(cy.env('API')).to.equal('http://localhost:9000')
+    })
+
+    it(
+      'Uses the closest API environment variable',
+      {
+        env: {
+          API: 'http://localhost:3003',
+        },
+      },
+      () => {
+        expect(cy.env('API')).to.equal('http://localhost:3003')
+        // other environment variables remain unchanged
+        expect(cy.env('DEMO')).to.be.true
+      }
+    )
+  }
+)
+```
+
+#### Single test configuration
+
+You can configure the number of retry attempts during `cypress run` or
+`cypress open`. See [Test Retries](/guides/guides/test-retries) for more
+information.
+
+```js
+it('should redirect unauthenticated user to sign-in page', {
+    retries: {
+      runMode: 3,
+      openMode: 2
+    }
+  } () => {
+    cy.visit('/')
+    // ...
+  })
+})
+```
 ### Dynamically Generate Tests
 
 You can dynamically generate tests using JavaScript.
