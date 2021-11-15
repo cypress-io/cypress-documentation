@@ -914,7 +914,7 @@ We have
 </Alert>
 
 By adding a [baseUrl](/guides/references/configuration#Global) in your configuration
-Cypress will attempt to prefix it any url provided to commands like [cy.visit()](/api/commands/visit)
+Cypress will attempt to prefix the `baseUrl` any URL provided to commands like [cy.visit()](/api/commands/visit)
 and [cy.request()](/api/commands/request) that are not fully qualified domain name (FQDN) URLs.
 
 This allows you to omit hard-coding fully qualified domain name (FQDN) URLs
