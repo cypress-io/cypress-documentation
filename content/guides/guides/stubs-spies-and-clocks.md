@@ -160,7 +160,7 @@ cy.tick(1000)
 You can call [`cy.clock()`](/api/commands/clock) **prior** to visiting your
 application and we will automatically bind it to the application on the next
 [`cy.visit()`](/api/commands/visit). The same concept applies to mounting a
-component with `mount(<MyComponent />)`. We bind **before** any timers from your
+component with `mount()`. We bind **before** any timers from your
 code can be invoked. This works identically to
 [`cy.server()`](/api/commands/server) and [`cy.route()`](/api/commands/route).
 

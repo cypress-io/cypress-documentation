@@ -65,7 +65,7 @@ describe('Post Resource', () => {
 
 Can you read this? If you did, it might sound something like this:
 
-> 1. Visit page at `/posts/new` or `mount(<PostBuilder />)`.
+> 1. Visit page at `/posts/new` (or mount the `PostBuilder` component).
 > 2. Find the `<input>` with class `post-title`.
 > 3. Type "My First Post" into it.
 > 4. Find the `<input>` with class `post-body`.
