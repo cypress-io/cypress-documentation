@@ -60,7 +60,7 @@ By default, the `cy.visit()` commands' will use the `pageLoadTimeout` and `baseU
 
 | Option                     | Default                                                        | Description                                                                                                                                                                                                                              |
 | -------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `url`                      | `null`                                                         | The URL visit. This value be appended to the `baseUrl` if one is configured. Behaves the same as the `url` argument.                                                                                                                                                                                |
+| `url`                      | `null`                                                         | The URL to visit. This value will be appended to the `baseUrl` if one is configured. Behaves the same as the `url` argument.                                                                                                                                                                                |
 | `method`                   | `GET`                                                          | The HTTP method to use in the visit. Can be `GET` or `POST`.                                                                                                                                                                             |
 | `body`                     | `null`                                                         | An optional body to send along with a `POST` request. If it is a string, it will be passed along unmodified. If it is an object, it will be URL encoded to a string and sent with a `Content-Type: application/x-www-urlencoded` header. |
 | `headers`                  | `{}`                                                           | An object that maps HTTP header names to values to be sent along with the request. _Note:_ `headers` will only be sent for the initial `cy.visit()` request, not for any subsequent requests.                                            |
@@ -265,7 +265,7 @@ cy.visit('app/index.html')
 
 #### Visit local file when `baseUrl` is set
 
-If you have `baseUrl` set, but need to visit a local file in a single test or a group of tests, set the `baseUrl` to `null` by using [a test-test configuration override](/guides/references/configuration#Test-time-overrides). Given our `cypress.json` file:
+If you have `baseUrl` set, but need to visit a local file in a single test or a group of tests, set the `baseUrl` to `null` by using [a test configuration](/guides/references/configuration#Test-Configuration). Given our `cypress.json` file:
 
 ```json
 {

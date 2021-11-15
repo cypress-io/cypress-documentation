@@ -145,7 +145,7 @@ that's not directly under Cypress's control - like timeouts, `userAgent`, or
 environment variables - will be ignored at run-time. Be sure to review the list of
 [test configuration options](/guides/references/configuration##Test-Configuration).
 
-## Test Configuration vs `Cypress.config()`
+### Test Configuration vs `Cypress.config()`
 
 To apply specific Cypress configuration values to a suite or test, you can pass a
 [test configuration](/guides/references/configuration#Test-Configuration) object
@@ -158,11 +158,11 @@ default values after the suite or test is complete.
 
 See the full guide on [test configuration](/guides/references/configuration#Test-Configuration).
 
-## `Cypress.config()` executes Synchronously
+### `Cypress.config()` executes Synchronously
 
 It's important to note that `Cypress.config()` executes synchronously and will not wait for the Cypress commands above it to execute.
-If you need to update your configuration mid-test, be sure to either chain the
-[asynchronously Cypress command](/guides/core-concepts/introduction-to-cypress#Commands-Are-Asynchronous) before it.
+If you need to update your configuration mid-test, be sure to chain the
+[asynchronously Cypress command](/guides/core-concepts/introduction-to-cypress#Commands-Are-Asynchronous).
 
 ```javascript
 it('using cy.then', () => {

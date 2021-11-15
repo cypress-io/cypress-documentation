@@ -355,13 +355,11 @@ You can also override configuration values within your test using
 This changes the configuration _for the remaining execution of the current spec file_.
 The values will reset to the previous default values after the spec has complete.
 
-
 ```javascript
 Cypress.config('pageLoadTimeout', 100000)
 
 Cypress.config('pageLoadTimeout') // => 100000
 ```
-
 #### Test-specific Configuration
 
 To apply specific Cypress [configuration](/guides/references/configuration)
@@ -371,8 +369,6 @@ function as the second argument.
 The configuration values passed in will only take effect during the suite or
 test where they are set. The values will then reset to the previous default
 values after the suite or test is complete.
-
-
 
 ##### Syntax
 
@@ -389,47 +385,43 @@ If you want to target a suite of tests to run or be excluded when run in a speci
 the `browser` configuration within the suite configuration. The `browser` option accepts the same arguments as
 [`Cypress.isBrowser()`](/api/cypress-api/isbrowser).
 
-The following suite of tests will be skipped if running tests in Chrome browsers.
+You can configure the number of times to retries a suite of tests if they fail
+during `cypress run` and `cypress open` separately.
 
 ```js
-describe('When NOT in Chrome', { browser: '!chrome' }, () => {
-  it('Shows warning', () => {
-    cy.get('.browser-warning')
-      .should('contain', 'For optimal viewing, use Chrome browser')
-  })
-})
-```
-
-The following suite of tests will only execute when running in the Firefox browser and will
-merge any current environment variables with the provided ones.
-
-```js
-describe('When in Firefox', {
-  browser: 'firefox',
-  env: {
-    API: 'http://localhost:9000'
-  }
-}, () => {
-  it('Sets the API url', () => {
-    expect(cy.env('API')).to.equal('http://localhost:9000')
-  })
-})
-```
-
-##### Single test configuration
-
-You can configure the number of retry attempts during `cypress run` or `cypress open`.
-
-```js
-it('should redirect unauthenticated user to sign-in page', {
+describe(
+  'login',
+  {
     retries: {
       runMode: 3,
-      openMode: 2
-    }
-  } () => {
-    cy.visit('/')
-    // ...
-  })
+      openMode: 2,
+    },
+  },
+  () => {
+    it('should redirect unauthenticated user to sign-in page', () => {
+      // ...
+    })
+    it('allows user to login', () => {
+      // ...
+    })
+  }
+)
+```
+
+##### Test-specific configuration
+
+If you want to target a test to run or be excluded when run in a specific
+browser, you can override the `browser` configuration within the test
+configuration. The `browser` option accepts the same arguments as
+[Cypress.isBrowser()](/api/cypress-api/isbrowser).
+
+```js
+it('Show warning outside Chrome', { browser: '!chrome' }, () => {
+  cy.get('.browser-warning').should(
+    'contain',
+    'For optimal viewing, use Chrome browser'
+  )
+})
 ```
 
 ## Resolved Configuration
