@@ -108,7 +108,7 @@ in the background when loading your application under test. In this case use the
 `onBeforeLoad` hook to access the window object before the content has loaded.
 
 However, Component Tests simply render your component. Here you can stub right
-before `cy.mount()`.
+before [`cy.mount()`](/api/commands/mount).
 
 :::cypress-stub-example
 
