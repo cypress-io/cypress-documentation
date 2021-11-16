@@ -461,11 +461,11 @@ cy.get('@new-user') // yields the same interception object
   .its('request.body')
   .should(
     'deep.equal',
-    JSON.stringify({
+    {
       id: '101',
       firstName: 'Joe',
       lastName: 'Black',
-    })
+    }
   )
 
 // and we can place multiple assertions in a single "should" callback
