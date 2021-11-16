@@ -1022,7 +1022,9 @@ store, and even drive the application via Redux actions.
 
 To spy on `console.log` you should use [cy.stub()](/api/commands/stub).
 
-```javascript
+:::cypress-stub-example
+
+```js
 cy.visit('/', {
   onBeforeLoad(win) {
     cy.stub(win.console, 'log').as('consoleLog')
@@ -1032,6 +1034,15 @@ cy.visit('/', {
 //...
 cy.get('@consoleLog').should('be.calledWith', 'Hello World!')
 ```
+
+```js
+cy.stub(window.console, 'log').as('consoleLog')
+cy.mount(<MyComponent />)
+
+cy.get('@consoleLog').should('be.calledWith', 'Hello World!')
+```
+
+:::
 
 Also, check out our
 [Stubbing `console` Receipe](/examples/examples/recipes#Stubbing-and-spying).

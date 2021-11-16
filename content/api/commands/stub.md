@@ -103,8 +103,18 @@ expect(removeStub).to.be.called
 
 #### Replace built-in window methods like prompt
 
-```javascript
-// assume App.start uses prompt to set the value of an element with class "name"
+When visiting a page in an End-to-End test, Cypress needs to manage the window
+in the background when loading your application under test. In this case use the
+`onBeforeLoad` hook to access the window object before the content has loaded.
+
+However, Component Tests simply render your component. Here you can stub right
+before `cy.mount()`.
+
+:::cypress-stub-example
+
+```js
+// assume App.start uses prompt to set the value of
+// an element with class "name"
 cy.visit('http://localhost:3000', {
   onBeforeLoad(win) {
     cy.stub(win, 'prompt').returns('my custom message')
@@ -116,6 +126,16 @@ App.start()
 cy.window().its('prompt').should('be.called')
 cy.get('.name').should('have.value', 'my custom message')
 ```
+
+```js
+cy.stub(window, 'prompt').returns('my custom message')
+cy.mount(<MyComponent />)
+
+cy.window().its('prompt').should('be.called')
+cy.get('.name').should('have.value', 'my custom message')
+```
+
+:::
 
 #### Disable logging to Command Log
 
