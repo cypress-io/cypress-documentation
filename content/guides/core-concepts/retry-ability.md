@@ -33,19 +33,9 @@ There are two types of methods you can call in your Cypress tests: **commands**
 and **assertions**. For example, there are 6 commands and 2 assertions in the
 test below.
 
-:::cypress-visit-mount-test-example
-
-```js
-cy.visit('/')
-```
-
-```js
-cy.mount(<MyComponent />)
-```
-
-```js
+```javascript
 it('creates 2 items', () => {
-  __VISIT_MOUNT_PLACEHOLDER__ // command
+  cy.visit('/') // command
   cy.focused() // command
     .should('have.class', 'new-todo') // assertion
 
@@ -57,8 +47,6 @@ it('creates 2 items', () => {
     .should('have.length', 2) // assertion
 })
 ```
-
-:::
 
 The [Command Log](/guides/core-concepts/test-runner#Command-Log) shows both
 commands and assertions with passing assertions showing in green.
@@ -400,7 +388,7 @@ cy.visit('/')
 ```
 
 ```js
-cy.mount(<MyComponent />)
+cy.mount(<Todos />)
 ```
 
 ```js
@@ -483,7 +471,7 @@ cy.visit('/')
 ```
 
 ```js
-cy.mount(<MyComponent />)
+cy.mount(<Todos />)
 ```
 
 ```js
@@ -601,9 +589,7 @@ const Clicker = ({ click }) => (
 
 it('calls the click prop twice', () => {
   const onClick = cy.stub()
-  // "mount" function comes from
-  // https://github.com/cypress-io/cypress/tree/master/npm/react
-  mount(<Clicker click={onClick} />)
+  cy.mount(<Clicker click={onClick} />)
   cy.get('button')
     .click()
     .click()
@@ -639,9 +625,7 @@ using `cy.get('@alias').should(...)` assertions.
 ```js
 it('calls the click prop', () => {
   const onClick = cy.stub().as('clicker')
-  // "mount" function comes from
-  // https://github.com/cypress-io/cypress/tree/master/npm/react
-  mount(<Clicker click={onClick} />)
+  cy.mount(<Clicker click={onClick} />)
   cy.get('button').click().click()
 
   // good practice 💡

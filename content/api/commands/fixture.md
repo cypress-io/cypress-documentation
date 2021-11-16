@@ -174,7 +174,8 @@ cy.fixture('users').then((json) => {
 
 #### Modifying fixture data before using it
 
-You can modify fixture data directly before passing it along to a route.
+You can modify fixture data directly before visiting a URL or mounting a
+component that makes a network request to that URL.
 
 :::cypress-visit-mount-test-example
 
@@ -183,7 +184,7 @@ cy.visit('/users')
 ```
 
 ```js
-cy.mount(<MyComponent />)
+cy.mount(<Users />)
 ```
 
 ```js

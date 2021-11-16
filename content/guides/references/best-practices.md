@@ -417,19 +417,21 @@ Let's imagine the following test that is filling out the form.
 :::cypress-visit-mount-test-example
 
 ```js
-cy.visit('/users/new')
+it('visits the form', () => {
+  cy.visit('/users/new')
+})
 ```
 
 ```js
-cy.mount(<MyComponent />)
+it('mounts the form', () => {
+  cy.mount(<UserForm />)
+})
 ```
 
 ```js
 // an example of what NOT TO DO
 describe('my form', () => {
-  it('visits the form', () => {
-    __VISIT_MOUNT_PLACEHOLDER__
-  })
+  __VISIT_MOUNT_PLACEHOLDER__
 
   it('requires first name', () => {
     cy.get('#first').type('Johnny')
@@ -465,7 +467,7 @@ cy.visit('/users/new')
 ```
 
 ```js
-cy.mount(<MyComponent />)
+cy.mount(<NewUser />)
 ```
 
 ```js
@@ -501,7 +503,7 @@ cy.visit('/users/new')
 ```
 
 ```js
-cy.mount(<MyComponent />)
+cy.mount(<NewUser />)
 ```
 
 ```js
@@ -558,7 +560,7 @@ cy.visit('/users/new')
 ```
 
 ```js
-cy.mount(<MyComponent />)
+cy.mount(<NewUser />)
 ```
 
 ```js
@@ -616,7 +618,7 @@ cy.visit('/users/new')
 ```
 
 ```js
-cy.mount(<MyComponent />)
+cy.mount(<NewUser />)
 ```
 
 ```js

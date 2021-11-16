@@ -59,17 +59,35 @@ will return immediately, having enqueued their work to be done later, and
 Let's use [`.then()`](/api/commands/then) to tap into the Cypress command during
 execution and add a `debugger` at the appropriate time:
 
-```js
-it('let me debug when the after the command executes', () => {
-  cy.visit('/my/page/path')
+:::cypress-visit-mount-test-example
 
-  cy.get('.selector-in-question').then(($selectedElement) => {
-    // Debugger is hit after the cy.visit
-    // and cy.get command have completed
-    debugger
-  })
+```js
+cy.visit('/my/page/path')
+
+cy.get('.selector-in-question').then(($selectedElement) => {
+  // Debugger is hit after the cy.visit
+  // and cy.get commands have completed
+  debugger
 })
 ```
+
+```js
+mount(<MyComponent />)
+
+cy.get('.selector-in-question').then(($selectedElement) => {
+  // Debugger is hit after the cy.mount
+  // and cy.get commands have completed
+  debugger
+})
+```
+
+```js
+it('let me debug when the after the command executes', () => {
+  __VISIT_MOUNT_PLACEHOLDER__
+})
+```
+
+:::
 
 Now we're in business! The first time through,
 [`cy.visit()`](/api/commands/visit) and the [`cy.get()`](/api/commands/get)
@@ -93,13 +111,25 @@ Cypress also exposes a shortcut for debugging commands,
 [`.debug()`](/api/commands/debug). Let's rewrite the test above using this
 helper method:
 
+:::cypress-visit-mount-test-example
+
+```js
+cy.visit('/my/page/path')
+```
+
+```js
+mount(<MyComponent />)
+```
+
 ```js
 it('let me debug like a fiend', () => {
-  cy.visit('/my/page/path')
+  __VISIT_MOUNT_PLACEHOLDER__
 
   cy.get('.selector-in-question').debug()
 })
 ```
+
+:::
 
 The current subject that is yielded by the [`cy.get()`](/api/commands/get) is
 exposed as the variable `subject` within your Developer Tools so that you can

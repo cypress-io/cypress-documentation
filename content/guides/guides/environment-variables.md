@@ -385,13 +385,13 @@ cy.visit(`https://docs.cypress.io/${Cypress.env('language')}/`)
 ```
 
 ```js
-cy.mount(<MyComponent lang={Cypress.env('language')} />)
+cy.mount(<International lang={Cypress.env('language')} />)
 ```
 
 ```js
 // change environment variable for single suite of tests
 describe(
-  'test against Spanish site',
+  'test against Spanish content',
   {
     env: {
       language: 'es',

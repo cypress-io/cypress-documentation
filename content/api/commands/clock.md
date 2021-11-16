@@ -159,11 +159,11 @@ cy.visit('/index.html')
 ```
 
 ```js
-mount(<DatePicker id="date" selected={now} />) // component renders according to the date prop
+mount(<DatePicker id="date" />)
 ```
 
 ```js
-const now = new Date(2021, 3, 14) // April 14, 2021 timestamp
+const now = new Date(2021, 3, 14) // month is 0-indexed
 
 cy.clock(now)
 __VISIT_MOUNT_PLACEHOLDER__

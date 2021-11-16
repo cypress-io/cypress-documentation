@@ -38,7 +38,7 @@ cy.visit('/posts/new')
 ```
 
 ```js
-cy.mount(<MyComponent />)
+cy.mount(<PostBuilder />)
 ```
 
 ```js

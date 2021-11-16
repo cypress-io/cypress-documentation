@@ -369,7 +369,7 @@ cy.visit('/')
 ```
 
 ```js
-cy.mount(<MyComponent />)
+cy.mount(<AddTodo />)
 ```
 
 ```js

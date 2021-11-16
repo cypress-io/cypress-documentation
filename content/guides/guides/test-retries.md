@@ -213,7 +213,7 @@ cy.visit('/')
 ```
 
 ```js
-cy.mount(<MyComponent />)
+cy.mount(<Login />)
 ```
 
 ```js

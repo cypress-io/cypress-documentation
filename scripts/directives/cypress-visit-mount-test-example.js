@@ -8,7 +8,7 @@ const replacer = (text) => {
 }}
 
 function processNode(node, { _require, error, warn }) {
-    const helpers = _require(__dirname, './helpers/example-helpers')
+		const helpers = _require(__dirname, './helpers/example-helpers')
     const { children } = helpers.getNodeProperties(node)
     const { errorArgs, parts } = helpers.getCodeBlocks(children, { count: 3 })
     

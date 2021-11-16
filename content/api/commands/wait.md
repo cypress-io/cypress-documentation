@@ -111,11 +111,11 @@ cy.visit('/accounts/123')
 ```
 
 ```js
-cy.mount(<MyComponent />)
+cy.mount(<Account />)
 ```
 
 ```js
-// Wait for the route aliased as 'getAccount' to respond
+// Wait for the alias 'getAccount' to respond
 // without changing or stubbing its response
 cy.intercept('/accounts/*').as('getAccount')
 __VISIT_MOUNT_PLACEHOLDER__
@@ -172,7 +172,7 @@ cy.visit('/dashboard')
 ```
 
 ```js
-cy.mount(<MyComponent />)
+cy.mount(<Dashboard />)
 ```
 
 ```js
