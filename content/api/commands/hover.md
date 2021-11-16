@@ -78,6 +78,17 @@ cy.get('.hidden').click({ force: true })
 cy.get('.checkbox').check({ force: true })
 ```
 
+### Add as a custom command
+
+Although Cypress does not have a built-in **cy.hover()**, it is a reserved
+command. Therefore, to add `cy.hover()` as a custom command;
+`Cypress.Commands.overwrite()` should be used instead of
+`Cypress.Commands.add()`.
+
+```javascript
+Cypress.Commands.overwrite('hover', (originalFn, ...otherArgs) => {})
+```
+
 ## See also
 
 We show how to use the `.trigger` command and the
@@ -90,6 +101,7 @@ source code available in the
 - [`.invoke()`](/api/commands/invoke)
 - [`.trigger()`](/api/commands/trigger)
 - [`cy.wrap()`](/api/commands/wrap)
+- [`Cypress.Commands.overwrite()`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands)
 - [Recipe: Hover and Hidden Elements](/examples/examples/recipes#Testing-the-DOM)
 - blog post [Hover in Cypress](https://filiphric.com/hover-in-cypress) by Filip
   Hric
