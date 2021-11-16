@@ -451,9 +451,8 @@ const loginByApi = (name, password) => {
 
 ### Where to call `cy.visit()`
 
-If you call `cy.visit()` immediately after `cy.setup()` in your login function
-or custom command, it will effectively behave the same as a login function
-without any session caching.
+If you call `cy.visit()` immediately after `cy.session()` in your login function
+or custom command, it will always end up visiting the specified URL.
 
 ```javascript
 const login = (name) => {
@@ -480,7 +479,8 @@ it('should test something else on the /home page', () => {
 })
 ```
 
-But the moment you want to test something on another page, your test will be
+However, any time you want to test something on a different page, you will need
+to call `cy.visit()` at the beginning of that test, which will then be
 effectively calling `cy.visit()` twice in a row, which will result in slightly
 slower tests.
 
