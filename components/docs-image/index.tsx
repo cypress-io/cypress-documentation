@@ -13,6 +13,7 @@ export default function DocsImage({ alt, src, title, noBorder }: DocsImageProps)
       src={src}
       alt={alt}
       title={title}
+      layout="fill"
     />
   )
 }
