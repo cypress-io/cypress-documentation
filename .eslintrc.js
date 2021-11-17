@@ -1,22 +1,22 @@
 module.exports = {
-  ignorePatterns: ['_cypress-nextjs-docs'],
-  parser: 'vue-eslint-parser',
-  parserOptions: {
-    parser: 'babel-eslint',
-    ecmaVersion: 8,
-    sourceType: 'module',
-  },
-  plugins: ['cypress', '@cypress/dev', 'jest'],
-  extends: [
-    'plugin:vue/recommended',
-    'plugin:@cypress/dev/general',
-    'plugin:cypress/recommended',
-    'prettier',
-  ],
+  root: true,
   env: {
-    es6: true,
+    browser: true,
+    amd: true,
     node: true,
-    'cypress/globals': true,
-    'jest/globals': true,
+    es6: true,
+  },
+  extends: [
+    'eslint:recommended',
+    'plugin:prettier/recommended',
+    'next',
+  ],
+  rules: {
+    'prettier/prettier': 'error',
+    'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 0,
+    'no-unused-vars': 0,
+    'react/no-unescaped-entities': 0,
   },
 }
+
