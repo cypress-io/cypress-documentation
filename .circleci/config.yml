@@ -1,186 +1,270 @@
-version: 2.1
+##
+# Nuxt Config
+#
+##
+# version: 2.1
 
-orbs:
-  cypress: cypress-io/cypress@1.26.0
+# orbs:
+#   cypress: cypress-io/cypress@1.26.0
 
-executors:
-  node-executor:
-    docker:
-      - image: cimg/node:14.15.1
-  with-chrome-and-firefox:
-    resource_class: medium+
-    docker:
-      - image: 'cypress/browsers:node12.14.1-chrome85-ff81'
+# executors:
+#   node-executor:
+#     docker:
+#       - image: cimg/node:14.15.1
+#   with-chrome-and-firefox:
+#     resource_class: medium+
+#     docker:
+#       - image: 'cypress/browsers:node12.14.1-chrome85-ff81'
 
-commands:
-  nuxt-build:
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}-{{ checksum "patches/vue-scrollactive+0.9.3.patch" }}-{{ checksum "patches/@docsearch+js+1.0.0-alpha.28.patch" }}-{{ checksum "patches/@nuxt+vue-app+2.14.12.patch" }}
-      - run:
-          name: Install Dependencies
-          command: yarn --frozen-lockfile
-      - save_cache:
-          key: yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}-{{ checksum "patches/vue-scrollactive+0.9.3.patch" }}-{{ checksum "patches/@docsearch+js+1.0.0-alpha.28.patch" }}-{{ checksum "patches/@nuxt+vue-app+2.14.12.patch" }}
-          paths:
-            - node_modules
-      - run:
-          name: Nuxt Build
-          command: yarn build
+# commands:
+#   nuxt-build:
+#     steps:
+#       - checkout
+#       - restore_cache:
+#           keys:
+#             - yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}-{{ checksum "patches/vue-scrollactive+0.9.3.patch" }}-{{ checksum "patches/@docsearch+js+1.0.0-alpha.28.patch" }}-{{ checksum "patches/@nuxt+vue-app+2.14.12.patch" }}
+#       - run:
+#           name: Install Dependencies
+#           command: yarn --frozen-lockfile
+#       - save_cache:
+#           key: yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}-{{ checksum "patches/vue-scrollactive+0.9.3.patch" }}-{{ checksum "patches/@docsearch+js+1.0.0-alpha.28.patch" }}-{{ checksum "patches/@nuxt+vue-app+2.14.12.patch" }}
+#           paths:
+#             - node_modules
+#       - run:
+#           name: Nuxt Build
+#           command: yarn build
 
-  link-check-changed-files:
-    steps:
-      - run:
-          name: Broken link checker for changed files
-          command: yarn changed-files-broken-link-checker:ci
+#   link-check-changed-files:
+#     steps:
+#       - run:
+#           name: Broken link checker for changed files
+#           command: yarn changed-files-broken-link-checker:ci
 
-job-defaults: &job-defaults
-  executor: node-executor
-  working_directory: ~/repo
+# job-defaults: &job-defaults
+#   executor: node-executor
+#   working_directory: ~/repo
 
-jobs:
-  build:
-    <<: *job-defaults
-    steps:
-      - nuxt-build
-      - persist_to_workspace:
-          root: ~/repo
-          paths:
-            - build/*
-            - node_modules/*
+# jobs:
+#   build:
+#     <<: *job-defaults
+#     steps:
+#       - nuxt-build
+#       - persist_to_workspace:
+#           root: ~/repo
+#           paths:
+#             - build/*
+#             - node_modules/*
 
-  link-check-changed-files:
-    <<: *job-defaults
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ~/repo
-      - link-check-changed-files
+#   link-check-changed-files:
+#     <<: *job-defaults
+#     steps:
+#       - checkout
+#       - attach_workspace:
+#           at: ~/repo
+#       - link-check-changed-files
 
-  lint:
-    <<: *job-defaults
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ~/repo
-      - run: yarn lint
+#   lint:
+#     <<: *job-defaults
+#     steps:
+#       - checkout
+#       - attach_workspace:
+#           at: ~/repo
+#       - run: yarn lint
 
-  broken-link-check-prod:
-    <<: *job-defaults
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}-{{ checksum "patches/vue-scrollactive+0.9.3.patch" }}-{{ checksum "patches/@docsearch+js+1.0.0-alpha.28.patch" }}-{{ checksum "patches/@nuxt+vue-app+2.14.12.patch" }}
-      - run:
-          name: Install Dependencies
-          command: yarn --frozen-lockfile
-      - run:
-          name: Broken link checker
-          command: yarn broken-link-checker:prod
+#   broken-link-check-prod:
+#     <<: *job-defaults
+#     steps:
+#       - checkout
+#       - restore_cache:
+#           keys:
+#             - yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}-{{ checksum "patches/vue-scrollactive+0.9.3.patch" }}-{{ checksum "patches/@docsearch+js+1.0.0-alpha.28.patch" }}-{{ checksum "patches/@nuxt+vue-app+2.14.12.patch" }}
+#       - run:
+#           name: Install Dependencies
+#           command: yarn --frozen-lockfile
+#       - run:
+#           name: Broken link checker
+#           command: yarn broken-link-checker:prod
 
-  release:
-    <<: *job-defaults
-    steps:
-      - nuxt-build
-      - run:
-          name: Docsearch Scraper
-          command: node ./cy_scripts/scrape.js
+#   release:
+#     <<: *job-defaults
+#     steps:
+#       - nuxt-build
+#       - run:
+#           name: Docsearch Scraper
+#           command: node ./cy_scripts/scrape.js
 
-  publish-scheduled-sanity-content:
-    <<: *job-defaults
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}-{{ checksum "patches/vue-scrollactive+0.9.3.patch" }}-{{ checksum "patches/@docsearch+js+1.0.0-alpha.28.patch" }}-{{ checksum "patches/@nuxt+vue-app+2.14.12.patch" }}
-      - run:
-          name: Install Dependencies
-          command: yarn --frozen-lockfile
-      - run:
-          name: Check for scheduled sanity.io content to publish and invoke Netlify build hook if necessary
-          command: node ./scripts/sanity/publishContent.js
+#   publish-scheduled-sanity-content:
+#     <<: *job-defaults
+#     steps:
+#       - checkout
+#       - restore_cache:
+#           keys:
+#             - yarn-cache-{{ checksum "yarn.lock" }}-{{ checksum "patches/github-slugger+1.3.0.patch" }}-{{ checksum "patches/vue-scrollactive+0.9.3.patch" }}-{{ checksum "patches/@docsearch+js+1.0.0-alpha.28.patch" }}-{{ checksum "patches/@nuxt+vue-app+2.14.12.patch" }}
+#       - run:
+#           name: Install Dependencies
+#           command: yarn --frozen-lockfile
+#       - run:
+#           name: Check for scheduled sanity.io content to publish and invoke Netlify build hook if necessary
+#           command: node ./scripts/sanity/publishContent.js
 
-workflows:
-  version: 2
-  build-and-test:
-    jobs:
-      - cypress/install:
-          name: 'Setup Linux'
-          yarn: true
-          install-command: yarn --frozen-lockfile
-          executor: with-chrome-and-firefox
-          post-steps:
-            - run:
-                name: 'Unit tests'
-                command: yarn test:unit --ci --runInBand
+# workflows:
+#   version: 2
+#   build-and-test:
+#     jobs:
+#       - cypress/install:
+#           name: 'Setup Linux'
+#           yarn: true
+#           install-command: yarn --frozen-lockfile
+#           executor: with-chrome-and-firefox
+#           post-steps:
+#             - run:
+#                 name: 'Unit tests'
+#                 command: yarn test:unit --ci --runInBand
 
-      - link-check-changed-files:
-          name: 'Broken link checker'
-          requires:
-            - build
+#       - link-check-changed-files:
+#           name: 'Broken link checker'
+#           requires:
+#             - build
 
-      - lint:
-          name: "Lint JS/CSS/Markdown"
-          requires:
-            - build
+#       - lint:
+#           name: "Lint JS/CSS/Markdown"
+#           requires:
+#             - build
 
-      # Run E2E tests in Chrome
-      - cypress/run:
-          name: 'UI Tests - Chrome'
-          browser: chrome
-          spec: cypress/integration/*
-          executor: with-chrome-and-firefox
-          wait-on: 'http://localhost:3000'
-          command-prefix: npx percy exec --
-          yarn: true
-          start: yarn start:ci
-          parallel: true
-          parallelism: 4
-          ci-build-id: ${CIRCLE_SHA1:0:8}
-          group: 'UI - Chrome'
-          requires:
-            - build
-            - Setup Linux
-          command: |
-            if [ -n "$DOCS_RECORD_KEY" ]; then
-              yarn cypress run --record --key $DOCS_RECORD_KEY --parallel
-            else
-              yarn cypress run
-            fi
+#       # Run E2E tests in Chrome
+#       - cypress/run:
+#           name: 'UI Tests - Chrome'
+#           browser: chrome
+#           spec: cypress/integration/*
+#           executor: with-chrome-and-firefox
+#           wait-on: 'http://localhost:3000'
+#           command-prefix: npx percy exec --
+#           yarn: true
+#           start: yarn start:ci
+#           parallel: true
+#           parallelism: 4
+#           ci-build-id: ${CIRCLE_SHA1:0:8}
+#           group: 'UI - Chrome'
+#           requires:
+#             - build
+#             - Setup Linux
+#           command: |
+#             if [ -n "$DOCS_RECORD_KEY" ]; then
+#               yarn cypress run --record --key $DOCS_RECORD_KEY --parallel
+#             else
+#               yarn cypress run
+#             fi
 
-      - build:
-          filters:
-            branches:
-              ignore:
-                - master
+#       - build:
+#           filters:
+#             branches:
+#               ignore:
+#                 - master
 
-      - release:
-          filters:
-            branches:
-              only:
-                - master
+#       - release:
+#           filters:
+#             branches:
+#               only:
+#                 - master
 
-  nightly:
-    triggers:
-      - schedule:
-          cron: "0 0 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - broken-link-check-prod
+#   nightly:
+#     triggers:
+#       - schedule:
+#           cron: "0 0 * * *"
+#           filters:
+#             branches:
+#               only:
+#                 - master
+#     jobs:
+#       - broken-link-check-prod
 
-  sanity-scheduled-content-check:
-    triggers:
-      - schedule:
-          cron: "0 0,12 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - publish-scheduled-sanity-content
+#   sanity-scheduled-content-check:
+#     triggers:
+#       - schedule:
+#           cron: "0 0,12 * * *"
+#           filters:
+#             branches:
+#               only:
+#                 - master
+#     jobs:
+#       - publish-scheduled-sanity-content
+
+##
+# Next Config
+#
+##
+# version: 2.1
+
+# orbs:
+#   cypress: cypress-io/cypress@1.28.0
+
+# executors:
+#   with-chrome-and-firefox:
+#     docker:
+#       - image: "cypress/browsers:node14.17.0-chrome88-ff89"
+#     resource_class: medium+
+
+# job-defaults: &job-defaults
+#   executor: with-chrome-and-firefox
+#   working_directory: ~/repo
+
+# jobs:
+#   update-algolia-index:
+#     <<: *job-defaults
+#     steps:
+#       - checkout
+#       - attach_workspace:
+#           at: ~/repo
+#       - run: yarn update-algolia-index
+
+# workflows:
+#   build-and-test:
+#     jobs:
+#       # Setup
+#       #  1. Install Cypress
+#       #  2. Validate types
+#       #  3. Run server unit-tests
+#       - cypress/install:
+#           name: "Setup Linux"
+#           yarn: true
+#           executor: with-chrome-and-firefox
+#           build: "yarn build"
+#           post-steps:
+#             - run:
+#                 name: Print machine info ℹ️
+#                 command: yarn cypress info
+#             - run:
+#                 name: Check Types
+#                 command: yarn types
+#             - run:
+#                 name: Lint Files
+#                 command: yarn lint
+#             - run:
+#                 name: Run Unit Tests
+#                 command: yarn test:unit
+
+#       # Run E2E tests in Chrome
+#       - cypress/run:
+#           name: "UI Tests - Chrome"
+#           browser: chrome
+#           executor: with-chrome-and-firefox
+#           wait-on: "http://localhost:3000"
+#           yarn: true
+#           start: yarn start
+#           requires:
+#             - Setup Linux
+#           post-steps:
+#             - run:
+#                 name: Check for Broken Links
+#                 command: yarn check:links
+
+#   nightly:
+#     triggers:
+#       - schedule:
+#           cron: "0 0 * * *"
+#           filters:
+#             branches:
+#               only:
+#                 - main
+#     jobs:
+#       - update-algolia-index
