@@ -1,0 +1,27 @@
+.prose ul > li::before {
+  display: none;
+}
+
+/* 
+  Removes backticks `` from being redered
+  for inline code in markdown files
+*/
+.prose code::before,
+.prose code::after {
+  content: '';
+}
+
+/* 
+  Back to Top Arrow in TOC Sidebar
+*/
+.back-to-top-arrow {
+  display: flex;
+}
+
+.back-to-top-arrow svg {
+  width: 8px;
+}
+
+.back-to-top-arrow div {
+  width: 12px;
+}
