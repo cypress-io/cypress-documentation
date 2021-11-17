@@ -54,7 +54,9 @@ will do given that perspective?
 
 Both [`cy.visit()`](/api/commands/visit) and [`cy.get()`](/api/commands/get)
 will return immediately, having enqueued their work to be done later, and
-`debugger` will be executed before any of the commands have actually run.
+`debugger` will be executed before any of the commands have actually run. The
+same behavior is expected in Component Tests when using
+[`cy.mount()`](/api/commands/mount).
 
 Let's use [`.then()`](/api/commands/then) to tap into the Cypress command during
 execution and add a `debugger` at the appropriate time:
@@ -89,12 +91,13 @@ it('let me debug when the after the command executes', () => {
 
 :::
 
-Now we're in business! The first time through,
-[`cy.visit()`](/api/commands/visit) and the [`cy.get()`](/api/commands/get)
-chain (with its [`.then()`](/api/commands/then) attached) are enqueued for
+Now we're in business! When you're visiting a page or mounting a component for
+the first time, (shown above with the [`cy.get()`](/api/commands/get)chain and
+its [`.then()`](/api/commands/then) attached) the commands are enqueued for
 Cypress to execute. The `it` block exits, and Cypress starts its work:
 
-1. The page is visited, and Cypress waits for it to load.
+1. In an End-to-End Test, the page is visited and Cypress waits for it to load.
+   Alternatively, the component is mounted and rendered in a Component Test.
 2. The element is queried, and Cypress automatically waits and retries for a few
    moments if it isn't found immediately.
 3. The function passed to [`.then()`](/api/commands/then) is executed, with the
