@@ -1,6 +1,8 @@
 ---
-title: 'Choosing a Testing Type: End-to-end or Component Tests?'
+title: 'Choosing a Testing Type'
 ---
+
+# End-to-end or Component Tests?
 
 <Alert type="info">
 
@@ -13,11 +15,11 @@ title: 'Choosing a Testing Type: End-to-end or Component Tests?'
 </Alert>
 
 One of the first decisions you will need to make on your testing journey is what
-type of test to create. Cypress offers two options: end-to-end (e2e) and
-component tests. There are benefits and considerations for each choice, and the
-decision will depend on the needs of what you are currently trying to
-accomplish. In the end, you will probably have a combination of both types of
-tests for your app, but how do you choose right now?
+type of test to create. Cypress offers two options: end-to-end and component
+tests. There are benefits and considerations for each choice, and the decision
+will depend on the needs of what you are currently trying to accomplish. In the
+end, you will probably have a combination of both types of tests for your app,
+but how do you choose right now?
 
 Let's go over each of these test types, the benefits they bring, things to
 consider, and scenarios for each.
@@ -29,9 +31,10 @@ through to the back end of your application, as well as testing integrations
 with third-party APIs and services. These types of tests are great at making
 sure your entire app is functioning as a cohesive whole.
 
-Cypress runs e2e tests the same way users interact with your app by using a real
-browser, visiting URLs, viewing content, clicking on links and buttons, etc.
-Testing this way helps ensure your tests and the user's experience are the same.
+Cypress runs end-to-end tests the same way users interact with your app by using
+a real browser, visiting URLs, viewing content, clicking on links and buttons,
+etc. Testing this way helps ensure your tests and the user's experience are the
+same.
 
 Writing end-to-end tests in Cypress can be done by developers building the
 application, specialized testing engineers, or a quality assurance team
@@ -68,6 +71,9 @@ on how to handle this complexity.
 
 </Alert>
 
+To learn more about end-to-end testing in Cypress, visit our guide on
+[Writing Your First End-to-end Test](/guides/getting-started/writing-your-first-end-to-end-test).
+
 ## What is Component Testing?
 
 Modern web frameworks provide ways to write applications by breaking them into
@@ -77,9 +83,9 @@ smaller logical units called components. Components can range from fairly small
 Because of their nature, components tend to be easily testable, which is where
 Cypress Component Testing comes into play.
 
-Component tests differ from e2e tests in that instead of visiting a URL to pull
-up an entire app, a component can be "mounted" and tested on its own. This
-allows you to focus on testing only the component's functionality and not
+Component tests differ from end-to-end tests in that instead of visiting a URL
+to pull up an entire app, a component can be "mounted" and tested on its own.
+This allows you to focus on testing only the component's functionality and not
 worrying about other nuances with testing a component as part of the larger
 application.
 
@@ -91,8 +97,8 @@ developers verify the required functionality while building it.
 One thing to consider, though, is even if all your component tests pass, it does
 not mean your app is functioning properly. Component tests do nothing to ensure
 that all the layers of your app are working well together. Therefore, a
-well-tested app has a combination of e2e and component tests, with each set of
-tests specializing in what they do best.
+well-tested app has a combination of end-to-end and component tests, with each
+set of tests specializing in what they do best.
 
 <Alert type="success">
 
@@ -105,8 +111,8 @@ tests specializing in what they do best.
 
 ### Considerations for component tests:
 
-- Does not ensure overall app quality
-- Does not call into external APIs/Services
+- Do not ensure overall app quality
+- Do not call into external APIs/Services
 - Usually written by developers working on the component
 
 ### Common scenarios for component tests:
@@ -117,3 +123,6 @@ tests specializing in what they do best.
 - Testing logic not tied to a component (like unit tests!)
 
 </Alert>
+
+To learn more about component testing in Cypress, visit our guide on
+[Writing Your First Component Test](/guides/getting-started/writing-your-first-component-test).
