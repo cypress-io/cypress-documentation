@@ -159,7 +159,7 @@ cy.visit('/index.html')
 ```
 
 ```js
-mount(<DatePicker id="date" />)
+cy.mount(<DatePicker id="date" />)
 ```
 
 ```js

@@ -72,7 +72,7 @@ cy.get('.selector-in-question').then(($selectedElement) => {
 ```
 
 ```js
-mount(<MyComponent />)
+cy.mount(<MyComponent />)
 
 cy.get('.selector-in-question').then(($selectedElement) => {
   // Debugger is hit after the cy.mount
@@ -118,7 +118,7 @@ cy.visit('/my/page/path')
 ```
 
 ```js
-mount(<MyComponent />)
+cy.mount(<MyComponent />)
 ```
 
 ```js
