@@ -126,3 +126,13 @@ set of tests specializing in what they do best.
 
 To learn more about component testing in Cypress, visit our guide on
 [Writing Your First Component Test](/guides/getting-started/writing-your-first-component-test).
+
+## Test Type Comparison
+
+| | End-to-end | Component | |-| |:-:| |:-:| |What's Tested | All app layers |
+Individual component | |Characteristics|Comprehensive, slower, more suspectable
+to flake| Specialized, quick, reliable | | Used For | Verifying app works as a
+cohesive whole | Testing functionality of individual component | | Written By |
+Developers, QA Team, SDETs | Developers, Designers | | CI Infrastructure | Often
+requires complex setup | None needed | | Initialization Command |
+`cy.visit(url)` | `mount(<MyComponent />)` |
