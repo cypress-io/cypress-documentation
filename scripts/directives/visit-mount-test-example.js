@@ -36,6 +36,6 @@ function processNode(node, { _require, error, warn }) {
 
 module.exports = {
   type: 'containerDirective',
-  name: 'cypress-visit-mount-test-example',
+  name: 'visit-mount-test-example',
   processNode,
 }

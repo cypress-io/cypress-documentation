@@ -20,7 +20,7 @@ message appears, an element is removed, or a CSS class is added after the
 appropriate user action. A typical Cypress test, for example, can check if a
 toggled "Todo" item gets a class of "completed" after the `.toggle` is checked:
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('/') // opens TodoMVC running at "baseUrl"

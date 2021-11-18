@@ -120,7 +120,7 @@ by any users of your custom command.
 
 In your specs, you can now use the custom command as expected
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```ts
 cy.visit('/')

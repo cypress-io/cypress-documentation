@@ -40,7 +40,7 @@ Pass in an options object to change the default behavior of `cy.window()`.
 
 #### Yield the remote window object
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('http://localhost:8080/app')
@@ -126,7 +126,7 @@ if (window.Cypress) {
 Cypress Test Runner can wait for the property `window.appReady` to be `true`
 before every test
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('/')

@@ -25,7 +25,7 @@ browser makes available to you, like `document`, `window`, and `debugger`.
 Based on those statements, you might be tempted to throw a `debugger` into your
 test, like so:
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('/my/page/path')
@@ -59,7 +59,7 @@ will return immediately, having enqueued their work to be done later, and
 Let's use [`.then()`](/api/commands/then) to tap into the Cypress command during
 execution and add a `debugger` at the appropriate time:
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('/my/page/path')
@@ -111,7 +111,7 @@ Cypress also exposes a shortcut for debugging commands,
 [`.debug()`](/api/commands/debug). Let's rewrite the test above using this
 helper method:
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('/my/page/path')

@@ -31,7 +31,7 @@ After you're done, we suggest watching some of our <Icon name="video"></Icon>
 Simplicity is all about getting more done with less typing. Let's look at an
 example:
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('/posts/new')
@@ -527,7 +527,7 @@ is what we mean when we say Cypress commands are asynchronous.
 
 #### Take this short test, for example:
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('/my/resource/path')
@@ -815,7 +815,7 @@ commands that were enqueued using the `cy.*` command chains.
 
 #### Let's take another look at an example
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('/my/resource/path')
@@ -1142,7 +1142,7 @@ basic part of testing?
 
 #### Consider this example:
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('/home')

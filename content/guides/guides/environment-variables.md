@@ -378,7 +378,7 @@ You can set environment variables for specific suites or tests by passing the
 
 #### Suite of test configuration
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit(`https://docs.cypress.io/${Cypress.env('language')}/`)

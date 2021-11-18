@@ -132,7 +132,7 @@ describe('Nav Menus', () => {
 
 #### Dynamically test multiple viewports
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('https://www.cypress.io')

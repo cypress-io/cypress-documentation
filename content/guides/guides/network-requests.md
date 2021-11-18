@@ -273,7 +273,7 @@ Cypress you might want to check that out first.
 
 Here is an example of aliasing requests and then subsequently waiting on them:
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('http://localhost:8888/dashboard')

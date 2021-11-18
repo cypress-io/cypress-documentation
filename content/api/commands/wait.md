@@ -104,7 +104,7 @@ For a detailed explanation of aliasing,
 
 #### Wait for a specific request to respond
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('/accounts/123')
@@ -165,7 +165,7 @@ cy.get('#book-results').should('have.length', 1)
 When passing an array of aliases to `cy.wait()`, Cypress will wait for all
 requests to complete within the given `requestTimeout` and `responseTimeout`.
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('/dashboard')

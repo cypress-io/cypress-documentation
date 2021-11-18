@@ -206,7 +206,7 @@ number.
 With the following test code, you would see the below screenshot filenames when
 all 3 attempts fail:
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('/')

@@ -414,7 +414,7 @@ How to solve this:
 
 Let's imagine the following test that is filling out the form.
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 it('visits the form', () => {
@@ -460,7 +460,7 @@ Here's 2 ways we can fix this:
 
 ### 1. Combine into one test
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('/users/new')
@@ -496,7 +496,7 @@ single test at a time.
 
 ### 2. Run shared code before each test
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('/users/new')
@@ -553,7 +553,7 @@ assertions and don't worry about it
 
 We've seen many users writing this kind of code:
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('/users/new')
@@ -611,7 +611,7 @@ could implicitly fail**.
 
 How you should rewrite those tests:
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('/users/new')

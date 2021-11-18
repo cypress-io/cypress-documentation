@@ -263,7 +263,7 @@ cy.get('#ssr-error', { timeout: 0 }).should('not.exist')
 
 Here is a short test that demonstrates some flake.
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('/')
@@ -381,7 +381,7 @@ that query elements. In our case we first query elements using `cy.get()` and
 then query from that list of elements using `.find()`. We can combine two
 separate queries into one - forcing the combined query to be retried.
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('/')
@@ -464,7 +464,7 @@ There is another way to fix our flaky test. Whenever you write a longer test, we
 recommend alternating commands with assertions. In this case, I will add an
 assertion after the `cy.get()` command, but before the `.find()` command.
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('/')

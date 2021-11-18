@@ -152,7 +152,7 @@ cy.get('.timer').then(($timer) => {
 
 #### Specify a now timestamp
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('/index.html')

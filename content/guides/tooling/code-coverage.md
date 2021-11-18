@@ -362,7 +362,7 @@ Even a single test can cover a lot of the application code. For example, let's
 run the following test that adds a few items, then marks one of them as
 completed.
 
-:::cypress-visit-mount-test-example
+:::visit-mount-test-example
 
 ```js
 cy.visit('/')
