@@ -2,8 +2,6 @@
 title: 'Choosing a Testing Type'
 ---
 
-# End-to-end or Component Tests?
-
 <Alert type="info">
 
 ## <Icon name="graduation-cap"></Icon> What you'll learn
@@ -13,6 +11,8 @@ title: 'Choosing a Testing Type'
 - How to choose which test type based on your scenario
 
 </Alert>
+
+## End-to-end or Component Tests?
 
 One of the first decisions you will need to make on your testing journey is what
 type of test to create. Cypress offers two options: end-to-end and component
