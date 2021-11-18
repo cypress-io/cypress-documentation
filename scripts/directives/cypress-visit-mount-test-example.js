@@ -8,34 +8,34 @@ const replacer = (text) => {
 }}
 
 function processNode(node, { _require, error, warn }) {
-		const helpers = _require(__dirname, './helpers/example-helpers')
-    const { children } = helpers.getNodeProperties(node)
-    const { errorArgs, parts } = helpers.getCodeBlocks(children, { count: 3 })
+  const helpers = _require(__dirname, './helpers/example-helpers')
+  const { children } = helpers.getNodeProperties(node)
+  const { errorArgs, parts } = helpers.getCodeBlocks(children, { count: 3 })
     
-    if (errorArgs) {
-        return error(...errorArgs)
-    }
+  if (errorArgs) {
+    return error(...errorArgs)
+  }
     
-    const [visit, mount, code] = parts
-    const visitCombined = code.replace(re, replacer(visit))
-    const mountCombined = code.replace(re, replacer(mount))
+  const [visit, mount, code] = parts
+  const visitCombined = code.replace(re, replacer(visit))
+  const mountCombined = code.replace(re, replacer(mount))
 
-    return helpers.getCodeGroup(
-        {
-            label: 'End-to-End Test',
-            language: 'js',
-            body: visitCombined
-        },
-        {
-            label: 'Component Test',
-            language: 'js',
-            body: mountCombined
-        }
-    )
+  return helpers.getCodeGroup(
+    {
+      label: 'End-to-End Test',
+      language: 'js',
+      body: visitCombined
+    },
+    {
+      label: 'Component Test',
+      language: 'js',
+      body: mountCombined
+    }
+  )
 }
 
 module.exports = {
-    type: 'containerDirective',
-    name: 'cypress-visit-mount-test-example',
-    processNode,
+  type: 'containerDirective',
+  name: 'cypress-visit-mount-test-example',
+  processNode,
 }
