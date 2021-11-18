@@ -589,6 +589,11 @@ const Clicker = ({ click }) => (
 
 it('calls the click prop twice', () => {
   const onClick = cy.stub()
+<<<<<<< HEAD
+=======
+  // "mount" function comes from
+  // https://github.com/cypress-io/cypress/tree/master/npm/react
+>>>>>>> 2bfce2d09 (update cy.mount syntax)
   cy.mount(<Clicker click={onClick} />)
   cy.get('button')
     .click()
