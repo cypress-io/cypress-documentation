@@ -110,7 +110,7 @@ in the background when loading your application under test. In this case use the
 However, Component Tests simply render your component. Here you can stub right
 before [`cy.mount()`](/api/commands/mount).
 
-:::cypress-stub-example
+:::e2e-component-example
 
 ```js
 // assume App.start uses prompt to set the value of
@@ -128,6 +128,8 @@ cy.get('.name').should('have.value', 'my custom message')
 ```
 
 ```js
+// assume component uses prompt to set the value of
+// an element with class "name"
 cy.stub(window, 'prompt').returns('my custom message')
 cy.mount(<MyComponent />)
 

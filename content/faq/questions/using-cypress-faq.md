@@ -1022,7 +1022,7 @@ store, and even drive the application via Redux actions.
 
 To spy on `console.log` you should use [cy.stub()](/api/commands/stub).
 
-:::cypress-stub-example
+:::e2e-component-example
 
 ```js
 cy.visit('/', {

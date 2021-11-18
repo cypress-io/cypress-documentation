@@ -25,6 +25,6 @@ function processNode(node, { _require, error }) {
 
 module.exports = {
   type: 'containerDirective',
-  name: 'cypress-stub-example',
+	name: 'e2e-component-example',
   processNode,
 }
