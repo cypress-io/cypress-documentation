@@ -57,11 +57,19 @@ on how to handle this complexity.
 - Can be written by developers or QA Teams
 - Can be used for integration testing as well
 
+</Alert>
+
+<Alert type="info">
+
 ### Considerations for end-to-end tests:
 
 - More difficult to set up, run, and maintain
 - Provision testing infrastructure in CI
 - Testing certain scenarios require more setup
+
+</Alert>
+
+<Alert type="bolt">
 
 ### Common scenarios for end-to-end tests:
 
@@ -109,11 +117,19 @@ set of tests specializing in what they do best.
 - Easy to set up specific scenarios in tests
 - Don't rely on any external system to run
 
+</Alert>
+
+<Alert type="info">
+
 ### Considerations for component tests:
 
 - Do not ensure overall app quality
 - Do not call into external APIs/Services
 - Usually written by developers working on the component
+
+</Alert>
+
+<Alert type="bolt">
 
 ### Common scenarios for component tests:
 
@@ -129,10 +145,11 @@ To learn more about component testing in Cypress, visit our guide on
 
 ## Test Type Comparison
 
-| | End-to-end | Component | |-| |:-:| |:-:| |What's Tested | All app layers |
-Individual component | |Characteristics|Comprehensive, slower, more suspectable
-to flake| Specialized, quick, reliable | | Used For | Verifying app works as a
-cohesive whole | Testing functionality of individual component | | Written By |
-Developers, QA Team, SDETs | Developers, Designers | | CI Infrastructure | Often
-requires complex setup | None needed | | Initialization Command |
-`cy.visit(url)` | `mount(<MyComponent />)` |
+|                        |                    End-to-end                    |                   Component                   |
+| ---------------------- | :----------------------------------------------: | :-------------------------------------------: |
+| What's Tested          |                  All app layers                  |             Individual component              |
+| Characteristics        | Comprehensive, slower, more suspectable to flake |         Specialized, quick, reliable          |
+| Used For               |     Verifying app works as a cohesive whole      | Testing functionality of individual component |
+| Written By             |            Developers, QA Team, SDETs            |             Developers, Designers             |
+| CI Infrastructure      |           Often requires complex setup           |                  None needed                  |
+| Initialization Command |                 `cy.visit(url)`                  |           `mount(<MyComponent />)`            |
