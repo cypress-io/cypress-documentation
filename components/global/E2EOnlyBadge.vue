@@ -9,5 +9,7 @@ export default {
 </script>
 
 <template>
-  <Badge type="hint">End-to-End Only</Badge>
+	<router-link to="/guides/overview/choosing-testing-type#What-is-End-to-end-Testing">
+		<Badge type="hint">End-to-End Only</Badge>
+	</router-link>
 </template>
