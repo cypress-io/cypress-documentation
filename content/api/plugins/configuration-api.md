@@ -236,9 +236,11 @@ off of the file system - you could store them all in memory inside of
 ### Runner Specific Plugins
 
 You can access the type of tests running via the `config.testingType` property.
-The testing type is either `e2e` or `component` depending on if the E2E or
-[Component Testing](/guides/component-testing/introduction/) runner was
-launched. This allows you to configure runner specific plugins.
+The testing type is either `e2e` or `component` depending on if the
+[End-to-End Testing](/guides/overview/choosing-testing-type#What-is-End-to-end-Testing)
+or
+[Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing)
+runner was launched. This allows you to configure runner specific plugins.
 
 #### Use Cypress React Plugin Conditionally
 

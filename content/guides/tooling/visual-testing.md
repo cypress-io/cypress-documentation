@@ -139,7 +139,7 @@ First joint webinar with Applitools
 <!-- textlint-enable -->
 
 Second joint webinar with Applitools with a focus on
-[Component Testing](/guides/component-testing/introduction)
+[Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing)
 
 <!-- textlint-disable -->
 

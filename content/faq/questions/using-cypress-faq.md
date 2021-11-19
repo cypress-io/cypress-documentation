@@ -1022,16 +1022,34 @@ store, and even drive the application via Redux actions.
 
 To spy on `console.log` you should use [cy.stub()](/api/commands/stub).
 
-```javascript
+:::e2e-component-example
+
+```js
 cy.visit('/', {
   onBeforeLoad(win) {
+    // Stub your functions here
     cy.stub(win.console, 'log').as('consoleLog')
   },
 })
 
-//...
+// Other test code
+
 cy.get('@consoleLog').should('be.calledWith', 'Hello World!')
 ```
+
+```js
+// Stub your functions here
+cy.stub(window.console, 'log').as('consoleLog')
+
+// After that, mount your component
+cy.mount(<MyComponent />)
+
+// Other test code
+
+cy.get('@consoleLog').should('be.calledWith', 'Hello World!')
+```
+
+:::
 
 Also, check out our
 [Stubbing `console` Receipe](/examples/examples/recipes#Stubbing-and-spying).
@@ -1137,8 +1155,8 @@ check out
 [cypress-react-selector](https://github.com/abhinaba-ghosh/cypress-react-selector).
 
 Finally, you might want to check out the
-[React Component Testing](/guides/component-testing/introduction) adaptor that
-allows you to test your React components right inside Cypress.
+[React Component Testing](/guides/getting-started/component-framework-configuration#React-Create-React-App)
+adaptor that allows you to test your React components right inside Cypress.
 
 ## <Icon name="angle-right"></Icon> Can I check the GraphQL network calls using Cypress?
 
