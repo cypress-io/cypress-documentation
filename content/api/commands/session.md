@@ -32,7 +32,7 @@ Enabling this flag does the following:
   [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
 
 Because the page is cleared at the beginning of each test,
-[`cy.mount()`](/api/commands/mount) or [`cy.visit()`](/api/commands/visit) must
+[`cy.visit()`](/api/commands/visit) or [`cy.mount()`](/api/commands/mount) must
 be explicitly called at the beginning of each test.
 
 </Alert>
@@ -735,8 +735,8 @@ to explicitly log out.
 | After `cy.session()` | <Icon name="check-circle" color="green"></Icon> |                                                 |
 
 Because calling `cy.session()` clears the current page in addition to restoring
-cached session data, [`cy.mount()`](/api/commands/mount) or
-[`cy.visit()`](/api/commands/visit) must always be explicitly called afterwards
+cached session data, [`cy.visit()`](/api/commands/visit) or
+[`cy.mount()`](/api/commands/mount) must always be explicitly called afterwards
 to ensure a page is visited or a component is mounted.
 
 ### Session caching
@@ -873,8 +873,8 @@ const login = (name, token, password) => {
 
 #### Why are all my Cypress commands failing after calling `cy.session()`?
 
-Ensure that you're calling [`cy.mount()`](/api/commands/mount) or
-[`cy.visit()`](/api/commands/visit) after calling `cy.session()`, otherwise your
+Ensure that you're calling [`cy.visit()`](/api/commands/visit) or
+[`cy.mount()`](/api/commands/mount) after calling `cy.session()`, otherwise your
 tests will be running on a blank page.
 
 #### Why am I seeing `401` errors after calling `cy.session()`?
@@ -944,5 +944,5 @@ data, including cookies, `localStorage` and `sessionStorage`.
 - [Authenticate faster in tests with the cy.session command](https://cypress.io/blog/2021/08/04/authenticate-faster-in-tests-cy-session-command/)
 - [Custom Commands](/api/cypress-api/custom-commands)
 - [`Cypress.session`](/api/cypress-api/session)
-- [`cy.mount()`](/api/commands/mount)
 - [`cy.visit()`](/api/commands/visit)
+- [`cy.mount()`](/api/commands/mount)
