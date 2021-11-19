@@ -52,6 +52,18 @@
   to = "/guides/dashboard/introduction/"
   status = 301
   force = true
+	
+[[redirects]]
+  from = "/guides/component-testing/introduction"
+  to = "/guides/overview/choosing-testing-type#What-is-Component-Testing"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/framework-configuration"
+  to = "/guides/getting-started/component-framework-configuration/"
+  status = 301
+  force = true
 
 [[plugins]]
 package = "@netlify/plugin-sitemap"

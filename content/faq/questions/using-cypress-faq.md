@@ -1137,8 +1137,8 @@ check out
 [cypress-react-selector](https://github.com/abhinaba-ghosh/cypress-react-selector).
 
 Finally, you might want to check out the
-[React Component Testing](/guides/component-testing/introduction) adaptor that
-allows you to test your React components right inside Cypress.
+[React Component Testing](/guides/getting-started/component-framework-configuration#React-Create-React-App)
+adaptor that allows you to test your React components right inside Cypress.
 
 ## <Icon name="angle-right"></Icon> Can I check the GraphQL network calls using Cypress?
 
