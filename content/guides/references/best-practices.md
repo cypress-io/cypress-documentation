@@ -535,7 +535,7 @@ We're also paving the way to make it less complicated to write multiple tests
 against the "default" state of the form. That way each test stays lean but each
 can be run independently and pass.
 
-## Creating "tiny" tests with a single assertion
+## Creating "tiny" tests with a single assertion <E2EOnlyBadge />
 
 <Alert type="danger">
 
@@ -553,20 +553,10 @@ assertions and don't worry about it
 
 We've seen many users writing this kind of code:
 
-:::visit-mount-test-example
-
-```js
-cy.visit('/users/new')
-```
-
-```js
-cy.mount(<NewUser />)
-```
-
 ```js
 describe('my form', () => {
-  before(() => {
-    __VISIT_MOUNT_PLACEHOLDER__
+  beforeEach(() => {
+    cy.visit('/users/new')
     cy.get('#first').type('johnny')
   })
 
@@ -584,11 +574,9 @@ describe('my form', () => {
 })
 ```
 
-:::
-
 While technically this runs fine - this is really excessive, and not performant.
 
-Why you did this pattern in unit tests:
+Why you do this pattern in component and unit tests:
 
 - When assertions failed you relied on the test's title to know what failed
 - You were told that adding multiple assertions was bad and accepted this as
@@ -596,7 +584,7 @@ Why you did this pattern in unit tests:
 - There was no performance penalty splitting up multiple tests because they run
   really fast
 
-Why you shouldn't do this in Cypress:
+Why you shouldn't do this in End-to-End tests:
 
 - Writing integration tests is not the same as unit tests
 - You will always know (and can visually see) which assertion failed in a large
@@ -611,20 +599,10 @@ could implicitly fail**.
 
 How you should rewrite those tests:
 
-:::visit-mount-test-example
-
-```js
-cy.visit('/users/new')
-```
-
-```js
-cy.mount(<NewUser />)
-```
-
 ```js
 describe('my form', () => {
-  before(() => {
-    __VISIT_MOUNT_PLACEHOLDER__
+  beforeEach(() => {
+    cy.visit('/users/new')
   })
 
   it('validates and formats first name', () => {
@@ -636,8 +614,6 @@ describe('my form', () => {
   })
 })
 ```
-
-:::
 
 ## Using `after` or `afterEach` hooks
 

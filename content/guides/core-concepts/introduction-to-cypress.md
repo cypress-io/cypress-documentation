@@ -818,22 +818,21 @@ commands that were enqueued using the `cy.*` command chains.
 :::visit-mount-test-example
 
 ```js
-cy.visit('/my/resource/path')
+cy.visit('/my/resource/path') // 1.
 ```
 
 ```js
-cy.mount(<MyComponent />)
+cy.mount(<MyComponent />) // 1.
 ```
 
 ```js
 it('changes the URL when "awesome" is clicked', () => {
-  __VISIT_MOUNT_PLACEHOLDER__ // 1.
+  __VISIT_MOUNT_PLACEHOLDER__
 
-  cy.get('.awesome-selector') // 2.
-    .click() // 3.
-
-  cy.url() // 4.
-    .should('include', '/my/resource/path#awesomeness') // 5.
+  cy.get('.hides-when-clicked') // 2
+    .should('be.visible') // 3
+    .click() // 4
+    .should('not.be.visible') // 5
 })
 ```
 
@@ -841,11 +840,11 @@ it('changes the URL when "awesome" is clicked', () => {
 
 The test above would cause an execution in this order:
 
-1. Visit a URL.
+1. Visit the URL (or mount the component).
 2. Find an element by its selector.
-3. Perform a click action on that element.
-4. Grab the URL.
-5. Assert the URL to include a specific _string_.
+3. Assert that the element is visible.
+4. Perform a click action on that element.
+5. Assert that the element is no longer visible.
 
 These actions will always happen serially (one after the other), never in
 parallel (at the same time). Why?
@@ -853,17 +852,17 @@ parallel (at the same time). Why?
 To illustrate this, let's revisit that list of actions and expose some of the
 hidden **✨ magic ✨** Cypress does for us at each step:
 
-1. Visit a URL ✨ **and wait for the page `load` event to fire after all
-   external resources have loaded**✨
-2. Find an element by its selector ✨ **and
-   [retry](/guides/core-concepts/retry-ability) until it is found in the DOM**
+1. Visit the URL ✨ **and wait for the page load event to fire after all
+   external resources have loaded** ✨ (or mount the component ✨ **and wait for
+   the component to finish mounting** ✨)
+2. Find an element by its selector ✨ **and retry until it is found in the DOM**
    ✨
-3. Perform a click action on that element ✨ **after we wait for the element to
-   reach an
-   [actionable state](/guides/core-concepts/interacting-with-elements)** ✨
-4. Grab the URL and...
-5. Assert the URL to include a specific _string_ ✨ **and
-   [retry](/guides/core-concepts/retry-ability) until the assertion passes** ✨
+3. Assert that the element is visible ✨ **and retry until the assertion
+   passes** ✨
+4. Perform a click action on that element ✨ **after we wait for the element to
+   reach an actionable state** ✨
+5. Assert that the element is no longer visible ✨ **and retry until the
+   assertion passes** ✨
 
 As you can see, Cypress does a lot of extra work to ensure the state of the
 application matches what our commands expect about it. Each command may resolve
@@ -1167,8 +1166,9 @@ cy.get('form').submit()
 Without a single explicit assertion, there are dozens of ways this test can
 fail! Here's a few:
 
-- The initial [`cy.visit()`](/api/commands/visit) could respond with something
-  other than success.
+- The initial [`cy.visit()`](/api/commands/visit) or
+  [`cy.mount()`](/api/commands/mount) could respond with something other than
+  success.
 - Any of the [`cy.get()`](/api/commands/get) commands could fail to find their
   elements in the DOM.
 - The element we want to [`.click()`](/api/commands/click) on could be covered

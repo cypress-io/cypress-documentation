@@ -276,10 +276,14 @@ Here is an example of aliasing requests and then subsequently waiting on them:
 :::visit-mount-test-example
 
 ```js
+// visiting the dashboard should make requests that match
+// the two routes above
 cy.visit('http://localhost:8888/dashboard')
 ```
 
 ```js
+// mounting the dashboard should make requests that match
+// the two routes above
 cy.mount(<Dashboard />)
 ```
 
@@ -287,8 +291,6 @@ cy.mount(<Dashboard />)
 cy.intercept('/activities/*', { fixture: 'activities' }).as('getActivities')
 cy.intercept('/messages/*', { fixture: 'messages' }).as('getMessages')
 
-// visiting or mounting the dashboard should make requests that match
-// the two routes above
 __VISIT_MOUNT_PLACEHOLDER__
 
 // pass an array of Route Aliases that forces Cypress to wait

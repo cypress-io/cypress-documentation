@@ -101,7 +101,7 @@ it('equals bar', () => {
 
   cy.window()
     .then((win) => {
-      foo = win.foo
+      foo = win.tags.foo
     })
     .then(() => {
       // variable "foo" has been set
@@ -126,25 +126,13 @@ if (window.Cypress) {
 Cypress Test Runner can wait for the property `window.appReady` to be `true`
 before every test
 
-:::visit-mount-test-example
-
-```js
-cy.visit('/')
-```
-
-```js
-cy.mount(<MyComponent />)
-```
-
 ```js
 // spec.js
 beforeEach(() => {
-  __VISIT_MOUNT_PLACEHOLDER__
+  cy.visit('/')
   cy.window().should('have.property', 'appReady', true)
 })
 ```
-
-:::
 
 <Alert type="info">
 
