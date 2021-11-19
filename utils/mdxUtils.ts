@@ -5,15 +5,13 @@ import toc from 'markdown-toc-unlazy'
 
 export const GUIDES_PATH = path.join(process.cwd(), 'content/guides')
 
-export const contentFilePaths = fs
-  .readdirSync(GUIDES_PATH)
-  // Only include md(x) files
-  .filter((path) => /\.mdx?$/.test(path))
+export const GET_PATH = (pathStr: string) => path.join(process.cwd(), pathStr)
 
-export const allContentFilePaths = glob
-  .sync('content/guides/**/*')
-  .filter((path) => /\.mdx?$/.test(path))
-  .map((path) => path.replace(/^content/, ''))
+export const allContentFilePaths = (pathStr: string) =>
+  glob
+    .sync(pathStr)
+    .filter((path) => /\.md$/.test(path))
+    .map((path) => path.replace(/^content/, ''))
 
 export const getToCForMarkdown = (markdown) => {
   const tableOfContents = toc(markdown).json

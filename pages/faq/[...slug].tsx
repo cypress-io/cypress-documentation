@@ -13,8 +13,8 @@ import Alert from '@/components/alert'
 import DocsImage from '@/components/docs-image'
 import DocsVideo from '@/components/docs-video'
 import Badge from '@/components/badge'
-import { GET_PATH, allContentFilePaths, getToCForMarkdown } from '@/utils/mdxUtils'
-import sidebarJSON from '@/data/sidebar.json'
+import { GUIDES_PATH, allContentFilePaths, getToCForMarkdown } from '@/utils/mdxUtils'
+import guidesSidebarJson from '@/data/sidebar.json'
 
 // Custom components/renderers to pass to MDX.
 // Since the MDX files aren't loaded by webpack, they have no knowledge of how
@@ -36,7 +36,7 @@ const components = {
   Badge,
 }
 
-export default function GuidesPage({ source, toc }) {
+export default function LessonPage({ source, toc }) {
   return (
     <>
       <Head>
@@ -48,15 +48,14 @@ export default function GuidesPage({ source, toc }) {
         toc={toc}
         source={source}
         components={components}
-        sidebarContent={sidebarJSON.guides[0]}
+        sidebarContent={guidesSidebarJson.guides[0]}
       />
     </>
   )
 }
 
 export const getStaticProps = async ({ params }) => {
-  const CONTENT_PATH = GET_PATH('content/guides')
-  const contentFilePath = path.join(CONTENT_PATH, `${params.slug[0]}/${params.slug[1]}.md`)
+  const contentFilePath = path.join(GUIDES_PATH, `${params.slug[0]}/${params.slug[1]}.md`)
   const source = fs.readFileSync(contentFilePath)
   const { content, data } = matter(source)
   const toc = getToCForMarkdown(content)
@@ -80,7 +79,7 @@ export const getStaticProps = async ({ params }) => {
 }
 
 export const getStaticPaths = async () => {
-  const paths = allContentFilePaths('content/guides/**/*')
+  const paths = allContentFilePaths
     // Remove file extensions for page paths
     .map((path) => path.replace(/\.mdx?$/, ''))
     // Map the path into the static paths object required by Next.js

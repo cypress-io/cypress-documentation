@@ -36,11 +36,11 @@ const components = {
   Badge,
 }
 
-export default function GuidesPage({ source, toc }) {
+export default function ExamplesPage({ source, toc }) {
   return (
     <>
       <Head>
-        <title>Guides | Cypress Documentation</title>
+        <title>Examples | Cypress Documentation</title>
         <meta name="description" content="" />
       </Head>
 
@@ -48,14 +48,14 @@ export default function GuidesPage({ source, toc }) {
         toc={toc}
         source={source}
         components={components}
-        sidebarContent={sidebarJSON.guides[0]}
+        sidebarContent={sidebarJSON.examples[0]}
       />
     </>
   )
 }
 
 export const getStaticProps = async ({ params }) => {
-  const CONTENT_PATH = GET_PATH('content/guides')
+  const CONTENT_PATH = GET_PATH('content/examples')
   const contentFilePath = path.join(CONTENT_PATH, `${params.slug[0]}/${params.slug[1]}.md`)
   const source = fs.readFileSync(contentFilePath)
   const { content, data } = matter(source)
@@ -80,7 +80,7 @@ export const getStaticProps = async ({ params }) => {
 }
 
 export const getStaticPaths = async () => {
-  const paths = allContentFilePaths('content/guides/**/*')
+  const paths = allContentFilePaths('content/examples/**/*')
     // Remove file extensions for page paths
     .map((path) => path.replace(/\.mdx?$/, ''))
     // Map the path into the static paths object required by Next.js

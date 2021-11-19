@@ -11,7 +11,7 @@ export default function Sidebar({ sidebarContent }) {
             <SubMenu title={item.title} key={index}>
               {item.children.map((subItem, subIndex) => (
                 <MenuItem key={subIndex}>
-                  <Link href={`/guides/${item.slug}/${subItem.slug}`}>
+                  <Link href={`/${sidebarContent.slug}/${item.slug}/${subItem.slug}`}>
                     <a>{subItem.title}</a>
                   </Link>
                 </MenuItem>
