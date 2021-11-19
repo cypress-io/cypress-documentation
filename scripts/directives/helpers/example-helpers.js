@@ -101,8 +101,15 @@ exports.getCodeBlocks = (children, { count, min, max } = {}) => {
   }
 
   const parts = children.map(({ value }) => value.trim())
+  const codeBlocks = children.map(({ type, value, lang }) => {
+    return {
+      type,
+      value: value.trim(),
+      lang,
+    }
+  })
 
-  return { parts }
+  return { parts, codeBlocks }
 }
 
 exports.adjustPluginsFileContent = (code) => {
