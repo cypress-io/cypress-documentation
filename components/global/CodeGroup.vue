@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.codeGroup">
+  <div ref="root" :class="$style.codeGroup">
     <div
       class="rounded-t-md border-b-2 border-gray-700 px-2 bg-gray-800 text-sm text-white relative flex flex-row"
     >
@@ -15,7 +15,7 @@
         ref="tabs"
         :key="label"
         class="px-4 py-3 text-gray-400 font-bold font-mono"
-        :class="[$style.button, activeTabIndex === i && 'active']"
+        :class="[$style.button, Math.min(0, activeTabIndex) === i && 'active']"
         @click="updateTabs(i)"
       >
         {{ label }}
@@ -33,17 +33,31 @@
 </template>
 
 <script>
+import { componentSync } from './componentSync'
+
 export default {
+  props: {
+    syncGroup: {
+      type: String,
+      default: null,
+    },
+  },
   data() {
     return {
       codeBlocks: [],
-      activeTabIndex: 0,
+      activeTabIndex: -1,
     }
   },
   watch: {
     activeTabIndex(newValue, oldValue) {
       this.activateCodeBlock(newValue)
     },
+  },
+  created() {
+    componentSync.register(this, 'activateTab')
+  },
+  unmounted() {
+    componentSync.unregister(this)
   },
   methods: {
     registerCodeBlock(codeBlock) {
@@ -53,7 +67,10 @@ export default {
         this.$nextTick(this.updateHighlighteUnderlinePosition)
       }
 
-      if (codeBlock.$vnode.componentInstance.active) {
+      if (
+        codeBlock.$vnode.componentInstance.active &&
+        this.activeTabIndex === -1
+      ) {
         this.activeTabIndex = length
       }
 
@@ -66,8 +83,15 @@ export default {
 
       this.updateHighlighteUnderlinePosition()
     },
-    updateTabs(i) {
+    activateTab(i) {
       this.activeTabIndex = i
+    },
+    updateTabs(i) {
+      if (this.syncGroup) {
+        componentSync.syncWithScroll(this, this.$refs.root, i)
+      } else {
+        this.activateTab(i)
+      }
     },
     updateHighlighteUnderlinePosition() {
       if (!this.$refs.tabs) {

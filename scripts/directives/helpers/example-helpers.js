@@ -112,7 +112,14 @@ exports.adjustPluginsFileContent = (code) => {
   return code
 }
 
-exports.getCodeGroup = (...blocks) => {
+const kebabCase = (str) => str.replace(/[A-Z]/g, (s) => `-${s.toLowerCase()}`)
+
+exports.getCodeGroup = (...args) => {
+  // Handle both signatures:
+  // - getCodeGroup(...blocks)
+  // - getCodeGroup(options, [...blocks])
+  let [options, blocks] = Array.isArray(args[1]) ? args : [{}, args]
+
   const filterFn = (obj) => obj && obj.body
   const mapFn = ({ label, language, alert = '', body }, i) => {
     const alertCode = alert && `<template v-slot:alert>${alert}</template>`
@@ -129,8 +136,16 @@ exports.getCodeGroup = (...blocks) => {
     `
   }
 
+  const codeGroupProps = ['syncGroup'].reduce((acc, name) => {
+    if (name in options) {
+      return `${acc} ${kebabCase(name)}="${options[name]}"`
+    }
+
+    return acc
+  }, '')
+
   const result = endent`
-    <code-group>
+    <code-group${codeGroupProps}>
     ${blocks.filter(filterFn).map(mapFn).join('\n')}
     </code-group>
   `
