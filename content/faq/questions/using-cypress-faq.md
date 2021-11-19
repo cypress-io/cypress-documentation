@@ -1022,16 +1022,34 @@ store, and even drive the application via Redux actions.
 
 To spy on `console.log` you should use [cy.stub()](/api/commands/stub).
 
-```javascript
+:::e2e-component-example
+
+```js
 cy.visit('/', {
   onBeforeLoad(win) {
+    // Stub your functions here
     cy.stub(win.console, 'log').as('consoleLog')
   },
 })
 
-//...
+// Other test code
+
 cy.get('@consoleLog').should('be.calledWith', 'Hello World!')
 ```
+
+```js
+// Stub your functions here
+cy.stub(window.console, 'log').as('consoleLog')
+
+// After that, mount your component
+cy.mount(<MyComponent />)
+
+// Other test code
+
+cy.get('@consoleLog').should('be.calledWith', 'Hello World!')
+```
+
+:::
 
 Also, check out our
 [Stubbing `console` Receipe](/examples/examples/recipes#Stubbing-and-spying).
