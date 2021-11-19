@@ -502,8 +502,8 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 
 ### Test Configuration
 
-To apply a specific Cypress [configuration](/guides/references/configuration)
-value to a suite or test, pass a configuration object to the test or suite
+It is possible to apply [test configuration](/guides/references/configuration#Test-Configuration)
+values to a suite or test. Pass a configuration object to the test or suite
 function as the second argument.
 
 This configuration will take effect during the suite or tests where they are set
@@ -519,31 +519,20 @@ it(name, config, fn)
 specify(name, config, fn)
 ```
 
+### Test Configuration
+
+
+This configuration will take effect during the suite or tests where they are set
+then return to their previous default values after the suite or tests are
+complete.
+
+
 #### Allowed config values
 
 <Icon name="exclamation-triangle" color="red"></Icon> **Note:** Some
 configuration values are readonly and cannot be changed via test configuration.
-The following configuration values **can be changed** via per test
-configuration:
-
-- `animationDistanceThreshold`
-- `baseUrl`
-- `browser` **note:** filters whether the tests or a suite of tests runs
-  depending on the current browser
-- `defaultCommandTimeout`
-- `execTimeout`
-- `env` **note:** Provided environment variables will be merged with current
-  environment variables.
-- `includeShadowDom`
-- `keystrokeDelay`
-- `requestTimeout`
-- `responseTimeout`
-- `retries`
-- `scrollBehavior`
-- `slowTestThreshold`
-- `viewportHeight`
-- `viewportWidth`
-- `waitForAnimations`
+Be sure to review the list of
+[test configuration options](/guides/references/configuration##Test-Configuration).
 
 #### Suite configuration
 
@@ -589,7 +578,7 @@ describe(
     },
   },
   () => {
-    it('Sets the expected viewport and API url', () => {
+    it('Sets the expected viewport and API URL', () => {
       expect(cy.config('viewportWidth')).to.equal(1024)
       expect(cy.config('viewportHeight')).to.equal(700)
       expect(cy.env('API')).to.equal('http://localhost:9000')
