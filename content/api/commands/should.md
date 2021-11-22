@@ -371,7 +371,7 @@ Cypress won't resolve your commands until all of its assertions pass.
 
 ```javascript
 // Application Code
-$('button').click(() => {
+$('button').click(function () {
   $button = $(this)
 
   setTimeout(() => {

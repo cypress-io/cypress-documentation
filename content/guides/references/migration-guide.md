@@ -179,7 +179,7 @@ This guide details the changes and how to change your code to migrate to Cypress
 
 ### [`cy.intercept()`][intercept] changes
 
-[Cypress 7.0](<(/guides/references/changelog#7-0-0)>) comes with some breaking
+[Cypress 7.0](/guides/references/changelog#7-0-0) comes with some breaking
 changes to [`cy.intercept()`][intercept]:
 
 #### Handler ordering is reversed

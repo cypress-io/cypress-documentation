@@ -65,7 +65,7 @@ cy.get('button').should('not.be.disabled')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.pause()` can bechained off of `cy` or off another
+<List><li>`.pause()` can be chained off of `cy` or off another
 command.</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)

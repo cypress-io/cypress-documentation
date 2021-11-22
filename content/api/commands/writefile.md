@@ -28,7 +28,7 @@ cy.writeFile('menu.json')
 A path to a file within the project root (the directory that contains the
 [Cypress configuration file](/guides/references/configuration))
 
-**<Icon name="angle-right"></Icon> contents** **_(String, Array, or Object)_**
+**<Icon name="angle-right"></Icon> contents** **_(String, Array, Object or Buffer)_**
 
 The contents to be written to the file.
 
@@ -37,17 +37,21 @@ The contents to be written to the file.
 The encoding to be used when writing to the file. The following encodings are
 supported:
 
-- `ascii`
-- `base64`
-- `binary`
-- `hex`
-- `latin1`
-- `utf8`
-- `utf-8`
-- `ucs2`
-- `ucs-2`
-- `utf16le`
-- `utf-16le`
+- `'ascii'`
+- `'base64'`
+- `'binary'`
+- `'hex'`
+- `'latin1'`
+- `'utf8'`
+- `'utf-8'`
+- `'ucs2'`
+- `'ucs-2'`
+- `'utf16le'`
+- `'utf-16le'`
+- `null`
+
+Using `null` explicitly will allows you to write a `Buffer` directly, without
+first encoding it as a string.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -69,8 +73,8 @@ parameter and include encoding there. This is the same behavior as
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.writeFile()` 'yields the value of the <code>contents</code>
-argument' </li></List>
+<List><li>`cy.writeFile()` yields the value of the <code>contents</code>
+argument.</li></List>
 
 ## Examples
 
@@ -183,6 +187,18 @@ cy.readFile(filename).then((list) => {
   list.push({ item: 'example' })
   // write the merged array
   cy.writeFile(filename, list)
+})
+```
+
+### Buffer
+
+#### Write a buffer directly without encoding as a string
+```javascript
+const filename = '/path/to/file.png'
+
+cy.readFile(filename, null).then((obj) => {
+  // <Buffer ef 3a bf ... >
+  cy.writeFile(filename, obj, null)
 })
 ```
 

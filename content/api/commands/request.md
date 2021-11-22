@@ -28,19 +28,19 @@ cy.request('http://dev.local/seed')
 
 The URL to make the request to.
 
-If you provide a non fully qualified domain name (FQDN), Cypress will make its
-best guess as to which host you want `cy.request()` to use in the url.
+If you do not provide a fully qualified domain name (FQDN) URL, Cypress will make its
+best guess as to which host you want `cy.request()` to use in the URL.
 
-1. If you make a `cy.request()` after visiting a page, Cypress assumes the url
+1. If you make a `cy.request()` after visiting a page, Cypress assumes the URL
    used for the `cy.visit()` is the host.
 
 ```javascript
 cy.visit('http://localhost:8080/app')
-cy.request('users/1.json') //  url is  http://localhost:8080/users/1.json
+cy.request('users/1.json') //  URL is  http://localhost:8080/users/1.json
 ```
 
-2. If you make a `cy.request()` prior to visiting a page, Cypress uses the host
-   configured as the `baseUrl` property inside of of your
+2. If you make a `cy.request()` prior to visiting a page, Cypress assumes the host
+   is the `baseUrl` property configured inside of of your
    [configuration file](/guides/references/configuration).
 
 :::cypress-config-example
@@ -54,7 +54,7 @@ cy.request('users/1.json') //  url is  http://localhost:8080/users/1.json
 :::
 
 ```javascript
-cy.request('seed/admin') // url is http://localhost:1234/seed/admin
+cy.request('seed/admin') // URL is http://localhost:1234/seed/admin
 ```
 
 3. If Cypress cannot determine the host it will throw an error.
@@ -102,6 +102,9 @@ Supported methods include:
 
 Pass in an options object to change the default behavior of `cy.request()`.
 
+You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout`
+globally in [configuration](/guides/references/configuration).
+
 | Option                     | Default                                                        | Description                                                                                                                                                                                              |
 | -------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `log`                      | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                                                                                                                 |
@@ -111,7 +114,7 @@ Pass in an options object to change the default behavior of `cy.request()`.
 | `body`                     | `null`                                                         | Body to send along with the request                                                                                                                                                                      |
 | `failOnStatusCode`         | `true`                                                         | Whether to fail on response codes other than `2xx` and `3xx`                                                                                                                                             |
 | `followRedirect`           | `true`                                                         | Whether to automatically follow redirects                                                                                                                                                                |
-| `form`                     | `false`                                                        | Whether to convert the `body` values to url encoded content and set the `x-www-form-urlencoded` header                                                                                                   |
+| `form`                     | `false`                                                        | Whether to convert the `body` values to URL encoded content and set the `x-www-form-urlencoded` header                                                                                                   |
 | `encoding`                 | `utf8`                                                         | The encoding to be used when serializing the response body. The following encodings are supported: `ascii`, `base64`, `binary`, `hex`, `latin1`, `utf8`, `utf-8`, `ucs2`, `ucs-2`, `utf16le`, `utf-16le` |
 | `gzip`                     | `true`                                                         | Whether to accept the `gzip` encoding                                                                                                                                                                    |
 | `headers`                  | `null`                                                         | Additional headers to send; Accepts object literal                                                                                                                                                       |
@@ -259,7 +262,7 @@ and sets cookies as if the requests had come from the browser.
 ```javascript
 cy.request({
   method: 'POST',
-  url: '/login_with_form', // baseUrl is prepended to url
+  url: '/login_with_form', // baseUrl is prepend to URL
   form: true, // indicates the body should be form urlencoded and sets Content-Type: application/x-www-form-urlencoded headers
   body: {
     username: 'jane.lane',

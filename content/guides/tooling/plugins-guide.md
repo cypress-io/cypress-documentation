@@ -13,10 +13,7 @@ plugins can use.
 > browser.
 
 Plugins are a "seam" for you to write your own custom code that executes during
-particular stages of the Cypress lifecycle. It also allows you to execute code
-within your own Node version when the
-[nodeVersion](/guides/references/configuration#Node-version) is set in your
-configuration.
+particular stages of the Cypress lifecycle.
 
 <Alert type="info">
 
@@ -140,10 +137,7 @@ which describe how to use this event.
 
 The event `task` is used in conjunction with the
 [`cy.task()`](/api/commands/task) command. It allows you to write arbitrary code
-in Node to accomplish tasks that aren't possible in the browser. It also allows
-you to execute code within your own Node version when the
-[nodeVersion](/guides/references/configuration#Node-version) is set in your
-configuration.
+in Node to accomplish tasks that aren't possible in the browser.
 
 You can use the `task` event to do things like:
 

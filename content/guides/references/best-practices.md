@@ -914,13 +914,27 @@ We have
 
 </Alert>
 
-Adding a [baseUrl](/guides/references/configuration#Global) in your
-configuration allows you to omit passing the `baseUrl` to commands like
-[cy.visit()](/api/commands/visit) and [cy.request()](/api/commands/request).
-Cypress assumes this is the url you want to use.
+By adding a [baseUrl](/guides/references/configuration#Global) in your configuration
+Cypress will attempt to prefix the `baseUrl` any URL provided to commands like [cy.visit()](/api/commands/visit)
+and [cy.request()](/api/commands/request) that are not fully qualified domain name (FQDN) URLs.
 
-Adding a [baseUrl](/guides/references/configuration#Global) can also save some
-time during the initial startup of your Cypress tests.
+This allows you to omit hard-coding fully qualified domain name (FQDN) URLs
+in commands. For example,
+
+```javascript
+ cy.visit('http://localhost:8080/index.html')
+```
+
+can be shortened to
+
+```javascript
+ cy.visit('index.html')
+```
+
+Not only does this create tests that can easily switch between domains, i.e. running a dev server on
+`http:localhost:8080` vs a deployed production server domain, but adding a `baseUrl` can also save some time
+during the initial startup of your Cypress tests.
+
 
 When you start running your tests, Cypress does not know the url of the app you
 plan to test. So, Cypress initially opens on `https://localhost` + a random
@@ -962,3 +976,7 @@ We also display an error if your server is not running at the specified
 `baseUrl` during `cypress run` after several retries.
 
 <DocsImage src="/img/guides/cypress-verifies-server-is-running-during-cypress-run.png" alt="The terminal warns and retries when the url at your baseUrl is not running" ></DocsImage>
+
+### Usage of `baseUrl` in depth
+
+This [short video](https://www.youtube.com/watch?v=f5UaXuAc52c) explains in depth how to use `baseUrl` correctly.
