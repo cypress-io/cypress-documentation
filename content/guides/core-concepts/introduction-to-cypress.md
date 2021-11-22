@@ -530,22 +530,21 @@ is what we mean when we say Cypress commands are asynchronous.
 :::visit-mount-test-example
 
 ```js
-cy.visit('/my/resource/path')
+cy.visit('/my/resource/path') // Nothing happens yet
 ```
 
 ```js
-cy.mount(<MyComponent />)
+cy.mount(<MyComponent />)     // Nothing happens yet
 ```
 
 ```js
-it('changes the URL when "awesome" is clicked', () => {
-  __VISIT_MOUNT_PLACEHOLDER__ // Nothing happens yet
+it('hides the thing when it is clicked', () => {
+  __VISIT_MOUNT_PLACEHOLDER__
 
-  cy.get('.awesome-selector') // Still nothing happening
-    .click() // Nope, nothing
-
-  cy.url() // Nothing to see, yet
-    .should('include', '/my/resource/path#awesomeness') // Nada.
+  cy.get('.hides-when-clicked') // Still nothing happening
+    .should('be.visible')       // Still absolutely nothing
+    .click()                    // Nope, nothing
+    .should('not.be.visible')   // Definitely nothing happening yet
 })
 
 // Ok, the test function has finished executing...
@@ -826,13 +825,13 @@ cy.mount(<MyComponent />) // 1.
 ```
 
 ```js
-it('changes the URL when "awesome" is clicked', () => {
+it('hides the thing when it is clicked', () => {
   __VISIT_MOUNT_PLACEHOLDER__
 
-  cy.get('.hides-when-clicked') // 2
-    .should('be.visible') // 3
-    .click() // 4
-    .should('not.be.visible') // 5
+  cy.get('.hides-when-clicked') // 2.
+    .should('be.visible') // 3.
+    .click() // 4.
+    .should('not.be.visible') // 5.
 })
 ```
 
