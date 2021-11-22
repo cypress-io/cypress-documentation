@@ -263,9 +263,19 @@ cy.get('#ssr-error', { timeout: 0 }).should('not.exist')
 
 Here is a short test that demonstrates some flake.
 
-```javascript
+:::visit-mount-test-example
+
+```js
+cy.visit('/')
+```
+
+```js
+cy.mount(<Todos />)
+```
+
+```js
 it('adds two items', () => {
-  cy.visit('/')
+  __VISIT_MOUNT_PLACEHOLDER__
 
   cy.get('.new-todo').type('todo A{enter}')
   cy.get('.todo-list li').find('label').should('contain', 'todo A')
@@ -274,6 +284,8 @@ it('adds two items', () => {
   cy.get('.todo-list li').find('label').should('contain', 'todo B')
 })
 ```
+
+:::
 
 The test passes in Cypress without a hitch.
 
@@ -369,9 +381,19 @@ that query elements. Instead of `cy.get('.todo-list li').find('label')` we can
 combine two separate queries into one - forcing the combined query to be
 retried.
 
-```javascript
+:::visit-mount-test-example
+
+```js
+cy.visit('/')
+```
+
+```js
+cy.mount(<Todos />)
+```
+
+```js
 it('adds two items', () => {
-  cy.visit('/')
+  __VISIT_MOUNT_PLACEHOLDER__
 
   cy.get('.new-todo').type('todo A{enter}')
   cy.get('.todo-list li label') // 1 query command
@@ -382,6 +404,8 @@ it('adds two items', () => {
     .should('contain', 'todo B') // assertion
 })
 ```
+
+:::
 
 To show the retries, I increased the application's artificial delay to 500ms.
 The test now always passes because the entire selector is retried. It finds 2
@@ -440,9 +464,19 @@ There is another way to fix our flaky test. Whenever you write a longer test, we
 recommend alternating commands with assertions. In this case, I will add an
 assertion after the `cy.get()` command, but before the `.find()` command.
 
-```javascript
+:::visit-mount-test-example
+
+```js
+cy.visit('/')
+```
+
+```js
+cy.mount(<Todos />)
+```
+
+```js
 it('adds two items', () => {
-  cy.visit('/')
+  __VISIT_MOUNT_PLACEHOLDER__
 
   cy.get('.new-todo').type('todo A{enter}')
   cy.get('.todo-list li') // command
@@ -457,6 +491,8 @@ it('adds two items', () => {
     .should('contain', 'todo B') // assertion
 })
 ```
+
+:::
 
 <DocsImage src="/img/guides/retry-ability/alternating.png" alt="Passing test" ></DocsImage>
 
@@ -553,9 +589,7 @@ const Clicker = ({ click }) => (
 
 it('calls the click prop twice', () => {
   const onClick = cy.stub()
-  // "mount" function comes from
-  // https://github.com/cypress-io/cypress/tree/master/npm/react
-  mount(<Clicker click={onClick} />)
+  cy.mount(<Clicker click={onClick} />)
   cy.get('button')
     .click()
     .click()
@@ -591,9 +625,7 @@ using `cy.get('@alias').should(...)` assertions.
 ```js
 it('calls the click prop', () => {
   const onClick = cy.stub().as('clicker')
-  // "mount" function comes from
-  // https://github.com/cypress-io/cypress/tree/master/npm/react
-  mount(<Clicker click={onClick} />)
+  cy.mount(<Clicker click={onClick} />)
   cy.get('button').click().click()
 
   // good practice 💡

@@ -178,7 +178,7 @@ on('task', {
 
 ### Seed a database
 
-```javascript
+```js
 // in test
 describe('e2e', () => {
   beforeEach(() => {

@@ -206,15 +206,27 @@ number.
 With the following test code, you would see the below screenshot filenames when
 all 3 attempts fail:
 
+:::visit-mount-test-example
+
+```js
+cy.visit('/')
+```
+
+```js
+cy.mount(<Login />)
+```
+
 ```js
 describe('User Login', () => {
   it('displays login errors', () => {
-    cy.visit('/')
+    __VISIT_MOUNT_PLACEHOLDER__
     cy.screenshot('user-login-errors')
     // ...
   })
 })
 ```
+
+:::
 
 ```js
 // screenshot filename from cy.screenshot() on 1st attempt

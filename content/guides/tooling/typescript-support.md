@@ -120,15 +120,27 @@ by any users of your custom command.
 
 In your specs, you can now use the custom command as expected
 
-```typescript
+:::visit-mount-test-example
+
+```ts
+cy.visit('/')
+```
+
+```ts
+cy.mount(<MyComponent />)
+```
+
+```ts
 // from your cypress/integration/spec.ts
 it('works', () => {
-  cy.visit('/')
+  __VISIT_MOUNT_PLACEHOLDER__
   // IntelliSense and TS compiler should
   // not complain about unknown method
   cy.dataCy('greeting')
 })
 ```
+
+:::
 
 #### Examples:
 

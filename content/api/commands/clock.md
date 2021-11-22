@@ -152,18 +152,25 @@ cy.get('.timer').then(($timer) => {
 
 #### Specify a now timestamp
 
-```javascript
-// your app code
-$('#date').text(new Date().toJSON())
+:::visit-mount-test-example
+
+```js
+cy.visit('/index.html')
 ```
 
-```javascript
-const now = new Date(2017, 3, 14).getTime() // April 14, 2017 timestamp
+```js
+cy.mount(<DatePicker id="date" />)
+```
+
+```js
+const now = new Date(2021, 3, 14) // month is 0-indexed
 
 cy.clock(now)
-cy.visit('/index.html')
-cy.get('#date').contains('2017-04-14')
+__VISIT_MOUNT_PLACEHOLDER__
+cy.get('#date').should('have.value', '04/14/2021')
 ```
+
+:::
 
 ### Function names
 
@@ -233,10 +240,17 @@ not override the time functions of any `iframe` embedded on the page.
 
 If you call `cy.clock()` before visiting a page with
 [`cy.visit()`](/api/commands/visit), the page's native global functions will be
-overridden on window load, before any of your app code runs, so even if
+overridden on window load, before any of your app code runs. So even if
 `setTimeout`, for example, is called on page load, it can still be controlled
 via [`cy.tick()`](/api/commands/tick). This also applies if, during the course
 of a test, the page under test is reloaded or changed.
+
+#### clock behavior before `cy.mount()`
+
+Using the [`cy.mount()`](/api/commands/mount) command in a Cypress Component
+Test will render your component but does not affect the behavior of the page or
+window object. This means you can `mount` directly after calling `cy.clock()` to
+test the component against any changes you've made to the yielded clock object.
 
 ## Rules
 

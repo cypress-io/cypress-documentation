@@ -178,19 +178,32 @@ cy.fixture('users').then((json) => {
 
 #### Modifying fixture data before using it
 
-You can modify fixture data directly before passing it along to a route.
+You can modify fixture data directly before visiting a URL or mounting a
+component that makes a network request to that URL.
 
-```javascript
+:::visit-mount-test-example
+
+```js
+cy.visit('/users')
+```
+
+```js
+cy.mount(<Users />)
+```
+
+```js
 cy.fixture('user').then((user) => {
   user.firstName = 'Jane'
   cy.intercept('GET', '/users/1', user).as('getUser')
 })
 
-cy.visit('/users')
+__VISIT_MOUNT_PLACEHOLDER__
 cy.wait('@getUser').then(({ request }) => {
   expect(request.body.firstName).to.eq('Jane')
 })
 ```
+
+:::
 
 ## Notes
 

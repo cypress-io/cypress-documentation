@@ -132,7 +132,17 @@ describe('Nav Menus', () => {
 
 #### Dynamically test multiple viewports
 
-```javascript
+:::visit-mount-test-example
+
+```js
+cy.visit('https://www.cypress.io')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
+```js
 const sizes = ['iphone-6', 'ipad-2', [1024, 768]]
 
 describe('Logo', () => {
@@ -146,12 +156,14 @@ describe('Logo', () => {
         cy.viewport(size)
       }
 
-      cy.visit('https://www.cypress.io')
+      __VISIT_MOUNT_PLACEHOLDER__
       cy.get('#logo').should('be.visible')
     })
   })
 })
 ```
+
+:::
 
 <DocsImage src="/img/api/viewport/loop-through-an-array-of-multiple-viewports.png" alt="Command Log of multiple viewports" ></DocsImage>
 

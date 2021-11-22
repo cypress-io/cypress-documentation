@@ -414,12 +414,24 @@ How to solve this:
 
 Let's imagine the following test that is filling out the form.
 
-```javascript
+:::visit-mount-test-example
+
+```js
+it('visits the form', () => {
+  cy.visit('/users/new')
+})
+```
+
+```js
+it('mounts the form', () => {
+  cy.mount(<UserForm />)
+})
+```
+
+```js
 // an example of what NOT TO DO
 describe('my form', () => {
-  it('visits the form', () => {
-    cy.visit('/users/new')
-  })
+  __VISIT_MOUNT_PLACEHOLDER__
 
   it('requires first name', () => {
     cy.get('#first').type('Johnny')
@@ -435,6 +447,8 @@ describe('my form', () => {
 })
 ```
 
+:::
+
 What's wrong with the above tests? They are all coupled together!
 
 If you were to change `it` to
@@ -446,11 +460,21 @@ Here's 2 ways we can fix this:
 
 ### 1. Combine into one test
 
-```javascript
+:::visit-mount-test-example
+
+```js
+cy.visit('/users/new')
+```
+
+```js
+cy.mount(<NewUser />)
+```
+
+```js
 // a bit better
 describe('my form', () => {
   it('can submit a valid form', () => {
-    cy.visit('/users/new')
+    __VISIT_MOUNT_PLACEHOLDER__
 
     cy.log('filling out first name') // if you really need this
     cy.get('#first').type('Johnny')
@@ -464,16 +488,28 @@ describe('my form', () => {
 })
 ```
 
+:::
+
 Now we can put an `.only` on this test and it will run successfully irrespective
 of any other test. The ideal Cypress workflow is writing and iterating on a
 single test at a time.
 
 ### 2. Run shared code before each test
 
-```javascript
+:::visit-mount-test-example
+
+```js
+cy.visit('/users/new')
+```
+
+```js
+cy.mount(<NewUser />)
+```
+
+```js
 describe('my form', () => {
   beforeEach(() => {
-    cy.visit('/users/new')
+    __VISIT_MOUNT_PLACEHOLDER__
     cy.get('#first').type('Johnny')
     cy.get('#last').type('Appleseed')
   })
@@ -490,6 +526,8 @@ describe('my form', () => {
 })
 ```
 
+:::
+
 This above example is ideal because now we are resetting the state between each
 test and ensuring nothing in previous tests leaks into subsequent ones.
 
@@ -497,7 +535,7 @@ We're also paving the way to make it less complicated to write multiple tests
 against the "default" state of the form. That way each test stays lean but each
 can be run independently and pass.
 
-## Creating "tiny" tests with a single assertion
+## Creating "tiny" tests with a single assertion <E2EOnlyBadge />
 
 <Alert type="danger">
 
@@ -515,9 +553,9 @@ assertions and don't worry about it
 
 We've seen many users writing this kind of code:
 
-```javascript
+```js
 describe('my form', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit('/users/new')
     cy.get('#first').type('johnny')
   })
@@ -538,7 +576,7 @@ describe('my form', () => {
 
 While technically this runs fine - this is really excessive, and not performant.
 
-Why you did this pattern in unit tests:
+Why you do this pattern in component and unit tests:
 
 - When assertions failed you relied on the test's title to know what failed
 - You were told that adding multiple assertions was bad and accepted this as
@@ -546,7 +584,7 @@ Why you did this pattern in unit tests:
 - There was no performance penalty splitting up multiple tests because they run
   really fast
 
-Why you shouldn't do this in Cypress:
+Why you shouldn't do this in End-to-End tests:
 
 - Writing integration tests is not the same as unit tests
 - You will always know (and can visually see) which assertion failed in a large
@@ -561,9 +599,9 @@ could implicitly fail**.
 
 How you should rewrite those tests:
 
-```javascript
+```js
 describe('my form', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit('/users/new')
   })
 
