@@ -85,6 +85,11 @@
   }
 }
 
+.main-content-header > a > div {
+  vertical-align: middle;
+  margin-left: 0;
+}
+
 /* Hide scrollbar */
 .hide-scroll {
   -ms-overflow-style: none; /* Internet Explorer 10+ */
@@ -155,9 +160,10 @@
 /* vertical alignment for 'hint' badge beside h2
    section titles using flexbox become 
    problematic on some pages, e.g FAQ's */
-.nuxt-content > h2 > div {
-  margin: 0.25rem 0;
+.nuxt-content h2 > a > div,
+.nuxt-content h3 > a > div {
   vertical-align: middle;
+  margin-left: 0.5rem;
 }
 
 /* h4 section titles with `emphasis` */
