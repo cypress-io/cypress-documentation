@@ -240,10 +240,17 @@ not override the time functions of any `iframe` embedded on the page.
 
 If you call `cy.clock()` before visiting a page with
 [`cy.visit()`](/api/commands/visit), the page's native global functions will be
-overridden on window load, before any of your app code runs, so even if
+overridden on window load, before any of your app code runs. So even if
 `setTimeout`, for example, is called on page load, it can still be controlled
 via [`cy.tick()`](/api/commands/tick). This also applies if, during the course
 of a test, the page under test is reloaded or changed.
+
+#### clock behavior before `cy.mount()`
+
+Using the [`cy.mount()`](/api/commands/mount) command in a Cypress Component
+Test will render your component but does not affect the behavior of the page or
+window object. This means you can `mount` directly after calling `cy.clock()` to
+test the component against any changes you've made to the yielded clock object.
 
 ## Rules
 

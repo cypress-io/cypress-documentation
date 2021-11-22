@@ -55,10 +55,7 @@ describe('Post Resource', () => {
     cy.contains('Submit') // 6.
       .click() // 7.
 
-    cy.url() // 8.
-      .should('include', '/posts/my-first-post')
-
-    cy.get('h1') // 9.
+    cy.get('h1') // 8.
       .should('contain', 'My First Post')
   })
 })
@@ -68,15 +65,14 @@ describe('Post Resource', () => {
 
 Can you read this? If you did, it might sound something like this:
 
-> 1. Visit the page at `/posts/new`.
+> 1. Visit page at `/posts/new` (or mount the `PostBuilder` component).
 > 2. Find the `<input>` with class `post-title`.
 > 3. Type "My First Post" into it.
 > 4. Find the `<input>` with class `post-body`.
 > 5. Type "Hello, world!" into it.
 > 6. Find the element containing the text `Submit`.
 > 7. Click it.
-> 8. Grab the browser URL, ensure it includes `/posts/my-first-post`.
-> 9. Find the `h1` tag, ensure it contains the text "My First Post".
+> 8. Find the `h1` tag, ensure it contains the text "My First Post".
 
 This is a relatively straightforward test, but consider how much code has been
 covered by it, both on the client and the server!
@@ -1174,7 +1170,8 @@ fail! Here's a few:
   by another element.
 - The input we want to [`.type()`](/api/commands/type) into could be disabled.
 - Form submission could result in a non-success status code.
-- The in-page JS (the application under test) could throw an error.
+- The in-page JS (the application under test) or the component could throw an
+  error.
 
 Can you think of any more?
 

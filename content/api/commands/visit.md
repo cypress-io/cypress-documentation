@@ -227,7 +227,7 @@ cy.visit({
 
 ### Redirects
 
-#### Visit will automatically follow redirects
+#### `cy.visit()` will automatically follow redirects
 
 ```javascript
 // we aren't logged in, so our web server
