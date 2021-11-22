@@ -188,9 +188,7 @@ cy.server({
 
 cy.route('GET', '/users/1', { id: 1, name: 'Amanda' }).as('getUser')
 cy.visit('/users/1/profile')
-cy.wait('@getUser')
-  .its('responseHeaders')
-  .should('have.property', 'x-token', 'abc-123-foo-bar') // true
+cy.wait('@getUser').its('responseHeaders').should('have.property', 'x-token', 'abc-123-foo-bar') // true
 ```
 
 ```javascript
@@ -238,10 +236,7 @@ via Ajax.
 const ignore = (xhr) => {
   // this function receives the xhr object in question and
   // will ignore if it's a GET that appears to be a static resource
-  return (
-    xhr.method === 'GET' &&
-    /\.(jsx?|coffee|html|less|s?css|svg)(\?.*)?$/.test(xhr.url)
-  )
+  return xhr.method === 'GET' && /\.(jsx?|coffee|html|less|s?css|svg)(\?.*)?$/.test(xhr.url)
 }
 ```
 

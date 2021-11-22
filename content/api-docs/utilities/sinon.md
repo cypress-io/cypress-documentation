@@ -40,10 +40,7 @@ CSS variable:
 
 ```js
 document.querySelector('input[type=color]').addEventListener('change', (e) => {
-  document.documentElement.style.setProperty(
-    '--background-color',
-    e.target.value
-  )
+  document.documentElement.style.setProperty('--background-color', e.target.value)
 })
 ```
 
@@ -62,11 +59,7 @@ cy.get('input[type=color]').invoke('val', '#ff0000').trigger('change')
 
 // we don't care about '--background-color' exact
 // value but know it should be a string
-cy.get('@setColor').should(
-  'have.been.calledWith',
-  Cypress.sinon.match.string,
-  '#ff0000'
-)
+cy.get('@setColor').should('have.been.calledWith', Cypress.sinon.match.string, '#ff0000')
 ```
 
 ## See also

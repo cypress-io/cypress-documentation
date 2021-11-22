@@ -69,10 +69,7 @@ it('download extension link', () => {
 it('warns to view page in Chrome browser', () => {
   // true when running in Firefox, etc...
   if (Cypress.isBrowser('!chrome')) {
-    cy.get('.browser-warning').should(
-      'contain',
-      'For optimal viewing, use Chrome browser'
-    )
+    cy.get('.browser-warning').should('contain', 'For optimal viewing, use Chrome browser')
   }
 })
 ```
@@ -85,10 +82,7 @@ it('warns to view page in Chrome browser', () => {
 it('colors rainbow', () => {
   // true when running in Electron or Chrome
   if (Cypress.isBrowser(['electron', 'chrome'])) {
-    cy.get('.rainbox').should(
-      'have.css',
-      'conic-gradient(red, orange, yellow, green, blue)'
-    )
+    cy.get('.rainbox').should('have.css', 'conic-gradient(red, orange, yellow, green, blue)')
   }
 })
 ```
@@ -164,10 +158,7 @@ it('Download extension in Firefox', { browser: 'firefox' }, () => {
 
 ```js
 it('Show warning outside Chrome', { browser: '!chrome' }, () => {
-  cy.get('.browser-warning').should(
-    'contain',
-    'For optimal viewing, use Chrome browser'
-  )
+  cy.get('.browser-warning').should('contain', 'For optimal viewing, use Chrome browser')
 })
 ```
 

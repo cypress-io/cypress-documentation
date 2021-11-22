@@ -1,4 +1,4 @@
-const withCSS = require("@zeit/next-css")
+const withCSS = require('@zeit/next-css')
 
 module.exports = {
   /**
@@ -10,57 +10,57 @@ module.exports = {
       {
         source: '/',
         destination: '/guides/overview/why-cypress',
-        permanent: true
+        permanent: true,
       },
       {
         source: '/guides',
         destination: '/guides/overview/why-cypress',
-        permanent: true
+        permanent: true,
       },
       {
         source: '/api',
         destination: '/api/table-of-contents',
-        permanent: true
+        permanent: true,
       },
       {
         source: '/api/table-of-contents',
         destination: '/api-docs/table-of-contents',
-        permanent: true
+        permanent: true,
       },
       {
         source: '/api/:slug(events|commands|utilities|cypress-api|plugins)/:path*',
         destination: '/api-docs/:slug/:path*',
-        permanent: true
+        permanent: true,
       },
       {
         source: '/plugins',
         destination: '/plugins/directory',
-        permanent: true
+        permanent: true,
       },
       {
         source: '/examples',
         destination: '/examples/examples/recipes',
-        permanent: true
+        permanent: true,
       },
       {
         source: '/faq',
         destination: '/faq/questions/using-cypress-faq',
-        permanent: true
-      }
+        permanent: true,
+      },
     ]
   },
   swcMinify: true,
   images: {
-    domains: ["images.unsplash.com", "source.unsplash.com", "tailwindui.com"],
+    domains: ['images.unsplash.com', 'source.unsplash.com', 'tailwindui.com'],
   },
   webpack: function (config) {
     config.module.rules.push({
       test: /\.(eot|woff|woff2|ttf|svg|png|jpg|gif)$/,
       use: {
-        loader: "url-loader",
+        loader: 'url-loader',
         options: {
           limit: 100000,
-          name: "[name].[ext]",
+          name: '[name].[ext]',
         },
       },
     })

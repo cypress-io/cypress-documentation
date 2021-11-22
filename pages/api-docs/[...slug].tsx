@@ -55,7 +55,7 @@ export default function APIPage({ source, toc }) {
 }
 
 export const getStaticProps = async ({ params }) => {
-  const CONTENT_PATH = GET_PATH('content/api')
+  const CONTENT_PATH = GET_PATH('content/api-docs')
   const contentFilePath = path.join(CONTENT_PATH, `${params.slug[0]}/${params.slug[1]}.md`)
   const source = fs.readFileSync(contentFilePath)
   const { content, data } = matter(source)
@@ -80,7 +80,7 @@ export const getStaticProps = async ({ params }) => {
 }
 
 export const getStaticPaths = async () => {
-  const paths = allContentFilePaths('content/api/**/*')
+  const paths = allContentFilePaths('content/api-docs/**/*')
     // Remove file extensions for page paths
     .map((path) => path.replace(/\.md?$/, ''))
     // Map the path into the static paths object required by Next.js

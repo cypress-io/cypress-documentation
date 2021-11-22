@@ -103,12 +103,7 @@ module.exports = (on, config) => {
 
     if (details.specs && details.browser) {
       // details.specs and details.browser will be undefined in interactive mode
-      console.log(
-        'Running',
-        details.specs.length,
-        'specs in',
-        details.browser.name
-      )
+      console.log('Running', details.specs.length, 'specs in', details.browser.name)
     }
   })
 }
