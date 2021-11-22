@@ -861,22 +861,22 @@ designed to deliver deterministic, repeatable and consistent tests.
 
 Almost all commands come with built-in
 [retry-ability](/guides/core-concepts/retry-ability)**. Without
-[**retry-ability**](/guides/core-concepts/retry-ability), assertions
-would randomly fail. This would lead to flaky, inconsistent results.
+[**retry-ability\*\*](/guides/core-concepts/retry-ability), assertions would
+randomly fail. This would lead to flaky, inconsistent results.
 
 <Alert type="info">
 
 While Cypress is built using Promises that come from
-[Bluebird](http://bluebirdjs.com/), these are not what we expose
-as commands and assertions on `cy`. If you'd like to learn more about
-handling asynchronous Cypress Commands please read our
+[Bluebird](http://bluebirdjs.com/), these are not what we expose as commands and
+assertions on `cy`. If you'd like to learn more about handling asynchronous
+Cypress Commands please read our
 [Core Concept Guide](/guides/core-concepts/variables-and-aliases).
 
 </Alert>
 
-Commands also have some design choices that developers who are used to promise-based
-testing may find unexpected. They are intentional decisions on Cypress' part,
-not technical limitations.
+Commands also have some design choices that developers who are used to
+promise-based testing may find unexpected. They are intentional decisions on
+Cypress' part, not technical limitations.
 
 1. You cannot **race** or run multiple commands at the same time (in parallel).
 2. You cannot add a `.catch` error handler to a failed command.
@@ -923,8 +923,8 @@ You might be wondering:
 The problem with this question is that this type of conditional control flow
 ends up being non-deterministic. This means different test runs may behave
 differently, which makes them less deterministic and consistent. In general,
-there are only a handful of very specific situations where you _can_
-create control flow using Cypress commands.
+there are only a handful of very specific situations where you _can_ create
+control flow using Cypress commands.
 
 With that said, as long as you are aware of the potential pitfalls with control
 flow, it is possible to do this in Cypress!

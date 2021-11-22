@@ -28,7 +28,8 @@ cy.writeFile('menu.json')
 A path to a file within the project root (the directory that contains the
 [Cypress configuration file](/guides/references/configuration))
 
-**<Icon name="angle-right"></Icon> contents** **_(String, Array, Object or Buffer)_**
+**<Icon name="angle-right"></Icon> contents** **_(String, Array, Object or
+Buffer)_**
 
 The contents to be written to the file.
 
@@ -193,6 +194,7 @@ cy.readFile(filename).then((list) => {
 ### Buffer
 
 #### Write a buffer directly without encoding as a string
+
 ```javascript
 const filename = '/path/to/file.png'
 

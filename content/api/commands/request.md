@@ -28,8 +28,8 @@ cy.request('http://dev.local/seed')
 
 The URL to make the request to.
 
-If you do not provide a fully qualified domain name (FQDN) URL, Cypress will make its
-best guess as to which host you want `cy.request()` to use in the URL.
+If you do not provide a fully qualified domain name (FQDN) URL, Cypress will
+make its best guess as to which host you want `cy.request()` to use in the URL.
 
 1. If you make a `cy.request()` after visiting a page, Cypress assumes the URL
    used for the `cy.visit()` is the host.
@@ -39,8 +39,8 @@ cy.visit('http://localhost:8080/app')
 cy.request('users/1.json') //  URL is  http://localhost:8080/users/1.json
 ```
 
-2. If you make a `cy.request()` prior to visiting a page, Cypress assumes the host
-   is the `baseUrl` property configured inside of of your
+2. If you make a `cy.request()` prior to visiting a page, Cypress assumes the
+   host is the `baseUrl` property configured inside of of your
    [configuration file](/guides/references/configuration).
 
 :::cypress-config-example

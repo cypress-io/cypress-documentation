@@ -31,7 +31,7 @@ cy.visit(options)
 
 ```javascript
 cy.visit('/') // visits the baseUrl
-cy.visit('index.html')  // visits the local file "index.html" if baseUrl is null
+cy.visit('index.html') // visits the local file "index.html" if baseUrl is null
 cy.visit('http://localhost:3000') // specify full URL if baseUrl is null or the domain is different the baseUrl
 cy.visit({
   url: '/pages/hello.html',
@@ -48,20 +48,24 @@ The URL to visit.
 Cypress will prefix the URL with the `baseUrl` configured in your
 [global configuration](/guides/references/configuration#Global) if set.
 
-If the the `basUrl` has not been set, you will need to specify a fully qualified URL or Cypress will attempt to
-act as your web server. See the [prefixes notes](#prefixes) for more details.
+If the the `basUrl` has not been set, you will need to specify a fully qualified
+URL or Cypress will attempt to act as your web server. See the
+[prefixes notes](#prefixes) for more details.
 
-**Note:** visiting a new domain requires the Test Runner window to reload. You cannot visit different super domains in a single test.
+**Note:** visiting a new domain requires the Test Runner window to reload. You
+cannot visit different super domains in a single test.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to control the behavior of `cy.visit()`.
 
-By default, the `cy.visit()` commands' will use the `pageLoadTimeout` and `baseUrl` set globally in your [configuration](/guides/references/configuration#Global).
+By default, the `cy.visit()` commands' will use the `pageLoadTimeout` and
+`baseUrl` set globally in your
+[configuration](/guides/references/configuration#Global).
 
 | Option                     | Default                                                        | Description                                                                                                                                                                                                                              |
 | -------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `url`                      | `null`                                                         | The URL to visit. This value will be appended to the `baseUrl` if one is configured. Behaves the same as the `url` argument.                                                                                                                                                                                |
+| `url`                      | `null`                                                         | The URL to visit. This value will be appended to the `baseUrl` if one is configured. Behaves the same as the `url` argument.                                                                                                             |
 | `method`                   | `GET`                                                          | The HTTP method to use in the visit. Can be `GET` or `POST`.                                                                                                                                                                             |
 | `body`                     | `null`                                                         | An optional body to send along with a `POST` request. If it is a string, it will be passed along unmodified. If it is an object, it will be URL encoded to a string and sent with a `Content-Type: application/x-www-urlencoded` header. |
 | `headers`                  | `{}`                                                           | An object that maps HTTP header names to values to be sent along with the request. _Note:_ `headers` will only be sent for the initial `cy.visit()` request, not for any subsequent requests.                                            |
@@ -73,7 +77,7 @@ By default, the `cy.visit()` commands' will use the `pageLoadTimeout` and `baseU
 | `onLoad`                   | `function`                                                     | Called once your page has fired its load event.                                                                                                                                                                                          |
 | `retryOnStatusCodeFailure` | `false`                                                        | Whether Cypress should automatically retry status code errors under the hood. Cypress will retry a request up to 4 times if this is set to true.                                                                                         |
 | `retryOnNetworkFailure`    | `true`                                                         | Whether Cypress should automatically retry transient network errors under the hood. Cypress will retry a request up to 4 times if this is set to true.                                                                                   |
-| `timeout`                  | [`pageLoadTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.visit()` to resolve before [timing out](#Timeouts) Note: Network requests are limited by the underlying operating system, and may still time out if this value is increased. |
+| `timeout`                  | [`pageLoadTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.visit()` to resolve before [timing out](#Timeouts) Note: Network requests are limited by the underlying operating system, and may still time out if this value is increased.                                        |
 
 You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl`
 globally in the [Cypress configuration](/guides/references/configuration).
@@ -107,7 +111,8 @@ cy.visit('http://localhost:8000')
 
 #### Change the default timeout
 
-Overrides the `pageLoadTimeout` set globally in your [configuration](/guides/references/configuration) for this page load.
+Overrides the `pageLoadTimeout` set globally in your
+[configuration](/guides/references/configuration) for this page load.
 
 ```javascript
 // Wait 30 seconds for page 'load' event
@@ -236,9 +241,9 @@ cy.visit({
 
 #### Visit is automatically prefixed with `baseUrl`
 
-Cypress will prefix the URL with the `baseUrl` if it has been set. Configure `baseUrl` in the
-[Cypress configuration](/guides/references/configuration) to prevent repeating
-yourself in every `cy.visit()` command.
+Cypress will prefix the URL with the `baseUrl` if it has been set. Configure
+`baseUrl` in the [Cypress configuration](/guides/references/configuration) to
+prevent repeating yourself in every `cy.visit()` command.
 
 :::cypress-config-example
 
@@ -254,7 +259,8 @@ yourself in every `cy.visit()` command.
 cy.visit('dashboard') // Visits http://localhost:3000/#/dashboard
 ```
 
-If you would like to visit a different host when the `baseUrl` has been set, provide the fully qualified URL you would like to go to. 
+If you would like to visit a different host when the `baseUrl` has been set,
+provide the fully qualified URL you would like to go to.
 
 ```javascript
 cy.visit('http://google.com')

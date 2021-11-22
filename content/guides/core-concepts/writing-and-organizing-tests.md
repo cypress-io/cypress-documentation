@@ -502,9 +502,10 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 
 ### Test Configuration
 
-It is possible to apply [test configuration](/guides/references/configuration#Test-Configuration)
-values to a suite or test. Pass a configuration object to the test or suite
-function as the second argument.
+It is possible to apply
+[test configuration](/guides/references/configuration#Test-Configuration) values
+to a suite or test. Pass a configuration object to the test or suite function as
+the second argument.
 
 This configuration will take effect during the suite or tests where they are set
 then return to their previous default values after the suite or tests are
@@ -521,11 +522,9 @@ specify(name, config, fn)
 
 ### Test Configuration
 
-
 This configuration will take effect during the suite or tests where they are set
 then return to their previous default values after the suite or tests are
 complete.
-
 
 #### Allowed config values
 

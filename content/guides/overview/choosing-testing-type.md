@@ -152,4 +152,4 @@ To learn more about component testing in Cypress, visit our guide on
 | Used For               |     Verifying app works as a cohesive whole      | Testing functionality of individual component |
 | Written By             |            Developers, QA Team, SDETs            |             Developers, Designers             |
 | CI Infrastructure      |           Often requires complex setup           |                  None needed                  |
-| Initialization Command |                 `cy.visit(url)`                  |           `cy.mount(<MyComponent />)`            |
+| Initialization Command |                 `cy.visit(url)`                  |          `cy.mount(<MyComponent />)`          |

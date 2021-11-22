@@ -399,9 +399,10 @@ export default function (on, config) {
 }
 ```
 
-Exactly like Webpack, you should start Cypress with `yarn cypress open --component`.
-Writing component tests when using Vite is _exactly_ the same as when using
-Webpack. Minor differences may occur depending on the
+Exactly like Webpack, you should start Cypress with
+`yarn cypress open --component`. Writing component tests when using Vite is
+_exactly_ the same as when using Webpack. Minor differences may occur depending
+on the
 
 **Known issues**
 

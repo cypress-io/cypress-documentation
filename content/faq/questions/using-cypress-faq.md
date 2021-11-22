@@ -1245,17 +1245,19 @@ Library. You can find the recording and the slides
 
 ## <Icon name="angle-right"></Icon> How do I prevent the application from opening a new browser window?
 
-If the application is opening a second browser window or tab, the test can stop that action. Read the linked
-resources for to learn how to:
+If the application is opening a second browser window or tab, the test can stop
+that action. Read the linked resources for to learn how to:
 
 - [deal with `<a target="_blank">` links](https://glebbahmutov.com/blog/cypress-tips-and-tricks/#deal-with-target_blank)
 - [deal with `window.open` calls](https://glebbahmutov.com/blog/cypress-tips-and-tricks/#deal-with-windowopen)
 
 ## <Icon name="angle-right"></Icon> How do I prevent application redirecting to another URL?
 
-Sometimes, your application might redirect the browser to another domain, losing the Cypress's control.
-If the application is using `window.location.replace` method to set a _relative_ URL, try using the
-`experimentalSourceRewriting` option described in our [Experiments](/guides/references/experiments) page.
-You can also try rewriting the problematic application code from the test using the `cy.intercept` command,
-as described in the [Deal with `window.location.replace`](https://glebbahmutov.com/blog/cypress-tips-and-tricks/#deal-with-windowlocationreplace) tip.
-
+Sometimes, your application might redirect the browser to another domain, losing
+the Cypress's control. If the application is using `window.location.replace`
+method to set a _relative_ URL, try using the `experimentalSourceRewriting`
+option described in our [Experiments](/guides/references/experiments) page. You
+can also try rewriting the problematic application code from the test using the
+`cy.intercept` command, as described in the
+[Deal with `window.location.replace`](https://glebbahmutov.com/blog/cypress-tips-and-tricks/#deal-with-windowlocationreplace)
+tip.
