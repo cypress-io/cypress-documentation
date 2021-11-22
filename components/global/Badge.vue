@@ -1,7 +1,9 @@
 <template>
-  <div :class="[$style.badge, $style[type]]">
-    <slot />
-  </div>
+  <router-link :to="{path}" style="border-style: none">
+    <div :class="[$style.badge, $style[type]]">
+      <slot />
+    </div>
+  </router-link>
 </template>
 
 <script>
@@ -11,6 +13,11 @@ export default {
       type: String,
       required: true,
     },
+    path: {
+      type: String,
+      default: '',
+      required: false,
+    }
   },
 }
 </script>
