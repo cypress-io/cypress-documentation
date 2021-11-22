@@ -538,10 +538,10 @@ cypress open --config pageLoadTimeout=100000,watchForFileChanges=false
 
 For more complex configuration objects, you may want to consider passing a
 [JSON.stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
-object surrounded by single quotes.
+object.
 
 ```shell
-cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.ts"]}'
+cypress open --config "{\"watchForFileChanges\":false,\"testFiles\":[\"**/*.js\",\"**/*.ts\"]}"
 ```
 
 #### `cypress open --config-file <configuration-file>`

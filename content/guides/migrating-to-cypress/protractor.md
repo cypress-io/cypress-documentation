@@ -317,8 +317,8 @@ to install Cypress, and we plan on adding new capabilities to it over time.
 When it comes to e2e tests, one of the most common things you'll need to do is
 get one or more HTML elements on a page. Rather than split element fetching into
 multiple methods that you need to memorize, everything can be accomplished with
-[`cy.get`](/api/commands/get) while using CSS selectors to account for all use
-cases.
+[`cy.get`](/api/commands/get) while using CSS selectors or the preferred
+[**data attribute**](https://on.cypress.io/selecting-elements)
 
 <Badge type="danger">Before: Protractor</Badge>
 
@@ -1223,6 +1223,14 @@ Read our docs to learn more about speeding up test execution in CI via
 [Cypress parallelization](http://on.cypress.io/parallelization)
 
 </Alert>
+
+### Code Coverage
+
+As you write more and more end-to-end tests, you will find yourself wondering -
+do I need to write more tests? Are there parts of the application still
+untested? Are there parts of the application that perhaps are tested too much?
+This [code coverage guide](https://on.cypress.io/code-coverage) is an excellent
+resource to learn how to add code coverage.
 
 ### Questions or Issues?
 

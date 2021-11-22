@@ -44,17 +44,21 @@ cy.fixture('users/admin.json') // Get data from {fixturesFolder}/users/admin.jso
 The encoding to be used when reading the file. The following encodings are
 supported:
 
-- `ascii`
-- `base64`
-- `binary`
-- `hex`
-- `latin1`
-- `utf8`
-- `utf-8`
-- `ucs2`
-- `ucs-2`
-- `utf16le`
-- `utf-16le`
+- `'ascii'`
+- `'base64'`
+- `'binary'`
+- `'hex'`
+- `'latin1'`
+- `'utf8'`
+- `'utf-8'`
+- `'ucs2'`
+- `'ucs-2'`
+- `'utf16le'`
+- `'utf-16le'`
+- `null`
+
+Using `null` explicitly will return the fixture as a `Buffer`, regardless of
+file extension.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -123,7 +127,7 @@ it('loads the same object', () => {
 
 ### Images
 
-#### Image fixtures are sent as `base64`
+#### Image fixtures are sent as `base64` by default
 
 ```javascript
 cy.fixture('images/logo.png').then((logo) => {
@@ -136,10 +140,10 @@ cy.fixture('images/logo.png').then((logo) => {
 #### Change encoding of Image fixture
 
 ```javascript
-cy.fixture('images/logo.png', 'binary').then((logo) => {
-  // logo will be encoded as binary
+cy.fixture('images/logo.png', null).then((logo) => {
+  // logo will be read as a buffer
   // and should look something like this:
-  // 000000000000000000000000000000000000000000...
+  // Buffer([0, 0, ...])
 })
 ```
 
@@ -243,7 +247,8 @@ Cypress automatically determines the encoding for the following file types:
 - `.zip`
 
 For other types of files, they will be read as `utf8` by default, unless
-specified in the second argument of `cy.fixture()`.
+specified in the second argument of `cy.fixture()`. You can specify `null` as
+the encoding in order to read the file as a `Buffer` instead.
 
 ### `this` context
 
@@ -274,6 +279,9 @@ describe('User page', () => {
 Please keep in mind that fixture files are assumed to be unchanged during the
 test, and thus the Test Runner loads them just once. Even if you overwrite the
 fixture file itself, the already loaded fixture data remains the same.
+
+If you wish to dynamically change the contents of a file during your tests,
+consider [`cy.readFile()`](/api/commands/readFile) instead.
 
 For example, if you want to reply to a network request with different object,
 the following **will not work**:
@@ -343,6 +351,8 @@ practical purposes it should never happen.
 - [Guide: Variables and Aliases](/guides/core-concepts/variables-and-aliases)
 - [`cy.intercept()`](/api/commands/intercept)
 - [`.then()`](/api/commands/then)
+- [`.readFile()`](/api/commands/readFile) for a similar command without caching
+  and with builtin retryability
 - [Recipe: Bootstrapping App Test Data](/examples/examples/recipes#Server-Communication)
 - [Fixtures](https://github.com/cypress-io/testing-workshop-cypress#fixtures)
   section of the Cypress Testing Workshop

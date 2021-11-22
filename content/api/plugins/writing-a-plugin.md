@@ -113,31 +113,7 @@ Cypress does this by spawning an independent `child_process` which then
 `requires` the [Cypress configuration file](/guides/references/configuration).
 This is similar to the way Visual Studio Code or Atom works.
 
-You will need to keep in mind it is **Cypress that is requiring your file** -
-not your local project, not your local Node version, and not anything else under
-your control.
-
-Because of this, this global context and the version of Node is controlled under
-Cypress.
-
-<Alert type="warning">
-
-<strong class="alert-header">Node version</strong>
-
-Keep in mind - code executed in plugins **may** be executed by the Node version
-that comes bundled in Cypress itself.
-
-This version of Node has **nothing to do** with your locally installed versions.
-Therefore you may want to write Node code which is compatible with this version
-or document that the user of your plugin will need to set a specific
-[nodeVersion](/guides/references/configuration#Node-version) in their
-configuration.
-
-You can find the current Node version we use when the `nodeVersion` is set to
-the default `bundled`
-[here](https://github.com/cypress-io/cypress/blob/master/.node-version).
-
-</Alert>
+This code will be executed using the the Node version that launched Cypress.
 
 ### npm modules
 

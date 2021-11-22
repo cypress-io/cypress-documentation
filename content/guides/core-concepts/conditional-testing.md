@@ -557,25 +557,3 @@ on other commands.
 If you cannot accurately know the state of your application then no matter what
 programming idioms you have available - **you cannot write 100% deterministic
 tests**.
-
-Still not convinced?
-
-Not only is this an anti-pattern, but it's an actual logical fallacy.
-
-You may think to yourself... okay fine, but 4 seconds - man that's not enough.
-Network requests could be slow, let's bump it up to 1 minute!
-
-Even then, it's still possible a WebSocket message could come in... so 5
-minutes!
-
-Even then, not enough, it's possible a `setTimeout` could trigger... 60 minutes.
-
-As you approach infinity your confidence does continue to rise on the chances
-you could prove the desired state will be reached, but you can never prove it
-will. Instead you could theoretically be waiting for the heat death of the
-universe for a condition to come that is only a moment away from happening.
-There is no way to prove or disprove that it _may_ conditionally happen.
-
-You, the test writer, must know ahead of time what your application is
-programmed to do - or have 100% confidence that the state of a mutable object
-(like the DOM) has stabilized in order to write accurate conditional tests.

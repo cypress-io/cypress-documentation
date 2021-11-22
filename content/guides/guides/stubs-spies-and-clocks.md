@@ -46,13 +46,13 @@ explanations.
 
 <strong class="alert-header">Example test!</strong>
 
-[Check out our example recipe testing spying, stubbing and time](/examples/examples/recipes#Stubbing-and-spying)
+[Check out our example recipe testing spying, stubbing, and time](/examples/examples/recipes#Stubbing-and-spying)
 
 </Alert>
 
 ### Stubs
 
-A stub is a way to modify a function and delegate control overs its behavior to
+A stub is a way to modify a function and delegate control over its behavior to
 you (the programmer).
 
 A stub is most commonly used in a unit test but is still useful during some
@@ -281,14 +281,14 @@ information.
 
 **_For instance we automatically display:_**
 
-- The call count (and total number of calls)
+- The call count (and the total number of calls)
 - The arguments, without transforming them (they are the real arguments)
 - The return value of the function
 - The context the function was invoked with
 
 ## See also
 
-- [Spies, stubs and clocks](https://example.cypress.io/commands/spies-stubs-clocks)
+- [Spies, stubs, and clocks](https://example.cypress.io/commands/spies-stubs-clocks)
   examples
 - [Stub navigator API in end-to-end tests](https://glebbahmutov.com/blog/stub-navigator-api/)
 - [Shrink the Untestable Code With App Actions And Effects](https://www.cypress.io/blog/2019/02/28/shrink-the-untestable-code-with-app-actions-and-effects/)

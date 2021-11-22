@@ -2,14 +2,14 @@
 title: Cypress.currentTest
 ---
 
-`Cypress.currentTest` is an object representing the currently executing test instance, with
-properties to access the title of the test.
+`Cypress.currentTest` is an object representing the currently executing test
+instance, with properties to access the title of the test.
 
 <Alert type="warning">
 
-Note that `Cypress.currentTest` may only be used inside tests and [test
-hooks](/guides/core-concepts/writing-and-organizing-tests#Hooks),
-and will be `null` outside of tests and test hooks.
+Note that `Cypress.currentTest` may only be used inside tests and
+[test hooks](/guides/core-concepts/writing-and-organizing-tests#Hooks), and will
+be `null` outside of tests and test hooks.
 
 </Alert>
 

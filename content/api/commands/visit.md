@@ -30,10 +30,13 @@ cy.visit(options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.visit('http://localhost:3000')
 cy.visit('/') // visits the baseUrl
-cy.visit('index.html') // visits the local file "index.html"
-cy.visit('./pages/hello.html')
+cy.visit('index.html') // visits the local file "index.html" if baseUrl is null
+cy.visit('http://localhost:3000') // specify full URL if baseUrl is null or the domain is different the baseUrl
+cy.visit({
+  url: '/pages/hello.html',
+  method: 'GET',
+})
 ```
 
 ### Arguments
@@ -43,20 +46,26 @@ cy.visit('./pages/hello.html')
 The URL to visit.
 
 Cypress will prefix the URL with the `baseUrl` configured in your
-[network options](/guides/references/configuration#Global) if you've set one.
+[global configuration](/guides/references/configuration#Global) if set.
 
-If there is no `baseUrl` set, you may specify the relative path of an html file,
-and Cypress will serve this file automatically using built-in static server. The
-path is relative to the root directory of the project. Note that the `file://`
-prefix is not needed.
+If the the `basUrl` has not been set, you will need to specify a fully qualified
+URL or Cypress will attempt to act as your web server. See the
+[prefixes notes](#prefixes) for more details.
+
+**Note:** visiting a new domain requires the Test Runner window to reload. You
+cannot visit different super domains in a single test.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to control the behavior of `cy.visit()`.
 
+By default, the `cy.visit()` commands' will use the `pageLoadTimeout` and
+`baseUrl` set globally in your
+[configuration](/guides/references/configuration#Global).
+
 | Option                     | Default                                                        | Description                                                                                                                                                                                                                              |
 | -------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `url`                      | `null`                                                         | The URL to visit. Behaves the same as the `url` argument.                                                                                                                                                                                |
+| `url`                      | `null`                                                         | The URL to visit. This value will be appended to the `baseUrl` if one is configured. Behaves the same as the `url` argument.                                                                                                             |
 | `method`                   | `GET`                                                          | The HTTP method to use in the visit. Can be `GET` or `POST`.                                                                                                                                                                             |
 | `body`                     | `null`                                                         | An optional body to send along with a `POST` request. If it is a string, it will be passed along unmodified. If it is an object, it will be URL encoded to a string and sent with a `Content-Type: application/x-www-urlencoded` header. |
 | `headers`                  | `{}`                                                           | An object that maps HTTP header names to values to be sent along with the request. _Note:_ `headers` will only be sent for the initial `cy.visit()` request, not for any subsequent requests.                                            |
@@ -68,7 +77,7 @@ Pass in an options object to control the behavior of `cy.visit()`.
 | `onLoad`                   | `function`                                                     | Called once your page has fired its load event.                                                                                                                                                                                          |
 | `retryOnStatusCodeFailure` | `false`                                                        | Whether Cypress should automatically retry status code errors under the hood. Cypress will retry a request up to 4 times if this is set to true.                                                                                         |
 | `retryOnNetworkFailure`    | `true`                                                         | Whether Cypress should automatically retry transient network errors under the hood. Cypress will retry a request up to 4 times if this is set to true.                                                                                   |
-| `timeout`                  | [`pageLoadTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.visit()` to resolve before [timing out](#Timeouts)                                                                                                                                                                  |
+| `timeout`                  | [`pageLoadTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.visit()` to resolve before [timing out](#Timeouts) Note: Network requests are limited by the underlying operating system, and may still time out if this value is increased.                                        |
 
 You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl`
 globally in the [Cypress configuration](/guides/references/configuration).
@@ -101,6 +110,9 @@ cy.visit('http://localhost:8000')
 ### Options
 
 #### Change the default timeout
+
+Overrides the `pageLoadTimeout` set globally in your
+[configuration](/guides/references/configuration) for this page load.
 
 ```javascript
 // Wait 30 seconds for page 'load' event
@@ -159,7 +171,7 @@ cy.visit('http://localhost:3000/#dashboard', {
 
 Check out our example recipes using `cy.visit()`'s `onBeforeLoad` option to:
 
-- [Bootstraping your App](/examples/examples/recipes#Server-Communication)
+- [Bootstrapping your App](/examples/examples/recipes#Server-Communication)
 - [Set a token to `localStorage` for login during Single Sign On](/examples/examples/recipes#Logging-In)
 - [Stub `window.fetch`](/examples/examples/recipes#Stubbing-and-spying)
 
@@ -182,7 +194,7 @@ cy.visit('http://localhost:3000/#/users', {
 })
 ```
 
-#### Add query paramaters
+#### Add query parameters
 
 You can provide query parameters as an object to `cy.visit()` by passing `qs` to
 `options`.
@@ -225,33 +237,36 @@ cy.visit({
 
 ## Notes
 
-### Redirects
+### Prefixes
 
-#### `cy.visit()` will automatically follow redirects
+#### Visit is automatically prefixed with `baseUrl`
 
-```javascript
-// we aren't logged in, so our web server
-// redirected us to /login
-cy.visit('http://localhost:3000/admin')
-cy.url().should('match', /login/)
+Cypress will prefix the URL with the `baseUrl` if it has been set. Configure
+`baseUrl` in the [Cypress configuration](/guides/references/configuration) to
+prevent repeating yourself in every `cy.visit()` command.
+
+:::cypress-config-example
+
+```js
+{
+  baseUrl: 'http://localhost:3000/#/'
+}
 ```
 
-### Protocol
-
-#### Protocol can be omitted from common hosts
-
-Cypress automatically prepends the `http://` protocol to common hosts. If you're
-not using one of these 3 hosts, then make sure to provide the protocol.
+:::
 
 ```javascript
-cy.visit('localhost:3000') // Visits http://localhost:3000
-cy.visit('0.0.0.0:3000') // Visits http://0.0.0.0:3000
-cy.visit('127.0.0.1:3000') // Visits http://127.0.0.1:3000
+cy.visit('dashboard') // Visits http://localhost:3000/#/dashboard
 ```
 
-### Web Server
+If you would like to visit a different host when the `baseUrl` has been set,
+provide the fully qualified URL you would like to go to.
 
-#### Cypress can optionally act as your web server
+```javascript
+cy.visit('http://google.com')
+```
+
+#### Visit local files
 
 Cypress will automatically attempt to serve your files if you don't provide a
 host and `baseUrl` **is not defined**. The path should be relative to your
@@ -266,7 +281,7 @@ server and provide the url to Cypress.
 cy.visit('app/index.html')
 ```
 
-#### Visit local file when `baseUrl` is set
+##### Visit local file when `baseUrl` is set
 
 If you have `baseUrl` set, but need to visit a local file in a single test or a
 group of tests, disable the `baseUrl` using
@@ -291,36 +306,34 @@ it('visits base url', () => {
   cy.visit('/')
   cy.contains('h1', 'Kitchen Sink')
 })
-
 it('visits local file', { baseUrl: null }, () => {
   cy.visit('index.html')
   cy.contains('local file')
 })
 ```
 
-**Tip:** because visiting every new domain requires the Test Runner window
-reload, we recommend putting the above tests in separate spec files.
+### Redirects
 
-### Prefixes
-
-#### Visit is automatically prefixed with `baseUrl`
-
-Configure `baseUrl` in the your
-[Cypress configuration](/guides/references/configuration) to prevent repeating
-yourself in every `cy.visit()` command.
-
-:::cypress-config-example
-
-```js
-{
-  baseUrl: 'http://localhost:3000/#/'
-}
-```
-
-:::
+#### Visit will automatically follow redirects
 
 ```javascript
-cy.visit('dashboard') // Visits http://localhost:3000/#/dashboard
+// we aren't logged in, so our web server
+// redirected us to /login
+cy.visit('http://localhost:3000/admin')
+cy.url().should('match', /login/)
+```
+
+### Protocol
+
+#### Protocol can be omitted from common hosts
+
+Cypress automatically prepends the `http://` protocol to common hosts. If you're
+not using one of these 3 hosts, then make sure to provide the protocol.
+
+```javascript
+cy.visit('localhost:3000') // Visits http://localhost:3000
+cy.visit('0.0.0.0:3000') // Visits http://0.0.0.0:3000
+cy.visit('127.0.0.1:3000') // Visits http://127.0.0.1:3000
 ```
 
 ### Window

@@ -118,9 +118,8 @@ require('dotenv').config()
 Below is a command to programmatically login into [Auth0](https://auth0.com),
 using the
 [/oauth/token endpoint](https://auth0.com/docs/protocols/protocol-oauth2#token-endpoint)
-and set an item in localStorage and set an item in localStorage with the
-authenticated users details, which we will use in our application code to verify
-we are authenticated under test.
+and set an item in localStorage with the authenticated users details, which we
+will use in our application code to verify we are authenticated under test.
 
 The `loginByAuth0Api` command will execute the following steps:
 
