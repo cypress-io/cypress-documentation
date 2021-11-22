@@ -48,7 +48,7 @@ The position where the right click should be issued. The `center` position is
 the default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
 `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
-<DocsImage src="/img/api/coordinates-diagram.jpg" alt="cypress-command-positions-diagram" ></DocsImage>
+<DocsImage src="/img/api/coordinates-diagram.jpg" alt="cypress-command-positions-diagram" />
 
 **<Icon name="angle-right"></Icon> x** **_(Number)_**
 
@@ -218,12 +218,12 @@ cy.get('.rightclick-action-div').rightclick()
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/rightclick/rightclick-dom-element-in-command-log.png" alt="Command log for right click" ></DocsImage>
+<DocsImage src="/img/api/rightclick/rightclick-dom-element-in-command-log.png" alt="Command log for right click" />
 
 When clicking on `rightclick` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/rightclick/rightclick-console-log-with-mouse-events.png" alt="console.log for right click" ></DocsImage>
+<DocsImage src="/img/api/rightclick/rightclick-console-log-with-mouse-events.png" alt="console.log for right click" />
 
 ## History
 

@@ -66,11 +66,7 @@ Pass in an options object to change the default behavior of `cy.setCookie()`.
 ```javascript
 cy.getCookies().should('be.empty')
 cy.setCookie('session_id', '189jd09sufh33aaiidhf99d09')
-cy.getCookie('session_id').should(
-  'have.property',
-  'value',
-  '189jd09sufh33aaiidhf99d09'
-)
+cy.getCookie('session_id').should('have.property', 'value', '189jd09sufh33aaiidhf99d09')
 ```
 
 ## Rules
@@ -106,12 +102,12 @@ cy.getCookie('fakeCookie1').should('have.property', 'value', '123ABC')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/setcookie/set-cookie-on-browser-for-testing.png" alt="Command Log setcookie" ></DocsImage>
+<DocsImage src="/img/api/setcookie/set-cookie-on-browser-for-testing.png" alt="Command Log setcookie" />
 
 When clicking on `setCookie` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/setcookie/see-cookie-properties-expiry-domain-and-others-in-test.png" alt="Console Log setcookie" ></DocsImage>
+<DocsImage src="/img/api/setcookie/see-cookie-properties-expiry-domain-and-others-in-test.png" alt="Console Log setcookie" />
 
 ## History
 

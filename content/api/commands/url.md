@@ -142,11 +142,11 @@ pass.</li></List>
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/url/test-url-of-website-or-web-application.png" alt="Command Log url" ></DocsImage>
+<DocsImage src="/img/api/url/test-url-of-website-or-web-application.png" alt="Command Log url" />
 
 When clicking on URL within the Command Log, the console outputs the following:
 
-<DocsImage src="/img/api/url/console-log-of-browser-url-string.png" alt="Console Log url" ></DocsImage>
+<DocsImage src="/img/api/url/console-log-of-browser-url-string.png" alt="Console Log url" />
 
 ## History
 

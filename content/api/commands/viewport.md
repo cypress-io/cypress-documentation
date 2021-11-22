@@ -118,10 +118,7 @@ describe('Nav Menus', () => {
 
     it('displays mobile menu on click', () => {
       cy.get('nav .desktop-menu').should('not.be.visible')
-      cy.get('nav .mobile-menu')
-        .should('be.visible')
-        .find('i.hamburger')
-        .click()
+      cy.get('nav .mobile-menu').should('be.visible').find('i.hamburger').click()
 
       cy.get('ul.slideout-menu').should('be.visible')
     })
@@ -152,7 +149,7 @@ describe('Logo', () => {
 })
 ```
 
-<DocsImage src="/img/api/viewport/loop-through-an-array-of-multiple-viewports.png" alt="Command Log of multiple viewports" ></DocsImage>
+<DocsImage src="/img/api/viewport/loop-through-an-array-of-multiple-viewports.png" alt="Command Log of multiple viewports" />
 
 ### Preset
 
@@ -294,12 +291,12 @@ cy.get('.nav').find('a').should('be.visible')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/viewport/viewport-size-width-and-height-changes-and-is-shown-in-the-commands.png" alt="Command Log viewport" ></DocsImage>
+<DocsImage src="/img/api/viewport/viewport-size-width-and-height-changes-and-is-shown-in-the-commands.png" alt="Command Log viewport" />
 
 When clicking on `viewport` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/viewport/console-log-shows-width-and-height-of-tested-viewport.png" alt="Console Log viewport" ></DocsImage>
+<DocsImage src="/img/api/viewport/console-log-shows-width-and-height-of-tested-viewport.png" alt="Console Log viewport" />
 
 ## History
 

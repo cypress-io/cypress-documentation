@@ -169,10 +169,7 @@ function disableElementAsync(element) {
 }
 
 cy.get('[data-cy=my-text-input]').then((textElements) => {
-  cy.wrap({ disableElementAsync }).invoke(
-    'disableElementAsync',
-    textElements[0]
-  )
+  cy.wrap({ disableElementAsync }).invoke('disableElementAsync', textElements[0])
 })
 
 // log message appears after 3 seconds
@@ -201,9 +198,7 @@ example:
 ```
 
 ```js
-cy.contains('The code example')
-  .invoke('attr', 'id')
-  .should('equal', 'code-snippet')
+cy.contains('The code example').invoke('attr', 'id').should('equal', 'code-snippet')
 ```
 
 **Tip:** Cypress has a built-in Chai-jQuery assertion to confirm the attribute.
@@ -265,7 +260,7 @@ setTimeout(() => {
 cy.wrap(english).invoke('greeting').should('equal', 'bye')
 ```
 
-<DocsImage src="/img/api/invoke/invoke-retries.gif" alt="Invoke retries example" width-600 ></DocsImage>
+<DocsImage src="/img/api/invoke/invoke-retries.gif" alt="Invoke retries example" width-600 />
 
 ## Rules
 
@@ -292,20 +287,17 @@ resolve.</li></List>
 **_Invoke jQuery show method on element_**
 
 ```javascript
-cy.get('.connectors-div')
-  .should('be.hidden')
-  .invoke('show')
-  .should('be.visible')
+cy.get('.connectors-div').should('be.hidden').invoke('show').should('be.visible')
 ```
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/invoke/invoke-jquery-show-on-element-for-testing.png" alt="Command Log for invoke" ></DocsImage>
+<DocsImage src="/img/api/invoke/invoke-jquery-show-on-element-for-testing.png" alt="Command Log for invoke" />
 
 When clicking on `invoke` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/invoke/log-function-invoked-and-return.png" alt="Console Log for invoke" ></DocsImage>
+<DocsImage src="/img/api/invoke/log-function-invoked-and-return.png" alt="Console Log for invoke" />
 
 ## History
 

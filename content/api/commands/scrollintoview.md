@@ -112,12 +112,12 @@ cy.get('#scroll-horizontal button').scrollIntoView().should('be.visible')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/scrollintoview/command-log-for-scrollintoview.png" alt="command log scrollintoview" ></DocsImage>
+<DocsImage src="/img/api/scrollintoview/command-log-for-scrollintoview.png" alt="command log scrollintoview" />
 
 When clicking on the `scrollintoview` command within the command log, the
 console outputs the following:
 
-<DocsImage src="/img/api/scrollintoview/console-log-for-scrollintoview.png" alt="console.log scrollintoview" ></DocsImage>
+<DocsImage src="/img/api/scrollintoview/console-log-for-scrollintoview.png" alt="console.log scrollintoview" />
 
 ## See also
 

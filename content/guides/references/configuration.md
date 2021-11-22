@@ -161,8 +161,7 @@ The Node version is used in Cypress to:
 <DocsImage
 src="/img/guides/test-runner-settings-nodejs-version.jpg"
 alt="Node version in Settings in Test Runner"
-
-> </DocsImage>
+/>
 
 ### Experiments
 
@@ -442,8 +441,7 @@ value has been set via the following ways:
 <DocsImage
 src="/img/guides/configuration/see-resolved-configuration.jpg"
 alt="See resolved configuration"
-
-> </DocsImage>
+/>
 
 ## Notes
 
@@ -514,8 +512,7 @@ send a `503` status code. As a convenience it also sets a
 <DocsImage
 src="/img/guides/blocked-host.png"
 alt="Network tab of dev tools with analytics.js request selected and the response header highlighted "
-
-> </DocsImage>
+/>
 
 ### modifyObstructiveCode
 
@@ -575,8 +572,7 @@ time this routine has taken to the bottom of the Command Log in the Test Runner.
 <DocsImage
 src="/img/guides/firefox-gc-interval-in-command-log.jpg"
 alt="GC duration shown"
-
-> </DocsImage>
+/>
 
 #### Configuration
 

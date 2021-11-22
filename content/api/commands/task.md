@@ -502,12 +502,12 @@ cy.task('readJson', 'cypress.json')
 
 The command above will display in the Command Log as:
 
-<DocsImage src="/img/api/task/task-read-cypress-json.png" alt="Command Log task" ></DocsImage>
+<DocsImage src="/img/api/task/task-read-cypress-json.png" alt="Command Log task" />
 
 When clicking on the `task` command within the command log, the console outputs
 the following:
 
-<DocsImage src="/img/api/task/console-shows-task-result.png" alt="Console Log task" ></DocsImage>
+<DocsImage src="/img/api/task/console-shows-task-result.png" alt="Console Log task" />
 
 ## History
 

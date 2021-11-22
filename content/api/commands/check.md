@@ -192,12 +192,12 @@ cy.get('form').find('[name="emailUser"]').check()
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/check/check-checkbox-in-cypress.png" alt="Command log for check" ></DocsImage>
+<DocsImage src="/img/api/check/check-checkbox-in-cypress.png" alt="Command log for check" />
 
 When clicking on `check` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/check/console-showing-events-on-check.png" alt="console.log for check" ></DocsImage>
+<DocsImage src="/img/api/check/console-showing-events-on-check.png" alt="console.log for check" />
 
 ## See also
 

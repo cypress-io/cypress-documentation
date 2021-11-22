@@ -72,12 +72,12 @@ cy.title().should('include', 'New User')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/title/test-title-of-website-or-webapp.png" alt="Command Log title" ></DocsImage>
+<DocsImage src="/img/api/title/test-title-of-website-or-webapp.png" alt="Command Log title" />
 
 When clicking on `title` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/title/see-the-string-yielded-in-the-console.png" alt="Console Log title" ></DocsImage>
+<DocsImage src="/img/api/title/see-the-string-yielded-in-the-console.png" alt="Console Log title" />
 
 ## History
 

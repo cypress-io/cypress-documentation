@@ -245,7 +245,7 @@ beforeEach(() => {
 })
 ```
 
-<DocsImage src="/img/guides/global-hooks.png" alt="Global hooks for tests"></DocsImage>
+<DocsImage src="/img/guides/global-hooks.png" alt="Global hooks for tests"/>
 
 <Alert type="info">
 
@@ -687,8 +687,7 @@ test file.
 <DocsImage
 src="/img/guides/core-concepts/run-single-spec.gif"
 alt="Running a single spec"
-
-> </DocsImage>
+/>
 
 ### Run all specs
 
@@ -696,7 +695,7 @@ You can run all spec files together by clicking the "Run all specs" button. This
 mode is equivalent to concatenating all spec files together into a single piece
 of test code.
 
-<DocsImage src="/img/guides/core-concepts/run-all-specs.gif" alt="Running all specs"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/run-all-specs.gif" alt="Running all specs"/>
 
 <Alert type="danger">
 
@@ -722,8 +721,7 @@ specs" button.
 <DocsImage
 src="/img/guides/core-concepts/run-selected-specs.gif"
 alt="Running specs matching the search filter"
-
-> </DocsImage>
+/>
 
 ## Test statuses
 
@@ -738,8 +736,7 @@ assertions. The test screenshot below shows a passed test:
 <DocsImage
 src="/img/guides/core-concepts/passing-test.png"
 alt="Test runner with a single passed test"
-
-> </DocsImage>
+/>
 
 Note that a test can pass after several
 [test retries](/guides/guides/test-retries). In that case the Command Log shows
@@ -753,8 +750,7 @@ be a user hitting this bug!
 <DocsImage
 src="/img/guides/core-concepts/failing-test.png"
 alt="Test runner with a single failed test"
-
-> </DocsImage>
+/>
 
 After a test fails, the screenshots and videos can help find the problem so it
 can be fixed.
@@ -786,8 +782,7 @@ file.
 <DocsImage
 src="/img/guides/core-concepts/different-pending.png"
 alt="Test runner with three pending tests"
-
-> </DocsImage>
+/>
 
 So remember - if you (the test writer) knowingly skip a test using one of the
 above three ways, Cypress counts it as a _pending_ test.
@@ -823,8 +818,7 @@ If the `beforeEach` hook completes and both tests finish, two tests are passing.
 <DocsImage
 src="/img/guides/core-concepts/two-passing.png"
 alt="Test runner showing two passing tests"
-
-> </DocsImage>
+/>
 
 But what happens if a command inside the `beforeEach` hook fails? For example,
 let's pretend we want to visit a non-existent page `/does-not-exist` instead of
@@ -845,8 +839,7 @@ would also fail due to the `beforeEach` hook failure.
 <DocsImage
 src="/img/guides/core-concepts/1-skipped.png"
 alt="Test runner showing a skipped test"
-
-> </DocsImage>
+/>
 
 If we collapse the test commands, we can see the empty box marking the skipped
 test "adds 2 todos".
@@ -854,8 +847,7 @@ test "adds 2 todos".
 <DocsImage
 src="/img/guides/core-concepts/skipped.png"
 alt="Test runner showing one failed and one skipped test"
-
-> </DocsImage>
+/>
 
 The tests that were meant to be executed but were skipped due to some run-time
 problem are marked "skipped" by Cypress.

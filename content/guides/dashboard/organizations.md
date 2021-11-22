@@ -8,8 +8,7 @@ Organizations are used to group projects and manage access to those projects.
 src="/img/dashboard/organizations-listed-in-dashboard.png"
 alt="Organizations"
 width-600
-
-> </DocsImage>
+/>
 
 ## Features
 
@@ -32,8 +31,7 @@ with Cypress teams.
 <DocsImage
 src="/img/dashboard/organizations/cypress-organization-UUID.gif"
 alt="Locate UUID gif"
-
-> </DocsImage>
+/>
 
 ## Managing Organizations
 
@@ -43,14 +41,13 @@ You can create an organization from within the
 [Dashboard Service](https://on.cypress.io/dashboard) by opening the organization
 switcher and clicking **<Icon name="plus"></Icon> Create new organization**.
 
-<DocsImage src="/img/dashboard/create-org.png" alt="Create new organization" width-600></DocsImage>
+<DocsImage src="/img/dashboard/create-org.png" alt="Create new organization" width-600/>
 
 <DocsImage
 src="/img/dashboard/add-organization-dialog.png"
 alt="Add Organization dialog"
 width-600
-
-> </DocsImage>
+/>
 
 ### Personal Org
 
@@ -70,8 +67,7 @@ organization, you can convert it to a professional organization via the
 <DocsImage
 src="/img/dashboard/convert-to-professional-org-button.jpg"
 alt="Convert org for billing"
-
-> </DocsImage>
+/>
 
 Click the **Convert organization** button, provide a name for the organization,
 and hit **Convert organization**. This will do two things:
@@ -86,8 +82,7 @@ and hit **Convert organization**. This will do two things:
 src="/img/dashboard/convert-to-professional-org-modal.jpg"
 alt="Convert org to new org"
 width-600
-
-> </DocsImage>
+/>
 
 ### Delete Org
 
@@ -98,8 +93,7 @@ to another organization before you can delete the organization.
 <DocsImage
 src="/img/dashboard/remove-organization-dialog.png"
 alt="Delete Organization"
-
-> </DocsImage>
+/>
 
 ## Billing & Usage
 
@@ -119,7 +113,7 @@ Follow the following process to request an OSS plan for your project:
 
 1. [Login](https://on.cypress.io/dashboard) to the Cypress Dashboard, or
    [create an account](https://on.cypress.io/dashboard) if you are a new user.
-   <DocsImage src="/img/dashboard/oss-plan-1-login.png" alt="Login or Create Account"></DocsImage>
+   <DocsImage src="/img/dashboard/oss-plan-1-login.png" alt="Login or Create Account"/>
 2. Go the [Organizations page](https://on.cypress.io/dashboard/organizations) to
    select the organization you want to associate with an OSS plan. If you have
    no organizations, you can create one by clicking the **+ Add Organization**
@@ -129,14 +123,13 @@ Follow the following process to request an OSS plan for your project:
 <DocsImage
 src="/img/dashboard/oss-plan-2-select-org.png"
 alt="Select or add organization"
+/> 3. Go to the **Billing & Usage** page, and then click on the \*\*Apply for an open source
 
-> </DocsImage> 3. Go to the **Billing & Usage** page, and then click on the **Apply for an open source
-> plan** link at the bottom of the page.
+> plan\*\* link at the bottom of the page.
 > <DocsImage
 > src="/img/dashboard/oss-plan-3-billing.png"
-> alt="Click Apply for an open source plan"
-> </DocsImage> 4. Fill in and submit the OSS plan request form.
-> <DocsImage src="/img/dashboard/oss-plan-4-apply.png" alt="OSS plan request form"></DocsImage> 5. You'll
+> alt="Click Apply for an open source plan"/> 4. Fill in and submit the OSS plan request form.
+> <DocsImage src="/img/dashboard/oss-plan-4-apply.png" alt="OSS plan request form"/> 5. You'll
 > receive an email confirming your request. The Cypress Team will review your request and, if approved,
 > an OSS plan subscription will be applied to your organization.
 
@@ -186,7 +179,7 @@ Organization to set up SSO.
    src="/img/dashboard/organizations/integrations-nenu-screenshot.png"
    alt="Enable SSO"
    width-600
-   > </DocsImage>
+   />
 2. Scroll down to the **Enterprise SSO** section. Select your SSO provider and
    take note of the information provided and required. Keep this window open and
    continue to the
@@ -211,17 +204,17 @@ documentation below, refer to
    <DocsImage
    src="/img/dashboard/organizations/okta-admin-cypress-sso-setup.png"
    alt="Okta Admin"
-   > </DocsImage>
+   />
 1. Create a new SAML-based Web application.
    <DocsImage
    src="/img/dashboard/organizations/okta-add-application-step1-cypress-sso.png"
    alt="Create Okta SAML App"
-   > </DocsImage>
+   />
    > <DocsImage
    >   src="/img/dashboard/organizations/okta-add-application-step3-cypress-sso.png"
    >   alt="Create Okta SAML App"
    >   width-600
-   > </DocsImage>
+   > />
 1. Supply the following information requested in the Okta setup wizard:
 
 - **App name:** `Cypress Dashboard`
@@ -240,7 +233,7 @@ documentation below, refer to
   <DocsImage
   src="/img/dashboard/organizations/okta-download-certificate-for-cypress-dashboard.png"
   alt="Download Certificate"
-  > </DocsImage>
+  />
 
 1. Navigate to the **Assignments** tab and grant your users access to the
    Cypress Dashboard.
@@ -252,7 +245,7 @@ The Cypress Dashboard can integrate with your identity provider via SAML. In
 addition to the documentation below, refer to your provider’s official
 documentation for configuring a SAML integration.
 
-<DocsImage src="/img/dashboard/organizations/enterprise-SSO-SAML.png" alt="SAML SSO"></DocsImage>
+<DocsImage src="/img/dashboard/organizations/enterprise-SSO-SAML.png" alt="SAML SSO"/>
 
 1. Log into the admin interface for your identity provider.
 1. Work through the setup wizard supplying the information requested:

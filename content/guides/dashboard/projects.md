@@ -31,7 +31,7 @@ Make sure you [install](/guides/getting-started/installing-cypress) and
    src="/img/dashboard/projects/setup-a-project-1.png"
    alt="Connect to Dashboard"
    no-border
-   > </DocsImage>
+   />
 4. Choose who owns the project. You can personally own it or select an
    organization you're a member of. If you don't have any organizations, click
    **Create organization**. Organizations work just like they do in GitHub and
@@ -41,7 +41,7 @@ Make sure you [install](/guides/getting-started/installing-cypress) and
    src="/img/dashboard/projects/setup-a-project-2.png"
    alt="Choose an Organization"
    no-border
-   > </DocsImage>
+   />
 5. If you don't have any existing projects, you'll have the opportunity to
    create a new one here. If you have existing projects and want to create a new
    one, you can click "Create a new project" to make a new one.
@@ -58,8 +58,7 @@ Make sure you [install](/guides/getting-started/installing-cypress) and
 src="/img/dashboard/projects/setup-a-project-3.png"
 alt="Create a New Project"
 no-border
-
-> </DocsImage>
+/>
 
 6. Alternatively, if you've already created a project in the Dashboard, you can
    link your project by selecting it from the dropdown. Make sure to select a
@@ -68,7 +67,7 @@ no-border
    src="/img/dashboard/projects/setup-a-project-4.png"
    alt="Choose a Project"
    no-border
-   > </DocsImage>
+   />
 7. Click **Setup Project**.
 8. Now you should see a view explaining how to record your first run with your
    record key.
@@ -76,7 +75,7 @@ no-border
    src="/img/dashboard/projects/setup-a-project-5.png"
    alt="Record Instructions"
    no-border
-   > </DocsImage>
+   />
 9. After setting up your project, Cypress inserts a unique
    [projectId](#Identification) into your configuration file, `cypress.json` by
    default. If you're using source control, we recommend that you check your
@@ -104,9 +103,9 @@ no-border
 them in the [Dashboard](https://on.cypress.io/dashboard) and in the Runs tab of
 the [Test Runner](/guides/core-concepts/test-runner).
 
-<DocsImage src="/img/dashboard/dashboard-runs-list.png" alt="Dashboard Screenshot"></DocsImage>
+<DocsImage src="/img/dashboard/dashboard-runs-list.png" alt="Dashboard Screenshot"/>
 
-<DocsImage src="/img/dashboard/runs-list-in-desktop-gui.png" alt="Runs List"></DocsImage>
+<DocsImage src="/img/dashboard/runs-list-in-desktop-gui.png" alt="Runs List"/>
 
 ## Identification
 
@@ -192,8 +191,7 @@ our [Dashboard](https://on.cypress.io/dashboard).
 <DocsImage
 src="/img/dashboard/record-keys-in-project-settings-dashboard.png"
 alt="Record key in project settings"
-
-> </DocsImage>
+/>
 
 You can also find your Record Key inside of the _Settings_ tab in the Test
 Runner.
@@ -201,8 +199,7 @@ Runner.
 <DocsImage
 src="/img/dashboard/record-key-shown-in-desktop-gui-configuration.jpg"
 alt="Record Key in Configuration Tab"
-
-> </DocsImage>
+/>
 
 ## Record keys
 
@@ -213,17 +210,17 @@ used.
 
 1. Go to your organization's projects page.
 2. Select the project you want to change access to.
-   <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project"></DocsImage>
+   <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project"/>
 3. Go to the project's **Settings** page.
    <DocsImage
    src="/img/dashboard/visit-project-settings.png"
    alt="Visit project settings"
-   > </DocsImage>
+   />
 4. Here you will see a **Record Keys** section
    <DocsImage
    src="/img/dashboard/record-keys-in-project-settings-dashboard.png"
    alt="Record keys in Dashboard"
-   > </DocsImage>
+   />
 5. Click **Create New Key**. A new key will be automatically generated for your
    project.
 
@@ -231,17 +228,17 @@ used.
 
 1. Go to your organization's projects page.
 2. Select the project you want to change access to.
-   <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project"></DocsImage>
+   <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project"/>
 3. Go to the project's **Settings** page.
    <DocsImage
    src="/img/dashboard/visit-project-settings.png"
    alt="Visit project settings"
-   > </DocsImage>
+   />
 4. Here you will see a **Record Keys** section
    <DocsImage
    src="/img/dashboard/record-keys-in-project-settings-dashboard.png"
    alt="Record keys in Dashboard"
-   > </DocsImage>
+   />
 5. Click **Delete** beside the record key you want to delete.
 
 ## Parallelization settings
@@ -256,15 +253,14 @@ learn more.
 <DocsImage
 src="/img/dashboard/run-completion-delay.jpg"
 alt="Run completion delay settings"
-
-> </DocsImage>
+/>
 
 ## GitHub Integration
 
 You can integrate your project with GitHub and edit its settings from within the
 project settings page.
 
-<DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings"></DocsImage>
+<DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings"/>
 
 See our [GitHub Integration guide](/guides/dashboard/github-integration) to
 learn more.
@@ -274,7 +270,7 @@ learn more.
 You can integrate your project with Slack and edit its settings from within the
 project settings page.
 
-<DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings"></DocsImage>
+<DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings"/>
 
 See our [Slack Integration guide](/guides/dashboard/slack-integration) to learn
 more.
@@ -293,7 +289,7 @@ test count to other developers viewing your project's README file.
    <DocsImage
    src="/img/dashboard/badges/dashboard-badge-configure-button.png"
    alt="README Badge configure button"
-   > </DocsImage>
+   />
 
 - **Note**: README badges are currently only available for public projects.
 
@@ -316,8 +312,7 @@ test count to other developers viewing your project's README file.
 <DocsImage
 src="/img/dashboard/badges/dashboard-badge-configuration.png"
 alt="README Badge configuration form"
-
-> </DocsImage>
+/>
 
 See also
 [Highlight your project’s test status with Cypress README badges](https://www.cypress.io/blog/2020/09/02/highlight-your-projects-test-status-with-cypress-readme-badges/)
@@ -327,7 +322,7 @@ announcement.
 
 Visit your project settings to see who has access to your project's runs.
 
-<DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings"></DocsImage>
+<DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings"/>
 
 ### Public vs Private
 
@@ -345,15 +340,15 @@ Visit your project settings to see who has access to your project's runs.
 
 1. Go to your organization's projects page.
 2. Select the project you want to change access to.
-   <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project"></DocsImage>
+   <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project"/>
 3. Go to the project's **Settings** page.
    <DocsImage
    src="/img/dashboard/visit-project-settings.png"
    alt="Visit project settings"
-   > </DocsImage>
+   />
 4. Here you will see a section displaying **Access to Runs**. Choose the
    appropriate access you'd like to assign for the project here.
-   <DocsImage src="/img/dashboard/access-to-runs.png" alt="access-to-runs"></DocsImage>
+   <DocsImage src="/img/dashboard/access-to-runs.png" alt="access-to-runs"/>
 
 ## Transfer ownership
 
@@ -366,23 +361,23 @@ user in the organization. Projects can only be transferred from the
 
 1. Select your organization in the organization switcher.
 2. Select the project you wish to transfer.
-   <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project"></DocsImage>
+   <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project"/>
 3. Go to the project's **Settings** page.
    <DocsImage
    src="/img/dashboard/visit-project-settings.png"
    alt="Visit project settings"
-   > </DocsImage>
+   />
 4. Scroll down to the **Transfer Ownership** section and click **Transfer
    Ownership**.
    <DocsImage
    src="/img/dashboard/transfer-ownership-button.png"
    alt="Transfer ownership button"
-   > </DocsImage>
+   />
 5. Select the user or organization, then click **Transfer**.
    <DocsImage
    src="/img/dashboard/transfer-ownership-of-project-dialog.png"
    alt="Transfer Project dialog"
-   > </DocsImage>
+   />
 
 ### Cancel project transfer
 
@@ -392,8 +387,7 @@ organization's projects and clicking **Cancel Transfer**.
 <DocsImage
 src="/img/dashboard/cancel-transfer-of-project.png"
 alt="Cancel pending transfer of project"
-
-> </DocsImage>
+/>
 
 ### Accept or reject transferred project
 
@@ -401,13 +395,12 @@ When a project is transferred to you, you will receive an email notifying you.
 You will be able to accept or reject the transferred project by clicking the
 notification in the sidebar and clicking 'Accept' or 'Reject'.
 
-<DocsImage src="/img/dashboard/see-pending-transfer.png" alt="See pending transfer"></DocsImage>
+<DocsImage src="/img/dashboard/see-pending-transfer.png" alt="See pending transfer"/>
 
 <DocsImage
 src="/img/dashboard/accept-or-reject-transfer-of-project.png"
 alt="Accept or reject a transferred project"
-
-> </DocsImage>
+/>
 
 ## Delete Project
 
@@ -417,16 +410,16 @@ test runs. Deleting projects can only be done from the
 
 1. Select your organization in the organization switcher.
 2. Select the project you want to remove.
-   <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project"></DocsImage>
+   <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project"/>
 3. Go to the project's **Settings** page.
    <DocsImage
    src="/img/dashboard/visit-project-settings.png"
    alt="Visit project settings"
-   > </DocsImage>
+   />
 4. At the very bottom of the Settings page click the **Remove Project** button.
    <DocsImage
    src="/img/dashboard/remove-project-dialog.png"
    alt="Delete project dialog"
-   > </DocsImage>
+   />
 5. Confirm that you want to delete the project by clicking **Yes, Remove
    Project**.

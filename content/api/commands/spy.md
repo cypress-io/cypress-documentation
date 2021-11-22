@@ -97,7 +97,7 @@ expect(withFoo).to.be.called // purposefully failing assertion
 
 You will see the following in the command log:
 
-<DocsImage src="/img/api/spy/using-spy-with-alias.png" alt="spies with aliases" ></DocsImage>
+<DocsImage src="/img/api/spy/using-spy-with-alias.png" alt="spies with aliases" />
 
 ## Notes
 
@@ -159,12 +159,12 @@ expect(spy).to.be.called
 
 The command above will display in the Command Log as:
 
-<DocsImage src="/img/api/spy/spying-shows-any-aliases-and-also-any-assertions-made.png" alt="Command Log spy" ></DocsImage>
+<DocsImage src="/img/api/spy/spying-shows-any-aliases-and-also-any-assertions-made.png" alt="Command Log spy" />
 
 When clicking on the `spy-1` event within the command log, the console outputs
 the following:
 
-<DocsImage src="/img/api/spy/console-shows-spy-arguments-calls-and-the-object-being-spied.png" alt="Console Log spy" ></DocsImage>
+<DocsImage src="/img/api/spy/console-shows-spy-arguments-calls-and-the-object-being-spied.png" alt="Console Log spy" />
 
 ## History
 

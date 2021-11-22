@@ -396,7 +396,7 @@ Reload the browser and turn on 'Verbose' logs to see debug messages within the
 Developer Tools console. You will only see the "cypress:driver" package logs
 that run in the browser, as you can see below.
 
-<DocsImage src="/img/api/debug/debug-driver.jpg" alt="Debug logs in browser"></DocsImage>
+<DocsImage src="/img/api/debug/debug-driver.jpg" alt="Debug logs in browser"/>
 
 ## Log memory and CPU usage
 
@@ -422,8 +422,7 @@ In the resulting output, processes are grouped by their name.
 <DocsImage
 src="/img/guides/troubleshooting-cypress-process-profiler-cli.jpg"
 alt="Process printout of Cypress in CLI"
-
-> </DocsImage>
+/>
 
 By default, process information is collected and summarized is printed once
 every 10 seconds. You can override this interval by setting the
@@ -456,7 +455,7 @@ You can include the plugin
 tests. This plugin writes the list of Cypress commands to the terminal as well
 as a JSON file if a test fails.
 
-<DocsImage src="/img/api/debug/failed-log.png" alt="cypress-failed-log terminal output"></DocsImage>
+<DocsImage src="/img/api/debug/failed-log.png" alt="cypress-failed-log terminal output"/>
 
 ## Hacking on Cypress
 
@@ -664,8 +663,7 @@ You can change anything in the JavaScript code:
 <DocsImage
 src="/img/guides/source-code.png"
 alt="Source code of the Test Runner in a text editor"
-
-> </DocsImage>
+/>
 
 When finished, if necessary, remove the edited Test Runner version and reinstall
 the Cypress official version to get back to the official released code.

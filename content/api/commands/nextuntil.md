@@ -124,12 +124,12 @@ cy.get('#veggies').nextUntil('#nuts')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/nextuntil/find-next-elements-until-selector.png" alt="Command Log nextUntil" ></DocsImage>
+<DocsImage src="/img/api/nextuntil/find-next-elements-until-selector.png" alt="Command Log nextUntil" />
 
 When clicking on `nextUntil` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/nextuntil/console-log-of-next-elements-until.png" alt="Console Log nextUntil" ></DocsImage>
+<DocsImage src="/img/api/nextuntil/console-log-of-next-elements-until.png" alt="Console Log nextUntil" />
 
 ## See also
 

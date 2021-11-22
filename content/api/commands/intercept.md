@@ -1365,7 +1365,7 @@ routes which are defined with `{ middleware: true }`, which always run first.
 This allows you to override existing `cy.intercept()` declarations by defining
 an overlapping `cy.intercept()`:
 
-<DocsImage src="/img/api/intercept/middleware-algo.png" alt="Middleware Algorithm" ></DocsImage>
+<DocsImage src="/img/api/intercept/middleware-algo.png" alt="Middleware Algorithm" />
 
 ### Request phase
 
@@ -1511,7 +1511,7 @@ following example, all of the requests circled in red have been served from
 cache, and will not send an HTTP request. Thus, they cannot be intercepted by
 `cy.intercept()`:
 
-<DocsImage src="/img/api/intercept/devtools-cached-responses.png" alt="Screenshot of Chrome DevTools showing cached responses." ></DocsImage>
+<DocsImage src="/img/api/intercept/devtools-cached-responses.png" alt="Screenshot of Chrome DevTools showing cached responses." />
 
 If you would like to intercept resources that normally send cache headers, here
 are some workarounds:
@@ -1521,16 +1521,12 @@ are some workarounds:
   removes cache headers from desired requests. For example:
   ```ts
   beforeEach(() => {
-    cy.intercept(
-      'https://api.example.com/**/*',
-      { middleware: true },
-      (req) => {
-        req.on('before:response', (res) => {
-          // force all API responses to not be cached
-          res.headers['cache-control'] = 'no-store'
-        })
-      }
-    )
+    cy.intercept('https://api.example.com/**/*', { middleware: true }, (req) => {
+      req.on('before:response', (res) => {
+        // force all API responses to not be cached
+        res.headers['cache-control'] = 'no-store'
+      })
+    })
   })
   ```
 - Chromium-family browsers only: Use `remote:debugger:protocol` to disable cache
@@ -1563,13 +1559,13 @@ it('cy.intercept command log', () => {
 })
 -->
 
-<DocsImage src="/img/api/intercept/command-log-routes-ui.png" alt="Screenshot of Command Log Routes UI"></DocsImage>
+<DocsImage src="/img/api/intercept/command-log-routes-ui.png" alt="Screenshot of Command Log Routes UI"/>
 
 When HTTP requests are made, Cypress will log them in the Command Log and
 indicate whether they matched a `cy.intercept()` by the presence of a yellow
 badge on the right hand side:
 
-<DocsImage src="/img/api/intercept/command-log-fetches.png" alt="Screenshot of example fetches"></DocsImage>
+<DocsImage src="/img/api/intercept/command-log-fetches.png" alt="Screenshot of example fetches"/>
 
 The circular indicator is filled if the request went to the destination server,
 but unfilled if the request was stubbed with a response.
@@ -1577,7 +1573,7 @@ but unfilled if the request was stubbed with a response.
 Clicking on a request that matched a `cy.intercept()` will print additional
 information about the request and response to the console:
 
-<DocsImage src="/img/api/intercept/console-props.png" alt="Screenshot of cy.intercept console output"></DocsImage>
+<DocsImage src="/img/api/intercept/console-props.png" alt="Screenshot of cy.intercept console output"/>
 
 [Read more about request logging in Cypress.](/guides/guides/network-requests#Command-Log)
 
@@ -1617,6 +1613,5 @@ information about the request and response to the console:
 [match-url]: #Matching-url
 [glob-match-url]: #Glob-Pattern-Matching-URLs
 [arg-method]: #method-String
-[arg-routehandler]:
-  #routeHandler-lt-code-gtstring-object-Function-StaticResponselt-code-gt
+[arg-routehandler]: #routeHandler-lt-code-gtstring-object-Function-StaticResponselt-code-gt
 [arg-routematcher]: #routeMatcher-RouteMatcher

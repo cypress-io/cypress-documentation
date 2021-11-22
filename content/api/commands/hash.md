@@ -102,12 +102,12 @@ cy.hash().should('eq', '#users/new')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/hash/test-url-hash-for-users-page.png" alt="Command Log for hash" ></DocsImage>
+<DocsImage src="/img/api/hash/test-url-hash-for-users-page.png" alt="Command Log for hash" />
 
 When clicking on `hash` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/hash/hash-command-yields-url-after-hash.png" alt="Console Log for hash" ></DocsImage>
+<DocsImage src="/img/api/hash/hash-command-yields-url-after-hash.png" alt="Console Log for hash" />
 
 ## See also
 

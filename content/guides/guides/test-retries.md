@@ -69,7 +69,7 @@ Assuming we have configured test retries with `2` retry attempts (for a total of
    you that the first attempt failed and will attempt to run the test a second
    time.
 
-<DocsImage src="/img/guides/test-retries/attempt-2-start.png"></DocsImage>
+<DocsImage src="/img/guides/test-retries/attempt-2-start.png"/>
 
 3. If the <Icon name="check-circle" color="green"></Icon> test passes after the
    second attempt, Cypress will continue with any remaining tests.
@@ -77,18 +77,18 @@ Assuming we have configured test retries with `2` retry attempts (for a total of
 4. If the <Icon name="times" color="red"></Icon> test fails a second time,
    Cypress will make the final third attempt to re-run the test.
 
-<DocsImage src="/img/guides/test-retries/attempt-3-start.png"></DocsImage>
+<DocsImage src="/img/guides/test-retries/attempt-3-start.png"/>
 
 5. If the <Icon name="times" color="red"></Icon> test fails a third time,
    Cypress will mark the test as failed and then move on to run any remaining
    tests.
 
-<DocsImage src="/img/guides/test-retries/attempt-3-fail.png"></DocsImage>
+<DocsImage src="/img/guides/test-retries/attempt-3-fail.png"/>
 
 The following is a screen capture of what test retries looks like on the same
 failed test when run via [cypress run](/guides/guides/command-line#cypress-run).
 
-<DocsImage src="/img/guides/test-retries/cli-error-message.png"></DocsImage>
+<DocsImage src="/img/guides/test-retries/cli-error-message.png"/>
 
 During [cypress open](/guides/guides/command-line#cypress-open) you will be able
 to see the number of attempts made in the
@@ -296,12 +296,11 @@ failed attempts, and the error for failed attempts.
 <DocsImage
 src="/img/guides/test-retries/flake-artifacts-and-errors.png"
 alt="Flake artifacts and errors"
-
-> </DocsImage>
+/>
 
 You can also see the Flaky Rate for a given test.
 
-<DocsImage src="/img/guides/test-retries/flaky-rate.png" alt="Flaky rate"></DocsImage>
+<DocsImage src="/img/guides/test-retries/flaky-rate.png" alt="Flaky rate"/>
 
 For a comprehensive view of how flake is affecting your overall test suite, you
 can review the

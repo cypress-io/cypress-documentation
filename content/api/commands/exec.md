@@ -90,9 +90,7 @@ cy.exec('rake db:seed').its('code').should('eq', 0)
 #### Run an arbitrary script and assert its output
 
 ```javascript
-cy.exec('npm run my-script')
-  .its('stdout')
-  .should('contain', 'Done running the script')
+cy.exec('npm run my-script').its('stdout').should('contain', 'Done running the script')
 ```
 
 #### Write to a file to create a fixture from response body
@@ -101,9 +99,7 @@ cy.exec('npm run my-script')
 cy.intercept('POST', '/comments').as('postComment')
 cy.get('.add-comment').click()
 cy.wait('@postComment').then(({ response }) => {
-  cy.exec(
-    `echo ${JSON.stringify(response.body)} >cypress/fixtures/comment.json`
-  )
+  cy.exec(`echo ${JSON.stringify(response.body)} >cypress/fixtures/comment.json`)
   cy.fixture('comment.json').should('deep.eq', response.body)
 })
 ```
@@ -222,12 +218,12 @@ if (Cypress.platform === 'win32') {
 
 The command above will display in the Command Log as:
 
-<DocsImage src="/img/api/exec/exec-cat-in-shell.png" alt="Command Log exec" ></DocsImage>
+<DocsImage src="/img/api/exec/exec-cat-in-shell.png" alt="Command Log exec" />
 
 When clicking on the `exec` command within the command log, the console outputs
 the following:
 
-<DocsImage src="/img/api/exec/console-shows-code-shell-stderr-and-stdout-for-exec.png" alt="console.log exec" ></DocsImage>
+<DocsImage src="/img/api/exec/console-shows-code-shell-stderr-and-stdout-for-exec.png" alt="console.log exec" />
 
 ## See also
 

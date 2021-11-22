@@ -159,14 +159,12 @@ cy.intercept('/activities/*').as('getActivities')
 cy.intercept('/comments/*').as('getComments')
 cy.visit('/dashboard')
 
-cy.wait(['@getUsers', '@getActivities', '@getComments']).then(
-  (interceptions) => {
-    // interceptions will now be an array of matching requests
-    // interceptions[0] <-- getUsers
-    // interceptions[1] <-- getActivities
-    // interceptions[2] <-- getComments
-  }
-)
+cy.wait(['@getUsers', '@getActivities', '@getComments']).then((interceptions) => {
+  // interceptions will now be an array of matching requests
+  // interceptions[0] <-- getUsers
+  // interceptions[1] <-- getActivities
+  // interceptions[2] <-- getComments
+})
 ```
 
 #### Using [`.spread()`](/api/commands/spread) to spread the array into multiple arguments.
@@ -224,7 +222,7 @@ This means that when you begin waiting for an aliased request, Cypress will wait
 up to 5 seconds for a matching request to be created. If no matching request is
 found, you will get an error message that looks like this:
 
-<DocsImage src="/img/api/wait/error-for-no-matching-route-when-waiting-in-test.png" alt="Error for no matching request" ></DocsImage>
+<DocsImage src="/img/api/wait/error-for-no-matching-route-when-waiting-in-test.png" alt="Error for no matching request" />
 
 Once Cypress detects that a matching request has begun its request, it then
 switches over to the 2nd waiting period. This duration is configured by the
@@ -235,7 +233,7 @@ This means Cypress will now wait up to 30 seconds for the external server to
 respond to this request. If no response is detected, you will get an error
 message that looks like this:
 
-<DocsImage src="/img/api/wait/timeout-error-when-waiting-for-route-response.png" alt="Timeout error for request wait" ></DocsImage>
+<DocsImage src="/img/api/wait/timeout-error-when-waiting-for-route-response.png" alt="Timeout error for request wait" />
 
 This gives you the best of both worlds - a fast error feedback loop when
 requests never go out and a much longer duration for the actual external
@@ -287,12 +285,12 @@ it('assets/img/api/wait/command-log-when-waiting-for-aliased-route.png', () => {
 })
 -->
 
-<DocsImage src="/img/api/wait/command-log-when-waiting-for-aliased-route.png" alt="Command Log wait" ></DocsImage>
+<DocsImage src="/img/api/wait/command-log-when-waiting-for-aliased-route.png" alt="Command Log wait" />
 
 When clicking on `wait` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/wait/wait-console-log-displays-all-the-data-of-the-route-request-and-response.png" alt="Console Log wait" ></DocsImage>
+<DocsImage src="/img/api/wait/wait-console-log-displays-all-the-data-of-the-route-request-and-response.png" alt="Console Log wait" />
 
 ## History
 

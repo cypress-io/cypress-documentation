@@ -398,12 +398,12 @@ beforeEach(() => {
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/visit/visit-example-page-in-before-each-of-test.png" alt="Command Log visit" ></DocsImage>
+<DocsImage src="/img/api/visit/visit-example-page-in-before-each-of-test.png" alt="Command Log visit" />
 
 When clicking on `visit` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/visit/visit-shows-any-redirect-or-cookies-set-in-the-console.png" alt="console Log visit" ></DocsImage>
+<DocsImage src="/img/api/visit/visit-shows-any-redirect-or-cookies-set-in-the-console.png" alt="console Log visit" />
 
 ## History
 

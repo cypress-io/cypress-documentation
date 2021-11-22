@@ -103,12 +103,12 @@ cy.getCookies()
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/getcookies/get-browser-cookies-and-inspect-all-properties.png" alt="Command Log getcookies" ></DocsImage>
+<DocsImage src="/img/api/getcookies/get-browser-cookies-and-inspect-all-properties.png" alt="Command Log getcookies" />
 
 When clicking on `getCookies` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/getcookies/test-application-cookies.png" alt="Console Log getcookies" ></DocsImage>
+<DocsImage src="/img/api/getcookies/test-application-cookies.png" alt="Console Log getcookies" />
 
 ## History
 

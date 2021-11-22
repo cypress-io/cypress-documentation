@@ -195,7 +195,7 @@ If you are running Cypress tests using a Chromium-based browser, you can see ALL
 currently set command line switches and the browser version information by
 opening a new tab and typing `chrome://version` url.
 
-<DocsImage src="/img/api/chrome-switches.png" alt="See all Chrome switches" ></DocsImage>
+<DocsImage src="/img/api/chrome-switches.png" alt="See all Chrome switches" />
 
 ## Examples
 
@@ -296,7 +296,7 @@ By default, Cypress passes the Chrome command line switch to enable a fake video
 for a media stream. This is to better enable testing webcam functionality
 without having to have the necessary hardware to test.
 
-<DocsImage src="/img/api/browser-launch-fake-video.gif" alt="Enable fake video for testing" ></DocsImage>
+<DocsImage src="/img/api/browser-launch-fake-video.gif" alt="Enable fake video for testing" />
 
 You can however send your own video file for testing by passing a Chrome command
 line switch pointing to a video file.
@@ -307,9 +307,7 @@ module.exports = (on, config) => {
   on('before:browser:launch', (browser = {}, launchOptions) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
       // Mac/Linux
-      launchOptions.args.push(
-        '--use-file-for-fake-video-capture=cypress/fixtures/my-video.y4m'
-      )
+      launchOptions.args.push('--use-file-for-fake-video-capture=cypress/fixtures/my-video.y4m')
 
       // Windows
       // launchOptions.args.push('--use-file-for-fake-video-capture=c:\\path\\to\\video\\my-video.y4m')
@@ -330,8 +328,7 @@ module.exports = (on) => {
   on('before:browser:launch', (browser, options) => {
     // only Firefox requires all mime types to be listed
     if (browser.family === 'firefox') {
-      const existingMimeTypes =
-        options.preferences['browser.helperApps.neverAsk.saveToDisk']
+      const existingMimeTypes = options.preferences['browser.helperApps.neverAsk.saveToDisk']
       const myMimeType = 'my/mimetype'
 
       // prevents the browser download prompt

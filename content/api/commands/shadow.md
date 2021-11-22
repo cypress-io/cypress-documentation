@@ -83,12 +83,12 @@ cy.get('.shadow-host').shadow()
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/shadow/shadow-command-log.png" alt="Command Log shadow" ></DocsImage>
+<DocsImage src="/img/api/shadow/shadow-command-log.png" alt="Command Log shadow" />
 
 When clicking on the `shadow` command within the command log, the console
 outputs the following:
 
-<DocsImage src="/img/api/shadow/shadow-in-console.png" alt="console.log shadow" ></DocsImage>
+<DocsImage src="/img/api/shadow/shadow-in-console.png" alt="console.log shadow" />
 
 ## See also
 

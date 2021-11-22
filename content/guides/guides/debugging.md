@@ -93,7 +93,7 @@ The current subject that is yielded by the [`cy.get()`](/api/commands/get) is
 exposed as the variable `subject` within your Developer Tools so that you can
 interact with it in the console.
 
-<DocsImage src="/img/guides/debugging-subject.png" alt="Debugging Subject"></DocsImage>
+<DocsImage src="/img/guides/debugging-subject.png" alt="Debugging Subject"/>
 
 Use [`.debug()`](/api/commands/debug) to quickly inspect any (or many!) part(s)
 of your application during the test. You can attach it to any Cypress chain of
@@ -146,8 +146,7 @@ information here.
 <DocsImage
 src="/img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png"
 alt="Console Log type"
-
-> </DocsImage>
+/>
 
 ## Errors
 
@@ -197,8 +196,7 @@ will show on failure that includes the following pieces of information:
 <DocsImage
 src="/img/guides/command-failure-error.png"
 alt="example command failure error"
-
-> </DocsImage>
+/>
 
 ### Source maps
 
@@ -261,8 +259,7 @@ Cypress emits multiple events you can listen to as shown below.
 <DocsImage
 src="/img/api/catalog-of-events/console-log-events-debug.png"
 alt="console log events for debugging"
-
-> </DocsImage>
+/>
 
 ## Run Cypress command outside the test
 

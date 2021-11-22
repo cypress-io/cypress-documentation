@@ -125,21 +125,17 @@ can time out waiting for assertions you've added to pass.</li></List>
 **_Uncheck the first checkbox_**
 
 ```javascript
-cy.get('[data-js="choose-all"]')
-  .click()
-  .find('input[type="checkbox"]')
-  .first()
-  .uncheck()
+cy.get('[data-js="choose-all"]').click().find('input[type="checkbox"]').first().uncheck()
 ```
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/uncheck/test-unchecking-a-checkbox.png" alt="Command Log uncheck" ></DocsImage>
+<DocsImage src="/img/api/uncheck/test-unchecking-a-checkbox.png" alt="Command Log uncheck" />
 
 When clicking on `uncheck` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/uncheck/console-shows-events-from-clicking-the-checkbox.png" alt="Console Log uncheck" ></DocsImage>
+<DocsImage src="/img/api/uncheck/console-shows-events-from-clicking-the-checkbox.png" alt="Console Log uncheck" />
 
 ## History
 

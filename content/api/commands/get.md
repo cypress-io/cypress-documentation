@@ -249,12 +249,12 @@ cy.get('input[name="firstName"]').should('have.value', 'Homer')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/get/get-element-and-make-an-assertion.png" alt="Command Log get" ></DocsImage>
+<DocsImage src="/img/api/get/get-element-and-make-an-assertion.png" alt="Command Log get" />
 
 When clicking on the `get` command within the command log, the console outputs
 the following:
 
-<DocsImage src="/img/api/get/console-log-get-command-and-elements-found.png" alt="Console Log get" ></DocsImage>
+<DocsImage src="/img/api/get/console-log-get-command-and-elements-found.png" alt="Console Log get" />
 
 ## History
 

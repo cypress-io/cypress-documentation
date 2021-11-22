@@ -313,12 +313,12 @@ cy.screenshot('my-image')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/screenshot/command-log-shows-name-of-screenshot-taken.png" alt="Command Log screenshot" ></DocsImage>
+<DocsImage src="/img/api/screenshot/command-log-shows-name-of-screenshot-taken.png" alt="Command Log screenshot" />
 
 When clicking on `screenshot` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/screenshot/console-logs-exactly-where-screenshot-was-saved-in-file-system.png" alt="Console Log screenshot" ></DocsImage>
+<DocsImage src="/img/api/screenshot/console-logs-exactly-where-screenshot-was-saved-in-file-system.png" alt="Console Log screenshot" />
 
 ## History
 

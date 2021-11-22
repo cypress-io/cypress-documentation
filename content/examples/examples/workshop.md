@@ -5,7 +5,7 @@ containerClass: examples
 
 ## End-to-end Testing with Cypress.io
 
-<DocsImage src="/img/examples/end-to-end-testing-workshop.jpg" alt="End-to-end Testing Workshop" ></DocsImage>
+<DocsImage src="/img/examples/end-to-end-testing-workshop.jpg" alt="End-to-end Testing Workshop" />
 
 Cypress has put together a full day workshop that teaches how to test a modern
 web application using Cypress. You can preview the slides here:
@@ -42,7 +42,7 @@ testers good Cypress practices.
 
 ## Cypress on CI
 
-<DocsImage src="/img/examples/cypress-workshop-ci.png" alt="Cypress on CI workshop" ></DocsImage>
+<DocsImage src="/img/examples/cypress-workshop-ci.png" alt="Cypress on CI workshop" />
 
 Cypress team has prepared a 4 hour workshop that shows how to successfully run
 Cypress tests on several popular continuous integration services. You can
@@ -64,7 +64,7 @@ on:
 
 ## ReactJSDay 2019 Testing Course
 
-<DocsImage src="/img/examples/reactjsday-course.png" alt="ReactJS Day" ></DocsImage>
+<DocsImage src="/img/examples/reactjsday-course.png" alt="ReactJS Day" />
 
 This is the
 [reference repository](https://github.com/NoriSte/reactjsday-2019-testing-course)

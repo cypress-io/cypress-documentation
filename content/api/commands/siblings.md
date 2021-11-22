@@ -108,12 +108,12 @@ cy.get('.left-nav').find('li.active').siblings()
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/siblings/find-siblings-of-dom-elements-to-test.png" alt="Command Log siblings" ></DocsImage>
+<DocsImage src="/img/api/siblings/find-siblings-of-dom-elements-to-test.png" alt="Command Log siblings" />
 
 When clicking on `siblings` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/siblings/console-log-of-sibling-elements.png" alt="Console Log siblings" ></DocsImage>
+<DocsImage src="/img/api/siblings/console-log-of-sibling-elements.png" alt="Console Log siblings" />
 
 ## History
 

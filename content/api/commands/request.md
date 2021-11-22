@@ -180,12 +180,10 @@ cy.get('@comments').should((response) => {
 #### Send a `POST` request with a JSON body
 
 ```javascript
-cy.request('POST', 'http://localhost:8888/users/admin', { name: 'Jane' }).then(
-  (response) => {
-    // response.body is automatically serialized into JSON
-    expect(response.body).to.have.property('name', 'Jane') // true
-  }
-)
+cy.request('POST', 'http://localhost:8888/users/admin', { name: 'Jane' }).then((response) => {
+  // response.body is automatically serialized into JSON
+  expect(response.body).to.have.property('name', 'Jane') // true
+})
 ```
 
 ### Options
@@ -393,12 +391,12 @@ cy.request('https://jsonplaceholder.typicode.com/comments').then((response) => {
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/request/testing-request-url-and-its-response-body-headers.png" alt="Command Log request" ></DocsImage>
+<DocsImage src="/img/api/request/testing-request-url-and-its-response-body-headers.png" alt="Command Log request" />
 
 When clicking on `request` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/request/console-log-request-response-body-headers-status-url.png" alt="Console Log request" ></DocsImage>
+<DocsImage src="/img/api/request/console-log-request-response-body-headers-status-url.png" alt="Console Log request" />
 
 ## History
 

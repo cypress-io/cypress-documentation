@@ -43,7 +43,7 @@ A specified position to scroll the window or element to. Valid positions are
 `topLeft`, `top`, `topRight`, `left`, `center`, `right`, `bottomLeft`, `bottom`,
 and `bottomRight`.
 
-<DocsImage src="/img/api/coordinates-diagram.jpg" alt="cypress-command-positions-diagram" ></DocsImage>
+<DocsImage src="/img/api/coordinates-diagram.jpg" alt="cypress-command-positions-diagram" />
 
 **<Icon name="angle-right"></Icon> x** **_(Number, String)_**
 
@@ -197,12 +197,12 @@ cy.get('#scrollable-horizontal').scrollTo('right')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/scrollto/command-log-scrollto.png" alt="command log for scrollTo" ></DocsImage>
+<DocsImage src="/img/api/scrollto/command-log-scrollto.png" alt="command log for scrollTo" />
 
 When clicking on `scrollTo` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/scrollto/console-log-scrollto.png" alt="console.log for scrollTo" ></DocsImage>
+<DocsImage src="/img/api/scrollto/console-log-scrollto.png" alt="console.log for scrollTo" />
 
 ## History
 

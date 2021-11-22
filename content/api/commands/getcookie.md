@@ -147,12 +147,12 @@ cy.getCookie('fakeCookie1').should('have.property', 'value', '123ABC')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/getcookie/get-browser-cookie-and-make-assertions-about-object.png" alt="Command Log getcookie" ></DocsImage>
+<DocsImage src="/img/api/getcookie/get-browser-cookie-and-make-assertions-about-object.png" alt="Command Log getcookie" />
 
 When clicking on `getCookie` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/getcookie/inspect-cookie-object-properties-in-console.png" alt="Console Log getcookie" ></DocsImage>
+<DocsImage src="/img/api/getcookie/inspect-cookie-object-properties-in-console.png" alt="Console Log getcookie" />
 
 ## History
 

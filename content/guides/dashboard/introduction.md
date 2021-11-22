@@ -55,7 +55,7 @@ From the Dashboard you can:
   parallel.
 - See related groupings of tests.
 
-<DocsImage src="/img/dashboard/dashboard-runs-list.png" alt="Dashboard Screenshot"></DocsImage>
+<DocsImage src="/img/dashboard/dashboard-runs-list.png" alt="Dashboard Screenshot"/>
 
 ### Manage runs
 
@@ -101,7 +101,7 @@ Additionally we've integrated the tests run into the Cypress
 [Test Runner](/guides/core-concepts/test-runner). This means you can see the
 tests run in the _Runs_ tab from within every project.
 
-<DocsImage src="/img/dashboard/runs-list-in-desktop-gui.png" alt="Runs List"></DocsImage>
+<DocsImage src="/img/dashboard/runs-list-in-desktop-gui.png" alt="Runs List"/>
 
 <Alert type="info">
 

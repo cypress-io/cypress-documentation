@@ -223,5 +223,4 @@ Follow these steps:
 <DocsImage
 src="/img/guides/test-runner-settings-proxy-configuration.jpg"
 alt="Proxy configuration in the Desktop app"
-
-> </DocsImage>
+/>

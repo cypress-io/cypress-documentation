@@ -79,12 +79,12 @@ cy.document()
 
 The command above will display in the Command Log as:
 
-<DocsImage src="/img/api/document/get-document-of-application-in-command-log.png" alt="Command log document" ></DocsImage>
+<DocsImage src="/img/api/document/get-document-of-application-in-command-log.png" alt="Command log document" />
 
 When clicking on `document` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/document/console-yields-the-document-of-aut.png" alt="console.log document" ></DocsImage>
+<DocsImage src="/img/api/document/console-yields-the-document-of-aut.png" alt="console.log document" />
 
 ## See also
 

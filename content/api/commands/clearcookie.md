@@ -101,12 +101,12 @@ cy.getCookie('foo').should('be.null')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/clearcookie/clear-cookie-in-browser-tests.png" alt="Command Log for clearcookie" ></DocsImage>
+<DocsImage src="/img/api/clearcookie/clear-cookie-in-browser-tests.png" alt="Command Log for clearcookie" />
 
 When clicking on `clearCookie` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/clearcookie/cleared-cookie-shown-in-console.png" alt="console.log for clearcookie" ></DocsImage>
+<DocsImage src="/img/api/clearcookie/cleared-cookie-shown-in-console.png" alt="console.log for clearcookie" />
 
 ## See also
 

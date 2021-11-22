@@ -42,7 +42,7 @@ The position where the event should be triggered. The `center` position is the
 default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
 `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
-<DocsImage src="/img/api/coordinates-diagram.jpg" alt="cypress-command-positions-diagram" ></DocsImage>
+<DocsImage src="/img/api/coordinates-diagram.jpg" alt="cypress-command-positions-diagram" />
 
 **<Icon name="angle-right"></Icon> x** **_(Number)_**
 
@@ -282,12 +282,12 @@ cy.get('.trigger-input-range').invoke('val', 25).trigger('change')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/trigger/command-log-trigger.png" alt="command log trigger" ></DocsImage>
+<DocsImage src="/img/api/trigger/command-log-trigger.png" alt="command log trigger" />
 
 When clicking on `trigger` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/trigger/console-log-trigger.png" alt="console log trigger" ></DocsImage>
+<DocsImage src="/img/api/trigger/console-log-trigger.png" alt="console log trigger" />
 
 ## History
 

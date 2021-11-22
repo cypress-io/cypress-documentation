@@ -71,17 +71,13 @@ cy.location().should((loc) => {
   expect(loc.hash).to.eq('#/users/123/edit')
   expect(loc.host).to.eq('localhost:8000')
   expect(loc.hostname).to.eq('localhost')
-  expect(loc.href).to.eq(
-    'http://localhost:8000/app/index.html?q=dan#/users/123/edit'
-  )
+  expect(loc.href).to.eq('http://localhost:8000/app/index.html?q=dan#/users/123/edit')
   expect(loc.origin).to.eq('http://localhost:8000')
   expect(loc.pathname).to.eq('/app/index.html')
   expect(loc.port).to.eq('8000')
   expect(loc.protocol).to.eq('http:')
   expect(loc.search).to.eq('?q=dan')
-  expect(loc.toString()).to.eq(
-    'http://localhost:8000/app/index.html?q=brian#/users/123/edit'
-  )
+  expect(loc.toString()).to.eq('http://localhost:8000/app/index.html?q=brian#/users/123/edit')
 })
 ```
 
@@ -132,7 +128,7 @@ cy.window().then((win) => {
 })
 ```
 
-<DocsImage src="/img/api/location/window-location-object-printed-in-console-log.png" alt="Console.log of window.location" ></DocsImage>
+<DocsImage src="/img/api/location/window-location-object-printed-in-console-log.png" alt="Console.log of window.location" />
 
 #### Console output of `.location()`
 
@@ -142,7 +138,7 @@ cy.location().then((loc) => {
 })
 ```
 
-<DocsImage src="/img/api/location/special-cypress-location-object-logged-in-console-output.png" alt="Console Log of Cypress location command" ></DocsImage>
+<DocsImage src="/img/api/location/special-cypress-location-object-logged-in-console-output.png" alt="Console Log of Cypress location command" />
 
 ## Rules
 
@@ -173,12 +169,12 @@ cy.location().should((loc) => {
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/location/make-assertion-about-location-url-in-tests.png" alt="Command Log of Cypress location command" ></DocsImage>
+<DocsImage src="/img/api/location/make-assertion-about-location-url-in-tests.png" alt="Command Log of Cypress location command" />
 
 When clicking on `location` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/location/location-object-in-console-log.png" alt="Console Log of Cypress location command" ></DocsImage>
+<DocsImage src="/img/api/location/location-object-in-console-log.png" alt="Console Log of Cypress location command" />
 
 ## See also
 

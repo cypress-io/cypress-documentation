@@ -123,12 +123,12 @@ cy.get('.active').parentsUntil('.nav')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/parentsuntil/get-all-parents-until-nav-selector.png" alt="Command Log parentsUntil" ></DocsImage>
+<DocsImage src="/img/api/parentsuntil/get-all-parents-until-nav-selector.png" alt="Command Log parentsUntil" />
 
 When clicking on `parentsUntil` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/parentsuntil/show-parents-until-nav-in-console.png" alt="Console Log parentsUntil" ></DocsImage>
+<DocsImage src="/img/api/parentsuntil/show-parents-until-nav-in-console.png" alt="Console Log parentsUntil" />
 
 ## See also
 

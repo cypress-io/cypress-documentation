@@ -125,12 +125,12 @@ cy.get('.left-nav').find('li.active').nextAll()
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/nextall/next-all-traversal-command-for-the-dom.png" alt="Command Log nextAll" ></DocsImage>
+<DocsImage src="/img/api/nextall/next-all-traversal-command-for-the-dom.png" alt="Command Log nextAll" />
 
 When clicking on `nextAll` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/nextall/all-next-elements-are-logged-in-console.png" alt="Console Log nextAll" ></DocsImage>
+<DocsImage src="/img/api/nextall/all-next-elements-are-logged-in-console.png" alt="Console Log nextAll" />
 
 ## See also
 

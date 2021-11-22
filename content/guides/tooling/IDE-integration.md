@@ -14,8 +14,7 @@ will open with the cursor located on the line and column of interest.
 <DocsImage
 src="/img/guides/file-opener-ide-go-to-line.gif"
 alt="Open file at line in VS Code"
-
-> </DocsImage>
+/>
 
 The first time you click a file path, Cypress will prompt you to select which
 location you prefer to open the file. You can choose to open it in your:
@@ -41,8 +40,7 @@ by clicking under **File Opener Preference**.
 <DocsImage
 src="/img/guides/file-opener-preference-settings-tab.png"
 alt="screenshot of Test Runner settings tab with file opener preference panel"
-
-> </DocsImage>
+/>
 
 ## Extensions & Plugins
 

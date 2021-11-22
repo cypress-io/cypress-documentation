@@ -28,35 +28,35 @@ Jira workflow to enable:
    <DocsImage
    src="/img/dashboard/jira-integration/dashboard-jira-integration-install.png"
    alt="Cypress Dashboard Integrations"
-   > </DocsImage>
+   />
 2. Click the "Get it Now" button on the
    [Atlassian Marketplace Cypress for Jira page](https://marketplace.atlassian.com/apps/1224341/cypress-for-jira?hosting=cloud&tab=overview)
    <DocsImage
    src="/img/dashboard/jira-integration/dashboard-jira-atlassian-get-it-now.png"
    alt="Atlassian Marketplace Cypress for Jira"
-   > </DocsImage>
+   />
 3. Login to Jira, Choose a site to install your app and click "Install app".
    <DocsImage
    src="/img/dashboard/jira-integration/dashboard-jira-atlassian-choose-site.png"
    alt="Atlassian Marketplace Cypress for Jira Choose Site"
-   > </DocsImage>
+   />
 4. On the "Add to Jira" screen, confirm installation by clicking "Get it now"
    <DocsImage
    src="/img/dashboard/jira-integration/dashboard-jira-atlassian-confirm-install.png"
    alt="Atlassian Marketplace Cypress for Jira Installation Confirmation"
-   > </DocsImage>
+   />
 5. Once installed, click the `Get Started` link in the notification.
    <DocsImage
    src="/img/dashboard/jira-integration/dashboard-jira-atlassian-success.png"
    alt="Atlassian Marketplace Cypress for Jira Installation Success"
-   > </DocsImage>
+   />
 6. On the next page, click the `Click to Finish Installation` button to be
    redirected to the [Cypress Dashboard](https://www.cypress.io/dashboard/) and
    choose the Cypress Organization for integration.
    <DocsImage
    src="/img/dashboard/jira-integration/dashboard-jira-atlassian-finish-install-step.png"
    alt="Atlassian Marketplace Cypress for Jira Installation Finish Installation"
-   > </DocsImage>
+   />
 7. Once redirected to the
    [Cypress Dashboard](https://www.cypress.io/dashboard/), select the
    organization to integrate with
@@ -64,13 +64,13 @@ Jira workflow to enable:
    <DocsImage
    src="/img/dashboard/jira-integration/dashboard-jira-integration-choose-cypress-org.png"
    alt="Cypress Dashboard Select Organization for Jira Integration"
-   > </DocsImage>
+   />
 8. The Jira Integration is complete. A list of projects permitted is provided on
    the Jira Integration page.
    <DocsImage
    src="/img/dashboard/jira-integration/dashboard-jira-integration-completed.png"
    alt="Cypress Dashboard Jira Integration"
-   > </DocsImage>
+   />
 
 ## Creating a Jira issue for a test case
 
@@ -97,7 +97,7 @@ Let's walk through creating a Jira issue for a failing test:
    src="/img/dashboard/jira-integration/dashboard-jira-integration-create-issue.png"
    alt="Create Jira Issue Button"
 
-   > </DocsImage>
+   />
 
 3. Complete and submit the Jira issue creation form by selecting the Jira
    project, issue type, assignee, and additional fields.
@@ -106,7 +106,7 @@ Let's walk through creating a Jira issue for a failing test:
    src="/img/dashboard/jira-integration/dashboard-jira-integration-modal.png"
    alt="Create Jira Issue Modal"
 
-   > </DocsImage>
+   />
 
 4. Once the issue is created, a log and reference of the issue will appear
    within results panel of test.
@@ -115,7 +115,7 @@ Let's walk through creating a Jira issue for a failing test:
    src="/img/dashboard/jira-integration/dashboard-jira-integration-inline-issue.png"
    alt="Jira Issue in Cypress Failure Context"
 
-   > </DocsImage>
+   />
 
    <Alert type="info">
 
@@ -127,8 +127,7 @@ the associated test.
 <DocsImage
 src="/img/dashboard/jira-integration/dashboard-jira-integration-jira-issue.png"
 alt="Jira Issue of Cypress Failure"
-
-> </DocsImage>
+/>
 
 </Alert>
 

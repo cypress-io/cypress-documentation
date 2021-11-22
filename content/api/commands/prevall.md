@@ -125,12 +125,12 @@ cy.get('.left-nav').find('li.active').prevAll()
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/prevall/find-all-previous-elements-with-optional-selector.png" alt="Command Log prevAll" ></DocsImage>
+<DocsImage src="/img/api/prevall/find-all-previous-elements-with-optional-selector.png" alt="Command Log prevAll" />
 
 When clicking on `prevAll` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/prevall/console-log-all-previous-elements-traversed.png" alt="Console Log prevAll" ></DocsImage>
+<DocsImage src="/img/api/prevall/console-log-all-previous-elements-traversed.png" alt="Console Log prevAll" />
 
 ## See also
 

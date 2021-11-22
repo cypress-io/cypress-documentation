@@ -120,9 +120,7 @@ automatically yields `<button>` elements over spans because of its
 [preferred element order](#Preferences).
 
 ```html
-<button class="btn btn-primary" type="button">
-  Messages <span class="badge">4</span>
-</button>
+<button class="btn btn-primary" type="button">Messages <span class="badge">4</span></button>
 ```
 
 ```javascript
@@ -278,7 +276,7 @@ whitespaces as shown below:
 
 Rendered result:
 
-<DocsImage src="/img/api/contains/contains-pre-exception.png" alt="The result of pre tag" ></DocsImage>
+<DocsImage src="/img/api/contains/contains-pre-exception.png" alt="The result of pre tag" />
 
 To reflect this behavior, Cypress also doesn't ignore them.
 
@@ -451,12 +449,12 @@ cy.get('h1').contains('New User')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/contains/find-el-that-contains-text.png" alt="Command Log contains" ></DocsImage>
+<DocsImage src="/img/api/contains/find-el-that-contains-text.png" alt="Command Log contains" />
 
 When clicking on the `contains` command within the command log, the console
 outputs the following:
 
-<DocsImage src="/img/api/contains/see-elements-found-from-contains-in-console.png" alt="console.log contains" ></DocsImage>
+<DocsImage src="/img/api/contains/see-elements-found-from-contains-in-console.png" alt="console.log contains" />
 
 ## History
 

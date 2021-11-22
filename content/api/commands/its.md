@@ -227,12 +227,12 @@ cy.wait('@getComments')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/its/xhr-response-its-response-body-for-testing.png" alt="Command Log for its" ></DocsImage>
+<DocsImage src="/img/api/its/xhr-response-its-response-body-for-testing.png" alt="Command Log for its" />
 
 When clicking on `its` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/its/response-body-yielded-with-its-command-log.png" alt="Console Log for its" ></DocsImage>
+<DocsImage src="/img/api/its/response-body-yielded-with-its-command-log.png" alt="Console Log for its" />
 
 ## History
 

@@ -455,8 +455,7 @@ file.
 <DocsImage
 src="/img/guides/github-actions/rwa-run-matrix.png"
 alt="Cypress Real World App GitHub Actions Matrix"
-
-> </DocsImage>
+/>
 
 ## See also
 

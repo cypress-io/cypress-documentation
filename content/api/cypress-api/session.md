@@ -45,7 +45,7 @@ Cypress.session.clearAllSavedSessions()
 This can also be done by clicking the "Clear All Sessions" button in the
 [Sessions Instrument Panel](/api/commands/session#The-Instrument-Panel).
 
-<DocsImage src="/img/api/session/sessions-panel.png" alt="Sessions Instrument Panel" ></DocsImage>
+<DocsImage src="/img/api/session/sessions-panel.png" alt="Sessions Instrument Panel" />
 
 ## See also
 

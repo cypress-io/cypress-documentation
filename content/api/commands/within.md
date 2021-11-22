@@ -198,12 +198,12 @@ cy.get('.query-form').within((el) => {
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/within/go-within-other-dom-elements.png" alt="Command Log within" ></DocsImage>
+<DocsImage src="/img/api/within/go-within-other-dom-elements.png" alt="Command Log within" />
 
 When clicking on the `within` command within the command log, the console
 outputs the following:
 
-<DocsImage src="/img/api/within/within-shows-its-yield-in-console-log.png" alt="Console Log within" ></DocsImage>
+<DocsImage src="/img/api/within/within-shows-its-yield-in-console-log.png" alt="Console Log within" />
 
 ## History
 

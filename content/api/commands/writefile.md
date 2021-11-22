@@ -193,6 +193,7 @@ cy.readFile(filename).then((list) => {
 ### Buffer
 
 #### Write a buffer directly without encoding as a string
+
 ```javascript
 const filename = '/path/to/file.png'
 
@@ -238,12 +239,12 @@ cy.writeFile('info.log', ['foo', 'bar', 'baz'])
 
 The command above will display in the Command Log as:
 
-<DocsImage src="/img/api/writefile/write-data-to-system-file-for-testing.png" alt="Command Log writeFile" ></DocsImage>
+<DocsImage src="/img/api/writefile/write-data-to-system-file-for-testing.png" alt="Command Log writeFile" />
 
 When clicking on the `writeFile` command within the command log, the console
 outputs the following:
 
-<DocsImage src="/img/api/writefile/console-log-shows-contents-written-to-file.png" alt="Console Log writeFile" ></DocsImage>
+<DocsImage src="/img/api/writefile/console-log-shows-contents-written-to-file.png" alt="Console Log writeFile" />
 
 ## History
 

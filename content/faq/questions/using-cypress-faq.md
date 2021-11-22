@@ -645,7 +645,7 @@ project and authenticate that your project is even _allowed_ to record tests.
 You can find your project's record key inside of the _Settings_ tab in the Test
 Runner.
 
-<DocsImage src="/img/dashboard/record-key-shown-in-desktop-gui-configuration.jpg" alt="Record Key in Configuration Tab" ></DocsImage>
+<DocsImage src="/img/dashboard/record-key-shown-in-desktop-gui-configuration.jpg" alt="Record Key in Configuration Tab" />
 
 For further detail see the
 [Identification](/guides/dashboard/projects#Identification) section of the
@@ -680,7 +680,7 @@ email's functionality and visual style:
 <DocsImage
   src="/img/guides/references/email-test.png"
   title="The HTML email loaded during the test"
-  alt="The test finds and clicks the Confirm registration button"></DocsImage>
+  alt="The test finds and clicks the Confirm registration button"/>
 
 3. You can use a 3rd party email service that provides temporary email addresses
    for testing. Some of these services even offer a
@@ -757,9 +757,7 @@ the assertion.
 cy.get('button', { timeout: 10000 }) // wait up to 10 seconds for this 'button' to exist
   .should('be.visible') // and to be visible
 
-cy.get('.element')
-  .click({ timeout: 10000 })
-  .should('not.have.class', 'animating')
+cy.get('.element').click({ timeout: 10000 }).should('not.have.class', 'animating')
 // wait up to 10 seconds for the .element to not have 'animating' class
 ```
 
@@ -800,7 +798,7 @@ describe('Logo', () => {
 })
 ```
 
-<DocsImage src="/img/faq/questions/command-log-of-dynamic-url-test.png" alt="Command Log multiple urls" ></DocsImage>
+<DocsImage src="/img/faq/questions/command-log-of-dynamic-url-test.png" alt="Command Log multiple urls" />
 
 ## <Icon name="angle-right"></Icon> How do I require or import node modules in Cypress?
 
@@ -1052,13 +1050,9 @@ To test elements with those characters in ids, they need to be escaped with
 ```js
 it('test', () => {
   cy.visit('index.html')
-  cy.get(`#${CSS.escape('Configuration/Setup/TextField.id')}`).contains(
-    'Hello World'
-  )
+  cy.get(`#${CSS.escape('Configuration/Setup/TextField.id')}`).contains('Hello World')
 
-  cy.get(
-    `#${Cypress.$.escapeSelector('Configuration/Setup/TextField.id')}`
-  ).contains('Hello World')
+  cy.get(`#${Cypress.$.escapeSelector('Configuration/Setup/TextField.id')}`).contains('Hello World')
 })
 ```
 
@@ -1201,9 +1195,7 @@ The following example comes from the Testing Library's documentation
 ```js
 cy.findByRole('button', { name: /Jackie Chan/i }).click()
 cy.findByRole('button', { name: /Button Text/i }).should('exist')
-cy.findByRole('button', { name: /Non-existing Button Text/i }).should(
-  'not.exist'
-)
+cy.findByRole('button', { name: /Non-existing Button Text/i }).should('not.exist')
 
 cy.findByLabelText(/Label text/i, { timeout: 7000 }).should('exist')
 

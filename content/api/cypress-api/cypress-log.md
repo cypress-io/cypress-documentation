@@ -60,7 +60,7 @@ Cypress.Commands.add('setSessionStorage', (key, value) => {
 The code above displays in the Command Log as shown below, with the console
 properties shown on click of the command.
 
-<DocsImage src="/img/api/Cypress.log-custom-logging-and-console.png" alt="Custom logging of custom command" ></DocsImage>
+<DocsImage src="/img/api/Cypress.log-custom-logging-and-console.png" alt="Custom logging of custom command" />
 
 ## See also
 

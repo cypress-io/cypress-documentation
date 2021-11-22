@@ -120,10 +120,7 @@ cy.get('select').select(0).should('have.value', '456')
 ```
 
 ```javascript
-cy.get('select')
-  .select(['apples', 'bananas'])
-  .invoke('val')
-  .should('deep.equal', ['456', '458'])
+cy.get('select').select(['apples', 'bananas']).invoke('val').should('deep.equal', ['456', '458'])
 ```
 
 #### Select the options with the values "456" and "457"
@@ -137,10 +134,7 @@ cy.get('select')
 ```
 
 ```javascript
-cy.get('select')
-  .select(['456', '457'])
-  .invoke('val')
-  .should('deep.equal', ['456', '457'])
+cy.get('select').select(['456', '457']).invoke('val').should('deep.equal', ['456', '457'])
 ```
 
 #### Select the options with the indexes 0 and 1
@@ -154,10 +148,7 @@ cy.get('select')
 ```
 
 ```javascript
-cy.get('select')
-  .select([0, 1])
-  .invoke('val')
-  .should('deep.equal', ['456', '457'])
+cy.get('select').select([0, 1]).invoke('val').should('deep.equal', ['456', '457'])
 ```
 
 <Alert type="info">
@@ -185,10 +176,7 @@ an empty array will clear selections on all options.
 ```
 
 ```javascript
-cy.get('select')
-  .select('banana', { force: true })
-  .invoke('val')
-  .should('eq', 'banana')
+cy.get('select').select('banana', { force: true }).invoke('val').should('eq', 'banana')
 ```
 
 #### Force select a disabled `<select>`
@@ -211,10 +199,7 @@ disabled `<optgroup>`. See
 ```
 
 ```javascript
-cy.get('select')
-  .select('okra', { force: true })
-  .invoke('val')
-  .should('eq', 'okra')
+cy.get('select').select('okra', { force: true }).invoke('val').should('eq', 'okra')
 ```
 
 ### Selected option
@@ -277,12 +262,12 @@ cy.get('select').select('Homer Simpson')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/select/select-homer-option-from-browser-dropdown.png" alt="Command Log select" ></DocsImage>
+<DocsImage src="/img/api/select/select-homer-option-from-browser-dropdown.png" alt="Command Log select" />
 
 When clicking on `select` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/select/console-log-for-select-shows-option-and-any-events-caused-from-clicking.png" alt="Console Log select" ></DocsImage>
+<DocsImage src="/img/api/select/console-log-for-select-shows-option-and-any-events-caused-from-clicking.png" alt="Console Log select" />
 
 ## See also
 

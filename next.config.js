@@ -23,6 +23,16 @@ module.exports = {
         permanent: true
       },
       {
+        source: '/api/table-of-contents',
+        destination: '/api-docs/table-of-contents',
+        permanent: true
+      },
+      {
+        source: '/api/:slug(events|commands|utilities|cypress-api|plugins)/:path*',
+        destination: '/api-docs/:slug/:path*',
+        permanent: true
+      },
+      {
         source: '/plugins',
         destination: '/plugins/directory',
         permanent: true

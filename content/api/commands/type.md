@@ -477,7 +477,7 @@ Additionally, events that cause a `change` event to fire (such as typing
 
 Any modifiers activated for the event are also listed in a `modifiers` column.
 
-<DocsImage src="/img/api/type/key-events-table-shown-in-console-for-testing-typing.png" alt="Cypress .type() key events table" ></DocsImage>
+<DocsImage src="/img/api/type/key-events-table-shown-in-console-for-testing-typing.png" alt="Cypress .type() key events table" />
 
 ### Tabbing
 
@@ -596,12 +596,12 @@ cy.get('input[name=firstName]').type('Jane Lane')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/type/type-in-input-shown-in-command-log.png" alt="Command Log type" ></DocsImage>
+<DocsImage src="/img/api/type/type-in-input-shown-in-command-log.png" alt="Command Log type" />
 
 When clicking on `type` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png" alt="Console Log type" ></DocsImage>
+<DocsImage src="/img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png" alt="Console Log type" />
 
 ## History
 

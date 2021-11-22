@@ -218,8 +218,7 @@ object. We can see the counters if we serve the `instrumented` folder instead of
 <DocsImage
 src="/img/guides/code-coverage/coverage-object.png"
 alt="Code coverage object"
-
-> </DocsImage>
+/>
 
 If we drill into the coverage object we can see the statements executed in each
 file. For example the file `src/index.js` has the following information:
@@ -227,8 +226,7 @@ file. For example the file `src/index.js` has the following information:
 <DocsImage
 src="/img/guides/code-coverage/coverage-statements.png"
 alt="Covered statements counters in a from the index file"
-
-> </DocsImage>
+/>
 
 In green, we highlighted the 4 statements present in that file. The first three
 statements were each executed once and the last statement was never executed (it
@@ -265,8 +263,7 @@ for full example projects showing different code coverage setups.
 <DocsImage
 src="/img/guides/code-coverage/source-map.png"
 alt="Bundled code and source mapped originals"
-
-> </DocsImage>
+/>
 
 A really nice feature of both [nyc](https://github.com/istanbuljs/nyc) and
 [`babel-plugin-istanbul`](https://github.com/istanbuljs/babel-plugin-istanbul)
@@ -332,8 +329,7 @@ tests finish. We have highlighted these commands using a green rectangle below.
 <DocsImage
 src="/img/guides/code-coverage/coverage-plugin-commands.png"
 alt="coverage plugin commands"
-
-> </DocsImage>
+/>
 
 After the tests complete, the final code coverage is saved to a `.nyc_output`
 folder. It is a JSON file from which we can generate a report in a variety of
@@ -372,8 +368,7 @@ the browser.
 <DocsImage
 src="/img/guides/code-coverage/circleci-coverage-report.png"
 alt="coverage HTML report on CircleCI"
-
-> </DocsImage>
+/>
 
 ## Code coverage as a guide
 
@@ -400,8 +395,7 @@ our application.
 <DocsImage
 src="/img/guides/code-coverage/single-test.png"
 alt="Coverage report after a single test"
-
-> </DocsImage>
+/>
 
 Even better, we can drill down into the individual source files to see what code
 we missed. In our example application, the main state logic is in the
@@ -410,8 +404,7 @@ we missed. In our example application, the main state logic is in the
 <DocsImage
 src="/img/guides/code-coverage/todos-coverage.png"
 alt="Main application logic coverage"
-
-> </DocsImage>
+/>
 
 Notice how the **ADD_TODO** action was executed 3 times - because our test has
 added 3 todo items, and the **COMPLETE_TODO** action was executed just once -
@@ -430,16 +423,14 @@ We can write more E2E tests.
 <DocsImage
 src="/img/guides/code-coverage/more-tests.png"
 alt="Cypress Test Runner passed more tests"
-
-> </DocsImage>
+/>
 
 The produced HTML report shows 99% code coverage
 
 <DocsImage
 src="/img/guides/code-coverage/almost-100.png"
 alt="99 percent code coverage"
-
-> </DocsImage>
+/>
 
 Every source file but 1 is covered at 100%. We can have great confidence in our
 application, and safely refactor the code knowing that we have a robust set of
@@ -472,8 +463,7 @@ Let's look at the one file that has a "missed" line. It is the
 <DocsImage
 src="/img/guides/code-coverage/selectors.png"
 alt="Selectors file with a line not covered by end-to-end tests"
-
-> </DocsImage>
+/>
 
 The source line not covered by the end-to-end tests shows an edge case NOT
 reachable from the UI. Yet this switch case is definitely worth testing - at
@@ -504,7 +494,7 @@ describe('getVisibleTodos', () => {
 
 The test passes, even if there is no web application visited.
 
-<DocsImage src="/img/guides/code-coverage/unit-test.png" alt="Unit test for selector"></DocsImage>
+<DocsImage src="/img/guides/code-coverage/unit-test.png" alt="Unit test for selector"/>
 
 Previously we instrumented the application code (either using a build step or
 inserting a plugin into the Babel pipeline). In the example above, we are NOT
@@ -554,8 +544,7 @@ should see the coverage information for the application source files.
 <DocsImage
 src="/img/guides/code-coverage/code-coverage-in-unit-test.png"
 alt="Code coverage in the unit test"
-
-> </DocsImage>
+/>
 
 The code coverage information in unit tests and end-to-end tests has the same
 format; the
@@ -567,13 +556,12 @@ test.
 <DocsImage
 src="/img/guides/code-coverage/unit-test-coverage.png"
 alt="Selectors code coverage"
-
-> </DocsImage>
+/>
 
 Our unit test is hitting the line we could not reach from the end-to-end tests,
 and if we execute all spec files - we will get 100% code coverage.
 
-<DocsImage src="/img/guides/code-coverage/100percent.png" alt="Full code coverage"></DocsImage>
+<DocsImage src="/img/guides/code-coverage/100percent.png" alt="Full code coverage"/>
 
 ## Full stack code coverage
 
@@ -676,8 +664,7 @@ example:
 <DocsImage
 src="/img/guides/code-coverage/full-coverage.png"
 alt="Combined code coverage report from front and back end code"
-
-> </DocsImage>
+/>
 
 You can explore the above combined full stack coverage report at the
 [coveralls.io/github/cypress-io/cypress-example-conduit-app](https://coveralls.io/github/cypress-io/cypress-example-conduit-app)

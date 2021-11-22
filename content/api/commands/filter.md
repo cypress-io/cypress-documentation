@@ -151,12 +151,12 @@ cy.get('.left-nav>.nav').find('>li').filter('.active')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/filter/filter-el-by-selector.png" alt="Command Log filter" ></DocsImage>
+<DocsImage src="/img/api/filter/filter-el-by-selector.png" alt="Command Log filter" />
 
 When clicking on the `filter` command within the command log, the console
 outputs the following:
 
-<DocsImage src="/img/api/filter/console-shows-list-and-filtered-element.png" alt="console.log filter" ></DocsImage>
+<DocsImage src="/img/api/filter/console-shows-list-and-filtered-element.png" alt="console.log filter" />
 
 ## See also
 

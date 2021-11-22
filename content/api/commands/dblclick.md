@@ -40,7 +40,7 @@ The position where the double click should be issued. The `center` position is
 the default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
 `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
-<DocsImage src="/img/api/coordinates-diagram.jpg" alt="cypress-command-positions-diagram" ></DocsImage>
+<DocsImage src="/img/api/coordinates-diagram.jpg" alt="cypress-command-positions-diagram" />
 
 **<Icon name="angle-right"></Icon> x** **_(Number)_**
 
@@ -211,12 +211,12 @@ cy.get('.action-div').dblclick()
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/dblclick/double-click-in-testing.png" alt="Command Log dblclick" ></DocsImage>
+<DocsImage src="/img/api/dblclick/double-click-in-testing.png" alt="Command Log dblclick" />
 
 When clicking on `dblclick` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/dblclick/element-double-clicked-on.png" alt="console.log dblclick" ></DocsImage>
+<DocsImage src="/img/api/dblclick/element-double-clicked-on.png" alt="console.log dblclick" />
 
 ## History
 

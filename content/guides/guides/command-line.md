@@ -422,8 +422,7 @@ The Dashboard will display any tags sent with the appropriate run.
 <DocsImage
 src="/img/dashboard/dashboard-run-with-tags.png"
 alt="Cypress run in the Dashboard displaying flags"
-
-> </DocsImage>
+/>
 
 #### Exit code
 

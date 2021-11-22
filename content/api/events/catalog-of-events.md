@@ -490,4 +490,4 @@ localStorage.debug = 'cypress:*'
 Reload the browser and turn on 'Verbose' logs to see debug messages within the
 Developer Tools console.
 
-<DocsImage src="/img/api/catalog-of-events/console-log-events-debug.png" alt="console log events for debugging" ></DocsImage>
+<DocsImage src="/img/api/catalog-of-events/console-log-events-debug.png" alt="console log events for debugging" />

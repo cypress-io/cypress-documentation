@@ -24,7 +24,7 @@ Details of each run are displayed including:
 - The browser and version
 - The Cypress version
 
-<DocsImage src="/img/dashboard/run-details.png" alt="run-details"></DocsImage>
+<DocsImage src="/img/dashboard/run-details.png" alt="run-details"/>
 
 ## <Icon name="file-code" className="fa-fw"></Icon> Spec files
 
@@ -40,8 +40,7 @@ This is especially helpful when you want to visualize how your tests ran in
 <DocsImage
 src="/img/dashboard/specs-timeline-view.png"
 alt="Specs tab with timeline view"
-
-> </DocsImage>
+/>
 
 ### Bar Chart View
 
@@ -51,8 +50,7 @@ determine which spec files or tests are running longer than others.
 <DocsImage
 src="/img/dashboard/specs-barchart-view.png"
 alt="Specs tab with bar chart view"
-
-> </DocsImage>
+/>
 
 ### Jump to failed tests
 
@@ -62,8 +60,7 @@ link to the failed test to go directly to its error message and stack trace.
 <DocsImage
 src="/img/dashboard/specs-failures-popup.png"
 alt="Failures popup on spec hover"
-
-> </DocsImage>
+/>
 
 ### <Icon name="code" className="fa-fw"></Icon> CI logs
 
@@ -77,8 +74,7 @@ that were uploaded during the recording.
 <DocsImage
 src="/img/dashboard/standard-output-of-recorded-test-run.png"
 alt="standard output"
-
-> </DocsImage>
+/>
 
 ### <Icon name="camera" className="fa-fw"></Icon> Screenshots
 
@@ -94,8 +90,7 @@ spec. You can also download the video.
 <DocsImage
 src="/img/dashboard/videos-of-recorded-test-run.png"
 alt="Video of test runs"
-
-> </DocsImage>
+/>
 
 ## <Icon name="exclamation-triangle" className="fa-fw"></Icon> Test failures
 
@@ -110,7 +105,7 @@ tab. Each failure is listed under its test title.
 - **Screenshot:** Any screenshots taken during the test.
 - **Video:** The recorded video scrubbed to the point of failure in the test.
 
-<DocsImage src="/img/dashboard/runs/test-attempts-and-errors.png" alt="failure tab"></DocsImage>
+<DocsImage src="/img/dashboard/runs/test-attempts-and-errors.png" alt="failure tab"/>
 
 ## Cancel run
 
@@ -146,7 +141,7 @@ canceled by members of the project.
   [cypress run --record](/guides/guides/command-line#cypress-run) for the run
   will exit with an error like below.
 
-  <DocsImage src="/img/dashboard/cancel-run-error.png" alt="cancel-run-error" width-600></DocsImage>
+  <DocsImage src="/img/dashboard/cancel-run-error.png" alt="cancel-run-error" width-600/>
 
 ## Archive run
 
@@ -159,7 +154,7 @@ Dashboard.
   <DocsImage
   src="/img/dashboard/archive-run-within-cancelation-msg.png"
   alt="cancel-run-error"
-  > </DocsImage>
+  />
 
 ### What happens when a run is archived?
 
@@ -176,15 +171,14 @@ Dashboard.
   run. The format is:
   `https://dashboard.cypress.io/projects/{project ID}/runs/{run number}`
 - Click **<Icon name="history"></Icon> Restore from archive**
-  <DocsImage src="/img/dashboard/restore-from-archive.png" alt="restore-from-archive"></DocsImage>
+  <DocsImage src="/img/dashboard/restore-from-archive.png" alt="restore-from-archive"/>
 
 ## Test Code History
 
 <DocsImage
 src="/img/dashboard/runs/test-code-history.png"
 alt="Screenshot of the Test Code History panel"
-
-> </DocsImage>
+/>
 
 When looking further into a test runs information, there is a new Test Case
 History panel. It matches test cases by spec and title and combines it with

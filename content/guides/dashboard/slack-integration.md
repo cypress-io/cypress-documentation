@@ -8,8 +8,7 @@ teams' Slack channels.
 <DocsImage
 src="/img/dashboard/cypress-slack-integration-channel-feed.png"
 alt="Cypress App notification feed in Slack channel"
-
-> </DocsImage>
+/>
 
 ## Install the Cypress Slack app
 
@@ -32,13 +31,13 @@ your Cypress Dashboard organization and your Slack workspace.
    src="/img/dashboard/select-cypress-organization.png"
    alt="Select an organization"
    width-600
-   > </DocsImage>
+   />
 1. Visit the selected organization's **Integrations** page via the side
    navigation.
    <DocsImage
    src="/img/dashboard/navigate-to-organization-integrations.png"
    alt="Install Cypress Slack from Integrations"
-   > </DocsImage>
+   />
 1. Click the **Install Slack Integration** button.
 1. You'll see a popup window that requests permission for Cypress to access the
    workspace and allows you to choose your Slack workspace and channel to
@@ -114,14 +113,14 @@ additional channel.
    src="/img/dashboard/select-cypress-organization.png"
    alt="Select an organization"
    width-600
-   > </DocsImage>
+   />
 1. Select the project you wish to integrate with Slack.
-   <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project"></DocsImage>
+   <DocsImage src="/img/dashboard/select-cypress-project.png" alt="Select a project"/>
 1. Go to the project's settings page.
    <DocsImage
    src="/img/dashboard/visit-project-settings.png"
    alt="Visit project settings"
-   > </DocsImage>
+   />
 1. Scroll down to the **Slack Integration** section.
 1. Click **Add Slack Channel**.
 1. You'll see a popup window that allows you to choose the channel to associate

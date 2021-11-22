@@ -157,12 +157,12 @@ cy.get('.left-nav.nav').find('>li').eq(3)
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/eq/find-element-at-index.png" alt="Command log eq" ></DocsImage>
+<DocsImage src="/img/api/eq/find-element-at-index.png" alt="Command log eq" />
 
 When clicking on the `eq` command within the command log, the console outputs
 the following:
 
-<DocsImage src="/img/api/eq/see-element-and-list-when-using-eq.png" alt="console.log eq" ></DocsImage>
+<DocsImage src="/img/api/eq/see-element-and-list-when-using-eq.png" alt="console.log eq" />
 
 ## See also
 

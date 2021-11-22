@@ -157,7 +157,7 @@ expect(withFoo).to.be.called // purposefully failing assertion
 
 You will see the following in the command log:
 
-<DocsImage src="/img/api/stub/stubs-with-aliases-and-error-in-command-log.png" alt="stubs with aliases" ></DocsImage>
+<DocsImage src="/img/api/stub/stubs-with-aliases-and-error-in-command-log.png" alt="stubs with aliases" />
 
 ## Notes
 
@@ -210,12 +210,12 @@ expect(stub).to.be.called
 
 The command above will display in the Command Log as:
 
-<DocsImage src="/img/api/stub/stub-in-command-log.png" alt="Command Log stub" ></DocsImage>
+<DocsImage src="/img/api/stub/stub-in-command-log.png" alt="Command Log stub" />
 
 When clicking on the `(stub-1)` event within the command log, the console
 outputs the following:
 
-<DocsImage src="/img/api/stub/inspect-the-stubbed-object-and-any-calls-or-arguments-made.png" alt="Console Log stub" ></DocsImage>
+<DocsImage src="/img/api/stub/inspect-the-stubbed-object-and-any-calls-or-arguments-made.png" alt="Console Log stub" />
 
 ## History
 

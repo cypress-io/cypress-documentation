@@ -68,8 +68,7 @@ in and out via the "Flaky" filter within this page.
 <DocsImage
 src="/img/dashboard/flaky-test-management/flaky-runs-view.png"
 alt="Flagging flaky tests runs in Cypress Dashboard"
-
-> </DocsImage>
+/>
 
 Any failure across multiple test run attempts triggered by test retrying will
 result in a given test case to be flagged as flaky.
@@ -108,8 +107,7 @@ needed to resolve flake issues.
 <DocsImage
 src="/img/dashboard/flaky-test-management/flake-analytics.png"
 alt="Flaky tests analytics"
-
-> </DocsImage>
+/>
 
 Selecting any of the flaky test cases in the analytics page will reveal a test
 case details panel that shows:
@@ -125,8 +123,7 @@ of flake over time to assist with debugging the root cause.
 <DocsImage
 src="/img/dashboard/flaky-test-management/flake-panel.png"
 alt="Flaky tests analytics details panel"
-
-> </DocsImage>
+/>
 
 ### Failure Rate vs Flake Rate
 
@@ -137,8 +134,7 @@ each flaky test case within the flaky tests analytics page:
 <DocsImage
 src="/img/dashboard/flaky-test-management/flake-v-fail-2.png"
 alt="flake rate vs fail rate"
-
-> </DocsImage>
+/>
 
 A test case flagged as flaky could have still passed after multiple test retry
 attempts. The test result status of individual test retry attempts is separate
@@ -154,8 +150,7 @@ while exhibiting flake as demonstrated below:
 <DocsImage
 src="/img/dashboard/flaky-test-management/flake-v-fail-1.png"
 alt="flake rate vs fail rate"
-
-> </DocsImage>
+/>
 
 ## Flake Alerting
 
@@ -183,8 +178,7 @@ project's GitHub integration settings:
 <DocsImage
 src="/img/dashboard/flaky-test-management/gh-flake.png"
 alt="GitHub flake alert settings"
-
-> </DocsImage>
+/>
 
 After enabling GitHub flake alerting, GitHub PR comments will show the number of
 flaky tests associated with the PR within the test summary, and include a
@@ -193,8 +187,7 @@ flaky tests associated with the PR within the test summary, and include a
 <DocsImage
 src="/img/dashboard/flaky-test-management/flake-pr-comment.png"
 alt="GitHub flake alert pr comment"
-
-> </DocsImage>
+/>
 
 ### Slack
 
@@ -203,8 +196,7 @@ Flake alerting via Slack can be enabled within Slack integration settings:
 <DocsImage
 src="/img/dashboard/flaky-test-management/slack-flake.png"
 alt="Slack flake alert settings"
-
-> </DocsImage>
+/>
 
 After enabling Slack alerts, the Dashboard will send Slack messages whenever
 flaky tests are detected:
@@ -212,8 +204,7 @@ flaky tests are detected:
 <DocsImage
 src="/img/dashboard/flaky-test-management/flake-slack-alert.png"
 alt="Slack flake alert"
-
-> </DocsImage>
+/>
 
 ## See Also
 

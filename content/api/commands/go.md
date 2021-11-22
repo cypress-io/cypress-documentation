@@ -115,12 +115,12 @@ cy.visit('http://localhost:8000/folders').go('back')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/go/test-showing-go-back-browser-button.png" alt="Command Log go" ></DocsImage>
+<DocsImage src="/img/api/go/test-showing-go-back-browser-button.png" alt="Command Log go" />
 
 When clicking on the `go` command within the command log, the console outputs
 the following:
 
-<DocsImage src="/img/api/go/window-is-logged-when-go-back-in-browser-history.png" alt="console Log go" ></DocsImage>
+<DocsImage src="/img/api/go/window-is-logged-when-go-back-in-browser-history.png" alt="console Log go" />
 
 ## See also
 

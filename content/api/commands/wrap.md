@@ -106,7 +106,7 @@ it('should wait for promises to resolve', () => {
 })
 ```
 
-<DocsImage src="/img/api/wrap/cypress-wrapped-promise-waits-to-resolve.gif" alt="Wrap of promises" ></DocsImage>
+<DocsImage src="/img/api/wrap/cypress-wrapped-promise-waits-to-resolve.gif" alt="Wrap of promises" />
 
 #### Application example
 
@@ -214,12 +214,12 @@ cy.wrap({ amount: 10 }).should('have.property', 'amount').and('eq', 10)
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/wrap/wrapped-object-in-cypress-tests.png" alt="Command Log wrap" ></DocsImage>
+<DocsImage src="/img/api/wrap/wrapped-object-in-cypress-tests.png" alt="Command Log wrap" />
 
 When clicking on the `wrap` command within the command log, the console outputs
 the following:
 
-<DocsImage src="/img/api/wrap/console-log-only-shows-yield-of-wrap.png" alt="Console Log wrap" ></DocsImage>
+<DocsImage src="/img/api/wrap/console-log-only-shows-yield-of-wrap.png" alt="Console Log wrap" />
 
 ## History
 

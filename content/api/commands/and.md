@@ -124,9 +124,7 @@ cy.get('a')
 #### Assert the href is equal to '/users'
 
 ```javascript
-cy.get('#header a')
-  .should('have.class', 'active')
-  .and('have.attr', 'href', '/users')
+cy.get('#header a').should('have.class', 'active').and('have.attr', 'href', '/users')
 ```
 
 ### Function
@@ -167,11 +165,7 @@ cy.get('p')
     })
 
     // call classes.get() to make this a plain array
-    expect(classes.get()).to.deep.eq([
-      'text-primary',
-      'text-danger',
-      'text-default',
-    ])
+    expect(classes.get()).to.deep.eq(['text-primary', 'text-danger', 'text-default'])
   })
 ```
 
@@ -271,20 +265,17 @@ cy.get('input', {timeout: 10000}).should('have.value', 'US').and(($input) => {
 **Chain assertions on the same subject**
 
 ```javascript
-cy.get('.list')
-  .find('input[type="checkbox"]')
-  .should('be.checked')
-  .and('not.be.disabled')
+cy.get('.list').find('input[type="checkbox"]').should('be.checked').and('not.be.disabled')
 ```
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/and/cypress-and-command-log.png" alt="Command log for assertions" ></DocsImage>
+<DocsImage src="/img/api/and/cypress-and-command-log.png" alt="Command log for assertions" />
 
 When clicking on `assert` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/and/cypress-assertions-console-log.png" alt="console.log for assertions" ></DocsImage>
+<DocsImage src="/img/api/and/cypress-assertions-console-log.png" alt="console.log for assertions" />
 
 ## See also
 

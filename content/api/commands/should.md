@@ -197,11 +197,7 @@ cy.get('p').should(($p) => {
   })
 
   // call classes.get() to make this a plain array
-  expect(classes.get()).to.deep.eq([
-    'text-primary',
-    'text-danger',
-    'text-default',
-  ])
+  expect(classes.get()).to.deep.eq(['text-primary', 'text-danger', 'text-default'])
 })
 ```
 
@@ -311,7 +307,7 @@ cy.get('.connectors-list > li').should(($lis) => {
 These string messages will be shown in the Command Log giving each assertion
 more context.
 
-<DocsImage src="/img/api/should/expect-with-message.png" alt="Expect assertions with messages" ></DocsImage>
+<DocsImage src="/img/api/should/expect-with-message.png" alt="Expect assertions with messages" />
 
 #### Compare text values of two elements
 
@@ -381,10 +377,7 @@ $('button').click(function () {
 ```
 
 ```javascript
-cy.get('button')
-  .click()
-  .should('have.class', 'active')
-  .and('not.have.class', 'inactive')
+cy.get('button').click().should('have.class', 'active').and('not.have.class', 'inactive')
 ```
 
 ## Notes
@@ -466,12 +459,12 @@ cy.get('.left-nav>.nav').children().should('have.length', 8)
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/should/should-command-shows-up-as-assert-for-each-assertion.png" alt="Command Log should" ></DocsImage>
+<DocsImage src="/img/api/should/should-command-shows-up-as-assert-for-each-assertion.png" alt="Command Log should" />
 
 When clicking on `assert` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/should/assertion-in-console-log-shows-actual-versus-expected-data.png" alt="Console Log should" ></DocsImage>
+<DocsImage src="/img/api/should/assertion-in-console-log-shows-actual-versus-expected-data.png" alt="Console Log should" />
 
 ## History
 

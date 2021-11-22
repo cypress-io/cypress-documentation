@@ -34,8 +34,7 @@ it('completes todo', () => {
 <DocsImage
 src="/img/guides/visual-testing/completed-test.gif"
 alt="Passing Cypress functional test"
-
-> </DocsImage>
+/>
 
 Cypress does NOT see how the page actually looks though. For example, Cypress
 will not see if the CSS class `completed` grays out the label element and adds a
@@ -44,8 +43,7 @@ strike-through line.
 <DocsImage
 src="/img/guides/visual-testing/completed-item.png"
 alt="Completed item style"
-
-> </DocsImage>
+/>
 
 You could technically write a functional test asserting the CSS properties using
 the [`have.css` assertion](/guides/references/assertions#CSS), but these may
@@ -106,12 +104,12 @@ side within the Cypress Test Runner if pixel difference is above the threshold;
 notice how the baseline image (_Expected result_) has the label text with the
 line through, while the new image (_Actual result_) does not have it.
 
-<DocsImage src="/img/guides/visual-testing/diff.png" alt="Baseline vs current image"></DocsImage>
+<DocsImage src="/img/guides/visual-testing/diff.png" alt="Baseline vs current image"/>
 
 Like most image comparison tools, the plugin also shows a difference view on
 mouse hover:
 
-<DocsImage src="/img/guides/visual-testing/diff-2.png" alt="Highlighted changes"></DocsImage>
+<DocsImage src="/img/guides/visual-testing/diff-2.png" alt="Highlighted changes"/>
 
 ## Tooling
 

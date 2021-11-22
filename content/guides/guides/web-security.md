@@ -381,8 +381,7 @@ in this case.
 <DocsImage
 src="/img/guides/chrome-web-security-stdout-warning.jpg"
 alt="chromeWebSecurity warning in stdout"
-
-> </DocsImage>
+/>
 
 If you rely on disabling web security, you will not be able to run tests on
 browsers that do not support this feature.

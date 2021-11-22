@@ -199,7 +199,7 @@ cy.intercept('PUT', /^\/users\/\d+/).as('userPut')
 
 Aliases of routes display in the routes instrument panel:
 
-<DocsImage src="/img/api/as/routes-table-in-command-log.png" alt="Command log for route" ></DocsImage>
+<DocsImage src="/img/api/as/routes-table-in-command-log.png" alt="Command log for route" />
 
 ## See also
 

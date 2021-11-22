@@ -96,8 +96,7 @@ be passing in green).
 <DocsImage
 src="/img/guides/first-test.png"
 alt="My first test shown passing in the Test Runner"
-
-> </DocsImage>
+/>
 
 <Alert type="info">
 
@@ -137,7 +136,7 @@ describe('My First Test', () => {
 })
 -->
 
-<DocsImage src="/img/guides/failing-test.png" alt="Failing test"></DocsImage>
+<DocsImage src="/img/guides/failing-test.png" alt="Failing test"/>
 
 Cypress provides a nice [Test Runner](/guides/core-concepts/test-runner) that
 gives you a visual structure of suites, tests, and assertions. Soon you'll also
@@ -295,8 +294,7 @@ describe('My First Test', () => {
 <DocsImage
 src="/img/guides/first-test-failing-contains.png"
 alt="Test failing to not find content 'hype'"
-
-> </DocsImage>
+/>
 
 <Alert type="warning">
 
@@ -486,8 +484,7 @@ Do you see what happened?
 <DocsImage
 src="/img/guides/first-test-hover-contains.png"
 alt="Hovering over the contains tab highlights the dom element in the App in the Test Runner"
-
-> </DocsImage>
+/>
 
 Cypress automatically traveled back in time to a snapshot of when that command
 resolved. Additionally, since [`cy.contains()`](/api/commands/contains) finds
@@ -504,8 +501,7 @@ present when our snapshot was taken.
 <DocsImage
 src="/img/guides/first-test-url-revert.png"
 alt="The url address bar shows https://example.cypress.io/"
-
-> </DocsImage>
+/>
 
 ### Snapshots
 
@@ -514,8 +510,7 @@ Commands are also interactive. Go ahead and click on the `CLICK` command.
 <DocsImage
 src="/img/guides/first-test-click-revert.png"
 alt="A click on the click command in the Command Log with Test Runner labeled as 1, 2, 3"
-
-> </DocsImage>
+/>
 
 Notice it highlights in purple. This did three things worth noting...
 
@@ -578,8 +573,7 @@ Cypress test.
 <DocsImage
 src="/img/guides/command-failure-error.png"
 alt="example command failure error"
-
-> </DocsImage>
+/>
 
 ### Page events
 
@@ -591,8 +585,7 @@ they occur. Notice these look different (they are gray and without a number).
 <DocsImage
 src="/img/guides/first-test-page-load.png"
 alt="Command log shows 'Page load --page loaded--' and 'New url https://example.cypress.io/'"
-
-> </DocsImage>
+/>
 
 **Cypress logs out page events for:**
 
@@ -612,8 +605,7 @@ selector.
 <DocsImage
 src="/img/guides/first-test-console-output.png"
 alt="Test Runner with get command pinned and console log open showing the yielded element"
-
-> </DocsImage>
+/>
 
 **We can see Cypress output additional information in the console:**
 
@@ -662,8 +654,7 @@ command.
 <DocsImage
 src="/img/guides/first-test-paused.png"
 alt="Test Runner shows label saying 'Paused' with Command Log showing 'Pause'"
-
-> </DocsImage>
+/>
 
 #### In action
 
@@ -684,5 +675,4 @@ alt="Test Runner shows label saying 'Paused' with Command Log showing 'Pause'"
 <DocsImage
 src="/img/guides/search-box.png"
 alt="Use the search box to find relevant documentation"
-
-> </DocsImage>
+/>

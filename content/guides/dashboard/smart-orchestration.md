@@ -70,8 +70,7 @@ To enable or disable this feature:
 <DocsImage
 src="/img/guides/smart-orchestration/enable-run-failed-specs-first.png"
 alt="Enable running of failed specs first"
-
-> </DocsImage>
+/>
 
 <Alert type="bolt">
 
@@ -145,8 +144,7 @@ To enable or disable this feature:
 <DocsImage
 src="/img/guides/smart-orchestration/enable-cancel-run.png"
 alt="Enable cancellation of test runs upon first failure"
-
-> </DocsImage>
+/>
 
 <Alert type="bolt">
 

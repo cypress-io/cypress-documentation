@@ -112,12 +112,12 @@ cy.get('input[name="name"]').clear().type('Jane Lane')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/clear/clear-input-in-cypress.png" alt="Command log for clear" ></DocsImage>
+<DocsImage src="/img/api/clear/clear-input-in-cypress.png" alt="Command log for clear" />
 
 When clicking on `clear` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/clear/one-input-cleared-in-tests.png" alt="console.log for clear" ></DocsImage>
+<DocsImage src="/img/api/clear/one-input-cleared-in-tests.png" alt="console.log for clear" />
 
 ## See also
 

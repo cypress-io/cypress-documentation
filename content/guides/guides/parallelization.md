@@ -38,8 +38,7 @@ CI strategies when using parallelization.
 <DocsImage
 src="/img/guides/parallelization/parallelization-diagram.png"
 alt="Parallelization Diagram"
-
-> </DocsImage>
+/>
 
 ## Splitting up your test suite
 
@@ -110,8 +109,7 @@ run.
 <DocsImage
 src="/img/guides/parallelization/parallelization-overview.png"
 alt="Parallelization Overview"
-
-> </DocsImage>
+/>
 
 ## Balance strategy
 
@@ -130,8 +128,7 @@ data regarding the spec file.
 <DocsImage
 src="/img/guides/parallelization/load-balancing.png"
 alt="Spec duration forecasting"
-
-> </DocsImage>
+/>
 
 With a duration estimation for each spec file of a test run, Cypress can
 distribute spec files to available CI resources in descending order of spec run
@@ -228,8 +225,7 @@ duration, while the run without parallelization did not.
 <DocsImage
 src="/img/guides/parallelization/1-vs-2-machines.png"
 alt="Without parallelization vs parallelizing across 2 machines"
-
-> </DocsImage>
+/>
 
 Parallelizing our tests across 2 machines saved us almost 50% of the total run
 time, and we can further decrease the build time by adding more machines.
@@ -255,8 +251,7 @@ runs can be utilized independently of Cypress parallelization.
 <DocsImage
 src="/img/guides/parallelization/machines-view-grouping-expanded.png"
 alt="Machines view grouping expanded"
-
-> </DocsImage>
+/>
 
 <Alert type="info">
 
@@ -294,7 +289,7 @@ as the browser being tested:
   cypress run --record --group Linux/Electron
   ```
 
-<DocsImage src="/img/guides/parallelization/browser.png" alt="browser"></DocsImage>
+<DocsImage src="/img/guides/parallelization/browser.png" alt="browser"/>
 
 ### Grouping to label parallelization
 
@@ -331,8 +326,7 @@ in the Cypress Dashboard, as shown below:
 <DocsImage
 src="/img/guides/parallelization/timeline-collapsed.png"
 alt="Timeline view with grouping and parallelization"
-
-> </DocsImage>
+/>
 
 ### Grouping by spec context
 
@@ -358,7 +352,7 @@ cypress run --record --group package/customer --spec 'cypress/integration/packag
 cypress run --record --group package/guest --spec 'cypress/integration/packages/guest/**/*'
 ```
 
-<DocsImage src="/img/guides/parallelization/monorepo.png" alt="monorepo"></DocsImage>
+<DocsImage src="/img/guides/parallelization/monorepo.png" alt="monorepo"/>
 
 This pattern is especially useful for projects in a monorepo. Each segment of
 the monorepo can be assigned its own group, and larger segments can be
@@ -376,8 +370,7 @@ the CI build ID via the
 <DocsImage
 src="/img/guides/parallelization/ci-build-id.png"
 alt="CI Machines linked by ci-build-id"
-
-> </DocsImage>
+/>
 
 ### CI Build ID environment variables by provider
 
@@ -423,8 +416,7 @@ the last known CI machine has completed as shown in the diagram below:
 <DocsImage
 src="/img/guides/parallelization/run-completion-delay.png"
 alt="Test run completion delay"
-
-> </DocsImage>
+/>
 
 This **delay is 60 seconds by default**, but is
 [configurable within the Dashboard project settings page](/guides/dashboard/projects#Run-completion-delay).
@@ -445,8 +437,7 @@ chronologically across all available machines.
 <DocsImage
 src="/img/guides/parallelization/timeline-view-small.png"
 alt="Timeline view with parallelization"
-
-> </DocsImage>
+/>
 
 ### Bar Chart View
 
@@ -456,8 +447,7 @@ each other.
 <DocsImage
 src="/img/guides/parallelization/bar-chart-view.png"
 alt="Bar Chart view with parallelization"
-
-> </DocsImage>
+/>
 
 ### Machines View
 
@@ -468,8 +458,7 @@ test run.
 <DocsImage
 src="/img/guides/parallelization/machines-view.png"
 alt="Machines view with parallelization"
-
-> </DocsImage>
+/>
 
 ## Next Steps
 

@@ -888,8 +888,7 @@ cy.get('#dropdon').should('not.contain', 'Cypress')
 <DocsImage
 src="/img/guides/el-incorrectly-passes-existence-check.png"
 alt="non-existent element before 6.0"
-
-> </DocsImage>
+/>
 
 In 6.0, these assertions will now correctly fail, telling us that the `#dropdon`
 element doesn't exist in the DOM.
@@ -897,8 +896,7 @@ element doesn't exist in the DOM.
 <DocsImage
 src="/img/guides/el-correctly-fails-existence-check.png"
 alt="non-existent element in 6.0"
-
-> </DocsImage>
+/>
 
 #### Assertions on non-existent elements
 

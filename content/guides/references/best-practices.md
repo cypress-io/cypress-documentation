@@ -359,8 +359,7 @@ email's functionality and visual style:
 src="/img/guides/references/email-test.png"
 title="The HTML email loaded during the test"
 alt="The test finds and clicks the Confirm registration button"
-
-> </DocsImage>
+/>
 
 3. In other cases, you should try using [`cy.request()`](/api/commands/request)
    command to query the an endpoint on your server that tells you what email has
@@ -915,8 +914,7 @@ port.
 <DocsImage
 src="/img/guides/cypress-loads-in-localhost-and-random-port.png"
 alt="Url address shows localhost:53927/\_\_/#tests/integration/organizations/list_spec.coffee"
-
-> </DocsImage>
+/>
 
 As soon as it encounters a [cy.visit()](/api/commands/visit), Cypress then
 switches to the url of the main window to the url specified in your visit. This
@@ -938,8 +936,7 @@ load the main window in the `baseUrl` you specified as soon as your tests start.
 <DocsImage
 src="/img/guides/cypress-loads-window-in-base-url-localhost.png"
 alt="Url address bar shows localhost:8484/\_\_tests/integration/organizations/list_spec.coffee"
-
-> </DocsImage>
+/>
 
 Having a `baseUrl` set gives you the added bonus of seeing an error if your
 server is not running during `cypress open` at the specified `baseUrl`.
@@ -947,8 +944,7 @@ server is not running during `cypress open` at the specified `baseUrl`.
 <DocsImage
 src="/img/guides/cypress-ensures-baseUrl-server-is-running.png"
 alt="Test Runner with warning about how Cypress could not verify server set as the baseUrl is running"
-
-> </DocsImage>
+/>
 
 We also display an error if your server is not running at the specified
 `baseUrl` during `cypress run` after several retries.
@@ -956,5 +952,4 @@ We also display an error if your server is not running at the specified
 <DocsImage
 src="/img/guides/cypress-verifies-server-is-running-during-cypress-run.png"
 alt="The terminal warns and retries when the url at your baseUrl is not running"
-
-> </DocsImage>
+/>

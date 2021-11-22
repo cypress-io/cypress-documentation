@@ -40,7 +40,7 @@ The position where the click should be issued. The `center` position is the
 default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
 `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
-<DocsImage src="/img/api/coordinates-diagram.jpg" alt="cypress-command-positions-diagram" ></DocsImage>
+<DocsImage src="/img/api/coordinates-diagram.jpg" alt="cypress-command-positions-diagram" />
 
 **<Icon name="angle-right"></Icon> x** **_(Number)_**
 
@@ -229,12 +229,12 @@ cy.get('.action-btn').click()
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/click/click-button-in-form-during-test.png" alt="Command log for click" ></DocsImage>
+<DocsImage src="/img/api/click/click-button-in-form-during-test.png" alt="Command log for click" />
 
 When clicking on `click` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/click/click-coords-and-events-in-console.png" alt="console.log for click" ></DocsImage>
+<DocsImage src="/img/api/click/click-coords-and-events-in-console.png" alt="console.log for click" />
 
 ## History
 

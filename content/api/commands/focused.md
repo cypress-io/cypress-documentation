@@ -89,12 +89,12 @@ cy.focused().should('have.attr', 'name').and('eq', 'num')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/focused/make-assertion-about-focused-element.png" alt="Command Log focused" ></DocsImage>
+<DocsImage src="/img/api/focused/make-assertion-about-focused-element.png" alt="Command Log focused" />
 
 When clicking on the `focused` command within the command log, the console
 outputs the following:
 
-<DocsImage src="/img/api/focused/currently-focused-element-in-an-input.png" alt="console focused" ></DocsImage>
+<DocsImage src="/img/api/focused/currently-focused-element-in-an-input.png" alt="console focused" />
 
 ## See also
 

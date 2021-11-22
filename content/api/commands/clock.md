@@ -265,12 +265,12 @@ cy.tick(1000)
 
 The command above will display in the Command Log as:
 
-<DocsImage src="/img/api/clock/clock-displays-in-command-log.png" alt="Command Log clock" ></DocsImage>
+<DocsImage src="/img/api/clock/clock-displays-in-command-log.png" alt="Command Log clock" />
 
 When clicking on the `clock` command within the command log, the console outputs
 the following:
 
-<DocsImage src="/img/api/clock/clock-displays-methods-replaced-in-console.png" alt="console.log clock command" ></DocsImage>
+<DocsImage src="/img/api/clock/clock-displays-methods-replaced-in-console.png" alt="console.log clock command" />
 
 ## See also
 

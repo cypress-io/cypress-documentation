@@ -96,34 +96,34 @@ cy.get('#action-canvas')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/pause/initial-pause-in-gui-highlights-the-pause-command.png" alt="Pause command on intial pause" ></DocsImage>
+<DocsImage src="/img/api/pause/initial-pause-in-gui-highlights-the-pause-command.png" alt="Pause command on intial pause" />
 
 When clicking on "Next: 'click'" at the top of the Command Log, the Command Log
 will run only the next command and pause again.
 
 #### Click "Next"
 
-<DocsImage src="/img/api/pause/next-goes-on-to-next-command-during-pause.png" alt="Pause command after clicking next" ></DocsImage>
+<DocsImage src="/img/api/pause/next-goes-on-to-next-command-during-pause.png" alt="Pause command after clicking next" />
 
 #### Click "Next" again
 
-<DocsImage src="/img/api/pause/continue-in-pause-command-just-like-debugger.png" alt="Continue to next command during pause" ></DocsImage>
+<DocsImage src="/img/api/pause/continue-in-pause-command-just-like-debugger.png" alt="Continue to next command during pause" />
 
 #### Click "Next" again
 
-<DocsImage src="/img/api/pause/pause-goes-to-show-next-click.png" alt="Pause command" ></DocsImage>
+<DocsImage src="/img/api/pause/pause-goes-to-show-next-click.png" alt="Pause command" />
 
 #### Click "Next" again
 
-<DocsImage src="/img/api/pause/clicking-on-canvas-continues-as-we-click-next.png" alt="Pause command" ></DocsImage>
+<DocsImage src="/img/api/pause/clicking-on-canvas-continues-as-we-click-next.png" alt="Pause command" />
 
 #### Click "Next" again
 
-<DocsImage src="/img/api/pause/last-next-click-before-out-test-is-finished.png" alt="Pause command" ></DocsImage>
+<DocsImage src="/img/api/pause/last-next-click-before-out-test-is-finished.png" alt="Pause command" />
 
 #### Click "Next" again, then 'Resume'
 
-<DocsImage src="/img/api/pause/next-then-resume-shows-our-test-has-ended.png" alt="Pause command" ></DocsImage>
+<DocsImage src="/img/api/pause/next-then-resume-shows-our-test-has-ended.png" alt="Pause command" />
 
 ## See also
 

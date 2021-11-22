@@ -54,8 +54,7 @@ commands and assertions with passing assertions showing in green.
 <DocsImage
 src="/img/guides/retry-ability/commands-assertions.png"
 alt="ommands and assertions"
-
-> </DocsImage>
+/>
 
 Let's look at the last command and assertion pair:
 
@@ -118,8 +117,7 @@ Cypress is requerying for them.
 <DocsImage
 src="/img/guides/retry-ability/retry-2-items.gif"
 alt="Retrying finding 2 items"
-
-> </DocsImage>
+/>
 
 Within a few milliseconds after the DOM updates, `cy.get()` finds two elements
 and the `should('have.length', 2)` assertion passes
@@ -158,8 +156,7 @@ itself failed.
 <DocsImage
 src="/img/guides/retry-ability/second-assertion-fails.gif"
 alt="Retrying multiple assertions"
-
-> </DocsImage>
+/>
 
 ## Not every command is retried
 
@@ -214,7 +211,7 @@ cy.get('.todo-list li') // command
   .eq(3) // command
 ```
 
-<DocsImage src="/img/guides/retry-ability/eq.gif" alt="Retrying built-in assertion"></DocsImage>
+<DocsImage src="/img/guides/retry-ability/eq.gif" alt="Retrying built-in assertion"/>
 
 Some commands that cannot be retried still have built-in _waiting_. For example,
 as described in the "Assertions" section of [.click()](/api/commands/click), the
@@ -292,14 +289,14 @@ it('adds two items', () => {
 
 The test passes in Cypress without a hitch.
 
-<DocsImage src="/img/guides/retry-ability/adds-two-items-passes.gif" alt="Test passes"></DocsImage>
+<DocsImage src="/img/guides/retry-ability/adds-two-items-passes.gif" alt="Test passes"/>
 
 But sometimes the test fails - not usually locally, no - it almost always fails
 on our continuous integration server. When the test fails, the recorded video
 and screenshots are NOT showing any obvious problems! Here is the failing test
 video:
 
-<DocsImage src="/img/guides/retry-ability/adds-two-items-fails.gif" alt="Test fails"></DocsImage>
+<DocsImage src="/img/guides/retry-ability/adds-two-items-fails.gif" alt="Test fails"/>
 
 The problem looks weird - I can clearly see the label "todo B" present in the
 list, so why isn't Cypress finding it? What is going on?
@@ -328,7 +325,7 @@ step.
 
 In the failing test, the first label was indeed found correctly:
 
-<DocsImage src="/img/guides/retry-ability/first-item-label.png" alt="First item label"></DocsImage>
+<DocsImage src="/img/guides/retry-ability/first-item-label.png" alt="First item label"/>
 
 Hover over the second "FIND label" command - something is wrong here. It found
 the _first label_, then kept requerying to find the text "todo B", but the first
@@ -337,14 +334,13 @@ item always remains "todo A".
 <DocsImage
 src="/img/guides/retry-ability/second-item-label.png"
 alt="Second item label"
-
-> </DocsImage>
+/>
 
 Hmm, weird, why is Cypress only looking at the _first_ item? Let's hover over
 the "GET .todo-list li" command to inspect what _that command found_. Ohh,
 interesting - there was only one item at that moment.
 
-<DocsImage src="/img/guides/retry-ability/second-get-li.png" alt="Second get li"></DocsImage>
+<DocsImage src="/img/guides/retry-ability/second-get-li.png" alt="Second get li"/>
 
 During the test, the `cy.get('.todo-list li')` command quickly found the
 rendered `<li>` item - and that item was the first and only "todo A" item. Our
@@ -356,7 +352,7 @@ inside the first `<li>` element, completely ignoring the newly created 2nd item.
 To confirm this, let's remove the artificial delay to see what's happening in
 the passing test.
 
-<DocsImage src="/img/guides/retry-ability/two-items.png" alt="Two items"></DocsImage>
+<DocsImage src="/img/guides/retry-ability/two-items.png" alt="Two items"/>
 
 When the web application runs without the delay, it gets its items into the DOM
 before the Cypress command `cy.get('.todo-list li')` runs. After the `cy.get()`
@@ -409,8 +405,7 @@ list elements when the second "todo B" is added to the DOM.
 <DocsImage
 src="/img/guides/retry-ability/combined-selectors.gif"
 alt="Combined selector"
-
-> </DocsImage>
+/>
 
 <Alert type="info">
 
@@ -480,7 +475,7 @@ it('adds two items', () => {
 })
 ```
 
-<DocsImage src="/img/guides/retry-ability/alternating.png" alt="Passing test"></DocsImage>
+<DocsImage src="/img/guides/retry-ability/alternating.png" alt="Passing test"/>
 
 The test passes, because the second `cy.get('.todo-list li')` is retried with
 its own assertion now `.should('have.length', 2)`. Only after successfully
@@ -507,7 +502,7 @@ Below is an example where the number value is set after a delay:
 </script>
 ```
 
-<DocsImage src="/img/guides/retry-ability/random-number.gif" alt="Random number"></DocsImage>
+<DocsImage src="/img/guides/retry-ability/random-number.gif" alt="Random number"/>
 
 #### <Icon name="exclamation-triangle" color="red"></Icon> Incorrectly waiting for values
 
@@ -531,8 +526,7 @@ the test only runs the entire chain once before failing.
 src="/img/guides/retry-ability/random-number-first-attempt.png"
 alt="First attempt at writing the test"
 width-600
-
-> </DocsImage>
+/>
 
 #### <Icon name="check-circle" color="green"></Icon> Correctly waiting for values
 
@@ -557,8 +551,7 @@ to get the number. When the number is finally set in the application, then the
 <DocsImage
 src="/img/guides/retry-ability/random-number-callback.gif"
 alt="Random number using callback"
-
-> </DocsImage>
+/>
 
 ### Use aliases
 
@@ -611,8 +604,7 @@ const Clicker = ({ click }) => (
 src="/img/guides/retry-ability/delay-click.png"
 alt="Expect fails the test without waiting for the delayed stub"
 width-600
-
-> </DocsImage>
+/>
 
 The test finishes before the component calls the `click` prop twice, and without
 retrying the assertion `expect(onClick).to.be.calledTwice`.
@@ -639,8 +631,7 @@ it('calls the click prop', () => {
 <DocsImage
 src="/img/guides/retry-ability/click-twice.gif"
 alt="Retrying the assertions using a stub alias"
-
-> </DocsImage>
+/>
 
 Watch the short video below to see this example in action
 

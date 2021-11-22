@@ -33,7 +33,7 @@ Cypress.
   [cy.fixture()](/api/commands/fixture).
 - Inspect and manipulate cookies and localStorage.
 
-<DocsImage src="/img/examples/public-project-kitchen-sink.png" alt="kitchensink running" ></DocsImage>
+<DocsImage src="/img/examples/public-project-kitchen-sink.png" alt="kitchensink running" />
 
 ## TodoMVC
 
@@ -53,7 +53,7 @@ vanilla Selenium.
 - Click and double click elements using [cy.click()](/api/commands/click) and
   [cy.dblclick()](/api/commands/dblclick).
 
-<DocsImage src="/img/examples/public-project-todomvc.png" alt="TodoMvc testing in Cypress" ></DocsImage>
+<DocsImage src="/img/examples/public-project-todomvc.png" alt="TodoMvc testing in Cypress" />
 
 ## TodoMVC Redux
 
@@ -68,7 +68,7 @@ Through a combination of end-to-end and unit tests shows how you can achieve
 - Instrument and collect code coverage following the Cypress
   [Code Coverage](/guides/tooling/code-coverage) guide.
 
-<DocsImage src="/img/examples/todomvc-redux-100percent.png" alt="TodoMVC Redux application code coverage report" ></DocsImage>
+<DocsImage src="/img/examples/todomvc-redux-100percent.png" alt="TodoMVC Redux application code coverage report" />
 
 ## Realworld
 
@@ -88,7 +88,7 @@ Shows a full blogging application, "Conduit", with back end code and a database.
   the Cypress [code coverage guide](/guides/tooling/code-coverage) for more
   details.
 
-<DocsImage src="/img/examples/realworld-app.png" alt="Realworld test in Cypress" ></DocsImage>
+<DocsImage src="/img/examples/realworld-app.png" alt="Realworld test in Cypress" />
 
 ## Phonecat
 
@@ -102,7 +102,7 @@ using Cypress.
 - Test redirect behavior of application using [.hash()](/api/commands/hash).
 - Test loading behavior of app.
 
-<DocsImage src="/img/examples/public-project-phone-cat.png" alt="Phonecat Angular tutorial app tested in cypress" ></DocsImage>
+<DocsImage src="/img/examples/public-project-phone-cat.png" alt="Phonecat Angular tutorial app tested in cypress" />
 
 ## PieChopper
 
@@ -117,7 +117,7 @@ involve a lot of form submissions.
 - Check checkboxes using [`cy.check()`](/api/commands/check)
 - Stub responses from our back end using [`cy.route()`](/api/commands/route)
 
-<DocsImage src="/img/examples/public-project-piechopper.png" alt="Piechopper app tested in cypress" ></DocsImage>
+<DocsImage src="/img/examples/public-project-piechopper.png" alt="Piechopper app tested in cypress" />
 
 ## Angular-playground
 

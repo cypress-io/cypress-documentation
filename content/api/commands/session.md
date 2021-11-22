@@ -179,10 +179,10 @@ Cypress.Commands.add('login', (username, password) => {
 **With session validation**
 
 ```javascript
-Cypress.Commands.add(
-  'login',
-  (username, password) => {
-    cy.session([username, password], () => {
+Cypress.Commands.add('login', (username, password) => {
+  cy.session(
+    [username, password],
+    () => {
       cy.request({
         method: 'POST',
         url: '/login',
@@ -190,13 +190,14 @@ Cypress.Commands.add(
       }).then(({ body }) => {
         window.localStorage.setItem('authToken', body.token)
       })
-    }, {
+    },
+    {
       validate() {
         cy.request('/whoami').its('status').should('eq', 200)
       },
-    })
-  }
-)
+    }
+  )
+})
 ```
 
 ### Updating an existing login helper function
@@ -654,7 +655,7 @@ When running the Test Runner in "open" mode, you can explicitly clear all
 sessions and re-run the spec file by clicking the "Clear All Sessions" button in
 the [Instrument Panel](#The-Instrument-Panel).
 
-<DocsImage src="/img/api/session/sessions-panel.png" alt="Sessions Instrument Panel" ></DocsImage>
+<DocsImage src="/img/api/session/sessions-panel.png" alt="Sessions Instrument Panel" />
 
 For debugging purposes, all sessions can be cleared with the
 [`Cypress.session.clearAllSavedSessions()`](/api/cypress-api/session) method.
@@ -796,7 +797,7 @@ console, and clicking the "Clear All Sessions" button will clear all saved
 sessions and re-run the spec file (see [Session caching](#Session-caching) for
 more details).
 
-<DocsImage src="/img/api/session/sessions-panel.png" alt="Sessions Instrument Panel" ></DocsImage>
+<DocsImage src="/img/api/session/sessions-panel.png" alt="Sessions Instrument Panel" />
 
 ### The command log
 
@@ -805,14 +806,14 @@ following lines, which includes the status of the session call along with the
 session `id` value:
 
 - No saved session was found, so a new session was created and saved:
-  <DocsImage src="/img/api/session/session-collapsed-new.png" alt="New session (collapsed)"></DocsImage>
+  <DocsImage src="/img/api/session/session-collapsed-new.png" alt="New session (collapsed)"/>
 
 - A saved session was found, and used:
-  <DocsImage src="/img/api/session/session-collapsed-saved.png" alt="Saved session (collapsed)"></DocsImage>
+  <DocsImage src="/img/api/session/session-collapsed-saved.png" alt="Saved session (collapsed)"/>
 
 - A saved session was found, but the `validate` function failed, so the session
   was recreated and saved:
-  <DocsImage src="/img/api/session/session-collapsed-recreated.png" alt="Recreated session (collapsed)"></DocsImage>
+  <DocsImage src="/img/api/session/session-collapsed-recreated.png" alt="Recreated session (collapsed)"/>
 
 Note that in cases where the `validate` function fails immediately after `setup`
 creates the session, the test will fail with an error.
@@ -826,7 +827,7 @@ session. A new session is created by visiting `/signin` where the user is logged
 in, after which, validation succeeds, and the session is made active for the
 remainder of the test.
 
-<DocsImage src="/img/api/session/session-expanded.png" alt="Recreated session (expanded)"></DocsImage>
+<DocsImage src="/img/api/session/session-expanded.png" alt="Recreated session (expanded)"/>
 
 ### Printing to the console
 
@@ -835,7 +836,7 @@ an expanded session group in the command log will print that session's details
 to the console. This information contains the `id` along with any cached session
 data, including cookies, `localStorage` and `sessionStorage`.
 
-<DocsImage src="/img/api/session/print-session-to-console.png" alt="Session console output"></DocsImage>
+<DocsImage src="/img/api/session/print-session-to-console.png" alt="Session console output"/>
 
 ## See also
 

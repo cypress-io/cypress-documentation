@@ -223,12 +223,12 @@ cy.window()
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/window/window-command-log-for-cypress-tests.png" alt="Command Log window" ></DocsImage>
+<DocsImage src="/img/api/window/window-command-log-for-cypress-tests.png" alt="Command Log window" />
 
 When clicking on `window` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/window/console-shows-the-applications-window-object-being-tested.png" alt="Console Log window" ></DocsImage>
+<DocsImage src="/img/api/window/console-shows-the-applications-window-object-being-tested.png" alt="Console Log window" />
 
 ## History
 

@@ -330,8 +330,7 @@ npx cypress open-ct
 <DocsImage
 src="/img/guides/component-testing/one-spec.png"
 alt="Single Spec file with single test run"
-
-> </DocsImage>
+/>
 
 - Try to modify the test in your editor, make the test fail, etc. The tests will
   re-run instantly with immediate visual feedback.
@@ -352,8 +351,7 @@ In the project we just built, this command will show the following results.
 <DocsImage
 src="/img/guides/component-testing/run-result.png"
 alt="Result of headless test run"
-
-> </DocsImage>
+/>
 
 To make the component tests part of your
 [continuous integration](/guides/continuous-integration/introduction) pipeline,

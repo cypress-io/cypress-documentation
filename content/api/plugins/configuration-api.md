@@ -59,7 +59,7 @@ modified from the plugins file.**
 
 Resolved values will show up in the "Settings" tab of the Test Runner.
 
-<DocsImage src="/img/guides/plugin-configuration.png" alt="Resolved configuration in the Desktop app" ></DocsImage>
+<DocsImage src="/img/guides/plugin-configuration.png" alt="Resolved configuration in the Desktop app" />
 
 ### Promises
 
@@ -111,7 +111,7 @@ When you open the Test Runner in a project that uses the above modifications to
 your plugins file, only the Chrome browsers found on the system will display in
 the list of available browsers.
 
-<DocsImage src="/img/guides/plugins/chrome-browsers-only.png" alt="Filtered list of Chrome browsers" ></DocsImage>
+<DocsImage src="/img/guides/plugins/chrome-browsers-only.png" alt="Filtered list of Chrome browsers" />
 
 <Alert type="info">
 

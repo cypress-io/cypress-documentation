@@ -455,7 +455,7 @@ cy.get('#username').type('username@email.com')
 cy.get('#password').type('superSecret123')
 ```
 
-<DocsImage src="/img/api/custom-commands/custom-command-type-no-masked-password.png"></DocsImage>
+<DocsImage src="/img/api/custom-commands/custom-command-type-no-masked-password.png"/>
 
 You may want to mask some values passed to the [.type()](/api/commands/type)
 command so that sensitive data does not display in screenshots or videos of your
@@ -487,7 +487,7 @@ cy.get('#password').type('superSecret123', { sensitive: true })
 Now our sensitive password is not printed to the Test Runner's Command Log when
 `sensitive: true` is passed as an option to [.type()](/api/commands/type).
 
-<DocsImage src="/img/api/custom-commands/custom-command-type-masked-password.png"></DocsImage>
+<DocsImage src="/img/api/custom-commands/custom-command-type-masked-password.png"/>
 
 <Alert type="info">
 
@@ -505,21 +505,18 @@ This example overwrites [cy.screenshot()](/api/commands/screenshot) to always
 wait until a certain element is visible.
 
 ```javascript
-Cypress.Commands.overwrite(
-  'screenshot',
-  (originalFn, subject, name, options) => {
-    // call another command, no need to return as it is managed
-    cy.get('.app')
-      .should('be.visible')
+Cypress.Commands.overwrite('screenshot', (originalFn, subject, name, options) => {
+  // call another command, no need to return as it is managed
+  cy.get('.app')
+    .should('be.visible')
 
-      // overwrite the default timeout, because screenshot does that internally
-      // otherwise the `then` is limited to the default command timeout
-      .then({ timeout: Cypress.config('responseTimeout') }, () => {
-        // return the original function so that cypress waits for it
-        return originalFn(subject, name, options)
-      })
-  }
-)
+    // overwrite the default timeout, because screenshot does that internally
+    // otherwise the `then` is limited to the default command timeout
+    .then({ timeout: Cypress.config('responseTimeout') }, () => {
+      // return the original function so that cypress waits for it
+      return originalFn(subject, name, options)
+    })
+})
 ```
 
 #### Overwrite `contains` command
@@ -528,21 +525,18 @@ This example overwrites [.contains()](/api/commands/contains) to always have the
 `matchCase` option set to `false`.
 
 ```js
-Cypress.Commands.overwrite(
-  'contains',
-  (originalFn, subject, filter, text, options = {}) => {
-    // determine if a filter argument was passed
-    if (typeof text === 'object') {
-      options = text
-      text = filter
-      filter = undefined
-    }
-
-    options.matchCase = false
-
-    return originalFn(subject, filter, text, options)
+Cypress.Commands.overwrite('contains', (originalFn, subject, filter, text, options = {}) => {
+  // determine if a filter argument was passed
+  if (typeof text === 'object') {
+    options = text
+    text = filter
+    filter = undefined
   }
-)
+
+  options.matchCase = false
+
+  return originalFn(subject, filter, text, options)
+})
 ```
 
 ## Validations

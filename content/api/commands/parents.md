@@ -121,12 +121,12 @@ can time out waiting for assertions you've added to pass.</li></List>
 cy.get('li.active').parents()
 ```
 
-<DocsImage src="/img/api/parents/get-all-parents-of-a-dom-element.png" alt="Command Log parents" ></DocsImage>
+<DocsImage src="/img/api/parents/get-all-parents-of-a-dom-element.png" alt="Command Log parents" />
 
 When clicking on the `parents` command within the command log, the console
 outputs the following:
 
-<DocsImage src="/img/api/parents/parents-elements-displayed-in-devtools-console.png" alt="Console Log parents" ></DocsImage>
+<DocsImage src="/img/api/parents/parents-elements-displayed-in-devtools-console.png" alt="Console Log parents" />
 
 ## See also
 

@@ -94,12 +94,12 @@ cy.get('.query-ul').within(() => {
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/root/find-root-element-and-assert.png" alt="Command Log root" ></DocsImage>
+<DocsImage src="/img/api/root/find-root-element-and-assert.png" alt="Command Log root" />
 
 When clicking on the `root` command within the command log, the console outputs
 the following:
 
-<DocsImage src="/img/api/root/console-log-root-which-is-usually-the-main-document.png" alt="Console Log root" ></DocsImage>
+<DocsImage src="/img/api/root/console-log-root-which-is-usually-the-main-document.png" alt="Console Log root" />
 
 ## See also
 

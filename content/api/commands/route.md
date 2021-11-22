@@ -491,13 +491,13 @@ response, status, headers, and delay have been controlled by your matching
 XHRs that display `(XHR)` in the Command Log have _not_ been stubbed and were
 passed directly through to a server.
 
-<DocsImage src="/img/api/route/xhr-stub-versus-not-stubbed-routes-in-command-log.png" alt="XHR Command Log when not stubbed" ></DocsImage>
+<DocsImage src="/img/api/route/xhr-stub-versus-not-stubbed-routes-in-command-log.png" alt="XHR Command Log when not stubbed" />
 
 Cypress also logs whether the XHR was stubbed or not to the console when you
 click on the command in the Command Log. It will indicate whether a request was
 stubbed, which url it matched or that it did not match any routes.
 
-<DocsImage src="/img/api/route/console-log-shows-if-route-was-stubbed-also.png" alt="XHR Command Log stubbed" ></DocsImage>
+<DocsImage src="/img/api/route/console-log-shows-if-route-was-stubbed-also.png" alt="XHR Command Log stubbed" />
 
 Even the `Initiator` is included, which is a stack trace to what caused the XHR
 to be sent.
@@ -597,17 +597,17 @@ it('cy.route command log', () => {
 })
 -->
 
-<DocsImage src="/img/api/route/routing-table-displayed-in-command-log-for-cy-route.png" alt="Command Log routing table" ></DocsImage>
+<DocsImage src="/img/api/route/routing-table-displayed-in-command-log-for-cy-route.png" alt="Command Log routing table" />
 
 When XHRs are made, Cypress will log them in the Command Log and indicate
 whether they matched a routing alias:
 
-<DocsImage src="/img/api/route/some-xhr-responses-including-200-and-500-status-codes.png" alt="Command Log XHR alias route" ></DocsImage>
+<DocsImage src="/img/api/route/some-xhr-responses-including-200-and-500-status-codes.png" alt="Command Log XHR alias route" />
 
 The circular indicator is filled if the request went to the destination server,
 but unfilled if the request was stubbed with a response.
 
-<DocsImage src="/img/api/route/console-log-shows-status-duration-response-request-and-other-data-for-routing.png" alt="Console Log XHR alias route" ></DocsImage>
+<DocsImage src="/img/api/route/console-log-shows-status-duration-response-request-and-other-data-for-routing.png" alt="Console Log XHR alias route" />
 
 [Read more about request logging in Cypress.](/guides/guides/network-requests#Command-Log)
 

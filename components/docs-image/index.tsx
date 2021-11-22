@@ -9,7 +9,11 @@ function classNames(...classes) {
 export default function DocsImage({ alt, src, title, noBorder }: DocsImageProps) {
   return (
     <Image
-      className={classNames(`${s.docsImage}`, `${noBorder ? `${s.imageNoBorder}` : ''}`)}
+      className={classNames(
+        `${s.docsImage}`,
+        `${noBorder ? `${s.imageNoBorder}` : ''}`,
+        'object-contain'
+      )}
       src={src}
       alt={alt}
       title={title}

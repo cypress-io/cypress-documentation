@@ -133,12 +133,12 @@ cy.get('[name="comment"]').focus().type('Nice Product!').blur()
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/blur/blur-input-command-log.png" alt="command log for blur" ></DocsImage>
+<DocsImage src="/img/api/blur/blur-input-command-log.png" alt="command log for blur" />
 
 When clicking on the `blur` command within the command log, the console outputs
 the following:
 
-<DocsImage src="/img/api/blur/console-showing-blur-command.png" alt="console.log for blur" ></DocsImage>
+<DocsImage src="/img/api/blur/console-showing-blur-command.png" alt="console.log for blur" />
 
 ## See also
 

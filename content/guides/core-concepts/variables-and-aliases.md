@@ -513,7 +513,7 @@ Aliasing your intercepted routes enables you to:
 - wait for your server to send the response
 - access the actual request object for assertions
 
-<DocsImage src="/img/guides/aliasing-routes.jpg" alt="Alias commands"></DocsImage>
+<DocsImage src="/img/guides/aliasing-routes.jpg" alt="Alias commands"/>
 
 Here's an example of aliasing an intercepted route and waiting on it to
 complete.

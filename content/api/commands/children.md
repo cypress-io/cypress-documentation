@@ -142,12 +142,12 @@ cy.get('.left-nav>.nav').children().should('have.length', 8)
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/children/children-elements-shown-in-command-log.png" alt="Command log for children" ></DocsImage>
+<DocsImage src="/img/api/children/children-elements-shown-in-command-log.png" alt="Command log for children" />
 
 When clicking on the `children` command within the command log, the console
 outputs the following:
 
-<DocsImage src="/img/api/children/children-yielded-in-console.png" alt="console.log for children" ></DocsImage>
+<DocsImage src="/img/api/children/children-yielded-in-console.png" alt="console.log for children" />
 
 ## See also
 
