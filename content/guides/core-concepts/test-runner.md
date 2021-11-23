@@ -14,7 +14,8 @@ title: The Test Runner
 ## Overview
 
 Cypress runs tests in a unique interactive runner that allows you to see
-commands as they execute while also viewing the application under test.
+commands as they execute while also viewing the Application or Component Under
+Test.
 
 <DocsImage src="/img/guides/gui-diagram.png" alt="Cypress Test Runner"></DocsImage>
 
@@ -38,10 +39,9 @@ file where the code is located. Clicking on this link will open the file in your
 
 ### Hovering on Commands
 
-Each command and assertion, when hovered over, restores the Application Under
-Test (righthand side) to the state it was in when that command executed. This
-allows you to 'time-travel' back to previous states of your application when
-testing.
+Each command and assertion, when hovered over, restores the Application or
+Component Under Test (righthand side) to the state it was in when that command
+executed. This allows you to 'time-travel' back to previous states when testing.
 
 <Alert type="info">
 
@@ -55,8 +55,8 @@ you may want to lower the `numTestsKeptInMemory` in your
 ### Clicking on Commands
 
 Each command, assertion, or error, when clicked on, displays extra information
-in the dev tools console. Clicking also 'pins' the Application Under Test
-(righthand side) to its previous state when the command executed.
+in the dev tools console. Clicking also 'pins' the Application or Component
+Under Test (righthand side) to its previous state when the command executed.
 
 <DocsImage src="/img/guides/clicking-commands.png" alt="Click to console.log and to pin" ></DocsImage>
 
@@ -122,7 +122,9 @@ it('intercept command log', () => {
 
 ## Application Under Test <E2EOnlyBadge />
 
-The righthand side of the Test Runner is used to display the Application Under
+In
+[End-to-End testing](/guides/overview/choosing-testing-type#What-is-End-to-end-Testing),
+the righthand side of the Test Runner is used to display the Application Under
 Test (AUT): the application that was navigated to using a
 [`cy.visit()`](/api/commands/visit) or any subsequent routing calls made from
 the visited application.
@@ -270,7 +272,7 @@ API to control the selectors you want returned.
 
 You may find yourself struggling to write good selectors because:
 
-- Your application uses dynamic ID's and class names
+- Your application or component uses dynamic ID's and class names
 - Your tests break whenever there are CSS or content changes
 
 To help with these common challenges, the Selector Playground automatically
