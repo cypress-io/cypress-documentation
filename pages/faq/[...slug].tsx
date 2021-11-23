@@ -14,7 +14,7 @@ import DocsImage from '@/components/docs-image'
 import DocsVideo from '@/components/docs-video'
 import Badge from '@/components/badge'
 import { GET_PATH, allContentFilePaths, getToCForMarkdown } from '@/utils/mdxUtils'
-import guidesSidebarJson from '@/data/sidebar.json'
+import sidebarJSON from '@/data/sidebar.json'
 
 // Custom components/renderers to pass to MDX.
 // Since the MDX files aren't loaded by webpack, they have no knowledge of how
@@ -36,6 +36,8 @@ const components = {
   Badge,
 }
 
+const PAGE = 'faq'
+
 export default function FAQPage({ source, toc }) {
   return (
     <>
@@ -48,15 +50,15 @@ export default function FAQPage({ source, toc }) {
         toc={toc}
         source={source}
         components={components}
-        sidebarContent={guidesSidebarJson.faq[0]}
+        sidebarContent={sidebarJSON[PAGE][0]}
       />
     </>
   )
 }
 
-export const getStaticProps = async ({ params }) => {
-  const CONTENT_PATH = GET_PATH('content/faq')
-  const contentFilePath = path.join(CONTENT_PATH, `${params.slug[0]}/${params.slug[1]}.md`)
+export const getStaticProps = async ({ params: { slug } }: { params: { slug: string[] } }) => {
+  const MD_FILE_PATH = slug.join('/')
+  const contentFilePath = GET_PATH(`content/${PAGE}/${MD_FILE_PATH}.md`)
   const source = fs.readFileSync(contentFilePath)
   const { content, data } = matter(source)
   const toc = getToCForMarkdown(content)
@@ -80,13 +82,13 @@ export const getStaticProps = async ({ params }) => {
 }
 
 export const getStaticPaths = async () => {
-  const paths = allContentFilePaths('content/faq/**/*')
+  const paths = allContentFilePaths(`content/${PAGE}/**/*`)
     // Remove file extensions for page paths
     .map((path) => path.replace(/\.md?$/, ''))
     // Map the path into the static paths object required by Next.js
     .map((filePath) => {
-      const [, , category, slug] = filePath.split('/')
-      return { params: { slug: [category, slug] } }
+      const slug = filePath.split('/').filter((path) => path !== '' && path !== PAGE)
+      return { params: { slug } }
     })
 
   return {

@@ -3,8 +3,6 @@ import path from 'path'
 import glob from 'glob'
 import toc from 'markdown-toc-unlazy'
 
-export const GUIDES_PATH = path.join(process.cwd(), 'content/guides')
-
 export const GET_PATH = (pathStr: string) => path.join(process.cwd(), pathStr)
 
 export const allContentFilePaths = (pathStr: string) =>
