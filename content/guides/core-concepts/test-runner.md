@@ -167,6 +167,68 @@ _Note: Internally, the AUT renders within an iframe. This can sometimes cause
 unexpected behaviors
 [explained here.](/api/commands/window#Cypress-uses-2-different-windows)_
 
+## Component Under Test <ComponentOnlyBadge />
+
+In
+[Component testing](/guides/overview/choosing-testing-type#What-is-Component-Testing),
+the righthand side of the Test Runner is used to display the Component Under
+Test (CUT): the component that was mounted using the
+[`cy.mount()`](/api/commands/mount) command.
+
+In the following example, taken from the
+[Writing Your First Component Test](/guides/getting-started/writing-your-first-component-test)
+guide, we wrote the following test in our spec file:
+
+:::react-vue-example
+
+```js
+it('should have password input of type password', () => {
+  mount(<LoginForm />)
+  cy.contains('Password').find('input').should('have.attr', 'type', 'password')
+})
+```
+
+```js
+it('should have password input of type password', () => {
+  mount(LoginForm)
+  cy.contains('Password').find('input').should('have.attr', 'type', 'password')
+})
+```
+
+:::
+
+In the corresponding Component Preview below, you can see the the `LoginForm`
+component is being displayed in the righthand side. Not only is the component
+visible, but it is fully interactable. You can open your developer tools to
+inspect elements as you would in your normal application. The DOM is completely
+available for debugging.
+
+(SCREENSHOT OF TEST RUN WITH COMPONENT RENDERED)
+
+The CUT also displays in the size and orientation specified in your tests. You
+can change the size or orientation with the
+[`cy.viewport()`](/api/commands/viewport) command or in your
+[Cypress configuration](/guides/references/configuration#Viewport). If the CUT
+does not fit within the current browser window, it is scaled appropriately to
+fit within the window.
+
+The current size and scale of the CUT is displayed in the top right corner of
+the window.
+
+The image below shows that our application is displaying at `1000px` width,
+`660px` height and scaled to `100%`.
+
+(CROPPED SCREENSHOT OF VIEWPORT SIZE)
+
+_Note: The righthand side may also be used to display syntax errors in your spec
+file that prevent the tests from running._
+
+(SCREENSHOT OF AN ERROR APEARING ON THE RIGHT SIDE)
+
+_Note: Internally, the CUT renders within an iframe. This can sometimes cause
+unexpected behaviors
+[explained here.](/api/commands/window#Cypress-uses-2-different-windows)_
+
 ## Selector Playground
 
 The Selector Playground is an interactive feature that helps you:
