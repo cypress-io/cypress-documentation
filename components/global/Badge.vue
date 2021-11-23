@@ -1,9 +1,12 @@
 <template>
-  <router-link :to="{path}" style="border-style: none">
+  <router-link v-if="path" :to="{path}" style="border-style: none">
     <div :class="[$style.badge, $style[type]]">
       <slot />
     </div>
   </router-link>
+  <div v-else :class="[$style.badge, $style[type]]">
+    <slot />
+  </div>
 </template>
 
 <script>
