@@ -54,7 +54,7 @@ npx cypress run
 ...or by using Yarn...
 
 ```shell
-yarn open
+yarn cypress run
 ```
 
 You may find it easier to add the cypress command to the `scripts` object in
