@@ -86,7 +86,7 @@ If you are running the tests from within a restrictive VPN you will need to allo
 
 module.exports.XHR_STUBBING_DEPRECATED = [
   '{% note warning %}',
-  '⚠️ **`cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0**. In a future release, support for `cy.server()` and `cy.route()` will be moved to a plugin. Consider using [`cy.intercept()`](/api/commands/intercept) instead. See our guide on [Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide#Migrating-cy-route-to-cy-intercept)',
+  '⚠️ **`cy.server()` and `cy.route()` are deprecated in Cypress 6.0.0**. In a future release, support for `cy.server()` and `cy.route()` will be removed. Consider using [`cy.intercept()`](/api/commands/intercept) instead. See our guide on [Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide#Migrating-cy-route-to-cy-intercept)',
   '{% endnote %}',
 ].join('\n')
 
