@@ -18,6 +18,6 @@ export default {
   <h1>
     {{ title }}
   </h1>
-  <E2EOnlyBadge v-if="e2eSpecific" class="mt-5 mb-3" style="margin-left:0" />
+  <E2EOnlyBadge v-if="e2eSpecific" class="mt-4 mb-3" />
 </div>
 </template>

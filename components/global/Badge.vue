@@ -1,5 +1,10 @@
 <template>
-  <div :class="[$style.badge, $style[type]]">
+  <router-link v-if="path" :to="{path}" style="border-style: none">
+    <div :class="[$style.badge, $style[type]]">
+      <slot />
+    </div>
+  </router-link>
+  <div v-else :class="[$style.badge, $style[type]]">
     <slot />
   </div>
 </template>
@@ -11,6 +16,11 @@ export default {
       type: String,
       required: true,
     },
+    path: {
+      type: String,
+      default: '',
+      required: false,
+    }
   },
 }
 </script>
