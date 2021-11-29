@@ -1003,6 +1003,13 @@
           "link": "https://github.com/maritome/cypress-msteams-reporter",
           "keywords": ["reporter", "ms-teams", "allure-report"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-aiotests-reporter",
+          "description": "Integrates AIO Tests for Jira with Cypress tests.  Creates execution cycles, reports results and uploads failure artifacts to AIO Tests ",
+          "link": "https://github.com/aiotests/cypress-aiotests-reporter",
+          "keywords": ["reporter", "aio-tests", "jira"],
+          "badge": "community"
         }
       ]
     },
