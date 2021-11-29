@@ -111,6 +111,7 @@ export default {
           <MainContentHeader
             :title="apiPageContent.title"
             :e2e-specific="apiPageContent.e2eSpecific"
+            :component-specific="apiPageContent.componentSpecific"
           />
           <nuxt-content v-if="!isApiToc" :document="apiPageContent" />
           <ApiTableOfContents v-if="isApiToc" />

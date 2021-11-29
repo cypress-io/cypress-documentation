@@ -92,6 +92,7 @@ export default {
           <MainContentHeader
             :title="(guide && guide.title) || 'Cypress Documentation'"
             :e2e-specific="guide.e2eSpecific"
+            :component-specific="guide.componentSpecific"
           />
           <nuxt-content :document="guide"></nuxt-content>
           <Footer />
