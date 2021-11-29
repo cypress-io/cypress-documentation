@@ -21,7 +21,7 @@ projects and tests run for the organization.
 4. The user will receive an invitation email with a link to accept the
    invitation.
 
-<DocsImage src="/img/dashboard/invite-user-dialog.png" alt="Invite User dialog" ></DocsImage>
+<DocsImage src="/img/dashboard/invite-user-dialog.png" alt="Invite User dialog"/>
 
 ### Sign Up with an Invitation:
 
@@ -102,7 +102,10 @@ given access to your organization. This means instead of you having to invite
 team members up front, they can request access and you can choose to accept or
 deny them access.
 
-<DocsImage src="/img/dashboard/request-access-to-organization.png" alt="Request access to project" ></DocsImage>
+<DocsImage
+src="/img/dashboard/request-access-to-organization.png"
+alt="Request access to project"
+/>
 
 ## User updates
 

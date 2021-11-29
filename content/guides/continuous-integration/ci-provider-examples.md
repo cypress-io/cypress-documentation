@@ -4,10 +4,9 @@ title: CI Provider Examples
 
 <Alert type="success">
 
-<b>Cypress is compatible with all Continuous Integration (CI) providers and
-systems.</b> On this page you’ll find extensive guides for using Cypress with
-some of the most popular CI providers, and assorted quick start examples for
-many other providers.
+<b>Cypress is compatible with all Continuous Integration (CI) providers and systems.</b> On this page
+you’ll find extensive guides for using Cypress with some of the most popular CI providers, and assorted
+quick start examples for many other providers.
 
 </Alert>
 

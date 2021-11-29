@@ -300,11 +300,10 @@ the `http://localhost:3000` URL is considered to be a different origin from the
 
 The rules are:
 
-- <Icon name="exclamation-triangle" color="red"></Icon> You **cannot**
-  [visit](/api/commands/visit) two domains of different origin in the same test.
-- <Icon name="check-circle" color="green"></Icon> You **can**
-  [visit](/api/commands/visit) two or more domains of different origin in
-  **different** tests.
+- <Icon name="exclamation-triangle" color="red"></Icon> You **cannot** [visit](/api/commands/visit) two
+  domains of different origin in the same test.
+- <Icon name="check-circle" color="green"></Icon> You **can** [visit](/api/commands/visit) two or more
+  domains of different origin in **different** tests.
 
 ```javascript
 it('navigates', () => {

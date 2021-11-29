@@ -477,10 +477,7 @@ place.
 ```javascript
 cy.get('#todos li').first().as('firstTodo')
 cy.get('@firstTodo').find('.edit').click()
-cy.get('@firstTodo')
-  .should('have.class', 'editing')
-  .find('input')
-  .type('Clean the kitchen')
+cy.get('@firstTodo').should('have.class', 'editing').find('input').type('Clean the kitchen')
 ```
 
 When we reference `@firstTodo`, Cypress checks to see if all of the elements it
@@ -516,7 +513,7 @@ Aliasing your intercepted routes enables you to:
 - wait for your server to send the response
 - access the actual request object for assertions
 
-<DocsImage src="/img/guides/aliasing-routes.jpg" alt="Alias commands" ></DocsImage>
+<DocsImage src="/img/guides/aliasing-routes.jpg" alt="Alias commands"/>
 
 Here's an example of aliasing an intercepted route and waiting on it to
 complete.

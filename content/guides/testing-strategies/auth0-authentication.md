@@ -131,67 +131,55 @@ The `loginByAuth0Api` command will execute the following steps:
 
 ```jsx
 // cypress/support/commands.js
-Cypress.Commands.add(
-  'loginByAuth0Api',
-  (username: string, password: string) => {
-    cy.log(`Logging in as ${username}`)
-    const client_id = Cypress.env('auth0_client_id')
-    const client_secret = Cypress.env('auth0_client_secret')
-    const audience = Cypress.env('auth0_audience')
-    const scope = Cypress.env('auth0_scope')
+Cypress.Commands.add('loginByAuth0Api', (username: string, password: string) => {
+  cy.log(`Logging in as ${username}`)
+  const client_id = Cypress.env('auth0_client_id')
+  const client_secret = Cypress.env('auth0_client_secret')
+  const audience = Cypress.env('auth0_audience')
+  const scope = Cypress.env('auth0_scope')
 
-    cy.request({
-      method: 'POST',
-      url: `https://${Cypress.env('auth0_domain')}/oauth/token`,
+  cy.request({
+    method: 'POST',
+    url: `https://${Cypress.env('auth0_domain')}/oauth/token`,
+    body: {
+      grant_type: 'password',
+      username,
+      password,
+      audience,
+      scope,
+      client_id,
+      client_secret,
+    },
+  }).then(({ body }) => {
+    const claims = jwt.decode(body.id_token)
+    const { nickname, name, picture, updated_at, email, email_verified, sub, exp } = claims
+
+    const item = {
       body: {
-        grant_type: 'password',
-        username,
-        password,
-        audience,
-        scope,
-        client_id,
-        client_secret,
-      },
-    }).then(({ body }) => {
-      const claims = jwt.decode(body.id_token)
-      const {
-        nickname,
-        name,
-        picture,
-        updated_at,
-        email,
-        email_verified,
-        sub,
-        exp,
-      } = claims
-
-      const item = {
-        body: {
-          ...body,
-          decodedToken: {
-            claims,
-            user: {
-              nickname,
-              name,
-              picture,
-              updated_at,
-              email,
-              email_verified,
-              sub,
-            },
-            audience,
-            client_id,
+        ...body,
+        decodedToken: {
+          claims,
+          user: {
+            nickname,
+            name,
+            picture,
+            updated_at,
+            email,
+            email_verified,
+            sub,
           },
+          audience,
+          client_id,
         },
-        expiresAt: exp,
-      }
+      },
+      expiresAt: exp,
+    }
 
-      window.localStorage.setItem('auth0Cypress', JSON.stringify(item))
+    window.localStorage.setItem('auth0Cypress', JSON.stringify(item))
 
-      cy.visit('/')
-    })
-  }
-)
+    cy.visit('/')
+  })
+})
 ```
 
 With our Auth0 app setup properly in the Auth0 Developer console, necessary
@@ -204,10 +192,7 @@ onboarding process and logout.
 describe('Auth0', function () {
   beforeEach(function () {
     cy.task('db:seed')
-    cy.loginByAuth0Api(
-      Cypress.env('auth_username'),
-      Cypress.env('auth_password')
-    )
+    cy.loginByAuth0Api(Cypress.env('auth_username'), Cypress.env('auth_password'))
   })
 
   it('shows onboarding', function () {
@@ -544,9 +529,7 @@ Cypress.Commands.add('loginByAuth0Api', (username, password) => {
     .then((ip) => {
       cy.request({
         method: 'DELETE',
-        url: `https://${Cypress.env(
-          'auth0_domain'
-        )}/api/v2/anomaly/blocks/ips/${ip}`,
+        url: `https://${Cypress.env('auth0_domain')}/api/v2/anomaly/blocks/ips/${ip}`,
         auth: {
           bearer: Cypress.env('auth0_mgmt_api_token'),
         },

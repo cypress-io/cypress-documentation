@@ -34,8 +34,9 @@ Test retries is **disabled by default**, and you can
 
 <Alert type="success">
 
-<strong class="alert-header"><Icon name="star"></Icon> Premium Dashboard
-Feature</strong>
+<strong class="alert-header">
+  <Icon name="star"></Icon> Premium Dashboard Feature
+</strong>
 
 **Test flake detection** is available to users with a
 [Team Dashboard plan](https://cypress.io/pricing).
@@ -64,7 +65,10 @@ Test runs with flaky tests will be flagged with the number of flaky of tests
 within the Dashboard "Latest runs" page. Flaky tests runs can also be filtered
 in and out via the "Flaky" filter within this page.
 
-<DocsImage src="/img/dashboard/flaky-test-management/flaky-runs-view.png" alt="Flagging flaky tests runs in Cypress Dashboard" ></DocsImage>
+<DocsImage
+src="/img/dashboard/flaky-test-management/flaky-runs-view.png"
+alt="Flagging flaky tests runs in Cypress Dashboard"
+/>
 
 Any failure across multiple test run attempts triggered by test retrying will
 result in a given test case to be flagged as flaky.
@@ -73,8 +77,9 @@ result in a given test case to be flagged as flaky.
 
 <Alert type="success">
 
-<strong class="alert-header"><Icon name="star"></Icon> Premium Dashboard
-Feature</strong>
+<strong class="alert-header">
+  <Icon name="star"></Icon> Premium Dashboard Feature
+</strong>
 
 **Test flake analytics** are available to users with a
 [Team Dashboard plan](https://cypress.io/pricing).
@@ -99,7 +104,10 @@ needed to resolve flake issues.
 
 </Alert>
 
-<DocsImage src="/img/dashboard/flaky-test-management/flake-analytics.png" alt="Flaky tests analytics" ></DocsImage>
+<DocsImage
+src="/img/dashboard/flaky-test-management/flake-analytics.png"
+alt="Flaky tests analytics"
+/>
 
 Selecting any of the flaky test cases in the analytics page will reveal a test
 case details panel that shows:
@@ -112,7 +120,10 @@ case details panel that shows:
 All these test case level details provide deeper context around the occurrences
 of flake over time to assist with debugging the root cause.
 
-<DocsImage src="/img/dashboard/flaky-test-management/flake-panel.png" alt="Flaky tests analytics details panel" ></DocsImage>
+<DocsImage
+src="/img/dashboard/flaky-test-management/flake-panel.png"
+alt="Flaky tests analytics details panel"
+/>
 
 ### Failure Rate vs Flake Rate
 
@@ -120,7 +131,10 @@ It is important to understand the distinction between failure rate and flake
 rate when test retries is enabled. These two metrics are tracked over time for
 each flaky test case within the flaky tests analytics page:
 
-<DocsImage src="/img/dashboard/flaky-test-management/flake-v-fail-2.png" alt="flake rate vs fail rate" ></DocsImage>
+<DocsImage
+src="/img/dashboard/flaky-test-management/flake-v-fail-2.png"
+alt="flake rate vs fail rate"
+/>
 
 A test case flagged as flaky could have still passed after multiple test retry
 attempts. The test result status of individual test retry attempts is separate
@@ -133,14 +147,18 @@ final status of passing.
 With this concept in mind, it is possible to always have zero final failure rate
 while exhibiting flake as demonstrated below:
 
-<DocsImage src="/img/dashboard/flaky-test-management/flake-v-fail-1.png" alt="flake rate vs fail rate" ></DocsImage>
+<DocsImage
+src="/img/dashboard/flaky-test-management/flake-v-fail-1.png"
+alt="flake rate vs fail rate"
+/>
 
 ## Flake Alerting
 
 <Alert type="success">
 
-<strong class="alert-header"><Icon name="star"></Icon> Premium Dashboard
-Feature</strong>
+<strong class="alert-header">
+  <Icon name="star"></Icon> Premium Dashboard Feature
+</strong>
 
 **Test flake alerting** is available to users with a
 [Team Dashboard plan](https://cypress.io/pricing).
@@ -157,24 +175,36 @@ with staying on top of flake occurrences.
 Flake alerting via GitHub PR comments and status checks can be enabled within a
 project's GitHub integration settings:
 
-<DocsImage src="/img/dashboard/flaky-test-management/gh-flake.png" alt="GitHub flake alert settings" ></DocsImage>
+<DocsImage
+src="/img/dashboard/flaky-test-management/gh-flake.png"
+alt="GitHub flake alert settings"
+/>
 
 After enabling GitHub flake alerting, GitHub PR comments will show the number of
 flaky tests associated with the PR within the test summary, and include a
 "Flakiness" section highlighting the specific tests that flaked.
 
-<DocsImage src="/img/dashboard/flaky-test-management/flake-pr-comment.png" alt="GitHub flake alert pr comment" ></DocsImage>
+<DocsImage
+src="/img/dashboard/flaky-test-management/flake-pr-comment.png"
+alt="GitHub flake alert pr comment"
+/>
 
 ### Slack
 
 Flake alerting via Slack can be enabled within Slack integration settings:
 
-<DocsImage src="/img/dashboard/flaky-test-management/slack-flake.png" alt="Slack flake alert settings" ></DocsImage>
+<DocsImage
+src="/img/dashboard/flaky-test-management/slack-flake.png"
+alt="Slack flake alert settings"
+/>
 
 After enabling Slack alerts, the Dashboard will send Slack messages whenever
 flaky tests are detected:
 
-<DocsImage src="/img/dashboard/flaky-test-management/flake-slack-alert.png" alt="Slack flake alert" ></DocsImage>
+<DocsImage
+src="/img/dashboard/flaky-test-management/flake-slack-alert.png"
+alt="Slack flake alert"
+/>
 
 ## See Also
 

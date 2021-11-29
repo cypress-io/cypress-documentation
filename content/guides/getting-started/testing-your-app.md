@@ -105,7 +105,10 @@ touch cypress/integration/home_page_spec.js
 
 Once that file is created, you should see it in the list of spec files.
 
-<DocsImage src="/img/guides/testing-your-app-home-page-spec.png" alt="List of files including home_page_spec.js"></DocsImage>
+<DocsImage
+src="/img/guides/testing-your-app-home-page-spec.png"
+alt="List of files including home_page_spec.js"
+/>
 
 Now you'll need to add in the following code in your test file to visit your
 server:
@@ -129,7 +132,10 @@ it('successfully loads', () => {
 })
 -->
 
-<DocsImage src="/img/guides/testing-your-app-visit-fail.png" alt="Error in Test Runner showing cy.visit failed" ></DocsImage>
+<DocsImage
+src="/img/guides/testing-your-app-visit-fail.png"
+alt="Error in Test Runner showing cy.visit failed"
+/>
 
 If you've started your server, then you should see your application loaded and
 working.
@@ -268,9 +274,7 @@ describe('The Home Page', () => {
     })
 
     // seed a user in the DB that we can control from our tests
-    cy.request('POST', '/test/seed/user', { name: 'Jane' })
-      .its('body')
-      .as('currentUser')
+    cy.request('POST', '/test/seed/user', { name: 'Jane' }).its('body').as('currentUser')
   })
 
   it('successfully loads', () => {
@@ -374,9 +378,7 @@ describe('The Login Page', () => {
 
     // seed a user in the DB that we can control from our tests
     // assuming it generates a random password for us
-    cy.request('POST', '/test/seed/user', { username: 'jane.lane' })
-      .its('body')
-      .as('currentUser')
+    cy.request('POST', '/test/seed/user', { username: 'jane.lane' }).its('body').as('currentUser')
   })
 
   it('sets auth cookie when logging in via form submission', function () {
@@ -478,9 +480,7 @@ describe('The Dashboard Page', () => {
 
     // seed a user in the DB that we can control from our tests
     // assuming it generates a random password for us
-    cy.request('POST', '/test/seed/user', { username: 'jane.lane' })
-      .its('body')
-      .as('currentUser')
+    cy.request('POST', '/test/seed/user', { username: 'jane.lane' }).its('body').as('currentUser')
   })
 
   it('logs in programmatically without using the UI', function () {
@@ -550,6 +550,6 @@ From here you may want to explore some more of our guides:
 - [Cross Browser Testing](/guides/guides/cross-browser-testing) for optimally
   running tests in CI across Firefox and Chrome-family browsers
 - <Icon name="github"></Icon>
-  [Cypress Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
-  for practical demonstrations of Cypress testing practices, configuration, and
-  strategies in a real-world project.
+  [Cypress Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) for practical
+  demonstrations of Cypress testing practices, configuration, and strategies in a real-world
+  project.

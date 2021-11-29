@@ -704,7 +704,10 @@ later in this guide.
 Using JavaScript loop commands like `while` can have unexpected effects. Let's
 say our application shows a random number on load.
 
-<DocsImage src="/img/guides/core-concepts/reload-page.gif" alt="Manually reloading the browser page until the number 7 appears"></DocsImage>
+<DocsImage
+src="/img/guides/core-concepts/reload-page.gif"
+alt="Manually reloading the browser page until the number 7 appears"
+/>
 
 We want the test to stop when it finds the number 7. If any other number is
 displayed the test reloads the page and checks again.
@@ -779,7 +782,10 @@ checkAndReload()
 
 The test runs and correctly finishes.
 
-<DocsImage src="/img/guides/core-concepts/lucky-7.gif" alt="Test reloads the page until the number 7 appears"></DocsImage>
+<DocsImage
+src="/img/guides/core-concepts/lucky-7.gif"
+alt="Test reloads the page until the number 7 appears"
+/>
 
 You can see a short video going through this example at
 [https://www.youtube.com/watch?v=5Z8BaPNDfvA](https://www.youtube.com/watch?v=5Z8BaPNDfvA).
@@ -861,7 +867,7 @@ designed to deliver deterministic, repeatable and consistent tests.
 
 Almost all commands come with built-in
 [retry-ability](/guides/core-concepts/retry-ability)**. Without
-[**retry-ability**](/guides/core-concepts/retry-ability), assertions
+[**retry-ability\*\*](/guides/core-concepts/retry-ability), assertions
 would randomly fail. This would lead to flaky, inconsistent results.
 
 <Alert type="info">
@@ -1195,9 +1201,7 @@ which is another name for [`.should()`](/api/commands/should) that makes things
 more readable:
 
 ```js
-cy.get('#header a')
-  .should('have.class', 'active')
-  .and('have.attr', 'href', '/users')
+cy.get('#header a').should('have.class', 'active').and('have.attr', 'href', '/users')
 ```
 
 Because [`.should('have.class')`](/api/commands/should) does not change the
@@ -1236,8 +1240,7 @@ expect(true).to.be.true
 
 <Alert type="info">
 
-<strong class="alert-header">Did you know you can write Unit Tests in
-Cypress?</strong>
+<strong class="alert-header">Did you know you can write Unit Tests in Cypress?</strong>
 
 Check out our example recipes for [unit testing](/examples/examples/recipes) and
 [unit testing React components](/examples/examples/recipes#Unit-Testing).
@@ -1365,9 +1368,7 @@ and any assertions chained after that command.
 ```js
 // we've modified the timeout which affects default
 // plus all added assertions
-cy.get('.mobile-nav', { timeout: 10000 })
-  .should('be.visible')
-  .and('contain', 'Home')
+cy.get('.mobile-nav', { timeout: 10000 }).should('be.visible').and('contain', 'Home')
 ```
 
 Under the hood Cypress:

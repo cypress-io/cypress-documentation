@@ -61,14 +61,15 @@ Assuming we have configured test retries with `2` retry attempts (for a total of
 3 attempts), here is how the tests might run:
 
 1. A test runs for the first time. If the
-   <Icon name="check-circle" color="green"></Icon> test passes, Cypress will
-   move forward with any remaining tests as usual.
+
+   <Icon name="check-circle" color="green"></Icon> test passes, Cypress will move forward with any remaining
+   tests as usual.
 
 2. If the <Icon name="times" color="red"></Icon> test fails, Cypress will tell
    you that the first attempt failed and will attempt to run the test a second
    time.
 
-<DocsImage src="/img/guides/test-retries/attempt-2-start.png"></DocsImage>
+<DocsImage src="/img/guides/test-retries/attempt-2-start.png"/>
 
 3. If the <Icon name="check-circle" color="green"></Icon> test passes after the
    second attempt, Cypress will continue with any remaining tests.
@@ -76,18 +77,18 @@ Assuming we have configured test retries with `2` retry attempts (for a total of
 4. If the <Icon name="times" color="red"></Icon> test fails a second time,
    Cypress will make the final third attempt to re-run the test.
 
-<DocsImage src="/img/guides/test-retries/attempt-3-start.png"></DocsImage>
+<DocsImage src="/img/guides/test-retries/attempt-3-start.png"/>
 
 5. If the <Icon name="times" color="red"></Icon> test fails a third time,
    Cypress will mark the test as failed and then move on to run any remaining
    tests.
 
-<DocsImage src="/img/guides/test-retries/attempt-3-fail.png"></DocsImage>
+<DocsImage src="/img/guides/test-retries/attempt-3-fail.png"/>
 
 The following is a screen capture of what test retries looks like on the same
 failed test when run via [cypress run](/guides/guides/command-line#cypress-run).
 
-<DocsImage src="/img/guides/test-retries/cli-error-message.png"></DocsImage>
+<DocsImage src="/img/guides/test-retries/cli-error-message.png"/>
 
 During [cypress open](/guides/guides/command-line#cypress-open) you will be able
 to see the number of attempts made in the
@@ -282,17 +283,24 @@ during the run.
 These tests are also indicated with a "Flaky" badge on the Latest Runs page and
 Test Results tab on the Run Details page.
 
-<DocsVideo src="/img/guides/test-retries/flaky-test-filter.mp4" title="Flaky test filter"></DocsVideo>
+<DocsVideo
+src="/img/guides/test-retries/flaky-test-filter.mp4"
+title="Flaky test filter"
+
+> </DocsVideo>
 
 Clicking on a Test Result will open the Test Case History screen. This
 demonstrates the number of failed attempts, the screenshots and/or videos of
 failed attempts, and the error for failed attempts.
 
-<DocsImage src="/img/guides/test-retries/flake-artifacts-and-errors.png" alt="Flake artifacts and errors" ></DocsImage>
+<DocsImage
+src="/img/guides/test-retries/flake-artifacts-and-errors.png"
+alt="Flake artifacts and errors"
+/>
 
 You can also see the Flaky Rate for a given test.
 
-<DocsImage src="/img/guides/test-retries/flaky-rate.png" alt="Flaky rate" ></DocsImage>
+<DocsImage src="/img/guides/test-retries/flaky-rate.png" alt="Flaky rate"/>
 
 For a comprehensive view of how flake is affecting your overall test suite, you
 can review the

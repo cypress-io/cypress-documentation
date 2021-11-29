@@ -187,10 +187,12 @@ The Cypress
 testing locally and in dedicated CI jobs. Examples:
 
 - <Icon name="github"></Icon>
-  [npm scripts](https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/package.json#L120)
+  [npm
+  scripts](https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/package.json#L120)
   to run Cypress in mobile viewport.
 - <Icon name="github"></Icon>
-  [Circle CI job configuration](https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/.circleci/config.yml#L82-L100)
+  [Circle CI job
+  configuration](https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/.circleci/config.yml#L82-L100)
   for running test suites in mobile viewport.
 
 </Alert>
@@ -417,7 +419,10 @@ cypress run --record --tag "production,nightly"
 
 The Dashboard will display any tags sent with the appropriate run.
 
-<DocsImage src="/img/dashboard/dashboard-run-with-tags.png" alt="Cypress run in the Dashboard displaying flags" ></DocsImage>
+<DocsImage
+src="/img/dashboard/dashboard-run-with-tags.png"
+alt="Cypress run in the Dashboard displaying flags"
+/>
 
 #### Exit code
 

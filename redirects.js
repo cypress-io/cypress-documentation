@@ -1,30 +1,49 @@
-export const redirects = [
+const redirects = [
   {
-    path: '/',
-    redirect: '/guides/overview/why-cypress',
+    source: '/',
+    destination: '/guides/overview/why-cypress',
+    permanent: true,
   },
   {
-    path: '/guides',
-    redirect: '/guides/overview/why-cypress',
+    source: '/guides',
+    destination: '/guides/overview/why-cypress',
+    permanent: true,
   },
   {
-    path: '/api',
-    redirect: '/api/table-of-contents',
+    source: '/api',
+    destination: '/api/table-of-contents',
+    permanent: true,
   },
   {
-    path: '/examples',
-    redirect: '/examples/examples/recipes',
+    source: '/api/assertions',
+    destination: '/guides/references/assertions',
+    permanent: true,
   },
   {
-    path: '/faq',
-    redirect: '/faq/questions/using-cypress-faq',
+    source: '/api/table-of-contents',
+    destination: '/api-docs/table-of-contents',
+    permanent: true,
   },
   {
-    path: '/plugins',
-    redirect: '/plugins/directory',
+    source: '/api/:slug(events|commands|utilities|cypress-api|plugins)/:path*',
+    destination: '/api-docs/:slug/:path*',
+    permanent: true,
   },
   {
-    path: '/guides/dashboard/dashboard-introduction',
-    redirect: '/guides/dashboard/introduction',
+    source: '/plugins',
+    destination: '/plugins/directory',
+    permanent: true,
+  },
+  {
+    source: '/examples',
+    destination: '/examples/examples/recipes',
+    permanent: true,
+  },
+  {
+    source: '/faq',
+    destination: '/faq/questions/using-cypress-faq',
+    permanent: true,
   },
 ]
+
+module.exports = redirects

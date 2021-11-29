@@ -93,7 +93,10 @@ Over in the [Command Log](/guides/core-concepts/test-runner#Command-Log) you'll
 see Cypress display the suite, the test and your first assertion (which should
 be passing in green).
 
-<DocsImage src="/img/guides/first-test.png" alt="My first test shown passing in the Test Runner" ></DocsImage>
+<DocsImage
+src="/img/guides/first-test.png"
+alt="My first test shown passing in the Test Runner"
+/>
 
 <Alert type="info">
 
@@ -133,7 +136,7 @@ describe('My First Test', () => {
 })
 -->
 
-<DocsImage src="/img/guides/failing-test.png" alt="Failing test" ></DocsImage>
+<DocsImage src="/img/guides/failing-test.png" alt="Failing test"/>
 
 Cypress provides a nice [Test Runner](/guides/core-concepts/test-runner) that
 gives you a visual structure of suites, tests, and assertions. Soon you'll also
@@ -288,7 +291,10 @@ describe('My First Test', () => {
 })
 -->
 
-<DocsImage src="/img/guides/first-test-failing-contains.png" alt="Test failing to not find content 'hype'" ></DocsImage>
+<DocsImage
+src="/img/guides/first-test-failing-contains.png"
+alt="Test failing to not find content 'hype'"
+/>
 
 <Alert type="warning">
 
@@ -337,9 +343,8 @@ Now we can assert something about this new page!
 
 <Alert type="info">
 
-<Icon name="magic"></Icon> You can see IntelliSense in your spec files by adding
-a single special comment line. Read about
-[Intelligent Code Completion](/guides/tooling/IDE-integration#Triple-slash-directives).
+<Icon name="magic"></Icon> You can see IntelliSense in your spec files by adding a single special comment
+line. Read about [Intelligent Code Completion](/guides/tooling/IDE-integration#Triple-slash-directives).
 
 </Alert>
 
@@ -390,9 +395,7 @@ describe('My First Test', () => {
     cy.url().should('include', '/commands/actions')
 
     // Get an input, type into it and verify that the value has been updated
-    cy.get('.action-email')
-      .type('fake@email.com')
-      .should('have.value', 'fake@email.com')
+    cy.get('.action-email').type('fake@email.com').should('have.value', 'fake@email.com')
   })
 })
 ```
@@ -478,7 +481,10 @@ Take your mouse and **hover over** the `CONTAINS` command in the Command Log.
 
 Do you see what happened?
 
-<DocsImage src="/img/guides/first-test-hover-contains.png" alt="Hovering over the contains tab highlights the dom element in the App in the Test Runner" ></DocsImage>
+<DocsImage
+src="/img/guides/first-test-hover-contains.png"
+alt="Hovering over the contains tab highlights the dom element in the App in the Test Runner"
+/>
 
 Cypress automatically traveled back in time to a snapshot of when that command
 resolved. Additionally, since [`cy.contains()`](/api/commands/contains) finds
@@ -492,13 +498,19 @@ Now if you remember at the end of the test we ended up on a different URL:
 But as we hover over the `CONTAINS`, Cypress reverts back to the URL that was
 present when our snapshot was taken.
 
-<DocsImage src="/img/guides/first-test-url-revert.png" alt="The url address bar shows https://example.cypress.io/" ></DocsImage>
+<DocsImage
+src="/img/guides/first-test-url-revert.png"
+alt="The url address bar shows https://example.cypress.io/"
+/>
 
 ### Snapshots
 
 Commands are also interactive. Go ahead and click on the `CLICK` command.
 
-<DocsImage src="/img/guides/first-test-click-revert.png" alt="A click on the click command in the Command Log with Test Runner labeled as 1, 2, 3" ></DocsImage>
+<DocsImage
+src="/img/guides/first-test-click-revert.png"
+alt="A click on the click command in the Command Log with Test Runner labeled as 1, 2, 3"
+/>
 
 Notice it highlights in purple. This did three things worth noting...
 
@@ -558,7 +570,10 @@ Cypress test.
    DevTools console. This will usually allow you to click on lines in the stack
    trace and open files in your DevTools.
 
-<DocsImage src="/img/guides/command-failure-error.png" alt="example command failure error" ></DocsImage>
+<DocsImage
+src="/img/guides/command-failure-error.png"
+alt="example command failure error"
+/>
 
 ### Page events
 
@@ -567,7 +582,10 @@ another entry for `(NEW URL)`. Neither of these was a command that we issued -
 rather Cypress itself will log out important events from your application when
 they occur. Notice these look different (they are gray and without a number).
 
-<DocsImage src="/img/guides/first-test-page-load.png" alt="Command log shows 'Page load --page loaded--' and 'New url https://example.cypress.io/'" ></DocsImage>
+<DocsImage
+src="/img/guides/first-test-page-load.png"
+alt="Command log shows 'Page load --page loaded--' and 'New url https://example.cypress.io/'"
+/>
 
 **Cypress logs out page events for:**
 
@@ -584,7 +602,10 @@ information to your console.
 Open up your Dev Tools and click on the `GET` for the `.action-email` class
 selector.
 
-<DocsImage src="/img/guides/first-test-console-output.png" alt="Test Runner with get command pinned and console log open showing the yielded element" ></DocsImage>
+<DocsImage
+src="/img/guides/first-test-console-output.png"
+alt="Test Runner with get command pinned and console log open showing the yielded element"
+/>
 
 **We can see Cypress output additional information in the console:**
 
@@ -622,9 +643,7 @@ describe('My First Test', () => {
     cy.url().should('include', '/commands/actions')
 
     // Get an input, type into it and verify that the value has been updated
-    cy.get('.action-email')
-      .type('fake@email.com')
-      .should('have.value', 'fake@email.com')
+    cy.get('.action-email').type('fake@email.com').should('have.value', 'fake@email.com')
   })
 })
 ```
@@ -632,7 +651,10 @@ describe('My First Test', () => {
 Now Cypress provides us a UI (similar to debugger) to step forward through each
 command.
 
-<DocsImage src="/img/guides/first-test-paused.png" alt="Test Runner shows label saying 'Paused' with Command Log showing 'Pause'" ></DocsImage>
+<DocsImage
+src="/img/guides/first-test-paused.png"
+alt="Test Runner shows label saying 'Paused' with Command Log showing 'Pause'"
+/>
 
 #### In action
 
@@ -650,4 +672,7 @@ command.
   strategies in a real-world project.
 - Search Cypress's documentation to quickly find what you need.
 
-<DocsImage src="/img/guides/search-box.png" alt="Use the search box to find relevant documentation" ></DocsImage>
+<DocsImage
+src="/img/guides/search-box.png"
+alt="Use the search box to find relevant documentation"
+/>

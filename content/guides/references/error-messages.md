@@ -11,7 +11,7 @@ This message means that Cypress was unable to find tests in the specified file.
 You'll likely get this message if you have an empty test file and have not yet
 written any tests.
 
-<DocsImage src="/img/guides/no-tests-found.png" alt="No tests found" ></DocsImage>
+<DocsImage src="/img/guides/no-tests-found.png" alt="No tests found"/>
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> We found an error preparing your test file
 
@@ -82,7 +82,7 @@ you can import/require other files as needed.
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> Cypress cannot execute commands outside a running test
 
-<DocsImage src="/img/guides/cypress-cannot-execute.png" alt="Cannot execute commands" ></DocsImage>
+<DocsImage src="/img/guides/cypress-cannot-execute.png" alt="Cannot execute commands"/>
 
 This message means you tried to execute one or more Cypress commands outside of
 a currently running test. Cypress has to be able to associate commands to a
@@ -161,7 +161,10 @@ describe('detachment example', () => {
 })
 -->
 
-<DocsImage src="/img/guides/cy-method-failed-element-is-detached.png" alt="cy.method() failed because element is detached" ></DocsImage>
+<DocsImage
+src="/img/guides/cy-method-failed-element-is-detached.png"
+alt="cy.method() failed because element is detached"
+/>
 
 Cypress errors because it can't interact with "dead" elements - much like a real
 user could not do this either. Understanding how this happens is very
@@ -283,7 +286,10 @@ describe('animating example', () => {
 })
 -->
 
-<DocsImage src="/img/guides/cy-method-failed-element-is-animating.png" alt="cy.method() failed because element is animating" ></DocsImage>
+<DocsImage
+src="/img/guides/cy-method-failed-element-is-animating.png"
+alt="cy.method() failed because element is animating"
+/>
 
 By default Cypress detects if an element you're trying to interact with is
 animating. This check ensures that an element is not animating too quickly for a
@@ -324,7 +330,10 @@ Let's examine several different ways you may get this error message. In every
 situation, you'll need to change something in your test code to prevent the
 error.
 
-<DocsImage src="/img/guides/the-test-has-finished.png" alt="The test has finished but Cypress still has commands" ></DocsImage>
+<DocsImage
+src="/img/guides/the-test-has-finished.png"
+alt="The test has finished but Cypress still has commands"
+/>
 
 <Alert type="warning">
 
@@ -793,7 +802,7 @@ attribute and setting a `CORS` header.
 
 <!-- keep old hash -->
 
-<a name='The-Chromium-Renderer-process-just-crashed'></a>
+<a name="The-Chromium-Renderer-process-just-crashed"></a>
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> The browser process running your tests just exited unexpectedly
 

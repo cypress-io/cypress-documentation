@@ -103,7 +103,11 @@ The Selector Playground helps you cut down on time spent finding the right
 selectors so you can focus on what's important: writing tests that verify your
 app's logic.
 
-<DocsVideo src="/img/guides/migrating-to-cypress/DevTools.mp4" title="interacting with tests in a browser"></DocsVideo>
+<DocsVideo
+src="/img/guides/migrating-to-cypress/DevTools.mp4"
+title="interacting with tests in a browser"
+
+> </DocsVideo>
 
 ### Faster feedback loops
 
@@ -116,7 +120,11 @@ Having your code editor and application under test within a browser side-by-side
 provides an instant feedback loop that allows you to iterate faster with
 confidence.
 
-<DocsVideo src="/img/guides/migrating-to-cypress/codeframe-ex.webm" title="auto-reloading"></DocsVideo>
+<DocsVideo
+src="/img/guides/migrating-to-cypress/codeframe-ex.webm"
+title="auto-reloading"
+
+> </DocsVideo>
 
 ### Time travel through tests
 
@@ -130,7 +138,11 @@ one command to another in the
 elements Cypress acted upon and how your application responded to the simulated
 **real user behavior**.
 
-<DocsVideo src="/img/guides/migrating-to-cypress/interactivity.mp4" title="Time travel debugging"></DocsVideo>
+<DocsVideo
+src="/img/guides/migrating-to-cypress/interactivity.mp4"
+title="Time travel debugging"
+
+> </DocsVideo>
 
 ### Gain Visibility in Headless Mode with Screenshots and Videos
 
@@ -671,9 +683,7 @@ cy.get(':radio').should('be.checked')
 
 ```javascript
 // assert .completed has css style "line-through" for "text-decoration" property
-expect(element(by.css('.completed')).getCssValue('text-decoration')).toBe(
-  'line-through'
-)
+expect(element(by.css('.completed')).getCssValue('text-decoration')).toBe('line-through')
 
 // assert the accordion does not have a "display: none"
 expect(element(by.id('accordion')).getCssValue('display')).not.toBe('none')
@@ -818,11 +828,9 @@ this and more is possible!
 
 ```js
 it('should display a warning when the third-party API is down', () => {
-  cy.intercept(
-    'GET',
-    'https://api.openweathermap.org/data/2.5/weather?q=Atlanta',
-    { statusCode: 500 }
-  )
+  cy.intercept('GET', 'https://api.openweathermap.org/data/2.5/weather?q=Atlanta', {
+    statusCode: 500,
+  })
   cy.get('.weather-forecast').contains('Weather Forecast Unavailable')
 })
 ```

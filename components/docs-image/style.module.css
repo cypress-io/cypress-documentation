@@ -1,0 +1,8 @@
+.docsImage {
+  margin-bottom: 1rem;
+}
+
+.imageNoBorder {
+  border: none !important;
+  box-shadow: none !important;
+}

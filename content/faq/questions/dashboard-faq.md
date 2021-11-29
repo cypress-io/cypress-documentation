@@ -6,7 +6,7 @@ containerClass: faq
 
 ## <Icon name="angle-right"></Icon> What is the Dashboard?
 
-<DocsImage src="/img/dashboard/dashboard-runs-list.png" alt="Dashboard Screenshot" ></DocsImage>
+<DocsImage src="/img/dashboard/dashboard-runs-list.png" alt="Dashboard Screenshot" />
 
 The [Dashboard](https://on.cypress.io/dashboard) is a Cypress service that gives
 you access to tests you've recorded - typically when running Cypress tests from

@@ -217,7 +217,7 @@ The Cypress Test Runner attempts to find all compatible browsers on the user's
 machine. The drop down to select a different browser is in the top right corner
 of the Test Runner.
 
-<DocsImage src="/img/guides/browser-list-dropdown.png" alt="Select a different browser" ></DocsImage>
+<DocsImage src="/img/guides/browser-list-dropdown.png" alt="Select a different browser"/>
 
 Read [Launching Browsers](/guides/guides/launching-browsers) for more
 information on how Cypress controls a real browser during end-to-end tests.
@@ -499,7 +499,10 @@ out functionality that has not yet been released, here is how:
    [https://github.com/cypress-io/cypress/commits/develop](https://github.com/cypress-io/cypress/commits/develop)
 2. Find the commit that you would like to install the pre-release version of.
    Click the comment icon (highlighted in red below):
-   <DocsImage src="/img/guides/install/develop-commit-comment-link.png" alt="Example of a commit for which pre-releases are available. Comment link highlighted in red." ></DocsImage>
+   <DocsImage
+   src="/img/guides/install/develop-commit-comment-link.png"
+   alt="Example of a commit for which pre-releases are available. Comment link highlighted in red."
+   />
 3. You should see several comments from the `cypress-bot` user with instructions
    for installing Cypress pre-releases. Pick the one that corresponds to your
    operating system and CPU architecture, and follow the instructions there to

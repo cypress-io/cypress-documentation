@@ -4,8 +4,7 @@ title: Environment Variables
 
 <Alert type="warning">
 
-<strong class="alert-header">Difference between OS-level and Cypress environment
-variables</strong>
+<strong class="alert-header">Difference between OS-level and Cypress environment variables</strong>
 
 In Cypress, "environment variables" are variables that are accessible via
 `Cypress.env`. These are not the same as OS-level environment variables.

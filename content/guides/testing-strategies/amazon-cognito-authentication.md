@@ -244,10 +244,7 @@ describe('Cognito', function () {
     cy.task('db:seed')
 
     // Programmatically login via Amazon Cognito API
-    cy.loginByCognitoApi(
-      Cypress.env('cognito_username'),
-      Cypress.env('cognito_password')
-    )
+    cy.loginByCognitoApi(Cypress.env('cognito_username'), Cypress.env('cognito_password'))
   })
 
   it('shows onboarding', function () {

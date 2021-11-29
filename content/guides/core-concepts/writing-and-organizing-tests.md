@@ -80,8 +80,7 @@ You can modify the folder configuration in your configuration file. See
 
 <Alert type="info">
 
-<strong class="alert-header">What files should I add to my '.gitignore file'
-?</strong>
+<strong class="alert-header">What files should I add to my '.gitignore file' ?</strong>
 
 Cypress will create a
 [`screenshotsFolder`](/guides/references/configuration#Screenshots) and a
@@ -217,10 +216,9 @@ in every single one of your spec files.
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle"></Icon> Keep in mind, when clicking "Run all
-specs" after [cypress open](/guides/guides/command-line#cypress-open), the code
-in the support file is executed once before all spec files, instead of once
-before each spec file. See [Execution](#Execution) for more details.
+<Icon name="exclamation-triangle"></Icon> Keep in mind, when clicking "Run all specs" after [cypress
+open](/guides/guides/command-line#cypress-open), the code in the support file is executed once before
+all spec files, instead of once before each spec file. See [Execution](#Execution) for more details.
 
 </Alert>
 
@@ -247,7 +245,7 @@ beforeEach(() => {
 })
 ```
 
-<DocsImage src="/img/guides/global-hooks.png" alt="Global hooks for tests" ></DocsImage>
+<DocsImage src="/img/guides/global-hooks.png" alt="Global hooks for tests"/>
 
 <Alert type="info">
 
@@ -429,18 +427,16 @@ describe('Hooks', () => {
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle"></Icon> Before writing `after()` or
-`afterEach()` hooks, please see our
-[thoughts on the anti-pattern of cleaning up state with `after()` or `afterEach()`](/guides/references/best-practices#Using-after-or-afterEach-hooks).
+<Icon name="exclamation-triangle"></Icon> Before writing `after()` or `afterEach()` hooks, please see
+our [thoughts on the anti-pattern of cleaning up state with `after()` or `afterEach()`](/guides/references/best-practices#Using-after-or-afterEach-hooks).
 
 </Alert>
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle"></Icon> Be wary of root-level hooks, as they
-could execute in a surprising order when clicking the "Run all specs" button.
-Instead place them inside `describe` or `context` suites for isolation. Read
-[Be careful when running all specs together](https://glebbahmutov.com/blog/run-all-specs/).
+<Icon name="exclamation-triangle"></Icon> Be wary of root-level hooks, as they could execute in a surprising
+order when clicking the "Run all specs" button. Instead place them inside `describe` or `context` suites
+for isolation. Read [Be careful when running all specs together](https://glebbahmutov.com/blog/run-all-specs/).
 
 </Alert>
 
@@ -521,10 +517,9 @@ specify(name, config, fn)
 
 #### Allowed config values
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Note:** Some
-configuration values are readonly and cannot be changed via test configuration.
-The following configuration values **can be changed** via per test
-configuration:
+<Icon name="exclamation-triangle" color="red"></Icon> **Note:** Some configuration values are readonly
+and cannot be changed via test configuration. The following configuration values **can be changed** via
+per test configuration:
 
 - `animationDistanceThreshold`
 - `baseUrl`
@@ -558,16 +553,11 @@ browsers.
 ```js
 describe('When NOT in Chrome', { browser: '!chrome' }, () => {
   it('Shows warning', () => {
-    cy.get('.browser-warning').should(
-      'contain',
-      'For optimal viewing, use Chrome browser'
-    )
+    cy.get('.browser-warning').should('contain', 'For optimal viewing, use Chrome browser')
   })
 
   it('Links to browser compatibility doc', () => {
-    cy.get('a.browser-compat')
-      .should('have.attr', 'href')
-      .and('include', 'browser-compatibility')
+    cy.get('a.browser-compat').should('have.attr', 'href').and('include', 'browser-compatibility')
   })
 })
 ```
@@ -694,7 +684,10 @@ ensure the best performance. For example the
 has multiple test files, but below we run a single "new-transaction.spec.ts"
 test file.
 
-<DocsImage src="/img/guides/core-concepts/run-single-spec.gif" alt="Running a single spec" ></DocsImage>
+<DocsImage
+src="/img/guides/core-concepts/run-single-spec.gif"
+alt="Running a single spec"
+/>
 
 ### Run all specs
 
@@ -702,14 +695,13 @@ You can run all spec files together by clicking the "Run all specs" button. This
 mode is equivalent to concatenating all spec files together into a single piece
 of test code.
 
-<DocsImage src="/img/guides/core-concepts/run-all-specs.gif" alt="Running all specs" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/run-all-specs.gif" alt="Running all specs"/>
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle"></Icon> Be wary of root-level hooks, as they
-could execute in a surprising order when clicking the "Run all specs" button.
-Instead place them inside `describe` or `context` suites for isolation. Read
-[Be careful when running all specs together](https://glebbahmutov.com/blog/run-all-specs/).
+<Icon name="exclamation-triangle"></Icon> Be wary of root-level hooks, as they could execute in a surprising
+order when clicking the "Run all specs" button. Instead place them inside `describe` or `context` suites
+for isolation. Read [Be careful when running all specs together](https://glebbahmutov.com/blog/run-all-specs/).
 
 </Alert>
 
@@ -726,7 +718,10 @@ specs" button.
   can use folder names to limit the specs; the filter "ui" will match both
   "admin-ui.spec.js" and "ui/admin.spec.js" files.
 
-<DocsImage src="/img/guides/core-concepts/run-selected-specs.gif" alt="Running specs matching the search filter" ></DocsImage>
+<DocsImage
+src="/img/guides/core-concepts/run-selected-specs.gif"
+alt="Running specs matching the search filter"
+/>
 
 ## Test statuses
 
@@ -738,7 +733,10 @@ After the Cypress spec completes every test has one of 4 statuses: **passed**,
 Passed tests have successfully completed all their commands without failing any
 assertions. The test screenshot below shows a passed test:
 
-<DocsImage src="/img/guides/core-concepts/passing-test.png" alt="Test runner with a single passed test" ></DocsImage>
+<DocsImage
+src="/img/guides/core-concepts/passing-test.png"
+alt="Test runner with a single passed test"
+/>
 
 Note that a test can pass after several
 [test retries](/guides/guides/test-retries). In that case the Command Log shows
@@ -749,7 +747,10 @@ some failed attempts, but ultimately the entire test finishes successfully.
 Good news - the failed test has found a problem. Could be much worse - it could
 be a user hitting this bug!
 
-<DocsImage src="/img/guides/core-concepts/failing-test.png" alt="Test runner with a single failed test" ></DocsImage>
+<DocsImage
+src="/img/guides/core-concepts/failing-test.png"
+alt="Test runner with a single failed test"
+/>
 
 After a test fails, the screenshots and videos can help find the problem so it
 can be fixed.
@@ -778,7 +779,10 @@ describe('TodoMVC', () => {
 All 3 tests above are marked _pending_ when Cypress finishes running the spec
 file.
 
-<DocsImage src="/img/guides/core-concepts/different-pending.png" alt="Test runner with three pending tests" ></DocsImage>
+<DocsImage
+src="/img/guides/core-concepts/different-pending.png"
+alt="Test runner with three pending tests"
+/>
 
 So remember - if you (the test writer) knowingly skip a test using one of the
 above three ways, Cypress counts it as a _pending_ test.
@@ -811,7 +815,10 @@ describe('TodoMVC', () => {
 
 If the `beforeEach` hook completes and both tests finish, two tests are passing.
 
-<DocsImage src="/img/guides/core-concepts/two-passing.png" alt="Test runner showing two passing tests" ></DocsImage>
+<DocsImage
+src="/img/guides/core-concepts/two-passing.png"
+alt="Test runner showing two passing tests"
+/>
 
 But what happens if a command inside the `beforeEach` hook fails? For example,
 let's pretend we want to visit a non-existent page `/does-not-exist` instead of
@@ -829,12 +836,18 @@ once, why would we execute it _again_ before the second test? It would just fail
 the same way! So Cypress _skips_ the remaining tests in that block, because they
 would also fail due to the `beforeEach` hook failure.
 
-<DocsImage src="/img/guides/core-concepts/1-skipped.png" alt="Test runner showing a skipped test" ></DocsImage>
+<DocsImage
+src="/img/guides/core-concepts/1-skipped.png"
+alt="Test runner showing a skipped test"
+/>
 
 If we collapse the test commands, we can see the empty box marking the skipped
 test "adds 2 todos".
 
-<DocsImage src="/img/guides/core-concepts/skipped.png" alt="Test runner showing one failed and one skipped test" ></DocsImage>
+<DocsImage
+src="/img/guides/core-concepts/skipped.png"
+alt="Test runner showing one failed and one skipped test"
+/>
 
 The tests that were meant to be executed but were skipped due to some run-time
 problem are marked "skipped" by Cypress.

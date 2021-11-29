@@ -143,10 +143,7 @@ process and logout.
 describe('Okta', function () {
   beforeEach(function () {
     cy.task('db:seed')
-    cy.loginByOktaApi(
-      Cypress.env('auth_username'),
-      Cypress.env('auth_password')
-    )
+    cy.loginByOktaApi(Cypress.env('auth_username'), Cypress.env('auth_password'))
   })
 
   it('shows onboarding', function () {
@@ -303,12 +300,7 @@ for the root path.
 ```jsx
 // src/containers/AppOkta.tsx
 // initial imports ...
-import {
-  LoginCallback,
-  SecureRoute,
-  useOktaAuth,
-  withOktaAuth,
-} from '@okta/okta-react'
+import { LoginCallback, SecureRoute, useOktaAuth, withOktaAuth } from '@okta/okta-react'
 
 // ...
 

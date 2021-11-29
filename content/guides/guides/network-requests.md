@@ -205,7 +205,7 @@ cy.intercept(
 When you use [`cy.intercept()`](/api/commands/intercept) to define a route,
 Cypress displays this under "Routes" in the Command Log.
 
-<DocsImage src="/img/guides/server-routing-table.png" alt="Routing Table"></DocsImage>
+<DocsImage src="/img/guides/server-routing-table.png" alt="Routing Table"/>
 
 When a new test runs, Cypress will restore the default behavior and remove all
 routes and stubs. For a complete reference of the API and options, refer to the
@@ -338,9 +338,7 @@ Cypress to test the _side effect_ of a successful request (the display of the
 Book results), you can test the actual _cause_ of the results.
 
 ```javascript
-cy.intercept('/search*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as(
-  'getSearch'
-)
+cy.intercept('/search*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
 
 // our autocomplete field is throttled
 // meaning it only makes a request after
@@ -366,9 +364,11 @@ test that properly await requests triggered upon auto-complete input changes.
 Check out the example:
 
 - <Icon name="github"></Icon>
-  [Auto-complete test code](https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/cypress/tests/ui/new-transaction.spec.ts#L36-L50)
+  [Auto-complete test
+  code](https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/cypress/tests/ui/new-transaction.spec.ts#L36-L50)
 - <Icon name="video"></Icon>
-  [Auto-complete test run video recording](https://dashboard.cypress.io/projects/7s5okt/runs/2352/test-results/3bf064fd-6959-441c-bf31-a9f276db0627/video)
+  [Auto-complete test run video
+  recording](https://dashboard.cypress.io/projects/7s5okt/runs/2352/test-results/3bf064fd-6959-441c-bf31-a9f276db0627/video)
   in Cypress Dashboard.
 
 </Alert>
@@ -404,7 +404,7 @@ it('test', () => {
 })
 -->
 
-<DocsImage src="/img/guides/clear-source-of-failure.png" alt="Wait Failure"></DocsImage>
+<DocsImage src="/img/guides/clear-source-of-failure.png" alt="Wait Failure"/>
 
 Now we know exactly why our test failed. It had nothing to do with the DOM.
 Instead we can see that either our request never went out or a request went out
@@ -423,9 +423,7 @@ can still verify that our application sends the correct request.
 ```javascript
 // any request to "/search/*" endpoint will automatically receive
 // an array with two book objects
-cy.intercept('/search/*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as(
-  'getSearch'
-)
+cy.intercept('/search/*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as('getSearch')
 
 cy.get('#autocomplete').type('Book')
 
@@ -503,7 +501,10 @@ test in the Command Log. Here is an example of what this looks like:
     })
 -->
 
-<DocsImage src="/img/guides/network-requests/command-log-requests.png" alt="Screenshot of fetch and XHR requests"></DocsImage>
+<DocsImage
+src="/img/guides/network-requests/command-log-requests.png"
+alt="Screenshot of fetch and XHR requests"
+/>
 
 The circular indicator on the left side indicates if the request went to the
 destination server or not. If the circle is solid, the request went to the
@@ -529,14 +530,20 @@ The Command Log will look like this:
     })
 -->
 
-<DocsImage src="/img/guides/network-requests/command-log-stubbed.png" alt="Screenshot of stubbed fetch and unstubbed XHR requests"></DocsImage>
+<DocsImage
+src="/img/guides/network-requests/command-log-stubbed.png"
+alt="Screenshot of stubbed fetch and unstubbed XHR requests"
+/>
 
 The `fetch` request now has an open circle, to indicate that it has been
 stubbed. Also, note that the alias for the `cy.intercept()` is now displayed on
 the right-hand side of the Command Log. If you mouse over the alias, you can see
 more information about how the request was handled:
 
-<DocsImage src="/img/guides/network-requests/command-log-stubbed-tooltip.png" alt="Screenshot of stubbed fetch request with tooltip and unstubbed XHR request"></DocsImage>
+<DocsImage
+src="/img/guides/network-requests/command-log-stubbed-tooltip.png"
+alt="Screenshot of stubbed fetch request with tooltip and unstubbed XHR request"
+/>
 
 Additionally, the request will be flagged if the request and/or response was
 modified by a `cy.intercept()` handler function. If we add this code to modify
@@ -561,7 +568,10 @@ but the request was still fulfilled from the destination (filled indicator):
     })>
 -->
 
-<DocsImage src="/img/guides/network-requests/command-log-req-modified.png" alt="Screenshot of request that has had the req modified"></DocsImage>
+<DocsImage
+src="/img/guides/network-requests/command-log-req-modified.png"
+alt="Screenshot of request that has had the req modified"
+/>
 
 As you can see, "req modified" is displayed in the badge, to indicate the
 request object was modified. "res modified" and "req + res modified" can also be
@@ -573,7 +583,10 @@ additional information in the Console. For example, after clicking the previous
 request for `/users?limit=100` and opening Developer Tools, we can see the
 following:
 
-<DocsImage src="/img/guides/network-requests/request-console-props.png" alt="Screenshot of request that has had the req modified"></DocsImage>
+<DocsImage
+src="/img/guides/network-requests/request-console-props.png"
+alt="Screenshot of request that has had the req modified"
+/>
 
 ## See also
 

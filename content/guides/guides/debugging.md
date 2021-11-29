@@ -93,7 +93,7 @@ The current subject that is yielded by the [`cy.get()`](/api/commands/get) is
 exposed as the variable `subject` within your Developer Tools so that you can
 interact with it in the console.
 
-<DocsImage src="/img/guides/debugging-subject.png" alt="Debugging Subject" ></DocsImage>
+<DocsImage src="/img/guides/debugging-subject.png" alt="Debugging Subject"/>
 
 Use [`.debug()`](/api/commands/debug) to quickly inspect any (or many!) part(s)
 of your application during the test. You can attach it to any Cypress chain of
@@ -143,7 +143,10 @@ information here.
 
 #### When clicking on `.type()` command, the Developer Tools console outputs the following:
 
-<DocsImage src="/img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png" alt="Console Log type" ></DocsImage>
+<DocsImage
+src="/img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png"
+alt="Console Log type"
+/>
 
 ## Errors
 
@@ -190,7 +193,10 @@ will show on failure that includes the following pieces of information:
    DevTools console. This will usually allow you to click on lines in the stack
    trace and open files in your DevTools.
 
-<DocsImage src="/img/guides/command-failure-error.png" alt="example command failure error" ></DocsImage>
+<DocsImage
+src="/img/guides/command-failure-error.png"
+alt="example command failure error"
+/>
 
 ### Source maps
 
@@ -250,7 +256,10 @@ by [Cypress Ambassador](https://www.cypress.io/ambassadors/) Josh Justice.
 Cypress emits multiple events you can listen to as shown below.
 [Read more about logging events in the browser here](/api/events/catalog-of-events#Logging-All-Events).
 
-<DocsImage src="/img/api/catalog-of-events/console-log-events-debug.png" alt="console log events for debugging" ></DocsImage>
+<DocsImage
+src="/img/api/catalog-of-events/console-log-events-debug.png"
+alt="console log events for debugging"
+/>
 
 ## Run Cypress command outside the test
 

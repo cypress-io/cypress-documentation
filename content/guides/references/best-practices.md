@@ -30,16 +30,15 @@ and start testing.
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Sharing
-page objects, using your UI to log in, and not taking shortcuts.
+<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Sharing page objects, using your
+UI to log in, and not taking shortcuts.
 
 </Alert>
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Test specs in
-isolation, programmatically log into your application, and take control of your
-application's state.
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Test specs in isolation, programmatically
+log into your application, and take control of your application's state.
 
 </Alert>
 
@@ -57,16 +56,15 @@ in our examples.
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Using
-highly brittle selectors that are subject to change.
+<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Using highly brittle selectors
+that are subject to change.
 
 </Alert>
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use `data-*`
-attributes to provide context to your selectors and isolate them from CSS or JS
-changes.
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use `data-*` attributes to provide
+context to your selectors and isolate them from CSS or JS changes.
 
 </Alert>
 
@@ -89,13 +87,7 @@ Luckily, it is possible to avoid both of these problems.
 Given a button that we want to interact with:
 
 ```html
-<button
-  id="main"
-  class="btn btn-large"
-  name="submission"
-  role="button"
-  data-cy="submit"
->
+<button id="main" class="btn btn-large" name="submission" role="button" data-cy="submit">
   Submit
 </button>
 ```
@@ -202,16 +194,15 @@ If the answer is **no** because the text could be changed - then use
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Trying
-to assign the return value of Commands with `const`, `let`, or `var`.
+<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Trying to assign the return value
+of Commands with `const`, `let`, or `var`.
 
 </Alert>
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use
-[closures to access and store](/guides/core-concepts/variables-and-aliases) what
-Commands yield you.
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use [closures to access and store](/guides/core-concepts/variables-and-aliases)
+what Commands yield you.
 
 </Alert>
 
@@ -257,17 +248,16 @@ For working with either of these patterns, please read our
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Trying
-to visit or interact with sites or servers you do not control.
+<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Trying to visit or interact with
+sites or servers you do not control.
 
 </Alert>
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Only test
-what you control. Try to avoid requiring a 3rd party server. When necessary,
-always use [`cy.request()`](/api/commands/request) to talk to 3rd party servers
-via their APIs.
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Only test what you control. Try to
+avoid requiring a 3rd party server. When necessary, always use [`cy.request()`](/api/commands/request)
+to talk to 3rd party servers via their APIs.
 
 </Alert>
 
@@ -366,9 +356,10 @@ Cypress can even load the received HTML email in its browser to verify the
 email's functionality and visual style:
 
 <DocsImage
-  src="/img/guides/references/email-test.png"
-  title="The HTML email loaded during the test"
-  alt="The test finds and clicks the Confirm registration button"></DocsImage>
+src="/img/guides/references/email-test.png"
+title="The HTML email loaded during the test"
+alt="The test finds and clicks the Confirm registration button"
+/>
 
 3. In other cases, you should try using [`cy.request()`](/api/commands/request)
    command to query the an endpoint on your server that tells you what email has
@@ -384,15 +375,14 @@ email's functionality and visual style:
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Coupling
-multiple tests together.
+<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Coupling multiple tests together.
 
 </Alert>
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Tests should
-always be able to be run independently from one another **and still pass**.
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Tests should always be able to be
+run independently from one another **and still pass**.
 
 </Alert>
 
@@ -501,15 +491,15 @@ can be run independently and pass.
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Acting
-like you're writing unit tests.
+<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Acting like you're writing unit
+tests.
 
 </Alert>
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Add multiple
-assertions and don't worry about it
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Add multiple assertions and don't
+worry about it
 
 </Alert>
 
@@ -581,15 +571,14 @@ describe('my form', () => {
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Using
-`after` or `afterEach` hooks to clean up state.
+<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Using `after` or `afterEach`
+hooks to clean up state.
 
 </Alert>
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Clean up
-state **before** tests run.
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Clean up state **before** tests run.
 
 </Alert>
 
@@ -775,16 +764,15 @@ script.
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Waiting
-for arbitrary time periods using [`cy.wait(Number)`](/api/commands/wait#Time).
+<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Waiting for arbitrary time periods
+using [`cy.wait(Number)`](/api/commands/wait#Time).
 
 </Alert>
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use route
-aliases or assertions to guard Cypress from proceeding until an explicit
-condition is met.
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use route aliases or assertions to
+guard Cypress from proceeding until an explicit condition is met.
 
 </Alert>
 
@@ -838,9 +826,7 @@ Alternatively a better solution to this problem is by waiting explicitly for an
 aliased route.
 
 ```javascript
-cy.intercept('GET', '/users', [{ name: 'Maggy' }, { name: 'Joan' }]).as(
-  'getUsers'
-)
+cy.intercept('GET', '/users', [{ name: 'Maggy' }, { name: 'Joan' }]).as('getUsers')
 cy.get('#fetch').click()
 cy.wait('@getUsers') // <--- wait explicitly for this route to finish
 cy.get('table tr').should('have.length', 2)
@@ -850,16 +836,15 @@ cy.get('table tr').should('have.length', 2)
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Trying
-to start a web server from within Cypress scripts with
-[`cy.exec()`](/api/commands/exec) or [`cy.task()`](/api/commands/task).
+<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Trying to start a web server
+from within Cypress scripts with [`cy.exec()`](/api/commands/exec) or [`cy.task()`](/api/commands/task).
 
 </Alert>
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Start a web
-server prior to running Cypress.
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Start a web server prior to running
+Cypress.
 
 </Alert>
 
@@ -900,16 +885,15 @@ We have
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Using
-[cy.visit()](/api/commands/visit) without setting a `baseUrl`.
+<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Using [cy.visit()](/api/commands/visit)
+without setting a `baseUrl`.
 
 </Alert>
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Set a
-`baseUrl` in your
-[configuration file (`cypress.json` by default)](/guides/references/configuration).
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Set a `baseUrl` in your [configuration
+file (`cypress.json` by default)](/guides/references/configuration).
 
 </Alert>
 
@@ -927,7 +911,10 @@ port.
 
 ### Without `baseUrl` set, Cypress loads main window in `localhost` + random port
 
-<DocsImage src="/img/guides/cypress-loads-in-localhost-and-random-port.png" alt="Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.coffee" ></DocsImage>
+<DocsImage
+src="/img/guides/cypress-loads-in-localhost-and-random-port.png"
+alt="Url address shows localhost:53927/\_\_/#tests/integration/organizations/list_spec.coffee"
+/>
 
 As soon as it encounters a [cy.visit()](/api/commands/visit), Cypress then
 switches to the url of the main window to the url specified in your visit. This
@@ -946,14 +933,23 @@ load the main window in the `baseUrl` you specified as soon as your tests start.
 
 ### With `baseUrl` set, Cypress loads main window in `baseUrl`
 
-<DocsImage src="/img/guides/cypress-loads-window-in-base-url-localhost.png" alt="Url address bar shows localhost:8484/__tests/integration/organizations/list_spec.coffee" ></DocsImage>
+<DocsImage
+src="/img/guides/cypress-loads-window-in-base-url-localhost.png"
+alt="Url address bar shows localhost:8484/\_\_tests/integration/organizations/list_spec.coffee"
+/>
 
 Having a `baseUrl` set gives you the added bonus of seeing an error if your
 server is not running during `cypress open` at the specified `baseUrl`.
 
-<DocsImage src="/img/guides/cypress-ensures-baseUrl-server-is-running.png" alt="Test Runner with warning about how Cypress could not verify server set as the baseUrl is running"></DocsImage>
+<DocsImage
+src="/img/guides/cypress-ensures-baseUrl-server-is-running.png"
+alt="Test Runner with warning about how Cypress could not verify server set as the baseUrl is running"
+/>
 
 We also display an error if your server is not running at the specified
 `baseUrl` during `cypress run` after several retries.
 
-<DocsImage src="/img/guides/cypress-verifies-server-is-running-during-cypress-run.png" alt="The terminal warns and retries when the url at your baseUrl is not running" ></DocsImage>
+<DocsImage
+src="/img/guides/cypress-verifies-server-is-running-during-cypress-run.png"
+alt="The terminal warns and retries when the url at your baseUrl is not running"
+/>

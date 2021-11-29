@@ -478,8 +478,7 @@ For instance you may want to do this:
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> The following code is not
-valid.
+<Icon name="exclamation-triangle" color="red"></Icon> The following code is not valid.
 
 </Alert>
 
@@ -520,8 +519,7 @@ Let's reimagine our "Welcome Wizard" example from before.
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> The following code is not
-valid.
+<Icon name="exclamation-triangle" color="red"></Icon> The following code is not valid.
 
 </Alert>
 

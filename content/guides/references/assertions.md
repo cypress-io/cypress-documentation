@@ -32,51 +32,51 @@ These chainers are available for BDD assertions (`expect`/`should`). Aliases
 listed can be used interchangeably with their original chainer. You can see the
 entire list of available BDD Chai assertions [here](http://chaijs.com/api/bdd/).
 
-| Chainer                                                                                                              | Example                                                                                                                               |
-| -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| not                                                                                                                  | `expect(name).to.not.equal('Jane')`                                                                                                   |
-| deep                                                                                                                 | `expect(obj).to.deep.equal({ name: 'Jane' })`                                                                                         |
-| nested                                                                                                               | `expect({a: {b: ['x', 'y']}}).to.have.nested.property('a.b[1]')`<br>`expect({a: {b: ['x', 'y']}}).to.nested.include({'a.b[1]': 'y'})` |
-| ordered                                                                                                              | `expect([1, 2]).to.have.ordered.members([1, 2]).but.not.have.ordered.members([2, 1])`                                                 |
-| any                                                                                                                  | `expect(arr).to.have.any.keys('age')`                                                                                                 |
-| all                                                                                                                  | `expect(arr).to.have.all.keys('name', 'age')`                                                                                         |
-| a(_type_) <br><small class="aliases"><strong>Aliases: </strong>an</small>                                            | `expect('test').to.be.a('string')`                                                                                                    |
-| include(_value_) <br><small class="aliases"><strong>Aliases: </strong>contain, includes, contains</small>            | `expect([1,2,3]).to.include(2)`                                                                                                       |
-| ok                                                                                                                   | `expect(undefined).to.not.be.ok`                                                                                                      |
-| true                                                                                                                 | `expect(true).to.be.true`                                                                                                             |
-| false                                                                                                                | `expect(false).to.be.false`                                                                                                           |
-| null                                                                                                                 | `expect(null).to.be.null`                                                                                                             |
-| undefined                                                                                                            | `expect(undefined).to.be.undefined`                                                                                                   |
-| exist                                                                                                                | `expect(myVar).to.exist`                                                                                                              |
-| empty                                                                                                                | `expect([]).to.be.empty`                                                                                                              |
-| arguments <br><small class="aliases"><strong>Aliases: </strong>Arguments</small>                                     | `expect(arguments).to.be.arguments`                                                                                                   |
-| equal(_value_) <br><small class="aliases"><strong>Aliases: </strong>equals, eq</small>                               | `expect(42).to.equal(42)`                                                                                                             |
-| deep.equal(_value_)                                                                                                  | `expect({ name: 'Jane' }).to.deep.equal({ name: 'Jane' })`                                                                            |
-| eql(_value_) <br><small class="aliases"><strong>Aliases: </strong>eqls</small>                                       | `expect({ name: 'Jane' }).to.eql({ name: 'Jane' })`                                                                                   |
-| greaterThan(_value_) <br><small class="aliases"><strong>Aliases: </strong>gt, above</small>                          | `expect(10).to.be.greaterThan(5)`                                                                                                     |
-| least(_value_)<br><small class="aliases"><strong>Aliases: </strong>gte</small>                                       | `expect(10).to.be.at.least(10)`                                                                                                       |
-| lessThan(_value_) <br><small class="aliases"><strong>Aliases: </strong>lt, below</small>                             | `expect(5).to.be.lessThan(10)`                                                                                                        |
-| most(_value_) <br><small class="aliases"><strong>Aliases: </strong>lte</small>                                       | `expect('test').to.have.length.of.at.most(4)`                                                                                         |
-| within(_start_, _finish_)                                                                                            | `expect(7).to.be.within(5,10)`                                                                                                        |
-| instanceOf(_constructor_) <br><small class="aliases"><strong>Aliases: </strong>instanceof</small>                    | `expect([1, 2, 3]).to.be.instanceOf(Array)`                                                                                           |
-| property(_name_, _[value]_)                                                                                          | `expect(obj).to.have.property('name')`                                                                                                |
-| deep.property(_name_, _[value]_)                                                                                     | `expect(deepObj).to.have.deep.property('tests[1]', 'e2e')`                                                                            |
-| ownProperty(_name_) <br><small class="aliases"><strong>Aliases: </strong>haveOwnProperty, own.property</small>       | `expect('test').to.have.ownProperty('length')`                                                                                        |
-| ownPropertyDescriptor(_name_) <br><small class="aliases"><strong>Aliases: </strong>haveOwnPropertyDescriptor</small> | `expect({a: 1}).to.have.ownPropertyDescriptor('a')`                                                                                   |
-| lengthOf(_value_)                                                                                                    | `expect('test').to.have.lengthOf(3)`                                                                                                  |
-| match(_RegExp_) <br><small class="aliases"><strong>Aliases: </strong>matches</small>                                 | `expect('testing').to.match(/^test/)`                                                                                                 |
-| string(_string_)                                                                                                     | `expect('testing').to.have.string('test')`                                                                                            |
-| keys(_key1_, _[key2]_, _[...]_) <br><small class="aliases"><strong>Aliases: </strong>key</small>                     | `expect({ pass: 1, fail: 2 }).to.have.keys('pass', 'fail')`                                                                           |
-| throw(_constructor_) <br><small class="aliases"><strong>Aliases: </strong>throws, Throw</small>                      | `expect(fn).to.throw(Error)`                                                                                                          |
-| respondTo(_method_) <br><small class="aliases"><strong>Aliases: </strong>respondsTo</small>                          | `expect(obj).to.respondTo('getName')`                                                                                                 |
-| itself                                                                                                               | `expect(Foo).itself.to.respondTo('bar')`                                                                                              |
-| satisfy(_method_) <br><small class="aliases"><strong>Aliases: </strong>satisfies</small>                             | `expect(1).to.satisfy((num) => { return num > 0 })`                                                                                   |
-| closeTo(_expected_, _delta_) <br><small class="aliases"><strong>Aliases: </strong>approximately</small>              | `expect(1.5).to.be.closeTo(1, 0.5)`                                                                                                   |
-| members(_set_)                                                                                                       | `expect([1, 2, 3]).to.include.members([3, 2])`                                                                                        |
-| oneOf(_values_)                                                                                                      | `expect(2).to.be.oneOf([1,2,3])`                                                                                                      |
-| change(_function_) <br><small class="aliases"><strong>Aliases: </strong>changes</small>                              | `expect(fn).to.change(obj, 'val')`                                                                                                    |
-| increase(_function_) <br><small class="aliases"><strong>Aliases: </strong>increases</small>                          | `expect(fn).to.increase(obj, 'val')`                                                                                                  |
-| decrease(_function_) <br><small class="aliases"><strong>Aliases: </strong>decreases</small>                          | `expect(fn).to.decrease(obj, 'val')`                                                                                                  |
+| Chainer                                                                                                               | Example                                                                                                                                |
+| --------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| not                                                                                                                   | `expect(name).to.not.equal('Jane')`                                                                                                    |
+| deep                                                                                                                  | `expect(obj).to.deep.equal({ name: 'Jane' })`                                                                                          |
+| nested                                                                                                                | `expect({a: {b: ['x', 'y']}}).to.have.nested.property('a.b[1]')`<br/>`expect({a: {b: ['x', 'y']}}).to.nested.include({'a.b[1]': 'y'})` |
+| ordered                                                                                                               | `expect([1, 2]).to.have.ordered.members([1, 2]).but.not.have.ordered.members([2, 1])`                                                  |
+| any                                                                                                                   | `expect(arr).to.have.any.keys('age')`                                                                                                  |
+| all                                                                                                                   | `expect(arr).to.have.all.keys('name', 'age')`                                                                                          |
+| a(_type_) <br/><small class="aliases"><strong>Aliases: </strong>an</small>                                            | `expect('test').to.be.a('string')`                                                                                                     |
+| include(_value_) <br/><small class="aliases"><strong>Aliases: </strong>contain, includes, contains</small>            | `expect([1,2,3]).to.include(2)`                                                                                                        |
+| ok                                                                                                                    | `expect(undefined).to.not.be.ok`                                                                                                       |
+| true                                                                                                                  | `expect(true).to.be.true`                                                                                                              |
+| false                                                                                                                 | `expect(false).to.be.false`                                                                                                            |
+| null                                                                                                                  | `expect(null).to.be.null`                                                                                                              |
+| undefined                                                                                                             | `expect(undefined).to.be.undefined`                                                                                                    |
+| exist                                                                                                                 | `expect(myVar).to.exist`                                                                                                               |
+| empty                                                                                                                 | `expect([]).to.be.empty`                                                                                                               |
+| arguments <br/><small class="aliases"><strong>Aliases: </strong>Arguments</small>                                     | `expect(arguments).to.be.arguments`                                                                                                    |
+| equal(_value_) <br/><small class="aliases"><strong>Aliases: </strong>equals, eq</small>                               | `expect(42).to.equal(42)`                                                                                                              |
+| deep.equal(_value_)                                                                                                   | `expect({ name: 'Jane' }).to.deep.equal({ name: 'Jane' })`                                                                             |
+| eql(_value_) <br/><small class="aliases"><strong>Aliases: </strong>eqls</small>                                       | `expect({ name: 'Jane' }).to.eql({ name: 'Jane' })`                                                                                    |
+| greaterThan(_value_) <br/><small class="aliases"><strong>Aliases: </strong>gt, above</small>                          | `expect(10).to.be.greaterThan(5)`                                                                                                      |
+| least(_value_)<br/><small class="aliases"><strong>Aliases: </strong>gte</small>                                       | `expect(10).to.be.at.least(10)`                                                                                                        |
+| lessThan(_value_) <br/><small class="aliases"><strong>Aliases: </strong>lt, below</small>                             | `expect(5).to.be.lessThan(10)`                                                                                                         |
+| most(_value_) <br/><small class="aliases"><strong>Aliases: </strong>lte</small>                                       | `expect('test').to.have.length.of.at.most(4)`                                                                                          |
+| within(_start_, _finish_)                                                                                             | `expect(7).to.be.within(5,10)`                                                                                                         |
+| instanceOf(_constructor_) <br/><small class="aliases"><strong>Aliases: </strong>instanceof</small>                    | `expect([1, 2, 3]).to.be.instanceOf(Array)`                                                                                            |
+| property(_name_, _[value]_)                                                                                           | `expect(obj).to.have.property('name')`                                                                                                 |
+| deep.property(_name_, _[value]_)                                                                                      | `expect(deepObj).to.have.deep.property('tests[1]', 'e2e')`                                                                             |
+| ownProperty(_name_) <br/><small class="aliases"><strong>Aliases: </strong>haveOwnProperty, own.property</small>       | `expect('test').to.have.ownProperty('length')`                                                                                         |
+| ownPropertyDescriptor(_name_) <br/><small class="aliases"><strong>Aliases: </strong>haveOwnPropertyDescriptor</small> | `expect({a: 1}).to.have.ownPropertyDescriptor('a')`                                                                                    |
+| lengthOf(_value_)                                                                                                     | `expect('test').to.have.lengthOf(3)`                                                                                                   |
+| match(_RegExp_) <br/><small class="aliases"><strong>Aliases: </strong>matches</small>                                 | `expect('testing').to.match(/^test/)`                                                                                                  |
+| string(_string_)                                                                                                      | `expect('testing').to.have.string('test')`                                                                                             |
+| keys(_key1_, _[key2]_, _[...]_) <br/><small class="aliases"><strong>Aliases: </strong>key</small>                     | `expect({ pass: 1, fail: 2 }).to.have.keys('pass', 'fail')`                                                                            |
+| throw(_constructor_) <br/><small class="aliases"><strong>Aliases: </strong>throws, Throw</small>                      | `expect(fn).to.throw(Error)`                                                                                                           |
+| respondTo(_method_) <br/><small class="aliases"><strong>Aliases: </strong>respondsTo</small>                          | `expect(obj).to.respondTo('getName')`                                                                                                  |
+| itself                                                                                                                | `expect(Foo).itself.to.respondTo('bar')`                                                                                               |
+| satisfy(_method_) <br/><small class="aliases"><strong>Aliases: </strong>satisfies</small>                             | `expect(1).to.satisfy((num) => { return num > 0 })`                                                                                    |
+| closeTo(_expected_, _delta_) <br/><small class="aliases"><strong>Aliases: </strong>approximately</small>              | `expect(1.5).to.be.closeTo(1, 0.5)`                                                                                                    |
+| members(_set_)                                                                                                        | `expect([1, 2, 3]).to.include.members([3, 2])`                                                                                         |
+| oneOf(_values_)                                                                                                       | `expect(2).to.be.oneOf([1,2,3])`                                                                                                       |
+| change(_function_) <br/><small class="aliases"><strong>Aliases: </strong>changes</small>                              | `expect(fn).to.change(obj, 'val')`                                                                                                     |
+| increase(_function_) <br/><small class="aliases"><strong>Aliases: </strong>increases</small>                          | `expect(fn).to.increase(obj, 'val')`                                                                                                   |
+| decrease(_function_) <br/><small class="aliases"><strong>Aliases: </strong>decreases</small>                          | `expect(fn).to.decrease(obj, 'val')`                                                                                                   |
 
 These getters are also available for BDD assertions. They don't actually do
 anything, but they enable you to write clear, english sentences.
@@ -144,29 +144,29 @@ You will commonly use these chainers after using DOM commands like:
 
 <!-- textlint-disable -->
 
-| Chainers                | Assertion                                                            |
-| ----------------------- | -------------------------------------------------------------------- |
-| attr(_name_, _[value]_) | `expect($el).to.have.attr('foo', 'bar')`                             |
-| prop(_name_, _[value]_) | `expect($el).to.have.prop('disabled', false)`                        |
-| css(_name_, _[value]_)  | `expect($el).to.have.css('background-color', 'rgb(0, 0, 0)')`        |
-| data(_name_, _[value]_) | `expect($el).to.have.data('foo', 'bar')`                             |
-| class(_className_)      | `expect($el).to.have.class('foo')`                                   |
-| id(_id_)                | `expect($el).to.have.id('foo')`                                      |
-| html(_html_)            | `expect($el).to.have.html('I love testing')`                         |
-| text(_text_)            | `expect($el).to.have.text('I love testing')`                         |
-| value(_value_)          | `expect($el).to.have.value('test@dev.com')`                          |
-| visible                 | `expect($el).to.be.visible`                                          |
-| hidden                  | `expect($el).to.be.hidden`                                           |
-| selected                | `expect($option).not.to.be.selected`                                 |
-| checked                 | `expect($input).not.to.be.checked`                                   |
-| focus[ed]               | `expect($input).not.to.be.focused`<br>`expect($input).to.have.focus` |
-| enabled                 | `expect($input).to.be.enabled`                                       |
-| disabled                | `expect($input).to.be.disabled`                                      |
-| empty                   | `expect($el).not.to.be.empty`                                        |
-| exist                   | `expect($nonexistent).not.to.exist`                                  |
-| match(_selector_)       | `expect($emptyEl).to.match(':empty')`                                |
-| contain(_text_)         | `expect($el).to.contain('text')`                                     |
-| descendants(_selector_) | `expect($el).to.have.descendants('div')`                             |
+| Chainers                | Assertion                                                             |
+| ----------------------- | --------------------------------------------------------------------- |
+| attr(_name_, _[value]_) | `expect($el).to.have.attr('foo', 'bar')`                              |
+| prop(_name_, _[value]_) | `expect($el).to.have.prop('disabled', false)`                         |
+| css(_name_, _[value]_)  | `expect($el).to.have.css('background-color', 'rgb(0, 0, 0)')`         |
+| data(_name_, _[value]_) | `expect($el).to.have.data('foo', 'bar')`                              |
+| class(_className_)      | `expect($el).to.have.class('foo')`                                    |
+| id(_id_)                | `expect($el).to.have.id('foo')`                                       |
+| html(_html_)            | `expect($el).to.have.html('I love testing')`                          |
+| text(_text_)            | `expect($el).to.have.text('I love testing')`                          |
+| value(_value_)          | `expect($el).to.have.value('test@dev.com')`                           |
+| visible                 | `expect($el).to.be.visible`                                           |
+| hidden                  | `expect($el).to.be.hidden`                                            |
+| selected                | `expect($option).not.to.be.selected`                                  |
+| checked                 | `expect($input).not.to.be.checked`                                    |
+| focus[ed]               | `expect($input).not.to.be.focused`<br/>`expect($input).to.have.focus` |
+| enabled                 | `expect($input).to.be.enabled`                                        |
+| disabled                | `expect($input).to.be.disabled`                                       |
+| empty                   | `expect($el).not.to.be.empty`                                         |
+| exist                   | `expect($nonexistent).not.to.exist`                                   |
+| match(_selector_)       | `expect($emptyEl).to.match(':empty')`                                 |
+| contain(_text_)         | `expect($el).to.contain('text')`                                      |
+| descendants(_selector_) | `expect($el).to.have.descendants('div')`                              |
 
 <!-- textlint-enable -->
 
@@ -404,10 +404,7 @@ removed.
 
 ```javascript
 // at first the item is marked completed
-cy.contains('li.todo', 'Write tests')
-  .should('have.class', 'completed')
-  .find('.toggle')
-  .click()
+cy.contains('li.todo', 'Write tests').should('have.class', 'completed').find('.toggle').click()
 
 // the CSS class has been removed
 cy.contains('li.todo', 'Write tests').should('not.have.class', 'completed')
@@ -444,9 +441,7 @@ cy.get('div').should(($div) => {
 You can attach multiple assertions to the same command.
 
 ```html
-<a class="assertions-link active" href="https://on.cypress.io" target="_blank"
-  >Cypress Docs</a
->
+<a class="assertions-link active" href="https://on.cypress.io" target="_blank">Cypress Docs</a>
 ```
 
 ```js

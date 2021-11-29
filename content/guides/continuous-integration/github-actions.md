@@ -452,7 +452,10 @@ refer to the
 [.github/workflows/main.yml](https://github.com/cypress-io/cypress-realworld-app/blob/develop/.github/workflows/main.yml)
 file.
 
-<DocsImage src="/img/guides/github-actions/rwa-run-matrix.png" alt="Cypress Real World App GitHub Actions Matrix"></DocsImage>
+<DocsImage
+src="/img/guides/github-actions/rwa-run-matrix.png"
+alt="Cypress Real World App GitHub Actions Matrix"
+/>
 
 ## See also
 

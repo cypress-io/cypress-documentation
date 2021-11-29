@@ -31,13 +31,19 @@ it('completes todo', () => {
 })
 ```
 
-<DocsImage src="/img/guides/visual-testing/completed-test.gif" alt="Passing Cypress functional test" ></DocsImage>
+<DocsImage
+src="/img/guides/visual-testing/completed-test.gif"
+alt="Passing Cypress functional test"
+/>
 
 Cypress does NOT see how the page actually looks though. For example, Cypress
 will not see if the CSS class `completed` grays out the label element and adds a
 strike-through line.
 
-<DocsImage src="/img/guides/visual-testing/completed-item.png" alt="Completed item style" ></DocsImage>
+<DocsImage
+src="/img/guides/visual-testing/completed-item.png"
+alt="Completed item style"
+/>
 
 You could technically write a functional test asserting the CSS properties using
 the [`have.css` assertion](/guides/references/assertions#CSS), but these may
@@ -98,12 +104,12 @@ side within the Cypress Test Runner if pixel difference is above the threshold;
 notice how the baseline image (_Expected result_) has the label text with the
 line through, while the new image (_Actual result_) does not have it.
 
-<DocsImage src="/img/guides/visual-testing/diff.png" alt="Baseline vs current image" ></DocsImage>
+<DocsImage src="/img/guides/visual-testing/diff.png" alt="Baseline vs current image"/>
 
 Like most image comparison tools, the plugin also shows a difference view on
 mouse hover:
 
-<DocsImage src="/img/guides/visual-testing/diff-2.png" alt="Highlighted changes" ></DocsImage>
+<DocsImage src="/img/guides/visual-testing/diff-2.png" alt="Highlighted changes"/>
 
 ## Tooling
 
@@ -242,8 +248,8 @@ verify the page appearance.
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Take a
-snapshot after you confirm the page is done changing.
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Take a snapshot after you confirm
+the page is done changing.
 
 </Alert>
 
@@ -274,8 +280,8 @@ cy.mySnapshotCommand()
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Control the
-timestamp inside the application under test.
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Control the timestamp inside the application
+under test.
 
 </Alert>
 
@@ -295,9 +301,8 @@ cy.mySnapshotCommand()
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use
-[cy.fixture()](/api/commands/fixture) and network mocking to set the application
-state.
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use [cy.fixture()](/api/commands/fixture)
+and network mocking to set the application state.
 
 </Alert>
 
@@ -316,8 +321,8 @@ cy.mySnapshotCommand()
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use visual
-diffing to check individual DOM elements rather than the entire page.
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use visual diffing to check individual
+DOM elements rather than the entire page.
 
 </Alert>
 
@@ -328,9 +333,8 @@ breaking tests in other unrelated components.
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use
-[Component Testing plugins](/plugins/directory) to test the individual
-components functionality in addition to end-to-end and visual tests.
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use [Component Testing plugins](/plugins/directory)
+to test the individual components functionality in addition to end-to-end and visual tests.
 
 </Alert>
 
@@ -349,9 +353,9 @@ the
 - [Visual Testing Plugins](/plugins/directory#visual-testing)
 - [Writing a Plugin](/api/plugins/writing-a-plugin)
 - <Icon name="github"></Icon>
-  [Cypress Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
-  is a full stack example application that demonstrates **best practices and
-  scalable strategies with Cypress in practical and realistic scenarios**.
+  [Cypress Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) is a full
+  stack example application that demonstrates **best practices and scalable strategies with Cypress
+  in practical and realistic scenarios**.
 - Read the blog post
   [Debug a Flaky Visual Regression Test](https://www.cypress.io/blog/2020/10/02/debug-a-flaky-visual-regression-test/)
 - Read the blog post

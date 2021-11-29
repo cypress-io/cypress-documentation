@@ -11,7 +11,10 @@ When clicking on a file path from the
 on your system. If the editor supports inline highlighting of the file, the file
 will open with the cursor located on the line and column of interest.
 
-<DocsImage src="/img/guides/file-opener-ide-go-to-line.gif" alt="Open file at line in VS Code" ></DocsImage>
+<DocsImage
+src="/img/guides/file-opener-ide-go-to-line.gif"
+alt="Open file at line in VS Code"
+/>
 
 The first time you click a file path, Cypress will prompt you to select which
 location you prefer to open the file. You can choose to open it in your:
@@ -34,7 +37,10 @@ your selected application without prompting you to choose. If you want to change
 your selection, you can do so in the **Settings** tab of the Cypress Test Runner
 by clicking under **File Opener Preference**.
 
-<DocsImage src="/img/guides/file-opener-preference-settings-tab.png" alt="screenshot of Test Runner settings tab with file opener preference panel" ></DocsImage>
+<DocsImage
+src="/img/guides/file-opener-preference-settings-tab.png"
+alt="screenshot of Test Runner settings tab with file opener preference panel"
+/>
 
 ## Extensions & Plugins
 

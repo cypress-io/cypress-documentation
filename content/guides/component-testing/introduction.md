@@ -210,9 +210,7 @@ module.exports = (on, config) => {
     // Vue's Webpack configuration
     const webpackConfig = require('@vue/cli-service/webpack.config.js')
 
-    on('dev-server:start', (options) =>
-      startDevServer({ options, webpackConfig })
-    )
+    on('dev-server:start', (options) => startDevServer({ options, webpackConfig }))
   }
 }
 ```
@@ -230,9 +228,7 @@ module.exports = (on, config) => {
     // Your project's Webpack configuration
     const webpackConfig = require('../../webpack.config.js')
 
-    on('dev-server:start', (options) =>
-      startDevServer({ options, webpackConfig })
-    )
+    on('dev-server:start', (options) => startDevServer({ options, webpackConfig }))
   }
 }
 ```
@@ -331,7 +327,10 @@ npx cypress open-ct
 
 - Select the spec file in the sidebar. You should see the following:
 
-<DocsImage src="/img/guides/component-testing/one-spec.png" alt="Single Spec file with single test run" ></DocsImage>
+<DocsImage
+src="/img/guides/component-testing/one-spec.png"
+alt="Single Spec file with single test run"
+/>
 
 - Try to modify the test in your editor, make the test fail, etc. The tests will
   re-run instantly with immediate visual feedback.
@@ -349,7 +348,10 @@ npx cypress run-ct
 
 In the project we just built, this command will show the following results.
 
-<DocsImage src="/img/guides/component-testing/run-result.png" alt="Result of headless test run" ></DocsImage>
+<DocsImage
+src="/img/guides/component-testing/run-result.png"
+alt="Result of headless test run"
+/>
 
 To make the component tests part of your
 [continuous integration](/guides/continuous-integration/introduction) pipeline,

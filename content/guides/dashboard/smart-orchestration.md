@@ -27,8 +27,9 @@ troubleshooting failures and deploying fixes.
 
 <Alert type="info">
 
-<strong class="alert-header"><Icon name="graduation-cap"></Icon> Consider the
-Scenario</strong>
+<strong class="alert-header">
+  <Icon name="graduation-cap"></Icon> Consider the Scenario
+</strong>
 
 For example, you have a test suite consisting of several spec files that take 30
 minutes to execute, but failures start to occur within one spec at the 20 minute
@@ -47,8 +48,9 @@ time.**
 
 <Alert type="success">
 
-<strong class="alert-header"><Icon name="star"></Icon> Premium Dashboard
-Feature</strong>
+<strong class="alert-header">
+  <Icon name="star"></Icon> Premium Dashboard Feature
+</strong>
 
 **Running failed specs first** is a _Smart Orchestration_ feature available to
 users with a [Business Dashboard plan](https://cypress.io/pricing).
@@ -65,7 +67,10 @@ To enable or disable this feature:
 3. Scroll to the Smart Orchestration section within Project Settings page.
 4. Toggle "Run failed specs first."
 
-<DocsImage src="/img/guides/smart-orchestration/enable-run-failed-specs-first.png" alt="Enable running of failed specs first"></DocsImage>
+<DocsImage
+src="/img/guides/smart-orchestration/enable-run-failed-specs-first.png"
+alt="Enable running of failed specs first"
+/>
 
 <Alert type="bolt">
 
@@ -87,7 +92,9 @@ changes.
 
 <Alert type="success">
 
-<strong class="alert-header"><Icon name="check"></Icon> Benefits</strong>
+<strong class="alert-header">
+  <Icon name="check"></Icon> Benefits
+</strong>
 
 Canceling an **entire** test run, even if parallelized, upon the first test
 failure will:
@@ -104,8 +111,9 @@ failure will:
 
 <Alert type="success">
 
-<strong class="alert-header"><Icon name="star"></Icon> Premium Dashboard
-Feature</strong>
+<strong class="alert-header">
+  <Icon name="star"></Icon> Premium Dashboard Feature
+</strong>
 
 **Canceling test runs when a test fails** is a _Smart Orchestration_ feature
 available to users with a [Business Dashboard plan](https://cypress.io/pricing).
@@ -133,7 +141,10 @@ To enable or disable this feature:
 3. Scroll to the Smart Orchestration section within Project Settings page
 4. Toggle "Cancel run when a test fails."
 
-<DocsImage src="/img/guides/smart-orchestration/enable-cancel-run.png" alt="Enable cancellation of test runs upon first failure"></DocsImage>
+<DocsImage
+src="/img/guides/smart-orchestration/enable-cancel-run.png"
+alt="Enable cancellation of test runs upon first failure"
+/>
 
 <Alert type="bolt">
 

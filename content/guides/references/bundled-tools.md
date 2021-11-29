@@ -51,8 +51,7 @@ and wraps Chai's DSL using
 [subjects](/guides/core-concepts/introduction-to-cypress#Assertions) and the
 [`.should()`](/api/commands/should) command.
 
-> <Icon name="chevron-right"></Icon> >
-> [List of available Chai Assertions](/guides/references/assertions#Chai)
+> <Icon name="chevron-right"></Icon> > [List of available Chai Assertions](/guides/references/assertions#Chai)
 
 ## Chai-jQuery
 
@@ -63,8 +62,7 @@ When writing integration tests, you will likely work a lot with the DOM. Cypress
 brings in Chai-jQuery, which automatically extends Chai with specific jQuery
 chainer methods.
 
-> <Icon name="chevron-right"></Icon> >
-> [List of available Chai-jQuery Assertions](/guides/references/assertions#Chai-jQuery)
+> <Icon name="chevron-right"></Icon> > [List of available Chai-jQuery Assertions](/guides/references/assertions#Chai-jQuery)
 
 ## Sinon.JS
 
@@ -94,8 +92,7 @@ writing Chai assertions. Cypress bundles in Sinon-Chai which extends Chai
 allowing you to [write assertions](https://github.com/cypress-io/sinon-chai)
 about `stubs` and `spies`.
 
-> <Icon name="chevron-right"></Icon> >
-> [List of available Sinon-Chai Assertions](/guides/references/assertions#Sinon-Chai)
+> <Icon name="chevron-right"></Icon> > [List of available Sinon-Chai Assertions](/guides/references/assertions#Sinon-Chai)
 
 ## Other Library Utilities
 
