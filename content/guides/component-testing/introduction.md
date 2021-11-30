@@ -114,10 +114,12 @@ look like this:
 
 ```js
 {
-  testFiles: "cypress/integration/*.spec.js",
+  e2e: {
+    specPattern: "cypress/integration/*.spec.js"
+  }
   component: {
     componentFolder: "src",
-    testFiles: ".*/__tests__/.*spec.tsx",
+    specPattern: ".*/__tests__/.*spec.tsx",
     viewportHeight: 500,
     viewportWidth: 700
   }
@@ -168,8 +170,8 @@ If it's your first time using Cypress, check out the
 
 Once installed, you need to configure how Cypress will locate component spec
 files. In the following Cypress configuration, all components test files
-contained within the `src` directory and match the glob given in the `testFiles`
-key.
+contained within the `src` directory and match the glob given in the
+`specPattern` key.
 
 :::cypress-config-example
 
@@ -177,7 +179,7 @@ key.
 {
   component: {
     componentFolder: "src",
-    testFiles: "**/*spec.{js,jsx,ts,tsx}"
+    specPattern: "**/*spec.{js,jsx,ts,tsx}"
   }
 }
 ```
@@ -267,7 +269,7 @@ SourceMaps.
 This example assumes a project with a `<Button />` component.
 
 We recommend locating your component tests next to the components you are
-testing. If you are using our recommended `testFiles` glob
+testing. If you are using our recommended `specPattern` glob
 (`**/*spec.{js,jsx,ts,tsx}`) [as described above](#Install):
 
 - Navigate to where this component exists in your code.

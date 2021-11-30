@@ -395,7 +395,7 @@ module.exports = defineConfig({
   component: {
     devServer,
     componentFolder: 'src',
-    testFiles: '**/*.test.{js,ts,jsx,tsx}'
+    specPattern: '**/*.test.{js,ts,jsx,tsx}'
   }
 })`,
   tab2: `import { defineConfig } from 'cypress'
@@ -405,7 +405,7 @@ export default defineConfig({
   component: {
     devServer,
     componentFolder: 'src',
-    testFiles: '**/*.test.{js,ts,jsx,tsx}'
+    specPattern: '**/*.test.{js,ts,jsx,tsx}'
   }
 })`,
   tab3: `// cypress.json (deprecated)
@@ -413,7 +413,7 @@ export default defineConfig({
 {
   "component": {
     "componentFolder": "src",
-    "testFiles": "**/*.test.{js,ts,jsx,tsx}"
+    "specPattern": "**/*.test.{js,ts,jsx,tsx}"
   }
 }
 

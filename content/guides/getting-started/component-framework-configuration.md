@@ -52,7 +52,7 @@ const { devServer } = require('@cypress/react/plugins/react-scripts')
   component: {
     devServer,
     componentFolder: 'src',
-    testFiles: '**/*.test.{js,ts,jsx,tsx}'
+    specPattern: '**/*.test.{js,ts,jsx,tsx}'
   }
 }
 ```
@@ -61,7 +61,7 @@ const { devServer } = require('@cypress/react/plugins/react-scripts')
 {
   "component": {
     "componentFolder": "src",
-    "testFiles": "**/*.test.{js,ts,jsx,tsx}"
+    "specPattern": "**/*.test.{js,ts,jsx,tsx}"
   }
 }
 ```
@@ -150,7 +150,7 @@ const webpackConfig = require('@vue/cli-service/webpack.config')
       })
     },
     componentFolder: 'src',
-    testFiles: '**/*.spec.js'
+    specPattern: '**/*.spec.js'
   }
 }
 ```
@@ -159,7 +159,7 @@ const webpackConfig = require('@vue/cli-service/webpack.config')
 {
   "component": {
     "componentFolder": "src",
-    "testFiles": "**/*.spec.js"
+    "specPattern": "**/*.spec.js"
   }
 }
 ```
@@ -271,7 +271,7 @@ const { devServer } = require('@cypress/react/plugins/next')
   component: {
     devServer,
     componentFolder: 'cypress/pages',
-    testFiles: '**/*.spec.{js,jsx}'
+    specPattern: '**/*.spec.{js,jsx}'
   }
 }
 ```
@@ -280,7 +280,7 @@ const { devServer } = require('@cypress/react/plugins/next')
 {
   "component": {
     "componentFolder": "cypress/pages",
-    "testFiles": "**/*.spec.{js,jsx}"
+    "specPattern": "**/*.spec.{js,jsx}"
   }
 }
 ```
@@ -394,6 +394,7 @@ const { getWebpackConfig } = require('nuxt')
 ```js
 {
   component: {
+    specPattern: '**/*.spec.js'
     async devServer(cypressDevServerConfig) {
       const webpackConfig = await getWebpackConfig()
       return startDevServer({
@@ -402,7 +403,6 @@ const { getWebpackConfig } = require('nuxt')
       })
     },
     componentFolder: 'components',
-    testFiles: '**/*.spec.js'
   }
 }
 ```
@@ -411,7 +411,7 @@ const { getWebpackConfig } = require('nuxt')
 {
   "component": {
     "componentFolder": "components",
-    "testFiles": "**/*.spec.js"
+    "specPattern": "**/*.spec.js"
   }
 }
 ```
@@ -550,13 +550,13 @@ const { startDevServer } = require('@cypress/vite-dev-server')
 ```js
 {
   component: {
+    specPattern: '**/*.spec.jsx'
     devServer(cypressDevServerConfig) {
       return startDevServer({
         options: cypressDevServerConfig
       })
     },
     componentFolder: 'src',
-    testFiles: '**/*.spec.jsx'
   }
 }
 ```
@@ -565,7 +565,7 @@ const { startDevServer } = require('@cypress/vite-dev-server')
 {
   "component": {
     "componentFolder": "src",
-    "testFiles": "**/*.spec.jsx"
+    "specPattern": "**/*.spec.jsx"
   }
 }
 ```

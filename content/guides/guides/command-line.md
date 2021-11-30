@@ -183,7 +183,7 @@ For more complex configuration objects, you may want to consider passing a
 object surrounded by single quotes.
 
 ```shell
-cypress run --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.ts"]}'
+cypress run --config '{"watchForFileChanges":false,"specPattern":["**/*.js","**/*.ts"]}'
 ```
 
 <Alert type="info">
@@ -541,7 +541,7 @@ For more complex configuration objects, you may want to consider passing a
 object.
 
 ```shell
-cypress open --config "{\"watchForFileChanges\":false,\"testFiles\":[\"**/*.js\",\"**/*.ts\"]}"
+cypress open --config "{\"watchForFileChanges\":false,\"specPattern\":[\"**/*.js\",\"**/*.ts\"]}"
 ```
 
 #### `cypress open --config-file <configuration-file>`

@@ -367,7 +367,7 @@ required for component testing
 {
   "experimentalComponentTesting": true,
   "componentFolder": "src",
-  "testFiles": "**/*spec.{js,jsx,ts,tsx}"
+  "specPattern": "**/*spec.{js,jsx,ts,tsx}"
 }
 ```
 
@@ -377,7 +377,7 @@ removed
 ```json
 {
   "componentFolder": "src",
-  "testFiles": "**/*spec.{js,jsx,ts,tsx}"
+  "specPattern": "**/*spec.{js,jsx,ts,tsx}"
 }
 ```
 
