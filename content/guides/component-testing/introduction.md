@@ -118,7 +118,7 @@ look like this:
     specPattern: "cypress/e2e/**/*.cy.{js,jsx,ts,tsx}"
   }
   component: {
-    specPattern: ".*/__tests__/.*spec.tsx",
+    specPattern: "**/*.cy.{js,jsx,ts,tsx}",
     viewportHeight: 500,
     viewportWidth: 700
   }
@@ -177,7 +177,7 @@ contained within the `src` directory and match the glob given in the
 ```js
 {
   component: {
-    specPattern: '**/*spec.{js,jsx,ts,tsx}'
+    specPattern: '**/*.cy.{js,jsx,ts,tsx}'
   }
 }
 ```
@@ -268,7 +268,7 @@ This example assumes a project with a `<Button />` component.
 
 We recommend locating your component tests next to the components you are
 testing. If you are using our recommended `specPattern` glob
-(`**/*spec.{js,jsx,ts,tsx}`) [as described above](#Install):
+(`**/*.cy.{js,jsx,ts,tsx}`) [as described above](#Install):
 
 - Navigate to where this component exists in your code.
 - Create a spec file in the same folder called `Button.spec.jsx`.

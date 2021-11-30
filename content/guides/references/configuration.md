@@ -235,7 +235,7 @@ object:
 | `devServerConfig` | `null`                     | Optional dev server configuration. Config options will be determined by the dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                             |
 | `setupNodeEvents` | `null`                     | Function in which node events can be registered and config can be modified. Takes the place of the (deprecated) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
 | `supportFile`     | `cypress/support/index.js` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                           |
-| `specPattern`     | `**/*.*`                   | A String or Array of glob patterns of the test files to load                                                                                                                                        |
+| `specPattern`     | `**/*.cy.{js,jsx,ts,tsx}`  | A String or Array of glob patterns of the test files to load                                                                                                                                        |
 
 :::cypress-config-example{noJson}
 

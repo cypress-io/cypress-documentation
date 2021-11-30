@@ -416,7 +416,7 @@ describe(':::cypress-config-plugin-example', () => {
     {
       component: {
         devServer,
-        specPattern: '**/*.test.{js,ts,jsx,tsx}'
+        specPattern: '**/*.cy.{js,jsx,ts,tsx}'
       }
     }
     \`\`\`
@@ -424,7 +424,7 @@ describe(':::cypress-config-plugin-example', () => {
     \`\`\`json
     {
       "component": {
-        "specPattern": "**/*.test.{js,ts,jsx,tsx}"
+        "specPattern": "**/*.cy.{js,jsx,ts,tsx}"
       }
     }
     \`\`\`

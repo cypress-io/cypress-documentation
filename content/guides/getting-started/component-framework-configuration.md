@@ -51,7 +51,7 @@ const { devServer } = require('@cypress/react/plugins/react-scripts')
 {
   component: {
     devServer,
-    specPattern: '**/*.test.{js,ts,jsx,tsx}'
+    specPattern: '**/*.cy.{js,jsx,ts,tsx}'
   }
 }
 ```
@@ -59,7 +59,7 @@ const { devServer } = require('@cypress/react/plugins/react-scripts')
 ```json
 {
   "component": {
-    "specPattern": "**/*.test.{js,ts,jsx,tsx}"
+    "specPattern": "**/*.cy.{js,jsx,ts,tsx}"
   }
 }
 ```
@@ -147,7 +147,7 @@ const webpackConfig = require('@vue/cli-service/webpack.config')
         webpackConfig,
       })
     },
-    specPattern: '**/*.spec.js'
+    specPattern: '**/*.cy.{js,jsx,ts,tsx}'
   }
 }
 ```
@@ -155,7 +155,7 @@ const webpackConfig = require('@vue/cli-service/webpack.config')
 ```json
 {
   "component": {
-    "specPattern": "**/*.spec.js"
+    "specPattern": "**/*.cy.{js,jsx,ts,tsx}"
   }
 }
 ```
@@ -266,7 +266,7 @@ const { devServer } = require('@cypress/react/plugins/next')
 {
   component: {
     devServer,
-    specPattern: '**/*.spec.{js,jsx}'
+    specPattern: '**/*.cy.{js,jsx,ts,tsx}'
   }
 }
 ```
@@ -274,7 +274,7 @@ const { devServer } = require('@cypress/react/plugins/next')
 ```json
 {
   "component": {
-    "specPattern": "**/*.spec.{js,jsx}"
+    "specPattern": "**/*.cy.{js,jsx,ts,tsx}"
   }
 }
 ```
@@ -395,7 +395,7 @@ const { getWebpackConfig } = require('nuxt')
         webpackConfig,
       })
     },
-    specPattern: '**/*.spec.js'
+    specPattern: '**/*.cy.{js,jsx,ts,tsx}'
   }
 }
 ```
@@ -403,7 +403,7 @@ const { getWebpackConfig } = require('nuxt')
 ```json
 {
   "component": {
-    "specPattern": "**/*.spec.js"
+    "specPattern": "**/*.cy.{js,jsx,ts,tsx}"
   }
 }
 ```
@@ -547,7 +547,7 @@ const { startDevServer } = require('@cypress/vite-dev-server')
         options: cypressDevServerConfig
       })
     },
-    specPattern: '**/*.spec.jsx'
+    specPattern: '**/*.cy.{js,jsx,ts,tsx}'
   }
 }
 ```
@@ -555,7 +555,7 @@ const { startDevServer } = require('@cypress/vite-dev-server')
 ```json
 {
   "component": {
-    "specPattern": "**/*.spec.jsx"
+    "specPattern": "**/*.cy.{js,jsx,ts,tsx}"
   }
 }
 ```
