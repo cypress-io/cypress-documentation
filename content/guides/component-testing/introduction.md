@@ -115,7 +115,7 @@ look like this:
 ```js
 {
   e2e: {
-    specPattern: "cypress/integration/*.spec.js"
+    specPattern: "cypress/e2e/**/*.cy.{js,jsx,ts,tsx}"
   }
   component: {
     specPattern: ".*/__tests__/.*spec.tsx",
