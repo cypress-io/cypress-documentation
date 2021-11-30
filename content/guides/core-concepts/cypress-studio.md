@@ -51,9 +51,8 @@ used to demonstrate the functionality of Cypress Studio below.
 
 ### Extending a Test
 
-You can extend any preexisting test or start by creating a new test in your
-[integrationFolder](/guides/references/configuration#Folders-Files)
-(`cypress/integration` by default) with the following test scaffolding.
+You can extend any preexisting test or start by creating a new test with the
+following test scaffolding.
 
 ```js
 // Code from Real World App (RWA)
