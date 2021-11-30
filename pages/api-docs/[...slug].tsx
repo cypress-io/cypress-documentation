@@ -1,8 +1,6 @@
 import fs from 'fs'
 import matter from 'gray-matter'
 import { serialize } from 'next-mdx-remote/serialize'
-import Head from 'next/head'
-import path from 'path'
 import rehypeSlug from 'rehype-slug'
 import rehypePrism from '@mapbox/rehype-prism'
 import Layout from '@/components/Layout'
@@ -14,7 +12,7 @@ import DocsImage from '@/components/docs-image'
 import DocsVideo from '@/components/docs-video'
 import Badge from '@/components/badge'
 import { GET_PATH, allContentFilePaths, getToCForMarkdown } from '@/utils/mdxUtils'
-import sidebarJSON from '@/data/sidebar.json'
+import sidebarJSON from '@/content/_data/sidebar.json'
 
 // Custom components/renderers to pass to MDX.
 // Since the MDX files aren't loaded by webpack, they have no knowledge of how
@@ -26,7 +24,6 @@ const components = {
   // useful for conditionally loading components for certain routes.
   // See the notes in README.md for more details.
   //TestComponent: dynamic(() => import('@/components/TestComponent')),
-  Head,
   VideoYouTube,
   Video,
   Icon,
@@ -38,21 +35,15 @@ const components = {
 
 const PAGE = 'api-docs'
 
-export default function APIPage({ source, toc }) {
+export default function APIPage({ source, frontMatter, toc }) {
   return (
-    <>
-      <Head>
-        <title>API | Cypress Documentation</title>
-        <meta name="description" content="" />
-      </Head>
-
-      <Layout
-        toc={toc}
-        source={source}
-        components={components}
-        sidebarContent={sidebarJSON[PAGE][0]}
-      />
-    </>
+    <Layout
+      toc={toc}
+      source={source}
+      components={components}
+      frontMatter={frontMatter}
+      sidebarContent={sidebarJSON[PAGE][0]}
+    />
   )
 }
 

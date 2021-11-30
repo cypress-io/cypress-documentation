@@ -361,18 +361,18 @@
       ]
     }
   ],
-  "api": [
+  "api-docs": [
     {
       "title": "API",
-      "slug": "api",
+      "slug": "api-docs",
       "children": [
         {
           "title": "API",
-          "slug": "api",
+          "slug": "",
           "children": [
             {
               "title": "Table of Contents",
-              "redirect": "/api/table-of-contents"
+              "slug": "table-of-contents"
             }
           ]
         },
@@ -392,7 +392,7 @@
           "children": [
             {
               "title": "All Assertions",
-              "redirect": "/guides/references/assertions"
+              "slug": "/guides/references/assertions"
             }
           ]
         },

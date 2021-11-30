@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar'
 import 'react-pro-sidebar/dist/css/styles.css'
 
@@ -17,25 +18,35 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ sidebarContent: { children, slug } }: SidebarProps) {
+  const router = useRouter()
+
   return (
-    <>
+    <div className="app-sidebar">
       {children
         ? children.map((item, index) => (
             <ProSidebar key={index}>
               <Menu iconShape="square">
-                <SubMenu title={item.title} key={index}>
-                  {item.children.map((subItem, subIndex) => (
-                    <MenuItem key={subIndex}>
-                      <Link href={`/${slug}/${item.slug}/${subItem.slug}`}>
-                        <a>{subItem.title}</a>
-                      </Link>
-                    </MenuItem>
-                  ))}
+                <SubMenu title={item.title} data-test={`${item.title}-children`} key={index}>
+                  {item.children.map((subItem, subIndex) => {
+                    const internalPath = `/${slug}/${item.slug}/${subItem.slug}`
+
+                    return (
+                      <MenuItem key={subIndex} data-test={item.slug}>
+                        <Link href={internalPath}>
+                          <a
+                            className={internalPath === router.asPath ? 'active-sidebar-link' : ''}
+                          >
+                            {subItem.title}
+                          </a>
+                        </Link>
+                      </MenuItem>
+                    )
+                  })}
                 </SubMenu>
               </Menu>
             </ProSidebar>
           ))
         : null}
-    </>
+    </div>
   )
 }

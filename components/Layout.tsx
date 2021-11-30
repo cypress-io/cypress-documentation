@@ -1,10 +1,18 @@
 import TableOfContents from './table-of-contents'
+import Head from 'next/head'
 import Sidebar from './Sidebar'
 import { MDXRemote } from 'next-mdx-remote'
 
-export default function Layout({ toc, source, components, sidebarContent }) {
+export default function Layout({ toc, source, components, frontMatter, sidebarContent }) {
+  const hasTitle = frontMatter && frontMatter.title
+
   return (
     <>
+      <Head>
+        <title>{hasTitle && `${frontMatter.title} |`} Cypress Documentation</title>
+        <meta name="description" content="" />
+      </Head>
+
       <div className="min-h-screen mt-20">
         <div className="py-6">
           <div className="max-w-3xl mx-auto sm:px-6 lg:max-w-full lg:px-8 lg:grid lg:grid-cols-12 lg:gap-8">
@@ -20,6 +28,7 @@ export default function Layout({ toc, source, components, sidebarContent }) {
               <div className="relative bg-white overflow-hidden">
                 <div className="relative px-4 sm:px-6 lg:px-8">
                   <div className="prose prose-indigo prose-lg text-gray-500 mx-auto">
+                    {hasTitle && <h1>{frontMatter.title}</h1>}
                     <MDXRemote {...source} components={components} />
                   </div>
                 </div>

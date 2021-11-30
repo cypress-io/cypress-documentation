@@ -11,12 +11,12 @@ const redirects = [
   },
   {
     source: '/api',
-    destination: '/api/table-of-contents',
+    destination: '/api-docs/table-of-contents',
     permanent: true,
   },
   {
-    source: '/api/assertions',
-    destination: '/guides/references/assertions',
+    source: '/api-docs',
+    destination: '/api-docs/table-of-contents',
     permanent: true,
   },
   {

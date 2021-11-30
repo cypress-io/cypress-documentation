@@ -193,20 +193,20 @@
 # Next Config
 #
 ##
-# version: 2.1
+version: 2.1
 
-# orbs:
-#   cypress: cypress-io/cypress@1.28.0
+orbs:
+  cypress: cypress-io/cypress@1.28.0
 
-# executors:
-#   with-chrome-and-firefox:
-#     docker:
-#       - image: "cypress/browsers:node14.17.0-chrome88-ff89"
-#     resource_class: medium+
+executors:
+  with-chrome-and-firefox:
+    docker:
+      - image: "cypress/browsers:node14.17.0-chrome88-ff89"
+    resource_class: medium+
 
-# job-defaults: &job-defaults
-#   executor: with-chrome-and-firefox
-#   working_directory: ~/repo
+job-defaults: &job-defaults
+  executor: with-chrome-and-firefox
+  working_directory: ~/repo
 
 # jobs:
 #   update-algolia-index:
@@ -217,54 +217,54 @@
 #           at: ~/repo
 #       - run: yarn update-algolia-index
 
-# workflows:
-#   build-and-test:
-#     jobs:
-#       # Setup
-#       #  1. Install Cypress
-#       #  2. Validate types
-#       #  3. Run server unit-tests
-#       - cypress/install:
-#           name: "Setup Linux"
-#           yarn: true
-#           executor: with-chrome-and-firefox
-#           build: "yarn build"
-#           post-steps:
-#             - run:
-#                 name: Print machine info ℹ️
-#                 command: yarn cypress info
-#             - run:
-#                 name: Check Types
-#                 command: yarn types
-#             - run:
-#                 name: Lint Files
-#                 command: yarn lint
-#             - run:
-#                 name: Run Unit Tests
-#                 command: yarn test:unit
+workflows:
+  build-and-test:
+    jobs:
+      # Setup
+      #  1. Install Cypress
+      #  2. Validate types
+      #  3. Run server unit-tests
+      - cypress/install:
+          name: "Setup Linux"
+          yarn: true
+          executor: with-chrome-and-firefox
+          build: "yarn build"
+          post-steps:
+            - run:
+                name: Print machine info ℹ️
+                command: yarn cypress info
+            - run:
+                name: Check Types
+                command: yarn types
+            - run:
+                name: Lint Files
+                command: yarn lint
+            - run:
+                name: Run Integration Tests
+                command: yarn test
 
-#       # Run E2E tests in Chrome
-#       - cypress/run:
-#           name: "UI Tests - Chrome"
-#           browser: chrome
-#           executor: with-chrome-and-firefox
-#           wait-on: "http://localhost:3000"
-#           yarn: true
-#           start: yarn start
-#           requires:
-#             - Setup Linux
-#           post-steps:
-#             - run:
-#                 name: Check for Broken Links
-#                 command: yarn check:links
+      # Run E2E tests in Chrome
+      - cypress/run:
+          name: "UI Tests - Chrome"
+          browser: chrome
+          executor: with-chrome-and-firefox
+          wait-on: "http://localhost:3000"
+          yarn: true
+          start: yarn start
+          requires:
+            - Setup Linux
+          # post-steps:
+          #   - run:
+          #       name: Check for Broken Links
+          #       command: yarn check:links
 
-#   nightly:
-#     triggers:
-#       - schedule:
-#           cron: "0 0 * * *"
-#           filters:
-#             branches:
-#               only:
-#                 - main
-#     jobs:
-#       - update-algolia-index
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - main
+    # jobs:
+    #   - update-algolia-index
