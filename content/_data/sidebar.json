@@ -59,10 +59,6 @@
             {
               "title": "Rendering Components Correctly",
               "slug": "rendering-components-correctly"
-            },
-            {
-              "title": "Creating a cy.mount Command",
-              "slug": "creating-a-cy-mount-command"
             }
           ]
         },
@@ -571,6 +567,10 @@
             {
               "title": "log",
               "slug": "log"
+            },
+            {
+              "title": "mount",
+              "slug": "mount"
             },
             {
               "title": "next",
