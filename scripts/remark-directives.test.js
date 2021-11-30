@@ -416,7 +416,6 @@ describe(':::cypress-config-plugin-example', () => {
     {
       component: {
         devServer,
-        componentFolder: 'src',
         specPattern: '**/*.test.{js,ts,jsx,tsx}'
       }
     }
@@ -425,7 +424,6 @@ describe(':::cypress-config-plugin-example', () => {
     \`\`\`json
     {
       "component": {
-        "componentFolder": "src",
         "specPattern": "**/*.test.{js,ts,jsx,tsx}"
       }
     }

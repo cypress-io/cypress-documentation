@@ -118,7 +118,6 @@ look like this:
     specPattern: "cypress/integration/*.spec.js"
   }
   component: {
-    componentFolder: "src",
     specPattern: ".*/__tests__/.*spec.tsx",
     viewportHeight: 500,
     viewportWidth: 700
@@ -178,8 +177,7 @@ contained within the `src` directory and match the glob given in the
 ```js
 {
   component: {
-    componentFolder: "src",
-    specPattern: "**/*spec.{js,jsx,ts,tsx}"
+    specPattern: '**/*spec.{js,jsx,ts,tsx}'
   }
 }
 ```

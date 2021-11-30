@@ -51,7 +51,6 @@ const { devServer } = require('@cypress/react/plugins/react-scripts')
 {
   component: {
     devServer,
-    componentFolder: 'src',
     specPattern: '**/*.test.{js,ts,jsx,tsx}'
   }
 }
@@ -60,7 +59,6 @@ const { devServer } = require('@cypress/react/plugins/react-scripts')
 ```json
 {
   "component": {
-    "componentFolder": "src",
     "specPattern": "**/*.test.{js,ts,jsx,tsx}"
   }
 }
@@ -149,7 +147,6 @@ const webpackConfig = require('@vue/cli-service/webpack.config')
         webpackConfig,
       })
     },
-    componentFolder: 'src',
     specPattern: '**/*.spec.js'
   }
 }
@@ -158,7 +155,6 @@ const webpackConfig = require('@vue/cli-service/webpack.config')
 ```json
 {
   "component": {
-    "componentFolder": "src",
     "specPattern": "**/*.spec.js"
   }
 }
@@ -270,7 +266,6 @@ const { devServer } = require('@cypress/react/plugins/next')
 {
   component: {
     devServer,
-    componentFolder: 'cypress/pages',
     specPattern: '**/*.spec.{js,jsx}'
   }
 }
@@ -279,7 +274,6 @@ const { devServer } = require('@cypress/react/plugins/next')
 ```json
 {
   "component": {
-    "componentFolder": "cypress/pages",
     "specPattern": "**/*.spec.{js,jsx}"
   }
 }
@@ -402,7 +396,6 @@ const { getWebpackConfig } = require('nuxt')
         webpackConfig,
       })
     },
-    componentFolder: 'components',
   }
 }
 ```
@@ -410,7 +403,6 @@ const { getWebpackConfig } = require('nuxt')
 ```json
 {
   "component": {
-    "componentFolder": "components",
     "specPattern": "**/*.spec.js"
   }
 }
@@ -556,7 +548,6 @@ const { startDevServer } = require('@cypress/vite-dev-server')
         options: cypressDevServerConfig
       })
     },
-    componentFolder: 'src',
   }
 }
 ```
@@ -564,7 +555,6 @@ const { startDevServer } = require('@cypress/vite-dev-server')
 ```json
 {
   "component": {
-    "componentFolder": "src",
     "specPattern": "**/*.spec.jsx"
   }
 }
