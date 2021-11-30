@@ -46,16 +46,17 @@ supported:
 - `'utf-16le'`
 - `null`
 
-Using `null` explicitly will return the file as a `Buffer`, regardless of file extension.
+Using `null` explicitly will return the file as a `Buffer`, regardless of file
+extension.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.readFile()`.
 
-| Option    | Default                                                              | Description                                                                              |
-| --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
-| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.readFile()` to resolve before [timing out](#Timeouts)               |
+| Option    | Default                                                        | Description                                                                              |
+| --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.readFile()` to resolve before [timing out](#Timeouts)               |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
@@ -227,6 +228,15 @@ When clicking on the `readFile` command within the command log, the console
 outputs the following:
 
 <DocsImage src="/img/api/readfile/console-log-shows-content-from-file-formatted-as-javascript.png" alt="Console Log readFile" ></DocsImage>
+
+## History
+
+| Version                                       | Changes                                              |
+| --------------------------------------------- | ---------------------------------------------------- |
+| [9.2.0](/guides/references/changelog#9-2-0)   | Changed default `timeout` value to `responseTimeout` |
+| [9.0.0](/guides/references/changelog#9-0-0)   | Changed `null` encoding to read as Buffer            |
+| [0.17.2](/guides/references/changelog#0-17-2) | Improved error messaging                             |
+| [0.17.1](/guides/references/changelog#0-17-1) | `cy.readFile()` command added                        |
 
 ## See also
 
