@@ -388,7 +388,6 @@ const { getWebpackConfig } = require('nuxt')
 ```js
 {
   component: {
-    specPattern: '**/*.spec.js'
     async devServer(cypressDevServerConfig) {
       const webpackConfig = await getWebpackConfig()
       return startDevServer({
@@ -396,6 +395,7 @@ const { getWebpackConfig } = require('nuxt')
         webpackConfig,
       })
     },
+    specPattern: '**/*.spec.js'
   }
 }
 ```
@@ -542,12 +542,12 @@ const { startDevServer } = require('@cypress/vite-dev-server')
 ```js
 {
   component: {
-    specPattern: '**/*.spec.jsx'
     devServer(cypressDevServerConfig) {
       return startDevServer({
         options: cypressDevServerConfig
       })
     },
+    specPattern: '**/*.spec.jsx'
   }
 }
 ```
