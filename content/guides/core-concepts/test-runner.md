@@ -8,6 +8,7 @@ title: The Test Runner
 
 - The names and purposes of the visual parts of the Cypress Test Runner
 - How to use the Selector Playground for targeting your page elements
+- How to debug tests using the built-in features of the Test Runner
 
 </Alert>
 
@@ -37,11 +38,12 @@ file where the code is located. Clicking on this link will open the file in your
 
 <DocsImage src="/img/guides/open-file-in-IDE.gif" alt="Open file your IDE" ></DocsImage>
 
-### Hovering on Commands
+### Time Traveling
 
 Each command and assertion, when hovered over, restores the Application or
 Component Under Test (righthand side) to the state it was in when that command
-executed. This allows you to 'time-travel' back to previous states when testing.
+executed. This allows you to **time travel** back to previous states when
+testing.
 
 <Alert type="info">
 
@@ -52,51 +54,85 @@ you may want to lower the `numTestsKeptInMemory` in your
 
 </Alert>
 
-### Clicking on Commands
+In the following example, hovering over the `CONTAINS` command in the Command
+Log changes the state of the Test Runner:
+
+<DocsImage src="/img/guides/first-test-hover-contains.png" alt="Hovering over the contains tab highlights the dom element in the App in the Test Runner" ></DocsImage>
+
+Cypress automatically travels back in time to a snapshot of when a hovered-over
+command resolved. Additionally, since [`cy.contains()`](/api/commands/contains)
+finds DOM elements on the page, Cypress also highlights the element and scrolls
+it into view (to the top of the page).
+
+Also note that as we hover over the `CONTAINS` command, Cypress reverts back to
+the URL that was present when the snapshot was taken.
+
+<DocsImage src="/img/guides/first-test-url-revert.png" alt="The url address bar shows https://example.cypress.io/" ></DocsImage>
+
+### Pinning Snapshots
 
 Each command, assertion, or error, when clicked on, displays extra information
-in the dev tools console. Clicking also 'pins' the Application or Component
-Under Test (righthand side) to its previous state when the command executed.
+in the dev tools console. Clicking also **pins** the Application or Component
+Under Test (righthand side) to its previous state, or **snapshot**, when the
+command executed.
 
-<DocsImage src="/img/guides/clicking-commands.png" alt="Click to console.log and to pin" ></DocsImage>
+In the following example, clicking on the `CLICK` command highlights it in
+purple, and does three other things worth noting:
 
-## Errors
+<DocsImage src="/img/guides/first-test-click-revert.png" alt="A click on the click command in the Command Log with Test Runner labeled as 1, 2, 3" ></DocsImage>
 
-Cypress prints several pieces of information when an error occurs during a
-Cypress test.
+#### 1. Pinned snapshots
 
-1. **Error name**: This is the type of the error (e.g. AssertionError,
-   CypressError)
-1. **Error message**: This generally tells you what went wrong. It can vary in
-   length. Some are short like in the example, while some are long, and may tell
-   you exactly how to fix the error.
-1. **Learn more:** Some error messages contain a Learn more link that will take
-   you to relevant Cypress documentation.
-1. **Code frame file**: This is usually the top line of the stack trace and it
-   shows the file, line number, and column number that is highlighted in the
-   code frame below. Clicking on this link will open the file in your
-   [preferred file opener](https://on.cypress.io/IDE-integration#File-Opener-Preference)
-   and highlight the line and column in editors that support it.
-1. **Code frame**: This shows a snippet of code where the failure occurred, with
-   the relevant line and column highlighted.
-1. **View stack trace**: Clicking this toggles the visibility of the stack
-   trace. Stack traces vary in length. Clicking on a blue file path will open
-   the file in your
-   [preferred file opener](https://on.cypress.io/IDE-integration#File-Opener-Preference).
-1. **Print to console button**: Click this to print the full error to your
-   DevTools console. This will usually allow you to click on lines in the stack
-   trace and open files in your DevTools.
+We have now **pinned** this snapshot. Hovering over other commands will not
+revert to them. This gives us a chance to manually inspect the DOM of our
+application under test at the time the snapshot was taken.
 
-<DocsImage src="/img/guides/command-failure-error.png" alt="example command failure error" ></DocsImage>
+#### 2. Event hitbox
 
-## Instrument Panel
+Since [`.click()`](/api/commands/click) is an action command, that means we also
+see a red hitbox at the coordinates the event took place.
+
+#### 3. Snapshot menu panel
+
+There is also a new menu panel. Some commands (like action commands) will take
+multiple snapshots: **before** and **after**. We can now cycle through these.
+
+The **before** snapshot is taken prior to the click event firing. The **after**
+snapshot is taken immediately after the click event. Although this click event
+caused our browser to load a new page, it's not an instantaneous transition.
+Depending on how fast your page loaded, you may still see the same page, or a
+blank screen as the page is unloading and in transition.
+
+When a command causes an immediate visual change in our application, cycling
+between before and after will update our snapshot. We can see this in action by
+clicking the `TYPE` command in the Command Log. Now, clicking **before** will
+show us the input in a default state, showing the placeholder text. Click
+**after** will show us what the input looks like when the `TYPE` command has
+completed.
+
+### Page events
+
+In addition to showing all the commands that were called, the command log also
+shows important events from your application or component when they occur.
+Notice these look different (they are gray and without a number).
+
+<DocsImage src="/img/guides/first-test-page-load.png" alt="Command log shows 'Page load --page loaded--' and 'New url https://example.cypress.io/'" ></DocsImage>
+
+**Cypress logs out page events for:**
+
+- Network XHR Requests
+- URL hash changes
+- Page Loads
+- Form Submissions
+
+### Instrument Panel
 
 For certain commands like [`cy.intercept()`](/api/commands/intercept),
 [`cy.stub()`](/api/commands/stub), and [`cy.spy()`](/api/commands/spy), an extra
 instrument panel is displayed above the test to give more information about the
 state of your tests.
 
-### Routes
+#### Routes
 
 <!-- Code to reproduce screenshot:
 it('intercept command log', () => {
@@ -112,15 +148,20 @@ it('intercept command log', () => {
 
 <DocsImage src="/img/guides/instrument-panel-routes.png" alt="Routes Instrument Panel" ></DocsImage>
 
-### Stubs
+#### Stubs
 
 <DocsImage src="/img/guides/instrument-panel-stubs.png" alt="Stubs Instrument Panel" ></DocsImage>
 
-### Spies
+#### Spies
 
 <DocsImage src="/img/guides/instrument-panel-spies.png" alt="Spies Instrument Panel" ></DocsImage>
 
-## Application Under Test <E2EOnlyBadge />
+## Preview Pane
+
+The righthand side of the Test Runner is where the Application or Component
+Under Test is rendered.
+
+### Application Under Test <E2EOnlyBadge />
 
 In
 [End-to-End testing](/guides/overview/choosing-testing-type#What-is-End-to-end-Testing),
@@ -169,7 +210,7 @@ _Note: Internally, the AUT renders within an iframe. This can sometimes cause
 unexpected behaviors
 [explained here.](/api/commands/window#Cypress-uses-2-different-windows)_
 
-## Component Under Test <ComponentOnlyBadge />
+### Component Under Test <ComponentOnlyBadge />
 
 In
 [Component testing](/guides/overview/choosing-testing-type#What-is-Component-Testing),
@@ -340,6 +381,105 @@ Test Runner.
 | `f` | Bring focus to 'specs' window |
 
 <DocsImage src="/img/guides/test-runner/keyboard-shortcuts.png" alt="Tooltips show keyboard shortcuts" ></DocsImage>
+
+## Debugging
+
+In addition to the features already mentioned, Cypress comes with a host of
+debugging tools to help you understand a test. You can:
+
+- See detailed information about [errors](#Errors) that occur.
+- Receive additional [console output](#Console-output) about each command.
+- [Pause commands](#Special-commands) and step through them iteratively.
+<!-- - Visualize when hidden or multiple elements are found. -->
+
+### Errors
+
+Cypress prints several pieces of information when an error occurs during a
+Cypress test.
+
+1. **Error name**: This is the type of the error (e.g. `AssertionError`,
+   `CypressError`)
+1. **Error message**: This generally tells you what went wrong. It can vary in
+   length. Some are short like in the example, while some are long, and may tell
+   you exactly how to fix the error.
+1. **Learn more:** Some error messages contain a Learn more link that will take
+   you to relevant Cypress documentation.
+1. **Code frame file**: This is usually the top line of the stack trace and it
+   shows the file, line number, and column number that is highlighted in the
+   code frame below. Clicking on this link will open the file in your
+   [preferred file opener](https://on.cypress.io/IDE-integration#File-Opener-Preference)
+   and highlight the line and column in editors that support it.
+1. **Code frame**: This shows a snippet of code where the failure occurred, with
+   the relevant line and column highlighted.
+1. **View stack trace**: Clicking this toggles the visibility of the stack
+   trace. Stack traces vary in length. Clicking on a blue file path will open
+   the file in your
+   [preferred file opener](https://on.cypress.io/IDE-integration#File-Opener-Preference).
+1. **Print to console button**: Click this to print the full error to your
+   DevTools console. This will usually allow you to click on lines in the stack
+   trace and open files in your DevTools.
+
+<DocsImage src="/img/guides/command-failure-error.png" alt="example command failure error" ></DocsImage>
+
+### Console output
+
+Besides Commands being interactive, they also output additional debugging
+information to your console.
+
+Open up your Dev Tools and click on the `GET` for the `.action-email` class
+selector.
+
+<DocsImage src="/img/guides/first-test-console-output.png" alt="Test Runner with get command pinned and console log open showing the yielded element" ></DocsImage>
+
+**We can see Cypress output additional information in the console:**
+
+- Command (that was issued)
+- Yielded (what was returned by this command)
+- Elements (the number of elements found)
+- Selector (the argument we used)
+
+We can even expand what was returned and inspect each individual element or even
+right click and inspect them in the Elements panel!
+
+### Special commands
+
+In addition to having a helpful UI, there are also special commands dedicated to
+the task of debugging, for example:
+
+- [cy.pause()](/api/commands/pause)
+- [cy.debug()](/api/commands/debug)
+
+In the following example, we've added a [cy.pause()](/api/commands/pause)
+command to this test:
+
+```js
+describe('My First Test', () => {
+  it('clicking "type" shows the right headings', () => {
+    cy.visit('https://example.cypress.io')
+
+    cy.pause()
+
+    cy.contains('type').click()
+
+    // Should be on a new URL which includes '/commands/actions'
+    cy.url().should('include', '/commands/actions')
+
+    // Get an input, type into it and verify that the value has been updated
+    cy.get('.action-email')
+      .type('fake@email.com')
+      .should('have.value', 'fake@email.com')
+  })
+})
+```
+
+Now, when the test runs, Cypress provides us a UI (similar to debugger) to step
+forward through each command in the test.
+
+<DocsImage src="/img/guides/first-test-paused.png" alt="Test Runner shows label saying 'Paused' with Command Log showing 'Pause'" ></DocsImage>
+
+In action:
+
+<DocsVideo src="/img/snippets/first-test-debugging-30fps.mp4"></DocsVideo>
 
 ## History
 

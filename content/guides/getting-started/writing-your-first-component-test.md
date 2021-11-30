@@ -1217,6 +1217,7 @@ repo.
 
 - [React `mount()` examples](https://github.com/cypress-io/cypress/tree/develop/npm/react#api)
 - [Vue `mount()` examples](https://github.com/cypress-io/cypress/tree/develop/npm/vue#what-is-cypressvue)
+- The [Test Runner](/guides/core-concepts/test-runner) UI
 
 ## Troubleshooting
 
