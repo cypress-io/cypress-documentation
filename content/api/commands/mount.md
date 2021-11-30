@@ -133,13 +133,16 @@ file in the `include` option:
 "include": ["./src", "cypress.d.ts"]
 ```
 
-## Examples
+## Additional Mount Commands
 
-You can create as many custom mount commands as you need. There might be times
-when you need to do additional setup for certain tests that other tests don't
-need. In this case, it is good to create a new command for those tests.
+You can create additional mount commands to fit your needs. For instance, there
+might be times when you need to do additional setup for certain tests that other
+tests don't need. In this case, it is good to create a new command for those
+tests.
 
 Below are some examples for specific use cases.
+
+## React Examples
 
 ### React Router
 
@@ -156,9 +159,12 @@ Cypress.Commands.add('mountWithRouter', (component, options) => {
   const { routerProps = { initialEntries: ['/'] }, ...mountOptions } = options
 
   const wrapped = <MemoryRouter {...routerProps}>{component}</MemoryRouter>
+
   return mount(wrapped, mountOptions)
 })
 ```
+
+You can pass in custom props for the `MemoryRouter` in the `options` param.
 
 Example usage:
 
@@ -173,22 +179,48 @@ it('Logout link should appear when logged in', () => {
 })
 ```
 
-### React Redux
+### Redux
 
-When using Redux, your component might consume data from a Redux store. Below is
-an example that setups a Redux Provider and
+To use a component that consumes state or actions from a Redux store, you can
+create a `mountWithRedux` command that will wrap your component in a Redux
+Provider:
 
 ```jsx
 import { mount } from '@cypress/react'
-import { Provider as ReduxProvider } from 'react-redux'
-import { getStore } from '../../redux/store'
+import { Provider } from 'react-redux'
+import { store } from '../../redux/store'
 
-Cypress.Commands.add('mountWithRedux', (component, options) => {
-  const { reduxProps = { store: getStore() }, ...mountOptions } = options
+Cypress.Commands.add('mountWithRedux', (component, options = {}) => {
+  const { reduxProps = { store: store }, ...mountOptions } = options
 
-  const wrapped = <ReduxProvider {...reduxProps}>{component}</ReduxProvider>
+  const wrapped = <Provider {...reduxProps}>{component}</Provider>
+
   return mount(wrapped, mountOptions)
 })
 ```
 
-The below example sets up a
+The `options` param has a `reduxProps` property that you can use to pass in a
+custom store. If `reduxProps` isn't specified, it will use the default store
+imported from `store.js`.
+
+Example Usage:
+
+```jsx
+import { store } from '../redux/store'
+import { setUser } from '../redux/userSlice'
+import { UserProfile } from './UserProfile'
+
+it('User profile should display users name', () => {
+  const user = { name: 'test person' }
+  // setUser is an action exported from the user slice
+  store.dispatch(setUser(user))
+  cy.mountWithRedux(<UserProfile />)
+  cy.get('div.name').should('have.text', user.name)
+})
+```
+
+## Vue Examples
+
+### Vue Plugins
+
+### Global Vue Components
