@@ -52,7 +52,8 @@ More specifically, the `LoginForm` component:
 
 Here's the component (styles omitted for brevity):
 
-:::react-vue-example
+<code-group-react-vue>
+<template #react>
 
 ```js
 import { useState } from 'react'
@@ -107,6 +108,9 @@ const LoginForm = ({ onLogin, title = 'Log In' }) => {
 export default LoginForm
 ```
 
+</template>
+<template #vue>
+
 ```vue
 <template>
   <form @submit.prevent="formSubmit" class="login-form">
@@ -158,7 +162,8 @@ export default {
 </script>
 ```
 
-:::
+</template>
+</code-group-react-vue>
 
 ## Adding your first spec file
 
@@ -326,9 +331,8 @@ spec file: a function to mount our component, and the component itself.
 Different frameworks render their components differently, so we provide
 framework-specific `mount()` functions, which can be imported like so:
 
-:::react-vue-example
-
-```md
+<code-group-react-vue>
+<template #react-alert>
 <Alert type="info">
 
 <strong class="alert-header">A note for React users</strong>
@@ -341,13 +345,15 @@ check out the library
 [documentation](https://github.com/cypress-io/cypress/tree/develop/npm/react#readme).
 
 </Alert>
-```
+</template>
+<template #react>
 
 ```js
 import { mount } from '@cypress/react'
 ```
 
-```md
+</template>
+<template #vue-alert>
 <Alert type="info">
 
 <strong class="alert-header">A note for Vue users</strong>
@@ -361,13 +367,15 @@ aren't covered in this guide, be sure to check out the library
 [documentation](https://github.com/cypress-io/cypress/tree/develop/npm/vue#readme).
 
 </Alert>
-```
+</template>
+<template #vue>
 
 ```js
 import { mount } from '@cypress/vue'
 ```
 
-:::
+</template>
+</code-group-react-vue>
 
 Because our example `LoginForm` component is exported as a default export, we
 will import it into our spec file like so (if the component was exported as a
@@ -385,7 +393,8 @@ can write our first component test.
 
 Replace the contents of your spec file with this, and then save it:
 
-:::react-vue-example
+<code-group-react-vue>
+<template #react>
 
 ```js
 import { mount } from '@cypress/react'
@@ -396,6 +405,9 @@ it('should mount the component', () => {
 })
 ```
 
+</template>
+<template #vue>
+
 ```js
 import { mount } from '@cypress/vue'
 import LoginForm from './LoginForm'
@@ -405,7 +417,8 @@ it('should mount the component', () => {
 })
 ```
 
-:::
+</template>
+</code-group-react-vue>
 
 Just like in the previous section, we should see one passing test. However, this
 time, because we're mounting a component, we should also see the component
@@ -432,7 +445,8 @@ rendered component, and implicitly asserts that it was found. So, we could do
 this to assert that there is an `input` element with a `type` attribute of
 `password`:
 
-:::react-vue-example
+<code-group-react-vue>
+<template #react>
 
 ```js
 it('should have password input', () => {
@@ -441,6 +455,9 @@ it('should have password input', () => {
 })
 ```
 
+</template>
+<template #vue>
+
 ```js
 it('should have password input', () => {
   mount(LoginForm)
@@ -448,7 +465,8 @@ it('should have password input', () => {
 })
 ```
 
-:::
+</template>
+</code-group-react-vue>
 
 However, this only asserts that there is an `input` element with a `type`
 attribute of `password` somewhere in the rendered component, which would give us
@@ -465,7 +483,8 @@ using [`.should()`](/api/commands/should).
 
 After your last test, add this test and save the spec file:
 
-:::react-vue-example
+<code-group-react-vue>
+<template #react>
 
 ```js
 it('should have password input of type password', () => {
@@ -474,6 +493,9 @@ it('should have password input of type password', () => {
 })
 ```
 
+</template>
+<template #vue>
+
 ```js
 it('should have password input of type password', () => {
   mount(LoginForm)
@@ -481,7 +503,8 @@ it('should have password input of type password', () => {
 })
 ```
 
-:::
+</template>
+</code-group-react-vue>
 
 <Alert type="success">
 
@@ -505,7 +528,8 @@ equal to expected default value of "Log In".
 
 After your last test, add this test and save the spec file:
 
-:::react-vue-example
+<code-group-react-vue>
+<template #react>
 
 ```js
 it('should render title with default text', () => {
@@ -514,6 +538,9 @@ it('should render title with default text', () => {
 })
 ```
 
+</template>
+<template #vue>
+
 ```js
 it('should render title with default text', () => {
   mount(LoginForm)
@@ -521,7 +548,8 @@ it('should render title with default text', () => {
 })
 ```
 
-:::
+</template>
+</code-group-react-vue>
 
 Asserting that a custom prop value is being rendered properly should also work
 the same way. For example, let's assert that a custom value for the `title` prop
@@ -529,7 +557,8 @@ is being rendered properly.
 
 After your last test, add this test and save the spec file:
 
-:::react-vue-example
+<code-group-react-vue>
+<template #react>
 
 ```js
 it('should render title with specified text', () => {
@@ -538,6 +567,9 @@ it('should render title with specified text', () => {
   cy.get('legend').should('have.text', title)
 })
 ```
+
+</template>
+<template #vue>
 
 ```js
 it('should render title with specified text', () => {
@@ -551,7 +583,8 @@ it('should render title with specified text', () => {
 })
 ```
 
-:::
+</template>
+</code-group-react-vue>
 
 <Alert type="success">
 
@@ -605,7 +638,8 @@ describe('LoginForm', () => {
 
 Your tests should now look something like this:
 
-:::react-vue-example
+<code-group-react-vue>
+<template #react>
 
 ```js
 describe('LoginForm', () => {
@@ -632,6 +666,9 @@ describe('LoginForm', () => {
   })
 })
 ```
+
+</template>
+<template #vue>
 
 ```js
 describe('LoginForm', () => {
@@ -663,7 +700,8 @@ describe('LoginForm', () => {
 })
 ```
 
-:::
+</template>
+</code-group-react-vue>
 
 And the Cypress app should look like this:
 
@@ -750,7 +788,8 @@ Inside the test, we first need to create a spy that we can pass into the
 a function to execute. After we create the spy, we need to mount the component,
 passing in the spy as the `onLogin` prop.
 
-:::react-vue-example
+<code-group-react-vue>
+<template #react>
 
 ```js
 it.only('should call onLogin with username and password on login', () => {
@@ -758,6 +797,9 @@ it.only('should call onLogin with username and password on login', () => {
   mount(<LoginForm onLogin={onLoginSpy} />)
 })
 ```
+
+</template>
+<template #vue>
 
 ```js
 it.only('should call onLogin with username and password on login', () => {
@@ -770,7 +812,8 @@ it.only('should call onLogin with username and password on login', () => {
 })
 ```
 
-:::
+</template>
+</code-group-react-vue>
 
 In the Cypress app, you should now see that the test details has an expandable
 "Spies / Stubs" panel showing details about the spy, including the number of
@@ -784,7 +827,8 @@ and type a password into it, and then click the Login button. Note that we're
 using the technique outlined in the [Writing smart tests](#Writing-smart-tests)
 section above to get these form controls.
 
-:::react-vue-example
+<code-group-react-vue>
+<template #react>
 
 ```js
 it.only('should call onLogin with username and password on login', () => {
@@ -795,6 +839,9 @@ it.only('should call onLogin with username and password on login', () => {
   cy.get('button').contains('Login').click()
 })
 ```
+
+</template>
+<template #vue>
 
 ```js
 it.only('should call onLogin with username and password on login', () => {
@@ -810,7 +857,8 @@ it.only('should call onLogin with username and password on login', () => {
 })
 ```
 
-:::
+</template>
+</code-group-react-vue>
 
 In the Cypress app, you should now see that the rendered component has filled-in
 Username and Password fields, and that all of the Cypress commands are listed
@@ -832,7 +880,8 @@ Using [`.as()`](/api/commands/as), we can assign the `onLoginSpy`
 `username` and `password` properties containing the values that were typed into
 the form.
 
-:::react-vue-example
+<code-group-react-vue>
+<template #react>
 
 ```js
 it.only('should call onLogin with username and password on login', () => {
@@ -847,6 +896,9 @@ it.only('should call onLogin with username and password on login', () => {
   })
 })
 ```
+
+</template>
+<template #vue>
 
 ```js
 it.only('should call onLogin with username and password on login', () => {
@@ -866,7 +918,8 @@ it.only('should call onLogin with username and password on login', () => {
 })
 ```
 
-:::
+</template>
+</code-group-react-vue>
 
 Ok, great. Our test is done!
 
@@ -939,7 +992,8 @@ Now, let's update our spec file to add the `beforeEach()` hook, before the
 existing "should call onLogin with username and password on login" test, and
 then move the spy creation and component mounting code into it, like so:
 
-:::react-vue-example
+<code-group-react-vue>
+<template #react>
 
 ```js
 describe('form tests', () => {
@@ -959,6 +1013,9 @@ describe('form tests', () => {
   })
 })
 ```
+
+</template>
+<template #vue>
 
 ```js
 describe('form tests', () => {
@@ -983,7 +1040,8 @@ describe('form tests', () => {
 })
 ```
 
-:::
+</template>
+</code-group-react-vue>
 
 The Cypress app should run the test exactly like before, however you should now
 see that the `mount` command has moved from the "test body" section to a
@@ -1011,7 +1069,8 @@ cy.get('@usernameInput').type('testuser123')
 Now, update the spec file, using the above approach for the Username input,
 Password input, and Login button, like so:
 
-:::react-vue-example
+<code-group-react-vue>
+<template #react>
 
 ```js
 describe('form tests', () => {
@@ -1034,6 +1093,9 @@ describe('form tests', () => {
   })
 })
 ```
+
+</template>
+<template #vue>
 
 ```js
 describe('form tests', () => {
@@ -1061,14 +1123,16 @@ describe('form tests', () => {
 })
 ```
 
-:::
+</template>
+</code-group-react-vue>
 
 Finally, we can refactor the test into two separate tests, like we outlined
 above. While doing so, let's also store the `username` and `password` values as
 `const` values, so they can be easily reused across all tests, and remove the
 `.only` so we can see all of our tests run normally:
 
-:::react-vue-example
+<code-group-react-vue>
+<template #react>
 
 ```js
 describe('form tests', () => {
@@ -1103,6 +1167,9 @@ describe('form tests', () => {
   })
 })
 ```
+
+</template>
+<template #vue>
 
 ```js
 describe('form tests', () => {
@@ -1142,7 +1209,8 @@ describe('form tests', () => {
 })
 ```
 
-:::
+</template>
+</code-group-react-vue>
 
 Now that this is done, we can very easily test all of the component's validation
 scenarios by adding a few more tests inside our "form tests" describe block.
