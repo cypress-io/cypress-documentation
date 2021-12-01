@@ -36,10 +36,11 @@ Configure the dev server to use the same Webpack configuration used by Create
 React App. You can do this using the `react-scripts` plugin provided by the
 `@cypress/react` module.
 
-Also, you need to tell Cypress where to find your component tests. The following
-example configuration assumes that all the test files are somewhere in the `src`
-folder and end with a `.test.js`, `.test.jsx`, `.test.ts` or `.test.tsx`
-extension.
+By default, Cypress looks for spec files anywhere in your project with an
+extension of either `.cy.js`, `.cy.jsx`, `.cy.ts`, or `.cy.tsx`. However, you
+can change this behavior with a custom `specPattern` value. In the following
+example, we've configured Cypress to look for spec files with those same
+extensions, but only in the `src` folder or any of its subdirectories.
 
 :::cypress-config-plugin-example
 
@@ -51,7 +52,7 @@ const { devServer } = require('@cypress/react/plugins/react-scripts')
 {
   component: {
     devServer,
-    specPattern: '**/*.cy.{js,jsx,ts,tsx}'
+    specPattern: 'src/**/*.cy.{js,jsx,ts,tsx}'
   }
 }
 ```
@@ -59,7 +60,7 @@ const { devServer } = require('@cypress/react/plugins/react-scripts')
 ```json
 {
   "component": {
-    "specPattern": "**/*.cy.{js,jsx,ts,tsx}"
+    "specPattern": "src/**/*.cy.{js,jsx,ts,tsx}"
   }
 }
 ```
@@ -147,7 +148,7 @@ const webpackConfig = require('@vue/cli-service/webpack.config')
         webpackConfig,
       })
     },
-    specPattern: '**/*.cy.{js,jsx,ts,tsx}'
+    specPattern: 'src/**/*.cy.{js,jsx,ts,tsx}'
   }
 }
 ```
@@ -155,7 +156,7 @@ const webpackConfig = require('@vue/cli-service/webpack.config')
 ```json
 {
   "component": {
-    "specPattern": "**/*.cy.{js,jsx,ts,tsx}"
+    "specPattern": "src/**/*.cy.{js,jsx,ts,tsx}"
   }
 }
 ```
@@ -266,7 +267,7 @@ const { devServer } = require('@cypress/react/plugins/next')
 {
   component: {
     devServer,
-    specPattern: '**/*.cy.{js,jsx,ts,tsx}'
+    specPattern: 'src/**/*.cy.{js,jsx,ts,tsx}'
   }
 }
 ```
@@ -274,7 +275,7 @@ const { devServer } = require('@cypress/react/plugins/next')
 ```json
 {
   "component": {
-    "specPattern": "**/*.cy.{js,jsx,ts,tsx}"
+    "specPattern": "src/**/*.cy.{js,jsx,ts,tsx}"
   }
 }
 ```
@@ -395,7 +396,7 @@ const { getWebpackConfig } = require('nuxt')
         webpackConfig,
       })
     },
-    specPattern: '**/*.cy.{js,jsx,ts,tsx}'
+    specPattern: 'src/**/*.cy.{js,jsx,ts,tsx}'
   }
 }
 ```
@@ -403,7 +404,7 @@ const { getWebpackConfig } = require('nuxt')
 ```json
 {
   "component": {
-    "specPattern": "**/*.cy.{js,jsx,ts,tsx}"
+    "specPattern": "src/**/*.cy.{js,jsx,ts,tsx}"
   }
 }
 ```
@@ -547,7 +548,7 @@ const { startDevServer } = require('@cypress/vite-dev-server')
         options: cypressDevServerConfig
       })
     },
-    specPattern: '**/*.cy.{js,jsx,ts,tsx}'
+    specPattern: 'src/**/*.cy.{js,jsx,ts,tsx}'
   }
 }
 ```
@@ -555,7 +556,7 @@ const { startDevServer } = require('@cypress/vite-dev-server')
 ```json
 {
   "component": {
-    "specPattern": "**/*.cy.{js,jsx,ts,tsx}"
+    "specPattern": "src/**/*.cy.{js,jsx,ts,tsx}"
   }
 }
 ```
