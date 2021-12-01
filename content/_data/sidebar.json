@@ -409,6 +409,10 @@
               "slug": "as"
             },
             {
+              "title": "attachFile",
+              "slug": "attachfile"
+            },
+            {
               "title": "blur",
               "slug": "blur"
             },

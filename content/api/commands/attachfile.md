@@ -7,10 +7,10 @@ Attaches a file or files to an HTML5 input element or simulates dragging a file 
 ## Syntax
 
 ```javascript
-cy.attachFile(file)
-cy.attachFile(file, options)
-cy.attachFile([file], options)
-cy.attachFile([file], options)
+.attachFile(file)
+.attachFile(file, options)
+.attachFile([file], options)
+.attachFile([file], options)
 ```
 
 ### Usage
@@ -51,9 +51,9 @@ If an object is provided, it can have the following properties.
 
 | Option         | Description                                                                                                                                                                                                              |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `contents`     | The contents of the file. This can be a string shorthand as described above, a `Buffer()` containing binary data or a non-Buffer object, which will be converted into a string with `JSON.stringify()` and utf8 encoded. |
-| `fileName`     | The name of the file. If `contents` is a path on disk, this defaults to the actual filename. In any other case, this defaults to an empty string.                                                                        |
-| `lastModified` | The file's last modified timestamp. This defaults to `Date.now()`.                                                                                                                                                       |
+| `contents`     | The contents of the file. This can be a string shorthand as described above, a `Buffer()` containing binary data or a non-Buffer object, which will be converted into a string with `JSON.stringify()` and utf8 encoded.                           |
+| `fileName`     | The name of the file. If `contents` is a path on disk, this defaults to the actual filename. In any other case, this defaults to an empty string.                                                                                                  |
+| `lastModified` | The file's last modified timestamp, in milliseconds elapsed since the UNIX epoch (eg. [`Date.prototype.getTime()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)). This defaults to `Date.now()`. |
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -201,7 +201,7 @@ The commands above will display in the Command Log as:
 When clicking on `attachFile` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/click/attach-file-in-console.png" alt="console.log for attachFile" ></DocsImage>
+<DocsImage src="/img/api/attachfile/attach-file-in-console.png" alt="console.log for attachFile" ></DocsImage>
 
 ## History
 
@@ -212,5 +212,6 @@ following:
 ## See also
 
 - [Guide: Variables and Aliases](/guides/core-concepts/variables-and-aliases)
+- [`.fixture()`](/api/commands/fixture)
 - [`.get()`](/api/commands/get)
 - [`.readFile()`](/api/commands/readfile)
