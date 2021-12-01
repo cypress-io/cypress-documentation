@@ -154,7 +154,7 @@ additional feedback while the tests are running!
 The solution here is to use multiple reporters. You will have the benefit of
 both worlds.
 
-We suggest using the npm module: <Icon name="github"></Icon>
+We suggest using the npm module: <Icon name="github"/>
 [https://github.com/you54f/cypress-multi-reporters](https://github.com/you54f/cypress-multi-reporters)
 
 We use multiple reporters for every single one of our internal projects.

@@ -22,7 +22,7 @@ cy.viewport(preset, orientation, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.viewport(550, 750) // Set viewport to 550px x 750px
@@ -31,15 +31,15 @@ cy.viewport('iphone-6') // Set viewport to 375px x 667px
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> width** **_(Number)_**
+**<Icon name="angle-right"/> width** **_(Number)_**
 
 Width of viewport in pixels (must be a non-negative, finite number).
 
-**<Icon name="angle-right"></Icon> height** **_(Number)_**
+**<Icon name="angle-right"/> height** **_(Number)_**
 
 Height of viewport in pixels (must be a non-negative, finite number).
 
-**<Icon name="angle-right"></Icon> preset** **_(String)_**
+**<Icon name="angle-right"/> preset** **_(String)_**
 
 A preset dimension to set the viewport. Preset supports the following options:
 
@@ -64,12 +64,12 @@ A preset dimension to set the viewport. Preset supports the following options:
 | `samsung-note9` | 414   | 846    |
 | `samsung-s10`   | 360   | 760    |
 
-**<Icon name="angle-right"></Icon> orientation** **_(String)_**
+**<Icon name="angle-right"/> orientation** **_(String)_**
 
 The orientation of the screen. The _default orientation_ is `portrait`. Pass
 `landscape` as the orientation to reverse the width/height.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.viewport()`.
 

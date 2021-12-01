@@ -26,13 +26,13 @@ The querying behavior of this command matches exactly how
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.get('input').not('.required') // Yield all inputs without class '.required'
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.not('.icon') // Errors, cannot be chained off 'cy'
@@ -41,11 +41,11 @@ cy.location().not() // Errors, 'location' does not yield DOM element
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> selector** **_(String selector)_**
+**<Icon name="angle-right"/> selector** **_(String selector)_**
 
 A selector used to remove matching DOM elements.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.not()`.
 

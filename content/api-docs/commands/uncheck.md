@@ -17,13 +17,13 @@ Uncheck checkbox(es).
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.get('[type="checkbox"]').uncheck() // Unchecks checkbox element
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.uncheck('[type="checkbox"]') // Errors, cannot be chained off 'cy'
@@ -32,15 +32,15 @@ cy.get('p:first').uncheck() // Errors, '.get()' does not yield checkbox
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> value** **_(String)_**
+**<Icon name="angle-right"/> value** **_(String)_**
 
 Value of checkbox that should be unchecked.
 
-**<Icon name="angle-right"></Icon> values** **_(Array)_**
+**<Icon name="angle-right"/> values** **_(Array)_**
 
 Values of checkboxes that should be unchecked.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.uncheck()`.
 

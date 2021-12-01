@@ -26,7 +26,7 @@ Details of each run are displayed including:
 
 <DocsImage src="/img/dashboard/run-details.png" alt="run-details"/>
 
-## <Icon name="file-code" className="fa-fw"></Icon> Spec files
+## <Icon name="file-code" className="fa-fw"/> Spec files
 
 You can see the result of each spec file that ran within **Specs**. There is
 also the option to switch between **Timeline View** and **Bar Chart View**.
@@ -62,7 +62,7 @@ src="/img/dashboard/specs-failures-popup.png"
 alt="Failures popup on spec hover"
 />
 
-### <Icon name="code" className="fa-fw"></Icon> CI logs
+### <Icon name="code" className="fa-fw"/> CI logs
 
 CI logs from the Cypress standard output include details and summaries of your
 tests for each spec file based on the [reporter](/guides/tooling/reporters) you
@@ -76,13 +76,13 @@ src="/img/dashboard/standard-output-of-recorded-test-run.png"
 alt="standard output"
 />
 
-### <Icon name="camera" className="fa-fw"></Icon> Screenshots
+### <Icon name="camera" className="fa-fw"/> Screenshots
 
 All screenshots taken during the test run can be found in the **Screenshots** of
 the spec. Both screenshots taken during failures and screenshots taken using the
 [`cy.screenshot()`](/api/commands/screenshot) command will show up here.
 
-### <Icon name="video" className="fa-fw"></Icon> Videos
+### <Icon name="video" className="fa-fw"/> Videos
 
 The video recorded during the test run can be found under the **Video** of the
 spec. You can also download the video.
@@ -92,7 +92,7 @@ src="/img/dashboard/videos-of-recorded-test-run.png"
 alt="Video of test runs"
 />
 
-## <Icon name="exclamation-triangle" className="fa-fw"></Icon> Test failures
+## <Icon name="exclamation-triangle" className="fa-fw"/> Test failures
 
 Any tests that fail during a test run can be found under the **Test Results**
 tab. Each failure is listed under its test title.
@@ -115,11 +115,11 @@ canceled by members of the project.
 ### To cancel a run
 
 - Click on a run in progress from the run list
-- Click on **<Icon name="ban"></Icon> Cancel run** in the upper-right corner of
+- Click on **<Icon name="ban"/> Cancel run** in the upper-right corner of
   the run details page
 - Click **Yes, cancel this run** to confirm. **Note: this cannot be undone**
 
-<DocsVideo src="/img/snippets/cancelling-run.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/cancelling-run.mp4"/>
 
 ### What happens when a run is canceled?
 
@@ -170,7 +170,7 @@ Dashboard.
 - Visit the archived run. The archived run can be accessed by the URL of the
   run. The format is:
   `https://dashboard.cypress.io/projects/{project ID}/runs/{run number}`
-- Click **<Icon name="history"></Icon> Restore from archive**
+- Click **<Icon name="history"/> Restore from archive**
   <DocsImage src="/img/dashboard/restore-from-archive.png" alt="restore-from-archive"/>
 
 ## Test Code History

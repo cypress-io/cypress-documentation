@@ -4,7 +4,7 @@ title: Variables and Aliases
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - How to deal with async commands
 - What Aliases are and how they simplify your code
@@ -495,9 +495,9 @@ always. It is recommended that you **alias elements as soon as possible**
 instead of further down a chain of commands.
 
 - `cy.get('#nav header .user').as('user')`
-  <Icon name="check-circle" color="green"></Icon> (good)
+  <Icon name="check-circle" color="green"/> (good)
 - `cy.get('#nav').find('header').find('.user').as('user')`
-  <Icon name="exclamation-triangle" color="red"></Icon> (bad)
+  <Icon name="exclamation-triangle" color="red"/> (bad)
 
 When in doubt, you can _always_ issue a regular [`cy.get()`](/api/commands/get)
 to query for the elements again.

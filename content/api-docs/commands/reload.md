@@ -15,7 +15,7 @@ cy.reload(forceReload, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.reload()
@@ -23,12 +23,12 @@ cy.reload()
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> forceReload** **_(Boolean)_**
+**<Icon name="angle-right"/> forceReload** **_(Boolean)_**
 
 Whether to reload the current page without using the cache. `true` forces the
 reload without cache.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 | Option    | Default                                                        | Description                                                                              |
 | --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |

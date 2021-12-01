@@ -28,7 +28,7 @@ on('after:screenshot', (details) => {
 })
 ```
 
-**<Icon name="angle-right"></Icon> details** **_(object)_**
+**<Icon name="angle-right"/> details** **_(object)_**
 
 An object describing the screenshot that was taken, with the following
 properties:

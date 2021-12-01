@@ -4,7 +4,7 @@ title: Cypress Studio
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - How to extend tests interactively using the Cypress Studio
 - How to add new tests interactively using the Cypress Studio
@@ -39,7 +39,7 @@ configuration file (`cypress.json` by default).
 }
 ```
 
-The Cypress <Icon name="github"></Icon>
+The Cypress <Icon name="github"/>
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) is
 an open source project implementing a payment application to demonstrate
 real-world usage of Cypress testing methods, patterns, and workflows. It will be
@@ -72,9 +72,9 @@ describe('Cypress Studio Demo', () => {
 
 <Alert type="info">
 
-##### <Icon name="graduation-cap"></Icon> Real World Example
+##### <Icon name="graduation-cap"/> Real World Example
 
-Clone the <Icon name="github"></Icon>
+Clone the <Icon name="github"/>
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and
 refer to the
 [cypress/tests/demo/cypress-studio.spec.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts)
@@ -338,9 +338,9 @@ describe('Cypress Studio Demo', () => {
 
 <Alert type="info">
 
-##### <Icon name="graduation-cap"></Icon> Real World Example
+##### <Icon name="graduation-cap"/> Real World Example
 
-Clone the <Icon name="github"></Icon>
+Clone the <Icon name="github"/>
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and
 refer to the
 [cypress/tests/demo/cypress-studio.spec.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts)

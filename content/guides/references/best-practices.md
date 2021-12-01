@@ -5,9 +5,9 @@ layout: toc-top
 
 <Alert type="info">
 
-### <Icon name="graduation-cap"></Icon> Real World Practices
+### <Icon name="graduation-cap"/> Real World Practices
 
-The Cypress team maintains the <Icon name="github"></Icon>
+The Cypress team maintains the <Icon name="github"/>
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app), a
 full stack example application that demonstrates **best practices and scalable
 strategies with Cypress in practical and realistic scenarios**.
@@ -30,14 +30,14 @@ and start testing.
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Sharing page objects, using your
+<Icon name="exclamation-triangle" color="red"/> **Anti-Pattern:** Sharing page objects, using your
 UI to log in, and not taking shortcuts.
 
 </Alert>
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Test specs in isolation, programmatically
+<Icon name="check-circle" color="green"/> **Best Practice:** Test specs in isolation, programmatically
 log into your application, and take control of your application's state.
 
 </Alert>
@@ -45,7 +45,7 @@ log into your application, and take control of your application's state.
 In February 2018 we gave a "Best Practices" conference talk at AssertJS. This
 video demonstrates how to approach writing fast, scalable tests.
 
-<Icon name="play-circle"></Icon>
+<Icon name="play-circle"/>
 [https://www.youtube.com/watch?v=5XQOK0v_YRE](https://www.youtube.com/watch?v=5XQOK0v_YRE)
 
 We have several
@@ -56,14 +56,14 @@ in our examples.
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Using highly brittle selectors
+<Icon name="exclamation-triangle" color="red"/> **Anti-Pattern:** Using highly brittle selectors
 that are subject to change.
 
 </Alert>
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use `data-*` attributes to provide
+<Icon name="check-circle" color="green"/> **Best Practice:** Use `data-*` attributes to provide
 context to your selectors and isolate them from CSS or JS changes.
 
 </Alert>
@@ -94,14 +94,14 @@ Given a button that we want to interact with:
 
 Let's investigate how we could target it:
 
-| Selector                              | Recommended                                                        | Notes                                                           |
-| ------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------------- |
-| `cy.get('button').click()`            | <Icon name="exclamation-triangle" color="red"></Icon> Never        | Worst - too generic, no context.                                |
-| `cy.get('.btn.btn-large').click()`    | <Icon name="exclamation-triangle" color="red"></Icon> Never        | Bad. Coupled to styling. Highly subject to change.              |
-| `cy.get('#main').click()`             | <Icon name="exclamation-triangle" color="orange"></Icon> Sparingly | Better. But still coupled to styling or JS event listeners.     |
-| `cy.get('[name=submission]').click()` | <Icon name="exclamation-triangle" color="orange"></Icon> Sparingly | Coupled to the `name` attribute which has HTML semantics.       |
-| `cy.contains('Submit').click()`       | <Icon name="check-circle" color="green"></Icon> Depends            | Much better. But still coupled to text content that may change. |
-| `cy.get('[data-cy=submit]').click()`  | <Icon name="check-circle" color="green"></Icon> Always             | Best. Isolated from all changes.                                |
+| Selector                              | Recommended                                                  | Notes                                                           |
+| ------------------------------------- | ------------------------------------------------------------ | --------------------------------------------------------------- |
+| `cy.get('button').click()`            | <Icon name="exclamation-triangle" color="red"/> Never        | Worst - too generic, no context.                                |
+| `cy.get('.btn.btn-large').click()`    | <Icon name="exclamation-triangle" color="red"/> Never        | Bad. Coupled to styling. Highly subject to change.              |
+| `cy.get('#main').click()`             | <Icon name="exclamation-triangle" color="orange"/> Sparingly | Better. But still coupled to styling or JS event listeners.     |
+| `cy.get('[name=submission]').click()` | <Icon name="exclamation-triangle" color="orange"/> Sparingly | Coupled to the `name` attribute which has HTML semantics.       |
+| `cy.contains('Submit').click()`       | <Icon name="check-circle" color="green"/> Depends            | Much better. But still coupled to text content that may change. |
+| `cy.get('[data-cy=submit]').click()`  | <Icon name="check-circle" color="green"/> Always             | Best. Isolated from all changes.                                |
 
 Targeting the element above by `tag`, `class` or `id` is very volatile and
 highly subject to change. You may swap out the element, you may refactor CSS and
@@ -132,7 +132,7 @@ When determining an unique selector it will automatically prefer elements with:
 
 </Alert>
 
-#### <Icon name="graduation-cap"></Icon> Real World Example
+#### <Icon name="graduation-cap"/> Real World Example
 
 The [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
 uses two useful custom commands for selecting elements for testing:
@@ -154,7 +154,7 @@ Cypress.Commands.add('getBySelLike', (selector, ...args) => {
 })
 ```
 
-> _<Icon name="github"></Icon> Source:
+> _<Icon name="github"/> Source:
 > [cypress/support/commands.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/support/commands.ts)_
 
 ### Text Content:
@@ -194,14 +194,14 @@ If the answer is **no** because the text could be changed - then use
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Trying to assign the return value
+<Icon name="exclamation-triangle" color="red"/> **Anti-Pattern:** Trying to assign the return value
 of Commands with `const`, `let`, or `var`.
 
 </Alert>
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use [closures to access and store](/guides/core-concepts/variables-and-aliases)
+<Icon name="check-circle" color="green"/> **Best Practice:** Use [closures to access and store](/guides/core-concepts/variables-and-aliases)
 what Commands yield you.
 
 </Alert>
@@ -248,14 +248,14 @@ For working with either of these patterns, please read our
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Trying to visit or interact with
+<Icon name="exclamation-triangle" color="red"/> **Anti-Pattern:** Trying to visit or interact with
 sites or servers you do not control.
 
 </Alert>
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Only test what you control. Try to
+<Icon name="check-circle" color="green"/> **Best Practice:** Only test what you control. Try to
 avoid requiring a 3rd party server. When necessary, always use [`cy.request()`](/api/commands/request)
 to talk to 3rd party servers via their APIs.
 
@@ -375,13 +375,13 @@ alt="The test finds and clicks the Confirm registration button"
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Coupling multiple tests together.
+<Icon name="exclamation-triangle" color="red"/> **Anti-Pattern:** Coupling multiple tests together.
 
 </Alert>
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Tests should always be able to be
+<Icon name="check-circle" color="green"/> **Best Practice:** Tests should always be able to be
 run independently from one another **and still pass**.
 
 </Alert>
@@ -491,14 +491,14 @@ can be run independently and pass.
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Acting like you're writing unit
+<Icon name="exclamation-triangle" color="red"/> **Anti-Pattern:** Acting like you're writing unit
 tests.
 
 </Alert>
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Add multiple assertions and don't
+<Icon name="check-circle" color="green"/> **Best Practice:** Add multiple assertions and don't
 worry about it
 
 </Alert>
@@ -571,14 +571,14 @@ describe('my form', () => {
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Using `after` or `afterEach`
+<Icon name="exclamation-triangle" color="red"/> **Anti-Pattern:** Using `after` or `afterEach`
 hooks to clean up state.
 
 </Alert>
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Clean up state **before** tests run.
+<Icon name="check-circle" color="green"/> **Best Practice:** Clean up state **before** tests run.
 
 </Alert>
 
@@ -712,7 +712,7 @@ The only times you **ever** need to clean up state, is if the operations that
 one test runs affects another test downstream. In only those cases do you need
 state cleanup.
 
-#### <Icon name="graduation-cap"></Icon> Real World Example
+#### <Icon name="graduation-cap"/> Real World Example
 
 The [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
 resets and re-seeds its database via a custom [Cypress task](/api/commands/task)
@@ -728,7 +728,7 @@ beforeEach(function () {
 })
 ```
 
-> _<Icon name="github"></Icon> Source:
+> _<Icon name="github"/> Source:
 > [cypress/tests/ui/auth.spec.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui/auth.spec.ts)_
 
 The `db:seed` task is defined within the
@@ -749,7 +749,7 @@ on('task', {
 })
 ```
 
-> _<Icon name="github"></Icon> Source:
+> _<Icon name="github"/> Source:
 > [cypress/plugins/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/plugins/index.ts)_
 
 The same practice above can be used for any type of database (PostgreSQL,
@@ -764,14 +764,14 @@ script.
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Waiting for arbitrary time periods
+<Icon name="exclamation-triangle" color="red"/> **Anti-Pattern:** Waiting for arbitrary time periods
 using [`cy.wait(Number)`](/api/commands/wait#Time).
 
 </Alert>
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use route aliases or assertions to
+<Icon name="check-circle" color="green"/> **Best Practice:** Use route aliases or assertions to
 guard Cypress from proceeding until an explicit condition is met.
 
 </Alert>
@@ -836,14 +836,14 @@ cy.get('table tr').should('have.length', 2)
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Trying to start a web server
+<Icon name="exclamation-triangle" color="red"/> **Anti-Pattern:** Trying to start a web server
 from within Cypress scripts with [`cy.exec()`](/api/commands/exec) or [`cy.task()`](/api/commands/task).
 
 </Alert>
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Start a web server prior to running
+<Icon name="check-circle" color="green"/> **Best Practice:** Start a web server prior to running
 Cypress.
 
 </Alert>
@@ -885,14 +885,14 @@ We have
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Anti-Pattern:** Using [cy.visit()](/api/commands/visit)
+<Icon name="exclamation-triangle" color="red"/> **Anti-Pattern:** Using [cy.visit()](/api/commands/visit)
 without setting a `baseUrl`.
 
 </Alert>
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Set a `baseUrl` in your [configuration
+<Icon name="check-circle" color="green"/> **Best Practice:** Set a `baseUrl` in your [configuration
 file (`cypress.json` by default)](/guides/references/configuration).
 
 </Alert>

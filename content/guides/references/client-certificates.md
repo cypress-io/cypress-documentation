@@ -17,7 +17,7 @@ not within the scope of Cypress documentation.
 
 ## Syntax
 
-**<Icon name="angle-right"></Icon> clientCertificates** **_(Object[])_**
+**<Icon name="angle-right"/> clientCertificates** **_(Object[])_**
 
 An array of objects defining the certificates. Each object must have the
 following properties

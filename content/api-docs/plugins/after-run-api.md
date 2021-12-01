@@ -36,7 +36,7 @@ on('after:run', (results) => {
 })
 ```
 
-**<Icon name="angle-right"></Icon> results** **_(Object)_**
+**<Icon name="angle-right"/> results** **_(Object)_**
 
 Results of the run, including the total number of passes/failures/etc, the
 project config, and details about the browser and system. It is the same as the

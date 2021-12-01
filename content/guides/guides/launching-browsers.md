@@ -327,7 +327,7 @@ You can see all of the default chrome command line switches we send
 You might notice that if you already have the browser open you will see two of
 the same browser icons in your dock.
 
-<DocsVideo src="/img/snippets/switching-between-cypress-and-other-chrome-browser.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/switching-between-cypress-and-other-chrome-browser.mp4"/>
 
 We understand that when Cypress is running in its own profile it can be
 difficult to tell the difference between your normal browser and Cypress.
@@ -337,7 +337,7 @@ versions (Dev, Canary, etc) useful. These browsers have different icons from the
 standard stable browser, making them more distinguishable. You can also use the
 bundled [Electron browser](#Electron-Browser), which does not have a dock icon.
 
-<DocsVideo src="/img/snippets/switching-cypress-browser-and-canary-browser.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/switching-cypress-browser-and-canary-browser.mp4"/>
 
 Additionally, in Chrome-based browsers, we've made the browser spawned by
 Cypress look different than regular sessions. You'll see a darker theme around

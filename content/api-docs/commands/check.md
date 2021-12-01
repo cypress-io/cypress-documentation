@@ -23,14 +23,14 @@ This element must be an `<input>` with type `checkbox` or `radio`.
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.get('[type="checkbox"]').check() // Check checkbox element
 cy.get('[type="radio"]').first().check() // Check first radio element
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.check('[type="checkbox"]') // Errors, cannot be chained off 'cy'
@@ -39,15 +39,15 @@ cy.get('p:first').check() // Errors, '.get()' does not yield checkbox or radio
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> value** **_(String)_**
+**<Icon name="angle-right"/> value** **_(String)_**
 
 Value of checkbox or radio that should be checked.
 
-**<Icon name="angle-right"></Icon> values** **_(Array)_**
+**<Icon name="angle-right"/> values** **_(Array)_**
 
 Values of checkboxes or radios that should be checked.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.check()`.
 

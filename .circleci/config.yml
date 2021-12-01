@@ -258,13 +258,13 @@ workflows:
           #       name: Check for Broken Links
           #       command: yarn check:links
 
-  nightly:
-    triggers:
-      - schedule:
-          cron: "0 0 * * *"
-          filters:
-            branches:
-              only:
-                - main
-    # jobs:
-    #   - update-algolia-index
+  # nightly:
+  #   triggers:
+  #     - schedule:
+  #         cron: "0 0 * * *"
+  #         filters:
+  #           branches:
+  #             only:
+  #               - main
+  #   jobs:
+  #     - update-algolia-index

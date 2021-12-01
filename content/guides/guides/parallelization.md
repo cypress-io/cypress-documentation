@@ -4,7 +4,7 @@ title: Parallelization
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - How to parallelize test runs
 - How to group test runs

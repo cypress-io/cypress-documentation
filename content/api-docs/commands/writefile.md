@@ -15,7 +15,7 @@ cy.writeFile(filePath, contents, encoding, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.writeFile('menu.json')
@@ -23,16 +23,16 @@ cy.writeFile('menu.json')
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> filePath** **_(String)_**
+**<Icon name="angle-right"/> filePath** **_(String)_**
 
 A path to a file within the project root (the directory that contains the
 default `cypress.json`).
 
-**<Icon name="angle-right"></Icon> contents** **_(String, Array, Object or Buffer)_**
+**<Icon name="angle-right"/> contents** **_(String, Array, Object or Buffer)_**
 
 The contents to be written to the file.
 
-**<Icon name="angle-right"></Icon> encoding** **_(String)_**
+**<Icon name="angle-right"/> encoding** **_(String)_**
 
 The encoding to be used when writing to the file. The following encodings are
 supported:
@@ -53,7 +53,7 @@ supported:
 Using `null` explicitly will allows you to write a `Buffer` directly, without
 first encoding it as a string.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.writeFile()`.
 

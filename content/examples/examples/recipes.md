@@ -5,7 +5,7 @@ containerClass: examples
 
 Recipes show you how to test common scenarios in Cypress.
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [https://github.com/cypress-io/cypress-example-recipes](https://github.com/cypress-io/cypress-example-recipes)
 
 ## Fundamentals

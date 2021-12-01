@@ -4,7 +4,7 @@ title: Migrating from Protractor to Cypress
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - Benefits of using Cypress in Angular apps
 - How Cypress can create reliable e2e tests for Angular apps
@@ -103,7 +103,7 @@ The Selector Playground helps you cut down on time spent finding the right
 selectors so you can focus on what's important: writing tests that verify your
 app's logic.
 
-<DocsVideo src="/img/guides/migrating-to-cypress/DevTools.mp4" title="interacting with tests in a browser"></DocsVideo>
+<DocsVideo src="/img/guides/migrating-to-cypress/DevTools.mp4" title="interacting with tests in a browser"/>
 
 ### Faster feedback loops
 
@@ -116,7 +116,7 @@ Having your code editor and application under test within a browser side-by-side
 provides an instant feedback loop that allows you to iterate faster with
 confidence.
 
-<DocsVideo src="/img/guides/migrating-to-cypress/codeframe-ex.webm" title="auto-reloading"></DocsVideo>
+<DocsVideo src="/img/guides/migrating-to-cypress/codeframe-ex.webm" title="auto-reloading"/>
 
 ### Time travel through tests
 
@@ -130,7 +130,7 @@ one command to another in the
 elements Cypress acted upon and how your application responded to the simulated
 **real user behavior**.
 
-<DocsVideo src="/img/guides/migrating-to-cypress/interactivity.mp4" title="Time travel debugging"></DocsVideo>
+<DocsVideo src="/img/guides/migrating-to-cypress/interactivity.mp4" title="Time travel debugging"/>
 
 ### Gain Visibility in Headless Mode with Screenshots and Videos
 
@@ -458,7 +458,7 @@ that allows you to:
 The Selector Playground can be useful when you need to find a specific selector
 to use in your Cypress tests.
 
-<DocsVideo src="/img/snippets/selector-playground.mp4" title="Selector Playground"></DocsVideo>
+<DocsVideo src="/img/snippets/selector-playground.mp4" title="Selector Playground"/>
 
 ### How to Interact with DOM Elements
 

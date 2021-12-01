@@ -47,15 +47,15 @@ Cypress.env(object)
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> name** **_(String)_**
+**<Icon name="angle-right"/> name** **_(String)_**
 
 The name of the environment variable to get or set.
 
-**<Icon name="angle-right"></Icon> value** **_(String)_**
+**<Icon name="angle-right"/> value** **_(String)_**
 
 The value of the environment variable to set.
 
-**<Icon name="angle-right"></Icon> object** **_(Object)_**
+**<Icon name="angle-right"/> object** **_(Object)_**
 
 Set multiple environment variables with an object literal.
 

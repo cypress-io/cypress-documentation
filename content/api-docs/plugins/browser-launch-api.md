@@ -24,7 +24,7 @@ on('before:browser:launch', (browser = {}, launchOptions) => {
 })
 ```
 
-**<Icon name="angle-right"></Icon> browser** **_(object)_**
+**<Icon name="angle-right"/> browser** **_(object)_**
 
 An object describing the browser being launched, with the following properties:
 
@@ -41,7 +41,7 @@ An object describing the browser being launched, with the following properties:
 | `isHeadless`   | `boolean` | Whether the browser is running headlessly.                                                                     |
 | `isHeaded`     | `boolean` | Whether the browser displays headed.                                                                           |
 
-**<Icon name="angle-right"></Icon> launchOptions** **_(object)_**
+**<Icon name="angle-right"/> launchOptions** **_(object)_**
 
 Options that can be modified to control how the browser is launched, with the
 following properties:

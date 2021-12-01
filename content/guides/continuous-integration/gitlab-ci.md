@@ -4,7 +4,7 @@ title: GitLab CI
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - How to run Cypress tests with GitLab as part of CI/CD pipeline
 - How to parallelize Cypress test runs within GitLab CI/CD
@@ -278,7 +278,7 @@ A complete CI workflow against multiple browsers, viewports and operating
 systems is available in the
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app).
 
-Clone the <Icon name="github"></Icon>
+Clone the <Icon name="github"/>
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and
 refer to the
 [.gitlab-ci.yml](https://github.com/cypress-io/cypress-realworld-app/blob/develop/.gitlab-ci.yml)

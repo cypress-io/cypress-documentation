@@ -13,7 +13,7 @@ Cypress.Keyboard.defaults(options)
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 An object containing the following:
 

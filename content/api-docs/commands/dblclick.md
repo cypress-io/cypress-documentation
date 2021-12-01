@@ -17,7 +17,7 @@ Double-click a DOM element.
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.get('button').dblclick() // Double click on button
@@ -25,7 +25,7 @@ cy.focused().dblclick() // Double click on el with focus
 cy.contains('Welcome').dblclick() // Double click on first el containing 'Welcome'
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.dblclick('button') // Errors, cannot be chained off 'cy'
@@ -34,7 +34,7 @@ cy.window().dblclick() // Errors, 'window' does not yield DOM element
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> position** **_(String)_**
+**<Icon name="angle-right"/> position** **_(String)_**
 
 The position where the double click should be issued. The `center` position is
 the default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
@@ -42,15 +42,15 @@ the default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
 
 <DocsImage src="/img/api/coordinates-diagram.jpg" alt="cypress-command-positions-diagram" />
 
-**<Icon name="angle-right"></Icon> x** **_(Number)_**
+**<Icon name="angle-right"/> x** **_(Number)_**
 
 The distance in pixels from the element's left to issue the double click.
 
-**<Icon name="angle-right"></Icon> y** **_(Number)_**
+**<Icon name="angle-right"/> y** **_(Number)_**
 
 The distance in pixels from the element's top to issue the double click.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.dblclick()`.
 

@@ -20,7 +20,7 @@ cy.spy(object, method)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.spy(user, 'addFriend')
@@ -28,11 +28,11 @@ cy.spy(user, 'addFriend')
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> object** **_(Object)_**
+**<Icon name="angle-right"/> object** **_(Object)_**
 
 The `object` that has the `method` to be wrapped.
 
-**<Icon name="angle-right"></Icon> method** **_(String)_**
+**<Icon name="angle-right"/> method** **_(String)_**
 
 The name of the `method` on the `object` to be wrapped.
 

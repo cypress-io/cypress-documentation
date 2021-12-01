@@ -23,7 +23,7 @@ guide.
 
 ## Chai
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [https://github.com/chaijs/chai](https://github.com/chaijs/chai)
 
 ### BDD Assertions
@@ -134,7 +134,7 @@ entire list of available Chai assertions [here](http://chaijs.com/api/assert/).
 
 ## Chai-jQuery
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [https://github.com/chaijs/chai-jquery](https://github.com/chaijs/chai-jquery)
 
 These chainers are available when asserting about a DOM object.
@@ -172,7 +172,7 @@ You will commonly use these chainers after using DOM commands like:
 
 ## Sinon-Chai
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [https://github.com/domenic/sinon-chai](https://github.com/domenic/sinon-chai)
 
 These chainers are used on assertions with [`cy.stub()`](/api/commands/stub) and

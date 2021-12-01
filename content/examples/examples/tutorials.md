@@ -15,9 +15,9 @@ we'll discuss approaches for taking shortcuts by controlling your application's
 state directly, and for writing your tests **in isolation** to prevent specs
 from being coupled together or having to share knowledge.
 
-| Tutorial                                                                                       | Length                           | Release date                                                | Cypress version |
-| ---------------------------------------------------------------------------------------------- | -------------------------------- | ----------------------------------------------------------- | --------------- |
-| [Organizing Tests, Logging In, Controlling State](https://www.youtube.com/watch?v=5XQOK0v_YRE) | <Icon name="video"></Icon> 27:21 | <time datetime="2018-02-22T16:00:00.000Z">02-22-2018</time> | 2.1.0           |
+| Tutorial                                                                                       | Length                     | Release date                                                | Cypress version |
+| ---------------------------------------------------------------------------------------------- | -------------------------- | ----------------------------------------------------------- | --------------- |
+| [Organizing Tests, Logging In, Controlling State](https://www.youtube.com/watch?v=5XQOK0v_YRE) | <Icon name="video"/> 27:21 | <time datetime="2018-02-22T16:00:00.000Z">02-22-2018</time> | 2.1.0           |
 
 ## Video playlists
 
@@ -54,17 +54,17 @@ We have a lot of ground to cover, so let's get started!
 
 **_Contents:_**
 
-| Tutorial                                                             | Length                           | Release date                                                | Cypress version |
-| -------------------------------------------------------------------- | -------------------------------- | ----------------------------------------------------------- | --------------- |
-| 1. [Project setup](#1-Project-setup)                                 | <Icon name="video"></Icon> 3:52  | <time datetime="2017-11-01T16:00:00.000Z">11-01-2017</time> | 1.0.2           |
-| 2. [Testing inputs](#2-Text-inputs)                                  | <Icon name="video"></Icon> 7:17  | <time datetime="2017-11-01T16:00:00.000Z">11-01-2017</time> | 1.0.2           |
-| 3. [Form submission and XHRs](#3-Form-submission-and-XHRs)           | <Icon name="video"></Icon> 10:21 | <time datetime="2017-11-04T10:45:00.000Z">11-04-2017</time> | 1.0.2           |
-| 4. [Loading data with fixtures](#4-Loading-data-with-fixtures)       | <Icon name="video"></Icon> 9:00  | <time datetime="2017-11-08T16:00:00.000Z">11-08-2017</time> | 1.0.2           |
-| 5. [Todo item behavior](#5-Todo-item-behavior)                       | <Icon name="video"></Icon> 8:19  | <time datetime="2017-11-20T16:00:00.000Z">11-20-2017</time> | 1.0.2           |
-| 6. [Toggling and debugging](#6-Toggling-and-debugging)               | <Icon name="video"></Icon> 9:05  | <time datetime="2017-11-20T16:00:00.000Z">11-20-2017</time> | 1.0.2           |
-| 7. [Filters and data-driven tests](#7-Filters-and-data-driven-tests) | <Icon name="video"></Icon> 11:39 | <time datetime="2017-11-29T16:00:00.000Z">11-29-2017</time> | 1.0.2           |
-| 8. [Full end-to-end tests part 1](#8-Full-end-to-end-tests-part-1)   | <Icon name="video"></Icon> 8:59  | <time datetime="2017-12-07T16:00:00.000Z">12-07-2017</time> | 1.0.2           |
-| 9. [Full end-to-end tests part 2](#9-Full-end-to-end-tests-part-2)   | <Icon name="video"></Icon> 7:04  | <time datetime="2017-12-07T16:00:00.000Z">12-07-2017</time> | 1.0.2           |
+| Tutorial                                                             | Length                     | Release date                                                | Cypress version |
+| -------------------------------------------------------------------- | -------------------------- | ----------------------------------------------------------- | --------------- |
+| 1. [Project setup](#1-Project-setup)                                 | <Icon name="video"/> 3:52  | <time datetime="2017-11-01T16:00:00.000Z">11-01-2017</time> | 1.0.2           |
+| 2. [Testing inputs](#2-Text-inputs)                                  | <Icon name="video"/> 7:17  | <time datetime="2017-11-01T16:00:00.000Z">11-01-2017</time> | 1.0.2           |
+| 3. [Form submission and XHRs](#3-Form-submission-and-XHRs)           | <Icon name="video"/> 10:21 | <time datetime="2017-11-04T10:45:00.000Z">11-04-2017</time> | 1.0.2           |
+| 4. [Loading data with fixtures](#4-Loading-data-with-fixtures)       | <Icon name="video"/> 9:00  | <time datetime="2017-11-08T16:00:00.000Z">11-08-2017</time> | 1.0.2           |
+| 5. [Todo item behavior](#5-Todo-item-behavior)                       | <Icon name="video"/> 8:19  | <time datetime="2017-11-20T16:00:00.000Z">11-20-2017</time> | 1.0.2           |
+| 6. [Toggling and debugging](#6-Toggling-and-debugging)               | <Icon name="video"/> 9:05  | <time datetime="2017-11-20T16:00:00.000Z">11-20-2017</time> | 1.0.2           |
+| 7. [Filters and data-driven tests](#7-Filters-and-data-driven-tests) | <Icon name="video"/> 11:39 | <time datetime="2017-11-29T16:00:00.000Z">11-29-2017</time> | 1.0.2           |
+| 8. [Full end-to-end tests part 1](#8-Full-end-to-end-tests-part-1)   | <Icon name="video"/> 8:59  | <time datetime="2017-12-07T16:00:00.000Z">12-07-2017</time> | 1.0.2           |
+| 9. [Full end-to-end tests part 2](#9-Full-end-to-end-tests-part-2)   | <Icon name="video"/> 7:04  | <time datetime="2017-12-07T16:00:00.000Z">12-07-2017</time> | 1.0.2           |
 
 ### 1. Project setup
 
@@ -74,10 +74,10 @@ This repo already has the build and server configuration handled. We will take a
 look at the project's [`npm`](https://www.npmjs.com/) dependencies and scripts,
 then jump right into getting Cypress up and running.
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [Get the completed code for this lesson on GitHub](https://github.com/cypress-io/cypress-tutorial-build-todo/tree/01_setup)
 
-<DocsVideo src="https://vimeo.com/240554515"></DocsVideo>
+<DocsVideo src="https://vimeo.com/240554515"/>
 
 ### 2. Text inputs
 
@@ -87,10 +87,10 @@ page and how to make assertions about their behavior. We will also look into
 some best practices like using `beforeEach` and defining our application's
 [baseUrl](/guides/references/configuration#Global) to remove duplicated code.
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [Get the completed code for this lesson on GitHub](https://github.com/cypress-io/cypress-tutorial-build-todo/tree/02_inputs)
 
-<DocsVideo src="https://vimeo.com/240554808"></DocsVideo>
+<DocsVideo src="https://vimeo.com/240554808"/>
 
 ### 3. Form submission and XHRs
 
@@ -101,10 +101,10 @@ on the application's "happy path" first. Once our form is working, we'll use
 another stubbed XHR call to setup a failure scenario and implement the code to
 properly display an error message.
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [Get the completed code for this lesson on GitHub](https://github.com/cypress-io/cypress-tutorial-build-todo/tree/03_form_sub)
 
-<DocsVideo src="https://vimeo.com/241063147"></DocsVideo>
+<DocsVideo src="https://vimeo.com/241063147"/>
 
 ### 4. Loading data with fixtures
 
@@ -144,10 +144,10 @@ convenience, you can copy it from here and paste it in as you follow along.
 ]
 ```
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [Get the completed code for this lesson on GitHub](https://github.com/cypress-io/cypress-tutorial-build-todo/tree/04_custom_cmd)
 
-<DocsVideo src="https://vimeo.com/241773142"></DocsVideo>
+<DocsVideo src="https://vimeo.com/241773142"/>
 
 ### 5. Todo item behavior
 
@@ -159,10 +159,10 @@ different ways of handling this situation. We'll also look at the appropriate
 way to hold onto references to previously queried DOM elements using
 [`.as()`](/api/commands/as) to create aliases.
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [Get the completed code for this lesson on GitHub](https://github.com/cypress-io/cypress-tutorial-build-todo/tree/05_todo_items)
 
-<DocsVideo src="https://vimeo.com/242954792"></DocsVideo>
+<DocsVideo src="https://vimeo.com/242954792"/>
 
 ### 6. Toggling and debugging
 
@@ -177,10 +177,10 @@ application state while debugging and let our test confirm our theory about the
 cause of the bug. Once the debugging is complete, we will refactor our code to
 be less error prone, relying on the test to help us get it right.
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [Get the completed code for this lesson on GitHub](https://github.com/cypress-io/cypress-tutorial-build-todo/tree/06_toggle_debug)
 
-<DocsVideo src="https://vimeo.com/242961930"></DocsVideo>
+<DocsVideo src="https://vimeo.com/242961930"/>
 
 ### 7. Filters and data-driven tests
 
@@ -193,10 +193,10 @@ links work. We will then look at how we can use standard JavaScript data
 structures to drive multiple assertions in our test, allowing us to test
 multiple variations of the filter behavior in a single test.
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [Get the completed code for this lesson on GitHub](https://github.com/cypress-io/cypress-tutorial-build-todo/tree/07_data_driven)
 
-<DocsVideo src="https://vimeo.com/244696145"></DocsVideo>
+<DocsVideo src="https://vimeo.com/244696145"/>
 
 ### 8. Full end-to-end tests part 1
 
@@ -208,10 +208,10 @@ application can create and save new todos without a stubbed back end. We will
 also see how we can listen to and [`cy.wait()`](/api/commands/wait) for XHR
 responses in our tests to avoid flake caused by unpredictable response times.
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [Get the completed code for this lesson on GitHub](https://github.com/cypress-io/cypress-tutorial-build-todo/tree/08_smoke_1)
 
-<DocsVideo src="https://vimeo.com/245387683"></DocsVideo>
+<DocsVideo src="https://vimeo.com/245387683"/>
 
 ### 9. Full end-to-end tests part 2
 
@@ -223,7 +223,7 @@ deleting and updating items against a real back end, we will see how to run our
 Cypress tests using `cypress run`, giving us an ideal setup for running our
 tests in a CI environment.
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [Get the completed code for this lesson on GitHub](https://github.com/cypress-io/cypress-tutorial-build-todo/tree/09_smoke_2)
 
-<DocsVideo src="https://vimeo.com/245388948"></DocsVideo>
+<DocsVideo src="https://vimeo.com/245388948"/>

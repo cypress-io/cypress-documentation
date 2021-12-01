@@ -17,13 +17,13 @@ Cypress.sinon.match.<matcher name>
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 Cypress.sinon.match.string
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.sinon.match.string // Errors, cannot be chained off 'cy'

@@ -4,7 +4,7 @@ title: Writing and Organizing Tests
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - How to organize your test and support files.
 - What languages are supported in your test files.
@@ -21,7 +21,7 @@ We recently gave a "Best Practices" conference talk at AssertJS (February 2018).
 This video demonstrates how to approach breaking down your application and
 organizing your tests.
 
-<Icon name="play-circle"></Icon>
+<Icon name="play-circle"/>
 [https://www.youtube.com/watch?v=5XQOK0v_YRE](https://www.youtube.com/watch?v=5XQOK0v_YRE)
 
 </Alert>
@@ -216,7 +216,7 @@ in every single one of your spec files.
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle"></Icon> Keep in mind, when clicking "Run all specs" after [cypress
+<Icon name="exclamation-triangle"/> Keep in mind, when clicking "Run all specs" after [cypress
 open](/guides/guides/command-line#cypress-open), the code in the support file is executed once before
 all spec files, instead of once before each spec file. See [Execution](#Execution) for more details.
 
@@ -427,14 +427,14 @@ describe('Hooks', () => {
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle"></Icon> Before writing `after()` or `afterEach()` hooks, please see
+<Icon name="exclamation-triangle"/> Before writing `after()` or `afterEach()` hooks, please see
 our [thoughts on the anti-pattern of cleaning up state with `after()` or `afterEach()`](/guides/references/best-practices#Using-after-or-afterEach-hooks).
 
 </Alert>
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle"></Icon> Be wary of root-level hooks, as they could execute in a surprising
+<Icon name="exclamation-triangle"/> Be wary of root-level hooks, as they could execute in a surprising
 order when clicking the "Run all specs" button. Instead place them inside `describe` or `context` suites
 for isolation. Read [Be careful when running all specs together](https://glebbahmutov.com/blog/run-all-specs/).
 
@@ -517,7 +517,7 @@ specify(name, config, fn)
 
 #### Allowed config values
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Note:** Some configuration values are readonly
+<Icon name="exclamation-triangle" color="red"/> **Note:** Some configuration values are readonly
 and cannot be changed via test configuration. The following configuration values **can be changed** via
 per test configuration:
 
@@ -699,7 +699,7 @@ of test code.
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle"></Icon> Be wary of root-level hooks, as they could execute in a surprising
+<Icon name="exclamation-triangle"/> Be wary of root-level hooks, as they could execute in a surprising
 order when clicking the "Run all specs" button. Instead place them inside `describe` or `context` suites
 for isolation. Read [Be careful when running all specs together](https://glebbahmutov.com/blog/run-all-specs/).
 

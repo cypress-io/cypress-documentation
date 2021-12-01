@@ -14,7 +14,7 @@ cy.wrap(subject, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.wrap({ name: 'Jane Lane' })
@@ -22,11 +22,11 @@ cy.wrap({ name: 'Jane Lane' })
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> subject** **_(Object)_**
+**<Icon name="angle-right"/> subject** **_(Object)_**
 
 An object to be yielded.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.wrap()`.
 
@@ -148,7 +148,7 @@ For example, given the following example:
 - `bar()` is also dependent on some data that is created while after calling
   other Cypress commands.
 
-**<Icon name="exclamation-triangle" color="red"></Icon>** If you wrap the
+**<Icon name="exclamation-triangle" color="red"/>** If you wrap the
 asynchronous functions in `cy.wrap()`, then `bar()` may be called prematurely
 before the required data is available:
 
@@ -167,7 +167,7 @@ cy.wrap(bar()) // DON'T DO THIS
 This behavior is due to the function invocation `foo()` and `bar()`, which call
 the functions immediately to return a Promise.
 
-**<Icon name="check-circle" color="green"></Icon>** If you want `bar()` to
+**<Icon name="check-circle" color="green"/>** If you want `bar()` to
 execute after `foo()` and the [cy.get()](/api/commands/get) commands, one
 solution is to chain off the final command using [.then()](/api/commands/then):
 

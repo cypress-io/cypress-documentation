@@ -16,13 +16,13 @@ new Cypress.Promise(fn)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 new Cypress.Promise((resolve, reject) => { ... })
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 new cy.Promise(...)  // Errors, cannot be chained off 'cy'

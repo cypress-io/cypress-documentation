@@ -35,7 +35,7 @@ on('before:run', (details) => {
 })
 ```
 
-**<Icon name="angle-right"></Icon> details** **_(Object)_**
+**<Icon name="angle-right"/> details** **_(Object)_**
 
 Details of the run, including the project config, system information, and the
 version of Cypress. More details are included when running via `cypress run`.

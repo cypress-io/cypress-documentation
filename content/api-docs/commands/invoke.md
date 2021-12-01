@@ -23,14 +23,14 @@ subject, use [`.its()`](/api/commands/its).
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.wrap({ animate: fn }).invoke('animate') // Invoke the 'animate' function
 cy.get('.modal').invoke('show') // Invoke the jQuery 'show' function
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.invoke('convert') // Errors, cannot be chained off 'cy'
@@ -39,11 +39,11 @@ cy.wrap({ name: 'Jane' }).invoke('name') // Errors, 'name' is not a function
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> functionName** **_(String, Number)_**
+**<Icon name="angle-right"/> functionName** **_(String, Number)_**
 
 Name of function to be invoked.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.invoke()`.
 
@@ -52,7 +52,7 @@ Pass in an options object to change the default behavior of `.invoke()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.invoke()` to resolve before [timing out](#Timeouts)                   |
 
-**<Icon name="angle-right"></Icon> args...**
+**<Icon name="angle-right"/> args...**
 
 Additional arguments to be given to the function call. There is no limit to the
 number of arguments.

@@ -9,13 +9,13 @@ provides you insight into what happened when your tests ran.
 
 <!-- textlint-disable -->
 
-<DocsVideo src="https://youtube.com/embed/ezp60FUnjGg"></DocsVideo>
+<DocsVideo src="https://youtube.com/embed/ezp60FUnjGg"/>
 
 <!-- textlint-enable -->
 
 <Alert type="info">
 
-##### <Icon name="graduation-cap"></Icon> Real World Example <Badge type="success">New</Badge>
+##### <Icon name="graduation-cap"/> Real World Example <Badge type="success">New</Badge>
 
 The Cypress
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
@@ -24,7 +24,7 @@ leverages the
 over 300 test cases in parallel across 25 machines, multiple browsers, multiple
 device sizes, and multiple operating systems.
 
-Check out the <Icon name="github"></Icon>
+Check out the <Icon name="github"/>
 [Real World App Dashboard](https://dashboard.cypress.io/projects/7s5okt).
 
 </Alert>
@@ -118,8 +118,8 @@ can view any [public project](/guides/dashboard/projects#Public-vs-Private).
 
 **Here are some of our own public projects you can view:**
 
-- [<Icon name="folder-open"></Icon> cypress-realworld-app](https://dashboard.cypress.io/projects/7s5okt)
-- [<Icon name="folder-open"></Icon> cypress-example-recipes](https://dashboard.cypress.io/#/projects/6p53jw)
-- [<Icon name="folder-open"></Icon> cypress-example-kitchensink](https://dashboard.cypress.io/#/projects/4b7344)
-- [<Icon name="folder-open"></Icon> cypress-example-todomvc](https://dashboard.cypress.io/#/projects/245obj)
-- [<Icon name="folder-open"></Icon> cypress-example-piechopper](https://dashboard.cypress.io/#/projects/fuduzp)
+- [<Icon name="folder-open"/> cypress-realworld-app](https://dashboard.cypress.io/projects/7s5okt)
+- [<Icon name="folder-open"/> cypress-example-recipes](https://dashboard.cypress.io/#/projects/6p53jw)
+- [<Icon name="folder-open"/> cypress-example-kitchensink](https://dashboard.cypress.io/#/projects/4b7344)
+- [<Icon name="folder-open"/> cypress-example-todomvc](https://dashboard.cypress.io/#/projects/245obj)
+- [<Icon name="folder-open"/> cypress-example-piechopper](https://dashboard.cypress.io/#/projects/fuduzp)

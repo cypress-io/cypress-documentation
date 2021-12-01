@@ -4,7 +4,7 @@ title: Screenshots and Videos
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - How Cypress captures screenshots of test failures automatically
 - How to manually capture your own screenshot

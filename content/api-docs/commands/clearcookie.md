@@ -21,7 +21,7 @@ cy.clearCookie(name, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.clearCookie('authId') // clear the 'authId' cookie
@@ -29,11 +29,11 @@ cy.clearCookie('authId') // clear the 'authId' cookie
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> name** **_(String)_**
+**<Icon name="angle-right"/> name** **_(String)_**
 
 The name of the cookie to be cleared.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.clearCookie()`.
 

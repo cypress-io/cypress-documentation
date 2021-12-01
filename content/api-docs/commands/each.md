@@ -13,14 +13,14 @@ property).
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.get('ul>li').each(() => {...}) // Iterate through each 'li'
 cy.getCookies().each(() => {...}) // Iterate through each cookie
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 
@@ -30,7 +30,7 @@ cy.location().each(() => {...}) // Errors, 'location' doesn't yield an array
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> callbackFn** **_(Function)_**
+**<Icon name="angle-right"/> callbackFn** **_(Function)_**
 
 Pass a function that is invoked with the following arguments:
 

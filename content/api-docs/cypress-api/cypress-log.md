@@ -15,7 +15,7 @@ Cypress.log(options)
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to `Cypress.log()`.
 

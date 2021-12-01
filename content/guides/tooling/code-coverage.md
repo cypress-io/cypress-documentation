@@ -4,7 +4,7 @@ title: Code Coverage
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - How to instrument your application code
 - How to save the coverage information collected during end-to-end and unit
@@ -15,7 +15,7 @@ title: Code Coverage
 
 <!-- textlint-disable -->
 
-<DocsVideo src="https://youtube.com/embed/C8g5X4vCZJA"></DocsVideo>
+<DocsVideo src="https://youtube.com/embed/C8g5X4vCZJA"/>
 
 <!-- textlint-enable -->
 
@@ -701,31 +701,31 @@ There is a series of videos we have recorded showing code coverage in Cypress
 
 <!-- textlint-disable terminology -->
 
-<DocsVideo src="https://youtube.com/embed/edgeQZ8UpD0"></DocsVideo>
+<DocsVideo src="https://youtube.com/embed/edgeQZ8UpD0"/>
 
 #### Get code coverage reports from Cypress tests
 
-<DocsVideo src="https://youtube.com/embed/y8StkffYra0"></DocsVideo>
+<DocsVideo src="https://youtube.com/embed/y8StkffYra0"/>
 
 #### Excluding code from code coverage reports
 
-<DocsVideo src="https://youtube.com/embed/DlceMpRpbAw"></DocsVideo>
+<DocsVideo src="https://youtube.com/embed/DlceMpRpbAw"/>
 
 #### Check code coverage robustly using 3rd party tool
 
-<DocsVideo src="https://youtube.com/embed/dwU5gUG2"></DocsVideo>
+<DocsVideo src="https://youtube.com/embed/dwU5gUG2"/>
 
 #### Adding code coverage badge to your project
 
-<DocsVideo src="https://youtube.com/embed/bNVRxb-MKGo"></DocsVideo>
+<DocsVideo src="https://youtube.com/embed/bNVRxb-MKGo"/>
 
 #### Show code coverage in commit status check
 
-<DocsVideo src="https://youtube.com/embed/AAl4HmJ3YuM"></DocsVideo>
+<DocsVideo src="https://youtube.com/embed/AAl4HmJ3YuM"/>
 
 #### Checking code coverage on pull request
 
-<DocsVideo src="https://youtube.com/embed/9Eq_gIshK0o"></DocsVideo>
+<DocsVideo src="https://youtube.com/embed/9Eq_gIshK0o"/>
 
 <!-- textlint-enable -->
 

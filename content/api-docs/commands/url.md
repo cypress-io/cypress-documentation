@@ -19,7 +19,7 @@ cy.url(options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.url() // Yields the current URL as a string
@@ -27,7 +27,7 @@ cy.url() // Yields the current URL as a string
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.url()`.
 

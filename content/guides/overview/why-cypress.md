@@ -4,7 +4,7 @@ title: Why Cypress?
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - What Cypress is and why you should use it
 - Our mission, and what we believe in
@@ -15,7 +15,7 @@ title: Why Cypress?
 
 <!-- textlint-disable -->
 
-<DocsVideo src="https://youtube.com/embed/LcGHiFnBh3Y"></DocsVideo>
+<DocsVideo src="https://youtube.com/embed/LcGHiFnBh3Y"/>
 
 <!-- textlint-enable -->
 
@@ -84,7 +84,7 @@ foster an ecosystem that thrives on open source. Every line of test code is an
 investment in **your codebase**, it will never be coupled to us as a paid
 service or company. Tests will be able to run and work independently, _always_.
 
-We believe testing needs a lot of <Icon name="heart"></Icon> and we are here to
+We believe testing needs a lot of <Icon name="heart"/> and we are here to
 build a tool, a service, and a community that everyone can learn and benefit
 from. We're solving the hardest pain points shared by every developer working on
 the web. We believe in this mission and hope that you will join us to make
@@ -119,33 +119,33 @@ do that no other testing framework can:
   (including Edge and Electron) locally and
   [optimally in a Continuous Integration pipeline](/guides/guides/cross-browser-testing).
 
-### <Icon name="cog"></Icon> Setting up tests
+### <Icon name="cog"/> Setting up tests
 
 There are no servers, drivers, or any other dependencies to install or
 configure. You can write your first passing test in 60 seconds.
 
-<DocsVideo src="/img/snippets/installing-cli.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/installing-cli.mp4"/>
 
-### <Icon name="code"></Icon> Writing tests
+### <Icon name="code"/> Writing tests
 
 Tests written in Cypress are meant to be easy to read and understand. Our API
 comes fully baked, on top of tools you are familiar with already.
 
-<DocsVideo src="/img/snippets/writing-tests.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/writing-tests.mp4"/>
 
-### <Icon name="play-circle"></Icon> Running tests
+### <Icon name="play-circle"/> Running tests
 
 Cypress runs as fast as your browser can render content. You can watch tests run
 in real time as you develop your applications. TDD FTW!
 
-<DocsVideo src="/img/snippets/running-tests.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/running-tests.mp4"/>
 
-### <Icon name="bug"></Icon> Debugging tests
+### <Icon name="bug"/> Debugging tests
 
 Readable error messages help you to debug quickly. You also have access to all
 the developer tools you know and love.
 
-<DocsVideo src="/img/snippets/debugging.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/debugging.mp4"/>
 
 ## Test types
 
@@ -226,7 +226,7 @@ Cypress makes it quick and easy to start testing, and as you begin to test your
 app, **you'll often wonder if you're using best practices or scalable
 strategies**.
 
-To guide the way, the Cypress team has created the <Icon name="github"></Icon>
+To guide the way, the Cypress team has created the <Icon name="github"/>
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app), a
 full stack example application that demonstrates testing with **Cypress in
 practical and realistic scenarios**.

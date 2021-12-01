@@ -4,7 +4,7 @@ title: Writing Your First Test
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - How to start testing a new project in Cypress.
 - What passing and failing tests look like.
@@ -12,7 +12,7 @@ title: Writing Your First Test
 
 </Alert>
 
-<DocsVideo src="https://vimeo.com/237115455"></DocsVideo>
+<DocsVideo src="https://vimeo.com/237115455"/>
 
 ## Add a test file
 
@@ -47,7 +47,7 @@ about how we do this in [Launching Browsers](/guides/guides/launching-browsers).
 
 </Alert>
 
-<DocsVideo src="/img/snippets/empty-file-30fps.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/empty-file-30fps.mp4"/>
 
 We are now officially in the
 [Cypress Test Runner](/guides/core-concepts/test-runner). This is where we will
@@ -142,7 +142,7 @@ Cypress provides a nice [Test Runner](/guides/core-concepts/test-runner) that
 gives you a visual structure of suites, tests, and assertions. Soon you'll also
 see commands, page events, network requests, and more.
 
-<DocsVideo src="/img/snippets/first-test-30fps.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/first-test-30fps.mp4"/>
 
 <Alert type="info">
 
@@ -189,7 +189,7 @@ commands:
 3. Interact with that element.
 4. Assert about the content on the page.
 
-### <Icon name="globe"></Icon> Step 1: Visit a page
+### <Icon name="globe"/> Step 1: Visit a page
 
 First, let's visit a web page. We will visit our
 [Kitchen Sink](/examples/examples/applications#Kitchen-Sink) application in this
@@ -222,7 +222,7 @@ Had this request come back with a non `2xx` status code such as `404` or `500`,
 or if there was a JavaScript error in the application's code, the test would
 have failed.
 
-<DocsVideo src="/img/snippets/first-test-visit-30fps.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/first-test-visit-30fps.mp4"/>
 
 <Alert type="danger">
 
@@ -245,7 +245,7 @@ for scripting live, production websites not under your control.
 
 </Alert>
 
-### <Icon name="search"></Icon> Step 2: Query for an element
+### <Icon name="search"/> Step 2: Query for an element
 
 Now that we've got a page loaded, we need to take some action on it. Why don't
 we click a link on the page? Sounds easy enough, let's go look for one we
@@ -311,9 +311,9 @@ the error's display, read about
 Before we add another command - let's get this test back to passing. Replace
 `hype` with `type`.
 
-<DocsVideo src="/img/snippets/first-test-contains-30fps.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/first-test-contains-30fps.mp4"/>
 
-### <Icon name="mouse-pointer"></Icon> Step 3: Click an element
+### <Icon name="mouse-pointer"/> Step 3: Click an element
 
 Ok, now we want to click on the link we found. How do we do that? Add a
 [.click()](/api/commands/click) command to the end of the previous command, like
@@ -339,16 +339,16 @@ destination page:
 
 Now we can assert something about this new page!
 
-<DocsVideo src="/img/snippets/first-test-click-30fps.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/first-test-click-30fps.mp4"/>
 
 <Alert type="info">
 
-<Icon name="magic"></Icon> You can see IntelliSense in your spec files by adding a single special comment
+<Icon name="magic"/> You can see IntelliSense in your spec files by adding a single special comment
 line. Read about [Intelligent Code Completion](/guides/tooling/IDE-integration#Triple-slash-directives).
 
 </Alert>
 
-### <Icon name="check-square"></Icon> Step 4: Make an assertion
+### <Icon name="check-square"/> Step 4: Make an assertion
 
 Let's make an assertion about something on the new page we clicked into. Perhaps
 we'd like to make sure the new URL is the expected URL. We can do that by
@@ -425,7 +425,7 @@ And hey, this is a very clean test! We didn't have to say anything about _how_
 things work, just that we'd like to verify a particular series of events and
 outcomes.
 
-<DocsVideo src="/img/snippets/first-test-assertions-30fps.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/first-test-assertions-30fps.mp4"/>
 
 <Alert type="info">
 
@@ -658,7 +658,7 @@ alt="Test Runner shows label saying 'Paused' with Command Log showing 'Pause'"
 
 #### In action
 
-<DocsVideo src="/img/snippets/first-test-debugging-30fps.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/first-test-debugging-30fps.mp4"/>
 
 ## Next steps
 
@@ -666,7 +666,7 @@ alt="Test Runner shows label saying 'Paused' with Command Log showing 'Pause'"
 - Set up
   [intelligent code completion](/guides/tooling/IDE-integration#Intelligent-Code-Completion)
   for Cypress commands and assertions.
-- Check out the <Icon name="github"></Icon>
+- Check out the <Icon name="github"/>
   [Cypress Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
   for practical demonstrations of Cypress testing practices, configuration, and
   strategies in a real-world project.

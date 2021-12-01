@@ -16,7 +16,7 @@ Below is a list of complete applications tested in Cypress.
 
 ## Kitchen Sink
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [https://github.com/cypress-io/cypress-example-kitchensink](https://github.com/cypress-io/cypress-example-kitchensink)
 
 This is an example app which is used to showcase every command available in
@@ -37,7 +37,7 @@ Cypress.
 
 ## TodoMVC
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [https://github.com/cypress-io/cypress-example-todomvc](https://github.com/cypress-io/cypress-example-todomvc)
 
 This repo compares
@@ -57,7 +57,7 @@ vanilla Selenium.
 
 ## TodoMVC Redux
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [https://github.com/cypress-io/cypress-example-todomvc-redux](https://github.com/cypress-io/cypress-example-todomvc-redux)
 
 A fork the
@@ -72,7 +72,7 @@ Through a combination of end-to-end and unit tests shows how you can achieve
 
 ## Realworld
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [https://github.com/cypress-io/cypress-example-realworld](https://github.com/cypress-io/cypress-example-realworld)
 
 Shows a full blogging application, "Conduit", with back end code and a database.
@@ -92,7 +92,7 @@ Shows a full blogging application, "Conduit", with back end code and a database.
 
 ## Phonecat
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [https://github.com/cypress-io/cypress-example-phonecat](https://github.com/cypress-io/cypress-example-phonecat)
 
 This tests the
@@ -106,7 +106,7 @@ using Cypress.
 
 ## PieChopper
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [https://github.com/cypress-io/cypress-example-piechopper](https://github.com/cypress-io/cypress-example-piechopper)
 
 This is a single page application with a decent amount of features. The tests
@@ -121,7 +121,7 @@ involve a lot of form submissions.
 
 ## Angular-playground
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [https://github.com/muratkeremozcan/angular-playground](https://github.com/muratkeremozcan/angular-playground)
 
 A 3rd-party copy of Angular's Karma examples, enhanced for innovation

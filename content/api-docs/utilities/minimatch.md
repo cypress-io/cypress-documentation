@@ -15,7 +15,7 @@ Cypress.minimatch(target: string, pattern: string, options?: MinimatchOptions);
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 Cypress.minimatch('/users/1/comments/2', '/users/*/comments', {
@@ -23,7 +23,7 @@ Cypress.minimatch('/users/1/comments/2', '/users/*/comments', {
 })
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.minimatch() // Errors, cannot be chained off 'cy'

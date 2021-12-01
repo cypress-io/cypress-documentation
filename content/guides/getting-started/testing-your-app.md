@@ -4,7 +4,7 @@ title: Testing Your App
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - The relationship between Cypress and your back end
 - How to configure Cypress to fit your app
@@ -15,11 +15,11 @@ title: Testing Your App
 
 <!-- textlint-disable terminology -->
 
-<DocsVideo src="https://youtube.com/embed/5XQOK0v_YRE"></DocsVideo>
+<DocsVideo src="https://youtube.com/embed/5XQOK0v_YRE"/>
 
 <!-- textlint-enable -->
 
-## <Icon name="terminal"></Icon> Step 1: Start your server
+## <Icon name="terminal"/> Step 1: Start your server
 
 Assuming you've successfully
 [installed the Test Runner](/guides/getting-started/installing-cypress#Installing)
@@ -86,7 +86,7 @@ only against a deployed production app.
 
 </Alert>
 
-## <Icon name="globe"></Icon> Step 2: Visit your server
+## <Icon name="globe"/> Step 2: Visit your server
 
 Once your server is running, it's time to visit it.
 
@@ -140,7 +140,7 @@ alt="Error in Test Runner showing cy.visit failed"
 If you've started your server, then you should see your application loaded and
 working.
 
-## <Icon name="cogs"></Icon> Step 3: Configure Cypress
+## <Icon name="cogs"/> Step 3: Configure Cypress
 
 If you think ahead, you'll quickly realize that you're going to be typing this
 URL a lot, since every test is going to need to visit some page of your
@@ -549,7 +549,7 @@ From here you may want to explore some more of our guides:
   running Cypress in CI
 - [Cross Browser Testing](/guides/guides/cross-browser-testing) for optimally
   running tests in CI across Firefox and Chrome-family browsers
-- <Icon name="github"></Icon>
+- <Icon name="github"/>
   [Cypress Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) for practical
   demonstrations of Cypress testing practices, configuration, and strategies in a real-world
   project.

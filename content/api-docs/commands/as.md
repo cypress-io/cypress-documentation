@@ -21,7 +21,7 @@ with an `@` prefix.
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.get('.main-nav').find('li').first().as('firstNav') // Alias element as @firstNav
@@ -30,7 +30,7 @@ cy.stub(api, 'onUnauth').as('unauth') // Alias stub as @unauth
 cy.spy(win, 'fetch').as('winFetch') // Alias spy as @winFetch
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.as('foo') // Errors, cannot be chained off 'cy'
@@ -38,7 +38,7 @@ cy.as('foo') // Errors, cannot be chained off 'cy'
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> aliasName** **_(String)_**
+**<Icon name="angle-right"/> aliasName** **_(String)_**
 
 The name of the alias to be referenced later within a
 [`cy.get()`](/api/commands/get) or [`cy.wait()`](/api/commands/wait) command

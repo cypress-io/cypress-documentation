@@ -4,7 +4,7 @@ title: Introduction to Cypress
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - How Cypress queries the DOM
 - How Cypress manages subjects and chains of commands
@@ -21,7 +21,7 @@ title: Introduction to Cypress
 Cypress. Read it. Understand it. Ask questions about it so that we can improve
 it.
 
-After you're done, we suggest watching some of our <Icon name="video"></Icon>
+After you're done, we suggest watching some of our <Icon name="video"/>
 [Tutorial Videos](/examples/examples/tutorials).
 
 </Alert>
@@ -540,7 +540,7 @@ Remembering that Cypress commands run asynchronously is important if you are
 attempting to mix Cypress commands with synchronous code. Synchronous code will
 execute immediately - not waiting for the Cypress commands above it to execute.
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect usage**
 
 In the example below, the `el` evaluates immediately, before the `cy.visit()`
 has executed, so will always evaluate to an empty array.
@@ -574,7 +574,7 @@ it('does not work as we expect', () => {
 // Cypress will begin running them in order!
 ```
 
-**<Icon name="check-circle" color="green"></Icon> Correct usage**
+**<Icon name="check-circle" color="green"/> Correct usage**
 
 Below is one way the code above could be rewritten in order to ensure the
 commands run as expected.
@@ -603,7 +603,7 @@ it('does not work as we expect', () => {
 // Cypress will begin running them in order!
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect usage**
 
 In the example below, the check on the `username` value gets evaluated
 immediately, before the `cy.visit()` has executed, so will always evaluate to
@@ -639,7 +639,7 @@ it('test', () => {
 // Cypress will begin running them in order!
 ```
 
-**<Icon name="check-circle" color="green"></Icon> Correct usage**
+**<Icon name="check-circle" color="green"/> Correct usage**
 
 Below is one way the code above could be rewritten in order to ensure the
 commands run as expected.
@@ -715,7 +715,7 @@ displayed the test reloads the page and checks again.
 **Note:** you can find this application and the correct test in our
 [Recipes](https://github.com/cypress-io/cypress-example-recipes#testing-the-dom).
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect test**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect test**
 
 The test written below WILL NOT work and most likely will crash your browser.
 
@@ -747,7 +747,7 @@ without executing any! The chain of commands keeps growing, but never executes -
 since the test function never finishes running. The `while` loop never allows
 Cypress to start executing even the very first `cy.get(...)` command.
 
-**<Icon name="check-circle" color="green"></Icon> Correct test**
+**<Icon name="check-circle" color="green"/> Correct test**
 
 We need to give the test a chance to run a few commands before deciding if it
 needs to continue. Thus the correct test would use recursion.

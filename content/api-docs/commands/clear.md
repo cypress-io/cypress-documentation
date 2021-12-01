@@ -19,7 +19,7 @@ An alias for [`.type('{selectall}{backspace}')`](/api/commands/type)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.get('[type="text"]').clear() // Clear text input
@@ -27,7 +27,7 @@ cy.get('textarea').type('Hi!').clear() // Clear textarea
 cy.focused().clear() // Clear focused input/textarea
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.clear() // Errors, cannot be chained off 'cy'
@@ -37,7 +37,7 @@ cy.url().clear() // Errors, 'url' doesn't yield DOM element
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.clear()`.
 

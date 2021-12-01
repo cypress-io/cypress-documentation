@@ -4,7 +4,7 @@ title: Working with GraphQL
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - Best practices to alias multiple GraphQL queries or mutations for a group of
   tests.

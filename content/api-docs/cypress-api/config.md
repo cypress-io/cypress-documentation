@@ -44,15 +44,15 @@ Cypress.config(object)
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> name** **_(String)_**
+**<Icon name="angle-right"/> name** **_(String)_**
 
 The name of the configuration to get or set.
 
-**<Icon name="angle-right"></Icon> value** **_(String)_**
+**<Icon name="angle-right"/> value** **_(String)_**
 
 The value of the configuration to set.
 
-**<Icon name="angle-right"></Icon> object** **_(Object)_**
+**<Icon name="angle-right"/> object** **_(Object)_**
 
 Set multiple configuration options with an object literal.
 

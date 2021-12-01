@@ -13,7 +13,7 @@ cy.log(message, args...)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.log('created new user')
@@ -21,12 +21,12 @@ cy.log('created new user')
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> message** **_(String)_**
+**<Icon name="angle-right"/> message** **_(String)_**
 
 Message to be printed to Cypress Command Log. Accepts a Markdown formatted
 message.
 
-**<Icon name="angle-right"></Icon> args...**
+**<Icon name="angle-right"/> args...**
 
 Additional arguments to be printed to the Cypress Command Log. There is no limit
 to the number of arguments.

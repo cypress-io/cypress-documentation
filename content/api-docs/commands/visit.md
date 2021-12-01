@@ -26,7 +26,7 @@ cy.visit(options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.visit('http://localhost:3000')
@@ -37,7 +37,7 @@ cy.visit('./pages/hello.html')
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> url** **_(String)_**
+**<Icon name="angle-right"/> url** **_(String)_**
 
 The URL to visit.
 
@@ -49,7 +49,7 @@ and Cypress will serve this file automatically using built-in static server. The
 path is relative to the root directory of the project. Note that the `file://`
 prefix is not needed.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to control the behavior of `cy.visit()`.
 

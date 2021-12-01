@@ -13,13 +13,13 @@ Type into a DOM element.
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.get('input').type('Hello, World') // Type 'Hello, World' into the 'input'
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.type('Welcome') // Errors, cannot be chained off 'cy'
@@ -28,7 +28,7 @@ cy.url().type('www.cypress.io') // Errors, 'url' does not yield DOM element
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> text** **_(String)_**
+**<Icon name="angle-right"/> text** **_(String)_**
 
 The text to be typed into the DOM element.
 
@@ -75,7 +75,7 @@ sequences:
 | `{meta}`  | Activates the `metaKey` modifier. Aliases: `{command}`, `{cmd}` |
 | `{shift}` | Activates the `shiftKey` modifier.                              |
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.type()`.
 

@@ -25,15 +25,15 @@ Cypress.Cookies.defaults(options)
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> enable** **_(Boolean)_**
+**<Icon name="angle-right"/> enable** **_(Boolean)_**
 
 Whether cookie debugging should be enabled.
 
-**<Icon name="angle-right"></Icon> names**
+**<Icon name="angle-right"/> names**
 
 Names of cookies to be preserved. Pass an unlimited number of arguments.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Set defaults for all cookies, such as preserving a set of cookies to bypass
 being cleared before each test.

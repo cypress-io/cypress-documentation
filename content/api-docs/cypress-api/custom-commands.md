@@ -26,7 +26,7 @@ Cypress.Commands.overwrite(name, callbackFn)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 Cypress.Commands.add('login', (email, pw) => {})
@@ -35,15 +35,15 @@ Cypress.Commands.overwrite('visit', (orig, url, options) => {})
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> name** **_(String)_**
+**<Icon name="angle-right"/> name** **_(String)_**
 
 The name of the command you're either adding or overwriting.
 
-**<Icon name="angle-right"></Icon> callbackFn** **_(Function)_**
+**<Icon name="angle-right"/> callbackFn** **_(Function)_**
 
 Pass a function that receives the arguments passed to the command.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to define the implicit behavior of the custom command.
 
@@ -576,13 +576,13 @@ Cypress.Commands.add(
 )
 ```
 
-**<Icon name="check-circle" color="green"></Icon> Valid Usage**
+**<Icon name="check-circle" color="green"/> Valid Usage**
 
 ```javascript
 cy.get('button').click() // has subject, and is `element`
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Invalid Usage**
+**<Icon name="exclamation-triangle" color="red"/> Invalid Usage**
 
 ```javascript
 cy.click() // no subject, will error
@@ -609,7 +609,7 @@ Cypress.Commands.add(
 )
 ```
 
-**<Icon name="check-circle" color="green"></Icon> Valid Usage**
+**<Icon name="check-circle" color="green"/> Valid Usage**
 
 ```javascript
 cy.get('button').trigger() // has subject, and is `element`
@@ -617,7 +617,7 @@ cy.document().trigger() // has subject, and is `document`
 cy.window().trigger() // has subject, and is `window`
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Invalid Usage**
+**<Icon name="exclamation-triangle" color="red"/> Invalid Usage**
 
 ```javascript
 cy.trigger() // no subject, will error
@@ -654,7 +654,7 @@ Cypress.Commands.add(
 )
 ```
 
-**<Icon name="check-circle" color="green"></Icon> Valid Usage**
+**<Icon name="check-circle" color="green"/> Valid Usage**
 
 ```javascript
 cy.contains() // no subject, but valid because it's optional
@@ -664,7 +664,7 @@ cy.document().contains() // has subject, and is `document`
 cy.visit().contains() // has subject, and since visit yields `window` it's ok
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Invalid Usage**
+**<Icon name="exclamation-triangle" color="red"/> Invalid Usage**
 
 ```javascript
 cy.wrap(null).contains() // has subject, but not `element`, will error
@@ -801,9 +801,9 @@ couple commands.
 
 Don't do things like:
 
-- **<Icon name="exclamation-triangle" color="red"></Icon>**
+- **<Icon name="exclamation-triangle" color="red"/>**
   `cy.clickButton(selector)`
-- **<Icon name="exclamation-triangle" color="red"></Icon>** `.shouldBeVisible()`
+- **<Icon name="exclamation-triangle" color="red"/>** `.shouldBeVisible()`
 
 This first custom command is wrapping `cy.get(selector).click()`. Going down
 this route would lead to creating dozens or even hundreds of custom commands to

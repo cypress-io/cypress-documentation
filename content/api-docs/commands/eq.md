@@ -22,14 +22,14 @@ The querying behavior of this command matches exactly how
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.get('tbody>tr').eq(0) // Yield first 'tr' in 'tbody'
 cy.get('ul>li').eq(4) // Yield fifth 'li' in 'ul'
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.eq(0) // Errors, cannot be chained off 'cy'
@@ -38,17 +38,17 @@ cy.getCookies().eq(4) // Errors, 'getCookies' does not yield DOM element
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> index** **_(Number)_**
+**<Icon name="angle-right"/> index** **_(Number)_**
 
 A number indicating the index to find the element at within an array of
 elements. Starts with 0.
 
-**<Icon name="angle-right"></Icon> indexFromEnd** **_(Number)_**
+**<Icon name="angle-right"/> indexFromEnd** **_(Number)_**
 
 A negative number indicating the index position from the end to find the element
 at within an array of elements.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.eq()`.
 
