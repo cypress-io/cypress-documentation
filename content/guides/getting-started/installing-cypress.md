@@ -66,16 +66,24 @@ container with the Node.js process.
 [base docker node images](https://hub.docker.com/_/node/).
 
 #### WSL2
-Install prerequisite packages using the command that relates to your linux distribution ([Ubuntu/Debian](#ubuntu/debian) or [CentOS](#centos)).
 
-We need to have an [X-server](https://en.wikipedia.org/wiki/X.Org_Server) to display GUI from the linux subsystem. There are a variety of X-servers
+Install prerequisite packages using the command that relates to your linux
+distribution ([Ubuntu/Debian](#ubuntu/debian) or [CentOS](#centos)).
+
+We need to have an [X-server](https://en.wikipedia.org/wiki/X.Org_Server) to
+display GUI from the linux subsystem. There are a variety of X-servers
 available, here we are going to use VcXsrv, you can use any other similar tool.
 
-Download [VcXsrv](https://sourceforge.net/projects/vcxsrv/) and install. You can set the settings to your preference (Multiple windows and Start no client is recommended), but on the page that lets you enable extra settings, disable access control. This is required as WSL2 has its own IP address, which changes often.
+Download [VcXsrv](https://sourceforge.net/projects/vcxsrv/) and install. You can
+set the settings to your preference (Multiple windows and Start no client is
+recommended), but on the page that lets you enable extra settings, disable
+access control. This is required as WSL2 has its own IP address, which changes
+often.
 
 <DocsImage src="/img/guides/vcxsrv-extra-settings.png" alt="Disable access control in vcxsrv" ></DocsImage>
 
-In your `.bashrc` (or equivalent such as `.zshrc`) set the `DISPLAY` environment variable. 
+In your `.bashrc` (or equivalent such as `.zshrc`) set the `DISPLAY` environment
+variable.
 
 ```shell
 # set DISPLAY variable to the IP automatically assigned to WSL2
@@ -89,31 +97,36 @@ echo $DISPLAY
 # something like 172.17.224.1:0.0
 ```
 
-The VcXsrv GUI uses D-BUS to internally communicate. Under the previous line in `.bashrc`, add the following:  
+The VcXsrv GUI uses D-BUS to internally communicate. Under the previous line in
+`.bashrc`, add the following:
 
 ```shell
 sudo /etc/init.d/dbus start &> /dev/null
 ```
 
-Now linux user needs to be granted access to `dbus` without a password. To do so, use the `visido` command.
+Now linux user needs to be granted access to `dbus` without a password. To do
+so, use the `visido` command.
 
 ```shell
 sudo visudo -f /etc/sudoers.d/dbus
 ```
 
 In the editor that launches, add the following line with your username.  
-`<your_username> ALL = (root) NOPASSWD: /etc/init.d/dbus`  
+`<your_username> ALL = (root) NOPASSWD: /etc/init.d/dbus`
 
-Go to Control Panel > System and Security > Windows Defender Firewall > Inbound Rules > New Rule.
+Go to Control Panel > System and Security > Windows Defender Firewall > Inbound
+Rules > New Rule.
 
 <DocsImage src="/img/guides/windows-firewall-disable-vcxsrv.png" alt="Add rule to allow connections for vcxsrv" ></DocsImage>
 
-Select Program and click on next. On the This program path, browse and select path to VcxSrv. On the next page select allow the connection and click next.
-On the next page, select all three options (Domain, Private, Public).
+Select Program and click on next. On the This program path, browse and select
+path to VcxSrv. On the next page select allow the connection and click next. On
+the next page, select all three options (Domain, Private, Public).
 
 <DocsImage src="/img/guides/rule-application-selection.png" alt="Select inbound rule application cases for vcxsrv" ></DocsImage>
 
-Give the rule a suitable name and description and click finish. WSL2 should now be able to open a GUI from shell. 
+Give the rule a suitable name and description and click finish. WSL2 should now
+be able to open a GUI from shell.
 
 ## Installing
 
