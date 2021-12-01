@@ -239,9 +239,9 @@ workflows:
             - run:
                 name: Lint Files
                 command: yarn lint
-            - run:
-                name: RRun Unit Tests
-                command: yarn test:unit
+            # - run:
+            #     name: Run Unit Tests
+            #     command: yarn test:unit
 
       # Run E2E tests in Chrome
       - cypress/run:
