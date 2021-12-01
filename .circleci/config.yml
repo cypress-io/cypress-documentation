@@ -247,16 +247,24 @@ workflows:
       - cypress/run:
           name: "UI Tests - Chrome"
           browser: chrome
+          spec: cypress/integration/*
           executor: with-chrome-and-firefox
           wait-on: "http://localhost:3000"
+          command-prefix: npx percy exec --
           yarn: true
           start: yarn start
+          parallel: true
+          parallelism: 4
+          ci-build-id: ${CIRCLE_SHA1:0:8}
+          group: "UI - Chrome"
           requires:
             - Setup Linux
-          # post-steps:
-          #   - run:
-          #       name: Check for Broken Links
-          #       command: yarn check:links
+          command: |
+            if [ -n "$DOCS_RECORD_KEY" ]; then
+              yarn cypress run --record --key $DOCS_RECORD_KEY --parallel
+            else
+              yarn cypress run
+            fi
 
   # nightly:
   #   triggers:
