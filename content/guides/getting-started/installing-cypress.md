@@ -67,18 +67,19 @@ container with the Node.js process.
 
 #### WSL2
 
-Install prerequisite packages using the command that relates to your linux
-distribution ([Ubuntu/Debian](#ubuntu/debian) or [CentOS](#centos)).
+First, install the prerequisite packages using the command that relates to your
+linux distribution ([Ubuntu/Debian](#Ubuntu-Debian) or [CentOS](#CentOS)).
 
 We need to have an [X-server](https://en.wikipedia.org/wiki/X.Org_Server) to
-display GUI from the linux subsystem. There are a variety of X-servers
-available, here we are going to use VcXsrv, you can use any other similar tool.
+display the Cypress UI from the linux subsystem. There are a variety of
+X-servers available, here we are going to use VcXsrv, you can use any other
+similar tool.
 
 Download [VcXsrv](https://sourceforge.net/projects/vcxsrv/) and install. You can
-set the settings to your preference (Multiple windows and Start no client is
-recommended), but on the page that lets you enable extra settings, disable
-access control. This is required as WSL2 has its own IP address, which changes
-often.
+set the settings to your preference ("Multiple windows" and "Start no client"
+are recommended), but on the page that lets you enable extra settings, be sure
+to select "Disable access control" which is required as WSL2 has its own IP
+address, which changes often.
 
 <DocsImage src="/img/guides/vcxsrv-extra-settings.png" alt="Disable access control in vcxsrv" ></DocsImage>
 
@@ -90,29 +91,36 @@ variable.
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
 ```
 
-To confirm `DISPLAY` variable has been set, print it out in the terminal.
+To confirm `DISPLAY` variable has been set, print it out in the terminal. You
+may need to restart your terminal to see this change.
 
 ```shell
 echo $DISPLAY
 # something like 172.17.224.1:0.0
 ```
 
-The VcXsrv GUI uses D-BUS to internally communicate. Under the previous line in
-`.bashrc`, add the following:
+The VcXsrv GUI uses [D-Bus](https://www.freedesktop.org/wiki/Software/dbus/) to
+internally communicate. After the `export DISPLAY` line in your `.bashrc`, add
+the following:
 
 ```shell
 sudo /etc/init.d/dbus start &> /dev/null
 ```
 
-Now linux user needs to be granted access to `dbus` without a password. To do
-so, use the `visido` command.
+Now your user needs to be granted access to run `sudo dbus` without needing to
+enter a password. To do so, use the `visido` command:
 
 ```shell
 sudo visudo -f /etc/sudoers.d/dbus
 ```
 
-In the editor that launches, add the following line with your username.  
-`<your_username> ALL = (root) NOPASSWD: /etc/init.d/dbus`
+In the editor that launches, add the following line, replacing `<your_username>`
+with your username (you can use the `whoami` command to print your username if
+you don't know it).
+
+```
+<your_username> ALL = (root) NOPASSWD: /etc/init.d/dbus
+```
 
 Go to Control Panel > System and Security > Windows Defender Firewall > Inbound
 Rules > New Rule.
