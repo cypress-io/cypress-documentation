@@ -250,6 +250,7 @@ workflows:
           spec: cypress/integration/*
           executor: with-chrome-and-firefox
           wait-on: "http://localhost:3000"
+          command-prefix: npx percy exec --
           yarn: true
           start: yarn start
           parallel: true
