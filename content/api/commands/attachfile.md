@@ -2,7 +2,7 @@
 title: attachFile
 ---
 
-Attaches files to HTML5 input element, or simulated dragging files onto the browser.
+Attaches a file or files to an HTML5 input element or simulates dragging a file or files into the browser.
 
 ## Syntax
 
@@ -31,16 +31,19 @@ cy.attachFile([file], options)
 
 ```javascript
 cy.attachFile('file.json') // Errors, cannot be chained off 'cy'
-cy.get('input[type=file]').attachFile('file contents') // Will attempt to find a file called 'file contents' on disk, probably not what you intended
+
+// Will attempt to find a file called 'file contents' on disk, probably not what you intended
+cy.get('input[type=file]').attachFile('file contents') 
 ```
 
 ### Arguments
 
 **<Icon name="angle-right"></Icon> file** **_(String, Array, Object or Buffer)_**
 
-Either a single file, or an array of them. A file can be:
-- A path to a file within the project root (the directory that contains the default `cypress.json` configuration file). Eg: `'path/to/file.json'`
-- `@alias` - An alias of any type, previously stored by `.as()`. Eg: `'@alias'`
+Either a single file, or an array of files. A file can be:
+
+- A path to a file within the project root (the directory that contains the default Cypress configuration file). Eg: `'path/to/file.json'`
+- `@alias` - An alias of any type, previously stored using `.as()`. Eg: `'@alias'`
 - A `Buffer()` containing binary data, such as that returned by `cy.readFile('file.json', { encoding: null })`. Eg: `Buffer.from('foo')`
 - An object with a non-null `contents` property, specifying details about the file. Eg: `{contents: '@alias', fileName: 'file.json'}`
 
@@ -62,7 +65,7 @@ Pass in an options object to change the default behavior of `.attachFile()`.
 | `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations). |
 | `force`             | `false`                                                               | Forces the action, disables [waiting for actionability](#Assertions)                                                                                                |
 | `log`               | `true`                                                                | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                                                                            |
-| `timeout`           | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)  | Time to wait for `.find()` to resolve before [timing out](#Timeouts)                                                                                                |
+| `timeout`           | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)  | Time to wait for `.attachFile()` to resolve before [timing out](#Timeouts)                                                                                                |
 | `waitForAnimations` | [`waitForAnimations`](/guides/references/configuration#Actionability) | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.                        |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
@@ -71,12 +74,12 @@ Pass in an options object to change the default behavior of `.attachFile()`.
 
 ### Action
 
-Depending on the action set in the `options` argument, `cy.attachFile()` can simulate two different user behaviors:
+Depending on the action set in the `options` argument, `.attachFile()` can simulate two different user behaviors:
 
 - `input` (default)
-By default, `attachFile()` runs in 'input' mode, mimicking a user a selecting one or more files on an HTML5 input element. In this mode, the subject [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) must be a single `input` element with `type="file"`, or a `label` element connected to one (either with its `for` attribute or by containing the input).
+By default, `attachFile()` runs in 'input' mode, mimicking a user selecting one or more files on an HTML5 input element. In this mode, the subject [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) must be a single `input` element with `type="file"`, or a `label` element connected to an input (either with its `for` attribute or by containing the input).
 - `drag-n-drop`
-Setting the action to `drag-n-drop` changes the behavior of the command to instead mimic a user dragging files from the operating system into the browser, and dropping them over the selected subject. In this mode, the subject can be any DOM element, or the `document` as a whole.
+Setting the action to `drag-n-drop` changes the behavior of the command to instead mimic a user dragging files from the operating system into the browser, and dropping them over the selected subject. In this mode, the subject can be any DOM element or the `document` as a whole.
 
 ## Examples
 
@@ -87,7 +90,7 @@ cy.get('input[type=file]').attachFile('file.json')
 cy.get('input[type=file]').attachFile('file.png')
 ```
 
-If given a path, `cy.readFile()` will attach the file exactly as it exists on disk. This is the preferred way to work with files on disk, avoiding many encoding-related pitfalls.
+If given a path, `.attachFile()` will attach the file exactly as it exists on disk. This is the preferred way to work with files on disk, avoiding many encoding-related pitfalls.
 
 ### On a hidden input
 
@@ -95,7 +98,7 @@ If given a path, `cy.readFile()` will attach the file exactly as it exists on di
 cy.get('input[type=file]').attachFile('file.json', { force: true })
 ```
 
-In many cases in modern applications, the underlaying file input is hidden from view, and activated by a user clicking on a button. In these cases, you will need to tell Cypress to ignore its actionability checks and attach the file even though a user would not be able to directly activate the file input.
+In many cases in modern applications, the underlying file input is hidden from view, and activated by a user clicking on a button. In these cases, you will need to tell Cypress to ignore its actionability checks and attach the file even though a user would not be able to directly activate the file input.
 
 ### From a fixture
 ```javascript
@@ -103,7 +106,7 @@ cy.fixture('file.json', { encoding: null }).as('myFixture')
 cy.get('input[type=file]').attachFile('@myFixture')
 ```
 
-Note the use of `null` encoding. By default, `cy.fixture()` `cy.readFile()` attempt to interpret files read from disk, which would result in a json file being decoded and re-encoded as a utf-8 string - the contents would be preserved, but formatting would not be, and the encoding might change. See [`cy.fixture`](/api/commands/fixture) or [`cy.readFile`](/api/commands/readfile) for more details on file encoding.
+Note the use of `null` encoding. By default, `cy.fixture()` and `cy.readFile()` attempt to interpret files read from disk, which would result in a JSON file being decoded and re-encoded as a utf-8 string - the contents would be preserved, but formatting would not be and the encoding might change. See [`cy.fixture`](/api/commands/fixture) or [`cy.readFile`](/api/commands/readfile) for more details on file encoding.
 
 ### From an API response
 
@@ -152,7 +155,7 @@ cy.document().attachFile('file.json', { action: 'drag-n-drop' })
 
 #### Default file existence assertion
 
-When passed a file path, `cy.attachFile()` asserts that the file exists and will fail if it does not exist. It will retry reading the file if it does not initially exist until the file exists or the command times out.
+When passed a file path, `.attachFile()` asserts that the file exists and will fail if it does not exist. It will retry reading the file if it does not initially exist until the file exists or the command times out.
 
 ```javascript
 // will fail after the defaultCommandTimeout is reached
@@ -171,7 +174,7 @@ cy.get('input[type=file]').attachFile('does-not-exist.yaml')
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.attachFile()` requires being chained off a command that yields DOM
-element(s). With the `input` action (default), it further requires a single `input` element with `type="file"`, or a `label` element attached to one.</li><li>If given a path, `cy.attachFile()` requires the file must exist.</li><li>If given an alias, `cy.attachFile()` requires that the subject of the alias must not be `null` or `undefined`</li></List>
+element(s). With the `input` action (default), it further requires a single `input` element with `type="file"`, or a `label` element attached to one.</li><li>If given a path, `.attachFile()` requires the file must exist.</li><li>If given an alias, `.attachFile()` requires that the subject of the alias must not be `null` or `undefined`</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
@@ -195,7 +198,7 @@ The commands above will display in the Command Log as:
 
 <DocsImage src="/img/api/attachfile/attach-file-during-test.png" alt="Command log for attachFile" ></DocsImage>
 
-When clicking on `click` within the command log, the console outputs the
+When clicking on `attachFile` within the command log, the console outputs the
 following:
 
 <DocsImage src="/img/api/click/attach-file-in-console.png" alt="console.log for attachFile" ></DocsImage>
@@ -204,7 +207,7 @@ following:
 
 | Version                                     | Changes                                                  |
 | ------------------------------------------- | -------------------------------------------------------- |
-| [10.0.0](/guides/references/changelog#10.0.0) | `cy.attachFile()` command added                        |
+| [10.0.0](/guides/references/changelog#10.0.0) | `.attachFile()` command added                        |
 
 ## See also
 

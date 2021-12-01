@@ -10,17 +10,20 @@ This guide details the changes and how to change your code to migrate to Cypress
 ## Attaching Files
 
 Attaching files to input elements or dropping them over the page is available
-in Cypress 10.0. Read the [`cy.attachFile()` API docs](/api/commands/attachFile)
+in Cypress 10.0. Read the [`.attachFile()` API docs](/api/commands/attachfile)
 for more information on how this works and how to use it.
 
 The
 [`cypress-file-upload`](https://github.com/abramenal/cypress-file-upload)
-plugin has been deprecated in favor of `attachFile()` built into Cypress.
+plugin has been deprecated in favor of `.attachFile()` built into Cypress.
 There's guidance below on how to migrate from the
 [`cypress-file-upload`](https://github.com/abramenal/cypress-file-upload)
 plugin to Cypress's built-in attachFile command.
 
 #### Quick guide
+
+The argument signature is different for `.attachFile()` than the `cypress-file-upload` plugin. You can follow the steps below for each argument in order to migrate:
+
 In the first argument:
 - `filePath`: Prefix value with `fixtures/'. Rename to `contents`.
 - `fileContent`: Use `Buffer.from()` rather than `Cypress.Blob` methods. Rename to `contents`.
@@ -29,7 +32,7 @@ In the first argument:
 
 In the second argument:
 - `subjectType`: Rename to `action`.
-- `allowEmpty`: Remove. `cy.attachFile()` does not check the length of a file read from disk, only its existence.
+- `allowEmpty`: Remove. `.attachFile()` does not check the length of a file read from disk, only its existence.
 
 #### Read and attach a fixture
 
@@ -121,7 +124,7 @@ cy.fixture(special, 'binary')
 <Badge type="success">After</Badge> Working with file contents before attaching with
 Cypress 10.0. The `null` encoding introduced in Cypress 9.0 makes
 working with binary data simpler, and is the preferred encoding for use with
-`cy.attachFile()`.
+`.attachFile()`.
 
 ```js
 const special = 'file.spss';
