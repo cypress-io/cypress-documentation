@@ -196,12 +196,12 @@
 version: 2.1
 
 orbs:
-  cypress: cypress-io/cypress@1.28.0
+  cypress: cypress-io/cypress@1.29.0
 
 executors:
   with-chrome-and-firefox:
     docker:
-      - image: "cypress/browsers:node14.17.0-chrome88-ff89"
+      - image: "cypress/browsers:node16.5.0-chrome94-ff93"
     resource_class: medium+
 
 job-defaults: &job-defaults
@@ -259,6 +259,12 @@ workflows:
           group: "UI - Chrome"
           requires:
             - Setup Linux
+          command: |
+            if [ -n "$DOCS_RECORD_KEY" ]; then
+              yarn cypress run --record --key $DOCS_RECORD_KEY --parallel
+            else
+              yarn cypress run
+            fi
 
   # nightly:
   #   triggers:
