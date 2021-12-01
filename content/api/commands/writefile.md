@@ -76,7 +76,7 @@ parameter and include encoding there. This is the same behavior as
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.writeFile()` yields `null`.</li></List>
+- `cy.writeFile()` yields `null`.
 
 ## Examples
 

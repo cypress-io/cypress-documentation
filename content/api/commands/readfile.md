@@ -231,12 +231,11 @@ outputs the following:
 
 ## History
 
-| Version                                       | Changes                                              |
-| --------------------------------------------- | ---------------------------------------------------- |
-| [9.2.0](/guides/references/changelog#9-2-0)   | Changed default `timeout` value to `responseTimeout` |
-| [9.0.0](/guides/references/changelog#9-0-0)   | Changed `null` encoding to read as Buffer            |
-| [0.17.2](/guides/references/changelog#0-17-2) | Improved error messaging                             |
-| [0.17.1](/guides/references/changelog#0-17-1) | `cy.readFile()` command added                        |
+| Version                                       | Changes                                   |
+| --------------------------------------------- | ----------------------------------------- |
+| [9.0.0](/guides/references/changelog#9-0-0)   | Changed `null` encoding to read as Buffer |
+| [0.17.2](/guides/references/changelog#0-17-2) | Improved error messaging                  |
+| [0.17.1](/guides/references/changelog#0-17-1) | `cy.readFile()` command added             |
 
 ## See also
 
