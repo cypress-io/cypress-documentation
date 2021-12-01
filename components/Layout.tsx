@@ -9,7 +9,7 @@ export default function Layout({ toc, source, components, frontMatter, sidebarCo
   return (
     <>
       <Head>
-        <title>{hasTitle && `${frontMatter.title} |`} Cypress Documentation</title>
+        <title>{hasTitle && `${frontMatter.title} | `}Cypress Documentation</title>
         <meta name="description" content="" />
       </Head>
 

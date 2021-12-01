@@ -28,7 +28,8 @@ export default function Sidebar({ sidebarContent: { children, slug } }: SidebarP
               <Menu iconShape="square">
                 <SubMenu title={item.title} data-test={`${item.title}-children`} key={index}>
                   {item.children.map((subItem, subIndex) => {
-                    const internalPath = `/${slug}/${item.slug}/${subItem.slug}`
+                    const internalPaths = [`/${slug}`, item.slug, subItem.slug]
+                    const internalPath = internalPaths.filter((path) => path).join('/')
 
                     return (
                       <MenuItem key={subIndex} data-test={item.slug}>

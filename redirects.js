@@ -25,6 +25,11 @@ const redirects = [
     permanent: true,
   },
   {
+    source: '/api-docs/assertions/all-assertions',
+    destination: '/guides/references/assertions',
+    permanent: true,
+  },
+  {
     source: '/api/:slug(events|commands|utilities|cypress-api|plugins)/:path*',
     destination: '/api-docs/:slug/:path*',
     permanent: true,

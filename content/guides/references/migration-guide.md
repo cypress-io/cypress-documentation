@@ -31,22 +31,22 @@ You should also update any use of the `isHeaded` or `isHeadless` property on
 
 <Badge type="danger">Before</Badge> run headless browser
 
-```script
+```bash
 cypress run --browser=chrome --headless
 ```
 
-```script
+```bash
 cypress run --browser=firefox --headless
 ```
 
 <Badge type="success">After</Badge> All browsers headless by default, so you can remove the `--headless`
 flag during `cypress run`.
 
-```script
+```bash
 cypress run --browser=chrome
 ```
 
-```script
+```bash
 cypress run --browser=firefox
 ```
 
@@ -578,7 +578,7 @@ In 6.X, the Desktop GUI had support for finding and executing a subset of
 component tests. In 7.0, this is possible with the `--headed` command and a spec
 glob, like so:
 
-```sh
+```bash
 cypress run-ct --headed --spec **/some-folder/*spec.*
 ```
 
