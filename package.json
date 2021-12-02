@@ -27,8 +27,7 @@
     "transform": "node scripts/transform.js",
     "types": "tsc --noEmit",
     "make-empty-commit": "node node_modules/make-empty-github-commit/bin/empty.js --repo cypress-io/docs",
-    "postinstall": "husky install",
-    "update-algolia-index": "yarn create-search-index && ts-node scripts/updateAlgoliaIndex.ts"
+    "postinstall": "husky install"
   },
   "lint-staged": {
     "*.+(ts|tsx)": "eslint --fix",
