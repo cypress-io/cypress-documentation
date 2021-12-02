@@ -65,6 +65,12 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/guides/core-concepts/test-runner"
+  to = "/guides/core-concepts/cypress-app"
+  status = 301
+  force = true
+
 [[plugins]]
 package = "@netlify/plugin-sitemap"
 

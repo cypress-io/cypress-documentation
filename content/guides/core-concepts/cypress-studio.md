@@ -103,7 +103,7 @@ Clicking on "Add Commands to Test" will launch the Cypress Studio.
 <Alert type="info">
 
 Cypress Studio is directly integrated with the
-[Command Log](/guides/core-concepts/test-runner#Command-Log).
+[Command Log](/guides/core-concepts/cypress-app#Command-Log).
 
 </Alert>
 

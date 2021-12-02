@@ -95,8 +95,8 @@
               "slug": "conditional-testing"
             },
             {
-              "title": "The Test Runner",
-              "slug": "test-runner"
+              "title": "Cypress App",
+              "slug": "cypress-app"
             },
             {
               "title": "Cypress Studio",

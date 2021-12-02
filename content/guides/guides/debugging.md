@@ -163,7 +163,7 @@ storage after each command to make sure everything happens as expected.
 ## Using the Developer Tools
 
 Though Cypress has built out
-[an excellent Test Runner](/guides/core-concepts/test-runner) to help you
+[an excellent Test Runner](/guides/core-concepts/cypress-app) to help you
 understand what is happening in your application and your tests, there's no
 replacing all the amazing work browser teams have done on their built-in
 development tools. Once again, we see that Cypress goes _with_ the flow of the
@@ -181,7 +181,7 @@ You can see a walk-through of debugging some application code from Cypress
 ### Get console logs for commands
 
 All of Cypress's commands, when clicked on within the
-[Command Log](/guides/core-concepts/test-runner#Command-Log), print extra
+[Command Log](/guides/core-concepts/cypress-app#Command-Log), print extra
 information about the command, its subject, and its yielded result. Try clicking
 around the Command Log with your Developer Tools open! You may find some useful
 information here.

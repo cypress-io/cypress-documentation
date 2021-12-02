@@ -238,7 +238,7 @@ global for use in your spec files. In its most basic form, the `it()` function
 accepts two arguments:
 
 - The first argument is a string, known as the test name. This string will
-  appear in the [Command Log](/guides/core-concepts/test-runner#Command-Log) so
+  appear in the [Command Log](/guides/core-concepts/cypress-app#Command-Log) so
   that you can easily see per-test results and differentiate between the results
   of multiple tests.
 - The second argument is the test function, also called the "test body."
@@ -293,7 +293,7 @@ detects changes to that file or in any files loaded into the spec file with
 
 In this case, because we've written a failing test, we should see a red X next
 to the test name in the
-[Command Log](/guides/core-concepts/test-runner#Command-Log), along with a
+[Command Log](/guides/core-concepts/cypress-app#Command-Log), along with a
 failing assertion of `expected false to equal true` in the test body, and a few
 options for getting more information about the failing test.
 
@@ -511,7 +511,7 @@ it('should have password input of type password', () => {
 <strong class="alert-header">Notes about the Cypress app</strong>
 
 - When there's more than one test, each passing test listed in the
-  [Command Log](/guides/core-concepts/test-runner#Command-Log) will be collapsed
+  [Command Log](/guides/core-concepts/cypress-app#Command-Log) will be collapsed
   by default. You can click any of them to show more details.
 - Hovering over commands like `mount`, `contains` or `find` in the expanded test
   details should highlight the relevant elements in the rendered component.
@@ -596,7 +596,7 @@ it('should render title with specified text', () => {
 - Hovering over commands like `mount`, `contains`, `find` or `get` in the
   expanded test details always shows the state of the rendered component at the
   time that command was run. We call this feature
-  [Time travel](/guides/core-concepts/test-runner#Time-travel).
+  [Time travel](/guides/core-concepts/cypress-app#Time-travel).
 
 </Alert>
 
@@ -1285,6 +1285,7 @@ repo.
 
 - [React `mount()` examples](https://github.com/cypress-io/cypress/tree/develop/npm/react#api)
 - [Vue `mount()` examples](https://github.com/cypress-io/cypress/tree/develop/npm/vue#what-is-cypressvue)
+- The [Cypress App](/guides/core-concepts/cypress-app) UI
 
 ## Troubleshooting
 

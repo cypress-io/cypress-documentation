@@ -5,8 +5,8 @@ title: IDE Integration
 ## File Opener Preference
 
 When clicking on a file path from the
-[Test Runner](/guides/core-concepts/test-runner) in the
-[command log](/guides/core-concepts/test-runner#Open-files-in-your-IDE) or an
+[Cypress App](/guides/core-concepts/cypress-app) in the
+[command log](/guides/core-concepts/cypress-app#Open-files-in-your-IDE) or an
 [error](/guides/guides/debugging#Errors), Cypress will attempt to open the file
 on your system. If the editor supports inline highlighting of the file, the file
 will open with the cursor located on the line and column of interest.

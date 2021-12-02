@@ -13,7 +13,7 @@ can also record your tests when running locally.
 <Alert type="info">
 
 To set up your project to record, you must use the
-[Test Runner](/guides/core-concepts/test-runner).
+[Cypress App](/guides/core-concepts/cypress-app).
 
 Make sure you [install](/guides/getting-started/installing-cypress) and
 [open](/guides/getting-started/installing-cypress#Opening-Cypress) it first!
@@ -23,7 +23,7 @@ Make sure you [install](/guides/getting-started/installing-cypress) and
 ### Set up a project to record
 
 1. Click on the **Runs** tab of your project within the
-   [Test Runner](/guides/core-concepts/test-runner).
+   [Cypress App](/guides/core-concepts/cypress-app).
 2. Click **Connect to Dashboard**.
 3. You will need to log in to record your tests, so you'll be prompted to log in
    to the Cypress Dashboard here if you haven't already done so.
@@ -81,7 +81,7 @@ Make sure you [install](/guides/getting-started/installing-cypress) and
 
 🎉 Your tests are now recording! As soon as tests finish running, you will see
 them in the [Dashboard](https://on.cypress.io/dashboard) and in the Runs tab of
-the [Test Runner](/guides/core-concepts/test-runner).
+the [Cypress App](/guides/core-concepts/cypress-app).
 
 <DocsImage src="/img/dashboard/dashboard-runs-list.png" alt="Dashboard Screenshot" ></DocsImage>
 

@@ -55,7 +55,7 @@ Pass in an options object to change the default behavior of `cy.wait()`.
 
 | Option            | Default                                                                                                                       | Description                                                                              |
 | ----------------- | ----------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`             | `true`                                                                                                                        | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `log`             | `true`                                                                                                                        | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout`         | [`requestTimeout`](/guides/references/configuration#Timeouts), [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.wait()` to resolve before [timing out](#Timeouts)                   |
 | `requestTimeout`  | [`requestTimeout`](/guides/references/configuration#Timeouts)                                                                 | Overrides the global `requestTimeout` for this request. Defaults to `timeout`.           |
 | `responseTimeout` | [`responseTimeout`](/guides/references/configuration#Timeouts)                                                                | Overrides the global `responseTimeout` for this request. Defaults to `timeout`.          |

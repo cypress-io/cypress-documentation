@@ -3,7 +3,7 @@ title: Experiments
 ---
 
 If you'd like to try out what we're working on in the
-[Test Runner](/guides/core-concepts/test-runner), you can enable beta features
+[Cypress App](/guides/core-concepts/cypress-app), you can enable beta features
 for your project by turning on the experimental features you'd like to try.
 
 <Alert type="warning">
