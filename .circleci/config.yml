@@ -251,7 +251,7 @@ workflows:
             - Setup Linux
           command: |
             if [ -n "$DOCS_RECORD_KEY" ]; then
-              yarn cypress run --record --key $DOCS_RECORD_KEY --parallel
+              yarn cypress:run --record --key $DOCS_RECORD_KEY --parallel
             else
-              yarn cypress run
+              yarn cypress:run
             fi
