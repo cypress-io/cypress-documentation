@@ -98,7 +98,7 @@ From the Dashboard you can:
 #### See tests runs in the Test Runner
 
 Additionally we've integrated the tests run into the Cypress
-[Test Runner](/guides/core-concepts/test-runner). This means you can see the
+[Cypress App](/guides/core-concepts/cypress-app). This means you can see the
 tests run in the _Runs_ tab from within every project.
 
 <DocsImage src="/img/dashboard/runs-list-in-desktop-gui.png" alt="Runs List" ></DocsImage>

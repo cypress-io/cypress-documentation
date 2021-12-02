@@ -43,7 +43,7 @@ Pass in an options object to change the default behavior of `.blur`.
 
 | Option    | Default                                                              | Description                                                                              |
 | --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `force`   | `false`                                                              | Forces the action, disables checking if [element is focused](#Requirements)              |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.blur()` to resolve before [timing out](#Timeouts)                     |
 

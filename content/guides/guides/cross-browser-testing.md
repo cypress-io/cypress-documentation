@@ -21,7 +21,7 @@ Excluding [Electron](/guides/guides/launching-browsers#Electron-Browser), any
 browser you want to run Cypress tests in needs to be installed on your local
 system or CI environment. A full list of detected browsers is displayed within
 the browser selection menu of the
-[Test Runner](/guides/core-concepts/test-runner).
+[Cypress App](/guides/core-concepts/cypress-app).
 
 <DocsImage src="/img/guides/cross-browser-testing/cypress-browser-selector.png" alt="Cypress Test Runner with Firefox selected as the browser"></DocsImage>
 

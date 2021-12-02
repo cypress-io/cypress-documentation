@@ -91,7 +91,7 @@ failed test when run via [cypress run](/guides/guides/command-line#cypress-run).
 
 During [cypress open](/guides/guides/command-line#cypress-open) you will be able
 to see the number of attempts made in the
-[Command Log](/guides/core-concepts/test-runner#Command-Log) and expand each
+[Command Log](/guides/core-concepts/cypress-app#Command-Log) and expand each
 attempt for review and debugging if desired.
 
 <DocsVideo src="/img/guides/test-retries/attempt-expand-collapse-time-travel.mp4"></DocsVideo>

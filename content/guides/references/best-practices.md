@@ -129,7 +129,7 @@ by test code.
 
 <strong class="alert-header">Did you know?</strong>
 
-The [Selector Playground](/guides/core-concepts/test-runner#Selector-Playground)
+The [Selector Playground](/guides/core-concepts/cypress-app#Selector-Playground)
 automatically follows these best practices.
 
 When determining an unique selector it will automatically prefer elements with:

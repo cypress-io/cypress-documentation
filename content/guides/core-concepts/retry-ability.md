@@ -48,7 +48,7 @@ it('creates 2 items', () => {
 })
 ```
 
-The [Command Log](/guides/core-concepts/test-runner#Command-Log) shows both
+The [Command Log](/guides/core-concepts/cypress-app#Command-Log) shows both
 commands and assertions with passing assertions showing in green.
 
 <DocsImage src="/img/guides/retry-ability/commands-assertions.png" alt="ommands and assertions" ></DocsImage>

@@ -96,7 +96,7 @@ Cypress comes fully baked, batteries included. Here is a list of things it can
 do that no other testing framework can:
 
 - **Time Travel:** Cypress takes snapshots as your tests run. Hover over
-  commands in the [Command Log](/guides/core-concepts/test-runner#Command-Log)
+  commands in the [Command Log](/guides/core-concepts/cypress-app#Command-Log)
   to see exactly what happened at each step.
 - **Debuggability:** Stop guessing why your tests are failing.
   [Debug directly](/guides/guides/debugging) from familiar tools like Developer

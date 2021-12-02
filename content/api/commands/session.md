@@ -887,7 +887,7 @@ if necessary.
 
 ### The Instrument Panel
 
-<!-- GA TODO: update /guides/core-concepts/test-runner#Instrument-Panel -->
+<!-- GA TODO: update /guides/core-concepts/cypress-app#Instrument-Panel -->
 
 Whenever a session is created or restored inside a test, an extra instrument
 panel is displayed at the top of the test to give more information about the

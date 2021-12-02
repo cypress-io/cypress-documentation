@@ -169,7 +169,7 @@ way to hold onto references to previously queried DOM elements using
 We will create a test for todo item toggling. As we implement the toggle
 feature, we will encounter a problem with our code and look at how Cypress can
 help us debug our code. We will use the
-[Cypress Command Log](/guides/core-concepts/test-runner#Command-Log) to narrow
+[Cypress Command Log](/guides/core-concepts/cypress-app#Command-Log) to narrow
 down our problem. Then, we can use the
 [Developer Tools right in the Cypress Test Runner](/guides/guides/debugging#Using-the-Developer-Tools)
 to step through the code to dig into the issue. We'll even see how we can update

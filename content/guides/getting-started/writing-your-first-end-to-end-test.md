@@ -49,9 +49,8 @@ about how we do this in [Launching Browsers](/guides/guides/launching-browsers).
 
 <DocsVideo src="/img/snippets/empty-file-30fps.mp4"></DocsVideo>
 
-We are now officially in the
-[Cypress Test Runner](/guides/core-concepts/test-runner). This is where we will
-spend the majority of your time testing.
+We are now officially in the [Cypress App](/guides/core-concepts/cypress-app).
+This is where we will spend the majority of your time testing.
 
 <Alert type="warning">
 
@@ -89,7 +88,7 @@ Once you save this file you should see the browser reload.
 
 Although it doesn't do anything useful, this is our first passing test! ✅
 
-Over in the [Command Log](/guides/core-concepts/test-runner#Command-Log) you'll
+Over in the [Command Log](/guides/core-concepts/cypress-app#Command-Log) you'll
 see Cypress display the suite, the test and your first assertion (which should
 be passing in green).
 
@@ -98,7 +97,7 @@ be passing in green).
 <Alert type="info">
 
 Notice Cypress displays a message about this being the default page
-[on the righthand side](/guides/core-concepts/test-runner#Application-Under-Test).
+[on the righthand side](/guides/core-concepts/cypress-app#Application-Under-Test).
 Cypress assumes you'll want to go out and [visit](/api/commands/visit) a URL on
 the internet - but it can also work just fine without that.
 
@@ -135,7 +134,7 @@ describe('My First Test', () => {
 
 <DocsImage src="/img/guides/failing-test.png" alt="Failing test" ></DocsImage>
 
-Cypress provides a nice [Test Runner](/guides/core-concepts/test-runner) that
+Cypress provides a nice [Cypress App](/guides/core-concepts/cypress-app) that
 gives you a visual structure of suites, tests, and assertions. Soon you'll also
 see commands, page events, network requests, and more.
 
@@ -207,10 +206,10 @@ describe('My First Test', () => {
 Save the file and switch back over to the Cypress Test Runner. You might notice
 a few things:
 
-1. The [Command Log](/guides/core-concepts/test-runner#Command-Log) now shows
+1. The [Command Log](/guides/core-concepts/cypress-app#Command-Log) now shows
    the new `VISIT` action.
 2. The Kitchen Sink application has been loaded into the
-   [App Preview](/guides/core-concepts/test-runner#Overview) pane.
+   [App Preview](/guides/core-concepts/cypress-app#Overview) pane.
 3. The test is green, even though we made no assertions.
 4. The `VISIT` displays a **blue pending state** until the page finishes
    loading.
@@ -264,7 +263,7 @@ describe('My First Test', () => {
 ```
 
 Our test should now display `CONTAINS` in the
-[Command Log](/guides/core-concepts/test-runner#Command-Log) and still be green.
+[Command Log](/guides/core-concepts/cypress-app#Command-Log) and still be green.
 
 Even without adding an assertion, we know that everything is okay! This is
 because many of Cypress' commands are built to fail if they don't find what
@@ -327,7 +326,7 @@ You can almost read it like a little story! Cypress calls this "chaining" and we
 chain together commands to build tests that really express what the app does in
 a declarative way.
 
-Also note that the [App Preview](/guides/core-concepts/test-runner#Overview)
+Also note that the [App Preview](/guides/core-concepts/cypress-app#Overview)
 pane has updated further after the click, following the link and showing the
 destination page:
 
@@ -459,7 +458,7 @@ These various timeouts are defined in the
 
 ## Next steps
 
-- Learn more about the [Test Runner](/guides/core-concepts/test-runner) UI.
+- Learn more about the [Cypress App](/guides/core-concepts/cypress-app) UI.
 - Start [testing your app](/guides/getting-started/testing-your-app).
 - Set up
   [intelligent code completion](/guides/tooling/IDE-integration#Intelligent-Code-Completion)
