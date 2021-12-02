@@ -206,16 +206,6 @@ executors:
 
 job-defaults: &job-defaults
   executor: with-chrome-and-firefox
-  working_directory: ~/repo
-
-# jobs:
-#   update-algolia-index:
-#     <<: *job-defaults
-#     steps:
-#       - checkout
-#       - attach_workspace:
-#           at: ~/repo
-#       - run: yarn update-algolia-index
 
 workflows:
   build-and-test:
@@ -259,14 +249,9 @@ workflows:
           group: "UI - Chrome"
           requires:
             - Setup Linux
-
-  # nightly:
-  #   triggers:
-  #     - schedule:
-  #         cron: "0 0 * * *"
-  #         filters:
-  #           branches:
-  #             only:
-  #               - main
-  #   jobs:
-  #     - update-algolia-index
+          command: |
+            if [ -n "$DOCS_RECORD_KEY" ]; then
+              yarn cypress run --record --key $DOCS_RECORD_KEY --parallel
+            else
+              yarn cypress run
+            fi
