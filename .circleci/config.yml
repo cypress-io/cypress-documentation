@@ -157,11 +157,11 @@ workflows:
               ignore:
                 - master
 
-      - release:
-          filters:
-            branches:
-              only:
-                - master
+      # - release:
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
 
   # nightly:
   #   triggers:
