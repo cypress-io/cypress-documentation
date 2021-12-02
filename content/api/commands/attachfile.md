@@ -30,10 +30,12 @@ Attaches a file or files to an HTML5 input element or simulates dragging a file 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.attachFile('file.json') // Errors, cannot be chained off 'cy'
+// Errors, cannot be chained off 'cy'
+cy.attachFile('file.json')
 
-// Will attempt to find a file called 'file contents' on disk, probably not what you intended
-cy.get('input[type=file]').attachFile('file contents') 
+// Will attempt to find a file called 'file contents'
+// on disk, probably not what you intended
+cy.get('input[type=file]').attachFile('file contents')
 ```
 
 ### Arguments
@@ -51,7 +53,7 @@ If an object is provided, it can have the following properties.
 
 | Option         | Description                                                                                                                                                                                                              |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `contents`     | The contents of the file. This can be a string shorthand as described above, a `Buffer()` containing binary data or a non-Buffer object, which will be converted into a string with `JSON.stringify()` and utf8 encoded.                           |
+| `contents`     | The contents of the file. This can be a string shorthand as described above, a `Buffer()` containing binary data or a non-Buffer object, which will be converted into a string with `JSON.stringify()` and `utf8` encoded.                           |
 | `fileName`     | The name of the file. If `contents` is a path on disk, this defaults to the actual filename. In any other case, this defaults to an empty string.                                                                                                  |
 | `lastModified` | The file's last modified timestamp, in milliseconds elapsed since the UNIX epoch (eg. [`Date.prototype.getTime()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)). This defaults to `Date.now()`. |
 
@@ -76,9 +78,12 @@ Pass in an options object to change the default behavior of `.attachFile()`.
 
 Depending on the action set in the `options` argument, `.attachFile()` can simulate two different user behaviors:
 
-- `input` (default)
-By default, `attachFile()` runs in 'input' mode, mimicking a user selecting one or more files on an HTML5 input element. In this mode, the subject [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) must be a single `input` element with `type="file"`, or a `label` element connected to an input (either with its `for` attribute or by containing the input).
-- `drag-n-drop`
+#### `input` (default)
+
+By default, `attachFile()` runs in 'input' mode, mimicking a user selecting one or more files on an HTML5 input element. In this mode, the [subject](/guides/core-concepts/introduction-to-cypress#Subject-Management) must be a single `input` element with `type="file"`, or a `label` element connected to an input (either with its `for` attribute or by containing the input).
+
+#### `drag-n-drop`
+
 Setting the action to `drag-n-drop` changes the behavior of the command to instead mimic a user dragging files from the operating system into the browser, and dropping them over the selected subject. In this mode, the subject can be any DOM element or the `document` as a whole.
 
 ## Examples
@@ -111,7 +116,10 @@ Note the use of `null` encoding. By default, `cy.fixture()` and `cy.readFile()` 
 ### From an API response
 
 ```javascript
-cy.request('http://localhost:8888/users/827').get('body').as('responseBody')
+cy.request('http://localhost:8888/users/827')
+  .its('body')
+  .as('responseBody')
+
 cy.get('input[type=file]').attachFile('@responseBody')
 ```
 
@@ -128,7 +136,11 @@ cy.get('input[type=file]').attachFile('@myFile')
 ### Attaching multiple files
 
 ```javascript
-cy.get('input[type=file]').attachFile(['file1.json', 'file2.json', 'file3.json'])
+cy.get('input[type=file]').attachFile([
+  'file1.json',
+  'file2.json',
+  'file3.json',
+])
 ```
 
 This will fail unless the file input has the `multiple` property.
