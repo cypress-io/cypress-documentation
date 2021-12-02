@@ -330,13 +330,13 @@ To open the Selector Playground, click the <Icon name="crosshairs"></Icon>
 button next to the URL at the top of the Cypress App. Hover over elements in
 your app to preview a unique selector for that element in the tooltip.
 
-<DocsImage src="/img/guides/test-runner/open-selector-playground.gif" alt="Opening selector playground and hovering over elements" ></DocsImage>
+<DocsImage src="/img/guides/cypress-app/open-selector-playground.gif" alt="Opening selector playground and hovering over elements" ></DocsImage>
 
 Click on the element and its selector will appear at the top. From there, you
 can copy it to your clipboard ( <Icon name="copy"></Icon> ) or print it to the
 console ( <Icon name="terminal"></Icon> ).
 
-<DocsImage src="/img/guides/test-runner/copy-selector-in-selector-playground.gif" alt="Clicking an element, copying its selector to clipboard, printing it to the console" ></DocsImage>
+<DocsImage src="/img/guides/cypress-app/copy-selector-in-selector-playground.gif" alt="Clicking an element, copying its selector to clipboard, printing it to the console" ></DocsImage>
 
 ### Running Experiments
 
@@ -347,7 +347,7 @@ The box at the top that displays the selector is also a text input.
 When you edit the selector, it will show you how many elements match and
 highlight those elements in your app.
 
-<DocsImage src="/img/guides/test-runner/typing-a-selector-to-find-in-playground.gif" alt="Type a selector to see what elements it matches" ></DocsImage>
+<DocsImage src="/img/guides/cypress-app/typing-a-selector-to-find-in-playground.gif" alt="Type a selector to see what elements it matches" ></DocsImage>
 
 #### Switching to Contains
 
@@ -359,7 +359,7 @@ Type in text to see which element it matches. Note that
 [`cy.contains()`](/api/commands/contains) only yields the first element that
 matches the text, even if multiple elements on the page contain the text.
 
-<DocsImage src="/img/guides/test-runner/cy-contains-in-selector-playground.gif" alt="Experiment with cy.contains" ></DocsImage>
+<DocsImage src="/img/guides/cypress-app/cy-contains-in-selector-playground.gif" alt="Experiment with cy.contains" ></DocsImage>
 
 #### Disabling Highlights
 
@@ -367,7 +367,7 @@ If you would like to interact with your app while the Selector Playground is
 open, the element highlighting might get in the way. Toggling the highlighting
 off will allow you to interact with your app more easily.
 
-<DocsImage src="/img/guides/test-runner/turn-off-highlight-in-selector-playground.gif" alt="Turn off highlighting" ></DocsImage>
+<DocsImage src="/img/guides/cypress-app/turn-off-highlight-in-selector-playground.gif" alt="Turn off highlighting" ></DocsImage>
 
 ## Keyboard Shortcuts
 
@@ -380,7 +380,7 @@ Cypress App.
 | `s` | Stop tests                    |
 | `f` | Bring focus to 'specs' window |
 
-<DocsImage src="/img/guides/test-runner/keyboard-shortcuts.png" alt="Tooltips show keyboard shortcuts" ></DocsImage>
+<DocsImage src="/img/guides/cypress-app/keyboard-shortcuts.png" alt="Tooltips show keyboard shortcuts" ></DocsImage>
 
 ## Debugging
 
