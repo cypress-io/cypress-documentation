@@ -1,0 +1,44 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/guides/overview/why-cypress/",
+      "permanent": true
+    },
+    {
+      "source": "/guides",
+      "destination": "/guides/overview/why-cypress/",
+      "permanent": true
+    },
+    {
+      "source": "/api",
+      "destination": "/api/table-of-contents/",
+      "permanent": true
+    },
+    {
+      "source": "/api/api/table-of-contents",
+      "destination": "/api/table-of-contents/",
+      "permanent": true
+    },
+    {
+      "source": "/plugins",
+      "destination": "/plugins/directory",
+      "permanent": true
+    },
+    {
+      "source": "/examples",
+      "destination": "/examples/examples/recipes/",
+      "permanent": true
+    },
+    {
+      "source": "/faq",
+      "destination": "/faq/questions/using-cypress-faq/",
+      "permanent": true
+    },
+    {
+      "source": "/guides/dashboard/dashboard-introduction",
+      "destination": "/guides/dashboard/introduction/",
+      "permanent": true
+    }
+  ]
+}
