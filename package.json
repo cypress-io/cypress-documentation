@@ -25,6 +25,7 @@
     "pre-commit": "yarn types && pretty-quick --staged && yarn run lint && yarn run stop-only",
     "prettier": "prettier --write '**/**.{ts,js,tsx}' '*.{json,md,yml}'",
     "start": "next start",
+    "start:ci": "cross-env NODE_ENV=test yarn build && yarn start",
     "test": "./node_modules/.bin/cypress open",
     "transform": "node scripts/transform.js",
     "types": "tsc --noEmit",

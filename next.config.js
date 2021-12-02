@@ -2,6 +2,7 @@ const routes = require('./redirects')
 const withCSS = require('@zeit/next-css')
 
 module.exports = {
+  distDir: 'build',
   /**
    * Redirects
    * https://nextjs.org/docs/api-reference/next.config.js/redirects
