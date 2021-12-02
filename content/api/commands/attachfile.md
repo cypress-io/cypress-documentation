@@ -196,7 +196,9 @@ element(s). With the `input` action (default), it further requires a single `inp
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 <List><li>`.attachFile()` can time out waiting for the element to reach an
-[actionable state](/guides/core-concepts/interacting-with-elements).</li></List>
+[actionable state](/guides/core-concepts/interacting-with-elements).</li><li>
+`.attachFile()` can time out waiting for a file to exist on disk or for an
+alias to resolve.</li></List>
 
 ## Command Log
 
