@@ -11,6 +11,7 @@ import Alert from '@/components/alert'
 import DocsImage from '@/components/docs-image'
 import DocsVideo from '@/components/docs-video'
 import Badge from '@/components/badge'
+import List from '@/components/list'
 import { GET_PATH, allContentFilePaths, getToCForMarkdown } from '@/utils/mdxUtils'
 import sidebarJSON from '@/content/_data/sidebar.json'
 
@@ -31,6 +32,7 @@ const components = {
   DocsImage,
   DocsVideo,
   Badge,
+  List,
 }
 
 const PAGE = 'api-docs'
