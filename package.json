@@ -12,6 +12,8 @@
     "build:profile": "next build --profile",
     "build:debug": "next build --debug",
     "copy": "bash ./scripts/clone-current-docs.sh",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
     "dev": "next dev",
     "dev:watch": "next-remote-watch ./content",
     "changed-files-broken-link-checker:ci": "node scripts/changedFilesBrokenLinkChecker.js",
