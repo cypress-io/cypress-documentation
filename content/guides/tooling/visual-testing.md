@@ -20,16 +20,27 @@ message appears, an element is removed, or a CSS class is added after the
 appropriate user action. A typical Cypress test, for example, can check if a
 toggled "Todo" item gets a class of "completed" after the `.toggle` is checked:
 
+:::visit-mount-test-example
+
+```js
+cy.visit('/') // opens TodoMVC running at "baseUrl"
+```
+
+```js
+cy.mount(<Todos />)
+```
+
 ```js
 it('completes todo', () => {
-  // opens TodoMVC running at "baseUrl"
-  cy.visit('/')
+  __VISIT_MOUNT_PLACEHOLDER__
   cy.get('.new-todo').type('write tests{enter}')
   cy.contains('.todo-list li', 'write tests').find('.toggle').check()
 
   cy.contains('.todo-list li', 'write tests').should('have.class', 'completed')
 })
 ```
+
+:::
 
 <DocsImage src="/img/guides/visual-testing/completed-test.gif" alt="Passing Cypress functional test" ></DocsImage>
 
@@ -128,7 +139,7 @@ First joint webinar with Applitools
 <!-- textlint-enable -->
 
 Second joint webinar with Applitools with a focus on
-[Component Testing](/guides/component-testing/introduction)
+[Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing)
 
 <!-- textlint-disable -->
 

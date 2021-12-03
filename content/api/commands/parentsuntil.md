@@ -35,7 +35,7 @@ cy.get('p').parentsUntil('.article') // Yield parents of 'p' until '.article'
 
 ```javascript
 cy.parentsUntil() // Errors, cannot be chained off 'cy'
-cy.location().parentsUntil('href') // Errors, 'location' does not yield DOM element
+cy.clock().parentsUntil('href') // Errors, 'clock' does not yield DOM elements
 ```
 
 ### Arguments
@@ -58,7 +58,7 @@ Pass in an options object to change the default behavior of `.parentsUntil()`.
 
 | Option    | Default                                                              | Description                                                                              |
 | --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.parentsUntil()` to resolve before [timing out](#Timeouts)             |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)

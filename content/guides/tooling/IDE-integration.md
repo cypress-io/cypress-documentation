@@ -5,8 +5,8 @@ title: IDE Integration
 ## File Opener Preference
 
 When clicking on a file path from the
-[Test Runner](/guides/core-concepts/test-runner) in the
-[command log](/guides/core-concepts/test-runner#Open-files-in-your-IDE) or an
+[Cypress App](/guides/core-concepts/cypress-app) in the
+[command log](/guides/core-concepts/cypress-app#Open-files-in-your-IDE) or an
 [error](/guides/guides/debugging#Errors), Cypress will attempt to open the file
 on your system. If the editor supports inline highlighting of the file, the file
 will open with the cursor located on the line and column of interest.
@@ -179,10 +179,11 @@ with the following configuration should get intelligent code completion working.
 
 ### Configuration
 
+::include{file=partials/warning-cypress-json.md}
+
 #### Features:
 
-When editing the
-[configuration file (`cypress.json` by default)](/guides/references/configuration),
+When editing the [Cypress configuration file](/guides/references/configuration),
 you can use our [json schema file](https://on.cypress.io/cypress.schema.json) to
 get intelligent tooltips in your IDE for each configuration property.
 

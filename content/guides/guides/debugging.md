@@ -25,15 +25,27 @@ browser makes available to you, like `document`, `window`, and `debugger`.
 Based on those statements, you might be tempted to throw a `debugger` into your
 test, like so:
 
+:::visit-mount-test-example
+
+```js
+cy.visit('/my/page/path')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
 ```js
 it('let me debug like a fiend', () => {
-  cy.visit('/my/page/path')
+  __VISIT_MOUNT_PLACEHOLDER__
 
   cy.get('.selector-in-question')
 
   debugger // Doesn't work
 })
 ```
+
+:::
 
 This may not work exactly as you are expecting. As you may remember from the
 [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress), `cy`
@@ -42,29 +54,50 @@ will do given that perspective?
 
 Both [`cy.visit()`](/api/commands/visit) and [`cy.get()`](/api/commands/get)
 will return immediately, having enqueued their work to be done later, and
-`debugger` will be executed before any of the commands have actually run.
+`debugger` will be executed before any of the commands have actually run. The
+same behavior is expected in Component Tests when using
+[`cy.mount()`](/api/commands/mount).
 
 Let's use [`.then()`](/api/commands/then) to tap into the Cypress command during
 execution and add a `debugger` at the appropriate time:
 
-```js
-it('let me debug when the after the command executes', () => {
-  cy.visit('/my/page/path')
+:::visit-mount-test-example
 
-  cy.get('.selector-in-question').then(($selectedElement) => {
-    // Debugger is hit after the cy.visit
-    // and cy.get command have completed
-    debugger
-  })
+```js
+cy.visit('/my/page/path')
+
+cy.get('.selector-in-question').then(($selectedElement) => {
+  // Debugger is hit after the cy.visit
+  // and cy.get commands have completed
+  debugger
 })
 ```
 
-Now we're in business! The first time through,
-[`cy.visit()`](/api/commands/visit) and the [`cy.get()`](/api/commands/get)
-chain (with its [`.then()`](/api/commands/then) attached) are enqueued for
+```js
+cy.mount(<MyComponent />)
+
+cy.get('.selector-in-question').then(($selectedElement) => {
+  // Debugger is hit after the cy.mount
+  // and cy.get commands have completed
+  debugger
+})
+```
+
+```js
+it('let me debug when the after the command executes', () => {
+  __VISIT_MOUNT_PLACEHOLDER__
+})
+```
+
+:::
+
+Now we're in business! When you're visiting a page or mounting a component for
+the first time, (shown above with the [`cy.get()`](/api/commands/get)chain and
+its [`.then()`](/api/commands/then) attached) the commands are enqueued for
 Cypress to execute. The `it` block exits, and Cypress starts its work:
 
-1. The page is visited, and Cypress waits for it to load.
+1. In an End-to-End Test, the page is visited and Cypress waits for it to load.
+   Alternatively, the component is mounted and rendered in a Component Test.
 2. The element is queried, and Cypress automatically waits and retries for a few
    moments if it isn't found immediately.
 3. The function passed to [`.then()`](/api/commands/then) is executed, with the
@@ -81,13 +114,25 @@ Cypress also exposes a shortcut for debugging commands,
 [`.debug()`](/api/commands/debug). Let's rewrite the test above using this
 helper method:
 
+:::visit-mount-test-example
+
+```js
+cy.visit('/my/page/path')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
 ```js
 it('let me debug like a fiend', () => {
-  cy.visit('/my/page/path')
+  __VISIT_MOUNT_PLACEHOLDER__
 
   cy.get('.selector-in-question').debug()
 })
 ```
+
+:::
 
 The current subject that is yielded by the [`cy.get()`](/api/commands/get) is
 exposed as the variable `subject` within your Developer Tools so that you can
@@ -118,7 +163,7 @@ storage after each command to make sure everything happens as expected.
 ## Using the Developer Tools
 
 Though Cypress has built out
-[an excellent Test Runner](/guides/core-concepts/test-runner) to help you
+[an excellent Test Runner](/guides/core-concepts/cypress-app) to help you
 understand what is happening in your application and your tests, there's no
 replacing all the amazing work browser teams have done on their built-in
 development tools. Once again, we see that Cypress goes _with_ the flow of the
@@ -136,7 +181,7 @@ You can see a walk-through of debugging some application code from Cypress
 ### Get console logs for commands
 
 All of Cypress's commands, when clicked on within the
-[Command Log](/guides/core-concepts/test-runner#Command-Log), print extra
+[Command Log](/guides/core-concepts/cypress-app#Command-Log), print extra
 information about the command, its subject, and its yielded result. Try clicking
 around the Command Log with your Developer Tools open! You may find some useful
 information here.

@@ -4,25 +4,22 @@ title: Browser Launch API
 
 Before Cypress launches a browser, it gives you the opportunity to modify the
 browser preferences, install extensions, add and remove command-line arguments,
-and modify other options from your [pluginsFile](/guides/tooling/plugins-guide).
+and modify other options from the
+[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function.
 
 ## Syntax
 
-<Alert type="warning">
+::include{file=partials/warning-setup-node-events.md}
 
-⚠️ This code is part of the
-[plugins file](/guides/core-concepts/writing-and-organizing-tests#Plugin-files)
-and thus executes in the Node environment. You cannot call `Cypress` or `cy`
-commands in this file, but you do have the direct access to the file system and
-the rest of the operating system.
-
-</Alert>
+:::cypress-plugin-example
 
 ```js
 on('before:browser:launch', (browser = {}, launchOptions) => {
   /* ... */
 })
 ```
+
+:::
 
 **<Icon name="angle-right"></Icon> browser** **_(object)_**
 
@@ -56,9 +53,10 @@ following properties:
 
 ### Modify browser launch arguments, preferences, and extensions
 
-Using your [pluginsFile](/guides/tooling/plugins-guide) you can tap into the
-`before:browser:launch` event and modify how Cypress launches the browser (e.g.
-modify arguments, user preferences, and extensions).
+Using the [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin)
+function you can tap into the `before:browser:launch` event and modify how
+Cypress launches the browser (e.g. modify arguments, user preferences, and
+extensions).
 
 This event will yield you the `browser` object, which gives you information
 about the browser, and the `launchOptions` object, which allows you to modify
@@ -76,49 +74,51 @@ Here are args available for the currently supported browsers:
 
 ##### Open devtools by default
 
+:::cypress-plugin-example
+
 ```js
-// cypress/plugins/index.js
-module.exports = (on, config) => {
-  on('before:browser:launch', (browser = {}, launchOptions) => {
-    // `args` is an array of all the arguments that will
-    // be passed to browsers when it launches
-    console.log(launchOptions.args) // print all current args
+on('before:browser:launch', (browser = {}, launchOptions) => {
+  // `args` is an array of all the arguments that will
+  // be passed to browsers when it launches
+  console.log(launchOptions.args) // print all current args
 
-    if (browser.family === 'chromium' && browser.name !== 'electron') {
-      // auto open devtools
-      launchOptions.args.push('--auto-open-devtools-for-tabs')
-    }
+  if (browser.family === 'chromium' && browser.name !== 'electron') {
+    // auto open devtools
+    launchOptions.args.push('--auto-open-devtools-for-tabs')
+  }
 
-    if (browser.family === 'firefox') {
-      // auto open devtools
-      launchOptions.args.push('-devtools')
-    }
+  if (browser.family === 'firefox') {
+    // auto open devtools
+    launchOptions.args.push('-devtools')
+  }
 
-    if (browser.name === 'electron') {
-      // auto open devtools
-      launchOptions.preferences.devTools = true
-    }
+  if (browser.name === 'electron') {
+    // auto open devtools
+    launchOptions.preferences.devTools = true
+  }
 
-    // whatever you return here becomes the launchOptions
-    return launchOptions
-  })
-}
+  // whatever you return here becomes the launchOptions
+  return launchOptions
+})
 ```
+
+:::
 
 #### Add browser extensions:
 
-```js
-// cypress/plugins/index.js
-module.exports = (on, config) => {
-  on('before:browser:launch', (browser, launchOptions) => {
-    // supply the absolute path to an unpacked extension's folder
-    // NOTE: extensions cannot be loaded in headless Chrome
-    launchOptions.extensions.push('Users/jane/path/to/extension')
+:::cypress-plugin-example
 
-    return launchOptions
-  })
-}
+```js
+on('before:browser:launch', (browser, launchOptions) => {
+  // supply the absolute path to an unpacked extension's folder
+  // NOTE: extensions cannot be loaded in headless Chrome
+  launchOptions.extensions.push('Users/jane/path/to/extension')
+
+  return launchOptions
+})
 ```
+
+:::
 
 #### Changing browser preferences:
 
@@ -129,36 +129,37 @@ Here are preferences available for the currently supported browsers:
 - Firefox: visit `about:config` URL within your Firefox browser to see all
   available preferences.
 
+:::cypress-plugin-example
+
 ```js
-// cypress/plugins/index.js
-module.exports = (on, config) => {
-  on('before:browser:launch', (browser, launchOptions) => {
-    if (browser.family === 'chromium' && browser.name !== 'electron') {
-      // in Chromium, preferences can exist in Local State, Preferences, or Secure Preferences
-      // via launchOptions.preferences, these can be acccssed as `localState`, `default`, and `secureDefault`
+on('before:browser:launch', (browser, launchOptions) => {
+  if (browser.family === 'chromium' && browser.name !== 'electron') {
+    // in Chromium, preferences can exist in Local State, Preferences, or Secure Preferences
+    // via launchOptions.preferences, these can be acccssed as `localState`, `default`, and `secureDefault`
 
-      // for example, to set `somePreference: true` in Preferences:
-      launchOptions.preferences.default['preference'] = true
+    // for example, to set `somePreference: true` in Preferences:
+    launchOptions.preferences.default['preference'] = true
 
-      return launchOptions
-    }
+    return launchOptions
+  }
 
-    if (browser.family === 'firefox') {
-      // launchOptions.preferences is a map of preference names to values
-      launchOptions.preferences['some.preference'] = true
+  if (browser.family === 'firefox') {
+    // launchOptions.preferences is a map of preference names to values
+    launchOptions.preferences['some.preference'] = true
 
-      return launchOptions
-    }
+    return launchOptions
+  }
 
-    if (browser.name === 'electron') {
-      // launchOptions.preferences is a `BrowserWindow` `options` object
-      launchOptions.preferences.darkTheme = true
+  if (browser.name === 'electron') {
+    // launchOptions.preferences is a `BrowserWindow` `options` object
+    launchOptions.preferences.darkTheme = true
 
-      return launchOptions
-    }
-  })
-}
+    return launchOptions
+  }
+})
 ```
+
+:::
 
 ### Modify Electron app switches
 
@@ -209,86 +210,89 @@ affect the size of screenshots and videos taken during the run.
 
 This setting changes the display size of the screen and does not affect the
 `viewportWidth` and `viewportHeight` set in the
-[configuration](/guides/references/configuration). The `viewportWidth` and
-`viewportHeight` only affect the size of the application under test displayed
-inside the Test Runner. Read the blog post
+[Cypress configuration](/guides/references/configuration). The `viewportWidth`
+and `viewportHeight` only affect the size of the application under test
+displayed inside the Test Runner. Read the blog post
 [Generate High-Resolution Videos and Screenshots](https://www.cypress.io/blog/2021/03/01/generate-high-resolution-videos-and-screenshots/)
 for details.
 
 </Alert>
 
+:::cypress-plugin-example
+
 ```js
-// cypress/plugins/index.js
-module.exports = (on, config) => {
-  on('before:browser:launch', (browser, launchOptions) => {
-    if (browser.name === 'chrome' && browser.isHeadless) {
-      // fullPage screenshot size is 1400x1200 on non-retina screens
-      // and 2800x2400 on retina screens
-      launchOptions.args.push('--window-size=1400,1200')
+on('before:browser:launch', (browser, launchOptions) => {
+  if (browser.name === 'chrome' && browser.isHeadless) {
+    // fullPage screenshot size is 1400x1200 on non-retina screens
+    // and 2800x2400 on retina screens
+    launchOptions.args.push('--window-size=1400,1200')
 
-      // force screen to be non-retina (1400x1200 size)
-      launchOptions.args.push('--force-device-scale-factor=1')
+    // force screen to be non-retina (1400x1200 size)
+    launchOptions.args.push('--force-device-scale-factor=1')
 
-      // force screen to be retina (2800x2400 size)
-      // launchOptions.args.push('--force-device-scale-factor=2')
-    }
+    // force screen to be retina (2800x2400 size)
+    // launchOptions.args.push('--force-device-scale-factor=2')
+  }
 
-    if (browser.name === 'electron' && browser.isHeadless) {
-      // fullPage screenshot size is 1400x1200
-      launchOptions.preferences.width = 1400
-      launchOptions.preferences.height = 1200
-    }
+  if (browser.name === 'electron' && browser.isHeadless) {
+    // fullPage screenshot size is 1400x1200
+    launchOptions.preferences.width = 1400
+    launchOptions.preferences.height = 1200
+  }
 
-    if (browser.name === 'firefox' && browser.isHeadless) {
-      // menubars take up height on the screen
-      // so fullPage screenshot size is 1400x1126
-      launchOptions.args.push('--width=1400')
-      launchOptions.args.push('--height=1200')
-    }
+  if (browser.name === 'firefox' && browser.isHeadless) {
+    // menubars take up height on the screen
+    // so fullPage screenshot size is 1400x1126
+    launchOptions.args.push('--width=1400')
+    launchOptions.args.push('--height=1200')
+  }
 
-    return launchOptions
-  })
-}
+  return launchOptions
+})
 ```
+
+:::
 
 ### Override the device pixel ratio
 
-```js
-// cypress/plugins/index.js
-module.exports = (on, config) => {
-  on('before:browser:launch', (browser, launchOptions) => {
-    if (browser.name === 'chrome' && browser.isHeadless) {
-      // force screen to behave like retina
-      // when running Chrome headless browsers
-      // (2560x1440 in size by default)
-      launchOptions.args.push('--force-device-scale-factor=2')
-    }
+:::cypress-plugin-example
 
-    return launchOptions
-  })
-}
+```js
+on('before:browser:launch', (browser, launchOptions) => {
+  if (browser.name === 'chrome' && browser.isHeadless) {
+    // force screen to behave like retina
+    // when running Chrome headless browsers
+    // (2560x1440 in size by default)
+    launchOptions.args.push('--force-device-scale-factor=2')
+  }
+
+  return launchOptions
+})
 ```
+
+:::
 
 ### Start fullscreen
 
+:::cypress-plugin-example
+
 ```js
-// cypress/plugins/index.js
-module.exports = (on, config) => {
-  on('before:browser:launch', (browser = {}, launchOptions) => {
-    if (browser.family === 'chromium' && browser.name !== 'electron') {
-      launchOptions.args.push('--start-fullscreen')
+on('before:browser:launch', (browser = {}, launchOptions) => {
+  if (browser.family === 'chromium' && browser.name !== 'electron') {
+    launchOptions.args.push('--start-fullscreen')
 
-      return launchOptions
-    }
+    return launchOptions
+  }
 
-    if (browser.name === 'electron') {
-      launchOptions.preferences.fullscreen = true
+  if (browser.name === 'electron') {
+    launchOptions.preferences.fullscreen = true
 
-      return launchOptions
-    }
-  })
-}
+    return launchOptions
+  }
+})
 ```
+
+:::
 
 ### Use fake video for webcam testing
 
@@ -301,49 +305,52 @@ without having to have the necessary hardware to test.
 You can however send your own video file for testing by passing a Chrome command
 line switch pointing to a video file.
 
+:::cypress-plugin-example
+
 ```js
-// cypress/plugins/index.js
-module.exports = (on, config) => {
-  on('before:browser:launch', (browser = {}, launchOptions) => {
-    if (browser.family === 'chromium' && browser.name !== 'electron') {
-      // Mac/Linux
-      launchOptions.args.push(
-        '--use-file-for-fake-video-capture=cypress/fixtures/my-video.y4m'
-      )
+on('before:browser:launch', (browser = {}, launchOptions) => {
+  if (browser.family === 'chromium' && browser.name !== 'electron') {
+    // Mac/Linux
+    launchOptions.args.push(
+      '--use-file-for-fake-video-capture=cypress/fixtures/my-video.y4m'
+    )
 
-      // Windows
-      // launchOptions.args.push('--use-file-for-fake-video-capture=c:\\path\\to\\video\\my-video.y4m')
-    }
+    // Windows
+    // launchOptions.args.push('--use-file-for-fake-video-capture=c:\\path\\to\\video\\my-video.y4m')
+  }
 
-    return launchOptions
-  })
-}
+  return launchOptions
+})
 ```
+
+:::
 
 ### Support unique file download mime types
 
 Cypress supports a myriad of mime types when testing file downloads, but in case
 you have a unique one, you can add support for it.
 
+:::cypress-plugin-example
+
 ```js
-module.exports = (on) => {
-  on('before:browser:launch', (browser, options) => {
-    // only Firefox requires all mime types to be listed
-    if (browser.family === 'firefox') {
-      const existingMimeTypes =
-        options.preferences['browser.helperApps.neverAsk.saveToDisk']
-      const myMimeType = 'my/mimetype'
+on('before:browser:launch', (browser, options) => {
+  // only Firefox requires all mime types to be listed
+  if (browser.family === 'firefox') {
+    const existingMimeTypes =
+      options.preferences['browser.helperApps.neverAsk.saveToDisk']
+    const myMimeType = 'my/mimetype'
 
-      // prevents the browser download prompt
-      options.preferences[
-        'browser.helperApps.neverAsk.saveToDisk'
-      ] = `${existingMimeTypes},${myMimeType}`
+    // prevents the browser download prompt
+    options.preferences[
+      'browser.helperApps.neverAsk.saveToDisk'
+    ] = `${existingMimeTypes},${myMimeType}`
 
-      return options
-    }
-  })
-}
+    return options
+  }
+})
 ```
+
+:::
 
 <Alert type="info">
 
@@ -356,17 +363,19 @@ module.exports = (on) => {
 If we need to set a particular Firefox flag, like `browser.send_pings` we can do
 it via preferences
 
-```js
-module.exports = (on) => {
-  on('before:browser:launch', (browser = {}, launchOptions) => {
-    if (browser.family === 'firefox') {
-      launchOptions.preferences['browser.send_pings'] = true
-    }
+:::cypress-plugin-example
 
-    return launchOptions
-  })
-}
+```js
+on('before:browser:launch', (browser = {}, launchOptions) => {
+  if (browser.family === 'firefox') {
+    launchOptions.preferences['browser.send_pings'] = true
+  }
+
+  return launchOptions
+})
 ```
+
+:::
 
 The above example comes from the blog post
 [How to Test Anchor Ping](https://glebbahmutov.com/blog/anchor-ping/).

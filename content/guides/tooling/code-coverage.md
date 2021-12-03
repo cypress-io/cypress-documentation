@@ -293,26 +293,27 @@ documentation for up-to-date installation instructions.
 npm install -D @cypress/code-coverage
 ```
 
-Then add the code below to your
+Then add the code below to the
 [supportFile](/guides/references/configuration#Folders-Files) and
-[pluginsFile](/guides/references/configuration#Folders-Files).
+[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function.
 
 ```js
 // cypress/support/index.js
 import '@cypress/code-coverage/support'
 ```
 
-```js
-// cypress/plugins/index.js
-module.exports = (on, config) => {
-  require('@cypress/code-coverage/task')(on, config)
-  // include any other plugin code...
+:::cypress-plugin-example
 
-  // It's IMPORTANT to return the config object
-  // with any changed environment variables
-  return config
-}
+```js
+require('@cypress/code-coverage/task')(on, config)
+// include any other plugin code...
+
+// It's IMPORTANT to return the config object
+// with any changed environment variables
+return config
 ```
+
+:::
 
 When you run the Cypress tests now, you should see a few commands after the
 tests finish. We have highlighted these commands using a green rectangle below.
@@ -357,13 +358,23 @@ the browser.
 
 ## Code coverage as a guide
 
-Even a single end-to-end test can cover a lot of the application code. For
-example, let's run the following test that adds a few items, then marks one of
-them as completed.
+Even a single test can cover a lot of the application code. For example, let's
+run the following test that adds a few items, then marks one of them as
+completed.
 
-```javascript
+:::visit-mount-test-example
+
+```js
+cy.visit('/')
+```
+
+```js
+cy.mount(<AddTodo />)
+```
+
+```js
 it('adds and completes todos', () => {
-  cy.visit('/')
+  __VISIT_MOUNT_PLACEHOLDER__
   cy.get('.new-todo')
     .type('write code{enter}')
     .type('write tests{enter}')
@@ -376,6 +387,8 @@ it('adds and completes todos', () => {
   cy.get('.todo').first().should('have.class', 'completed')
 })
 ```
+
+:::
 
 After running the test and opening the HTML report, we see 76% code coverage in
 our application.
@@ -481,22 +494,23 @@ to use the same `.babelrc` with
 and tell the Cypress built-in bundler to use `.babelrc` when bundling specs. One
 can use the
 [`@cypress/code-coverage`](https://github.com/cypress-io/code-coverage) plugin
-again to do this by adding the code below to your
-[pluginsFile](/guides/references/configuration#Folders-Files).
+again to do this by adding the code below to the
+[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function.
+
+:::cypress-plugin-example
 
 ```javascript
-// cypress/plugins/index.js
-module.exports = (on, config) => {
-  require('@cypress/code-coverage/task')(on, config)
-  // tell Cypress to use .babelrc file
-  // and instrument the specs files
-  // only the extra application files will be instrumented
-  // not the spec files themselves
-  on('file:preprocessor', require('@cypress/code-coverage/use-babelrc'))
+require('@cypress/code-coverage/task')(on, config)
+// tell Cypress to use .babelrc file
+// and instrument the specs files
+// only the extra application files will be instrumented
+// not the spec files themselves
+on('file:preprocessor', require('@cypress/code-coverage/use-babelrc'))
 
-  return config
-}
+return config
 ```
+
+:::
 
 For reference, the `.babelrc` file is shared between the example application and
 the spec files, thus Cypress tests are transpiled the same way the application
@@ -607,20 +621,24 @@ if (global.__coverage__) {
 ```
 
 In order for the `@cypress/code-coverage` plugin to know that it should request
-the back end coverage, add the new endpoint to the `cypress.json` environment
-settings under `env.codeCoverage.url` key. For example, if the application back
-end is running at port 3000 and we are using the default "GET /**coverage**"
-endpoint, set the following:
+the back end coverage, add the new endpoint to the Cypress configuration
+environment settings under `env.codeCoverage.url` key. For example, if the
+application back end is running at port 3000 and we are using the default "GET
+/**coverage**" endpoint, set the following:
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "env": {
-    "codeCoverage": {
-      "url": "http://localhost:3000/__coverage__"
+  env: {
+    codeCoverage: {
+      url: 'http://localhost:3000/__coverage__'
     }
   }
 }
 ```
+
+:::
 
 From now on, the front end code coverage collected during end-to-end tests will
 be merged with the code coverage from the instrumented back end code and saved

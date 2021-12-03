@@ -1,69 +1,105 @@
 <template>
-  <div :class="$style.codeGroup">
+  <div ref="root" :class="$style.codeGroup">
     <div
       class="rounded-t-md border-b-2 border-gray-700 px-2 bg-gray-800 text-sm text-white relative flex flex-row"
     >
       <button
-        v-for="({ label }, i) in tabs"
+        v-for="(
+          {
+            $vnode: {
+              componentInstance: { label },
+            },
+          },
+          i
+        ) in codeBlocks"
         ref="tabs"
         :key="label"
         class="px-4 py-3 text-gray-400 font-bold font-mono"
-        :class="[activeTabIndex === i && 'active']"
+        :class="[$style.button, Math.min(0, activeTabIndex) === i && 'active']"
         @click="updateTabs(i)"
       >
         {{ label }}
       </button>
-      <span ref="highlight-underline" :class="$style.highlightUnderline" />
+      <button
+        v-if="codeBlocks.length === 0"
+        class="px-4 py-3 text-gray-400 font-bold font-mono"
+      >
+        Loading...
+      </button>
+      <span ref="highlightUnderline" :class="$style.highlightUnderline" />
     </div>
     <slot />
   </div>
 </template>
 
 <script>
+import { componentSync } from './componentSync'
+
 export default {
+  props: {
+    syncGroup: {
+      type: String,
+      default: null,
+    },
+  },
   data() {
     return {
-      tabs: [],
-      activeTabIndex: 0,
+      codeBlocks: [],
+      activeTabIndex: -1,
     }
   },
   watch: {
     activeTabIndex(newValue, oldValue) {
-      this.switchTab(newValue)
+      this.activateCodeBlock(newValue)
     },
   },
-  mounted() {
-    this.tabs = this.$slots.default
-      .filter((slot) => Boolean(slot.componentOptions))
-      .map((slot) => {
-        return {
-          label: slot.componentOptions.propsData.label,
-          elm: slot.elm,
-        }
-      })
-
-    this.$nextTick(this.updateHighlighteUnderlinePosition)
+  created() {
+    componentSync.register(this, 'activateTab')
+  },
+  unmounted() {
+    componentSync.unregister(this)
   },
   methods: {
-    switchTab(i) {
-      this.tabs.forEach((tab) => {
-        tab.elm.classList.remove('active')
+    registerCodeBlock(codeBlock) {
+      const { length } = this.codeBlocks
+
+      if (length === 0) {
+        this.$nextTick(this.updateHighlighteUnderlinePosition)
+      }
+
+      if (
+        codeBlock.$vnode.componentInstance.active &&
+        this.activeTabIndex === -1
+      ) {
+        this.activeTabIndex = length
+      }
+
+      this.codeBlocks.push(codeBlock)
+    },
+    activateCodeBlock(index) {
+      this.codeBlocks.forEach((codeBlock, i) => {
+        codeBlock.setActiveState(i === index)
       })
 
-      this.tabs[i].elm.classList.add('active')
-    },
-    updateTabs(i) {
-      this.activeTabIndex = i
       this.updateHighlighteUnderlinePosition()
     },
+    activateTab(i) {
+      this.activeTabIndex = i
+    },
+    updateTabs(i) {
+      if (this.syncGroup) {
+        componentSync.syncWithScroll(this, this.$refs.root, i)
+      } else {
+        this.activateTab(i)
+      }
+    },
     updateHighlighteUnderlinePosition() {
-      const activeTab = this.$refs.tabs[this.activeTabIndex]
-
-      if (!activeTab) {
+      if (!this.$refs.tabs) {
         return
       }
 
-      const highlightUnderline = this.$refs['highlight-underline']
+      const activeTab = this.$refs.tabs[this.activeTabIndex]
+      const { highlightUnderline } = this.$refs
 
       highlightUnderline.style.left = `${activeTab.offsetLeft}px`
       highlightUnderline.style.width = `${activeTab.clientWidth}px`
@@ -73,8 +109,8 @@ export default {
 </script>
 
 <style module>
-button {
-  outline: none;
+.button {
+  outline: none !important;
 }
 
 .highlightUnderline {

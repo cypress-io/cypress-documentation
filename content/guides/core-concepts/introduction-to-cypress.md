@@ -31,10 +31,20 @@ After you're done, we suggest watching some of our <Icon name="video"></Icon>
 Simplicity is all about getting more done with less typing. Let's look at an
 example:
 
+:::visit-mount-test-example
+
+```js
+cy.visit('/posts/new')
+```
+
+```js
+cy.mount(<PostBuilder />)
+```
+
 ```js
 describe('Post Resource', () => {
   it('Creating a New Post', () => {
-    cy.visit('/posts/new') // 1.
+    __VISIT_MOUNT_PLACEHOLDER__ // 1.
 
     cy.get('input.post-title') // 2.
       .type('My First Post') // 3.
@@ -45,26 +55,24 @@ describe('Post Resource', () => {
     cy.contains('Submit') // 6.
       .click() // 7.
 
-    cy.url() // 8.
-      .should('include', '/posts/my-first-post')
-
-    cy.get('h1') // 9.
+    cy.get('h1') // 8.
       .should('contain', 'My First Post')
   })
 })
 ```
 
+:::
+
 Can you read this? If you did, it might sound something like this:
 
-> 1. Visit the page at `/posts/new`.
+> 1. Visit page at `/posts/new` (or mount the `PostBuilder` component).
 > 2. Find the `<input>` with class `post-title`.
 > 3. Type "My First Post" into it.
 > 4. Find the `<input>` with class `post-body`.
 > 5. Type "Hello, world!" into it.
 > 6. Find the element containing the text `Submit`.
 > 7. Click it.
-> 8. Grab the browser URL, ensure it includes `/posts/my-first-post`.
-> 9. Find the `h1` tag, ensure it contains the text "My First Post".
+> 8. Find the `h1` tag, ensure it contains the text "My First Post".
 
 This is a relatively straightforward test, but consider how much code has been
 covered by it, both on the client and the server!
@@ -515,21 +523,32 @@ is what we mean when we say Cypress commands are asynchronous.
 
 #### Take this short test, for example:
 
+:::visit-mount-test-example
+
 ```js
-it('changes the URL when "awesome" is clicked', () => {
-  cy.visit('/my/resource/path') // Nothing happens yet
+cy.visit('/my/resource/path') // Nothing happens yet
+```
 
-  cy.get('.awesome-selector') // Still nothing happening
-    .click() // Nope, nothing
+```js
+cy.mount(<MyComponent />)     // Nothing happens yet
+```
 
-  cy.url() // Nothing to see, yet
-    .should('include', '/my/resource/path#awesomeness') // Nada.
+```js
+it('hides the thing when it is clicked', () => {
+  __VISIT_MOUNT_PLACEHOLDER__
+
+  cy.get('.hides-when-clicked') // Still nothing happening
+    .should('be.visible')       // Still absolutely nothing
+    .click()                    // Nope, nothing
+    .should('not.be.visible')   // Definitely nothing happening yet
 })
 
 // Ok, the test function has finished executing...
 // We've queued all of these commands and now
 // Cypress will begin running them in order!
 ```
+
+:::
 
 Cypress doesn't kick off the browser automation magic until the test function
 exits.
@@ -791,25 +810,36 @@ commands that were enqueued using the `cy.*` command chains.
 
 #### Let's take another look at an example
 
+:::visit-mount-test-example
+
 ```js
-it('changes the URL when "awesome" is clicked', () => {
-  cy.visit('/my/resource/path') // 1.
+cy.visit('/my/resource/path') // 1.
+```
 
-  cy.get('.awesome-selector') // 2.
-    .click() // 3.
+```js
+cy.mount(<MyComponent />) // 1.
+```
 
-  cy.url() // 4.
-    .should('include', '/my/resource/path#awesomeness') // 5.
+```js
+it('hides the thing when it is clicked', () => {
+  __VISIT_MOUNT_PLACEHOLDER__
+
+  cy.get('.hides-when-clicked') // 2.
+    .should('be.visible') // 3.
+    .click() // 4.
+    .should('not.be.visible') // 5.
 })
 ```
 
+:::
+
 The test above would cause an execution in this order:
 
-1. Visit a URL.
+1. Visit the URL (or mount the component).
 2. Find an element by its selector.
-3. Perform a click action on that element.
-4. Grab the URL.
-5. Assert the URL to include a specific _string_.
+3. Assert that the element is visible.
+4. Perform a click action on that element.
+5. Assert that the element is no longer visible.
 
 These actions will always happen serially (one after the other), never in
 parallel (at the same time). Why?
@@ -817,17 +847,17 @@ parallel (at the same time). Why?
 To illustrate this, let's revisit that list of actions and expose some of the
 hidden **✨ magic ✨** Cypress does for us at each step:
 
-1. Visit a URL ✨ **and wait for the page `load` event to fire after all
-   external resources have loaded**✨
-2. Find an element by its selector ✨ **and
-   [retry](/guides/core-concepts/retry-ability) until it is found in the DOM**
+1. Visit the URL ✨ **and wait for the page load event to fire after all
+   external resources have loaded** ✨ (or mount the component ✨ **and wait for
+   the component to finish mounting** ✨)
+2. Find an element by its selector ✨ **and retry until it is found in the DOM**
    ✨
-3. Perform a click action on that element ✨ **after we wait for the element to
-   reach an
-   [actionable state](/guides/core-concepts/interacting-with-elements)** ✨
-4. Grab the URL and...
-5. Assert the URL to include a specific _string_ ✨ **and
-   [retry](/guides/core-concepts/retry-ability) until the assertion passes** ✨
+3. Assert that the element is visible ✨ **and retry until the assertion
+   passes** ✨
+4. Perform a click action on that element ✨ **after we wait for the element to
+   reach an actionable state** ✨
+5. Assert that the element is no longer visible ✨ **and retry until the
+   assertion passes** ✨
 
 As you can see, Cypress does a lot of extra work to ensure the state of the
 application matches what our commands expect about it. Each command may resolve
@@ -840,7 +870,7 @@ that expect particular things to take much longer like
 out.
 
 These commands have their own particular timeout values which are documented in
-our [configuration](/guides/references/configuration).
+the [Cypress configuration](/guides/references/configuration).
 
 <Alert type="success">
 
@@ -861,22 +891,22 @@ designed to deliver deterministic, repeatable and consistent tests.
 
 Almost all commands come with built-in
 [retry-ability](/guides/core-concepts/retry-ability)**. Without
-[**retry-ability**](/guides/core-concepts/retry-ability), assertions
-would randomly fail. This would lead to flaky, inconsistent results.
+[**retry-ability\*\*](/guides/core-concepts/retry-ability), assertions would
+randomly fail. This would lead to flaky, inconsistent results.
 
 <Alert type="info">
 
 While Cypress is built using Promises that come from
-[Bluebird](http://bluebirdjs.com/), these are not what we expose
-as commands and assertions on `cy`. If you'd like to learn more about
-handling asynchronous Cypress Commands please read our
+[Bluebird](http://bluebirdjs.com/), these are not what we expose as commands and
+assertions on `cy`. If you'd like to learn more about handling asynchronous
+Cypress Commands please read our
 [Core Concept Guide](/guides/core-concepts/variables-and-aliases).
 
 </Alert>
 
-Commands also have some design choices that developers who are used to promise-based
-testing may find unexpected. They are intentional decisions on Cypress' part,
-not technical limitations.
+Commands also have some design choices that developers who are used to
+promise-based testing may find unexpected. They are intentional decisions on
+Cypress' part, not technical limitations.
 
 1. You cannot **race** or run multiple commands at the same time (in parallel).
 2. You cannot add a `.catch` error handler to a failed command.
@@ -923,8 +953,8 @@ You might be wondering:
 The problem with this question is that this type of conditional control flow
 ends up being non-deterministic. This means different test runs may behave
 differently, which makes them less deterministic and consistent. In general,
-there are only a handful of very specific situations where you _can_
-create control flow using Cypress commands.
+there are only a handful of very specific situations where you _can_ create
+control flow using Cypress commands.
 
 With that said, as long as you are aware of the potential pitfalls with control
 flow, it is possible to do this in Cypress!
@@ -1005,8 +1035,18 @@ basic part of testing?
 
 #### Consider this example:
 
+:::visit-mount-test-example
+
 ```js
 cy.visit('/home')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
+```js
+__VISIT_MOUNT_PLACEHOLDER__
 
 cy.get('.main-menu').contains('New Project').click()
 
@@ -1015,18 +1055,22 @@ cy.get('.title').type('My Awesome Project')
 cy.get('form').submit()
 ```
 
+:::
+
 Without a single explicit assertion, there are dozens of ways this test can
 fail! Here's a few:
 
-- The initial [`cy.visit()`](/api/commands/visit) could respond with something
-  other than success.
+- The initial [`cy.visit()`](/api/commands/visit) or
+  [`cy.mount()`](/api/commands/mount) could respond with something other than
+  success.
 - Any of the [`cy.get()`](/api/commands/get) commands could fail to find their
   elements in the DOM.
 - The element we want to [`.click()`](/api/commands/click) on could be covered
   by another element.
 - The input we want to [`.type()`](/api/commands/type) into could be disabled.
 - Form submission could result in a non-success status code.
-- The in-page JS (the application under test) could throw an error.
+- The in-page JS (the application under test) or the component could throw an
+  error.
 
 Can you think of any more?
 

@@ -26,7 +26,7 @@ cy.readFile('menu.json')
 **<Icon name="angle-right"></Icon> filePath** **_(String)_**
 
 A path to a file within the project root (the directory that contains the
-default `cypress.json` configuration file).
+[Cypress configuration file](/guides/references/configuration)).
 
 **<Icon name="angle-right"></Icon> encoding** **_(String)_**
 
@@ -46,7 +46,8 @@ supported:
 - `'utf-16le'`
 - `null`
 
-Using `null` explicitly will return the file as a `Buffer`, regardless of file extension.
+Using `null` explicitly will return the file as a `Buffer`, regardless of file
+extension.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -54,7 +55,7 @@ Pass in an options object to change the default behavior of `cy.readFile()`.
 
 | Option    | Default                                                              | Description                                                                              |
 | --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.readFile()` to resolve before [timing out](#Timeouts)               |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
@@ -213,13 +214,18 @@ pass.</li></List>
 
 ## Command Log
 
-**_List the contents of the default `cypress.json` configuration file_**
+**_List the contents of your package.json file_**
 
 ```javascript
-cy.readFile('cypress.json')
+cy.readFile('package.json')
 ```
 
 The command above will display in the Command Log as:
+
+<!-- Code to reproduce screenshot:
+  in spec file:
+  use cy.readFile('package.json') as shown in the example above
+-->
 
 <DocsImage src="/img/api/readfile/readfile-can-get-content-of-system-files-in-tests.png" alt="Command Log readFile" ></DocsImage>
 

@@ -1,12 +1,10 @@
 ---
 title: Framework Configuration
-containerClass: component-testing
 ---
 
-Recent years have seen an explosion in component based libraries (Vue, React)
-and frameworks built on top of them (Nuxt, Next). Cypress tests are written and
-behave the same regardless. Some frameworks require some additional
-configuration to work correctly with Cypress component testing.
+Cypress component tests are written and behave the same regardless of framework
+choice (Vue, React, Nuxt, Next); however, some frameworks require additional
+configuration to work correctly.
 
 All the example projects described in this page can be found
 [here](https://github.com/cypress-io/cypress-component-examples).
@@ -34,35 +32,53 @@ React App use Webpack v4.
 
 </Alert>
 
-Next configure the dev-server to use the same Webpack configuration used by
-Create React App. We can do this easily using the `react-scripts` plugin
-provided by Cypress. Place the following in `cypress/plugins/index.js`, creating
-the relevant directories.
+Configure the dev server to use the same Webpack configuration used by Create
+React App. You can do this using the `react-scripts` plugin provided by the
+`@cypress/react` module.
+
+Also, you need to tell Cypress where to find your component tests. The following
+example configuration assumes that all the test files are somewhere in the `src`
+folder and end with a `.test.js`, `.test.jsx`, `.test.ts` or `.test.tsx`
+extension.
+
+:::cypress-config-plugin-example
 
 ```js
-// cypress/plugins/index.js
+const { devServer } = require('@cypress/react/plugins/react-scripts')
+```
 
+```js
+{
+  component: {
+    devServer,
+    componentFolder: 'src',
+    testFiles: '**/*.test.{js,ts,jsx,tsx}'
+  }
+}
+```
+
+```json
+{
+  "component": {
+    "componentFolder": "src",
+    "testFiles": "**/*.test.{js,ts,jsx,tsx}"
+  }
+}
+```
+
+```js
 const injectDevServer = require('@cypress/react/plugins/react-scripts')
 
 module.exports = (on, config) => {
   injectDevServer(on, config)
-
   return config
 }
 ```
 
-Lastly, tell Cypress where you find your test in `cypress.json`. In this example
-all the tests are in `src` and named `test.js`:
+:::
 
-```json
-{
-  "testFiles": "**/*.test.{js,ts,jsx,tsx}",
-  "componentFolder": "src"
-}
-```
-
-Finally, add a test. We will replace the default test (using Testing Library)
-with one using Cypress:
+Now add a test. We will replace the default test (using Testing Library) with
+one using Cypress:
 
 ```jsx
 // src/App.test.js
@@ -77,9 +93,9 @@ it('renders learn react link', () => {
 })
 ```
 
-Start Cypress with `npx cypress open-ct` - the test runner will open. Select
-your test to execute it and see the rendered output. You can also run the tests
-without opening a browser with `npx cypress run-ct`.
+Start Cypress with `npx cypress open --component` - the test runner will open.
+Select your test to execute it and see the rendered output. You can also run the
+tests without opening a browser with `npx cypress run --component`.
 
 ## Vue (Vue CLI)
 
@@ -109,13 +125,46 @@ need `html-webpack-plugin@5` instead.
 
 </Alert>
 
-Next configure the dev-server to use the same Webpack configuration used by Vue
-CLI. Place the following in `cypress/plugins/index.js`, creating the relevant
-directories.
+Configure the dev server to use the same Webpack configuration used by Vue CLI.
+You can do this using the plugin provided by the `@cypress/webpack-dev-server`
+module.
+
+Also, you need to tell Cypress where to find your component tests. The following
+example configuration assumes that all the test files are somewhere in the `src`
+folder and end with the `.spec.js` extension.
+
+:::cypress-config-plugin-example
 
 ```js
-// cypress/plugins/index.js
+const { startDevServer } = require('@cypress/webpack-dev-server')
+const webpackConfig = require('@vue/cli-service/webpack.config')
+```
 
+```js
+{
+  component: {
+    devServer(cypressDevServerConfig) {
+      return startDevServer({
+        options: cypressDevServerConfig,
+        webpackConfig,
+      })
+    },
+    componentFolder: 'src',
+    testFiles: '**/*.spec.js'
+  }
+}
+```
+
+```json
+{
+  "component": {
+    "componentFolder": "src",
+    "testFiles": "**/*.spec.js"
+  }
+}
+```
+
+```js
 const { startDevServer } = require('@cypress/webpack-dev-server')
 const webpackConfig = require('@vue/cli-service/webpack.config')
 
@@ -129,6 +178,8 @@ module.exports = (on, config) => {
 }
 ```
 
+:::
+
 <Alert type="warning">
 
 <strong class="alert-header">PWA Caveat</strong>
@@ -140,17 +191,7 @@ for more information.
 
 </Alert>
 
-Lastly, tell Cypress where you find your test in `cypress.json`. In this example
-all the tests are in `src` and named `spec.js`:
-
-```json
-{
-  "testFiles": "**/*.spec.js",
-  "componentFolder": "src"
-}
-```
-
-Finally, add a test:
+Now add a test:
 
 ```jsx
 // src/components/HelloWorld.spec.js
@@ -169,9 +210,9 @@ it('renders a message', () => {
 })
 ```
 
-Start Cypress with `npx cypress open-ct` - the test runner will open. Select
-your test to execute it and see the rendered output. You can also run the tests
-without opening a browser with `npx cypress run-ct`.
+Start Cypress with `npx cypress open --component` - the test runner will open.
+Select your test to execute it and see the rendered output. You can also run the
+tests without opening a browser with `npx cypress run --component`.
 
 ### Vue 3 (Vue CLI)
 
@@ -211,33 +252,55 @@ versions that correspond to the current version of Next.js.
 
 </Alert>
 
-Next configure the dev-server using the Next.js adapter shipped with
-`@cypress/react` by adding the following code to `cypress/plugins/index.js`,
-creating the relevant directories:
+Configure the dev server to use the same Webpack configuration used by Next.js.
+You can do this using the `next` plugin provided by the `@cypress/react` module.
+
+Also, you need to tell Cypress where to find your component tests. The following
+example configuration assumes that all the test files are somewhere in the
+`cypress/pages` folder and end with either the `.spec.js` or `.spec.jsx`
+extension.
+
+:::cypress-config-plugin-example
+
+```js
+const { devServer } = require('@cypress/react/plugins/next')
+```
+
+```js
+{
+  component: {
+    devServer,
+    componentFolder: 'cypress/pages',
+    testFiles: '**/*.spec.{js,jsx}'
+  }
+}
+```
+
+```json
+{
+  "component": {
+    "componentFolder": "cypress/pages",
+    "testFiles": "**/*.spec.{js,jsx}"
+  }
+}
+```
 
 ```js
 const injectDevServer = require('@cypress/react/plugins/next')
 
 module.exports = (on, config) => {
   injectDevServer(on, config)
-
   return config
 }
 ```
 
-Lastly, tell Cypress where you find your test in `cypress.json`. In this example
-all the tests are in `cypress/pages`:
+:::
 
-```json
-{
-  "testFiles": "*_/_.spec.{js,jsx}",
-  "componentFolder": "cypress/pages"
-}
-```
-
-Finally, add a test in `cypress/pages`:
+Now add a test:
 
 ```jsx
+// cypress/pages/IndexPage.spec.jsx
+
 import React from 'react'
 import { mount } from '@cypress/react'
 import IndexPage from '../../pages/index'
@@ -248,9 +311,9 @@ it('Renders page component', () => {
 })
 ```
 
-Start Cypress with `npx cypress open-ct` - the test runner will open. Select
-your test to execute it and see the rendered output. You can also run the tests
-without opening a browser with `npx cypress run-ct`.
+Start Cypress with `npx cypress open --component` - the test runner will open.
+Select your test to execute it and see the rendered output. You can also run the
+tests without opening a browser with `npx cypress run --component`.
 
 <Alert type="warning">
 
@@ -309,13 +372,51 @@ CLI v4 use Webpack v4.
 
 </Alert>
 
-Next configure the dev-server to use the same Webpack configuration used by
-Nuxt. Place the following in `cypress/plugins/index.js`, creating the relevant
-directories.
+Configure the dev server to use the same Webpack configuration used by Nuxt. You
+can do this using the plugin provided by the `@cypress/webpack-dev-server`
+module.
+
+Also, you need to tell Cypress where to find your component tests. While it's
+possible to mount components in the `pages` directory, generally you will want
+to be more granular with your component tests - full page tests are best
+implemented with Cypress e2e runner.
+
+The following example configuration assumes that all the test files are
+somewhere in the `components` folder, and end with the `.spec.js` extension.
+
+:::cypress-config-plugin-example
 
 ```js
-// cypress/plugins/index.js
+const { startDevServer } = require('@cypress/webpack-dev-server')
+const { getWebpackConfig } = require('nuxt')
+```
 
+```js
+{
+  component: {
+    async devServer(cypressDevServerConfig) {
+      const webpackConfig = await getWebpackConfig()
+      return startDevServer({
+        options: cypressDevServerConfig,
+        webpackConfig,
+      })
+    },
+    componentFolder: 'components',
+    testFiles: '**/*.spec.js'
+  }
+}
+```
+
+```json
+{
+  "component": {
+    "componentFolder": "components",
+    "testFiles": "**/*.spec.js"
+  }
+}
+```
+
+```js
 const { startDevServer } = require('@cypress/webpack-dev-server')
 const { getWebpackConfig } = require('nuxt')
 
@@ -330,22 +431,9 @@ module.exports = (on, config) => {
 }
 ```
 
-Lastly, tell Cypress where you find your tests in `cypress.json`. While it's
-possible to mount components in the `pages` directory, generally you will want
-to be more granular with your component tests - full page tests are best
-implemented with Cypress e2e runner.
+:::
 
-In this example we specify the `componentFolder` as `components`, the default
-for Nuxt.
-
-```json
-{
-  "testFiles": "**/*.spec.js",
-  "componentFolder": "components"
-}
-```
-
-Finally, add a component and test:
+Now add a component:
 
 ```html
 <!-- components/mountains.vue -->
@@ -377,8 +465,11 @@ Finally, add a component and test:
 </script>
 ```
 
+And a test:
+
 ```js
 // components/mountains.spec.js
+
 import { mount } from '@cypress/vue'
 import Mountains from './mountains.vue'
 
@@ -429,9 +520,9 @@ _not_ applied. In this example, the `fetch` hook is not automatically applied,
 so we used the `mocks` mounting option to specify the three component states
 (loading, error and success) and test each one in isolation.
 
-Start Cypress with `npx cypress open-ct` - the test runner will open. Select
-your test to execute it and see the rendered output. You can also run the tests
-without opening a browser with `npx cypress run-ct`.
+Start Cypress with `npx cypress open --component` - the test runner will open.
+Select your test to execute it and see the rendered output. You can also run the
+tests without opening a browser with `npx cypress run --component`.
 
 ## Vite Based Projects (Vue, React)
 
@@ -444,40 +535,58 @@ project
 and a Vue project
 [here](https://github.com/cypress-io/cypress-component-examples/tree/main/vite-vue).
 
-Inside of `cypress/plugins/index.js`, configure Cypress to use the Vite dev
-server:
+Configure the dev server using the plugin provided by the
+`@cypress/vite-dev-server` module. Also, you need to tell Cypress where to find
+your component tests. The following example configuration assumes that all the
+test files are somewhere in the `src` folder and end with the `.spec.jsx`
+extension.
+
+:::cypress-config-plugin-example
 
 ```js
-// cypress/plugins/index.js
+const { startDevServer } = require('@cypress/vite-dev-server')
+```
 
-const path = require('path')
+```js
+{
+  component: {
+    devServer(cypressDevServerConfig) {
+      return startDevServer({
+        options: cypressDevServerConfig
+      })
+    },
+    componentFolder: 'src',
+    testFiles: '**/*.spec.jsx'
+  }
+}
+```
+
+```json
+{
+  "component": {
+    "componentFolder": "src",
+    "testFiles": "**/*.spec.jsx"
+  }
+}
+```
+
+```js
 const { startDevServer } = require('@cypress/vite-dev-server')
 
 module.exports = (on, config) => {
   on('dev-server:start', (options) => {
-    return startDevServer({
-      options,
-      viteConfig: {
-        configFile: path.resolve(__dirname, '..', '..', 'vite.config.js'),
-      },
-    })
+    return startDevServer({ options })
   })
 }
 ```
 
-Lastly, tell Cypress where you find your test in `cypress.json`. In this example
-all the tests are in `src` and named `spec.jsx`:
+:::
 
-```json
-{
-  "testFiles": "**/*.spec.jsx",
-  "componentFolder": "src"
-}
-```
-
-Finally, add a test in `src/App.spec.jsx`:
+Now add a test:
 
 ```jsx
+// src/App.spec.jsx
+
 import React from 'react'
 import { mount } from '@cypress/react'
 import App from './App'
@@ -488,6 +597,6 @@ it('renders learn react link', () => {
 })
 ```
 
-Start Cypress with `npx cypress open-ct` - the test runner will open. Select
-your test to execute it and see the rendered output. You can also run the tests
-without opening a browser with `npx cypress run-ct`.
+Start Cypress with `npx cypress open --component` - the test runner will open.
+Select your test to execute it and see the rendered output. You can also run the
+tests without opening a browser with `npx cypress run --component`.

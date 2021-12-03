@@ -27,7 +27,7 @@ Pass in an options object to change the default behavior of `cy.window()`.
 
 | Option    | Default                                                              | Description                                                                              |
 | --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.window()` to resolve before [timing out](#Timeouts)                 |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
@@ -40,13 +40,24 @@ Pass in an options object to change the default behavior of `cy.window()`.
 
 #### Yield the remote window object
 
-```javascript
+:::visit-mount-test-example
+
+```js
 cy.visit('http://localhost:8080/app')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
+```js
+__VISIT_MOUNT_PLACEHOLDER__
 cy.window().then((win) => {
   // win is the remote window
-  // of the page at: http://localhost:8080/app
 })
 ```
+
+:::
 
 #### Check a custom property
 
@@ -72,7 +83,7 @@ it('equals bar', () => {
   let foo
 
   cy.window().then((win) => {
-    foo = win.foo
+    foo = win.tags.foo
   })
 
   // variable "foo" is still undefined
@@ -90,7 +101,7 @@ it('equals bar', () => {
 
   cy.window()
     .then((win) => {
-      foo = win.foo
+      foo = win.tags.foo
     })
     .then(() => {
       // variable "foo" has been set
@@ -115,7 +126,7 @@ if (window.Cypress) {
 Cypress Test Runner can wait for the property `window.appReady` to be `true`
 before every test
 
-```javascript
+```js
 // spec.js
 beforeEach(() => {
   cy.visit('/')

@@ -1,5 +1,6 @@
 ---
 title: reload
+e2eSpecific: true
 ---
 
 Reload the page.
@@ -30,9 +31,9 @@ reload without cache.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
-| Option    | Default                                                        | Description                                                                              |
-| --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| Option    | Default                                                        | Description                                                                                                                                                                                        |
+| --------- | -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                                                                           |
 | `timeout` | [`pageLoadTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.reload()` to resolve before [timing out](#Timeouts) Note: Network requests are limited by the underlying operating system, and may still time out if this value is increased. |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)

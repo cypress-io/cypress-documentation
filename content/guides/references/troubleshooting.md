@@ -315,7 +315,6 @@ want to enable them
 | `cypress:net-stubbing*`         | Network interception in the proxy layer                               |
 | `cypress:server:reporter`       | Problems with test reporters                                          |
 | `cypress:server:preprocessor`   | Processing specs                                                      |
-| `cypress:server:plugins`        | Running the plugins file and bundling specs                           |
 | `cypress:server:socket-e2e`     | Watching spec files                                                   |
 | `cypress:server:task`           | Invoking the `cy.task()` command                                      |
 | `cypress:server:socket-base`    | Debugging `cy.request()` command                                      |
@@ -432,7 +431,7 @@ verbose `cypress-verbose:server:util:process_profiler` debug stream.
 
 ## Disable the Command Log
 
-In some cases the [Command Log](/guides/core-concepts/test-runner#Command-Log),
+In some cases the [Command Log](/guides/core-concepts/cypress-app#Command-Log),
 responsible for displaying test commands, assertions, and statuses in the Test
 Runner, may cause performance issues resulting in slower tests or the browser
 crashing.

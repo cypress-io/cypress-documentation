@@ -28,8 +28,8 @@ cy.request('http://dev.local/seed')
 
 The URL to make the request to.
 
-If you do not provide a fully qualified domain name (FQDN) URL, Cypress will make its
-best guess as to which host you want `cy.request()` to use in the URL.
+If you do not provide a fully qualified domain name (FQDN) URL, Cypress will
+make its best guess as to which host you want `cy.request()` to use in the URL.
 
 1. If you make a `cy.request()` after visiting a page, Cypress assumes the URL
    used for the `cy.visit()` is the host.
@@ -39,16 +39,19 @@ cy.visit('http://localhost:8080/app')
 cy.request('users/1.json') //  URL is  http://localhost:8080/users/1.json
 ```
 
-2. If you make a `cy.request()` prior to visiting a page, Cypress assumes the host
-   is the `baseUrl` property configured inside of of your
+2. If you make a `cy.request()` prior to visiting a page, Cypress assumes the
+   host is the `baseUrl` property configured inside of of your
    [configuration file](/guides/references/configuration).
 
-```json
-// cypress.json
+:::cypress-config-example
+
+```js
 {
-  "baseUrl": "http://localhost:1234"
+  baseUrl: 'http://localhost:1234'
 }
 ```
+
+:::
 
 ```javascript
 cy.request('seed/admin') // URL is http://localhost:1234/seed/admin
@@ -104,7 +107,7 @@ globally in [configuration](/guides/references/configuration).
 
 | Option                     | Default                                                        | Description                                                                                                                                                                                              |
 | -------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `log`                      | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                                                                                                                 |
+| `log`                      | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                                                                                 |
 | `url`                      | `null`                                                         | The URL to make the request to                                                                                                                                                                           |
 | `method`                   | `GET`                                                          | The HTTP method to use in the request                                                                                                                                                                    |
 | `auth`                     | `null`                                                         | Adds Authorization headers. [Accepts these options.](https://github.com/request/request#http-authentication)                                                                                             |
@@ -119,6 +122,9 @@ globally in [configuration](/guides/references/configuration).
 | `retryOnStatusCodeFailure` | `false`                                                        | Whether Cypress should automatically retry status code errors under the hood. Cypress will retry a request up to 4 times if this is set to true.                                                         |
 | `retryOnNetworkFailure`    | `true`                                                         | Whether Cypress should automatically retry transient network errors under the hood. Cypress will retry a request up to 4 times if this is set to true.                                                   |
 | `timeout`                  | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.request()` to resolve before [timing out](#Timeouts)                                                                                                                                |
+
+You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout`
+globally in the [Cypress configuration](/guides/references/configuration).
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 

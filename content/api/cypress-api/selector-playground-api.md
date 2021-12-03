@@ -2,7 +2,7 @@
 title: Cypress.SelectorPlayground
 ---
 
-The [Selector Playground](/guides/core-concepts/test-runner#Selector-Playground)
+The [Selector Playground](/guides/core-concepts/cypress-app#Selector-Playground)
 exposes APIs that enable you to:
 
 - Change the default selector strategy

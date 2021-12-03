@@ -7,7 +7,8 @@ Control the size and orientation of the screen for your application.
 <Alert type="info">
 
 You can set the viewport's width and height globally by defining `viewportWidth`
-and `viewportHeight` in the [configuration](/guides/references/configuration).
+and `viewportHeight` in the
+[Cypress configuration](/guides/references/configuration).
 
 </Alert>
 
@@ -75,7 +76,7 @@ Pass in an options object to change the default behavior of `cy.viewport()`.
 
 | Option | Default | Description                                                                              |
 | ------ | ------- | ---------------------------------------------------------------------------------------- |
-| `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
@@ -131,7 +132,17 @@ describe('Nav Menus', () => {
 
 #### Dynamically test multiple viewports
 
-```javascript
+:::visit-mount-test-example
+
+```js
+cy.visit('https://www.cypress.io')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
+```js
 const sizes = ['iphone-6', 'ipad-2', [1024, 768]]
 
 describe('Logo', () => {
@@ -145,12 +156,14 @@ describe('Logo', () => {
         cy.viewport(size)
       }
 
-      cy.visit('https://www.cypress.io')
+      __VISIT_MOUNT_PLACEHOLDER__
       cy.get('#logo').should('be.visible')
     })
   })
 })
 ```
+
+:::
 
 <DocsImage src="/img/api/viewport/loop-through-an-array-of-multiple-viewports.png" alt="Command Log of multiple viewports" ></DocsImage>
 
@@ -197,14 +210,19 @@ By default, until you issue a `cy.viewport()` command, Cypress sets the width to
 
 You can
 [change these default dimensions](/guides/references/configuration#Viewport) by
-adding the following to your configuration file (`cypress.json` by default):
+adding the following to your Cypress configuration:
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "viewportWidth": 1000,
-  "viewportHeight": 660
+  viewportWidth: 1000,
+  viewportHeight: 660
 }
+
 ```
+
+:::
 
 Additionally, Cypress automatically sets the viewport to its default size
 between each test.

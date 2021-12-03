@@ -30,11 +30,7 @@ export const runSidebarTests = ([section]) => {
 
         category.children.forEach((page) => {
           it(page.title, () => {
-            // click the page link in the sidebar
-            cy.contains(
-              `.app-sidebar [data-test="${category.slug}"] a`,
-              page.title
-            ).click({ force: true })
+            const isLink = page.redirect || page.slug
 
             const constructedPath = `/${section.slug}/${category.slug}/${page.slug}`
             const pathname = page.redirect || constructedPath
@@ -43,12 +39,28 @@ export const runSidebarTests = ([section]) => {
             const sidebarText = OVERRIDES.SIDEBAR_TEXT[pathname] || page.title
             const pageTitle = OVERRIDES.PAGE_TITLE[pathname] || page.title
 
+            // If the item is not a link, simply verify that it has the correct text
+            if (!isLink) {
+              cy.contains(
+                `.app-sidebar [data-test="${categorySlug}"] div`,
+                sidebarText
+              )
+
+              return
+            }
+
+            // click the page link in the sidebar
+            cy.contains(
+              `.app-sidebar [data-test="${category.slug}"] a[href="${pathname}"]`,
+              page.title
+            ).click({ force: true })
+
             // ensure the correct page has been navigated to
             cy.location('pathname').should('equal', pathname)
 
             // ensure the current sidebar category contains an active link with the current page title
             cy.contains(
-              `.app-sidebar [data-test="${categorySlug}"] a`,
+              `.app-sidebar [data-test="${categorySlug}"] a[href="${pathname}"]`,
               sidebarText
             ).should(
               'have.class',

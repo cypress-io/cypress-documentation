@@ -1,5 +1,6 @@
 ---
 title: Okta Authentication
+e2eSpecific: true
 ---
 
 <Alert type="info">
@@ -46,27 +47,26 @@ as shown in the subsequent sections of this guide.
 ## Setting Okta app credentials in Cypress
 
 To have access to test user credentials within our tests we need to configure
-Cypress to use the [Okta](https://okta.com) environment variables set in `.env`
-inside of the `cypress/plugins/index.js` file.
+Cypress to use the [Okta](https://okta.com) environment variables set in the
+`.env` file.
 
-```jsx
-// cypress/plugins/index.js
-// initial imports ...
+:::cypress-env-example
 
-dotenv.config()
+```js
+// Populate process.env with values from .env file
+require('dotenv').config()
+```
 
-export default (on, config) => {
-  // ...
-  config.env.auth_username = process.env.AUTH_USERNAME
-  config.env.auth_password = process.env.AUTH_PASSWORD
-  config.env.okta_domain = process.env.REACT_APP_OKTA_DOMAIN
-  config.env.okta_client_id = process.env.REACT_APP_OKTA_CLIENTID
-
-  // plugins code ...
-
-  return config
+```json
+{
+  "auth_username": "AUTH_USERNAME",
+  "auth_password": "AUTH_PASSWORD",
+  "okta_domain": "REACT_APP_OKTA_DOMAIN",
+  "okta_client_id": "REACT_APP_OKTA_CLIENTID"
 }
 ```
+
+:::
 
 ## Custom Command for Okta Authentication
 

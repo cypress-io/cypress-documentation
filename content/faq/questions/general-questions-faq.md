@@ -6,7 +6,7 @@ containerClass: faq
 
 ## <Icon name="angle-right"></Icon> Is Cypress free and open source?
 
-The [Test Runner](/guides/core-concepts/test-runner) is a free, downloadable and
+The [Cypress App](/guides/core-concepts/cypress-app) is a free, downloadable and
 open source (MIT license) application. This is always free to use. Our
 [Dashboard Service](/guides/dashboard/introduction) is a web application that
 offers a variety of billing plans (including a free, open source plan) for when
@@ -346,7 +346,7 @@ The Cypress Test Runner runs locally so no data is sent to Cypress aside from
 exception data, which can be disabled using the instructions
 [here](https://docs.cypress.io/guides/getting-started/installing-cypress#Opt-out-of-sending-exception-data-to-Cypress).
 
-## <Icon name="angle-right"></Icon> Can I write API tests using Cypress?
+## <Icon name="angle-right"></Icon> Can I write API tests using Cypress? <E2EOnlyBadge />
 
 Cypress is mainly designed to run end-to-end tests, but if you need to write a
 few tests that call the backend API using the

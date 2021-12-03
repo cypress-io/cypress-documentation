@@ -366,7 +366,7 @@ You can set various environment variables to modify how Cypress runs.
 #### Configuration Values
 
 You can set any configuration value as an environment variable. This overrides
-values in your configuration file (`cypress.json` by default).
+values in the Cypress configuration.
 
 **_Typical use cases would be modifying things like:_**
 

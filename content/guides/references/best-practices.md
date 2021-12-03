@@ -129,7 +129,7 @@ by test code.
 
 <strong class="alert-header">Did you know?</strong>
 
-The [Selector Playground](/guides/core-concepts/test-runner#Selector-Playground)
+The [Selector Playground](/guides/core-concepts/cypress-app#Selector-Playground)
 automatically follows these best practices.
 
 When determining an unique selector it will automatically prefer elements with:
@@ -414,12 +414,24 @@ How to solve this:
 
 Let's imagine the following test that is filling out the form.
 
-```javascript
+:::visit-mount-test-example
+
+```js
+it('visits the form', () => {
+  cy.visit('/users/new')
+})
+```
+
+```js
+it('mounts the form', () => {
+  cy.mount(<UserForm />)
+})
+```
+
+```js
 // an example of what NOT TO DO
 describe('my form', () => {
-  it('visits the form', () => {
-    cy.visit('/users/new')
-  })
+  __VISIT_MOUNT_PLACEHOLDER__
 
   it('requires first name', () => {
     cy.get('#first').type('Johnny')
@@ -435,6 +447,8 @@ describe('my form', () => {
 })
 ```
 
+:::
+
 What's wrong with the above tests? They are all coupled together!
 
 If you were to change `it` to
@@ -446,11 +460,21 @@ Here's 2 ways we can fix this:
 
 ### 1. Combine into one test
 
-```javascript
+:::visit-mount-test-example
+
+```js
+cy.visit('/users/new')
+```
+
+```js
+cy.mount(<NewUser />)
+```
+
+```js
 // a bit better
 describe('my form', () => {
   it('can submit a valid form', () => {
-    cy.visit('/users/new')
+    __VISIT_MOUNT_PLACEHOLDER__
 
     cy.log('filling out first name') // if you really need this
     cy.get('#first').type('Johnny')
@@ -464,16 +488,28 @@ describe('my form', () => {
 })
 ```
 
+:::
+
 Now we can put an `.only` on this test and it will run successfully irrespective
 of any other test. The ideal Cypress workflow is writing and iterating on a
 single test at a time.
 
 ### 2. Run shared code before each test
 
-```javascript
+:::visit-mount-test-example
+
+```js
+cy.visit('/users/new')
+```
+
+```js
+cy.mount(<NewUser />)
+```
+
+```js
 describe('my form', () => {
   beforeEach(() => {
-    cy.visit('/users/new')
+    __VISIT_MOUNT_PLACEHOLDER__
     cy.get('#first').type('Johnny')
     cy.get('#last').type('Appleseed')
   })
@@ -490,6 +526,8 @@ describe('my form', () => {
 })
 ```
 
+:::
+
 This above example is ideal because now we are resetting the state between each
 test and ensuring nothing in previous tests leaks into subsequent ones.
 
@@ -497,7 +535,7 @@ We're also paving the way to make it less complicated to write multiple tests
 against the "default" state of the form. That way each test stays lean but each
 can be run independently and pass.
 
-## Creating "tiny" tests with a single assertion
+## Creating "tiny" tests with a single assertion <E2EOnlyBadge />
 
 <Alert type="danger">
 
@@ -515,9 +553,9 @@ assertions and don't worry about it
 
 We've seen many users writing this kind of code:
 
-```javascript
+```js
 describe('my form', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit('/users/new')
     cy.get('#first').type('johnny')
   })
@@ -538,7 +576,7 @@ describe('my form', () => {
 
 While technically this runs fine - this is really excessive, and not performant.
 
-Why you did this pattern in unit tests:
+Why you do this pattern in component and unit tests:
 
 - When assertions failed you relied on the test's title to know what failed
 - You were told that adding multiple assertions was bad and accepted this as
@@ -546,7 +584,7 @@ Why you did this pattern in unit tests:
 - There was no performance penalty splitting up multiple tests because they run
   really fast
 
-Why you shouldn't do this in Cypress:
+Why you shouldn't do this in End-to-End tests:
 
 - Writing integration tests is not the same as unit tests
 - You will always know (and can visually see) which assertion failed in a large
@@ -561,9 +599,9 @@ could implicitly fail**.
 
 How you should rewrite those tests:
 
-```javascript
+```js
 describe('my form', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit('/users/new')
   })
 
@@ -743,13 +781,13 @@ beforeEach(function () {
 > [cypress/tests/ui/auth.spec.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui/auth.spec.ts)_
 
 The `db:seed` task is defined within the
-[plugins file](/guides/core-concepts/writing-and-organizing-tests#Plugin-files)
-of the project, and in this case sends a request to a dedicated back end API of
-the app to appropriately re-seed the database.
+[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function of the
+project, and in this case sends a request to a dedicated back end API of the app
+to appropriately re-seed the database.
 
-```ts
-// cypress/plugins/index.ts
+:::cypress-plugin-example
 
+```js
 on('task', {
   async 'db:seed'() {
     // Send request to backend API to re-seed database with test data
@@ -759,6 +797,8 @@ on('task', {
   //...
 })
 ```
+
+:::
 
 > _<Icon name="github"></Icon> Source:
 > [cypress/plugins/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/plugins/index.ts)_
@@ -806,7 +846,7 @@ cy.request('http://localhost:8080/db/seed')
 cy.wait(5000) // <--- this is unnecessary
 ```
 
-### Unnecessary wait for `cy.visit()`
+### Unnecessary wait for `cy.visit()` <E2EOnlyBadge />
 
 Waiting for this is unnecessary because the [cy.visit()](/api/commands/visit)
 resolves once the page fires its `load` event. By that time all of your assets
@@ -908,32 +948,33 @@ We have
 <Alert type="success">
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Set a
-`baseUrl` in your
-[configuration file (`cypress.json` by default)](/guides/references/configuration).
+`baseUrl` in your [Cypress configuration](/guides/references/configuration).
 
 </Alert>
 
-By adding a [baseUrl](/guides/references/configuration#Global) in your configuration
-Cypress will attempt to prefix the `baseUrl` any URL provided to commands like [cy.visit()](/api/commands/visit)
-and [cy.request()](/api/commands/request) that are not fully qualified domain name (FQDN) URLs.
+By adding a [baseUrl](/guides/references/configuration#Global) in your
+configuration Cypress will attempt to prefix the `baseUrl` any URL provided to
+commands like [cy.visit()](/api/commands/visit) and
+[cy.request()](/api/commands/request) that are not fully qualified domain name
+(FQDN) URLs.
 
-This allows you to omit hard-coding fully qualified domain name (FQDN) URLs
-in commands. For example,
+This allows you to omit hard-coding fully qualified domain name (FQDN) URLs in
+commands. For example,
 
 ```javascript
- cy.visit('http://localhost:8080/index.html')
+cy.visit('http://localhost:8080/index.html')
 ```
 
 can be shortened to
 
 ```javascript
- cy.visit('index.html')
+cy.visit('index.html')
 ```
 
-Not only does this create tests that can easily switch between domains, i.e. running a dev server on
-`http:localhost:8080` vs a deployed production server domain, but adding a `baseUrl` can also save some time
-during the initial startup of your Cypress tests.
-
+Not only does this create tests that can easily switch between domains, i.e.
+running a dev server on `http:localhost:8080` vs a deployed production server
+domain, but adding a `baseUrl` can also save some time during the initial
+startup of your Cypress tests.
 
 When you start running your tests, Cypress does not know the url of the app you
 plan to test. So, Cypress initially opens on `https://localhost` + a random
@@ -950,13 +991,17 @@ can result in a 'flash' or 'reload' when your tests first start.
 By setting the `baseUrl`, you can avoid this reload altogether. Cypress will
 load the main window in the `baseUrl` you specified as soon as your tests start.
 
-### Configuration file (`cypress.json` by default)
+### Cypress configuration file
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "baseUrl": "http://localhost:8484"
+  baseUrl: 'http://localhost:8484'
 }
 ```
+
+:::
 
 ### With `baseUrl` set, Cypress loads main window in `baseUrl`
 
@@ -974,4 +1019,5 @@ We also display an error if your server is not running at the specified
 
 ### Usage of `baseUrl` in depth
 
-This [short video](https://www.youtube.com/watch?v=f5UaXuAc52c) explains in depth how to use `baseUrl` correctly.
+This [short video](https://www.youtube.com/watch?v=f5UaXuAc52c) explains in
+depth how to use `baseUrl` correctly.

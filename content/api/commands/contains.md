@@ -58,7 +58,7 @@ Pass in an options object to change the default behavior of `.contains()`.
 | Option             | Default                                                                           | Description                                                                                                  |
 | ------------------ | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | `matchCase`        | `true`                                                                            | Check case sensitivity                                                                                       |
-| `log`              | `true`                                                                            | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                     |
+| `log`              | `true`                                                                            | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                     |
 | `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)              | Time to wait for `.contains()` to resolve before [timing out](#Timeouts)                                     |
 | `includeShadowDom` | [`includeShadowDom` config option value](/guides/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
 

@@ -122,15 +122,27 @@ by any users of your custom command.
 
 In your specs, you can now use the custom command as expected
 
-```typescript
+:::visit-mount-test-example
+
+```ts
+cy.visit('/')
+```
+
+```ts
+cy.mount(<MyComponent />)
+```
+
+```ts
 // from your cypress/integration/spec.ts
 it('works', () => {
-  cy.visit('/')
+  __VISIT_MOUNT_PLACEHOLDER__
   // IntelliSense and TS compiler should
   // not complain about unknown method
   cy.dataCy('greeting')
 })
 ```
+
+:::
 
 #### Examples:
 
@@ -153,6 +165,8 @@ TypeScript compiler understand the new methods. See the
 instructions.
 
 ### Types for plugins
+
+::include{file=partials/warning-plugins-file.md}
 
 You can utilize Cypress's type declarations in your
 [plugins file](/guides/tooling/plugins-guide) by annotating it like the

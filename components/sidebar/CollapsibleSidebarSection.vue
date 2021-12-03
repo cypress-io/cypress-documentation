@@ -151,7 +151,7 @@ export default {
           :name="child.slug"
           :depth="depth + 1"
         />
-        <li v-else>
+        <li v-else-if="child.redirect || child.slug">
           <nuxt-link
             :to="child.redirect || `/${section}/${folder}/${child.slug}`"
             :class="getSidebarItemClass(folder, child)"
@@ -159,6 +159,11 @@ export default {
           >
             {{ child.title }}
           </nuxt-link>
+        </li>
+        <li v-else>
+          <div class="pl-4 pr-2 py-0 text-md font-bold bg-gray-200">
+            {{ child.title }}
+          </div>
         </li>
       </div>
     </ul>

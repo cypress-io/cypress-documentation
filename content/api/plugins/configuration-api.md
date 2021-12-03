@@ -3,43 +3,36 @@ title: Configuration API
 ---
 
 Cypress enables you to dynamically modify configuration values and environment
-variables from your plugins file.
+variables from your Cypress configuration.
 
 ## Usage
 
-<Alert type="warning">
+::include{file=partials/warning-setup-node-events.md}
 
-⚠️ This code is part of the
-[plugins file](/guides/core-concepts/writing-and-organizing-tests#Plugin-files)
-and thus executes in the Node environment. You cannot call `Cypress` or `cy`
-commands in this file, but you do have the direct access to the file system and
-the rest of the operating system.
+To modify configuration, you return a config object from `setupNodeEvents`
+within this exported function.
 
-</Alert>
+:::cypress-plugin-example
 
-To modify configuration, you return an object from your plugins file exported
-function.
+```js
+console.log(config) // see everything in here!
 
-```javascript
-// cypress/plugins/index.js
-module.exports = (on, config) => {
-  console.log(config) // see everything in here!
+// modify config values
+config.defaultCommandTimeout = 10000
+config.baseUrl = 'https://staging.acme.com'
 
-  // modify config values
-  config.defaultCommandTimeout = 10000
-  config.baseUrl = 'https://staging.acme.com'
+// modify env var value
+config.env.ENVIRONMENT = 'staging'
 
-  // modify env var value
-  config.env.ENVIRONMENT = 'staging'
-
-  // IMPORTANT return the updated config object
-  return config
-}
+// IMPORTANT return the updated config object
+return config
 ```
 
-Whenever you return an object from your `pluginFile`, Cypress will take this and
-"diff" it against the original configuration and automatically set the resolved
-values to point to what you returned.
+:::
+
+Whenever you return an object from your `setupNodeEvents` function, Cypress will
+take this and "diff" it against the original configuration and automatically set
+the resolved values to point to what you returned.
 
 If you don't return an object, then configuration will not be modified.
 
@@ -47,11 +40,12 @@ If you don't return an object, then configuration will not be modified.
 
 The `config` object also includes the following extra values that are not part
 of the standard configuration. **These values are read only and cannot be
-modified from the plugins file.**
+modified from the `setupNodeEvents` function in the Cypress configuration.**
 
-- `configFile`: The absolute path to the config file. By default, this is
-  `<projectRoot>/cypress.json`, but may be a custom path or `false` if using the
-  [`--config-file` flag](/guides/guides/command-line#cypress-open-config-file-lt-config-file-gt).
+- `configFile`: The absolute path to the Cypress configuration file. See the
+  [--config-file](guides/guides/command-line#cypress-open) and
+  [configFile](guides/guides/module-api) docs for more information on this
+  value.
 - `projectRoot`: The absolute path to the root of the project (e.g.
   `/Users/me/dev/my-project`)
 
@@ -83,33 +77,34 @@ for more information on how this works.
 
 </Alert>
 
-In the plugins file, you can filter the list of browsers passed inside the
-`config` object and return the list of browsers you want available for selection
-during `cypress open`.
+In [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin), you can
+filter the list of browsers passed inside the `config` object and return the
+list of browsers you want available for selection during `cypress open`.
+
+:::cypress-plugin-example
 
 ```javascript
-// cypress/plugins/index.js
-module.exports = (on, config) => {
-  // inside config.browsers array each object has information like
-  // {
-  //   name: 'chrome',
-  //   family: 'chromium',
-  //   channel: 'canary',
-  //   displayName: 'Canary',
-  //   version: '80.0.3966.0',
-  //   path:
-  //    '/Applications/Canary.app/Contents/MacOS/Canary',
-  //   majorVersion: 80
-  // }
-  return {
-    browsers: config.browsers.filter((b) => b.family === 'chromium'),
-  }
+// inside config.browsers array each object has information like
+// {
+//   name: 'chrome',
+//   family: 'chromium',
+//   channel: 'canary',
+//   displayName: 'Canary',
+//   version: '80.0.3966.0',
+//   path:
+//    '/Applications/Canary.app/Contents/MacOS/Canary',
+//   majorVersion: 80
+// }
+return {
+  browsers: config.browsers.filter((b) => b.family === 'chromium'),
 }
 ```
 
-When you open the Test Runner in a project that uses the above modifications to
-your plugins file, only the Chrome browsers found on the system will display in
-the list of available browsers.
+:::
+
+When you open the Test Runner in a project that uses the above modifications,
+only the Chrome browsers found on the system will display in the list of
+available browsers.
 
 <DocsImage src="/img/guides/plugins/chrome-browsers-only.png" alt="Filtered list of Chrome browsers" ></DocsImage>
 
@@ -125,6 +120,8 @@ If you modify the list of browsers, you can see the
 in the **Settings** tab of the Test Runner.
 
 ### Switch between multiple configuration files
+
+::include{file=partials/warning-plugins-file.md}
 
 This means you can do things like store multiple configuration files and switch
 between them like:
@@ -233,15 +230,17 @@ This is a less complicated example. Remember - you have the full power of Node
 at your disposal.
 
 How you choose to edit the configuration is up to you. You don't have to read
-off of the file system - you could store them all in memory inside of your
-`pluginsFile` if you wanted.
+off of the file system - you could store them all in memory inside of
+[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) if you wanted.
 
 ### Runner Specific Plugins
 
 You can access the type of tests running via the `config.testingType` property.
-The testing type is either `e2e` or `component` depending on if the E2E or
-[Component Testing](/guides/component-testing/introduction/) runner was
-launched. This allows you to configure runner specific plugins.
+The testing type is either `e2e` or `component` depending on if the
+[End-to-End Testing](/guides/overview/choosing-testing-type#What-is-End-to-end-Testing)
+or
+[Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing)
+runner was launched. This allows you to configure runner specific plugins.
 
 #### Use Cypress React Plugin Conditionally
 

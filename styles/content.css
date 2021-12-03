@@ -65,7 +65,11 @@
   }
 }
 
-.main-content-title {
+.main-content-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
   border-bottom-width: 1px;
   border-bottom-color: rgb(238, 238, 238);
   color: var(--font-color-black);
@@ -73,12 +77,17 @@
   @apply font-bold;
   @apply mt-10;
   @apply mb-6;
-  @apply pb-3;
+  @apply pb-2;
 
   @screen md {
     @apply text-5xl;
     @apply mt-14;
   }
+}
+
+.main-content-header > a > div {
+  vertical-align: middle;
+  margin-left: 0;
 }
 
 /* Hide scrollbar */
@@ -148,6 +157,20 @@
   @apply text-3xl;
 }
 
+/* vertical alignment for 'hint' badge beside h2
+   section titles using flexbox become 
+   problematic on some pages, e.g FAQ's */
+.nuxt-content h2 > a > div,
+.nuxt-content h3 > a > div {
+  vertical-align: middle;
+  margin-left: 0.5rem;
+}
+
+/* h4 section titles with `emphasis` */
+.nuxt-content > h4 > code {
+  margin-left: 0.25rem;
+}
+
 .nuxt-content > h2,
 .nuxt-content > h3,
 .nuxt-content > h4 {
@@ -161,11 +184,17 @@
   @apply text-2xl;
   @apply font-bold;
   @apply mt-8;
+  @apply flex;
+  @apply flex-wrap;
+  @apply items-center;
 }
 
 .nuxt-content > h4 {
   @apply text-xl;
   @apply font-medium;
+  @apply flex;
+  @apply flex-wrap;
+  @apply items-center;
 }
 
 .nuxt-content h2 > em,

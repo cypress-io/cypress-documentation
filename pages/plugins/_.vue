@@ -1,15 +1,17 @@
 <script>
 import AppHeader from '@/components/AppHeader'
-import PluginsList from '@/components/PluginsList.vue'
+import PluginsList from '@/components/PluginsList'
 import Footer from '@/components/Footer'
-import { getMetaData, getMetaDescription, getTitle } from '../../utils'
-import { fetchBanner } from '../../utils/sanity'
+import MainContentHeader from '@/components/MainContentHeader'
+import { getMetaData, getMetaDescription, getTitle } from '@/utils'
+import { fetchBanner } from '@/utils/sanity'
 
 export default {
   components: {
     AppHeader,
     PluginsList,
     Footer,
+    MainContentHeader
   },
   async asyncData({ $content, app, params, error }) {
     const path = `/plugins/${params.pathMatch || 'index'}`
@@ -74,7 +76,7 @@ export default {
     <main :class="Boolean(banner) ? $style.bannerMargin : ''" class="pt-16">
       <div class="mt-16 mx-16">
         <article class="w-full">
-          <h1 class="main-content-title">{{ pluginDoc.title }}</h1>
+          <MainContentHeader :title="pluginDoc.title" />
           <nuxt-content :document="pluginDoc"></nuxt-content>
           <PluginsList :list="plugins" />
           <Footer />

@@ -28,16 +28,20 @@ like to assert on.
 <Alert type="info">
 
 Cypress Studio is an experimental feature and can be enabled by adding the
-[experimentalStudio](/guides/references/experiments) attribute to your
-configuration file (`cypress.json` by default).
+[experimentalStudio](/guides/references/experiments) attribute to your Cypress
+configuration.
 
 </Alert>
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "experimentalStudio": true
+  experimentalStudio: true
 }
 ```
+
+:::
 
 The Cypress <Icon name="github"></Icon>
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) is
@@ -99,7 +103,7 @@ Clicking on "Add Commands to Test" will launch the Cypress Studio.
 <Alert type="info">
 
 Cypress Studio is directly integrated with the
-[Command Log](/guides/core-concepts/test-runner#Command-Log).
+[Command Log](/guides/core-concepts/cypress-app#Command-Log).
 
 </Alert>
 

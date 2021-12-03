@@ -1,5 +1,6 @@
 ---
 title: url
+e2eSpecific: true
 ---
 
 Get the current URL of the page that is currently active.
@@ -36,7 +37,7 @@ Pass in an options object to change the default behavior of `cy.url()`.
 | Option    | Default                                                              | Description                                                                              |
 | --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | `decode`  | `false`                                                              | Decode URL                                                                               |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.url()` to resolve before [timing out](#Timeouts)                    |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
@@ -104,12 +105,13 @@ return them the full current URL. We almost never refer to the URL as an `href`.
 
 #### Hardcoded versus using the configuration object
 
-Instead of hard-coding the URL used in the assertion, we recommend you define a `baseUrl`
-in your [Cypress configuration](/guides/references/configuration). For more details on why,
-see our Best Practices guide on [setting a global `baseUrl`](/guides/references/best-practices#Setting-a-global-baseUrl).
+Instead of hard-coding the URL used in the assertion, we recommend you define a
+`baseUrl` in your [Cypress configuration](/guides/references/configuration). For
+more details on why, see our Best Practices guide on
+[setting a global `baseUrl`](/guides/references/best-practices#Setting-a-global-baseUrl).
 
-Given the remote URL, `http://localhost:8000/index.html`, and the baseUrl, `http://localhost:8000`,
-these assertions are the same.
+Given the remote URL, `http://localhost:8000/index.html`, and the baseUrl,
+`http://localhost:8000`, these assertions are the same.
 
 ```javascript
 cy.url().should('eq', 'http://localhost:8000/index.html')
