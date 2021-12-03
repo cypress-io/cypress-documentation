@@ -10,16 +10,18 @@ info on how to craft your own.
 
 </Alert>
 
-We recommend creating a custom `cy.mount` command which wraps the mount command
+For
+[Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing),
+we recommend creating a custom `cy.mount` command which wraps the mount command
 from the framework-specific libraries in your component tests. Doing so offers a
 few advantages:
 
 - You don't need to import the mount command into every test as the `cy.mount`
-  command is available globally
+  command is available globally.
 - You can set up common scenarios that you usually have to do in each test, like
   wrapping a component in a
   [React Provider](https://reactjs.org/docs/context.html) or adding
-  [Vue plugins](https://vuejs.org/v2/guide/plugins.html)
+  [Vue plugins](https://vuejs.org/v2/guide/plugins.html).
 
 If you attempt to use `cy.mount` before creating it, you will get a warning:
 
@@ -33,10 +35,12 @@ To use `cy.mount` you will need to add a
 [custom command](/api/cypress-api/custom-commands) to the commands file. Below
 are examples that you can start with for your commands:
 
-:::react-vue-example
+<code-group-react-vue>
+<template #react>
 
 ```js
 import { mount } from '@cypress/react'
+
 Cypress.Commands.overwrite('mount', (jsx, options) => {
   // Wrap any parent components needed
   // ie: return mount(<MyProvider>{jsx}</MyProvider>, options)
@@ -44,8 +48,12 @@ Cypress.Commands.overwrite('mount', (jsx, options) => {
 })
 ```
 
+</template>
+<template #vue>
+
 ```js
 import { mount } from '@cypress/vue'
+
 Cypress.Commands.overwrite('mount', (comp, options = {}) => {
   // Setup options object
   options.global = options.global || {}
@@ -68,23 +76,27 @@ Cypress.Commands.overwrite('mount', (comp, options = {}) => {
 })
 ```
 
-:::
-
-See [examples](#Examples) below for practical use cases.
+</template>
+</code-group-react-vue>
 
 ## Adding TypeScript Typings for `cy.mount` Commands
 
 When working in
 [TypeScript](https://docs.cypress.io/guides/tooling/typescript-support), you
-will need to add some custom typings for your commands to get code completion
-and avoid any TypeScript errors. Below are the typings for the above examples
-for React and Vue:
+will need to add custom typings for your commands to get code completion and to
+avoid any TypeScript errors.
 
-:::react-vue-example
+The typings will need to be in a location that any code can access, therefore,
+we recommend creating a `cypress.d.ts` file in the root directory.
+
+Then, you can update the `cypress.d.ts` file with:
+
+<code-group-react-vue>
+<template #react>
 
 ```ts
-// cypress.d.ts
 import { MountOptions, MountReturn } from '@cypress/react'
+
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -102,32 +114,34 @@ declare global {
 }
 ```
 
+</template>
+<template #vue>
+
 ```ts
 import { mount } from '@cypress/vue'
+
 type MountParams = Parameters<typeof mount>
+type OptionsParam = MountParams[1]
 
 declare global {
   namespace Cypress {
-    type ComponentParam = MountParams[0] | JSX.Element
-    type OptionsParam = MountParams[1]
     interface Chainable {
       /**
        * Helper mount function for Vue Components
        * @param component Vue Component or JSX Element to mount
        * @param options Options passed to Vue Test Utils
        */
-      mount(component: ComponentParam, options?: OptionsParam): Chainable<any>
+      mount(component: any, options?: OptionsParam): Chainable<any>
     }
   }
 }
 ```
 
-:::
+</template>
+</code-group-react-vue>
 
-The typings will need to be in a location that any code can access in the
-application. We recommend adding them to a `cypress.d.ts` file at the root of
-the application and updating any tsconfig.json files to reference the typings
-file in the `include` option:
+If your tests have trouble finding the types for the custom commands, manually
+include the `cypress.d.ts` file in all your `tsconfig.json` files like so:
 
 ```json
 "include": ["./src", "cypress.d.ts"]
@@ -135,10 +149,8 @@ file in the `include` option:
 
 ## Additional Mount Commands
 
-You can create additional mount commands to fit your needs. For instance, there
-might be times when you need to do additional setup for certain tests that other
-tests don't need. In this case, it is good to create a new command for those
-tests.
+You're not limited to a single `cy.mount()` command. If needed, you can create
+any number of custom mount commands, as long as they have unique names.
 
 Below are some examples for specific use cases.
 
@@ -188,39 +200,94 @@ Provider:
 ```jsx
 import { mount } from '@cypress/react'
 import { Provider } from 'react-redux'
-import { store } from '../../redux/store'
 
-Cypress.Commands.add('mountWithRedux', (component, options = {}) => {
-  const { reduxProps = { store: store }, ...mountOptions } = options
-
-  const wrapped = <Provider {...reduxProps}>{component}</Provider>
-
-  return mount(wrapped, mountOptions)
+Cypress.Commands.add('mountWithRedux', (component, store, options = {}) => {
+  const wrapped = <Provider store={store}>{component}</Provider>
+  return mount(wrapped, options)
 })
 ```
 
-The `options` param has a `reduxProps` property that you can use to pass in a
-custom store. If `reduxProps` isn't specified, it will use the default store
-imported from `store.js`.
+Typings:
+
+```jsx
+import { MountOptions, MountReturn } from '@cypress/react';
+import { EnhancedStore } from '@reduxjs/toolkit';
+import { RootState } from './src/StoreState';
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Mounts a React node
+       * @param jsx React Node to mount
+       * @param store The store to initialize the provider with
+       * @param options Additional options to pass into mount
+       */
+      mountWithRedux(
+        jsx: React.ReactNode,
+        store: EnhancedStore<RootState>,
+        options?: MountOptions
+      ): Cypress.Chainable<MountReturn>;
+    }
+  }
+}
+```
+
+The second param to the `mountWithRedux` command is the store that the provider
+gets initialized with. We recommend having a factory method that returns a new
+store each time so that the store is not reused between tests.
 
 Example Usage:
 
 ```jsx
-import { store } from '../redux/store'
+import { getStore } from '../redux/store'
 import { setUser } from '../redux/userSlice'
 import { UserProfile } from './UserProfile'
 
 it('User profile should display users name', () => {
   const user = { name: 'test person' }
+  const store = getStore()
   // setUser is an action exported from the user slice
   store.dispatch(setUser(user))
-  cy.mountWithRedux(<UserProfile />)
+  cy.mountWithRedux(<UserProfile />, store)
   cy.get('div.name').should('have.text', user.name)
 })
 ```
 
 ## Vue Examples
 
-### Vue Plugins
+### Plugins & Global Vue Components
 
-### Global Vue Components
+Vue components like Buttons and TextFields might be registered at the global
+level in the main file to avoid having to import them into each component that
+consumes them. If you try to run a test on one of these, the common components
+won't render because the tests don't use the `app` that is setup in the main
+file.
+
+We can create a custom mount command that will add these global components to
+the options that get passed into `mount`:
+
+```jsx
+import { mount } from '@cypress/vue'
+
+Cypress.Commands.add('mount', (comp, options = {}) => {
+    // Setup options object
+    options.global = options.global || {};
+    options.global.stubs = options.global.stubs || {};
+    options.global.stubs['transition'] = false;
+    options.global.components = options.global.components || {};
+    options.global.plugins = options.global.plugins || [];
+
+    // Add any global plugins
+    // options.global.plugins.push({
+    //   install(app) {
+    //     app.use(MyPlugin);
+    //   },
+    // });
+
+    // Add any global components
+    options.global.components['Button'] = Button
+
+    return mount(comp, options)
+  }
+```
