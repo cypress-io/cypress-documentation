@@ -84,7 +84,7 @@ const main = async () => {
 
   execSync(`curl -X post -d '{}' ${process.env.NETLIFY_BUILD_HOOK_MASTER}`)
 
-  log('Netlify build hook invoked.')
+  log('Vercel build hook invoked.')
 }
 
 main()

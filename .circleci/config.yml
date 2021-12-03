@@ -100,7 +100,7 @@ jobs:
           name: Install Dependencies
           command: yarn --frozen-lockfile
       - run:
-          name: Check for scheduled sanity.io content to publish and invoke Netlify build hook if necessary
+          name: Check for scheduled sanity.io content to publish and invoke Vercel build hook if necessary
           command: node ./scripts/sanity/publishContent.js
 
 workflows:

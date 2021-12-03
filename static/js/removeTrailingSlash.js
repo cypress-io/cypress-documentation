@@ -6,7 +6,7 @@
   }
 
   /**
-   * Netlify is allowing for paths to end with `/`, however, this can cause issues
+   * Vercel is allowing for paths to end with `/`, however, this can cause issues
    * if a user lands on a URL that ends with `/`, navigates to another page,
    * then presses the browser's back button. The browser's address bar will update
    * to the previous URL, but the page will 404. To eliminate this possibility,

@@ -414,17 +414,17 @@ open a pull request (PR) from your repo to the
   help with tests or any other changes we may need.
   ![Allow edits from maintainers checkbox](https://user-images.githubusercontent.com/1271181/31393427-b3105d44-ada9-11e7-80f2-0dac51e3919e.png)
 - All PRs against `master` will automatically create a deploy preview URL with
-  Netlify. The deploy preview can be accessed via the PR's
-  `netlify-cypress-docs/deploy-preview` status check:
+  Vercel. The deploy preview can be accessed via the PR's `vercel bot` preview:
 
-![Netlify deploy preview status check](https://user-images.githubusercontent.com/11802078/113176533-36b79680-9212-11eb-8aec-898d0f5047df.png)
+![Vercel deploy preview](https://user-images.githubusercontent.com/3605268/144604520-af0ad580-8aba-4761-8d2d-2acb20994a57.png)
 
 - All branches will automatically create a branch deploy preview. The branch
   deploy previews do not appear as a GitHub status check like deploy previews.
   You can view your branch's deploy preview by visiting
-  `https://$BRANCH_NAME--cypress-docs.netlify.app` where `$BRANCH_NAME` is your
-  git branch name. For example, if my branch was named `my-branch`, my branch
-  preview will be available at `https://my-branch--cypress-docs.netlify.app`.
+  `https://cypress-documentation-$BRANCH_NAME-cypress-io.vercel.app` where
+  `$BRANCH_NAME` is your git branch name. For example, if my branch was named
+  `my-branch`, my branch preview will be available at
+  `https://cypress-documentation-my-branch-cypress-io.vercel.app`.
 
 ### Contributor License Agreement
 

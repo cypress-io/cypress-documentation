@@ -90,7 +90,7 @@ export default {
    ** Google Tag Manager
    */
   gtm: {
-    // The env var CONTEXT is set by Netlify and can be 'production', 'deploy-preview', or 'branch-deploy'
+    // The env var CONTEXT is set by Vercel and can be 'production', 'deploy-preview', or 'branch-deploy'
     id:
       (process.env.CONTEXT === 'production' && 'GTM-KNKBWLD') || 'GTM-XXXXXXX',
   },
