@@ -210,7 +210,7 @@ export default {
           >
             GitHub
           </a>
-          <app-header-mobile-section
+          <AppHeaderMobileSection
             v-for="(group, index) in mobileMenuItems"
             :key="`navgroup-${index}`"
             :name="group.slug"
