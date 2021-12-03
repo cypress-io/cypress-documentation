@@ -13,7 +13,7 @@ Understand how we exploit them and hit the ground running with Cypress!
 
 ## Mocha
 
-<Icon name="github"></Icon> [http://mochajs.org/](http://mochajs.org/)
+<Icon name="github"/> [http://mochajs.org/](http://mochajs.org/)
 
 Cypress has adopted Mocha's `bdd` syntax, which fits perfectly with both
 integration and unit testing. All of the tests you'll be writing sit on the
@@ -42,7 +42,7 @@ These fixes are all completely transparent.
 
 ## Chai
 
-<Icon name="github"></Icon> [http://chaijs.com/](http://chaijs.com/)
+<Icon name="github"/> [http://chaijs.com/](http://chaijs.com/)
 
 While Mocha provides us a framework to structure our tests, Chai gives us the
 ability to easily write assertions. Chai gives us readable assertions with
@@ -51,22 +51,22 @@ and wraps Chai's DSL using
 [subjects](/guides/core-concepts/introduction-to-cypress#Assertions) and the
 [`.should()`](/api/commands/should) command.
 
-> <Icon name="chevron-right"></Icon> > [List of available Chai Assertions](/guides/references/assertions#Chai)
+> <Icon name="chevron-right"/> > [List of available Chai Assertions](/guides/references/assertions#Chai)
 
 ## Chai-jQuery
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [https://github.com/chaijs/chai-jquery](https://github.com/chaijs/chai-jquery)
 
 When writing integration tests, you will likely work a lot with the DOM. Cypress
 brings in Chai-jQuery, which automatically extends Chai with specific jQuery
 chainer methods.
 
-> <Icon name="chevron-right"></Icon> > [List of available Chai-jQuery Assertions](/guides/references/assertions#Chai-jQuery)
+> <Icon name="chevron-right"/> > [List of available Chai-jQuery Assertions](/guides/references/assertions#Chai-jQuery)
 
 ## Sinon.JS
 
-<Icon name="github"></Icon> [http://sinonjs.org/](http://sinonjs.org/)
+<Icon name="github"/> [http://sinonjs.org/](http://sinonjs.org/)
 
 When writing unit tests, or even in integration-like tests, you often need to
 ability to stub and spy methods. Cypress includes two methods,
@@ -84,7 +84,7 @@ your tests using [`Cypress.sinon`](/api/utilities/sinon).
 
 ## Sinon-Chai
 
-<Icon name="github"></Icon>
+<Icon name="github"/>
 [https://github.com/cypress-io/sinon-chai](https://github.com/cypress-io/sinon-chai)
 
 When working with `stubs` or `spies` you'll regularly want to use those when
@@ -92,7 +92,7 @@ writing Chai assertions. Cypress bundles in Sinon-Chai which extends Chai
 allowing you to [write assertions](https://github.com/cypress-io/sinon-chai)
 about `stubs` and `spies`.
 
-> <Icon name="chevron-right"></Icon> > [List of available Sinon-Chai Assertions](/guides/references/assertions#Sinon-Chai)
+> <Icon name="chevron-right"/> > [List of available Sinon-Chai Assertions](/guides/references/assertions#Sinon-Chai)
 
 ## Other Library Utilities
 

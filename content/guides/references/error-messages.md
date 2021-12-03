@@ -5,7 +5,7 @@ title: Error Messages
 
 ## Test File Errors
 
-### <Icon name="exclamation-triangle" color="red"></Icon> No tests found
+### <Icon name="exclamation-triangle" color="red"/> No tests found
 
 This message means that Cypress was unable to find tests in the specified file.
 You'll likely get this message if you have an empty test file and have not yet
@@ -13,7 +13,7 @@ written any tests.
 
 <DocsImage src="/img/guides/no-tests-found.png" alt="No tests found"/>
 
-### <Icon name="exclamation-triangle" color="red"></Icon> We found an error preparing your test file
+### <Icon name="exclamation-triangle" color="red"/> We found an error preparing your test file
 
 This message means that Cypress encountered an error when compiling and/or
 bundling your test file. Cypress automatically compiles and bundles your test
@@ -29,7 +29,7 @@ When the error is fixed in your test file, your tests will automatically re-run.
 
 ## Support File Errors
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Support file missing or invalid
+### <Icon name="exclamation-triangle" color="red"/> Support file missing or invalid
 
 The `supportFolder` option was removed from Cypress in version
 [`0.18.0`](/guides/references/changelog#0-18-0) and was replaced by module
@@ -80,7 +80,7 @@ you can import/require other files as needed.
 
 ## Command Errors
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Cypress cannot execute commands outside a running test
+### <Icon name="exclamation-triangle" color="red"/> Cypress cannot execute commands outside a running test
 
 <DocsImage src="/img/guides/cypress-cannot-execute.png" alt="Cannot execute commands"/>
 
@@ -120,7 +120,7 @@ better way to accomplish what you're trying to do. Read through the
 [chat with someone in our chat](https://gitter.im/cypress-io/cypress), or
 [open an issue](https://github.com/cypress-io/cypress/issues/new/choose).
 
-### <Icon name="exclamation-triangle" color="red"></Icon> `cy...()` failed because the element you are chaining off of has become detached or removed from the dom
+### <Icon name="exclamation-triangle" color="red"/> `cy...()` failed because the element you are chaining off of has become detached or removed from the dom
 
 Getting this error means you've tried to interact with a "dead" DOM element -
 meaning it's been detached or completely removed from the DOM.
@@ -238,7 +238,7 @@ Read the blog post
 [Do Not Get Too Detached](https://www.cypress.io/blog/2020/07/22/do-not-get-too-detached/)
 for another example of this error, and how to solve it.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> `cy....()` failed because the element cannot be interacted with
+### <Icon name="exclamation-triangle" color="red"/> `cy....()` failed because the element cannot be interacted with
 
 You may see a variation of this message for 4 different reasons:
 
@@ -268,7 +268,7 @@ cy.get('[disabled]').click({force: true}).
 _Be careful with this option. It's possible to force your tests to pass when the
 element is actually not interactable in your application._
 
-### <Icon name="exclamation-triangle" color="red"></Icon> `cy....()` failed because the element is currently animating
+### <Icon name="exclamation-triangle" color="red"/> `cy....()` failed because the element is currently animating
 
 <!--
 To reproduce the following screenshot:
@@ -324,7 +324,7 @@ modifying the [configuration](/guides/references/configuration).
 }
 ```
 
-### <Icon name="exclamation-triangle" color="red"></Icon> The test has finished but Cypress still has commands in its queue
+### <Icon name="exclamation-triangle" color="red"/> The test has finished but Cypress still has commands in its queue
 
 Let's examine several different ways you may get this error message. In every
 situation, you'll need to change something in your test code to prevent the
@@ -450,11 +450,11 @@ it('does not forget to return a promise', () => {
 })
 ```
 
-### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` failed because you are attempting to visit a second unique domain
+### <Icon name="exclamation-triangle" color="red"/> `cy.visit()` failed because you are attempting to visit a second unique domain
 
 See our [Web Security](/guides/guides/web-security#Limitations) documentation.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` failed because you are attempting to visit a different origin domain
+### <Icon name="exclamation-triangle" color="red"/> `cy.visit()` failed because you are attempting to visit a different origin domain
 
 Two URLs have the same origin if the `protocol`, `port` (if specified), and
 `host` are the same for both. You can only visit domains that are of the
@@ -469,7 +469,7 @@ separate tests.
 See our [Web Security](/guides/guides/web-security#Limitations) documentation
 for more information and workarounds.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> `Cypress.addParentCommand()` / `Cypress.addDualCommand()` / `Cypress.addChildCommand()` has been removed and replaced by `Cypress.Commands.add()`
+### <Icon name="exclamation-triangle" color="red"/> `Cypress.addParentCommand()` / `Cypress.addDualCommand()` / `Cypress.addChildCommand()` has been removed and replaced by `Cypress.Commands.add()`
 
 In version [0.20.0](/guides/references/changelog), we removed the commands for
 adding custom commands and replaced them with, what we believe to be, a simpler
@@ -481,7 +481,7 @@ Now you can create parent, dual, and child commands using the same
 Please read our
 [new documentation on writing custom commands](/api/cypress-api/custom-commands).
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Cypress detected that you invoked one or more `cy` commands in a custom command but returned a different value.
+### <Icon name="exclamation-triangle" color="red"/> Cypress detected that you invoked one or more `cy` commands in a custom command but returned a different value.
 
 Because `cy` commands are asynchronous and are queued to be run later, it
 doesn't make sense to return anything else.
@@ -493,7 +493,7 @@ In versions before [0.20.0](/guides/references/changelog) of Cypress we
 automatically detected this and forced the `cy` commands to be returned. To make
 things less magical and clearer, we are now throwing an error.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Cypress detected that you invoked one or more `cy` commands but returned a different value.
+### <Icon name="exclamation-triangle" color="red"/> Cypress detected that you invoked one or more `cy` commands but returned a different value.
 
 Because cy commands are asynchronous and are queued to be run later, it doesn't
 make sense to return anything else.
@@ -505,7 +505,7 @@ In versions before [0.20.0](/guides/references/changelog) of Cypress we
 automatically detected this and forced the `cy` commands to be returned. To make
 things less magical and clearer, we are now throwing an error.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Cypress detected that you returned a promise from a command while also invoking one or more cy commands in that promise.
+### <Icon name="exclamation-triangle" color="red"/> Cypress detected that you returned a promise from a command while also invoking one or more cy commands in that promise.
 
 Because Cypress commands are already promise-like, you don't need to wrap them
 or return your own promise.
@@ -517,7 +517,7 @@ The reason this is an error instead of a warning is because Cypress internally
 queues commands serially whereas Promises execute as soon as they are invoked.
 Attempting to reconcile this would prevent Cypress from ever resolving.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Cypress detected that you returned a promise in a test, but also invoked one or more `cy` commands inside of that promise.
+### <Icon name="exclamation-triangle" color="red"/> Cypress detected that you returned a promise in a test, but also invoked one or more `cy` commands inside of that promise.
 
 While this works in practice, it's often indicative of an anti-pattern. You
 almost never need to return both a promise and also invoke `cy` commands.
@@ -525,17 +525,17 @@ almost never need to return both a promise and also invoke `cy` commands.
 `cy` commands themselves are already promise like, and you can likely avoid the
 use of the separate Promise.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Cypress detected that you returned a promise in a test, but also invoked a done callback.
+### <Icon name="exclamation-triangle" color="red"/> Cypress detected that you returned a promise in a test, but also invoked a done callback.
 
 The version of Mocha was upgraded with Cypress 4.0. Mocha 3+ no longer allows
 returning a promise and invoking a done callback. Read more about it in the
 [4.0 migration guide](/guides/references/migration-guide#Mocha-upgrade).
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Passing `cy.route({stub: false})` or `cy.server({stub: false})` is now deprecated.
+### <Icon name="exclamation-triangle" color="red"/> Passing `cy.route({stub: false})` or `cy.server({stub: false})` is now deprecated.
 
 You can safely remove: `{stub: false}`.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> CypressError: Timed out retrying: Expected to find element: ‘…’, but never found it. Queried from element: <…>
+### <Icon name="exclamation-triangle" color="red"/> CypressError: Timed out retrying: Expected to find element: ‘…’, but never found it. Queried from element: <…>
 
 If you get this error in a case where the element is definitely visible in the
 DOM, your document might contain malformed HTML. In such cases,
@@ -546,7 +546,7 @@ if you've exhausted all other possibilities.
 
 ## CLI Errors
 
-### <Icon name="exclamation-triangle" color="red"></Icon> You passed the `--record` flag but did not provide us your Record Key.
+### <Icon name="exclamation-triangle" color="red"/> You passed the `--record` flag but did not provide us your Record Key.
 
 You may receive this error when trying to run Cypress tests in
 [Continuous Integration](/guides/continuous-integration/introduction). This
@@ -562,7 +562,7 @@ Test Runner or in the [Dashboard Service](https://on.cypress.io/dashboard).
 You will want to then
 [add the key to your config file or as an environment variable](/guides/continuous-integration/introduction#Record-tests).
 
-### <Icon name="exclamation-triangle" color="red"></Icon> The `cypress ci` command has been deprecated
+### <Icon name="exclamation-triangle" color="red"/> The `cypress ci` command has been deprecated
 
 As of version [`0.19.0`](/guides/references/changelog#0-19-0) and CLI versions
 `0.13.0`, the `cypress ci` command has been deprecated. We did this to make it
@@ -593,7 +593,7 @@ cypress run --record
 
 We will automatically apply the record key environment variable.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> A Cached Cypress Binary Could not be found
+### <Icon name="exclamation-triangle" color="red"/> A Cached Cypress Binary Could not be found
 
 This error occurs in CI when using `cypress run` without a valid Cypress binary
 cache installed on the system (on linux that's `~/.cache/Cypress`).
@@ -602,7 +602,7 @@ To fix this error, follow instructions on
 [caching the cypress binary in CI](/guides/continuous-integration/introduction#Caching),
 then bump the version of your CI cache to ensure a clean build.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Incorrect usage of `--ci-build-id` flag
+### <Icon name="exclamation-triangle" color="red"/> Incorrect usage of `--ci-build-id` flag
 
 You passed the `--ci-build-id` flag but did not provide either a
 [--group](/guides/guides/command-line#cypress-run-group-lt-name-gt) or
@@ -616,7 +616,7 @@ when to use the
 [--ci-build-id](/guides/guides/command-line#cypress-run-ci-build-id-lt-id-gt)
 option.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> The `--ci-build-id`, `--group`, or `--parallel` flags can only be used when recording
+### <Icon name="exclamation-triangle" color="red"/> The `--ci-build-id`, `--group`, or `--parallel` flags can only be used when recording
 
 You passed the `--ci-build-id`,
 [--group](/guides/guides/command-line#cypress-run-group-lt-name-gt), or
@@ -629,7 +629,7 @@ These flags can only be used when recording to the
 Please review our [parallelization](/guides/guides/parallelization)
 documentation to learn more.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> We could not determine a unique CI build ID
+### <Icon name="exclamation-triangle" color="red"/> We could not determine a unique CI build ID
 
 You passed the
 [--group](/guides/guides/command-line#cypress-run-group-lt-name-gt) or
@@ -651,7 +651,7 @@ flag manually.
 Please review our [parallelization](/guides/guides/parallelization)
 documentation to learn more.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Group name has already been used for this run
+### <Icon name="exclamation-triangle" color="red"/> Group name has already been used for this run
 
 You passed the
 [--group](/guides/guides/command-line#cypress-run-group-lt-name-gt) flag, but
@@ -665,7 +665,7 @@ Please review
 [grouping test runs](/guides/guides/parallelization#Grouping-test-runs)
 documentation to learn more.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Cannot parallelize tests across environments
+### <Icon name="exclamation-triangle" color="red"/> Cannot parallelize tests across environments
 
 You passed the [--parallel](/guides/guides/command-line#cypress-run-parallel)
 flag, but we do not parallelize tests across different environments.
@@ -685,7 +685,7 @@ parameters such as:
 Please review our [parallelization](/guides/guides/parallelization)
 documentation to learn more.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Cannot parallelize tests in this group
+### <Icon name="exclamation-triangle" color="red"/> Cannot parallelize tests in this group
 
 You passed the `--parallel` flag, but this run group was originally created
 without the `--parallel` flag.
@@ -698,7 +698,7 @@ Please review our
 [grouping test runs](/guides/guides/parallelization#Grouping-test-runs)
 documentation to learn more.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Run must pass `--parallel` flag
+### <Icon name="exclamation-triangle" color="red"/> Run must pass `--parallel` flag
 
 You did not pass the `--parallel` flag, but this run's group was originally
 created with the `--parallel` flag.
@@ -709,7 +709,7 @@ flag with this group.
 Please review our [parallelization](/guides/guides/parallelization)
 documentation to learn more.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Cannot parallelize tests on a stale run
+### <Icon name="exclamation-triangle" color="red"/> Cannot parallelize tests on a stale run
 
 This error is thrown when you are attempting to pass the
 [--parallel](/guides/guides/command-line#cypress-run-parallel) flag to a run
@@ -731,7 +731,7 @@ your own unique CI Build ID per run as described
 Please also review our [parallelization](/guides/guides/parallelization)
 documentation to learn more.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Run is not accepting any new groups
+### <Icon name="exclamation-triangle" color="red"/> Run is not accepting any new groups
 
 The run you are attempting access to is already complete and will not accept new
 groups.
@@ -744,7 +744,7 @@ documentation to learn more.
 
 ## Page Load Errors
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Cypress detected a cross-origin error happened on page load
+### <Icon name="exclamation-triangle" color="red"/> Cypress detected a cross-origin error happened on page load
 
 <Alert type="info">
 
@@ -790,7 +790,7 @@ browsers). Before doing so you should really understand and
 }
 ```
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Cypress detected that an uncaught error was thrown from a cross-origin script.
+### <Icon name="exclamation-triangle" color="red"/> Cypress detected that an uncaught error was thrown from a cross-origin script.
 
 Check your Developer Tools Console for the actual error - it should be printed
 there.
@@ -804,7 +804,7 @@ attribute and setting a `CORS` header.
 
 <a name="The-Chromium-Renderer-process-just-crashed"></a>
 
-### <Icon name="exclamation-triangle" color="red"></Icon> The browser process running your tests just exited unexpectedly
+### <Icon name="exclamation-triangle" color="red"/> The browser process running your tests just exited unexpectedly
 
 This error can occur whenever Cypress detects that the launched browser has
 exited or crashed before the tests could finish running.
@@ -830,7 +830,7 @@ recover from browser crashes automatically, so tests can continue to run.
 
 ## Test Runner errors
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Whoops, we can't run your tests
+### <Icon name="exclamation-triangle" color="red"/> Whoops, we can't run your tests
 
 This error happens when Cypress detects that the browser automation is not
 connected, or that Cypress's internal proxy is being bypassed. This is caused by
@@ -858,7 +858,7 @@ one of the following:
   a different browser, follow the instructions in the
   [Cross Browser Testing](/guides/guides/cross-browser-testing) guide.
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Cannot connect to API server
+### <Icon name="exclamation-triangle" color="red"/> Cannot connect to API server
 
 Logging in, viewing runs, and setting up new projects to record requires
 connecting to an external API server. This error displays when we failed to
@@ -871,7 +871,7 @@ This error likely appeared because:
    run our API locally. Please read more about this in our
    [contributing doc](https://on.cypress.io/contributing).
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Cypress detected policy settings on your computer that may cause issues
+### <Icon name="exclamation-triangle" color="red"/> Cypress detected policy settings on your computer that may cause issues
 
 When Cypress launches Chrome, it attempts to launch it with a custom proxy
 server and browser extension. Certain group policies (GPOs) on Windows can
@@ -907,7 +907,7 @@ Here are some potential workarounds:
    3. Delete or rename any policy keys found. _Make sure to back up your
       registry before making any changes._
 
-### <Icon name="exclamation-triangle" color="red"></Icon> Uncaught exceptions from your application
+### <Icon name="exclamation-triangle" color="red"/> Uncaught exceptions from your application
 
 When Cypress detects an uncaught exception in your application, it will fail the
 currently running test.

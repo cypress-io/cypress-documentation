@@ -4,7 +4,7 @@ title: Google Authentication
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - Programmatically authenticate with [Google](https://google.com) via a custom
   Cypress command

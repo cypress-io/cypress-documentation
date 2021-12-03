@@ -4,7 +4,7 @@ title: General Questions
 containerClass: faq
 ---
 
-## <Icon name="angle-right"></Icon> Is Cypress free and open source?
+## <Icon name="angle-right"/> Is Cypress free and open source?
 
 The [Test Runner](/guides/core-concepts/test-runner) is a free, downloadable and
 open source (MIT license) application. This is always free to use. Our
@@ -14,13 +14,13 @@ you want to record your test runs in CI.
 
 Please see our [Pricing Page](https://www.cypress.io/pricing) for more details.
 
-## <Icon name="angle-right"></Icon> What operating systems do you support?
+## <Icon name="angle-right"/> What operating systems do you support?
 
 You can [install Cypress](/guides/getting-started/installing-cypress) on Mac,
 Linux, and Windows. For additional information, please see our
 [System requirements](/guides/getting-started/installing-cypress#System-requirements).
 
-## <Icon name="angle-right"></Icon> Do you support native mobile apps?
+## <Icon name="angle-right"/> Do you support native mobile apps?
 
 Cypress will never be able to run on a native mobile app, but we can test some
 functionality of mobile web browsers and test mobile applications that are
@@ -37,7 +37,7 @@ You can read about testing mobile applications with Ionic and Cypress
 and see how we manage testing the mobile viewport in the
 [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
 
-## <Icon name="angle-right"></Icon> How is this different from 'X' testing tool?
+## <Icon name="angle-right"/> How is this different from 'X' testing tool?
 
 The Cypress Test Runner is a hybrid application/framework/service all rolled
 into one. It takes a little bit of other testing tools, brings them together and
@@ -104,7 +104,7 @@ on Selenium, is still pretty slow, and is prohibitive when trying to TDD your
 application. Cypress, on the other hand, runs at the speed your browser and
 application are capable of serving and rendering; there is no additional bloat.
 
-## <Icon name="angle-right"></Icon> Do you support X language or X framework?
+## <Icon name="angle-right"/> Do you support X language or X framework?
 
 Any and all. Ruby, Node, C#, PHP - none of that matters. Cypress tests anything
 that runs in the context of a browser. It is back end, front end, language and
@@ -112,22 +112,22 @@ framework agnostic.
 
 You'll write your tests in JavaScript, but beyond that Cypress works everywhere.
 
-## <Icon name="angle-right"></Icon> Can I run Cypress on another browser other than Chrome?
+## <Icon name="angle-right"/> Can I run Cypress on another browser other than Chrome?
 
 You can read about our currently available browsers
 [here](/guides/guides/launching-browsers).
 
-## <Icon name="angle-right"></Icon> Will Cypress work in my CI provider?
+## <Icon name="angle-right"/> Will Cypress work in my CI provider?
 
 Cypress works in any [CI provider](/guides/continuous-integration/introduction).
 
-## <Icon name="angle-right"></Icon> Does Cypress require me to change any of my existing code?
+## <Icon name="angle-right"/> Does Cypress require me to change any of my existing code?
 
 No. But if you're wanting to test parts of your application that are not easily
 testable, you'll want to refactor those situations (as you would for any
 testing).
 
-## <Icon name="angle-right"></Icon> Does Cypress use Selenium / Webdriver?
+## <Icon name="angle-right"/> Does Cypress use Selenium / Webdriver?
 
 No. In fact Cypress' architecture is very different from Selenium in a few
 critical ways:
@@ -147,7 +147,7 @@ critical ways:
   determine which type of event to use in specific situations. Native event
   support is on our [roadmap](/guides/references/roadmap).
 
-## <Icon name="angle-right"></Icon> If Cypress runs in the browser, doesn't that mean it's sandboxed?
+## <Icon name="angle-right"/> If Cypress runs in the browser, doesn't that mean it's sandboxed?
 
 Yes, technically; it's sandboxed and has to follow the same rules as every other
 browser. That's actually a good thing because it doesn't require a browser
@@ -163,11 +163,11 @@ which extends its capabilities far outside of the browser sandbox. Without
 these, Cypress would not work at all. For the vast majority of your web
 development, Cypress will work fine, and already _does_ work.
 
-## <Icon name="angle-right"></Icon> We use WebSockets; will Cypress work with that?
+## <Icon name="angle-right"/> We use WebSockets; will Cypress work with that?
 
 Yes.
 
-## <Icon name="angle-right"></Icon> We have the most complex most outrageous authentication system ever; will Cypress work with that?
+## <Icon name="angle-right"/> We have the most complex most outrageous authentication system ever; will Cypress work with that?
 
 If you're using some complex thumb-print, retinal-scan, time-based,
 key-changing, microphone, audial, decoding mechanism to log in your users, then
@@ -191,18 +191,18 @@ accessible parts of your application, and let Cypress test the other 99%.
 Remember, Cypress won't make a non-testable application suddenly testable. It's
 on your shoulders to architect your code in an accessible manner.
 
-## <Icon name="angle-right"></Icon> Is it possible to use cypress on `.jspa`?
+## <Icon name="angle-right"/> Is it possible to use cypress on `.jspa`?
 
 Yes. Cypress works on anything rendered to a browser.
 
-## <Icon name="angle-right"></Icon> Can I use Cypress to script user-actions on an external site like `gmail.com`?
+## <Icon name="angle-right"/> Can I use Cypress to script user-actions on an external site like `gmail.com`?
 
 No. There are already lots of tools to do that. Using Cypress to test against a
 3rd party application is not its intended use. It _may_ work but will defeat the
 purpose of why it was created. You use Cypress _while_ you develop your
 application, it helps you write your tests.
 
-## <Icon name="angle-right"></Icon> Is there code coverage?
+## <Icon name="angle-right"/> Is there code coverage?
 
 There is a plugin and detailed documentation on how to get end-to-end, unit and
 full stack code coverage.
@@ -216,7 +216,7 @@ You may also find the following resources helpful when writing end-to-end tests:
 - [element coverage](https://glebbahmutov.com/blog/element-coverage/)
 - [application state coverage](https://glebbahmutov.com/blog/hyperapp-state-machine/)
 
-## <Icon name="angle-right"></Icon> Are there driver bindings in my language?
+## <Icon name="angle-right"/> Are there driver bindings in my language?
 
 Cypress does _not_ utilize WebDriver for testing, so it does not use or have any
 notion of driver bindings. If your language can be somehow transpiled to
@@ -226,7 +226,7 @@ or
 [Cypress Browserify preprocessor](https://github.com/cypress-io/cypress-browserify-preprocessor)
 to transpile your tests to JavaScript that Cypress can run.
 
-## <Icon name="angle-right"></Icon> What resources do you recommend to learn JavaScript before writing Cypress tests?
+## <Icon name="angle-right"/> What resources do you recommend to learn JavaScript before writing Cypress tests?
 
 We hope that Cypress makes test writing simple and fun, even for people with a
 minimal knowledge of JavaScript. If you would like to develop your JS skills, we
@@ -248,7 +248,7 @@ You can also learn JavaScript by watching these videos:
 - [Learn JavaScript](https://www.codecademy.com/learn/introduction-to-javascript)
   by CodeAcademy
 
-## <Icon name="angle-right"></Icon> So what benefits would one get for converting one's unit tests from Karma or Jest to Cypress?
+## <Icon name="angle-right"/> So what benefits would one get for converting one's unit tests from Karma or Jest to Cypress?
 
 Unit tests are not something we are really trying to solve right now. Most of
 the `cy` API commands are useless in unit tests. The biggest benefit of writing
@@ -269,7 +269,7 @@ shortcuts as much as possible (because you have native access to all objects
 including your app). In other words, we want you to think in unit tests while
 you write integration tests.
 
-## <Icon name="angle-right"></Icon> When should I write a unit test and when should I write an end-to-end test?
+## <Icon name="angle-right"/> When should I write a unit test and when should I write an end-to-end test?
 
 We believe unit tests and end-to-end tests have differences that should guide
 your choice.
@@ -305,7 +305,7 @@ features. Good tests:
 Certainly, unit and end-to-end tests are NOT in opposition to each other and are
 complementary tools in your toolbox.
 
-## <Icon name="angle-right"></Icon> How do I convince my company to use Cypress?
+## <Icon name="angle-right"/> How do I convince my company to use Cypress?
 
 First, be honest with yourself -
 [is Cypress the right tool](/guides/overview/why-cypress) for your company and
@@ -317,7 +317,7 @@ prototype to others before proceeding any further. If you can demonstrate the
 benefits of using Cypress as a developer tool for your project to other
 engineers, then Cypress will likely be more quickly adopted.
 
-## <Icon name="angle-right"></Icon> How can I find out about new versions of Cypress?
+## <Icon name="angle-right"/> How can I find out about new versions of Cypress?
 
 We publish our releases at GitHub and Npm, together with the releases we also
 publish a changelog with the principal changes, fixes, and updates. You can
@@ -327,7 +327,7 @@ follow through these links:
 - [npm (Releases)](https://www.npmjs.com/package/cypress)
 - [Changelog at Cypress Docs](/guides/references/changelog)
 
-## <Icon name="angle-right"></Icon> How often are Cypress Test Runner versions released?
+## <Icon name="angle-right"/> How often are Cypress Test Runner versions released?
 
 We schedule releases of the Test Runner on Monday every two weeks. This new
 version includes any bugfixes and/or features that have been completed by that
@@ -340,13 +340,13 @@ We schedule major releases with breaking changes approximately every 3 months.
 If there is a significant bug outside of our release schedule then we release a
 patch as soon as possible.
 
-## <Icon name="angle-right"></Icon> What information is captured or transmitted when using the Cypress Test Runner?
+## <Icon name="angle-right"/> What information is captured or transmitted when using the Cypress Test Runner?
 
 The Cypress Test Runner runs locally so no data is sent to Cypress aside from
 exception data, which can be disabled using the instructions
 [here](https://docs.cypress.io/guides/getting-started/installing-cypress#Opt-out-of-sending-exception-data-to-Cypress).
 
-## <Icon name="angle-right"></Icon> Can I write API tests using Cypress?
+## <Icon name="angle-right"/> Can I write API tests using Cypress?
 
 Cypress is mainly designed to run end-to-end tests, but if you need to write a
 few tests that call the backend API using the
@@ -381,9 +381,7 @@ needed:
 it('adds todos', () => {
   // drive the application through its UI
   cy.visit('/')
-  cy.get('.new-todo')
-    .type('write E2E tests{enter}')
-    .type('add API tests as needed{enter}')
+  cy.get('.new-todo').type('write E2E tests{enter}').type('add API tests as needed{enter}')
   // now confirm the server has 2 todo items
   cy.request('/todos')
     .its('body')

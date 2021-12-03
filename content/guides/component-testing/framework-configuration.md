@@ -21,7 +21,7 @@ can find an example project
 Once you have a React project, you'll also need to install the Cypress Webpack
 Dev Server and React adapter, as well as some devDependencies:
 
-```sh
+```bash
 npm install --save-dev cypress @cypress/react @cypress/webpack-dev-server html-webpack-plugin@4
 ```
 
@@ -95,7 +95,7 @@ v4.5.12. You can find an example project
 You'll also need to install the Cypress Webpack Dev Server and Vue 2 adapter, as
 well as some devDependencies:
 
-```sh
+```bash
 npm install --save-dev cypress @cypress/vue @cypress/webpack-dev-server html-webpack-plugin@4
 ```
 
@@ -198,7 +198,7 @@ Although Next.js is webpack based, it doesn't have it as a direct dependency, so
 you'll need to install it. You'll also need to install the cypress webpack dev
 server and react adapter:
 
-```sh
+```bash
 npm install --save-dev cypress @cypress/webpack-dev-server @cypress/react html-webpack-plugin@4 webpack@4 webpack-dev-server@3
 ```
 
@@ -281,7 +281,7 @@ module.exports = {
 Finally, ensure you install Webpack 5 and the corresponding HTMLWebpackPlugin
 version:
 
-```sh
+```bash
 npm install --save-dev cypress @cypress/webpack-dev-server @cypress/react html-webpack-plugin@5 webpack@5 webpack-dev-server@3
 ```
 
@@ -296,7 +296,7 @@ can find the completed example project
 Nuxt uses Vue 2 and Webpack under the hood, so you also need to install the
 Cypress Webpack Dev Server and Vue 2 adapter, as well as some devDependencies:
 
-```sh
+```bash
 npm install --save-dev cypress @cypress/vue @cypress/webpack-dev-server html-webpack-plugin@4
 ```
 

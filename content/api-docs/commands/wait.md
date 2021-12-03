@@ -18,7 +18,7 @@ cy.wait(aliases, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.wait(500)
@@ -27,11 +27,11 @@ cy.wait('@getProfile')
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> time** **_(Number)_**
+**<Icon name="angle-right"/> time** **_(Number)_**
 
 The amount of time to wait in milliseconds.
 
-**<Icon name="angle-right"></Icon> alias** **_(String)_**
+**<Icon name="angle-right"/> alias** **_(String)_**
 
 An aliased route as defined using the [`.as()`](/api/commands/as) command and
 referenced with the `@` character and the name of the alias.
@@ -44,12 +44,12 @@ referenced with the `@` character and the name of the alias.
 
 </Alert>
 
-**<Icon name="angle-right"></Icon> aliases** **_(Array)_**
+**<Icon name="angle-right"/> aliases** **_(Array)_**
 
 An array of aliased routes as defined using the [`.as()`](/api/commands/as)
 command and referenced with the `@` character and the name of the alias.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.wait()`.
 

@@ -4,7 +4,7 @@ title: Retry-ability
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - How Cypress retries commands and assertions
 - When commands are retried and when they are not
@@ -504,7 +504,7 @@ Below is an example where the number value is set after a delay:
 
 <DocsImage src="/img/guides/retry-ability/random-number.gif" alt="Random number"/>
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Incorrectly waiting for values
+#### <Icon name="exclamation-triangle" color="red"/> Incorrectly waiting for values
 
 You may want to write a test like below, to test that the number is between 1
 and 10, although **this will not work as intended**. The test yields the
@@ -528,7 +528,7 @@ alt="First attempt at writing the test"
 width-600
 />
 
-#### <Icon name="check-circle" color="green"></Icon> Correctly waiting for values
+#### <Icon name="check-circle" color="green"/> Correctly waiting for values
 
 We need to retry getting the element, invoking the `text()` method, calling the
 `parseFloat` function and running the `gte` and `lte` assertions. We can achieve
@@ -564,7 +564,7 @@ testing with the
 [@cypress/react](https://github.com/cypress-io/cypress/tree/master/npm/react)
 plugin, the following test might or might not work:
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Incorrectly checking if the stub was called
+#### <Icon name="exclamation-triangle" color="red"/> Incorrectly checking if the stub was called
 
 ```js
 const Clicker = ({ click }) => (
@@ -609,7 +609,7 @@ width-600
 The test finishes before the component calls the `click` prop twice, and without
 retrying the assertion `expect(onClick).to.be.calledTwice`.
 
-#### <Icon name="check-circle" color="green"></Icon> Correctly waiting for the stub to be called
+#### <Icon name="check-circle" color="green"/> Correctly waiting for the stub to be called
 
 We recommend aliasing the stub using the [`.as`](/api/commands/as) command and
 using `cy.get('@alias').should(...)` assertions.
@@ -637,7 +637,7 @@ Watch the short video below to see this example in action
 
 <!-- textlint-disable -->
 
-<DocsVideo src="https://youtube.com/embed/AlltFcsIFvc"></DocsVideo>
+<DocsVideo src="https://youtube.com/embed/AlltFcsIFvc"/>
 
 <!-- textlint-enable -->
 

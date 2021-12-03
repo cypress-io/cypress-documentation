@@ -4,7 +4,7 @@ title: Test Retries
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - What are test retries?
 - Why are test retries important?
@@ -62,24 +62,24 @@ Assuming we have configured test retries with `2` retry attempts (for a total of
 
 1. A test runs for the first time. If the
 
-   <Icon name="check-circle" color="green"></Icon> test passes, Cypress will move forward with any remaining
+   <Icon name="check-circle" color="green"/> test passes, Cypress will move forward with any remaining
    tests as usual.
 
-2. If the <Icon name="times" color="red"></Icon> test fails, Cypress will tell
+2. If the <Icon name="times" color="red"/> test fails, Cypress will tell
    you that the first attempt failed and will attempt to run the test a second
    time.
 
 <DocsImage src="/img/guides/test-retries/attempt-2-start.png"/>
 
-3. If the <Icon name="check-circle" color="green"></Icon> test passes after the
+3. If the <Icon name="check-circle" color="green"/> test passes after the
    second attempt, Cypress will continue with any remaining tests.
 
-4. If the <Icon name="times" color="red"></Icon> test fails a second time,
+4. If the <Icon name="times" color="red"/> test fails a second time,
    Cypress will make the final third attempt to re-run the test.
 
 <DocsImage src="/img/guides/test-retries/attempt-3-start.png"/>
 
-5. If the <Icon name="times" color="red"></Icon> test fails a third time,
+5. If the <Icon name="times" color="red"/> test fails a third time,
    Cypress will mark the test as failed and then move on to run any remaining
    tests.
 
@@ -95,7 +95,7 @@ to see the number of attempts made in the
 [Command Log](/guides/core-concepts/test-runner#Command-Log) and expand each
 attempt for review and debugging if desired.
 
-<DocsVideo src="/img/guides/test-retries/attempt-expand-collapse-time-travel.mp4"></DocsVideo>
+<DocsVideo src="/img/guides/test-retries/attempt-expand-collapse-time-travel.mp4"/>
 
 ## Configure Test Retries
 
@@ -283,11 +283,7 @@ during the run.
 These tests are also indicated with a "Flaky" badge on the Latest Runs page and
 Test Results tab on the Run Details page.
 
-<DocsVideo
-src="/img/guides/test-retries/flaky-test-filter.mp4"
-title="Flaky test filter"
-
-> </DocsVideo>
+<DocsVideo src="/img/guides/test-retries/flaky-test-filter.mp4" title="Flaky test filter"/>
 
 Clicking on a Test Result will open the Test Case History screen. This
 demonstrates the number of failed attempts, the screenshots and/or videos of

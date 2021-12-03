@@ -13,13 +13,13 @@ Scroll an element into view.
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.get('footer').scrollIntoView() // Scrolls 'footer' into view
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.scrollIntoView('footer') // Errors, cannot be chained off 'cy'
@@ -28,7 +28,7 @@ cy.window().scrollIntoView() // Errors, 'window' does not yield DOM element
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.scrollIntoView()`.
 

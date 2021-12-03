@@ -4,7 +4,7 @@ title: Conditional Testing
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - When conditional testing is a good choice for your tests
 - Situations where conditional testing is impossible
@@ -478,7 +478,7 @@ For instance you may want to do this:
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> The following code is not valid.
+<Icon name="exclamation-triangle" color="red"/> The following code is not valid.
 
 </Alert>
 
@@ -519,7 +519,7 @@ Let's reimagine our "Welcome Wizard" example from before.
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle" color="red"></Icon> The following code is not valid.
+<Icon name="exclamation-triangle" color="red"/> The following code is not valid.
 
 </Alert>
 

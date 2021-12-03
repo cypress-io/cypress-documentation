@@ -17,7 +17,7 @@ Cypress.SelectorPlayground.getSelector($el)
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 An object containing any or all of the following options:
 
@@ -37,7 +37,7 @@ An object containing any or all of the following options:
 - `attributes`
 - `nth-child`
 
-**<Icon name="angle-right"></Icon> $el** **_(Object)_**
+**<Icon name="angle-right"/> $el** **_(Object)_**
 
 The [jQuery element](http://api.jquery.com/Types/#jQuery) that you want to get
 the selector value for.

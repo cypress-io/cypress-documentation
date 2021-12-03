@@ -350,7 +350,7 @@ The configuration values passed in will only take effect during the suite or
 test where they are set. The values will then reset to the previous default
 values after the suite or test is complete.
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Note:** Some configuration values are readonly
+<Icon name="exclamation-triangle" color="red"/> **Note:** Some configuration values are readonly
 and cannot be changed via test configuration. The following configuration values **can be changed** via
 per test configuration:
 
@@ -455,10 +455,10 @@ To see a working example of this please check out our
 
 To block a host:
 
-- <Icon name="check-circle" color="green"></Icon> Pass only the host
-- <Icon name="check-circle" color="green"></Icon> Use wildcard `*` patterns
-- <Icon name="check-circle" color="green"></Icon> Include the port other than `80` and `443`
-- <Icon name="exclamation-triangle" color="red"></Icon> Do **NOT** include protocol: `http://` or `https://`
+- <Icon name="check-circle" color="green"/> Pass only the host
+- <Icon name="check-circle" color="green"/> Use wildcard `*` patterns
+- <Icon name="check-circle" color="green"/> Include the port other than `80` and `443`
+- <Icon name="exclamation-triangle" color="red"/> Do **NOT** include protocol: `http://` or `https://`
 
 <Alert type="info">
 
@@ -499,9 +499,9 @@ Be cautious for URL's which have no subdomain.
 
 For instance given a URL: `https://google.com/search?q=cypress`
 
-- <Icon name="check-circle" color="green"></Icon> Matches `google.com`
-- <Icon name="check-circle" color="green"></Icon> Matches `*google.com`
-- <Icon name="exclamation-triangle" color="red"></Icon> Does NOT match `*.google.com`
+- <Icon name="check-circle" color="green"/> Matches `google.com`
+- <Icon name="check-circle" color="green"/> Matches `*google.com`
+- <Icon name="exclamation-triangle" color="red"/> Does NOT match `*.google.com`
 
 </Alert>
 
@@ -662,7 +662,7 @@ IntelliSense is available for Cypress while editing your configuration file.
 
 ## Common problems
 
-#### <Icon name="angle-right"></Icon> `baseUrl` is not set
+#### <Icon name="angle-right"/> `baseUrl` is not set
 
 Make sure you do not accidentally place the <code>baseUrl</code> or another
 top-level config variable into the <code>env</code> block. The following
@@ -694,7 +694,7 @@ object.
 You can also find a few tips on setting the `baseUrl` in this
 [short video](https://www.youtube.com/watch?v=f5UaXuAc52c).
 
-#### <Icon name="angle-right"></Icon> Test files not found when using `spec` parameter
+#### <Icon name="angle-right"/> Test files not found when using `spec` parameter
 
 When using the `--spec <path or mask>` argument, make it relative to the
 project's folder. If the specs are still missing, run Cypress with

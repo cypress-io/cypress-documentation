@@ -20,13 +20,13 @@ The querying behavior of this command matches exactly how
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.get('.article').find('footer') // Yield 'footer' within '.article'
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.find('.progress') // Errors, cannot be chained off 'cy'
@@ -35,11 +35,11 @@ cy.exec('node start').find() // Errors, 'exec' does not yield DOM element
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> selector** **_(String selector)_**
+**<Icon name="angle-right"/> selector** **_(String selector)_**
 
 A selector used to filter matching descendent DOM elements.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.find()`.
 

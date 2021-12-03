@@ -15,7 +15,7 @@ cy.location(key, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.location() // Get location object
@@ -25,12 +25,12 @@ cy.location('port') // Get the port of the location object
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> key** **_(String)_**
+**<Icon name="angle-right"/> key** **_(String)_**
 
 A key on the location object. Returns this value instead of the full location
 object.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.location()`.
 

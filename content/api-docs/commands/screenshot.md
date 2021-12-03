@@ -23,7 +23,7 @@ cy.screenshot(fileName, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.screenshot()
@@ -32,7 +32,7 @@ cy.get('.post').screenshot()
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> fileName** **_(String)_**
+**<Icon name="angle-right"/> fileName** **_(String)_**
 
 A name for the image file. Will be relative to the
 [screenshots folder](/guides/references/configuration#Folders-Files) and the
@@ -40,7 +40,7 @@ path to the spec file. When passed a path, the folder structure will be created.
 See the [Naming conventions](/api/commands/screenshot#Naming-conventions) below
 for more.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.screenshot()`.
 

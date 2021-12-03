@@ -4,7 +4,7 @@ title: Introduction
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - An overview of Continuous Integration
 - How to run Cypress tests in Continuous Integration
@@ -16,13 +16,13 @@ title: Introduction
 
 ## What is Continuous Integration?
 
-<DocsVideo src="https://youtube.com/embed/USX6AntcPyg"></DocsVideo>
+<DocsVideo src="https://youtube.com/embed/USX6AntcPyg"/>
 
 ## Setting up CI
 
 <!-- textlint-disable -->
 
-<DocsVideo src="https://youtube.com/embed/saYovXS9Llk"></DocsVideo>
+<DocsVideo src="https://youtube.com/embed/saYovXS9Llk"/>
 
 <!-- textlint-enable -->
 

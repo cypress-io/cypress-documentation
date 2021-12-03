@@ -24,7 +24,7 @@ cy.debug(options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.debug().getCookie('app') // Pause to debug at beginning of commands
@@ -33,7 +33,7 @@ cy.get('nav').debug() // Debug the `get` command's yield
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.debug()`.
 

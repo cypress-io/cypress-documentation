@@ -10,7 +10,7 @@ in order to reduce test setup times.
 
 <Alert type="warning">
 
-<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
+<strong class="alert-header"><Icon name="exclamation-triangle"/>
 Experimental</strong>
 
 The `session` API is currently experimental, and can be enabled by setting the
@@ -46,7 +46,7 @@ cy.session(id, setup, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 // Caching session when logging in via page visit
@@ -70,7 +70,7 @@ cy.session([username, password], () => {
 })
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 // visiting before calling cy.session() is redundant, it needs to
@@ -92,7 +92,7 @@ cy.url().should('contain', '/login-successful')
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> id** **_(String, Array, Object)_**
+**<Icon name="angle-right"/> id** **_(String, Array, Object)_**
 
 A unique identifier that will be used to cache and restore a given session. In
 simple cases, a `String` value is sufficient. In order to simplify generation of
@@ -116,7 +116,7 @@ serialize into an identifier, so exercise care with the data you specify.
 
 </Alert>
 
-**<Icon name="angle-right"></Icon> setup** **_(Function)_**
+**<Icon name="angle-right"/> setup** **_(Function)_**
 
 This function is called whenever a session for the given `id` hasn't yet been
 cached, or if it's no longer valid (see the `validate` option). After `setup`
@@ -127,7 +127,7 @@ so that subsequent calls to `cy.session()` with the same `id` will bypass
 The page and all active session data (cookies, `localStorage` and
 `sessionStorage`) across all domains are always cleared before `setup` runs.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 | Option     | Default     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | ---------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -629,11 +629,11 @@ The page is cleared and all active session data (cookies, `localStorage`, and
 being created or restored and allows you to switch sessions without first having
 to explicitly log out.
 
-|                      |              Current page cleared               |           Active session data cleared           |
-| -------------------- | :---------------------------------------------: | :---------------------------------------------: |
-| Before `setup`       | <Icon name="check-circle" color="green"></Icon> | <Icon name="check-circle" color="green"></Icon> |
-| Before `validate`    | <Icon name="check-circle" color="green"></Icon> |                                                 |
-| After `cy.session()` | <Icon name="check-circle" color="green"></Icon> |                                                 |
+|                      |           Current page cleared            |        Active session data cleared        |
+| -------------------- | :---------------------------------------: | :---------------------------------------: |
+| Before `setup`       | <Icon name="check-circle" color="green"/> | <Icon name="check-circle" color="green"/> |
+| Before `validate`    | <Icon name="check-circle" color="green"/> |                                           |
+| After `cy.session()` | <Icon name="check-circle" color="green"/> |                                           |
 
 Because calling `cy.session()` clears the current page in addition to restoring
 cached session data, [`cy.visit()`](/api/commands/visit) must always be
@@ -712,7 +712,7 @@ const login = (name, email) => {
 }
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 If you have custom `login` code that uses multiple parameters (in this example,
 a name, a token, and a password), in order to be able to log in many different
@@ -751,7 +751,7 @@ In summary, you need to ensure that the `id` is created from all the parameters
 that are used inside the `setup` function that may change, otherwise `id` values
 may collide and create unexpected results.
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 In this example, setting the `id` to `[name, token, password]` guarantees that
 calling `login()` with different `name`, `token` and `password` values will

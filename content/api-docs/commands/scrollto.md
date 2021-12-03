@@ -22,14 +22,14 @@ cy.scrollTo(x, y, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.scrollTo(0, 500) // Scroll the window 500px down
 cy.get('.sidebar').scrollTo('bottom') // Scroll 'sidebar' to its bottom
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.title().scrollTo('My App') // Errors, 'title' does not yield DOM element
@@ -37,7 +37,7 @@ cy.title().scrollTo('My App') // Errors, 'title' does not yield DOM element
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> position** **_(String)_**
+**<Icon name="angle-right"/> position** **_(String)_**
 
 A specified position to scroll the window or element to. Valid positions are
 `topLeft`, `top`, `topRight`, `left`, `center`, `right`, `bottomLeft`, `bottom`,
@@ -45,17 +45,17 @@ and `bottomRight`.
 
 <DocsImage src="/img/api/coordinates-diagram.jpg" alt="cypress-command-positions-diagram" />
 
-**<Icon name="angle-right"></Icon> x** **_(Number, String)_**
+**<Icon name="angle-right"/> x** **_(Number, String)_**
 
 The distance in pixels from window/element's left or percentage of the
 window/element's width to scroll to.
 
-**<Icon name="angle-right"></Icon> y** **_(Number, String)_**
+**<Icon name="angle-right"/> y** **_(Number, String)_**
 
 The distance in pixels from window/element's top or percentage of the
 window/element's height to scroll to.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.scrollTo()`.
 

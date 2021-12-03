@@ -87,15 +87,15 @@ command definition, a code example and a link to the full documentation page.
 
 ##### Autocomplete while typing Cypress commands
 
-<DocsVideo src="/img/snippets/intellisense-cypress-assertion-matchers.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/intellisense-cypress-assertion-matchers.mp4"/>
 
 ##### Signature help when writing and hovering on Cypress commands
 
-<DocsVideo src="/img/snippets/intellisense-method-signature-examples.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/intellisense-method-signature-examples.mp4"/>
 
 ##### Autocomplete while typing assertion chains, including only showing DOM assertions if testing on a DOM element.
 
-<DocsVideo src="/img/snippets/intellisense-assertion-chainers.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/intellisense-assertion-chainers.mp4"/>
 
 #### Set up in your Dev Environment
 
@@ -120,7 +120,7 @@ your spec file.
 /// <reference types="Cypress" />
 ```
 
-<DocsVideo src="/img/snippets/intellisense-setup.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/intellisense-setup.mp4"/>
 
 If you write [custom commands](/api/cypress-api/custom-commands) and provide
 TypeScript definitions for them, you can use the triple slash directives to show
@@ -194,11 +194,11 @@ get intelligent tooltips in your IDE for each configuration property.
 
 ##### Property help when writing and hovering on configuration keys
 
-<DocsVideo src="/img/snippets/intellisense-cypress-config-tooltips.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/intellisense-cypress-config-tooltips.mp4"/>
 
 ##### Properties list with intelligent defaults
 
-<DocsVideo src="/img/snippets/intellisense-config-defaults.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/intellisense-config-defaults.mp4"/>
 
 #### Set up in your Dev Environment:
 

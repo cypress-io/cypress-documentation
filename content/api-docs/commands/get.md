@@ -23,7 +23,7 @@ cy.get(alias, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.get('.list > li') // Yield the <li>'s in .list
@@ -31,11 +31,11 @@ cy.get('.list > li') // Yield the <li>'s in .list
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> selector** **_(String selector)_**
+**<Icon name="angle-right"/> selector** **_(String selector)_**
 
 A selector used to filter matching DOM elements.
 
-**<Icon name="angle-right"></Icon> alias** **_(String)_**
+**<Icon name="angle-right"/> alias** **_(String)_**
 
 An alias as defined using the [`.as()`](/api/commands/as) command and referenced
 with the `@` character and the name of the alias.
@@ -54,7 +54,7 @@ previously aliased DOM element has gone stale.
 
 </Alert>
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.get()`.
 

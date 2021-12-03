@@ -4,7 +4,7 @@ title: Bitbucket Pipelines
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - How to run Cypress tests with Bitbucket Pipelines as part of CI/CD pipeline
 - How to parallelize Cypress test runs withins Bitbucket Pipelines
@@ -304,7 +304,7 @@ A complete CI workflow against multiple browsers, viewports and operating
 systems is available in the
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app).
 
-Clone the <Icon name="github"></Icon>
+Clone the <Icon name="github"/>
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and
 refer to the
 [bitbucket-pipelines.yml](https://github.com/cypress-io/cypress-realworld-app/blob/develop/bitbucket-pipelines.yml)

@@ -4,7 +4,7 @@ title: Auth0 Authentication
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - Programmatically authenticate with [Auth0](https://auth0.com) via a custom
   Cypress command

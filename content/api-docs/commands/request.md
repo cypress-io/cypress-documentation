@@ -16,7 +16,7 @@ cy.request(options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.request('http://dev.local/seed')
@@ -24,7 +24,7 @@ cy.request('http://dev.local/seed')
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> url** **_(String)_**
+**<Icon name="angle-right"/> url** **_(String)_**
 
 The URL to make the request to.
 
@@ -56,12 +56,12 @@ cy.request('seed/admin') // url is http://localhost:1234/seed/admin
 
 3. If Cypress cannot determine the host it will throw an error.
 
-**<Icon name="angle-right"></Icon> body** **_(String, Object)_**
+**<Icon name="angle-right"/> body** **_(String, Object)_**
 
 A request `body` to be sent in the request. Cypress sets the `Accepts` request
 header and serializes the response body by the `encoding` option.
 
-**<Icon name="angle-right"></Icon> method** **_(String)_**
+**<Icon name="angle-right"/> method** **_(String)_**
 
 Make a request using a specific method. If no method is defined, Cypress uses
 the `GET` method by default.
@@ -95,7 +95,7 @@ Supported methods include:
 - `SEARCH`
 - `CONNECT`
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.request()`.
 

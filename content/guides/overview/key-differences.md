@@ -4,7 +4,7 @@ title: Key Differences
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - What makes Cypress unique
 - How its architecture differs from Selenium

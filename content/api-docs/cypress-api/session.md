@@ -7,7 +7,7 @@ be used alongside the [`cy.session()`](/api/commands/session) command.
 
 <Alert type="warning">
 
-<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
+<strong class="alert-header"><Icon name="exclamation-triangle"/>
 Experimental</strong>
 
 The `session` API is currently experimental, and can be enabled by setting the

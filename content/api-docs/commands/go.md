@@ -13,7 +13,7 @@ cy.go(direction, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.go('back')
@@ -21,7 +21,7 @@ cy.go('back')
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> direction** **_(String, Number)_**
+**<Icon name="angle-right"/> direction** **_(String, Number)_**
 
 The direction to navigate.
 
@@ -29,7 +29,7 @@ You can use `back` or `forward` to go one step back or forward. You could also
 navigate to a specific history position (`-1` goes back one page, `1` goes
 forward one page, etc).
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.go()`.
 

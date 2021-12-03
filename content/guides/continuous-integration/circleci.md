@@ -4,7 +4,7 @@ title: CircleCI
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - How to run Cypress tests with CircleCI as part of CI/CD pipeline
 - How to parallelize Cypress test runs within CircleCI
@@ -13,9 +13,9 @@ title: CircleCI
 
 <!-- textlint-disable -->
 
-<DocsVideo src="https://youtube.com/embed/J-xbNtKgXfY"></DocsVideo>
+<DocsVideo src="https://youtube.com/embed/J-xbNtKgXfY"/>
 
-<DocsVideo src="/img/snippets/running-in-ci.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/running-in-ci.mp4"/>
 
 <!-- textlint-enable -->
 
@@ -81,7 +81,7 @@ project.
 
 <Alert type="info">
 
-##### <Icon name="graduation-cap"></Icon> Real World Example <Badge type="success">New</Badge>
+##### <Icon name="graduation-cap"/> Real World Example <Badge type="success">New</Badge>
 
 The Cypress
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses
@@ -91,7 +91,7 @@ multiple browsers, multiple device sizes, and multiple operating systems with
 full code-coverage reporting and
 [Cypress Dashboard recording](https://dashboard.cypress.io/projects/7s5okt).
 
-Check out the full <Icon name="github"></Icon>
+Check out the full <Icon name="github"/>
 [RWA Circle CI configuration](https://github.com/cypress-io/cypress-realworld-app/blob/develop/.circleci/config.yml).
 
 </Alert>

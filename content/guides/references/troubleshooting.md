@@ -195,7 +195,7 @@ properly. If you or your company block specific Chrome extensions, this may
 cause problems with running Cypress. You will want to ask your administrator to
 allow the Cypress extension ID below:
 
-```sh
+```bash
 caljajdfkjjjdehjdoimjkkakekklcck
 ```
 

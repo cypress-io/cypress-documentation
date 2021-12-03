@@ -15,7 +15,7 @@ cy.readFile(filePath, encoding, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.readFile('menu.json')
@@ -23,12 +23,12 @@ cy.readFile('menu.json')
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> filePath** **_(String)_**
+**<Icon name="angle-right"/> filePath** **_(String)_**
 
 A path to a file within the project root (the directory that contains the
 default `cypress.json` configuration file).
 
-**<Icon name="angle-right"></Icon> encoding** **_(String)_**
+**<Icon name="angle-right"/> encoding** **_(String)_**
 
 The encoding to be used when reading the file. The following encodings are
 supported:
@@ -48,7 +48,7 @@ supported:
 
 Using `null` explicitly will return the file as a `Buffer`, regardless of file extension.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.readFile()`.
 

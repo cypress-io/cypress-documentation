@@ -4,7 +4,7 @@ title: Command Line
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - How to run Cypress from the command line
 - How to specify which spec files to run
@@ -178,7 +178,7 @@ cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
 
 <Alert type="info">
 
-##### <Icon name="graduation-cap"></Icon> Real World Example
+##### <Icon name="graduation-cap"/> Real World Example
 
 The Cypress
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses
@@ -186,11 +186,11 @@ The Cypress
 [viewport](/guides/references/configuration#Viewport) sizes for responsive
 testing locally and in dedicated CI jobs. Examples:
 
-- <Icon name="github"></Icon>
+- <Icon name="github"/>
   [npm
   scripts](https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/package.json#L120)
   to run Cypress in mobile viewport.
-- <Icon name="github"></Icon>
+- <Icon name="github"/>
   [Circle CI job
   configuration](https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/.circleci/config.yml#L82-L100)
   for running test suites in mobile viewport.

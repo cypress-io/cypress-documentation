@@ -20,14 +20,14 @@ If you want to call a `function` on the previously yielded subject, use
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.wrap({ width: '50' }).its('width') // Get the 'width' property
 cy.window().its('sessionStorage') // Get the 'sessionStorage' property
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.its('window') // Errors, cannot be chained off 'cy'
@@ -36,11 +36,11 @@ cy.clearCookies().its('length') // Errors, 'clearCookies' does not yield Object
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> propertyName** **_(String, Number)_**
+**<Icon name="angle-right"/> propertyName** **_(String, Number)_**
 
 Index, name of property or name of nested properties (with dot notation) to get.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.its()`.
 

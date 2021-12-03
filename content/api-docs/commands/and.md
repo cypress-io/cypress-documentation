@@ -29,7 +29,7 @@ An alias of [`.should()`](/api/commands/should)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.get('.err').should('be.empty').and('be.hidden') // Assert '.err' is empty & hidden
@@ -39,7 +39,7 @@ cy.wrap({ foo: 'bar' })
   .and('eq', 'bar') // Assert 'foo' property is 'bar'
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.and('eq', '42') // Should not be chained off 'cy'
@@ -47,21 +47,21 @@ cy.and('eq', '42') // Should not be chained off 'cy'
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> chainers** **_(String)_**
+**<Icon name="angle-right"/> chainers** **_(String)_**
 
 Any valid chainer that comes from [Chai](/guides/references/assertions#Chai) or
 [Chai-jQuery](/guides/references/assertions#Chai-jQuery) or
 [Sinon-Chai](/guides/references/assertions#Sinon-Chai).
 
-**<Icon name="angle-right"></Icon> value** **_(String)_**
+**<Icon name="angle-right"/> value** **_(String)_**
 
 Value to assert against chainer.
 
-**<Icon name="angle-right"></Icon> method** **_(String)_**
+**<Icon name="angle-right"/> method** **_(String)_**
 
 A method to be called on the chainer.
 
-**<Icon name="angle-right"></Icon> callbackFn** **_(Function)_**
+**<Icon name="angle-right"/> callbackFn** **_(Function)_**
 
 Pass a function that can have any number of explicit assertions within it.
 Whatever was passed to the function is what is yielded.

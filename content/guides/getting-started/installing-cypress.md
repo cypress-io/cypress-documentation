@@ -4,7 +4,7 @@ title: Installing Cypress
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - How to install Cypress via `npm`
 - How to install Cypress via direct download
@@ -66,7 +66,7 @@ container with the Node.js process.
 
 ## Installing
 
-### <Icon name="terminal"></Icon> `npm install`
+### <Icon name="terminal"/> `npm install`
 
 Install Cypress via `npm`:
 
@@ -89,7 +89,7 @@ in the correct directory.
 
 </Alert>
 
-<DocsVideo src="/img/snippets/installing-cli.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/installing-cli.mp4"/>
 
 <Alert type="info">
 
@@ -118,7 +118,7 @@ The recommended approach is to install Cypress with `npm` because :
 
 </Alert>
 
-### <Icon name="terminal"></Icon> `yarn add`
+### <Icon name="terminal"/> `yarn add`
 
 Installing Cypress via [`yarn`](https://yarnpkg.com):
 
@@ -133,7 +133,7 @@ yarn add cypress --dev
 System proxy properties `http_proxy`, `https_proxy` and `no_proxy` are respected
 for the download of the Cypress binary.
 
-### <Icon name="download"></Icon> Direct download
+### <Icon name="download"/> Direct download
 
 If you're not using Node or `npm` in your project or you want to try Cypress out
 quickly, you can always
@@ -153,7 +153,7 @@ will be detected automatically.
 Then you can manually unzip and double click. Cypress will run without needing
 to install any dependencies.
 
-<DocsVideo src="/img/snippets/installing-global.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/installing-global.mp4"/>
 
 <Alert type="info">
 
@@ -165,7 +165,7 @@ the desired version (ex.
 
 </Alert>
 
-### <Icon name="sync-alt"></Icon> Continuous integration
+### <Icon name="sync-alt"/> Continuous integration
 
 Please read our
 [Continuous Integration](/guides/continuous-integration/introduction) docs for

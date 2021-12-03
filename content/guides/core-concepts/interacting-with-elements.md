@@ -4,7 +4,7 @@ title: Interacting with Elements
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - How Cypress calculates visibility
 - How Cypress ensures elements are actionable

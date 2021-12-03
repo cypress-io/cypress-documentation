@@ -35,7 +35,7 @@ Test retries is **disabled by default**, and you can
 <Alert type="success">
 
 <strong class="alert-header">
-  <Icon name="star"></Icon> Premium Dashboard Feature
+  <Icon name="star"/> Premium Dashboard Feature
 </strong>
 
 **Test flake detection** is available to users with a
@@ -78,7 +78,7 @@ result in a given test case to be flagged as flaky.
 <Alert type="success">
 
 <strong class="alert-header">
-  <Icon name="star"></Icon> Premium Dashboard Feature
+  <Icon name="star"/> Premium Dashboard Feature
 </strong>
 
 **Test flake analytics** are available to users with a
@@ -157,7 +157,7 @@ alt="flake rate vs fail rate"
 <Alert type="success">
 
 <strong class="alert-header">
-  <Icon name="star"></Icon> Premium Dashboard Feature
+  <Icon name="star"/> Premium Dashboard Feature
 </strong>
 
 **Test flake alerting** is available to users with a

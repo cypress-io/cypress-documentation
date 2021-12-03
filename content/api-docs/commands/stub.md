@@ -21,7 +21,7 @@ cy.stub(object, method, replacerFn)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.stub(user, 'addFriend')
@@ -29,15 +29,15 @@ cy.stub(user, 'addFriend')
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> object** **_(Object)_**
+**<Icon name="angle-right"/> object** **_(Object)_**
 
 The `object` that has the `method` to be replaced.
 
-**<Icon name="angle-right"></Icon> method** **_(String)_**
+**<Icon name="angle-right"/> method** **_(String)_**
 
 The name of the `method` on the `object` to be wrapped.
 
-**<Icon name="angle-right"></Icon> replacerFn** **_(Function)_**
+**<Icon name="angle-right"/> replacerFn** **_(Function)_**
 
 The function used to replace the `method` on the `object`.
 

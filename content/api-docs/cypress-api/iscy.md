@@ -16,7 +16,7 @@ Cypress.isCy(obj)
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> obj** **_(Object)_**
+**<Icon name="angle-right"/> obj** **_(Object)_**
 
 The object to test.
 

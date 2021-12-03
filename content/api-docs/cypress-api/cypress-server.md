@@ -23,7 +23,7 @@ Cypress.Server.defaults(options)
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `Cypress.Server`.
 

@@ -15,13 +15,13 @@ Select an `<option>` within a `<select>`.
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.get('select').select('user-1') // Select the 'user-1' option
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.select('John Adams') // Errors, cannot be chained off 'cy'
@@ -30,16 +30,16 @@ cy.location().select() // Errors, 'location' does not yield <select> element
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> value** **_(String, Number)_**
+**<Icon name="angle-right"/> value** **_(String, Number)_**
 
 The `value`, `index`, or text content of the `<option>` to be selected.
 
-**<Icon name="angle-right"></Icon> values** **_(Array)_**
+**<Icon name="angle-right"/> values** **_(Array)_**
 
 An array of `values`, `indexes`, or text contents of the `<option>`s to be
 selected.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.select()`.
 

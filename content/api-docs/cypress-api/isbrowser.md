@@ -15,17 +15,17 @@ Cypress.isBrowser(filter)
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> matcher** **_(String)_**
+**<Icon name="angle-right"/> matcher** **_(String)_**
 
 The name of the browser (case-insensitive) you want to check against. Name can
 be prepended with a `!` character to inverse the check.
 
-**<Icon name="angle-right"></Icon> matchers** **_(Array)_**
+**<Icon name="angle-right"/> matchers** **_(Array)_**
 
 An array of the names of the browsers (case-insensitive) you want to check
 against. Name can be prepended with a `!` character to inverse the check.
 
-**<Icon name="angle-right"></Icon> filter** **_(Object or Array)_**
+**<Icon name="angle-right"/> filter** **_(Object or Array)_**
 
 Filter one or multiple browsers by the browser properties. You can inspect the
 current browser's properties by using the

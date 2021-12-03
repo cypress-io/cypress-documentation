@@ -4,7 +4,7 @@ title: Visual Testing
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - How visual testing complements functional testing
 - How to implement visual diffing yourself or using 3rd party service
@@ -129,7 +129,7 @@ First joint webinar with Applitools
 
 <!-- textlint-disable -->
 
-<DocsVideo src="https://youtube.com/embed/qVRjhABuyG0"></DocsVideo>
+<DocsVideo src="https://youtube.com/embed/qVRjhABuyG0"/>
 
 <!-- textlint-enable -->
 
@@ -138,11 +138,11 @@ Second joint webinar with Applitools with a focus on
 
 <!-- textlint-disable -->
 
-<DocsVideo src="https://youtube.com/embed/Bxh_ebMk1aM"></DocsVideo>
+<DocsVideo src="https://youtube.com/embed/Bxh_ebMk1aM"/>
 
 <!-- textlint-enable -->
 
-<Icon name="external-link-alt"></Icon>
+<Icon name="external-link-alt"/>
 [https://applitools.com](https://applitools.com/)
 
 | Resource                                                                     | Description                                                                                                                                                   |
@@ -156,15 +156,15 @@ Second joint webinar with Applitools with a focus on
 
 <!-- textlint-disable -->
 
-<DocsVideo src="https://youtube.com/embed/MXfZeE9RQDw"></DocsVideo>
+<DocsVideo src="https://youtube.com/embed/MXfZeE9RQDw"/>
 
 <!-- textlint-enable -->
 
-<Icon name="external-link-alt"></Icon> [https://percy.io](https://percy.io/)
+<Icon name="external-link-alt"/> [https://percy.io](https://percy.io/)
 
 <Alert type="info">
 
-##### <Icon name="graduation-cap"></Icon> Real World Example <Badge type="success">New</Badge>
+##### <Icon name="graduation-cap"/> Real World Example <Badge type="success">New</Badge>
 
 The Cypress
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses
@@ -191,11 +191,11 @@ to see these Percy and Cypress in action.
 
 <!-- textlint-disable -->
 
-<DocsVideo src="https://youtube.com/embed/C_p12IvN5HU"></DocsVideo>
+<DocsVideo src="https://youtube.com/embed/C_p12IvN5HU"/>
 
 <!-- textlint-enable -->
 
-<Icon name="external-link-alt"></Icon> [https://happo.io/](https://happo.io/)
+<Icon name="external-link-alt"/> [https://happo.io/](https://happo.io/)
 
 | Resource                                                                             | Description                                                                                                                                 |
 | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -230,7 +230,7 @@ As a general rule there are some best practices when visual testing.
 
 ### Recognize the need for visual testing
 
-**<Icon name="exclamation-triangle" color="red"></Icon> assertions that verify
+**<Icon name="exclamation-triangle" color="red"/> assertions that verify
 style properties**
 
 ```js
@@ -248,14 +248,14 @@ verify the page appearance.
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Take a snapshot after you confirm
+<Icon name="check-circle" color="green"/> **Best Practice:** Take a snapshot after you confirm
 the page is done changing.
 
 </Alert>
 
 For example, if the snapshot command is `cy.mySnapshotCommand`:
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```js
 // the web application takes time to add the new item,
@@ -264,7 +264,7 @@ cy.get('.new-todo').type('write tests{enter}')
 cy.mySnapshotCommand()
 ```
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```js
 // use a functional assertion to ensure
@@ -280,7 +280,7 @@ cy.mySnapshotCommand()
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Control the timestamp inside the application
+<Icon name="check-circle" color="green"/> **Best Practice:** Control the timestamp inside the application
 under test.
 
 </Alert>
@@ -301,7 +301,7 @@ cy.mySnapshotCommand()
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use [cy.fixture()](/api/commands/fixture)
+<Icon name="check-circle" color="green"/> **Best Practice:** Use [cy.fixture()](/api/commands/fixture)
 and network mocking to set the application state.
 
 </Alert>
@@ -321,7 +321,7 @@ cy.mySnapshotCommand()
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use visual diffing to check individual
+<Icon name="check-circle" color="green"/> **Best Practice:** Use visual diffing to check individual
 DOM elements rather than the entire page.
 
 </Alert>
@@ -333,7 +333,7 @@ breaking tests in other unrelated components.
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use [Component Testing plugins](/plugins/directory)
+<Icon name="check-circle" color="green"/> **Best Practice:** Use [Component Testing plugins](/plugins/directory)
 to test the individual components functionality in addition to end-to-end and visual tests.
 
 </Alert>
@@ -352,7 +352,7 @@ the
 - [Plugins](/guides/tooling/plugins-guide)
 - [Visual Testing Plugins](/plugins/directory#visual-testing)
 - [Writing a Plugin](/api/plugins/writing-a-plugin)
-- <Icon name="github"></Icon>
+- <Icon name="github"/>
   [Cypress Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) is a full
   stack example application that demonstrates **best practices and scalable strategies with Cypress
   in practical and realistic scenarios**.

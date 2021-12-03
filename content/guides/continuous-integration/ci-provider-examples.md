@@ -16,14 +16,14 @@ For the following CI Providers we have in depth guides.
 
 ### CircleCI
 
-<Icon name="book" color="gray"></Icon> [CircleCI Guide](circleci) <br />
-<Icon name="external-link-alt" color="gray"></Icon>
+<Icon name="book" color="gray"/> [CircleCI Guide](circleci) <br />
+<Icon name="external-link-alt" color="gray"/>
 [See CircleCI + Cypress Dashboard in action](https://dashboard.cypress.io/projects/7s5okt)
 <br /> <br />
 
 <Alert type="info">
 
-##### <Icon name="graduation-cap"></Icon> Real World Example <Badge type="success">New</Badge>
+##### <Icon name="graduation-cap"/> Real World Example <Badge type="success">New</Badge>
 
 The Cypress
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses
@@ -32,21 +32,21 @@ The Cypress
 systems with full code-coverage reporting and
 [Cypress Dashboard recording](https://dashboard.cypress.io/projects/7s5okt).
 
-Check out the full <Icon name="github"></Icon>
+Check out the full <Icon name="github"/>
 [RWA CircleCI configuration](https://github.com/cypress-io/cypress-realworld-app/blob/develop/.circleci/config.yml).
 
 </Alert>
 
 ### GitHub Actions
 
-<Icon name="book" color="gray"></Icon> [GitHub Actions Guide](github-actions)
-<br /> <Icon name="external-link-alt" color="gray"></Icon>
+<Icon name="book" color="gray"/> [GitHub Actions Guide](github-actions)
+<br /> <Icon name="external-link-alt" color="gray"/>
 [See GitHub Actions + Cypress Dashboard in action](https://dashboard.cypress.io/projects/tpys4j)
 <br /> <br />
 
 <Alert type="info">
 
-##### <Icon name="graduation-cap"></Icon> Real World Example <Badge type="success">New</Badge>
+##### <Icon name="graduation-cap"/> Real World Example <Badge type="success">New</Badge>
 
 The Cypress
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses
@@ -55,22 +55,22 @@ across 25 machines, multiple browsers, multiple device sizes, and multiple
 operating systems with
 [Cypress Dashboard recording](https://dashboard.cypress.io/projects/tpys4j).
 
-Check out the full <Icon name="github"></Icon>
+Check out the full <Icon name="github"/>
 [RWA GitHub Actions configuration](https://github.com/cypress-io/cypress-realworld-app/blob/develop/.github/workflows/main.yml).
 
 </Alert>
 
 ### BitBucket
 
-<Icon name="book" color="gray"></Icon>
+<Icon name="book" color="gray"/>
 [BitBucket Pipelines Guide](bitbucket-pipelines) <br />
-<Icon name="external-link-alt" color="gray"></Icon>
+<Icon name="external-link-alt" color="gray"/>
 [See BitBucket Pipelines + Cypress Dashboard in action](https://dashboard.cypress.io/projects/q1ovwz)
 <br /> <br />
 
 <Alert type="info">
 
-##### <Icon name="graduation-cap"></Icon> Real World Example <Badge type="success">New</Badge>
+##### <Icon name="graduation-cap"/> Real World Example <Badge type="success">New</Badge>
 
 The Cypress
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses
@@ -79,21 +79,21 @@ over 300 test cases in parallel across 25 machines, multiple browsers and
 multiple device sizes with
 [Cypress Dashboard recording](https://dashboard.cypress.io/projects/q1ovwz).
 
-Check out the full <Icon name="github"></Icon>
+Check out the full <Icon name="github"/>
 [RWA BitBucket Pipelines configuration](https://github.com/cypress-io/cypress-realworld-app/blob/develop/bitbucket-pipelines.yml).
 
 </Alert>
 
 ### GitLab CI
 
-<Icon name="book" color="gray"></Icon> [GitLab CI Guide](gitlab-ci) <br />
-<Icon name="external-link-alt" color="gray"></Icon>
+<Icon name="book" color="gray"/> [GitLab CI Guide](gitlab-ci) <br />
+<Icon name="external-link-alt" color="gray"/>
 [See GitLab CI + Cypress Dashboard in action](https://dashboard.cypress.io/projects/woih1m)
 <br /> <br />
 
 <Alert type="info">
 
-##### <Icon name="graduation-cap"></Icon> Real World Example <Badge type="success">New</Badge>
+##### <Icon name="graduation-cap"/> Real World Example <Badge type="success">New</Badge>
 
 The Cypress
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses
@@ -101,21 +101,21 @@ The Cypress
 25 machines, multiple browsers and multiple device sizes with
 [Cypress Dashboard recording](https://dashboard.cypress.io/projects/woih1m).
 
-Check out the full <Icon name="github"></Icon>
+Check out the full <Icon name="github"/>
 [RWA GitLab CI configuration](https://github.com/cypress-io/cypress-realworld-app/blob/develop/gitlab-ci.yml).
 
 </Alert>
 
 ### AWS CodeBuild
 
-<Icon name="book" color="gray"></Icon> [AWS CodeBuild Guide](aws-codebuild)
-<br /> <Icon name="external-link-alt" color="gray"></Icon>
+<Icon name="book" color="gray"/> [AWS CodeBuild Guide](aws-codebuild)
+<br /> <Icon name="external-link-alt" color="gray"/>
 [See AWS CodeBuild + Cypress Dashboard in action](https://dashboard.cypress.io/projects/zx15dm)
 <br /> <br />
 
 <Alert type="info">
 
-##### <Icon name="graduation-cap"></Icon> Real World Example <Badge type="success">New</Badge>
+##### <Icon name="graduation-cap"/> Real World Example <Badge type="success">New</Badge>
 
 The Cypress
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses
@@ -123,7 +123,7 @@ The Cypress
 parallel across 25 machines, multiple browsers and multiple device sizes with
 [Cypress Dashboard recording](https://dashboard.cypress.io/projects/zx15dm).
 
-Check out the full <Icon name="github"></Icon>
+Check out the full <Icon name="github"/>
 [RWA AWS CodeBuild configuration](https://github.com/cypress-io/cypress-realworld-app/blob/develop/buildspec.yml).
 
 </Alert>

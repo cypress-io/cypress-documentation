@@ -28,7 +28,7 @@ troubleshooting failures and deploying fixes.
 <Alert type="info">
 
 <strong class="alert-header">
-  <Icon name="graduation-cap"></Icon> Consider the Scenario
+  <Icon name="graduation-cap"/> Consider the Scenario
 </strong>
 
 For example, you have a test suite consisting of several spec files that take 30
@@ -49,7 +49,7 @@ time.**
 <Alert type="success">
 
 <strong class="alert-header">
-  <Icon name="star"></Icon> Premium Dashboard Feature
+  <Icon name="star"/> Premium Dashboard Feature
 </strong>
 
 **Running failed specs first** is a _Smart Orchestration_ feature available to
@@ -93,7 +93,7 @@ changes.
 <Alert type="success">
 
 <strong class="alert-header">
-  <Icon name="check"></Icon> Benefits
+  <Icon name="check"/> Benefits
 </strong>
 
 Canceling an **entire** test run, even if parallelized, upon the first test
@@ -112,7 +112,7 @@ failure will:
 <Alert type="success">
 
 <strong class="alert-header">
-  <Icon name="star"></Icon> Premium Dashboard Feature
+  <Icon name="star"/> Premium Dashboard Feature
 </strong>
 
 **Canceling test runs when a test fails** is a _Smart Orchestration_ feature

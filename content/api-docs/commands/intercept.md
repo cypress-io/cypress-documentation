@@ -63,7 +63,7 @@ argument
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```js
 // spying
@@ -91,7 +91,7 @@ cy.intercept('/users*', { hostname: 'localhost' }, (req) => {
 
 ### Arguments
 
-#### **<Icon name="angle-right"></Icon> method** **_(String)_**
+#### **<Icon name="angle-right"/> method** **_(String)_**
 
 Match the route to a specific
 [HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) (`GET`,
@@ -103,14 +103,14 @@ If no method is defined Cypress will match all requests by default.
 
 </Alert>
 
-#### **<Icon name="angle-right"></Icon> url** **_(String, Glob, RegExp)_**
+#### **<Icon name="angle-right"/> url** **_(String, Glob, RegExp)_**
 
 Specify the URL to match. See [Matching `url`](#match-url) for examples.
 
 Alternatively, specify the URL via the [`routeMatcher`][arg-routematcher]
 argument (below).
 
-#### **<Icon name="angle-right"></Icon> routeMatcher** **_(`RouteMatcher`)_**
+#### **<Icon name="angle-right"/> routeMatcher** **_(`RouteMatcher`)_**
 
 `routeMatcher` is an object used to match the incoming HTTP requests with this
 intercepted route.
@@ -137,7 +137,7 @@ glob-matched against the request using
 
 See [examples](#With-RouteMatcher) below.
 
-#### <Icon name="angle-right"></Icon> staticResponse (<code>[StaticResponse][staticresponse]</code>)
+#### <Icon name="angle-right"/> staticResponse (<code>[StaticResponse][staticresponse]</code>)
 
 By passing in a `StaticResponse` as the last argument, you can
 [statically define (stub) a response](#Stubbing-a-response) for matched requests
@@ -167,7 +167,7 @@ for an example.
 
 See also [`StaticResponse` objects](#StaticResponse-objects).
 
-#### <Icon name="angle-right"></Icon> routeHandler (<code>Function</code>)
+#### <Icon name="angle-right"/> routeHandler (<code>Function</code>)
 
 The `routeHandler` function is called whenever a request is matched, with the
 first argument being the request object. From inside the callback, you have

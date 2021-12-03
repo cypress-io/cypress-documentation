@@ -4,7 +4,7 @@ title: Amazon Cognito Authentication
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - Programmatically authenticate with
   [Amazon Cognito](https://aws.amazon.com/cognito) via a custom Cypress command

@@ -31,7 +31,7 @@ on('before:spec', (spec) => {
 })
 ```
 
-**<Icon name="angle-right"></Icon> spec** **_(Object)_**
+**<Icon name="angle-right"/> spec** **_(Object)_**
 
 Details of the spec file, including the following properties:
 

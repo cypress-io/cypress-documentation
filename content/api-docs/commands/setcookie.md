@@ -13,7 +13,7 @@ cy.setCookie(name, value, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.setCookie('auth_key', '123key') // Set the 'auth_key' cookie to '123key'
@@ -21,15 +21,15 @@ cy.setCookie('auth_key', '123key') // Set the 'auth_key' cookie to '123key'
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> name** **_(String)_**
+**<Icon name="angle-right"/> name** **_(String)_**
 
 The name of the cookie to set.
 
-**<Icon name="angle-right"></Icon> value** **_(String)_**
+**<Icon name="angle-right"/> value** **_(String)_**
 
 The value of the cookie to set.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.setCookie()`.
 

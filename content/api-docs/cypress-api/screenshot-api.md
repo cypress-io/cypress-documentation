@@ -23,7 +23,7 @@ Cypress.Screenshot.defaults(options)
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 An object containing one or more of the following:
 

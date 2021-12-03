@@ -4,7 +4,7 @@ title: Debugging
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - How Cypress runs in the same event loop with your code, keeping debugging less
   demanding and more understandable
@@ -126,7 +126,7 @@ modern ecosystem, opting to leverage these tools wherever possible.
 
 <Alert type="info">
 
-### <Icon name="video"></Icon> See it in action!
+### <Icon name="video"/> See it in action!
 
 You can see a walk-through of debugging some application code from Cypress
 [in this segment from our React tutorial series](https://vimeo.com/242961930#t=264s).

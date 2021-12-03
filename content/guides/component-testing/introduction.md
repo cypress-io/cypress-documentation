@@ -3,12 +3,14 @@ title: Introduction
 containerClass: component-testing
 ---
 
+<Alert type="warning">
+
 ⚠️ The Cypress Component Testing library is still in **Alpha**. We are rapidly
 developing and expect that the API may undergo breaking changes. Contribute to
 its development by submitting feature requests or issues
 [here](https://github.com/cypress-io/cypress/).
 
-</alert>
+</Alert>
 
 ## What is Component Testing?
 
@@ -76,7 +78,7 @@ guide assumes your project uses a [Webpack based](https://webpack.js.org/) tool
 chain. For our experimental Vite based instructions, please see the information
 here.
 
-<alert type="info">
+<Alert type="info">
 
 If you currently do not use Webpack, you can create a separate configuration for
 Webpack specifically for Cypress Component Testing. Follow the
@@ -84,7 +86,7 @@ Webpack specifically for Cypress Component Testing. Follow the
 to create a new Webpack config, then continue following the
 [Installation guide](#Install) below.
 
-</alert>
+</Alert>
 
 ### Prerequisites
 
@@ -127,13 +129,13 @@ your configuration file and apply any Component Testing specific overrides.
 
 ### Install
 
-<alert type="info">
+<Alert type="info">
 
 If you are using [Vue.js](https://vuejs.org/), click on the Vue tab of the code
 examples in our documentation when available. If there is no Vue tab, the code
 is the same.
 
-</alert>
+</Alert>
 
 Start by running the command below to install dependencies. It will install both
 the latest version of Cypress and the tooling you need to run component testing.
@@ -155,12 +157,12 @@ npm install --save-dev cypress @cypress/vue @cypress/webpack-dev-server webpack-
   </code-block>
 </code-group>
 
-<alert type="info">
+<Alert type="info">
 
 If it's your first time using Cypress, check out the
 [main Getting Started documentation](/guides/getting-started/installing-cypress).
 
-</alert>
+</Alert>
 
 Once installed, you need to configure how Cypress will locate component spec
 files. In the following configuration file (`cypress.json` by default), all
@@ -248,13 +250,13 @@ Each of these plugins perform the same tasks under the hood. Alternatively, if
 you have your own Webpack configuration, you can just provide it (without need
 for a specific plugin) as specified above.
 
-<alert type="info">
+<Alert type="info">
 
 If you have separate Webpack configurations for development and production, use
 the development configuration. It will give better location information using
 SourceMaps.
 
-</alert>
+</Alert>
 
 ### Writing Component Tests
 
@@ -312,12 +314,12 @@ it('Button', () => {
   </code-block>
 </code-group>
 
-<alert type="info">
+<Alert type="info">
 
 The React and Vue tests are nearly identical, allowing for a common shared test
 style across frameworks!
 
-</alert>
+</Alert>
 
 - Open Cypress in Component Testing mode:
 
@@ -327,10 +329,7 @@ npx cypress open-ct
 
 - Select the spec file in the sidebar. You should see the following:
 
-<DocsImage
-src="/img/guides/component-testing/one-spec.png"
-alt="Single Spec file with single test run"
-/>
+<DocsImage src="/img/guides/component-testing/one-spec.png" alt="Single Spec file with single test run"/>
 
 - Try to modify the test in your editor, make the test fail, etc. The tests will
   re-run instantly with immediate visual feedback.
@@ -348,10 +347,7 @@ npx cypress run-ct
 
 In the project we just built, this command will show the following results.
 
-<DocsImage
-src="/img/guides/component-testing/run-result.png"
-alt="Result of headless test run"
-/>
+<DocsImage src="/img/guides/component-testing/run-result.png" alt="Result of headless test run"/>
 
 To make the component tests part of your
 [continuous integration](/guides/continuous-integration/introduction) pipeline,
@@ -366,7 +362,7 @@ to first run the E2E tests, then run the component tests.
 
 The tools listed in this section are actively being developed. We will support
 early adoption of these projects in order to get community feedback.
-Please report issues against these projects in Github or contact us on
+Please report issues against these projects in Github or contact us on
 [Discord](https://discord.gg/Cd4CdSx) for additional support.
 
 #### Vite

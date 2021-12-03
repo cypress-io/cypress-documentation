@@ -17,13 +17,13 @@ Trigger an event on a DOM element.
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.get('a').trigger('mousedown') // Trigger mousedown event on link
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.trigger('touchstart') // Errors, cannot be chained off 'cy'
@@ -32,11 +32,11 @@ cy.location().trigger('mouseleave') // Errors, 'location' does not yield DOM ele
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> eventName** **_(String)_**
+**<Icon name="angle-right"/> eventName** **_(String)_**
 
 The name of the `event` to be triggered on the DOM element.
 
-**<Icon name="angle-right"></Icon> position** **_(String)_**
+**<Icon name="angle-right"/> position** **_(String)_**
 
 The position where the event should be triggered. The `center` position is the
 default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
@@ -44,15 +44,15 @@ default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
 
 <DocsImage src="/img/api/coordinates-diagram.jpg" alt="cypress-command-positions-diagram" />
 
-**<Icon name="angle-right"></Icon> x** **_(Number)_**
+**<Icon name="angle-right"/> x** **_(Number)_**
 
 The distance in pixels from element's left to trigger the event.
 
-**<Icon name="angle-right"></Icon> y** **_(Number)_**
+**<Icon name="angle-right"/> y** **_(Number)_**
 
 The distance in pixels from element's top to trigger the event.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.trigger()`.
 

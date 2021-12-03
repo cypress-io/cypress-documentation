@@ -28,7 +28,7 @@ throw within it but be aware of [differences](/api/commands/should#Differences).
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.get('.nav').then(($nav) => {}) // Yields .nav as first arg
@@ -37,7 +37,7 @@ cy.location().then((loc) => {}) // Yields location object as first arg
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.then()`.
 
@@ -45,7 +45,7 @@ Pass in an options object to change the default behavior of `.then()`.
 | --------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.then()` to resolve before [timing out](#Timeouts) |
 
-**<Icon name="angle-right"></Icon> callbackFn** **_(Function)_**
+**<Icon name="angle-right"/> callbackFn** **_(Function)_**
 
 Pass a function that takes the previously yielded subject as its first argument.
 

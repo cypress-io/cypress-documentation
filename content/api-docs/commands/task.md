@@ -23,7 +23,7 @@ cy.task(event, arg, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 // in test
@@ -53,12 +53,12 @@ the given event has been handled.
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> event** **_(String)_**
+**<Icon name="angle-right"/> event** **_(String)_**
 
 An event name to be handled via the `task` event in the
 [pluginsFile](/guides/references/configuration#Folders-Files).
 
-**<Icon name="angle-right"></Icon> arg** **_(Object)_**
+**<Icon name="angle-right"/> arg** **_(Object)_**
 
 An argument to send along with the event. This can be any value that can be
 serialized by
@@ -87,7 +87,7 @@ module.exports = (on, config) => {
 }
 ```
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.task()`.
 

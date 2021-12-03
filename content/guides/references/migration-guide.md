@@ -31,22 +31,22 @@ You should also update any use of the `isHeaded` or `isHeadless` property on
 
 <Badge type="danger">Before</Badge> run headless browser
 
-```script
+```bash
 cypress run --browser=chrome --headless
 ```
 
-```script
+```bash
 cypress run --browser=firefox --headless
 ```
 
 <Badge type="success">After</Badge> All browsers headless by default, so you can remove the `--headless`
 flag during `cypress run`.
 
-```script
+```bash
 cypress run --browser=chrome
 ```
 
-```script
+```bash
 cypress run --browser=firefox
 ```
 
@@ -578,7 +578,7 @@ In 6.X, the Desktop GUI had support for finding and executing a subset of
 component tests. In 7.0, this is possible with the `--headed` command and a spec
 glob, like so:
 
-```sh
+```bash
 cypress run-ct --headed --spec **/some-folder/*spec.*
 ```
 
@@ -1488,7 +1488,7 @@ changes and new features outlined in their
 [changelog](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md). Some
 changes you might notice are described below.
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Breaking Change: invoke `done` callback and return a promise
+#### <Icon name="exclamation-triangle" color="red"/> Breaking Change: invoke `done` callback and return a promise
 
 Starting with
 [Mocha 3.0.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#300--2016-07-31),
@@ -1586,7 +1586,7 @@ it('uses async/await', async () => {
 })
 ```
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Tests require a title
+#### <Icon name="exclamation-triangle" color="red"/> Tests require a title
 
 Tests now require a title and will error when not provided one.
 
@@ -1603,7 +1603,7 @@ changes and new features outlined in
 [Chai's migration guide](https://github.com/chaijs/chai/issues/781). Some
 changes you might notice are described below.
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Breaking Change: assertions expecting numbers
+#### <Icon name="exclamation-triangle" color="red"/> Breaking Change: assertions expecting numbers
 
 Some assertions will now throw an error if the assertion's target or arguments
 are not numbers, including `within`, `above`, `least`, `below`, `most`,
@@ -1617,7 +1617,7 @@ expect(null).to.be.above(10)
 expect('string').to.have.a.length.of.at.least(3)
 ```
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Breaking Change: `empty` assertions
+#### <Icon name="exclamation-triangle" color="red"/> Breaking Change: `empty` assertions
 
 The `.empty` assertion will now throw when it is passed non-string primitives
 and functions.
@@ -1628,7 +1628,7 @@ expect(Symbol()).to.be.empty
 expect(() => {}).to.be.empty
 ```
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Breaking Change: non-existent properties
+#### <Icon name="exclamation-triangle" color="red"/> Breaking Change: non-existent properties
 
 An error will throw when a non-existent property is read. If there are typos in
 property assertions, they will now appear as failures.
@@ -1638,7 +1638,7 @@ property assertions, they will now appear as failures.
 expect(true).to.be.ture
 ```
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Breaking Change: `include` checks strict equality
+#### <Icon name="exclamation-triangle" color="red"/> Breaking Change: `include` checks strict equality
 
 `include` now always use strict equality unless the `deep` property is set.
 
@@ -1679,7 +1679,7 @@ breaking changes and new features outlined in
 [Sinon.JS's migration guide](https://sinonjs.org/releases/latest/#migration-guides).
 Some changes you might notice are described below.
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Breaking Change: stub non-existent properties
+#### <Icon name="exclamation-triangle" color="red"/> Breaking Change: stub non-existent properties
 
 An error will throw when trying to stub a non-existent property.
 
@@ -1688,7 +1688,7 @@ An error will throw when trying to stub a non-existent property.
 cy.stub(obj, 'nonExistingProperty')
 ```
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Breaking Change: `reset()` replaced by `resetHistory()`
+#### <Icon name="exclamation-triangle" color="red"/> Breaking Change: `reset()` replaced by `resetHistory()`
 
 For spies and stubs, the `reset()` method was replaced by `resetHistory()`.
 

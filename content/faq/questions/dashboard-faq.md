@@ -4,7 +4,7 @@ title: Dashboard
 containerClass: faq
 ---
 
-## <Icon name="angle-right"></Icon> What is the Dashboard?
+## <Icon name="angle-right"/> What is the Dashboard?
 
 <DocsImage src="/img/dashboard/dashboard-runs-list.png" alt="Dashboard Screenshot" />
 
@@ -15,7 +15,7 @@ provides you insight into what happened during your tests run.
 
 You can read more [here](/guides/dashboard/introduction).
 
-## <Icon name="angle-right"></Icon> How do I record my tests?
+## <Icon name="angle-right"/> How do I record my tests?
 
 1. First [set up the project to record](/guides/dashboard/projects#Setup).
 2. Then [record your runs](/guides/dashboard/runs).
@@ -24,11 +24,11 @@ After recording your tests, you will see them in the
 [Dashboard](https://on.cypress.io/dashboard) and in the "Runs" tab of the Test
 Runner.
 
-## <Icon name="angle-right"></Icon> How much does it cost?
+## <Icon name="angle-right"/> How much does it cost?
 
 Please see our [Pricing Page](https://www.cypress.io/pricing) for more details.
 
-## <Icon name="angle-right"></Icon> What counts as a test result?
+## <Icon name="angle-right"/> What counts as a test result?
 
 Which [pricing tier](https://www.cypress.io/pricing) is best for you depends on
 the number of test you record each month in your organization.
@@ -48,13 +48,13 @@ You can always see how many tests you've recorded from your organization's
 [Billing & Usage](/guides/dashboard/organizations#Billing-Usage) page within the
 Dashboard.
 
-## <Icon name="angle-right"></Icon> What counts as a user?
+## <Icon name="angle-right"/> What counts as a user?
 
 A [user](/guides/dashboard/users) is anyone with a login to our Dashboard
 Service that has been invited to see and review the test results of your
 organization.
 
-## <Icon name="angle-right"></Icon> What is the difference between public and private projects?
+## <Icon name="angle-right"/> What is the difference between public and private projects?
 
 **A public project** means that anyone can see the recorded runs for it. It's
 similar to how public projects on Github, Travis, or Circle are handled. Anyone
@@ -66,7 +66,7 @@ explicitly invite to your [organization](/guides/dashboard/organizations) can
 see its recorded runs. Even if someone knows your `projectId`, they will not
 have access to your runs unless you have invited them.
 
-## <Icon name="angle-right"></Icon> How is this different than CI?
+## <Icon name="angle-right"/> How is this different than CI?
 
 Cypress is **complementary** to your
 [CI provider](/guides/continuous-integration/introduction), and plays a
@@ -90,12 +90,12 @@ provider's `stdout` output, you can log into the
 screenshots and video of the tests running. It should be instantly clear what
 the problem was.
 
-## <Icon name="angle-right"></Icon> Can I host the Dashboard data myself?
+## <Icon name="angle-right"/> Can I host the Dashboard data myself?
 
 No, although we are looking to build an on-premise version of the Dashboard for
 use in private clouds.
 
-## <Icon name="angle-right"></Icon> Can I choose not to use the Dashboard?
+## <Icon name="angle-right"/> Can I choose not to use the Dashboard?
 
 Of course. The Dashboard Service is a separate service from the Test Runner and
 will always remain optional. We hope you'll find a tremendous amount of value in
@@ -106,13 +106,13 @@ You can always run your tests in CI using
 flag which does not communicate with our external servers and will not record
 any test results.
 
-## <Icon name="angle-right"></Icon> What is my Organization ID?
+## <Icon name="angle-right"/> What is my Organization ID?
 
 Your Organization ID is a unique identifier that is linked to your organization.
 Instructions on how to find your ID are in the
 [Dashboard Guide.](/guides/dashboard/organizations#Organization-ID)
 
-## <Icon name="angle-right"></Icon> What does Cypress record?
+## <Icon name="angle-right"/> What does Cypress record?
 
 We capture the following:
 
@@ -130,7 +130,7 @@ your run such as:
 
 These will be added in subsequent releases.
 
-## <Icon name="angle-right"></Icon> Why is test parallelization based on spec files and not on the individual functions?
+## <Icon name="angle-right"/> Why is test parallelization based on spec files and not on the individual functions?
 
 Cypress [test parallelization](/guides/guides/parallelization) is indeed based
 on specs. For each spec the Test Runner scaffolds the new running context, in a
@@ -151,7 +151,7 @@ and uploading video after, making spec files run shorter than approximately 10
 seconds would also be fruitless - because Cypress overhead would eat any time
 savings.
 
-## <Icon name="angle-right"></Icon> My CI setup is based on Docker, but is very custom. How can I load balance my test runs?
+## <Icon name="angle-right"/> My CI setup is based on Docker, but is very custom. How can I load balance my test runs?
 
 Even if your CI setup is very different from the
 [CI examples we have](/guides/continuous-integration/introduction#Examples) and
@@ -176,7 +176,7 @@ parallel. If there is NO common variable, try using the commit SHA string.
 Assuming you do not run the same tests more than once against the same commit,
 it might be good enough for the job.
 
-## <Icon name="angle-right"></Icon> Can I delete a run from the Dashboard?
+## <Icon name="angle-right"/> Can I delete a run from the Dashboard?
 
 You can [archive a run](guides/dashboard/runs#Archive-run) so that it does not
 display in the runs list or in analytics.
@@ -184,14 +184,14 @@ display in the runs list or in analytics.
 **Note:** Archiving the recorded runs has no effect on the amount of tests
 recorded and counted as your usage billed for the month.
 
-## <Icon name="angle-right"></Icon> Can I delete my Cypress account?
+## <Icon name="angle-right"/> Can I delete my Cypress account?
 
 You can delete your Cypress account from
 [your Dashboard profile](https://dashboard.cypress.io/profile). Deleting your
 account cannot be undone! By deleting your Cypress account, all associated data
 in your account will be permanently deleted.
 
-## <Icon name="angle-right"></Icon> What happens to my Dashboard if I downgrade my account?
+## <Icon name="angle-right"/> What happens to my Dashboard if I downgrade my account?
 
 Downgrading your account will **not** result in loss of access to your
 Dashboard.
@@ -200,7 +200,7 @@ However, it will make your Dashboard subject to the limitations of your new
 plan. For example, downgrading to the _Seed_ plan will limit data retention to
 30 days and test results to 500 per billing period.
 
-## <Icon name="angle-right"></Icon> What happens once I reach the test results limit?
+## <Icon name="angle-right"/> What happens once I reach the test results limit?
 
 Tests running with the `--record` flag will run as normal when the limit is
 reached, but parallelization will be disabled and new test results will be
@@ -217,7 +217,7 @@ by:
 4. Review your organization's usage
 5. Scroll down and select **Upgrade** under your plan of choice
 
-## <Icon name="angle-right"></Icon> I'm working at a restrictive VPN. Which subdomains do I have to allow on my VPN for the Dashboard to work properly?
+## <Icon name="angle-right"/> I'm working at a restrictive VPN. Which subdomains do I have to allow on my VPN for the Dashboard to work properly?
 
 To send the data and results of your tests to the
 [Dashboard](https://on.cypress.io/dashboard-introduction), Cypress needs free

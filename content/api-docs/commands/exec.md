@@ -23,7 +23,7 @@ cy.exec(command, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.exec('npm run build')
@@ -31,12 +31,12 @@ cy.exec('npm run build')
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> command** **_(String)_**
+**<Icon name="angle-right"/> command** **_(String)_**
 
 The system command to be executed from the project root (the directory that
 contains the default `cypress.json` configuration file).
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.exec()`.
 

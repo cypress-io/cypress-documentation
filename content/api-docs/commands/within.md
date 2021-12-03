@@ -14,13 +14,13 @@ within a particular group of elements such as a `<form>`.
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.get('.list').within(($list) => {}) // Yield the `.list` and scope all commands within it
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.within(() => {}) // Errors, cannot be chained off 'cy'
@@ -29,11 +29,11 @@ cy.getCookies().within(() => {}) // Errors, 'getCookies' does not yield DOM elem
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> callbackFn** **_(Function)_**
+**<Icon name="angle-right"/> callbackFn** **_(Function)_**
 
 Pass a function that takes the current yielded subject as its first argument.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.within()`.
 

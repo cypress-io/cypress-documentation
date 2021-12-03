@@ -149,7 +149,7 @@ You can use the `task` event to do things like:
 - Running an external process (like spinning up a Webdriver instance of another
   browser like Safari or puppeteer)
 
-##### <Icon name="graduation-cap"></Icon> Real World Example
+##### <Icon name="graduation-cap"/> Real World Example
 
 The [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
 uses [tasks](/api/commands/task) to re-seed its database, and to filter/find
@@ -187,7 +187,7 @@ the rest of the operating system.
 };
 ```
 
-> _<Icon name="github"></Icon> Source:
+> _<Icon name="github"/> Source:
 > [cypress/plugins/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/plugins/index.ts)_
 
 Check out the

@@ -4,7 +4,7 @@ title: The Test Runner
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - The names and purposes of the visual parts of the Cypress Test Runner
 - How to use the Selector Playground for targeting your page elements
@@ -181,7 +181,7 @@ The Selector Playground is an interactive feature that helps you:
 - See what elements match a given selector.
 - See what element matches a string of text.
 
-<DocsVideo src="/img/snippets/selector-playground.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/selector-playground.mp4"/>
 
 ### Uniqueness
 
@@ -227,7 +227,7 @@ changes.
 
 ### Finding Selectors
 
-To open the Selector Playground, click the <Icon name="crosshairs"></Icon>
+To open the Selector Playground, click the <Icon name="crosshairs"/>
 button next to the URL at the top of the runner. Hover over elements in your app
 to preview a unique selector for that element in the tooltip.
 
@@ -237,8 +237,8 @@ alt="Opening selector playground and hovering over elements"
 />
 
 Click on the element and its selector will appear at the top. From there, you
-can copy it to your clipboard ( <Icon name="copy"></Icon> ) or print it to the
-console ( <Icon name="terminal"></Icon> ).
+can copy it to your clipboard ( <Icon name="copy"/> ) or print it to the
+console ( <Icon name="terminal"/> ).
 
 <DocsImage
 src="/img/guides/test-runner/copy-selector-in-selector-playground.gif"

@@ -24,14 +24,14 @@ cy.contains(selector, content, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.get('.nav').contains('About') // Yield el in .nav containing 'About'
 cy.contains('Hello') // Yield first el in document containing 'Hello'
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.title().contains('My App') // Errors, 'title' does not yield DOM element
@@ -40,18 +40,18 @@ cy.getCookies().contains('_key') // Errors, 'getCookies' does not yield DOM elem
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> content** **_(String, Number, RegExp)_**
+**<Icon name="angle-right"/> content** **_(String, Number, RegExp)_**
 
 Get the DOM element containing the content.
 
-**<Icon name="angle-right"></Icon> selector** **_(String selector)_**
+**<Icon name="angle-right"/> selector** **_(String selector)_**
 
 Specify a selector to filter DOM elements containing the text. Cypress will
 _ignore_ its [default preference order](#Notes) for the specified selector.
 Using a selector allows you to return more _shallow_ elements (higher in the
 tree) that contain the specific text.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.contains()`.
 

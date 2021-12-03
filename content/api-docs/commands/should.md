@@ -29,7 +29,7 @@ as [assertions](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.get('.error').should('be.empty') // Assert that '.error' is empty
@@ -37,7 +37,7 @@ cy.contains('Login').should('be.visible') // Assert that el is visible
 cy.wrap({ foo: 'bar' }).its('foo').should('eq', 'bar') // Assert the 'foo' property equals 'bar'
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.should('eq', '42') // Should not be chained off 'cy'
@@ -45,21 +45,21 @@ cy.should('eq', '42') // Should not be chained off 'cy'
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> chainers** **_(String)_**
+**<Icon name="angle-right"/> chainers** **_(String)_**
 
 Any valid chainer that comes from [Chai](/guides/references/assertions#Chai) or
 [Chai-jQuery](/guides/references/assertions#Chai-jQuery) or
 [Sinon-Chai](/guides/references/assertions#Sinon-Chai).
 
-**<Icon name="angle-right"></Icon> value** **_(String)_**
+**<Icon name="angle-right"/> value** **_(String)_**
 
 Value to assert against chainer.
 
-**<Icon name="angle-right"></Icon> method** **_(String)_**
+**<Icon name="angle-right"/> method** **_(String)_**
 
 A method to be called on the chainer.
 
-**<Icon name="angle-right"></Icon> callbackFn** **_(Function)_**
+**<Icon name="angle-right"/> callbackFn** **_(Function)_**
 
 Pass a function that can have any number of explicit assertions within it.
 Whatever was passed to the function is what is yielded.
@@ -201,7 +201,7 @@ cy.get('p').should(($p) => {
 })
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Warning** Any value
+**<Icon name="exclamation-triangle" color="red"/> Warning** Any value
 returned from a `.should()` callback function will be ignored. The original
 subject will be yielded to the next command.
 

@@ -4,7 +4,7 @@ title: Stubs, Spies, and Clocks
 
 <Alert type="info">
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap"/> What you'll learn
 
 - Which libraries Cypress includes to provide typical testing functionality
 - How to use stubs for asserting that code was called but preventing it from

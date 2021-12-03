@@ -29,7 +29,7 @@ cy.clock(now, functionNames, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.clock()
@@ -37,15 +37,15 @@ cy.clock()
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> now** **_(number)_**
+**<Icon name="angle-right"/> now** **_(number)_**
 
 A timestamp specifying where the clock should start.
 
-**<Icon name="angle-right"></Icon> functionNames** **_(Array)_**
+**<Icon name="angle-right"/> functionNames** **_(Array)_**
 
 Name of native functions that clock should override.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.clock()`.
 

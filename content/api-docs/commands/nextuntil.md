@@ -25,13 +25,13 @@ The querying behavior of this command matches exactly how
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.get('div').nextUntil('.warning') // Yield siblings after 'div' until '.warning'
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red"/> Incorrect Usage**
 
 ```javascript
 cy.nextUntil() // Errors, cannot be chained off 'cy'
@@ -40,19 +40,19 @@ cy.location().nextUntil('path') // Errors, 'location' does not yield DOM element
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> selector** **_(String selector)_**
+**<Icon name="angle-right"/> selector** **_(String selector)_**
 
 The selector where you want finding next siblings to stop.
 
-**<Icon name="angle-right"></Icon> element** **_(DOM node, jQuery Object)_**
+**<Icon name="angle-right"/> element** **_(DOM node, jQuery Object)_**
 
 The element where you want finding next siblings to stop.
 
-**<Icon name="angle-right"></Icon> filter** **_(String selector)_**
+**<Icon name="angle-right"/> filter** **_(String selector)_**
 
 A selector used to filter matching DOM elements.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.nextUntil()`.
 

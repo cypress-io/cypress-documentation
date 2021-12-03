@@ -20,7 +20,7 @@ cy.tick(milliseconds, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.tick(500)
@@ -28,12 +28,12 @@ cy.tick(500)
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> milliseconds** **_(Number)_**
+**<Icon name="angle-right"/> milliseconds** **_(Number)_**
 
 The number of `milliseconds` to move the clock. Any timers within the affected
 range of time will be called.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.tick()`.
 

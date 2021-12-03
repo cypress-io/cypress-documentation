@@ -47,7 +47,7 @@ cy.route(options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green"/> Correct Usage**
 
 ```javascript
 cy.route('/users/**')
@@ -55,15 +55,15 @@ cy.route('/users/**')
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> url** **_(String, Glob, RegExp)_**
+**<Icon name="angle-right"/> url** **_(String, Glob, RegExp)_**
 
 Listen for a route matching the specific URL.
 
-**<Icon name="angle-right"></Icon> response** **_(String, Object, Array)_**
+**<Icon name="angle-right"/> response** **_(String, Object, Array)_**
 
 Supply a response `body` to _stub_ in the matching route.
 
-**<Icon name="angle-right"></Icon> method** **_(String)_**
+**<Icon name="angle-right"/> method** **_(String)_**
 
 Match the route to a specific method (`GET`, `POST`, `PUT`, etc).
 
@@ -73,12 +73,12 @@ If no method is defined Cypress will match `GET` requests by default.
 
 </Alert>
 
-**<Icon name="angle-right"></Icon> callbackFn** **_(Function)_**
+**<Icon name="angle-right"/> callbackFn** **_(Function)_**
 
 Listen for a route matching a returned object literal from a callback function.
 Functions that return a `Promise` will automatically be awaited.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right"/> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.route()`. By
 default `cy.route()` inherits its options from
