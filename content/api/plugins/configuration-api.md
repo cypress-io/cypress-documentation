@@ -51,7 +51,7 @@ modified from the `setupNodeEvents` function in the Cypress configuration.**
 
 </Alert>
 
-Resolved values will show up in the "Settings" tab of the Test Runner.
+Resolved values will show up in the "Settings" tab of the Cypress App.
 
 <DocsImage src="/img/guides/plugin-configuration.png" alt="Resolved configuration in the Desktop app" ></DocsImage>
 
@@ -102,7 +102,7 @@ return {
 
 :::
 
-When you open the Test Runner in a project that uses the above modifications,
+When you open the Cypress App in a project that uses the above modifications,
 only the Chrome browsers found on the system will display in the list of
 available browsers.
 
@@ -117,7 +117,7 @@ will be restored automatically.
 
 If you modify the list of browsers, you can see the
 [resolved configuration](/guides/references/configuration#Resolved-Configuration)
-in the **Settings** tab of the Test Runner.
+in the **Settings** tab of the Cypress App.
 
 ### Switch between multiple configuration files
 

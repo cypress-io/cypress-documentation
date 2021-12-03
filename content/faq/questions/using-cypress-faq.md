@@ -241,7 +241,7 @@ which requests you want to wait on.
 
 ## <Icon name="angle-right"></Icon> Can I test the HTML `<head>` element?
 
-Yes, you sure can. While executing tests in the Test Runner, you can view the
+Yes, you sure can. While executing tests in the Cypress App, you can view the
 entire `window.document` object in your open console using
 [cy.document()](/api/commands/document). You can even make assertions on the
 `<head>` element. Check out this example.
@@ -1179,7 +1179,7 @@ for our start.
 
 Cypress is not built for performance testing. Because Cypress instruments the
 page under test, proxies the network requests, and tightly controls the test
-steps, the Test Runner adds its own overhead. Thus, the performance numbers you
+steps, the Cypress App adds its own overhead. Thus, the performance numbers you
 get from Cypress tests are slower than "normal" use. Still, you can access the
 native `window.performance` object and grab the page time measurements, see the
 [Evaluate performance metrics](https://github.com/cypress-io/cypress-example-recipes#testing-the-dom)

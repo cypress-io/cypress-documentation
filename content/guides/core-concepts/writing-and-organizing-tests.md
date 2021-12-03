@@ -260,7 +260,7 @@ beforeEach(() => {
 
 Cypress executes the support file before the spec file. For example when you
 click on a test file named `spec-a.js` via
-[cypress open](/guides/guides/command-line#cypress-open), then the Test Runner
+[cypress open](/guides/guides/command-line#cypress-open), then the Cypress App
 executes the files in the following order:
 
 ```html
@@ -275,7 +275,7 @@ The same happens when using the
 window is opened for each support and spec file pair.
 
 But when you click on "Run all specs" button after
-[cypress open](/guides/guides/command-line#cypress-open), the Test Runner
+[cypress open](/guides/guides/command-line#cypress-open), the Cypress App
 bundles and concatenates all specs together, in essence running scripts like
 shown below. This means the code in the support file is executed once before all
 spec files, instead of once before each spec file.
@@ -725,7 +725,7 @@ After the Cypress spec completes every test has one of 4 statuses: **passed**,
 Passed tests have successfully completed all their commands without failing any
 assertions. The test screenshot below shows a passed test:
 
-<DocsImage src="/img/guides/core-concepts/passing-test.png" alt="Test runner with a single passed test" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/passing-test.png" alt="Cypress App with a single passed test" ></DocsImage>
 
 Note that a test can pass after several
 [test retries](/guides/guides/test-retries). In that case the Command Log shows
@@ -736,7 +736,7 @@ some failed attempts, but ultimately the entire test finishes successfully.
 Good news - the failed test has found a problem. Could be much worse - it could
 be a user hitting this bug!
 
-<DocsImage src="/img/guides/core-concepts/failing-test.png" alt="Test runner with a single failed test" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/failing-test.png" alt="Cypress App with a single failed test" ></DocsImage>
 
 After a test fails, the screenshots and videos can help find the problem so it
 can be fixed.
@@ -765,7 +765,7 @@ describe('TodoMVC', () => {
 All 3 tests above are marked _pending_ when Cypress finishes running the spec
 file.
 
-<DocsImage src="/img/guides/core-concepts/different-pending.png" alt="Test runner with three pending tests" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/different-pending.png" alt="Cypress App with three pending tests" ></DocsImage>
 
 So remember - if you (the test writer) knowingly skip a test using one of the
 above three ways, Cypress counts it as a _pending_ test.
@@ -798,7 +798,7 @@ describe('TodoMVC', () => {
 
 If the `beforeEach` hook completes and both tests finish, two tests are passing.
 
-<DocsImage src="/img/guides/core-concepts/two-passing.png" alt="Test runner showing two passing tests" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/two-passing.png" alt="Cypress App showing two passing tests" ></DocsImage>
 
 But what happens if a command inside the `beforeEach` hook fails? For example,
 let's pretend we want to visit a non-existent page `/does-not-exist` instead of
@@ -816,12 +816,12 @@ once, why would we execute it _again_ before the second test? It would just fail
 the same way! So Cypress _skips_ the remaining tests in that block, because they
 would also fail due to the `beforeEach` hook failure.
 
-<DocsImage src="/img/guides/core-concepts/1-skipped.png" alt="Test runner showing a skipped test" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/1-skipped.png" alt="Cypress App showing a skipped test" ></DocsImage>
 
 If we collapse the test commands, we can see the empty box marking the skipped
 test "adds 2 todos".
 
-<DocsImage src="/img/guides/core-concepts/skipped.png" alt="Test runner showing one failed and one skipped test" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/skipped.png" alt="Cypress App showing one failed and one skipped test" ></DocsImage>
 
 The tests that were meant to be executed but were skipped due to some run-time
 problem are marked "skipped" by Cypress.

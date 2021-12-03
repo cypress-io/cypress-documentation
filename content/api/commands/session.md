@@ -745,13 +745,13 @@ Once created, a session for a given `id` is cached for the duration of the spec
 file. You can't modify a stored session after it has been cached, but you can
 always create a new session with a different `id`.
 
-In order to reduce development time, when running the Test Runner in "open"
+In order to reduce development time, when running the Cypress App in "open"
 mode, sessions will be cached _between spec file runs_ as long as the `setup`
 function hasn't changed.
 
 ### Explicitly clearing sessions
 
-When running the Test Runner in "open" mode, you can explicitly clear all
+When running the Cypress App in "open" mode, you can explicitly clear all
 sessions and re-run the spec file by clicking the "Clear All Sessions" button in
 the [Instrument Panel](#The-Instrument-Panel).
 

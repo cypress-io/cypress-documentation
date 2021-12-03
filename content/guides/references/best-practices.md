@@ -924,8 +924,8 @@ Trying to start a web server from [cy.exec()](/api/commands/exec) or
 
 Because there is no guarantee that code running in an `after` will always run.
 
-While working in the Cypress Test Runner you can always restart / refresh while
-in the middle of a test. When that happens, code in an `after` won't execute.
+While working in the Cypress App you can always restart / refresh while in the
+middle of a test. When that happens, code in an `after` won't execute.
 
 **What should I do then?**
 

@@ -141,7 +141,7 @@ beforeEach(() => {
 [This blog post](https://www.cypress.io/blog/2018/02/05/when-can-the-test-start/)
 explains how to use `cy.window()` to spy on the DOM `prototype` to detect when
 the application starts adding event listeners to the DOM elements. When this
-happens for the first time, the Test Runner knows that the application has
+happens for the first time, the Cypress App knows that the application has
 started and the tests can begin.
 
 See
@@ -183,7 +183,7 @@ it('test', (done) => {
 It fails. But the interesting thing is that the type of `event` is
 `KeyboardEvent` when you `console.log(event)`.
 
-It's because the Test Runner uses an `iframe` to load the application under
+It's because the Cypress App uses an `iframe` to load the application under
 test. In other words, the `KeyboardEvent` used in the the code above and the
 `KeyboardEvent` class from which the `event` variable is constructed are
 different `KeyboardEvent`s.

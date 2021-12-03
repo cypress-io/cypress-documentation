@@ -22,9 +22,9 @@ title: Testing Your App
 ## <Icon name="terminal"></Icon> Step 1: Start your server
 
 Assuming you've successfully
-[installed the Test Runner](/guides/getting-started/installing-cypress#Installing)
+[installed the Cypress App](/guides/getting-started/installing-cypress#Installing)
 and
-[opened the Test Runner](/guides/getting-started/installing-cypress#Opening-Cypress)
+[opened the Cypress App](/guides/getting-started/installing-cypress#Opening-Cypress)
 in your project, the first thing you'll want to do is start your local
 development server that hosts the application.
 

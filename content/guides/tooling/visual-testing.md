@@ -105,9 +105,9 @@ it('completes todo', () => {
 ```
 
 This open source plugin compares the baseline and the current images side by
-side within the Cypress Test Runner if pixel difference is above the threshold;
-notice how the baseline image (_Expected result_) has the label text with the
-line through, while the new image (_Actual result_) does not have it.
+side within the Cypress App if pixel difference is above the threshold; notice
+how the baseline image (_Expected result_) has the label text with the line
+through, while the new image (_Actual result_) does not have it.
 
 <DocsImage src="/img/guides/visual-testing/diff.png" alt="Baseline vs current image" ></DocsImage>
 

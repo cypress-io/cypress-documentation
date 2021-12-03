@@ -92,7 +92,7 @@ it('renders learn react link', () => {
 })
 ```
 
-Start Cypress with `npx cypress open --component` - the test runner will open.
+Start Cypress with `npx cypress open --component` - the Cypress App will open.
 Select your test to execute it and see the rendered output. You can also run the
 tests without opening a browser with `npx cypress run --component`.
 
@@ -209,7 +209,7 @@ it('renders a message', () => {
 })
 ```
 
-Start Cypress with `npx cypress open --component` - the test runner will open.
+Start Cypress with `npx cypress open --component` - the Cypress App will open.
 Select your test to execute it and see the rendered output. You can also run the
 tests without opening a browser with `npx cypress run --component`.
 
@@ -310,7 +310,7 @@ it('Renders page component', () => {
 })
 ```
 
-Start Cypress with `npx cypress open --component` - the test runner will open.
+Start Cypress with `npx cypress open --component` - the Cypress App will open.
 Select your test to execute it and see the rendered output. You can also run the
 tests without opening a browser with `npx cypress run --component`.
 
@@ -520,7 +520,7 @@ _not_ applied. In this example, the `fetch` hook is not automatically applied,
 so we used the `mocks` mounting option to specify the three component states
 (loading, error and success) and test each one in isolation.
 
-Start Cypress with `npx cypress open --component` - the test runner will open.
+Start Cypress with `npx cypress open --component` - the Cypress App will open.
 Select your test to execute it and see the rendered output. You can also run the
 tests without opening a browser with `npx cypress run --component`.
 
@@ -598,6 +598,6 @@ it('renders learn react link', () => {
 })
 ```
 
-Start Cypress with `npx cypress open --component` - the test runner will open.
+Start Cypress with `npx cypress open --component` - the Cypress App will open.
 Select your test to execute it and see the rendered output. You can also run the
 tests without opening a browser with `npx cypress run --component`.

@@ -112,7 +112,7 @@ from a known filesystem path to bypass browser auto detection.
 
 You can see the full list of found browsers and their properties within the
 [resolved configuration](/guides/references/configuration#Resolved-Configuration)
-in the **Settings** tab of the Test Runner.
+in the **Settings** tab of the Cypress App.
 
 Another way to log what is found by Cypress is to run Cypress with the
 [DEBUG environment variable](#Print-DEBUG-logs) set to `cypress:launcher`. This
@@ -191,7 +191,7 @@ cypress open --browser C:/User/Application/browser.exe:chrome
 
 ## Allow the Cypress Chrome extension
 
-Cypress utilizes a Chrome extension within the Test Runner in order to run
+Cypress utilizes a Chrome extension within the Cypress App in order to run
 properly. If you or your company block specific Chrome extensions, this may
 cause problems with running Cypress. You will want to ask your administrator to
 allow the Cypress extension ID below:
@@ -471,7 +471,7 @@ to learn about the many ways you can contribute.
 ### Run the Cypress app by itself
 
 Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb
-server (if necessary), and then opens the Test Runner application built on top
+server (if necessary), and then opens the Cypress App application built on top
 of [Electron](https://electronjs.org/).
 
 Some common situations on why you would want to run the Cypress app by itself
@@ -528,8 +528,8 @@ ldd /home/person/.cache/Cypress/3.3.1/Cypress/Cypress
 dependencies by copying them from one of our official Docker images.
 
 **Note:** verbose Electron logging might show warnings that still allow Cypress
-to work normally. For example, the Cypress Test Runner opens normally despite
-the scary output below:
+to work normally. For example, the Cypress App opens normally despite the scary
+output below:
 
 ```shell
 ELECTRON_ENABLE_LOGGING=true DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress
@@ -540,7 +540,7 @@ ELECTRON_ENABLE_LOGGING=true DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/C
 You might need to use a local HTTP server (instead of file://): https://fb.me/react-devtools-faq", source: file:///root/.cache/Cypress/3.3.1/Cypress/resources/app/packages/desktop-gui/dist/app.js (73292)
 ```
 
-You can also see verbose Cypress logs when running the Test Runner binary
+You can also see verbose Cypress logs when running the Cypress App binary
 
 ```shell
 DEBUG=cypress* DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress --smoke-test --ping=101
@@ -577,7 +577,7 @@ Calling _exit(1). Core file will not be generated.
 ### Patch Cypress
 
 Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb
-server (if necessary), and then opens the Test Runner application built on top
+server (if necessary), and then opens the Cypress App application built on top
 of [Electron](https://electronjs.org/).
 
 If you're encountering a bug in the current version of Cypress, you can
@@ -648,7 +648,7 @@ npx cypress cache path
 ```
 
 Second, open the source code at the following path in any code editor. Make sure
-to substitute `3.3.1` for the desired version of the Test Runner you want to
+to substitute `3.3.1` for the desired version of the Cypress App you want to
 edit.
 
 ```text
@@ -657,7 +657,7 @@ edit.
 
 You can change anything in the JavaScript code:
 
-<DocsImage src="/img/guides/source-code.png" alt="Source code of the Test Runner in a text editor" ></DocsImage>
+<DocsImage src="/img/guides/source-code.png" alt="Source code of the Cypress App in a text editor" ></DocsImage>
 
 When finished, if necessary, remove the edited Test Runner version and reinstall
 the Cypress official version to get back to the official released code.

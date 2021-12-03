@@ -95,7 +95,7 @@ From the Dashboard you can:
 
 - Integrate Cypress into Slack on every recorded test run.
 
-#### See tests runs in the Test Runner
+#### See tests runs in the Cypress App
 
 Additionally we've integrated the tests run into the Cypress
 [Cypress App](/guides/core-concepts/cypress-app). This means you can see the

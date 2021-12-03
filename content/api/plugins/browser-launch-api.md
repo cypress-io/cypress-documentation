@@ -33,7 +33,7 @@ An object describing the browser being launched, with the following properties:
 | `displayName`  | `string`  | Human-readable display name for the browser.                                                                   |
 | `version`      | `string`  | Full version.                                                                                                  |
 | `path`         | `string`  | Path to the browser on disk. Blank for Electron.                                                               |
-| `info`         | `string`  | _(Optional)_ Extra information about the browser (used for display in the browser selector of the Test Runner) |
+| `info`         | `string`  | _(Optional)_ Extra information about the browser (used for display in the browser selector of the Cypress App) |
 | `majorVersion` | `number`  | The major version number of the browser.                                                                       |
 | `isHeadless`   | `boolean` | Whether the browser is running headlessly.                                                                     |
 | `isHeaded`     | `boolean` | Whether the browser displays headed.                                                                           |
@@ -212,7 +212,7 @@ This setting changes the display size of the screen and does not affect the
 `viewportWidth` and `viewportHeight` set in the
 [Cypress configuration](/guides/references/configuration). The `viewportWidth`
 and `viewportHeight` only affect the size of the application under test
-displayed inside the Test Runner. Read the blog post
+displayed inside the Cypress App. Read the blog post
 [Generate High-Resolution Videos and Screenshots](https://www.cypress.io/blog/2021/03/01/generate-high-resolution-videos-and-screenshots/)
 for details.
 
