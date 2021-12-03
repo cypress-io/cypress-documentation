@@ -222,7 +222,8 @@ In the following example, taken from the
 [Writing Your First Component Test](/guides/getting-started/writing-your-first-component-test)
 guide, we wrote the following test in our spec file:
 
-:::react-vue-example
+<code-group-react-vue>
+<template #react>
 
 ```js
 it('should have password input of type password', () => {
@@ -231,6 +232,9 @@ it('should have password input of type password', () => {
 })
 ```
 
+</template>
+<template #vue>
+
 ```js
 it('should have password input of type password', () => {
   mount(LoginForm)
@@ -238,7 +242,8 @@ it('should have password input of type password', () => {
 })
 ```
 
-:::
+</template>
+</code-group-react-vue>
 
 In the corresponding Component Preview below, you can see the the `LoginForm`
 component is being displayed in the righthand side. Not only is the component
