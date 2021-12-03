@@ -844,10 +844,6 @@ if (window.Cypress) {
 }
 ```
 
-If you want to detect if your Node.js code is running within Cypress, Cypress
-sets an OS level environment variable of `CYPRESS=true`. You could detect that
-you're running in Cypress by looking for `process.env.CYPRESS`.
-
 ## <Icon name="angle-right"></Icon> Do you allow before, beforeEach, after, or afterEach hooks?
 
 Yes. You can read more
