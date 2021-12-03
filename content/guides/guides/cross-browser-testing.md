@@ -23,7 +23,7 @@ system or CI environment. A full list of detected browsers is displayed within
 the browser selection menu of the
 [Cypress App](/guides/core-concepts/cypress-app).
 
-<DocsImage src="/img/guides/cross-browser-testing/cypress-browser-selector.png" alt="Cypress Test Runner with Firefox selected as the browser"></DocsImage>
+<DocsImage src="/img/guides/cross-browser-testing/cypress-browser-selector.png" alt="Cypress App with Firefox selected as the browser"></DocsImage>
 
 The desired browser can also specified via the
 [`--browser`](/guides/guides/command-line#Options) flag when using

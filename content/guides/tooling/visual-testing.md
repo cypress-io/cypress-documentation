@@ -121,7 +121,7 @@ mouse hover:
 There are several published, open source plugins, listed in the
 [Visual Testing plugins](/plugins/directory#visual-testing) section, and several
 commercial companies have developed visual testing solutions on top of the
-Cypress Test Runner listed below.
+Cypress App listed below.
 
 ### Open source
 

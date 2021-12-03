@@ -162,8 +162,8 @@ repository.
 Cypress does not instrument your code - you need to do it yourself. The golden
 standard for JavaScript code instrumentation is the battle-hardened
 [Istanbul](https://istanbul.js.org) and, luckily, it plays very nicely with the
-Cypress Test Runner. You can instrument the code as a build step through one of
-two ways:
+the Cypress App. You can instrument the code as a build step through one of two
+ways:
 
 - Using the [nyc](https://github.com/istanbuljs/nyc) module - a command-line
   interface for the [Istanbul](https://istanbul.js.org) library
@@ -415,7 +415,7 @@ application the user is expected to use.
 
 We can write more E2E tests.
 
-<DocsImage src="/img/guides/code-coverage/more-tests.png" alt="Cypress Test Runner passed more tests" ></DocsImage>
+<DocsImage src="/img/guides/code-coverage/more-tests.png" alt="Cypress App passed more tests" ></DocsImage>
 
 The produced HTML report shows 99% code coverage
 

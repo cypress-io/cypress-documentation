@@ -4,7 +4,7 @@ title: Configuration
 
 ## Configuration file
 
-The first time you open Cypress Test Runner, it creates the `cypress.config.js`
+The first time you open the Cypress App, it creates the `cypress.config.js`
 configuration file. This Javascript file is used to store any configuration
 values you supply. If you
 [configure your tests to record](/guides/dashboard/projects#Setup) the results

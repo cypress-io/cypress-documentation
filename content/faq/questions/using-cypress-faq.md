@@ -668,7 +668,7 @@ party APIs or talk directly to your server. Read about this
 
 1. If your application is running locally and is sending the emails directly
    through an SMTP server, you can use a temporary local test SMTP server
-   running inside Cypress Test Runner. Read the blog post
+   running inside the Cypress App. Read the blog post
    ["Testing HTML Emails using Cypress"](https://www.cypress.io/blog/2021/05/11/testing-html-emails-using-cypress/)
    for details.
 2. If your application is using a 3rd party email service, or you cannot stub
@@ -1100,7 +1100,7 @@ posts.
 
 ## <Icon name="angle-right"></Icon> Why doesn't the `instanceof Event` work?
 
-It might be because of the 2 different windows in Cypress Test Runner. For more
+It might be because of the 2 different windows in the Cypress App. For more
 information, please check
 [the note here](/api/commands/window#Cypress-uses-2-different-windows).
 

@@ -327,7 +327,7 @@ follow through these links:
 - [npm (Releases)](https://www.npmjs.com/package/cypress)
 - [Changelog at Cypress Docs](/guides/references/changelog)
 
-## <Icon name="angle-right"></Icon> How often are Cypress Test Runner versions released?
+## <Icon name="angle-right"></Icon> How often are Cypress App versions released?
 
 We schedule releases of the Cypress App on Monday every two weeks. This new
 version includes any bugfixes and/or features that have been completed by that

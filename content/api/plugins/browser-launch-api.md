@@ -163,9 +163,9 @@ on('before:browser:launch', (browser, launchOptions) => {
 
 ### Modify Electron app switches
 
-Cypress Test Runner is an Electron application, and its behavior (and the
-behavior of the bundled-in Electron browser) can be customized using command
-line switches. The supported switches depend on the Electron version, see
+The Cypress App is an Electron application, and its behavior (and the behavior
+of the bundled-in Electron browser) can be customized using command line
+switches. The supported switches depend on the Electron version, see
 [Electron documentation](https://www.electronjs.org/docs/api/command-line-switches).
 
 You can pass Electron-specific launch arguments using the

@@ -123,8 +123,8 @@ if (window.Cypress) {
 }
 ```
 
-Cypress Test Runner can wait for the property `window.appReady` to be `true`
-before every test
+The Cypress App can wait for the property `window.appReady` to be `true` before
+every test
 
 ```js
 // spec.js
