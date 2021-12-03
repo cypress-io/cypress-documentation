@@ -28,7 +28,7 @@ keys.map((key) => {
 })
 
 try {
-  fs.writeFileSync('public/manifest.yml', yamlArray.join('\n'))
+  fs.writeFileSync('static/manifest.yml', yamlArray.join('\n'))
 } catch (err) {
   // eslint-disable-next-line no-console
   console.error(err)

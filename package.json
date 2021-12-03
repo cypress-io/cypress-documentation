@@ -24,7 +24,8 @@
     "test:unit": "jest",
     "transform": "node scripts/transform.js",
     "make-empty-commit": "node node_modules/make-empty-github-commit/bin/empty.js --repo cypress-io/docs",
-    "postinstall": "husky install; patch-package"
+    "postinstall": "husky install; patch-package",
+    "postbuild": "node ./scripts/sidebarJsonToYaml.js"
   },
   "lint-staged": {
     "*.{js,vue}": "eslint --cache --fix",
