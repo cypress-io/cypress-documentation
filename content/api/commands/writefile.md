@@ -31,8 +31,7 @@ default `cypress.json`).
 **<Icon name="angle-right"></Icon> contents** **_(String, Array, Object or
 Buffer)_**
 
-The contents to be written to the file. Contents must be no larger than 100MB in
-size.
+The contents to be written to the file.
 
 **<Icon name="angle-right"></Icon> encoding** **_(String)_**
 
@@ -220,8 +219,8 @@ cy.readFile(filename, null).then((obj) => {
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-- `cy.writeFile()` can time out when the content being written is very large or
-  exceeds the maximum size threshold.
+- `cy.writeFile()` can time out when the content being written takes a
+  significant amount of time to encode.
 
 ## Command Log
 
