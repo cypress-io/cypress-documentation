@@ -329,17 +329,21 @@ configuration:
 
 - `animationDistanceThreshold`
 - `baseUrl`
-- `browser` **note:** filters whether the tests or a suite of tests runs
-  depending on the current browser
+- `blockHosts`
 - `defaultCommandTimeout`
-- `execTimeout`
 - `env` **note:** Provided environment variables will be merged with current
   environment variables.
+- `execTimeout`
+- `experimentalSessionSupport`
 - `includeShadowDom`
 - `keystrokeDelay`
+- `numTestsKeptInMemory`
+- `pageLoadTimeout`
+- `redirectionLimit`
 - `requestTimeout`
 - `responseTimeout`
 - `retries`
+- `screenshotOnRunFailure`
 - `scrollBehavior`
 - `slowTestThreshold`
 - `viewportHeight`
