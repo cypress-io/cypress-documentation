@@ -80,7 +80,7 @@ Now add a test. We will replace the default test (using Testing Library) with
 one using Cypress:
 
 ```jsx
-// src/App.test.js
+// src/App.cy.js
 
 import React from 'react'
 import { mount } from '@cypress/react'
@@ -128,9 +128,11 @@ Configure the dev server to use the same Webpack configuration used by Vue CLI.
 You can do this using the plugin provided by the `@cypress/webpack-dev-server`
 module.
 
-Also, you need to tell Cypress where to find your component tests. The following
-example configuration assumes that all the test files are somewhere in the `src`
-folder and end with the `.spec.js` extension.
+By default, Cypress looks for spec files anywhere in your project with an
+extension of either `.cy.js`, `.cy.jsx`, `.cy.ts`, or `.cy.tsx`. However, you
+can change this behavior with a custom `specPattern` value. In the following
+example, we've configured Cypress to look for spec files with those same
+extensions, but only in the `src` folder or any of its subdirectories.
 
 :::cypress-config-plugin-example
 
@@ -191,7 +193,7 @@ for more information.
 Now add a test:
 
 ```jsx
-// src/components/HelloWorld.spec.js
+// src/components/HelloWorld.cy.js
 
 import { mount } from '@cypress/vue'
 import HelloWorld from './HelloWorld.vue'
@@ -252,10 +254,11 @@ versions that correspond to the current version of Next.js.
 Configure the dev server to use the same Webpack configuration used by Next.js.
 You can do this using the `next` plugin provided by the `@cypress/react` module.
 
-Also, you need to tell Cypress where to find your component tests. The following
-example configuration assumes that all the test files are somewhere in the
-`cypress/pages` folder and end with either the `.spec.js` or `.spec.jsx`
-extension.
+By default, Cypress looks for spec files anywhere in your project with an
+extension of either `.cy.js`, `.cy.jsx`, `.cy.ts`, or `.cy.tsx`. However, you
+can change this behavior with a custom `specPattern` value. In the following
+example, we've configured Cypress to look for spec files with those same
+extensions, but only in the `pages` folder or any of its subdirectories.
 
 :::cypress-config-plugin-example
 
@@ -267,7 +270,7 @@ const { devServer } = require('@cypress/react/plugins/next')
 {
   component: {
     devServer,
-    specPattern: 'src/**/*.cy.{js,jsx,ts,tsx}'
+    specPattern: 'pages/**/*.cy.{js,jsx,ts,tsx}'
   }
 }
 ```
@@ -275,7 +278,7 @@ const { devServer } = require('@cypress/react/plugins/next')
 ```json
 {
   "component": {
-    "specPattern": "src/**/*.cy.{js,jsx,ts,tsx}"
+    "specPattern": "pages/**/*.cy.{js,jsx,ts,tsx}"
   }
 }
 ```
@@ -294,11 +297,11 @@ module.exports = (on, config) => {
 Now add a test:
 
 ```jsx
-// cypress/pages/IndexPage.spec.jsx
+// pages/IndexPage.cy.jsx
 
 import React from 'react'
 import { mount } from '@cypress/react'
-import IndexPage from '../../pages/index'
+import IndexPage from './index'
 
 it('Renders page component', () => {
   mount(<IndexPage />)
@@ -371,13 +374,15 @@ Configure the dev server to use the same Webpack configuration used by Nuxt. You
 can do this using the plugin provided by the `@cypress/webpack-dev-server`
 module.
 
-Also, you need to tell Cypress where to find your component tests. While it's
-possible to mount components in the `pages` directory, generally you will want
-to be more granular with your component tests - full page tests are best
-implemented with Cypress e2e runner.
+By default, Cypress looks for spec files anywhere in your project with an
+extension of either `.cy.js`, `.cy.jsx`, `.cy.ts`, or `.cy.tsx`. However, you
+can change this behavior with a custom `specPattern` value. In the following
+example, we've configured Cypress to look for spec files with those same
+extensions, but only in the `components` folder or any of its subdirectories.
 
-The following example configuration assumes that all the test files are
-somewhere in the `components` folder, and end with the `.spec.js` extension.
+While it's possible to mount components in the `pages` directory, generally you
+will want to be more granular with your component tests - full page tests are
+best implemented with Cypress e2e runner.
 
 :::cypress-config-plugin-example
 
@@ -396,7 +401,7 @@ const { getWebpackConfig } = require('nuxt')
         webpackConfig,
       })
     },
-    specPattern: 'src/**/*.cy.{js,jsx,ts,tsx}'
+    specPattern: 'components/**/*.cy.{js,jsx,ts,tsx}'
   }
 }
 ```
@@ -404,7 +409,7 @@ const { getWebpackConfig } = require('nuxt')
 ```json
 {
   "component": {
-    "specPattern": "src/**/*.cy.{js,jsx,ts,tsx}"
+    "specPattern": "components/**/*.cy.{js,jsx,ts,tsx}"
   }
 }
 ```
@@ -461,7 +466,7 @@ Now add a component:
 And a test:
 
 ```js
-// components/mountains.spec.js
+// components/mountains.cy.js
 
 import { mount } from '@cypress/vue'
 import Mountains from './mountains.vue'
@@ -529,10 +534,13 @@ and a Vue project
 [here](https://github.com/cypress-io/cypress-component-examples/tree/main/vite-vue).
 
 Configure the dev server using the plugin provided by the
-`@cypress/vite-dev-server` module. Also, you need to tell Cypress where to find
-your component tests. The following example configuration assumes that all the
-test files are somewhere in the `src` folder and end with the `.spec.jsx`
-extension.
+`@cypress/vite-dev-server` module.
+
+By default, Cypress looks for spec files anywhere in your project with an
+extension of either `.cy.js`, `.cy.jsx`, `.cy.ts`, or `.cy.tsx`. However, you
+can change this behavior with a custom `specPattern` value. In the following
+example, we've configured Cypress to look for spec files with those same
+extensions, but only in the `src` folder or any of its subdirectories.
 
 :::cypress-config-plugin-example
 
@@ -576,7 +584,7 @@ module.exports = (on, config) => {
 Now add a test:
 
 ```jsx
-// src/App.spec.jsx
+// src/App.cy.jsx
 
 import React from 'react'
 import { mount } from '@cypress/react'
