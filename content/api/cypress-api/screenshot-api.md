@@ -52,10 +52,10 @@ Cypress.Screenshot.defaults({
 })
 ```
 
-### Take a screenshot of the entire Test Runner
+### Take a screenshot of the entire Cypress App
 
 By default, [`cy.screenshot()`](/api/commands/screenshot) only captures your
-application under test. You may want it to capture the entire Test Runner for
+application under test. You may want it to capture the entire Cypress App for
 debugging purposes.
 
 ```javascript

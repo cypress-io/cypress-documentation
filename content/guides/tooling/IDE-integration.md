@@ -34,7 +34,7 @@ your selected application without prompting you to choose. If you want to change
 your selection, you can do so in the **Settings** tab of the Cypress App by
 clicking under **File Opener Preference**.
 
-<DocsImage src="/img/guides/file-opener-preference-settings-tab.png" alt="screenshot of Test Runner settings tab with file opener preference panel" ></DocsImage>
+<DocsImage src="/img/guides/file-opener-preference-settings-tab.png" alt="screenshot of Cypress App settings tab with file opener preference panel" ></DocsImage>
 
 ## Extensions & Plugins
 

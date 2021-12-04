@@ -96,7 +96,7 @@ behavior of the app under **real user interactions.** Since the app is loaded
 within a real browser, you can also manually explore its behavior while it is
 under the state of a desired test scenario.
 
-The Test Runner also helps you to write your tests by making it as easy as
+The Cypress App also helps you to write your tests by making it as easy as
 possible to find the right CSS selectors for the DOM elements in your
 application with its
 [Selector Playground](https://docs.cypress.io/guides/core-concepts/cypress-app#Selector-Playground).

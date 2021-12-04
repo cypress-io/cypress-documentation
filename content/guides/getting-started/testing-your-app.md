@@ -129,7 +129,7 @@ it('successfully loads', () => {
 })
 -->
 
-<DocsImage src="/img/guides/testing-your-app-visit-fail.png" alt="Error in Test Runner showing cy.visit failed" ></DocsImage>
+<DocsImage src="/img/guides/testing-your-app-visit-fail.png" alt="Error in Cypress App showing cy.visit failed" ></DocsImage>
 
 If you've started your server, then you should see your application loaded and
 working.

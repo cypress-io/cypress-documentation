@@ -188,7 +188,7 @@ The Node version is used in Cypress to:
 - Execute code in the
   [pluginsFile](/guides/references/configuration#Folders-Files).
 
-<DocsImage src="/img/guides/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Test Runner" ></DocsImage>
+<DocsImage src="/img/guides/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Cypress App" ></DocsImage>
 
 ### Experiments
 

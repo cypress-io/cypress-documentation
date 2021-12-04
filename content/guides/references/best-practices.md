@@ -1010,7 +1010,7 @@ load the main window in the `baseUrl` you specified as soon as your tests start.
 Having a `baseUrl` set gives you the added bonus of seeing an error if your
 server is not running during `cypress open` at the specified `baseUrl`.
 
-<DocsImage src="/img/guides/cypress-ensures-baseUrl-server-is-running.png" alt="Test Runner with warning about how Cypress could not verify server set as the baseUrl is running"></DocsImage>
+<DocsImage src="/img/guides/cypress-ensures-baseUrl-server-is-running.png" alt="Cypress App with warning about how Cypress could not verify server set as the baseUrl is running"></DocsImage>
 
 We also display an error if your server is not running at the specified
 `baseUrl` during `cypress run` after several retries.

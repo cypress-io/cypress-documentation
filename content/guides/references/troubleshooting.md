@@ -629,9 +629,9 @@ official fix faster.
 
 ### Edit the installed Cypress code
 
-The installed Test Runner comes with the fully transpiled, unobfuscated
+The installed application comes with the fully transpiled, unobfuscated
 JavaScript source code that you can hack on. You might want to directly modify
-the installed Test Runner code to:
+the installed app code to:
 
 - investigate a hard to recreate bug that happens on your machine
 - change the run-time behavior of Cypress before opening a pull request
@@ -659,7 +659,7 @@ You can change anything in the JavaScript code:
 
 <DocsImage src="/img/guides/source-code.png" alt="Source code of the Cypress App in a text editor" ></DocsImage>
 
-When finished, if necessary, remove the edited Test Runner version and reinstall
+When finished, if necessary, remove the edited application version and reinstall
 the Cypress official version to get back to the official released code.
 
 ```shell

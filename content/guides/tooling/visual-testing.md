@@ -14,7 +14,7 @@ title: Visual Testing
 
 ## Functional vs visual testing
 
-Cypress is a _functional_ Test Runner. It drives the web application the way a
+Cypress is a _functional_ application. It drives the web application the way a
 user would, and checks if the app _functions_ as expected: if the expected
 message appears, an element is removed, or a CSS class is added after the
 appropriate user action. A typical Cypress test, for example, can check if a
