@@ -657,6 +657,14 @@ cypress verify
 ✔  Verified Cypress! /Users/jane/Library/Caches/Cypress/3.0.0/Cypress.app
 ```
 
+To change the default timeout of 30 seconds you can set the environment variable
+`CYPRESS_VERIFY_TIMEOUT`:
+
+```shell
+export CYPRESS_VERIFY_TIMEOUT=60000 # wait for 60 seconds
+cypress verify
+```
+
 ### `cypress version`
 
 Prints the installed Cypress binary version, the Cypress package version, the
