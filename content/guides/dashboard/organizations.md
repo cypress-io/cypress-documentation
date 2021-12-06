@@ -257,8 +257,8 @@ organization to sign in through your SSO provider.
 
 #### **Notes**
 
-- Once SSO is set up in the Dashboard, Users should be invited via your SSO
-  provider, not the Dashboard.
+- Once SSO is set up in the Dashboard, Users will need to be invited via your
+  SSO provider, as the Dashboard invitation option will be disabled.
 - All SSO Users are initailly added with the
   [User Role](https://on.cypress.io/users#User-roles) of Member. If a User needs
   different User Role permissions, this can be changed via the Cypress Dashboard
