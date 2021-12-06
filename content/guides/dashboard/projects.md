@@ -174,8 +174,8 @@ our [Dashboard](https://on.cypress.io/dashboard).
 
 <DocsImage src="/img/dashboard/record-keys-in-project-settings-dashboard.png" alt="Record key in project settings" ></DocsImage>
 
-You can also find your Record Key inside of the _Settings_ tab in the Test
-Runner.
+You can also find your Record Key inside of the _Settings_ tab in the Cypress
+App.
 
 <DocsImage src="/img/dashboard/record-key-shown-in-desktop-gui-configuration.jpg" alt="Record Key in Configuration Tab" ></DocsImage>
 

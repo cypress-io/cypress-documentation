@@ -233,14 +233,15 @@ How you choose to edit the configuration is up to you. You don't have to read
 off of the file system - you could store them all in memory inside of
 [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) if you wanted.
 
-### Runner Specific Plugins
+### Test Type-Specific Plugins
 
 You can access the type of tests running via the `config.testingType` property.
 The testing type is either `e2e` or `component` depending on if the
 [End-to-End Testing](/guides/overview/choosing-testing-type#What-is-End-to-end-Testing)
 or
 [Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing)
-runner was launched. This allows you to configure runner specific plugins.
+type was selected in the Cypress App. This allows you to configure test
+type-specific plugins.
 
 #### Use Cypress React Plugin Conditionally
 

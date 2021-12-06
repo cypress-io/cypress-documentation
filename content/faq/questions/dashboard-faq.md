@@ -21,8 +21,8 @@ You can read more [here](/guides/dashboard/introduction).
 2. Then [record your runs](/guides/dashboard/runs).
 
 After recording your tests, you will see them in the
-[Dashboard](https://on.cypress.io/dashboard) and in the "Runs" tab of the Test
-Runner.
+[Dashboard](https://on.cypress.io/dashboard) and in the "Runs" tab of the
+Cypress App.
 
 ## <Icon name="angle-right"></Icon> How much does it cost?
 

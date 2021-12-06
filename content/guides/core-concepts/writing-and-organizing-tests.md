@@ -122,8 +122,8 @@ To see an example of every command used in Cypress, open the
 within your `cypress/integration` folder.
 
 To start writing tests for your app, create a new file like `app_spec.js` within
-your `cypress/integration` folder. Refresh your tests list in the Cypress Test
-Runner and your new file should have appeared in the list.
+your `cypress/integration` folder. Refresh your tests list in the Cypress App
+and your new file should have appeared in the list.
 
 ### Fixture Files
 

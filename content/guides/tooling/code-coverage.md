@@ -456,8 +456,8 @@ reachable from the UI. Yet this switch case is definitely worth testing - at
 least to avoid accidentally changing its behavior during future refactoring.
 
 We can directly test this piece of code by importing the `getVisibleTodos`
-function from the Cypress spec file. In essense we are using the Cypress Test
-Runner as a unit testing tool (find more unit testing recipes
+function from the Cypress spec file. In essense we are using the Cypress App as
+a unit testing tool (find more unit testing recipes
 [here](https://github.com/cypress-io/cypress-example-recipes#unit-testing)).
 
 Here is our test to confirm that the error is thrown.
@@ -736,7 +736,7 @@ following repositories:
   shows coverage for a React App that uses TypeScript.
 - [bahmutov/cypress-and-jest](https://github.com/bahmutov/cypress-and-jest)
   shows how to run Jest unit tests and Cypress unit tests, collecting code
-  coverage from both test runners, and then produce a merged report.
+  coverage from both applications, and then produce a merged report.
 - [rootstrap/react-redux-base](https://github.com/rootstrap/react-redux-base)
   shows an example with a realistic webpack config. Instruments the source code
   using `babel-plugin-istanbul` during tests.

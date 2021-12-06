@@ -432,9 +432,9 @@ verbose `cypress-verbose:server:util:process_profiler` debug stream.
 ## Disable the Command Log
 
 In some cases the [Command Log](/guides/core-concepts/cypress-app#Command-Log),
-responsible for displaying test commands, assertions, and statuses in the Test
-Runner, may cause performance issues resulting in slower tests or the browser
-crashing.
+responsible for displaying test commands, assertions, and statuses in the
+Cypress App, may cause performance issues resulting in slower tests or the
+browser crashing.
 
 In order to isolate these issues, you can hide the Command Log by passing the
 environment variable below during `cypress open` or `cypress run`.
