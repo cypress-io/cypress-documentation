@@ -258,7 +258,8 @@ By default, Cypress looks for spec files anywhere in your project with an
 extension of either `.cy.js`, `.cy.jsx`, `.cy.ts`, or `.cy.tsx`. However, you
 can change this behavior with a custom `specPattern` value. In the following
 example, we've configured Cypress to look for spec files with those same
-extensions, but only in the `pages` folder or any of its subdirectories.
+extensions, but only in the `pages` and `components` folders or any of their
+subdirectories.
 
 :::cypress-config-plugin-example
 
@@ -270,7 +271,7 @@ const { devServer } = require('@cypress/react/plugins/next')
 {
   component: {
     devServer,
-    specPattern: 'pages/**/*.cy.{js,jsx,ts,tsx}'
+    specPattern: '{pages,components}/**/*.cy.{js,jsx,ts,tsx}'
   }
 }
 ```
@@ -278,7 +279,7 @@ const { devServer } = require('@cypress/react/plugins/next')
 ```json
 {
   "component": {
-    "specPattern": "pages/**/*.cy.{js,jsx,ts,tsx}"
+    "specPattern": "{pages,components}/**/*.cy.{js,jsx,ts,tsx}"
   }
 }
 ```
@@ -378,7 +379,8 @@ By default, Cypress looks for spec files anywhere in your project with an
 extension of either `.cy.js`, `.cy.jsx`, `.cy.ts`, or `.cy.tsx`. However, you
 can change this behavior with a custom `specPattern` value. In the following
 example, we've configured Cypress to look for spec files with those same
-extensions, but only in the `components` folder or any of its subdirectories.
+extensions, but only in the `pages` and `components` folders or any of their
+subdirectories.
 
 While it's possible to mount components in the `pages` directory, generally you
 will want to be more granular with your component tests - full page tests are
@@ -401,7 +403,7 @@ const { getWebpackConfig } = require('nuxt')
         webpackConfig,
       })
     },
-    specPattern: 'components/**/*.cy.{js,jsx,ts,tsx}'
+    specPattern: '{pages,components}/**/*.cy.{js,jsx,ts,tsx}'
   }
 }
 ```
@@ -409,7 +411,7 @@ const { getWebpackConfig } = require('nuxt')
 ```json
 {
   "component": {
-    "specPattern": "components/**/*.cy.{js,jsx,ts,tsx}"
+    "specPattern": "{pages,components}/**/*.cy.{js,jsx,ts,tsx}"
   }
 }
 ```
