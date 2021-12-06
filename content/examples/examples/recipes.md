@@ -121,7 +121,7 @@ Demo recipes from the blog posts at [Cypress blog](https://www.cypress.io/blog).
 | [File Upload in React](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/file-upload-react)          | Test file upload in React application     |
 
 **Note:** looking for the React/Vue component testing recipes? Read the
-[Introducing the Cypress Component Cypress App– new in 7.0.0](https://www.cypress.io/blog/2021/04/06/introducing-the-cypress-component-test-runner/)
+[Introducing the Cypress Component Test Runner– new in 7.0.0](https://www.cypress.io/blog/2021/04/06/introducing-the-cypress-component-test-runner/)
 blog post.
 
 ## Server Communication

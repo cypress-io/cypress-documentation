@@ -141,8 +141,8 @@ beforeEach(() => {
 [This blog post](https://www.cypress.io/blog/2018/02/05/when-can-the-test-start/)
 explains how to use `cy.window()` to spy on the DOM `prototype` to detect when
 the application starts adding event listeners to the DOM elements. When this
-happens for the first time, the Cypress App knows that the application has
-started and the tests can begin.
+happens for the first time, the Cypress App knows that the application under
+test has started and the tests can begin.
 
 See
 [Set flag to start tests](https://glebbahmutov.com/blog/set-flag-to-start-tests/)
