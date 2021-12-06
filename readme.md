@@ -52,6 +52,28 @@ You can view the statically generated site at
 
 ### Testing
 
+#### Linting
+
+Javascript code is linted with [ESLint](https://eslint.org/).
+
+CSS code is linted with [stylelint](https://stylelint.io/).
+
+Markdown is formatted with [Prettier](https://prettier.io/).
+
+```sh
+yarn lint
+```
+
+#### Unit Tests
+
+Javascript code is unit tested with [Jest](https://jestjs.io/).
+
+```sh
+yarn test:unit
+```
+
+#### Integration Tests
+
 We use Cypress itself to test the documentation.
 
 Run the tests:

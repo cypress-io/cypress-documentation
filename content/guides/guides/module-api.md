@@ -45,28 +45,29 @@ node e2e-run-tests.js
 Just like the [Command Line options](/guides/guides/command-line) for
 `cypress run`, you can pass options that modify how Cypress runs.
 
-| Option            | Type               | Description                                                                                                                                                        |
-| ----------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `browser`         | _string_           | Specify different browser to run tests in, either by name or by filesystem path                                                                                    |
-| `ciBuildId`       | _string_           | Specify a unique identifier for a run to enable [grouping](/guides/guides/parallelization#Grouping-test-runs) or [parallelization](/guides/guides/parallelization) |
-| `config`          | _object_           | Specify [configuration](/guides/references/configuration)                                                                                                          |
-| `configFile`      | _string / boolean_ | Path to the config file to be used. If `false` is passed, no config file will be used.                                                                             |
-| `env`             | _object_           | Specify [environment variables](/guides/guides/environment-variables)                                                                                              |
-| `group`           | _string_           | [Group](/guides/guides/parallelization#Grouping-test-runs) recorded tests together under a single run                                                              |
-| `headed`          | _boolean_          | Displays the browser instead of running headlessly                                                                                                                 |
-| `headless`        | _boolean_          | Hide the browser instead of running headed (default during `cypress run`)                                                                                          |
-| `key`             | _string_           | Specify your secret record key                                                                                                                                     |
-| `exit`            | _boolean_          | Whether to close Cypress after all tests run                                                                                                                       |
-| `parallel`        | _boolean_          | Run recorded specs in [parallel](/guides/guides/parallelization) across multiple machines                                                                          |
-| `port`            | _number_           | Override default port                                                                                                                                              |
-| `project`         | _string_           | Path to a specific project                                                                                                                                         |
-| `quiet`           | _boolean_          | If passed, Cypress output will not be printed to `stdout`. Only output from the configured [Mocha reporter](/guides/tooling/reporters) will print.                 |
-| `record`          | _boolean_          | Whether to record the test run                                                                                                                                     |
-| `reporter`        | _string_           | Specify a [Mocha reporter](/guides/tooling/reporters)                                                                                                              |
-| `reporterOptions` | _object_           | Specify [Mocha reporter](/guides/tooling/reporters) options                                                                                                        |
-| `spec`            | _string_           | Specify the specs to run, see examples below                                                                                                                       |
-| `tag`             | _string_           | Identify a run with a tag or tags                                                                                                                                  |
-| `testingType`     | _string_           | Specify the type of tests to execute; either `e2e` or `component`. Defaults to `e2e`                                                                               |
+| Option              | Type               | Description                                                                                                                                                                                                       |
+| ------------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `browser`           | _string_           | Specify different browser to run tests in, either by name or by filesystem path                                                                                                                                   |
+| `ciBuildId`         | _string_           | Specify a unique identifier for a run to enable [grouping](/guides/guides/parallelization#Grouping-test-runs) or [parallelization](/guides/guides/parallelization)                                                |
+| `config`            | _object_           | Specify [configuration](/guides/references/configuration)                                                                                                                                                         |
+| `configFile`        | _string / boolean_ | Path to the config file to be used. If `false` is passed, no config file will be used.                                                                                                                            |
+| `env`               | _object_           | Specify [environment variables](/guides/guides/environment-variables)                                                                                                                                             |
+| `group`             | _string_           | [Group](/guides/guides/parallelization#Grouping-test-runs) recorded tests together under a single run                                                                                                             |
+| `headed`            | _boolean_          | Displays the browser instead of running headlessly                                                                                                                                                                |
+| `headless`          | _boolean_          | Hide the browser instead of running headed (default during `cypress run`)                                                                                                                                         |
+| `key`               | _string_           | Specify your secret record key                                                                                                                                                                                    |
+| `exit`              | _boolean_          | Whether to close Cypress after all tests run                                                                                                                                                                      |
+| `parallel`          | _boolean_          | Run recorded specs in [parallel](/guides/guides/parallelization) across multiple machines                                                                                                                         |
+| `port`              | _number_           | Override default port                                                                                                                                                                                             |
+| `project`           | _string_           | Path to a specific project                                                                                                                                                                                        |
+| `quiet`             | _boolean_          | If passed, Cypress output will not be printed to `stdout`. Only output from the configured [Mocha reporter](/guides/tooling/reporters) will print.                                                                |
+| `record`            | _boolean_          | Whether to record the test run                                                                                                                                                                                    |
+| `reporter`          | _string_           | Specify a [Mocha reporter](/guides/tooling/reporters)                                                                                                                                                             |
+| `reporterOptions`   | _object_           | Specify [Mocha reporter](/guides/tooling/reporters) options                                                                                                                                                       |
+| `slowTestThreshold` | _number_           | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter. You will often want to set this separately for component and e2e testing. |
+| `spec`              | _string_           | Specify the specs to run, see examples below                                                                                                                                                                      |
+| `tag`               | _string_           | Identify a run with a tag or tags                                                                                                                                                                                 |
+| `testingType`       | _string_           | Specify the type of tests to execute; either `e2e` or `component`. Defaults to `e2e`                                                                                                                              |
 
 ### Examples
 
@@ -346,6 +347,7 @@ for more examples.
 
 | Version                                       | Changes                                                |
 | --------------------------------------------- | ------------------------------------------------------ |
+| [8.7.0](/guides/references/changelog#8-7-0)   | Added `slowTestThreshold` configuration option.        |
 | [7.3.0](/guides/references/changelog#7-3-0)   | Added `testingType` configuration option.              |
 | [5.0.0](/guides/references/changelog#5-0-0)   | Test results returned from `cypress.run()` changed.    |
 | [4.11.0](/guides/references/changelog#4-11-0) | Added `cypress.cli` with `parseRunArguments` function. |

@@ -46,7 +46,7 @@ cypress run
 Depending on which CI provider you use, you may need a config file. You'll want
 to refer to your CI provider's documentation to know where to add the commands
 to install and run Cypress. For more configuration examples check out our
-[examples](#Examples).
+[examples](/guides/continuous-integration/ci-provider-examples).
 
 ### Boot your server
 

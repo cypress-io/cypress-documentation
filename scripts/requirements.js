@@ -9,7 +9,7 @@ const createChildCommandDOMListItem = (cmd) =>
     cmd
   )} requires being chained off a command that yields DOM element(s).`}
 const createDualCommandListItem = (cmd) =>
-  {return `${codify(cmd)} can bechained off of ${codify('cy')} or off another command.`}
+  {return `${codify(cmd)} can be chained off of ${codify('cy')} or off another command.`}
 const createParentCommandListItem = (cmd) =>
   {return `${codify(cmd)} requires being chained off of ${codify('cy')}.`}
 

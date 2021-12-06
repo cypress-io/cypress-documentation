@@ -54,7 +54,7 @@ npx cypress run
 ...or by using Yarn...
 
 ```shell
-yarn open
+yarn cypress run
 ```
 
 You may find it easier to add the cypress command to the `scripts` object in
@@ -128,7 +128,7 @@ cypress run [options]
 | `--reporter`, `-r`         | [Specify a Mocha reporter](#cypress-run-reporter-lt-reporter-gt)                                                                                                                           |
 | `--reporter-options`, `-o` | [Specify Mocha reporter options](#cypress-run-reporter-lt-reporter-gt)                                                                                                                     |
 | `--spec`, `-s`             | [Specify the spec files to run](#cypress-run-spec-lt-spec-gt)                                                                                                                              |
-| `--tag`, `-t`              | [Identify a run with a tag or tags](#cypress-run-tag-lt-tag-gt)                                                                                                                          |
+| `--tag`, `-t`              | [Identify a run with a tag or tags](#cypress-run-tag-lt-tag-gt)                                                                                                                            |
 
 #### `cypress run --browser <browser-name-or-path>`
 
@@ -523,7 +523,7 @@ values with a comma. The values set here override any values set in your
 configuration file.
 
 ```shell
-cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
+cypress open --config pageLoadTimeout=100000,watchForFileChanges=false
 ```
 
 #### `cypress open --config-file <config-file>`

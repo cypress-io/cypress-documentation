@@ -105,7 +105,7 @@ If no method is defined Cypress will match all requests by default.
 
 #### **<Icon name="angle-right"></Icon> url** **_(String, Glob, RegExp)_**
 
-Specify the URL to match. See [Matching `url`](#match-url) for examples.
+Specify the URL to match. See [Matching `url`][match-url] for examples.
 
 Alternatively, specify the URL via the [`routeMatcher`][arg-routematcher]
 argument (below).
