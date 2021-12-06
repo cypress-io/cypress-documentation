@@ -11,7 +11,7 @@ documented below. These methods are used internally by Cypress in nearly every
 single built in command.
 
 We suggest
-[reading through the source code here](https://github.com/cypress-io/cypress/blob/develop/packages/driver/src/dom/index.js)
+[reading through the source code here](https://github.com/cypress-io/cypress/blob/develop/packages/driver/src/dom/index.ts)
 to see all of the methods and what they do.
 
 </Alert>
