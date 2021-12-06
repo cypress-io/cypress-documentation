@@ -51,7 +51,7 @@ Cypress Dashboard. From there, you will have the choice of authenitication type:
 Refer to our
 [Enterprise SSO Guide](https://on.cypress.io/organizations#Slack-Integration)
 
-#### **Locked Out/ Forgot Password**
+#### **Locked Out or Forgot Passwordd**
 
 Refer to our
 [I can't access my Dashboard FAQ](http://localhost:3000/faq/questions/dashboard-faq#I-can-t-access-my-Dashboard)

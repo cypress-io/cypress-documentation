@@ -54,7 +54,7 @@ A [user](/guides/dashboard/users) is anyone with a login to our Dashboard
 Service that has been invited to see and review the test results of your
 organization.
 
-## <Icon name="angle-right"></Icon> I can't access my Dashboard?
+## <Icon name="angle-right"></Icon> What do I do if I can't access my Dashboard account?
 
 **I am trying to reset my password, but never receive the email:**
 
