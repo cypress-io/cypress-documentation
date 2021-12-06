@@ -54,6 +54,21 @@ A [user](/guides/dashboard/users) is anyone with a login to our Dashboard
 Service that has been invited to see and review the test results of your
 organization.
 
+## <Icon name="angle-right"></Icon> I can't access my Dashboard?
+
+**I am trying to reset my password, but never receive the email:**
+
+- Verify it is the correct email address
+- Verify it is not in a trash or spam folder
+- Verify you are not using Social authentication by trying to Sign In with
+  Google or GitHub
+- Verify you have followed the
+  [Sign Up with an Invitation](https://docs.cypress.io/guides/dashboard/users#Sign-Up-with-an-Invitation)
+  process for your preferred method of authentication
+
+**If the troubleshooting tips above did not solve your access issue or involves
+SSO, reach out to [support](mailto:support@cypress.io).**
+
 ## <Icon name="angle-right"></Icon> What is the difference between public and private projects?
 
 **A public project** means that anyone can see the recorded runs for it. It's
