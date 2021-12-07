@@ -87,9 +87,8 @@ will need to add custom typings for your commands to get code completion and to
 avoid any TypeScript errors.
 
 The typings will need to be in a location that any code can access, therefore,
-we recommend creating a `cypress.d.ts` file in the root directory.
-
-Then, you can update the `cypress.d.ts` file with:
+we recommend creating a `cypress.d.ts` file in the root directory, and use this
+example as a starting point for customizing your own command:
 
 <code-group-react-vue>
 <template #react>
@@ -152,22 +151,30 @@ include the `cypress.d.ts` file in all your `tsconfig.json` files like so:
 You're not limited to a single `cy.mount()` command. If needed, you can create
 any number of custom mount commands, as long as they have unique names.
 
-Below are some examples for specific use cases.
+Below are some examples for common uses cases and libraries.
 
 ## React Examples
 
+If your React component relies on provider to work properly, you will need to
+wrap your component in that provider in your component tests. This is a good use
+case to create a custom mount command that wraps your components for you.
+
+Below are a few examples that demonstrate how. These examples can be adjusted
+for most other providers that you will need to support.
+
 ### React Router
 
-If you have a component that consumes a hook or component from React Router, you
-will need to make sure the component has access to a React Router provider.
-Below is a sample mount command that uses `MemoryRouter` to wrap the component.
-Setup props for `MemoryRouter` can be passed in the options param as well:
+If you have a component that consumes a hook or component from
+[React Router](https://reactrouter.com/), you will need to make sure the
+component has access to a React Router provider. Below is a sample mount command
+that uses `MemoryRouter` to wrap the component. Setup props for `MemoryRouter`
+can be passed in the options param as well:
 
 ```jsx
 import { mount } from '@cypress/react'
 import { MemoryRouter } from 'react-router-dom'
 
-Cypress.Commands.add('mountWithRouter', (component, options) => {
+Cypress.Commands.add('mountWithRouter', (component, options = {}) => {
   const { routerProps = { initialEntries: ['/'] }, ...mountOptions } = options
 
   const wrapped = <MemoryRouter {...routerProps}>{component}</MemoryRouter>
@@ -176,26 +183,50 @@ Cypress.Commands.add('mountWithRouter', (component, options) => {
 })
 ```
 
-You can pass in custom props for the `MemoryRouter` in the `options` param.
+Typings:
 
-Example usage:
+```ts
+import { MountOptions, MountReturn } from '@cypress/react'
+import { MemoryRouterProps } from 'react-router-dom'
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Mounts a React node
+       * @param jsx React Node to mount
+       * @param options Additional options to pass into mount
+       */
+      mountWithRouter(
+        jsx: React.ReactNode,
+        options?: MountOptions & { routerProps?: MemoryRouterProps }
+      ): Cypress.Chainable<MountReturn>
+    }
+  }
+}
+```
+
+In this setup, you can pass in custom props for the `MemoryRouter` in the
+`options` param. Below is an example test that ensures an active link has the
+correct class applied to it by initializing the router with `initialEntries`
+pointed to a particular route:
 
 ```jsx
-it('Logout link should appear when logged in', () => {
-  cy.mountWithRouter(<Navigation loggedIn={true} />, {
+it('login link should be active when url is "/login"', () => {
+  cy.mountWithRouter(<Navigation />, {
     routerProps: {
-      initialEntries: ['/home'],
+      initialEntries: ['/login'],
     },
   })
-  cy.contains('Logout').should('exist')
+  cy.get('a').contains('Login').should('have.class', 'active')
 })
 ```
 
 ### Redux
 
-To use a component that consumes state or actions from a Redux store, you can
-create a `mountWithRedux` command that will wrap your component in a Redux
-Provider:
+To use a component that consumes state or actions from a
+[Redux](https://react-redux.js.org/) store, you can create a `mountWithRedux`
+command that will wrap your component in a Redux Provider:
 
 ```jsx
 import { mount } from '@cypress/react'
@@ -209,10 +240,10 @@ Cypress.Commands.add('mountWithRedux', (component, store, options = {}) => {
 
 Typings:
 
-```jsx
-import { MountOptions, MountReturn } from '@cypress/react';
-import { EnhancedStore } from '@reduxjs/toolkit';
-import { RootState } from './src/StoreState';
+```ts
+import { MountOptions, MountReturn } from '@cypress/react'
+import { EnhancedStore } from '@reduxjs/toolkit'
+import { RootState } from './src/StoreState'
 
 declare global {
   namespace Cypress {
@@ -227,17 +258,15 @@ declare global {
         jsx: React.ReactNode,
         store: EnhancedStore<RootState>,
         options?: MountOptions
-      ): Cypress.Chainable<MountReturn>;
+      ): Cypress.Chainable<MountReturn>
     }
   }
 }
 ```
 
 The second param to the `mountWithRedux` command is the store that the provider
-gets initialized with. We recommend having a factory method that returns a new
-store each time so that the store is not reused between tests.
-
-Example Usage:
+gets initialized with. It is important that the store be initialized with each
+new test to ensure changes to the store don't affect other tests:
 
 ```jsx
 import { getStore } from '../redux/store'
@@ -246,48 +275,333 @@ import { UserProfile } from './UserProfile'
 
 it('User profile should display users name', () => {
   const user = { name: 'test person' }
+
+  // getStore is a factory method that creates a new store
   const store = getStore()
+
   // setUser is an action exported from the user slice
   store.dispatch(setUser(user))
+
   cy.mountWithRedux(<UserProfile />, store)
+
   cy.get('div.name').should('have.text', user.name)
 })
 ```
 
 ## Vue Examples
 
-### Plugins & Global Vue Components
+Adding plugins and global components are some common scenarios for creating
+custom mount commands in Vue. Below are examples that demonstrate how set up a
+mount command for a few popular Vue libraries. These examples can be adapted to
+other libraries as well.
 
-Vue components like Buttons and TextFields might be registered at the global
-level in the main file to avoid having to import them into each component that
-consumes them. If you try to run a test on one of these, the common components
-won't render because the tests don't use the `app` that is setup in the main
-file.
+### Vuetify
 
-We can create a custom mount command that will add these global components to
-the options that get passed into `mount`:
+This example shows how to set a global `cy.mount` command that configures
+[Vuetify](https://vuetifyjs.com/), ensuring components that utilize the UI
+library display properly during test runs.
 
-```jsx
+Vuetify is a plugin that must be registered and have a few custom attributes on
+the root element setup for styling to appear correct.
+
+<code-group-vue2-vue3>
+<template #vue2>
+
+```js
+import { mount } from '@cypress/vue'
+import vuetify from '../../src/plugins/vuetify'
+
+Cypress.Commands.overwrite('mount', (comp, options = {}) => {
+  // Add attributes needed for Vuetify styling
+  const root = document.getElementById('__cy_root')
+  if (!root.classList.contains('v-application')) {
+    root.classList.add('v-application')
+  }
+  root.setAttribute('data-app', 'true')
+
+  // vuetify import calls Vue.use(Vuetify) directly
+  // so no need to call it directly here
+
+  return mount(comp, {
+    vuetify,
+    ...options,
+  })
+})
+```
+
+</template>
+<template #vue3>
+
+```js
+import { mount } from '@cypress/vue'
+import vuetify from '../../src/plugins/vuetify'
+
+Cypress.Commands.overwrite('mount', (comp, options = {}) => {
+  // Setup options object
+  options.global = options.global || {}
+  options.global.plugins = options.global.plugins || []
+
+  // Add attributes needed for Vuetify styling
+  const root = document.getElementById('__cy_root')
+  if (!root.classList.contains('v-application')) {
+    root.classList.add('v-application')
+  }
+  root.setAttribute('data-app', 'true')
+
+  // Add Vuetify plugin
+  options.global.plugins.push({
+    install(app) {
+      app.use(vuetify)
+    },
+  })
+
+  return mount(comp, options)
+})
+```
+
+</template>
+</code-group-vue2-vue3>
+
+Typings:
+
+```ts
 import { mount } from '@cypress/vue'
 
-Cypress.Commands.add('mount', (comp, options = {}) => {
-    // Setup options object
-    options.global = options.global || {};
-    options.global.stubs = options.global.stubs || {};
-    options.global.stubs['transition'] = false;
-    options.global.components = options.global.components || {};
-    options.global.plugins = options.global.plugins || [];
+type MountParams = Parameters<typeof mount>
+type OptionsParam = MountParams[1]
 
-    // Add any global plugins
-    // options.global.plugins.push({
-    //   install(app) {
-    //     app.use(MyPlugin);
-    //   },
-    // });
-
-    // Add any global components
-    options.global.components['Button'] = Button
-
-    return mount(comp, options)
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Helper mount function for Vue Components
+       * @param component Vue Component or JSX Element to mount
+       * @param options Options passed to Vue Test Utils
+       */
+      mount(component: any, options?: OptionsParam): Chainable<any>
+    }
   }
+}
 ```
+
+Usage:
+
+```ts
+import Button from './Button.vue'
+
+it('Shows a button', () => {
+  cy.mount(Button, {
+    slots: {
+      default: () => 'Click Me',
+    },
+  })
+  cy.contains('Click Me').should('exist')
+})
+```
+
+### Vue Router
+
+To wire up a plugin such as Vue Router, you can create a custom command to
+register the plugin and pass in a custom implementation of the router via the
+options param.
+
+<code-group-vue2-vue3>
+<template #vue2>
+
+```js
+import { mount } from '@cypress/vue'
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import { router } from '../../src/router'
+
+Cypress.Commands.add('mountWithRouter', (comp, options = {}) => {
+  // Add the VueRouter plugin
+  Vue.use(VueRouter)
+
+  // Use the router passed in via options,
+  // or the default one if not provided
+  options.router = options.router || router
+
+  return mount(comp, options)
+})
+```
+
+Typings:
+
+```ts
+import { mount } from '@cypress/vue'
+import VueRouter from 'vue-router'
+
+type MountParams = Parameters<typeof mount>
+type OptionsParam = MountParams[1] & { router?: VueRouter }
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Helper mount function for Vue Components
+       * @param component Vue Component or JSX Element to mount
+       * @param options Options passed to Vue Test Utils
+       */
+      mountWithRouter(component: any, options?: OptionsParam): Chainable<any>
+    }
+  }
+}
+```
+
+Usage:
+
+```js
+import VueRouter from 'vue-router'
+import Navigation from './Navigation.vue'
+import { routes } from '../router'
+
+it('login link should be active when url is "/login"', () => {
+  // Create a new router instance for each test
+  const router = new VueRouter({
+    mode: 'history',
+    routes,
+  })
+
+  // Change location to `/login`
+  router.push('/login')
+
+  // Pass the already initialized router for use
+  cy.mountWithRouter(Navigation, { router: router })
+
+  cy.get('a').contains('Login').should('have.class', 'router-link-active')
+})
+```
+
+</template>
+<template #vue3>
+
+```js
+import { mount } from '@cypress/vue'
+import { createMemoryHistory, createRouter } from 'vue-router'
+import { routes } from '../../src/router'
+
+Cypress.Commands.add('mountWithRouter', (comp, options = {}) => {
+  // Setup options object
+  options.global = options.global || {}
+  options.global.plugins = options.global.plugins || []
+
+  // Use the router passed in via options,
+  // or the default one if not provided
+  options.router =
+    options.router ||
+    createRouter({
+      routes: routes,
+      history: createMemoryHistory(),
+    })
+
+  // Add router plugin
+  options.global.plugins.push({
+    install(app) {
+      app.use(options.router)
+    },
+  })
+
+  return mount(comp, options)
+})
+```
+
+Typings:
+
+```ts
+import { mount } from '@cypress/vue'
+import { Router } from 'vue-router'
+
+type MountParams = Parameters<typeof mount>
+type OptionsParam = MountParams[1] & { router?: Router }
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Helper mount function for Vue Components
+       * @param component Vue Component or JSX Element to mount
+       * @param options Options passed to Vue Test Utils
+       */
+      mountWithRouter(component: any, options?: OptionsParam): Chainable<any>
+    }
+  }
+}
+```
+
+Usage:
+
+Calling `router.push()` in the router for Vue 3 is an asynchronous operation.
+You can use the [cy.wrap](/api/commands/wrap) command to have Cypress await the
+promise's resolve before it continues with other commands:
+
+```js
+import Navigation from './Navigation.vue'
+import { routes } from '../router'
+import { createMemoryHistory, createRouter } from 'vue-router'
+
+it('login link should be active when url is "/login"', () => {
+  // Create a new router instance for each test
+  const router = createRouter({
+    routes: routes,
+    history: createMemoryHistory(),
+  })
+
+  // Change location to `/login`,
+  // and await on the promise with cy.wrap
+  cy.wrap(router.push('/login'))
+
+  // Pass the already initialized router for use
+  cy.mountWithRouter(<Navigation />, { router: router })
+
+  cy.get('a').contains('Login').should('have.class', 'router-link-active')
+})
+```
+
+</template>
+</code-group-vue2-vue3>
+
+### Global Components
+
+If you have components that are registered globally in the main application
+file, you will need to set them up in your mount command as well.
+
+<code-group-vue2-vue3>
+<template #vue2>
+
+```js
+import { mount } from '@cypress/vue'
+import Button from '../../src/components/Button.vue'
+
+Cypress.Commands.overwrite('mount', (comp, options = {}) => {
+  // Register global components
+  Vue.component('MyButton', Button)
+
+  return mount(comp, {
+    vuetify,
+    ...options,
+  })
+})
+```
+
+</template>
+<template #vue3>
+
+```js
+import { mount } from '@cypress/vue'
+import Button from '../../src/components/Button.vue'
+
+Cypress.Commands.overwrite('mount', (comp, options = {}) => {
+  // Setup options object
+  options.global = options.global || {}
+  options.global.components = options.global.components || {}
+
+  // Register global components
+  options.global.components['Button'] = Button
+
+  return mount(comp, options)
+})
+```
+
+</template>
+</code-group-vue2-vue3>
