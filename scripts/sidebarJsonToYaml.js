@@ -18,6 +18,20 @@ keys.map((key) => {
         yamlArray.push(indent(`${child.slug}:`, 1, 2))
 
         child.children.map((grandChild) => {
+          if (grandChild.title === 'Table of Contents') {
+            yamlArray.push(
+              indent('table-of-contents: table-of-contents.html', 1, 4)
+            )
+
+            return
+          }
+
+          if (grandChild.title === 'All Assertions') {
+            yamlArray.push(indent('all-assertions: assertions.html', 1, 4))
+
+            return
+          }
+
           yamlArray.push(
             indent(`${grandChild.slug}: ${grandChild.slug}.html`, 1, 4)
           )

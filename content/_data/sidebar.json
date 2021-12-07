@@ -372,8 +372,7 @@
           "children": [
             {
               "title": "Table of Contents",
-              "redirect": "/api/table-of-contents",
-              "slug": "table-of-contents"
+              "redirect": "/api/table-of-contents"
             }
           ]
         },
@@ -393,8 +392,7 @@
           "children": [
             {
               "title": "All Assertions",
-              "redirect": "/guides/references/assertions",
-              "slug": "all-assertions"
+              "redirect": "/guides/references/assertions"
             }
           ]
         },
