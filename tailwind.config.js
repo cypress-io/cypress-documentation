@@ -29,7 +29,7 @@ module.exports = {
         black: 'rgb(46, 49, 56)',
       },
       spacing: {
-        sidebar: '290px',
+        sidebar: '300px',
       },
     },
   },
