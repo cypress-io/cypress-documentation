@@ -1,4 +1,5 @@
 const fs = require('fs')
+const yaml = require('js-yaml')
 const { indent } = require('../utils/indentString')
 const sidebarJSON = require('../content/_data/sidebar.json')
 const keys = Object.keys(sidebarJSON)
@@ -42,7 +43,7 @@ keys.map((key) => {
 })
 
 try {
-  fs.writeFileSync('static/manifest.yml', yamlArray.join('\n'))
+  fs.writeFileSync('static/manifest.yml', yaml.dump(yamlArray.join('\n')))
 } catch (err) {
   // eslint-disable-next-line no-console
   console.error(err)
