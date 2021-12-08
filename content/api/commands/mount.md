@@ -273,7 +273,7 @@ import { getStore } from '../redux/store'
 import { setUser } from '../redux/userSlice'
 import { UserProfile } from './UserProfile'
 
-it('User profile should display users name', () => {
+it('User profile should display user name', () => {
   const user = { name: 'test person' }
 
   // getStore is a factory method that creates a new store
