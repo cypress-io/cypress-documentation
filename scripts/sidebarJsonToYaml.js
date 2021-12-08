@@ -1,50 +1,22 @@
 const fs = require('fs')
 const yaml = require('js-yaml')
-const { indent } = require('../utils/indentString')
 const sidebarJSON = require('../content/_data/sidebar.json')
-const keys = Object.keys(sidebarJSON)
-let yamlArray = []
+const sidebarKeys = Object.keys(sidebarJSON)
+let formattedSidebar = {}
 
-keys.map((key) => {
-  sidebarJSON[key].map((item) => {
-    if (item.slug === 'plugins') {
-      yamlArray.push('plugins:')
-      yamlArray.push(indent('plugins: index.html', 1, 2))
-    } else {
-      yamlArray.push(`${item.slug}:`)
+const process = (arr) => {
+  return arr.reduce((acc, { slug, children }) => {
+    return {
+      ...acc,
+      [slug]: children ? process(children) : `${slug}`,
     }
+  }, {})
+}
 
-    if (item.children) {
-      item.children.map((child) => {
-        yamlArray.push(indent(`${child.slug}:`, 1, 2))
+sidebarKeys.map((key) => {
+  const formattedKey = process(sidebarJSON[key])
 
-        child.children.map((grandChild) => {
-          if (grandChild.title === 'Table of Contents') {
-            yamlArray.push(
-              indent('table-of-contents: table-of-contents.html', 1, 4)
-            )
-
-            return
-          }
-
-          if (grandChild.title === 'All Assertions') {
-            yamlArray.push(indent('all-assertions: assertions.html', 1, 4))
-
-            return
-          }
-
-          yamlArray.push(
-            indent(`${grandChild.slug}: ${grandChild.slug}.html`, 1, 4)
-          )
-        })
-      })
-    }
-  })
+  Object.assign(formattedSidebar, formattedKey)
 })
 
-try {
-  fs.writeFileSync('static/manifest.yml', yaml.dump(yamlArray.join('\n')))
-} catch (err) {
-  // eslint-disable-next-line no-console
-  console.error(err)
-}
+fs.writeFileSync('static/manifest.yml', yaml.dump(formattedSidebar), 'utf8')

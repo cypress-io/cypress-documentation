@@ -1,237 +1,235 @@
-|-
+guides:
+  overview:
+    why-cypress: why-cypress
+    key-differences: key-differences
+  getting-started:
+    installing-cypress: installing-cypress
+    writing-your-first-test: writing-your-first-test
+    testing-your-app: testing-your-app
+  core-concepts:
+    introduction-to-cypress: introduction-to-cypress
+    writing-and-organizing-tests: writing-and-organizing-tests
+    retry-ability: retry-ability
+    interacting-with-elements: interacting-with-elements
+    variables-and-aliases: variables-and-aliases
+    conditional-testing: conditional-testing
+    test-runner: test-runner
+    cypress-studio: cypress-studio
+  dashboard:
+    introduction: introduction
+    projects: projects
+    runs: runs
+    organizations: organizations
+    users: users
+    bitbucket-integration: bitbucket-integration
+    github-integration: github-integration
+    gitlab-integration: gitlab-integration
+    jira-integration: jira-integration
+    slack-integration: slack-integration
+    analytics: analytics
+    flaky-test-management: flaky-test-management
+    smart-orchestration: smart-orchestration
   guides:
-    overview:
-      why-cypress: why-cypress.html
-      key-differences: key-differences.html
-    getting-started:
-      installing-cypress: installing-cypress.html
-      writing-your-first-test: writing-your-first-test.html
-      testing-your-app: testing-your-app.html
-    core-concepts:
-      introduction-to-cypress: introduction-to-cypress.html
-      writing-and-organizing-tests: writing-and-organizing-tests.html
-      retry-ability: retry-ability.html
-      interacting-with-elements: interacting-with-elements.html
-      variables-and-aliases: variables-and-aliases.html
-      conditional-testing: conditional-testing.html
-      test-runner: test-runner.html
-      cypress-studio: cypress-studio.html
-    dashboard:
-      introduction: introduction.html
-      projects: projects.html
-      runs: runs.html
-      organizations: organizations.html
-      users: users.html
-      bitbucket-integration: bitbucket-integration.html
-      github-integration: github-integration.html
-      gitlab-integration: gitlab-integration.html
-      jira-integration: jira-integration.html
-      slack-integration: slack-integration.html
-      analytics: analytics.html
-      flaky-test-management: flaky-test-management.html
-      smart-orchestration: smart-orchestration.html
-    guides:
-      command-line: command-line.html
-      module-api: module-api.html
-      debugging: debugging.html
-      network-requests: network-requests.html
-      test-retries: test-retries.html
-      parallelization: parallelization.html
-      environment-variables: environment-variables.html
-      stubs-spies-and-clocks: stubs-spies-and-clocks.html
-      screenshots-and-videos: screenshots-and-videos.html
-      launching-browsers: launching-browsers.html
-      cross-browser-testing: cross-browser-testing.html
-      web-security: web-security.html
-    testing-strategies:
-      auth0-authentication: auth0-authentication.html
-      amazon-cognito-authentication: amazon-cognito-authentication.html
-      okta-authentication: okta-authentication.html
-      google-authentication: google-authentication.html
-      working-with-graphql: working-with-graphql.html
-    continuous-integration:
-      introduction: introduction.html
-      ci-provider-examples: ci-provider-examples.html
-      circleci: circleci.html
-      github-actions: github-actions.html
-      gitlab-ci: gitlab-ci.html
-      bitbucket-pipelines: bitbucket-pipelines.html
-      aws-codebuild: aws-codebuild.html
-    component-testing:
-      introduction: introduction.html
-      framework-configuration: framework-configuration.html
-    migrating-to-cypress:
-      protractor: protractor.html
-    tooling:
-      IDE-integration: IDE-integration.html
-      plugins-guide: plugins-guide.html
-      reporters: reporters.html
-      typescript-support: typescript-support.html
-      visual-testing: visual-testing.html
-      code-coverage: code-coverage.html
-    references:
-      assertions: assertions.html
-      configuration: configuration.html
-      client-certificates: client-certificates.html
-      proxy-configuration: proxy-configuration.html
-      best-practices: best-practices.html
-      error-messages: error-messages.html
-      bundled-tools: bundled-tools.html
-      trade-offs: trade-offs.html
-      troubleshooting: troubleshooting.html
-      changelog: changelog.html
-      migration-guide: migration-guide.html
-      roadmap: roadmap.html
-      experiments: experiments.html
+    command-line: command-line
+    module-api: module-api
+    debugging: debugging
+    network-requests: network-requests
+    test-retries: test-retries
+    parallelization: parallelization
+    environment-variables: environment-variables
+    stubs-spies-and-clocks: stubs-spies-and-clocks
+    screenshots-and-videos: screenshots-and-videos
+    launching-browsers: launching-browsers
+    cross-browser-testing: cross-browser-testing
+    web-security: web-security
+  testing-strategies:
+    auth0-authentication: auth0-authentication
+    amazon-cognito-authentication: amazon-cognito-authentication
+    okta-authentication: okta-authentication
+    google-authentication: google-authentication
+    working-with-graphql: working-with-graphql
+  continuous-integration:
+    introduction: introduction
+    ci-provider-examples: ci-provider-examples
+    circleci: circleci
+    github-actions: github-actions
+    gitlab-ci: gitlab-ci
+    bitbucket-pipelines: bitbucket-pipelines
+    aws-codebuild: aws-codebuild
+  component-testing:
+    introduction: introduction
+    framework-configuration: framework-configuration
+  migrating-to-cypress:
+    protractor: protractor
+  tooling:
+    IDE-integration: IDE-integration
+    plugins-guide: plugins-guide
+    reporters: reporters
+    typescript-support: typescript-support
+    visual-testing: visual-testing
+    code-coverage: code-coverage
+  references:
+    assertions: assertions
+    configuration: configuration
+    client-certificates: client-certificates
+    proxy-configuration: proxy-configuration
+    best-practices: best-practices
+    error-messages: error-messages
+    bundled-tools: bundled-tools
+    trade-offs: trade-offs
+    troubleshooting: troubleshooting
+    changelog: changelog
+    migration-guide: migration-guide
+    roadmap: roadmap
+    experiments: experiments
+api:
   api:
-    api:
-      table-of-contents: table-of-contents.html
-    events:
-      catalog-of-events: catalog-of-events.html
-    assertions:
-      all-assertions: assertions.html
-    commands:
-      and: and.html
-      as: as.html
-      blur: blur.html
-      check: check.html
-      children: children.html
-      clear: clear.html
-      clearcookie: clearcookie.html
-      clearcookies: clearcookies.html
-      clearlocalstorage: clearlocalstorage.html
-      click: click.html
-      clock: clock.html
-      closest: closest.html
-      contains: contains.html
-      dblclick: dblclick.html
-      debug: debug.html
-      document: document.html
-      each: each.html
-      end: end.html
-      eq: eq.html
-      exec: exec.html
-      filter: filter.html
-      find: find.html
-      first: first.html
-      fixture: fixture.html
-      focus: focus.html
-      focused: focused.html
-      get: get.html
-      getcookie: getcookie.html
-      getcookies: getcookies.html
-      go: go.html
-      hash: hash.html
-      hover: hover.html
-      intercept: intercept.html
-      invoke: invoke.html
-      its: its.html
-      last: last.html
-      location: location.html
-      log: log.html
-      next: next.html
-      nextall: nextall.html
-      nextuntil: nextuntil.html
-      not: not.html
-      parent: parent.html
-      parents: parents.html
-      parentsuntil: parentsuntil.html
-      pause: pause.html
-      prev: prev.html
-      prevall: prevall.html
-      prevuntil: prevuntil.html
-      readfile: readfile.html
-      reload: reload.html
-      request: request.html
-      rightclick: rightclick.html
-      root: root.html
-      route: route.html
-      screenshot: screenshot.html
-      scrollintoview: scrollintoview.html
-      scrollto: scrollto.html
-      select: select.html
-      server: server.html
-      session: session.html
-      setcookie: setcookie.html
-      shadow: shadow.html
-      should: should.html
-      siblings: siblings.html
-      spread: spread.html
-      spy: spy.html
-      stub: stub.html
-      submit: submit.html
-      task: task.html
-      then: then.html
-      tick: tick.html
-      title: title.html
-      trigger: trigger.html
-      type: type.html
-      uncheck: uncheck.html
-      url: url.html
-      viewport: viewport.html
-      visit: visit.html
-      wait: wait.html
-      window: window.html
-      within: within.html
-      wrap: wrap.html
-      writefile: writefile.html
-    utilities:
-      _: _.html
-      $: $.html
-      blob: blob.html
-      minimatch: minimatch.html
-      promise: promise.html
-      sinon: sinon.html
-    cypress-api:
-      custom-commands: custom-commands.html
-      cookies: cookies.html
-      screenshot-api: screenshot-api.html
-      selector-playground-api: selector-playground-api.html
-      cypress-server: cypress-server.html
-      arch: arch.html
-      browser: browser.html
-      config: config.html
-      currenttest: currenttest.html
-      dom: dom.html
-      env: env.html
-      isbrowser: isbrowser.html
-      iscy: iscy.html
-      cypress-log: cypress-log.html
-      platform: platform.html
-      session: session.html
-      spec: spec.html
-      testing-type: testing-type.html
-      version: version.html
-    plugins:
-      writing-a-plugin: writing-a-plugin.html
-      configuration-api: configuration-api.html
-      preprocessors-api: preprocessors-api.html
-      before-run-api: before-run-api.html
-      after-run-api: after-run-api.html
-      before-spec-api: before-spec-api.html
-      after-spec-api: after-spec-api.html
-      browser-launch-api: browser-launch-api.html
-      after-screenshot-api: after-screenshot-api.html
+    undefined: undefined
+  events:
+    catalog-of-events: catalog-of-events
+  assertions:
+    undefined: undefined
+  commands:
+    and: and
+    as: as
+    blur: blur
+    check: check
+    children: children
+    clear: clear
+    clearcookie: clearcookie
+    clearcookies: clearcookies
+    clearlocalstorage: clearlocalstorage
+    click: click
+    clock: clock
+    closest: closest
+    contains: contains
+    dblclick: dblclick
+    debug: debug
+    document: document
+    each: each
+    end: end
+    eq: eq
+    exec: exec
+    filter: filter
+    find: find
+    first: first
+    fixture: fixture
+    focus: focus
+    focused: focused
+    get: get
+    getcookie: getcookie
+    getcookies: getcookies
+    go: go
+    hash: hash
+    hover: hover
+    intercept: intercept
+    invoke: invoke
+    its: its
+    last: last
+    location: location
+    log: log
+    next: next
+    nextall: nextall
+    nextuntil: nextuntil
+    not: not
+    parent: parent
+    parents: parents
+    parentsuntil: parentsuntil
+    pause: pause
+    prev: prev
+    prevall: prevall
+    prevuntil: prevuntil
+    readfile: readfile
+    reload: reload
+    request: request
+    rightclick: rightclick
+    root: root
+    route: route
+    screenshot: screenshot
+    scrollintoview: scrollintoview
+    scrollto: scrollto
+    select: select
+    server: server
+    session: session
+    setcookie: setcookie
+    shadow: shadow
+    should: should
+    siblings: siblings
+    spread: spread
+    spy: spy
+    stub: stub
+    submit: submit
+    task: task
+    then: then
+    tick: tick
+    title: title
+    trigger: trigger
+    type: type
+    uncheck: uncheck
+    url: url
+    viewport: viewport
+    visit: visit
+    wait: wait
+    window: window
+    within: within
+    wrap: wrap
+    writefile: writefile
+  utilities:
+    _: _
+    $: $
+    blob: blob
+    minimatch: minimatch
+    promise: promise
+    sinon: sinon
+  cypress-api:
+    custom-commands: custom-commands
+    cookies: cookies
+    screenshot-api: screenshot-api
+    selector-playground-api: selector-playground-api
+    cypress-server: cypress-server
+    arch: arch
+    browser: browser
+    config: config
+    currenttest: currenttest
+    dom: dom
+    env: env
+    isbrowser: isbrowser
+    iscy: iscy
+    cypress-log: cypress-log
+    platform: platform
+    session: session
+    spec: spec
+    testing-type: testing-type
+    version: version
   plugins:
-    plugins: index.html
+    writing-a-plugin: writing-a-plugin
+    configuration-api: configuration-api
+    preprocessors-api: preprocessors-api
+    before-run-api: before-run-api
+    after-run-api: after-run-api
+    before-spec-api: before-spec-api
+    after-spec-api: after-spec-api
+    browser-launch-api: browser-launch-api
+    after-screenshot-api: after-screenshot-api
+plugins: plugins
+examples:
   examples:
-    examples:
-      recipes: recipes.html
-      tutorials: tutorials.html
-      applications: applications.html
-      docker: docker.html
-      workshop: workshop.html
-      projects-media: projects-media.html
-    media:
-      courses-media: courses-media.html
-      webinars-media: webinars-media.html
-      blogs-media: blogs-media.html
-      talks-media: talks-media.html
-      podcasts-media: podcasts-media.html
-      screencasts-media: screencasts-media.html
-  faq:
-    questions:
-      using-cypress-faq: using-cypress-faq.html
-      general-questions-faq: general-questions-faq.html
-      dashboard-faq: dashboard-faq.html
-      company-faq: company-faq.html
+    recipes: recipes
+    tutorials: tutorials
+    applications: applications
+    docker: docker
+    workshop: workshop
+    projects-media: projects-media
+  media:
+    courses-media: courses-media
+    webinars-media: webinars-media
+    blogs-media: blogs-media
+    talks-media: talks-media
+    podcasts-media: podcasts-media
+    screencasts-media: screencasts-media
+faq:
+  questions:
+    using-cypress-faq: using-cypress-faq
+    general-questions-faq: general-questions-faq
+    dashboard-faq: dashboard-faq
+    company-faq: company-faq
