@@ -467,7 +467,7 @@ it('login link should be active when url is "/login"', () => {
   router.push('/login')
 
   // Pass the already initialized router for use
-  cy.mountWithRouter(Navigation, { router: router })
+  cy.mountWithRouter(Navigation, { router })
 
   cy.get('a').contains('Login').should('have.class', 'router-link-active')
 })
