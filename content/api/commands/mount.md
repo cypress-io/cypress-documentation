@@ -5,7 +5,7 @@ componentSpecific: true
 
 <Alert type="warning">
 
-Cypress does not have a **cy.mount()** command out-of-the-box. See below for
+Cypress does not have a `cy.mount()` command out-of-the-box. See below for
 info on how to craft your own.
 
 </Alert>
