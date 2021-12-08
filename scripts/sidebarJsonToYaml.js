@@ -1,14 +1,17 @@
 const fs = require('fs')
 const yaml = require('js-yaml')
+const slugify = require('slugify')
 const sidebarJSON = require('../content/_data/sidebar.json')
 const sidebarKeys = Object.keys(sidebarJSON)
 let formattedSidebar = {}
 
 const process = (arr) => {
-  return arr.reduce((acc, { slug, children }) => {
+  return arr.reduce((acc, { slug, children, title }) => {
     return {
       ...acc,
-      [slug]: children ? process(children) : `${slug}`,
+      [slug ? slug : slugify(title).toLowerCase()]: children
+        ? process(children)
+        : `${slug ? slug : slugify(title).toLowerCase()}`,
     }
   }, {})
 }

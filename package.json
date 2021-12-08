@@ -93,6 +93,7 @@
     "prettier": "^2.0.5",
     "remark": "^13.0.0",
     "request-promise": "^4.2.6",
+    "slugify": "^1.6.3",
     "strip-markdown": "^4.0.0",
     "stylelint": "^13.6.1",
     "stylelint-config-css-modules": "^2.2.0",

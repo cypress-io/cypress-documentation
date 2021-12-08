@@ -84,11 +84,11 @@ guides:
     experiments: experiments
 api:
   api:
-    undefined: undefined
+    table-of-contents: table-of-contents
   events:
     catalog-of-events: catalog-of-events
   assertions:
-    undefined: undefined
+    all-assertions: all-assertions
   commands:
     and: and
     as: as
