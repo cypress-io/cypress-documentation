@@ -575,7 +575,7 @@ import Button from '../../src/components/Button.vue'
 
 Cypress.Commands.overwrite('mount', (comp, options = {}) => {
   // Register global components
-  Vue.component('MyButton', Button)
+  Vue.component('Button', Button)
 
   return mount(comp, {
     vuetify,
