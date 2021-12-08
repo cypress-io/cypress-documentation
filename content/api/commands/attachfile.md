@@ -18,13 +18,13 @@ Attaches a file or files to an HTML5 input element or simulates dragging a file 
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-  cy.get('input[type=file]').attachFile('file.json')
-  cy.get('input[type=file]').attachFile(['file.json', 'file2.json'])
-  cy.get('input[type=file]').attachFile({
-    contents: Buffer.from('foo'),
-    fileName: 'file.json',
-    lastModified: Date.now(),
-  })
+cy.get('input[type=file]').attachFile('file.json')
+cy.get('input[type=file]').attachFile(['file.json', 'file2.json'])
+cy.get('input[type=file]').attachFile({
+  contents: Buffer.from('foo'),
+  fileName: 'file.json',
+  lastModified: Date.now(),
+})
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
@@ -65,9 +65,9 @@ Pass in an options object to change the default behavior of `.attachFile()`.
 | ------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `action`            | `'input'`                                                             | Switches attachFile between modes. Valid values are `input` and `drag-n-drop`. See [Actions](#Actions) below for more details.                                      |
 | `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations). |
-| `force`             | `false`                                                               | Forces the action, disables [waiting for actionability](#Assertions)                                                                                                |
-| `log`               | `true`                                                                | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                                                                            |
-| `timeout`           | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)  | Time to wait for `.attachFile()` to resolve before [timing out](#Timeouts)                                                                                                |
+| `force`             | `false`                                                               | Forces the action, disables [waiting for actionability](#Assertions).                                                                                               |
+| `log`               | `true`                                                                | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log).                                                                           |
+| `timeout`           | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)  | Time to wait for `.attachFile()` to resolve before [timing out](#Timeouts).                                                                                               |
 | `waitForAnimations` | [`waitForAnimations`](/guides/references/configuration#Actionability) | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.                        |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
@@ -143,7 +143,11 @@ cy.get('input[type=file]').attachFile([
 ])
 ```
 
+<Alert type="warning">
+
 This will fail unless the file input has the `multiple` property.
+
+</Alert>
 
 ### Attaching a file with custom filename and lastModified
 
@@ -186,12 +190,12 @@ cy.get('input[type=file]').attachFile('does-not-exist.yaml')
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 <List><li>`.attachFile()` requires being chained off a command that yields DOM
-element(s). With the `input` action (default), it further requires a single `input` element with `type="file"`, or a `label` element attached to one.</li><li>If given a path, `.attachFile()` requires the file must exist.</li><li>If given an alias, `.attachFile()` requires that the subject of the alias must not be `null` or `undefined`</li></List>
+element(s). With the `input` action (default), it further requires a single `input` element with `type="file"`, or a `label` element attached to one.</li><li>If given a path, `.attachFile()` requires the file must exist.</li><li>If given an alias, `.attachFile()` requires that the subject of the alias must not be `null` or `undefined`.</li></List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 <List><li>`.attachFile()` will automatically wait for the element to reach an
-[actionable state](/guides/core-concepts/interacting-with-elements)</li></List>
+[actionable state](/guides/core-concepts/interacting-with-elements).</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
