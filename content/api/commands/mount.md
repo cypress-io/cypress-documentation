@@ -5,33 +5,33 @@ componentSpecific: true
 
 <Alert type="warning">
 
-Cypress does not have a `cy.mount()` command out-of-the-box. See below for
-info on how to craft your own.
+Cypress does not have a `cy.mount()` command out-of-the-box. See below for info
+on how to craft your own.
 
 </Alert>
 
 For
 [Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing),
-we recommend creating a custom `cy.mount` command which wraps the mount command
-from the framework-specific libraries in your component tests. Doing so offers a
-few advantages:
+we recommend creating a custom `cy.mount()` command which wraps the mount
+command from the framework-specific libraries in your component tests. Doing so
+offers a few advantages:
 
-- You don't need to import the mount command into every test as the `cy.mount`
+- You don't need to import the mount command into every test as the `cy.mount()`
   command is available globally.
 - You can set up common scenarios that you usually have to do in each test, like
   wrapping a component in a
   [React Provider](https://reactjs.org/docs/context.html) or adding
   [Vue plugins](https://vuejs.org/v2/guide/plugins.html).
 
-If you attempt to use `cy.mount` before creating it, you will get a warning:
+If you attempt to use `cy.mount()` before creating it, you will get a warning:
 
-<img src="/_nuxt/assets/img/guides/component-testing/cy-mount-must-be-implemented.png" alt="cy.mount must be implemented by the user." />
+<img src="/_nuxt/assets/img/guides/component-testing/cy-mount-must-be-implemented.png" alt="cy.mount() must be implemented by the user." />
 
 Let's take a look at how to implement the command.
 
-## Creating a New `cy.mount` Command
+## Creating a New `cy.mount()` Command
 
-To use `cy.mount` you will need to add a
+To use `cy.mount()` you will need to add a
 [custom command](/api/cypress-api/custom-commands) to the commands file. Below
 are examples that you can start with for your commands:
 
@@ -79,7 +79,7 @@ Cypress.Commands.overwrite('mount', (comp, options = {}) => {
 </template>
 </code-group-react-vue>
 
-## Adding TypeScript Typings for `cy.mount` Commands
+## Adding TypeScript Typings for `cy.mount()` Commands
 
 When working in
 [TypeScript](https://docs.cypress.io/guides/tooling/typescript-support), you
@@ -212,12 +212,22 @@ correct class applied to it by initializing the router with `initialEntries`
 pointed to a particular route:
 
 ```jsx
+import { Navigation } from './Navigation'
+
+it('home link should be active when url is "/"', () => {
+  // No need to pass in custom initialEntries as default url is '/'
+  cy.mountWithRouter(<Navigation />)
+
+  cy.get('a').contains('Home').should('have.class', 'active')
+})
+
 it('login link should be active when url is "/login"', () => {
   cy.mountWithRouter(<Navigation />, {
     routerProps: {
       initialEntries: ['/login'],
     },
   })
+
   cy.get('a').contains('Login').should('have.class', 'active')
 })
 ```
@@ -231,9 +241,14 @@ command that will wrap your component in a Redux Provider:
 ```jsx
 import { mount } from '@cypress/react'
 import { Provider } from 'react-redux'
+import { getStore } from '../../src/store'
 
-Cypress.Commands.add('mountWithRedux', (component, store, options = {}) => {
-  const wrapped = <Provider store={store}>{component}</Provider>
+Cypress.Commands.add('mountWithRedux', (component, options = {}) => {
+  // Use the default store if one is not provided
+  options.reduxStore = options.reduxStore || getStore()
+
+  const wrapped = <Provider store={options.reduxStore}>{component}</Provider>
+
   return mount(wrapped, options)
 })
 ```
@@ -251,22 +266,21 @@ declare global {
       /**
        * Mounts a React node
        * @param jsx React Node to mount
-       * @param store The store to initialize the provider with
        * @param options Additional options to pass into mount
        */
       mountWithRedux(
         jsx: React.ReactNode,
-        store: EnhancedStore<RootState>,
-        options?: MountOptions
+        options?: MountOptions & { reduxStore?: EnhancedStore<RootState> }
       ): Cypress.Chainable<MountReturn>
     }
   }
 }
 ```
 
-The second param to the `mountWithRedux` command is the store that the provider
-gets initialized with. It is important that the store be initialized with each
-new test to ensure changes to the store don't affect other tests:
+You can pass in an instance of the store that the provider will use on the
+options param, which can be useful to initialize a store with certain data for
+tests. It is important that the store be initialized with each new test to
+ensure changes to the store don't affect other tests:
 
 ```jsx
 import { getStore } from '../redux/store'
@@ -282,7 +296,7 @@ it('User profile should display user name', () => {
   // setUser is an action exported from the user slice
   store.dispatch(setUser(user))
 
-  cy.mountWithRedux(<UserProfile />, store)
+  cy.mountWithRedux(<UserProfile />, { reduxStore: store })
 
   cy.get('div.name').should('have.text', user.name)
 })
@@ -297,7 +311,7 @@ other libraries as well.
 
 ### Vuetify
 
-This example shows how to set a global `cy.mount` command that configures
+This example shows how to set a global `cy.mount()` command that configures
 [Vuetify](https://vuetifyjs.com/), ensuring components that utilize the UI
 library display properly during test runs.
 
@@ -456,6 +470,13 @@ import VueRouter from 'vue-router'
 import Navigation from './Navigation.vue'
 import { routes } from '../router'
 
+it('home link should be active when url is "/"', () => {
+  // No need to pass in custom router as default url is '/'
+  cy.mountWithRouter(Navigation)
+
+  cy.get('a').contains('Home').should('have.class', 'router-link-active')
+})
+
 it('login link should be active when url is "/login"', () => {
   // Create a new router instance for each test
   const router = new VueRouter({
@@ -540,6 +561,13 @@ import Navigation from './Navigation.vue'
 import { routes } from '../router'
 import { createMemoryHistory, createRouter } from 'vue-router'
 
+it('home link should be active when url is "/"', () => {
+  // No need to pass in custom router as default url is '/'
+  cy.mountWithRouter(<Navigation />)
+
+  cy.get('a').contains('Home').should('have.class', 'router-link-active')
+})
+
 it('login link should be active when url is "/login"', () => {
   // Create a new router instance for each test
   const router = createRouter({
@@ -552,7 +580,7 @@ it('login link should be active when url is "/login"', () => {
   cy.wrap(router.push('/login'))
 
   // Pass the already initialized router for use
-  cy.mountWithRouter(<Navigation />, { router: router })
+  cy.mountWithRouter(<Navigation />, { router })
 
   cy.get('a').contains('Login').should('have.class', 'router-link-active')
 })
@@ -578,7 +606,6 @@ Cypress.Commands.overwrite('mount', (comp, options = {}) => {
   Vue.component('Button', Button)
 
   return mount(comp, {
-    vuetify,
     ...options,
   })
 })
