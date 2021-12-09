@@ -109,7 +109,7 @@ declare global {
        */
       dataCy(value: string): Chainable<Element>
     }
-  } 
+  }
 }
 ```
 
@@ -122,9 +122,9 @@ by any users of your custom command.
 
 <Alert type="info">
 
-Please note, types of all the parameters taken by implementation callback are
-inferred automatically based on declared interface. Thus, in the example above
-the `value` will be of type `string` implicitly.
+Types of all the parameters taken by the implementation callback are inferred
+automatically based on the declared interface. Thus, in the example above, the
+`value` will be of type `string` implicitly.
 
 </Alert>
 
@@ -142,8 +142,8 @@ it('works', () => {
 
 #### Adding child or dual commands
 
-When you add a custom command with `prevSubject` Cypress will infer subject type
-automatically based on kind of specified `prevSubject`(s)
+When you add a custom command with `prevSubject`, Cypress will infer the subject
+type automatically based on the specified `prevSubject`.
 
 ```typescript
 // in cypress/support/index.ts
@@ -154,62 +154,70 @@ declare global {
   namespace Cypress {
     interface Chainable {
       /**
-       * Custom command to type few random words into input elements
+       * Custom command to type a few random words into input elements
        * @param count=3
        * @example cy.get('input').typeRandomWords()
        */
-      typeRandomWords(count?: number, options?: Partial<TypeOptions>): Chainable<Element>
+      typeRandomWords(
+        count?: number,
+        options?: Partial<TypeOptions>
+      ): Chainable<Element>
     }
-  } 
+  }
 }
 ```
 
 ```typescript
 // cypress/support/index.ts
-Cypress.Commands.add('typeRandomWords', {prevSubject: 'element'}, (
-    subject /* :JQuery<HTMLElement> */, count = 3, options?,
+Cypress.Commands.add('typeRandomWords', { prevSubject: 'element' }, (
+  subject /* :JQuery<HTMLElement> */,
+  count = 3,
+  options?
 ) => {
-  return cy.wrap(subject).type(generateRandomWords(cound), options)
+  return cy.wrap(subject).type(generateRandomWords(count), options)
 })
 ```
 
-
 #### Overwriting child or dual commands
 
-When overwriting either built-in or custom commands which make use of `prevSubject`
-you have to help the type-checker to understand this.
+When overwriting either built-in or custom commands which make use of
+`prevSubject`, you must specify generic parameters to help the type-checker to
+understand the type of the `prevSubject`.
 
 ```typescript
 interface TypeOptions extends Cypress.TypeOptions {
   sensitive: boolean
 }
 
-Cypress.Commands.overwrite<'type', 'element'>('type', (
-    originalFn, element, text, options?: Partial<TypeOptions>,
-) => {
-  if (options && options.sensitive) {
-    // turn off original log
-    options.log = false
-    // create our own log with masked message
-    Cypress.log({
-      $el: element,
-      name: 'type',
-      message: '*'.repeat(text.length),
-    })
+Cypress.Commands.overwrite<'type', 'element'>(
+  'type',
+  (originalFn, element, text, options?: Partial<TypeOptions>) => {
+    if (options && options.sensitive) {
+      // turn off original log
+      options.log = false
+      // create our own log with masked message
+      Cypress.log({
+        $el: element,
+        name: 'type',
+        message: '*'.repeat(text.length),
+      })
+    }
+
+    return originalFn(element, text, options)
   }
-  
-  return originalFn(element, text, options)
-})
+)
 ```
 
 As you can see there are generic parameters `<'type', 'element'>` are used:
 
-1. This is the command name, should equal to actual first parameter passed to `cy.overwite`
-2. Type of prevSubject that is used by the original command. Possible values:
-   - 'element' will infer second param as `JQuery<HTMLElement>`
-   - 'window' will infer second param as `Window`
-   - 'document' will infer second param as `Document`
-   - 'optional' will infer second param as `unknown`
+1. The first parameter is the command name, equal to first parameter passed to
+   `Cypress.Commands.overwrite`.
+2. The second parameter is the type of the `prevSubject` that is used by the
+   original command. Possible values:
+   - 'element' infers it as `JQuery<HTMLElement>`
+   - 'window' infers it as `Window`
+   - 'document' infers it as `Document`
+   - 'optional' infers it as `unknown`
 
 #### Examples:
 
