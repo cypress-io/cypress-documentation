@@ -182,8 +182,10 @@ For more complex configuration objects, you may want to consider passing a
 [JSON.stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
 object surrounded by single quotes.
 
+Here, we're passing in the configuration for component spec files.
+
 ```shell
-cypress run --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.ts"]}'
+cypress run --config '{"watchForFileChanges":false,"specPattern":["**/*.cy.js","**/*.cy.ts"]}'
 ```
 
 <Alert type="info">
@@ -540,8 +542,10 @@ For more complex configuration objects, you may want to consider passing a
 [JSON.stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
 object.
 
+Here, we're passing in the configuration for component spec files.
+
 ```shell
-cypress open --config "{\"watchForFileChanges\":false,\"testFiles\":[\"**/*.js\",\"**/*.ts\"]}"
+cypress open --config "{\"watchForFileChanges\":false,\"specPattern\":[\"**/*.cy.js\",\"**/*.cy.ts\"]}"
 ```
 
 #### `cypress open --config-file <configuration-file>`

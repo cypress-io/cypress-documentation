@@ -102,15 +102,14 @@ you should understand well. The default values listed here are meaningful.
 
 ### Folders / Files
 
-| Option              | Default               | Description                                                                                                                                                                                                                                                                                |
-| ------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `downloadsFolder`   | `cypress/downloads`   | Path to folder where files downloaded during a test are saved                                                                                                                                                                                                                              |
-| `fileServerFolder`  | root project folder   | Path to folder where application files will attempt to be served from                                                                                                                                                                                                                      |
-| `fixturesFolder`    | `cypress/fixtures`    | Path to folder containing fixture files (Pass `false` to disable)                                                                                                                                                                                                                          |
-| `ignoreTestFiles`   | `*.hot-update.js`     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using [https://globster.xyz](https://globster.xyz) to test what files would match. |
-| `integrationFolder` | `cypress/integration` | Path to folder containing integration test files                                                                                                                                                                                                                                           |
-| `screenshotsFolder` | `cypress/screenshots` | Path to folder where screenshots will be saved from [`cy.screenshot()`](/api/commands/screenshot) command or after a test fails during `cypress run`                                                                                                                                       |
-| `videosFolder`      | `cypress/videos`      | Path to folder where videos will be saved during `cypress run`                                                                                                                                                                                                                             |
+| Option               | Default               | Description                                                                                                                                                                                                                                                                                |
+| -------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `downloadsFolder`    | `cypress/downloads`   | Path to folder where files downloaded during a test are saved                                                                                                                                                                                                                              |
+| `fileServerFolder`   | root project folder   | Path to folder where application files will attempt to be served from                                                                                                                                                                                                                      |
+| `fixturesFolder`     | `cypress/fixtures`    | Path to folder containing fixture files (Pass `false` to disable)                                                                                                                                                                                                                          |
+| `specExcludePattern` | `*.hot-update.js`     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using [https://globster.xyz](https://globster.xyz) to test what files would match. |
+| `screenshotsFolder`  | `cypress/screenshots` | Path to folder where screenshots will be saved from [`cy.screenshot()`](/api/commands/screenshot) command or after a test fails during `cypress run`                                                                                                                                       |
+| `videosFolder`       | `cypress/videos`      | Path to folder where videos will be saved during `cypress run`                                                                                                                                                                                                                             |
 
 ### Screenshots
 
@@ -185,8 +184,6 @@ file.
 The Node version is used in Cypress to:
 
 - Build files in the
-  [integrationFolder](/guides/references/configuration#Folders-Files).
-- Build files in the
   [supportFile](/guides/references/configuration#Folders-Files).
 - Execute code in the
   [pluginsFile](/guides/references/configuration#Folders-Files).
@@ -209,11 +206,11 @@ configuration.
 These options are available to be specified inside the `e2e` configuration
 object:
 
-| Option            | Default                    | Description                                                                                                                                                                                         |
-| ----------------- | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `setupNodeEvents` | `null`                     | Function in which node events can be registered and config can be modified. Takes the place of the (deprecated) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
-| `supportFile`     | `cypress/support/index.js` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                           |
-| `testFiles`       | `**/*.*`                   | A String or Array of glob patterns of the test files to load                                                                                                                                        |
+| Option            | Default                               | Description                                                                                                                                                                                         |
+| ----------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `setupNodeEvents` | `null`                                | Function in which node events can be registered and config can be modified. Takes the place of the (deprecated) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
+| `supportFile`     | `cypress/support/index.js`            | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                           |
+| `specPattern`     | `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` | A String or Array of glob patterns of the test files to load                                                                                                                                        |
 
 :::cypress-config-example{noJson}
 
@@ -232,13 +229,13 @@ object:
 These options are available to be specified inside the `component` configuration
 object:
 
-| Option            | Default                    | Description                                                                                                                                                                                         |
-| ----------------- | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `devServer`       | `null`                     | Required function used to configure the component testing dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                                               |
-| `devServerConfig` | `null`                     | Optional dev server configuration. Config options will be determined by the dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                             |
-| `setupNodeEvents` | `null`                     | Function in which node events can be registered and config can be modified. Takes the place of the (deprecated) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
-| `supportFile`     | `cypress/support/index.js` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                           |
-| `testFiles`       | `**/*.*`                   | A String or Array of glob patterns of the test files to load                                                                                                                                        |
+| Option            | Default                    | Description                                                                                                                                                                                                                                    |
+| ----------------- | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `devServer`       | `null`                     | Required function used to configure the component testing dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                                                                                          |
+| `devServerConfig` | `null`                     | Optional dev server configuration. Config options will be determined by the dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                                                                        |
+| `setupNodeEvents` | `null`                     | Function in which node events can be registered and config can be modified. Takes the place of the (deprecated) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents)                                            |
+| `supportFile`     | `cypress/support/index.js` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                                                                      |
+| `specPattern`     | `**/*.cy.{js,jsx,ts,tsx}`  | A String or Array of glob patterns of the test files to load. <br><br>Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.** |
 
 :::cypress-config-example{noJson}
 
