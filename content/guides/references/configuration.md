@@ -458,7 +458,6 @@ it('my test only for chrome', { browser: 'chrome' }, () => {
 })
 ```
 
-
 ### blockHosts
 
 By passing a string or array of strings you can block requests made to one or
