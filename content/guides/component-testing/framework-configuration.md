@@ -440,9 +440,9 @@ like the other examples on this page. This example uses a Vite project with
 React, created via `npm init @vitejs/app my-react-app -- --template react`. The
 configuration instructions are the same for Vue. There is an example React
 project
-[here](https://github.com/cypress-io/cypress-component-examples/tree/main/vite-react)
+[here](https://github.com/cypress-io/cypress-component-testing-examples/tree/main/vite-react)
 and a Vue project
-[here](https://github.com/cypress-io/cypress-component-examples/tree/main/vite-vue).
+[here](https://github.com/cypress-io/cypress-component-testing-examples/tree/main/vite-vue).
 
 Inside of `cypress/plugins/index.js`, configure Cypress to use the Vite dev
 server:
