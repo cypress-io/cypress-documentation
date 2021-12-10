@@ -736,7 +736,7 @@ following repositories:
   shows coverage for a React App that uses TypeScript.
 - [bahmutov/cypress-and-jest](https://github.com/bahmutov/cypress-and-jest)
   shows how to run Jest unit tests and Cypress unit tests, collecting code
-  coverage from both applications, and then produce a merged report.
+  coverage from both test runners, and then produce a merged report.
 - [rootstrap/react-redux-base](https://github.com/rootstrap/react-redux-base)
   shows an example with a realistic webpack config. Instruments the source code
   using `babel-plugin-istanbul` during tests.
