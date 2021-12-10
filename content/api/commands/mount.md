@@ -245,11 +245,11 @@ import { getStore } from '../../src/store'
 
 Cypress.Commands.add('mountWithRedux', (component, options = {}) => {
   // Use the default store if one is not provided
-  options.reduxStore = options.reduxStore || getStore()
+  const { reduxStore = getStore(), ...mountOptions } = options
 
-  const wrapped = <Provider store={options.reduxStore}>{component}</Provider>
+  const wrapped = <Provider store={reduxStore}>{component}</Provider>
 
-  return mount(wrapped, options)
+  return mount(wrapped, mountOptions)
 })
 ```
 
@@ -605,9 +605,7 @@ Cypress.Commands.overwrite('mount', (comp, options = {}) => {
   // Register global components
   Vue.component('Button', Button)
 
-  return mount(comp, {
-    ...options,
-  })
+  return mount(comp, options)
 })
 ```
 
