@@ -228,13 +228,13 @@ object:
 These options are available to be specified inside the `component` configuration
 object:
 
-| Option            | Default                    | Description                                                                                                                                                                                                                                    |
-| ----------------- | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `devServer`       | `null`                     | Required function used to configure the component testing dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                                                                                          |
-| `devServerConfig` | `null`                     | Optional dev server configuration. Config options will be determined by the dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                                                                        |
-| `setupNodeEvents` | `null`                     | Function in which node events can be registered and config can be modified. Takes the place of the (deprecated) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents)                                            |
-| `supportFile`     | `cypress/support/index.js` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                                                                      |
-| `specPattern`     | `**/*.cy.{js,jsx,ts,tsx}`  | A String or Array of glob patterns of the test files to load. <br><br>Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.** |
+| Option            | Default                    | Description                                                                                                                                                                                         |
+| ----------------- | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `devServer`       | `null`                     | Required function used to configure the component testing dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                                               |
+| `devServerConfig` | `null`                     | Optional dev server configuration. Config options will be determined by the dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                             |
+| `setupNodeEvents` | `null`                     | Function in which node events can be registered and config can be modified. Takes the place of the (deprecated) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
+| `supportFile`     | `cypress/support/index.js` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                           |
+| `specPattern`     | `**/*.cy.{js,jsx,ts,tsx}`  | A String or Array of glob patterns of the test files to load. <br><br>Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.**                            |
 
 :::cypress-config-example{noJson}
 
@@ -275,8 +275,8 @@ See the [Command Line](/guides/guides/command-line) guide for more examples.
 ### Testing Type-Specific Overrides
 
 In addition to setting
-[Testing Type-Specific options](#Test-Type-Specific-Options), you can override
-other configuration options for either the
+[Testing Type-Specific options](#Testing-Type-Specific-Options), you can
+override other configuration options for either the
 [End-to-End Testing](guides/overview/choosing-testing-type#What-is-End-to-end-Testing)
 or
 [Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing).
