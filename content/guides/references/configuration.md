@@ -195,7 +195,7 @@ The Node version is used in Cypress to:
 Configuration might include experimental options currently being tested. See
 [Experiments](/guides/references/experiments) page.
 
-## Test Type-Specific Options
+## Testing Type-Specific Options
 
 You can provide configuration options for either E2E or Component Testing by
 creating `e2e` and `component` objects inside your Cypress configuration.
@@ -272,10 +272,10 @@ cypress run --config-file tests/cypress.config.js
 
 See the [Command Line](/guides/guides/command-line) guide for more examples.
 
-### Test Type-Specific Overrides
+### Testing Type-Specific Overrides
 
 In addition to setting
-[Test Type-Specific options](#Test-Type-Specific-Options), you can override
+[Testing Type-Specific options](#Test-Type-Specific-Options), you can override
 other configuration options for either the
 [End-to-End Testing](guides/overview/choosing-testing-type#What-is-End-to-end-Testing)
 or
@@ -533,9 +533,10 @@ send a `503` status code. As a convenience it also sets a
 
 ### devServer / devServerConfig
 
-The `devServer` function is a required [`component`](#component) testing option,
-and allows you to register a component testing dev server. It receives a
-`cypressDevServerConfig` argument which is passed to the dev server module.
+The `devServer` function is a required [`component`](#component) testing
+specific option, and allows you to register a component testing dev server. It
+receives a `cypressDevServerConfig` argument which is passed to the dev server
+module.
 
 :::cypress-config-example{noJson}
 
@@ -733,7 +734,7 @@ case, please disable this option.
 The `setupNodeEvents` function allows you to tap into, modify, or extend the
 internal behavior of Cypress using the [`on`](/api/plugins/writing-a-plugin#on)
 and [`config`](/api/plugins/writing-a-plugin#config) arguments, and is valid as
-an [`e2e`](#e2e) or [`component`](#component) testing option.
+an [`e2e`](#e2e) or [`component`](#component) testing specific option.
 
 <Alert type="info">
 

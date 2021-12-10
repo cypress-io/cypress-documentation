@@ -184,11 +184,10 @@ module.exports = (on, config) => {}
 ### Clashing types with Jest
 
 If you are using both Jest and Cypress in the same project, the TypeScript types
-registered globally by the two test applications can clash. For example, both
-Jest and Cypress provide the clashing types for the `describe` and `it`
-functions. Both Jest and Expect (bundled inside Cypress) provide the clashing
-types for the `expect` assertion, etc. There are two solutions to disentangle
-the types:
+registered globally by the two test runners can clash. For example, both Jest
+and Cypress provide the clashing types for the `describe` and `it` functions.
+Both Jest and Expect (bundled inside Cypress) provide the clashing types for the
+`expect` assertion, etc. There are two solutions to disentangle the types:
 
 1. Configure a separate `tsconfig.json` for E2E tests. See our example
    [cypress-io/cypress-and-jest-typescript-example](https://github.com/cypress-io/cypress-and-jest-typescript-example)
