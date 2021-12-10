@@ -22,9 +22,9 @@ title: Testing Your App
 ## <Icon name="terminal"></Icon> Step 1: Start your server
 
 Assuming you've successfully
-[installed the Test Runner](/guides/getting-started/installing-cypress#Installing)
+[installed the Cypress App](/guides/getting-started/installing-cypress#Installing)
 and
-[opened the Test Runner](/guides/getting-started/installing-cypress#Opening-Cypress)
+[opened the Cypress App](/guides/getting-started/installing-cypress#Opening-Cypress)
 in your project, the first thing you'll want to do is start your local
 development server that hosts the application.
 
@@ -129,7 +129,7 @@ it('successfully loads', () => {
 })
 -->
 
-<DocsImage src="/img/guides/testing-your-app-visit-fail.png" alt="Error in Test Runner showing cy.visit failed" ></DocsImage>
+<DocsImage src="/img/guides/testing-your-app-visit-fail.png" alt="Error in Cypress App showing cy.visit failed" ></DocsImage>
 
 If you've started your server, then you should see your application loaded and
 working.

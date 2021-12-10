@@ -39,9 +39,9 @@ and see how we manage testing the mobile viewport in the
 
 ## <Icon name="angle-right"></Icon> How is this different from 'X' testing tool?
 
-The Cypress Test Runner is a hybrid application/framework/service all rolled
-into one. It takes a little bit of other testing tools, brings them together and
-improves on them.
+The Cypress App is a hybrid application/framework/service all rolled into one.
+It takes a little bit of other testing tools, brings them together and improves
+on them.
 
 #### Mocha
 
@@ -327,9 +327,9 @@ follow through these links:
 - [npm (Releases)](https://www.npmjs.com/package/cypress)
 - [Changelog at Cypress Docs](/guides/references/changelog)
 
-## <Icon name="angle-right"></Icon> How often are Cypress Test Runner versions released?
+## <Icon name="angle-right"></Icon> How often are Cypress App versions released?
 
-We schedule releases of the Test Runner on Monday every two weeks. This new
+We schedule releases of the Cypress App on Monday every two weeks. This new
 version includes any bugfixes and/or features that have been completed by that
 time. You can see all issues merged into the default code branch but not yet
 released by looking at the issues with the label
@@ -340,10 +340,10 @@ We schedule major releases with breaking changes approximately every 3 months.
 If there is a significant bug outside of our release schedule then we release a
 patch as soon as possible.
 
-## <Icon name="angle-right"></Icon> What information is captured or transmitted when using the Cypress Test Runner?
+## <Icon name="angle-right"></Icon> What information is captured or transmitted when using the Cypress App?
 
-The Cypress Test Runner runs locally so no data is sent to Cypress aside from
-exception data, which can be disabled using the instructions
+The Cypress App runs locally so no data is sent to Cypress aside from exception
+data, which can be disabled using the instructions
 [here](https://docs.cypress.io/guides/getting-started/installing-cypress#Opt-out-of-sending-exception-data-to-Cypress).
 
 ## <Icon name="angle-right"></Icon> Can I write API tests using Cypress? <E2EOnlyBadge />
@@ -397,7 +397,7 @@ it('adds todos', () => {
 Take a look at
 [Add GUI to your E2E API tests](https://www.cypress.io/blog/2017/11/07/add-gui-to-your-e2e-api-tests/)
 blog post, then at [cy-api](https://github.com/bahmutov/cy-api) plugin that
-pipes the request and response objects into the Test Runner's GUI for easier
+pipes the request and response objects into the Cypress App's GUI for easier
 debugging.
 
 A good strategy for writing targeted API tests is to use them to reach the

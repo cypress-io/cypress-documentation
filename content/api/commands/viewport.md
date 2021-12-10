@@ -233,7 +233,7 @@ between each test.
 
 By default, if your screen is not large enough to display all of the current
 dimension's pixels, Cypress will scale and center your application within the
-Cypress runner to accommodate.
+preview pane to accommodate.
 
 Scaling the app should not affect any calculations or behavior of your
 application (in fact it won't even know it's being scaled).

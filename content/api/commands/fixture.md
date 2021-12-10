@@ -277,7 +277,7 @@ describe('User page', () => {
 ### Loaded just once
 
 Please keep in mind that fixture files are assumed to be unchanged during the
-test, and thus the Test Runner loads them just once. Even if you overwrite the
+test, and thus the Cypress App loads them just once. Even if you overwrite the
 fixture file itself, the already loaded fixture data remains the same.
 
 If you wish to dynamically change the contents of a file during your tests,

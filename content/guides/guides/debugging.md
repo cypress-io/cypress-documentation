@@ -163,7 +163,7 @@ storage after each command to make sure everything happens as expected.
 ## Using the Developer Tools
 
 Though Cypress has built out
-[an excellent Test Runner](/guides/core-concepts/cypress-app) to help you
+[an excellent application](/guides/core-concepts/cypress-app) to help you
 understand what is happening in your application and your tests, there's no
 replacing all the amazing work browser teams have done on their built-in
 development tools. Once again, we see that Cypress goes _with_ the flow of the

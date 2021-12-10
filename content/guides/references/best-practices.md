@@ -353,7 +353,7 @@ passwords, your server schedules an email to be delivered.
 
 1. If your application is running locally and is sending the emails directly
    through an SMTP server, you can use a temporary local test SMTP server
-   running inside Cypress Test Runner. Read the blog post
+   running inside the Cypress App. Read the blog post
    ["Testing HTML Emails using Cypress"](https://www.cypress.io/blog/2021/05/11/testing-html-emails-using-cypress/)
    for details.
 2. If your application is using a 3rd party email service, or you cannot stub
@@ -924,8 +924,8 @@ Trying to start a web server from [cy.exec()](/api/commands/exec) or
 
 Because there is no guarantee that code running in an `after` will always run.
 
-While working in the Cypress Test Runner you can always restart / refresh while
-in the middle of a test. When that happens, code in an `after` won't execute.
+While working in the Cypress App you can always restart / refresh while in the
+middle of a test. When that happens, code in an `after` won't execute.
 
 **What should I do then?**
 
@@ -1010,7 +1010,7 @@ load the main window in the `baseUrl` you specified as soon as your tests start.
 Having a `baseUrl` set gives you the added bonus of seeing an error if your
 server is not running during `cypress open` at the specified `baseUrl`.
 
-<DocsImage src="/img/guides/cypress-ensures-baseUrl-server-is-running.png" alt="Test Runner with warning about how Cypress could not verify server set as the baseUrl is running"></DocsImage>
+<DocsImage src="/img/guides/cypress-ensures-baseUrl-server-is-running.png" alt="Cypress App with warning about how Cypress could not verify server set as the baseUrl is running"></DocsImage>
 
 We also display an error if your server is not running at the specified
 `baseUrl` during `cypress run` after several retries.

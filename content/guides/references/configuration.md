@@ -4,7 +4,7 @@ title: Configuration
 
 ## Configuration file
 
-The first time you open Cypress Test Runner, it creates the `cypress.config.js`
+The first time you open the Cypress App, it creates the `cypress.config.js`
 configuration file. This Javascript file is used to store any configuration
 values you supply. If you
 [configure your tests to record](/guides/dashboard/projects#Setup) the results
@@ -188,18 +188,17 @@ The Node version is used in Cypress to:
 - Execute code in the
   [pluginsFile](/guides/references/configuration#Folders-Files).
 
-<DocsImage src="/img/guides/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Test Runner" ></DocsImage>
+<DocsImage src="/img/guides/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Cypress App" ></DocsImage>
 
 ### Experiments
 
 Configuration might include experimental options currently being tested. See
 [Experiments](/guides/references/experiments) page.
 
-## Runner Specific Options
+## Testing Type-Specific Options
 
-You can provide configuration options for either the E2E or Component Testing
-runners by creating `e2e` and `component` objects inside your Cypress
-configuration.
+You can provide configuration options for either E2E or Component Testing by
+creating `e2e` and `component` objects inside your Cypress configuration.
 
 ### e2e
 
@@ -229,13 +228,13 @@ object:
 These options are available to be specified inside the `component` configuration
 object:
 
-| Option            | Default                    | Description                                                                                                                                                                                                                                    |
-| ----------------- | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `devServer`       | `null`                     | Required function used to configure the component testing dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                                                                                          |
-| `devServerConfig` | `null`                     | Optional dev server configuration. Config options will be determined by the dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                                                                        |
-| `setupNodeEvents` | `null`                     | Function in which node events can be registered and config can be modified. Takes the place of the (deprecated) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents)                                            |
-| `supportFile`     | `cypress/support/index.js` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                                                                      |
-| `specPattern`     | `**/*.cy.{js,jsx,ts,tsx}`  | A String or Array of glob patterns of the test files to load. <br><br>Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.** |
+| Option            | Default                    | Description                                                                                                                                                                                         |
+| ----------------- | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `devServer`       | `null`                     | Required function used to configure the component testing dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                                               |
+| `devServerConfig` | `null`                     | Optional dev server configuration. Config options will be determined by the dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                             |
+| `setupNodeEvents` | `null`                     | Function in which node events can be registered and config can be modified. Takes the place of the (deprecated) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
+| `supportFile`     | `cypress/support/index.js` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                           |
+| `specPattern`     | `**/*.cy.{js,jsx,ts,tsx}`  | A String or Array of glob patterns of the test files to load. <br><br>Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.**                            |
 
 :::cypress-config-example{noJson}
 
@@ -273,12 +272,14 @@ cypress run --config-file tests/cypress.config.js
 
 See the [Command Line](/guides/guides/command-line) guide for more examples.
 
-### Runner Specific Overrides
+### Testing Type-Specific Overrides
 
-In addition to setting [Runner Specific Options](#Runner-Specific-Options), you
-can override other configuration options for either the E2E or
-[Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing)
-runners.
+In addition to setting
+[Testing Type-Specific options](#Testing-Type-Specific-Options), you can
+override other configuration options for either the
+[End-to-End Testing](/guides/overview/choosing-testing-type#What-is-End-to-end-Testing)
+or
+[Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing).
 
 For example:
 
@@ -532,9 +533,10 @@ send a `503` status code. As a convenience it also sets a
 
 ### devServer / devServerConfig
 
-The `devServer` function is a required [`component`](#component) runner specific
-option, and allows you to register a component testing dev server. It receives a
-`cypressDevServerConfig` argument which is passed to the dev server module.
+The `devServer` function is a required [`component`](#component) testing
+specific option, and allows you to register a component testing dev server. It
+receives a `cypressDevServerConfig` argument which is passed to the dev server
+module.
 
 :::cypress-config-example{noJson}
 
@@ -604,7 +606,7 @@ We've disabled running GC during
 interact with the browser.
 
 Because GC adds additional time to the overall run, we've added the amount of
-time this routine has taken to the bottom of the Command Log in the Test Runner.
+time this routine has taken to the bottom of the Command Log in the Cypress App.
 
 <DocsImage src="/img/guides/firefox-gc-interval-in-command-log.jpg" alt="GC duration shown"></DocsImage>
 
@@ -732,7 +734,7 @@ case, please disable this option.
 The `setupNodeEvents` function allows you to tap into, modify, or extend the
 internal behavior of Cypress using the [`on`](/api/plugins/writing-a-plugin#on)
 and [`config`](/api/plugins/writing-a-plugin#config) arguments, and is valid as
-an [`e2e`](#e2e) or [`component`](#component) runner specific option.
+an [`e2e`](#e2e) or [`component`](#component) testing specific option.
 
 <Alert type="info">
 
@@ -809,7 +811,7 @@ You can also find a few tips on setting the `baseUrl` in this
 When using the `--spec <path or mask>` argument, make it relative to the
 project's folder. If the specs are still missing, run Cypress with
 [DEBUG logs](/guides/references/troubleshooting#Print-DEBUG-logs) with the
-following setting to see how the Test Runner is looking for spec files:
+following setting to see how the Cypress App is looking for spec files:
 
 ```shell
 DEBUG=cypress:cli,cypress:server:specs

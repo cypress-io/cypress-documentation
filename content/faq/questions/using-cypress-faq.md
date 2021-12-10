@@ -241,7 +241,7 @@ which requests you want to wait on.
 
 ## <Icon name="angle-right"></Icon> Can I test the HTML `<head>` element?
 
-Yes, you sure can. While executing tests in the Test Runner, you can view the
+Yes, you sure can. While executing tests in the Cypress App, you can view the
 entire `window.document` object in your open console using
 [cy.document()](/api/commands/document). You can even make assertions on the
 `<head>` element. Check out this example.
@@ -645,8 +645,8 @@ A _Record Key_ is a GUID that's generated automatically by Cypress once you've
 [set up your tests to record](/guides/dashboard/runs). It helps identify your
 project and authenticate that your project is even _allowed_ to record tests.
 
-You can find your project's record key inside of the _Settings_ tab in the Test
-Runner.
+You can find your project's record key inside of the _Settings_ tab in the
+Cypress App.
 
 <DocsImage src="/img/dashboard/record-key-shown-in-desktop-gui-configuration.jpg" alt="Record Key in Configuration Tab" ></DocsImage>
 
@@ -668,7 +668,7 @@ party APIs or talk directly to your server. Read about this
 
 1. If your application is running locally and is sending the emails directly
    through an SMTP server, you can use a temporary local test SMTP server
-   running inside Cypress Test Runner. Read the blog post
+   running inside the Cypress App. Read the blog post
    ["Testing HTML Emails using Cypress"](https://www.cypress.io/blog/2021/05/11/testing-html-emails-using-cypress/)
    for details.
 2. If your application is using a 3rd party email service, or you cannot stub
@@ -1100,7 +1100,7 @@ posts.
 
 ## <Icon name="angle-right"></Icon> Why doesn't the `instanceof Event` work?
 
-It might be because of the 2 different windows in Cypress Test Runner. For more
+It might be because of the 2 different windows in the Cypress App. For more
 information, please check
 [the note here](/api/commands/window#Cypress-uses-2-different-windows).
 
@@ -1179,7 +1179,7 @@ for our start.
 
 Cypress is not built for performance testing. Because Cypress instruments the
 page under test, proxies the network requests, and tightly controls the test
-steps, the Test Runner adds its own overhead. Thus, the performance numbers you
+steps, the Cypress App adds its own overhead. Thus, the performance numbers you
 get from Cypress tests are slower than "normal" use. Still, you can access the
 native `window.performance` object and grab the page time measurements, see the
 [Evaluate performance metrics](https://github.com/cypress-io/cypress-example-recipes#testing-the-dom)

@@ -145,8 +145,8 @@ These are all useful to listen to for debugging purposes.
 ### Other Events
 
 There are a myriad of other events Cypress fires to communicate with the Node
-server process, automation servers, mocha, the runner, and the reporter. They
-are strictly internal to the way Cypress works and not useful for users.
+server process, automation servers, mocha, the application, and the reporter.
+They are strictly internal to the way Cypress works and not useful for users.
 
 ## Binding to Events
 
