@@ -449,6 +449,16 @@ value has been set via the following ways:
 
 ## Notes
 
+### browser
+`browser` is a special configuration option that allows you to filter whether a test or a suite of tests should run depending on the current browser.
+
+```javascript
+it('my test only for chrome', { browser: 'chrome' }, () => {
+  // only run this test in chrome
+})
+```
+
+
 ### blockHosts
 
 By passing a string or array of strings you can block requests made to one or
