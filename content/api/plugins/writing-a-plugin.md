@@ -80,7 +80,7 @@ please [refer to the docs for each one](#List-of-events).
 This configuration contains all of the values that get passed into the browser
 for your project.
 
-[For a comprehensive list of all configuration values look here.](https://github.com/cypress-io/cypress/blob/master/packages/server/lib/config.js)
+[For a comprehensive list of all configuration values look here.](https://github.com/cypress-io/cypress/blob/master/packages/server/lib/config.ts)
 
 Some plugins may utilize or require these values, so they can take certain
 actions based on the configuration.
