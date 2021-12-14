@@ -183,7 +183,7 @@ cy.get('input[type=file]').attachFile('does-not-exist.yaml')
 #### The element must first reach actionability
 
 `.attachFile()` is an "action command" that follows all the rules
-of [defined here](/guides/core-concepts/interacting-with-elements).
+of [Actionability](/guides/core-concepts/interacting-with-elements).
 
 ## Rules
 
