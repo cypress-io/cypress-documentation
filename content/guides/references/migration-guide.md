@@ -126,12 +126,12 @@ cy.get('[data-cy="file-input"]').attachFile('myfixture.json');
 ```
 
 <Badge type="success">After</Badge> Attaching a fixture from disk with
-Cypress 10.0. Cypress follows paths from the root of your test folder
+Cypress 10.0. Cypress follows paths from your project root
 (same as [`cy.readFile()`](/api/commands/readfile)).
 
 
 ```js
-cy.get('[data-cy="file-input"]').attachFile('fixtures/myfixture.json');
+cy.get('[data-cy="file-input"]').attachFile('cypress/fixtures/myfixture.json');
 
 // Or
 
