@@ -36,7 +36,7 @@ folder structure. By default it will create:
   /fixtures
     - example.json
 
-  /integration
+  /e2e
     /examples
       /1-getting-started
         - todo.spec.js
@@ -95,7 +95,7 @@ these should also be ignored when you check into source control.
 
 ### Test files
 
-Test files are located in `cypress/integration` by default, but can be
+Test files are located in `cypress/e2e` by default, but can be
 [configured](/guides/references/configuration#Folders-Files) to another
 directory. Test files may be written as:
 
@@ -119,11 +119,11 @@ Check out our recipe using
 
 To see an example of every command used in Cypress, open the
 [`2-advanced-examples` folder](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/cypress/integration/2-advanced-examples)
-within your `cypress/integration` folder.
+within your `cypress/e2e` folder.
 
 To start writing tests for your app, create a new file like `app_spec.js` within
-your `cypress/integration` folder. Refresh your tests list in the Cypress App
-and your new file should have appeared in the list.
+your `cypress/e2e` folder. Refresh your tests list in the Cypress App and your
+new file should have appeared in the list.
 
 ### Fixture Files
 
@@ -865,7 +865,7 @@ behavior.
 
 #### Folders
 
-- Integration directory (`cypress/integration/` by default)
+- Integration directory (`cypress/e2e/` by default)
 - Support directory (`cypress/support/` by default)
 - Plugins directory (`cypress/plugins/` by default)
 

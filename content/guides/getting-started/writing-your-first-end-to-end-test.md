@@ -26,11 +26,10 @@ now it's time to write our first test. We're going to:
 2. Watch Cypress update our list of specs.
 3. Launch the Cypress App.
 
-Let's create a new file in the `cypress/integration` folder that was created for
-us:
+Let's create a new file in the `cypress/e2e` folder that was created for us:
 
 ```shell
-touch {your_project}/cypress/integration/sample_spec.js
+touch {your_project}/cypress/e2e/sample_spec.js
 ```
 
 Once we've created that file, we should see the Cypress App immediately display

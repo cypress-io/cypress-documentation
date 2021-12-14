@@ -131,7 +131,7 @@ cy.mount(<MyComponent />)
 ```
 
 ```ts
-// from your cypress/integration/spec.ts
+// from your cypress/e2e/spec.ts
 it('works', () => {
   __VISIT_MOUNT_PLACEHOLDER__
   // IntelliSense and TS compiler should

@@ -463,7 +463,7 @@ a unit testing tool (find more unit testing recipes
 Here is our test to confirm that the error is thrown.
 
 ```javascript
-// cypress/integration/selectors-spec.js
+// cypress/e2e/selectors-spec.js
 import { getVisibleTodos } from '../../src/selectors'
 
 describe('getVisibleTodos', () => {
@@ -534,8 +534,7 @@ The code coverage information in unit tests and end-to-end tests has the same
 format; the
 [`@cypress/code-coverage`](https://github.com/cypress-io/code-coverage) plugin
 automatically grabs both and saves the combined report. Thus we can see the code
-coverage from the `cypress/integration/selectors-spec.js` file after running the
-test.
+coverage from the `cypress/e2e/selectors-spec.js` file after running the test.
 
 <DocsImage src="/img/guides/code-coverage/unit-test-coverage.png" alt="Selectors code coverage" ></DocsImage>
 

@@ -31,11 +31,11 @@ on('after:spec', (spec, results) => {
 
 Details of the spec file, including the following properties:
 
-| Property   | Description                                                                                          |
-| ---------- | ---------------------------------------------------------------------------------------------------- |
-| `name`     | The base name of the spec file (e.g. `login_spec.js`)                                                |
-| `relative` | The path to the spec file, relative to the project root (e.g. `cypress/integration/login_spec.js`)   |
-| `absolute` | The absolute path to the spec file (e.g. `/Users/janelane/my-app/cypress/integration/login_spec.js`) |
+| Property   | Description                                                                                  |
+| ---------- | -------------------------------------------------------------------------------------------- |
+| `name`     | The base name of the spec file (e.g. `login_spec.js`)                                        |
+| `relative` | The path to the spec file, relative to the project root (e.g. `cypress/e2e/login_spec.js`)   |
+| `absolute` | The absolute path to the spec file (e.g. `/Users/janelane/my-app/cypress/e2e/login_spec.js`) |
 
 **<Icon name="angle-right"></Icon> results** **_(Object)_**
 
@@ -59,8 +59,8 @@ module.exports = (on, config) => {
     // spec will look something like this:
     // {
     //   name: 'login_spec.js',
-    //   relative: 'cypress/integration/login_spec.js',
-    //   absolute: '/Users/janelane/my-app/cypress/integration/login_spec.js',
+    //   relative: 'cypress/e2e/login_spec.js',
+    //   absolute: '/Users/janelane/my-app/cypress/e2e/login_spec.js',
     // }
 
     // results will look something like this:

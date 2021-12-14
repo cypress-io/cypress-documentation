@@ -524,7 +524,7 @@ This example uses the
 task defined above.
 
 ```javascript
-cy.task('countFiles', 'cypress/integration')
+cy.task('countFiles', 'cypress/e2e')
 ```
 
 The command above will display in the Command Log as:

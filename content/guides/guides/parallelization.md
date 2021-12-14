@@ -319,19 +319,19 @@ test these three parts of your application within the same run:
 - One group can be called `package/admin`:
 
 ```shell
-cypress run --record --group package/admin --spec 'cypress/integration/packages/admin/**/*'
+cypress run --record --group package/admin --spec 'cypress/e2e/packages/admin/**/*'
 ```
 
 - Another can be called `package/customer`:
 
 ```shell
-cypress run --record --group package/customer --spec 'cypress/integration/packages/customer/**/*'
+cypress run --record --group package/customer --spec 'cypress/e2e/packages/customer/**/*'
 ```
 
 - The last group can be called `package/guest`:
 
 ```shell
-cypress run --record --group package/guest --spec 'cypress/integration/packages/guest/**/*'
+cypress run --record --group package/guest --spec 'cypress/e2e/packages/guest/**/*'
 ```
 
 <DocsImage src="/img/guides/parallelization/monorepo.png" alt="monorepo"></DocsImage>

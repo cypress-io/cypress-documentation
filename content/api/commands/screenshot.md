@@ -78,7 +78,7 @@ You can change the directory where screenshots are saved in the
 #### Take a screenshot
 
 ```javascript
-// cypress/integration/users.spec.js
+// cypress/e2e/users.spec.js
 
 describe('my tests', () => {
   it('takes a screenshot', () => {
@@ -187,8 +187,7 @@ This behavior can be changed by passing the `{overwrite: true}` option to
   appended with ` (failed)`:
   `{screenshotsFolder}/{specPath}/{testName} (failed).png`
 
-For example, given a spec file located at
-`cypress/integration/users/login_spec.js`:
+For example, given a spec file located at `cypress/e2e/users/login_spec.js`:
 
 ```javascript
 describe('my tests', () => {

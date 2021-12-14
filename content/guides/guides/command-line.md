@@ -77,14 +77,14 @@ your `package.json`
 Dashboard, the command should be:
 
 ```shell
-npm run cy:run -- --record --spec "cypress/integration/my-spec.js"
+npm run cy:run -- --record --spec "cypress/e2e/my-spec.js"
 ```
 
 If you are using the [npx](https://github.com/zkat/npx) tool, you can invoke the
 locally installed Cypress tool directly:
 
 ```shell
-npx cypress run --record --spec "cypress/integration/my-spec.js"
+npx cypress run --record --spec "cypress/e2e/my-spec.js"
 ```
 
 <Alert type="info">
@@ -255,11 +255,11 @@ You can add multiple groups to the same run by passing a different name. This
 can help distinguish groups of specs from each other.
 
 ```shell
-cypress run --group admin-tests --spec 'cypress/integration/admin/**/*'
+cypress run --group admin-tests --spec 'cypress/e2e/admin/**/*'
 ```
 
 ```shell
-cypress run --group user-tests --spec 'cypress/integration/user/**/*'
+cypress run --group user-tests --spec 'cypress/e2e/user/**/*'
 ```
 
 Specifying the `--ci-build-id` may also be necessary.
@@ -373,20 +373,20 @@ path should be an absolute path or can relative to the current working
 directory.
 
 ```shell
-cypress run --spec "cypress/integration/examples/actions.spec.js"
+cypress run --spec "cypress/e2e/examples/actions.spec.js"
 ```
 
 Run tests within the folder matching the glob _(Note: Using double quotes is
 strongly recommended)_.
 
 ```shell
-cypress run --spec "cypress/integration/login/**/*"
+cypress run --spec "cypress/e2e/login/**/*"
 ```
 
 Run tests specifying multiple test files to run.
 
 ```shell
-cypress run --spec "cypress/integration/examples/actions.spec.js,cypress/integration/examples/files.spec.js"
+cypress run --spec "cypress/e2e/examples/actions.spec.js,cypress/e2e/examples/files.spec.js"
 ```
 
 Use in combination with `--project` parameter. Imagine the Cypress tests are in
@@ -408,7 +408,7 @@ app/
 If we are in the `app` folder, we can run the specs using the following command
 
 ```shell
-cypress run --project tests/e2e --spec ./tests/e2e/cypress/integration/spec.js
+cypress run --project tests/e2e --spec ./tests/e2e/cypress/e2e/spec.js
 ```
 
 #### `cypress run --tag <tag>`

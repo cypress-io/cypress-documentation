@@ -83,7 +83,7 @@ const cypress = require('cypress')
 cypress
   .run({
     // the path is relative to the current working directory
-    spec: './cypress/integration/examples/actions.spec.js',
+    spec: './cypress/e2e/examples/actions.spec.js',
   })
   .then((results) => {
     console.log(results)
@@ -109,7 +109,7 @@ const cypress = require('cypress')
 
 cypress.run({
   // the wildcard path is relative to the current working directory
-  spec: './cypress/integration/**/api*.js',
+  spec: './cypress/e2e/**/api*.js',
 })
 ```
 
@@ -169,14 +169,14 @@ tests results. A typical run could return something like this:
       "state": "failed",
       "body": "function () {\n  expect(true).to.be["false"];\n}",
       "displayError": "AssertionError: expected true to be false\n' +
-      '    at Context.eval (...cypress/integration/spec.js:5:21",
+      '    at Context.eval (...cypress/e2e/spec.js:5:21",
       "attempts": [{
         "state": "failed",
         "error": {
           "message": "expected true to be false",
           "name": "AssertionError",
           "stack": "AssertionError: expected true to be false\n' +
-      '    at Context.eval (...cypress/integration/spec.js:5:21"
+      '    at Context.eval (...cypress/e2e/spec.js:5:21"
         },
         "screenshots": [{
           "name": null,
