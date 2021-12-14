@@ -223,9 +223,13 @@ following:
 
 ## History
 
-| Version                                     | Changes                                                  |
-| ------------------------------------------- | -------------------------------------------------------- |
-| [10.0.0](/guides/references/changelog#10.0.0) | `.attachFile()` command added                        |
+| Version                                       | Changes                                                  |
+| --------------------------------------------- | -------------------------------------------------------- |
+| [10.0.0](/guides/references/changelog#10.0.0) | `.attachFile()` command added                            |
+
+### Community Recognition
+
+The `.attachFile()` command draws heavy inspiration from the now-deprecated Cypress File Upload plugin. It was make possible by [@abramenal](https://github.com/abramenal) and contributors to the [cypress-file-upload](https://github.com/abramenal/cypress-file-upload#contributors) repository.
 
 ## See also
 
