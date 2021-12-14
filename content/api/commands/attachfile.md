@@ -9,8 +9,8 @@ Attaches a file or files to an HTML5 input element or simulates dragging a file 
 ```javascript
 .attachFile(file)
 .attachFile(file, options)
-.attachFile([file], options)
-.attachFile([file], options)
+.attachFile([file1, file2, ...])
+.attachFile([file1, file2, ...], options)
 ```
 
 ### Usage
@@ -76,7 +76,7 @@ Pass in an options object to change the default behavior of `.attachFile()`.
 
 ### Action
 
-Depending on the action set in the `options` argument, `.attachFile()` can simulate two different user behaviors:
+Depending on the `action` set in the `options` argument, `.attachFile()` can simulate two different user behaviors:
 
 #### `input` (default)
 
@@ -91,11 +91,11 @@ Setting the action to `drag-n-drop` changes the behavior of the command to inste
 ### From a file on disk
 
 ```javascript
-cy.get('input[type=file]').attachFile('file.json')
-cy.get('input[type=file]').attachFile('file.png')
+cy.get('input[type=file]').attachFile('path/to/file.json')
+cy.get('input[type=file]').attachFile('path/to/file.png')
 ```
 
-If given a path, `.attachFile()` will attach the file exactly as it exists on disk. This is the preferred way to work with files on disk, avoiding many encoding-related pitfalls.
+If given a path, `.attachFile()` will search for the file relative to the project root and attach the file exactly as it exists on disk. This is the preferred way to work with files on disk, avoiding many encoding-related pitfalls.
 
 ### On a hidden input
 
@@ -171,7 +171,7 @@ cy.document().attachFile('file.json', { action: 'drag-n-drop' })
 
 #### Default file existence assertion
 
-When passed a file path, `.attachFile()` asserts that the file exists and will fail if it does not exist. It will retry reading the file if it does not initially exist until the file exists or the command times out.
+Whenever resolving a file path, `.attachFile()` asserts that the file exists and will fail if it does not exist. It will retry reading the file if it does not initially exist until the file exists or the command times out.
 
 ```javascript
 // will fail after the defaultCommandTimeout is reached
@@ -183,7 +183,7 @@ cy.get('input[type=file]').attachFile('does-not-exist.yaml')
 #### The element must first reach actionability
 
 `.attachFile()` is an "action command" that follows all the rules
-[defined here](/guides/core-concepts/interacting-with-elements).
+of [defined here](/guides/core-concepts/interacting-with-elements).
 
 ## Rules
 
