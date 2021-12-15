@@ -35,8 +35,8 @@ To use `cy.mount()` you will need to add a
 [custom command](/api/cypress-api/custom-commands) to the commands file. Below
 are examples that you can start with for your commands:
 
-<code-group-react-vue>
-<template #react>
+<code-group>
+<code-block label="React" active>
 
 ```js
 import { mount } from '@cypress/react'
@@ -48,8 +48,8 @@ Cypress.Commands.overwrite('mount', (jsx, options) => {
 })
 ```
 
-</template>
-<template #vue>
+</code-block>
+<code-block label="Vue 2">
 
 ```js
 import { mount } from '@cypress/vue'
@@ -76,8 +76,36 @@ Cypress.Commands.overwrite('mount', (comp, options = {}) => {
 })
 ```
 
-</template>
-</code-group-react-vue>
+</code-block>
+<code-block label="Vue 3">
+
+```js
+import { mount } from '@cypress/vue'
+
+Cypress.Commands.overwrite('mount', (comp, options = {}) => {
+  // Setup options object
+  options.global = options.global || {}
+  options.global.stubs = options.global.stubs || {}
+  options.global.stubs['transition'] = false
+  options.global.components = options.global.components || {}
+  options.global.plugins = options.global.plugins || []
+
+  /* Add any global plugins */
+  // options.global.plugins.push({
+  //   install(app) {
+  //     app.use(MyPlugin);
+  //   },
+  // });
+
+  /* Add any global components */
+  // options.global.components['Button'] = Button;
+
+  return mount(comp, options)
+})
+```
+
+</code-block>
+</code-group>
 
 ## Adding TypeScript Typings for `cy.mount()` Commands
 
@@ -279,8 +307,7 @@ declare global {
 
 You can pass in an instance of the store that the provider will use on the
 options param, which can be useful to initialize a store with certain data for
-tests. It is important that the store be initialized with each new test to
-ensure changes to the store don't affect other tests:
+tests.
 
 ```jsx
 import { getStore } from '../redux/store'
@@ -302,116 +329,16 @@ it('User profile should display user name', () => {
 })
 ```
 
+> The `getStore` method is a factory method that initializes a new Redux store.
+> It is important that the store be initialized with each new test to ensure
+> changes to the store don't affect other tests.
+
 ## Vue Examples
 
 Adding plugins and global components are some common scenarios for creating
 custom mount commands in Vue. Below are examples that demonstrate how set up a
 mount command for a few popular Vue libraries. These examples can be adapted to
 other libraries as well.
-
-### Vuetify
-
-This example shows how to set a global `cy.mount()` command that configures
-[Vuetify](https://vuetifyjs.com/), ensuring components that utilize the UI
-library display properly during test runs.
-
-Vuetify is a plugin that must be registered and have a few custom attributes on
-the root element setup for styling to appear correct.
-
-<code-group-vue2-vue3>
-<template #vue2>
-
-```js
-import { mount } from '@cypress/vue'
-import vuetify from '../../src/plugins/vuetify'
-
-Cypress.Commands.overwrite('mount', (comp, options = {}) => {
-  // Add attributes needed for Vuetify styling
-  const root = document.getElementById('__cy_root')
-  if (!root.classList.contains('v-application')) {
-    root.classList.add('v-application')
-  }
-  root.setAttribute('data-app', 'true')
-
-  // vuetify import calls Vue.use(Vuetify) directly
-  // so no need to call it directly here
-
-  return mount(comp, {
-    vuetify,
-    ...options,
-  })
-})
-```
-
-</template>
-<template #vue3>
-
-```js
-import { mount } from '@cypress/vue'
-import vuetify from '../../src/plugins/vuetify'
-
-Cypress.Commands.overwrite('mount', (comp, options = {}) => {
-  // Setup options object
-  options.global = options.global || {}
-  options.global.plugins = options.global.plugins || []
-
-  // Add attributes needed for Vuetify styling
-  const root = document.getElementById('__cy_root')
-  if (!root.classList.contains('v-application')) {
-    root.classList.add('v-application')
-  }
-  root.setAttribute('data-app', 'true')
-
-  // Add Vuetify plugin
-  options.global.plugins.push({
-    install(app) {
-      app.use(vuetify)
-    },
-  })
-
-  return mount(comp, options)
-})
-```
-
-</template>
-</code-group-vue2-vue3>
-
-Typings:
-
-```ts
-import { mount } from '@cypress/vue'
-
-type MountParams = Parameters<typeof mount>
-type OptionsParam = MountParams[1]
-
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      /**
-       * Helper mount function for Vue Components
-       * @param component Vue Component or JSX Element to mount
-       * @param options Options passed to Vue Test Utils
-       */
-      mount(component: any, options?: OptionsParam): Chainable<any>
-    }
-  }
-}
-```
-
-Usage:
-
-```ts
-import Button from './Button.vue'
-
-it('Shows a button', () => {
-  cy.mount(Button, {
-    slots: {
-      default: () => 'Click Me',
-    },
-  })
-  cy.contains('Click Me').should('exist')
-})
-```
 
 ### Vue Router
 
@@ -589,6 +516,172 @@ it('login link should be active when url is "/login"', () => {
 </template>
 </code-group-vue2-vue3>
 
+### Vue
+
+To use a component that uses [Vuex](https://vuex.vuejs.org/), you can create a
+`mountWithVuex` command that expose a Vuex store to your component:
+
+<code-group-vue2-vue3>
+<template #vue2>
+
+```js
+import { mount } from '@cypress/vue'
+import Vuex from 'vuex'
+import { getStore } from '../../src/plugins/store'
+
+Cypress.Commands.add('mountWithVuex', (comp, options = {}) => {
+  // Setup options object
+  options.extensions = options.extensions || {}
+  options.extensions.plugins = options.extensions.plugins || []
+
+  // Use store passed in from options, or initialize a new one
+  options.store = options.store || getStore()
+
+  // Add Vuex plugin
+  options.extensions.plugins.push(Vuex)
+
+  return mount(comp, options)
+})
+```
+
+> The `getStore` method is a factory method that initializes Vuex and creates a
+> new store. It is important that the store be initialized with each new test to
+> ensure changes to the store don't affect other tests.
+
+Typings:
+
+```ts
+import { mount } from '@cypress/vue'
+import { Store } from 'vuex'
+
+type MountParams = Parameters<typeof mount>
+type OptionsParam = MountParams[1]
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Helper mount function for Vue Components
+       * @param component Vue Component or JSX Element to mount
+       * @param options Options passed to Vue Test Utils
+       */
+      mountWithVuex(
+        component: any,
+        options?: OptionsParam & { store?: Store }
+      ): Chainable<any>
+    }
+  }
+}
+```
+
+Usage:
+
+```js
+import { getStore } from '@/plugins/store'
+import UserProfile from './UserProfile.vue'
+
+it.only('User profile should display user name', () => {
+  const user = { name: 'test person' }
+
+  // getStore is a factory method that creates a new store
+  const store = getStore()
+
+  // mutate the store with user
+  store.commit('setUser', user)
+
+  cy.mountWithVuex(UserProfile, {
+    store,
+  })
+
+  cy.get('div.name').should('have.text', user.name)
+})
+```
+
+</template>
+<template #vue3>
+
+```js
+import { mount } from '@cypress/vue'
+import { getStore } from '../../src/plugins/store'
+
+Cypress.Commands.add('mountWithVuex', (comp, options = {}) => {
+  // Setup options object
+  options.global = options.global || {}
+  options.global.stubs = options.global.stubs || {}
+  options.global.stubs['transition'] = false
+  options.global.components = options.global.components || {}
+  options.global.plugins = options.global.plugins || []
+
+  // Use store passed in from options, or initialize a new one
+  const { store = getStore(), ...mountOptions } = options
+
+  // Add Vuex plugin
+  options.global.plugins.push({
+    install(app) {
+      app.use(store)
+    },
+  })
+
+  return mount(comp, mountOptions)
+})
+```
+
+> The `getStore` method is a factory method that initializes Vuex and creates a
+> new store. It is important that the store be initialized with each new test to
+> ensure changes to the store don't affect other tests.
+
+Typings:
+
+```ts
+import { mount } from '@cypress/vue'
+import { Store } from 'vuex'
+
+type MountParams = Parameters<typeof mount>
+type OptionsParam = MountParams[1]
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Helper mount function for Vue Components
+       * @param component Vue Component or JSX Element to mount
+       * @param options Options passed to Vue Test Utils
+       */
+      mountWithVuex(
+        component: any,
+        options?: OptionsParam & { store?: Store }
+      ): Chainable<any>
+    }
+  }
+}
+```
+
+Usage:
+
+```js
+import { getStore } from '@/plugins/store'
+import UserProfile from './UserProfile.vue'
+
+it.only('User profile should display user name', () => {
+  const user = { name: 'test person' }
+
+  // getStore is a factory method that creates a new store
+  const store = getStore()
+
+  // mutate the store with user
+  store.commit('setUser', user)
+
+  cy.mountWithVuex(UserProfile, {
+    store,
+  })
+
+  cy.get('div.name').should('have.text', user.name)
+})
+```
+
+</template>
+</code-group-vue2-vue3>
+
 ### Global Components
 
 If you have components that are registered globally in the main application
@@ -602,8 +695,13 @@ import { mount } from '@cypress/vue'
 import Button from '../../src/components/Button.vue'
 
 Cypress.Commands.overwrite('mount', (comp, options = {}) => {
+  // Setup options object
+  options.extensions = options.extensions || {}
+  options.extensions.plugins = options.extensions.plugins || []
+  options.extensions.components = options.extensions.components || {}
+
   // Register global components
-  Vue.component('Button', Button)
+  options.extensions.components = { Button }
 
   return mount(comp, options)
 })
@@ -622,7 +720,7 @@ Cypress.Commands.overwrite('mount', (comp, options = {}) => {
   options.global.components = options.global.components || {}
 
   // Register global components
-  options.global.components['Button'] = Button
+  options.global.components = { Button }
 
   return mount(comp, options)
 })
