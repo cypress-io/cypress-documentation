@@ -390,8 +390,8 @@ cy.get('input[type=text]').type('Test all the things', { force: true })
 
 ### Actionability
 
-`.type()` is an "action command" that follows all the rules
-of [Actionability](/guides/core-concepts/interacting-with-elements).
+`.type()` is an "action command" that follows all the rules of
+[Actionability](/guides/core-concepts/interacting-with-elements).
 
 ### Events
 

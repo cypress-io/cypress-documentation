@@ -139,8 +139,8 @@ cy.get('table').find('tr:last-child').should('be.visible')
 
 ### Actionability
 
-`cy.scrollTo()` is an "action command" that follows all the rules
-of [Actionability](/guides/core-concepts/interacting-with-elements).
+`cy.scrollTo()` is an "action command" that follows all the rules of
+[Actionability](/guides/core-concepts/interacting-with-elements).
 
 ### Scopes
 

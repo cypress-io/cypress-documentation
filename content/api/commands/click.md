@@ -177,8 +177,8 @@ cy.get('li:first').click({
 
 #### The element must first reach actionability
 
-`.click()` is an "action command" that follows all the rules
-of [Actionability](/guides/core-concepts/interacting-with-elements).
+`.click()` is an "action command" that follows all the rules of
+[Actionability](/guides/core-concepts/interacting-with-elements).
 
 ### Focus
 

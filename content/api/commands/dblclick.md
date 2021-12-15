@@ -178,8 +178,8 @@ cy.get('li:first').dblclick({
 
 #### The element must first reach actionability
 
-`.dblclick()` is an "action command" that follows all the rules
-of [Actionability](/guides/core-concepts/interacting-with-elements).
+`.dblclick()` is an "action command" that follows all the rules of
+[Actionability](/guides/core-concepts/interacting-with-elements).
 
 ## Rules
 

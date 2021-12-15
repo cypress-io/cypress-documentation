@@ -85,36 +85,43 @@ CONTENT_TBD
 
 ### Attaching Files
 
-Attaching files to input elements or dropping them over the page is available
-in Cypress 10.0. Read the [`.attachFile()` API docs](/api/commands/attachfile)
-for more information on how this works and how to use it.
+Attaching files to input elements or dropping them over the page is available in
+Cypress 10.0. Read the [`.attachFile()` API docs](/api/commands/attachfile) for
+more information on how this works and how to use it.
 
-The
-[`cypress-file-upload`](https://github.com/abramenal/cypress-file-upload)
-plugin has been deprecated in favor of `.attachFile()` built into Cypress.
-There's guidance below on how to migrate from the
-[`cypress-file-upload`](https://github.com/abramenal/cypress-file-upload)
-plugin to Cypress's built-in attachFile command.
+The [`cypress-file-upload`](https://github.com/abramenal/cypress-file-upload)
+plugin has been deprecated in favor of `.attachFile()` built into Cypress, and
+is not compatible with Cypress 10.0. There's guidance below on how to migrate
+from the
+[`cypress-file-upload`](https://github.com/abramenal/cypress-file-upload) plugin
+to Cypress's built-in attachFile command.
 
 #### Quick guide
 
-The argument signature is different for Cypress' builtin `.attachFile()` command than the version the
-`cypress-file-upload` plugin provided. You can follow the steps below for each argument in order to migrate:
+The argument signature is different for Cypress' builtin `.attachFile()` command
+than the version the `cypress-file-upload` plugin provided. You can follow the
+steps below for each argument in order to migrate:
 
 In the first argument:
-- `filePath`: Prefix value with `fixtures/`. Rename to `contents`.
-- `fileContent`: Use `Buffer.from()` rather than `Cypress.Blob` methods. Rename to `contents`.
-- `encoding`: Remove. No longer needed due to improved binary file handling in Cypress 9.0.
-- `mimeType`: Remove. No longer needed due to improved binary file handling in Cypress 9.0.
+
+- `filePath`: Prefix value with `cypress/fixtures/`. Rename to `contents`.
+- `fileContent`: Use `Buffer.from()` rather than `Cypress.Blob` methods. Rename
+  to `contents`.
+- `encoding`: Remove. No longer needed due to improved binary file handling in
+  Cypress 9.0.
+- `mimeType`: Remove. No longer needed due to improved binary file handling in
+  Cypress 9.0.
 
 In the second argument:
+
 - `subjectType`: Rename to `action`.
-- `allowEmpty`: Remove. `.attachFile()` does not check the length of a file read from disk, only its existence.
+- `allowEmpty`: Remove. `.attachFile()` does not check the length of a file read
+  from disk, only its existence.
 
 ### Examples
 
-Below are several examples of migrating various commands from `cypress-file-upload`
-to the builtin `.attachFile()`.
+Below are several examples of migrating various commands from
+`cypress-file-upload` to the builtin `.attachFile()`.
 
 #### Read and attach a fixture
 
@@ -122,22 +129,20 @@ to the builtin `.attachFile()`.
 `cypress-file-upload`
 
 ```js
-cy.get('[data-cy="file-input"]').attachFile('myfixture.json');
+cy.get('[data-cy="file-input"]').attachFile('myfixture.json')
 ```
 
-<Badge type="success">After</Badge> Attaching a fixture from disk with
-Cypress 10.0. Cypress follows paths from your project root
-(same as [`cy.readFile()`](/api/commands/readfile)).
-
+<Badge type="success">After</Badge> Attaching a fixture from disk with Cypress
+10.0. Cypress follows paths from your project root (same as
+[`cy.readFile()`](/api/commands/readfile)).
 
 ```js
-cy.get('[data-cy="file-input"]').attachFile('cypress/fixtures/myfixture.json');
+cy.get('[data-cy="file-input"]').attachFile('cypress/fixtures/myfixture.json')
 
 // Or
 
 cy.fixture('myfixture.json', { encoding: null }).as('myfixture')
-cy.get('[data-cy="file-input"]').attachFile('@myfixture');
-
+cy.get('[data-cy="file-input"]').attachFile('@myfixture')
 ```
 
 #### Using drag-n-drop
@@ -146,16 +151,19 @@ cy.get('[data-cy="file-input"]').attachFile('@myfixture');
 `cypress-file-upload`
 
 ```js
-cy.get('[data-cy="dropzone"]').attachFile('myfixture.json', { subjectType: 'drag-n-drop' })
+cy.get('[data-cy="dropzone"]').attachFile('myfixture.json', {
+  subjectType: 'drag-n-drop',
+})
 ```
 
-<Badge type="success">After</Badge> Attaching a fixture from disk with
-Cypress 10.0. Cypress follows paths from the root of your test folder
-(same as [`cy.readFile()`](/api/commands/readfile)).
-
+<Badge type="success">After</Badge> Attaching a fixture from disk with Cypress
+10.0. Cypress follows paths from the root of your test folder (same as
+[`cy.readFile()`](/api/commands/readfile)).
 
 ```js
-cy.get('[data-cy="dropzone"]').attachFile('fixtures/myfixture.json', { action: 'drag-n-drop' });
+cy.get('[data-cy="dropzone"]').attachFile('fixtures/myfixture.json', {
+  action: 'drag-n-drop',
+})
 ```
 
 #### Overriding the file name
@@ -170,61 +178,59 @@ cy.get('[data-cy="dropzone"]').attachFile({
 })
 ```
 
-<Badge type="success">After</Badge> Attaching a fixture from disk with
-Cypress 10.0. Cypress follows paths from the root of your test folder
-(same as [`cy.readFile()`](/api/commands/readfile)).
-
+<Badge type="success">After</Badge> Attaching a fixture from disk with Cypress
+10.0. Cypress follows paths from the root of your test folder (same as
+[`cy.readFile()`](/api/commands/readfile)).
 
 ```js
 cy.get('[data-cy="dropzone"]').attachFile({
   contents: 'fixtures/myfixture.json',
   fileName: 'customFileName.json',
-});
+})
 ```
 
 #### Working with file contents
 
-<Badge type="danger">Before</Badge> Working with file contents before attaching using
-`cypress-file-upload`
+<Badge type="danger">Before</Badge> Working with file contents before attaching
+using `cypress-file-upload`
 
 ```js
-const special = 'file.spss';
+const special = 'file.spss'
 
 cy.fixture(special, 'binary')
   .then(Cypress.Blob.binaryStringToBlob)
-  .then(fileContent => {
+  .then((fileContent) => {
     // ...process file contents
     cy.get('[data-cy="file-input"]').attachFile({
       fileContent,
       filePath: special,
       encoding: 'utf-8',
       lastModified: new Date().getTime(),
-    });
-  });
+    })
+  })
 ```
 
-<Badge type="success">After</Badge> Working with file contents before attaching with
-Cypress 10.0. The `null` encoding introduced in Cypress 9.0 makes
-working with binary data simpler, and is the preferred encoding for use with
+<Badge type="success">After</Badge> Working with file contents before attaching
+with Cypress 10.0. The `null` encoding introduced in Cypress 9.0 makes working
+with binary data simpler, and is the preferred encoding for use with
 `.attachFile()`.
 
 ```js
-const special = 'file.spss';
+const special = 'file.spss'
 
-cy.fixture(special, { encoding: null })
-  .then(contents => {
-    // ...process file contents
-    cy.get('[data-cy="file-input"]').attachFile({
-      contents,
-      fileName: special,
-      lastModified: new Date().getTime(),
-    });
-  });
+cy.fixture(special, { encoding: null }).then((contents) => {
+  // ...process file contents
+  cy.get('[data-cy="file-input"]').attachFile({
+    contents,
+    fileName: special,
+    lastModified: new Date().getTime(),
+  })
+})
 
 // Or
 
 cy.fixture(special, { encoding: null })
-  .then(contents => {
+  .then((contents) => {
     // ...process file contents
   })
   .as('special')

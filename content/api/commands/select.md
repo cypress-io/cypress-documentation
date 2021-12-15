@@ -238,8 +238,8 @@ cy.get('select#name option:selected').should('have.text', 'Peter')
 
 ### Actionability
 
-`.select()` is an action command that follows the rules
-of [Actionability](/guides/core-concepts/interacting-with-elements).
+`.select()` is an action command that follows the rules of
+[Actionability](/guides/core-concepts/interacting-with-elements).
 
 However, passing `{ force: true }` to `.select()` will not override the
 actionability checks for selecting a disabled `<option>` or an option within a
