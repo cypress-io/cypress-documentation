@@ -41,10 +41,10 @@ are examples that you can start with for your commands:
 ```js
 import { mount } from '@cypress/react'
 
-Cypress.Commands.overwrite('mount', (jsx, options) => {
+Cypress.Commands.overwrite('mount', (component, options) => {
   // Wrap any parent components needed
-  // ie: return mount(<MyProvider>{jsx}</MyProvider>, options)
-  return mount(jsx, options)
+  // ie: return mount(<MyProvider>{component}</MyProvider>, options)
+  return mount(component, options)
 })
 ```
 
@@ -54,7 +54,7 @@ Cypress.Commands.overwrite('mount', (jsx, options) => {
 ```js
 import { mount } from '@cypress/vue'
 
-Cypress.Commands.overwrite('mount', (comp, options = {}) => {
+Cypress.Commands.overwrite('mount', (component, options = {}) => {
   // Setup options object
   options.extensions = options.extensions || {}
   options.extensions.plugins = options.extensions.plugins || []
@@ -70,7 +70,7 @@ Cypress.Commands.overwrite('mount', (comp, options = {}) => {
   /* Add any global components */
   // options.global.components['Button'] = Button;
 
-  return mount(comp, options)
+  return mount(component, options)
 })
 ```
 
@@ -80,7 +80,7 @@ Cypress.Commands.overwrite('mount', (comp, options = {}) => {
 ```js
 import { mount } from '@cypress/vue'
 
-Cypress.Commands.overwrite('mount', (comp, options = {}) => {
+Cypress.Commands.overwrite('mount', (component, options = {}) => {
   // Setup options object
   options.global = options.global || {}
   options.global.stubs = options.global.stubs || {}
@@ -98,7 +98,7 @@ Cypress.Commands.overwrite('mount', (comp, options = {}) => {
   /* Add any global components */
   // options.global.components['Button'] = Button;
 
-  return mount(comp, options)
+  return mount(component, options)
 })
 ```
 
@@ -127,11 +127,11 @@ declare global {
     interface Chainable {
       /**
        * Mounts a React node
-       * @param jsx React Node to mount
+       * @param component React Node to mount
        * @param options Additional options to pass into mount
        */
       mount(
-        jsx: React.ReactNode,
+        component: React.ReactNode,
         options?: MountOptions
       ): Cypress.Chainable<MountReturn>
     }
@@ -220,11 +220,11 @@ declare global {
     interface Chainable {
       /**
        * Mounts a React node
-       * @param jsx React Node to mount
+       * @param component React Node to mount
        * @param options Additional options to pass into mount
        */
       mountWithRouter(
-        jsx: React.ReactNode,
+        component: React.ReactNode,
         options?: MountOptions & { routerProps?: MemoryRouterProps }
       ): Cypress.Chainable<MountReturn>
     }
@@ -291,11 +291,11 @@ declare global {
     interface Chainable {
       /**
        * Mounts a React node
-       * @param jsx React Node to mount
+       * @param component React Node to mount
        * @param options Additional options to pass into mount
        */
       mountWithRedux(
-        jsx: React.ReactNode,
+        component: React.ReactNode,
         options?: MountOptions & { reduxStore?: EnhancedStore<RootState> }
       ): Cypress.Chainable<MountReturn>
     }
@@ -353,7 +353,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { router } from '../../src/router'
 
-Cypress.Commands.add('mountWithRouter', (comp, options = {}) => {
+Cypress.Commands.add('mountWithRouter', (component, options = {}) => {
   // Add the VueRouter plugin
   Vue.use(VueRouter)
 
@@ -361,7 +361,7 @@ Cypress.Commands.add('mountWithRouter', (comp, options = {}) => {
   // or the default one if not provided
   options.router = options.router || router
 
-  return mount(comp, options)
+  return mount(component, options)
 })
 ```
 
@@ -427,7 +427,7 @@ import { mount } from '@cypress/vue'
 import { createMemoryHistory, createRouter } from 'vue-router'
 import { routes } from '../../src/router'
 
-Cypress.Commands.add('mountWithRouter', (comp, options = {}) => {
+Cypress.Commands.add('mountWithRouter', (component, options = {}) => {
   // Setup options object
   options.global = options.global || {}
   options.global.plugins = options.global.plugins || []
@@ -448,7 +448,7 @@ Cypress.Commands.add('mountWithRouter', (comp, options = {}) => {
     },
   })
 
-  return mount(comp, options)
+  return mount(component, options)
 })
 ```
 
@@ -527,7 +527,7 @@ import { mount } from '@cypress/vue'
 import Vuex from 'vuex'
 import { getStore } from '../../src/plugins/store'
 
-Cypress.Commands.add('mountWithVuex', (comp, options = {}) => {
+Cypress.Commands.add('mountWithVuex', (component, options = {}) => {
   // Setup options object
   options.extensions = options.extensions || {}
   options.extensions.plugins = options.extensions.plugins || []
@@ -538,7 +538,7 @@ Cypress.Commands.add('mountWithVuex', (comp, options = {}) => {
   // Add Vuex plugin
   options.extensions.plugins.push(Vuex)
 
-  return mount(comp, options)
+  return mount(component, options)
 })
 ```
 
@@ -602,7 +602,7 @@ it.only('User profile should display user name', () => {
 import { mount } from '@cypress/vue'
 import { getStore } from '../../src/plugins/store'
 
-Cypress.Commands.add('mountWithVuex', (comp, options = {}) => {
+Cypress.Commands.add('mountWithVuex', (component, options = {}) => {
   // Setup options object
   options.global = options.global || {}
   options.global.stubs = options.global.stubs || {}
@@ -620,7 +620,7 @@ Cypress.Commands.add('mountWithVuex', (comp, options = {}) => {
     },
   })
 
-  return mount(comp, mountOptions)
+  return mount(component, mountOptions)
 })
 ```
 
@@ -692,7 +692,7 @@ file, you will need to set them up in your mount command as well.
 import { mount } from '@cypress/vue'
 import Button from '../../src/components/Button.vue'
 
-Cypress.Commands.overwrite('mount', (comp, options = {}) => {
+Cypress.Commands.overwrite('mount', (component, options = {}) => {
   // Setup options object
   options.extensions = options.extensions || {}
   options.extensions.plugins = options.extensions.plugins || []
@@ -701,7 +701,7 @@ Cypress.Commands.overwrite('mount', (comp, options = {}) => {
   // Register global components
   options.extensions.components['Button'] = Button
 
-  return mount(comp, options)
+  return mount(component, options)
 })
 ```
 
@@ -712,7 +712,7 @@ Cypress.Commands.overwrite('mount', (comp, options = {}) => {
 import { mount } from '@cypress/vue'
 import Button from '../../src/components/Button.vue'
 
-Cypress.Commands.overwrite('mount', (comp, options = {}) => {
+Cypress.Commands.overwrite('mount', (component, options = {}) => {
   // Setup options object
   options.global = options.global || {}
   options.global.components = options.global.components || {}
@@ -720,7 +720,7 @@ Cypress.Commands.overwrite('mount', (comp, options = {}) => {
   // Register global components
   options.global.components['Button'] = Button
 
-  return mount(comp, options)
+  return mount(component, options)
 })
 ```
 
