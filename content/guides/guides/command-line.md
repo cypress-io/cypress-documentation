@@ -216,12 +216,6 @@ You can specify a path to a file where
 cypress run --config-file tests/cypress.config.js
 ```
 
-You can pass `false` to disable the use of a configuration file entirely.
-
-```shell
-cypress run --config-file false
-```
-
 #### `cypress run --env <env>`
 
 Set Cypress [environment variables](/guides/guides/environment-variables).
@@ -555,12 +549,6 @@ You can specify a path to a file where
 
 ```shell
 cypress open --config-file tests/cypress.config.js
-```
-
-You can pass `false` to disable the use of a configuration file entirely.
-
-```shell
-cypress open --config-file false
 ```
 
 #### `cypress open --env <env>`
