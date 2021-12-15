@@ -12,9 +12,9 @@ on how to craft your own.
 
 For
 [Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing),
-we recommend creating a custom `cy.mount()` command which wraps the mount
-command from the framework-specific libraries in your component tests. Doing so
-offers a few advantages:
+we recommend creating a custom `cy.mount()` command to wrap the mount command
+from the framework-specific libraries in your component tests. Doing so offers a
+few advantages:
 
 - You don't need to import the mount command into every test as the `cy.mount()`
   command is available globally.
@@ -23,17 +23,20 @@ offers a few advantages:
   [React Provider](https://reactjs.org/docs/context.html) or adding
   [Vue plugins](https://vuejs.org/v2/guide/plugins.html).
 
-If you attempt to use `cy.mount()` before creating it, you will get a warning:
+However, if you attempt to use `cy.mount()` before creating it, you will get a
+warning:
 
 <img src="/_nuxt/assets/img/guides/component-testing/cy-mount-must-be-implemented.png" alt="cy.mount() must be implemented by the user." />
+
+This is to inform you that a `cy.mount()` command is custom to your application
+and needs to be set up manually.
 
 Let's take a look at how to implement the command.
 
 ## Creating a New `cy.mount()` Command
 
-To use `cy.mount()` you will need to add a
-[custom command](/api/cypress-api/custom-commands) to the commands file. Below
-are examples that you can start with for your commands:
+To use `cy.mount()` add a [custom command](/api/cypress-api/custom-commands) to
+the commands file. Below are examples to start with for your commands:
 
 <code-group-react-vue2-vue3>
 <template #react>
@@ -112,8 +115,8 @@ When working in
 will need to add custom typings for your commands to get code completion and to
 avoid any TypeScript errors.
 
-The typings will need to be in a location that any code can access, therefore,
-we recommend creating a `cypress.d.ts` file in the root directory, and use this
+The typings need to be in a location that any code can access, therefore, we
+recommend creating a `cypress.d.ts` file in the root directory, and use this
 example as a starting point for customizing your own command:
 
 <code-group-react-vue>
