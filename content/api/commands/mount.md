@@ -35,8 +35,8 @@ To use `cy.mount()` you will need to add a
 [custom command](/api/cypress-api/custom-commands) to the commands file. Below
 are examples that you can start with for your commands:
 
-<code-group>
-<code-block label="React" active>
+<code-group-react-vue2-vue3>
+<template #react>
 
 ```js
 import { mount } from '@cypress/react'
@@ -48,8 +48,8 @@ Cypress.Commands.overwrite('mount', (jsx, options) => {
 })
 ```
 
-</code-block>
-<code-block label="Vue 2">
+</template>
+<template #vue2>
 
 ```js
 import { mount } from '@cypress/vue'
@@ -74,8 +74,8 @@ Cypress.Commands.overwrite('mount', (comp, options = {}) => {
 })
 ```
 
-</code-block>
-<code-block label="Vue 3">
+</template>
+<template #vue3>
 
 ```js
 import { mount } from '@cypress/vue'
@@ -102,8 +102,8 @@ Cypress.Commands.overwrite('mount', (comp, options = {}) => {
 })
 ```
 
-</code-block>
-</code-group>
+</template>
+</code-group-react-vue2-vue3>
 
 ## Adding TypeScript Typings for `cy.mount()` Commands
 
