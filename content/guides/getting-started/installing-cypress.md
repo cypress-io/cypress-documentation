@@ -478,7 +478,7 @@ the Command Prompt before installing Cypress:
 set CYPRESS_CRASH_REPORTS=0
 ```
 
-To accomplish the same thing in Powershell:
+To accomplish the same thing in PowerShell:
 
 ```shell
 $env:CYPRESS_CRASH_REPORTS = "0"
