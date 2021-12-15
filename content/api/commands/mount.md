@@ -181,9 +181,9 @@ Below are some examples for common uses cases and libraries.
 
 ## React Examples
 
-If your React component relies on provider to work properly, you will need to
-wrap your component in that provider in your component tests. This is a good use
-case to create a custom mount command that wraps your components for you.
+If your React component relies on context to work properly, you need to wrap
+your component in a provider in your component tests. This is a good use case to
+create a custom mount command that wraps your components for you.
 
 Below are a few examples that demonstrate how. These examples can be adjusted
 for most other providers that you will need to support.
@@ -191,10 +191,9 @@ for most other providers that you will need to support.
 ### React Router
 
 If you have a component that consumes a hook or component from
-[React Router](https://reactrouter.com/), you will need to make sure the
-component has access to a React Router provider. Below is a sample mount command
-that uses `MemoryRouter` to wrap the component. Setup props for `MemoryRouter`
-can be passed in the options param as well:
+[React Router](https://reactrouter.com/), make sure the component has access to
+a React Router provider. Below is a sample mount command that uses
+`MemoryRouter` to wrap the component.
 
 ```jsx
 import { mount } from '@cypress/react'
@@ -232,10 +231,10 @@ declare global {
 }
 ```
 
-In this setup, you can pass in custom props for the `MemoryRouter` in the
-`options` param. Below is an example test that ensures an active link has the
-correct class applied to it by initializing the router with `initialEntries`
-pointed to a particular route:
+To set up certain scenarios, pass in props that will get passed to
+`MemoryRouter` in the options. Below is an example test that ensures an active
+link has the correct class applied to it by initializing the router with
+`initialEntries` pointed to a particular route:
 
 ```jsx
 import { Navigation } from './Navigation'
@@ -261,8 +260,8 @@ it('login link should be active when url is "/login"', () => {
 ### Redux
 
 To use a component that consumes state or actions from a
-[Redux](https://react-redux.js.org/) store, you can create a `mountWithRedux`
-command that will wrap your component in a Redux Provider:
+[Redux](https://react-redux.js.org/) store, create a `mountWithRedux` command
+that will wrap your component in a Redux Provider:
 
 ```jsx
 import { mount } from '@cypress/react'
@@ -303,9 +302,7 @@ declare global {
 }
 ```
 
-You can pass in an instance of the store that the provider will use on the
-options param, which can be useful to initialize a store with certain data for
-tests.
+The options param can have a store that is already initialized with data:
 
 ```jsx
 import { getStore } from '../redux/store'
@@ -327,22 +324,25 @@ it('User profile should display user name', () => {
 })
 ```
 
-> The `getStore` method is a factory method that initializes a new Redux store.
-> It is important that the store be initialized with each new test to ensure
-> changes to the store don't affect other tests.
+<Alert type="info">
+
+The `getStore` method is a factory method that initializes a new Redux store. It
+is important that the store be initialized with each new test to ensure changes
+to the store don't affect other tests.
+
+</Alert>
 
 ## Vue Examples
 
 Adding plugins and global components are some common scenarios for creating
 custom mount commands in Vue. Below are examples that demonstrate how set up a
 mount command for a few popular Vue libraries. These examples can be adapted to
-other libraries as well.
+fit other libraries as well.
 
 ### Vue Router
 
-To wire up a plugin such as Vue Router, you can create a custom command to
-register the plugin and pass in a custom implementation of the router via the
-options param.
+To use Vue Router, create a command to register the plugin and pass in a custom
+implementation of the router via the options param:
 
 <code-group-vue2-vue3>
 <template #vue2>
@@ -432,14 +432,13 @@ Cypress.Commands.add('mountWithRouter', (component, options = {}) => {
   options.global = options.global || {}
   options.global.plugins = options.global.plugins || []
 
-  // Use the router passed in via options,
-  // or the default one if not provided
-  options.router =
-    options.router ||
-    createRouter({
+  // create router if one is not provided
+  if (!options.router) {
+    options.router = createRouter({
       routes: routes,
       history: createMemoryHistory(),
     })
+  }
 
   // Add router plugin
   options.global.plugins.push({
@@ -478,7 +477,7 @@ declare global {
 Usage:
 
 Calling `router.push()` in the router for Vue 3 is an asynchronous operation.
-You can use the [cy.wrap](/api/commands/wrap) command to have Cypress await the
+Use the [cy.wrap](/api/commands/wrap) command to have Cypress await the
 promise's resolve before it continues with other commands:
 
 ```js
@@ -516,8 +515,8 @@ it('login link should be active when url is "/login"', () => {
 
 ### Vuex
 
-To use a component that uses [Vuex](https://vuex.vuejs.org/), you can create a
-`mountWithVuex` command that expose a Vuex store to your component:
+To use a component that uses [Vuex](https://vuex.vuejs.org/), create a
+`mountWithVuex` command that configures a Vuex store for your component:
 
 <code-group-vue2-vue3>
 <template #vue2>
@@ -542,9 +541,13 @@ Cypress.Commands.add('mountWithVuex', (component, options = {}) => {
 })
 ```
 
-> The `getStore` method is a factory method that initializes Vuex and creates a
-> new store. It is important that the store be initialized with each new test to
-> ensure changes to the store don't affect other tests.
+<Alert type="info">
+
+The `getStore` method is a factory method that initializes Vuex and creates a
+new store. It is important that the store be initialized with each new test to
+ensure changes to the store don't affect other tests.
+
+</Alert>
 
 Typings:
 
@@ -624,9 +627,13 @@ Cypress.Commands.add('mountWithVuex', (component, options = {}) => {
 })
 ```
 
-> The `getStore` method is a factory method that initializes Vuex and creates a
-> new store. It is important that the store be initialized with each new test to
-> ensure changes to the store don't affect other tests.
+<Alert type="info">
+
+The `getStore` method is a factory method that initializes Vuex and creates a
+new store. It is important that the store be initialized with each new test to
+ensure changes to the store don't affect other tests.
+
+</Alert>
 
 Typings:
 
@@ -683,7 +690,8 @@ it.only('User profile should display user name', () => {
 ### Global Components
 
 If you have components that are registered globally in the main application
-file, you will need to set them up in your mount command as well.
+file, set them up in your mount command so your component will render them
+properly:
 
 <code-group-vue2-vue3>
 <template #vue2>
