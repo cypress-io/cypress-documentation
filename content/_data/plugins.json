@@ -596,6 +596,13 @@
           "link": "https://github.com/BrandedEntertainmentNetwork/cypress-rest-graphql",
           "keywords": ["api", "rest", "graphQL"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-forced-colors",
+          "description": "Cypress commands to enable and disable browser forced colors mode",
+          "link": "https://github.com/ling1726/cypress-forced-colors",
+          "keywords": ["forced colors", "high contrast", "high contrast mode", "contrast", "testing"],
+          "badge": "community"
         }
       ]
     },
