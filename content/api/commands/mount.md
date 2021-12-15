@@ -56,11 +56,9 @@ import { mount } from '@cypress/vue'
 
 Cypress.Commands.overwrite('mount', (comp, options = {}) => {
   // Setup options object
-  options.global = options.global || {}
-  options.global.stubs = options.global.stubs || {}
-  options.global.stubs['transition'] = false
-  options.global.components = options.global.components || {}
-  options.global.plugins = options.global.plugins || []
+  options.extensions = options.extensions || {}
+  options.extensions.plugins = options.extensions.plugins || []
+  options.extensions.components = options.extensions.components || {}
 
   /* Add any global plugins */
   // options.global.plugins.push({
@@ -701,7 +699,7 @@ Cypress.Commands.overwrite('mount', (comp, options = {}) => {
   options.extensions.components = options.extensions.components || {}
 
   // Register global components
-  options.extensions.components = { Button }
+  options.extensions.components['Button'] = Button
 
   return mount(comp, options)
 })
@@ -720,7 +718,7 @@ Cypress.Commands.overwrite('mount', (comp, options = {}) => {
   options.global.components = options.global.components || {}
 
   // Register global components
-  options.global.components = { Button }
+  options.global.components['Button'] = Button
 
   return mount(comp, options)
 })
