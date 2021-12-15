@@ -109,7 +109,7 @@ declare global {
        */
       dataCy(value: string): Chainable<Element>
     }
-  } 
+  }
 }
 ```
 
