@@ -514,7 +514,7 @@ it('login link should be active when url is "/login"', () => {
 </template>
 </code-group-vue2-vue3>
 
-### Vue
+### Vuex
 
 To use a component that uses [Vuex](https://vuex.vuejs.org/), you can create a
 `mountWithVuex` command that expose a Vuex store to your component:
