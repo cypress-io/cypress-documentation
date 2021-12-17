@@ -26,7 +26,7 @@ Some commands in Cypress are for interacting with the DOM such as:
 - [`.uncheck()`](/api/commands/uncheck)
 - [`.select()`](/api/commands/select)
 - [`.trigger()`](/api/commands/trigger)
-- [`.attachFile()`](/api/commands/attachfile)
+- [`.selectFile()`](/api/commands/selectfile)
 
 These commands simulate a user interacting with your application. Under the
 hood, Cypress fires the events a browser would fire thus causing your

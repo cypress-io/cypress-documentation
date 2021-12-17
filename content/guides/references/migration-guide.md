@@ -83,23 +83,31 @@ on('<event>', (arg1, arg2) => {
 
 CONTENT_TBD
 
+## Migrating to Cypress 9.3
+
+This guide details the changes and how to change your code to make full use of
+Cypress 9.3.
+[See the full changelog for 9.3](/guides/references/changelog#9-3-0).
+
+None of the changes detailed here are breaking.
+
 ### Attaching Files
 
 Attaching files to input elements or dropping them over the page is available in
-Cypress 10.0. Read the [`.attachFile()` API docs](/api/commands/attachfile) for
+Cypress 9.3. Read the [`.selectFile()` API docs](/api/commands/selectfile) for
 more information on how this works and how to use it.
 
 The [`cypress-file-upload`](https://github.com/abramenal/cypress-file-upload)
-plugin has been deprecated in favor of `.attachFile()` built into Cypress, and
-is not compatible with Cypress 10.0. There's guidance below on how to migrate
-from the
+plugin has been deprecated in favor of `.selectFile()` built into Cypress,
+though it remains compatible with Cypress 9.3. There's guidance below on how to
+migrate from the
 [`cypress-file-upload`](https://github.com/abramenal/cypress-file-upload) plugin
-to Cypress's built-in attachFile command.
+to Cypress's built-in selectFile command.
 
 #### Quick guide
 
-The argument signature is different for Cypress' builtin `.attachFile()` command
-than the version the `cypress-file-upload` plugin provided. You can follow the
+The argument signature is different for Cypress' builtin `.selectFile()` command
+than `.attachFile` the `cypress-file-upload` plugin provided. You can follow the
 steps below for each argument in order to migrate:
 
 In the first argument:
@@ -114,8 +122,9 @@ In the first argument:
 
 In the second argument:
 
-- `subjectType`: Rename to `action`.
-- `allowEmpty`: Remove. `.attachFile()` does not check the length of a file read
+- `subjectType`: Rename to `action`. Move from `drag-n-drop` to `drag-drop` or
+  from `input` to `select`.
+- `allowEmpty`: Remove. `.selectFile()` does not check the length of a file read
   from disk, only its existence.
 
 ### Examples
@@ -132,17 +141,17 @@ Below are several examples of migrating various commands from
 cy.get('[data-cy="file-input"]').attachFile('myfixture.json')
 ```
 
-<Badge type="success">After</Badge> Attaching a fixture from disk with Cypress
-10.0. Cypress follows paths from your project root (same as
+<Badge type="success">After</Badge> Attaching a fixture from disk with
+`.selectFile()`. Cypress follows paths from your project root (same as
 [`cy.readFile()`](/api/commands/readfile)).
 
 ```js
-cy.get('[data-cy="file-input"]').attachFile('cypress/fixtures/myfixture.json')
+cy.get('[data-cy="file-input"]').selectFile('cypress/fixtures/myfixture.json')
 
 // Or
 
 cy.fixture('myfixture.json', { encoding: null }).as('myfixture')
-cy.get('[data-cy="file-input"]').attachFile('@myfixture')
+cy.get('[data-cy="file-input"]').selectFile('@myfixture')
 ```
 
 #### Using drag-n-drop
@@ -156,13 +165,13 @@ cy.get('[data-cy="dropzone"]').attachFile('myfixture.json', {
 })
 ```
 
-<Badge type="success">After</Badge> Attaching a fixture from disk with Cypress
-10.0. Cypress follows paths from the root of your test folder (same as
-[`cy.readFile()`](/api/commands/readfile)).
+<Badge type="success">After</Badge> Attaching a fixture from disk with
+`.selectFile()`. Cypress follows paths from the root of your test folder (same
+as [`cy.readFile()`](/api/commands/readfile)).
 
 ```js
-cy.get('[data-cy="dropzone"]').attachFile('fixtures/myfixture.json', {
-  action: 'drag-n-drop',
+cy.get('[data-cy="dropzone"]').selectFile('fixtures/myfixture.json', {
+  action: 'drag-drop',
 })
 ```
 
@@ -178,12 +187,12 @@ cy.get('[data-cy="dropzone"]').attachFile({
 })
 ```
 
-<Badge type="success">After</Badge> Attaching a fixture from disk with Cypress
-10.0. Cypress follows paths from the root of your test folder (same as
-[`cy.readFile()`](/api/commands/readfile)).
+<Badge type="success">After</Badge> Attaching a fixture from disk with
+`.selectFile()`. Cypress follows paths from the root of your test folder (same
+as [`cy.readFile()`](/api/commands/readfile)).
 
 ```js
-cy.get('[data-cy="dropzone"]').attachFile({
+cy.get('[data-cy="dropzone"]').selectFile({
   contents: 'fixtures/myfixture.json',
   fileName: 'customFileName.json',
 })
@@ -211,8 +220,8 @@ cy.fixture(special, 'binary')
 ```
 
 <Badge type="success">After</Badge> Working with file contents before attaching
-with Cypress 10.0. The `null` encoding introduced in Cypress 9.0 makes working
-with binary data simpler, and is the preferred encoding for use with
+with `.selectFile()`. The `null` encoding introduced in Cypress 9.0 makes
+working with binary data simpler, and is the preferred encoding for use with
 `.attachFile()`.
 
 ```js
@@ -220,7 +229,7 @@ const special = 'file.spss'
 
 cy.fixture(special, { encoding: null }).then((contents) => {
   // ...process file contents
-  cy.get('[data-cy="file-input"]').attachFile({
+  cy.get('[data-cy="file-input"]').selectFile({
     contents,
     fileName: special,
     lastModified: new Date().getTime(),
@@ -235,7 +244,7 @@ cy.fixture(special, { encoding: null })
   })
   .as('special')
 
-cy.get('[data-cy="file-input"]').attachFile('@special')
+cy.get('[data-cy="file-input"]').selectFile('@special')
 ```
 
 ## Migrating to Cypress 8.0

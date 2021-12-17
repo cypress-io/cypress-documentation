@@ -429,10 +429,6 @@
               "slug": "as"
             },
             {
-              "title": "attachFile",
-              "slug": "attachfile"
-            },
-            {
               "title": "blur",
               "slug": "blur"
             },
@@ -659,6 +655,10 @@
             {
               "title": "select",
               "slug": "select"
+            },
+            {
+              "title": "selectFile",
+              "slug": "selectfile"
             },
             {
               "title": "server",

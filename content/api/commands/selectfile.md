@@ -1,5 +1,5 @@
 ---
-title: attachFile
+title: selectFile
 ---
 
 Attaches a file or files to an HTML5 input element or simulates dragging a file
@@ -8,10 +8,10 @@ or files into the browser.
 ## Syntax
 
 ```javascript
-.attachFile(file)
-.attachFile(file, options)
-.attachFile([file1, file2, ...])
-.attachFile([file1, file2, ...], options)
+.selectFile(file)
+.selectFile(file, options)
+.selectFile([file1, file2, ...])
+.selectFile([file1, file2, ...], options)
 ```
 
 ### Usage
@@ -19,9 +19,9 @@ or files into the browser.
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('input[type=file]').attachFile('file.json')
-cy.get('input[type=file]').attachFile(['file.json', 'file2.json'])
-cy.get('input[type=file]').attachFile({
+cy.get('input[type=file]').selectFile('file.json')
+cy.get('input[type=file]').selectFile(['file.json', 'file2.json'])
+cy.get('input[type=file]').selectFile({
   contents: Buffer.from('foo'),
   fileName: 'file.json',
   lastModified: Date.now(),
@@ -32,11 +32,11 @@ cy.get('input[type=file]').attachFile({
 
 ```javascript
 // Errors, cannot be chained off 'cy'
-cy.attachFile('file.json')
+cy.selectFile('file.json')
 
 // Will attempt to find a file called 'file contents'
 // on disk, probably not what you intended
-cy.get('input[type=file]').attachFile('file contents')
+cy.get('input[type=file]').selectFile('file contents')
 ```
 
 ### Arguments
@@ -65,52 +65,52 @@ If an object is provided, it can have the following properties.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
-Pass in an options object to change the default behavior of `.attachFile()`.
+Pass in an options object to change the default behavior of `.selectFile()`.
 
 | Option                       | Default                                                                        | Description                                                                                                                                       |
 | ---------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `action`                     | `'input'`                                                                      | Switches attachFile between modes. Valid values are `input` and `drag-n-drop`. See [Actions](#Actions) below for more details.                    |
+| `action`                     | `'select'`                                                                     | Switches selectFile between modes. Valid values are `select` and `drag-drop`. See [Actions](#Actions) below for more details.                     |
 | `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations). |
 | `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions).                                                                             |
 | `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log).                                                         |
-| `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.attachFile()` to resolve before [timing out](#Timeouts).                                                                       |
+| `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.selectFile()` to resolve before [timing out](#Timeouts).                                                                       |
 | `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.      |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.attachFile()` yields the same subject it was given from the previous
+- `.selectFile()` yields the same subject it was given from the previous
   command.
 
 ### Action
 
-Depending on the `action` set in the `options` argument, `.attachFile()` can
+Depending on the `action` set in the `options` argument, `.selectFile()` can
 simulate two different user behaviors:
 
-#### `input` (default)
+#### `select` (default)
 
-By default, `attachFile()` runs in 'input' mode, mimicking a user selecting one
+By default, `selectFile()` runs in 'select' mode, mimicking a user selecting one
 or more files on an HTML5 input element. In this mode, the
 [subject](/guides/core-concepts/introduction-to-cypress#Subject-Management) must
 be a single `input` element with `type="file"`, or a `label` element connected
 to an input (either with its `for` attribute or by containing the input).
 
-#### `drag-n-drop`
+#### `drag-drop`
 
-Setting the action to `drag-n-drop` changes the behavior of the command to
-instead mimic a user dragging files from the operating system into the browser,
-and dropping them over the selected subject. In this mode, the subject can be
-any DOM element or the `document` as a whole.
+Setting the action to `drag-drop` changes the behavior of the command to instead
+mimic a user dragging files from the operating system into the browser, and
+dropping them over the selected subject. In this mode, the subject can be any
+DOM element or the `document` as a whole.
 
 ## Examples
 
 ### From a file on disk
 
 ```javascript
-cy.get('input[type=file]').attachFile('path/to/file.json')
-cy.get('input[type=file]').attachFile('path/to/file.png')
+cy.get('input[type=file]').selectFile('path/to/file.json')
+cy.get('input[type=file]').selectFile('path/to/file.png')
 ```
 
-If given a path, `.attachFile()` will search for the file relative to the
+If given a path, `.selectFile()` will search for the file relative to the
 project root and attach the file exactly as it exists on disk. This is the
 preferred way to work with files on disk, avoiding many encoding-related
 pitfalls.
@@ -118,7 +118,7 @@ pitfalls.
 ### On a hidden input
 
 ```javascript
-cy.get('input[type=file]').attachFile('file.json', { force: true })
+cy.get('input[type=file]').selectFile('file.json', { force: true })
 ```
 
 In many cases in modern applications, the underlying file input is hidden from
@@ -130,7 +130,7 @@ though a user would not be able to directly activate the file input.
 
 ```javascript
 cy.fixture('file.json', { encoding: null }).as('myFixture')
-cy.get('input[type=file]').attachFile('@myFixture')
+cy.get('input[type=file]').selectFile('@myFixture')
 ```
 
 Note the use of `null` encoding. By default, `cy.fixture()` and `cy.readFile()`
@@ -145,7 +145,7 @@ for more details on file encoding.
 ```javascript
 cy.request('http://localhost:8888/users/827').its('body').as('responseBody')
 
-cy.get('input[type=file]').attachFile('@responseBody')
+cy.get('input[type=file]').selectFile('@responseBody')
 ```
 
 ### Processing data inside the test
@@ -157,13 +157,13 @@ cy.readFile('users.json')
   })
   .as('myFile')
 
-cy.get('input[type=file]').attachFile('@myFile')
+cy.get('input[type=file]').selectFile('@myFile')
 ```
 
 ### Attaching multiple files
 
 ```javascript
-cy.get('input[type=file]').attachFile([
+cy.get('input[type=file]').selectFile([
   'file1.json',
   'file2.json',
   'file3.json',
@@ -179,7 +179,7 @@ This will fail unless the file input has the `multiple` property.
 ### Attaching a file with custom filename and lastModified
 
 ```javascript
-cy.get('input[type=file]').attachFile({
+cy.get('input[type=file]').selectFile({
   contents: 'path/to/file.json',
   fileName: 'users.json',
   lastModified: new Date('Feb 18 1989').valueOf(),
@@ -189,7 +189,7 @@ cy.get('input[type=file]').attachFile({
 ### Dropping a file on the document
 
 ```javascript
-cy.document().attachFile('file.json', { action: 'drag-n-drop' })
+cy.document().selectFile('file.json', { action: 'drag-drop' })
 ```
 
 ## Notes
@@ -198,43 +198,43 @@ cy.document().attachFile('file.json', { action: 'drag-n-drop' })
 
 #### Default file existence assertion
 
-Whenever resolving a file path, `.attachFile()` asserts that the file exists and
+Whenever resolving a file path, `.selectFile()` asserts that the file exists and
 will fail if it does not exist. It will retry reading the file if it does not
 initially exist until the file exists or the command times out.
 
 ```javascript
 // will fail after the defaultCommandTimeout is reached
-cy.get('input[type=file]').attachFile('does-not-exist.yaml')
+cy.get('input[type=file]').selectFile('does-not-exist.yaml')
 ```
 
 ### Actionability
 
 #### The element must first reach actionability
 
-`.attachFile()` is an "action command" that follows all the rules of
+`.selectFile()` is an "action command" that follows all the rules of
 [Actionability](/guides/core-concepts/interacting-with-elements).
 
 ## Rules
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `.attachFile()` requires being chained off a command that yields DOM
+- `.selectFile()` requires being chained off a command that yields DOM
   element(s). With the `input` action (default), it further requires a single
   `input` element with `type="file"`, or a `label` element attached to one.
-- If given a path, `.attachFile()` requires the file must exist.
-- If given an alias, `.attachFile()` requires that the subject of the alias must
+- If given a path, `.selectFile()` requires the file must exist.
+- If given an alias, `.selectFile()` requires that the subject of the alias must
   not be `null` or `undefined`.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `.attachFile()` will automatically wait for the element to reach an
+- `.selectFile()` will automatically wait for the element to reach an
   [actionable state](/guides/core-concepts/interacting-with-elements).
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-- `.attachFile()` can time out waiting for the element to reach an
+- `.selectFile()` can time out waiting for the element to reach an
   [actionable state](/guides/core-concepts/interacting-with-elements).
-- `.attachFile()` can time out waiting for a file to exist on disk or for an
+- `.selectFile()` can time out waiting for a file to exist on disk or for an
   alias to resolve.
 
 ## Command Log
@@ -242,27 +242,27 @@ cy.get('input[type=file]').attachFile('does-not-exist.yaml')
 **_Attach file to input_**
 
 ```javascript
-cy.get('.file-input').attachFile(Buffer.from('Hello world'))
+cy.get('.file-input').selectFile(Buffer.from('Hello world'))
 ```
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/attachfile/attach-file-during-test.png" alt="Command log for attachFile" ></DocsImage>
+<DocsImage src="/img/api/attachfile/attach-file-during-test.png" alt="Command log for selectFile" ></DocsImage>
 
-When clicking on `attachFile` within the command log, the console outputs the
+When clicking on `selectFile` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/attachfile/attach-file-in-console.png" alt="console.log for attachFile" ></DocsImage>
+<DocsImage src="/img/api/attachfile/attach-file-in-console.png" alt="console.log for selectFile" ></DocsImage>
 
 ## History
 
-| Version                                       | Changes                       |
-| --------------------------------------------- | ----------------------------- |
-| [10.0.0](/guides/references/changelog#10.0.0) | `.attachFile()` command added |
+| Version                                     | Changes                       |
+| ------------------------------------------- | ----------------------------- |
+| [9.3.0](/guides/references/changelog#9.3.0) | `.selectFile()` command added |
 
 ### Community Recognition
 
-The `.attachFile()` command draws heavy inspiration from the now-deprecated
+The `.selectFile()` command draws heavy inspiration from the now-deprecated
 Cypress File Upload plugin. It was made possible by
 [@abramenal](https://github.com/abramenal) and contributors to the
 [cypress-file-upload](https://github.com/abramenal/cypress-file-upload#contributors)
