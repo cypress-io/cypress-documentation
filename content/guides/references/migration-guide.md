@@ -83,32 +83,20 @@ on('<event>', (arg1, arg2) => {
 
 CONTENT_TBD
 
-## Migrating to Cypress 9.3
+## Migrating `cypress-file-upload` to [`.selectFile()`](/api/commands/selectfile)
 
-This guide details the changes and how to change your code to make full use of
-Cypress 9.3.
-[See the full changelog for 9.3](/guides/references/changelog#9-3-0).
-
-None of the changes detailed here are breaking.
-
-### Attaching Files
-
-Attaching files to input elements or dropping them over the page is available in
-Cypress 9.3. Read the [`.selectFile()` API docs](/api/commands/selectfile) for
-more information on how this works and how to use it.
-
-The [`cypress-file-upload`](https://github.com/abramenal/cypress-file-upload)
-plugin has been deprecated in favor of `.selectFile()` built into Cypress,
-though it remains compatible with Cypress 9.3. There's guidance below on how to
-migrate from the
-[`cypress-file-upload`](https://github.com/abramenal/cypress-file-upload) plugin
-to Cypress's built-in selectFile command.
+Selecting files with input elements or dropping them over the page is available
+in Cypress 9.3. Read the [`.selectFile()` API docs](/api/commands/selectfile)
+for more information on how this works and how to use it. This guide details how
+to change your test code to migrate from
+[`cypress-file-upload`](https://github.com/abramenal/cypress-file-upload) to
+`.selectFile()`.
 
 #### Quick guide
 
 The argument signature is different for Cypress' builtin `.selectFile()` command
-than the `.attachFile` command the `cypress-file-upload` plugin provided. You can follow the
-steps below for each argument in order to migrate:
+than the `.attachFile` command the `cypress-file-upload` plugin provided. You
+can follow the steps below for each argument in order to migrate:
 
 In the first argument:
 
@@ -200,7 +188,7 @@ cy.get('[data-cy="dropzone"]').selectFile({
 
 #### Working with file contents
 
-<Badge type="danger">Before</Badge> Working with file contents before attaching
+<Badge type="danger">Before</Badge> Working with file contents before using
 using `cypress-file-upload`
 
 ```js
@@ -219,9 +207,9 @@ cy.fixture(special, 'binary')
   })
 ```
 
-<Badge type="success">After</Badge> Working with file contents before attaching
-with `.selectFile()`. The `null` encoding introduced in Cypress 9.0 makes
-working with binary data simpler, and is the preferred encoding for use with
+<Badge type="success">After</Badge> Working with file contents before using with
+`.selectFile()`. The `null` encoding introduced in Cypress 9.0 makes working
+with binary data simpler, and is the preferred encoding for use with
 `.selectFile()`.
 
 ```js

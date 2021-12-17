@@ -2,8 +2,8 @@
 title: selectFile
 ---
 
-Attaches a file or files to an HTML5 input element or simulates dragging a file
-or files into the browser.
+Selects a file or files to attach to an HTML5 input element or simulates
+dragging a file or files into the browser.
 
 ## Syntax
 
@@ -123,7 +123,7 @@ cy.get('input[type=file]').selectFile('file.json', { force: true })
 
 In many cases in modern applications, the underlying file input is hidden from
 view, and activated by a user clicking on a button. In these cases, you will
-need to tell Cypress to ignore its actionability checks and attach the file even
+need to tell Cypress to ignore its actionability checks and select the file even
 though a user would not be able to directly activate the file input.
 
 ### From a fixture
@@ -239,7 +239,7 @@ cy.get('input[type=file]').selectFile('does-not-exist.yaml')
 
 ## Command Log
 
-**_Attach file to input_**
+**_Select file for input_**
 
 ```javascript
 cy.get('.file-input').selectFile(Buffer.from('Hello world'))
@@ -247,12 +247,12 @@ cy.get('.file-input').selectFile(Buffer.from('Hello world'))
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/attachfile/attach-file-during-test.png" alt="Command log for selectFile" ></DocsImage>
+<DocsImage src="/img/api/selectfile/attach-file-during-test.png" alt="Command log for selectFile" ></DocsImage>
 
 When clicking on `selectFile` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/attachfile/attach-file-in-console.png" alt="console.log for selectFile" ></DocsImage>
+<DocsImage src="/img/api/selectfile/attach-file-in-console.png" alt="console.log for selectFile" ></DocsImage>
 
 ## History
 
