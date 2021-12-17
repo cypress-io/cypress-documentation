@@ -107,7 +107,7 @@ to Cypress's built-in selectFile command.
 #### Quick guide
 
 The argument signature is different for Cypress' builtin `.selectFile()` command
-than `.attachFile` the `cypress-file-upload` plugin provided. You can follow the
+than the `.attachFile` command the `cypress-file-upload` plugin provided. You can follow the
 steps below for each argument in order to migrate:
 
 In the first argument:
@@ -130,7 +130,7 @@ In the second argument:
 ### Examples
 
 Below are several examples of migrating various commands from
-`cypress-file-upload` to the builtin `.attachFile()`.
+`cypress-file-upload` to the builtin `.selectFile()` command.
 
 #### Read and attach a fixture
 
@@ -141,7 +141,7 @@ Below are several examples of migrating various commands from
 cy.get('[data-cy="file-input"]').attachFile('myfixture.json')
 ```
 
-<Badge type="success">After</Badge> Attaching a fixture from disk with
+<Badge type="success">After</Badge> Selecting a fixture from disk with
 `.selectFile()`. Cypress follows paths from your project root (same as
 [`cy.readFile()`](/api/commands/readfile)).
 
@@ -165,7 +165,7 @@ cy.get('[data-cy="dropzone"]').attachFile('myfixture.json', {
 })
 ```
 
-<Badge type="success">After</Badge> Attaching a fixture from disk with
+<Badge type="success">After</Badge> Selecting a fixture from disk with
 `.selectFile()`. Cypress follows paths from the root of your test folder (same
 as [`cy.readFile()`](/api/commands/readfile)).
 
@@ -187,7 +187,7 @@ cy.get('[data-cy="dropzone"]').attachFile({
 })
 ```
 
-<Badge type="success">After</Badge> Attaching a fixture from disk with
+<Badge type="success">After</Badge> Selecting a fixture from disk with
 `.selectFile()`. Cypress follows paths from the root of your test folder (same
 as [`cy.readFile()`](/api/commands/readfile)).
 
@@ -222,7 +222,7 @@ cy.fixture(special, 'binary')
 <Badge type="success">After</Badge> Working with file contents before attaching
 with `.selectFile()`. The `null` encoding introduced in Cypress 9.0 makes
 working with binary data simpler, and is the preferred encoding for use with
-`.attachFile()`.
+`.selectFile()`.
 
 ```js
 const special = 'file.spss'

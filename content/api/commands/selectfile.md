@@ -160,7 +160,7 @@ cy.readFile('users.json')
 cy.get('input[type=file]').selectFile('@myFile')
 ```
 
-### Attaching multiple files
+### Selecting multiple files
 
 ```javascript
 cy.get('input[type=file]').selectFile([
@@ -176,7 +176,7 @@ This will fail unless the file input has the `multiple` property.
 
 </Alert>
 
-### Attaching a file with custom filename and lastModified
+### Selecting a file with custom filename and lastModified
 
 ```javascript
 cy.get('input[type=file]').selectFile({
