@@ -30,7 +30,8 @@ We make it possible to:
 - [Set up tests](#Setting-up-tests)
 - [Write tests](#Writing-tests)
 - [Run tests](#Running-tests)
-- [Debug Tests](#Debugging-tests)
+- [Debug tests](#Debugging-tests)
+- [Analyze test results](#Analyzing-test-results)
 
 Cypress is most often compared to Selenium; however Cypress is both
 fundamentally and architecturally different. Cypress is not constrained by the
@@ -146,6 +147,13 @@ Readable error messages help you to debug quickly. You also have access to all
 the developer tools you know and love.
 
 <DocsVideo src="/img/snippets/debugging.mp4" title="Debugging Tests"></DocsVideo>
+
+### <Icon name="chart-bar"></Icon> Analyzing test results
+
+The Cypress Dashboard collects details of your test runs and gives you detailed
+logs and analytics that help you surface issues and combat flake.
+
+<DocsVideo src="/img/snippets/debugging.mp4"></DocsVideo>
 
 ## Test types
 

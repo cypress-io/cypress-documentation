@@ -133,6 +133,7 @@ export default {
         'faBook',
         'faBug',
         'faCamera',
+        'faChartBar',
         'faCheck',
         'faCheckCircle',
         'faCheckSquare',
