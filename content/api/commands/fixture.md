@@ -57,7 +57,8 @@ supported:
 - `'utf-16le'`
 - `null`
 
-Using `null` explicitly will return the fixture as a `Buffer`, regardless of file extension.
+Using `null` explicitly will return the fixture as a `Buffer`, regardless of
+file extension.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -233,8 +234,8 @@ Cypress automatically determines the encoding for the following file types:
 - `.zip`
 
 For other types of files, they will be read as `utf8` by default, unless
-specified in the second argument of `cy.fixture()`. You can specify `null`
-as the encoding in order to read the file as a `Buffer` instead.
+specified in the second argument of `cy.fixture()`. You can specify `null` as
+the encoding in order to read the file as a `Buffer` instead.
 
 ### `this` context
 
@@ -337,7 +338,8 @@ practical purposes it should never happen.
 - [Guide: Variables and Aliases](/guides/core-concepts/variables-and-aliases)
 - [`cy.intercept()`](/api/commands/intercept)
 - [`.then()`](/api/commands/then)
-- [`.readFile()`](/api/commands/readFile) for a similar command without caching and with builtin retryability
+- [`.readFile()`](/api/commands/readFile) for a similar command without caching
+  and with builtin retryability
 - [Recipe: Bootstrapping App Test Data](/examples/examples/recipes#Server-Communication)
 - [Fixtures](https://github.com/cypress-io/testing-workshop-cypress#fixtures)
   section of the Cypress Testing Workshop
