@@ -54,15 +54,15 @@ you should understand well. The default values listed here are meaningful.
 
 </Alert>
 
-| Option                  | Default | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| ----------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  |
-| `defaultCommandTimeout` | `4000`  | Time, in milliseconds, to wait until most DOM based commands are considered timed out                                                                                                                                                                                                                                                                                                                                                                                             |
-| `execTimeout`           | `60000` | Time, in milliseconds, to wait for a system command to finish executing during a [`cy.exec()`](/api/commands/exec) command                                                                                                                                                                                                                                                                                                                                                        |
-| `taskTimeout`           | `60000` | Time, in milliseconds, to wait for a task to finish executing during a [`cy.task()`](/api/commands/task) command                                                                                                                                                                                                                                                                                                                                                                  |
-| `pageLoadTimeout`       | `60000` | Time, in milliseconds, to wait for `page transition events` or [`cy.visit()`](/api/commands/visit), [`cy.go()`](/api/commands/go), [`cy.reload()`](/api/commands/reload) commands to fire their page `load` events. Network requests are limited by the underlying operating system, and may still time out if this value is increased.                                                                                                                                           |
-| `requestTimeout`        | `5000`  | Time, in milliseconds, to wait for a request to go out in a [`cy.wait()`](/api/commands/wait) command                                                                                                                                                                                                                                                                                                                                                                             |
-| `responseTimeout`       | `30000` | Time, in milliseconds, to wait until a response in a [`cy.request()`](/api/commands/request), [`cy.wait()`](/api/commands/wait), [`cy.fixture()`](/api/commands/fixture), [`cy.getCookie()`](/api/commands/getcookie), [`cy.getCookies()`](/api/commands/getcookies), [`cy.setCookie()`](/api/commands/setcookie), [`cy.clearCookie()`](/api/commands/clearcookie), [`cy.clearCookies()`](/api/commands/clearcookies), and [`cy.screenshot()`](/api/commands/screenshot) commands |
-| `slowTestThreshold`     | `10000 \| 250` | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter. You will often want to configure this differently for component and e2e testing. Default is 10000 for e2e and 250 for component tests. |
+| Option                  | Default        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ----------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `defaultCommandTimeout` | `4000`         | Time, in milliseconds, to wait until most DOM based commands are considered timed out                                                                                                                                                                                                                                                                                                                                                                                             |
+| `execTimeout`           | `60000`        | Time, in milliseconds, to wait for a system command to finish executing during a [`cy.exec()`](/api/commands/exec) command                                                                                                                                                                                                                                                                                                                                                        |
+| `taskTimeout`           | `60000`        | Time, in milliseconds, to wait for a task to finish executing during a [`cy.task()`](/api/commands/task) command                                                                                                                                                                                                                                                                                                                                                                  |
+| `pageLoadTimeout`       | `60000`        | Time, in milliseconds, to wait for `page transition events` or [`cy.visit()`](/api/commands/visit), [`cy.go()`](/api/commands/go), [`cy.reload()`](/api/commands/reload) commands to fire their page `load` events. Network requests are limited by the underlying operating system, and may still time out if this value is increased.                                                                                                                                           |
+| `requestTimeout`        | `5000`         | Time, in milliseconds, to wait for a request to go out in a [`cy.wait()`](/api/commands/wait) command                                                                                                                                                                                                                                                                                                                                                                             |
+| `responseTimeout`       | `30000`        | Time, in milliseconds, to wait until a response in a [`cy.request()`](/api/commands/request), [`cy.wait()`](/api/commands/wait), [`cy.fixture()`](/api/commands/fixture), [`cy.getCookie()`](/api/commands/getcookie), [`cy.getCookies()`](/api/commands/getcookies), [`cy.setCookie()`](/api/commands/setcookie), [`cy.clearCookie()`](/api/commands/clearcookie), [`cy.clearCookies()`](/api/commands/clearcookies), and [`cy.screenshot()`](/api/commands/screenshot) commands |
+| `slowTestThreshold`     | `10000 \| 250` | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter. You will often want to configure this differently for component and e2e testing. Default is 10000 for e2e and 250 for component tests.                                                                                                                                                                                                    |
 
 ### Folders / Files
 
@@ -319,13 +319,14 @@ You can
 
 ## Test Configuration
 
-We provide two options to override the configuration while your test are running, `Cypress.config()` and
-suite-specific or test-specific configuration overrides.
+We provide two options to override the configuration while your test are
+running, `Cypress.config()` and suite-specific or test-specific configuration
+overrides.
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Note:** Some
-configuration values are readonly and cannot be changed via test configuration.
-The following configuration values **can be changed** via per test
-configuration:
+<Icon name="exclamation-triangle" color="red"></Icon> **Note:** The
+configuration values below are all writeable and **can be changed** via per test
+configuration. Any other configuration values are readonly and cannot be changed
+at run time.
 
 - `animationDistanceThreshold`
 - `baseUrl`
@@ -355,15 +356,16 @@ configuration:
 You can also override configuration values within your test using
 [`Cypress.config()`](/api/cypress-api/config).
 
-
-This changes the configuration _for the remaining execution of the current spec file_.
-The values will reset to the previous default values after the spec has complete.
+This changes the configuration _for the remaining execution of the current spec
+file_. The values will reset to the previous default values after the spec has
+complete.
 
 ```javascript
 Cypress.config('pageLoadTimeout', 100000)
 
 Cypress.config('pageLoadTimeout') // => 100000
 ```
+
 #### Test-specific Configuration
 
 To apply specific Cypress [configuration](/guides/references/configuration)
@@ -385,8 +387,9 @@ specify(name, config, fn)
 
 ##### Suite configuration
 
-If you want to target a suite of tests to run or be excluded when run in a specific browser, you can override
-the `browser` configuration within the suite configuration. The `browser` option accepts the same arguments as
+If you want to target a suite of tests to run or be excluded when run in a
+specific browser, you can override the `browser` configuration within the suite
+configuration. The `browser` option accepts the same arguments as
 [`Cypress.isBrowser()`](/api/cypress-api/isbrowser).
 
 You can configure the number of times to retries a suite of tests if they fail
@@ -448,15 +451,6 @@ value has been set via the following ways:
 <DocsImage src="/img/guides/configuration/see-resolved-configuration.jpg" alt="See resolved configuration" ></DocsImage>
 
 ## Notes
-
-### browser
-`browser` is a special configuration option that allows you to filter whether a test or a suite of tests should run depending on the current browser.
-
-```javascript
-it('my test only for chrome', { browser: 'chrome' }, () => {
-  // only run this test in chrome
-})
-```
 
 ### blockHosts
 
