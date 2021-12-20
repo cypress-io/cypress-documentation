@@ -77,7 +77,10 @@ We believe our documentation should be approachable. This means enabling our
 readers to understand fully not just the **what** but the **why** as well.
 
 We want to help developers build a new generation of modern applications faster,
-better, and without the stress and anxiety associated with managing tests.
+better, and without the stress and anxiety associated with managing tests. We
+want to elevate the art of software development by leveraging test results to
+generate actionable insights into long-term stability, and identify areas for
+improvement.
 
 We know that in order for us to be successful we must enable, nurture, and
 foster an ecosystem that thrives on open source. Every line of test code is an
