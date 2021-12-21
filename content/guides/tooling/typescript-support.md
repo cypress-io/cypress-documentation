@@ -120,6 +120,14 @@ by any users of your custom command.
 
 </Alert>
 
+<Alert type="info">
+
+Types of all the parameters taken by the implementation callback are inferred
+automatically based on the declared interface. Thus, in the example above, the
+`value` will be of type `string` implicitly.
+
+</Alert>
+
 In your specs, you can now use the custom command as expected
 
 ```typescript
@@ -131,6 +139,85 @@ it('works', () => {
   cy.dataCy('greeting')
 })
 ```
+
+#### Adding child or dual commands
+
+When you add a custom command with `prevSubject`, Cypress will infer the subject
+type automatically based on the specified `prevSubject`.
+
+```typescript
+// in cypress/support/index.ts
+// load type definitions that come with Cypress module
+/// <reference types="cypress" />
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Custom command to type a few random words into input elements
+       * @param count=3
+       * @example cy.get('input').typeRandomWords()
+       */
+      typeRandomWords(
+        count?: number,
+        options?: Partial<TypeOptions>
+      ): Chainable<Element>
+    }
+  }
+}
+```
+
+```typescript
+// cypress/support/index.ts
+Cypress.Commands.add('typeRandomWords', { prevSubject: 'element' }, (
+  subject /* :JQuery<HTMLElement> */,
+  count = 3,
+  options?
+) => {
+  return cy.wrap(subject).type(generateRandomWords(count), options)
+})
+```
+
+#### Overwriting child or dual commands
+
+When overwriting either built-in or custom commands which make use of
+`prevSubject`, you must specify generic parameters to help the type-checker to
+understand the type of the `prevSubject`.
+
+```typescript
+interface TypeOptions extends Cypress.TypeOptions {
+  sensitive: boolean
+}
+
+Cypress.Commands.overwrite<'type', 'element'>(
+  'type',
+  (originalFn, element, text, options?: Partial<TypeOptions>) => {
+    if (options && options.sensitive) {
+      // turn off original log
+      options.log = false
+      // create our own log with masked message
+      Cypress.log({
+        $el: element,
+        name: 'type',
+        message: '*'.repeat(text.length),
+      })
+    }
+
+    return originalFn(element, text, options)
+  }
+)
+```
+
+As you can see there are generic parameters `<'type', 'element'>` are used:
+
+1. The first parameter is the command name, equal to first parameter passed to
+   `Cypress.Commands.overwrite`.
+2. The second parameter is the type of the `prevSubject` that is used by the
+   original command. Possible values:
+   - 'element' infers it as `JQuery<HTMLElement>`
+   - 'window' infers it as `Window`
+   - 'document' infers it as `Document`
+   - 'optional' infers it as `unknown`
 
 #### Examples:
 
