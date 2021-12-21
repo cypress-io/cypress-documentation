@@ -140,32 +140,13 @@ See [examples](#With-RouteMatcher) below.
 #### <Icon name="angle-right"></Icon> staticResponse (<code>[StaticResponse][staticresponse]</code>)
 
 By passing in a `StaticResponse` as the last argument, you can
-[statically define (stub) a response](#Stubbing-a-response) for matched requests
-including the body of the response, as well as the headers and HTTP status code:
-
-| Option     | Description                                                      |
-| ---------- | ---------------------------------------------------------------- |
-| statusCode | HTTP response status code                                        |
-| headers    | HTTP response headers                                            |
-| body       | Serve a static response body (`object`, `string`, `ArrayBuffer`) |
-| fixture    | Serve a fixture as the HTTP response body                        |
-
-`StaticResponse` also provides options for simulating a degraded or broken
-network connection:
-
-| Option            | Description                                                                 |
-| ----------------- | --------------------------------------------------------------------------- |
-| forceNetworkError | Force an error by destroying the browser connection                         |
-| delay             | Minimum network latency or delay to add to the response time (milliseconds) |
-| throttleKbps      | Maximum data transfer rate of the response (kilobits/second)                |
-
-**Note:** All properties are optional.
+[statically define (stub) a response](#Stubbing-a-response) for matched
+requests. See [`StaticResponse` object](#StaticResponse-objects) for the list of
+properties.
 
 See
 [Stubbing a response with a `StaticResponse` object](#With-a-StaticResponse-object)
 for an example.
-
-See also [`StaticResponse` objects](#StaticResponse-objects).
 
 #### <Icon name="angle-right"></Icon> routeHandler (<code>Function</code>)
 
@@ -457,7 +438,15 @@ cy.intercept('/not-found', {
 })
 ```
 
-See also [`StaticResponse` objects][staticresponse].
+Stub response with a fixture that is read as a Buffer:
+
+```js
+cy.intercept('/not-found', {
+  fixture: 'media/gif.mp4,null',
+})
+```
+
+See also [`StaticResponse` object][staticresponse].
 
 ### Using the **`routeHandler`** function
 
@@ -1326,29 +1315,32 @@ from propagating to the next matching response handler in line. See
 
 ## `StaticResponse` objects
 
-A `StaticResponse` represents a stubbed response to an HTTP request. You can
-supply a `StaticResponse` to Cypress in 3 ways:
+A `StaticResponse` represents a
+[statically defined response (stub)](#Stubbing-a-response).
 
-- Directly to `cy.intercept()` as
-  [`staticResponse`](#staticResponse-lt-code-gtStaticResponselt-code-gt), to
-  stub a response to a route: `cy.intercept('/url', staticResponse)`
+The following properties are available on `StaticResponse`.
+
+| Option            | Description                                                                                                                                                                                                                       |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| statusCode        | HTTP response status code                                                                                                                                                                                                         |
+| headers           | HTTP response headers                                                                                                                                                                                                             |
+| body              | Serve a static response body (`object`, `string`, `ArrayBuffer`) (when `fixture` is omitted).                                                                                                                                     |
+| fixture           | Serve a fixture as the HTTP response body (allowed when `body` is omitted). Read the contents with an encoding other than the [default for the file type](/api/commands/fixture#Encoding), pass the fixture like `path,encoding`. |
+| forceNetworkError | Force an error by destroying the browser connection                                                                                                                                                                               |
+| delay             | Minimum network latency or delay to add to the response time (milliseconds)                                                                                                                                                       |
+| throttleKbps      | Maximum data transfer rate of the response (kilobits/second)                                                                                                                                                                      |
+
+**Note:** All properties are optional.
+
+You can supply a `StaticResponse` to Cypress in 3 ways:
+
+- To `cy.intercept()` as
+  [`an argument`](#staticResponse-lt-code-gtStaticResponselt-code-gt), to stub a
+  response to a route: `cy.intercept('/url', staticResponse)`
 - To [`req.reply()`][req-reply], to stub a response from a request handler:
   `req.reply(staticResponse)`
 - To [`res.send()`][res-send], to stub a response from a response handler:
   `res.send(staticResponse)`
-
-The following properties are available on `StaticResponse`. All properties are
-optional:
-
-| Option            | Description                                                                 |
-| ----------------- | --------------------------------------------------------------------------- |
-| fixture           | Serve a fixture as the HTTP response body                                   |
-| body              | Serve a static response body (`object`, `string`, `ArrayBuffer`)            |
-| headers           | HTTP response headers                                                       |
-| statusCode        | HTTP response status code                                                   |
-| forceNetworkError | Force an error by destroying the browser connection                         |
-| delay             | Minimum network latency or delay to add to the response time (milliseconds) |
-| throttleKbps      | Maximum data transfer rate of the response (kilobits/second)                |
 
 See
 ["Stubbing a response with a `StaticResponse` object"](#With-a-StaticResponse-object)
