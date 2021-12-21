@@ -114,10 +114,18 @@ do that no other testing framework can:
 - **Consistent Results:** Our architecture doesn’t use Selenium or WebDriver.
   Say hello to fast, consistent and reliable tests that are flake-free.
 - **Screenshots and Videos:** View screenshots taken automatically on failure,
-  or videos of your entire test suite when run from the CLI.
+  or videos of your entire test suite when run from the CLI. Record to the
+  Dashboard to store them with your test results for easy online browsing.
 - **Cross browser Testing:** Run tests within Firefox and Chrome-family browsers
   (including Edge and Electron) locally and
   [optimally in a Continuous Integration pipeline](/guides/guides/cross-browser-testing).
+- **Test Orchestration:** Once you're set up to record to the Dashboard, easily
+  [parallelize](/guides/guides/parallelization) your test suite and
+  [fail-fast](/guides/dashboard/smart-orchestration#Run-failed-specs-first) for
+  tight feedback loops.
+- **Flake Detection:** Sometimes tests pass, sometimes they fail? Discover and
+  diagnose unreliable tests with the Dashboard's
+  [Flaky tests](/guides/dashboard/flaky-test-management) feature.
 
 ### <Icon name="cog"></Icon> Setting up tests
 
