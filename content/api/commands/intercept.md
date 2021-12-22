@@ -118,7 +118,8 @@ intercepted route.
 All properties are optional but all those that are set must match for the
 request to be intercepted. If a `string` is passed to any property, it will be
 glob-matched against the request using
-[`Cypress.minimatch`](/api/utilities/minimatch).
+[`Cypress.minimatch`](/api/utilities/minimatch) with the `{ matchBase: true }`
+minimatch option applied.
 
 | Option     | Description                                                                                     |
 | ---------- | ----------------------------------------------------------------------------------------------- |
@@ -1450,22 +1451,27 @@ cy.intercept('/users?_limit=+(3|5)')
 
 ### Cypress.minimatch
 
-Under the hood, Cypress uses the [minimatch](/api/utilities/minimatch) library
-for glob matching and provides access to it via the `Cypress` global. This
-enables you to test your pattern in the Test Runner browser console.
+Under the hood, `cy.intercept` uses the [minimatch](/api/utilities/minimatch) library
+with the `{ matchBase: true }` option applied for glob matching and provides
+access to it via the `Cypress` global. This enables you to test your pattern in
+your spec or in the Test Runner browser console.
 
 You can invoke the `Cypress.minimatch` with just two arguments - the URL
 (`string`) and the pattern (`string`), respectively - and if it yields `true`,
 then you have a match!
 
 ```javascript
-// executed in the Test Runner browser console:
-Cypress.minimatch('http://localhost/users?_limit=3', '/users?_limit=+(3|5)')
-// true
-Cypress.minimatch('http://localhost/users?_limit=5', '/users?_limit=+(3|5)')
-// true
-Cypress.minimatch('http://localhost/users?_limit=7', '/users?_limit=+(3|5)')
-// false
+expect(
+  Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)')
+).to.be.true
+expect(
+  Cypress.minimatch('http://localhost/users?_limit=5', '/users?_limit=+(3|5)', {
+    matchBase: true,
+  })
+).to.be.true
+expect(
+  Cypress.minimatch('http://localhost/users?_limit=7', '**/users?_limit=+(3|5)')
+).to.be.false
 ```
 
 #### minimatch options
@@ -1475,7 +1481,7 @@ You can also pass in options (`object`) as the third argument, one of which is
 understand why your pattern isn't working as you expect:
 
 ```js
-Cypress.minimatch('http://localhost/users?_limit=3', '/users?_limit=+(3|5)', {
+Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)', {
   debug: true,
 })
 // true (plus debug messages)
