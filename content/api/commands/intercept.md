@@ -1452,7 +1452,7 @@ cy.intercept('/users?_limit=+(3|5)')
 ### Cypress.minimatch
 
 Under the hood, Cypress uses the [minimatch](/api/utilities/minimatch) library
-with the `{ matchBase: true}` option applied for glob matching and provides
+with the `{ matchBase: true }` option applied for glob matching and provides
 access to it via the `Cypress` global. This enables you to test your pattern in
 your spec or in Test Runner browser console.
 
