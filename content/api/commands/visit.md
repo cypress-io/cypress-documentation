@@ -47,7 +47,7 @@ The URL to visit.
 Cypress will prefix the URL with the `baseUrl` configured in your
 [global configuration](/guides/references/configuration#Global) if set.
 
-If the the `baseUrl` has not been set, you will need to specify a fully qualified
+If the `baseUrl` has not been set, you will need to specify a fully qualified
 URL or Cypress will attempt to act as your web server. See the
 [prefixes notes](#prefixes) for more details.
 
