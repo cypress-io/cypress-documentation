@@ -2,8 +2,8 @@
 title: selectFile
 ---
 
-Selects a file or files to attach to an HTML5 input element or simulates
-dragging a file or files into the browser.
+Selects a file or files in an HTML5 input element or simulates dragging a file
+or files into the browser.
 
 ## Syntax
 
