@@ -421,7 +421,7 @@ for all available platforms.
 https://download.cypress.io/desktop/3.0.0?platform=win32&arch=x64
 ```
 
-When setting `CYPRESS_DOWNLOAD_PATH_PARAMS=true` environment variable, then the download url uses path parameter format instead of query based parameters.
+When setting `CYPRESS_DOWNLOAD_PATH_PARAMS=true` environment variable, then the download url uses path parameter format instead of query based parameter format.
 ```text
 https://download.cypress.io/desktop/3.0.0/win32-x64/cypress.zip
 ```
