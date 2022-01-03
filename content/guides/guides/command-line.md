@@ -121,7 +121,7 @@ cypress run [options]
 | `--headless`               | [Hide the browser instead of running headed (default during `cypress run`)](#cypress-run-headless)                                                                                         |
 | `--help`, `-h`             | Output usage information                                                                                                                                                                   |
 | `--key`, `-k`              | [Specify your secret record key](#cypress-run-record-key-lt-record-key-gt)                                                                                                                 |
-| `--no-exit`                | [Keep Cypress Test Runner open after tests in a spec file run](#cypress-run-no-exit)                                                                                                       |
+| `--no-exit`                | [Keep the Cypress App open after tests in a spec file run](#cypress-run-no-exit)                                                                                                           |
 | `--parallel`               | [Run recorded specs in parallel across multiple machines](#cypress-run-parallel)                                                                                                           |
 | `--port`,`-p`              | [Override default port](#cypress-run-port-lt-port-gt)                                                                                                                                      |
 | `--project`, `-P`          | [Path to a specific project](#cypress-run-project-lt-project-path-gt)                                                                                                                      |
@@ -182,8 +182,10 @@ For more complex configuration objects, you may want to consider passing a
 [JSON.stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
 object surrounded by single quotes.
 
+Here, we're passing in the configuration for component spec files.
+
 ```shell
-cypress run --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.ts"]}'
+cypress run --config '{"watchForFileChanges":false,"specPattern":["**/*.cy.js","**/*.cy.ts"]}'
 ```
 
 <Alert type="info">
@@ -277,8 +279,8 @@ cypress run --headed
 
 #### `cypress run --no-exit`
 
-To prevent the Cypress Test Runner from exiting after running tests in a spec
-file, use `--no-exit`.
+To prevent the Cypress App from exiting after running tests in a spec file, use
+`--no-exit`.
 
 You can pass `--headed --no-exit` in order to view the **command log** or have
 access to **developer tools** after a `spec` has run.
@@ -480,7 +482,7 @@ $ echo $?
 
 ### `cypress open`
 
-Opens the Cypress Test Runner.
+Opens the Cypress App.
 
 ```shell
 cypress open [options]
@@ -489,8 +491,8 @@ cypress open [options]
 #### Options:
 
 Options passed to `cypress open` will automatically be applied to the project
-you open. These persist on all projects until you quit the Cypress Test Runner.
-These options will also override values in the Cypress configuration file.
+you open. These persist on all projects until you quit the Cypress App. These
+options will also override values in the Cypress configuration file.
 
 | Option                | Description                                                                                                                   |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
@@ -519,7 +521,7 @@ cypress open --browser /usr/bin/chromium
 ```
 
 If found, the specified browser will be added to the list of available browsers
-in the Cypress Test Runner.
+in the Cypress App.
 
 Currently, only browsers in the Chrome family (including the new Chromium-based
 Microsoft Edge and Brave) and Firefox are supported.
@@ -540,8 +542,10 @@ For more complex configuration objects, you may want to consider passing a
 [JSON.stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
 object.
 
+Here, we're passing in the configuration for component spec files.
+
 ```shell
-cypress open --config "{\"watchForFileChanges\":false,\"testFiles\":[\"**/*.js\",\"**/*.ts\"]}"
+cypress open --config "{\"watchForFileChanges\":false,\"specPattern\":[\"**/*.cy.js\",\"**/*.cy.ts\"]}"
 ```
 
 #### `cypress open --config-file <configuration-file>`

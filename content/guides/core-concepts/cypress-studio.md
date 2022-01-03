@@ -13,7 +13,7 @@ title: Cypress Studio
 
 ## Overview
 
-Cypress Studio provides a visual way to generate tests within the Test Runner,
+Cypress Studio provides a visual way to generate tests within the Cypress App,
 by _recording interactions_ against the application under test.
 
 The [`.click()`](/api/commands/click), [`.type()`](/api/commands/type),
@@ -51,9 +51,8 @@ used to demonstrate the functionality of Cypress Studio below.
 
 ### Extending a Test
 
-You can extend any preexisting test or start by creating a new test in your
-[integrationFolder](/guides/references/configuration#Folders-Files)
-(`cypress/integration` by default) with the following test scaffolding.
+You can extend any preexisting test or start by creating a new test with the
+following test scaffolding.
 
 ```js
 // Code from Real World App (RWA)
@@ -89,7 +88,7 @@ file.
 #### Step 1 - Run the spec
 
 We will use Cypress Studio to perform a "New Transaction" user journey. First,
-launch the Test Runner and run the spec created in the previous step.
+launch the Cypress App and run the spec created in the previous step.
 
 <DocsImage src="/img/guides/cypress-studio/run-spec-1.png" alt="Cypress Studio" no-border></DocsImage>
 
@@ -117,7 +116,7 @@ the application inside the `beforeEach` block).
 
 </Alert>
 
-Next, the Test Runner will execute the test in isolation and pause after the
+Next, the Cypress App will execute the test in isolation and pause after the
 last command in the test.
 
 <DocsImage src="/img/guides/cypress-studio/extend-ready.png" alt="Cypress Studio Ready" no-border></DocsImage>

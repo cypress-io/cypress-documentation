@@ -551,7 +551,7 @@ Since no record key was passed, Cypress checks for any environment variable with
 the name `CYPRESS_RECORD_KEY`. In this case, that was also not found.
 
 You can get your project's record key by locating it in your settings tab in the
-Test Runner or in the [Dashboard Service](https://on.cypress.io/dashboard).
+Cypress App or in the [Dashboard Service](https://on.cypress.io/dashboard).
 
 You will want to then
 [add the key to your config file or as an environment variable](/guides/continuous-integration/introduction#Record-tests).
@@ -826,7 +826,7 @@ remaining tests and print out this error.
 There is an [open issue](https://github.com/cypress-io/cypress/issues/349) to
 recover from browser crashes automatically, so tests can continue to run.
 
-## Test Runner errors
+## Cypress App errors
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> Whoops, we can't run your tests
 
@@ -851,9 +851,9 @@ one of the following:
 
 **You visit the Cypress proxy URL outside of a Cypress browser.**
 
-- Don't copy the URL you see when launching a Cypress browser from the Test
-  Runner and open it in a non-Cypress browser. If you want to run your tests in
-  a different browser, follow the instructions in the
+- Don't copy the URL you see when launching a Cypress browser from the
+  Cypress App and open it in a non-Cypress browser. If you want to run your
+  tests in a different browser, follow the instructions in the
   [Cross Browser Testing](/guides/guides/cross-browser-testing) guide.
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> Cannot connect to API server

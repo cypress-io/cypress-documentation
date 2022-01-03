@@ -9,7 +9,7 @@ When you run tests in Cypress, we launch a browser for you. This enables us to:
 
 ## Browsers
 
-When Cypress is initially run from the Test Runner, you can choose to run
+When Cypress is initially run from the Cypress App, you can choose to run
 Cypress in a select number of browsers including:
 
 - [Chrome](https://www.google.com/chrome/)
@@ -26,7 +26,7 @@ Cypress in a select number of browsers including:
 - [Firefox Nightly](https://www.mozilla.org/firefox/nightly/)
 
 Cypress automatically detects available browsers on your OS. You can switch the
-browser in the Test Runner by using the drop down in the top right corner:
+browser in the Cypress App by using the drop down in the top right corner:
 
 <DocsImage src="/img/guides/browser-list-dropdown.png" alt="Select a different browser" ></DocsImage>
 
@@ -189,7 +189,7 @@ return {
 
 :::
 
-When you open the Test Runner in a project that uses the above modifications to
+When you open the Cypress App in a project that uses the above modifications to
 the setupNodeEvents function, only the Chrome browsers found on the system will
 display in the list of available browsers.
 
@@ -253,7 +253,7 @@ other browser of the `chromium` family.
 
 If you modify the list of browsers, you can see the
 [resolved configuration](/guides/references/configuration#Resolved-Configuration)
-in the **Settings** tab of the Test Runner.
+in the **Settings** tab of the Cypress App.
 
 ### Unsupported Browsers
 

@@ -190,7 +190,7 @@ load them automatically. By default, this extension is either `.cy.js`,
 `MyComponent.cy.js`.
 
 Note that you can change the
-[`testFiles`](/guides/references/configuration#component) configuration option
+[`specPattern`](/guides/references/configuration#component) configuration option
 to customize how Cypress looks for spec files.
 
 ### Creating the spec file

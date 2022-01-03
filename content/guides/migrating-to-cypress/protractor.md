@@ -85,18 +85,18 @@ configuration, this often leads to a reliance on lengthy terminal messages that
 can be expensive from a context-switching perspective.
 
 With the [Cypress App](/guides/core-concepts/cypress-app), your tests run in an
-interactive browser environment in real time. The Cypress Test Runner's
+interactive browser environment in real time. The Cypress App's
 [command log](/guides/core-concepts/cypress-app#Command-Log) displays the tests
 from your test suite and their assertions. When you
 [click on a command or assertion](https://docs.cypress.io/guides/core-concepts/cypress-app#Clicking-on-Commands)
-in the command log, the Cypress Test Runner displays a DOM snapshot from that
-point in time so you can see what the application under test looked like at the
-time of the test's execution. This allows you to see the **real rendered UI**
-and the behavior of the app under **real user interactions.** Since the app is
-loaded within a real browser, you can also manually explore its behavior while
-it is under the state of a desired test scenario.
+in the command log, the Cypress App displays a DOM snapshot from that point in
+time so you can see what the application under test looked like at the time of
+the test's execution. This allows you to see the **real rendered UI** and the
+behavior of the app under **real user interactions.** Since the app is loaded
+within a real browser, you can also manually explore its behavior while it is
+under the state of a desired test scenario.
 
-The Test Runner also helps you to write your tests by making it as easy as
+The Cypress App also helps you to write your tests by making it as easy as
 possible to find the right CSS selectors for the DOM elements in your
 application with its
 [Selector Playground](https://docs.cypress.io/guides/core-concepts/cypress-app#Selector-Playground).
@@ -121,12 +121,12 @@ confidence.
 
 ### Time travel through tests
 
-The Cypress Test Runner gives you time travel capabilities to see exactly how
-your app was behaving at any point during test execution. Cypress takes DOM
-snapshots of your application under test as the Test Runner executes the
-commands and assertions in your tests. This enables you to view the **real UI**
-of your application at any point during your tests' execution. By clicking from
-one command to another in the
+The Cypress App gives you time travel capabilities to see exactly how your app
+was behaving at any point during test execution. Cypress takes DOM snapshots of
+your application under test as the Cypress App executes the commands and
+assertions in your tests. This enables you to view the **real UI** of your
+application at any point during your tests' execution. By clicking from one
+command to another in the
 [command log](/guides/core-concepts/cypress-app#Command-Log), you can see which
 elements Cypress acted upon and how your application responded to the simulated
 **real user behavior**.
@@ -191,8 +191,7 @@ You can also use the following command to start Cypress in `open` mode:
 ng run {your-project-name}:cypress-open
 ```
 
-Both of these commands will launch the Cypress Test Runner in an Electron
-browser.
+Both of these commands will launch the Cypress App in an Electron browser.
 
 You can also launch Cypress via `run` mode, which runs headlessly:
 

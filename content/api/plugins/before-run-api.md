@@ -74,7 +74,7 @@ module.exports = (on, config) => {
     //     // ... more specs
     //   ],
     //   specPattern: [
-    //     '**/*_spec.js'
+    //     '**/*.cy.{js,jsx,ts,tsx}'
     //   ],
     //   parallel: false,
     //   group: 'group-1',

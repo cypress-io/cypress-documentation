@@ -23,7 +23,7 @@ for `cypress.json` will be removed in a future version of Cypress.
 
 Related notes:
 
-- If no config file exists when you open the Cypress Test Runner, a
+- If no config file exists when you open the Cypress App, a
   [`cypress.config.js`](/guides/references/configuration#Configuration-file)
   file will now be auto-generated for you.
 - A

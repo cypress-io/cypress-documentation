@@ -209,13 +209,13 @@ npx cypress open
 yarn run cypress open
 ```
 
-After a moment, the Cypress Test Runner will launch.
+After a moment, the Cypress App will launch.
 
 ### Switching browsers
 
-The Cypress Test Runner attempts to find all compatible browsers on the user's
-machine. The drop down to select a different browser is in the top right corner
-of the Test Runner.
+The Cypress App attempts to find all compatible browsers on the user's machine.
+The drop down to select a different browser is in the top right corner of the
+Cypress App.
 
 <DocsImage src="/img/guides/browser-list-dropdown.png" alt="Select a different browser" ></DocsImage>
 
@@ -492,7 +492,7 @@ setx CYPRESS_CRASH_REPORTS 0
 
 ### Install pre-release version
 
-If you would like to install a pre-release version of the Test Runner to test
+If you would like to install a pre-release version of the Cypress App to test
 out functionality that has not yet been released, here is how:
 
 1. Open up the list of commits to `develop` on the Cypress repo:

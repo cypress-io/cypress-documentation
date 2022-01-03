@@ -17,14 +17,14 @@ title: Writing Your First End-to-End Test
 ## Add a test file
 
 Assuming you've successfully
-[installed the Test Runner](/guides/getting-started/installing-cypress#Installing)
+[installed the Cypress App](/guides/getting-started/installing-cypress#Installing)
 and
 [opened the Cypress app](/guides/getting-started/installing-cypress#Opening-Cypress),
 now it's time to write our first test. We're going to:
 
 1. Create a `sample_spec.js` file.
 2. Watch Cypress update our list of specs.
-3. Launch the Cypress Test Runner.
+3. Launch the Cypress App.
 
 Let's create a new file in the `cypress/integration` folder that was created for
 us:
@@ -33,9 +33,9 @@ us:
 touch {your_project}/cypress/integration/sample_spec.js
 ```
 
-Once we've created that file, we should see the Cypress Test Runner immediately
-display it in the list of Integration Tests. Cypress monitors your spec files
-for any changes and automatically displays any changes.
+Once we've created that file, we should see the Cypress App immediately display
+it in the list of Integration Tests. Cypress monitors your spec files for any
+changes and automatically displays any changes.
 
 Even though we haven't written any tests yet - that's okay - let's click on
 `sample_spec.js` and watch Cypress launch your browser.
@@ -92,7 +92,7 @@ Over in the [Command Log](/guides/core-concepts/cypress-app#Command-Log) you'll
 see Cypress display the suite, the test and your first assertion (which should
 be passing in green).
 
-<DocsImage src="/img/guides/first-test.png" alt="My first test shown passing in the Test Runner" ></DocsImage>
+<DocsImage src="/img/guides/first-test.png" alt="My first test shown passing in the Cypress App" ></DocsImage>
 
 <Alert type="info">
 
@@ -203,8 +203,8 @@ describe('My First Test', () => {
 })
 ```
 
-Save the file and switch back over to the Cypress Test Runner. You might notice
-a few things:
+Save the file and switch back over to the Cypress App. You might notice a few
+things:
 
 1. The [Command Log](/guides/core-concepts/cypress-app#Command-Log) now shows
    the new `VISIT` action.

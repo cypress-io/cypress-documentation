@@ -1460,14 +1460,14 @@ cy.intercept('/users?_limit=+(3|5)')
 
 Under the hood, Cypress uses the [minimatch](/api/utilities/minimatch) library
 for glob matching and provides access to it via the `Cypress` global. This
-enables you to test your pattern in the Test Runner browser console.
+enables you to test your pattern in the Cypress App browser console.
 
 You can invoke the `Cypress.minimatch` with just two arguments - the URL
 (`string`) and the pattern (`string`), respectively - and if it yields `true`,
 then you have a match!
 
 ```javascript
-// executed in the Test Runner browser console:
+// executed in the Cypress App browser console:
 Cypress.minimatch('http://localhost/users?_limit=3', '/users?_limit=+(3|5)')
 // true
 Cypress.minimatch('http://localhost/users?_limit=5', '/users?_limit=+(3|5)')

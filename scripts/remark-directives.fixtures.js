@@ -394,8 +394,7 @@ const { devServer } = require('@cypress/react/plugins/react-scripts')
 module.exports = defineConfig({
   component: {
     devServer,
-    componentFolder: 'src',
-    testFiles: '**/*.test.{js,ts,jsx,tsx}'
+    specPattern: '**/*.cy.{js,jsx,ts,tsx}'
   }
 })`,
   tab2: `import { defineConfig } from 'cypress'
@@ -404,16 +403,14 @@ const { devServer } = require('@cypress/react/plugins/react-scripts')
 export default defineConfig({
   component: {
     devServer,
-    componentFolder: 'src',
-    testFiles: '**/*.test.{js,ts,jsx,tsx}'
+    specPattern: '**/*.cy.{js,jsx,ts,tsx}'
   }
 })`,
   tab3: `// cypress.json (deprecated)
 
 {
   "component": {
-    "componentFolder": "src",
-    "testFiles": "**/*.test.{js,ts,jsx,tsx}"
+    "specPattern": "**/*.cy.{js,jsx,ts,tsx}"
   }
 }
 

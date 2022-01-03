@@ -52,7 +52,7 @@ If the the `basUrl` has not been set, you will need to specify a fully qualified
 URL or Cypress will attempt to act as your web server. See the
 [prefixes notes](#prefixes) for more details.
 
-**Note:** visiting a new domain requires the Test Runner window to reload. You
+**Note:** visiting a new domain requires the Cypress App window to reload. You
 cannot visit different super domains in a single test.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**

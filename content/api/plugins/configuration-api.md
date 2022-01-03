@@ -51,7 +51,7 @@ modified from the `setupNodeEvents` function in the Cypress configuration.**
 
 </Alert>
 
-Resolved values will show up in the "Settings" tab of the Test Runner.
+Resolved values will show up in the "Settings" tab of the Cypress App.
 
 <DocsImage src="/img/guides/plugin-configuration.png" alt="Resolved configuration in the Desktop app" ></DocsImage>
 
@@ -102,7 +102,7 @@ return {
 
 :::
 
-When you open the Test Runner in a project that uses the above modifications,
+When you open the Cypress App in a project that uses the above modifications,
 only the Chrome browsers found on the system will display in the list of
 available browsers.
 
@@ -117,7 +117,7 @@ will be restored automatically.
 
 If you modify the list of browsers, you can see the
 [resolved configuration](/guides/references/configuration#Resolved-Configuration)
-in the **Settings** tab of the Test Runner.
+in the **Settings** tab of the Cypress App.
 
 ### Switch between multiple configuration files
 
@@ -233,14 +233,15 @@ How you choose to edit the configuration is up to you. You don't have to read
 off of the file system - you could store them all in memory inside of
 [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) if you wanted.
 
-### Runner Specific Plugins
+### Test Type-Specific Plugins
 
 You can access the type of tests running via the `config.testingType` property.
 The testing type is either `e2e` or `component` depending on if the
 [End-to-End Testing](/guides/overview/choosing-testing-type#What-is-End-to-end-Testing)
 or
 [Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing)
-runner was launched. This allows you to configure runner specific plugins.
+type was selected in the Cypress App. This allows you to configure test
+type-specific plugins.
 
 #### Use Cypress React Plugin Conditionally
 
