@@ -43,7 +43,7 @@ export default {
     SANITY_PROJECT_ID: process.env.SANITY_PROJECT_ID,
     SANITY_AUTH_TOKEN: process.env.SANITY_AUTH_TOKEN,
     FULLSTORY_ORG_ID: process.env.FULLSTORY_ORG_ID,
-    CONTEXT: process.env.CONTEXT,
+    VERCEL_ENV: process.env.VERCEL_ENV,
   },
   /*
    ** Plugins to load before mounting the App
@@ -83,16 +83,17 @@ export default {
   },
   sentry: {
     dsn:
-      (process.env.CONTEXT === 'production' && process.env.SENTRY_DSN) ||
+      (process.env.VERCEL_ENV === 'production' && process.env.SENTRY_DSN) ||
       undefined,
   },
   /*
    ** Google Tag Manager
    */
   gtm: {
-    // The env var CONTEXT is set by Vercel and can be 'production', 'deploy-preview', or 'branch-deploy'
+    // The env var VERCEL_ENV is set by Vercel and can be 'production', 'deploy-preview', or 'branch-deploy'
     id:
-      (process.env.CONTEXT === 'production' && 'GTM-KNKBWLD') || 'GTM-XXXXXXX',
+      (process.env.VERCEL_ENV === 'production' && 'GTM-KNKBWLD') ||
+      'GTM-XXXXXXX',
   },
   /*
    ** Axios module configuration
