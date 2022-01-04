@@ -24,11 +24,9 @@ export default {
           >{{ pluginType.name }}</a
         >
       </h2>
-      <p
-        v-if="pluginType.description"
-        class="my-8"
-        v-html="pluginType.description"
-      ></p>
+      <p v-if="pluginType.description" class="my-8">
+        {{ pluginType.description }}
+      </p>
       <ul :class="$style.pluginsList">
         <li v-for="plugin in pluginType.plugins" :key="plugin.name" class="m-3">
           <div :class="$style.pluginTitle">
