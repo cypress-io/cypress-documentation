@@ -7,14 +7,14 @@ choice (Vue, React, Nuxt, Next); however, some frameworks require additional
 configuration to work correctly.
 
 All the example projects described in this page can be found
-[here](https://github.com/cypress-io/cypress-component-examples).
+[here](https://github.com/cypress-io/cypress-component-testing-examples).
 
 ## React (Create React App)
 
 This guide assumes you've created your app using
 [Create React App](https://create-react-app.dev/docs/documentation-intro). You
 can find an example project
-[here](https://github.com/cypress-io/cypress-component-examples/tree/main/create-react-app).
+[here](https://github.com/cypress-io/cypress-component-testing-examples/tree/main/create-react-app).
 
 Once you have a React project, you'll also need to install the Cypress Webpack
 Dev Server and React adapter, as well as some devDependencies:
