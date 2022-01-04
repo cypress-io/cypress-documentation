@@ -40,8 +40,6 @@ export default {
    */
   css: ['@/styles/content.css'],
   env: {
-    SANITY_PROJECT_ID: process.env.SANITY_PROJECT_ID,
-    SANITY_AUTH_TOKEN: process.env.SANITY_AUTH_TOKEN,
     FULLSTORY_ORG_ID: process.env.FULLSTORY_ORG_ID,
     VERCEL_ENV: process.env.VERCEL_ENV,
   },
@@ -51,6 +49,7 @@ export default {
    */
   plugins: [
     '@/plugins/vue-scrollactive',
+    '@/plugins/sanity-client',
     { src: '@/plugins/fullstory', mode: 'client' },
   ],
   /*
