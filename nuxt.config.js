@@ -51,7 +51,6 @@ export default {
    */
   plugins: [
     '@/plugins/vue-scrollactive',
-    '@/plugins/sanity-client',
     { src: '@/plugins/fullstory', mode: 'client' },
   ],
   /*
