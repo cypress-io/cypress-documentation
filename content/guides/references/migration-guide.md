@@ -1294,7 +1294,7 @@ result of each test retry.
       "state": "failed",
       "body": "function () {\n  expect(true).to.be["false"];\n}",
       "stack": "AssertionError: expected true to be false\n' +
-        '    at Context.eval (...cypress/e2e/spec.js:5:21",
+        '    at Context.eval (...cypress/integration/spec.js:5:21",
       "error": "expected true to be false",
       "timings": {
         "lifecycle": 16,
@@ -1334,14 +1334,14 @@ result of each test retry.
       "state": "failed",
       "body": "function () {\n  expect(true).to.be["false"];\n}",
       "displayError": "AssertionError: expected true to be false\n' +
-      '    at Context.eval (...cypress/e2e/spec.js:5:21",
+      '    at Context.eval (...cypress/integration/spec.js:5:21",
       "attempts": [{
         "state": "failed",
         "error": {
           "message": "expected true to be false",
           "name": "AssertionError",
           "stack": "AssertionError: expected true to be false\n' +
-      '    at Context.eval (...cypress/e2e/spec.js:5:21"
+      '    at Context.eval (...cypress/integration/spec.js:5:21"
         },
         "screenshots": [{
           "name": null,
@@ -1511,20 +1511,20 @@ The globals `__dirname` and `__filename` no longer include a leading slash.
 <Badge type="danger">Before</Badge> `__dirname` / `__filename`
 
 ```js
-// cypress/e2e/app_spec.js
+// cypress/integration/app_spec.js
 it('include leading slash < 5.0', () => {
-  expect(__dirname).to.equal('/cypress/e2e')
-  expect(__filename).to.equal('/cypress/e2e/app_spec.js')
+  expect(__dirname).to.equal('/cypress/integration')
+  expect(__filename).to.equal('/cypress/integration/app_spec.js')
 })
 ```
 
 <Badge type="success">After</Badge> `__dirname` / `__filename`
 
 ```js
-// cypress/e2e/app_spec.js
+// cypress/integration/app_spec.js
 it('do not include leading slash >= 5.0', () => {
-  expect(__dirname).to.equal('cypress/e2e')
-  expect(__filename).to.equal('cypress/e2e/app_spec.js')
+  expect(__dirname).to.equal('cypress/integration')
+  expect(__filename).to.equal('cypress/integration/app_spec.js')
 })
 ```
 
