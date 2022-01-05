@@ -817,10 +817,6 @@
               "slug": "dom"
             },
             {
-              "title": "Keyboard",
-              "slug": "keyboard-api"
-            },
-            {
               "title": "env",
               "slug": "env"
             },
