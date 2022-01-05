@@ -131,7 +131,6 @@ workflows:
       - cypress/run:
           name: 'UI Tests - Chrome'
           browser: chrome
-          spec: cypress/e2e/*
           executor: with-chrome-and-firefox
           wait-on: 'http://localhost:3000'
           command-prefix: npx percy exec --
