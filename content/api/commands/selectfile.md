@@ -21,11 +21,15 @@ or files into the browser.
 ```javascript
 cy.get('input[type=file]').selectFile('file.json')
 cy.get('input[type=file]').selectFile(['file.json', 'file2.json'])
+
 cy.get('input[type=file]').selectFile({
-  contents: Buffer.from('foo'),
-  fileName: 'file.json',
+  contents: Buffer.from('file contents'),
+  fileName: 'file.txt',
   lastModified: Date.now(),
 })
+
+cy.get('input[type=file]').selectFile('file.json', { action: 'drag-drop' })
+cy.document().selectFile('file.json', { action: 'drag-drop' })
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
@@ -50,7 +54,8 @@ Either a single file, or an array of files. A file can be:
   default Cypress configuration file). Eg: `'path/to/file.json'`
 - `@alias` - An alias of any type, previously stored using `.as()`. Eg:
   `'@alias'`
-- A `Buffer()` containing binary data, such as that returned by
+- A [`Buffer()`](https://nodejs.org/api/buffer.html#class-buffer) containing
+  binary data, such as that returned by
   `cy.readFile('file.json', { encoding: null })`. Eg: `Buffer.from('foo')`
 - An object with a non-null `contents` property, specifying details about the
   file. Eg: `{contents: '@alias', fileName: 'file.json'}`
@@ -69,7 +74,7 @@ Pass in an options object to change the default behavior of `.selectFile()`.
 
 | Option                       | Default                                                                        | Description                                                                                                                                       |
 | ---------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `action`                     | `'select'`                                                                     | Switches selectFile between modes. Valid values are `select` and `drag-drop`. See [Actions](#Actions) below for more details.                     |
+| `action`                     | `'select'`                                                                     | Switches modes. Valid values are `select` and `drag-drop`. See [Actions](#Actions) below for more details.                                        |
 | `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations). |
 | `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions).                                                                             |
 | `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log).                                                         |
@@ -88,8 +93,8 @@ simulate two different user behaviors:
 
 #### `select` (default)
 
-By default, `selectFile()` runs in 'select' mode, mimicking a user selecting one
-or more files on an HTML5 input element. In this mode, the
+By default, `.selectFile()` runs in 'select' mode, mimicking a user selecting
+one or more files on an HTML5 input element. In this mode, the
 [subject](/guides/core-concepts/introduction-to-cypress#Subject-Management) must
 be a single `input` element with `type="file"`, or a `label` element connected
 to an input (either with its `for` attribute or by containing the input).
@@ -181,7 +186,7 @@ This will fail unless the file input has the `multiple` property.
 ```javascript
 cy.get('input[type=file]').selectFile({
   contents: 'path/to/file.json',
-  fileName: 'users.json',
+  fileName: 'custom-name.json',
   lastModified: new Date('Feb 18 1989').valueOf(),
 })
 ```

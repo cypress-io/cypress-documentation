@@ -88,9 +88,9 @@ CONTENT_TBD
 Selecting files with input elements or dropping them over the page is available
 in Cypress 9.3. Read the [`.selectFile()` API docs](/api/commands/selectfile)
 for more information on how this works and how to use it. This guide details how
-to change your test code to migrate from
-[`cypress-file-upload`](https://github.com/abramenal/cypress-file-upload) to
-`.selectFile()`.
+to change your test code to migrate from the
+[`cypress-file-upload`](https://github.com/abramenal/cypress-file-upload) plugin
+to `.selectFile()`.
 
 #### Quick guide
 
@@ -98,22 +98,28 @@ The argument signature is different for Cypress' builtin `.selectFile()` command
 than the `.attachFile` command the `cypress-file-upload` plugin provided. You
 can follow the steps below for each argument in order to migrate:
 
-In the first argument:
+When the first argument is a file path:
 
-- `filePath`: Prefix value with `cypress/fixtures/`. Rename to `contents`.
-- `fileContent`: Use `Buffer.from()` rather than `Cypress.Blob` methods. Rename
-  to `contents`.
-- `encoding`: Remove. No longer needed due to improved binary file handling in
-  Cypress 9.0.
-- `mimeType`: Remove. No longer needed due to improved binary file handling in
-  Cypress 9.0.
+- Prefix the path with `cypress/fixtures`
+
+When the first argument is an object:
+
+- `filePath`: Rename the property to `contents`. Prefix the value with
+  `cypress/fixtures/`.
+- `fileContent`: Rename the property to `contents`. Use
+  [`Buffer.from()`](https://nodejs.org/api/buffer.html#class-buffer) or other
+  Buffer methods, rather than `Cypress.Blob`.
+- `encoding`: Remove this property. It is no longer needed due to improved
+  binary file handling in Cypress 9.0.
+- `mimeType`: Remove this property. It is no longer needed due to improved
+  binary file handling in Cypress 9.0.
 
 In the second argument:
 
-- `subjectType`: Rename to `action`. Move from `drag-n-drop` to `drag-drop` or
-  from `input` to `select`.
-- `allowEmpty`: Remove. `.selectFile()` does not check the length of a file read
-  from disk, only its existence.
+- `subjectType`: Rename this property to `action`. Change the value from
+  `drag-n-drop` to `drag-drop` or from `input` to `select`.
+- `allowEmpty`: Remove this property. `.selectFile()` does not check the length
+  of a file read from disk, only its existence.
 
 ### Examples
 
