@@ -194,7 +194,7 @@ workflows:
           record: true
           group: firefox-critical-path
           browser: firefox
-          spec: 'cypress/integration/signup.spec.js,cypress/integration/login.spec.js'
+          spec: 'cypress/e2e/signup.spec.js,cypress/e2e/login.spec.js'
 ```
 
 ### Parallelize per browser
@@ -247,7 +247,7 @@ workflows:
           parallelism: 2
           group: firefox
           browser: firefox
-          spec: 'cypress/integration/app.spec.js,cypress/integration/login.spec.js,cypress/integration/about.spec.js'
+          spec: 'cypress/e2e/app.spec.js,cypress/e2e/login.spec.js,cypress/e2e/about.spec.js'
 ```
 
 ### Running Specific Tests by Browser

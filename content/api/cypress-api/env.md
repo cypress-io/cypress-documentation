@@ -186,7 +186,7 @@ return config
 :::
 
 ```js
-// cypress/integration/secrets_spec.js
+// cypress/e2e/secrets_spec.js
 describe('Environment variable set in plugin', () => {
   let sharedSecret
 

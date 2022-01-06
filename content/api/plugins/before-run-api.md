@@ -68,8 +68,8 @@ module.exports = (on, config) => {
     //   specs: [
     //     {
     //       name: 'login_spec.js',
-    //       relative: 'cypress/integration/login_spec.js',
-    //       absolute: '/Users/janelane/app/cypress/integration/login_spec.js',
+    //       relative: 'cypress/e2e/login_spec.js',
+    //       absolute: '/Users/janelane/app/cypress/e2e/login_spec.js',
     //     },
     //     // ... more specs
     //   ],

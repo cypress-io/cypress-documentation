@@ -94,13 +94,13 @@ Let's delete the `sample_spec.js` file created in the previous tutorial now that
 it's no longer needed.
 
 ```shell
-rm cypress/integration/sample_spec.js
+rm cypress/e2e/sample_spec.js
 ```
 
 Now let's create our own spec file called `home_page_spec.js`.
 
 ```shell
-touch cypress/integration/home_page_spec.js
+touch cypress/e2e/home_page_spec.js
 ```
 
 Once that file is created, you should see it in the list of spec files.

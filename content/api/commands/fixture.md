@@ -116,7 +116,7 @@ If you are loading a JSON fixture, you can simply use the `import` statement and
 let the bundler load it:
 
 ```js
-// cypress/integration/spec.js
+// cypress/e2e/spec.js
 import user from '../fixtures/user.json'
 it('loads the same object', () => {
   cy.fixture('user').then((userFixture) => {
