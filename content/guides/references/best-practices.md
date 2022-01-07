@@ -728,13 +728,13 @@ test - even if you refreshed Cypress in the middle of an existing one!
 This is also a great opportunity to use
 [root level hooks in mocha](https://github.com/mochajs/mochajs.github.io/blob/master/index.md#root-level-hooks).
 A perfect place to put these is in the
-[`cypress/support/index.js` file](/guides/core-concepts/writing-and-organizing-tests#Support-file)
+[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file)
 because it is always evaluated before any test code from your spec files.
 
 **Hooks you add to the root will always run on all suites!**
 
 ```js
-// cypress/support/index.js
+// cypress/support/e2e.js or cypress/support/component.js
 
 beforeEach(() => {
   // now this runs prior to every test

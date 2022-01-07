@@ -153,8 +153,9 @@ single test.
 
 <Alert type="info">
 
-A great place to put this configuration is in your `cypress/support/index.js`
-file, since it is loaded before any test files are evaluated.
+A great place to put this configuration is in the
+[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file),
+since it is loaded before any test files are evaluated.
 
 </Alert>
 

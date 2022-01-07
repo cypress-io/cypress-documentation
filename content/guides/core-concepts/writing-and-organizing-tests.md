@@ -275,10 +275,6 @@ This file runs **before** every single spec file. We do this purely as a
 convenience mechanism so you don't have to import this file in every single one
 of your spec files.
 
-The initial imported support file can be configured to another file or turned
-off completely using the
-[supportFile](/guides/references/configuration#Folders-Files) configuration.
-
 The support file is a great place to put reusable behavior such as
 [custom commands](/api/cypress-api/custom-commands) or global overrides that you
 want applied and available to all of your spec files.

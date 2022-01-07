@@ -43,8 +43,8 @@ Cypress.Keyboard.defaults({
 
 ### Where to put Keyboard configuration
 
-A great place to put this configuration is in your
-[`cypress/support/index.js` file](/guides/core-concepts/writing-and-organizing-tests#Support-file),
+A great place to put this configuration is in the
+[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file),
 since it is loaded before any test files are evaluated.
 
 ### Set the keystroke delay in test configuration

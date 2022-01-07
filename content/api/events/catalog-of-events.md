@@ -186,7 +186,7 @@ single test.
 ```javascript
 // likely want to do this in a support file
 // so it's applied to all spec files
-// cypress/support/index.js
+// cypress/support/e2e.js or cypress/support/component.js
 
 Cypress.on('uncaught:exception', (err, runnable) => {
   // returning false here prevents Cypress from
@@ -200,7 +200,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 ```javascript
 // likely want to do this in a support file
 // so it's applied to all spec files
-// cypress/support/index.js
+// cypress/support/e2e.js or cypress/support/component.js
 Cypress.on('uncaught:exception', (err, runnable) => {
   // we expect a 3rd party library error with message 'list not defined'
   // and don't want to fail the test so we return false
@@ -217,7 +217,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 ```javascript
 // likely want to do this in a support file
 // so it's applied to all spec files
-// cypress/support/index.js
+// cypress/support/e2e.js or cypress/support/component.js
 Cypress.on('uncaught:exception', (err, runnable, promise) => {
   // when the exception originated from an unhandled promise
   // rejection, the promise is provided as a third argument
