@@ -83,7 +83,7 @@ on('<event>', (arg1, arg2) => {
 
 CONTENT_TBD
 
-## Migrating `cypress-file-upload` to [`.selectFile()`](/api/commands/selectfile)
+## Migrating from `cypress-file-upload` to [`.selectFile()`](/api/commands/selectfile)
 
 Selecting files with input elements or dropping them over the page is available
 in Cypress 9.3. Read the [`.selectFile()` API docs](/api/commands/selectfile)
@@ -92,7 +92,7 @@ to change your test code to migrate from the
 [`cypress-file-upload`](https://github.com/abramenal/cypress-file-upload) plugin
 to `.selectFile()`.
 
-#### Quick guide
+### Quick guide
 
 The argument signature is different for Cypress' builtin `.selectFile()` command
 than the `.attachFile` command the `cypress-file-upload` plugin provided. You
@@ -100,7 +100,7 @@ can follow the steps below for each argument in order to migrate:
 
 When the first argument is a file path:
 
-- Prefix the path with `cypress/fixtures`
+- Prefix the path with `cypress/fixtures/`.
 
 When the first argument is an object:
 
