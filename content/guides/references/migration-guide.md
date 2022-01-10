@@ -107,8 +107,8 @@ When the first argument is an object:
 - `filePath`: Rename the property to `contents`. Prefix the value with
   `cypress/fixtures/`.
 - `fileContent`: Rename the property to `contents`. Use
-  [`Buffer.from()`](https://nodejs.org/api/buffer.html#class-buffer) or other
-  Buffer methods, rather than `Cypress.Blob`.
+  [`Cypress.Buffer.from()`](/api/utilities/buffer) or other Buffer methods,
+  rather than `Cypress.Blob`.
 - `encoding`: Remove this property. It is no longer needed due to improved
   binary file handling in Cypress 9.0.
 - `mimeType`: Remove this property. It is no longer needed due to improved
