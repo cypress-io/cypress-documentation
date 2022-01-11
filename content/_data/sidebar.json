@@ -779,6 +779,10 @@
               "slug": "blob"
             },
             {
+              "title": "Buffer",
+              "slug": "buffer"
+            },
+            {
               "title": "minimatch",
               "slug": "minimatch"
             },

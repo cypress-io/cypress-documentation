@@ -46,8 +46,8 @@ supported:
 - `'utf-16le'`
 - `null`
 
-Using `null` explicitly will return the file as a `Buffer`, regardless of file
-extension.
+Using `null` explicitly will return the file as a
+[`Cypress.Buffer()`](/api/utilities/buffer), regardless of file extension.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
