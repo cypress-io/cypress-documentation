@@ -275,6 +275,19 @@ This file runs **before** every single spec file. We do this purely as a
 convenience mechanism so you don't have to import this file in every single one
 of your spec files.
 
+<Alert type="info">
+
+<strong class="alert-header"><Icon name="cogs"></Icon> Support File Per Test
+Type</strong>
+
+Depending on which Cypress [test type](/guides/overview/choosing-testing-type)
+you are using, you may configure your supportFile accordingly.
+
+- [e2e](/guides/references/configuration#e2e)
+- [component](/guides/references/configuration#component)
+
+</Alert>
+
 The support file is a great place to put reusable behavior such as
 [custom commands](/api/cypress-api/custom-commands) or global overrides that you
 want applied and available to all of your spec files.
