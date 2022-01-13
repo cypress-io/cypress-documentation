@@ -39,7 +39,7 @@ cy.Buffer.method() // Errors, cannot be chained off 'cy'
 ```javascript
 // Programmatically upload the logo
 cy.readFile('images/logo.png', null).then((file) => {
-  Cypress.Buffer.isBuffer(file) // true
+  expect(Cypress.Buffer.isBuffer(file)).to.be.true
 })
 ```
 
@@ -49,7 +49,7 @@ cy.readFile('images/logo.png', null).then((file) => {
 const files = []
 
 for (var i = 1; i <= 10; i++) {
-  files.push(Buffer.from(`Contents of file #${i}`))
+  files.push(Cypress.Buffer.from(`Contents of file #${i}`))
 }
 
 // Attach 10 files, of the form "Contents of file #1", "Contents of file #2", etc.

@@ -54,7 +54,7 @@ Either a single file, or an array of files. A file can be:
   default Cypress configuration file). Eg: `'path/to/file.json'`
 - `@alias` - An alias of any type, previously stored using `.as()`. Eg:
   `'@alias'`
-- A [`Cypress.Buffer()`](/api/utilities/buffer) containing binary data, such as
+- A [`Cypress.Buffer`](/api/utilities/buffer) instance containing binary data, such as
   that returned by `cy.readFile('file.json', { encoding: null })`. Eg:
   `Cypress.Buffer.from('foo')`
 - An object with a non-null `contents` property, specifying details about the
@@ -64,7 +64,7 @@ If an object is provided, it can have the following properties.
 
 | Option         | Description                                                                                                                                                                                                                                        |
 | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `contents`     | The contents of the file. This can be a string shorthand as described above, a `Cypress.Buffer()` containing binary data or a non-Buffer object, which will be converted into a string with `JSON.stringify()` and `utf8` encoded.                 |
+| `contents`     | The contents of the file. This can be a string shorthand as described above, a `Cypress.Buffer` instance containing binary data or a non-Buffer object, which will be converted into a string with `JSON.stringify()` and `utf8` encoded.                 |
 | `fileName`     | The name of the file. If `contents` is a path on disk, this defaults to the actual filename. In any other case, this defaults to an empty string.                                                                                                  |
 | `lastModified` | The file's last modified timestamp, in milliseconds elapsed since the UNIX epoch (eg. [`Date.prototype.getTime()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)). This defaults to `Date.now()`. |
 
