@@ -54,8 +54,8 @@ Either a single file, or an array of files. A file can be:
   default Cypress configuration file). Eg: `'path/to/file.json'`
 - `@alias` - An alias of any type, previously stored using `.as()`. Eg:
   `'@alias'`
-- A [`Cypress.Buffer`](/api/utilities/buffer) instance containing binary data, such as
-  that returned by `cy.readFile('file.json', { encoding: null })`. Eg:
+- A [`Cypress.Buffer`](/api/utilities/buffer) instance containing binary data,
+  such as that returned by `cy.readFile('file.json', { encoding: null })`. Eg:
   `Cypress.Buffer.from('foo')`
 - An object with a non-null `contents` property, specifying details about the
   file. Eg: `{contents: '@alias', fileName: 'file.json'}`
@@ -64,7 +64,7 @@ If an object is provided, it can have the following properties.
 
 | Option         | Description                                                                                                                                                                                                                                        |
 | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `contents`     | The contents of the file. This can be a string shorthand as described above, a `Cypress.Buffer` instance containing binary data or a non-Buffer object, which will be converted into a string with `JSON.stringify()` and `utf8` encoded.                 |
+| `contents`     | The contents of the file. This can be a string shorthand as described above, a `Cypress.Buffer` instance containing binary data or a non-Buffer object, which will be converted into a string with `JSON.stringify()` and `utf8` encoded.          |
 | `fileName`     | The name of the file. If `contents` is a path on disk, this defaults to the actual filename. In any other case, this defaults to an empty string.                                                                                                  |
 | `lastModified` | The file's last modified timestamp, in milliseconds elapsed since the UNIX epoch (eg. [`Date.prototype.getTime()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)). This defaults to `Date.now()`. |
 
@@ -250,14 +250,28 @@ cy.get('input[type=file]').selectFile('does-not-exist.yaml')
 cy.get('.file-input').selectFile(Cypress.Buffer.from('Hello world'))
 ```
 
+<!--
+Below screenshots generated from this HTML:
+
+<form>
+  <input id="basic" type="file" className="file-input" />
+</form>
+
+And this test:
+
+it('should attach a file', () => {
+  cy.get('.file-input').selectFile(Cypress.Buffer.from('Hello world'))
+})
+-->
+
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/selectfile/attach-file-during-test.png" alt="Command log for selectFile" ></DocsImage>
+<DocsImage src="/img/api/selectfile/selectfile-command-log.png" alt="Command log for selectFile" ></DocsImage>
 
 When clicking on `selectFile` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/selectfile/attach-file-in-console.png" alt="console.log for selectFile" ></DocsImage>
+<DocsImage src="/img/api/selectfile/selectfile-console.png" alt="console.log for selectFile" ></DocsImage>
 
 ## History
 
