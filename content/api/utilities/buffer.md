@@ -7,8 +7,9 @@ polyfill for the browser and exposes it as `Cypress.Buffer`.
 
 Use `Cypress.Buffer` to manipulate binary data, similar to the
 [nodejs Buffer class](https://nodejs.org/api/buffer.html). Instances are
-returned by `cy.readFile()` and `cy.fixture()`, and it is used with
-`.selectFile()`.
+returned by [`cy.readFile()`](/api/commands/readfile) and
+[`cy.fixture()`](/api/commands/fixture), and it is used with
+[`.selectFile()`](/api/commands/selectfile).
 
 ## Syntax
 
@@ -32,18 +33,16 @@ cy.Buffer.method() // Errors, cannot be chained off 'cy'
 
 ## Examples
 
-### Image Fixture
-
-#### Maniulating binary data read from disk
+### Loading binary data read from disk
 
 ```javascript
-// Programmatically upload the logo
 cy.readFile('images/logo.png', null).then((file) => {
   expect(Cypress.Buffer.isBuffer(file)).to.be.true
+  // Do something with `file` Buffer here
 })
 ```
 
-#### Using dynamic file contents with `.selectFile()`
+### Using dynamic file contents with `.selectFile()`
 
 ```javascript
 const files = []
