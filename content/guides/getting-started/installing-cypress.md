@@ -270,16 +270,16 @@ You can [read more about the CLI here](/guides/guides/command-line).
 
 ### Environment variables
 
-| Name                            | Description                                                                          |
-| ------------------------------- | ------------------------------------------------------------------------------------ |
-| `CYPRESS_INSTALL_BINARY`        | [Destination of Cypress binary that's downloaded and installed](#Install-binary)     |
-| `CYPRESS_DOWNLOAD_MIRROR`       | [Downloads the Cypress binary though a mirror server](#Mirroring)                    |
-| `CYPRESS_CACHE_FOLDER`          | [Changes the Cypress binary cache location](#Binary-cache)                           |
-| `CYPRESS_RUN_BINARY`            | [Location of Cypress binary at run-time](#Run-binary)                                |
-| `CYPRESS_VERIFY_TIMEOUT`        | Overrides the timeout duration for the `verify` command. The default value is 30000. |
-| `CYPRESS_DOWNLOAD_PATH_PARAMS`  | Uses path params instead of query params in download url                             |
-| ~~CYPRESS_SKIP_BINARY_INSTALL~~ | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY=0` instead          |
-| ~~CYPRESS_BINARY_VERSION~~      | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY` instead            |
+| Name                            | Description                                                                                              |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `CYPRESS_INSTALL_BINARY`        | [Destination of Cypress binary that's downloaded and installed](#Install-binary)                         |
+| `CYPRESS_DOWNLOAD_MIRROR`       | [Downloads the Cypress binary though a mirror server](#Mirroring)                                        |
+| `CYPRESS_CACHE_FOLDER`          | [Changes the Cypress binary cache location](#Binary-cache)                                               |
+| `CYPRESS_RUN_BINARY`            | [Location of Cypress binary at run-time](#Run-binary)                                                    |
+| `CYPRESS_VERIFY_TIMEOUT`        | Overrides the timeout duration for the `verify` command. The default value is 30000.                     |
+| `CYPRESS_DOWNLOAD_PATH_TEMPLATE`| Allows to specify custom download url. Replaces ${endpoint}, ${platform}, ${arch} with respective values |
+| ~~CYPRESS_SKIP_BINARY_INSTALL~~ | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY=0` instead                              |
+| ~~CYPRESS_BINARY_VERSION~~      | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY` instead                                |
 
 ### Install binary
 
@@ -421,7 +421,8 @@ for all available platforms.
 https://download.cypress.io/desktop/3.0.0?platform=win32&arch=x64
 ```
 
-When setting `CYPRESS_DOWNLOAD_PATH_PARAMS=true` environment variable, then the download url uses path parameter format instead of query based parameters.
+When setting `CYPRESS_DOWNLOAD_PATH_TEMPLATE='${endpoint}/${platform}-${arch}/cypress.zip'` environment variable, 
+then a custom download url is used, where ${endpoint}, ${platform}, ${arch} are replaced with respective values.
 ```text
 https://download.cypress.io/desktop/3.0.0/win32-x64/cypress.zip
 ```
