@@ -106,4 +106,5 @@ used anywhere inside of your tests.
 - [`Cypress.$`](/api/utilities/$) (jQuery)
 - [`Cypress.minimatch`](/api/utilities/minimatch) (minimatch.js)
 - [`Cypress.Blob`](/api/utilities/blob) (Blob utils)
+- [`Cypress.Buffer`](/api/utilities/buffer) (Buffer utils)
 - [`Cypress.Promise`](/api/utilities/promise) (Bluebird)
