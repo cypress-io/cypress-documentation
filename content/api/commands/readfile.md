@@ -47,7 +47,8 @@ supported:
 - `null`
 
 Using `null` explicitly will return the file as a
-[`Cypress.Buffer`](/api/utilities/buffer) instance, regardless of file extension.
+[`Cypress.Buffer`](/api/utilities/buffer) instance, regardless of file
+extension.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
