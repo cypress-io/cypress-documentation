@@ -637,6 +637,10 @@
               "slug": "select"
             },
             {
+              "title": "selectFile",
+              "slug": "selectfile"
+            },
+            {
               "title": "server",
               "slug": "server"
             },
@@ -753,6 +757,10 @@
             {
               "title": "Blob",
               "slug": "blob"
+            },
+            {
+              "title": "Buffer",
+              "slug": "buffer"
             },
             {
               "title": "minimatch",
