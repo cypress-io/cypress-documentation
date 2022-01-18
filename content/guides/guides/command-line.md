@@ -54,7 +54,7 @@ npx cypress run
 ...or by using Yarn...
 
 ```shell
-yarn open
+yarn cypress run
 ```
 
 You may find it easier to add the cypress command to the `scripts` object in
@@ -665,6 +665,19 @@ Verify that Cypress is installed correctly and is executable.
 cypress verify
 ✔  Verified Cypress! /Users/jane/Library/Caches/Cypress/3.0.0/Cypress.app
 ```
+
+To change the default timeout of 30 seconds, you can set the environment
+variable `CYPRESS_VERIFY_TIMEOUT`:
+
+```shell
+export CYPRESS_VERIFY_TIMEOUT=60000 # wait for 60 seconds
+cypress verify
+```
+
+Note that the `cypress verify` command is executed as part of the `cypress open`
+and `cypress run` commands. The `CYPRESS_VERIFY_TIMEOUT` environment variable
+should be provided for those commands if you wish to modify the timeout
+duration.
 
 ### `cypress version`
 

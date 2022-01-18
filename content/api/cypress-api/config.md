@@ -160,7 +160,7 @@ Some configuration values are readonly and cannot be changed while running a
 test. Anything that's not directly under Cypress's control - like timeouts,
 `userAgent`, or environment variables - will be ignored at run-time. Be sure to
 review the list of
-[test configuration options](/guides/references/configuration##Test-Configuration).
+[test configuration options](/guides/references/configuration#Test-Configuration).
 
 ### Test Configuration vs `Cypress.config()`
 

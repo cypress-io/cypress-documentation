@@ -39,11 +39,6 @@ during the testing phase.
 
 ### Google Project and Application Setup
 
-The technique we will use for testing is to use the
-[Google OAuth 2.0 Playground](https://developers.google.com/oauthplayground) to
-create a refresh token that can be exchanged for an access token and id token
-during the testing phase.
-
 First, a [Google](https://google.com) project is required. If you don't already
 have a project, you can create one using the
 [Google Cloud Console](https://console.cloud.google.com). More information is

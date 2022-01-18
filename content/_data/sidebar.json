@@ -801,6 +801,10 @@
               "slug": "cookies"
             },
             {
+              "title": "Keyboard",
+              "slug": "keyboard-api"
+            },
+            {
               "title": "Screenshot",
               "slug": "screenshot-api"
             },

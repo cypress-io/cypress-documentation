@@ -336,24 +336,28 @@ We provide two options to override the configuration while your test are
 running, `Cypress.config()` and suite-specific or test-specific configuration
 overrides.
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Note:** Some
-configuration values are readonly and cannot be changed via test configuration.
-The following configuration values **can be changed** via per test
-configuration:
+<Icon name="exclamation-triangle" color="red"></Icon> **Note:** The
+configuration values below are all writeable and **can be changed** via per test
+configuration. Any other configuration values are readonly and cannot be changed
+at run time.
 
 - `animationDistanceThreshold`
 - `baseUrl`
-- `browser` **note:** filters whether the tests or a suite of tests runs
-  depending on the current browser
+- `blockHosts`
 - `defaultCommandTimeout`
-- `execTimeout`
 - `env` **note:** Provided environment variables will be merged with current
   environment variables.
+- `execTimeout`
+- `experimentalSessionSupport`
 - `includeShadowDom`
 - `keystrokeDelay`
+- `numTestsKeptInMemory`
+- `pageLoadTimeout`
+- `redirectionLimit`
 - `requestTimeout`
 - `responseTimeout`
 - `retries`
+- `screenshotOnRunFailure`
 - `scrollBehavior`
 - `slowTestThreshold`
 - `viewportHeight`

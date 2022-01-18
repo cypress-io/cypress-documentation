@@ -972,7 +972,7 @@ cy.visit('index.html')
 ```
 
 Not only does this create tests that can easily switch between domains, i.e.
-running a dev server on `http:localhost:8080` vs a deployed production server
+running a dev server on `http://localhost:8080` vs a deployed production server
 domain, but adding a `baseUrl` can also save some time during the initial
 startup of your Cypress tests.
 

@@ -58,11 +58,12 @@ first encoding it as a string.
 
 Pass in an options object to change the default behavior of `cy.writeFile()`.
 
-| Option     | Default | Description                                                                                         |
-| ---------- | ------- | --------------------------------------------------------------------------------------------------- |
-| `log`      | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)            |
-| `flag`     | `w`     | File system flag as used with [`fs.writeFile`](https://nodejs.org/api/fs.html#fs_file_system_flags) |
-| `encoding` | `utf8`  | The encoding to be used when writing to the file                                                    |
+| Option     | Default                                                              | Description                                                                                         |
+| ---------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `log`      | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)            |
+| `flag`     | `w`                                                                  | File system flag as used with [`fs.writeFile`](https://nodejs.org/api/fs.html#fs_file_system_flags) |
+| `encoding` | `utf8`                                                               | The encoding to be used when writing to the file                                                    |
+| `timeout`  | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.writeFile()` to resolve before [timing out](#Timeouts)                           |
 
 <Alert type="info">
 
@@ -74,8 +75,7 @@ parameter and include encoding there. This is the same behavior as
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.writeFile()` yields the value of the <code>contents</code>
-argument.</li></List>
+- `cy.writeFile()` yields `null`.
 
 ## Examples
 
@@ -209,7 +209,6 @@ cy.readFile(filename, null).then((obj) => {
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
 - `cy.writeFile()` requires being chained off of `cy`.
-
 - `cy.writeFile()` requires the file be successfully written to disk. Anything
   preventing this such as OS permission issues will cause it to fail.
 
@@ -220,15 +219,8 @@ cy.readFile(filename, null).then((obj) => {
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-- `cy.writeFile()` should never time out.
-
-<Alert type="warning">
-
-Because `cy.writeFile()` is asynchronous it is technically possible for there to
-be a timeout while talking to the internal Cypress automation APIs. But for
-practical purposes it should never happen.
-
-</Alert>
+- `cy.writeFile()` can time out when the content being written takes a
+  significant amount of time to encode.
 
 ## Command Log
 
@@ -251,6 +243,7 @@ outputs the following:
 
 | Version                                     | Changes                                                  |
 | ------------------------------------------- | -------------------------------------------------------- |
+| [9.2.0](/guides/references/changelog#9-2-0) | Added `timeout` option                                   |
 | [4.0.0](/guides/references/changelog#4-0-0) | `cy.writeFile()` now yields `null` instead of `contents` |
 | [3.1.1](/guides/references/changelog#3-1-1) | Added `flag` option and appending with `a+`              |
 | [1.0.0](/guides/references/changelog#1.0.0) | `cy.writeFile()` command added                           |
