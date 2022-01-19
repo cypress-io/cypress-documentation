@@ -1451,10 +1451,10 @@ cy.intercept('/users?_limit=+(3|5)')
 
 ### Cypress.minimatch
 
-Under the hood, `cy.intercept` uses the [minimatch](/api/utilities/minimatch) library
-with the `{ matchBase: true }` option applied for glob matching and provides
-access to it via the `Cypress` global. This enables you to test your pattern in
-your spec or in the Test Runner browser console.
+Under the hood, `cy.intercept` uses the [minimatch](/api/utilities/minimatch)
+library with the `{ matchBase: true }` option applied for glob matching and
+provides access to it via the `Cypress` global. This enables you to test your
+pattern in your spec or in the Test Runner browser console.
 
 You can invoke the `Cypress.minimatch` with just two arguments - the URL
 (`string`) and the pattern (`string`), respectively - and if it yields `true`,
