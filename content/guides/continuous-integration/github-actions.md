@@ -240,7 +240,7 @@ section.
 Before diving into an example of a parallelization setup, it is important to
 understand the two different types of GitHub Action jobs that we will declare:
 
-- **Install Job**: A job that installs and caches dependencies that will used by
+- **Install Job**: A job that installs and caches dependencies that will be used by
   subsequent jobs later in the GitHub Action workflow.
 - **Worker Job**: A job that handles execution of Cypress tests and depends on
   the _install job_.
