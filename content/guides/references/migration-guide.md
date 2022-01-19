@@ -32,7 +32,7 @@ When the first argument is an object:
   binary file handling in Cypress 9.0.
 - `mimeType`: This property is unsupported in Cypress 9.3.0. If you need
   mimeType support, continue using cypress-file-upload until we add support for
-  this parameter.
+  this parameter. Support will be added in a future update.
 
 In the second argument:
 
