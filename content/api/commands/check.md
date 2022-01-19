@@ -158,8 +158,8 @@ cy.get('#pick-fruit :checked').should('be.checked').and('have.value', 'apple')
 
 #### The element must first reach actionability
 
-`.check()` is an "action command" that follows all the rules
-[defined here](/guides/core-concepts/interacting-with-elements).
+`.check()` is an "action command" that follows all the rules of
+[Actionability](/guides/core-concepts/interacting-with-elements).
 
 ## Rules
 

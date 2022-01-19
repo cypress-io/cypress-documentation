@@ -203,8 +203,8 @@ cy.get('button').trigger('mouseover', { eventConstructor: 'MouseEvent' })
 
 #### The element must first reach actionability
 
-`.trigger()` is an "action command" that follows all the rules
-[defined here](/guides/core-concepts/interacting-with-elements).
+`.trigger()` is an "action command" that follows all the rules of
+[Actionability](/guides/core-concepts/interacting-with-elements).
 
 ### Events
 

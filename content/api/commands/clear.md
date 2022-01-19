@@ -71,8 +71,8 @@ cy.get('textarea').clear().type('Hello, World')
 
 #### The element must first reach actionability
 
-`.clear()` is an "action command" that follows all the rules
-[defined here](/guides/core-concepts/interacting-with-elements).
+`.clear()` is an "action command" that follows all the rules of
+[Actionability](/guides/core-concepts/interacting-with-elements).
 
 ### Documentation
 

@@ -14,6 +14,7 @@
     "/guides/references/legacy-configuration": "Configuration (Legacy)",
     "/api/utilities/_": "Cypress._",
     "/api/utilities/$": "Cypress.$",
+    "/api/utilities/buffer": "Cypress.Buffer",
     "/api/utilities/minimatch": "Cypress.minimatch",
     "/api/utilities/promise": "Cypress.Promise",
     "/api/utilities/sinon": "Cypress.sinon",

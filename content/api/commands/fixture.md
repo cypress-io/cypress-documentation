@@ -57,8 +57,9 @@ supported:
 - `'utf-16le'`
 - `null`
 
-Using `null` explicitly will return the fixture as a `Buffer`, regardless of
-file extension.
+Using `null` explicitly will return the fixture as a
+[`Cypress.Buffer`](/api/utilities/buffer) instance, regardless of file
+extension.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -144,6 +145,7 @@ cy.fixture('images/logo.png', null).then((logo) => {
   // logo will be read as a buffer
   // and should look something like this:
   // Buffer([0, 0, ...])
+  expect(Cypress.Buffer.isBuffer(logo)).to.be.true
 })
 ```
 
@@ -248,7 +250,8 @@ Cypress automatically determines the encoding for the following file types:
 
 For other types of files, they will be read as `utf8` by default, unless
 specified in the second argument of `cy.fixture()`. You can specify `null` as
-the encoding in order to read the file as a `Buffer` instead.
+the encoding in order to read the file as a
+[`Cypress.Buffer`](/api/utilities/buffer) instance instead.
 
 ### `this` context
 
