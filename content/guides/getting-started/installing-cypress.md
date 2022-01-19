@@ -423,9 +423,9 @@ https://download.cypress.io/desktop/3.0.0?platform=win32&arch=x64
 
 When setting `CYPRESS_DOWNLOAD_PATH_TEMPLATE='${endpoint}/${platform}-${arch}/cypress.zip'` environment variable, 
 then a custom download url is used, where ${endpoint}, ${platform}, ${arch} are replaced with respective values.
+
 ```text
 https://download.cypress.io/desktop/3.0.0/win32-x64/cypress.zip
-```
 
 ### Mirroring
 
