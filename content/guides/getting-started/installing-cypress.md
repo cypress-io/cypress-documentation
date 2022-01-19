@@ -426,6 +426,7 @@ then a custom download url is used, where ${endpoint}, ${platform}, ${arch} are 
 
 ```text
 https://download.cypress.io/desktop/3.0.0/win32-x64/cypress.zip
+```
 
 ### Mirroring
 
