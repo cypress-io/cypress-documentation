@@ -2,6 +2,167 @@
 title: Migration Guide
 ---
 
+## Migrating from `cypress-file-upload` to [`.selectFile()`](/api/commands/selectfile)
+
+Selecting files with input elements or dropping them over the page is available
+in Cypress 9.3. Read the [`.selectFile()` API docs](/api/commands/selectfile)
+for more information on how this works and how to use it. This guide details how
+to change your test code to migrate from the
+[`cypress-file-upload`](https://github.com/abramenal/cypress-file-upload) plugin
+to `.selectFile()`.
+
+### Quick guide
+
+The argument signature is different for Cypress' builtin `.selectFile()` command
+than the `.attachFile` command the `cypress-file-upload` plugin provided. You
+can follow the steps below for each argument in order to migrate:
+
+When the first argument is a file path:
+
+- Prefix the path with `cypress/fixtures/`.
+
+When the first argument is an object:
+
+- `filePath`: Rename the property to `contents`. Prefix the value with
+  `cypress/fixtures/`.
+- `fileContent`: Rename the property to `contents`. Use
+  [`Cypress.Buffer.from()`](/api/utilities/buffer) or other Buffer methods,
+  rather than `Cypress.Blob`.
+- `encoding`: Remove this property. It is no longer needed due to improved
+  binary file handling in Cypress 9.0.
+- `mimeType`: This property is unsupported in Cypress 9.3.0. If you need
+  mimeType support, continue using cypress-file-upload until we add support for
+  this parameter. Support will be added in a future update.
+
+In the second argument:
+
+- `subjectType`: Rename this property to `action`. Change the value from
+  `drag-n-drop` to `drag-drop` or from `input` to `select`.
+- `allowEmpty`: Remove this property. `.selectFile()` does not check the length
+  of a file read from disk, only its existence.
+- `force`: Works the same with `.selectFile()` as it did in
+  `cypress-file-upload`. No change necessary.
+
+### Examples
+
+Below are several examples of migrating various commands from
+`cypress-file-upload` to the builtin `.selectFile()` command.
+
+#### Read and attach a fixture
+
+<Badge type="danger">Before</Badge> Attaching a fixture from disk with
+`cypress-file-upload`
+
+```js
+cy.get('[data-cy="file-input"]').attachFile('myfixture.json')
+```
+
+<Badge type="success">After</Badge> Selecting a fixture from disk with
+`.selectFile()`. Cypress follows paths from your project root (same as
+[`cy.readFile()`](/api/commands/readfile)).
+
+```js
+cy.get('[data-cy="file-input"]').selectFile('cypress/fixtures/myfixture.json')
+
+// Or
+
+cy.fixture('myfixture.json', { encoding: null }).as('myfixture')
+cy.get('[data-cy="file-input"]').selectFile('@myfixture')
+```
+
+#### Using drag-n-drop
+
+<Badge type="danger">Before</Badge> Dragging and dropping a file with
+`cypress-file-upload`
+
+```js
+cy.get('[data-cy="dropzone"]').attachFile('myfixture.json', {
+  subjectType: 'drag-n-drop',
+})
+```
+
+<Badge type="success">After</Badge> Selecting a fixture from disk with
+`.selectFile()`. Cypress follows paths from the root of your test folder (same
+as [`cy.readFile()`](/api/commands/readfile)).
+
+```js
+cy.get('[data-cy="dropzone"]').selectFile('fixtures/myfixture.json', {
+  action: 'drag-drop',
+})
+```
+
+#### Overriding the file name
+
+<Badge type="danger">Before</Badge> Dragging and dropping a file with
+`cypress-file-upload`
+
+```js
+cy.get('[data-cy="dropzone"]').attachFile({
+  filePath: 'myfixture.json',
+  fileName: 'customFileName.json',
+})
+```
+
+<Badge type="success">After</Badge> Selecting a fixture from disk with
+`.selectFile()`. Cypress follows paths from the root of your test folder (same
+as [`cy.readFile()`](/api/commands/readfile)).
+
+```js
+cy.get('[data-cy="dropzone"]').selectFile({
+  contents: 'fixtures/myfixture.json',
+  fileName: 'customFileName.json',
+})
+```
+
+#### Working with file contents
+
+<Badge type="danger">Before</Badge> Working with file contents before using
+using `cypress-file-upload`
+
+```js
+const special = 'file.spss'
+
+cy.fixture(special, 'binary')
+  .then(Cypress.Blob.binaryStringToBlob)
+  .then((fileContent) => {
+    // ...process file contents
+    cy.get('[data-cy="file-input"]').attachFile({
+      fileContent,
+      filePath: special,
+      encoding: 'utf-8',
+      lastModified: new Date().getTime(),
+    })
+  })
+```
+
+<Badge type="success">After</Badge> Working with file contents before using with
+`.selectFile()`. The `null` encoding introduced in Cypress 9.0 makes working
+with binary data simpler, and is the preferred encoding for use with
+`.selectFile()`.
+
+```js
+const special = 'file.spss'
+
+cy.fixture(special, { encoding: null }).then((contents) => {
+  // ...process file contents
+  cy.get('[data-cy="file-input"]').selectFile({
+    contents,
+    fileName: special,
+    lastModified: new Date().getTime(),
+  })
+})
+
+// Or
+
+cy.fixture(special, { encoding: null })
+  .then((contents) => {
+    // ...process file contents
+  })
+  .as('special')
+
+cy.get('[data-cy="file-input"]').selectFile('@special')
+```
+
 ## Migrating to Cypress 8.0
 
 This guide details the changes and how to change your code to migrate to Cypress

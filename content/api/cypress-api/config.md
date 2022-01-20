@@ -98,8 +98,8 @@ Cypress.config('pageLoadTimeout') // => 60000
 
 <strong class="alert-header">Scope</strong>
 
-Remember, any changes that you make to configuration using this API will be
-in effect for the remainder of the tests _in the same spec file._
+Remember, any changes that you make to configuration using this API will be in
+effect for the remainder of the tests _in the same spec file._
 
 </Alert>
 
@@ -140,37 +140,39 @@ Cypress.config() // => {defaultCommandTimeout: 10000, viewportHeight: 900, ...}
 
 ### Not all config values can be changed at all times
 
-Some configuration values are readonly and cannot be changed while running a test. Anything
-that's not directly under Cypress's control - like timeouts, `userAgent`, or
-environment variables - will be ignored at run-time. Be sure to review the list of
+Some configuration values are readonly and cannot be changed during running a
+test. Anything that is not listed in the
+[test configuration options](/guides/references/configuration#Test-Configuration)
+cannot be updated at runtime. Be sure to review the list of
 [test configuration options](/guides/references/configuration##Test-Configuration).
 
 ### Test Configuration vs `Cypress.config()`
 
-To apply specific Cypress configuration values to a suite or test, you can pass a
-[test configuration](/guides/references/configuration#Test-Configuration) object
-to the test or suite function.
+To apply specific Cypress configuration values to a suite or test, you can pass
+a [test configuration](/guides/references/configuration#Test-Configuration)
+object to the test or suite function.
 
 While `Cypress.config()` changes configuration values through the entire spec
 file, using test configuration will only change configuration values during the
 suite or test where they are set. The values will then reset to the previous
 default values after the suite or test is complete.
 
-See the full guide on [test configuration](/guides/references/configuration#Test-Configuration).
+See the full guide on
+[test configuration](/guides/references/configuration#Test-Configuration).
 
 ### `Cypress.config()` executes Synchronously
 
-It's important to note that `Cypress.config()` executes synchronously and will not wait for the Cypress commands above it to execute.
-If you need to update your configuration mid-test, be sure to chain the
+It's important to note that `Cypress.config()` executes synchronously and will
+not wait for the Cypress commands above it to execute. If you need to update
+your configuration mid-test, be sure to chain the
 [asynchronously Cypress command](/guides/core-concepts/introduction-to-cypress#Commands-Are-Asynchronous).
 
 ```javascript
 it('using cy.then', () => {
   cy.visit('/my-test_page')
-  cy.click('#download-html')
-    .then(() => {
-      Cypress.config('baseUrl', 'null')
-    })
+  cy.click('#download-html').then(() => {
+    Cypress.config('baseUrl', 'null')
+  })
   cy.visit('/downloads/contents.html')
 })
 ```
