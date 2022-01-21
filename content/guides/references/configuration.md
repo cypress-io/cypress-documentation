@@ -20,13 +20,11 @@ configuration file.
 <strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
 Deprecated</strong>
 
-Configuring Cypress via `cypress.json` is deprecated as of Cypress CFG_VERSION.
-If your project has a `cypress.json` file, please see the
+Configuring Cypress via `cypress.json` is no longer supported as of Cypress
+CFG_VERSION. If your project has a `cypress.json` file, please see the
 [legacy configuration](/guides/references/legacy-configuration) page for
 configuration instructions and the migration guide for more information on how
 to update your configuration.
-
-Support for `cypress.json` will be removed in a future version of Cypress.
 
 </Alert>
 
