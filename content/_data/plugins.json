@@ -543,6 +543,13 @@
           "badge": "community"
         },
         {
+          "name": "@this-dot/cypress-indexeddb",
+          "description": "Custom commands for indexedDb. Allows populating, modifying and asserting data stored in indexedDb.",
+          "link": "https://github.com/thisdot/open-source/tree/main/libs/cypress-indexeddb",
+          "keywords": ["commands", "indexedDb"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-iframe",
           "description": "Custom commands for interacting with iframes",
           "link": "https://gitlab.com/kgroat/cypress-iframe",
