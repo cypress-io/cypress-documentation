@@ -1,5 +1,5 @@
 <template>
-  <div class="hidden xl:block xl:col-span-2 mt-16">
+  <div class="hidden xl:block xl:col-span-2 mt-16 lg:z-10">
     <nav
       v-if="toc.length"
       :class="hasBanner ? $style.bannerMargin : ''"
