@@ -63,13 +63,14 @@ function processNode(node, { _require, error, warn }) {
       language: 'json',
       alert: endent`
         <Alert type="warning">
-        
+
         <strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
         Deprecated</strong>
 
         The \`cypress.json\` file is no longer supported as of Cypress CFG_VERSION. We recommend
-        that you update your configuration. Please see the
-        [new configuration guide](/guides/references/configuration) and the
+        that you update your configuration.
+
+        Please see the [new configuration guide](/guides/references/configuration) and the
         [migration guide](/guides/references/migration-guide) for more information.
 
         </Alert>

@@ -42,7 +42,9 @@ function processNode(node, { _require, error, warn }) {
         Deprecated</strong>
 
         The \`cypress.json\` file and plugins file are no longer supported as of Cypress
-        CFG_VERSION. We recommend that you update your configuration. Please see the
+        CFG_VERSION.
+
+        We recommend that you update your configuration. Please see the
         [new configuration guide](/guides/references/configuration),
         [plugins guide](/guides/tooling/plugins-guide) and the
         [migration guide](/guides/references/migration-guide) for more information.

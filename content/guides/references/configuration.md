@@ -21,7 +21,9 @@ configuration file.
 Deprecated</strong>
 
 Configuring Cypress via `cypress.json` is no longer supported as of Cypress
-CFG_VERSION. If your project has a `cypress.json` file, please see the
+CFG_VERSION.
+
+If your project has a `cypress.json` file, please see the
 [legacy configuration](/guides/references/legacy-configuration) page for
 configuration instructions and the migration guide for more information on how
 to update your configuration.
