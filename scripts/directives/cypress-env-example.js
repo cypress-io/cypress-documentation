@@ -70,7 +70,7 @@ function processNode(node, { _require, error, warn }) {
       <strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
       Deprecated</strong>
 
-      The plugins file is no longer supported as of Cypress CFG_VERSION.
+      The plugins file is no longer supported as of Cypress version 10.0.0.
 
       We recommend that you update your configuration. Please see the
       [plugins guide](/guides/tooling/plugins-guide) and the

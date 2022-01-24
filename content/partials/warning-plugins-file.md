@@ -4,7 +4,7 @@
 Deprecated</strong>
 
 Configuring plugins via `cypress/plugins/index.js` is no longer supported as of
-Cypress CFG_VERSION.
+Cypress version 10.0.0.
 
 We recommend that you update your configuration. Please see the
 [plugins guide](/guides/tooling/plugins-guide) and the

@@ -712,9 +712,9 @@ DEBUG=cypress:cli,cypress:server:specs
 
 ## History
 
-| Version                                                                 | Changes                                              |
-| ----------------------------------------------------------------------- | ---------------------------------------------------- |
-| [CFG_VERSION](/guides/references/changelog#CFG_VERSION_CHANGED_TO_HASH) | Added page due to deprecation of `cypress.json` file |
+| Version                                     | Changes                                              |
+| ------------------------------------------- | ---------------------------------------------------- |
+| [10.0.0](/guides/references/changelog#1000) | Added page due to deprecation of `cypress.json` file |
 
 ## See also
 

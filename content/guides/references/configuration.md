@@ -21,7 +21,7 @@ configuration file.
 Deprecated</strong>
 
 Configuring Cypress via `cypress.json` is no longer supported as of Cypress
-CFG_VERSION.
+version 10.0.0.
 
 If your project has a `cypress.json` file, please see the
 [legacy configuration](/guides/references/legacy-configuration) page for
@@ -741,7 +741,7 @@ an [`e2e`](#e2e) or [`component`](#component) testing specific option.
 
 <Alert type="info">
 
-This function was added in Cypress CFG_VERSION to replace the deprecated
+This function was added in Cypress version 10.0.0 to replace the deprecated
 [plugins file](/guides/references/legacy-configuration#Plugins).
 
 </Alert>
@@ -822,20 +822,20 @@ DEBUG=cypress:cli,cypress:server:specs
 
 ## History
 
-| Version                                                                 | Changes                                                                              |
-| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| [CFG_VERSION](/guides/references/changelog#CFG_VERSION_CHANGED_TO_HASH) | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files |
-| [8.7.0](/guides/references/changelog#8-7-0)                             | Added `slowTestThreshold` option                                                     |
-| [8.0.0](/guides/references/changelog#8-0-0)                             | Added `clientCertificates` option                                                    |
-| [7.0.0](/guides/references/changelog#7-0-0)                             | Added `e2e` and `component` options.                                                 |
-| [7.0.0](/guides/references/changelog#7-0-0)                             | Added `redirectionLimit` option.                                                     |
-| [6.1.0](/guides/references/changelog#6-1-0)                             | Added `scrollBehavior` option.                                                       |
-| [5.2.0](/guides/references/changelog#5-2-0)                             | Added `includeShadowDom` option.                                                     |
-| [5.0.0](/guides/references/changelog#5-0-0)                             | Added `retries` configuration.                                                       |
-| [5.0.0](/guides/references/changelog#5-0-0)                             | Renamed `blacklistHosts` configuration to `blockHosts`.                              |
-| [4.1.0](/guides/references/changelog#4-12-0)                            | Added `screenshotOnRunFailure` configuration.                                        |
-| [4.0.0](/guides/references/changelog#4-0-0)                             | Added `firefoxGcInterval` configuration.                                             |
-| [3.5.0](/guides/references/changelog#3-5-0)                             | Added `nodeVersion` configuration.                                                   |
+| Version                                      | Changes                                                                              |
+| -------------------------------------------- | ------------------------------------------------------------------------------------ |
+| [10.0.0](/guides/references/changelog#1000)  | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files |
+| [8.7.0](/guides/references/changelog#8-7-0)  | Added `slowTestThreshold` option                                                     |
+| [8.0.0](/guides/references/changelog#8-0-0)  | Added `clientCertificates` option                                                    |
+| [7.0.0](/guides/references/changelog#7-0-0)  | Added `e2e` and `component` options.                                                 |
+| [7.0.0](/guides/references/changelog#7-0-0)  | Added `redirectionLimit` option.                                                     |
+| [6.1.0](/guides/references/changelog#6-1-0)  | Added `scrollBehavior` option.                                                       |
+| [5.2.0](/guides/references/changelog#5-2-0)  | Added `includeShadowDom` option.                                                     |
+| [5.0.0](/guides/references/changelog#5-0-0)  | Added `retries` configuration.                                                       |
+| [5.0.0](/guides/references/changelog#5-0-0)  | Renamed `blacklistHosts` configuration to `blockHosts`.                              |
+| [4.1.0](/guides/references/changelog#4-12-0) | Added `screenshotOnRunFailure` configuration.                                        |
+| [4.0.0](/guides/references/changelog#4-0-0)  | Added `firefoxGcInterval` configuration.                                             |
+| [3.5.0](/guides/references/changelog#3-5-0)  | Added `nodeVersion` configuration.                                                   |
 
 ## See also
 
