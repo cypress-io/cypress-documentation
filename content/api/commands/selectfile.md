@@ -186,15 +186,45 @@ This will fail unless the file input has the `multiple` property.
 
 </Alert>
 
-### Selecting a file with custom filename, mimeType and lastModified
+### Custom fileName, mimeType and lastModified
 
 ```javascript
-cy.get('input[type=file]').selectFile({
-  contents: 'path/to/file.yml',
-  fileName: 'custom-name.json',
-  mimeType: 'text/plain',
-  lastModified: new Date('Feb 18 1989').valueOf(),
-})
+cy.get('input[type=file][multiple]')
+  .selectFile([
+    {
+      contents: 'cypress/fixtures/example.json',
+    },
+    {
+      contents: 'cypress/fixtures/example.json',
+      fileName: 'file.png',
+    },
+    {
+      contents: 'cypress/fixtures/example.json',
+      fileName: 'file.png',
+      mimeType: 'text/plain',
+      lastModified: new Date('Feb 18 1989').valueOf(),
+    },
+  ])
+  .then(($input) => {
+    const files = $input[0].files
+
+    // If nothing is specified, the fileName and MIME type will be inferred from the path on disk.:
+    expect(files[0].name).to.eq('example.json')
+    expect(files[0].type).to.eq('application/json')
+
+    // If the fileName is given, the MIME type will be inferred based on that.
+    expect(files[1].name).to.eq('file.png')
+    expect(files[1].type).to.eq('image/png')
+
+    // But an explicitly specified MIME type is always used.:
+    expect(files[2].name).to.eq('file.png')
+    expect(files[2].type).to.eq('text/plain')
+
+    // lastModified defaults to the current time, but can be overridden.
+    expect(files[0].lastModified).to.be.closeTo(Date.now(), 1000)
+    expect(files[1].lastModified).to.be.closeTo(Date.now(), 1000)
+    expect(files[2].lastModified).to.eql(new Date('Feb 18 1989').valueOf())
+  })
 ```
 
 ### Dropping a file on the document
