@@ -216,7 +216,7 @@ cy.get('input[type=file][multiple]')
     expect(files[1].name).to.eq('file.png')
     expect(files[1].type).to.eq('image/png')
 
-    // But an explicitly specified MIME type is always used.:
+    // But an explicitly specified MIME type is always used.
     expect(files[2].name).to.eq('file.png')
     expect(files[2].type).to.eq('text/plain')
 
