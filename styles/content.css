@@ -42,6 +42,7 @@
   @apply lg:col-span-9;
   @apply xl:col-span-8;
   @apply mt-16;
+  @apply lg:z-0;
 }
 
 .main-content-article {

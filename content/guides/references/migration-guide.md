@@ -111,8 +111,9 @@ When the first argument is an object:
   rather than `Cypress.Blob`.
 - `encoding`: Remove this property. It is no longer needed due to improved
   binary file handling in Cypress 9.0.
-- `mimeType`: Remove this property. It is no longer needed due to improved
-  binary file handling in Cypress 9.0.
+- `mimeType`: This property is unsupported in Cypress 9.3.0. If you need
+  mimeType support, continue using cypress-file-upload until we add support for
+  this parameter. Support will be added in a future update.
 
 In the second argument:
 
@@ -120,6 +121,8 @@ In the second argument:
   `drag-n-drop` to `drag-drop` or from `input` to `select`.
 - `allowEmpty`: Remove this property. `.selectFile()` does not check the length
   of a file read from disk, only its existence.
+- `force`: Works the same with `.selectFile()` as it did in
+  `cypress-file-upload`. No change necessary.
 
 ### Examples
 
