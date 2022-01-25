@@ -6,7 +6,7 @@ title: Migration Guide
 
 This guide details the changes and how to change your code to migrate to Cypress
 version 10.0.0.
-[See the full changelog for version 10.0.0](/guides/references/changelog#1000).
+[See the full changelog for version 10.0.0](/guides/references/changelog#10-0-0).
 
 ### Configuration file changes
 

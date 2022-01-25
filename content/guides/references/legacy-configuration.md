@@ -712,9 +712,9 @@ DEBUG=cypress:cli,cypress:server:specs
 
 ## History
 
-| Version                                     | Changes                                              |
-| ------------------------------------------- | ---------------------------------------------------- |
-| [10.0.0](/guides/references/changelog#1000) | Added page due to deprecation of `cypress.json` file |
+| Version                                       | Changes                                              |
+| --------------------------------------------- | ---------------------------------------------------- |
+| [10.0.0](/guides/references/changelog#10-0-0) | Added page due to deprecation of `cypress.json` file |
 
 ## See also
 

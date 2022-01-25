@@ -822,20 +822,20 @@ DEBUG=cypress:cli,cypress:server:specs
 
 ## History
 
-| Version                                      | Changes                                                                              |
-| -------------------------------------------- | ------------------------------------------------------------------------------------ |
-| [10.0.0](/guides/references/changelog#1000)  | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files |
-| [8.7.0](/guides/references/changelog#8-7-0)  | Added `slowTestThreshold` option                                                     |
-| [8.0.0](/guides/references/changelog#8-0-0)  | Added `clientCertificates` option                                                    |
-| [7.0.0](/guides/references/changelog#7-0-0)  | Added `e2e` and `component` options.                                                 |
-| [7.0.0](/guides/references/changelog#7-0-0)  | Added `redirectionLimit` option.                                                     |
-| [6.1.0](/guides/references/changelog#6-1-0)  | Added `scrollBehavior` option.                                                       |
-| [5.2.0](/guides/references/changelog#5-2-0)  | Added `includeShadowDom` option.                                                     |
-| [5.0.0](/guides/references/changelog#5-0-0)  | Added `retries` configuration.                                                       |
-| [5.0.0](/guides/references/changelog#5-0-0)  | Renamed `blacklistHosts` configuration to `blockHosts`.                              |
-| [4.1.0](/guides/references/changelog#4-12-0) | Added `screenshotOnRunFailure` configuration.                                        |
-| [4.0.0](/guides/references/changelog#4-0-0)  | Added `firefoxGcInterval` configuration.                                             |
-| [3.5.0](/guides/references/changelog#3-5-0)  | Added `nodeVersion` configuration.                                                   |
+| Version                                       | Changes                                                                              |
+| --------------------------------------------- | ------------------------------------------------------------------------------------ |
+| [10.0.0](/guides/references/changelog#10-0-0) | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files |
+| [8.7.0](/guides/references/changelog#8-7-0)   | Added `slowTestThreshold` option                                                     |
+| [8.0.0](/guides/references/changelog#8-0-0)   | Added `clientCertificates` option                                                    |
+| [7.0.0](/guides/references/changelog#7-0-0)   | Added `e2e` and `component` options.                                                 |
+| [7.0.0](/guides/references/changelog#7-0-0)   | Added `redirectionLimit` option.                                                     |
+| [6.1.0](/guides/references/changelog#6-1-0)   | Added `scrollBehavior` option.                                                       |
+| [5.2.0](/guides/references/changelog#5-2-0)   | Added `includeShadowDom` option.                                                     |
+| [5.0.0](/guides/references/changelog#5-0-0)   | Added `retries` configuration.                                                       |
+| [5.0.0](/guides/references/changelog#5-0-0)   | Renamed `blacklistHosts` configuration to `blockHosts`.                              |
+| [4.1.0](/guides/references/changelog#4-12-0)  | Added `screenshotOnRunFailure` configuration.                                        |
+| [4.0.0](/guides/references/changelog#4-0-0)   | Added `firefoxGcInterval` configuration.                                             |
+| [3.5.0](/guides/references/changelog#3-5-0)   | Added `nodeVersion` configuration.                                                   |
 
 ## See also
 
