@@ -2,7 +2,6 @@
 const path = require('path')
 const fs = require('fs')
 const replace = require('replace-in-file')
-const Promise = require('bluebird')
 const YAML = require('yamljs')
 const glob = require('glob')
 const findDeep = require('deepdash/findDeep')

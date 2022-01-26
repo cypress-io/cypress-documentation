@@ -1,21 +1,22 @@
 /* eslint-disable no-console */
 
 const chalk = require('chalk')
-const Promise = require('bluebird')
-const request = require('request-promise')
+const axios = require('axios')
 const {
   configFromEnvOrJsonFile,
   filenameToShellVariable,
 } = require('@cypress/env-or-json-file')
 const { stripIndent } = require('common-tags')
 
-const tap = (func) => {return (arg) => {
-  func(arg)
+const tap = (func) => {
+  return (arg) => {
+    func(arg)
 
-  return arg
-}}
+    return arg
+  }
+}
 
-function checkToken (token) {
+function checkToken(token) {
   if (!token) {
     const example = JSON.stringify({
       token: 'foobarbaz',
@@ -36,7 +37,7 @@ function checkToken (token) {
   }
 }
 
-function getCircleCredentials () {
+function getCircleCredentials() {
   // the JSON file should have an object like
   // { "token": "abc123..." }
   // where the token is your personal API token from CircleCI
@@ -59,30 +60,31 @@ function getCircleCredentials () {
   return config.token
 }
 
-function scrape () {
+function scrape() {
   return Promise.resolve()
-  .then(getCircleCredentials)
-  .then(tap(checkToken))
-  .then((token) => {
-    // hmm, how do we trigger workflow?
-    // seems this is not supported yet as of July 10th 2017
-    // https://discuss.circleci.com/t/trigger-workflow-through-rest-api/13931
-    return request({
-      url: 'https://circleci.com/api/v1.1/project/github/cypress-io/docsearch-scraper/',
-      method: 'POST',
-      json: true,
-      auth: {
-        user: token,
-      },
-    }).then((body) => {
-      console.log(
-        '\n',
-        'Started Circle CI build:',
-        chalk.green(body.build_url),
-        '\n'
-      )
+    .then(getCircleCredentials)
+    .then(tap(checkToken))
+    .then((token) => {
+      // hmm, how do we trigger workflow?
+      // seems this is not supported yet as of July 10th 2017
+      // https://discuss.circleci.com/t/trigger-workflow-through-rest-api/13931
+      return axios({
+        url:
+          'https://circleci.com/api/v1.1/project/github/cypress-io/docsearch-scraper/',
+        method: 'post',
+        json: true,
+        headers: {
+          'Circle-Token': token,
+        },
+      }).then((body) => {
+        console.log(
+          '\n',
+          'Started Circle CI build:',
+          chalk.green(body.build_url),
+          '\n'
+        )
+      })
     })
-  })
 }
 
 // if we're not being required
