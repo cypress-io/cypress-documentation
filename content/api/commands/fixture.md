@@ -125,6 +125,47 @@ it('loads the same object', () => {
   })
 })
 ```
+#### JavaScript file
+Cypress allows a `.js` file as a fixture, in places where JSON is expected.
+The contents of this file are treated as a something that evaluates to a JavaScript object (within Cypress, the content of the file is `eval()`-ed, with parentheses:
+
+```javascript
+let fixtureValue = eval("(" + fileContent + ")");
+```
+
+The `.js` file should evaluate to a JavaScript object (see examples below); many things that are valid JavaScript, are not allowed in this file, specifically, the file should _not_ end in a semi-colon (`;`).
+
+Although it is possible to make complex behaviour through this method, note that fixtures are meant to be "a fixed set of data".
+If you want dynamic responses, a better solution is to use a [`routeHandler` function](/api/commands/intercept#Using-the-routeHandler-function).
+
+Note that any valid JSON is valid as a `.js` fixture.
+The advantage is that that "sloppy" JSON is allowed: use single-quotes (or no quotes for keys), trailing commas, and comments.
+
+<Alert type="danger">
+  The code in the `.js` fixture gets executed.
+  If you import your fixtures (or values in your fixtures) from an external source, into fixture files with a `.js` extension, this may be a security problem!
+  In general, never use `.js` fixtures, unless you 100% control what is in the file.
+</Alert>
+
+##### Examples
+
+"Sloppy" JSON `fixture/users.js` with comments
+```javascript
+[
+  {
+    name: 'Bob' + '\u2022', // add a unicode black dot to the name
+    age: 25,
+  }
+]
+```
+
+Generate many Bobs `fixture/users.js`
+```javascript
+Array(100).fill(0).map((_, index) => ({
+  name: `Bob_${index}`,
+  age: 25 + Math.floor(index / 2),
+}))
+```
 
 ### Images
 
