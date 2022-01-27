@@ -157,7 +157,8 @@ workflows:
               ignore:
                 - master
       # Removing filter to test docsearch-scraper change.
-      # - release:
+      - release:
+          name: 'Run docsearch scraper'
       #     filters:
       #       branches:
       #         only:
