@@ -90,22 +90,22 @@ only against a deployed production app.
 
 Once your server is running, it's time to visit it.
 
-Let's delete the `sample_spec.js` file created in the previous tutorial now that
+Let's delete the `sample.cy.js` file created in the previous tutorial now that
 it's no longer needed.
 
 ```shell
-rm cypress/e2e/sample_spec.js
+rm cypress/e2e/sample.cy.js
 ```
 
-Now let's create our own spec file called `home_page_spec.js`.
+Now let's create our own spec file called `home_page.cy.js`.
 
 ```shell
-touch cypress/e2e/home_page_spec.js
+touch cypress/e2e/home_page.cy.js
 ```
 
 Once that file is created, you should see it in the list of spec files.
 
-<DocsImage src="/img/guides/testing-your-app-home-page-spec.png" alt="List of files including home_page_spec.js"></DocsImage>
+<DocsImage src="/img/guides/testing-your-app-home-page-spec.png" alt="List of files including home_page.cy.js"></DocsImage>
 
 Now you'll need to add in the following code in your test file to visit your
 server:
@@ -118,7 +118,7 @@ describe('The Home Page', () => {
 })
 ```
 
-Now click on the `home_page_spec.js` file and watch Cypress open your browser.
+Now click on the `home_page.cy.js` file and watch Cypress open your browser.
 
 If you forgot to start your server you'll see the error below:
 

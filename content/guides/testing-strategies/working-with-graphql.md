@@ -62,7 +62,7 @@ In our test file, we can import these utilities and use them to alias the
 queries and mutations for our tests in a `beforeEach`.
 
 ```js
-// app.spec.js
+// app.cy.js
 import { aliasQuery, aliasMutation } from '../utils/graphql-test-utils'
 
 context('Tests', () => {
@@ -88,7 +88,7 @@ Expectations can be made against the response of an intercepted GraphQL query or
 mutation using [cy.wait()](/api/commands/wait).
 
 ```js
-// app.spec.js
+// app.cy.js
 import { aliasQuery } from '../utils/graphql-test-utils'
 
 context('Tests', () => {
@@ -116,7 +116,7 @@ In the test below, the response is modified to test the UI for a single page of
 results.
 
 ```js
-// app.spec.js
+// app.cy.js
 import { hasOperationName, aliasQuery } from '../utils/graphql-test-utils'
 
 context('Tests', () => {

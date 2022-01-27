@@ -80,7 +80,7 @@ describe('Cypress Studio Demo', () => {
 Clone the <Icon name="github"></Icon>
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and
 refer to the
-[cypress/tests/demo/cypress-studio.spec.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts)
+[cypress/tests/demo/cypress-studio.cy.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts)
 file.
 
 </Alert>
@@ -282,7 +282,7 @@ describe('Cypress Studio Demo', () => {
 Clone the <Icon name="github"></Icon>
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and
 refer to the
-[cypress/tests/demo/cypress-studio.spec.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts)
+[cypress/tests/demo/cypress-studio.cy.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts)
 file.
 
 </Alert>

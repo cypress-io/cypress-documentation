@@ -127,7 +127,7 @@ The Cypress App can wait for the property `window.appReady` to be `true` before
 every test
 
 ```js
-// spec.js
+// spec.cy.js
 beforeEach(() => {
   cy.visit('/')
   cy.window().should('have.property', 'appReady', true)

@@ -77,14 +77,14 @@ your `package.json`
 Dashboard, the command should be:
 
 ```shell
-npm run cy:run -- --record --spec "cypress/e2e/my-spec.js"
+npm run cy:run -- --record --spec "cypress/e2e/my-spec.cy.js"
 ```
 
 If you are using the [npx](https://github.com/zkat/npx) tool, you can invoke the
 locally installed Cypress tool directly:
 
 ```shell
-npx cypress run --record --spec "cypress/e2e/my-spec.js"
+npx cypress run --record --spec "cypress/e2e/my-spec.cy.js"
 ```
 
 <Alert type="info">
@@ -367,7 +367,7 @@ path should be an absolute path or can relative to the current working
 directory.
 
 ```shell
-cypress run --spec "cypress/e2e/examples/actions.spec.js"
+cypress run --spec "cypress/e2e/examples/actions.cy.js"
 ```
 
 Run tests within the folder matching the glob _(Note: Using double quotes is
@@ -380,7 +380,7 @@ cypress run --spec "cypress/e2e/login/**/*"
 Run tests specifying multiple test files to run.
 
 ```shell
-cypress run --spec "cypress/e2e/examples/actions.spec.js,cypress/e2e/examples/files.spec.js"
+cypress run --spec "cypress/e2e/examples/actions.cy.js,cypress/e2e/examples/files.cy.js"
 ```
 
 Use in combination with `--project` parameter. Imagine the Cypress tests are in

@@ -153,25 +153,25 @@ takes **1:51** to complete all of the tests.
 ```text
 1x-electron, Machine #1
 --------------------------
--- actions.spec.js (14s)
--- aliasing.spec.js (1s)
--- assertions.spec.js (1s)
--- connectors.spec.js (2s)
--- cookies.spec.js (2s)
--- cypress_api.spec.js (3s)
--- files.spec.js (2s)
--- local_storage.spec.js (1s)
--- location.spec.js (1s)
--- misc.spec.js (4s)
--- navigation.spec.js (3s)
--- network_requests.spec.js (3s)
--- querying.spec.js (1s)
--- spies_stubs_clocks.spec.js (1s)
--- traversal.spec.js (4s)
--- utilities.spec.js (3s)
--- viewport.spec.js (3s)
--- waiting.spec.js (5s)
--- window.spec.js (1s)
+-- actions.cy.js (14s)
+-- aliasing.cy.js (1s)
+-- assertions.cy.js (1s)
+-- connectors.cy.js (2s)
+-- cookies.cy.js (2s)
+-- cypress_api.cy.js (3s)
+-- files.cy.js (2s)
+-- local_storage.cy.js (1s)
+-- location.cy.js (1s)
+-- misc.cy.js (4s)
+-- navigation.cy.js (3s)
+-- network_requests.cy.js (3s)
+-- querying.cy.js (1s)
+-- spies_stubs_clocks.cy.js (1s)
+-- traversal.cy.js (4s)
+-- utilities.cy.js (3s)
+-- viewport.cy.js (3s)
+-- waiting.cy.js (5s)
+-- window.cy.js (1s)
 ```
 
 <Alert type="info">
@@ -196,16 +196,16 @@ file and it finished in **59 seconds**.
 ```text
 2x-electron, Machine #1, 9 specs          2x-electron, Machine #2, 10 specs
 --------------------------------          -----------------------------------
--- actions.spec.js (14s)                  -- waiting.spec.js (6s)
--- traversal.spec.js (4s)                 -- navigation.spec.js (3s)
--- misc.spec.js (4s)                      -- utilities.spec.js (3s)
--- cypress_api.spec.js (4s)               -- viewport.spec.js (4s)
--- cookies.spec.js (3s)                   -- network_requests.spec.js (3s)
--- files.spec.js (3s)                     -- connectors.spec.js (2s)
--- location.spec.js (2s)                  -- assertions.spec.js (1s)
--- querying.spec.js (2s)                  -- aliasing.spec.js (1s)
--- location.spec.js (1s)                  -- spies_stubs_clocks.spec.js (1s)
-                                          -- window.spec.js (1s)
+-- actions.cy.js (14s)                    -- waiting.cy.js (6s)
+-- traversal.cy.js (4s)                   -- navigation.cy.js (3s)
+-- misc.cy.js (4s)                        -- utilities.cy.js (3s)
+-- cypress_api.cy.js (4s)                 -- viewport.cy.js (4s)
+-- cookies.cy.js (3s)                     -- network_requests.cy.js (3s)
+-- files.cy.js (3s)                       -- connectors.cy.js (2s)
+-- location.cy.js (2s)                    -- assertions.cy.js (1s)
+-- querying.cy.js (2s)                    -- aliasing.cy.js (1s)
+-- location.cy.js (1s)                    -- spies_stubs_clocks.cy.js (1s)
+                                          -- window.cy.js (1s)
 ```
 
 The difference in running times and machines used is very clear when looking at

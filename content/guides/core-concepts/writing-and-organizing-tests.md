@@ -39,27 +39,27 @@ folder structure. By default it will create:
   /e2e
     /examples
       /1-getting-started
-        - todo.spec.js
+        - todo.cy.js
       /2-advanced-examples
-        - actions.spec.js
-        - aliasing.spec.js
-        - assertions.spec.js
-        - connectors.spec.js
-        - cookies.spec.js
-        - cypress_api.spec.js
-        - files.spec.js
-        - local_storage.spec.js
-        - location.spec.js
-        - misc.spec.js
-        - navigation.spec.js
-        - network_requests.spec.js
-        - querying.spec.js
-        - spies_stubs_clocks.spec.js
-        - traversal.spec.js
-        - utilities.spec.js
-        - viewport.spec.js
-        - waiting.spec.js
-        - window.spec.js
+        - actions.cy.js
+        - aliasing.cy.js
+        - assertions.cy.js
+        - connectors.cy.js
+        - cookies.cy.js
+        - cypress_api.cy.js
+        - files.cy.js
+        - local_storage.cy.js
+        - location.cy.js
+        - misc.cy.js
+        - navigation.cy.js
+        - network_requests.cy.js
+        - querying.cy.js
+        - spies_stubs_clocks.cy.js
+        - traversal.cy.js
+        - utilities.cy.js
+        - viewport.cy.js
+        - waiting.cy.js
+        - window.cy.js
 
   /support
     - commands.js
@@ -121,7 +121,7 @@ To see an example of every command used in Cypress, open the
 [`2-advanced-examples` folder](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/cypress/integration/2-advanced-examples)
 within your `cypress/e2e` folder.
 
-To start writing tests for your app, create a new file like `app_spec.js` within
+To start writing tests for your app, create a new file like `app.cy.js` within
 your `cypress/e2e` folder. Refresh your tests list in the Cypress App and your
 new file should have appeared in the list.
 
@@ -166,7 +166,7 @@ to `cypress/screenshots` by default.
 ```text
 /cypress
   /screenshots
-    /app_spec.js
+    /app.cy.js
       - Navigates to main menu (failures).png
 ```
 
@@ -182,7 +182,7 @@ Any videos recorded of the run are stored in the
 ```text
 /cypress
   /videos
-    - app_spec.js.mp4
+    - app.cy.js.mp4
 ```
 
 To learn more about videos and settings available, see
@@ -678,8 +678,8 @@ cy.wrap(add(1, 2)).should('equal', 3)
 We suggest running test files individually by clicking on the spec filename to
 ensure the best performance. For example the
 [Cypress RealWorld App](https://github.com/cypress-io/cypress-example-realworld)
-has multiple test files, but below we run a single "new-transaction.spec.ts"
-test file.
+has multiple test files, but below we run a single "new-transaction.cy.ts" test
+file.
 
 <DocsImage src="/img/guides/core-concepts/run-single-spec.gif" alt="Running a single spec" ></DocsImage>
 
@@ -708,10 +708,10 @@ be run as if concatenating all spec files together when clicking the "Run N
 specs" button.
 
 - The search filter is case-insensitive; the filter "ui" will match both
-  "UI-spec.js" and "admin-ui-spec.js" files.
+  "UI-spec.cy.js" and "admin-ui-spec.cy.js" files.
 - The search filter is applied to the entire relative spec file path, thus you
   can use folder names to limit the specs; the filter "ui" will match both
-  "admin-ui.spec.js" and "ui/admin.spec.js" files.
+  "admin-ui.cy.js" and "ui/admin.cy.js" files.
 
 <DocsImage src="/img/guides/core-concepts/run-selected-specs.gif" alt="Running specs matching the search filter" ></DocsImage>
 
