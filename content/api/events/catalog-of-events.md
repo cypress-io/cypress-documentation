@@ -183,11 +183,11 @@ single test.
 
 #### To turn off all uncaught exception handling
 
-```javascript
-// likely want to do this in a support file
-// so it's applied to all spec files
-// cypress/support/e2e.js or cypress/support/component.js
+You'll likely want to do this in a
+[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file)
+so it's applied to all spec files.
 
+```javascript
 Cypress.on('uncaught:exception', (err, runnable) => {
   // returning false here prevents Cypress from
   // failing the test
@@ -197,10 +197,11 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 
 ### To conditionally turn off uncaught exception handling for a certain error
 
+You'll likely want to do this in a
+[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file)
+so it's applied to all spec files.
+
 ```javascript
-// likely want to do this in a support file
-// so it's applied to all spec files
-// cypress/support/e2e.js or cypress/support/component.js
 Cypress.on('uncaught:exception', (err, runnable) => {
   // we expect a 3rd party library error with message 'list not defined'
   // and don't want to fail the test so we return false
@@ -214,10 +215,11 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 
 ### To conditionally turn off uncaught exception handling unhandled promise rejections
 
+You'll likely want to do this in a
+[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file)
+so it's applied to all spec files.
+
 ```javascript
-// likely want to do this in a support file
-// so it's applied to all spec files
-// cypress/support/e2e.js or cypress/support/component.js
 Cypress.on('uncaught:exception', (err, runnable, promise) => {
   // when the exception originated from an unhandled promise
   // rejection, the promise is provided as a third argument
@@ -258,10 +260,11 @@ it('is doing something very important', (done) => {
 
 #### Debug the moment a test fails
 
+If you want to debug when any test fails you'll likely want to put this in a
+[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file),
+or at the top of an individual spec file.
+
 ```javascript
-// if you want to debug when any test fails
-// You likely want to put this in a support file,
-// or at the top of an individual spec file
 Cypress.on('fail', (error, runnable) => {
   debugger
 
