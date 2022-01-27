@@ -727,9 +727,7 @@ test - even if you refreshed Cypress in the middle of an existing one!
 
 This is also a great opportunity to use
 [root level hooks in mocha](https://github.com/mochajs/mochajs.github.io/blob/master/index.md#root-level-hooks).
-A perfect place to put these is in the
-[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file)
-because it is always evaluated before any test code from your spec files.
+::include{file=partials/support-file-configuration.md}
 
 **Hooks you add to the root will always run on all suites!**
 

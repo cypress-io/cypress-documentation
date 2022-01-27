@@ -170,9 +170,7 @@ Cypress.Screenshot.defaults({
 
 #### Where to put screenshot configuration
 
-A great place to put this configuration is in the
-[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file)
-file, since it is loaded before any test files are evaluated.
+::include{file=partials/support-file-configuration.md}
 
 ## History
 
