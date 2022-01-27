@@ -264,12 +264,25 @@ click on a test file named `spec-a.js` via
 [cypress open](/guides/guides/command-line#cypress-open), then the Cypress App
 executes the files in the following order:
 
-```html
-<!-- bundled support file -->
+:::e2e-component-example
+
+```js
+//bundled e2e support file
 <script src="support/e2e.js"></script>
-<!-- bundled spec file -->
-<script src="e2e/spec-a.js"></script>
+
+//bundled spec file
+<script src="e2e/spec-a.cy.js"></script>
 ```
+
+```js
+//bundled component support file
+<script src="support/component.js"></script>
+
+//bundled spec file
+<script src="components/Button/Button.cy.js"></script>
+```
+
+:::
 
 The same happens when using the
 [cypress run](/guides/guides/command-line#cypress-run) command: a new browser
@@ -281,15 +294,31 @@ bundles and concatenates all specs together, in essence running scripts like
 shown below. This means the code in the support file is executed once before all
 spec files, instead of once before each spec file.
 
-```html
-<!-- bundled support file -->
+:::e2e-component-example
+
+```js
+//bundled e2e or component support file
 <script src="support/e2e.js"></script>
-<!-- bundled first spec file, second spec file, etc -->
+
+//bundled first spec file, second spec file, etc
 <script src="e2e/spec-a.js"></script>
 <script src="e2e/spec-b.js"></script>
 ...
 <script src="e2e/spec-n.js"></script>
 ```
+
+```js
+//bundled e2e or component support file
+<script src="support/component.js"></script>
+
+//bundled first spec file, second spec file, etc
+<script src="components/Header/Header.cy.js"></script>
+<script src="components/Button/Button.cy.js"></script>
+...
+<script src="components/Input/Input.cy.js"></script>
+```
+
+:::
 
 <Alert type="info">
 
