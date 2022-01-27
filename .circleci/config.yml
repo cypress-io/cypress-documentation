@@ -156,12 +156,12 @@ workflows:
             branches:
               ignore:
                 - master
-
-      - release:
-          filters:
-            branches:
-              only:
-                - master
+      # Removing filter to test docsearch-scraper change.
+      # - release:
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
 
   nightly:
     triggers:
