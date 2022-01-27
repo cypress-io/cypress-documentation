@@ -33,7 +33,7 @@ folder structure. By default it will create:
 
 ```text
 /cypress
-  /fixtures
+  /e2e
     - example.json
 
   /e2e
@@ -63,7 +63,8 @@ folder structure. By default it will create:
 
   /support
     - commands.js
-    - index.js
+    - e2e.js
+    - component.js
 ```
 
 ### Configuring Folder Structure
@@ -265,9 +266,9 @@ executes the files in the following order:
 
 ```html
 <!-- bundled support file -->
-<script src="support/index.js"></script>
+<script src="support/e2e.js"></script>
 <!-- bundled spec file -->
-<script src="integration/spec-a.js"></script>
+<script src="e2e/spec-a.js"></script>
 ```
 
 The same happens when using the
@@ -282,12 +283,12 @@ spec files, instead of once before each spec file.
 
 ```html
 <!-- bundled support file -->
-<script src="support/index.js"></script>
+<script src="support/e2e.js"></script>
 <!-- bundled first spec file, second spec file, etc -->
-<script src="integration/spec-a.js"></script>
-<script src="integration/spec-b.js"></script>
+<script src="e2e/spec-a.js"></script>
+<script src="e2e/spec-b.js"></script>
 ...
-<script src="integration/spec-n.js"></script>
+<script src="e2e/spec-n.js"></script>
 ```
 
 <Alert type="info">
@@ -865,9 +866,8 @@ behavior.
 
 #### Folders
 
-- Integration directory (`cypress/e2e/` by default)
+- E2E directory (`cypress/e2e/` by default)
 - Support directory (`cypress/support/` by default)
-- Plugins directory (`cypress/plugins/` by default)
 
 The folder, the files within the folder, and all child folders and their files
 (recursively) are watched.
