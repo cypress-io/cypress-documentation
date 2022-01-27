@@ -76,11 +76,13 @@ function scrape() {
         headers: {
           'Circle-Token': token,
         },
-      }).then((body) => {
+      }).then((response) => {
+        const { data } = response
+
         console.log(
           '\n',
           'Started Circle CI build:',
-          chalk.green(body.build_url),
+          chalk.green(data.build_url),
           '\n'
         )
       })
