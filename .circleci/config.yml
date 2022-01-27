@@ -156,13 +156,14 @@ workflows:
             branches:
               ignore:
                 - master
-      # Removing filter to test docsearch-scraper change.
+
+      # Run docsearch-scraper only on master.
       - release:
           name: 'Run docsearch scraper'
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
+          filters:
+            branches:
+              only:
+                - master
 
   nightly:
     triggers:
