@@ -157,7 +157,9 @@ workflows:
               ignore:
                 - master
 
+      # Run docsearch-scraper only on master.
       - release:
+          name: 'Run docsearch scraper'
           filters:
             branches:
               only:
