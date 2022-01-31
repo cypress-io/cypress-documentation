@@ -211,8 +211,8 @@ npm install <plugin name> --save-dev
 
 There are two ways to use a plugin in Cypress:
 
-1. As of Cypress CFG_VERSION, it is recommended that you add your plugin to the
-   the [`setupNodeEvents`](/guides/references/configuration#setupNodeEvents)
+1. As of Cypress version 10.0.0, you will need to add your plugin to the
+   [`setupNodeEvents`](/guides/references/configuration#setupNodeEvents)
    function in the [Cypress configuration](/guides/references/configuration).
 2. If you're using an older version of Cypress, you can add your plugin to the
    (deprecated) [plugins file](/guides/references/legacy-configuration#Plugins).

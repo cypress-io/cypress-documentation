@@ -1,17 +1,17 @@
 const CYPRESS_JSON_ALERT = `<alert type="warning">
 <p><strong class="alert-header"><icon name="exclamation-triangle"></icon>
 Deprecated</strong></p>
-<p>The <code>cypress.json</code> file is deprecated as of Cypress CFG_VERSION. We recommend
-that you update your configuration. Please see the
-<a href="/guides/references/configuration">new configuration guide</a> and the
+<p>The <code>cypress.json</code> file is no longer supported as of Cypress version 10.0.0. We recommend
+that you update your configuration.</p>
+<p>Please see the <a href="/guides/references/configuration">new configuration guide</a> and the
 <a href="/guides/references/migration-guide">migration guide</a> for more information.</p>
 </alert>`
 
 const PLUGINS_FILE_ALERT = `<alert type="warning">
 <p><strong class="alert-header"><icon name="exclamation-triangle"></icon>
 Deprecated</strong></p>
-<p>The plugins file is deprecated as of Cypress CFG_VERSION. We recommend
-that you update your configuration. Please see the
+<p>The plugins file is no longer supported as of Cypress version 10.0.0.</p>
+<p>We recommend that you update your configuration. Please see the
 <a href="/guides/tooling/plugins-guide">plugins guide</a> and the
 <a href="/guides/references/migration-guide">migration guide</a> for more information.</p>
 </alert>`
@@ -19,8 +19,9 @@ that you update your configuration. Please see the
 const CYPRESS_JSON_PLUGINS_FILE_ALERT = `<alert type="warning">
 <p><strong class="alert-header"><icon name="exclamation-triangle"></icon>
 Deprecated</strong></p>
-<p>The <code>cypress.json</code> file and plugins file are deprecated as of Cypress
-CFG_VERSION. We recommend that you update your configuration. Please see the
+<p>The <code>cypress.json</code> file and plugins file are no longer supported as of Cypress
+version 10.0.0.</p>
+<p>We recommend that you update your configuration. Please see the
 <a href="/guides/references/configuration">new configuration guide</a>,
 <a href="/guides/tooling/plugins-guide">plugins guide</a> and the
 <a href="/guides/references/migration-guide">migration guide</a> for more information.</p>

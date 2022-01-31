@@ -2,11 +2,11 @@
 title: Migration Guide
 ---
 
-## Migrating to Cypress CFG_VERSION
+## Migrating to Cypress version 10.0.0
 
 This guide details the changes and how to change your code to migrate to Cypress
-CFG_VERSION. [See the full changelog for
-CFG_VERSION](/guides/references/changelog#CFG_VERSION_CHANGED_TO_HASH.
+version 10.0.0.
+[See the full changelog for version 10.0.0](/guides/references/changelog#10-0-0).
 
 ### Configuration file changes
 
