@@ -851,9 +851,9 @@ one of the following:
 
 **You visit the Cypress proxy URL outside of a Cypress browser.**
 
-- Don't copy the URL you see when launching a Cypress browser from the
-  Cypress App and open it in a non-Cypress browser. If you want to run your
-  tests in a different browser, follow the instructions in the
+- Don't copy the URL you see when launching a Cypress browser from the Cypress
+  App and open it in a non-Cypress browser. If you want to run your tests in a
+  different browser, follow the instructions in the
   [Cross Browser Testing](/guides/guides/cross-browser-testing) guide.
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> Cannot connect to API server

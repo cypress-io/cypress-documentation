@@ -471,8 +471,8 @@ to learn about the many ways you can contribute.
 ### Run the Cypress app by itself
 
 Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb
-server (if necessary), and then opens the Cypress App built on top
-of [Electron](https://electronjs.org/).
+server (if necessary), and then opens the Cypress App built on top of
+[Electron](https://electronjs.org/).
 
 Some common situations on why you would want to run the Cypress app by itself
 are to:
@@ -577,8 +577,8 @@ Calling _exit(1). Core file will not be generated.
 ### Patch Cypress
 
 Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb
-server (if necessary), and then opens the Cypress App built on top
-of [Electron](https://electronjs.org/).
+server (if necessary), and then opens the Cypress App built on top of
+[Electron](https://electronjs.org/).
 
 If you're encountering a bug in the current version of Cypress, you can
 implementing a temporary fix by patching Cypress in your own project. Here is an

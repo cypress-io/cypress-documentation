@@ -530,7 +530,7 @@ cy.visit('/my/resource/path') // Nothing happens yet
 ```
 
 ```js
-cy.mount(<MyComponent />)     // Nothing happens yet
+cy.mount(<MyComponent />) // Nothing happens yet
 ```
 
 ```js
@@ -538,9 +538,9 @@ it('hides the thing when it is clicked', () => {
   __VISIT_MOUNT_PLACEHOLDER__
 
   cy.get('.hides-when-clicked') // Still nothing happening
-    .should('be.visible')       // Still absolutely nothing
-    .click()                    // Nope, nothing
-    .should('not.be.visible')   // Definitely nothing happening yet
+    .should('be.visible') // Still absolutely nothing
+    .click() // Nope, nothing
+    .should('not.be.visible') // Definitely nothing happening yet
 })
 
 // Ok, the test function has finished executing...
