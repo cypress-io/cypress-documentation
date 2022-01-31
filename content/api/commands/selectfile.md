@@ -69,7 +69,7 @@ If an object is provided, it can have the following properties.
 | Option         | Description                                                                                                                                                                                                                                                                     |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `contents`     | The contents of the file. This can be a string shorthand as described above, a `TypedArray` instance containing binary data (such as a `Cypress.Buffer` instance) or a non-TypedArray object, which will be converted into a string with `JSON.stringify()` and `utf8` encoded. |
-| `fileName`     | The name of the file. If `contents` is a path on disk, this defaults to the actual filename. In any other case, this defaults to an empty string.                                                                                                                               |
+| `fileName`     | The name of the file. If `contents` is a path on disk or an alias from `cy.readFile()` or `cy.fixture()`, this defaults to the actual filename. In any other case, this defaults to an empty string.                                                                            |
 | `mimeType`     | The [mimeType](https://developer.mozilla.org/en-US/docs/Web/API/File/type) of the file. If omitted, it will be [inferred](https://github.com/jshttp/mime-types#mimelookuppath) from the file extension. If one cannot be inferred, it will default to an empty string.          |
 | `lastModified` | The file's last modified timestamp, in milliseconds elapsed since the UNIX epoch (eg. [`Date.prototype.getTime()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)). This defaults to `Date.now()`.                              |
 
@@ -186,15 +186,45 @@ This will fail unless the file input has the `multiple` property.
 
 </Alert>
 
-### Selecting a file with custom filename, mimeType and lastModified
+### Custom fileName, mimeType and lastModified
 
 ```javascript
-cy.get('input[type=file]').selectFile({
-  contents: 'path/to/file.json',
-  fileName: 'custom-name.json',
-  mimeType: 'text/plain',
-  lastModified: new Date('Feb 18 1989').valueOf(),
-})
+cy.get('input[type=file][multiple]')
+  .selectFile([
+    {
+      contents: 'cypress/fixtures/example.json',
+    },
+    {
+      contents: 'cypress/fixtures/example.json',
+      fileName: 'file.png',
+    },
+    {
+      contents: 'cypress/fixtures/example.json',
+      fileName: 'file.png',
+      mimeType: 'text/plain',
+      lastModified: new Date('Feb 18 1989').valueOf(),
+    },
+  ])
+  .then(($input) => {
+    const files = $input[0].files
+
+    // If nothing is specified, the fileName and MIME type will be inferred from the path on disk.:
+    expect(files[0].name).to.eq('example.json')
+    expect(files[0].type).to.eq('application/json')
+
+    // If the fileName is given, the MIME type will be inferred based on that.
+    expect(files[1].name).to.eq('file.png')
+    expect(files[1].type).to.eq('image/png')
+
+    // But an explicitly specified MIME type is always used.
+    expect(files[2].name).to.eq('file.png')
+    expect(files[2].type).to.eq('text/plain')
+
+    // lastModified defaults to the current time, but can be overridden.
+    expect(files[0].lastModified).to.be.closeTo(Date.now(), 1000)
+    expect(files[1].lastModified).to.be.closeTo(Date.now(), 1000)
+    expect(files[2].lastModified).to.eql(new Date('Feb 18 1989').valueOf())
+  })
 ```
 
 ### Dropping a file on the document
@@ -281,10 +311,10 @@ following:
 
 ## History
 
-| Version                                     | Changes                                                 |
-| ------------------------------------------- | ------------------------------------------------------- |
-| [9.3.0](/guides/references/changelog#9.3.0) | `.selectFile()` command added                           |
-| [9.4.0](/guides/references/changelog#9.4.0) | Support for `TypedArray` and `mimeType` property added. |
+| Version                                     | Changes                                                                                                                      |
+| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| [9.3.0](/guides/references/changelog#9.3.0) | `.selectFile()` command added                                                                                                |
+| [9.4.0](/guides/references/changelog#9.4.0) | Support for `TypedArray` and `mimeType` property added. Default `fileName` name is no longer lost when working with aliases. |
 
 ### Community Recognition
 
