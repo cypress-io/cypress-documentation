@@ -67,9 +67,9 @@ module.exports = (on, config) => {
     //   cypressVersion: '6.1.0',
     //   specs: [
     //     {
-    //       name: 'login_spec.js',
-    //       relative: 'cypress/e2e/login_spec.js',
-    //       absolute: '/Users/janelane/app/cypress/e2e/login_spec.js',
+    //       name: 'login_cy.js',
+    //       relative: 'cypress/e2e/login_cy.js',
+    //       absolute: '/Users/janelane/app/cypress/e2e/login_cy.js',
     //     },
     //     // ... more specs
     //   ],

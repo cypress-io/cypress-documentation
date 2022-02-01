@@ -699,7 +699,7 @@ However, this pattern can be used and abused. Let's not forget - writing Cypress
 tests is **JavaScript**, and it's often more efficient to write a function for
 repeatable behavior that's specific to only **a single spec file**.
 
-If you're working on a `search_spec.js` file and want to compose several
+If you're working on a `search.cy.js` file and want to compose several
 repeatable actions together, you should first ask yourself:
 
 > Can this be written as a function?

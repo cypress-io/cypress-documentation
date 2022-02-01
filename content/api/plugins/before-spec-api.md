@@ -31,11 +31,11 @@ on('before:spec', (spec) => {
 
 Details of the spec file, including the following properties:
 
-| Property   | Description                                                                                  |
-| ---------- | -------------------------------------------------------------------------------------------- |
-| `name`     | The base name of the spec file (e.g. `login_spec.js`)                                        |
-| `relative` | The path to the spec file, relative to the project root (e.g. `cypress/e2e/login_spec.js`)   |
-| `absolute` | The absolute path to the spec file (e.g. `/Users/janelane/my-app/cypress/e2e/login_spec.js`) |
+| Property   | Description                                                                                |
+| ---------- | ------------------------------------------------------------------------------------------ |
+| `name`     | The base name of the spec file (e.g. `login.cy.js`)                                        |
+| `relative` | The path to the spec file, relative to the project root (e.g. `cypress/e2e/login.cy.js`)   |
+| `absolute` | The absolute path to the spec file (e.g. `/Users/janelane/my-app/cypress/e2e/login.cy.js`) |
 
 ## Usage
 
@@ -49,9 +49,9 @@ module.exports = (on, config) => {
   on('before:spec', (spec) => {
     // spec will look something like this:
     // {
-    //   name: 'login_spec.js',
-    //   relative: 'cypress/e2e/login_spec.js',
-    //   absolute: '/Users/janelane/app/cypress/e2e/login_spec.js',
+    //   name: 'login.cy.js',
+    //   relative: 'cypress/e2e/login.cy.js',
+    //   absolute: '/Users/janelane/app/cypress/e2e/login.cy.js',
     // }
 
     console.log('Running', spec.relative)

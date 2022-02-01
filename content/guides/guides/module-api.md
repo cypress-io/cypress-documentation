@@ -83,7 +83,7 @@ const cypress = require('cypress')
 cypress
   .run({
     // the path is relative to the current working directory
-    spec: './cypress/e2e/examples/actions.spec.js',
+    spec: './cypress/e2e/examples/actions.cy.js',
   })
   .then((results) => {
     console.log(results)
@@ -169,19 +169,19 @@ tests results. A typical run could return something like this:
       "state": "failed",
       "body": "function () {\n  expect(true).to.be["false"];\n}",
       "displayError": "AssertionError: expected true to be false\n' +
-      '    at Context.eval (...cypress/e2e/spec.js:5:21",
+      '    at Context.eval (...cypress/e2e/cy.js:5:21",
       "attempts": [{
         "state": "failed",
         "error": {
           "message": "expected true to be false",
           "name": "AssertionError",
           "stack": "AssertionError: expected true to be false\n' +
-      '    at Context.eval (...cypress/e2e/spec.js:5:21"
+      '    at Context.eval (...cypress/e2e/cy.js:5:21"
         },
         "screenshots": [{
           "name": null,
           "takenAt": "2020-08-05T08:52:20.432Z",
-          "path": "User/janelane/my-app/cypress/screenshots/spec.js/test (failed).png",
+          "path": "User/janelane/my-app/cypress/screenshots/cy.js/test (failed).png",
           "height": 720,
           "width": 1280
         }],

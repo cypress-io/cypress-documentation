@@ -769,7 +769,7 @@ called `db:seed` in a `beforeEach` hook. This allows each test to start from a
 clean slate and a deterministic state. For example:
 
 ```ts
-// cypress/tests/ui/auth.spec.ts
+// cypress/tests/ui/auth.cy.ts
 
 beforeEach(function () {
   cy.task('db:seed')
@@ -778,7 +778,7 @@ beforeEach(function () {
 ```
 
 > _<Icon name="github"></Icon> Source:
-> [cypress/tests/ui/auth.spec.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui/auth.spec.ts)_
+> [cypress/tests/ui/auth.cy.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui/auth.spec.ts)_
 
 The `db:seed` task is defined within the
 [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function of the

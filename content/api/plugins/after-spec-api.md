@@ -31,11 +31,11 @@ on('after:spec', (spec, results) => {
 
 Details of the spec file, including the following properties:
 
-| Property   | Description                                                                                  |
-| ---------- | -------------------------------------------------------------------------------------------- |
-| `name`     | The base name of the spec file (e.g. `login_spec.js`)                                        |
-| `relative` | The path to the spec file, relative to the project root (e.g. `cypress/e2e/login_spec.js`)   |
-| `absolute` | The absolute path to the spec file (e.g. `/Users/janelane/my-app/cypress/e2e/login_spec.js`) |
+| Property   | Description                                                                                |
+| ---------- | ------------------------------------------------------------------------------------------ |
+| `name`     | The base name of the spec file (e.g. `login.cy.js`)                                        |
+| `relative` | The path to the spec file, relative to the project root (e.g. `cypress/e2e/login.cy.js`)   |
+| `absolute` | The absolute path to the spec file (e.g. `/Users/janelane/my-app/cypress/e2e/login.cy.js`) |
 
 **<Icon name="angle-right"></Icon> results** **_(Object)_**
 
@@ -58,9 +58,9 @@ module.exports = (on, config) => {
   on('after:spec', (spec, results) => {
     // spec will look something like this:
     // {
-    //   name: 'login_spec.js',
-    //   relative: 'cypress/e2e/login_spec.js',
-    //   absolute: '/Users/janelane/my-app/cypress/e2e/login_spec.js',
+    //   name: 'login.cy.js',
+    //   relative: 'cypress/e2e/login.cy.js',
+    //   absolute: '/Users/janelane/my-app/cypress/e2e/login.cy.js',
     // }
 
     // results will look something like this:
@@ -84,7 +84,7 @@ module.exports = (on, config) => {
     //     }
     //   ],
     //   error: null,
-    //   video: '/Users/janelane/my-app/cypress/videos/login_spec.js.mp4',
+    //   video: '/Users/janelane/my-app/cypress/videos/login.cy.js.mp4',
     //   screenshots: [],
     //   // ...more properties...
     // }

@@ -342,7 +342,7 @@ module.exports = (on, config) => {
 ```
 
 ```js
-// integration/spec.js
+// integration/spec.cy.js
 it('has username to use', () => {
   expect(Cypress.env('username')).to.be.a('string')
 })

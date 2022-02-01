@@ -78,12 +78,12 @@ You can change the directory where screenshots are saved in the
 #### Take a screenshot
 
 ```javascript
-// cypress/e2e/users.spec.js
+// cypress/e2e/users.cy.js
 
 describe('my tests', () => {
   it('takes a screenshot', () => {
     // screenshot will be saved as
-    // cypress/screenshots/users.spec.js/my tests -- takes a screenshot.png
+    // cypress/screenshots/users.cy.js/my tests -- takes a screenshot.png
     cy.screenshot()
   })
 })
@@ -95,7 +95,7 @@ describe('my tests', () => {
 
 ```javascript
 // screenshot will be saved as
-// cypress/screenshots/spec.js/clicking-on-nav.png
+// cypress/screenshots/spec.cy.js/clicking-on-nav.png
 cy.screenshot('clicking-on-nav')
 ```
 
@@ -103,7 +103,7 @@ cy.screenshot('clicking-on-nav')
 
 ```javascript
 // screenshot will be saved as
-// cypress/screenshots/spec.js/actions/login/clicking-login.png
+// cypress/screenshots/spec.cy.js/actions/login/clicking-login.png
 cy.screenshot('actions/login/clicking-login')
 ```
 
@@ -146,7 +146,7 @@ cy.screenshot('my-screenshot', {
     // including but not limited to the following:
     // {
     //   name: 'my-screenshot',
-    //   path: '/Users/janelane/project/screenshots/spec.js/my-screenshot.png',
+    //   path: '/Users/janelane/project/screenshots/spec.cy.js/my-screenshot.png',
     //   size: '15 kb',
     //   dimensions: {
     //     width: 1000,
@@ -187,21 +187,21 @@ This behavior can be changed by passing the `{overwrite: true}` option to
   appended with ` (failed)`:
   `{screenshotsFolder}/{specPath}/{testName} (failed).png`
 
-For example, given a spec file located at `cypress/e2e/users/login_spec.js`:
+For example, given a spec file located at `cypress/e2e/users/login.cy.js`:
 
 ```javascript
 describe('my tests', () => {
   it('takes a screenshot', () => {
-    cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot.png
-    cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (1).png
-    cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (2).png
+    cy.screenshot() // cypress/screenshots/users/login.cy.js/my tests -- takes a screenshot.png
+    cy.screenshot() // cypress/screenshots/users/login.cy.js/my tests -- takes a screenshot (1).png
+    cy.screenshot() // cypress/screenshots/users/login.cy.js/my tests -- takes a screenshot (2).png
 
-    cy.screenshot('my-screenshot') // cypress/screenshots/users/login_spec.js/my-screenshot.png
-    cy.screenshot('my-screenshot') // cypress/screenshots/users/login_spec.js/my-screenshot (1).png
+    cy.screenshot('my-screenshot') // cypress/screenshots/users/login.cy.js/my-screenshot.png
+    cy.screenshot('my-screenshot') // cypress/screenshots/users/login.cy.js/my-screenshot (1).png
 
-    cy.screenshot('my/nested/screenshot') // cypress/screenshots/users/login_spec.js/my/nested/screenshot.png
+    cy.screenshot('my/nested/screenshot') // cypress/screenshots/users/login.cy.js/my/nested/screenshot.png
 
-    // if this test fails, the screenshot will be saved to cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (failed).png
+    // if this test fails, the screenshot will be saved to cypress/screenshots/users/login.cy.js/my tests -- takes a screenshot (failed).png
   })
 })
 ```
