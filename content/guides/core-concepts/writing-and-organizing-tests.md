@@ -185,7 +185,7 @@ Any videos recorded of the run are stored in the
     - app.cy.js.mp4
 ```
 
-#### Asset Saving Structure
+#### Asset File Paths
 
 Generated screenshots and videos are saved inside their respective folders
 (`cypress/screenshots`, `cypress/videos`). The paths of the generated files will

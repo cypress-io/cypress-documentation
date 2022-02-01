@@ -171,12 +171,11 @@ Screenshot naming follows these rules:
   by a path relating to where the spec file exists stripped of any common
   acestor paths shared between all spec files found, with a name including the
   current test's suites and test name:
-  `{screenshotsFolder}/{specPathStrippedOfCommonAncestors}/{testName}.png`
+  `{screenshotsFolder}/{adjustedSpecPath}/{testName}.png`
 - For a named screenshot, the name is used instead of the suites and test name:
-  `{screenshotsFolder}/{specPathStrippedOfCommonAncestors}/{name}.png`
+  `{screenshotsFolder}/{adjustedSpecPath}/{name}.png`
 - For any duplicate screenshots (named or not), they will be appended with a
-  number:
-  `{screenshotsFolder}/{specPathStrippedOfCommonAncestors}/{testName} (1).png`.
+  number: `{screenshotsFolder}/{adjustedSpecPath}/{testName} (1).png`.
 
 <Alert type="info">
 
@@ -187,24 +186,27 @@ This behavior can be changed by passing the `{overwrite: true}` option to
 
 - For a failure screenshot, the default naming scheme is used and the name is
   appended with ` (failed)`:
-  `{screenshotsFolder}/{specPathStrippedOfCommonAncestors}/{testName} (failed).png`
+  ```javascript
+  {screenshotsFolder}/{adjustedSpecPath}/{testName} (failed).png
+  ```
 
 For example, given a spec file located at `cypress/e2e/users/login.cy.js`:
 
 ```javascript
 describe('my tests', () => {
   it('takes a screenshot', () => {
-    // NOTE: Because this file has multiple screenshots and therefore each screenshot has a common ancestor path of `/users/` and therefore stripped from the path.
-    cy.screenshot() // cypress/screenshots/login_spec.js/my tests -- takes a screenshot.png
-    cy.screenshot() // cypress/screenshots/login_spec.js/my tests -- takes a screenshot (1).png
-    cy.screenshot() // cypress/screenshots/login_spec.js/my tests -- takes a screenshot (2).png
+    // NOTE: This file has multiple screenshots and each screenshot has a common ancestor path of `/users/`.
+    // In this scenario `/users/` is stripped from the path.
+    cy.screenshot() // cypress/screenshots/login.cy.js/my tests -- takes a screenshot.png
+    cy.screenshot() // cypress/screenshots/login.cy.js/my tests -- takes a screenshot (1).png
+    cy.screenshot() // cypress/screenshots/login.cy.js/my tests -- takes a screenshot (2).png
 
-    cy.screenshot('my-screenshot') // cypress/screenshots/login_spec.js/my-screenshot.png
-    cy.screenshot('my-screenshot') // cypress/screenshots/login_spec.js/my-screenshot (1).png
+    cy.screenshot('my-screenshot') // cypress/screenshots/login.cy.js/my-screenshot.png
+    cy.screenshot('my-screenshot') // cypress/screenshots/login.cy.js/my-screenshot (1).png
 
-    cy.screenshot('my/nested/screenshot') // cypress/screenshots/login_spec.js/my/nested/screenshot.png
+    cy.screenshot('my/nested/screenshot') // cypress/screenshots/login.cy.js/my/nested/screenshot.png
 
-    // if this test fails, the screenshot will be saved to cypress/screenshots/login_spec.js/my tests -- takes a screenshot (failed).png
+    // if this test fails, the screenshot will be saved to cypress/screenshots/login.cy.js/my tests -- takes a screenshot (failed).png
   })
 })
 ```
