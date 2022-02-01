@@ -366,7 +366,8 @@ command is used for assertion retries, we can fix this test for good.
 
 The first solution we recommend is to avoid unnecessarily splitting commands
 that query elements. Instead of `cy.get('.todo-list li').find('label')` we can
-combine two separate queries into one - forcing the combined query to be retried.
+combine two separate queries into one - forcing the combined query to be
+retried.
 
 ```javascript
 it('adds two items', () => {

@@ -179,10 +179,10 @@ Cypress.Commands.add('login', (username, password) => {
 **With session validation**
 
 ```javascript
-Cypress.Commands.add(
-  'login',
-  (username, password) => {
-    cy.session([username, password], () => {
+Cypress.Commands.add('login', (username, password) => {
+  cy.session(
+    [username, password],
+    () => {
       cy.request({
         method: 'POST',
         url: '/login',
@@ -190,13 +190,14 @@ Cypress.Commands.add(
       }).then(({ body }) => {
         window.localStorage.setItem('authToken', body.token)
       })
-    }, {
+    },
+    {
       validate() {
         cy.request('/whoami').its('status').should('eq', 200)
       },
-    })
-  }
-)
+    }
+  )
+})
 ```
 
 ### Updating an existing login helper function

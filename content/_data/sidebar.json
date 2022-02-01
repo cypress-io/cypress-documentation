@@ -637,6 +637,10 @@
               "slug": "select"
             },
             {
+              "title": "selectFile",
+              "slug": "selectfile"
+            },
+            {
               "title": "server",
               "slug": "server"
             },
@@ -755,6 +759,10 @@
               "slug": "blob"
             },
             {
+              "title": "Buffer",
+              "slug": "buffer"
+            },
+            {
               "title": "minimatch",
               "slug": "minimatch"
             },
@@ -779,6 +787,10 @@
             {
               "title": "Cookies",
               "slug": "cookies"
+            },
+            {
+              "title": "Keyboard",
+              "slug": "keyboard-api"
             },
             {
               "title": "Screenshot",
