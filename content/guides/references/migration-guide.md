@@ -111,9 +111,10 @@ When the first argument is an object:
   rather than `Cypress.Blob`.
 - `encoding`: Remove this property. It is no longer needed due to improved
   binary file handling in Cypress 9.0.
-- `mimeType`: This property is unsupported in Cypress 9.3.0. If you need
-  mimeType support, continue using cypress-file-upload until we add support for
-  this parameter. Support will be added in a future update.
+- `mimeType`: No change necessary. In most cases you do not need to give a
+  mimeType explicitly. Cypress will attempt to infer the MIME type
+  [based on the extension](https://github.com/jshttp/mime-types#mimelookuppath)
+  of the fileName if none is provided.
 
 In the second argument:
 
@@ -242,6 +243,27 @@ cy.fixture(special, { encoding: null })
   .as('special')
 
 cy.get('[data-cy="file-input"]').selectFile('@special')
+```
+
+#### Specifying a custom mimeType
+
+<Badge type="danger">Before</Badge> Specifying the MIME type with
+`cypress-file-upload`
+
+```js
+cy.get('[data-cy="dropzone"]').attachFile({
+  filePath: 'myfixture.json',
+  fileName: 'customFileName.json',
+})
+```
+
+<Badge type="success">After</Badge> Specifying a MIME type with `.selectFile()`.
+
+```js
+cy.get('[data-cy="dropzone"]').selectFile({
+  contents: 'fixtures/myfixture.json',
+  mimeType: 'text/plain',
+})
 ```
 
 ## Migrating to Cypress 8.0
