@@ -1,4 +1,5 @@
 import TableOfContents from './table-of-contents'
+import Header from './header'
 import Head from 'next/head'
 import Sidebar from './Sidebar'
 import { MDXRemote } from 'next-mdx-remote'
@@ -12,6 +13,8 @@ export default function Layout({ toc, source, components, frontMatter, sidebarCo
         <title>{hasTitle && `${frontMatter.title} | `}Cypress Documentation</title>
         <meta name="description" content="" />
       </Head>
+
+      <Header />
 
       <div className="min-h-screen mt-20">
         <div className="py-6">
