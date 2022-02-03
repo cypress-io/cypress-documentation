@@ -11,12 +11,6 @@ GitHub integration.
 
 <DocsImage src="/img/dashboard/github-integration/pull-request-cypress-integration-comments-github-checks.jpg" alt="Cypress GitHub App PR" ></DocsImage>
 
-<Alert type="info">
-
-GitHub Enterprise's On-premise platform is currently not supported.
-
-</Alert>
-
 <Alert type="warning">
 
 GitHub Integration is dependent on your CI environment reliably providing commit
@@ -28,6 +22,26 @@ If you are still facing issues after this, please
 [contact us](mailto:hello@cypress.io).
 
 </Alert>
+
+## GitHub Enterprise
+
+<Alert type="success">
+
+<strong class="alert-header"><Icon name="star"></Icon> Premium Dashboard
+Feature</strong>
+
+GitHub Enterprise integration is included in our
+[Business and Enterprise paid pricing plans](https://www.cypress.io/pricing).
+
+</Alert>
+
+To configure the Dashboard integration for your GitHub Enterprise site, first
+follow the instructions to
+[install via organization integration settings](#Install-via-organization-integration-settings)
+below, then skip to
+[Cypress GitHub Enterprise app installation](#Cypress-GitHub-Enterprise-app-installation-process),
+and finally
+[enable integration for a project](#Enabling-GitHub-integration-for-a-project).
 
 ## Install the Cypress GitHub app
 
@@ -47,9 +61,14 @@ the [Cypress Dashboard](https://on.cypress.io/dashboard).
 3. Visit the selected organization's **Integrations** page via the side
    navigation.
    <DocsImage src="/img/dashboard/navigate-to-organization-integrations.png" alt="Install Cypress GitHub from Integrations" ></DocsImage>
-4. Click the **Install GitHub Integration** button.
+4. Click the **Install GitHub Integration** or **Install GitHub Enterprise
+   Integration** button.
 
 ### Install via project settings
+
+<Alert type="warning">
+This installation method is not applicable to GitHub Enterprise.
+</Alert>
 
 1. Select your organization in the organization switcher.
    <DocsImage src="/img/dashboard/select-cypress-organization.png" alt="Select an organization" width-600 ></DocsImage>
@@ -88,6 +107,78 @@ you choose **All repositories**.
 
 3. Click the **Install** button to complete the installation.
 
+### Cypress GitHub Enterprise app installation process
+
+For GitHub Enterprise the installation is a little more involved, you need to
+create a new GitHub App, copy various settings and credentials from the new app,
+paste them into the Dashboard and go through the GitHub app activation process.
+
+1. With your Dashboard organization's GitHub Enterprise page open, open a new
+   tab or browser window and browse to your GitHub Enterprise site. Navigate to
+   your GitHub organization -> **Settings** -> **Developer settings** ->
+   **GitHub Apps**. Do **NOT** go to **OAuth Apps**. Click the **New GitHub
+   App** button.
+
+2. Fill in the **Register new GitHub app** form.
+
+   - Enter a **GitHub App name**. Name may contain only dashes, letters and
+     numbers, **no spaces**.
+   - Enter the Cypress Dashboard **Homepage URL**, https://dashboard.cypress.io
+   - Enter the **Callback URL** and **Setup URL**,
+     https://dashboard.cypress.io/apps/github/callback
+
+3. Fill in the **Webhook** form.
+
+   - Enter the **Webhook URL**, https://dashboard.cypress.io/webhooks/github-app
+   - Copy and paste your Cypress organization's **Webhook secret** from the
+     Dashboard into the GitHub Webhook form.
+
+4. Fill in the **Repository Permissions**.
+
+   - **Actions**: read-only
+   - **Checks**: read & write
+   - **Contents**: read-only
+   - **Discussions**: read & write
+   - **Pull requests**: read & write
+   - **Commit statuses**: read & write
+
+5. Skip to the bottom of the form and click the **Create GitHub App** button.
+   You'll be taken to the app settings page for your new GitHub app.
+
+6. Copy and paste the new app details into the Dashboard.
+
+   - Copy and paste the App name into the **GitHub Enterprise app name** field.
+   - Copy and paste the App ID into the **GitHub Enterprise app ID** field.
+   - Copy and paste the Client ID into the **GitHub Enterprise client ID**
+     field.
+   - Copy and paste the root URL of your GitHub Enterprise site into the
+     **GitHub Enterprise Server Url** field.
+
+7. Click the **Generate a new client secret** button, then copy and paste the
+   generated secret into the **GitHub Enterprise client secret** field on the
+   Dashboard.
+
+8. Scroll to the bottom of the app settings page and click the **Generate a
+   private key** button. A file will be downloaded to your browser's default
+   downloads location. Open the file with a plain text editor, select all text
+   and copy and paste into the **GitHub Enterprise private key** field on the
+   Dashboard.
+
+9. In the Dashboard, click the **Next Step** button and you will be taken to the
+   GitHub Enterprise app authorization page. Click the **Authorize \[your app
+   name\]** button.
+
+10. On your newly-authorized GitHub App, click the **Install** button.
+
+11. Nearly there! On the GitHub App installation page, choose whether you want
+    to install the app against all repos or select specific ones, then click the
+    **Install** button.
+
+12. Finally you will be returned to the Dashboard. Congratulations, you have
+    installed the Cypress Dashboard GitHub Enterprise integration! Treat
+    yourself to the refreshing beverage of your choice, then continue to the
+    next section.
+
 ## Enabling GitHub integration for a project
 
 After completing the Cypress GitHub App installation for your organization you
@@ -96,12 +187,12 @@ can now enable GitHub Integration for _any_ Cypress project.
 1. Go to the project's settings page.
    <DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings" ></DocsImage>
 
-2. Scroll down to the GitHub Integration section. <Alert type="info">
+2. Scroll down to the GitHub Integration section.
 
+<Alert type="info">
    You can quickly get to a project's GitHub Integrations settings, by clicking
    on the **Configure** link of the desired project within an organization's
    Integrations page:
-
 </Alert>
 
 <DocsImage src="/img/dashboard/github-integration/org-settings-with-no-enabled-projects.png" alt="Org GitHub Integration settings"></DocsImage>
