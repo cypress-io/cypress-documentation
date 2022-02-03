@@ -35,7 +35,6 @@ yarn-error.log*
 .vercel
 
 db.json
-public/
 *.log
 .history
 .vscode

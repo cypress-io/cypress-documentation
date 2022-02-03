@@ -1,8 +1,15 @@
 import TableOfContents from './table-of-contents'
-import Header from './header'
 import Head from 'next/head'
-import Sidebar from './Sidebar'
+import dynamic from 'next/dynamic'
 import { MDXRemote } from 'next-mdx-remote'
+
+const Sidebar = dynamic(() => import('./Sidebar'), {
+  ssr: false,
+})
+
+const Header = dynamic(() => import('./header'), {
+  ssr: false,
+})
 
 export default function Layout({ toc, source, components, frontMatter, sidebarContent }) {
   const hasTitle = frontMatter && frontMatter.title
@@ -14,7 +21,7 @@ export default function Layout({ toc, source, components, frontMatter, sidebarCo
         <meta name="description" content="" />
       </Head>
 
-      <Header />
+      <Header section="guides" />
 
       <div className="min-h-screen mt-20">
         <div className="py-6">

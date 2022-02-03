@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import Link from 'next/link'
+import Icon from '../icon'
+import MobileMenuButton from '../mobile-men-button'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -27,8 +30,14 @@ const navLinks = [
   },
 ]
 
-export default function AppHeader() {
+export default function AppHeader({ section }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const isActive = (path) => {
+    const [_empty, sectionInPath, ..._rest] = path.split('/')
+
+    return sectionInPath === section
+  }
 
   return (
     <>
@@ -37,7 +46,53 @@ export default function AppHeader() {
           isMenuOpen ? 'h-full' : '',
           'w-full bg-gray-800 fixed top-0 left-0 overflow-y-auto z-20'
         )}
-      ></nav>
+      >
+        <div className="mx-auto px-2 sm:px-4 lg:px-8">
+          <div className="relative flex items-center justify-between h-16">
+            <div className="flex items-center px-2 lg:px-0">
+              <div className="flex-shrink-0">
+                <a href="/">
+                  <img
+                    className="block h-8 w-auto"
+                    src="/cypress-logo.png"
+                    alt="Cypress Docs Logo"
+                  />
+                </a>
+              </div>
+
+              <div className="hidden lg:block lg:ml-6">
+                <div className="flex space-x-4">
+                  {navLinks.map(({ label, path }) => (
+                    <Link href={path} key={label}>
+                      <a
+                        className={classNames(
+                          isActive(path)
+                            ? 'bg-gray-700 text-white'
+                            : 'hover:bg-gray-700 hover:text-white text-gray-300',
+                          'px-3 py-2 rounded-md text-md font-bold'
+                        )}
+                      >
+                        {label}
+                      </a>
+                    </Link>
+                  ))}
+
+                  <a
+                    href="https://github.com/cypress-io/cypress"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-bold"
+                  >
+                    <span className="sr-only">GitHub</span>
+                    <Icon name="github" />
+                  </a>
+                </div>
+              </div>
+            </div>
+            {/* <AppSearchAlgolia options={algoliaSettings} /> */}
+
+            <MobileMenuButton isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+          </div>
+        </div>
+      </nav>
     </>
   )
 }
