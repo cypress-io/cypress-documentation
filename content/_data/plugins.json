@@ -589,7 +589,14 @@
           "link": "https://github.com/BrandedEntertainmentNetwork/cypress-rest-graphql",
           "keywords": ["api", "rest", "graphQL"],
           "badge": "community"
-        }
+        },
+        {
+          "name": "@oreillymedia/cypress-playback",
+          "description": "Automatically record and playback HTTP requests made in Cypress tests.",
+          "link": "https://github.com/oreillymedia/cypress-playback",
+          "keywords": ["fixtures", "intercept"],
+          "badge": "community"
+        },
       ]
     },
     {
