@@ -45,6 +45,7 @@ export default function APIPage({ source, frontMatter, toc }) {
       components={components}
       frontMatter={frontMatter}
       sidebarContent={sidebarJSON[PAGE][0]}
+      section={PAGE}
     />
   )
 }

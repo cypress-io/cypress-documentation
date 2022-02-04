@@ -35,7 +35,7 @@ const components = {
   List,
 }
 
-const section = 'guides'
+const PAGE = 'guides'
 
 export default function GuidesPage({ source, frontMatter, toc }) {
   return (
@@ -44,15 +44,15 @@ export default function GuidesPage({ source, frontMatter, toc }) {
       source={source}
       components={components}
       frontMatter={frontMatter}
-      sidebarContent={sidebarJSON[section][0]}
-      section={section}
+      sidebarContent={sidebarJSON[PAGE][0]}
+      section={PAGE}
     />
   )
 }
 
 export const getStaticProps = async ({ params: { slug } }: { params: { slug: string[] } }) => {
   const mdFilePath = slug.join('/')
-  const contentFilePath = GET_PATH(`content/${section}/${mdFilePath}.md`)
+  const contentFilePath = GET_PATH(`content/${PAGE}/${mdFilePath}.md`)
   const source = fs.readFileSync(contentFilePath)
   const { content, data } = matter(source)
   const toc = getToCForMarkdown(content)
@@ -76,7 +76,7 @@ export const getStaticProps = async ({ params: { slug } }: { params: { slug: str
 }
 
 export const getStaticPaths = async () => {
-  const paths = allContentFilePaths(`content/${section}/**/*`)
+  const paths = allContentFilePaths(`content/${PAGE}/**/*`)
     // Remove file extensions for page paths
     .map((path) => path.replace(/\.md?$/, ''))
     // Map the path into the static paths object required by Next.js
