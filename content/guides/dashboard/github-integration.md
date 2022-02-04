@@ -148,13 +148,13 @@ them into the Dashboard, and complete the activation process.
 6. Returning to the Cypress Dashboard GitHub Enterprise Integration
    configuration screen, populate the following values from your new GitHub App
    - Copy the root URL of your GitHub Enterprise site to the Cypress **GitHub
-     Enterprise Server Url** field.
+     Enterprise Server URL** field.
    - Copy the **App ID** to the Cypress **GitHub Enterprise App ID** field.
    - Copy the **Client ID** to the Cypress **GitHub Enterprise Client ID**
      field.
-   - Copy the **GitHub App name** to the Cypress **GitHub Enterprise app name**
+   - Copy the **GitHub App name** to the Cypress **GitHub Enterprise App name**
      field.
-   - Generate a new Client sectret in GitHub by clicking on the **Generate a new
+   - Generate a new Client secret in GitHub by clicking on the **Generate a new
      client secret** button. Copy the new secret into the Cypress **GitHub
      Enterprise Client secret** field.
    - Generate a new private key in GitHub by clicking on the **Generate a
