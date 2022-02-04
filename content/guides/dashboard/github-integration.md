@@ -12,7 +12,6 @@ GitHub integration.
 <DocsImage src="/img/dashboard/github-integration/pull-request-cypress-integration-comments-github-checks.jpg" alt="Cypress GitHub App PR" ></DocsImage>
 
 <Alert type="warning">
-
 GitHub Integration is dependent on your CI environment reliably providing commit
 SHA data (typically via an environment variable). This is not a problem for most
 users, but if you are facing GitHub integration issues with your CI setup,
@@ -20,7 +19,6 @@ please make sure the git information is being sent properly by following
 [these guidelines](/guides/continuous-integration/introduction#Git-information).
 If you are still facing issues after this, please
 [contact us](mailto:hello@cypress.io).
-
 </Alert>
 
 ## GitHub Enterprise
@@ -93,14 +91,11 @@ to GitHub.com to complete the installation:
 
 2. Choose to associate **All repositories** or only select GitHub repositories
    with your Cypress GitHub App installation.
+   <DocsImage src="/img/dashboard/github-integration/select-all-gh-repos.jpg" alt="Select All GitHub repositories" ></DocsImage>
 
-<DocsImage src="/img/dashboard/github-integration/select-all-gh-repos.jpg" alt="Select All GitHub repositories" ></DocsImage>
-
-  <Alert type="info">
-
-All current and _future_ repositories will be included with this installation if
-you choose **All repositories**.
-
+<Alert type="info">
+All current and <em>future</em> repositories will be included with this installation if
+you choose <strong>All repositories</strong>.
 </Alert>
 
 <DocsImage src="/img/dashboard/github-integration/select-gh-repos.jpg" alt="Select specific GitHub repositories" ></DocsImage>
@@ -109,45 +104,35 @@ you choose **All repositories**.
 
 ### Cypress GitHub Enterprise app installation process
 
-For GitHub Enterprise the installation is a little more involved, you need to
-create a new GitHub App, copy various settings and credentials from the new app,
-paste them into the Dashboard and go through the GitHub app activation process.
-
-<a id="cypress-github-enterprise-app-installation-process-1"></a>
+To integrate the Dashboard with GitHub Enterprise, you need to create a new
+GitHub App, copy the necessary settings and credentials from the new app, paste
+them into the Dashboard, and complete the activation process.
 
 1. With your Dashboard organization's GitHub Enterprise page open, open a new
    tab or browser window and browse to your GitHub Enterprise site. Navigate to
    your GitHub organization → **Settings** → **Developer settings** → **GitHub
    Apps**. Do **NOT** go to **OAuth Apps**. Click the **New GitHub App** button.
 
-<DocsImage src="/img/dashboard/github-integration/ghe/ghe-01.png" alt="Create new GitHub App" ></DocsImage>
+<DocsImage src="/img/dashboard/github-integration/ghe/ghe-01.png" alt="Create new GitHub App" id="cypress-github-enterprise-app-installation-process-1"></DocsImage>
 
-<a id="cypress-github-enterprise-app-installation-process-2"></a>
-
-2. Fill in the **Register new GitHub app** form.
-
+2. Complete the **Register new GitHub app** section.
    - Enter a **GitHub App name**. Name may contain only dashes, letters and
      numbers, **no spaces**.
    - Enter the Cypress Dashboard **Homepage URL**, https://dashboard.cypress.io
    - Enter the **Callback URL** and **Setup URL**,
      https://dashboard.cypress.io/apps/github/callback
 
-<DocsImage src="/img/dashboard/github-integration/ghe/ghe-02.png" alt="Configure new GitHub App" ></DocsImage>
+<DocsImage src="/img/dashboard/github-integration/ghe/ghe-02.png" alt="Configure new GitHub App" id="cypress-github-enterprise-app-installation-process-2"></DocsImage>
 
-<a id="cypress-github-enterprise-app-installation-process-3"></a>
-
-3. Fill in the **Webhook** form.
-
+3. Complete the **Webhook** section.
    - Enter the **Webhook URL**, https://dashboard.cypress.io/webhooks/github-app
-   - Copy and paste your Cypress organization's **Webhook secret** from the
-     Dashboard into the GitHub Webhook form.
+   - Copy and paste the provided **Webhook secret** from your Cypress Dashboard
+     to **Webhook secret (optional)**.
 
-<DocsImage src="/img/dashboard/github-integration/ghe/ghe-03.png" alt="Configure app webhook" ></DocsImage>
+<DocsImage src="/img/dashboard/github-integration/ghe/ghe-03.png" alt="Configure app webhook" id="cypress-github-enterprise-app-installation-process-3"></DocsImage>
 
-<a id="cypress-github-enterprise-app-installation-process-4"></a>
-
-4. Fill in the **Repository Permissions**.
-
+4. Set the **Repository Permissions**. Below are the minimum permissions
+   required for the new GitHub App.
    - **Actions**: read-only
    - **Checks**: read & write
    - **Contents**: read-only
@@ -155,69 +140,52 @@ paste them into the Dashboard and go through the GitHub app activation process.
    - **Pull requests**: read & write
    - **Commit statuses**: read & write
 
-<DocsImage src="/img/dashboard/github-integration/ghe/ghe-04.png" alt="Configure app permissions" ></DocsImage>
-
-<a id="cypress-github-enterprise-app-installation-process-5"></a>
+<DocsImage src="/img/dashboard/github-integration/ghe/ghe-04.png" alt="Configure app permissions" id="cypress-github-enterprise-app-installation-process-4"></DocsImage>
 
 5. Skip to the bottom of the form and click the **Create GitHub App** button.
-   You'll be taken to the app settings page for your new GitHub app. Copy and
-   paste the new app details into the Dashboard.
+   Your new GitHub App is now created, and you'll be taken to the settings page.
 
-   - Copy and paste the App name into the **GitHub Enterprise app name** field.
-   - Copy and paste the App ID into the **GitHub Enterprise app ID** field.
-   - Copy and paste the Client ID into the **GitHub Enterprise client ID**
+6. Returning to the Cypress Dashboard GitHub Enterprise Integration
+   configuration screen, populate the following values from your new GitHub App
+   - Copy the root URL of your GitHub Enterprise site to the Cypress **GitHub
+     Enterprise Server Url** field.
+   - Copy the **App ID** to the Cypress **GitHub Enterprise App ID** field.
+   - Copy the **Client ID** to the Cypress **GitHub Enterprise Client ID**
      field.
-   - Copy and paste the root URL of your GitHub Enterprise site into the
-     **GitHub Enterprise Server Url** field.
+   - Copy the **GitHub App name** to the Cypress **GitHub Enterprise app name**
+     field.
+   - Generate a new Client sectret in GitHub by clicking on the **Generate a new
+     client secret** button. Copy the new secret into the Cypress **GitHub
+     Enterprise Client secret** field.
+   - Generate a new private key in GitHub by clicking on the **Generate a
+     private key** button. Open in a text editor and copy all of the content
+     into the Cypress **GitHub Enterprise Private key** field.
 
-<DocsImage src="/img/dashboard/github-integration/ghe/ghe-05.png" alt="Collect new app info" ></DocsImage>
+<DocsImage src="/img/dashboard/github-integration/ghe/ghe-05.png" alt="Collect new app info" id="cypress-github-enterprise-app-installation-process-5"></DocsImage>
 
-<a id="cypress-github-enterprise-app-installation-process-6"></a>
+<DocsImage src="/img/dashboard/github-integration/ghe/ghe-06.png" alt="Generate client secret" id="cypress-github-enterprise-app-installation-process-6"></DocsImage>
 
-6. Click the **Generate a new client secret** button, then copy and paste the
-   generated secret into the **GitHub Enterprise client secret** field on the
-   Dashboard.
+<DocsImage src="/img/dashboard/github-integration/ghe/ghe-07.png" alt="Generate private key" id="cypress-github-enterprise-app-installation-process-7"></DocsImage>
 
-<DocsImage src="/img/dashboard/github-integration/ghe/ghe-06.png" alt="Generate client secret" ></DocsImage>
+7. In the Cypress Dashboard, click the **Next Step** button and you will be
+   taken to the GitHub Enterprise app authorization page. Click the **Authorize
+   \[your app name\]** button.
 
-<a id="cypress-github-enterprise-app-installation-process-7"></a>
+<DocsImage src="/img/dashboard/github-integration/ghe/ghe-08.png" alt="Authorize GitHub App" id="cypress-github-enterprise-app-installation-process-8"></DocsImage>
 
-7. Scroll to the bottom of the app settings page and click the **Generate a
-   private key** button. A file will be downloaded to your browser's default
-   downloads location. Open the file with a plain text editor, select all text
-   and copy and paste into the **GitHub Enterprise private key** field on the
-   Dashboard.
+8. On your newly-authorized GitHub App, click the **Install** button.
 
-<DocsImage src="/img/dashboard/github-integration/ghe/ghe-07.png" alt="Generate private key" ></DocsImage>
+<DocsImage src="/img/dashboard/github-integration/ghe/ghe-09.png" alt="Install GitHub App" id="cypress-github-enterprise-app-installation-process-9"></DocsImage>
 
-<a id="cypress-github-enterprise-app-installation-process-8"></a>
+9. Nearly there! On the GitHub App installation page, choose whether you want to
+   install the app against all repos or select specific ones, then click the
+   **Install** button.
 
-8. In the Dashboard, click the **Next Step** button and you will be taken to the
-   GitHub Enterprise app authorization page. Click the **Authorize \[your app
-   name\]** button.
+<DocsImage src="/img/dashboard/github-integration/ghe/ghe-10.png" alt="Confirm installation of GitHub App" id="cypress-github-enterprise-app-installation-process-10"></DocsImage>
 
-<DocsImage src="/img/dashboard/github-integration/ghe/ghe-08.png" alt="Authorize GitHub App" ></DocsImage>
-
-<a id="cypress-github-enterprise-app-installation-process-9"></a>
-
-9. On your newly-authorized GitHub App, click the **Install** button.
-
-<DocsImage src="/img/dashboard/github-integration/ghe/ghe-09.png" alt="Install GitHub App" ></DocsImage>
-
-<a id="cypress-github-enterprise-app-installation-process-10"></a>
-
-10. Nearly there! On the GitHub App installation page, choose whether you want
-    to install the app against all repos or select specific ones, then click the
-    **Install** button.
-
-<DocsImage src="/img/dashboard/github-integration/ghe/ghe-10.png" alt="Confirm installation of GitHub App" ></DocsImage>
-
-<a id="cypress-github-enterprise-app-installation-process-"></a>
-
-11. Finally you will be returned to the Dashboard. Congratulations, you have
-    installed the Cypress Dashboard GitHub Enterprise integration! Treat
-    yourself to the refreshing beverage of your choice, then continue to the
-    next section.
+10. Finally you will be returned to the Dashboard. Congratulations, you have
+    installed the Cypress Dashboard GitHub Enterprise integration! You are now
+    ready to configure a GitHub Integration for a project.
 
 ## Enabling GitHub integration for a project
 
@@ -227,11 +195,12 @@ can now enable GitHub Integration for _any_ Cypress project.
 1. Go to the project's settings page.
    <DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings" ></DocsImage>
 
-2. Scroll down to the GitHub Integration section.
+2. Scroll down to the GitHub Integration or GitHub Enterprise Integration
+   section.
 
 <Alert type="info">
    You can quickly get to a project's GitHub Integrations settings, by clicking
-   on the **Configure** link of the desired project within an organization's
+   on the <strong>Configure</strong> link of the desired project within an organization's
    Integrations page:
 </Alert>
 
