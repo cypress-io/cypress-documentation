@@ -146,7 +146,7 @@ them into the Dashboard, and complete the activation process.
    Your new GitHub App is now created, and you'll be taken to the settings page.
 
 6. Returning to the Cypress Dashboard GitHub Enterprise Integration
-   configuration screen, populate the following values from your new GitHub App
+   configuration screen, populate the following values from your new GitHub App.
    - Copy the root URL of your GitHub Enterprise site to the Cypress **GitHub
      Enterprise Server URL** field.
    - Copy the **App ID** to the Cypress **GitHub Enterprise App ID** field.
