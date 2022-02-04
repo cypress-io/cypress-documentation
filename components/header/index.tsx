@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Icon from '../icon'
 import MobileMenu from '../mobile-menu'
 import MobileMenuButton from '../mobile-menu-button'
+import SearchAlgolia from '../search-algolia'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -88,7 +89,8 @@ export default function AppHeader({ section, mobileMenuItems }) {
                 </div>
               </div>
             </div>
-            {/* <AppSearchAlgolia options={algoliaSettings} /> */}
+
+            <SearchAlgolia />
 
             <MobileMenuButton isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
           </div>

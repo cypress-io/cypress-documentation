@@ -39,7 +39,7 @@
     "*.+(ts|tsx|json|css|md|mdx)": "prettier --write"
   },
   "dependencies": {
-    "@docsearch/react": "^3.0.0-alpha.41",
+    "@docsearch/react": "^3.0.0-alpha.50",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.16",
