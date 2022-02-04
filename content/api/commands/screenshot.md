@@ -167,10 +167,10 @@ cy.screenshot('my-screenshot', {
 Screenshot naming follows these rules:
 
 - By default, a screenshot is saved to a file with a path relative to the
-  [screenshots folder](/guides/references/configuration#Folders-Files), appended
-  by a path relating to where the spec file exists stripped of any common
-  acestor paths shared between all spec files found, with a name including the
-  current test's suites and test name:
+  [screenshots folder](/guides/core-concepts/writing-and-organizing-tests#Asset-Saving-Structure).
+  It is then appended by a path relative to where the spec file exists stripped
+  of any common acestor paths that are shared between all spec files found. It
+  will finally add a name for the current test's suites and test name:
   `{screenshotsFolder}/{adjustedSpecPath}/{testName}.png`
 - For a named screenshot, the name is used instead of the suites and test name:
   `{screenshotsFolder}/{adjustedSpecPath}/{name}.png`
@@ -197,14 +197,19 @@ describe('my tests', () => {
   it('takes a screenshot', () => {
     // NOTE: This file has multiple screenshots and each screenshot has a common ancestor path of `/users/`.
     // In this scenario `/users/` is stripped from the path.
-    cy.screenshot() // cypress/screenshots/login.cy.js/my tests -- takes a screenshot.png
-    cy.screenshot() // cypress/screenshots/login.cy.js/my tests -- takes a screenshot (1).png
-    cy.screenshot() // cypress/screenshots/login.cy.js/my tests -- takes a screenshot (2).png
+    // cypress/screenshots/login.cy.js/my tests -- takes a screenshot.png
+    cy.screenshot()
+    // cypress/screenshots/login.cy.js/my tests -- takes a screenshot (1).png
+    cy.screenshot()
+    // cypress/screenshots/login.cy.js/my tests -- takes a screenshot (2).png
+    cy.screenshot()
 
-    cy.screenshot('my-screenshot') // cypress/screenshots/login.cy.js/my-screenshot.png
-    cy.screenshot('my-screenshot') // cypress/screenshots/login.cy.js/my-screenshot (1).png
-
-    cy.screenshot('my/nested/screenshot') // cypress/screenshots/login.cy.js/my/nested/screenshot.png
+    // cypress/screenshots/login.cy.js/my-screenshot.png
+    cy.screenshot('my-screenshot')
+    // cypress/screenshots/login.cy.js/my-screenshot (1).png
+    cy.screenshot('my-screenshot')
+    // cypress/screenshots/login.cy.js/my/nested/screenshot.png
+    cy.screenshot('my/nested/screenshot')
 
     // if this test fails, the screenshot will be saved to cypress/screenshots/login.cy.js/my tests -- takes a screenshot (failed).png
   })
