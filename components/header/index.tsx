@@ -31,7 +31,7 @@ const navLinks = [
   },
 ]
 
-export default function AppHeader({ section }) {
+export default function AppHeader({ section, mobileMenuItems }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const isActive = (path) => {
@@ -94,7 +94,12 @@ export default function AppHeader({ section }) {
           </div>
         </div>
 
-        <MobileMenu navLinks={navLinks} isMenuOpen={isMenuOpen} />
+        <MobileMenu
+          navLinks={navLinks}
+          isMenuOpen={isMenuOpen}
+          mobileMenuItems={mobileMenuItems}
+          section={section}
+        />
       </nav>
     </>
   )

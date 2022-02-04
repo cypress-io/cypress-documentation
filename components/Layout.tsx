@@ -11,7 +11,7 @@ const Header = dynamic(() => import('./header'), {
   ssr: false,
 })
 
-export default function Layout({ toc, source, components, frontMatter, sidebarContent }) {
+export default function Layout({ toc, source, components, frontMatter, sidebarContent, section }) {
   const hasTitle = frontMatter && frontMatter.title
 
   return (
@@ -21,7 +21,7 @@ export default function Layout({ toc, source, components, frontMatter, sidebarCo
         <meta name="description" content="" />
       </Head>
 
-      <Header section="guides" />
+      <Header section={section} mobileMenuItems={sidebarContent.children} />
 
       <div className="min-h-screen mt-20">
         <div className="py-6">

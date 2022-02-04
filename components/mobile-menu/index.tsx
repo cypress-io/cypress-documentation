@@ -1,10 +1,11 @@
 import Link from 'next/link'
+import MobileSection from '../mobile-section'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function MobileMenu({ navLinks, isMenuOpen }) {
+export default function MobileMenu({ navLinks, isMenuOpen, mobileMenuItems, section }) {
   return (
     <>
       <div className={classNames(isMenuOpen ? 'block' : 'hidden', 'lg:hidden overflow-y-auto')}>
@@ -22,6 +23,17 @@ export default function MobileMenu({ navLinks, isMenuOpen }) {
               GitHub
             </a>
           </Link>
+
+          {mobileMenuItems.map((group, index) => (
+            <MobileSection
+              key={index}
+              section={section}
+              title={group.title}
+              folder={group.slug}
+              parentSection={group.slug}
+              groupChildren={group.children}
+            />
+          ))}
         </div>
       </div>
     </>
