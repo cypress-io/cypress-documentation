@@ -113,7 +113,7 @@ export default {
     :data-test="folder"
   >
     <button
-      class="group w-full flex items-center text-left px-2 pl-4 pr-1 text-xl font-bold bg-lightGray text-gray-800 hover:text-gray-500 hover:bg-gray-50 focus:outline-none"
+      class="group w-full flex items-center text-left px-2 pl-4 pr-1 text-lg font-bold bg-lightGray text-gray-800 hover:text-gray-500 hover:bg-gray-50 focus:outline-none"
       @click="toggleSection"
     >
       {{ label }}
@@ -155,7 +155,7 @@ export default {
           <nuxt-link
             :to="child.redirect || `/${section}/${folder}/${child.slug}`"
             :class="getSidebarItemClass(folder, child)"
-            class="rounded-md group w-full flex items-center pl-4 pr-2 py-1 text-lg font-semibold hover:text-green transition-colors hover:bg-gray-50 "
+            class="rounded-md group w-full flex items-center pl-4 pr-2 py-1 text-base font-semibold hover:text-green transition-colors hover:bg-gray-50 "
           >
             {{ child.title }}
           </nuxt-link>
