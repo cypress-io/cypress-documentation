@@ -155,7 +155,7 @@ export default {
           <nuxt-link
             :to="child.redirect || `/${section}/${folder}/${child.slug}`"
             :class="getSidebarItemClass(folder, child)"
-            class="rounded-md group w-full flex items-center pl-3 pr-2 py-1 text-base font-semibold hover:text-green transition-colors hover:bg-gray-50 "
+            class="rounded-md group w-full flex items-center pl-3 pr-2 py-1 text-base font-medium hover:text-green transition-colors hover:bg-gray-50 "
           >
             {{ child.title }}
           </nuxt-link>
