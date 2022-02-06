@@ -113,7 +113,7 @@ export default {
     :data-test="folder"
   >
     <button
-      class="group w-full flex items-center text-left px-2 pl-4 pr-1 text-lg font-bold bg-lightGray text-gray-800 hover:text-gray-500 hover:bg-gray-50 focus:outline-none"
+      class="group w-full flex items-center text-left px-2 pl-4 text-lg font-bold bg-lightGray text-gray-800 hover:text-gray-500 hover:bg-gray-50 focus:outline-none"
       @click="toggleSection"
     >
       {{ label }}
