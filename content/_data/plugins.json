@@ -766,6 +766,13 @@
           "badge": "community"
         },
         {
+          "name": "Vulcan Next",
+          "description": "A model-driven Next.js and GraphQL boilerplate, with Storybook, Jest and Cypress all set up.",
+          "link": "https://github.com/VulcanJS/vulcan-next",
+          "keywords": ["next.js", "react", "graphql", "mongo", "vercel"],
+          "badge": "community"
+        },
+        {
           "name": "@cypress/schematic",
           "description": "Adds Cypress to your Angular project via the Angular CLI",
           "link": "https://github.com/cypress-io/cypress/tree/master/npm/cypress-schematic",
