@@ -260,65 +260,42 @@ beforeEach(() => {
 #### Execution
 
 Cypress executes the support file before the spec file. For example when you
-click on a test file named `spec-a.js` via
+click on a test file named `spec-a.cy.js` via
 [cypress open](/guides/guides/command-line#cypress-open), then the Cypress App
 executes the files in the following order:
 
-:::e2e-component-example
+**e2e example:**
 
-```js
-//bundled e2e support file
-<script src="support/e2e.js"></script>
+1. `support/e2e.js // your support file`
+2. `e2e/spec-a.cy.js // your spec file`
 
-//bundled spec file
-<script src="e2e/spec-a.cy.js"></script>
-```
+**component example:**
 
-```js
-//bundled component support file
-<script src="support/component.js"></script>
-
-//bundled spec file
-<script src="components/Button/Button.cy.js"></script>
-```
-
-:::
+1. `support/component.js // your support file`
+2. `components/Button/Button.cy.js // your spec file`
 
 The same happens when using the
 [cypress run](/guides/guides/command-line#cypress-run) command: a new browser
 window is opened for each support and spec file pair.
 
 But when you click on "Run all specs" button after
-[cypress open](/guides/guides/command-line#cypress-open), the Cypress App
-bundles and concatenates all specs together, in essence running scripts like
-shown below. This means the code in the support file is executed once before all
-spec files, instead of once before each spec file.
+[cypress open](/guides/guides/command-line#cypress-open), the Cypress App runs
+all specs together. This means the code in the support file is executed once
+before all spec files, instead of once before each spec file.
 
-:::e2e-component-example
+**e2e example:**
 
-```js
-//bundled e2e or component support file
-<script src="support/e2e.js"></script>
+1. `support/e2e.js // your support file`
+2. `e2e/spec-a.cy.js // your first spec file`
+3. `e2e/spec-b.cy.js // your second spec file`
+4. `e2e/spec-n.cy.js // etc`
 
-//bundled first spec file, second spec file, etc
-<script src="e2e/spec-a.js"></script>
-<script src="e2e/spec-b.js"></script>
-...
-<script src="e2e/spec-n.js"></script>
-```
+**component example:**
 
-```js
-//bundled e2e or component support file
-<script src="support/component.js"></script>
-
-//bundled first spec file, second spec file, etc
-<script src="components/Header/Header.cy.js"></script>
-<script src="components/Button/Button.cy.js"></script>
-...
-<script src="components/Input/Input.cy.js"></script>
-```
-
-:::
+1. `support/component.js // your support file`
+2. `components/Button/Button.cy.js // your first spec file`
+3. `components/Header/Header.cy.js // your second spec file`
+4. `components/Input/Input.cy.js // etc`
 
 <Alert type="info">
 
