@@ -68,7 +68,7 @@ folder structure. By default it will create:
 ``` -->
 
 <code-group>
-<code-block label="Javascript" active>
+<code-block label="JavaScript" active>
 
 ```text
 E2E:
@@ -94,7 +94,7 @@ Both:
 ```
 
 </code-block>
-<code-block label="Typescript">
+<code-block label="TypeScript">
 
 ```text
 E2E:
