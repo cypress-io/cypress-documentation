@@ -32,7 +32,7 @@ Enabling this flag does the following:
   [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
 
 Because the page is cleared at the beginning of each test,
-[`cy.visit()`](/api/commands/visit) or [`cy.mount()`](/api/commands/mount) must
+[`cy.mount()`](/api/commands/mount) or [`cy.visit()`](/api/commands/visit) must
 be explicitly called at the beginning of each test.
 
 </Alert>
@@ -453,96 +453,6 @@ const loginByApi = (name, password) => {
 }
 ```
 
-### Where to call `cy.visit()` <E2EOnlyBadge />
-
-If you call [`cy.visit()`](/api/commands/visit) immediately after `cy.session()`
-in your login function or custom command, it will always end up visiting the
-specified URL.
-
-```javascript
-const login = (name) => {
-  cy.session(name, () => {
-    cy.visit('/login')
-    cy.get('[data-test=name]').type(name)
-    cy.get('[data-test=password]').type('s3cr3t')
-    cy.get('#submit').click()
-    cy.url().should('contain', '/home')
-  })
-  cy.visit('/home')
-}
-
-beforeEach(() => {
-  login('user')
-})
-
-it('should test something on the /home page', () => {
-  // assertions
-})
-
-it('should test something else on the /home page', () => {
-  // assertions
-})
-```
-
-However, any time you want to test something on a different page, you will need
-to call `cy.visit()` at the beginning of that test, which will then be
-effectively calling `cy.visit()` twice in a row, which will result in slightly
-slower tests.
-
-```javascript
-// ...continued...
-
-it('should test something on the /other page', () => {
-  cy.visit('/other')
-  // assertions
-})
-```
-
-Tests will often be faster if you call `cy.visit()` only when necessary. This
-works especially well when
-[organizing tests into suites](/guides/core-concepts/writing-and-organizing-tests#Test-Structure)
-and calling `cy.visit()` after logging in inside a
-[`beforeEach`](/guides/core-concepts/writing-and-organizing-tests#Hooks) hook.
-
-```javascript
-const login = (name) => {
-  cy.session(name, () => {
-    cy.visit('/login')
-    cy.get('[data-test=name]').type(name)
-    cy.get('[data-test=password]').type('s3cr3t')
-    cy.get('#submit').click()
-    cy.url().should('contain', '/home')
-  })
-  // no visit here
-}
-
-describe('home page tests', () => {
-  beforeEach(() => {
-    login('user')
-    cy.visit('/home')
-  })
-
-  it('should test something on the /home page', () => {
-    // assertions
-  })
-
-  it('should test something else on the /home page', () => {
-    // assertions
-  })
-})
-
-describe('other page tests', () => {
-  beforeEach(() => {
-    login('user')
-    cy.visit('/other')
-  })
-
-  it('should test something on the /other page', () => {
-    // assertions
-  })
-})
-```
-
 ### Where to call `cy.mount()` <ComponentOnlyBadge />
 
 If you call [`cy.mount()`](/api/commands/mount) immediately after `cy.session()`
@@ -632,6 +542,96 @@ describe('other page tests', () => {
   })
 
   it('should test something in the OtherDetails component', () => {
+    // assertions
+  })
+})
+```
+
+### Where to call `cy.visit()` <E2EOnlyBadge />
+
+If you call [`cy.visit()`](/api/commands/visit) immediately after `cy.session()`
+in your login function or custom command, it will always end up visiting the
+specified URL.
+
+```javascript
+const login = (name) => {
+  cy.session(name, () => {
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(name)
+    cy.get('[data-test=password]').type('s3cr3t')
+    cy.get('#submit').click()
+    cy.url().should('contain', '/home')
+  })
+  cy.visit('/home')
+}
+
+beforeEach(() => {
+  login('user')
+})
+
+it('should test something on the /home page', () => {
+  // assertions
+})
+
+it('should test something else on the /home page', () => {
+  // assertions
+})
+```
+
+However, any time you want to test something on a different page, you will need
+to call `cy.visit()` at the beginning of that test, which will then be
+effectively calling `cy.visit()` twice in a row, which will result in slightly
+slower tests.
+
+```javascript
+// ...continued...
+
+it('should test something on the /other page', () => {
+  cy.visit('/other')
+  // assertions
+})
+```
+
+Tests will often be faster if you call `cy.visit()` only when necessary. This
+works especially well when
+[organizing tests into suites](/guides/core-concepts/writing-and-organizing-tests#Test-Structure)
+and calling `cy.visit()` after logging in inside a
+[`beforeEach`](/guides/core-concepts/writing-and-organizing-tests#Hooks) hook.
+
+```javascript
+const login = (name) => {
+  cy.session(name, () => {
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(name)
+    cy.get('[data-test=password]').type('s3cr3t')
+    cy.get('#submit').click()
+    cy.url().should('contain', '/home')
+  })
+  // no visit here
+}
+
+describe('home page tests', () => {
+  beforeEach(() => {
+    login('user')
+    cy.visit('/home')
+  })
+
+  it('should test something on the /home page', () => {
+    // assertions
+  })
+
+  it('should test something else on the /home page', () => {
+    // assertions
+  })
+})
+
+describe('other page tests', () => {
+  beforeEach(() => {
+    login('user')
+    cy.visit('/other')
+  })
+
+  it('should test something on the /other page', () => {
     // assertions
   })
 })
@@ -735,8 +735,8 @@ to explicitly log out.
 | After `cy.session()` | <Icon name="check-circle" color="green"></Icon> |                                                 |
 
 Because calling `cy.session()` clears the current page in addition to restoring
-cached session data, [`cy.visit()`](/api/commands/visit) or
-[`cy.mount()`](/api/commands/mount) must always be explicitly called afterwards
+cached session data, [`cy.mount()`](/api/commands/mount) or
+[`cy.visit()`](/api/commands/visit) must always be explicitly called afterwards
 to ensure a page is visited or a component is mounted.
 
 ### Session caching
@@ -944,5 +944,5 @@ data, including cookies, `localStorage` and `sessionStorage`.
 - [Authenticate faster in tests with the cy.session command](https://cypress.io/blog/2021/08/04/authenticate-faster-in-tests-cy-session-command/)
 - [Custom Commands](/api/cypress-api/custom-commands)
 - [`Cypress.session`](/api/cypress-api/session)
-- [`cy.visit()`](/api/commands/visit)
 - [`cy.mount()`](/api/commands/mount)
+- [`cy.visit()`](/api/commands/visit)

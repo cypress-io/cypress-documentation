@@ -1060,8 +1060,8 @@ cy.get('form').submit()
 Without a single explicit assertion, there are dozens of ways this test can
 fail! Here's a few:
 
-- The initial [`cy.visit()`](/api/commands/visit) or
-  [`cy.mount()`](/api/commands/mount) could respond with something other than
+- The initial [`cy.mount()`](/api/commands/mount) or
+  [`cy.visit()`](/api/commands/visit) could respond with something other than
   success.
 - Any of the [`cy.get()`](/api/commands/get) commands could fail to find their
   elements in the DOM.
