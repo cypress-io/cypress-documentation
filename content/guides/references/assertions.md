@@ -210,7 +210,7 @@ Cypress will "just work" with new assertions added to `chai`. You can:
 - Write your own `chai` assertions as
   [documented here](http://chaijs.com/api/plugins/).
 - npm install any existing `chai` library and import into your test file or
-  support file.
+  [support file](/guides/core-concepts/writing-and-organizing-tests#Support-file).
 
 <Alert type="info">
 

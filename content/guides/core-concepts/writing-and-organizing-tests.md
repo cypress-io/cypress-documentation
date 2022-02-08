@@ -263,10 +263,17 @@ The initial imported plugins file can be
 
 ### Support file
 
-By default Cypress will automatically include the support file
-`cypress/support/index.js`. This file runs **before** every single spec file. We
-do this purely as a convenience mechanism so you don't have to import this file
-in every single one of your spec files.
+By default Cypress will automatically include type-specific support files. For
+E2E, the default is `cypress/support/e2e.{js,jsx,ts,tsx}`, and for Component
+Testing `cypress/support/e2e.{js,jsx,ts,tsx}`.
+
+The default support file can be configured to another file or turned off
+completely within each testing type's configuration object using the
+[supportFile](/guides/references/configuration#Folders-Files) configuration.
+
+This file runs **before** every single spec file. We do this purely as a
+convenience mechanism so you don't have to import this file in every single one
+of your spec files.
 
 The initial imported support file can be configured to another file or turned
 off completely using the
@@ -279,8 +286,8 @@ want applied and available to all of your spec files.
 From your support file you can `import` or `require` other files to keep things
 organized.
 
-We automatically seed an example support file, which has several commented out
-examples.
+We automatically seed an example support file for each configured testing type,
+which has several commented out examples.
 
 You can define behaviors in a `before` or `beforeEach` within any of the
 `cypress/support` files:

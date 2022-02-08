@@ -770,7 +770,9 @@ cypress run
 #### 5. Update the support file (optionally)
 
 Previously, a support file was required to set up the component testing target
-node. This is no longer necessary.
+node. This is no longer necessary. Instead, if a support file is needed, it
+should be set up according to the
+[support file documentation](/guides/core-concepts/writing-and-organizing-tests#Support-file).
 
 Specifically for React users, if the support file contains the following line,
 please remove it. The import will fail in the future. We have left it in to
