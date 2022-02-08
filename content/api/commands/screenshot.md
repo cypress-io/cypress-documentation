@@ -167,7 +167,7 @@ cy.screenshot('my-screenshot', {
 Screenshot naming follows these rules:
 
 - Screenshots are saved inside the
-  [screenshots folder](guides/core-concepts/writing-and-organizing-tests#Asset-File-Paths).
+  [screenshots folder](/guides/core-concepts/writing-and-organizing-tests#Asset-File-Paths).
   Inside that folder, the screenshot is saved inside a folder structure relative
   to the path of the spec file, which is adjusted to remove any common ancestor
   paths shared with all other spec files. Inside this folder, the screenshot
