@@ -114,30 +114,11 @@ If you have any questions regarding the OSS plan, please feel free
 
 ## Integrations
 
-### BitBucket Integration
-
-Please see our full documentation for
-[BitBucket Integration](/guides/dashboard/bitbucket-integration).
-
-### GitHub Integration
-
-Please see our full documentation for
-[GitHub Integration](/guides/dashboard/github-integration).
-
-### GitLab Integration
-
-Please see our full documentation for
-[GitLab Integration](/guides/dashboard/gitlab-integration).
-
-### Jira Integration
-
-Please see our full documentation for
-[Jira Integration](/guides/dashboard/jira-integration).
-
-### Slack Integration
-
-Please see our full documentation for
-[Slack Integration](/guides/dashboard/slack-integration).
+- [BitBucket](/guides/dashboard/bitbucket-integration)
+- [GitHub](/guides/dashboard/github-integration)
+- [GitLab](/guides/dashboard/gitlab-integration)
+- [Jira](/guides/dashboard/jira-integration)
+- [Slack](/guides/dashboard/slack-integration)
 
 ### Enterprise SSO
 
