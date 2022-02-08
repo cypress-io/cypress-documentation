@@ -81,7 +81,12 @@ on('<event>', (arg1, arg2) => {
 
 ### Config option changes
 
-CONTENT_TBD
+#### `supportFile`
+
+The `supportFile` configuration option is no longer valid at the top-level.
+Instead, it must be configured within each testing type's configuration object.
+More information can be found in the
+[support file docs](/guides/core-concepts/writing-and-organizing-tests#Support-file).
 
 ## Migrating from `cypress-file-upload` to [`.selectFile()`](/api/commands/selectfile)
 
@@ -770,9 +775,7 @@ cypress run
 #### 5. Update the support file (optionally)
 
 Previously, a support file was required to set up the component testing target
-node. This is no longer necessary. Instead, if a support file is needed, it
-should be set up according to the
-[support file documentation](/guides/core-concepts/writing-and-organizing-tests#Support-file).
+node. This is no longer necessary.
 
 Specifically for React users, if the support file contains the following line,
 please remove it. The import will fail in the future. We have left it in to
