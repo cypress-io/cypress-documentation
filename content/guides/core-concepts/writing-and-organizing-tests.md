@@ -31,7 +31,7 @@ organizing your tests.
 After adding a new project, Cypress will automatically scaffold out a suggested
 folder structure. By default it will create:
 
-```text
+<!-- ```text
 /cypress
   /e2e
     - example.json
@@ -65,7 +65,62 @@ folder structure. By default it will create:
     - commands.js
     - e2e.js
     - component.js
+``` -->
+
+<code-group>
+<code-block label="Javascript" active>
+
+```text
+E2E:
+/cypress.config.js
+/cypress/fixtures/example.json
+/cypress/support/commands.js
+/cypress/support/e2e.js
+
+Component:
+/cypress.config.js
+/cypress/fixtures/example.json
+/cypress/support/commands.js
+/cypress/support/component.js
+/cypress/support/component-index.html
+
+Both:
+/cypress.config.js
+/cypress/fixtures/example.json
+/cypress/support/commands.js
+/cypress/support/e2e.js
+/cypress/support/component.js
+/cypress/support/component-index.html
 ```
+
+</code-block>
+<code-block label="Typescript">
+
+```text
+E2E:
+/cypress.config.ts
+/cypress/fixtures/example.json
+/cypress/support/commands.ts
+/cypress/support/e2e.ts
+
+Component:
+/cypress.config.ts
+/cypress/fixtures/example.json
+/cypress/support/commands.ts
+/cypress/support/component.ts
+/cypress/support/component-index.html
+
+Both:
+/cypress.config.ts
+/cypress/fixtures/example.json
+/cypress/support/commands.ts
+/cypress/support/e2e.ts
+/cypress/support/component.ts
+/cypress/support/component-index.html
+```
+
+</code-block>
+</code-group>
 
 ### Configuring Folder Structure
 
