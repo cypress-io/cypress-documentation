@@ -329,38 +329,6 @@ executes the files in the following order:
 1. `support/component.js` (your support file)
 2. `components/Button/Button.cy.js` (your spec file)
 
-The same happens when using the
-[cypress run](/guides/guides/command-line#cypress-run) command: a new browser
-window is opened for each support and spec file pair.
-
-But when you click on "Run all specs" button after
-[cypress open](/guides/guides/command-line#cypress-open), the Cypress App runs
-all specs together. This means the code in the support file is executed once
-before all spec files, instead of once before each spec file.
-
-**e2e example:**
-
-1. `support/e2e.js` (your support file)
-2. `e2e/spec-a.cy.js` (your first spec file)
-3. `e2e/spec-b.cy.js` (your second spec file)
-4. `e2e/spec-n.cy.js` (etc)
-
-**component example:**
-
-1. `support/component.js` (your support file)
-2. `components/Button/Button.cy.js` (your first spec file)
-3. `components/Header/Header.cy.js` (your second spec file)
-4. `components/Input/Input.cy.js` (etc)
-
-<Alert type="info">
-
-Having a single support file when running all specs together might execute
-`before` and `beforeEach` hooks in ways you may not anticipate. Read
-[Be careful when running all specs together](https://glebbahmutov.com/blog/run-all-specs/)
-for examples.
-
-</Alert>
-
 ### Troubleshooting
 
 If Cypress does not find the spec files for some reason, you can troubleshoot
