@@ -185,6 +185,39 @@ Any videos recorded of the run are stored in the
     - app.cy.js.mp4
 ```
 
+#### Asset File Paths
+
+Generated screenshots and videos are saved inside their respective folders
+(`cypress/screenshots`, `cypress/videos`). The paths of the generated files will
+be stripped of any common ancestor paths shared between all spec files found by
+the `specPattern` option (or via the `--spec` command line option or `spec`
+module API option, if specified)
+
+**Example 1:**
+
+- Spec file found
+  - `cypress/e2e/path/to/file/one.cy.js`
+- Common ancester paths (calculated at runtime)
+  - `cypress/e2e/path/to/file`
+- Generated screenshot file
+  - `cypress/screenshots/one.cy.js/your-screenshot.png`
+- Generated video file
+  - `cypress/videos/one.cy.js.mp4`
+
+**Example 2:**
+
+- Spec files found
+  - `cypress/e2e/path/to/file/one.cy.js`
+  - `cypress/e2e/path/to/two.cy.js`
+- Common ancester paths (calculated at runtime)
+  - `cypress/e2e/path/to/`
+- Generated screenshot files
+  - `cypress/screenshots/file/one.cy.js/your-screenshot.png`
+  - `cypress/screenshots/two.cy.js/your-screenshot.png`
+- Generated video files
+  - `cypress/videos/file/one.cy.js.mp4`
+  - `cypress/videos/two.cy.js.mp4`
+
 To learn more about videos and settings available, see
 [Screenshots and Videos](/guides/guides/screenshots-and-videos#Screenshots)
 

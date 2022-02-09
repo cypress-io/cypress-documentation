@@ -166,15 +166,17 @@ cy.screenshot('my-screenshot', {
 
 Screenshot naming follows these rules:
 
-- By default, a screenshot is saved to a file with a path relative to the
-  [screenshots folder](/guides/references/configuration#Folders-Files), appended
-  by a path relating to where the spec file exists, with a name including the
-  current test's suites and test name:
-  `{screenshotsFolder}/{specPath}/{testName}.png`
+- Screenshots are saved inside the
+  [screenshots folder](/guides/core-concepts/writing-and-organizing-tests#Asset-File-Paths).
+  Inside that folder, the screenshot is saved inside a folder structure relative
+  to the path of the spec file, which is adjusted to remove any common ancestor
+  paths shared with all other spec files. Inside this folder, the screenshot
+  will be saved with the test name:
+  `{screenshotsFolder}/{adjustedSpecPath}/{testName}.png`
 - For a named screenshot, the name is used instead of the suites and test name:
-  `{screenshotsFolder}/{specPath}/{name}.png`
+  `{screenshotsFolder}/{adjustedSpecPath}/{name}.png`
 - For any duplicate screenshots (named or not), they will be appended with a
-  number: `{screenshotsFolder}/{specPath}/{testName} (1).png`.
+  number: `{screenshotsFolder}/{adjustedSpecPath}/{testName} (1).png`.
 
 <Alert type="info">
 
@@ -185,26 +187,45 @@ This behavior can be changed by passing the `{overwrite: true}` option to
 
 - For a failure screenshot, the default naming scheme is used and the name is
   appended with ` (failed)`:
-  `{screenshotsFolder}/{specPath}/{testName} (failed).png`
+  ```javascript
+  {screenshotsFolder}/{adjustedSpecPath}/{testName} (failed).png
+  ```
 
 For example, given a spec file located at `cypress/e2e/users/login.cy.js`:
 
 ```javascript
 describe('my tests', () => {
   it('takes a screenshot', () => {
-    cy.screenshot() // cypress/screenshots/users/login.cy.js/my tests -- takes a screenshot.png
-    cy.screenshot() // cypress/screenshots/users/login.cy.js/my tests -- takes a screenshot (1).png
-    cy.screenshot() // cypress/screenshots/users/login.cy.js/my tests -- takes a screenshot (2).png
+    // NOTE: This file has multiple screenshots
+    // each screenshot has a common ancestor path of `/users/`.
+    // In this scenario `/users/` is stripped from the path.
+    // cypress/screenshots/login.cy.js/my tests -- takes a screenshot.png
+    cy.screenshot()
+    // cypress/screenshots/login.cy.js/my tests -- takes a screenshot (1).png
+    cy.screenshot()
+    // cypress/screenshots/login.cy.js/my tests -- takes a screenshot (2).png
+    cy.screenshot()
 
-    cy.screenshot('my-screenshot') // cypress/screenshots/users/login.cy.js/my-screenshot.png
-    cy.screenshot('my-screenshot') // cypress/screenshots/users/login.cy.js/my-screenshot (1).png
+    // cypress/screenshots/login.cy.js/my-screenshot.png
+    cy.screenshot('my-screenshot')
+    // cypress/screenshots/login.cy.js/my-screenshot (1).png
+    cy.screenshot('my-screenshot')
+    // cypress/screenshots/login.cy.js/my/nested/screenshot.png
+    cy.screenshot('my/nested/screenshot')
 
-    cy.screenshot('my/nested/screenshot') // cypress/screenshots/users/login.cy.js/my/nested/screenshot.png
-
-    // if this test fails, the screenshot will be saved to cypress/screenshots/users/login.cy.js/my tests -- takes a screenshot (failed).png
+    // if this test fails, the screenshot will be saved to
+    // cypress/screenshots/login.cy.js/my tests -- takes a screenshot (failed).png
   })
 })
 ```
+
+<Alert type="info">
+
+To learn more about how to write and organize tests and how assets are saved,
+see
+[Writing And Organizing Tests](/guides/core-concepts/writing-and-organizing-tests#Asset-Files)
+
+</Alert>
 
 ### `after:screenshot` plugin event
 
