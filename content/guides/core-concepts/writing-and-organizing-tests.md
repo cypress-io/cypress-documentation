@@ -321,13 +321,13 @@ executes the files in the following order:
 
 **e2e example:**
 
-1. `support/e2e.js // your support file`
-2. `e2e/spec-a.cy.js // your spec file`
+1. `support/e2e.js` (your support file)
+2. `e2e/spec-a.cy.js` (your spec file)
 
 **component example:**
 
-1. `support/component.js // your support file`
-2. `components/Button/Button.cy.js // your spec file`
+1. `support/component.js` (your support file)
+2. `components/Button/Button.cy.js` (your spec file)
 
 The same happens when using the
 [cypress run](/guides/guides/command-line#cypress-run) command: a new browser
@@ -340,17 +340,17 @@ before all spec files, instead of once before each spec file.
 
 **e2e example:**
 
-1. `support/e2e.js // your support file`
-2. `e2e/spec-a.cy.js // your first spec file`
-3. `e2e/spec-b.cy.js // your second spec file`
-4. `e2e/spec-n.cy.js // etc`
+1. `support/e2e.js` (your support file)
+2. `e2e/spec-a.cy.js` (your first spec file)
+3. `e2e/spec-b.cy.js` (your second spec file)
+4. `e2e/spec-n.cy.js` (etc)
 
 **component example:**
 
-1. `support/component.js // your support file`
-2. `components/Button/Button.cy.js // your first spec file`
-3. `components/Header/Header.cy.js // your second spec file`
-4. `components/Input/Input.cy.js // etc`
+1. `support/component.js` (your support file)
+2. `components/Button/Button.cy.js` (your first spec file)
+3. `components/Header/Header.cy.js` (your second spec file)
+4. `components/Input/Input.cy.js` (etc)
 
 <Alert type="info">
 
