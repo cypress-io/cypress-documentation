@@ -96,7 +96,7 @@ You'll also need to install the Cypress Webpack Dev Server and Vue 2 adapter, as
 well as some devDependencies:
 
 ```sh
-npm install --save-dev cypress @cypress/vue @cypress/webpack-dev-server html-webpack-plugin@4
+npm install --save-dev cypress @cypress/vue@2 @cypress/webpack-dev-server html-webpack-plugin@4
 ```
 
 <Alert type="info">
