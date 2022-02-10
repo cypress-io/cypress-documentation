@@ -106,7 +106,7 @@ you should understand well. The default values listed here are meaningful.
 | `downloadsFolder`    | `cypress/downloads`   | Path to folder where files downloaded during a test are saved                                                                                                                                                                                                                              |
 | `fileServerFolder`   | root project folder   | Path to folder where application files will attempt to be served from                                                                                                                                                                                                                      |
 | `fixturesFolder`     | `cypress/fixtures`    | Path to folder containing fixture files (Pass `false` to disable)                                                                                                                                                                                                                          |
-| `specExcludePattern` | `*.hot-update.js`     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using [https://globster.xyz](https://globster.xyz) to test what files would match. |
+| `excludeSpecPattern` | `*.hot-update.js`     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using [https://globster.xyz](https://globster.xyz) to test what files would match. |
 | `screenshotsFolder`  | `cypress/screenshots` | Path to folder where screenshots will be saved from [`cy.screenshot()`](/api/commands/screenshot) command or after a test fails during `cypress run`                                                                                                                                       |
 | `videosFolder`       | `cypress/videos`      | Path to folder where videos will be saved during `cypress run`                                                                                                                                                                                                                             |
 
@@ -135,7 +135,7 @@ For more options regarding screenshots, view the
 
 | Option                  | Default             | Description                                                                                                                                  |
 | ----------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `downloadsFolder`       | `cypress/downloads` | Path to folder where files downloaded during a test are saved                                                                                |
+| `downloadsFolder`       | `cypress/downloads` | Path to folder where files downloaded during a test are saved.                                                                               |
 | `trashAssetsBeforeRuns` | `true`              | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`. |
 
 ### Browser
