@@ -873,8 +873,8 @@ const login = (name, token, password) => {
 
 #### Why are all my Cypress commands failing after calling `cy.session()`?
 
-Ensure that you're calling [`cy.visit()`](/api/commands/visit) or
-[`cy.mount()`](/api/commands/mount) after calling `cy.session()`, otherwise your
+Ensure that you're calling [`cy.mount()`](/api/commands/mount) or
+[`cy.visit()`](/api/commands/visit) after calling `cy.session()`, otherwise your
 tests will be running on a blank page.
 
 #### Why am I seeing `401` errors after calling `cy.session()`?
