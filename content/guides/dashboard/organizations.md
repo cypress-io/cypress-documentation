@@ -79,14 +79,15 @@ to another organization before you can delete the organization.
 ### Open Source Plan
 
 To support the community, we provide the Open Source (OSS) plan to take
-advantage of our Dashboard Service with unlimited test runs. To qualify, your
-Organization needs the following:
+advantage of our Dashboard Service with unlimited test runs. To qualify, all
+Projects in your Organization must meet the following criteria:
 
-- Project is a non-commercial entity
-- Project is [public](https://on.cypress.io/projects#Change-project-access)
-- Your project source code is available in a public location with an
+- Be a non-commercial entity
+- Be [Public](https://on.cypress.io/projects#Change-project-access) in the
+  Dashboard
+- Your Project source code is available in a public location with an
   [OSI-approved license](https://opensource.org/licenses)
-- Reach the Free Plan limit of 500
+- Have reached the [Free Plan](https://www.cypress.io/pricing) limit of 500
   [Test Recordings](https://on.cypress.io/dashboard-faq#What-counts-as-a-test-result)
 
 ### Requesting OSS plan for an Org
