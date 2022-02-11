@@ -84,7 +84,7 @@ Organization needs the following:
 
 - Project is a non-commercial entity
 - Project is [public](https://on.cypress.io/projects#Change-project-access)
-- Source code for your Project is available in a public location with an
+- Your project source code is available in a public location with an
   [OSI-approved license](https://opensource.org/licenses)
 - Hit the Free Plan limit of 500
   [Test Recordings](https://on.cypress.io/dashboard-faq#What-counts-as-a-test-result)
