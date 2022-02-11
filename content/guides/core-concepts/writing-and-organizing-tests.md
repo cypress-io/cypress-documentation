@@ -31,40 +31,60 @@ organizing your tests.
 After adding a new project, Cypress will automatically scaffold out a suggested
 folder structure. By default it will create:
 
+<code-group>
+<code-block label="JavaScript" active>
+
 ```text
-/cypress
-  /fixtures
-    - example.json
+E2E:
+/cypress.config.js
+/cypress/fixtures/example.json
+/cypress/support/commands.js
+/cypress/support/e2e.js
 
-  /e2e
-    /examples
-      /1-getting-started
-        - todo.cy.js
-      /2-advanced-examples
-        - actions.cy.js
-        - aliasing.cy.js
-        - assertions.cy.js
-        - connectors.cy.js
-        - cookies.cy.js
-        - cypress_api.cy.js
-        - files.cy.js
-        - local_storage.cy.js
-        - location.cy.js
-        - misc.cy.js
-        - navigation.cy.js
-        - network_requests.cy.js
-        - querying.cy.js
-        - spies_stubs_clocks.cy.js
-        - traversal.cy.js
-        - utilities.cy.js
-        - viewport.cy.js
-        - waiting.cy.js
-        - window.cy.js
+Component:
+/cypress.config.js
+/cypress/fixtures/example.json
+/cypress/support/commands.js
+/cypress/support/component.js
+/cypress/support/component-index.html
 
-  /support
-    - commands.js
-    - index.js
+Both:
+/cypress.config.js
+/cypress/fixtures/example.json
+/cypress/support/commands.js
+/cypress/support/e2e.js
+/cypress/support/component.js
+/cypress/support/component-index.html
 ```
+
+</code-block>
+<code-block label="TypeScript">
+
+```text
+E2E:
+/cypress.config.ts
+/cypress/fixtures/example.json
+/cypress/support/commands.ts
+/cypress/support/e2e.ts
+
+Component:
+/cypress.config.ts
+/cypress/fixtures/example.json
+/cypress/support/commands.ts
+/cypress/support/component.ts
+/cypress/support/component-index.html
+
+Both:
+/cypress.config.ts
+/cypress/fixtures/example.json
+/cypress/support/commands.ts
+/cypress/support/e2e.ts
+/cypress/support/component.ts
+/cypress/support/component-index.html
+```
+
+</code-block>
+</code-group>
 
 ### Configuring Folder Structure
 
@@ -291,46 +311,19 @@ beforeEach(() => {
 
 #### Execution
 
-Cypress executes the support file before the spec file. For example when you
-click on a test file named `spec-a.js` via
-[cypress open](/guides/guides/command-line#cypress-open), then the Cypress App
-executes the files in the following order:
+Cypress executes the support file before the spec file. For example, when
+Cypress executes a spec file via `cypress open` or `cypress run`, it executes
+the files in the following order:
 
-```html
-<!-- bundled support file -->
-<script src="support/index.js"></script>
-<!-- bundled spec file -->
-<script src="integration/spec-a.js"></script>
-```
+**e2e example:**
 
-The same happens when using the
-[cypress run](/guides/guides/command-line#cypress-run) command: a new browser
-window is opened for each support and spec file pair.
+1. `support/e2e.js` (your support file)
+2. `e2e/spec-a.cy.js` (your spec file)
 
-But when you click on "Run all specs" button after
-[cypress open](/guides/guides/command-line#cypress-open), the Cypress App
-bundles and concatenates all specs together, in essence running scripts like
-shown below. This means the code in the support file is executed once before all
-spec files, instead of once before each spec file.
+**component example:**
 
-```html
-<!-- bundled support file -->
-<script src="support/index.js"></script>
-<!-- bundled first spec file, second spec file, etc -->
-<script src="integration/spec-a.js"></script>
-<script src="integration/spec-b.js"></script>
-...
-<script src="integration/spec-n.js"></script>
-```
-
-<Alert type="info">
-
-Having a single support file when running all specs together might execute
-`before` and `beforeEach` hooks in ways you may not anticipate. Read
-[Be careful when running all specs together](https://glebbahmutov.com/blog/run-all-specs/)
-for examples.
-
-</Alert>
+1. `support/component.js` (your support file)
+2. `components/Button/Button.cy.js` (your spec file)
 
 ### Troubleshooting
 
@@ -898,9 +891,8 @@ behavior.
 
 #### Folders
 
-- Integration directory (`cypress/e2e/` by default)
+- E2E directory (`cypress/e2e/` by default)
 - Support directory (`cypress/support/` by default)
-- Plugins directory (`cypress/plugins/` by default)
 
 The folder, the files within the folder, and all child folders and their files
 (recursively) are watched.
