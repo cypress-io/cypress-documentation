@@ -78,7 +78,7 @@ to another organization before you can delete the organization.
 
 ### Open Source Plan
 
-To support the community, we provide the Open Source (OSS) plan for to take
+To support the community, we provide the Open Source (OSS) plan to take
 advantage of our Dashboard Service with unlimited test runs. To qualify, your
 Organization needs the following:
 
