@@ -268,15 +268,6 @@ By default Cypress will automatically include the support file
 do this purely as a convenience mechanism so you don't have to import this file
 in every single one of your spec files.
 
-<Alert type="danger">
-
-<Icon name="exclamation-triangle"></Icon> Keep in mind, when clicking "Run all
-specs" after [cypress open](/guides/guides/command-line#cypress-open), the code
-in the support file is executed once before all spec files, instead of once
-before each spec file. See [Execution](#Execution) for more details.
-
-</Alert>
-
 The initial imported support file can be configured to another file or turned
 off completely using the
 [supportFile](/guides/references/configuration#Folders-Files) configuration.
@@ -458,15 +449,6 @@ describe('Hooks', () => {
 <Icon name="exclamation-triangle"></Icon> Before writing `after()` or
 `afterEach()` hooks, please see our
 [thoughts on the anti-pattern of cleaning up state with `after()` or `afterEach()`](/guides/references/best-practices#Using-after-or-afterEach-hooks).
-
-</Alert>
-
-<Alert type="danger">
-
-<Icon name="exclamation-triangle"></Icon> Be wary of root-level hooks, as they
-could execute in a surprising order when clicking the "Run all specs" button.
-Instead place them inside `describe` or `context` suites for isolation. Read
-[Be careful when running all specs together](https://glebbahmutov.com/blog/run-all-specs/).
 
 </Alert>
 
@@ -699,47 +681,12 @@ cy.wrap(add(1, 2)).should('equal', 3)
 
 ## Running tests
 
-### Run a single spec file
-
-We suggest running test files individually by clicking on the spec filename to
-ensure the best performance. For example the
+You can run a test by clicking on the spec filename. For example the
 [Cypress RealWorld App](https://github.com/cypress-io/cypress-example-realworld)
-has multiple test files, but below we run a single "new-transaction.cy.ts" test
-file.
+has multiple test files, but below we run the "new-transaction.spec.ts" test
+file by clicking on it.
 
 <DocsImage src="/img/guides/core-concepts/run-single-spec.gif" alt="Running a single spec" ></DocsImage>
-
-### Run all specs
-
-You can run all spec files together by clicking the "Run all specs" button. This
-mode is equivalent to concatenating all spec files together into a single piece
-of test code.
-
-<DocsImage src="/img/guides/core-concepts/run-all-specs.gif" alt="Running all specs" ></DocsImage>
-
-<Alert type="danger">
-
-<Icon name="exclamation-triangle"></Icon> Be wary of root-level hooks, as they
-could execute in a surprising order when clicking the "Run all specs" button.
-Instead place them inside `describe` or `context` suites for isolation. Read
-[Be careful when running all specs together](https://glebbahmutov.com/blog/run-all-specs/).
-
-</Alert>
-
-### Run filtered specs
-
-You can also run a subset of all specs by entering a text search filter. Only
-the specs with relative file paths containing the search filter will remain and
-be run as if concatenating all spec files together when clicking the "Run N
-specs" button.
-
-- The search filter is case-insensitive; the filter "ui" will match both
-  "UI-spec.cy.js" and "admin-ui-spec.cy.js" files.
-- The search filter is applied to the entire relative spec file path, thus you
-  can use folder names to limit the specs; the filter "ui" will match both
-  "admin-ui.cy.js" and "ui/admin.cy.js" files.
-
-<DocsImage src="/img/guides/core-concepts/run-selected-specs.gif" alt="Running specs matching the search filter" ></DocsImage>
 
 ## Test statuses
 
