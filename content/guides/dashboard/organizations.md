@@ -78,24 +78,27 @@ to another organization before you can delete the organization.
 
 ### Open Source Plan
 
-To support the community, we provide the Open Source (OSS) plan for public
-projects to take advantage of our Dashboard Service with unlimited test runs. To
-qualify, your project needs two things:
+To support the community, we provide the Open Source (OSS) plan for to take
+advantage of our Dashboard Service with unlimited test runs. To qualify, your
+Organization needs the following:
 
-- Your project is a non-commercial entity
-- Source code for your project is available in a public location with an
+- Project is a non-commercial entity
+- Project is [public](https://on.cypress.io/projects#Change-project-access)
+- Source code for your Project is available in a public location with an
   [OSI-approved license](https://opensource.org/licenses)
+- Hit the Free Plan limit of 500
+  [Test Recordings](https://on.cypress.io/dashboard-faq#What-counts-as-a-test-result)
 
-### Requesting OSS plan for an org
+### Requesting OSS plan for an Org
 
-Follow the following process to request an OSS plan for your project:
+Follow the following process to request an OSS plan:
 
 1. [Login](https://on.cypress.io/dashboard) to the Cypress Dashboard, or
    [create an account](https://on.cypress.io/dashboard) if you are a new user.
    <DocsImage src="/img/dashboard/oss-plan-1-login.png" alt="Login or Create Account"></DocsImage>
 2. Go the [Organizations page](https://on.cypress.io/dashboard/organizations) to
-   select the organization you want to associate with an OSS plan. If you have
-   no organizations, you can create one by clicking the **+ Add Organization**
+   select the Organization you want to associate with an OSS plan. If you have
+   no Organizations, you can create one by clicking the **+ Add Organization**
    button.
    > **Note**: Personal organizations cannot be used with an OSS plan.
 
@@ -107,7 +110,7 @@ Fill in and submit the OSS plan request form.
 <DocsImage src="/img/dashboard/oss-plan-4-apply.png" alt="OSS plan request form"></DocsImage> 5.
 You'll receive an email confirming your request. The Cypress Team will review
 your request and, if approved, an OSS plan subscription will be applied to your
-organization.
+Organization.
 
 If you have any questions regarding the OSS plan, please feel free
 [contact us](mailto:hello@cypress.io).
