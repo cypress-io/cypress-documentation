@@ -177,7 +177,7 @@ without opening a browser with `npx cypress run-ct`.
 
 The installation and configuration is the same as Vue 2 with the Vue CLI as
 described above. The only difference is the Vue adapter should be installed
-using `npm install @cypress/vue@latest`. `@cypress/vue@2` targets Vue 2, and the
+using `npm install @cypress/vue`. `@cypress/vue@2` targets Vue 2, and the
 `latest` release targets Vue 3.
 
 You can find an example project
