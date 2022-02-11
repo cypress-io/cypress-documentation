@@ -997,7 +997,9 @@ load the main window in the `baseUrl` you specified as soon as your tests start.
 
 ```js
 {
-  baseUrl: 'http://localhost:8484'
+  e2e: {
+    baseUrl: 'http://localhost:8484'
+  }
 }
 ```
 

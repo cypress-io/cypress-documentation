@@ -38,7 +38,9 @@ Related notes:
 
 ```js
 {
-  baseUrl: 'http://localhost:1234'
+  e2e: {
+    baseUrl: 'http://localhost:1234'
+  }
 }
 ```
 
