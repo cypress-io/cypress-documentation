@@ -101,14 +101,13 @@ you should understand well. The default values listed here are meaningful.
 
 ### Folders / Files
 
-| Option               | Default               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| -------------------- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `downloadsFolder`    | `cypress/downloads`   | Path to folder where files downloaded during a test are saved.                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `fileServerFolder`   | root project folder   | Path to folder where application files will attempt to be served from.                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| `fixturesFolder`     | `cypress/fixtures`    | Path to folder containing fixture files (Pass `false` to disable).                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `excludeSpecPattern` | `*.hot-update.js`     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using [https://globster.xyz](https://globster.xyz) to test what files would match. <br><br> The **/node_modules/** pattern is automatically added to both e2e.specExcludePattern and component.specExcludePattern, and does not need to be specified (and can't be overridden). |
-| `screenshotsFolder`  | `cypress/screenshots` | Path to folder where screenshots will be saved from [`cy.screenshot()`](/api/commands/screenshot) command or after a test fails during `cypress run`.                                                                                                                                                                                                                                                                                                                                   |
-| `videosFolder`       | `cypress/videos`      | Path to folder where videos will be saved during `cypress run`.                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| Option              | Default               | Description                                                                                                                                           |
+| ------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `downloadsFolder`   | `cypress/downloads`   | Path to folder where files downloaded during a test are saved.                                                                                        |
+| `fileServerFolder`  | root project folder   | Path to folder where application files will attempt to be served from.                                                                                |
+| `fixturesFolder`    | `cypress/fixtures`    | Path to folder containing fixture files (Pass `false` to disable).                                                                                    |
+| `screenshotsFolder` | `cypress/screenshots` | Path to folder where screenshots will be saved from [`cy.screenshot()`](/api/commands/screenshot) command or after a test fails during `cypress run`. |
+| `videosFolder`      | `cypress/videos`      | Path to folder where videos will be saved during `cypress run`.                                                                                       |
 
 ### Screenshots
 
@@ -204,12 +203,12 @@ creating `e2e` and `component` objects inside your Cypress configuration.
 These options are available to be specified inside the `e2e` configuration
 object:
 
-| Option            | Default                               | Description                                                                                                                                                                                         |
-| ----------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `setupNodeEvents` | `null`                                | Function in which node events can be registered and config can be modified. Takes the place of the (deprecated) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
-| `supportFile`     | `cypress/support/e2e.{js,jsx,ts,tsx}` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                           |
-| `specPattern`     | `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` | A String or Array of glob patterns of the test files to load                                                                                                                                        |
-| `excludeSpecPattern` | `*.hot-update.js`                  | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using [https://globster.xyz](https://globster.xyz) to test what files would match. |
+| Option               | Default                               | Description                                                                                                                                                                                         |
+| -------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `setupNodeEvents`    | `null`                                | Function in which node events can be registered and config can be modified. Takes the place of the (deprecated) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
+| `supportFile`        | `cypress/support/e2e.{js,jsx,ts,tsx}` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                           |
+| `specPattern`        | `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` | A String or Array of glob patterns of the test files to load.                                                                                                                                       |
+| `excludeSpecPattern` | `*.hot-update.js`                     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludeSpecPattern)                       |
 
 :::cypress-config-example{noJson}
 
@@ -228,14 +227,14 @@ object:
 These options are available to be specified inside the `component` configuration
 object:
 
-| Option               | Default                                  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| -------------------- | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `devServer`          | `null`                                   | Required function used to configure the component testing dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                                                                                                                                                                                                                                                                                           |
-| `devServerConfig`    | `null`                                   | Optional dev server configuration. Config options will be determined by the dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                                                                                                                                                                                                                                                                         |
-| `setupNodeEvents`    | `null`                                   | Function in which node events can be registered and config can be modified. Takes the place of the (deprecated) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents)                                                                                                                                                                                                                                             |
-| `supportFile`        | `cypress/support/index.js`               | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                                                                                                                                                                                                                                                                       |
-| `specPattern`        | `**/*.cy.{js,jsx,ts,tsx}`                | A String or Array of glob patterns of the test files to load. <br><br>Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.**                                                                                                                                                                                                                                                                        |
-| `excludeSpecPattern` | `['/snapshots/*', '/image_snapshots/*']` | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We suggest using [https://globster.xyz](https://globster.xyz) to test what files would match. <br><br> The **/node_modules/** pattern is automatically added to `specExcludePattern`, and does not need to be specified (and can't be overridden). |
+| Option               | Default                                  | Description                                                                                                                                                                                         |
+| -------------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `devServer`          | `null`                                   | Required function used to configure the component testing dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                                               |
+| `devServerConfig`    | `null`                                   | Optional dev server configuration. Config options will be determined by the dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                             |
+| `setupNodeEvents`    | `null`                                   | Function in which node events can be registered and config can be modified. Takes the place of the (deprecated) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
+| `supportFile`        | `cypress/support/index.js`               | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                           |
+| `specPattern`        | `**/*.cy.{js,jsx,ts,tsx}`                | A String or Array of glob patterns of the test files to load. <br><br>Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.**                            |
+| `excludeSpecPattern` | `['/snapshots/*', '/image_snapshots/*']` | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludeSpecPattern)                       |
 
 :::cypress-config-example{noJson}
 
@@ -580,6 +579,16 @@ See the
 [component testing framework configuration guide](/guides/getting-started/component-framework-configuration)
 for specific examples.
 
+### excludeSpecPattern
+
+Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We
+suggest using [https://globster.xyz](https://globster.xyz) to test what files
+would match.
+
+The **/node_modules/** pattern is automatically added to `specExcludePattern`,
+and does not need to be specified (and can't be overridden). See [`e2e`](#e2e)
+or [`component`](#component) testing-specific options.
+
 ### firefoxGcInterval
 
 <Alert type="warning">
@@ -771,7 +780,7 @@ See the [plugins guide](/guides/tooling/plugins-guide) for more information.
 
 ## Common problems
 
-#### <Icon name="angle-right"></Icon> `baseUrl` is not set
+#### <Icon name="angle-right"></Icon> `baseUrl`&nbsp;is not set
 
 Make sure you do not accidentally place the `baseUrl` or another top-level
 config option into the `env` object. The following configuration is _incorrect_
