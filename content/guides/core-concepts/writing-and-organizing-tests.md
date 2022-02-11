@@ -31,42 +31,6 @@ organizing your tests.
 After adding a new project, Cypress will automatically scaffold out a suggested
 folder structure. By default it will create:
 
-<!-- ```text
-/cypress
-  /e2e
-    - example.json
-
-  /e2e
-    /examples
-      /1-getting-started
-        - todo.cy.js
-      /2-advanced-examples
-        - actions.cy.js
-        - aliasing.cy.js
-        - assertions.cy.js
-        - connectors.cy.js
-        - cookies.cy.js
-        - cypress_api.cy.js
-        - files.cy.js
-        - local_storage.cy.js
-        - location.cy.js
-        - misc.cy.js
-        - navigation.cy.js
-        - network_requests.cy.js
-        - querying.cy.js
-        - spies_stubs_clocks.cy.js
-        - traversal.cy.js
-        - utilities.cy.js
-        - viewport.cy.js
-        - waiting.cy.js
-        - window.cy.js
-
-  /support
-    - commands.js
-    - e2e.js
-    - component.js
-``` -->
-
 <code-group>
 <code-block label="JavaScript" active>
 
@@ -314,10 +278,9 @@ beforeEach(() => {
 
 #### Execution
 
-Cypress executes the support file before the spec file. For example when you
-click on a test file named `spec-a.cy.js` via
-[cypress open](/guides/guides/command-line#cypress-open), then the Cypress App
-executes the files in the following order:
+Cypress executes the support file before the spec file. For example, when
+Cypress executes a spec file via `cypress open` or `cypress run`, it executes
+the files in the following order:
 
 **e2e example:**
 
