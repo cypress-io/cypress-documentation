@@ -123,4 +123,3 @@ can view any [public project](/guides/dashboard/projects#Public-vs-Private).
 - [<Icon name="folder-open"></Icon> cypress-example-recipes](https://dashboard.cypress.io/#/projects/6p53jw)
 - [<Icon name="folder-open"></Icon> cypress-example-kitchensink](https://dashboard.cypress.io/#/projects/4b7344)
 - [<Icon name="folder-open"></Icon> cypress-example-todomvc](https://dashboard.cypress.io/#/projects/245obj)
-- [<Icon name="folder-open"></Icon> cypress-example-piechopper](https://dashboard.cypress.io/#/projects/fuduzp)
