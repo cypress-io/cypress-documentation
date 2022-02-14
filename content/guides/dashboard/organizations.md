@@ -49,7 +49,7 @@ automatically.
 
 #### Convert to professional org
 
-If you’ve already set up your projects, users, and billing on your personal
+If you've already set up your projects, users, and billing on your personal
 organization, you can convert it to a professional organization via the
 **Organization settings** page.
 
@@ -61,7 +61,7 @@ and hit **Convert organization**. This will do two things:
 1. It will upgrade your personal organization to a new named organization. All
    of your projects, users, and billing information will carry over to this new
    organization.
-2. We’ll create a new, empty personal organization so you always have a place to
+2. We'll create a new, empty personal organization so you always have a place to
    keep your side projects and experiments!
 
 <DocsImage src="/img/dashboard/convert-to-professional-org-modal.jpg" alt="Convert org to new org" width-600 ></DocsImage>
@@ -169,7 +169,7 @@ Follow the instructions below for your specific SSO provider.
 
 The Cypress Dashboard can integrate with Okta via SAML. In addition to the
 documentation below, refer to
-[Okta’s official documentation for setting up a new SAML application.](https://developer.okta.com/docs/guides/saml-application-setup/overview/)
+[Okta's official documentation for setting up a new SAML application.](https://developer.okta.com/docs/guides/saml-application-setup/overview/)
 
 1. Log into your Okta dashboard and head to the **Admin** section.
    <DocsImage src="/img/dashboard/organizations/okta-admin-cypress-sso-setup.png" alt="Okta Admin" ></DocsImage>
@@ -185,7 +185,7 @@ documentation below, refer to
 - **Attribute statements:** Add the attribute statements described in the
   Cypress Dashboard
 
-1. Click **Next** then select **I’m an Okta customer** and click **Finish**.
+1. Click **Next** then select **I'm an Okta customer** and click **Finish**.
 1. Click the **View Setup Instructions** button in the middle of the page. The
    Cypress Dashboard needs the information provided here:
 
@@ -200,7 +200,7 @@ documentation below, refer to
 ##### **SAML**
 
 The Cypress Dashboard can integrate with your identity provider via SAML. In
-addition to the documentation below, refer to your provider’s official
+addition to the documentation below, refer to your provider's official
 documentation for configuring a SAML integration.
 
 <DocsImage src="/img/dashboard/organizations/enterprise-SSO-SAML.png" alt="SAML SSO" ></DocsImage>
@@ -213,9 +213,9 @@ documentation for configuring a SAML integration.
 - **Single sign on URL:** Collect the URL provided by the Cypress Dashboard
 - **Audience URI:** Collect the URI provided by the Cypress Dashboard
 - Add a custom mapping of **AttributeStatements** with the following:
-  - `User.Email`: User’s email
-  - `User.FirstName`: User’s first name
-  - `User.LastName`: User’s last name
+  - `User.Email`: User's email
+  - `User.FirstName`: User's first name
+  - `User.LastName`: User's last name
 
 1. Collect the sign-on URL and certificate from your identity provider. Supply
    that to the Cypress Dashboard.
