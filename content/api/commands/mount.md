@@ -35,6 +35,8 @@ Let's take a look at how to implement the command.
 
 ## Creating a New `cy.mount()` Command
 
+::include{file=partials/import-mount-functions.md}
+
 To use `cy.mount()` add a [custom command](/api/cypress-api/custom-commands) to
 the commands file. Below are examples to start with for your commands:
 
