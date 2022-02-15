@@ -26,7 +26,7 @@ few advantages:
 However, if you attempt to use `cy.mount()` before creating it, you will get a
 warning:
 
-<img src="/_nuxt/assets/img/guides/component-testing/cy-mount-must-be-implemented.png" alt="cy.mount() must be implemented by the user." />
+<DocsImage src="/img/guides/component-testing/cy-mount-must-be-implemented.png" alt="cy.mount() must be implemented by the user."></DocsImage>
 
 This is to inform you that a `cy.mount()` command is custom to your application
 and needs to be set up manually.
