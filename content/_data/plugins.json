@@ -202,7 +202,7 @@
           "description": "Quickly generates Cypress tests from HTML and JS code",
           "link": "https://github.com/cypress-io/cypress-fiddle",
           "keywords": ["prototype"],
-          "badge": "official"
+          "badge": "community"
         },
         {
           "name": "npm-cy",
@@ -512,7 +512,7 @@
           "description": "Simple commands to skip a test based on platform, browser or a url",
           "link": "https://github.com/cypress-io/cypress-skip-test",
           "keywords": ["commands"],
-          "badge": "official"
+          "badge": "community"
         },
         {
           "name": "cypress-websocket-testing",
