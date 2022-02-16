@@ -26,7 +26,7 @@ few advantages:
 However, if you attempt to use `cy.mount()` before creating it, you will get a
 warning:
 
-<img src="/_nuxt/assets/img/guides/component-testing/cy-mount-must-be-implemented.png" alt="cy.mount() must be implemented by the user." />
+<DocsImage src="/img/guides/component-testing/cy-mount-must-be-implemented.png" alt="cy.mount() must be implemented by the user."></DocsImage>
 
 This is to inform you that a `cy.mount()` command is custom to your application
 and needs to be set up manually.
@@ -34,6 +34,8 @@ and needs to be set up manually.
 Let's take a look at how to implement the command.
 
 ## Creating a New `cy.mount()` Command
+
+::include{file=partials/import-mount-functions.md}
 
 To use `cy.mount()` add a [custom command](/api/cypress-api/custom-commands) to
 the commands file. Below are examples to start with for your commands:
