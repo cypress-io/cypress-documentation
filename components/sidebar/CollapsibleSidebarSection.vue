@@ -121,9 +121,9 @@ export default {
       <svg :class="isOpen ? 'text-gray-700 rotate-180' : 'text-gray-900'"
         class="ml-auto h-5 w-5 transform group-hover:text-gray-500 transition-colors ease-in-out duration-150"
         aria-hidden="true"
-        width="14" height="14" viewBox="0 0 18 18" fill="none"     xmlns="http://www.w3.org/2000/svg"
+        width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
       >
-        <path d="M2 5L8 11L14 5" stroke="#9095AD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M4 6L8 10L12 6" stroke="#9095AD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
 
     </button>
@@ -155,7 +155,7 @@ export default {
           <nuxt-link
             :to="child.redirect || `/${section}/${folder}/${child.slug}`"
             :class="getSidebarItemClass(folder, child)"
-            class="rounded-md group w-full flex items-center pl-3 pr-2 py-1 text-base font-medium hover:text-green transition-colors hover:bg-gray-50 "
+            class="rounded-md group w-full flex items-center pl-3 pr-2 py-1 text-base font-medium hover:text-green transition-colors hover:bg-gray-50"
           >
             {{ child.title }}
           </nuxt-link>
