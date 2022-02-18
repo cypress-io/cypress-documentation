@@ -41,6 +41,14 @@ your test files. However, automatically including all the files in a certain
 directory is somewhat magical and unintuitive, and requires creating globals for
 the purpose of utility functions.
 
+### <Icon name="exclamation-triangle" color="red"></Icon> Error Loading Config
+
+The `supportFile` configuration option was removed from the root configutation
+object in Cypress version `10.0.0`. Instead, it must be added within each
+testing type's configuration object as a separate property if you would like to
+use a file other than the default
+[supportFile](/guides/references/configuration#Folders-Files) configuration.
+
 #### Use modules for utility functions
 
 Cypress supports both ES2015 modules and CommonJS modules. You can
@@ -62,16 +70,7 @@ It's still useful to load a setup file before your test code. If you are setting
 Cypress defaults or utilizing custom Cypress commands, instead of needing to
 import/require those defaults/commands in every test file, you can use the
 [`supportFile`](/guides/references/configuration#Folders-Files) configuration
-option.
-
-To include code before your test files, set the
-[`supportFile`](/guides/references/configuration#Folders-Files) path. By
-default, [`supportFile`](/guides/references/configuration#Folders-Files) is set
-to look for one of the following files:
-
-- `cypress/support/index.js`
-- `cypress/support/index.ts`
-- `cypress/support/index.coffee`
+option within each testing type's configuration object.
 
 Just like with your test files, the
 [`supportFile`](/guides/references/configuration#Folders-Files) can use ES2015+,

@@ -207,7 +207,7 @@ object:
 | Option            | Default                               | Description                                                                                                                                                                                         |
 | ----------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `setupNodeEvents` | `null`                                | Function in which node events can be registered and config can be modified. Takes the place of the (deprecated) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
-| `supportFile`     | `cypress/support/index.js`            | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                           |
+| `supportFile`     | `cypress/support/e2e.{js,jsx,ts,tsx}` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                           |
 | `specPattern`     | `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` | A String or Array of glob patterns of the test files to load                                                                                                                                        |
 
 :::cypress-config-example{noJson}
@@ -227,13 +227,13 @@ object:
 These options are available to be specified inside the `component` configuration
 object:
 
-| Option            | Default                    | Description                                                                                                                                                                                         |
-| ----------------- | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `devServer`       | `null`                     | Required function used to configure the component testing dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                                               |
-| `devServerConfig` | `null`                     | Optional dev server configuration. Config options will be determined by the dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                             |
-| `setupNodeEvents` | `null`                     | Function in which node events can be registered and config can be modified. Takes the place of the (deprecated) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
-| `supportFile`     | `cypress/support/index.js` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                           |
-| `specPattern`     | `**/*.cy.{js,jsx,ts,tsx}`  | A String or Array of glob patterns of the test files to load. <br><br>Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.**                            |
+| Option            | Default                                     | Description                                                                                                                                                                                         |
+| ----------------- | ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `devServer`       | `null`                                      | Required function used to configure the component testing dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                                               |
+| `devServerConfig` | `null`                                      | Optional dev server configuration. Config options will be determined by the dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                             |
+| `setupNodeEvents` | `null`                                      | Function in which node events can be registered and config can be modified. Takes the place of the (deprecated) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
+| `supportFile`     | `cypress/support/component.{js,jsx,ts,tsx}` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                           |
+| `specPattern`     | `**/*.cy.{js,jsx,ts,tsx}`                   | A String or Array of glob patterns of the test files to load. <br><br>Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.**                            |
 
 :::cypress-config-example{noJson}
 
