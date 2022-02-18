@@ -312,7 +312,8 @@
           "name": "cypress-tags",
           "description": "Use custom tags to slice up Cypress test runs",
           "link": "https://github.com/annaet/cypress-tags",
-          "keywords": ["test", "tag", "browserify"]
+          "keywords": ["test", "tag", "browserify"],
+          "badge": "community"
         },
         {
           "name": "@swimlane/cy-mockapi",
@@ -380,13 +381,6 @@
           "description": "Adds a cypress child command for drag'n'drop support.",
           "link": "https://github.com/4teamwork/cypress-drag-drop",
           "keywords": ["dragndrop", "drag", "drop", "commands"],
-          "badge": "community"
-        },
-        {
-          "name": "cypress-file-upload",
-          "description": "Simple custom command to ease file upload testing",
-          "link": "https://github.com/abramenal/cypress-file-upload",
-          "keywords": ["fileupload", "file", "upload", "commands"],
           "badge": "community"
         },
         {
@@ -703,9 +697,9 @@
         },
         {
           "name": "Nx",
-          "description": "Nrwl Extensions for Angular",
-          "link": "https://nrwl.io/nx/e2e-testing-with-cypress",
-          "keywords": ["angular", "cli"],
+          "description": "Smart, Fast and Extensible Build System",
+          "link": "https://nx.dev/cypress/overview",
+          "keywords": ["angular", "react", "cli", "monorepo"],
           "badge": "community"
         },
         {

@@ -7,6 +7,5 @@ dataType: blogs
 
 <!--
   If you're looking to add content to our Blogs page,
-  Go to ../source/_data/blogs.yml and add your blog.
-  See media.swig file that renders blogs.yml into HTML markup
+  Go to ../../_data/blogs.json and add your blog.
 -->

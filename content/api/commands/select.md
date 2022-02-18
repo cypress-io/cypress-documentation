@@ -36,7 +36,8 @@ The `value`, `index`, or text content of the `<option>` to be selected.
 
 **<Icon name="angle-right"></Icon> values** **_(Array)_**
 
-An array of `values`, `indexes`, or text contents of the `<option>`s to be selected.
+An array of `values`, `indexes`, or text contents of the `<option>`s to be
+selected.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -161,7 +162,10 @@ cy.get('select')
 
 <Alert type="info">
 
-**Note:** Passing an array into `cy.select()` will select only the options matching values in the array, leaving all other options unselected (even those that were previously selected). In the same manner, calling `cy.select([])` with an empty array will clear selections on all options.
+**Note:** Passing an array into `cy.select()` will select only the options
+matching values in the array, leaving all other options unselected (even those
+that were previously selected). In the same manner, calling `cy.select([])` with
+an empty array will clear selections on all options.
 
 </Alert>
 
@@ -234,8 +238,8 @@ cy.get('select#name option:selected').should('have.text', 'Peter')
 
 ### Actionability
 
-`.select()` is an action command that follows the rules
-[defined here](/guides/core-concepts/interacting-with-elements).
+`.select()` is an action command that follows the rules of
+[Actionability](/guides/core-concepts/interacting-with-elements).
 
 However, passing `{ force: true }` to `.select()` will not override the
 actionability checks for selecting a disabled `<option>` or an option within a

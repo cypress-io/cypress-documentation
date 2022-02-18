@@ -605,14 +605,12 @@ You can run a single test file or group of tests by passing the `--spec` flag to
 ## <Icon name="angle-right"></Icon> How do I test uploading a file?
 
 It is possible to upload files in your application but it's different based on
-how you've written your own upload code. Many people had success by using the
-community plugin
-[cypress-file-upload](https://github.com/abramenal/cypress-file-upload). This
-plugin adds a custom child command `.attachFile` that you call from the test.
+how you've written your own upload code. The various options are detailed in the
+[`.selectFile()` command](/api/commands/selectfile), but in many cases the
+simplest option will work:
 
 ```javascript
-// attaches the file cypress/fixtures/data.json
-cy.get('[data-cy="file-input"]').attachFile('data.json')
+cy.get('[data-cy="file-input"]').selectFile('cypress/fixtures/data.json')
 ```
 
 You can read more about uploading files in
@@ -811,9 +809,7 @@ You can `require` or `import` them as you're accustomed to. We preprocess your
 spec files with webpack and Babel.
 
 We recommend utilizing one of the following to execute code outside of the
-browser. Furthermore, you can use your own Node version during code excecution
-by setting the [nodeVersion](/guides/references/configuration#Node-version) in
-your configuration.
+browser.
 
 - [`cy.task()`](/api/commands/task) to run code in Node via the
   [pluginsFile](/guides/references/configuration#Folders-Files)
@@ -842,6 +838,10 @@ if (window.Cypress) {
   // we are running in a regular ol' browser
 }
 ```
+
+If you want to detect if your Node.js code is running within Cypress, Cypress
+sets an OS level environment variable of `CYPRESS=true`. You could detect that
+you're running in Cypress by looking for `process.env.CYPRESS`.
 
 ## <Icon name="angle-right"></Icon> Do you allow before, beforeEach, after, or afterEach hooks?
 
@@ -1223,3 +1223,22 @@ We have had a webinar with [Roman Sandler](https://twitter.com/RomanSndlr) where
 he has given practical advice on writing effective tests using the Testing
 Library. You can find the recording and the slides
 [here](https://www.cypress.io/blog/2020/07/15/webcast-recording-build-invincible-integration-tests-using-cypress-and-cypress-testing-library/).
+
+## <Icon name="angle-right"></Icon> How do I prevent the application from opening a new browser window?
+
+If the application is opening a second browser window or tab, the test can stop
+that action. Read the linked resources for to learn how to:
+
+- [deal with `<a target="_blank">` links](https://glebbahmutov.com/blog/cypress-tips-and-tricks/#deal-with-target_blank)
+- [deal with `window.open` calls](https://glebbahmutov.com/blog/cypress-tips-and-tricks/#deal-with-windowopen)
+
+## <Icon name="angle-right"></Icon> How do I prevent application redirecting to another URL?
+
+Sometimes, your application might redirect the browser to another domain, losing
+the Cypress's control. If the application is using `window.location.replace`
+method to set a _relative_ URL, try using the `experimentalSourceRewriting`
+option described in our [Experiments](/guides/references/experiments) page. You
+can also try rewriting the problematic application code from the test using the
+`cy.intercept` command, as described in the
+[Deal with `window.location.replace`](https://glebbahmutov.com/blog/cypress-tips-and-tricks/#deal-with-windowlocationreplace)
+tip.

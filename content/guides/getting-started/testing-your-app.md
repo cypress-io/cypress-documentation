@@ -350,7 +350,7 @@ a much more thorough analysis and approach to accomplishing this.
 ### Logging in
 
 One of the first (and arguably one of the hardest) hurdles you'll have to
-overcome is testing logging into your application.
+overcome in testing is logging into your application.
 
 Nothing slows a test suite down like having to log in, but all the good parts of
 your application most likely require an authenticated user! Here are some tips.
