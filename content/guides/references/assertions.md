@@ -193,8 +193,10 @@ These chainers are used on assertions with [`cy.stub()`](/api/commands/stub) and
 | alwaysCalledOn           | `expect(spy).to.always.be.calledOn(context)`                            |
 | calledWith               | `expect(spy).to.be.calledWith(...args)`                                 |
 | alwaysCalledWith         | `expect(spy).to.always.be.calledWith(...args)`                          |
+| calledOnceWith           | `expect(spy).to.be.calledOnceWith(...args)`                             |
 | calledWithExactly        | `expect(spy).to.be.calledWithExactly(...args)`                          |
 | alwaysCalledWithExactly  | `expect(spy).to.always.be.calledWithExactly(...args)`                   |
+| calledOnceWithExactly    | `expect(spy).to.be.calledOnceWithExactly(...args)`                      |
 | calledWithMatch          | `expect(spy).to.be.calledWithMatch(...args)`                            |
 | alwaysCalledWithMatch    | `expect(spy).to.always.be.calledWithMatch(...args)`                     |
 | returned                 | `expect(spy).to.have.returned(returnVal)`                               |
