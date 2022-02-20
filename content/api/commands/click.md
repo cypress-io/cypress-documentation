@@ -210,7 +210,7 @@ element(s).</li></List>
 
 <List><li>`.click()` will automatically wait for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.click()`
-will automatically [retry](/guides/core-concepts/retry-ability) until all
+will **NOT** automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed</li></List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
