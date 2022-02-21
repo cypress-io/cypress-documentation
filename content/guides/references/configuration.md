@@ -585,7 +585,7 @@ Cypress uses `minimatch` with the options: `{dot: true, matchBase: true}`. We
 suggest using [https://globster.xyz](https://globster.xyz) to test what files
 would match.
 
-The **/node_modules/** pattern is automatically added to `specExcludePattern`,
+The `**/node_modules/**` pattern is automatically added to `specExcludePattern`,
 and does not need to be specified (and can't be overridden). See [`e2e`](#e2e)
 or [`component`](#component) testing-specific options.
 
@@ -780,7 +780,7 @@ See the [plugins guide](/guides/tooling/plugins-guide) for more information.
 
 ## Common problems
 
-#### <Icon name="angle-right"></Icon> `baseUrl`&nbsp;is not set
+#### <Icon name="angle-right"></Icon> `baseUrl` is not set
 
 Make sure you do not accidentally place the `baseUrl` or another top-level
 config option into the `env` object. The following configuration is _incorrect_
