@@ -114,15 +114,11 @@ If you have any questions regarding the OSS plan, please feel free
 
 ## Integrations
 
-### GitHub Integration
-
-Please see our full documentation for
-[GitHub Integration](/guides/dashboard/github-integration).
-
-### Slack Integration
-
-Please see our full documentation for
-[Slack Integration](/guides/dashboard/slack-integration).
+- [BitBucket](/guides/dashboard/bitbucket-integration)
+- [GitHub](/guides/dashboard/github-integration)
+- [GitLab](/guides/dashboard/gitlab-integration)
+- [Jira](/guides/dashboard/jira-integration)
+- [Slack](/guides/dashboard/slack-integration)
 
 ### Enterprise SSO
 
@@ -259,7 +255,7 @@ organization to sign in through your SSO provider.
 
 - Once SSO is set up in the Dashboard, Users should be invited via your SSO
   provider, not the Dashboard.
-- All SSO Users are initailly added with the
+- All SSO Users are initially added with the
   [User Role](https://on.cypress.io/users#User-roles) of Member. If a User needs
   different User Role permissions, this can be changed via the Cypress Dashboard
   by a current member with the role of Owner or Admin.

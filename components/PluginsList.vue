@@ -24,11 +24,13 @@ export default {
           >{{ pluginType.name }}</a
         >
       </h2>
+      <!-- eslint-disable vue/no-v-html -->
       <p
         v-if="pluginType.description"
         class="my-8"
         v-html="pluginType.description"
       ></p>
+      <!--eslint-enable-->
       <ul :class="$style.pluginsList">
         <li v-for="plugin in pluginType.plugins" :key="plugin.name" class="m-3">
           <div :class="$style.pluginTitle">

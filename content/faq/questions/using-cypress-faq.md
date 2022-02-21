@@ -605,14 +605,12 @@ You can run a single test file or group of tests by passing the `--spec` flag to
 ## <Icon name="angle-right"></Icon> How do I test uploading a file?
 
 It is possible to upload files in your application but it's different based on
-how you've written your own upload code. Many people had success by using the
-community plugin
-[cypress-file-upload](https://github.com/abramenal/cypress-file-upload). This
-plugin adds a custom child command `.attachFile` that you call from the test.
+how you've written your own upload code. The various options are detailed in the
+[`.selectFile()` command](/api/commands/selectfile), but in many cases the
+simplest option will work:
 
 ```javascript
-// attaches the file cypress/fixtures/data.json
-cy.get('[data-cy="file-input"]').attachFile('data.json')
+cy.get('[data-cy="file-input"]').selectFile('cypress/fixtures/data.json')
 ```
 
 You can read more about uploading files in
@@ -1101,9 +1099,6 @@ JavaScript Cypress tests.
 - read
   [Cypress Super-patterns: How to elevate the quality of your test suite](https://dev.to/wescopeland/cypress-super-patterns-how-to-elevate-the-quality-of-your-test-suite-1lcf)
   for best practices when writing Cucumber tests
-- take a look at
-  [briebug/bba-cypress-quickstart](https://github.com/briebug/bba-cypress-quickstart)
-  example application
 
 ## <Icon name="angle-right"></Icon> Can I test Next.js sites using Cypress?
 
