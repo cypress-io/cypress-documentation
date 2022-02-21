@@ -16,11 +16,9 @@ file in the project root if one exists. The
 [Configuration guide](/guides/references/configuration) has been updated to
 reflect these changes, and explains them in greater detail.
 
-The `cypress.json` configuration file is now deprecated. Documentation for
-`cypress.json` is now available in the
-[Legacy Configuration guide](/guides/references/legacy-configuration). Support
-for `cypress.json` will be removed in a future version of Cypress.
-
+While you can continue using `cypress.json`, support for it will be removed in a
+future version of Cypress. Documentation for `cypress.json` is now available in
+the [Legacy Configuration guide](/guides/references/legacy-configuration).
 Related notes:
 
 - If no config file exists when you open the Cypress App, a
@@ -81,12 +79,45 @@ on('<event>', (arg1, arg2) => {
 
 ### Config option changes
 
+#### `baseUrl`
+
+This option is no longer valid at the top-level, and may only be defined inside
+the `e2e` configuration object.
+
+#### `componentFolder`
+
+////
+
+#### devServer() and devServerConfig
+
+////
+
+#### `experimentalStudio`
+
+This option is no longer used, and has been removed completely.
+
+#### `ignoreTestFiles`
+
+////
+
+#### `integrationFolder`
+
+////
+
+#### `setupNodeEvents()`
+
+////
+
 #### `supportFile`
 
 The `supportFile` configuration option is no longer valid at the top-level.
 Instead, it must be configured within each testing type's configuration object.
 More information can be found in the
 [support file docs](/guides/core-concepts/writing-and-organizing-tests#Support-file).
+
+#### `testFiles`
+
+////
 
 ## Migrating from `cypress-file-upload` to [`.selectFile()`](/api/commands/selectfile)
 

@@ -59,16 +59,13 @@ function processNode(node, { _require, error, warn }) {
       `,
     },
     {
-      label: 'cypress.json (deprecated)',
+      label: 'cypress.json',
       language: 'json',
       alert: endent`
         <Alert type="warning">
 
-        <strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
-        Deprecated</strong>
-
-        The \`cypress.json\` file is no longer supported as of Cypress version 10.0.0. We recommend
-        that you update your configuration.
+        The \`cypress.json\` file is being replaced by \`cypress.config.js\` or \`cypress.config.ts\` in Cypress version 10.0.0. We recommend
+        that you update your configuration accordingly.
 
         Please see the [new configuration guide](/guides/references/configuration) and the
         [migration guide](/guides/references/migration-guide) for more information.
