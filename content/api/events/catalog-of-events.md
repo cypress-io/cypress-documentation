@@ -183,9 +183,7 @@ single test.
 
 #### To turn off all uncaught exception handling
 
-You'll likely want to do this in a
-[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file)
-so it's applied to all spec files.
+::include{file=partials/support-file-configuration.md}
 
 ```javascript
 Cypress.on('uncaught:exception', (err, runnable) => {
@@ -197,9 +195,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 
 ### To conditionally turn off uncaught exception handling for a certain error
 
-You'll likely want to do this in a
-[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file)
-so it's applied to all spec files.
+::include{file=partials/support-file-configuration.md}
 
 ```javascript
 Cypress.on('uncaught:exception', (err, runnable) => {
@@ -215,9 +211,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 
 ### To conditionally turn off uncaught exception handling unhandled promise rejections
 
-You'll likely want to do this in a
-[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file)
-so it's applied to all spec files.
+::include{file=partials/support-file-configuration.md}
 
 ```javascript
 Cypress.on('uncaught:exception', (err, runnable, promise) => {
