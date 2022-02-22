@@ -265,7 +265,7 @@ DEBUG=cypress:* cypress run
 **On Windows:**
 
 On Windows, you'll need to run the command in a command prompt terminal (not
-Powershell).
+PowerShell).
 
 ```shell
 set DEBUG=cypress:*

@@ -535,12 +535,6 @@ it(name, config, fn)
 specify(name, config, fn)
 ```
 
-### Test Configuration
-
-This configuration will take effect during the suite or tests where they are set
-then return to their previous default values after the suite or tests are
-complete.
-
 #### Allowed config values
 
 <Icon name="exclamation-triangle" color="red"></Icon> **Note:** Some
