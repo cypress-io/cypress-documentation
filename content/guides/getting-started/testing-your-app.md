@@ -142,9 +142,8 @@ application. Luckily, Cypress provides a
 [configuration option](/guides/references/configuration) for this. Let's
 leverage that now.
 
-Open up your [configuration file](/guides/references/configuration)
-(`cypress.json` in your project directory, by default) It starts out empty, but
-let's add the `baseUrl` option.
+Open up your [configuration file](/guides/references/configuration). It starts
+out empty, but let's add the `baseUrl` option.
 
 :::cypress-config-example
 
