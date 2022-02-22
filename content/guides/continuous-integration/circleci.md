@@ -25,8 +25,7 @@ The [Cypress CircleCI Orb](https://github.com/cypress-io/circleci-orb) is a
 piece of configuration set in your `.circleci/config.yml` file to correctly
 install, cache and run Cypress with very little effort.
 
-Full documentation can be found at the
-[`cypress-io/circleci-orb`](https://github.com/cypress-io/circleci-orb) repo.
+Full documentation can be found at the [`cypress-io/circleci-orb`](https://github.com/cypress-io/circleci-orb) repo. For the Orb Quick Start Guide and usage cases, view the [CircleCI Cypress orb](https://github.com/cypress-io/circleci-orb) documentation.
 
 A typical project can have:
 
