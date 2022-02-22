@@ -105,7 +105,7 @@ export default (on, config) => {
   config.env.auth0_audience = process.env.REACT_APP_AUTH0_AUDIENCE
   config.env.auth0_scope = process.env.REACT_APP_AUTH0_SCOPE
   config.env.auth0_client_id = process.env.REACT_APP_AUTH0_CLIENTID
-  config.env.auth0_client_secret = process.env.AUTH0_CLIENT_SECRETD
+  config.env.auth0_client_secret = process.env.AUTH0_CLIENT_SECRET
 
   // plugins code ...
 
@@ -205,8 +205,8 @@ describe('Auth0', function () {
   beforeEach(function () {
     cy.task('db:seed')
     cy.loginByAuth0Api(
-      Cypress.env('auth_username'),
-      Cypress.env('auth_password')
+      Cypress.env('auth0_username'),
+      Cypress.env('auth0_password')
     )
   })
 
