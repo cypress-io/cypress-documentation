@@ -51,6 +51,8 @@ with Cypress.
   Various helpers and commands for integration with Cypress.
 - [Cypress Snippets](https://marketplace.visualstudio.com/items?itemName=andrew-codes.cypress-snippets):
   Useful Cypress code snippets.
+- [Cypress Snippets](https://marketplace.visualstudio.com/items?itemName=CliffSu.cypress-snippets):
+  This extension includes the newest and most common cypress snippets.
 - [Open Cypress](https://marketplace.visualstudio.com/items?itemName=tnrich.vscode-extension-open-cypress):
   Allows you to open Cypress specs and single `it()` blocks directly from VS
   Code.
