@@ -64,11 +64,11 @@ function processNode(node, { _require, error, warn }) {
       alert: endent`
         <Alert type="warning">
 
-        The \`cypress.json\` file is being replaced by \`cypress.config.js\` or \`cypress.config.ts\` in Cypress version 10.0.0. We recommend
+        The \`cypress.json\` file has been replaced by \`cypress.config.js\` or \`cypress.config.ts\` in Cypress version 10.0.0. We recommend
         that you update your configuration accordingly.
 
         Please see the [new configuration guide](/guides/references/configuration) and the
-        [migration guide](/guides/references/migration-guide) for more information.
+        [migration guide](/guides/references/migration-guide#Migrating-to-Cypress-version-10-0-0) for more information.
 
         </Alert>
       `,

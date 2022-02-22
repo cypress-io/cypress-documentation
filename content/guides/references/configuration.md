@@ -17,9 +17,6 @@ configuration file.
 
 <Alert type="warning">
 
-<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
-Deprecated</strong>
-
 Configuring Cypress via `cypress.json` is no longer supported as of Cypress
 version 10.0.0.
 
