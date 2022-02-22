@@ -1,6 +1,14 @@
 {
   "courses": [
     {
+      "title": "Cypress: Web Automation Testing from Zero to Hero",
+      "url": "https://www.udemy.com/course/cypress-web-automation-testing-from-zero-to-hero/?couponCode=CYPRESSDOCS",
+      "author": "Artem Bondar",
+      "authorTwitter": "ArtemBondar",
+      "sourceName": "Udemy",
+      "sourceUrl": "https://udemy.com"
+    },
+    {
       "title": "Test network edge cases with .intercept() command in Cypress",
       "url": "https://egghead.io/courses/test-network-edge-cases-with-cy-intercept-command-in-cypress-0fd94c68?af=1mdhb0",
       "author": "Filip Hric",
