@@ -83,8 +83,8 @@ globally in [configuration](/guides/references/configuration).
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.visit()` 'yields the `window` object after the page finishes
-loading' </li></List>
+<List><li>`cy.visit()` yields the `window` object after the page finishes
+loading</li></List>
 
 Let's confirm the `window.navigator.language` after visiting the site:
 
