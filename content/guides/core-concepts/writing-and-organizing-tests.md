@@ -601,16 +601,19 @@ You can configure the number of retry attempts during `cypress run` or
 information.
 
 ```js
-it('should redirect unauthenticated user to sign-in page', {
+it(
+  'should redirect unauthenticated user to sign-in page',
+  {
     retries: {
       runMode: 3,
-      openMode: 2
-    }
-  } () => {
+      openMode: 2,
+    },
+  },
+  () => {
     cy.visit('/')
     // ...
-  })
-})
+  }
+)
 ```
 
 ### Dynamically Generate Tests
