@@ -1022,6 +1022,13 @@
           "link": "https://github.com/mailslurp/cypress-mailslurp",
           "keywords": ["email", "mailslurp", "test", "commands"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-sendria",
+          "description": "Cypress Plugin for Sendria Fake SMTP Server. Use this plugin for tests like Account confirmation/verifications emails, one time passwords (OTPs) in email or general email testing.",
+          "link": "https://github.com/upgundecha/cypress-sendria",
+          "keywords": ["email", "email testing", "sendria", "test", "commands"],
+          "badge": "community"
         }
       ]
     }
