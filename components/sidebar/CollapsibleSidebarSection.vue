@@ -160,8 +160,8 @@ export default {
           </nuxt-link>
         </li>
         <li v-else>
-          <div class="pl-4 py-0 mt-4 text-xs font-semibold text-gray-400 grid grid-cols-1">
-            <span class="border-b border-gray-300 border-dashed">{{ child.title }}</span>
+          <div class="pl-3 py-0 mt-5 text-sm font-semibold text-gray-400 grid grid-cols-1 text-transform: uppercase">
+            <span>{{ child.title }}</span>
           </div>
         </li>
       </div>
