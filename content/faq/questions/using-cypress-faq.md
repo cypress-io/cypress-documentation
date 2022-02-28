@@ -1099,9 +1099,6 @@ JavaScript Cypress tests.
 - read
   [Cypress Super-patterns: How to elevate the quality of your test suite](https://dev.to/wescopeland/cypress-super-patterns-how-to-elevate-the-quality-of-your-test-suite-1lcf)
   for best practices when writing Cucumber tests
-- take a look at
-  [briebug/bba-cypress-quickstart](https://github.com/briebug/bba-cypress-quickstart)
-  example application
 
 ## <Icon name="angle-right"></Icon> Can I test Next.js sites using Cypress?
 
