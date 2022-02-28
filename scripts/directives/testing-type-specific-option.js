@@ -6,20 +6,18 @@ function processNode(node, { error }) {
 
   if (!option) {
     return error(
-      `Found a "::testing-type-specific-option" directive without a "option" attribute. You might have intended to import a partial into a markdown file, but no partial can be found without the "option" attribute. The "::testing-type-specific-option" directive should look like "::testing-type-specific-option{option=foo}".`
+      `Found a "::testing-type-specific-option" directive without a "option" attribute. This directive should look like "::testing-type-specific-option{option=configOptionName}".`
     )
   }
-
-  const message = `Depending on which Cypress [test type](/guides/overview/choosing-testing-type)
-  you are using, you can configure your \`OPTION_HERE\` accordingly.`
 
   return endent`
     <Alert type="info">
 
-    <strong class="alert-header"><Icon name="cogs"></Icon> Support File, Per Test
-    Type</strong>
+    <strong class="alert-header"><Icon name="cogs"></Icon> \`${option}\` per testing
+    type</strong>
 
-    ${message.replace('OPTION_HERE', option)}
+    Depending on which [testing type](/guides/overview/choosing-testing-type)
+    you are using, you can configure your \`${option}\` accordingly.
 
     - [component](/guides/references/configuration#component)
     - [e2e](/guides/references/configuration#e2e)

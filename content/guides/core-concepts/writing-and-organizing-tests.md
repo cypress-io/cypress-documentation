@@ -263,8 +263,36 @@ The initial imported plugins file can be
 
 ### Support file
 
-We automatically seed an example support file for each configured testing type,
-which has several commented out examples.
+To include code before your test files, set the
+[`supportFile`](/guides/references/configuration#Folders-Files) path. By
+default, [`supportFile`](/guides/references/configuration#Folders-Files) is set
+to look for one of the following files:
+
+**Component:**
+
+- `cypress/support/component.js`
+- `cypress/support/component.jsx`
+- `cypress/support/component.ts`
+- `cypress/support/component.tsx`
+
+**End-to-End:**
+
+- `cypress/support/e2e.js`
+- `cypress/support/e2e.jsx`
+- `cypress/support/e2e.ts`
+- `cypress/support/e2e.tsx`
+
+<Alert type="danger">
+
+⚠️ For a given testing type, multiple matching `supportFile` files will result
+in an error when Cypress loads.
+
+</Alert>
+
+::testing-type-specific-option{option=supportFile}
+
+The Cypress App automatically creates an example support file for each
+configured testing type, which has several commented out examples.
 
 This file runs **before** every single spec file. We do this purely as a
 convenience mechanism so you don't have to import this file in every single one
@@ -273,12 +301,6 @@ of your spec files.
 The support file is a great place to put reusable behavior such as
 [custom commands](/api/cypress-api/custom-commands) or global overrides that you
 want applied and available to all of your spec files.
-
-By default Cypress will automatically include type-specific support files. For
-E2E, the default is `cypress/support/e2e.{js,jsx,ts,tsx}`, and for Component
-Testing `cypress/support/e2e.{js,jsx,ts,tsx}`.
-
-::testing-type-specific-option{option=supportFile}
 
 The initial imported support file can be configured to another file or turned
 off completely using the
@@ -319,44 +341,6 @@ the files in the following order:
 
 1. `support/component.js` (your support file)
 2. `components/Button/Button.cy.js` (your spec file)
-
-#### Use supportFile to load scripts before your test code
-
-If you are setting Cypress defaults or utilizing custom Cypress commands,
-instead of needing to import/require those defaults/commands in every test file,
-you can use the [`supportFile`](/guides/references/configuration#Folders-Files)
-configuration option.
-
-To include code before your test files, set the
-[`supportFile`](/guides/references/configuration#Folders-Files) path. By
-default, [`supportFile`](/guides/references/configuration#Folders-Files) is set
-to look for one of the following files:
-
-**Component:**
-
-- `cypress/support/component.js`
-- `cypress/support/component.jsx`
-- `cypress/support/component.ts`
-- `cypress/support/component.tsx`
-
-**End-to-End:**
-
-- `cypress/support/e2e.js`
-- `cypress/support/e2e.jsx`
-- `cypress/support/e2e.ts`
-- `cypress/support/e2e.tsx`
-
-<Alert type="danger">
-
-⚠️ For a given testing type, multiple matching `supportFile` files will result
-in an error when Cypress loads.
-
-</Alert>
-
-Just like with your test files, the
-[`supportFile`](/guides/references/configuration#Folders-Files) can use ES2015+,
-[TypeScript](/guides/tooling/typescript-support) or CoffeeScript and modules, so
-you can import/require other files as needed.
 
 ### Troubleshooting
 
