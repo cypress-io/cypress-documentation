@@ -263,6 +263,17 @@ The initial imported plugins file can be
 
 ### Support file
 
+We automatically seed an example support file for each configured testing type,
+which has several commented out examples.
+
+This file runs **before** every single spec file. We do this purely as a
+convenience mechanism so you don't have to import this file in every single one
+of your spec files.
+
+The support file is a great place to put reusable behavior such as
+[custom commands](/api/cypress-api/custom-commands) or global overrides that you
+want applied and available to all of your spec files.
+
 By default Cypress will automatically include type-specific support files. For
 E2E, the default is `cypress/support/e2e.{js,jsx,ts,tsx}`, and for Component
 Testing `cypress/support/e2e.{js,jsx,ts,tsx}`.
@@ -272,22 +283,8 @@ Testing `cypress/support/e2e.{js,jsx,ts,tsx}`.
 The initial imported support file can be configured to another file or turned
 off completely using the
 [supportFile](/guides/references/configuration#Folders-Files) configuration.
-
-This file runs **before** every single spec file. We do this purely as a
-convenience mechanism so you don't have to import this file in every single one
-of your spec files.
-
-::testing-type-specific-option{file=partials/support-file-test-type.md}
-
-The support file is a great place to put reusable behavior such as
-[custom commands](/api/cypress-api/custom-commands) or global overrides that you
-want applied and available to all of your spec files.
-
 From your support file you can `import` or `require` other files to keep things
 organized.
-
-We automatically seed an example support file for each configured testing type,
-which has several commented out examples.
 
 You can define behaviors in a `before` or `beforeEach` within any of the
 `cypress/support` files:
@@ -325,11 +322,10 @@ the files in the following order:
 
 #### Use supportFile to load scripts before your test code
 
-It's still useful to load a setup file before your test code. If you are setting
-Cypress defaults or utilizing custom Cypress commands, instead of needing to
-import/require those defaults/commands in every test file, you can use the
-[`supportFile`](/guides/references/configuration#Folders-Files) configuration
-option.
+If you are setting Cypress defaults or utilizing custom Cypress commands,
+instead of needing to import/require those defaults/commands in every test file,
+you can use the [`supportFile`](/guides/references/configuration#Folders-Files)
+configuration option.
 
 To include code before your test files, set the
 [`supportFile`](/guides/references/configuration#Folders-Files) path. By
@@ -349,14 +345,6 @@ to look for one of the following files:
 - `cypress/support/e2e.jsx`
 - `cypress/support/e2e.ts`
 - `cypress/support/e2e.tsx`
-
-// ========== (duplicate for review purposes) // ==========
-
-**Component:** `cypress/support/component.{js,jsx,ts,tsx}`
-
-**End-to-End:**
-
-- The default value is `cypress/support/e2e.{js,jsx,ts,tsx}`
 
 <Alert type="danger">
 
