@@ -80,13 +80,12 @@ cy.get('.checkbox').check({ force: true })
 
 ### Add as a custom command
 
-Although Cypress does not have a built-in **cy.hover()**, it is a reserved
-command. Therefore, to add `cy.hover()` as a custom command;
-`Cypress.Commands.overwrite()` should be used instead of
-`Cypress.Commands.add()`.
+Although Cypress does not have a built-in `cy.hover()`, you can add your own
+custom command using
+[`Cypress.Commands.add()`](/api/cypress-api/custom-commands).
 
 ```javascript
-Cypress.Commands.overwrite('hover', (originalFn, ...otherArgs) => {})
+Cypress.Commands.add('hover', (originalFn, ...otherArgs) => {})
 ```
 
 ## See also

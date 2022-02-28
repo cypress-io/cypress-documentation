@@ -46,7 +46,7 @@ the commands file. Below are examples to start with for your commands:
 ```js
 import { mount } from '@cypress/react'
 
-Cypress.Commands.overwrite('mount', (component, options) => {
+Cypress.Commands.add('mount', (component, options) => {
   // Wrap any parent components needed
   // ie: return mount(<MyProvider>{component}</MyProvider>, options)
   return mount(component, options)
@@ -59,7 +59,7 @@ Cypress.Commands.overwrite('mount', (component, options) => {
 ```js
 import { mount } from '@cypress/vue'
 
-Cypress.Commands.overwrite('mount', (component, options = {}) => {
+Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
   options.extensions = options.extensions || {}
   options.extensions.plugins = options.extensions.plugins || []
@@ -85,7 +85,7 @@ Cypress.Commands.overwrite('mount', (component, options = {}) => {
 ```js
 import { mount } from '@cypress/vue'
 
-Cypress.Commands.overwrite('mount', (component, options = {}) => {
+Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
   options.global = options.global || {}
   options.global.stubs = options.global.stubs || {}
@@ -705,7 +705,7 @@ properly:
 import { mount } from '@cypress/vue'
 import Button from '../../src/components/Button.vue'
 
-Cypress.Commands.overwrite('mount', (component, options = {}) => {
+Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
   options.extensions = options.extensions || {}
   options.extensions.plugins = options.extensions.plugins || []
@@ -725,7 +725,7 @@ Cypress.Commands.overwrite('mount', (component, options = {}) => {
 import { mount } from '@cypress/vue'
 import Button from '../../src/components/Button.vue'
 
-Cypress.Commands.overwrite('mount', (component, options = {}) => {
+Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
   options.global = options.global || {}
   options.global.components = options.global.components || {}
