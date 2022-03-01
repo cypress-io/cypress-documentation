@@ -50,7 +50,9 @@ recommend wrapping your config object with `defineConfig()` like this:
 
 ```js
 {
-  baseUrl: 'http://localhost:1234'
+  e2e: {
+    baseUrl: 'http://localhost:1234'
+  }
 }
 ```
 
@@ -782,9 +784,8 @@ See the [plugins guide](/guides/tooling/plugins-guide) for more information.
 
 #### <Icon name="angle-right"></Icon> `baseUrl` is not set
 
-Make sure you do not accidentally place the `baseUrl` or another top-level
-config option into the `env` object. The following configuration is _incorrect_
-and will not work:
+Make sure you do not accidentally place the `baseUrl` config option into the
+`env` object. The following configuration is _incorrect_ and will not work:
 
 :::cypress-config-example{noJson}
 
@@ -800,17 +801,19 @@ and will not work:
 
 :::
 
-Solution: place the `baseUrl` property at the top level, outside the `env`
-object.
+Solution: place the `baseUrl` property outside the `env` object and inside the
+[e2e](/guides/references/configuration#e2e) testing-type specific object.
 
 :::cypress-config-example{noJson}
 
 ```js
 {
   // ✅ THE CORRECT WAY
-  baseUrl: 'http://localhost:3030',
   env: {
     FOO: 'bar'
+  },
+  e2e: {
+    baseUrl: 'http://localhost:3030',
   }
 }
 ```

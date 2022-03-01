@@ -249,7 +249,9 @@ prevent repeating yourself in every `cy.visit()` command.
 
 ```js
 {
-  baseUrl: 'http://localhost:3000/#/'
+  e2e: {
+    baseUrl: 'http://localhost:3000/#/'
+  }
 }
 ```
 
@@ -292,7 +294,9 @@ Imagine this Cypress configuration:
 
 ```js
 {
-  baseUrl: 'https://example.cypress.io'
+  e2e: {
+    baseUrl: 'https://example.cypress.io'
+  }
 }
 ```
 
