@@ -205,8 +205,8 @@ describe('Auth0', function () {
   beforeEach(function () {
     cy.task('db:seed')
     cy.loginByAuth0Api(
-      Cypress.env('auth_username'),
-      Cypress.env('auth_password')
+      Cypress.env('auth0_username'),
+      Cypress.env('auth0_password')
     )
   })
 
