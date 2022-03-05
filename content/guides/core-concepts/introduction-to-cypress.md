@@ -860,8 +860,8 @@ queue, to be executed asynchronously at a later date. These commands are
 designed to deliver deterministic, repeatable and consistent tests.
 
 Almost all commands come with built-in
-[retry-ability](/guides/core-concepts/retry-ability)**. Without
-[**retry-ability\*\*](/guides/core-concepts/retry-ability), assertions would
+**[retry-ability](/guides/core-concepts/retry-ability)**. Without
+**[retry-ability](/guides/core-concepts/retry-ability)**, assertions would
 randomly fail. This would lead to flaky, inconsistent results.
 
 <Alert type="info">
