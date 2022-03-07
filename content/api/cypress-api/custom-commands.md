@@ -687,9 +687,9 @@ understandable.
 
 ### `cy.hover()` and `cy.mount()`
 
-Cypress does not have hover() or mount() commands out-of-the-box. See how to
-craft your own [cy.hover()](/api/commands/hover) and
-[cy.mount()](/api/commands/mount) custom commands.
+Cypress does not have `cy.hover()` or `cy.mount()` commands out-of-the-box. See how to
+craft your own [`cy.hover()`](/api/commands/hover) and
+[`cy.mount()`](/api/commands/mount) custom commands.
 
 ### Best Practices
 
