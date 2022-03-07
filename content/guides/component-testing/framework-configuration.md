@@ -96,7 +96,7 @@ You'll also need to install the Cypress Webpack Dev Server and Vue 2 adapter, as
 well as some devDependencies:
 
 ```sh
-npm install --save-dev cypress @cypress/vue @cypress/webpack-dev-server html-webpack-plugin@4
+npm install --save-dev cypress @cypress/vue@2 @cypress/webpack-dev-server html-webpack-plugin@4
 ```
 
 <Alert type="info">
@@ -177,8 +177,8 @@ without opening a browser with `npx cypress run-ct`.
 
 The installation and configuration is the same as Vue 2 with the Vue CLI as
 described above. The only difference is the Vue adapter should be installed
-using `npm install @cypress/vue@next` - `@cypress/vue` targets Vue 2, and the
-`next` branch targets Vue 3.
+using `npm install @cypress/vue`. `@cypress/vue@2` targets Vue 2, and the
+`latest` release targets Vue 3.
 
 You can find an example project
 [here](https://github.com/cypress-io/cypress-component-examples/tree/main/vue-cli-vue-3-cypress).
@@ -297,7 +297,7 @@ Nuxt uses Vue 2 and Webpack under the hood, so you also need to install the
 Cypress Webpack Dev Server and Vue 2 adapter, as well as some devDependencies:
 
 ```sh
-npm install --save-dev cypress @cypress/vue @cypress/webpack-dev-server html-webpack-plugin@4
+npm install --save-dev cypress @cypress/vue@2 @cypress/webpack-dev-server html-webpack-plugin@4
 ```
 
 <Alert type="info">

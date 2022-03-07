@@ -27,6 +27,8 @@ install, cache and run Cypress with very little effort.
 
 Full documentation can be found at the
 [`cypress-io/circleci-orb`](https://github.com/cypress-io/circleci-orb) repo.
+For the Orb Quick Start Guide and usage cases, view the CircleCI
+[Cypress orb documentation](https://circleci.com/developer/orbs/orb/cypress-io/cypress).
 
 A typical project can have:
 

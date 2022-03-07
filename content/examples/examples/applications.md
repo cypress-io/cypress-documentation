@@ -5,14 +5,12 @@ containerClass: examples
 
 Below is a list of complete applications tested in Cypress.
 
-| Name                                      | JS          | Description                                                                                                   |
-| ----------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------- |
-| [Kitchen Sink](#Kitchen-Sink)             | Vanilla     | Showcases every single Cypress command                                                                        |
-| [TodoMVC](#TodoMVC)                       | React       | Compares the official TodoMVC Selenium tests to Cypress                                                       |
-| [Realworld](#Realworld)                   | React       | Full end-to-end tests for the [gothinkster/realworld](https://github.com/gothinkster/realworld) "Conduit" app |
-| [Phonecat](#Phonecat)                     | Angular 1.x | Compares the official Phonecat Protractor tests to Cypress                                                    |
-| [PieChopper](#PieChopper)                 | Angular 1.x | Tests a fully featured application with many forms and modals                                                 |
-| [Angular-playground](#Angular-playground) | Angular 11  | Full TypeScript project with code coverage                                                                    |
+| Name                                      | JS         | Description                                                                                                   |
+| ----------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------- |
+| [Kitchen Sink](#Kitchen-Sink)             | Vanilla    | Showcases every single Cypress command                                                                        |
+| [TodoMVC](#TodoMVC)                       | React      | Compares the official TodoMVC Selenium tests to Cypress                                                       |
+| [Realworld](#Realworld)                   | React      | Full end-to-end tests for the [gothinkster/realworld](https://github.com/gothinkster/realworld) "Conduit" app |
+| [Angular-playground](#Angular-playground) | Angular 11 | Full TypeScript project with code coverage                                                                    |
 
 ## Kitchen Sink
 
@@ -89,35 +87,6 @@ Shows a full blogging application, "Conduit", with back end code and a database.
   details.
 
 <DocsImage src="/img/examples/realworld-app.png" alt="Realworld test in Cypress" ></DocsImage>
-
-## Phonecat
-
-<Icon name="github"></Icon>
-[https://github.com/cypress-io/cypress-example-phonecat](https://github.com/cypress-io/cypress-example-phonecat)
-
-This tests the
-[original Angular Phonecat example app](https://github.com/angular/angular-phonecat)
-using Cypress.
-
-- Test redirect behavior of application using [.hash()](/api/commands/hash).
-- Test loading behavior of app.
-
-<DocsImage src="/img/examples/public-project-phone-cat.png" alt="Phonecat Angular tutorial app tested in cypress" ></DocsImage>
-
-## PieChopper
-
-<Icon name="github"></Icon>
-[https://github.com/cypress-io/cypress-example-piechopper](https://github.com/cypress-io/cypress-example-piechopper)
-
-This is a single page application with a decent amount of features. The tests
-involve a lot of form submissions.
-
-- Test mobile responsive views using [`cy.viewport()`](/api/commands/viewport)
-- Test that the app scrolls correctly
-- Check checkboxes using [`cy.check()`](/api/commands/check)
-- Stub responses from our back end using [`cy.route()`](/api/commands/route)
-
-<DocsImage src="/img/examples/public-project-piechopper.png" alt="Piechopper app tested in cypress" ></DocsImage>
 
 ## Angular-playground
 
