@@ -39,7 +39,7 @@ Let's take a look at how to implement the command.
 
 To use `cy.mount()`, add a [custom command](/api/cypress-api/custom-commands) to
 the commands file using
-[Cypress.Commands.add()](/api/cypress-api/custom-commands). Below are examples
+[`Cypress.Commands.add()`](/api/cypress-api/custom-commands). Below are examples
 to start with for your commands:
 
 <code-group-react-vue2-vue3>
