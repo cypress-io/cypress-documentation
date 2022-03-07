@@ -75,12 +75,17 @@ pass.</li></List>
 
 ## Known Issue
 
-When working with `cy.click()`, it sometimes won't click the right element in Chrome. It's happening because of [the ambiguity in spec](https://bugs.chromium.org/p/chromium/issues/detail?id=1188919&q=shadowRoot%20elementFromPoint&can=2).
+When working with `cy.click()`, it sometimes won't click the right element in
+Chrome. It's happening because of
+[the ambiguity in spec](https://bugs.chromium.org/p/chromium/issues/detail?id=1188919&q=shadowRoot%20elementFromPoint&can=2).
 
 In this case, pass `{ position: 'top' }` to `cy.click()` like below:
 
 ```js
-cy.get('#element').shadow().find('[data-test-id="my-button"]').click({ position: 'top' })
+cy.get('#element')
+  .shadow()
+  .find('[data-test-id="my-button"]')
+  .click({ position: 'top' })
 ```
 
 ## Command Log
