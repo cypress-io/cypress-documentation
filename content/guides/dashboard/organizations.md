@@ -114,24 +114,21 @@ If you have any questions regarding the OSS plan, please feel free
 
 ## Integrations
 
-### GitHub Integration
-
-Please see our full documentation for
-[GitHub Integration](/guides/dashboard/github-integration).
-
-### Slack Integration
-
-Please see our full documentation for
-[Slack Integration](/guides/dashboard/slack-integration).
+- [BitBucket](/guides/dashboard/bitbucket-integration)
+- [GitHub](/guides/dashboard/github-integration)
+- [GitLab](/guides/dashboard/gitlab-integration)
+- [Jira](/guides/dashboard/jira-integration)
+- [Slack](/guides/dashboard/slack-integration)
 
 ### Enterprise SSO
 
-<Alert type="info">
+<Alert type="success">
 
-<strong class="alert-header">Paid Add-on Integration</strong>
+<strong class="alert-header"><Icon name="star"></Icon> Premium Dashboard
+Feature</strong>
 
-Enterprise SSO is available as an add-on to any of our
-[paid pricing plans](https://www.cypress.io/pricing).
+Enterprise SSO is included in our
+[Business and Enterprise paid pricing plans](https://www.cypress.io/pricing).
 
 </Alert>
 
@@ -139,9 +136,9 @@ Enterprise SSO is available as an add-on to any of our
 
 <strong class="alert-header">Requires Owner Permissions</strong>
 
-**All instructions below must be done by an owner of the organization.** If you
-are not an owner of the organization, coordinate with an owner of the
-organization to set up SSO.
+**All instructions below must be done by an Owner of the organization.** If you
+are not an Owner of the Organization, coordinate with an Owner of the
+Organization to set up SSO.
 
 </Alert>
 
@@ -164,7 +161,7 @@ Follow the instructions below for your specific SSO provider.
 - [SAML](#SAML)
 - [Azure AD](#Azure-AD)
 
-##### Okta
+##### **Okta**
 
 The Cypress Dashboard can integrate with Okta via SAML. In addition to the
 documentation below, refer to
@@ -196,7 +193,7 @@ documentation below, refer to
    Cypress Dashboard.
 1. [Save and test the configuration](#Save-and-Test).
 
-##### SAML
+##### **SAML**
 
 The Cypress Dashboard can integrate with your identity provider via SAML. In
 addition to the documentation below, refer to your provider’s official
@@ -220,7 +217,7 @@ documentation for configuring a SAML integration.
    that to the Cypress Dashboard.
 1. [Save and test the configuration](#Save-and-Test).
 
-##### Azure AD
+##### **Azure AD**
 
 The Cypress Dashboard can integrate with your identity provider via Azure AD. In
 addition to the documentation below, refer to the Microsoft Guides for
@@ -253,3 +250,12 @@ addition to the documentation below, refer to the Microsoft Guides for
 
 🎉 Your integration is now complete! You can invite all of the users in your
 organization to sign in through your SSO provider.
+
+#### **Notes**
+
+- Once SSO is set up in the Dashboard, Users should be invited via your SSO
+  provider, not the Dashboard.
+- All SSO Users are initially added with the
+  [User Role](https://on.cypress.io/users#User-roles) of Member. If a User needs
+  different User Role permissions, this can be changed via the Cypress Dashboard
+  by a current member with the role of Owner or Admin.

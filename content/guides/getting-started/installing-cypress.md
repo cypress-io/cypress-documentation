@@ -9,6 +9,7 @@ title: Installing Cypress
 - How to install Cypress via `npm`
 - How to install Cypress via direct download
 - How to version and run Cypress via `package.json`
+- How to run Cypress on `wsl2` in windows
 
 </Alert>
 
@@ -98,6 +99,12 @@ The version of the `npm` package determines the version of the binary
 downloaded. As of version `3.0`, the binary is downloaded to a global cache
 directory to be used across projects.
 
+System proxy properties `http_proxy`, `https_proxy` and `no_proxy` are respected
+for the download of the Cypress binary. You can also use the npm properties
+`npm_config_proxy` and `npm_config_https_proxy`. Those have lower priority, so
+they will only be used if the system properties are being resolved to not use a
+proxy.
+
 </Alert>
 
 <Alert type="success">
@@ -123,6 +130,9 @@ cd /your/project/path
 ```shell
 yarn add cypress --dev
 ```
+
+System proxy properties `http_proxy`, `https_proxy` and `no_proxy` are respected
+for the download of the Cypress binary.
 
 ### <Icon name="download"></Icon> Direct download
 
@@ -260,14 +270,16 @@ You can [read more about the CLI here](/guides/guides/command-line).
 
 ### Environment variables
 
-| Name                            | Description                                                                      |
-| ------------------------------- | -------------------------------------------------------------------------------- |
-| `CYPRESS_INSTALL_BINARY`        | [Destination of Cypress binary that's downloaded and installed](#Install-binary) |
-| `CYPRESS_DOWNLOAD_MIRROR`       | [Downloads the Cypress binary though a mirror server](#Mirroring)                |
-| `CYPRESS_CACHE_FOLDER`          | [Changes the Cypress binary cache location](#Binary-cache)                       |
-| `CYPRESS_RUN_BINARY`            | [Location of Cypress binary at run-time](#Run-binary)                            |
-| ~~CYPRESS_SKIP_BINARY_INSTALL~~ | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY=0` instead      |
-| ~~CYPRESS_BINARY_VERSION~~      | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY` instead        |
+| Name                             | Description                                                                                              |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `CYPRESS_INSTALL_BINARY`         | [Destination of Cypress binary that's downloaded and installed](#Install-binary)                         |
+| `CYPRESS_DOWNLOAD_MIRROR`        | [Downloads the Cypress binary though a mirror server](#Mirroring)                                        |
+| `CYPRESS_CACHE_FOLDER`           | [Changes the Cypress binary cache location](#Binary-cache)                                               |
+| `CYPRESS_RUN_BINARY`             | [Location of Cypress binary at run-time](#Run-binary)                                                    |
+| `CYPRESS_VERIFY_TIMEOUT`         | Overrides the timeout duration for the `verify` command. The default value is 30000.                     |
+| `CYPRESS_DOWNLOAD_PATH_TEMPLATE` | Allows to specify custom download url. Replaces ${endpoint}, ${platform}, ${arch} with respective values |
+| ~~CYPRESS_SKIP_BINARY_INSTALL~~  | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY=0` instead                              |
+| ~~CYPRESS_BINARY_VERSION~~       | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY` instead                                |
 
 ### Install binary
 
@@ -386,8 +398,6 @@ The download server URL is `https://download.cypress.io`.
 We currently have the following downloads available:
 
 - Windows 64-bit (`?platform=win32&arch=x64`)
-- Windows 32-bit (`?platform=win32&arch=ia32`, available since
-  [Cypress 3.3.0](/guides/references/changelog#3-3-0))
 - Linux 64-bit (`?platform=linux`)
 - macOS 64-bit (`?platform=darwin`)
 
@@ -409,6 +419,16 @@ for all available platforms.
 
 ```text
 https://download.cypress.io/desktop/3.0.0?platform=win32&arch=x64
+```
+
+When setting
+`CYPRESS_DOWNLOAD_PATH_TEMPLATE='${endpoint}/${platform}-${arch}/cypress.zip'`
+environment variable, then a custom download url is used, where
+${endpoint},
+${platform}, ${arch} are replaced with respective values.
+
+```text
+https://download.cypress.io/desktop/3.0.0/win32-x64/cypress.zip
 ```
 
 ### Mirroring
@@ -470,7 +490,7 @@ the Command Prompt before installing Cypress:
 set CYPRESS_CRASH_REPORTS=0
 ```
 
-To accomplish the same thing in Powershell:
+To accomplish the same thing in PowerShell:
 
 ```shell
 $env:CYPRESS_CRASH_REPORTS = "0"
@@ -498,13 +518,78 @@ out functionality that has not yet been released, here is how:
    operating system and CPU architecture, and follow the instructions there to
    install the pre-release.
 
-Notes on pre-releases:
+Cypress pre-releases are only available for about a month after they are built.
+Do not rely on these being available past one month.
 
-- Cypress pre-releases are only available for about a month after they are
-  built. Do not rely on these being available past one month.
-- If you already have a pre-release or official release installed for a specific
-  version of Cypress, you may need to do `cypress cache clear` before Cypress
-  will install a pre-release. This also applies to installing an official
-  release over a pre-release - if you have a pre-release of Cypress vX.Y.Z
-  installed, the official release of Cypress vX.Y.Z will not install until you
-  do `cypress cache clear`.
+### Windows Subsystem for Linux
+
+#### WSL2
+
+First, install the prerequisite packages using the command that relates to your
+linux distribution ([Ubuntu/Debian](#Ubuntu-Debian) or [CentOS](#CentOS)).
+
+We need to have an [X-server](https://en.wikipedia.org/wiki/X.Org_Server) to
+display the Cypress UI from the linux subsystem. There are a variety of
+X-servers available, here we are going to use VcXsrv, you can use any other
+similar tool.
+
+Download [VcXsrv](https://sourceforge.net/projects/vcxsrv/) and install. You can
+set the settings to your preference ("Multiple windows" and "Start no client"
+are recommended), but on the page that lets you enable extra settings, be sure
+to select "Disable access control" which is required as WSL2 has its own IP
+address, which changes often.
+
+<DocsImage src="/img/guides/vcxsrv-extra-settings.png" alt="Disable access control in vcxsrv" ></DocsImage>
+
+In your `.bashrc` (or equivalent such as `.zshrc`) set the `DISPLAY` environment
+variable.
+
+```shell
+# set DISPLAY variable to the IP automatically assigned to WSL2
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
+```
+
+To confirm `DISPLAY` variable has been set, print it out in the terminal. You
+may need to restart your terminal to see this change.
+
+```shell
+echo $DISPLAY
+# something like 172.17.224.1:0.0
+```
+
+The VcXsrv GUI uses [D-Bus](https://www.freedesktop.org/wiki/Software/dbus/) to
+internally communicate. After the `export DISPLAY` line in your `.bashrc`, add
+the following:
+
+```shell
+sudo /etc/init.d/dbus start &> /dev/null
+```
+
+Now your user needs to be granted access to run `sudo dbus` without needing to
+enter a password. To do so, use the `visido` command:
+
+```shell
+sudo visudo -f /etc/sudoers.d/dbus
+```
+
+In the editor that launches, add the following line, replacing `<your_username>`
+with your username (you can use the `whoami` command to print your username if
+you don't know it).
+
+```
+<your_username> ALL = (root) NOPASSWD: /etc/init.d/dbus
+```
+
+Go to Control Panel > System and Security > Windows Defender Firewall > Inbound
+Rules > New Rule.
+
+<DocsImage src="/img/guides/windows-firewall-disable-vcxsrv.png" alt="Add rule to allow connections for vcxsrv" ></DocsImage>
+
+Select Program and click on next. On the This program path, browse and select
+path to VcxSrv. On the next page select allow the connection and click next. On
+the next page, select all three options (Domain, Private, Public).
+
+<DocsImage src="/img/guides/rule-application-selection.png" alt="Select inbound rule application cases for vcxsrv" ></DocsImage>
+
+Give the rule a suitable name and description and click finish. WSL2 should now
+be able to open a GUI from shell.

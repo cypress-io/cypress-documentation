@@ -71,9 +71,6 @@ declarative subject validations such as:
 - `document`: requires the previous subject be the document
 - `window`: requires the previous subject be the window
 
-Internally our built in commands make use of every single one of these
-combinations above.
-
 ## Examples
 
 ### Parent Commands

@@ -35,8 +35,8 @@ The text to be typed into the DOM element.
 Text passed to `.type()` may include any of the special character sequences
 below. These characters will pass along the correct `keyCode`, `key`, and
 `which` codes to any events issued during `.type()`. Some of the special
-character sequences may perform actions during typing such as `{movetoend}`,
-`{movetostart}`, or `{selectall}`.
+character sequences may perform actions during typing such as `{moveToEnd}`,
+`{moveToStart}`, or `{selectAll}`.
 
 <Alert type="info">
 
@@ -50,20 +50,20 @@ To disable parsing special characters sequences, set the
 | `{{}`           | Types the literal `{` key                        |
 | `{backspace}`   | Deletes character to the left of the cursor      |
 | `{del}`         | Deletes character to the right of the cursor     |
-| `{downarrow}`   | Moves cursor down                                |
+| `{downArrow}`   | Moves cursor down                                |
 | `{end}`         | Moves cursor to the end of the line              |
 | `{enter}`       | Types the Enter key                              |
 | `{esc}`         | Types the Escape key                             |
 | `{home}`        | Moves cursor to the start of the line            |
 | `{insert}`      | Inserts character to the right of the cursor     |
-| `{leftarrow}`   | Moves cursor left                                |
-| `{movetoend}`   | Moves cursor to end of typeable element          |
-| `{movetostart}` | Moves cursor to the start of typeable element    |
-| `{pagedown}`    | Scrolls down                                     |
-| `{pageup}`      | Scrolls up                                       |
-| `{rightarrow}`  | Moves cursor right                               |
-| `{selectall}`   | Selects all text by creating a `selection range` |
-| `{uparrow}`     | Moves cursor up                                  |
+| `{leftArrow}`   | Moves cursor left                                |
+| `{moveToEnd}`   | Moves cursor to end of typeable element          |
+| `{moveToStart}` | Moves cursor to the start of typeable element    |
+| `{pageDown}`    | Scrolls down                                     |
+| `{pageUp}`      | Scrolls up                                       |
+| `{rightArrow}`  | Moves cursor right                               |
+| `{selectAll}`   | Selects all text by creating a `selection range` |
+| `{upArrow}`     | Moves cursor up                                  |
 
 Text passed to `.type()` may also include any of these modifier character
 sequences:
@@ -167,7 +167,7 @@ locale. `yyyy-MM-dd` is the format required by
 [the W3 spec](https://www.w3.org/TR/html/infrastructure.html#dates-and-times)
 and is what the input's `value` will be set to regardless of browser or locale.
 
-Special characters (`{leftarrow}`, `{selectall}`, etc.) are not permitted.
+Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
 
 ### Month Inputs
 
@@ -182,7 +182,7 @@ locale. `yyyy-MM` is the format required by
 [the W3 spec](https://www.w3.org/TR/html/infrastructure.html#months) and is what
 the input's `value` will be set to regardless of browser or locale.
 
-Special characters (`{leftarrow}`, `{selectall}`, etc.) are not permitted.
+Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
 
 ### Week Inputs
 
@@ -200,7 +200,7 @@ locale. `yyyy-Www` is the format required by
 [the W3 spec](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-week-string)
 and is what the input's `value` will be set to regardless of browser or locale.
 
-Special characters (`{leftarrow}`, `{selectall}`, etc.) are not permitted.
+Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
 
 ### Time Inputs
 
@@ -213,7 +213,7 @@ valid time in the format:
 
 Where `HH` is 00-23, `mm` is 00-59, `ss` is 00-59, and `SSS` is 000-999.
 
-Special characters (`{leftarrow}`, `{selectall}`, etc.) are not permitted.
+Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
 
 ### Key Combinations
 
@@ -341,7 +341,7 @@ though it's _not_ a focusable element).
 ```javascript
 // all of the type events are fired on the body
 cy.get('body').type(
-  '{uparrow}{uparrow}{downarrow}{downarrow}{leftarrow}{rightarrow}{leftarrow}{rightarrow}ba'
+  '{upArrow}{upArrow}{downArrow}{downArrow}{leftArrow}{rightArrow}{leftArrow}{rightArrow}ba'
 )
 ```
 
@@ -390,8 +390,8 @@ cy.get('input[type=text]').type('Test all the things', { force: true })
 
 ### Actionability
 
-`.type()` is an "action command" that follows all the rules
-[defined here](/guides/core-concepts/interacting-with-elements).
+`.type()` is an "action command" that follows all the rules of
+[Actionability](/guides/core-concepts/interacting-with-elements).
 
 ### Events
 

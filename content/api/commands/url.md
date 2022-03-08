@@ -104,11 +104,13 @@ return them the full current URL. We almost never refer to the URL as an `href`.
 
 #### Hardcoded versus using the configuration object
 
-Instead of hardcoding the URL you can use the `baseUrl` of the
-[Cypress configuration](/guides/references/configuration).
+Instead of hard-coding the URL used in the assertion, we recommend you define a
+`baseUrl` in your [Cypress configuration](/guides/references/configuration). For
+more details on why, see our Best Practices guide on
+[setting a global `baseUrl`](/guides/references/best-practices#Setting-a-global-baseUrl).
 
-Given the remote URL, `http://localhost:8000/index.html`, these assertions are
-the same.
+Given the remote URL, `http://localhost:8000/index.html`, and the baseUrl,
+`http://localhost:8000`, these assertions are the same.
 
 ```javascript
 cy.url().should('eq', 'http://localhost:8000/index.html')

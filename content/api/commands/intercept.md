@@ -105,7 +105,7 @@ If no method is defined Cypress will match all requests by default.
 
 #### **<Icon name="angle-right"></Icon> url** **_(String, Glob, RegExp)_**
 
-Specify the URL to match. See [Matching `url`](#match-url) for examples.
+Specify the URL to match. See [Matching `url`][match-url] for examples.
 
 Alternatively, specify the URL via the [`routeMatcher`][arg-routematcher]
 argument (below).
@@ -118,7 +118,8 @@ intercepted route.
 All properties are optional but all those that are set must match for the
 request to be intercepted. If a `string` is passed to any property, it will be
 glob-matched against the request using
-[`Cypress.minimatch`](/api/utilities/minimatch).
+[`Cypress.minimatch`](/api/utilities/minimatch) with the `{ matchBase: true }`
+minimatch option applied.
 
 | Option     | Description                                                                                     |
 | ---------- | ----------------------------------------------------------------------------------------------- |
@@ -140,32 +141,13 @@ See [examples](#With-RouteMatcher) below.
 #### <Icon name="angle-right"></Icon> staticResponse (<code>[StaticResponse][staticresponse]</code>)
 
 By passing in a `StaticResponse` as the last argument, you can
-[statically define (stub) a response](#Stubbing-a-response) for matched requests
-including the body of the response, as well as the headers and HTTP status code:
-
-| Option     | Description                                                      |
-| ---------- | ---------------------------------------------------------------- |
-| statusCode | HTTP response status code                                        |
-| headers    | HTTP response headers                                            |
-| body       | Serve a static response body (`object`, `string`, `ArrayBuffer`) |
-| fixture    | Serve a fixture as the HTTP response body                        |
-
-`StaticResponse` also provides options for simulating a degraded or broken
-network connection:
-
-| Option            | Description                                                                 |
-| ----------------- | --------------------------------------------------------------------------- |
-| forceNetworkError | Force an error by destroying the browser connection                         |
-| delay             | Minimum network latency or delay to add to the response time (milliseconds) |
-| throttleKbps      | Maximum data transfer rate of the response (kilobits/second)                |
-
-**Note:** All properties are optional.
+[statically define (stub) a response](#Stubbing-a-response) for matched
+requests. See [`StaticResponse` object](#StaticResponse-objects) for the list of
+properties.
 
 See
 [Stubbing a response with a `StaticResponse` object](#With-a-StaticResponse-object)
 for an example.
-
-See also [`StaticResponse` objects](#StaticResponse-objects).
 
 #### <Icon name="angle-right"></Icon> routeHandler (<code>Function</code>)
 
@@ -457,7 +439,15 @@ cy.intercept('/not-found', {
 })
 ```
 
-See also [`StaticResponse` objects][staticresponse].
+Stub response with a fixture that is read as a Buffer:
+
+```js
+cy.intercept('/not-found', {
+  fixture: 'media/gif.mp4,null',
+})
+```
+
+See also [`StaticResponse` object][staticresponse].
 
 ### Using the **`routeHandler`** function
 
@@ -1326,29 +1316,32 @@ from propagating to the next matching response handler in line. See
 
 ## `StaticResponse` objects
 
-A `StaticResponse` represents a stubbed response to an HTTP request. You can
-supply a `StaticResponse` to Cypress in 3 ways:
+A `StaticResponse` represents a
+[statically defined response (stub)](#Stubbing-a-response).
 
-- Directly to `cy.intercept()` as
-  [`staticResponse`](#staticResponse-lt-code-gtStaticResponselt-code-gt), to
-  stub a response to a route: `cy.intercept('/url', staticResponse)`
+The following properties are available on `StaticResponse`.
+
+| Option            | Description                                                                                                                                                                                                                       |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| statusCode        | HTTP response status code                                                                                                                                                                                                         |
+| headers           | HTTP response headers                                                                                                                                                                                                             |
+| body              | Serve a static response body (`object`, `string`, `ArrayBuffer`) (when `fixture` is omitted).                                                                                                                                     |
+| fixture           | Serve a fixture as the HTTP response body (allowed when `body` is omitted). Read the contents with an encoding other than the [default for the file type](/api/commands/fixture#Encoding), pass the fixture like `path,encoding`. |
+| forceNetworkError | Force an error by destroying the browser connection                                                                                                                                                                               |
+| delay             | Minimum network latency or delay to add to the response time (milliseconds)                                                                                                                                                       |
+| throttleKbps      | Maximum data transfer rate of the response (kilobits/second)                                                                                                                                                                      |
+
+**Note:** All properties are optional.
+
+You can supply a `StaticResponse` to Cypress in 3 ways:
+
+- To `cy.intercept()` as
+  [`an argument`](#staticResponse-lt-code-gtStaticResponselt-code-gt), to stub a
+  response to a route: `cy.intercept('/url', staticResponse)`
 - To [`req.reply()`][req-reply], to stub a response from a request handler:
   `req.reply(staticResponse)`
 - To [`res.send()`][res-send], to stub a response from a response handler:
   `res.send(staticResponse)`
-
-The following properties are available on `StaticResponse`. All properties are
-optional:
-
-| Option            | Description                                                                 |
-| ----------------- | --------------------------------------------------------------------------- |
-| fixture           | Serve a fixture as the HTTP response body                                   |
-| body              | Serve a static response body (`object`, `string`, `ArrayBuffer`)            |
-| headers           | HTTP response headers                                                       |
-| statusCode        | HTTP response status code                                                   |
-| forceNetworkError | Force an error by destroying the browser connection                         |
-| delay             | Minimum network latency or delay to add to the response time (milliseconds) |
-| throttleKbps      | Maximum data transfer rate of the response (kilobits/second)                |
 
 See
 ["Stubbing a response with a `StaticResponse` object"](#With-a-StaticResponse-object)
@@ -1458,22 +1451,27 @@ cy.intercept('/users?_limit=+(3|5)')
 
 ### Cypress.minimatch
 
-Under the hood, Cypress uses the [minimatch](/api/utilities/minimatch) library
-for glob matching and provides access to it via the `Cypress` global. This
-enables you to test your pattern in the Test Runner browser console.
+Under the hood, `cy.intercept` uses the [minimatch](/api/utilities/minimatch)
+library with the `{ matchBase: true }` option applied for glob matching and
+provides access to it via the `Cypress` global. This enables you to test your
+pattern in your spec or in the Test Runner browser console.
 
 You can invoke the `Cypress.minimatch` with just two arguments - the URL
 (`string`) and the pattern (`string`), respectively - and if it yields `true`,
 then you have a match!
 
 ```javascript
-// executed in the Test Runner browser console:
-Cypress.minimatch('http://localhost/users?_limit=3', '/users?_limit=+(3|5)')
-// true
-Cypress.minimatch('http://localhost/users?_limit=5', '/users?_limit=+(3|5)')
-// true
-Cypress.minimatch('http://localhost/users?_limit=7', '/users?_limit=+(3|5)')
-// false
+expect(
+  Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)')
+).to.be.true
+expect(
+  Cypress.minimatch('http://localhost/users?_limit=5', '/users?_limit=+(3|5)', {
+    matchBase: true,
+  })
+).to.be.true
+expect(
+  Cypress.minimatch('http://localhost/users?_limit=7', '**/users?_limit=+(3|5)')
+).to.be.false
 ```
 
 #### minimatch options
@@ -1483,7 +1481,7 @@ You can also pass in options (`object`) as the third argument, one of which is
 understand why your pattern isn't working as you expect:
 
 ```js
-Cypress.minimatch('http://localhost/users?_limit=3', '/users?_limit=+(3|5)', {
+Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)', {
   debug: true,
 })
 // true (plus debug messages)
