@@ -87,8 +87,9 @@ Projects in your Organization must meet the following criteria:
   Dashboard
 - Your Project source code is available in a public location with an
   [OSI-approved license](https://opensource.org/licenses)
-- Have reached the [Free Plan](https://www.cypress.io/pricing) limit of 500
-  [Test Recordings](https://on.cypress.io/dashboard-faq#What-counts-as-a-test-result)
+- Record minimum of 500
+  [tests](https://on.cypress.io/dashboard-faq#What-counts-as-a-test-result)
+  included with the [Free Plan](https://www.cypress.io/pricing)
 
 ### Requesting OSS plan for an Org
 
