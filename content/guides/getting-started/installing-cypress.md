@@ -518,16 +518,8 @@ out functionality that has not yet been released, here is how:
    operating system and CPU architecture, and follow the instructions there to
    install the pre-release.
 
-Notes on pre-releases:
-
-- Cypress pre-releases are only available for about a month after they are
-  built. Do not rely on these being available past one month.
-- If you already have a pre-release or official release installed for a specific
-  version of Cypress, you may need to do `cypress cache clear` before Cypress
-  will install a pre-release. This also applies to installing an official
-  release over a pre-release - if you have a pre-release of Cypress vX.Y.Z
-  installed, the official release of Cypress vX.Y.Z will not install until you
-  do `cypress cache clear`.
+Cypress pre-releases are only available for about a month after they are built.
+Do not rely on these being available past one month.
 
 ### Windows Subsystem for Linux
 
