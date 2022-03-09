@@ -90,7 +90,7 @@ Cypress.Commands.add('hover', (...args) => {})
 
 Note that while `Cypress.Commands.add()` is the recommended way to define a
 custom `cy.hover()` command since Cypress 10.0,
-[Cypress.Commands.overwrite()](/api/cypress-api/custom-commands#Overwrite-Existing-Commands)
+[`Cypress.Commands.overwrite()`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands)
 will still work.
 
 ```javascript
