@@ -137,10 +137,10 @@ arrays and allows using numerical index to pick a function to run.
 
 ```javascript
 const reverse = (s) => Cypress._.reverse(s)
-const double = (n) => n * n
+const square = (n) => n * n
 
 // picks function with index 1 and calls it with argument 4
-cy.wrap([reverse, double]).invoke(1, 4).should('eq', 16)
+cy.wrap([reverse, square]).invoke(1, 4).should('eq', 16)
 ```
 
 ### Invoking an async function
