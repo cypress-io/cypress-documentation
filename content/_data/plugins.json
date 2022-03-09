@@ -589,6 +589,13 @@
           "link": "https://github.com/BrandedEntertainmentNetwork/cypress-rest-graphql",
           "keywords": ["api", "rest", "graphQL"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-trusted-types",
+          "description": "Simplify testing of Trusted Types violations",
+          "link": "https://github.com/Siegrift/cypress-trusted-types",
+          "keywords": ["Trusted Types", "commands", "assertions"],
+          "badge": "community"
         }
       ]
     },
