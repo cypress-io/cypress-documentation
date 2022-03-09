@@ -185,17 +185,11 @@
   @apply text-2xl;
   @apply font-bold;
   @apply mt-8;
-  @apply flex;
-  @apply flex-wrap;
-  @apply items-center;
 }
 
 .nuxt-content > h4 {
   @apply text-xl;
   @apply font-medium;
-  @apply flex;
-  @apply flex-wrap;
-  @apply items-center;
 }
 
 .nuxt-content h2 > em,
