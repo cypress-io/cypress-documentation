@@ -596,6 +596,13 @@
           "link": "https://github.com/BrandedEntertainmentNetwork/cypress-rest-graphql",
           "keywords": ["api", "rest", "graphQL"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-window-helper",
+          "description": "cypress-window-helper aims to switch and interact with pop-up and tabs windows opened by the main cypress frame",
+          "link": "https://github.com/mathias-vandaele/cypress-window-helper",
+          "keywords": ["window", "tab", "switch", "popup"],
+          "badge": "community"
         }
       ]
     },
