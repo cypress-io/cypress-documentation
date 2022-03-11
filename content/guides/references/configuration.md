@@ -2,18 +2,24 @@
 title: Configuration
 ---
 
-## Configuration file
+## Configuration File
 
-The first time you open the Cypress App, it creates the `cypress.config.js`
-configuration file. This Javascript file is used to store any configuration
-values you supply. If you
-[configure your tests to record](/guides/dashboard/projects#Setup) the results
-to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction) the
-`projectId` will be written in this file too.
+Launching the Cypress App for the first time, you will be guided through a
+wizard that will create a Cypress configuration file for you. This file will be
+`cypress.config.js` for JavaScript apps or `cypress.config.ts` for
+[TypeScript](/guides/tooling/typescript-support) apps. This file is used to
+store any configuration specific to Cypress.
 
-Alternately, Cypress supports a [TypeScript](/guides/tooling/typescript-support)
-`cypress.config.ts` configuration file, and a (deprecated) `cypress.json`
-configuration file.
+Cypress additionaly supports config files with `.mjs` or `.cjs` extenstions as
+well.
+
+Using a `.mjs` file will allow you to use
+[ESM Module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
+syntax in your config without the need of a tranpiler step.
+
+A '.cjs' file uses the [CommonJS](https://nodejs.org/api/modules.html) module
+sytntax, which is the default for JavaScript files. All JavaScript config
+examples in our docs use the CommonJS format.
 
 <Alert type="warning">
 
@@ -30,14 +36,9 @@ to update your configuration.
 
 </Alert>
 
-<Alert type="info">
-
-<strong class="alert-header">Change Configuration File</strong>
-
-You can change the configuration file with the
-[`--config-file` flag](/guides/guides/command-line#cypress-open-config-file-lt-configuration-file-gt).
-
-</Alert>
+If you [configure your tests to record](/guides/dashboard/projects#Setup) the
+results to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction)
+the `projectId` will be stored in the config file as well.
 
 ## Intelligent Code Completion
 
@@ -66,19 +67,30 @@ default values.
 
 ### Global
 
-| Option                 | Default                           | Description                                                                                                                                                                                  |
-| ---------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `baseUrl`              | `null`                            | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL.                                                                         |
-| `clientCertificates`   | `[]`                              | An optional array of [client certificates](/guides/references/client-certificates).                                                                                                          |
-| `env`                  | `{}`                              | Any values to be set as [environment variables](/guides/guides/environment-variables).                                                                                                       |
-| `includeShadowDom`     | `false`                           | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get)).                                |
-| `numTestsKeptInMemory` | `50`                              | The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.           |
-| `port`                 | `null`                            | Port used to host Cypress. Normally this is a randomly generated port.                                                                                                                       |
-| `redirectionLimit`     | `20`                              | The number of times that the application under test can redirect before erroring.                                                                                                            |
-| `reporter`             | `spec`                            | The [reporter](/guides/tooling/reporters) used during `cypress run`.                                                                                                                         |
-| `reporterOptions`      | `null`                            | The [reporter options](/guides/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                           |
-| `retries`              | `{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. See [Test Retries](/guides/guides/test-retries) for more information. |
-| `watchForFileChanges`  | `true`                            | Whether Cypress will watch and restart tests on test file changes.                                                                                                                           |
+| Option | Default | Description | | ---------------------- |
+--------------------------------- |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| | | `clientCertificates` | `[]` | An optional array of
+[client certificates](/guides/references/client-certificates). | | `env` | `{}`
+| Any values to be set as
+[environment variables](/guides/guides/environment-variables). | |
+`includeShadowDom` | `false` | Whether to traverse shadow DOM boundaries and
+include elements within the shadow DOM in the results of query commands (e.g.
+[`cy.get()`](/api/commands/get)). | | `numTestsKeptInMemory` | `50` | The number
+of tests for which snapshots and command data are kept in memory. Reduce this
+number if you are experiencing high memory consumption in your browser during a
+test run. | | `port` | `null` | Port used to host Cypress. Normally this is a
+randomly generated port. | | `redirectionLimit` | `20` | The number of times
+that the application under test can redirect before erroring. | | `reporter` |
+`spec` | The [reporter](/guides/tooling/reporters) used during `cypress run`. |
+| `reporterOptions` | `null` | The
+[reporter options](/guides/tooling/reporters#Reporter-Options) used. Supported
+options depend on the reporter. | | `retries` |
+`{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test.
+Can be configured to apply to `cypress run` or `cypress open` separately. See
+[Test Retries](/guides/guides/test-retries) for more information. | |
+`watchForFileChanges` | `true` | Whether Cypress will watch and restart tests on
+test file changes. |
 
 ### Timeouts
 
@@ -202,11 +214,12 @@ creating `e2e` and `component` objects inside your Cypress configuration.
 
 ### e2e
 
-These options are available to be specified inside the `e2e` configuration
+Î These options are available to be specified inside the `e2e` configuration
 object:
 
 | Option               | Default                               | Description                                                                                                                                                                                         |
 | -------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `baseUrl`            | `null`                                | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL.                                                                                |
 | `setupNodeEvents`    | `null`                                | Function in which node events can be registered and config can be modified. Takes the place of the (deprecated) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
 | `supportFile`        | `cypress/support/e2e.{js,jsx,ts,tsx}` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                           |
 | `specPattern`        | `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` | A String or Array of glob patterns of the test files to load.                                                                                                                                       |
@@ -267,6 +280,12 @@ For example:
 ```shell
 cypress run --browser firefox --config viewportWidth=1280,viewportHeight=720
 ```
+
+### Specifying an Alternative Config File
+
+You can change which Config file Cypress will use with the
+[`--config-file`](/guides/guides/command-line#cypress-open-config-file-lt-configuration-file-gt)
+flag.
 
 ```shell
 cypress run --config-file tests/cypress.config.js
