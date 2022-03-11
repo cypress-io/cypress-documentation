@@ -67,30 +67,20 @@ default values.
 
 ### Global
 
-| Option | Default | Description | | ---------------------- |
---------------------------------- |
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| | | `clientCertificates` | `[]` | An optional array of
-[client certificates](/guides/references/client-certificates). | | `env` | `{}`
-| Any values to be set as
-[environment variables](/guides/guides/environment-variables). | |
-`includeShadowDom` | `false` | Whether to traverse shadow DOM boundaries and
-include elements within the shadow DOM in the results of query commands (e.g.
-[`cy.get()`](/api/commands/get)). | | `numTestsKeptInMemory` | `50` | The number
-of tests for which snapshots and command data are kept in memory. Reduce this
-number if you are experiencing high memory consumption in your browser during a
-test run. | | `port` | `null` | Port used to host Cypress. Normally this is a
-randomly generated port. | | `redirectionLimit` | `20` | The number of times
-that the application under test can redirect before erroring. | | `reporter` |
-`spec` | The [reporter](/guides/tooling/reporters) used during `cypress run`. |
-| `reporterOptions` | `null` | The
-[reporter options](/guides/tooling/reporters#Reporter-Options) used. Supported
-options depend on the reporter. | | `retries` |
-`{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test.
-Can be configured to apply to `cypress run` or `cypress open` separately. See
-[Test Retries](/guides/guides/test-retries) for more information. | |
-`watchForFileChanges` | `true` | Whether Cypress will watch and restart tests on
-test file changes. |
+<!-- prettier-ignore-start -->
+
+| Option                 | Default                           | Description                                                                                                                                                                                  |
+| ---------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |                                                                      |
+| `clientCertificates`   | `[]`                              | An optional array of [client certificates](/guides/references/client-certificates).                                                                                                          |
+| `env`                  | `{}`                              | Any values to be set as [environment variables](/guides/guides/environment-variables).                                                                                                       |
+| `includeShadowDom`     | `false`                           | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get)).                                |
+| `numTestsKeptInMemory` | `50`                              | The number of tests for which snapshots and command data are kept in memory. Reduce this number if you are experiencing high memory consumption in your browser during a test run.           |
+| `port`                 | `null`                            | Port used to host Cypress. Normally this is a randomly generated port.                                                                                                                       |
+| `redirectionLimit`     | `20`                              | The number of times that the application under test can redirect before erroring.                                                                                                            |
+| `reporter`             | `spec`                            | The [reporter](/guides/tooling/reporters) used during `cypress run`.                                                                                                                         |
+| `reporterOptions`      | `null`                            | The [reporter options](/guides/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                           |
+| `retries`              | `{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. See [Test Retries](/guides/guides/test-retries) for more information. |
+| `watchForFileChanges`  | `true`                            | Whether Cypress will watch and restart tests on test file changes.                                                                                                                           |
 
 ### Timeouts
 
@@ -219,7 +209,7 @@ object:
 
 | Option               | Default                               | Description                                                                                                                                                                                         |
 | -------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `baseUrl`            | `null`                                | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL.                                                                                |
+| `baseUrl`              | `null`                            | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL.   
 | `setupNodeEvents`    | `null`                                | Function in which node events can be registered and config can be modified. Takes the place of the (deprecated) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
 | `supportFile`        | `cypress/support/e2e.{js,jsx,ts,tsx}` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                           |
 | `specPattern`        | `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` | A String or Array of glob patterns of the test files to load.                                                                                                                                       |
@@ -262,6 +252,8 @@ object:
 ```
 
 :::
+
+<!-- prettier-ignore-end -->
 
 ## Overriding Options
 
