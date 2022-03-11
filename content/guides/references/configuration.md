@@ -214,7 +214,7 @@ creating `e2e` and `component` objects inside your Cypress configuration.
 
 ### e2e
 
-Î These options are available to be specified inside the `e2e` configuration
+These options are available to be specified inside the `e2e` configuration
 object:
 
 | Option               | Default                               | Description                                                                                                                                                                                         |
