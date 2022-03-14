@@ -174,18 +174,25 @@ export default defineConfig({
 </template>
 </cypress-config-file>
 
-<Alert type="warning">
-
-<strong class="alert-header">Caveats</strong>
-
-There are some Next.js specific caveats due to its server-side architecture
-relating to `getInitialProps` and `getStaticProps`.
-[Learn more here](https://github.com/cypress-io/cypress/tree/develop/npm/react/examples/nextjs#server-side-props).
-
-</Alert>
-
 You can find an example Next.js project
 [here](https://github.com/cypress-io/cypress-component-examples/tree/main/setup-create-next-app).
+
+#### Next.js Caveats
+
+There are some specific caveats to consider when testing Next.js
+[Pages](https://nextjs.org/docs/basic-features/pages) in component testing.
+
+A page component could have additional logic in its `getServerSideProps` or
+`getStaticProps` methods. These methods only run on the server, so they are not
+available to run inside a component test. Trying to test a page in a component
+test would result in the props being passed into the page to be undefined.
+
+While you could pass in props directly to the page component in a component
+test, that would leave these server-side methods untested. However, an
+end-to-end test would execute and test a page in its entirety.
+
+Because of this, we recommend using end-to-end testing over component testing
+for Next.js pages, and component testing for individual components.
 
 ### Vite
 
