@@ -115,6 +115,7 @@ const getGitDiffList = () => {
 
   const diff = execSync(GIT_DIFF_NAME_STATUS_LAST_COMMIT).toString().split('\n')
 
+  console.log(diff)
   if (Array.isArray(diff)) {
     const nonEmptyDiffs = diff.filter(Boolean)
 
@@ -215,8 +216,9 @@ const main = async () => {
   const relativeUrls = filePaths.reduce(reduceChangelogChangesToOne, {
     hasChangelogEdits: undefined,
     paths: [],
-  })
+  }, [])
 
+  logger.log(relativeUrls)
   const urls = relativeUrls.map(convertRelativeUrlToAbsolute)
 
   logger.log('URLs to check: ', urls)
@@ -270,4 +272,7 @@ const main = async () => {
   }
 }
 
-main()
+main().catch((err) => {
+  logger.error('Something went wrong', err)
+  throw err
+})
