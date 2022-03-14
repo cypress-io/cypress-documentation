@@ -589,6 +589,13 @@
           "link": "https://github.com/BrandedEntertainmentNetwork/cypress-rest-graphql",
           "keywords": ["api", "rest", "graphQL"],
           "badge": "community"
+        },
+        {
+          "name": "cy-verify-downloads",
+          "description": "Cypress custom command to wait and verify that file was downloaded",
+          "link": "https://github.com/elaichenkov/cy-verify-downloads",
+          "keywords": ["commands", "assertions", "wait", "verify", "download"],
+          "badge": "community"
         }
       ]
     },
