@@ -685,6 +685,12 @@ to those commands, and programmatically controlling your custom command. This
 will cleanup the Command Log and be much more visually appealing and
 understandable.
 
+### `cy.hover()` and `cy.mount()`
+
+Cypress does not have `cy.hover()` or `cy.mount()` commands out-of-the-box. See
+how to craft your own [`cy.hover()`](/api/commands/hover) and
+[`cy.mount()`](/api/commands/mount) custom commands.
+
 ### Best Practices
 
 #### 1. Don't make everything a custom command
