@@ -298,7 +298,7 @@ Then add the code below to the
 [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function.
 
 ```js
-// cypress/support/index.js
+// cypress/support/e2e.js
 import '@cypress/code-coverage/support'
 ```
 

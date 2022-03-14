@@ -263,31 +263,50 @@ The initial imported plugins file can be
 
 ### Support file
 
-By default Cypress will automatically include type-specific support files. For
-E2E, the default is `cypress/support/e2e.{js,jsx,ts,tsx}`, and for Component
-Testing `cypress/support/e2e.{js,jsx,ts,tsx}`.
+To include code before your test files, set the
+[`supportFile`](/guides/references/configuration#Folders-Files) path. By
+default, [`supportFile`](/guides/references/configuration#Folders-Files) is set
+to look for one of the following files:
 
-The default support file can be configured to another file or turned off
-completely within each testing type's configuration object using the
-[supportFile](/guides/references/configuration#Folders-Files) configuration.
+**Component:**
+
+- `cypress/support/component.js`
+- `cypress/support/component.jsx`
+- `cypress/support/component.ts`
+- `cypress/support/component.tsx`
+
+**End-to-End:**
+
+- `cypress/support/e2e.js`
+- `cypress/support/e2e.jsx`
+- `cypress/support/e2e.ts`
+- `cypress/support/e2e.tsx`
+
+<Alert type="danger">
+
+⚠️ For a given testing type, multiple matching `supportFile` files will result
+in an error when Cypress loads.
+
+</Alert>
+
+::testing-type-specific-option{option=supportFile}
+
+The Cypress App automatically creates an example support file for each
+configured testing type, which has several commented out examples.
 
 This file runs **before** every single spec file. We do this purely as a
 convenience mechanism so you don't have to import this file in every single one
 of your spec files.
 
-The initial imported support file can be configured to another file or turned
-off completely using the
-[supportFile](/guides/references/configuration#Folders-Files) configuration.
-
 The support file is a great place to put reusable behavior such as
 [custom commands](/api/cypress-api/custom-commands) or global overrides that you
 want applied and available to all of your spec files.
 
+The initial imported support file can be configured to another file or turned
+off completely using the
+[supportFile](/guides/references/configuration#Folders-Files) configuration.
 From your support file you can `import` or `require` other files to keep things
 organized.
-
-We automatically seed an example support file for each configured testing type,
-which has several commented out examples.
 
 You can define behaviors in a `before` or `beforeEach` within any of the
 `cypress/support` files:

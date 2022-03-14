@@ -10,9 +10,8 @@ defined below.
 
 A great place to define or overwrite commands is in your
 `cypress/support/commands.js` file, since it is loaded before any test files are
-evaluated via an import statement in your
-[supportFile](/guides/references/configuration#Folders-Files)
-(`cypress/support/index.js` by default).
+evaluated via an import statement in the
+[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file).
 
 </Alert>
 
