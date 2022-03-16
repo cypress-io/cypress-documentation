@@ -345,10 +345,11 @@ for more examples.
 
 ## History
 
-| Version                                       | Changes                                                |
-| --------------------------------------------- | ------------------------------------------------------ |
-| [8.7.0](/guides/references/changelog#8-7-0)   | Added `slowTestThreshold` configuration option.        |
-| [7.3.0](/guides/references/changelog#7-3-0)   | Added `testingType` configuration option.              |
-| [5.0.0](/guides/references/changelog#5-0-0)   | Test results returned from `cypress.run()` changed.    |
-| [4.11.0](/guides/references/changelog#4-11-0) | Added `cypress.cli` with `parseRunArguments` function. |
-| [4.9.0](/guides/references/changelog#4-9-0)   | Added `quiet` option to `cypress.run()`                |
+| Version                                       | Changes                                                 |
+| --------------------------------------------- | ------------------------------------------------------- |
+| [10.0.0](/guides/references/changelog#10-0-0) | `slowTestThreshold` is now scoped to each testing type. |
+| [8.7.0](/guides/references/changelog#8-7-0)   | Added `slowTestThreshold` configuration option.         |
+| [7.3.0](/guides/references/changelog#7-3-0)   | Added `testingType` configuration option.               |
+| [5.0.0](/guides/references/changelog#5-0-0)   | Test results returned from `cypress.run()` changed.     |
+| [4.11.0](/guides/references/changelog#4-11-0) | Added `cypress.cli` with `parseRunArguments` function.  |
+| [4.9.0](/guides/references/changelog#4-9-0)   | Added `quiet` option to `cypress.run()`                 |
