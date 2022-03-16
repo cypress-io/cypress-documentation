@@ -14,9 +14,7 @@ title: Writing Your First Component Test
 
 </Alert>
 
-<Alert type="success">
-
-<strong class="alert-header">Follow along!</strong>
+## Getting Started
 
 In order to get the most out of this guide, we recommend that you follow along.
 Clone the
@@ -32,29 +30,6 @@ the following folders to get started:
 If you want to use your own project, follow the steps in the
 [Framework Configuration Guide](/guides/getting-started/component-framework-configuration)
 before continuing.
-
-</Alert>
-
-<Alert type="success">
-
-<strong class="alert-header">Follow along!</strong>
-
-In order to get the most out of this guide, we recommend that you follow along.
-Clone the
-[cypress-component-testing-examples](https://github.com/cypress-io/cypress-component-testing-examples)
-repo and then follow the instructions at the top of the `README` of either of
-the following folders to get started:
-
-- React version:
-  [guide-getting-started-react](https://github.com/cypress-io/cypress-component-testing-examples/tree/main/guide-getting-started-react)
-- Vue version:
-  [guide-getting-started-vue](https://github.com/cypress-io/cypress-component-testing-examples/tree/main/guide-getting-started-vue)
-
-If you want to use your own project, follow the steps in the
-[Framework Configuration Guide](/guides/getting-started/component-framework-configuration)
-before continuing.
-
-</Alert>
 
 ## The example component
 
