@@ -14,10 +14,10 @@ Cypress additionally supports config files with `.mjs` or `.cjs` extensions.
 
 Using a `.mjs` file will allow you to use
 [ESM Module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
-syntax in your config without the need of a tranpiler step.
+syntax in your config without the need of a transpiler step.
 
 A '.cjs' file uses the [CommonJS](https://nodejs.org/api/modules.html) module
-sytntax, which is the default for JavaScript files. All JavaScript config
+syntax, which is the default for JavaScript files. All JavaScript config
 examples in our docs use the CommonJS format.
 
 <Alert type="warning">
