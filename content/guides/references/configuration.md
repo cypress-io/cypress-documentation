@@ -260,13 +260,12 @@ Cypress gives you the option to dynamically alter configuration options. This is
 helpful when running Cypress in multiple environments and on multiple developer
 machines.
 
-### Command Line
+### Overriding Individual Options
 
 When running Cypress from the command line you can pass a `--config` flag to
-override individual config options or a `--config-file` flag to specify an
-entirely different configuration file.
+override individual config options.
 
-For example:
+For example, to override `viewportWidth` and `viewportHeight`, you can run:
 
 ```shell
 cypress run --browser firefox --config viewportWidth=1280,viewportHeight=720
@@ -274,7 +273,7 @@ cypress run --browser firefox --config viewportWidth=1280,viewportHeight=720
 
 ### Specifying an Alternative Config File
 
-You can change which Config file Cypress will use with the
+In the Cypress CLI, you can change which config file Cypress will use with the
 [`--config-file`](/guides/guides/command-line#cypress-open-config-file-lt-configuration-file-gt)
 flag.
 
