@@ -10,8 +10,7 @@ wizard that will create a Cypress configuration file for you. This file will be
 [TypeScript](/guides/tooling/typescript-support) apps. This file is used to
 store any configuration specific to Cypress.
 
-Cypress additionaly supports config files with `.mjs` or `.cjs` extenstions as
-well.
+Cypress additionally supports config files with `.mjs` or `.cjs` extensions.
 
 Using a `.mjs` file will allow you to use
 [ESM Module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
