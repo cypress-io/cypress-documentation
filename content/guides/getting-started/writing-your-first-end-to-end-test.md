@@ -91,7 +91,7 @@ Over in the [Command Log](/guides/core-concepts/cypress-app#Command-Log) you'll
 see Cypress display the suite, the test and your first assertion (which should
 be passing in green).
 
-<DocsImage src="/img/guides/first-test.png" alt="My first test shown passing in the Cypress App" ></DocsImage>
+<DocsImage src="/img/guides/getting-started/e2e/v10/first-test.png" alt="My first test shown passing in the Cypress App"></DocsImage>
 
 <Alert type="info">
 
@@ -131,7 +131,7 @@ describe('My First Test', () => {
 })
 -->
 
-<DocsImage src="/img/guides/failing-test.png" alt="Failing test" ></DocsImage>
+<DocsImage src="/img/guides/getting-started/e2e/v10/first-test-failing.png" alt="Failing test"></DocsImage>
 
 Cypress provides a nice [Cypress App](/guides/core-concepts/cypress-app) that
 gives you a visual structure of suites, tests, and assertions. Soon you'll also
@@ -286,7 +286,7 @@ describe('My First Test', () => {
 })
 -->
 
-<DocsImage src="/img/guides/first-test-failing-contains.png" alt="Test failing to not find content 'hype'" ></DocsImage>
+<DocsImage src="/img/guides/getting-started/e2e/v10/first-test-failing-contains.png" alt="Test failing to not find content 'hype'"></DocsImage>
 
 <Alert type="warning">
 
@@ -468,4 +468,4 @@ These various timeouts are defined in the
   strategies in a real-world project.
 - Search Cypress's documentation to quickly find what you need.
 
-<DocsImage src="/img/guides/search-box.png" alt="Use the search box to find relevant documentation" ></DocsImage>
+<DocsImage src="/img/guides/getting-started/e2e/search-box.png" alt="Use the search box to find relevant documentation"></DocsImage>

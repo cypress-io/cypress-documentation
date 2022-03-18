@@ -218,7 +218,7 @@ The Cypress App attempts to find all compatible browsers on the user's machine.
 The drop down to select a different browser is in the top right corner of the
 Cypress App.
 
-<DocsImage src="/img/guides/browser-list-dropdown.png" alt="Select a different browser" ></DocsImage>
+<DocsImage src="/img/guides/launching-browsers/v10/browser-list-dropdown.png" alt="Select a different browser"></DocsImage>
 
 Read [Launching Browsers](/guides/guides/launching-browsers) for more
 information on how Cypress controls a real browser during end-to-end tests.
@@ -512,7 +512,7 @@ out functionality that has not yet been released, here is how:
    [https://github.com/cypress-io/cypress/commits/develop](https://github.com/cypress-io/cypress/commits/develop)
 2. Find the commit that you would like to install the pre-release version of.
    Click the comment icon (highlighted in red below):
-   <DocsImage src="/img/guides/install/develop-commit-comment-link.png" alt="Example of a commit for which pre-releases are available. Comment link highlighted in red." ></DocsImage>
+   <DocsImage src="/img/guides/install/develop-commit-comment-link.png" alt="Example of a commit for which pre-releases are available. Comment link highlighted in red."></DocsImage>
 3. You should see several comments from the `cypress-bot` user with instructions
    for installing Cypress pre-releases. Pick the one that corresponds to your
    operating system and CPU architecture, and follow the instructions there to
@@ -539,7 +539,7 @@ are recommended), but on the page that lets you enable extra settings, be sure
 to select "Disable access control" which is required as WSL2 has its own IP
 address, which changes often.
 
-<DocsImage src="/img/guides/vcxsrv-extra-settings.png" alt="Disable access control in vcxsrv" ></DocsImage>
+<DocsImage src="/img/guides/vcxsrv-extra-settings.png" alt="Disable access control in vcxsrv"></DocsImage>
 
 In your `.bashrc` (or equivalent such as `.zshrc`) set the `DISPLAY` environment
 variable.
@@ -583,13 +583,13 @@ you don't know it).
 Go to Control Panel > System and Security > Windows Defender Firewall > Inbound
 Rules > New Rule.
 
-<DocsImage src="/img/guides/windows-firewall-disable-vcxsrv.png" alt="Add rule to allow connections for vcxsrv" ></DocsImage>
+<DocsImage src="/img/guides/windows-firewall-disable-vcxsrv.png" alt="Add rule to allow connections for vcxsrv"></DocsImage>
 
 Select Program and click on next. On the This program path, browse and select
 path to VcxSrv. On the next page select allow the connection and click next. On
 the next page, select all three options (Domain, Private, Public).
 
-<DocsImage src="/img/guides/rule-application-selection.png" alt="Select inbound rule application cases for vcxsrv" ></DocsImage>
+<DocsImage src="/img/guides/rule-application-selection.png" alt="Select inbound rule application cases for vcxsrv"></DocsImage>
 
 Give the rule a suitable name and description and click finish. WSL2 should now
 be able to open a GUI from shell.

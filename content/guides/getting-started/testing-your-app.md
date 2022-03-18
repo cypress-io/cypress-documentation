@@ -105,7 +105,7 @@ touch cypress/e2e/home_page.cy.js
 
 Once that file is created, you should see it in the list of spec files.
 
-<DocsImage src="/img/guides/testing-your-app-home-page-spec.png" alt="List of files including home_page.cy.js"></DocsImage>
+<DocsImage src="/img/guides/getting-started/e2e/v10/testing-your-app-home-page-spec.png" alt="List of files including home_page.cy.js"></DocsImage>
 
 Now you'll need to add in the following code in your test file to visit your
 server:
@@ -129,7 +129,7 @@ it('successfully loads', () => {
 })
 -->
 
-<DocsImage src="/img/guides/testing-your-app-visit-fail.png" alt="Error in Cypress App showing cy.visit failed" ></DocsImage>
+<DocsImage src="/img/guides/getting-started/e2e/v10/testing-your-app-visit-fail.png" alt="Error in Cypress App showing cy.visit failed"></DocsImage>
 
 If you've started your server, then you should see your application loaded and
 working.

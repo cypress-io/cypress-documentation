@@ -221,7 +221,7 @@ and other types of tests.
 
 ## Cypress in the Real World
 
-<DocsImage src="/img/guides/real-world-app.png" alt="Cypress Real World App"></DocsImage>
+<DocsImage src="/img/guides/overview/v10/real-world-app.png" alt="Cypress Real World App"></DocsImage>
 
 Cypress makes it quick and easy to start testing, and as you begin to test your
 app, **you'll often wonder if you're using best practices or scalable

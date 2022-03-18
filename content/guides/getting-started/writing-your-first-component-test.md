@@ -206,7 +206,7 @@ If you haven't already done so,
 The Cypress app should update to show the newly-created file in its list of
 specs.
 
-(SCREENSHOT OF SPEC FILE LIST)
+<DocsImage src="/img/guides/getting-started/ct/v10/spec-file-list.png" alt="Cypress spec file list"></DocsImage>
 
 If you have any issues getting the spec file to appear in the Cypress app,
 please see the [Troubleshooting](#Troubleshooting) section of this guide.
@@ -214,7 +214,7 @@ please see the [Troubleshooting](#Troubleshooting) section of this guide.
 Now select the spec file in the Cypress app. Cypress will tell you that no tests
 could be found, which is to be expected, since we haven't yet written any tests.
 
-(SCREENSHOT OF SELECTED SPEC WITH NO TESTS MESSAGE)
+<DocsImage src="/img/guides/getting-started/ct/v10/no-tests-message.png" alt="Cypress app with no tests message"></DocsImage>
 
 Now that we've created our first spec file and have confirmed that Cypress can
 load it, let's write our first test.
@@ -297,7 +297,7 @@ to the test name in the
 failing assertion of `expected false to equal true` in the test body, and a few
 options for getting more information about the failing test.
 
-(SCREENSHOT OF FAILING HELLO WORLD TEST)
+<DocsImage src="/img/guides/getting-started/ct/v10/failing-hello-world-test.png" alt="Cypress failing hello world test"></DocsImage>
 
 ### Updating a failing test
 
@@ -316,7 +316,7 @@ Now, the test should pass, and should have a green check mark next to the test
 name, along with a passing assertion of `expected true to equal true` in the
 test body.
 
-(SCREENSHOT OF PASSING HELLO WORLD TEST)
+<DocsImage src="/img/guides/getting-started/ct/v10/passing-hello-world-test.png" alt="Cypress passing hello world test"></DocsImage>
 
 Congratulations! You've written your first test using Cypress component testing.
 Now let's write some meaningful component tests.
@@ -377,7 +377,7 @@ Just like in the previous section, we should see one passing test. However, this
 time, because we're mounting a component, we should also see the component
 rendering in the Cypress app.
 
-(SCREENSHOT OF CYPRESS APP WITH MOUNTED COMPONENT)
+<DocsImage src="/img/guides/getting-started/ct/v10/mounted-component.png" alt="Cypress app showing mounted component"></DocsImage>
 
 If you have any issues getting the component to mount or render properly, please
 see the [Troubleshooting](#Troubleshooting) section of this guide.
@@ -658,7 +658,7 @@ describe('LoginForm', () => {
 
 And the Cypress app should look like this:
 
-(SCREENSHOT OF CYPRESS APP SHOWING TESTS UNDER DESCRIBE BLOCK)
+<DocsImage src="/img/guides/getting-started/ct/v10/describe-block.png" alt="Cypress app showing test describe block"></DocsImage>
 
 ### Nested grouping
 
@@ -772,7 +772,7 @@ In the Cypress app, you should now see that the test details has an expandable
 "Spies / Stubs" panel showing details about the spy, including the number of
 calls.
 
-(SCREENSHOT OF SPIES / STUBS PANEL)
+<DocsImage src="/img/guides/getting-started/ct/v10/spies-stubs-panel.png" alt="Cypress app showing spies and stubs panel"></DocsImage>
 
 Now that the component is mounted inside the test, we can then instruct Cypress
 to find the Username field and type a username into it, find the Password field
@@ -822,7 +822,7 @@ the [`.type()`](/api/commands/type) command.
 You should also see that the spy was called after the button click, and the
 number of calls has been updated to 1 in the "Spies / Stubs" panel.
 
-(SCREENSHOT SHOWING SPIES / STUBS PANEL AND RENDERED COMPONENT)
+<DocsImage src="/img/guides/getting-started/ct/v10/spies-stubs-panel-and-rendered-component.png" alt="Cypress app showing spies and stubs panel with rendered component"></DocsImage>
 
 While visually confirming that the spy was called is helpful, we should actually
 assert this in our test.
@@ -1211,7 +1211,7 @@ it('should not show any validation errors before login is attempted', () => {
 })
 ```
 
-(SCREENSHOT OF CYPRESS APP WITH ALL THE PASSING TESTS)
+<DocsImage src="/img/guides/getting-started/ct/v10/all-passing-tests.png" alt="Cypress app showing all passing tests"></DocsImage>
 
 ## Summary
 

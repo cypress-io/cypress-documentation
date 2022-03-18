@@ -9,8 +9,8 @@ When you run tests in Cypress, we launch a browser for you. This enables us to:
 
 ## Browsers
 
-When Cypress is initially run from the Cypress App, you can choose to run
-Cypress in a select number of browsers including:
+When the Cypress App is initially launched, you can choose to test your
+application using number of browsers including:
 
 - [Chrome](https://www.google.com/chrome/)
 - [Chrome Beta](https://www.google.com/chrome/beta/)
@@ -26,9 +26,9 @@ Cypress in a select number of browsers including:
 - [Firefox Nightly](https://www.mozilla.org/firefox/nightly/)
 
 Cypress automatically detects available browsers on your OS. You can switch the
-browser in the Cypress App by using the drop down in the top right corner:
+browser in the Cypress App by using the drop down near the top right corner:
 
-<DocsImage src="/img/guides/browser-list-dropdown.png" alt="Select a different browser" ></DocsImage>
+<DocsImage src="/img/guides/launching-browsers/v10/browser-list-dropdown.png" alt="Select a different browser"></DocsImage>
 
 ### Browser versions supported
 
@@ -193,7 +193,7 @@ When you open the Cypress App in a project that uses the above modifications to
 the setupNodeEvents function, only the Chrome browsers found on the system will
 display in the list of available browsers.
 
-<DocsImage src="/img/guides/plugins/chrome-browsers-only.png" alt="Filtered list of Chrome browsers" ></DocsImage>
+<DocsImage src="/img/guides/launching-browsers/chrome-browsers-only.png" alt="Filtered list of Chrome browsers"></DocsImage>
 
 <Alert type="info">
 
@@ -244,12 +244,12 @@ return findBrowser().then((browser) => {
 
 :::
 
-<DocsImage src="/img/guides/plugins/brave-browser.png" alt="List of browsers includes Brave browser" ></DocsImage>
+<!-- <DocsImage src="/img/guides/launching-browsers/brave-browser.png" alt="List of browsers includes Brave browser"></DocsImage> -->
 
 Once selected, the Brave browser is detected using the same approach as any
 other browser of the `chromium` family.
 
-<DocsImage src="/img/guides/plugins/brave-running-tests.png" alt="Brave browser executing end-to-end tests" ></DocsImage>
+<DocsImage src="/img/guides/launching-browsers/v10/brave-running-tests.png" alt="Brave browser executing end-to-end tests"></DocsImage>
 
 If you modify the list of browsers, you can see the
 [resolved configuration](/guides/references/configuration#Resolved-Configuration)
@@ -339,7 +339,7 @@ Additionally, in Chrome-based browsers, we've made the browser spawned by
 Cypress look different than regular sessions. You'll see a darker theme around
 the chrome of the browser. You'll always be able to visually distinguish these.
 
-<DocsImage src="/img/guides/cypress-browser-chrome.png" alt="Cypress Browser with darker chrome" ></DocsImage>
+<DocsImage src="/img/guides/launching-browsers/v10/cypress-browser-chrome.png" alt="Cypress Browser with darker chrome"></DocsImage>
 
 ## Troubleshooting
 
