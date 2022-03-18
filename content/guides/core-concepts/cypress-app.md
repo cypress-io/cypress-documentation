@@ -204,7 +204,7 @@ The image below shows that our application is displaying at `1000px` width,
 _Note: The righthand side may also be used to display syntax errors in your test
 file that prevent the tests from running._
 
-<DocsImage src="/img/guides/errors.png" alt="Errors" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/aut-error-e2e.png" alt="Errors"></DocsImage>
 
 _Note: Internally, the AUT renders within an iframe. This can sometimes cause
 unexpected behaviors
@@ -251,7 +251,7 @@ visible, but it is fully interactable. You can open your developer tools to
 inspect elements as you would in your normal application. The DOM is completely
 available for debugging.
 
-(SCREENSHOT OF TEST RUN WITH COMPONENT RENDERED)
+<DocsImage src="/img/guides/core-concepts/v10/component-under-test.png" alt="Cypress app showing mounted component and password assertion"></DocsImage>
 
 The CUT also displays in the size and orientation specified in your tests. You
 can change the size or orientation with the
@@ -263,15 +263,15 @@ fit within the window.
 The current size and scale of the CUT is displayed in the top right corner of
 the window.
 
-The image below shows that our application is displaying at `1000px` width,
-`660px` height and scaled to `100%`.
+The image below shows that our application is displaying at `500px` width,
+`500px` height and scaled to `100%`.
 
-(CROPPED SCREENSHOT OF VIEWPORT SIZE)
+<DocsImage src="/img/guides/core-concepts/v10/viewport-scaling-ct.png" alt="Cypress app showing mounted component test viewport scale"></DocsImage>
 
 _Note: The righthand side may also be used to display syntax errors in your spec
 file that prevent the tests from running._
 
-(SCREENSHOT OF AN ERROR APEARING ON THE RIGHT SIDE)
+<DocsImage src="/img/guides/core-concepts/v10/aut-error-ct.png" alt="Cypress app showing error as application under test"></DocsImage>
 
 _Note: Internally, the CUT renders within an iframe. This can sometimes cause
 unexpected behaviors
