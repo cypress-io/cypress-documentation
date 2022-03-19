@@ -431,6 +431,13 @@ ${platform}, ${arch} are replaced with respective values.
 https://download.cypress.io/desktop/3.0.0/win32-x64/cypress.zip
 ```
 
+When used in `.npmrc`, you will need to escape each dollar sign with a backslash
+
+```ini
+CYPRESS_DOWNLOAD_PATH_TEMPLATE=\${endpoint}/v${platform}-\${arch}/cypress.zip
+```
+
+
 ### Mirroring
 
 If you choose to mirror the entire Cypress download site, you can specify
