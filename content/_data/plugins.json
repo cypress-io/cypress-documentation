@@ -622,6 +622,14 @@
           "link": "https://picklejs.com",
           "keywords": ["cucumber", "collection", "actions", "commands"],
           "badge": "community"
+        }, 
+        {
+          "name": "Pact Cypress Adapter",
+          "description": "Simple commands that generates pact from Cypress for pact test",
+          "link": "https://github.com/pactflow/pact-cypress-adapter",
+          "keywords": ["pact", "contract testing", "commands"],
+          "badge": "official"
+
         }
       ]
     },
