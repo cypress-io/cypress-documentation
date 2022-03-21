@@ -518,8 +518,8 @@ out functionality that has not yet been released, here is how:
    operating system and CPU architecture, and follow the instructions there to
    install the pre-release.
 
-Cypress pre-releases are only available for about a month after they are built.
-Do not rely on these being available past one month.
+Cypress pre-releases are only available for 60 days after they are built. Do not
+rely on these being available past 60 days.
 
 ### Windows Subsystem for Linux
 
