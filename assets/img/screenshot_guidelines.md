@@ -332,6 +332,14 @@ describe.only('LoginForm', () => {
 })
 ```
 
+http://localhost:3000/guides/core-concepts/cypress-app#Component-Under-Test
+```js
+it('should have password input of type password', () => {
+  mount(<LoginForm />)
+  cy.contains('Password').find('input').should('have.attr', 'type', 'password')
+})
+```
+
 # [Cypress Real World App App](https://github.com/cypress-io/cypress-realworld-app)
 
 http://localhost:3000/guides/overview/why-cypress#Cypress-in-the-Real-World
@@ -632,6 +640,55 @@ http://localhost:3000/guides/core-concepts/cypress-app#What-you-ll-learn
 1) Hero image of Cypress GUI
 Load [this test](https://github.com/cypress-io/cypress-example-todomvc/blob/724757df744c499a3596ca45c2c57da3aad371a5/cypress/integration/app_spec.js#L89) 
 
+http://localhost:3000/guides/core-concepts/cypress-app#Finding-Selectors (gif)
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+         }
+        .wrapper {
+            height: 100vh;
+            display: grid;
+            place-content: center;
+            grid-template-columns: 100px 100px;
+            grid-gap: 1rem;
+        }
+        .wrapper > * {
+            outline: 1px solid grey;
+            font-size: 14px;
+            font-family: system-ui;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div data-cy="cy-id">data-cy</div>
+        <div data-test="test-id">data-test</div>
+        <div data-testid="testid-id">data-testid</div>
+        <div id="some-id">ID</div>
+        <div class="someClass">Class</div>
+        <main>Tag</main>
+    </div>
+</body>
+</html>
+```
+```js
+it('shows off selector playground', () => {
+    cy.visit('../../selector-playground.html')
+    cy.viewport(300, 200)
+})
+```
+
 http://localhost:3000/guides/core-concepts/cypress-app#Errors
 1) add button to todomvc app index.html or any app where appropriate: 
 ```html
@@ -734,6 +791,9 @@ context('Actions', () => {
   })
 })  
 ```
+
+http://localhost:3000/guides/core-concepts/cypress-app#Open-files-in-your-IDE (gif)
+1) Position text editor over test runner window & return to runner so that things overlap when opening. Include doc (Mac) to show the icon bounce. 
 
 http://localhost:3000/guides/core-concepts/cypress-app#Time-Traveling
 ```js
