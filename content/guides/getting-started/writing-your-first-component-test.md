@@ -14,9 +14,7 @@ title: Writing Your First Component Test
 
 </Alert>
 
-<Alert type="success">
-
-<strong class="alert-header">Follow along!</strong>
+## Getting Started
 
 In order to get the most out of this guide, we recommend that you follow along.
 Clone the
@@ -29,7 +27,9 @@ the following folders to get started:
 - Vue version:
   [guide-getting-started-vue](https://github.com/cypress-io/cypress-component-testing-examples/tree/main/guide-getting-started-vue)
 
-</Alert>
+If you want to use your own project, follow the steps in the
+[Framework Configuration Guide](/guides/getting-started/component-framework-configuration)
+before continuing.
 
 ## The example component
 
