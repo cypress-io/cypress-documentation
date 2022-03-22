@@ -6,15 +6,15 @@ const unified = require('unified')
 const remarkParse = require('remark-parse')
 const remarkDirective = require('remark-directive')
 const remarkRehype = require('remark-rehype')
-const rehypeStringify = require('rehype-stringify')
-
 const directives = require('./remark-directives')
 
 jest.mock('fs')
 
 const CONTENT_PATH = path.join(__dirname, '../content')
 
-const processText = (text) => {
+const processText = async (text) => {
+  const rehypeStringify = (await import('rehype-stringify')).default
+
   return unified()
     .use(remarkParse)
     .use(remarkDirective)
