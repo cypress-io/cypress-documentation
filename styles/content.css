@@ -395,3 +395,11 @@ span.token.keyword.control-flow {
     background: rgb(252, 162, 162);
   }
 }
+
+/* This style seems to be stripped out of css in prod builds from FA, so adding it in manually */
+.svg-inline--fa {
+    display: inline-block;
+    font-size: inherit;
+    height: 1em;
+    vertical-align: -0.125em;
+}
