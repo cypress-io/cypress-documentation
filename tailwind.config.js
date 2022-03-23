@@ -2,7 +2,8 @@ module.exports = {
   /**
    * All utilities will be marked with !important
    * @see https://tailwindcss.com/docs/configuration#important
-   */
+  */
+  darkMode: 'class',
   important: false,
   plugins: [require('@tailwindcss/forms')],
   theme: {

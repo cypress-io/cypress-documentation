@@ -226,7 +226,7 @@
   @apply mb-0;
 }
 
-.nuxt-content svg {
+.nuxt-content svg, .toc-content svg {
   height: 1em;
   width: 1em;
   @apply inline-block;

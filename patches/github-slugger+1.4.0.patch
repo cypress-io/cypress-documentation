@@ -1,0 +1,51 @@
+diff --git a/node_modules/github-slugger/index.js b/node_modules/github-slugger/index.js
+index c1f2d01..f0d1bfe 100644
+--- a/node_modules/github-slugger/index.js
++++ b/node_modules/github-slugger/index.js
+@@ -19,6 +19,7 @@ function BananaSlug () {
+  * @return {string}       A unique slug string
+  */
+ BananaSlug.prototype.slug = function (value, maintainCase) {
++  maintainCase = true
+   const self = this
+   let slug = slugger(value, maintainCase === true)
+   const originalSlug = slug
+@@ -44,7 +45,37 @@ BananaSlug.prototype.reset = function () {
+ function slugger (string, maintainCase) {
+   if (typeof string !== 'string') return ''
+   if (!maintainCase) string = string.toLowerCase()
+-  return string.replace(regex, '').replace(/ /g, '-')
++
++  /**
++   * Github Slugger is the package + algorithm used by Remark + Rehype to
++   * create ids and hrefs for headers that will be unique throughout a page.
++   * We have custom rules that we use for our own headers.
++   * Some of them exist to support legacy links (e.g. case-sensitivity).
++   */
++  var specials = regex
++  var periodAtEnd = /\.{1}$/g
++  var shouldBecomeDash = /\./g
++  var icons = /<[Ii]con.[^/]+\/*>(<\/[Ii]con>)*/
++  var lessThan = /</g
++  var greaterThan = />/g
++  var twoOrMoreDashes = /-{2,}/g
++
++  var str = string.trim()
++    .replace(icons, '')
++    .trim()
++    .replace(periodAtEnd, '')
++    .replace(shouldBecomeDash, '-')
++    .replace(lessThan, 'lt-')
++    .replace(greaterThan, '-gt')
++    .replace(specials, '-')
++    .replace(/\s/g, '-')
++    .replace(twoOrMoreDashes, '-')
++
++  if (str.endsWith('-')) {
++    str = str.slice(0, str.length - 1)
++  }
++
++  return str
+ }
+ 
+ BananaSlug.slug = slugger
