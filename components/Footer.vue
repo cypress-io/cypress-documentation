@@ -5,6 +5,12 @@ export default {
   components: {
     Icon,
   },
+
+  data() {
+    return {
+      year: new Date().getFullYear(),
+    }
+  },
 }
 </script>
 <template>
@@ -94,7 +100,7 @@ export default {
         </a>
       </div>
       <p class="mt-8 text-center text-base text-gray-500">
-        &copy; 2021 Cypress.io. All rights reserved.
+        &copy; {{ year }} Cypress.io. All rights reserved.
       </p>
     </div>
   </footer>
