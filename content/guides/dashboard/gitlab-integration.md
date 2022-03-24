@@ -22,6 +22,13 @@ If you are still facing issues after this, please
 
 <Alert type="warning">
 
+<strong class="alert-header"><Icon name="exclamation-triangle"></Icon> GitLab
+Self-managed</strong>
+
+GitLab Self-managed Integration is is currently in Limited Preview. For more
+information about participating in this Limited Preview, please contact your
+[Customer Success Manager](mailto:success@cypress.io).
+
 GitLab Self-managed Integration is dependent on your GitLab instance being able
 to reach our Dashboard API on the open internet. If your instance is running
 behind a firewall, you may need to reconfigure your security infrastructure to
