@@ -226,7 +226,7 @@
   @apply mb-0;
 }
 
-.nuxt-content svg {
+.nuxt-content svg, .toc-content svg {
   height: 1em;
   width: 1em;
   @apply inline-block;
@@ -371,4 +371,12 @@ span.token.keyword.control-flow {
     height: 100%;
     background: rgb(252, 162, 162);
   }
+}
+
+/* This style seems to be stripped out of css in prod builds from FA, so adding it in manually */
+.svg-inline--fa {
+    display: inline-block;
+    font-size: inherit;
+    height: 1em;
+    vertical-align: -0.125em;
 }
