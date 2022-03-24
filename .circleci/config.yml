@@ -6,11 +6,11 @@ orbs:
 executors:
   node-executor:
     docker:
-      - image: cimg/node:14.15.1
+      - image: cimg/node:14.16.0
   with-chrome-and-firefox:
     resource_class: medium+
     docker:
-      - image: 'cypress/browsers:node12.14.1-chrome85-ff81'
+      - image: 'cypress/browsers:node16.13.2-chrome97-ff96'
 
 commands:
   nuxt-build:
