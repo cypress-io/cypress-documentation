@@ -55,6 +55,7 @@ function loadDirectives() {
   loadDirective('./directives/cypress-env-example')
   loadDirective('./directives/e2e-component-example')
   loadDirective('./directives/visit-mount-test-example')
+  loadDirective('./directives/testing-type-specific-option')
 }
 
 const directivesByType = {}

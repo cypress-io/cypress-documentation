@@ -10,9 +10,8 @@ defined below.
 
 A great place to define or overwrite commands is in your
 `cypress/support/commands.js` file, since it is loaded before any test files are
-evaluated via an import statement in your
-[supportFile](/guides/references/configuration#Folders-Files)
-(`cypress/support/index.js` by default).
+evaluated via an import statement in the
+[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file).
 
 </Alert>
 
@@ -684,6 +683,12 @@ you're issuing many internal Cypress commands, consider passing `{ log: false }`
 to those commands, and programmatically controlling your custom command. This
 will cleanup the Command Log and be much more visually appealing and
 understandable.
+
+### `cy.hover()` and `cy.mount()`
+
+Cypress does not have `cy.hover()` or `cy.mount()` commands out-of-the-box. See
+how to craft your own [`cy.hover()`](/api/commands/hover) and
+[`cy.mount()`](/api/commands/mount) custom commands.
 
 ### Best Practices
 
