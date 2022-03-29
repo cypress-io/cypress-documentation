@@ -107,6 +107,13 @@ export default {
                   {{ link.label }}
                 </nuxt-link>
                 <a
+                  href="https://learn.cypress.io"
+                  class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-bold"
+                >
+                  <span class="sr-only">Learn</span>
+                  Learn
+                </a>
+                <a
                   href="https://github.com/cypress-io/cypress"
                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-bold"
                 >
@@ -191,6 +198,12 @@ export default {
           >
             {{ link.label }}
           </nuxt-link>
+          <a
+            href="https://learn.cypress.io"
+            class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+          >
+            Learn
+          </a>
           <a
             href="https://github.com/cypress-io/cypress"
             class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
