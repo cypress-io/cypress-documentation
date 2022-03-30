@@ -2,18 +2,23 @@
 title: Configuration
 ---
 
-## Configuration file
+## Configuration File
 
-The first time you open the Cypress App, it creates the `cypress.config.js`
-configuration file. This Javascript file is used to store any configuration
-values you supply. If you
-[configure your tests to record](/guides/dashboard/projects#Setup) the results
-to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction) the
-`projectId` will be written in this file too.
+Launching the Cypress App for the first time, you will be guided through a
+wizard that will create a Cypress configuration file for you. This file will be
+`cypress.config.js` for JavaScript apps or `cypress.config.ts` for
+[TypeScript](/guides/tooling/typescript-support) apps. This file is used to
+store any configuration specific to Cypress.
 
-Alternately, Cypress supports a [TypeScript](/guides/tooling/typescript-support)
-`cypress.config.ts` configuration file, and a (deprecated) `cypress.json`
-configuration file.
+Cypress additionally supports config files with `.mjs` or `.cjs` extensions.
+
+Using a `.mjs` file will allow you to use
+[ESM Module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
+syntax in your config without the need of a transpiler step.
+
+A '.cjs' file uses the [CommonJS](https://nodejs.org/api/modules.html) module
+syntax, which is the default for JavaScript files. All JavaScript config
+examples in our docs use the CommonJS format.
 
 <Alert type="warning">
 
@@ -30,14 +35,9 @@ to update your configuration.
 
 </Alert>
 
-<Alert type="info">
-
-<strong class="alert-header">Change Configuration File</strong>
-
-You can change the configuration file with the
-[`--config-file` flag](/guides/guides/command-line#cypress-open-config-file-lt-configuration-file-gt).
-
-</Alert>
+If you [configure your tests to record](/guides/dashboard/projects#Setup) the
+results to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction)
+the `projectId` will be stored in the config file as well.
 
 ## Intelligent Code Completion
 
@@ -66,9 +66,10 @@ default values.
 
 ### Global
 
+<!-- prettier-ignore-start -->
+
 | Option                 | Default                           | Description                                                                                                                                                                                  |
-| ---------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `baseUrl`              | `null`                            | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL.                                                                         |
+| ---------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |                                                                      |
 | `clientCertificates`   | `[]`                              | An optional array of [client certificates](/guides/references/client-certificates).                                                                                                          |
 | `env`                  | `{}`                              | Any values to be set as [environment variables](/guides/guides/environment-variables).                                                                                                       |
 | `includeShadowDom`     | `false`                           | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get)).                                |
@@ -206,6 +207,7 @@ object:
 
 | Option               | Default                               | Description                                                                                                                                                                                         |
 | -------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `baseUrl`              | `null`                            | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL.   
 | `setupNodeEvents`    | `null`                                | Function in which node events can be registered and config can be modified. Takes the place of the (deprecated) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
 | `supportFile`        | `cypress/support/e2e.{js,jsx,ts,tsx}` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                           |
 | `specPattern`        | `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` | A String or Array of glob patterns of the test files to load.                                                                                                                                       |
@@ -251,23 +253,30 @@ object:
 
 :::
 
+<!-- prettier-ignore-end -->
+
 ## Overriding Options
 
 Cypress gives you the option to dynamically alter configuration options. This is
 helpful when running Cypress in multiple environments and on multiple developer
 machines.
 
-### Command Line
+### Overriding Individual Options
 
 When running Cypress from the command line you can pass a `--config` flag to
-override individual config options or a `--config-file` flag to specify an
-entirely different configuration file.
+override individual config options.
 
-For example:
+For example, to override `viewportWidth` and `viewportHeight`, you can run:
 
 ```shell
 cypress run --browser firefox --config viewportWidth=1280,viewportHeight=720
 ```
+
+### Specifying an Alternative Config File
+
+In the Cypress CLI, you can change which config file Cypress will use with the
+[`--config-file`](/guides/guides/command-line#cypress-open-config-file-lt-configuration-file-gt)
+flag.
 
 ```shell
 cypress run --config-file tests/cypress.config.js
