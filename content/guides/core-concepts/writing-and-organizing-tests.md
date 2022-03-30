@@ -266,9 +266,10 @@ The initial imported plugins file can be
 ### Support file
 
 To include code before your test files, set the
-[`supportFile`](/guides/references/configuration#Folders-Files) path. By
-default, [`supportFile`](/guides/references/configuration#Folders-Files) is set
-to look for one of the following files:
+[`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
+path. By default,
+[`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
+is set to look for one of the following files:
 
 **Component:**
 
