@@ -1,26 +1,104 @@
 ---
-title: Rendering Components Correctly
+title: Styling Components
 ---
+
+<Alert type="info">
+
+## <Icon name="graduation-cap"></Icon> What you'll learn
+
+- How to load CSS libraries like Tailwind or Bootstrap
+- How to render icon fonts like Font Awesome
+- Where to import your application's global stylesheets
+- How to use `indexHtmlFile` to define a custom DOM mounting point
+
+</Alert>
 
 # Rendering Components Correctly
 
-The first time you mount a new component, you may notice the following things:
+The first time you mount _any_ new component, you may notice that the component
+doesn't look like it should. Unless your application is written _exclusively_
+using Component-scoped CSS (e.g. Styled Components or Vue's Scoped Styles) you
+will need to follow this guide in order to get your component looking **and
+behaving** like it will in production.
 
-1. Your component is unstyled OR
-2. Your component throws runtime error
+<Alert type="success">
+Ensure that whatever you're doing in production is happening within either the Component HTML file or the Component Support File.
+</Alert>
+
+## Component Support File
+
+When you first load a component or end-to-end spec file, it will first load
+something called a supportFile. By default, this is created for you during
+first-time setup of Cypress Component Testing and is located at
+`cypress/support/component.js`. This file gives you the opportunity to setup
+your spec's environment.
+
+For component specs, you use this file to setup page-level concerns that would
+usually exist by the time you mount the component. Some examples include:
+
+1. Run-time JavaScript code (State Management, Routers, UI Libraries)
+2. Global Styles (Style Resets, Tailwind)
+
+As a rule, your Component Support File should look **very similar** to your
+application's `main.js` and `main.css` files.
+
+## 3rd Party CSS Libraries (Tailwind, Bootstrap, PopperJS)
+
+<!--
+What you would see is classes being applied in the inspector, but no styles. e.g. bg-red-500 wouldn't do anything, but it would show up in Chrome.
+
+PopperJS (Floating UI) is probably a better example because the UI is malformed -- not just missing. e.g. the :after CSS being semi-visible
+-->
+
+Components can have three parts: markup, styles, and script logic. All three of
+these work together in order to deliver a working component.
+
+Styles are business logic, too.
+
+<!--
+Demonstrate cypress.get('element').should('be.visible')
+OR
+cy.get('element').click().get('something-else').should('be.visible')
+
+// Demonstrate before and after import of main.css
+// in the user's support/component.js file
+// and how 'element' becomes visible/not visible
+// and how that breaks the test
+
+// What's a good example?
+Overlays + Modals are usually really good.
+1. Parent covers child (prevents click due to overflow)
+2. Child height issues
+3. Child visibility issues (opacity)
+
+<template>
+  <div class="overlay absolute w-screen h-screen bg-red-500 z-1000">
+    <button>X</button>
+  </div>
+  <div>
+    Page content
+  </div>
+</template>
+-->
+
+1. Tailwind
+2. CSS Modules
+3. Scoped Styled
+4. Styled Components
+5. Regular Stylesheets
+6. UI Libraries
 
 This guide will help you setup your test infrastructure to render your
-component's styles properly. Solving runtime errors, such as those with
+component's styles properly. Solving certain runtime errors, such as those with
 ThemeProviders or Material UI, is covered on the
 "[Getting Components to Work](/guides/getting-started/getting-components-to-work)"
 page.
 
 Depending on how your application is built, the first time your mount a new
-component, it may be unstyled. You may have Times New Roman font or you'll
-notice that any CSS Resets (normalize.css, etc) aren't being applied. It won't
-"look right".
+component, it may be completely or somewhat unstyled.
 
-This makes sense.
+This makes sense. Many applications have some amount of one-time setup that is
+run outside of the component file.
 
 We build our applications within the context that they're supposed to run in,
 and we make assumptions that our components will always be rendered within a
@@ -236,9 +314,6 @@ Or via an `@import` statement
   font-style: normal;
 }
 ```
-
-Ensure that whatever you're doing in production is happening within either the
-Component HTML file or the Component Support File.
 
 ### Icon Fonts: None of my icons are rendering
 
