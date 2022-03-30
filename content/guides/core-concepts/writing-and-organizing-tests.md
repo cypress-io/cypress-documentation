@@ -297,8 +297,11 @@ The Cypress App automatically creates an example support file for each
 configured testing type, which has several commented out examples.
 
 This file runs **before** every single spec file. We do this purely as a
-convenience mechanism so you don't have to import this file in every single one
-of your spec files.
+convenience mechanism so you don't have to import this file.
+
+By default Cypress will automatically include type-specific support files. For
+E2E, the default is `cypress/support/e2e.{js,jsx,ts,tsx}`, and for Component
+Testing `cypress/support/e2e.{js,jsx,ts,tsx}`.
 
 The support file is a great place to put reusable behavior such as
 [custom commands](/api/cypress-api/custom-commands) or global overrides that you
