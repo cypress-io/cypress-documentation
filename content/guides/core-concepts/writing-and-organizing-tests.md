@@ -113,7 +113,7 @@ these should also be ignored when you check into source control.
 
 </Alert>
 
-### Test files
+### Spec files
 
 Test files are located in `cypress/e2e` by default, but can be
 [configured](/guides/references/configuration#Folders-Files) to another
