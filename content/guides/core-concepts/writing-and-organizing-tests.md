@@ -121,6 +121,8 @@ directory. Test files may be written as:
 
 - `.js`
 - `.jsx`
+- `.ts`
+- `.tsx`
 - `.coffee`
 - `.cjsx`
 
