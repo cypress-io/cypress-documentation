@@ -531,11 +531,10 @@ cy.wait('@headers')
 #### Add, modify or delete a header to all outgoing requests
 
 You can add, modify or delete a header to all outgoing requests using a
-`beforeEach()` in the `cypress/support/index.js` file
+`beforeEach()` in the
+[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file).
 
 ```js
-// cypress/support/index.ts
-
 beforeEach(() => {
   cy.intercept(
     { url: 'http://localhost:3001/**', middleware: true },
@@ -663,25 +662,25 @@ cy.intercept('/users', (req) => {
 #### Throttle or delay response all incoming responses
 
 You can throttle or delay all incoming responses using a `beforeEach()` in the
-`cypress/support/index.js` file
+[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file).
 
 ```js
-// cypress/support/index.ts
-
 // Throttle API responses to simulate real-world conditions
-cy.intercept(
-  {
-    url: 'http://localhost:3001/**',
-    middleware: true,
-  },
-  (req) => {
-    req.on('response', (res) => {
-      // Throttle the response to 1 Mbps to simulate a
-      // mobile 3G connection
-      res.setThrottle(1000)
-    })
-  }
-)
+beforeEach(() => {
+  cy.intercept(
+    {
+      url: 'http://localhost:3001/**',
+      middleware: true,
+    },
+    (req) => {
+      req.on('response', (res) => {
+        // Throttle the response to 1 Mbps to simulate a
+        // mobile 3G connection
+        res.setThrottle(1000)
+      })
+    }
+  )
+})
 ```
 
 ### Request/Response Modification with `routeHandler`

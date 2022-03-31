@@ -135,12 +135,12 @@ export default {
       :algolia-settings="algoliaSettings"
       :banner="banner"
     />
-    <main :class="Boolean(banner) ? 'banner-margin' : ''" class="main-content">
+    <main :class="{ banner: 'banner-margin' }" class="main-content">
       <AppSidebar
         :items="sidebarItems"
         section="guides"
         :path="path"
-        :has-banner="Boolean(banner)"
+        :has-banner="banner"
       />
       <div class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
@@ -153,7 +153,7 @@ export default {
           <Footer />
         </article>
       </div>
-      <TableOfContents :toc="tableOfContents" :has-banner="Boolean(banner)" />
+      <TableOfContents :toc="tableOfContents" :has-banner="banner" />
     </main>
   </div>
 </template>

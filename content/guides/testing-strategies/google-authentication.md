@@ -215,7 +215,7 @@ is in the
 
 </Alert>
 
-## Adapting an Google App for Testing
+## Adapting a Google App for Testing
 
 <Alert type="info">
 

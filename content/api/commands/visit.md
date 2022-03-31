@@ -84,8 +84,8 @@ globally in the [Cypress configuration](/guides/references/configuration).
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.visit()` 'yields the `window` object after the page finishes
-loading' </li></List>
+<List><li>`cy.visit()` yields the `window` object after the page finishes
+loading</li></List>
 
 Let's confirm the `window.navigator.language` after visiting the site:
 
@@ -249,7 +249,9 @@ prevent repeating yourself in every `cy.visit()` command.
 
 ```js
 {
-  baseUrl: 'http://localhost:3000/#/'
+  e2e: {
+    baseUrl: 'http://localhost:3000/#/'
+  }
 }
 ```
 
@@ -292,7 +294,9 @@ Imagine this Cypress configuration:
 
 ```js
 {
-  baseUrl: 'https://example.cypress.io'
+  e2e: {
+    baseUrl: 'https://example.cypress.io'
+  }
 }
 ```
 

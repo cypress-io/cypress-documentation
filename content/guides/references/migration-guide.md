@@ -81,7 +81,12 @@ on('<event>', (arg1, arg2) => {
 
 ### Config option changes
 
-CONTENT_TBD
+#### `supportFile`
+
+The `supportFile` configuration option is no longer valid at the top-level.
+Instead, it must be configured within each testing type's configuration object.
+More information can be found in the
+[support file docs](/guides/core-concepts/writing-and-organizing-tests#Support-file).
 
 ## Migrating from `cypress-file-upload` to [`.selectFile()`](/api/commands/selectfile)
 

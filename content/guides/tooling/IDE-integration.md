@@ -51,6 +51,8 @@ with Cypress.
   Various helpers and commands for integration with Cypress.
 - [Cypress Snippets](https://marketplace.visualstudio.com/items?itemName=andrew-codes.cypress-snippets):
   Useful Cypress code snippets.
+- [Cypress Snippets](https://marketplace.visualstudio.com/items?itemName=CliffSu.cypress-snippets):
+  This extension includes the newest and most common cypress snippets.
 - [Open Cypress](https://marketplace.visualstudio.com/items?itemName=tnrich.vscode-extension-open-cypress):
   Allows you to open Cypress specs and single `it()` blocks directly from VS
   Code.
@@ -175,54 +177,6 @@ with the following configuration should get intelligent code completion working.
   },
   "include": ["**/*.*"]
 }
-```
-
-### Configuration
-
-::include{file=partials/warning-cypress-json.md}
-
-#### Features:
-
-When editing the [Cypress configuration file](/guides/references/configuration),
-you can use our [json schema file](https://on.cypress.io/cypress.schema.json) to
-get intelligent tooltips in your IDE for each configuration property.
-
-##### Property help when writing and hovering on configuration keys
-
-<DocsVideo src="/img/snippets/intellisense-cypress-config-tooltips.mp4"></DocsVideo>
-
-##### Properties list with intelligent defaults
-
-<DocsVideo src="/img/snippets/intellisense-config-defaults.mp4"></DocsVideo>
-
-#### Set up in your Dev Environment:
-
-Intelligent code completion using JSON schemas is supported by default in
-[Visual Studio Code](https://code.visualstudio.com/) and
-[Visual Studio](https://www.visualstudio.com/). All other editors will require
-extra configuration or plugins for JSON schema support.
-
-To set up in [Visual Studio Code](https://code.visualstudio.com/) you can open
-`Preferences / Settings / User Settings` and add the `json.schemas` property.
-Make sure to replace `cypress.json` with your configuration file if not the
-default.
-
-```json
-{
-  "json.schemas": [
-    {
-      "fileMatch": ["cypress.json"],
-      "url": "https://on.cypress.io/cypress.schema.json"
-    }
-  ]
-}
-```
-
-Or you can directly add a `$schema` key to your Cypress configuration file,
-which is a great way to share the schema with all collaborators of the project.
-
-```json
-"$schema": "https://on.cypress.io/cypress.schema.json",
 ```
 
 ### See also

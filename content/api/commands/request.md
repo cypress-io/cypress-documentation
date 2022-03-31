@@ -47,7 +47,9 @@ cy.request('users/1.json') //  URL is  http://localhost:8080/users/1.json
 
 ```js
 {
-  baseUrl: 'http://localhost:1234'
+  e2e: {
+    baseUrl: 'http://localhost:1234'
+  }
 }
 ```
 

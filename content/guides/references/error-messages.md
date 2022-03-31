@@ -33,13 +33,22 @@ When the error is fixed in your test file, your tests will automatically re-run.
 
 The `supportFolder` option was removed from Cypress in version
 [`0.18.0`](/guides/references/changelog#0-18-0) and was replaced by module
-support and the [`supportFile`](/guides/references/configuration#Folders-Files)
+support and the
+[`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
 configuration option.
 
 Cypress used to automatically include any scripts in the `supportFolder` before
 your test files. However, automatically including all the files in a certain
 directory is somewhat magical and unintuitive, and requires creating globals for
 the purpose of utility functions.
+
+### <Icon name="exclamation-triangle" color="red"></Icon> Error Loading Config
+
+The `supportFile` configuration option was removed from the root configutation
+object in Cypress version `10.0.0`. Instead, it must be added within each
+testing type's configuration object as a separate property if you would like to
+use a file other than the default
+[supportFile](/guides/references/configuration#Folders-Files) configuration.
 
 #### Use modules for utility functions
 
@@ -61,22 +70,20 @@ it('uses modules', () => {
 It's still useful to load a setup file before your test code. If you are setting
 Cypress defaults or utilizing custom Cypress commands, instead of needing to
 import/require those defaults/commands in every test file, you can use the
-[`supportFile`](/guides/references/configuration#Folders-Files) configuration
-option.
+[`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
+configuration option within each testing type's configuration object.
 
-To include code before your test files, set the
-[`supportFile`](/guides/references/configuration#Folders-Files) path. By
-default, [`supportFile`](/guides/references/configuration#Folders-Files) is set
-to look for one of the following files:
+<Alert type="danger">
 
-- `cypress/support/index.js`
-- `cypress/support/index.ts`
-- `cypress/support/index.coffee`
+⚠️ For a given testing type, multiple matching `supportFile` files will result
+in an error when Cypress loads.
+
+</Alert>
 
 Just like with your test files, the
-[`supportFile`](/guides/references/configuration#Folders-Files) can use ES2015+,
-[TypeScript](/guides/tooling/typescript-support) or CoffeeScript and modules, so
-you can import/require other files as needed.
+[`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
+can use ES2015+, [TypeScript](/guides/tooling/typescript-support) or
+CoffeeScript and modules, so you can import/require other files as needed.
 
 ## Command Errors
 

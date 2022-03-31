@@ -486,9 +486,7 @@ npm install --save-dev @cypress/vue @cypress/vite-dev-server
 </template>
 <template #yarn>
 
-```sh
 yarn add -D @cypress/vue @cypress/vite-dev-server
-```
 
 </template>
 </npm-or-yarn>
