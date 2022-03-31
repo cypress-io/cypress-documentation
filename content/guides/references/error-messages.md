@@ -33,7 +33,8 @@ When the error is fixed in your test file, your tests will automatically re-run.
 
 The `supportFolder` option was removed from Cypress in version
 [`0.18.0`](/guides/references/changelog#0-18-0) and was replaced by module
-support and the [`supportFile`](/guides/references/configuration#Folders-Files)
+support and the
+[`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
 configuration option.
 
 Cypress used to automatically include any scripts in the `supportFolder` before
@@ -69,8 +70,8 @@ it('uses modules', () => {
 It's still useful to load a setup file before your test code. If you are setting
 Cypress defaults or utilizing custom Cypress commands, instead of needing to
 import/require those defaults/commands in every test file, you can use the
-[`supportFile`](/guides/references/configuration#Folders-Files) configuration
-option within each testing type's configuration object.
+[`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
+configuration option within each testing type's configuration object.
 
 <Alert type="danger">
 
@@ -80,9 +81,9 @@ in an error when Cypress loads.
 </Alert>
 
 Just like with your test files, the
-[`supportFile`](/guides/references/configuration#Folders-Files) can use ES2015+,
-[TypeScript](/guides/tooling/typescript-support) or CoffeeScript and modules, so
-you can import/require other files as needed.
+[`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
+can use ES2015+, [TypeScript](/guides/tooling/typescript-support) or
+CoffeeScript and modules, so you can import/require other files as needed.
 
 ## Command Errors
 
