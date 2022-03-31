@@ -550,9 +550,16 @@ send a `503` status code. As a convenience it also sets a
 ### devServer / devServerConfig
 
 The `devServer` function is a required [`component`](#component) testing
-specific option, and allows you to register a component testing dev server. It
-receives a `cypressDevServerConfig` argument which is passed to the dev server
-module.
+specific option, and allows you to register a component testing dev server.
+
+Typically, you will import a devServer from a library package (see
+[Framework Configuration](/guides/getting-started/component-framework-configuration)).
+
+However, it is possible to customize the devServer and provide your own function
+for custom or advanced setups.
+
+The devServer option receives a `cypressDevServerConfig` argument which is
+passed to the dev server module:
 
 :::cypress-config-example{noJson}
 
