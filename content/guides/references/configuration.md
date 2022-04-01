@@ -474,7 +474,7 @@ highlighted to show where the value has been set via the following ways:
 - [Command Line arguments](/guides/guides/command-line)
 - [setupNodeEvents](#setupNodeEvents)
 
-<DocsImage src="/img/guides/configuration/v10/see-resolved-configuration.png" alt="See resolved configuration" ></DocsImage>
+<DocsImage src="/img/guides/configuration/v10/see-resolved-configuration.png" alt="See resolved configuration"></DocsImage>
 
 ## Notes
 
