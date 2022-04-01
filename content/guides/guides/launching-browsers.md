@@ -183,17 +183,17 @@ list of browsers you want available for selection during `cypress open`.
 //   majorVersion: 80
 // }
 return {
-  browsers: config.browsers.filter((b) => b.family === 'chromium'),
+  browsers: config.browsers.filter(
+    (b) => b.family === 'chromium' && b.name !== 'electron'
+  ),
 }
 ```
 
 :::
 
 When you open the Cypress App in a project that uses the above modifications to
-the setupNodeEvents function, only the Chrome browsers found on the system will
-display in the list of available browsers.
-
-<DocsImage src="/img/guides/launching-browsers/chrome-browsers-only.png" alt="Filtered list of Chrome browsers"></DocsImage>
+the `setupNodeEvents` function, Electron will no longer display in the list of
+available browsers.
 
 <Alert type="info">
 
