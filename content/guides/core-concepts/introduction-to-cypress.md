@@ -798,7 +798,7 @@ checkAndReload()
 
 The test runs and correctly finishes.
 
-<DocsImage src="/img/guides/core-concepts/lucky-7.gif" alt="Test reloads the page until the number 7 appears"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/lucky-7.gif" alt="Test reloads the page until the number 7 appears"></DocsImage>
 
 You can see a short video going through this example at
 [https://www.youtube.com/watch?v=5Z8BaPNDfvA](https://www.youtube.com/watch?v=5Z8BaPNDfvA).

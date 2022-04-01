@@ -457,10 +457,10 @@ it('Show warning outside Chrome', { browser: '!chrome' }, () => {
 
 ## Resolved Configuration
 
-When you open a Cypress project, clicking on the **Settings** tab will display
-the resolved configuration to you. This helps you to understand and see where
-different values came from. Each set value is highlighted to show where the
-value has been set via the following ways:
+When you open a Cypress project, expanding the Project Settings panel under
+**Settings** will display the resolved configuration to you. This helps you to
+understand and see where different values came from. Each set value is
+highlighted to show where the value has been set via the following ways:
 
 - Default value
 - [Cypress configuration file](/guides/references/configuration)
@@ -469,9 +469,9 @@ value has been set via the following ways:
 - System
   [environment variables](/guides/guides/environment-variables#Option-3-CYPRESS)
 - [Command Line arguments](/guides/guides/command-line)
-- [Plugins file](/api/plugins/configuration-api)
+- [setupNodeEvents](#setupNodeEvents)
 
-<DocsImage src="/img/guides/configuration/see-resolved-configuration.jpg" alt="See resolved configuration" ></DocsImage>
+<DocsImage src="/img/guides/configuration/v10/see-resolved-configuration.png" alt="See resolved configuration"></DocsImage>
 
 ## Notes
 
@@ -542,7 +542,7 @@ When Cypress blocks a request made to a matching host, it will automatically
 send a `503` status code. As a convenience it also sets a
 `x-cypress-matched-blocked-host` header so you can see which rule it matched.
 
-<DocsImage src="/img/guides/blocked-host.png" alt="Network tab of dev tools with analytics.js request selected and the response header highlighted " ></DocsImage>
+<DocsImage src="/img/guides/references/v10/blocked-host.png" alt="Network tab of dev tools with analytics.js request selected and the response header highlighted " ></DocsImage>
 
 ### devServer / devServerConfig
 
@@ -768,7 +768,7 @@ an [`e2e`](#e2e) or [`component`](#component) testing specific option.
 
 <Alert type="info">
 
-This function was added in Cypress version 10.0.0 to replace the deprecated
+This function was added in Cypress version `10.0.0` to replace the deprecated
 [plugins file](/guides/references/legacy-configuration#Plugins).
 
 </Alert>

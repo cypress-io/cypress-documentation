@@ -205,7 +205,7 @@ cy.intercept(
 When you use [`cy.intercept()`](/api/commands/intercept) to define a route,
 Cypress displays this under "Routes" in the Command Log.
 
-<DocsImage src="/img/guides/server-routing-table.png" alt="Routing Table"></DocsImage>
+<DocsImage src="/img/guides/network-requests/v10/server-routing-table.png" alt="Routing Table"></DocsImage>
 
 When a new test runs, Cypress will restore the default behavior and remove all
 routes and stubs. For a complete reference of the API and options, refer to the
@@ -418,7 +418,7 @@ it('test', () => {
 })
 -->
 
-<DocsImage src="/img/guides/clear-source-of-failure.png" alt="Wait Failure"></DocsImage>
+<DocsImage src="/img/guides/network-requests/v10/clear-source-of-failure.png" alt="Wait Failure"></DocsImage>
 
 Now we know exactly why our test failed. It had nothing to do with the DOM.
 Instead we can see that either our request never went out or a request went out

@@ -23,4 +23,4 @@ Cypress test.
    DevTools console. This will usually allow you to click on lines in the stack
    trace and open files in your DevTools.
 
-<DocsImage src="/img/guides/command-failure-error.png" alt="example command failure error" ></DocsImage>
+<DocsImage src="/img/guides/cypress-app/v10/command-failure-error.png" alt="example command failure error"></DocsImage>
