@@ -18,6 +18,13 @@
           "badge": "community"
         },
         {
+          "name": "Cytorus",
+          "description": "Run cucumber/gherkin-syntaxed specs with cypress.io",
+          "link": "https://github.com/NaturalIntelligence/cytorus",
+          "keywords": ["gherkin", "cucumber"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-app-watcher-preprocessor",
           "description": "Reruns Cypress tests when the back end server restarts",
           "link": "https://github.com/TheBrainFamily/cypress-app-watcher-preprocessor",
@@ -697,9 +704,9 @@
         },
         {
           "name": "Nx",
-          "description": "Nrwl Extensions for Angular",
-          "link": "https://nrwl.io/nx/e2e-testing-with-cypress",
-          "keywords": ["angular", "cli"],
+          "description": "Smart, Fast and Extensible Build System",
+          "link": "https://nx.dev/cypress/overview",
+          "keywords": ["angular", "react", "cli", "monorepo"],
           "badge": "community"
         },
         {
