@@ -143,10 +143,6 @@ To see an example of every command used in Cypress, open the
 [`2-advanced-examples` folder](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/cypress/integration/2-advanced-examples)
 within your `cypress/e2e` folder.
 
-To start writing tests for your app, create a new file like `app.cy.js` within
-your `cypress/e2e` folder. Refresh your tests list in the Cypress App and your
-new file should have appeared in the list.
-
 ### Fixture Files
 
 Fixtures are used as external pieces of static data that can be used by your
@@ -369,6 +365,14 @@ style.
 
 If you're familiar with writing tests in JavaScript, then writing tests in
 Cypress will be a breeze.
+
+<Alert type="info">
+
+To start writing tests for your app, follow our guides for writing your first
+[Component](/guides/getting-started/writing-your-first-component-test) or
+[End-to-End](/guides/getting-started/writing-your-first-end-to-end-test) test.
+
+</Alert>
 
 ### Test Structure
 
