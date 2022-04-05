@@ -14,6 +14,8 @@ title: Writing Your First Component Test
 
 </Alert>
 
+<CtBetaAlert></CtBetaAlert>
+
 ## Getting Started
 
 In order to get the most out of this guide, we recommend that you follow along.

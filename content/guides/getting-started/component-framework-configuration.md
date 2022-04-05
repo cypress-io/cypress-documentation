@@ -2,6 +2,8 @@
 title: Framework Configuration
 ---
 
+<CtBetaAlert></CtBetaAlert>
+
 Writing tests in Cypress is the same regardless of framework choice (Vue, React,
 Nuxt, Next, etc.). However, each framework requires additional setup and
 configuration to run properly.
