@@ -1,6 +1,15 @@
 {
   "courses": [
     {
+      "title": "Cypress.io kurz",
+      "url": "https://academy.tesena.com/p/cypress-io",
+      "author": "Filip Hric",
+      "authorTwitter": "filip_hric",
+      "sourceName": "Tesena",
+      "sourceUrl": "https://academy.tesena.com",
+      "language": "Slovak"
+    },
+    {
       "title": "Cypress: Web Automation Testing from Zero to Hero",
       "url": "https://www.udemy.com/course/cypress-web-automation-testing-from-zero-to-hero/?couponCode=CYPRESSDOCS",
       "author": "Artem Bondar",
