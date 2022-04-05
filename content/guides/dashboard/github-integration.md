@@ -137,10 +137,6 @@ them into the Dashboard, and complete the activation process.
 
 4. Set the **Repository Permissions**. Below are the minimum permissions
    required for the new GitHub App.
-   - **Actions**: read-only
-   - **Checks**: read & write
-   - **Contents**: read-only
-   - **Discussions**: read & write
    - **Pull requests**: read & write
    - **Commit statuses**: read & write
 
