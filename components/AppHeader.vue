@@ -84,8 +84,8 @@ export default {
             <div class="flex-shrink-0">
               <a href="/">
                 <img
-                  class="block h-8 w-auto"
-                  :src="require('~/assets/cypress-logo.png')"
+                  class="block h-9 w-auto"
+                  :src="require('~/assets/cypress-logo.svg')"
                   alt="Cypress Docs Logo"
                 />
               </a>
