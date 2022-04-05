@@ -84,8 +84,8 @@ export default {
             <div class="flex-shrink-0">
               <a href="/">
                 <img
-                  class="block h-8 w-auto"
-                  :src="require('~/assets/cypress-logo.png')"
+                  class="block h-9 w-auto"
+                  :src="require('~/assets/cypress-logo.svg')"
                   alt="Cypress Docs Logo"
                 />
               </a>
@@ -210,7 +210,7 @@ export default {
           >
             GitHub
           </a>
-          <app-header-mobile-section
+          <AppHeaderMobileSection
             v-for="(group, index) in mobileMenuItems"
             :key="`navgroup-${index}`"
             :name="group.slug"
