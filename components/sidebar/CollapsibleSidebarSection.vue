@@ -107,13 +107,13 @@ export default {
     :class="
       depth > 1
         ? `ml-${depth + 3} pl-2 border-l-2 border-gray-200`
-        : 'px-7 pb-4'
+        : 'px-4 pb-4'
     "
     class="space-y-1"
     :data-test="folder"
   >
     <button
-      class="group w-full flex items-center text-left text-lg font-bold text-gray-600 hover:text-gray-900 hover:bg-gray-50 focus:outline-none"
+      class="group w-full flex items-center text-left px-2 pl-4 pr-1 text-lg font-bold bg-lightGray text-gray-600 hover:text-gray-900 hover:bg-gray-50 focus:outline-none"
       @click="toggleSection"
     >
       {{ label }}
@@ -155,7 +155,7 @@ export default {
           <nuxt-link
             :to="child.redirect || `/${section}/${folder}/${child.slug}`"
             :class="getSidebarItemClass(folder, child)"
-            class="rounded-md group w-full flex items-center pl-3 pr-2 py-1 text-md font-medium hover:text-green transition-colors hover:bg-gray-50"
+            class="rounded-md group w-full flex items-center pl-4 pr-2 py-1 text-md font-medium hover:text-green transition-colors hover:bg-gray-50"
           >
             {{ child.title }}
           </nuxt-link>
