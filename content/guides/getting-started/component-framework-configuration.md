@@ -545,7 +545,7 @@ in the `component` config options:
 {
   component: {
     devServer,
-    indexHtmlFile: '/custom/path/to/index.html'
+    indexHtmlFile: '/custom/path/to/component-index.html'
   }
 }
 ```
