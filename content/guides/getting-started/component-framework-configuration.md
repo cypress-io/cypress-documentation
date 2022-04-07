@@ -8,19 +8,16 @@ setup configuration.
 
 Cypress currently supports the following frameworks for component testing:
 
-| Framework                                 | UI Library |
-| ----------------------------------------- | ---------- |
-| [Create React App](#Create-React-App-CRA) | React      |
-| [Next.js](#Next-js) (Alpha)               | React      |
-| [React with Vite](#Vite)                  | React      |
-| [React with Webpack](#Webpack)            | React      |
-| [Vue CLI](#Vue-CLI)                       | Vue        |
-| [Nuxt](#Nuxt) (Alpha)                     | Vue        |
-| [Vue with Vite](#Vite-1)                  | Vue        |
-| [Vue with Webpack](#Webpack-1)            | Vue        |
-
-Additional frameworks can be configured using a
-[Custom Dev Server Function](#Custom-Dev-Server).
+| Framework                                            | UI Library | Bundler |
+| ---------------------------------------------------- | ---------- | ------- |
+| [Create React App](#Create-React-App-CRA)            | React      | Webpack |
+| [Next.js](#Next-js) <Badge type="info">Alpha</Badge> | React      | Webpack |
+| [React with Vite](#Vite)                             | React      | Vite    |
+| [React with Webpack](#Webpack)                       | React      | Webpack |
+| [Vue CLI](#Vue-CLI)                                  | Vue        | Webpack |
+| [Nuxt](#Nuxt) <Badge type="info">Alpha</Badge>       | Vue        | Webpack |
+| [Vue with Vite](#Vite-1)                             | Vue        | Vite    |
+| [Vue with Webpack](#Webpack-1)                       | Vue        | Webpack |
 
 ## Automatic Setup
 
@@ -52,8 +49,8 @@ and a custom webpack config.
 
 To configure component testing for a React app that uses
 [Create React App](https://create-react-app.dev/), you will need to configure a
-`devServer` with a framework of `create-react-app` and a bundler of `webpack`
-like so:
+`devServer` with a `framework` of "create-react-app" and a `bundler` of
+"webpack" like so:
 
 <cypress-config-file>
 <template #js>
@@ -104,7 +101,7 @@ Next.js is currently in alpha support for component testing. See
 
 To configure component testing for a React app that uses
 [Next.js](https://nextjs.org/), you will need to configure a `devServer` with a
-framework of `next` and a bundler of `webpack` like so:
+`framework` of "next" and a `bundler` of "webpack" like so:
 
 <cypress-config-file>
 <template #js>
@@ -166,7 +163,7 @@ app.
 
 To configure component testing for a React app that uses
 [Vite](https://vitejs.dev/), you will need to configure a `devServer` with a
-framework of `react` and a bundler of `vite` like so:
+`framework` of "react" and a `bundler` of "vite" like so:
 
 <cypress-config-file>
 <template #js>
@@ -210,7 +207,7 @@ You can find an example React project that uses Vite
 
 To configure component testing for a React app that uses a custom
 [Webpack](https://webpack.js.org/) config, you will need to configure a
-`devServer` with a framework of `react` and a bundler of `webpack` like so:
+`devServer` with a `framework` of "react" and a `bundler` of "webpack" like so:
 
 <cypress-config-file>
 <template #js>
@@ -270,7 +267,7 @@ webpack config.
 
 To configure component testing for a Vue app that uses
 [Vue CLI](https://cli.vuejs.org/), you will need to configure a `devServer` with
-a framework of `vue-cli` and a bundler of `webpack` like so:
+a `framework` of "vue-cli" and a `bundler` of "webpack" like so:
 
 <cypress-config-file>
 <template #js>
@@ -333,7 +330,7 @@ Nuxt is currently in alpha support for component testing.
 
 To configure component testing for a Vue app that uses
 [Nuxt](https://nuxtjs.org/), you will need to configure a `devServer` with a
-framework of `nuxt` and a bundler of `webpack` like so:
+`framework` of "nuxt" and a `bundler` of "webpack" like so:
 
 <cypress-config-file>
 <template #js>
@@ -377,7 +374,7 @@ You can find a sample Vue Nuxt project
 
 To configure component testing for a Vue app that uses
 [Vite](https://vitejs.dev/), you will need to configure a `devServer` with a
-framework of `vue` and a bundler of `vite` like so:
+`framework` of "vue" and a `bundler` of "vite" like so:
 
 <cypress-config-file>
 <template #js>
@@ -421,7 +418,7 @@ You can find an example Vue project that uses Vite
 
 To configure component testing for a Vue app that uses a custom
 [Webpack](https://webpack.js.org/) config, you will need to configure a
-`devServer` with a framework of `vue` and a bundler of `webpack` like so:
+`devServer` with a `framework` of "vue" and a `bundler` of "webpack" like so:
 
 <cypress-config-file>
 <template #js>
@@ -539,7 +536,7 @@ The index file allows you to add in global assets, such as styles, fonts, and
 external scripts.
 
 You can provide an alternative path to the file using the `indexHtmlFile` option
-in the `component` config options:
+in the [component](/guides/references/configuration#component) config options:
 
 ```js
 {
@@ -562,7 +559,6 @@ subdirectories.
 ```js
 {
   component: {
-    devServer,
     specPattern: 'src/**/*.cy.{js,jsx,ts,tsx}'
   }
 }
