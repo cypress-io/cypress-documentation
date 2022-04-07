@@ -543,16 +543,35 @@ send a `503` status code. As a convenience it also sets a
 The `devServer` option is required for [`component`](#component) testing, and
 allows you to register a component testing dev server.
 
-Typically, you will specify a `framework` and `bundler` option in `devServer`
-for your framework and UI library. See
+Typically, you will specify a `framework` and `bundler` options in `devServer`
+for your framework and UI library like so:
+
+:::cypress-config-example{noJson}
+
+```js
+{
+  component: {
+    devServer: {
+      framework: 'create-react-app',
+      bundler: 'webpack'
+    },
+  },
+}
+```
+
+:::
+
+See
 [Framework Configuration](/guides/getting-started/component-framework-configuration)
-for more info.
+guide for more info on all the available `framework` and `bundler` options, as
+well as additional configuration options.
 
-However, it is possible to customize the devServer and provide your own function
-for custom or advanced setups.
+#### Custom Dev Server
 
-The devServer option receives a `cypressDevServerConfig` argument which is
-passed to the dev server module:
+It is possible to customize the devServer and provide your own function for
+custom or advanced setups.
+
+The devServer function receives a `cypressDevServerConfig` argument:
 
 :::cypress-config-example{noJson}
 
@@ -566,9 +585,11 @@ passed to the dev server module:
 }
 ```
 
+:::
+
 See the
-[component testing framework configuration guide](/guides/getting-started/component-framework-configuration)
-for specific examples.
+[Custom Dev Server](/guides/getting-started/component-framework-configuration)
+guide for more info.
 
 ### excludeSpecPattern
 
