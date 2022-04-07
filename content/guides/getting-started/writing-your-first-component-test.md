@@ -2,6 +2,8 @@
 title: Writing Your First Component Test
 ---
 
+<CtBetaAlert></CtBetaAlert>
+
 <Alert type="info">
 
 ## <Icon name="graduation-cap"></Icon> What you'll learn
@@ -13,8 +15,6 @@ title: Writing Your First Component Test
 - Best practices for writing and organizing tests.
 
 </Alert>
-
-<CtBetaAlert></CtBetaAlert>
 
 ## Getting Started
 
