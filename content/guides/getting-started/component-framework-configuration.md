@@ -252,9 +252,9 @@ export default defineConfig({
 </template>
 </cypress-config-file>
 
-If you don't provide one, Cypress will try to infer your webpack config. If
-Cypress cannot or you want to make modifications to your config, you can pass it
-in manually via the `webpackConfig` option.
+If you don't provide a webpack config, Cypress will try to infer it. If Cypress
+cannot do so, or you want to make modifications to your config, you can specify
+it via the `webpackConfig` option.
 
 You can find an example React project that uses Webpack
 [here](https://github.com/cypress-io/cypress-component-examples/tree/main/setup-webpack-react-app).
