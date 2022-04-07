@@ -66,7 +66,7 @@ default values.
 <!-- prettier-ignore-start -->
 
 | Option                 | Default                           | Description                                                                                                                                                                                  |
-| ---------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |                                                                      |
+| ---------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `clientCertificates`   | `[]`                              | An optional array of [client certificates](/guides/references/client-certificates).                                                                                                          |
 | `env`                  | `{}`                              | Any values to be set as [environment variables](/guides/guides/environment-variables).                                                                                                       |
 | `includeShadowDom`     | `false`                           | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get)).                                |
@@ -202,14 +202,14 @@ creating `e2e` and `component` objects inside your Cypress configuration.
 These options are available to be specified inside the `e2e` configuration
 object:
 
-| Option               | Default                               | Description                                                                                                                                                                                         |
-| -------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `baseUrl`              | `null`                            | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL.   
+| Option               | Default                               | Description                                                                                                                                                                                           |
+| -------------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `baseUrl`            | `null`                                | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL.                                                                                  |
 | `setupNodeEvents`    | `null`                                | Function in which node events can be registered and config can be modified. Takes the place of the (removed) pluginFile option. [Please read the notes for examples on using this.](#setupNodeEvents) |
-| `supportFile`        | `cypress/support/e2e.{js,jsx,ts,tsx}` | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                           |
-| `specPattern`        | `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` | A String or Array of glob patterns of the test files to load.                                                                                                                                       |
-| `excludeSpecPattern` | `*.hot-update.js`                     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludeSpecPattern)                       |
-| `slowTestThreshold`  | `10000`                               | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                             |
+| `supportFile`        | `cypress/support/e2e.{js,jsx,ts,tsx}` | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                             |
+| `specPattern`        | `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` | A String or Array of glob patterns of the test files to load.                                                                                                                                         |
+| `excludeSpecPattern` | `*.hot-update.js`                     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludeSpecPattern)                         |
+| `slowTestThreshold`  | `10000`                               | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                               |
 
 :::cypress-config-example{noJson}
 
@@ -228,15 +228,14 @@ object:
 These options are available to be specified inside the `component` configuration
 object:
 
-| Option               | Default                                  | Description                                                                                                                                                                                         |
-| -------------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `devServer`          | `null`                                   | Required function used to configure the component testing dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                                               |
-| `devServerConfig`    | `null`                                   | Optional dev server configuration. Config options will be determined by the dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                             |
+| Option               | Default                                  | Description                                                                                                                                                                                      |
+| -------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `devServer`          | `null`                                   | Required option used to configure the component testing dev server. [Please read the notes for examples on using this.](#devServer)                                              |
 | `setupNodeEvents`    | `null`                                   | Function in which node events can be registered and config can be modified. Takes the place of the (removed) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
-| `supportFile`        | `cypress/support/component.js`           | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                           |
-| `specPattern`        | `**/*.cy.{js,jsx,ts,tsx}`                | A glob pattern String or Array of glob pattern Strings of the spec files to load. <br><br>Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.**  **                            |
-| `excludeSpecPattern` | `['/snapshots/*', '/image_snapshots/*']` | A String or Array of glob patterns used to ignore spec files that would otherwise be shown in your list of specs. [Please read the notes on using this.](#excludeSpecPattern)                       |
-| `slowTestThreshold`  | `250`                                    | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                             |
+| `supportFile`        | `cypress/support/component.js`           | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                        |
+| `specPattern`        | `**/*.cy.{js,jsx,ts,tsx}`                | A glob pattern String or Array of glob pattern Strings of the spec files to load. <br><br>Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.**  ** |
+| `excludeSpecPattern` | `['/snapshots/*', '/image_snapshots/*']` | A String or Array of glob patterns used to ignore spec files that would otherwise be shown in your list of specs. [Please read the notes on using this.](#excludeSpecPattern)                    |
+| `slowTestThreshold`  | `250`                                    | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                          |
 
 :::cypress-config-example{noJson}
 
@@ -295,10 +294,6 @@ For example:
 :::cypress-config-example{noJson}
 
 ```js
-const { devServer } = require('@cypress/webpack-dev-server')
-```
-
-```js
 {
   // These settings apply everywhere unless overridden
   defaultCommandTimeout: 5000,
@@ -306,7 +301,6 @@ const { devServer } = require('@cypress/webpack-dev-server')
   viewportHeight: 600,
   // Viewport settings overridden for component tests
   component: {
-    devServer,
     viewportWidth: 500
     viewportHeight: 500
   },
@@ -544,13 +538,15 @@ send a `503` status code. As a convenience it also sets a
 
 <DocsImage src="/img/guides/references/v10/blocked-host.png" alt="Network tab of dev tools with analytics.js request selected and the response header highlighted " ></DocsImage>
 
-### devServer / devServerConfig
+### devServer
 
-The `devServer` function is a required [`component`](#component) testing
-specific option, and allows you to register a component testing dev server.
+The `devServer` option is required for [`component`](#component) testing, and
+allows you to register a component testing dev server.
 
-Typically, you will import a devServer from a library package (see
-[Framework Configuration](/guides/getting-started/component-framework-configuration)).
+Typically, you will specify a `framework` and `bundler` option in `devServer`
+for your framework and UI library. See
+[Framework Configuration](/guides/getting-started/component-framework-configuration)
+for more info.
 
 However, it is possible to customize the devServer and provide your own function
 for custom or advanced setups.
@@ -569,27 +565,6 @@ passed to the dev server module:
   },
 }
 ```
-
-:::
-
-The `devServerConfig` object is optional and specific to the dev server that
-you've specified. If provided, it will be passed into the `devServer` function
-as the second argument.
-
-:::cypress-config-example{noJson}
-
-```js
-{
-  component: {
-    devServer(cypressDevServerConfig, devServerConfig) {
-      // this ^ devServerConfig is the same as the one below
-    },
-    devServerConfig: {/* optional config object */},
-  },
-}
-```
-
-:::
 
 See the
 [component testing framework configuration guide](/guides/getting-started/component-framework-configuration)
