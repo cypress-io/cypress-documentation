@@ -1268,8 +1268,8 @@ In 7.0 Cypress component tests require that code is bundled with your local
 development server, via a new `dev-server:start` event. This event replaces the
 previous `file:preprocessor` event.
 
-<Badge type="danger">Before</Badge> Plugins file registers the file:preprocessor
-event
+<Badge type="danger">Before</Badge> Plugins file registers the
+file\:preprocessor event
 
 ```js
 const webpackPreprocessor = require('@cypress/webpack-preprocessor')
@@ -1280,7 +1280,7 @@ module.exports = (on, config) => {
 }
 ```
 
-<Badge type="success">After</Badge> Plugins file registers the dev-server:start
+<Badge type="success">After</Badge> Plugins file registers the dev-server\:start
 event
 
 ```js
