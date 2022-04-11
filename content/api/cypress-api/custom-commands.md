@@ -21,8 +21,8 @@ evaluated via an import statement in your
 ```javascript
 Cypress.Commands.add(name, callbackFn)
 Cypress.Commands.add(name, options, callbackFn)
-Cypress.Commands.addAll(callbackArgs)
-Cypress.Commands.addAll(options, callbackArgs)
+Cypress.Commands.addAll(callbackObj)
+Cypress.Commands.addAll(options, callbackObj)
 Cypress.Commands.overwrite(name, callbackFn)
 ```
 
@@ -49,7 +49,7 @@ The name of the command you're either adding or overwriting.
 
 Pass a function that receives the arguments passed to the command.
 
-**<Icon name="angle-right"></Icon> callbackArgs** **_(Object)_**
+**<Icon name="angle-right"></Icon> callbackObj** **_(Object)_**
 
 An object with `callbackFn`s as properties.
 
