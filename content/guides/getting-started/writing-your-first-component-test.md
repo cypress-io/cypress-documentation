@@ -329,7 +329,7 @@ In order to test components, we will use the custom
 components. Mounting the component will allow us to write tests against its
 rendered output.
 
-### Importing the Component
+### Importing the component
 
 Because our example `LoginForm` component is exported as a default export, we
 will import it into our spec file like so (if the component was exported as a
