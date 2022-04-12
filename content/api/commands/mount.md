@@ -6,9 +6,9 @@ componentSpecific: true
 <Alert type="warning">
 
 Cypress does not have a built-in `cy.mount()` command. The command must be set
-up in your `/cypress/support/component.{js/ts}` file. By default, when you use
-the Cypress app to configure your project, one will be automatically scaffolded
-for you in this file.
+up in your [support file](/guides/references/configuration#component). By
+default, when you use the Cypress app to configure your project, one will be
+automatically scaffolded for you in this file.
 
 This guide covers how to customize the `cy.mount()` command to fit the needs of
 your app.
