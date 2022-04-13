@@ -12,12 +12,12 @@ Cypress currently supports the following frameworks for component testing:
 | ---------------------------------------------------- | ---------- | ------- |
 | [Create React App](#Create-React-App-CRA)            | React      | Webpack |
 | [Next.js](#Next-js) <Badge type="info">Alpha</Badge> | React      | Webpack |
-| [React with Vite](#Vite)                             | React      | Vite    |
-| [React with Webpack](#Webpack)                       | React      | Webpack |
+| [React with Vite](#React-with-Vite)                  | React      | Vite    |
+| [React with Webpack](#React-with-Webpack)            | React      | Webpack |
 | [Vue CLI](#Vue-CLI)                                  | Vue        | Webpack |
 | [Nuxt](#Nuxt) <Badge type="info">Alpha</Badge>       | Vue        | Webpack |
-| [Vue with Vite](#Vite-1)                             | Vue        | Vite    |
-| [Vue with Webpack](#Webpack-1)                       | Vue        | Webpack |
+| [Vue with Vite](#Vue-with-Vite)                      | Vue        | Vite    |
+| [Vue with Webpack](#Vue-with-Webpack)                | Vue        | Webpack |
 
 ## Automatic Setup
 
@@ -159,7 +159,7 @@ Because of this, we recommend using end-to-end testing over component testing
 for Next.js pages and component testing for individual components in a Next.js
 app.
 
-### Vite
+### React with Vite
 
 To configure component testing for a React app that uses
 [Vite](https://vitejs.dev/), you will need to configure a `devServer` with a
@@ -203,7 +203,7 @@ export default defineConfig({
 You can find an example React project that uses Vite
 [here](https://github.com/cypress-io/cypress-component-examples/tree/main/setup-vite-react-app).
 
-### Webpack
+### React with Webpack
 
 To configure component testing for a React app that uses a custom
 [Webpack](https://webpack.js.org/) config, you will need to configure a
@@ -370,7 +370,7 @@ export default defineConfig({
 You can find a sample Vue Nuxt project
 [here](https://github.com/cypress-io/cypress-component-examples/tree/main/setup-nuxt-vue-2).
 
-### Vite
+### Vue with Vite
 
 To configure component testing for a Vue app that uses
 [Vite](https://vitejs.dev/), you will need to configure a `devServer` with a
@@ -414,7 +414,7 @@ export default defineConfig({
 You can find an example Vue project that uses Vite
 [here](https://github.com/cypress-io/cypress-component-examples/tree/main/setup-vite-vue-app).
 
-### Webpack
+### Vue with Webpack
 
 To configure component testing for a Vue app that uses a custom
 [Webpack](https://webpack.js.org/) config, you will need to configure a
