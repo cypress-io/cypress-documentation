@@ -571,7 +571,7 @@ well as additional configuration options.
 It is possible to customize the devServer and provide your own function for
 custom or advanced setups.
 
-The devServer function receives a `cypressDevServerConfig` argument:
+The devServer function receives a `cypressConfig` argument:
 
 :::cypress-config-example{noJson}
 
