@@ -578,8 +578,9 @@ The devServer function receives a `cypressConfig` argument:
 ```js
 {
   component: {
-    devServer(cypressDevServerConfig) {
-      // start dev server here
+    devServer(cypressConfig) {
+      // return dev server instance or a promise that resolves to
+      // a dev server instance here
     },
   },
 }
