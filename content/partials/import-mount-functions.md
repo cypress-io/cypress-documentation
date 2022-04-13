@@ -9,9 +9,9 @@ framework-specific `mount()` functions, which can be imported like so:
 
 The `mount()` command exported from the
 [cypress/react](https://github.com/cypress-io/cypress/tree/develop/npm/react)
-library supports standard JSX syntax for mounting components. If you have any
+module supports standard JSX syntax for mounting components. If you have any
 questions about mount options that aren't covered in this guide, be sure to
-check out the library
+check out the module
 [documentation](https://github.com/cypress-io/cypress/tree/develop/npm/react#readme).
 
 </Alert>
