@@ -1,6 +1,14 @@
 {
   "courses": [
     {
+      "title": "Cypress Network Testing Exercises",
+      "url": "https://cypress.tips/courses",
+      "author": "Gleb Bahmutov",
+      "authorTwitter": "bahmutov",
+      "sourceName": "Cypress.Tips",
+      "sourceUrl": "https://cypress.tips/"
+    },
+    {
       "title": "Cypress.io kurz",
       "url": "https://academy.tesena.com/p/cypress-io",
       "author": "Filip Hric",
