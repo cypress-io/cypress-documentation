@@ -95,7 +95,7 @@ You can find an example Create React App project
 <Alert type="warning">
 
 Next.js is currently in alpha support for component testing. See
-[Next.js Caveats](#Nextjs-Caveats) for more info on current limitations.
+[Next.js Caveats](#Next-js-Caveats) for more info on current limitations.
 
 </Alert>
 
