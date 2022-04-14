@@ -325,12 +325,13 @@ Now let's write some meaningful component tests.
 
 ## Testing components
 
-In order to test components, we're going to need to import two things into our
-spec file: a function to mount our component, and the component itself.
+In order to test components, we will use the custom
+[`cy.mount()`](/api/commands/mount) command that is scaffolded during
+[setup](/guides/getting-started/component-framework-configuration) to mount our
+components. Mounting the component will allow us to write tests against its
+rendered output.
 
-### Setting up imports
-
-::include{file=partials/import-mount-functions.md}
+### Importing the component
 
 Because our example `LoginForm` component is exported as a default export, we
 will import it into our spec file like so (if the component was exported as a
@@ -343,8 +344,7 @@ import LoginForm from './LoginForm'
 
 ### Mounting the component
 
-Now that both the `mount()` function and the component have been imported, we
-can write our first component test.
+Now we can begin to write our first component test.
 
 Replace the contents of your spec file with this, and then save it:
 
@@ -352,11 +352,10 @@ Replace the contents of your spec file with this, and then save it:
 <template #react>
 
 ```js
-import { mount } from '@cypress/react'
 import LoginForm from './LoginForm'
 
 it('should mount the component', () => {
-  mount(<LoginForm />)
+  cy.mount(<LoginForm />)
 })
 ```
 
@@ -364,11 +363,10 @@ it('should mount the component', () => {
 <template #vue>
 
 ```js
-import { mount } from '@cypress/vue'
 import LoginForm from './LoginForm'
 
 it('should mount the component', () => {
-  mount(LoginForm)
+  cy.mount(LoginForm)
 })
 ```
 
@@ -405,7 +403,7 @@ this to assert that there is an `input` element with a `type` attribute of
 
 ```js
 it('should have password input', () => {
-  mount(<LoginForm />)
+  cy.mount(<LoginForm />)
   cy.get('input[type="password"]')
 })
 ```
@@ -415,7 +413,7 @@ it('should have password input', () => {
 
 ```js
 it('should have password input', () => {
-  mount(LoginForm)
+  cy.mount(LoginForm)
   cy.get('input[type="password"]')
 })
 ```
@@ -443,7 +441,7 @@ After your last test, add this test and save the spec file:
 
 ```js
 it('should have password input of type password', () => {
-  mount(<LoginForm />)
+  cy.mount(<LoginForm />)
   cy.contains('Password').find('input').should('have.attr', 'type', 'password')
 })
 ```
@@ -453,7 +451,7 @@ it('should have password input of type password', () => {
 
 ```js
 it('should have password input of type password', () => {
-  mount(LoginForm)
+  cy.mount(LoginForm)
   cy.contains('Password').find('input').should('have.attr', 'type', 'password')
 })
 ```
@@ -488,7 +486,7 @@ After your last test, add this test and save the spec file:
 
 ```js
 it('should render title with default text', () => {
-  mount(<LoginForm />)
+  cy.mount(<LoginForm />)
   cy.get('legend').should('have.text', 'Log In')
 })
 ```
@@ -498,7 +496,7 @@ it('should render title with default text', () => {
 
 ```js
 it('should render title with default text', () => {
-  mount(LoginForm)
+  cy.mount(LoginForm)
   cy.get('legend').should('have.text', 'Log In')
 })
 ```
@@ -518,7 +516,7 @@ After your last test, add this test and save the spec file:
 ```js
 it('should render title with specified text', () => {
   const title = 'Please Authenticate'
-  mount(<LoginForm title={title} />)
+  cy.mount(<LoginForm title={title} />)
   cy.get('legend').should('have.text', title)
 })
 ```
@@ -529,7 +527,7 @@ it('should render title with specified text', () => {
 ```js
 it('should render title with specified text', () => {
   const title = 'Please Authenticate'
-  mount(LoginForm, {
+  cy.mount(LoginForm, {
     propsData: {
       title,
     },
@@ -599,24 +597,24 @@ Your tests should now look something like this:
 ```js
 describe('LoginForm', () => {
   it('should mount the component', () => {
-    mount(<LoginForm />)
+    cy.mount(<LoginForm />)
   })
 
   it('should have password input of type password', () => {
-    mount(<LoginForm />)
+    cy.mount(<LoginForm />)
     cy.contains('Password')
       .find('input')
       .should('have.attr', 'type', 'password')
   })
 
   it('should render title with default text', () => {
-    mount(<LoginForm />)
+    cy.mount(<LoginForm />)
     cy.get('legend').should('have.text', 'Log In')
   })
 
   it('should render title with specified text', () => {
     const title = 'Please Authenticate'
-    mount(<LoginForm title={title} />)
+    cy.mount(<LoginForm title={title} />)
     cy.get('legend').should('have.text', title)
   })
 })
@@ -628,24 +626,24 @@ describe('LoginForm', () => {
 ```js
 describe('LoginForm', () => {
   it('should mount the component', () => {
-    mount(LoginForm)
+    cy.mount(LoginForm)
   })
 
   it('should have password input of type password', () => {
-    mount(LoginForm)
+    cy.mount(LoginForm)
     cy.contains('Password')
       .find('input')
       .should('have.attr', 'type', 'password')
   })
 
   it('should render title with default text', () => {
-    mount(LoginForm)
+    cy.mount(LoginForm)
     cy.get('legend').should('have.text', 'Log In')
   })
 
   it('should render title with specified text', () => {
     const title = 'Please Authenticate'
-    mount(LoginForm, {
+    cy.mount(LoginForm, {
       propsData: {
         title,
       },
@@ -749,7 +747,7 @@ passing in the spy as the `onLogin` prop.
 ```js
 it.only('should call onLogin with username and password on login', () => {
   const onLoginSpy = cy.spy()
-  mount(<LoginForm onLogin={onLoginSpy} />)
+  cy.mount(<LoginForm onLogin={onLoginSpy} />)
 })
 ```
 
@@ -759,7 +757,7 @@ it.only('should call onLogin with username and password on login', () => {
 ```js
 it.only('should call onLogin with username and password on login', () => {
   const onLoginSpy = cy.spy()
-  mount(LoginForm, {
+  cy.mount(LoginForm, {
     propsData: {
       onLogin: onLoginSpy,
     },
@@ -788,7 +786,7 @@ section above to get these form controls.
 ```js
 it.only('should call onLogin with username and password on login', () => {
   const onLoginSpy = cy.spy()
-  mount(<LoginForm onLogin={onLoginSpy} />)
+  cy.mount(<LoginForm onLogin={onLoginSpy} />)
   cy.contains('Username').find('input').type('testuser123')
   cy.contains('Password').find('input').type('s3cret')
   cy.get('button').contains('Login').click()
@@ -801,7 +799,7 @@ it.only('should call onLogin with username and password on login', () => {
 ```js
 it.only('should call onLogin with username and password on login', () => {
   const onLoginSpy = cy.spy()
-  mount(LoginForm, {
+  cy.mount(LoginForm, {
     propsData: {
       onLogin: onLoginSpy,
     },
@@ -841,7 +839,7 @@ the form.
 ```js
 it.only('should call onLogin with username and password on login', () => {
   const onLoginSpy = cy.spy().as('onLoginSpy')
-  mount(<LoginForm onLogin={onLoginSpy} />)
+  cy.mount(<LoginForm onLogin={onLoginSpy} />)
   cy.contains('Username').find('input').type('testuser123')
   cy.contains('Password').find('input').type('s3cret')
   cy.get('button').contains('Login').click()
@@ -858,7 +856,7 @@ it.only('should call onLogin with username and password on login', () => {
 ```js
 it.only('should call onLogin with username and password on login', () => {
   const onLoginSpy = cy.spy().as('onLoginSpy')
-  mount(LoginForm, {
+  cy.mount(LoginForm, {
     propsData: {
       onLogin: onLoginSpy,
     },
@@ -954,7 +952,7 @@ then move the spy creation and component mounting code into it, like so:
 describe('form tests', () => {
   beforeEach(() => {
     const onLoginSpy = cy.spy().as('onLoginSpy')
-    mount(<LoginForm onLogin={onLoginSpy} />)
+    cy.mount(<LoginForm onLogin={onLoginSpy} />)
   })
 
   it.only('should call onLogin with username and password on login', () => {
@@ -976,7 +974,7 @@ describe('form tests', () => {
 describe('form tests', () => {
   beforeEach(() => {
     const onLoginSpy = cy.spy().as('onLoginSpy')
-    mount(LoginForm, {
+    cy.mount(LoginForm, {
       propsData: {
         onLogin: onLoginSpy,
       },
@@ -999,7 +997,7 @@ describe('form tests', () => {
 </code-group-react-vue>
 
 The Cypress app should run the test exactly like before, however you should now
-see that the `mount` command has moved from the "test body" section to a
+see that the `cy.mount` command has moved from the "test body" section to a
 separate "before each" section.
 
 In order to get the most out of the `beforeEach()` hook, we should also separate
@@ -1031,7 +1029,7 @@ Password input, and Login button, like so:
 describe('form tests', () => {
   beforeEach(() => {
     const onLoginSpy = cy.spy().as('onLoginSpy')
-    mount(<LoginForm onLogin={onLoginSpy} />)
+    cy.mount(<LoginForm onLogin={onLoginSpy} />)
     cy.contains('Username').find('input').as('usernameInput')
     cy.contains('Password').find('input').as('passwordInput')
     cy.get('button').contains('Login').as('loginButton')
@@ -1056,7 +1054,7 @@ describe('form tests', () => {
 describe('form tests', () => {
   beforeEach(() => {
     const onLoginSpy = cy.spy().as('onLoginSpy')
-    mount(LoginForm, {
+    cy.mount(LoginForm, {
       propsData: {
         onLogin: onLoginSpy,
       },
@@ -1096,7 +1094,7 @@ describe('form tests', () => {
 
   beforeEach(() => {
     const onLoginSpy = cy.spy().as('onLoginSpy')
-    mount(<LoginForm onLogin={onLoginSpy} />)
+    cy.mount(<LoginForm onLogin={onLoginSpy} />)
     cy.contains('Username').find('input').as('usernameInput')
     cy.contains('Password').find('input').as('passwordInput')
     cy.get('button').contains('Login').as('loginButton')
@@ -1133,7 +1131,7 @@ describe('form tests', () => {
 
   beforeEach(() => {
     const onLoginSpy = cy.spy().as('onLoginSpy')
-    mount(LoginForm, {
+    cy.mount(LoginForm, {
       propsData: {
         onLogin: onLoginSpy,
       },

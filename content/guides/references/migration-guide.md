@@ -70,9 +70,8 @@ separate "plugins file" (which used to default to `cypress/plugins/index.js`) is
 no longer needed.
 
 Support for the plugins file has been removed, and it has been replaced with the
-new [`setupNodeEvents()`](/guides/references/configuration#setupNodeEvents),
-[`devServer()` and `devServerConfig`](/guides/references/configuration#devServer-devServerConfig)
-config options.
+new [`setupNodeEvents()`](/guides/references/configuration#setupNodeEvents) and
+[`devServer`](/guides/references/configuration#devServer) config options.
 
 Related notes:
 
@@ -83,12 +82,10 @@ Related notes:
   plugins file; it takes the same `on` and `config` arguments, and should return
   the same value. See the [Config option changes section](#setupNodeEvents) of
   this migration guide for more details.
-- The
-  [`devServer()` and `devServerConfig`](/guides/references/configuration#devServer-devServerConfig)
-  config options are specific to component testing, and offer a much more
-  streamlined and consistent way to configure a component testing dev server
-  than using the plugins file. See the
-  [Config option changes section](#devServer-and-devServerConfig) of this
+- The [`devServer`](/guides/references/configuration#devServer) config option is
+  specific to component testing, and offers a much more streamlined and
+  consistent way to configure a component testing dev server than using the
+  plugins file. See the [Config option changes section](#devServer) of this
   migration guide for more details.
 - Many pages and examples throughout the documentation have been updated to show
   configuration in `setupNodeEvents` as well as the legacy plugins file. For
@@ -133,28 +130,22 @@ when Cypress loads.
 
 </Alert>
 
-#### `devServer()` and `devServerConfig`
+#### `devServer`
 
 All functionality related to starting a component testing dev server previously
 in the `pluginsFile` has moved here. These options are not valid at the
 top-level, and may only be defined in the
-[`component`](/guides/references/configuration#e2e) configuration object.
+[`component`](/guides/references/configuration#component) configuration object.
 
 Related notes:
 
 - Do not configure your dev server inside `setupNodeEvents()`, use the
-  `devServer()` config option instead.
-- All component testing dev server plugins have been updated with a `devServer`
-  named export function. Be sure to update your config to use the `devServer`
-  named export.
-- The `devServer()` config option has the same signature as the dev server
-  plugins’ `devServer` named export function, which should simplify
-  configuration.
+  `devServer` config option instead.
 
 <Alert type="info">
 
-See the dev server documentation for the plugin you’re using for more specific
-instructions on what the `devServerConfig` should be for that plugin. Some
+See the dev server documentation for the UI framework you’re using for more
+specific instructions on what the `devServer` should be for that framework. Some
 examples can be found in our
 [framework documentation](/guides/getting-started/component-framework-configuration).
 
@@ -190,13 +181,15 @@ module.exports = (on, config) => {
 
 ```js
 const { defineConfig } = require('cypress')
-const { devServer } = require('@cypress/webpack-dev-server')
 const webpackConfig = require('./webpack.config.js')
 
 module.exports = defineConfig({
   component: {
-    devServer,
-    devServerConfig: { webpackConfig },
+    devServer: {
+      framework: 'react', // or vue
+      bundler: 'webpack',
+      webpackConfig,
+    },
   },
 })
 ```
@@ -206,18 +199,17 @@ module.exports = defineConfig({
 
 ```js
 const { defineConfig } = require('cypress')
-const { devServer } = require('@cypress/webpack-dev-server')
 const webpackConfig = require('./webpack.config.js')
 
 module.exports = defineConfig({
   component: {
-    devServer(cypressDevServerConfig, devServerConfig) {
-      // The devServerConfig argument passed in here
-      // is actually the devServerConfig config option
-      // defined outside this function
-      return devServer(cypressDevServerConfig, devServerConfig)
+    devServer(cypressConfig) {
+      return devServer({
+        framework: 'react', // or vue
+        cypressConfig,
+        webpackConfig,
+      })
     },
-    devServerConfig: { webpackConfig },
   },
 })
 ```
@@ -227,13 +219,15 @@ module.exports = defineConfig({
 
 ```js
 import { defineConfig } from 'cypress'
-import { devServer } from '@cypress/webpack-dev-server'
-import webpackConfig from './webpack.config.js'
+import webpackConfig from './webpack.config'
 
 export default defineConfig({
   component: {
-    devServer,
-    devServerConfig: { webpackConfig },
+    devServer: {
+      framework: 'react', // or vue
+      bundler: 'webpack',
+      webpackConfig,
+    },
   },
 })
 ```
@@ -244,17 +238,17 @@ export default defineConfig({
 ```js
 import { defineConfig } from 'cypress'
 import { devServer } from '@cypress/webpack-dev-server'
-import webpackConfig from './webpack.config.js'
+import webpackConfig from './webpack.config'
 
 export default defineConfig({
   component: {
-    devServer(cypressDevServerConfig, devServerConfig) {
-      // The devServerConfig argument passed in here
-      // is actually the devServerConfig config option
-      // defined outside this function
-      return devServer(cypressDevServerConfig, devServerConfig)
+    devServer(cypressConfig) {
+      return devServer({
+        framework: 'react', // or vue
+        cypressConfig,
+        webpackConfig,
+      })
     },
-    devServerConfig: { webpackConfig },
   },
 })
 ```
@@ -267,12 +261,11 @@ export default defineConfig({
 <Badge type="danger">Before</Badge>
 
 ```js
-const injectDevServer = require('@cypress/react/plugins/craco')
-const cracoConfig = require('../../craco.config.js')
+const devServer = require('@cypress/react/plugins/react-scripts')
 
 module.exports = (on, config) => {
   if (config.testingType === 'component') {
-    injectDevServer(on, config, cracoConfig)
+    injectDevServer(on, config, {})
   }
 }
 ```
@@ -284,13 +277,13 @@ module.exports = (on, config) => {
 
 ```js
 const { defineConfig } = require('cypress')
-const { devServer } = require('@cypress/react/plugins/craco')
-const cracoConfig = require('./craco.config.js')
 
 module.exports = defineConfig({
   component: {
-    devServer,
-    devServerConfig: { cracoConfig },
+    devServer: {
+      framework: 'react', // or vue
+      bundler: 'webpack',
+    },
   },
 })
 ```
@@ -300,16 +293,17 @@ module.exports = defineConfig({
 
 ```js
 const { defineConfig } = require('cypress')
-const cracoConfig = require('./craco.config.js')
+const webpackConfig = require('./webpack.config.js')
 
 module.exports = defineConfig({
   component: {
-    devServer(cypressDevServerConfig, devServerConfig) {
-      // The devServerConfig argument passed in here is actually the
-      // devServerConfig config option defined outside this function
-      return devServer(cypressDevServerConfig, devServerConfig)
+    devServer(cypressConfig) {
+      return devServer({
+        framework: 'react', // or vue
+        cypressConfig,
+        webpackConfig,
+      })
     },
-    devServerConfig: { cracoConfig },
   },
 })
 ```
@@ -392,10 +386,10 @@ when Cypress loads.
 #### `pluginsFile`
 
 This option is no longer used, and all plugin file functionality has moved into
-the [`setupNodeEvents()`](/guides/references/configuration#setupNodeEvents),
-[`devServer()` and `devServerConfig`](/guides/references/configuration#devServer-devServerConfig)
-options. See the [Plugins file removed](#Plugins-file-removed) section of this
-migration guide for more details.
+the [`setupNodeEvents()`](/guides/references/configuration#setupNodeEvents) and
+[`devServer`](/guides/references/configuration#devServer) options. See the
+[Plugins file removed](#Plugins-file-removed) section of this migration guide
+for more details.
 
 <Alert type="warning">
 
@@ -436,7 +430,7 @@ module.exports = (on, config) => {
 ```js
 {
   component: {
-    devServer(cypressDevServerConfig, devServerConfig) {
+    devServer(cypressConfig) {
       // component testing dev server setup code
     },
     setupNodeEvents(on, config) {
@@ -455,8 +449,7 @@ module.exports = (on, config) => {
 
 Alternately, you can continue to use an external plugins file, but you will need
 to load that file explicitly, and also update it to move any component testing
-dev server code into the [`devServer()`](#devServer-and-devServerConfig) config
-option.
+dev server code into the [`devServer`](#devServer) config option.
 
 <code-group>
 <code-block label="cypress.config.js" active>
@@ -467,7 +460,7 @@ const setupNodeEvents = require('./cypress/plugins/index.js')
 
 module.exports = defineConfig({
   component: {
-    devServer(cypressDevServerConfig, devServerConfig) {
+    devServer(cypressConfig) {
       // component testing dev server setup code
     },
     setupNodeEvents,
@@ -487,7 +480,7 @@ import setupNodeEvents from './cypress/plugins/index.js'
 
 export default defineConfig({
   component: {
-    devServer(cypressDevServerConfig, devServerConfig) {
+    devServer(cypressConfig) {
       // component testing dev server setup code
     },
     setupNodeEvents,
@@ -685,8 +678,8 @@ overwritten without needing to use `Cypress.Commands.overwrite()`.
 All the Component Testing dev servers have been updated with a new
 10.0-compatible API, while also retaining the pre-10.0 API for backwards
 compatibility. See the
-[`devServer`](/guides/references/migration-guide#devServer-and-devServerConfig)
-config option documentation for more details.
+[`devServer`](/guides/references/migration-guide#devServer) config option
+documentation for more details.
 
 - [@cypress/webpack-dev-server](https://github.com/cypress-io/cypress/tree/master/npm/webpack-dev-server)
 - [@cypress/vite-dev-server](https://github.com/cypress-io/cypress/tree/master/npm/vite-dev-server)
@@ -1268,8 +1261,8 @@ In 7.0 Cypress component tests require that code is bundled with your local
 development server, via a new `dev-server:start` event. This event replaces the
 previous `file:preprocessor` event.
 
-<Badge type="danger">Before</Badge> Plugins file registers the file:preprocessor
-event
+<Badge type="danger">Before</Badge> Plugins file registers the
+file\:preprocessor event
 
 ```js
 const webpackPreprocessor = require('@cypress/webpack-preprocessor')
@@ -1280,7 +1273,7 @@ module.exports = (on, config) => {
 }
 ```
 
-<Badge type="success">After</Badge> Plugins file registers the dev-server:start
+<Badge type="success">After</Badge> Plugins file registers the dev-server\:start
 event
 
 ```js

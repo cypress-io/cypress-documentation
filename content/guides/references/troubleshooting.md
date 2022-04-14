@@ -393,7 +393,7 @@ delete localStorage.debug
 ```
 
 Reload the browser and turn on 'Verbose' logs to see debug messages within the
-Developer Tools console. You will only see the "cypress:driver" package logs
+Developer Tools console. You will only see the **cypress\:driver** package logs
 that run in the browser, as you can see below.
 
 <DocsImage src="/img/api/debug/debug-driver.jpg" alt="Debug logs in browser" ></DocsImage>
