@@ -31,10 +31,6 @@ Feature</strong>
 GitHub Enterprise integration is included in our
 [Business and Enterprise paid pricing plans](https://www.cypress.io/pricing).
 
-This integration is currently in Limited Preview. For more information about
-participating in this Limited Preview, please contact your
-[Customer Success Manager](mailto:success@cypress.io).
-
 </Alert>
 
 To configure the Dashboard integration for your GitHub Enterprise site, first
@@ -137,10 +133,6 @@ them into the Dashboard, and complete the activation process.
 
 4. Set the **Repository Permissions**. Below are the minimum permissions
    required for the new GitHub App.
-   - **Actions**: read-only
-   - **Checks**: read & write
-   - **Contents**: read-only
-   - **Discussions**: read & write
    - **Pull requests**: read & write
    - **Commit statuses**: read & write
 
