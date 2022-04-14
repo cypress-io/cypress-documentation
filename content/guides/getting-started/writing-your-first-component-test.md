@@ -2,6 +2,8 @@
 title: Writing Your First Component Test
 ---
 
+<CtBetaAlert></CtBetaAlert>
+
 <Alert type="info">
 
 ## <Icon name="graduation-cap"></Icon> What you'll learn

@@ -15,6 +15,8 @@ your app.
 
 </Alert>
 
+<CtBetaAlert></CtBetaAlert>
+
 For
 [Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing),
 we recommend creating a custom `cy.mount()` command to wrap the mount command

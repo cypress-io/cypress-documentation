@@ -2,6 +2,8 @@
 title: Framework Configuration
 ---
 
+<CtBetaAlert></CtBetaAlert>
+
 Writing tests in Cypress is the same regardless of whichever UI library you
 choose (React or Vue, currently). However, each framework requires a different
 setup configuration.
