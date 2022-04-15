@@ -584,7 +584,7 @@ browsers.
 ```js
 describe('When NOT in Chrome', { browser: '!chrome' }, () => {
   it('Shows warning', () => {
-    cy.get('.browser-warning').should(
+    cy.get('[data-testid=browser-warning]').should(
       'contain',
       'For optimal viewing, use Chrome browser'
     )
@@ -668,7 +668,7 @@ describe('if your app uses jQuery', () => {
       // event that causes the event callback to fire
       cy.get('#with-jquery')
         .invoke('trigger', event)
-        .get('#messages')
+        .get('[data-testid=messages]')
         .should('contain', 'the event ' + event + 'was fired')
     })
   })
@@ -755,8 +755,10 @@ describe('TodoMVC', () => {
 
   it.skip('adds 2 todos', function () {
     cy.visit('/')
-    cy.get('.new-todo').type('learn testing{enter}').type('be cool{enter}')
-    cy.get('.todo-list li').should('have.length', 100)
+    cy.get('[data-testid=new-todo]')
+      .type('learn testing{enter}')
+      .type('be cool{enter}')
+    cy.get('[data-testid=todo-list] li').should('have.length', 100)
   })
 
   xit('another test', () => {
@@ -789,12 +791,14 @@ describe('TodoMVC', () => {
   })
 
   it('hides footer initially', () => {
-    cy.get('.filters').should('not.exist')
+    cy.get('[data-testid=filters]').should('not.exist')
   })
 
   it('adds 2 todos', () => {
-    cy.get('.new-todo').type('learn testing{enter}').type('be cool{enter}')
-    cy.get('.todo-list li').should('have.length', 2)
+    cy.get('[data-testid=new-todo]')
+      .type('learn testing{enter}')
+      .type('be cool{enter}')
+    cy.get('[data-testid=todo-list] li').should('have.length', 2)
   })
 })
 ```

@@ -123,7 +123,7 @@ cy.get('button').then(($btn) => {
   // inspect $btn <object>
   debugger
 
-  cy.get('#countries')
+  cy.get('[data-testid=countries]')
     .select('USA')
     .then(($select) => {
       // inspect $select <object>
@@ -155,7 +155,7 @@ Here's a great use case for a `const`.
 ```html
 <button>increment</button>
 
-you clicked button <span id="num">0</span> times
+you clicked button <span data-testid="num">0</span> times
 ```
 
 ```js
@@ -163,13 +163,13 @@ you clicked button <span id="num">0</span> times
 let count = 0
 
 $('button').on('click', () => {
-  $('#num').text((count += 1))
+  $('[data-testid=num]').text((count += 1))
 })
 ```
 
 ```js
 // cypress test code
-cy.get('#num').then(($span) => {
+cy.get('[data-testid=num]').then(($span) => {
   // capture what num is right now
   const num1 = parseFloat($span.text())
 
@@ -197,7 +197,7 @@ great&mdash;but what happens when you're running code in hooks like `before` or
 
 ```js
 beforeEach(() => {
-  cy.button().then(($btn) => {
+  cy.get('button').then(($btn) => {
     const text = $btn.text()
   })
 })
@@ -226,7 +226,7 @@ describe('a suite', () => {
   let text
 
   beforeEach(() => {
-    cy.button().then(($btn) => {
+    cy.get('button').then(($btn) => {
       // redefine text reference
       text = $btn.text()
     })
@@ -475,7 +475,7 @@ been _completely_ removed from the DOM and a new `<li>` is rendered in its
 place.
 
 ```javascript
-cy.get('#todos li').first().as('firstTodo')
+cy.get('#[data-testid=todos] li').first().as('firstTodo')
 cy.get('@firstTodo').find('.edit').click()
 cy.get('@firstTodo')
   .should('have.class', 'editing')
@@ -497,9 +497,9 @@ _Usually_, replaying previous commands will return what you expect, but not
 always. It is recommended that you **alias elements as soon as possible**
 instead of further down a chain of commands.
 
-- `cy.get('#nav header .user').as('user')`
+- `cy.get('nav header [data-testid=user]').as('user')`
   <Icon name="check-circle" color="green"></Icon> (good)
-- `cy.get('#nav').find('header').find('.user').as('user')`
+- `cy.get('nav').find('header').find('[data-testid=user]').as('user')`
   <Icon name="exclamation-triangle" color="red"></Icon> (bad)
 
 When in doubt, you can _always_ issue a regular [`cy.get()`](/api/commands/get)
