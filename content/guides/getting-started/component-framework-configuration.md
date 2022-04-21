@@ -215,15 +215,13 @@ To configure component testing for a React app that uses a custom
 <template #js>
 
 ```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
+module.exports = {
   component: {
     devServer: {
       framework: 'react',
       bundler: 'webpack',
       // optionally pass in webpack config
-      webpackConfig: require('webpack.config'),
+      webpackConfig: require('./webpack.config'),
     },
   },
 })
@@ -234,7 +232,7 @@ module.exports = defineConfig({
 
 ```ts
 import { defineConfig } from 'cypress'
-import webpackConfig from 'webpack.config'
+import webpackConfig from './webpack.config'
 
 export default defineConfig({
   component: {
@@ -426,18 +424,16 @@ To configure component testing for a Vue app that uses a custom
 <template #js>
 
 ```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
+module.exports = {
   component: {
     devServer: {
       framework: 'vue',
       bundler: 'webpack',
       // optionally pass in webpack config
-      webpackConfig: require('webpack.config'),
+      webpackConfig: require('./webpack.config'),
     },
   },
-})
+}
 ```
 
 </template>
@@ -445,7 +441,7 @@ module.exports = defineConfig({
 
 ```ts
 import { defineConfig } from 'cypress'
-import webpackConfig from 'webpack.config'
+import webpackConfig from './webpack.config'
 
 export default defineConfig({
   component: {
