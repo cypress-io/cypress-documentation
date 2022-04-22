@@ -140,6 +140,8 @@ full list.
   callback function.
 - If the callback contains no Cypress commands, `cy.origin()` yields the return
   value of the function.
+- In either of the two cases above, if the value is not serializable,
+  `cy.origin()` yields null.
 
 ## Examples
 
