@@ -14,10 +14,8 @@ in order to reduce test setup times.
 Experimental</strong>
 
 The `session` API is currently experimental, and can be enabled by setting the
-[`experimentalSessionAndOrigin`](/guides/references/experiments) flag to `true`
-in the Cypress config. Please note, if you already have the
-`experimentalSessionSupport` flag turned on, this has now been removed and will
-throw an error.
+[`experimentalSessionAndOrigin`](/guides/references/experiments) option to
+`true` in the Cypress config.
 
 Enabling this flag does the following:
 
@@ -31,8 +29,8 @@ Enabling this flag does the following:
 - It overrides the
   [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
   [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
-- Cross-domain requests will no longer fail immediately, but instead, time out
-  based on [`pageLoadTimeout`](/guides/references/configuration#Timeouts).
+- Cross-domain navigations will no longer fail immediately, but instead, time
+  out based on [`pageLoadTimeout`](/guides/references/configuration#Timeouts).
 - Tests will no longer wait on page loads before moving on to the next test.
 
 Because the page is cleared before each test,
