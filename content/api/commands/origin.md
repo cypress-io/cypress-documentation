@@ -29,7 +29,8 @@ Enabling this flag does the following:
   - All active session data (cookies, `localStorage` and `sessionStorage`)
     across all domains are cleared.
 - It overrides
-  the [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
+  the [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
+  [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
 - Cross-domain requests will no longer fail immediately, but instead, time out
   based on [`pageLoadTimeout`](/guides/references/configuration#Timeouts).
 - Tests will no longer wait on page loads before moving on to the next test.
@@ -91,7 +92,7 @@ cy.get('h1').contains('My cool site under test')
 
 A URL specifying the secondary origin in which the callback is to be executed.
 This should at the very least contain a hostname, and may also include the
-protocol, port number & path.
+protocol, port number & path. Query params are not supported.
 
 This argument will be used in two ways:
 
@@ -102,8 +103,8 @@ This argument will be used in two ways:
 
 2. It overrides the `baseUrl` configured in your
    [global configuration](/guides/references/configuration#Global) while inside
-   the callback. So `cy.visit()` will navigate relative to this URL, not the
-   configured `baseUrl`.
+   the callback. So `cy.visit()` and `cy.request()` will use this URL as a
+   prefix, not the configured `baseUrl`.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -168,8 +169,34 @@ cy.origin(
 )
 ```
 
-Note: You can just replace `sentArgs` and `receivedArgs` with `args` if you
-want, the naming in this example is purely for clarity.
+Note: You can just replace `sentArgs` with `args` if you want, the naming in
+this example is purely for clarity.
+
+### Yielding a value
+
+Values returned or yielded from the callback function **must** be serializable
+or they will not be returned to the primary origin. For example, the following
+will not work:
+
+**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+
+```js
+cy.origin('https://www.acme.com', () => {
+  cy.visit('/')
+  cy.get('h1') // Yields an element, which can't be serialized...
+}).contains('ACME CORP') // ...so this will fail
+```
+
+Instead, you must explicitly yield a serializable value:
+
+**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+
+```js
+cy.origin('https://www.acme.com', () => {
+  cy.visit('/')
+  cy.get('h1').invoke('textContent') // Yields a string...
+}).should('equal', 'ACME CORP') // 👍
+```
 
 ### Navigating to secondary origin with cy.visit
 
@@ -180,14 +207,17 @@ cross-domain error will be thrown.
 ```js
 // Do things in primary domain...
 
-cy.origin('https://www.acme.com', () => {
+cy.origin('www.acme.com', () => {
   // Visit https://www.acme.com/history/founder
   cy.visit('/history/founder')
   cy.get('h1').contains('About our Founder, Marvin Acme')
 })
 ```
 
-TODO baseUrl / default protocol
+Here the `baseUrl` inside the callback is set to `www.acme.com` and the protocol
+defaults to `https`. When `cy.visit()` is called with the path
+`/history/founder`, the three are concatenated to make
+`https://www.acme.com/history/founder`.
 
 ### Navigating to secondary origin with UI
 
@@ -241,6 +271,8 @@ this functionality in a `login`
 [custom command](/api/cypress-api/custom-commands) so you don't have to
 duplicate this login code in every test. Here's an idealized example of how to
 do this with `cy.origin()`.
+
+**<Icon name="exclamation-triangle" color="#f0ad4e"></Icon> Inefficient Usage**
 
 ```js
 Cypress.Commands.add('login', (username, password) => {
@@ -390,8 +422,8 @@ this will not work:
 const foo = 1
 cy.origin('somesite.com', () => {
   cy.visit('/')
-  // This line will throw a ReferenceError because `foo` is not defined in the
-  // scope of the callback
+  // This line will throw a ReferenceError because
+  // `foo` is not defined in the scope of the callback
   cy.get('input').type(foo)
 })
 ```
@@ -410,18 +442,11 @@ cy.origin('somesite.com', { args: { foo } }, ({ foo }) => {
 })
 ```
 
-Underneath the hood, Cypress uses
-[`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
-and
-[`JSON.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse)
-(or equivalent library functions, implementation details may change) to
-serialize and deserialize the `args` object. This introduces a number of
-restrictions on the data which may be transmitted:
-
-- Primitive values only: object, array, string, number, boolean, null
-- Date objects will be converted to strings
-- Inherited properties are not serialized
-- Circular references are not allowed and will throw an error
+Cypress uses
+[the structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm)
+to transfer the `args` option to the secondary origin. This introduces a number
+of
+[restrictions on the data which may be passed](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#things_that_dont_work_with_structured_clone).
 
 ### Callback restrictions
 
@@ -434,17 +459,20 @@ following Cypress commands will throw errors if used in the callback:
 - [`cy.session()`](/api/commands/session)
 - [`cy.server()`](/api/commands/server)
 - [`cy.route()`](/api/commands/route)
-- [`Cypress.Server.defaults()`](/api/cypress-api/cypress-server)
 - [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies)
 
 It is also currently not possible to use
 [`require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
 or
 [dynamic `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#dynamic_imports)
-within the callback. This functionality will be provided in a future version of
-Cypress, but for now a simple workaround to reuse code between `cy.origin()`
-callbacks is to create a custom Cypress command within the secondary origin in a
-`before` block:
+within the callback. Because of this limitation, it cannot use
+[npm](https://www.npmjs.com/) packages or other third-party libraries inside the
+callback, as there is no mechanism to reference them. This functionality will be
+provided in a future version of Cypress.
+
+While third-party packages are strictly unavailable, it is possible to reuse
+your **own** code between `cy.origin()` callbacks. The workaround is to create a
+custom Cypress command within the secondary origin in a `before` block:
 
 ```js
 before(() => {
@@ -479,6 +507,7 @@ inclusion in a future version of Cypress.
 
 ## See also
 
+- [Easily test multi-domain workflows with cy.origin](https://cypress.io/blog/2022/04/25/cypress-9-6-0-easily-test-multi-domain-workflows-with-cy-origin/)
 - [Custom Commands](/api/cypress-api/custom-commands)
 - [`cy.session()`](/api/commands/session)
 - [`cy.visit()`](/api/commands/visit)
