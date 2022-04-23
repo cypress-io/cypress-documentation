@@ -335,11 +335,10 @@ Enabling the `experimentalSessionAndOrigin` flag makes the test-runner work
 slightly differently, and some test suites that rely on the existing behaviour
 may have to be updated. The most important of these changes is **test
 isolation**. This means that after every test, the current page is reset to
-[`about:blank`](https://en.wikipedia.org/wiki/About_URI_scheme#Standardization)
-and all active session data (cookies, `localStorage` and `sessionStorage`)
-across all domains are cleared. This change is opt-in for now, but will be
-standardized in a future major release of Cypress, so eventually all tests will
-need to be isolated.
+`about:blank` and all active session data
+(cookies, `localStorage` and `sessionStorage`) across all domains are cleared.
+This change is opt-in for now, but will be standardized in a future major
+release of Cypress, so eventually all tests will need to be isolated.
 
 Before this change, it was possible to write tests such that you could, for
 example, login to a CMS in the first test, change some content in the second
