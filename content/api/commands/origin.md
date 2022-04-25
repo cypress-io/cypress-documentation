@@ -297,7 +297,7 @@ same session.
 
 However, once the `experimentalSessionAndOrigin` flag is activated this is no
 longer possible, as all session state is now cleared between tests. So to avoid
-this overhead we have added the [`cy.session()`](/api/commands/session) command,
+this overhead we recommend you leverage the [`cy.session()`](/api/commands/session) command,
 which allows you to easily cache session information and reuse it across tests.
 So now let's enhance our custom login command with `cy.session()` for a complete
 syndicated login flow with session caching and validation. No mocking, no
