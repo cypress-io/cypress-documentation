@@ -6,9 +6,9 @@ Visit multiple domains of different
 [origin](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy#definition_of_an_origin)
 in a single test.
 
-In normal use, a single Cypress test may only run commands in domains of the
-same origin, a limitation determined by standard web security features of the
-browser. The `cy.origin()` command allows your tests to bypass this limitation.
+In normal use, a single Cypress test may only run commands in a single origin, a
+limitation determined by standard web security features of the browser. The
+`cy.origin()` command allows your tests to bypass this limitation.
 
 <Alert type="warning">
 
