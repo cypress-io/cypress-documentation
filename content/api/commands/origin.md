@@ -24,7 +24,7 @@ Enabling this flag does the following:
 - It adds the [`cy.session()`](/api/commands/session) and `cy.origin()`
   commands, and [`Cypress.session`](/api/cypress-api/session) API.
 - It adds the following new behaviors (that will be the default in a future
-  major update of Cypress) at the beginning of each test:
+  major version release of Cypress) at the beginning of each test:
   - The page is cleared (by setting it to `about:blank`).
   - All active session data (cookies, `localStorage` and `sessionStorage`)
     across all domains are cleared.
