@@ -205,7 +205,7 @@ trigger the navigation **after** entering the origin callback, otherwise a
 cross-origin error will be thrown.
 
 ```js
-// Do things in primary domain...
+// Do things in primary origin...
 
 cy.origin('www.acme.com', () => {
   // Visit https://www.acme.com/history/founder
