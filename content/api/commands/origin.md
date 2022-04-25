@@ -343,7 +343,7 @@ release of Cypress, so eventually all tests will need to be isolated.
 Before this change, it was possible to write tests such that you could, for
 example, log in to a CMS in the first test, change some content in the second
 test, verify the new version is displayed on a different URL in the third, and
-logout in the fourth. Here's a simplified example of such a test strategy.
+log out in the fourth. Here's a simplified example of such a test strategy.
 
 <Badge type="danger">Before</Badge> Multiple small tests against different
 origins
