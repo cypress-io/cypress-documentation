@@ -214,7 +214,7 @@ cy.origin('www.acme.com', () => {
 })
 ```
 
-Here the `baseUrl` inside the callback is set to `www.acme.com` and the protocol
+Here the `baseUrl` inside the `cy.origin()` callback is set to `www.acme.com` and the protocol
 defaults to `https`. When `cy.visit()` is called with the path
 `/history/founder`, the three are concatenated to make
 `https://www.acme.com/history/founder`.
