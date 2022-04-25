@@ -170,9 +170,6 @@ cy.origin(
 )
 ```
 
-Note: You can just replace `sentArgs` with `args` if you want, the naming in
-this example is purely for clarity.
-
 ### Yielding a value
 
 Values returned or yielded from the callback function **must** be serializable
@@ -487,6 +484,7 @@ before(() => {
 
 it('clicks the secondary origin link', () => {
   cy.origin('somesite.com', () => {
+    cy.visit('/page')
     cy.clickLink('Click Me')
   })
 })
