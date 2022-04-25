@@ -202,7 +202,7 @@ cy.origin('https://www.acme.com', () => {
 
 When navigating to a secondary origin using `cy.visit()`, it is essential to
 trigger the navigation **after** entering the origin callback, otherwise a
-cross-domain error will be thrown.
+cross-origin error will be thrown.
 
 ```js
 // Do things in primary domain...
