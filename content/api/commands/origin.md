@@ -223,7 +223,7 @@ defaults to `https`. When `cy.visit()` is called with the path
 
 When navigating to a secondary origin by clicking a link or button in the
 primary origin, it is essential to trigger the navigation _before_ entering the
-origin callback, otherwise a cross-domain error will be thrown.
+origin callback, otherwise a cross-origin error will be thrown.
 
 ```js
 // Button in primary origin goes to https://www.acme.com
