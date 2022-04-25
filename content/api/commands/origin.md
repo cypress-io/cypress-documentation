@@ -15,7 +15,7 @@ limitation determined by standard web security features of the browser. The
 <strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
 Experimental</strong>
 
-The `origin` API is currently experimental, and can be enabled by setting
+The `cy.origin()` command is currently experimental and can be enabled by setting
 the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
 to `true` in the Cypress config.
 
