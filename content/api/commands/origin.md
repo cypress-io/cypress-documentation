@@ -31,7 +31,7 @@ Enabling this flag does the following:
 - It overrides
   the [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
   [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
-- Cross-domain requests will no longer fail immediately, but instead, time out
+- Cross-origin requests will no longer fail immediately, but instead, time out
   based on [`pageLoadTimeout`](/guides/references/configuration#Timeouts).
 - Tests will no longer wait on page loads before moving on to the next test.
 
