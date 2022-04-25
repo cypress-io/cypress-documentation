@@ -15,7 +15,8 @@ limitation determined by standard web security features of the browser. The
 <strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
 Experimental</strong>
 
-The `cy.origin()` command is currently experimental and can be enabled by setting
+The `cy.origin()` command is currently experimental and can be enabled by
+setting
 the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
 to `true` in the Cypress config.
 
@@ -28,7 +29,7 @@ Enabling this flag does the following:
   - The page is cleared (by setting it to `about:blank`).
   - All active session data (cookies, `localStorage` and `sessionStorage`)
     across all domains are cleared.
-- It overrides
+- It supersedes
   the [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
   [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
 - Cross-origin requests will no longer fail immediately, but instead, time out
@@ -141,8 +142,8 @@ full list.
   callback function.
 - If the callback contains no Cypress commands, `cy.origin()` yields the return
   value of the function.
-- In either of the two cases above, if the value is not serializable,
-  `cy.origin()` yields null.
+- In either of the two cases above, if the value is not serializable, attempting
+  to access the yielded value will throw an error.
 
 ## Examples
 
@@ -214,8 +215,8 @@ cy.origin('www.acme.com', () => {
 })
 ```
 
-Here the `baseUrl` inside the `cy.origin()` callback is set to `www.acme.com` and the protocol
-defaults to `https`. When `cy.visit()` is called with the path
+Here the `baseUrl` inside the `cy.origin()` callback is set to `www.acme.com`
+and the protocol defaults to `https`. When `cy.visit()` is called with the path
 `/history/founder`, the three are concatenated to make
 `https://www.acme.com/history/founder`.
 
@@ -295,13 +296,14 @@ performant. Up until now you could get around this problem by putting login code
 in the first test of your file, then performing subsequent tests reusing the
 same session.
 
-However, once the `experimentalSessionAndOrigin` flag is activated this is no
-longer possible, as all session state is now cleared between tests. So to avoid
-this overhead we recommend you leverage the [`cy.session()`](/api/commands/session) command,
-which allows you to easily cache session information and reuse it across tests.
-So now let's enhance our custom login command with `cy.session()` for a complete
-syndicated login flow with session caching and validation. No mocking, no
-workarounds, no third-party plugins!
+However, once the `experimentalSessionAndOrigin` flag is activated, this is no
+longer possible, since all session state is now cleared between tests. So to
+avoid this overhead we recommend you leverage the
+[`cy.session()`](/api/commands/session) command, which allows you to easily
+cache session information and reuse it across tests. So now let's enhance our
+custom login command with `cy.session()` for a complete syndicated login flow
+with session caching and validation. No mocking, no workarounds, no third-party
+plugins!
 
 ```js
 Cypress.Commands.add('login', (username, password) => {
@@ -445,7 +447,8 @@ Cypress uses
 [the structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm)
 to transfer the `args` option to the secondary origin. This introduces a number
 of
-[restrictions on the data which may be passed](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#things_that_dont_work_with_structured_clone) into the callback.
+[restrictions on the data which may be passed](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#things_that_dont_work_with_structured_clone)
+into the callback.
 
 ### Callback restrictions
 
