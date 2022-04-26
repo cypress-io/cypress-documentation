@@ -2,8 +2,6 @@
 title: origin
 ---
 
-<DocsVideo src="https://youtube.com/embed/Fohrq5GZSD8"></DocsVideo>
-
 Visit multiple domains of different
 [origin](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy#definition_of_an_origin)
 in a single test.
@@ -328,6 +326,16 @@ Cypress.Commands.add('login', (username, password) => {
 })
 ```
 
+## Learn More
+
+### How to Test Multiple Origins
+
+<DocsVideo src="https://youtube.com/embed/Fohrq5GZSD8"></DocsVideo>
+
+In this video we walk through how to test multiple origins in a single test. We
+also look at how to use the `cy.session()` command to cache session information
+and reuse it across tests.
+
 ## Notes
 
 ### Migrating existing tests
@@ -351,7 +359,7 @@ origins
 
 ```js
 it('logs in', () => {
-  cy.visit('https"//supersecurelogons.com')
+  cy.visit('https//supersecurelogons.com')
   cy.get('input#password').type('Password123!')
   cy.get('button#submit').click()
 })
