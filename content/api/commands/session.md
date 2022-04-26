@@ -315,7 +315,7 @@ describe('login', () => {
   })
 })
 
-// Testing something that simply requires being logged in
+// Testing something that requires being logged in
 describe('account details', () => {
   it('should have the correct document title', () => {
     cy.login('user')
@@ -548,7 +548,7 @@ to solve this by refactoring the login code to assert directly inside `setup`.
 
 ```javascript
 Cypress.Commands.add('loginByApi', (username, password) => {
-  return cy.request('POST', `/api/login`, {
+  return cy.request('POST', '/api/login', {
     username,
     password,
   })
@@ -566,7 +566,7 @@ it('should return the correct value', () => {
 ```javascript
 Cypress.Commands.add('loginByApi', (username, password) => {
   cy.session([username, password], () => {
-    cy.request('POST', `/api/login`, {
+    cy.request('POST', '/api/login', {
       username,
       password,
     }).then((response) => {
@@ -799,9 +799,9 @@ more details).
 
 <DocsImage src="/img/api/session/sessions-panel.png" alt="Sessions Instrument Panel" ></DocsImage>
 
-### The command log
+### The Command Log
 
-Whenever `cy.session()` is called, the command log will show one of the
+Whenever `cy.session()` is called, the Command Log will show one of the
 following lines, which includes the status of the session call along with the
 session `id` value:
 
@@ -818,7 +818,7 @@ session `id` value:
 Note that in cases where the `validate` function fails immediately after `setup`
 creates the session, the test will fail with an error.
 
-Expanding the session group in the command log will show all of the commands
+Expanding the session group in the Command Log will show all of the commands
 that were run when creating and/or validating the session.
 
 In this image, a saved session is restored, but when `/personal` is visited in
@@ -832,7 +832,7 @@ remainder of the test.
 ### Printing to the console
 
 Clicking a session `id` in the Instrument Panel or clicking the first line under
-an expanded session group in the command log will print that session's details
+an expanded session group in the Command Log will print that session's details
 to the console. This information contains the `id` along with any cached session
 data, including cookies, `localStorage` and `sessionStorage`.
 

@@ -688,7 +688,7 @@ Code put in a `before` or `beforeEach` hook will **always** run prior to the
 test - even if you refreshed Cypress in the middle of an existing one!
 
 This is also a great opportunity to use
-[root level hooks in mocha](https://github.com/mochajs/mochajs.github.io/blob/master/index.md#root-level-hooks).
+[root level hooks in Mocha](https://github.com/mochajs/mochajs.github.io/blob/master/index.md#root-level-hooks).
 A perfect place to put these is in the
 [`cypress/support/index.js` file](/guides/core-concepts/writing-and-organizing-tests#Support-file)
 because it is always evaluated before any test code from your spec files.

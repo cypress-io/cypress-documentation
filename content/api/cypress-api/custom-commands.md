@@ -867,7 +867,7 @@ repository for a working example.
 - Blog posts
   [Writing a Custom Cypress Command](https://glebbahmutov.com/blog/writing-custom-cypress-command/)
   and
-  [How to Publish Custom Cypress Command on NPM](https://glebbahmutov.com/blog/publishing-cypress-command/).
+  [How to Publish Custom Cypress Command on npm](https://glebbahmutov.com/blog/publishing-cypress-command/).
 - [Plugins using custom commands](/plugins/directory#custom-commands)
 - [`cypress-xpath`](https://github.com/cypress-io/cypress-xpath) adds a
   `cy.xpath()` command and shows best practices for writing custom commands:

@@ -468,7 +468,7 @@ cy.intercept('/users*', (req) => {
 <Alert type="info">
 
 Throughout these examples we will refer to the incoming HTTP request as `req`.
-Those of you with [Express.js](https://expressjs.com/)
+Those of you with [Express](https://expressjs.com/)
 [middleware](https://expressjs.com/en/guide/writing-middleware.html) experience
 should be familiar with this syntax.
 
@@ -778,7 +778,7 @@ traffic _before_ Cypress can intercept it.
 
 `cy.intercept()` cannot be debugged using
 [`cy.request()`](/api/commands/request)! Cypress only intercepts requests made
-by your front-end application.
+by your front end application.
 
 </Alert>
 
@@ -788,7 +788,7 @@ The intercepted request passed to the route handler (hereafter referred to as
 `req`, though you can use any name) contains methods to dynamically control the
 response to a request:
 
-- `req.reply()` - stub out a response requiring no dependency on a real back-end
+- `req.reply()` - stub out a response requiring no dependency on a real back end
 - `req.continue()` - modify or make assertions on the real response
 - `req.destroy()` - destroy the request and respond with a network error
 - `req.redirect()` - respond to the request with a redirect to a specified
@@ -856,8 +856,8 @@ See also
 Modifying the real response (`continue`):
 
 The `continue` method accepts a function which is passed an object representing
-the real response being intercepted on its way back to the client (your
-front-end application).
+the real response being intercepted on its way back to the client (your front
+end application).
 
 ```js
 // pass the request through and make an assertion on

@@ -232,12 +232,12 @@ We hope that Cypress makes test writing simple and fun, even for people with a
 minimal knowledge of JavaScript. If you would like to develop your JS skills, we
 recommend the following free online resources:
 
-- Online tutorial [Learn Javascript](https://gitbookio.gitbooks.io/JavaScript)
+- Online tutorial [Learn JavaScript](https://gitbookio.gitbooks.io/JavaScript)
   with small exercises
 - Book [Eloquent JavaScript](https://eloquentjavascript.net/)
 - Book [Human JavaScript](http://read.humanjavascript.com/)
 - an entire collection of free JavaScript books at the
-  [Free Frontend](https://freefrontend.com/javascript-books/) site
+  [Free front end](https://freefrontend.com/javascript-books/) site
 - [The Modern JavaScript Tutorial](https://javascript.info/) teaches you both
   JavaScript and HTML programming, and is available in several translations
 
@@ -349,7 +349,7 @@ exception data, which can be disabled using the instructions
 ## <Icon name="angle-right"></Icon> Can I write API tests using Cypress?
 
 Cypress is mainly designed to run end-to-end tests, but if you need to write a
-few tests that call the backend API using the
+few tests that call the back end API using the
 [`cy.request()`](/api/commands/request) command ... who can stop you?
 
 ```js
@@ -371,7 +371,7 @@ it('adds a todo', () => {
 
 Take a look at our
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) that
-uses quite a few such tests to verify the backend APIs.
+uses quite a few such tests to verify the back end APIs.
 
 You can verify the responses using the built-in assertions and perform multiple
 calls. You can even write E2E tests that combine UI commands with API testing as

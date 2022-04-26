@@ -79,17 +79,17 @@ here.
 <alert type="info">
 
 If you currently do not use Webpack, you can create a separate configuration for
-Webpack specifically for Cypress Component Testing. Follow the
+webpack specifically for Cypress Component Testing. Follow the
 [Webpack getting started guide](https://webpack.js.org/guides/getting-started/)
-to create a new Webpack config, then continue following the
+to create a new webpack config, then continue following the
 [Installation guide](#Install) below.
 
 </alert>
 
 ### Prerequisites
 
-- A project with a `package.json` file at the root that runs on Webpack 4 or 5.
-- A `webpack.config.js` file, or a way to access Webpack configuration. Refer to
+- A project with a `package.json` file at the root that runs on webpack 4 or 5.
+- A `webpack.config.js` file, or a way to access webpack configuration. Refer to
   your framework's documentation.
 - Some components that you want to test that visually display in a browser. It
   could be a date picker, tabs, responsive images.
@@ -249,12 +249,12 @@ such as Next.js, or use a Vue template other than vue-cli, you will need to
 import the appropriate plugin. See a list of officially maintained plugins
 [here](https://github.com/cypress-io/cypress/tree/develop/npm/react/plugins).
 Each of these plugins perform the same tasks under the hood. Alternatively, if
-you have your own Webpack configuration, you can just provide it (without need
+you have your own webpack configuration, you can just provide it (without need
 for a specific plugin) as specified above.
 
 <alert type="info">
 
-If you have separate Webpack configurations for development and production, use
+If you have separate webpack configurations for development and production, use
 the development configuration. It will give better location information using
 SourceMaps.
 
@@ -364,7 +364,7 @@ to first run the E2E tests, then run the component tests.
 
 The tools listed in this section are actively being developed. We will support
 early adoption of these projects in order to get community feedback.
-Please report issues against these projects in Github or contact us on
+Please report issues against these projects in GitHub or contact us on
 [Discord](https://discord.gg/Cd4CdSx) for additional support.
 
 #### Vite
@@ -399,7 +399,7 @@ export default function (on, config) {
 
 Exactly like Webpack, you should start Cypress with `yarn cypress open-ct`.
 Writing component tests when using Vite is _exactly_ the same as when using
-Webpack. Minor differences may occur depending on the
+webpack. Minor differences may occur depending on the
 
 **Known issues**
 
@@ -411,7 +411,7 @@ Webpack. Minor differences may occur depending on the
 
 Issues will often arise during the initial compilation and start of your
 project. Please collect logs and focus on stripping down your `viteConfig` to
-work around any issues. Please log any issues in Github.
+work around any issues. Please log any issues in GitHub.
 
 **Collecting logs**
 

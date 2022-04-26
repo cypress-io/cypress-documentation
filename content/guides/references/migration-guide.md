@@ -92,7 +92,7 @@ cy.get('[data-cy="dropzone"]').selectFile('fixtures/myfixture.json', {
 })
 ```
 
-#### Overriding the file name
+#### Overriding the filename
 
 <Badge type="danger">Before</Badge> Dragging and dropping a file with
 `cypress-file-upload`
@@ -443,7 +443,7 @@ This should only affect users who are explicitly asserting on global errors. See
 ### Component Testing
 
 In 7.0, component testing is no longer experimental. Cypress now ships with a
-dedicated component test runner with a new UI and dedicated commands to launch
+dedicated component Test Runner with a new UI and dedicated commands to launch
 it.
 
 **Changes are required for all existing projects**. The required changes are

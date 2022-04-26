@@ -722,7 +722,7 @@ By default, Cypress automatically
 state from building up.
 
 You can preserve specific cookies across tests using the
-[Cypress.Cookies api](/api/cypress-api/cookies):
+[Cypress.Cookies API](/api/cypress-api/cookies):
 
 ```javascript
 // now any cookie with the name 'session_id' will
@@ -925,7 +925,7 @@ to the browser URL. This is normal. Cypress modifies the traffic between your
 server and the browser. The browser notices this and displays a certificate
 warning. However, this is purely cosmetic and does not alter the way your
 application under test runs in any way, so you can safely ignore this warning.
-The network traffic between Cypress and the backend server still happens via
+The network traffic between Cypress and the back end server still happens via
 HTTPS.
 
 See also the [Web Security](/guides/guides/web-security) guide.

@@ -71,8 +71,8 @@ Also see [Authentication plugins](/plugins/directory#authentication) and watch
 | Recipe                                                                                                                                        | Description                                         |
 | --------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
 | [Grep tests](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__grep)                                  | Filter tests by name using Mocha-like `grep` syntax |
-| [Typescript with Browserify](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/preprocessors__typescript-browserify) | Add typescript support with browserify              |
-| [Typescript with Webpack](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/preprocessors__typescript-webpack)       | Add typescript support with webpack                 |
+| [TypeScript with Browserify](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/preprocessors__typescript-browserify) | Add TypeScript support with Browserify              |
+| [TypeScript with webpack](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/preprocessors__typescript-webpack)       | Add TypeScript support with webpack                 |
 | [Flow with Browserify](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/preprocessors__flow-browserify)             | Add flow support with Browserify                    |
 
 ## Blogs
@@ -135,7 +135,7 @@ blog post.
 | [Stream test results](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/server-communication__stream-tests)                       | Streams each test result from the browser to the plugins to an external process via IPC                                      |
 | [Offline](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/server-communication__offline)                                        | Test web application when the network is offline                                                                             |
 | [Server timing](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/server-communication__server-timing)                            | Report server timing results from Cypress test                                                                               |
-| [Wait for API](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/server-communication__wait-for-api)                              | Call the backend using `cy.request` until it responds                                                                        |
+| [Wait for API](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/server-communication__wait-for-api)                              | Call the back end using `cy.request` until it responds                                                                       |
 | [Making HTTP requests](https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/server-communication__request)                           | How to use `cy.request`, `window.fetch`, and `cy.task` commands to make HTTP requests to the server with and without cookies |
 
 ## Other Cypress Recipes
