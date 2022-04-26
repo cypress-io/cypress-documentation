@@ -2,6 +2,8 @@
 title: origin
 ---
 
+<DocsVideo src="https://youtube.com/embed/Fohrq5GZSD8"></DocsVideo>
+
 Visit multiple domains of different
 [origin](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy#definition_of_an_origin)
 in a single test.
