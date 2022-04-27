@@ -220,7 +220,7 @@ Many first time users look at Cypress code and think it runs synchronously.
 We see new users commonly write code that looks like this:
 
 ```js
-// DONT DO THIS. IT DOES NOT WORK
+// DON'T DO THIS. IT DOES NOT WORK
 // THE WAY YOU THINK IT DOES.
 const a = cy.get('a')
 
@@ -834,6 +834,8 @@ a length of 2.
 Whenever commands have an assertion they will not resolve until their associated
 assertions pass. This enables you to describe the state of your application
 without having to worry about when it gets there.
+
+<!-- cspell:ignore maggy -->
 
 ```javascript
 cy.intercept('GET', '/users', [{ name: 'Maggy' }, { name: 'Joan' }])

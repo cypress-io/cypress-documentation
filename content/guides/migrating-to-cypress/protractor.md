@@ -946,7 +946,7 @@ commands are
 and are enqueued to run serially at a later time. Cypress commands might look
 like promises, but the
 [Cypress API is not an exact implementation of Promises](/guides/core-concepts/introduction-to-cypress#Commands-Are-Not-Promises).
-The modern web is asychronous, therefore you need to interact with modern web
+The modern web is asynchronous, therefore you need to interact with modern web
 apps in an asynchronous fashion. This is why the Cypress API is asynchronous.
 This allows you to write deterministic tests since all of your commands are
 executed serially, enabling your tests to run predictably each time.

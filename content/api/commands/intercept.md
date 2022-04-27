@@ -219,7 +219,7 @@ cy.intercept('GET', '/users')
 
 ### Matching with [RouteMatcher](#routeMatcher-RouteMatcher)
 
-Specifying a `method` and `url` to match can also be acheived by passing the
+Specifying a `method` and `url` to match can also be achieved by passing the
 `routeMatcher` object into `cy.intercept` instead:
 
 ```js
@@ -230,7 +230,7 @@ cy.intercept('GET', '**/users')
 
 ```js
 // Match any type of request with the pathname `/search`
-// and the query paramater 'q=some+terms'
+// and the query parameter 'q=some+terms'
 cy.intercept({
   pathname: '/search',
   query: {
@@ -729,6 +729,8 @@ cy.intercept('POST', '/users', (req) => {
 The outgoing request, including its body, headers, etc., can be modified before
 it's sent.
 
+<!-- cspell:ignore Rpbjpvc -->
+
 ```js
 // modify the request body before it's sent to its destination
 cy.intercept('POST', '/users', (req) => {
@@ -946,7 +948,7 @@ cy.intercept('POST', '/users', (req) => {
 // requests to create a user will be fulfilled
 // with a body of 'success'
 cy.intercept('POST', '/users', 'success')
-// { body: 'sucess' }
+// { body: 'success' }
 ```
 
 ## Intercepted requests
@@ -1619,3 +1621,5 @@ information about the request and response to the console:
 [arg-routehandler]:
   #routeHandler-lt-code-gtstring-object-Function-StaticResponselt-code-gt
 [arg-routematcher]: #routeMatcher-RouteMatcher
+
+<!-- cspell:ignore gtstring,Responselt -->

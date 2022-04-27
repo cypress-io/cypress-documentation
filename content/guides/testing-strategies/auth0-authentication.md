@@ -451,7 +451,7 @@ const AppAuth0 = () => {
       })();
     }, [user, getAccessTokenSilently]);
 
-  // If under test in Cypress, get credentials from "auth0Cypress" localstorage item and send event to our state management to log the user into the SPA
+  // If under test in Cypress, get credentials from "auth0Cypress" localStorage item and send event to our state management to log the user into the SPA
   if (window.Cypress) {
     useEffect(() => {
       const auth0 = JSON.parse(localStorage.getItem("auth0Cypress")!);
@@ -510,6 +510,8 @@ Next you'll need to obtain a
 the [Auth0 Management API](https://auth0.com/docs/api/management/v2). This token
 is a JSON Web Token (JWT) and it contains specific granted permissions for the
 API.
+
+<!-- cspell:ignore mgmt,icanhazip -->
 
 Add this token as environment variable `AUTH0_MGMT_API_TOKEN` to our
 [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app)

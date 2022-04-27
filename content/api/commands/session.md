@@ -393,6 +393,8 @@ function validate() {
 If you want to change which session data is cached, you can modify cookies,
 `localStorage`, `sessionStorage` as-necessary in `setup`.
 
+<!-- cspell:ignore sufh,aaiidhf -->
+
 ```javascript
 cy.session('user', () => {
   cy.visit('/login')
@@ -609,8 +611,8 @@ it('t1', ()=>{
 })
 
 it('t2', ()=>{
-  cy.visit('anotherexample.com')
-  // do things on anotherexample.com
+  cy.visit('anotherExample.com')
+  // do things on anotherExample.com
 })
 
 it('t3', ()=>{

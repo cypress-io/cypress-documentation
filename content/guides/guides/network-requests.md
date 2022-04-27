@@ -227,7 +227,7 @@ complex JSON objects. Cypress allows you to integrate fixture syntax directly
 into responses.
 
 ```javascript
-// we set the response to be the activites.json fixture
+// we set the response to be the activities.json fixture
 cy.intercept('GET', '/activities/*', { fixture: 'activities.json' })
 ```
 

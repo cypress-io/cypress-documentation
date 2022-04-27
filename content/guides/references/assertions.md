@@ -117,7 +117,7 @@ entire list of available Chai assertions [here](http://chaijs.com/api/assert/).
 | .isUndefined(_value_, _[message]_)                          | `assert.isUndefined(undefined, 'val is undefined')`    |
 | .isDefined(_value_, _[message]_)                            | `assert.isDefined('hello', 'val has been defined')`    |
 | .isFunction(_value_, _[message]_)                           | `assert.isFunction(x => x * x, 'val is func')`         |
-| .isNotFunction(_value_, _[message]_)                        | `assert.isNotFunction(5, 'val not funct')`             |
+| .isNotFunction(_value_, _[message]_)                        | `assert.isNotFunction(5, 'val not func')`              |
 | .isObject(_value_, _[message]_)                             | `assert.isObject({num: 5}, 'val is object')`           |
 | .isNotObject(_value_, _[message]_)                          | `assert.isNotObject(3, 'val not object')`              |
 | .isArray(_value_, _[message]_)                              | `assert.isArray(['unit', 'e2e'], 'val is array')`      |

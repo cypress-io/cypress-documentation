@@ -54,6 +54,8 @@ Below are several examples of migrating various commands from
 <Badge type="danger">Before</Badge> Attaching a fixture from disk with
 `cypress-file-upload`
 
+<!-- cspell:ignore myfixture -->
+
 ```js
 cy.get('[data-cy="file-input"]').attachFile('myfixture.json')
 ```
@@ -121,7 +123,7 @@ cy.get('[data-cy="dropzone"]').selectFile({
 using `cypress-file-upload`
 
 ```js
-const special = 'file.spss'
+const special = 'file.bin'
 
 cy.fixture(special, 'binary')
   .then(Cypress.Blob.binaryStringToBlob)
@@ -142,7 +144,7 @@ with binary data simpler, and is the preferred encoding for use with
 `.selectFile()`.
 
 ```js
-const special = 'file.spss'
+const special = 'file.bin'
 
 cy.fixture(special, { encoding: null }).then((contents) => {
   // ...process file contents
@@ -1052,7 +1054,7 @@ This guide details the changes and how to change your code to migrate to Cypress
 
 <Alert type="info">
 
-**Key takeway:** Use `.should('not.exist')` to assert that an element does not
+**Key takeaway:** Use `.should('not.exist')` to assert that an element does not
 exist in the DOM (not `.should('not.be.visible')`, etc).
 
 </Alert>
@@ -1079,6 +1081,8 @@ cy.get('#dropdon').should('not.contain', 'Cypress')
 ```
 
 <DocsImage src="/img/guides/el-incorrectly-passes-existence-check.png" alt="non-existent element before 6.0"></DocsImage>
+
+<!-- cspell:ignore dropdon -->
 
 In 6.0, these assertions will now correctly fail, telling us that the `#dropdon`
 element doesn't exist in the DOM.
@@ -1365,6 +1369,8 @@ result of each test retry.
 
 <Badge type="danger">Before</Badge> `results.runs` Module API results
 
+<!-- cspell:ignore ddmk -->
+
 ```json
 {
   // ...
@@ -1639,9 +1645,13 @@ Running Cypress on Linux now requires the `libgbm` dependency (on Debian-based
 systems, this is available as `libgbm-dev`). To install all required
 dependencies on Ubuntu/Debian, you can run the script below:
 
+<- cspell:disable -->
+
 ```shell
 apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 ```
+
+<- cspell:enable -->
 
 ### TypeScript esModuleInterop
 
@@ -1837,6 +1847,8 @@ expect(() => {}).to.be.empty
 An error will throw when a non-existent property is read. If there are typos in
 property assertions, they will now appear as failures.
 
+<!-- cspell:ignore ture -->
+
 ```javascript
 // Would pass in Cypress 3 but will fail correctly in 4
 expect(true).to.be.ture
@@ -1861,7 +1873,7 @@ cy.wrap([
 })
 ```
 
-<Badge type="success">After</Badge> Need to specificy `deep.include` for deep
+<Badge type="success">After</Badge> Need to specify `deep.include` for deep
 equality
 
 ```javascript
@@ -2137,6 +2149,8 @@ end of life on April 30, 2019.
 [See Node's release schedule](https://github.com/nodejs/Release). These Node.js
 versions will no longer be supported when installing Cypress. The minimum
 Node.js version supported to install Cypress is Node.js 8.
+
+<!-- cspell:ignore cjsx -->
 
 ### CJSX is no longer supported
 

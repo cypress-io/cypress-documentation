@@ -81,6 +81,8 @@ it('warns to view page in Chrome browser', () => {
 
 #### Run commands in all specified browsers
 
+<!-- cspell:ignore rainbox -->
+
 ```javascript
 it('colors rainbow', () => {
   // true when running in Electron or Chrome

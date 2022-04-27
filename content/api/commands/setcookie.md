@@ -63,6 +63,8 @@ Pass in an options object to change the default behavior of `cy.setCookie()`.
 
 #### Set a cookie
 
+<!-- cspell:ignore sufh,aaiidhf -->
+
 ```javascript
 cy.getCookies().should('be.empty')
 cy.setCookie('session_id', '189jd09sufh33aaiidhf99d09')

@@ -110,6 +110,8 @@ If the HTML contains a
 [jQuery :contains](https://api.jquery.com/contains-selector/) selector, then the
 test needs to use the Unicode value `\u00a0` instead of `&nbsp;`.
 
+<!-- cspell:ignore testattr -->
+
 ```html
 <div data-testid="testattr">
   <span>Hello&nbsp;world</span>

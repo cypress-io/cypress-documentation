@@ -319,6 +319,8 @@ The example below gets the text contained within one element and saves it in a
 closure variable. Then the test gets the text in another element and asserts
 that the two text values are the same after normalizing.
 
+<!-- cspell:ignore ACMEDEVELOPERS -->
+
 ```html
 <div class="company-details">
   <div class="title">Acme Developers</div>

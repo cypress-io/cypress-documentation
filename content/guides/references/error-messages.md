@@ -871,6 +871,8 @@ prevent this from working as intended, which can cause tests to break.
 If your administrator has set any of the following Chrome GPOs, it can prevent
 your tests from running in Chrome:
 
+<!-- cspell:ignore Forcelist -->
+
 - Proxy policies:
   `ProxySettings, ProxyMode, ProxyServerMode, ProxyServer, ProxyPacUrl, ProxyBypassList`
 - Extension policies:

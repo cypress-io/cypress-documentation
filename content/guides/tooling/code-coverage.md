@@ -198,6 +198,8 @@ render(
 ...and wraps each statement with additional counters that keep track of how many
 times each source line has been executed by the JavaScript runtime.
 
+<!-- cspell:ignore hmhptych -->
+
 ```javascript
 const store = (cov_18hmhptych.s[0]++, createStore(reducer))
 cov_18hmhptych.s[1]++
@@ -443,7 +445,7 @@ reachable from the UI. Yet this switch case is definitely worth testing - at
 least to avoid accidentally changing its behavior during future refactoring.
 
 We can directly test this piece of code by importing the `getVisibleTodos`
-function from the Cypress spec file. In essense we are using the Cypress Test
+function from the Cypress spec file. In essence we are using the Cypress Test
 Runner as a unit testing tool (find more unit testing recipes
 [here](https://github.com/cypress-io/cypress-example-recipes#unit-testing)).
 
@@ -730,7 +732,6 @@ following repositories:
   ejecting `react-scripts`.
 - [bahmutov/next-and-cypress-example](https://github.com/bahmutov/next-and-cypress-example)
   shows how to get back end and front end coverage for a Next.js project.
-  `middleware/nextjs.js`.
 
 Find the full list of examples linked in
 [cypress-io/code-coverage#external-examples](https://github.com/cypress-io/code-coverage#external-examples).

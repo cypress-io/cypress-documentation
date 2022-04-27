@@ -132,6 +132,8 @@ it('loads the same object', () => {
 
 #### Image fixtures are sent as `base64` by default
 
+<!-- cspell:disable  -->
+
 ```javascript
 cy.fixture('images/logo.png').then((logo) => {
   // logo will be encoded as base64
@@ -139,6 +141,8 @@ cy.fixture('images/logo.png').then((logo) => {
   // aIJKnwxydrB10NVWqhlmmC+ZiWs7otHotSAAAOw==...
 })
 ```
+
+<!-- cspell:enable -->
 
 #### Change encoding of Image fixture
 

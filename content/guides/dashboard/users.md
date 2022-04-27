@@ -26,7 +26,7 @@ projects and tests run for the organization.
 ### Sign Up with an Invitation:
 
 Upon receiving the email, click **"Accept Invitation"** to be redirected to the
-Cypress Dashboard. From there, you will have the choice of authenitication type:
+Cypress Dashboard. From there, you will have the choice of authentication type:
 
 - **Basic** (Google or GitHub)
 - **Social** (Email and Password)

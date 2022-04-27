@@ -66,7 +66,7 @@ Compatible with IntelliJ IDEA, AppCode, CLion, GoLand, PhpStorm, PyCharm, Rider,
 RubyMine, and WebStorm.
 
 - [Cypress Support](https://plugins.jetbrains.com/plugin/13819-intellij-cypress):
-  Integrates Cypress under the common Intellij test framework.
+  Integrates Cypress under the common IntelliJ test framework.
 - [Cypress Support Pro](https://plugins.jetbrains.com/plugin/13987-cypress-pro):
   An improved version of Cypress Support plugin with debugging from the IDE,
   advanced autocomplete, built-in recorder and other features.

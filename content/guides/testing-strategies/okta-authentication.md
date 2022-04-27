@@ -415,7 +415,7 @@ const AppOkta: React.FC = () => {
 
   // ...
 
-  // If under test in Cypress, get credentials from "oktaCypress" localstorage item and send event to our state management to log the user into the SPA
+  // If under test in Cypress, get credentials from "oktaCypress" localStorage item and send event to our state management to log the user into the SPA
   if (window.Cypress) {
     useEffect(() => {
       const okta = JSON.parse(localStorage.getItem("oktaCypress")!);

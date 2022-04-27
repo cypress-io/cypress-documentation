@@ -265,7 +265,7 @@ These patterns are pretty much the same as before:
 #### Use the URL to control it:
 
 ```js
-// dont show the wizard
+// don't show the wizard
 cy.visit('https://app.com?wizard=0')
 ```
 

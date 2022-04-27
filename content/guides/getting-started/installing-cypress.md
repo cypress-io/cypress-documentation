@@ -37,6 +37,8 @@ on your system.
 
 #### Ubuntu/Debian
 
+<!-- cspell:disable  -->
+
 ```shell
 apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 ```
@@ -46,6 +48,8 @@ apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 lib
 ```shell
 yum install -y xorg-x11-server-Xvfb gtk2-devel gtk3-devel libnotify-devel GConf2 nss libXScrnSaver alsa-lib
 ```
+
+<!-- cspell:enable  -->
 
 #### Docker
 
@@ -448,6 +452,8 @@ Cypress will then attempt to download a binary with this format:
 
 ### Using a custom CA
 
+<!-- cspell:ignore cafile -->
+
 Cypress can be configured to use the `ca` and `cafile` options from your NPM
 config file to download the Cypress binary.
 
@@ -544,6 +550,8 @@ address, which changes often.
 In your `.bashrc` (or equivalent such as `.zshrc`) set the `DISPLAY` environment
 variable.
 
+<!-- cspell:ignore resolv -->
+
 ```shell
 # set DISPLAY variable to the IP automatically assigned to WSL2
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
@@ -565,6 +573,8 @@ the following:
 sudo /etc/init.d/dbus start &> /dev/null
 ```
 
+<!-- cspell:ignore visido -->
+
 Now your user needs to be granted access to run `sudo dbus` without needing to
 enter a password. To do so, use the `visido` command:
 
@@ -575,6 +585,8 @@ sudo visudo -f /etc/sudoers.d/dbus
 In the editor that launches, add the following line, replacing `<your_username>`
 with your username (you can use the `whoami` command to print your username if
 you don't know it).
+
+<!-- cspell:ignore NOPASSWD -->
 
 ```
 <your_username> ALL = (root) NOPASSWD: /etc/init.d/dbus

@@ -123,6 +123,8 @@ cy.readFile('languages/en.yml').then((str) => {
 
 #### Specify the encoding with the second argument
 
+<!-- cspell:disable -->
+
 ```javascript
 cy.readFile('path/to/logo.png', 'base64').then((logo) => {
   // logo will be encoded as base64
@@ -130,6 +132,8 @@ cy.readFile('path/to/logo.png', 'base64').then((logo) => {
   // aIJKnwxydrB10NVWqhlmmC+ZiWs7otHotSAAAOw==...
 })
 ```
+
+<!-- cspell:enable  -->
 
 #### Read
 

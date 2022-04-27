@@ -239,6 +239,8 @@ Once saved, the file will be run again in Cypress.
 Finally, viewing our test code, we can see that the test is updated after
 clicking "Save Commands" with the actions we recorded in Cypress Studio.
 
+<!-- cspell:ignore sidenav,bankaccount,bankaccounts -->
+
 ```js
 // Code from Real World App (RWA)
 import { User } from 'models'

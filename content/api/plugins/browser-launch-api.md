@@ -135,7 +135,7 @@ module.exports = (on, config) => {
   on('before:browser:launch', (browser, launchOptions) => {
     if (browser.family === 'chromium' && browser.name !== 'electron') {
       // in Chromium, preferences can exist in Local State, Preferences, or Secure Preferences
-      // via launchOptions.preferences, these can be acccssed as `localState`, `default`, and `secureDefault`
+      // via launchOptions.preferences, these can be accessed as `localState`, `default`, and `secureDefault`
 
       // for example, to set `somePreference: true` in Preferences:
       launchOptions.preferences.default['preference'] = true

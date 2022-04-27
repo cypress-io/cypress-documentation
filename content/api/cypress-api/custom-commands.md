@@ -130,6 +130,8 @@ Cypress.Commands.add('downloadFile', (url, directory, fileName) => {
 })
 ```
 
+<!-- cspell:ignore mydownloads -->
+
 ```js
 cy.downloadFile('https://path_to_file.pdf', 'mydownloads', 'demo.pdf')
 ```
