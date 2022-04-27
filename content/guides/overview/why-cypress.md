@@ -161,9 +161,11 @@ performs actions via the UI just like a real user would.
 ```js
 it('adds todos', () => {
   cy.visit('https://todo.app.com')
-  cy.get('.new-input').type('write code{enter}').type('write tests{enter}')
+  cy.get('[data-testid=new-todo]')
+    .type('write code{enter}')
+    .type('write tests{enter}')
   // confirm the application is showing two items
-  cy.get('li.todo').should('have.length', 2)
+  cy.get('[data-testid=todos]').should('have.length', 2)
 })
 ```
 

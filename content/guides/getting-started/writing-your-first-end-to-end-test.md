@@ -357,7 +357,8 @@ describe('My First Test', () => {
 
     cy.contains('type').click()
 
-    // Should be on a new URL which includes '/commands/actions'
+    // Should be on a new URL which
+    // includes '/commands/actions'
     cy.url().should('include', '/commands/actions')
   })
 })
@@ -372,10 +373,11 @@ likely to change your application state in more than one way.
 We can continue the interactions and assertions in this test by adding another
 chain to interact with and verify the behavior of elements on this new page.
 
-We can use [cy.get()](/api/commands/get) to select an element based on a CSS
-class. Then we can use the [.type()](/api/commands/type) command to enter text
-into the selected input. Finally, we can verify that the value of the input
-reflects the text that was typed with another [.should()](/api/commands/should).
+We can use [cy.get()](/api/commands/get) to select an element based on a
+`data-*` attribute. Then we can use the [.type()](/api/commands/type) command to
+enter text into the selected input. Finally, we can verify that the value of the
+input reflects the text that was typed with another
+[.should()](/api/commands/should).
 
 ```js
 describe('My First Test', () => {
@@ -384,11 +386,13 @@ describe('My First Test', () => {
 
     cy.contains('type').click()
 
-    // Should be on a new URL which includes '/commands/actions'
+    // Should be on a new URL which
+    // includes '/commands/actions'
     cy.url().should('include', '/commands/actions')
 
-    // Get an input, type into it and verify that the value has been updated
-    cy.get('.action-email')
+    // Get an input, type into it and verify
+    // that the value has been updated
+    cy.get('[data-testid=action-email]')
       .type('fake@email.com')
       .should('have.value', 'fake@email.com')
   })
@@ -404,7 +408,7 @@ the new page. If we read it out loud, it might sound like:
 > 3. Click on it
 > 4. Get the URL
 > 5. Assert it includes: `/commands/actions`
-> 6. Get the input with the `.action-email` class
+> 6. Get the input with the `action-email` data-testid
 > 7. Type `fake@email.com` into the input
 > 8. Assert the input reflects the new value
 
@@ -412,7 +416,7 @@ Or in the Given, When, Then syntax:
 
 > 1. Given a user visits `https://example.cypress.io`
 > 2. When they click the link labeled `type`
-> 3. And they type "fake@email.com" into the `.action-email` input
+> 3. And they type "fake@email.com" into the `[data-testid=action-email]` input
 > 4. Then the URL should include `/commands/actions`
 > 5. And the `.action-email` input has "fake@email.com" as its value
 
