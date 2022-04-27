@@ -80,7 +80,6 @@ up reading very nicely.
 
 ```js
 cy.get('button').then(($btn) => {
-
   // store the button's text
   const txt = $btn.text()
 
@@ -96,7 +95,7 @@ cy.get('button').then(($btn) => {
 
 // these commands run after all of the
 // other previous commands have finished
-cy.get(...).find(...).should(...)
+cy.get(/*...*/).find(/*...*/).should(/*...*/)
 ```
 
 The commands outside of the `.then()` will not run until all of the nested
@@ -554,11 +553,10 @@ cy.request('https://jsonplaceholder.cypress.io/comments').as('comments')
 
 cy.get('@comments').should((response) => {
   if (response.status === 200) {
-      expect(response).to.have.property('duration')
-    } else {
-      // whatever you want to check here
-    }
-  })
+    expect(response).to.have.property('duration')
+  } else {
+    // whatever you want to check here
+  }
 })
 ```
 

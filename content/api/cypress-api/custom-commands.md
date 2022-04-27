@@ -260,7 +260,7 @@ Cypress.Commands.add('createUser', (user) => {
     cy.request({
       method: 'POST',
       url: 'https://www.example.com/users',
-      headers: { Authorization: 'Bearer ' + resp.body.token },
+      headers: { Authorization: `Bearer ${resp.body.token}` },
       body: user,
     })
   })

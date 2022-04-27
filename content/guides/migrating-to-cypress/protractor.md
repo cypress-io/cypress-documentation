@@ -338,7 +338,7 @@ element(by.name('field-name'))
 element(by.cssContainingText('.my-class', 'text'))
 
 //Get the first element containing a specific text (only for link elements)
-element(by.linkText('text')
+element(by.linkText('text'))
 ```
 
 <Badge type="success">After: Cypress</Badge>
@@ -823,6 +823,7 @@ it('should display a warning when the third-party API is down', () => {
     'https://api.openweathermap.org/data/2.5/weather?q=Atlanta',
     { statusCode: 500 }
   )
+
   cy.get('.weather-forecast').contains('Weather Forecast Unavailable')
 })
 ```
@@ -835,6 +836,7 @@ it('projects endpoint should return 2 projects', () => {
   cy.intercept('/projects', {
     body: [{ projectId: '1' }, { projectId: '2' }],
   }).as('projects')
+
   cy.wait('@projects').its('response.body').should('have.length', 2)
 })
 ```

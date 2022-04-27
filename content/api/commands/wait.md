@@ -191,18 +191,17 @@ to the next command.
 
 ```js
 // Anti-pattern: placing Cypress commands inside .then callbacks
-cy.wait('@alias')
-  .then(() => {
-    cy.get(...)
-  })
+cy.wait('@alias').then(() => {
+  cy.get(/*...*/)
+})
 
 // Recommended practice: write Cypress commands serially
 cy.wait('@alias')
-cy.get(...)
+cy.get(/*...*/)
 
 // Example: assert status from cy.intercept() before proceeding
 cy.wait('@alias').its('response.statusCode').should('eq', 200)
-cy.get(...)
+cy.get(/*...*/)
 ```
 
 Read

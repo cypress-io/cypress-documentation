@@ -118,7 +118,9 @@ the bundler load it:
 
 ```js
 // cypress/integration/spec.js
+
 import user from '../fixtures/user.json'
+
 it('loads the same object', () => {
   cy.fixture('user').then((userFixture) => {
     expect(user, 'the same data').to.deep.equal(userFixture)

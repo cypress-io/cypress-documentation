@@ -190,6 +190,7 @@ describe('Cypress Studio Demo', () => {
     cy.get(
       '[data-test=user-list-item-tsHF6_D5oQ] > .MuiListItemText-root > .MuiListItemText-primary'
     ).should('have.text', 'Devon Becker')
+
     cy.get('[data-test=user-list-item-tsHF6_D5oQ]').click()
     cy.get('#amount').clear()
     cy.get('#amount').type('$25')

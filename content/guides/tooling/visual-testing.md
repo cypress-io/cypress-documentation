@@ -228,10 +228,11 @@ As a general rule there are some best practices when visual testing.
 style properties**
 
 ```js
-cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
+cy.get('.completed')
+  .should('have.css', 'text-decoration', 'line-through')
   .and('have.css', 'color', 'rgb(217,217,217)')
+
 cy.get('.user-info').should('have.css', 'display', 'none')
-...
 ```
 
 If your end-to-end tests become full of assertions checking visibility, color

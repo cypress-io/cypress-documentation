@@ -210,9 +210,9 @@ module.exports = (on, config) => {
     // Vue's Webpack configuration
     const webpackConfig = require('@vue/cli-service/webpack.config.js')
 
-    on('dev-server:start', (options) =>
-      startDevServer({ options, webpackConfig })
-    )
+    on('dev-server:start', (options) => {
+      return startDevServer({ options, webpackConfig })
+    })
   }
 }
 ```
@@ -230,9 +230,9 @@ module.exports = (on, config) => {
     // Your project's Webpack configuration
     const webpackConfig = require('../../webpack.config.js')
 
-    on('dev-server:start', (options) =>
-      startDevServer({ options, webpackConfig })
-    )
+    on('dev-server:start', (options) => {
+      return startDevServer({ options, webpackConfig })
+    })
   }
 }
 ```
@@ -392,6 +392,7 @@ export default function (on, config) {
     const viteConfig = {
       // import or inline your vite configuration from vite.config.js
     }
+
     return startDevServer({ options, viteConfig })
   })
 }

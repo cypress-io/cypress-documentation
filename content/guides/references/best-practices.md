@@ -608,9 +608,17 @@ describe('logged in user', () => {
     cy.logout()
   })
 
-  it('tests', ...)
-  it('more', ...)
-  it('things', ...)
+  it('tests', () => {
+    /*...*/
+  })
+
+  it('more', () => {
+    /*...*/
+  })
+
+  it('things', () => {
+    /*...*/
+  })
 })
 ```
 

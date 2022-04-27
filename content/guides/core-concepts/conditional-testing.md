@@ -187,11 +187,11 @@ it is.
 // so you can deterministically know what it is ahead of time
 cy.visit('https://app.com?campaign=A')
 
-...
+/*...*/
 
 cy.visit('https://app.com?campaign=B')
 
-...
+/*...*/
 
 cy.visit('https://app.com?campaign=C')
 ```
@@ -293,9 +293,9 @@ cy.getCookie('showWizard')
       cy.get('#wizard').contains('Close').click()
     }
   })
-  .get(...)    // more commands here
-  .should(...) // more commands here
-  .click()     // more commands here
+  .get(/*...*/) // more commands here
+  .should(/*...*/) // more commands here
+  .click() // more commands here
 ```
 
 #### Use your server or database:
@@ -314,9 +314,9 @@ cy.request('https://app.com/me')
       cy.get('#wizard').contains('Close').click()
     }
   })
-  .get(...)    // more commands here
-  .should(...) // more commands here
-  .click()     // more commands here
+  .get(/*...*/) // more commands here
+  .should(/*...*/) // more commands here
+  .click() // more commands here
 ```
 
 Alternatively, if you are creating users, it might take less time to create the
@@ -330,16 +330,18 @@ in a way that the data is **always** present and query-able. The data would have
 to be present 100% of the time, otherwise this strategy would not work.
 
 ```js
-cy.get('html').should('have.attr', 'data-wizard').then((wizard) => {
-  if (wizard) {
-    // dismiss the wizard conditionally by enqueuing these
-    // three additional commands
-    cy.get('#wizard').contains('Close').click()
-  }
-})
-.get(...)    // more commands here
-.should(...) // more commands here
-.click()     // more commands here
+cy.get('html')
+  .should('have.attr', 'data-wizard')
+  .then((wizard) => {
+    if (wizard) {
+      // dismiss the wizard conditionally by enqueuing these
+      // three additional commands
+      cy.get('#wizard').contains('Close').click()
+    }
+  })
+  .get(/*...*/) // more commands here
+  .should(/*...*/) // more commands here
+  .click() // more commands here
 ```
 
 ### Element existence
@@ -449,17 +451,17 @@ text is present is identical to element existence above.
 // body has fully rendered without any pending changes
 // to its state
 cy.get('body').then(($body) => {
-    // synchronously ask for the body's text
-    // and do something based on whether it includes
-    // another string
-    if ($body.text().includes('some string')) {
-      // yup found it
-      cy.get(...).should(...)
-    } else {
-      // nope not here
-      cy.get(...).should(...)
-    }
-  })
+  // synchronously ask for the body's text
+  // and do something based on whether it includes
+  // another string
+  if ($body.text().includes('some string')) {
+    // yup found it
+    cy.get(/*...*/).should(/*...*/)
+  } else {
+    // nope not here
+    cy.get(/*...*/).should(/*...*/)
+  }
+})
 ```
 
 ## Error Recovery
@@ -528,12 +530,13 @@ valid.
 ```js
 //! You cannot add error handling to Cypress commands.
 //! This code is just for demonstration purposes
-function keepCalmAndCarryOn () {
-  cy.get(...).should(...).click()
+function keepCalmAndCarryOn() {
+  cy.get(/*...*/).should(/*...*/).click()
 }
 
-cy
-  .get('#wizard').contains('Close').click()
+cy.get('#wizard')
+  .contains('Close')
+  .click()
   .catch((err) => {
     // no problem, i guess the wizard didn't exist
     // or something... no worries

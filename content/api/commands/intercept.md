@@ -240,16 +240,14 @@ cy.intercept({
 ```
 
 ```js
-cy.intercept(
-  {
-    // this RegExp matches any URL beginning with
-    // 'http://api.example.com/' and ending with '/edit' or '/save'
-    url: /^http:\/\/api\.example\.com\/.*\/(edit|save)/,
-    // matching requests must also contain this header
-    headers: {
-      'x-requested-with': 'exampleClient',
-    },
-  }
+cy.intercept({
+  // this RegExp matches any URL beginning with
+  // 'http://api.example.com/' and ending with '/edit' or '/save'
+  url: /^http:\/\/api\.example\.com\/.*\/(edit|save)/,
+  // matching requests must also contain this header
+  headers: {
+    'x-requested-with': 'exampleClient',
+  },
 })
 ```
 
@@ -805,15 +803,15 @@ argument:
 cy.intercept('POST', '/users', (req) => {
   req.reply({
     headers: {
-      Set-Cookie: 'newUserName=Peter Pan;'
+      'Set-Cookie': 'newUserName=Peter Pan;',
     },
     statusCode: 201,
     body: {
-      name: 'Peter Pan'
+      name: 'Peter Pan',
     },
     delay: 10, // milliseconds
     throttleKbps: 1000, // to simulate a 3G connection
-    forceNetworkError: false // default
+    forceNetworkError: false, // default
   })
 })
 
@@ -821,7 +819,7 @@ cy.intercept('POST', '/users', (req) => {
 cy.intercept('GET', '/users', (req) => {
   req.reply({
     statusCode: 200, // default
-    fixture: 'users.json'
+    fixture: 'users.json',
   })
 })
 ```
@@ -907,6 +905,7 @@ cy.intercept('GET', '/users', (req) => {
     // do something when the `before:response` event is triggered
   })
 })
+
 cy.intercept('POST', '/users', (req) => {
   req.on('response', (res) => {
     // do something when the `response` event is triggered
@@ -1075,6 +1074,7 @@ interceptor:
 cy.intercept('/billing', (req) => {
   // dynamically get billing plan name at request-time
   const planName = getPlanName()
+
   // this object will automatically be JSON.stringified and
   // sent as the response
   req.reply({ plan: planName })
@@ -1093,6 +1093,7 @@ of 500ms:
 cy.intercept('/api/users/*', async (req) => {
   // asynchronously retrieve fixture filename at request-time
   const fixtureFilename = await getFixtureFilenameForUrl(req.url)
+
   req.reply({
     fixture: fixtureFilename,
     delay: 500,

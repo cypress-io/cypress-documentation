@@ -305,6 +305,7 @@ details.
 cy.intercept(url, (req) => {
   /* This will be called first! */
 })
+
 cy.intercept(url, (req) => {
   /* This will be called second! */
 })
@@ -316,6 +317,7 @@ cy.intercept(url, (req) => {
 cy.intercept(url, (req) => {
   /* This will be called second! */
 })
+
 cy.intercept(url, (req) => {
   /* This will be called first! */
 })

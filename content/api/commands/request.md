@@ -288,28 +288,26 @@ complicated than that.
 
 ```js
 // a regular ol' function folks
-function req () {
-  cy
-    .request(...)
-    .then((resp) => {
-      // if we got what we wanted
+function req() {
+  cy.request(/*...*/).then((resp) => {
+    // if we got what we wanted
 
-      if (resp.status === 200 && resp.body.ok === true)
-        // break out of the recursive loop
-        return
+    if (resp.status === 200 && resp.body.ok === true)
+      // break out of the recursive loop
+      return
 
-      // else recurse
-      req()
-    })
+    // else recurse
+    req()
+  })
 }
 
 cy
   // do the thing causing the side effect
-  .get('button').click()
+  .get('button')
+  .click()
 
   // now start the requests
   .then(req)
-
 ```
 
 ## Notes

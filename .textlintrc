@@ -1,9 +1,5 @@
 {
   "rules": {
-    "eslint": {
-      "configFile": ".eslintrc-textlint",
-      "ignoreParsingErrors": true
-    },
     "terminology": {
       "defaultTerms": false,
       "terms": [

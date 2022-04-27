@@ -384,6 +384,7 @@ it('adds todos', () => {
   cy.get('.new-todo')
     .type('write E2E tests{enter}')
     .type('add API tests as needed{enter}')
+
   // now confirm the server has 2 todo items
   cy.request('/todos')
     .its('body')

@@ -86,19 +86,21 @@ cy.get('ul li') // this yields us a jquery object
 #### Get the `user` object of the response's `body`
 
 ```javascript
-cy
-  .request(...)
+cy.request(/*...*/)
   .its('body.user')
-  .then(user => ...)
+  .then((user) => {
+    /*...*/
+  })
 ```
 
 alternatively, use destructuring
 
 ```javascript
-cy
-  .request(...)
+cy.request(/*...*/)
   .its('body')
-  .then(({user}) => ...)
+  .then(({ user }) => {
+    /*...*/
+  })
 ```
 
 ### Strings
