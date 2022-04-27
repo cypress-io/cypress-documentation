@@ -192,6 +192,7 @@ and
 
 - [Basic Example (amplify.yml)](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/amplify.yml)
 
-### LayerCI
+### webapp.io
 
 - [cypress-example-layerci](https://github.com/bahmutov/cypress-example-layerci)
+- [Using cypress with webapp.io](https://webapp.io/docs/integrations/cypress)
