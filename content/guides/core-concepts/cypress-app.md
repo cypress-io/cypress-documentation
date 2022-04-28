@@ -36,7 +36,7 @@ There are some places in the Command Log that display a link to the relevant
 file where the code is located. Clicking on this link will open the file in your
 [preferred file opener](/guides/tooling/IDE-integration#File-Opener-Preference).
 
-<DocsImage src="/img/guides/cypress-app/v10/open-file-in-IDE.gif" alt="Open file your IDE"></DocsImage>
+<DocsImage src="/img/guides/cypress-app/v10/open-file-in-IDE.gif" alt="Open file in your IDE"></DocsImage>
 
 ### Time Traveling
 

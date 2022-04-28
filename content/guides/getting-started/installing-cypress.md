@@ -539,7 +539,7 @@ are recommended), but on the page that lets you enable extra settings, be sure
 to select "Disable access control" which is required as WSL2 has its own IP
 address, which changes often.
 
-<DocsImage src="/img/guides/vcxsrv-extra-settings.png" alt="Disable access control in vcxsrv"></DocsImage>
+<DocsImage src="/img/guides/install/vcxsrv-extra-settings.png" alt="Disable access control in vcxsrv"></DocsImage>
 
 In your `.bashrc` (or equivalent such as `.zshrc`) set the `DISPLAY` environment
 variable.
@@ -583,13 +583,13 @@ you don't know it).
 Go to Control Panel > System and Security > Windows Defender Firewall > Inbound
 Rules > New Rule.
 
-<DocsImage src="/img/guides/windows-firewall-disable-vcxsrv.png" alt="Add rule to allow connections for vcxsrv"></DocsImage>
+<DocsImage src="/img/guides/install/windows-firewall-disable-vcxsrv.png" alt="Add rule to allow connections for vcxsrv"></DocsImage>
 
 Select Program and click on next. On the This program path, browse and select
 path to VcxSrv. On the next page select allow the connection and click next. On
 the next page, select all three options (Domain, Private, Public).
 
-<DocsImage src="/img/guides/rule-application-selection.png" alt="Select inbound rule application cases for vcxsrv"></DocsImage>
+<DocsImage src="/img/guides/install/rule-application-selection.png" alt="Select inbound rule application cases for vcxsrv"></DocsImage>
 
 Give the rule a suitable name and description and click finish. WSL2 should now
 be able to open a GUI from shell.

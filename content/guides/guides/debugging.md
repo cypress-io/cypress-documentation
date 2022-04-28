@@ -138,7 +138,7 @@ The current subject that is yielded by the [`cy.get()`](/api/commands/get) is
 exposed as the variable `subject` within your Developer Tools so that you can
 interact with it in the console.
 
-<DocsImage src="/img/guides/debugging-subject.png" alt="Debugging Subject" ></DocsImage>
+<DocsImage src="/img/guides/debugging/debugging-subject.png" alt="Debugging Subject"></DocsImage>
 
 Use [`.debug()`](/api/commands/debug) to quickly inspect any (or many!) part(s)
 of your application during the test. You can attach it to any Cypress chain of

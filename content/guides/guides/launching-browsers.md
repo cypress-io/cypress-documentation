@@ -244,8 +244,6 @@ return findBrowser().then((browser) => {
 
 :::
 
-<!-- <DocsImage src="/img/guides/launching-browsers/brave-browser.png" alt="List of browsers includes Brave browser"></DocsImage> -->
-
 Once selected, the Brave browser is detected using the same approach as any
 other browser of the `chromium` family.
 

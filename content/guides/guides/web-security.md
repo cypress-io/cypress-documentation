@@ -379,7 +379,7 @@ Disabling web security is only supported in Chrome-based browsers. Settings in
 `chromeWebSecurity` will have no effect in other browsers. We will log a warning
 in this case.
 
-<DocsImage src="/img/guides/chrome-web-security-stdout-warning.jpg" alt='chromeWebSecurity warning in stdout'></DocsImage>
+<DocsImage src="/img/guides/web-security/chrome-web-security-stdout-warning.jpg" alt='chromeWebSecurity warning in stdout'></DocsImage>
 
 If you rely on disabling web security, you will not be able to run tests on
 browsers that do not support this feature.

@@ -525,7 +525,7 @@ Below is an example where the number value is set after a delay:
 </script>
 ```
 
-<DocsImage src="/img/guides/retry-ability/random-number.gif" alt="Random number"></DocsImage>
+<DocsImage src="/img/guides/retry-ability/v10/random-number.gif" alt="Random number"></DocsImage>
 
 #### <Icon name="exclamation-triangle" color="red"></Icon> Incorrectly waiting for values
 

@@ -185,7 +185,7 @@ The Node version is used in Cypress to:
 - Execute code in the
   [pluginsFile](/guides/references/configuration#Folders-Files).
 
-<DocsImage src="/img/guides/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Cypress App" ></DocsImage>
+<DocsImage src="/img/guides/configuration/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Cypress App"></DocsImage>
 
 ### Experiments
 
@@ -534,9 +534,10 @@ For instance given a URL: `https://google.com/search?q=cypress`
 
 When Cypress blocks a request made to a matching host, it will automatically
 send a `503` status code. As a convenience it also sets a
-`x-cypress-matched-blocked-host` header so you can see which rule it matched.
+`x-cypress-matched-blacklisted-host` header so you can see which rule it
+matched.
 
-<DocsImage src="/img/guides/references/v10/blocked-host.png" alt="Network tab of dev tools with analytics.js request selected and the response header highlighted " ></DocsImage>
+<DocsImage src="/img/guides/references/v10/blocked-host.png" alt="Network tab of dev tools with analytics.js request selected and the response header highlighted"></DocsImage>
 
 ### devServer
 
@@ -635,7 +636,7 @@ interact with the browser.
 Because GC adds additional time to the overall run, we've added the amount of
 time this routine has taken to the bottom of the Command Log in the Cypress App.
 
-<DocsImage src="/img/guides/firefox-gc-interval-in-command-log.jpg" alt="GC duration shown"></DocsImage>
+<DocsImage src="/img/guides/configuration/firefox-gc-interval-in-command-log.jpg" alt="GC duration shown"></DocsImage>
 
 #### Configuration
 
