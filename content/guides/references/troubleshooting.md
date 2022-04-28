@@ -419,7 +419,7 @@ cypress run
 
 In the resulting output, processes are grouped by their name.
 
-<DocsImage src="/img/guides/troubleshooting-cypress-process-profiler-cli.jpg" alt="Process printout of Cypress in CLI" ></DocsImage>
+<DocsImage src="/img/guides/troubleshooting/troubleshooting-cypress-process-profiler-cli.jpg" alt="Process printout of Cypress in CLI"></DocsImage>
 
 By default, process information is collected and summarized is printed once
 every 10 seconds. You can override this interval by setting the
@@ -452,7 +452,7 @@ You can include the plugin
 tests. This plugin writes the list of Cypress commands to the terminal as well
 as a JSON file if a test fails.
 
-<DocsImage src="/img/api/debug/failed-log.png" alt="cypress-failed-log terminal output" ></DocsImage>
+<DocsImage src="/img/api/debug/failed-log.png" alt="cypress-failed-log terminal output"></DocsImage>
 
 ## Hacking on Cypress
 
@@ -657,7 +657,7 @@ edit.
 
 You can change anything in the JavaScript code:
 
-<DocsImage src="/img/guides/source-code.png" alt="Source code of the Cypress App in a text editor" ></DocsImage>
+<DocsImage src="/img/guides/troubleshooting/source-code.png" alt="Source code of the Cypress App in a text editor" ></DocsImage>
 
 When finished, if necessary, remove the edited Cypress App version and reinstall
 the Cypress official version to get back to the official released code.

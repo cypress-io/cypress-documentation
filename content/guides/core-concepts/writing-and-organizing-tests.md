@@ -828,7 +828,7 @@ would also fail due to the `beforeEach` hook failure.
 If we collapse the test commands, we can see the empty box marking the skipped
 test "adds 2 todos".
 
-<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-skipped-tests.png" alt="Cypress App showing one skipped test"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-skipped-test.png" alt="Cypress App showing one skipped test"></DocsImage>
 
 The tests that were meant to be executed but were skipped due to some run-time
 problem are marked "skipped" by Cypress.

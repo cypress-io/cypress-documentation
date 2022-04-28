@@ -218,7 +218,7 @@ cy.get('button').click({ position: 'topLeft' })
 The coordinates we fired the event at will generally be available when clicking
 the command in the [Command Log](/guides/core-concepts/cypress-app#Command-Log).
 
-<DocsImage src="/img/guides/core-concepts/coords.png" alt="Event coordinates"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/coords.png" alt="Event coordinates"></DocsImage>
 
 Additionally we'll display a red "hitbox" - which is a dot indicating the
 coordinates of the event.
