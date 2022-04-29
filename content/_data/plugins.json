@@ -876,6 +876,13 @@
           "badge": "community"
         },
         {
+          "name": "viswiz-cypress",
+          "description": "Visual regression testing with VisWiz.io",
+          "link": "https://github.com/viswiz-io/viswiz-cypress",
+          "keywords": ["visual regression", "testing service", "screenshots", "image-diff"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-plugin-snapshots",
           "description": "Plugin for snapshot tests in Cypress. Same API as Jest, but with graphical interface for reviewing and approving changes.",
           "link": "https://github.com/meinaart/cypress-plugin-snapshots",
