@@ -1525,22 +1525,22 @@ const { mount } = require('@cypress/react')
 describe('Component teardown behavior', () => {
   it('modifies the document and mounts a component', () => {
     // HTML unrelated to the component is mounted
-    Cypress.$('body').append('<div id="some-html"/>')
+    Cypress.$('body').append('<div data-cy="some-html"/>')
 
     // A component is mounted
-    mount(<Button id="my-button"></Button>)
+    mount(<Button data-cy="my-button"></Button>)
 
-    cy.get('#some-html').should('exist')
-    cy.get('#my-button').should('exist')
+    cy.get('[data-cy="some-html"]').should('exist')
+    cy.get('[data-cy="my-button"]').should('exist')
   })
 
   it('cleans up any HTML', () => {
     // The component is automatically unmounted by Cypress
-    cy.get('#my-button').should('not.exist')
+    cy.get('[data-cy="my-button"]').should('not.exist')
 
     // The HTML left over from the previous test has been cleaned up
     // This was done automatically by Cypress
-    cy.get('#some-html').should('not.exist')
+    cy.get('[data-cy="some-html"]').should('not.exist')
   })
 })
 ```
@@ -1554,21 +1554,21 @@ const { mount } = require('@cypress/react')
 describe('Component teardown behavior', () => {
   it('modifies the document and mounts a component', () => {
     // HTML unrelated to the component is mounted
-    Cypress.$('body').append('<div id="some-html"/>')
+    Cypress.$('body').append('<div data-cy="some-html"/>')
 
     // A component is mounted
-    mount(<Button id="my-button"></Button>)
+    mount(<Button data-cy="my-button"></Button>)
 
-    cy.get('#some-html').should('exist')
-    cy.get('#my-button').should('exist')
+    cy.get('[data-cy="some-html"]').should('exist')
+    cy.get('[data-cy="my-button"]').should('exist')
   })
 
   it('only cleans up *components* between tests', () => {
     // The component is automatically unmounted by Cypress
-    cy.get('#my-button').should('not.exist')
+    cy.get('[data-cy="my-button"]').should('not.exist')
 
     // The HTML left over from the previous test should be manually cleared
-    cy.get('#some-html').should('not.exist')
+    cy.get('[data-cy="some-html"]').should('not.exist')
   })
 })
 ```
@@ -1815,11 +1815,11 @@ visible
 
 ```js
 it('test', () => {
-  // the .modal element is removed from the DOM on click
-  cy.get('.modal').find('.close').click()
+  // the data-cy="modal" element is removed from the DOM on click
+  cy.get('[data-cy="modal"]').find('.close').click()
   // assertions below pass in < 6.0, but properly fail in 6.0+
-  cy.get('.modal').should('not.be.visible')
-  cy.get('.modal').should('not.contain', 'Upgrade')
+  cy.get('[data-cy="modal"]').should('not.be.visible')
+  cy.get('[data-cy="modal"]').should('not.contain', 'Upgrade')
 })
 ```
 
@@ -1828,10 +1828,10 @@ exist
 
 ```js
 it('test', () => {
-  // the .modal element is removed from the DOM on click
-  cy.get('.modal').find('.close').click()
+  // the data-cy="modal" element is removed from the DOM on click
+  cy.get('data-cy="modal"').find('.close').click()
   // we should instead assert that the element doesn't exist
-  cy.get('.modal').should('not.exist')
+  cy.get('data-cy="modal"').should('not.exist')
 })
 ```
 
