@@ -322,7 +322,8 @@ cy.get('[data-testid=completed]').should(
 ```
 
 ```javascript
-// retry while accordion css has the "display: none" property
+// retry while accordion css has the
+// "display: none" property
 cy.get('[data-testid=accordion]').should('not.have.css', 'display', 'none')
 ```
 
@@ -382,7 +383,8 @@ tests".
 cy.get('[data-testid=todos]').should('have.length', 2)
 cy.get('[data-testid=new-todo]').type('Write tests{enter}')
 
-// using a positive assertion to check the exact number of items
+// using a positive assertion to check the
+// exact number of items
 cy.get('[data-testid=todos]').should('have.length', 3)
 ```
 
@@ -401,7 +403,8 @@ pass when the application behaves in multiple unexpected ways:
 cy.get('[data-testid=todos]').should('have.length', 2)
 cy.get('[data-testid=new-todo]').type('Write tests{enter}')
 
-// using negative assertion to check it's not a number of items
+// using negative assertion to check it's
+// not a number of items
 cy.get('[data-testid=todos]').should('not.have.length', 2)
 ```
 

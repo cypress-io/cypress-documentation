@@ -437,16 +437,16 @@ sent data as a query string in the URL. Although we're mocking the response, we
 can still verify that our application sends the correct request.
 
 ```javascript
-// any request to "/search/*" endpoint will automatically receive
-// an array with two book objects
+// any request to "/search/*" endpoint will
+// automatically receive an array with two book objects
 cy.intercept('/search/*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as(
   'getSearch'
 )
 
 cy.get('[data-testid=autocomplete]').type('Book')
 
-// this yields us the interception cycle object which includes
-// fields for the request and response
+// this yields us the interception cycle object
+// which includes fields for the request and response
 cy.wait('@getSearch').its('request.url').should('include', '/search?query=Book')
 
 cy.get('[data-testid=results]')

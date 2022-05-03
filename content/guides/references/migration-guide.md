@@ -1815,7 +1815,7 @@ visible
 
 ```js
 it('test', () => {
-  // the data-cy="modal" element is removed from the DOM on click
+  // the modal element is removed from the DOM on click
   cy.get('[data-cy="modal"]').find('.close').click()
   // assertions below pass in < 6.0, but properly fail in 6.0+
   cy.get('[data-cy="modal"]').should('not.be.visible')
@@ -1828,7 +1828,7 @@ exist
 
 ```js
 it('test', () => {
-  // the data-cy="modal" element is removed from the DOM on click
+  // the modal element is removed from the DOM on click
   cy.get('data-cy="modal"').find('.close').click()
   // we should instead assert that the element doesn't exist
   cy.get('data-cy="modal"').should('not.exist')

@@ -111,7 +111,7 @@ proxy.
 
 <strong class="alert-header">Best Practice</strong>
 
-The recommended approach is to install Cypress with `npm` because :
+The recommended approach is to install Cypress with `npm` because:
 
 - Cypress is versioned like any other dependency.
 - It simplifies running Cypress in
