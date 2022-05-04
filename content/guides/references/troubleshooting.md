@@ -8,8 +8,7 @@ Cypress itself. In this situation, we recommend checking these support resources
 
 ## Support channels
 
-- Connect with our community in
-  [Discord](https://discord.com/channels/755913899261296641/763114122065739818)
+- Connect with our community in [Discord](https://discord.gg/ncdA3Jz63n)
 - Search existing [GitHub issues](https://github.com/cypress-io/cypress/issues)
 - Search this documentation (search is in the top right) 😉
 - Search [Stack Overflow](https://stackoverflow.com/questions/tagged/cypress)
