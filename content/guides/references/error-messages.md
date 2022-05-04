@@ -213,7 +213,7 @@ We can prevent Cypress from throwing this error by rewriting our test code.
 
 ```javascript
 cy.get('button').click()
-cy.get('[data-testid=parent]')
+cy.get('[data-testid="parent"]')
 ```
 
 The above example is an oversimplification. Let's look at a more complex
@@ -313,7 +313,7 @@ element there are a few options:
   continuously retry.
 
 ```javascript
-cy.get('[data-testid=modal-close]').click({ waitForAnimations: false })
+cy.get('[data-testid="modal-close"]').click({ waitForAnimations: false })
 ```
 
 You can globally disable animation error checking, or increase the threshold by

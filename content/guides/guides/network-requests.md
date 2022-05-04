@@ -359,14 +359,14 @@ cy.intercept('/search*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as(
 // our autocomplete field is throttled
 // meaning it only makes a request after
 // 500ms from the last keyPress
-cy.get('[data-testid=autocomplete]').type('Book')
+cy.get('[data-testid="autocomplete"]').type('Book')
 
 // wait for the request + response
 // thus insulating us from the
 // throttled request
 cy.wait('@getSearch')
 
-cy.get('[data-testid=results]')
+cy.get('[data-testid="results"]')
   .should('contain', 'Book 1')
   .and('contain', 'Book 2')
 ```
@@ -443,13 +443,13 @@ cy.intercept('/search/*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as(
   'getSearch'
 )
 
-cy.get('[data-testid=autocomplete]').type('Book')
+cy.get('[data-testid="autocomplete"]').type('Book')
 
 // this yields us the interception cycle object
 // which includes fields for the request and response
 cy.wait('@getSearch').its('request.url').should('include', '/search?query=Book')
 
-cy.get('[data-testid=results]')
+cy.get('[data-testid="results"]')
   .should('contain', 'Book 1')
   .and('contain', 'Book 2')
 ```

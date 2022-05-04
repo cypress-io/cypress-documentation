@@ -39,11 +39,11 @@ it('creates 2 items', () => {
   cy.focused() // command
     .should('have.class', 'new-todo') // assertion
 
-  cy.get('[data-testid=new-todo]') // command
+  cy.get('[data-testid="new-todo"]') // command
     .type('todo A{enter}') // command
     .type('todo B{enter}') // command
 
-  cy.get('[data-testid=todo-list] li') // command
+  cy.get('[data-testid="todo-list"] li') // command
     .should('have.length', 2) // assertion
 })
 ```
@@ -56,7 +56,7 @@ commands and assertions with passing assertions showing in green.
 Let's look at the last command and assertion pair:
 
 ```javascript
-cy.get('[data-testid=todo-list] li') // command
+cy.get('[data-testid="todo-list"] li') // command
   .should('have.length', 2) // assertion
 ```
 
@@ -107,7 +107,7 @@ app.TodoModel.prototype.addTodo = function (title) {
 }
 ```
 
-My test still passes! The last `cy.get('[data-testid=todo-list]')` and the
+My test still passes! The last `cy.get('[data-testid="todo-list"]')` and the
 assertion `should('have.length', 2)` are clearly showing the spinning
 indicators, meaning Cypress is requerying for them.
 
@@ -131,7 +131,7 @@ function with 2 [`expect`](/guides/references/assertions#BDD-Assertions)
 assertions inside of it.
 
 ```javascript
-cy.get('[data-testid=todo-list] li') // command
+cy.get('[data-testid="todo-list"] li') // command
   .should('have.length', 2) // assertion
   .and(($li) => {
     // 2 more assertions
@@ -192,7 +192,7 @@ even without any attached assertions until it finds an element with the given
 index in the previously yielded list of elements.
 
 ```javascript
-cy.get('[data-testid=todo-list] li') // command
+cy.get('[data-testid="todo-list"] li') // command
   .should('have.length', 2) // assertion
   .eq(3) // command
 ```
@@ -238,7 +238,7 @@ time. For example:
 
 ```javascript
 // we've modified the timeout which affects default + added assertions
-cy.get('[data-testid=mobile-nav]', { timeout: 10000 })
+cy.get('[data-testid="mobile-nav"]', { timeout: 10000 })
   .should('be.visible')
   .and('contain', 'Home')
 ```
@@ -256,7 +256,7 @@ since it will spend 0 milliseconds retrying.
 ```javascript
 // check synchronously that the element does not exist (no retry)
 // for example just after a server-side render
-cy.get('[data-testid=ssr-error]', { timeout: 0 }).should('not.exist')
+cy.get('[data-testid="ssr-error"]', { timeout: 0 }).should('not.exist')
 ```
 
 ## Only the last command is retried
@@ -277,11 +277,15 @@ cy.mount(<Todos />)
 it('adds two items', () => {
   __VISIT_MOUNT_PLACEHOLDER__
 
-  cy.get('[data-testid=new-todo]').type('todo A{enter}')
-  cy.get('[data-testid=todo-list] li').find('label').should('contain', 'todo A')
+  cy.get('[data-testid="new-todo"]').type('todo A{enter}')
+  cy.get('[data-testid="todo-list"] li')
+    .find('label')
+    .should('contain', 'todo A')
 
-  cy.get('[data-testid=new-todo]').type('todo B{enter}')
-  cy.get('[data-testid=todo-list] li').find('label').should('contain', 'todo B')
+  cy.get('[data-testid="new-todo"]').type('todo B{enter}')
+  cy.get('[data-testid="todo-list"] li')
+    .find('label')
+    .should('contain', 'todo B')
 })
 ```
 
@@ -339,7 +343,7 @@ interesting - there was only one item at that moment.
 
 <DocsImage src="/img/guides/retry-ability/v10/second-get-li.png" alt="Second get li"></DocsImage>
 
-During the test, the `cy.get('[data-testid=todo-list] li')` command quickly
+During the test, the `cy.get('[data-testid="todo-list"] li')` command quickly
 found the rendered `<li>` item - and that item was the first and only "todo A"
 item. Our application was waiting 100ms before appending the second item "todo
 B" to the list. By the time the second item was added, Cypress had already
@@ -353,7 +357,7 @@ the passing test.
 <DocsImage src="/img/guides/retry-ability/v10/two-items.png" alt="Two items"></DocsImage>
 
 When the web application runs without the delay, it gets its items into the DOM
-before the Cypress command `cy.get('[data-testid=todo-list] li')` runs. After
+before the Cypress command `cy.get('[data-testid="todo-list"] li')` runs. After
 the `cy.get()` returns 2 items, the `.find()` command just has to find the right
 label. Great.
 
@@ -365,8 +369,8 @@ For a variety of implementation reasons, Cypress commands **only** retry the
 **last command** before the assertion. In our test:
 
 ```javascript
-cy.get('[data-testid=new-todo]').type('todo B{enter}')
-cy.get('[data-testid=todo-list] li') // queries immediately, finds 1 <li>
+cy.get('[data-testid="new-todo"]').type('todo B{enter}')
+cy.get('[data-testid="todo-list"] li') // queries immediately, finds 1 <li>
   .find('label') // retried, retried, retried with 1 <li>
   .should('contain', 'todo B') // never succeeds with only 1st <li>
 ```
@@ -380,8 +384,8 @@ command is used for assertion retries, we can fix this test for good.
 
 The first solution we recommend is to avoid unnecessarily splitting commands
 that query elements. Instead of
-`cy.get('[data-testid=todo-list] li').find('label')` we can combine two separate
-queries into one - forcing the combined query to be retried.
+`cy.get('[data-testid="todo-list"] li').find('label')` we can combine two
+separate queries into one - forcing the combined query to be retried.
 
 :::visit-mount-test-example
 
@@ -397,12 +401,12 @@ cy.mount(<Todos />)
 it('adds two items', () => {
   __VISIT_MOUNT_PLACEHOLDER__
 
-  cy.get('[data-testid=new-todo]').type('todo A{enter}')
-  cy.get('[data-testid=todo-list] li label') // 1 query command
+  cy.get('[data-testid="new-todo"]').type('todo A{enter}')
+  cy.get('[data-testid="todo-list"] li label') // 1 query command
     .should('contain', 'todo A') // assertion
 
-  cy.get('[data-testid=new-todo]').type('todo B{enter}')
-  cy.get('[data-testid=todo-list] li label') // 1 query command
+  cy.get('[data-testid="new-todo"]').type('todo B{enter}')
+  cy.get('[data-testid="todo-list"] li label') // 1 query command
     .should('contain', 'todo B') // assertion
 })
 ```
@@ -426,12 +430,12 @@ list elements when the second "todo B" is added to the DOM.
 command.
 
 ```javascript
-cy.get('[data-testid=new-todo]').type('todo A{enter}')
-cy.contains('[data-testid=todo-list] li', 'todo A')
-cy.get('[data-testid=new-todo]').type('todo B{enter}')
+cy.get('[data-testid="new-todo"]').type('todo A{enter}')
+cy.contains('[data-testid="todo-list"] li', 'todo A')
+cy.get('[data-testid="new-todo"]').type('todo B{enter}')
 // you can use a regular expression
 // to match the text exactly
-cy.contains('[data-testid=todo-list] li', /^todo B$/)
+cy.contains('[data-testid="todo-list"] li', /^todo B$/)
 ```
 
 </Alert>
@@ -480,14 +484,14 @@ cy.mount(<Todos />)
 it('adds two items', () => {
   __VISIT_MOUNT_PLACEHOLDER__
 
-  cy.get('[data-testid=new-todo]').type('todo A{enter}')
-  cy.get('[data-testid=todo-list] li') // command
+  cy.get('[data-testid="new-todo"]').type('todo A{enter}')
+  cy.get('[data-testid="todo-list"] li') // command
     .should('have.length', 1) // assertion
     .find('label') // command
     .should('contain', 'todo A') // assertion
 
-  cy.get('[data-testid=new-todo]').type('todo B{enter}')
-  cy.get('[data-testid=todo-list] li') // command
+  cy.get('[data-testid="new-todo"]').type('todo B{enter}')
+  cy.get('[data-testid="todo-list"] li') // command
     .should('have.length', 2) // assertion
     .find('label') // command
     .should('contain', 'todo B') // assertion
@@ -498,7 +502,7 @@ it('adds two items', () => {
 
 <DocsImage src="/img/guides/retry-ability/v10/alternating-commands-assertions.png" alt="Passing test"></DocsImage>
 
-The test passes, because the second `cy.get('[data-testid=todo-list] li')` is
+The test passes, because the second `cy.get('[data-testid="todo-list"] li')` is
 retried with its own assertion now `.should('have.length', 2)`. Only after
 successfully finding two `<li>` elements, the command `.find('label')` and its
 assertion starts, and by now, the item with the correct "todo B" label has been
@@ -535,7 +539,7 @@ following values, noted in the comments, before failing.
 
 ```javascript
 // WRONG: this test will not work as intended
-cy.get('[data-testid=random-number]') // <div>🎁</div>
+cy.get('[data-testid="random-number"]') // <div>🎁</div>
   .invoke('text') // "🎁"
   .then(parseFloat) // NaN
   .should('be.gte', 1) // fails
@@ -554,7 +558,7 @@ We need to retry getting the element, invoking the `text()` method, calling the
 this using the `.should(callbackFn)`.
 
 ```javascript
-cy.get('[data-testid=random-number]').should(($div) => {
+cy.get('[data-testid="random-number"]').should(($div) => {
   // all the code inside here will retry
   // until it passes or times out
   const n = parseFloat($div.text())

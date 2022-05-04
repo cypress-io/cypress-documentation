@@ -392,7 +392,7 @@ describe('My First Test', () => {
 
     // Get an input, type into it and verify
     // that the value has been updated
-    cy.get('[data-testid=action-email]')
+    cy.get('[data-testid="action-email"]')
       .type('fake@email.com')
       .should('have.value', 'fake@email.com')
   })
@@ -416,9 +416,10 @@ Or in the Given, When, Then syntax:
 
 > 1. Given a user visits `https://example.cypress.io`
 > 2. When they click the link labeled `type`
-> 3. And they type "fake@email.com" into the `[data-testid=action-email]` input
+> 3. And they type "fake@email.com" into the `[data-testid="action-email"]`
+>    input
 > 4. Then the URL should include `/commands/actions`
-> 5. And the `[data-testid=action-email]` input has "fake@email.com" as its
+> 5. And the `[data-testid="action-email"]` input has "fake@email.com" as its
 >    value
 
 And hey, this is a very clean test! We didn't have to say anything about _how_

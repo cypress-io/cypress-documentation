@@ -434,11 +434,11 @@ describe('my form', () => {
   __VISIT_MOUNT_PLACEHOLDER__
 
   it('requires first name', () => {
-    cy.get('[data-testid=first-name]').type('Johnny')
+    cy.get('[data-testid="first-name"]').type('Johnny')
   })
 
   it('requires last name', () => {
-    cy.get('[data-testid=last-name]').type('Appleseed')
+    cy.get('[data-testid="last-name"]').type('Appleseed')
   })
 
   it('can submit a valid form', () => {
@@ -477,10 +477,10 @@ describe('my form', () => {
     __VISIT_MOUNT_PLACEHOLDER__
 
     cy.log('filling out first name') // if you really need this
-    cy.get('[data-testid=first-name]').type('Johnny')
+    cy.get('[data-testid="first-name"]').type('Johnny')
 
     cy.log('filling out last name') // if you really need this
-    cy.get('[data-testid=last-name]').type('Appleseed')
+    cy.get('[data-testid="last-name"]').type('Appleseed')
 
     cy.log('submitting form') // if you really need this
     cy.get('form').submit()
@@ -510,15 +510,15 @@ cy.mount(<NewUser />)
 describe('my form', () => {
   beforeEach(() => {
     __VISIT_MOUNT_PLACEHOLDER__
-    cy.get('[data-testid=first-name]').type('Johnny')
-    cy.get('[data-testid=last-name]').type('Appleseed')
+    cy.get('[data-testid="first-name"]').type('Johnny')
+    cy.get('[data-testid="last-name"]').type('Appleseed')
   })
 
   it('displays form validation', () => {
     // clear out first name
-    cy.get('[data-testid=first-name]').clear()
+    cy.get('[data-testid="first-name"]').clear()
     cy.get('form').submit()
-    cy.get('[data-testid=errors]').should('contain', 'First name is required')
+    cy.get('[data-testid="errors"]').should('contain', 'First name is required')
   })
 
   it('can submit a valid form', () => {
@@ -558,11 +558,11 @@ We've seen many users writing this kind of code:
 describe('my form', () => {
   beforeEach(() => {
     cy.visit('/users/new')
-    cy.get('[data-testid=first-name]').type('johnny')
+    cy.get('[data-testid="first-name"]').type('johnny')
   })
 
   it('has validation attr', () => {
-    cy.get('[data-testid=first-name]').should(
+    cy.get('[data-testid="first-name"]').should(
       'have.attr',
       'data-validation',
       'required'
@@ -570,11 +570,11 @@ describe('my form', () => {
   })
 
   it('has active class', () => {
-    cy.get('[data-testid=first-name]').should('have.class', 'active')
+    cy.get('[data-testid="first-name"]').should('have.class', 'active')
   })
 
   it('has formatted first name', () => {
-    cy.get('[data-testid=first-name]')
+    cy.get('[data-testid="first-name"]')
       // capitalized first letter
       .should('have.value', 'Johnny')
   })
@@ -613,7 +613,7 @@ describe('my form', () => {
   })
 
   it('validates and formats first name', () => {
-    cy.get('[data-testid=first-name]')
+    cy.get('[data-testid="first-name"]')
       .type('johnny')
       .should('have.attr', 'data-validation', 'required')
       .and('have.class', 'active')
@@ -886,7 +886,7 @@ aliased route.
 cy.intercept('GET', '/users', [{ name: 'Maggy' }, { name: 'Joan' }]).as(
   'getUsers'
 )
-cy.get('[data-testid=fetch-users]').click()
+cy.get('[data-testid="fetch-users"]').click()
 cy.wait('@getUsers') // <--- wait explicitly for this route to finish
 cy.get('table tr').should('have.length', 2)
 ```
