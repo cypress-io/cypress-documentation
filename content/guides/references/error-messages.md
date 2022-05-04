@@ -117,8 +117,8 @@ correctly.
 If you are purposefully writing commands outside of a test, there is probably a
 better way to accomplish what you're trying to do. Read through the
 [Examples](/examples/examples/recipes),
-[chat with someone in our chat](https://gitter.im/cypress-io/cypress), or
-[open an issue](https://github.com/cypress-io/cypress/issues/new/choose).
+[chat with someone in our chat](https://discord.com/channels/755913899261296641/763114122065739818),
+or [open an issue](https://github.com/cypress-io/cypress/issues/new/choose).
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy...()` failed because the element you are chaining off of has become detached or removed from the dom
 
