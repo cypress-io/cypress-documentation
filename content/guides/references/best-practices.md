@@ -102,14 +102,14 @@ Given a button that we want to interact with:
 
 Let's investigate how we could target it:
 
-| Selector                              | Recommended                                                        | Notes                                                           |
-| ------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------------- |
-| `cy.get('button').click()`            | <Icon name="exclamation-triangle" color="red"></Icon> Never        | Worst - too generic, no context.                                |
-| `cy.get('.btn.btn-large').click()`    | <Icon name="exclamation-triangle" color="red"></Icon> Never        | Bad. Coupled to styling. Highly subject to change.              |
-| `cy.get('#main').click()`             | <Icon name="exclamation-triangle" color="orange"></Icon> Sparingly | Better. But still coupled to styling or JS event listeners.     |
-| `cy.get('[name=submission]').click()` | <Icon name="exclamation-triangle" color="orange"></Icon> Sparingly | Coupled to the `name` attribute which has HTML semantics.       |
-| `cy.contains('Submit').click()`       | <Icon name="check-circle" color="green"></Icon> Depends            | Much better. But still coupled to text content that may change. |
-| `cy.get('[data-cy=submit]').click()`  | <Icon name="check-circle" color="green"></Icon> Always             | Best. Isolated from all changes.                                |
+| Selector                                | Recommended                                                        | Notes                                                           |
+| --------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------------- |
+| `cy.get('button').click()`              | <Icon name="exclamation-triangle" color="red"></Icon> Never        | Worst - too generic, no context.                                |
+| `cy.get('.btn.btn-large').click()`      | <Icon name="exclamation-triangle" color="red"></Icon> Never        | Bad. Coupled to styling. Highly subject to change.              |
+| `cy.get('#main').click()`               | <Icon name="exclamation-triangle" color="orange"></Icon> Sparingly | Better. But still coupled to styling or JS event listeners.     |
+| `cy.get('[name="submission"]').click()` | <Icon name="exclamation-triangle" color="orange"></Icon> Sparingly | Coupled to the `name` attribute which has HTML semantics.       |
+| `cy.contains('Submit').click()`         | <Icon name="check-circle" color="green"></Icon> Depends            | Much better. But still coupled to text content that may change. |
+| `cy.get('[data-cy="submit"]').click()`  | <Icon name="check-circle" color="green"></Icon> Always             | Best. Isolated from all changes.                                |
 
 Targeting the element above by `tag`, `class` or `id` is very volatile and
 highly subject to change. You may swap out the element, you may refactor CSS and
