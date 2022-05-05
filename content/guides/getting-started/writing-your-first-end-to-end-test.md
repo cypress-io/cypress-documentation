@@ -46,8 +46,6 @@ about how we do this in [Launching Browsers](/guides/guides/launching-browsers).
 
 </Alert>
 
-<DocsVideo src="/img/snippets/empty-file-30fps.mp4"></DocsVideo>
-
 We are now officially in the [Cypress App](/guides/core-concepts/cypress-app).
 This is where we will spend the majority of your time testing.
 
@@ -136,8 +134,6 @@ describe('My First Test', () => {
 The [Cypress App](/guides/core-concepts/cypress-app) gives you a visual
 structure of suites, tests, and assertions. Soon you'll also see commands, page
 events, network requests, and more.
-
-<DocsVideo src="/img/snippets/first-test-30fps.mp4"></DocsVideo>
 
 <Alert type="info">
 

@@ -94,8 +94,6 @@ to see the number of attempts made in the
 [Command Log](/guides/core-concepts/cypress-app#Command-Log) and expand each
 attempt for review and debugging if desired.
 
-<DocsVideo src="/img/guides/test-retries/attempt-expand-collapse-time-travel.mp4"></DocsVideo>
-
 ## Configure Test Retries
 
 ### Global Configuration
