@@ -250,32 +250,36 @@ cy.get('textarea').should('have.value', 'foo bar baz')
 
 ```javascript
 // assert the element's text content is exactly the given text
-cy.get('#user-name').should('have.text', 'Joe Smith')
+cy.get('[data-testid="user-name"]').should('have.text', 'Joe Smith')
 // assert the element's text includes the given substring
-cy.get('#address').should('include.text', 'Atlanta')
+cy.get('[data-testid="address"]').should('include.text', 'Atlanta')
 // retry until this span does not contain 'click me'
 cy.get('a').parent('span.help').should('not.contain', 'click me')
 // the element's text should start with "Hello"
-cy.get('#greeting')
+cy.get('[data-testid="greeting"]')
   .invoke('text')
   .should('match', /^Hello/)
-// tip: use cy.contains to find element with its text
+// use cy.contains to find an element with its text
 // matching the given regular expression
-cy.contains('#a-greeting', /^Hello/)
+cy.contains('[data-testid="greeting"]', /^Hello/)
 ```
 
-**Tip:** read about assertions against a text with non-breaking space entities
-in
+<Alert type="info">
+
+**Tip:** read about assertions against text with non-breaking space entities in
 [How do I get an element's text contents?](/faq/questions/using-cypress-faq#How-do-I-get-an-element-s-text-contents)
+
+</Alert>
 
 ### Visibility
 
 ```javascript
-// retry until the button with id "form-submit" is visible
-cy.get('button#form-submit').should('be.visible')
+// retry until the element with
+// data-testid "form-submit" is visible
+cy.get('[data-testid="form-submit"]').should('be.visible')
 // retry until the list item with
 // text "write tests" is visible
-cy.contains('.todo li', 'write tests').should('be.visible')
+cy.contains('[data-testid="todo"] li', 'write tests').should('be.visible')
 ```
 
 **Note:** if there are multiple elements, the assertions `be.visible` and
@@ -296,7 +300,7 @@ that shows how to correctly check the visibility of elements.
 
 ```javascript
 // retry until loading spinner no longer exists
-cy.get('#loading').should('not.exist')
+cy.get('[data-testid="loading"]').should('not.exist')
 ```
 
 ### State
@@ -309,28 +313,33 @@ cy.get(':radio').should('be.checked')
 ### CSS
 
 ```javascript
-// retry until .completed has matching css
-cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
+// retry until element has matching css
+cy.get('[data-testid="completed"]').should(
+  'have.css',
+  'text-decoration',
+  'line-through'
+)
 ```
 
 ```javascript
-// retry while .accordion css has the "display: none" property
-cy.get('#accordion').should('not.have.css', 'display', 'none')
+// retry while accordion css has the
+// "display: none" property
+cy.get('[data-testid="accordion"]').should('not.have.css', 'display', 'none')
 ```
 
 ### Disabled property
 
 ```html
-<input type="text" id="example-input" disabled />
+<input type="text" data-testid="example-input" disabled />
 ```
 
 ```javascript
-cy.get('#example-input')
+cy.get('[data-testid="example-input"]')
   .should('be.disabled')
   // let's enable this element from the test
   .invoke('prop', 'disabled', false)
 
-cy.get('#example-input')
+cy.get('[data-testid="example-input"]')
   // we can use "enabled" assertion
   .should('be.enabled')
   // or negate the "disabled" assertion
@@ -342,7 +351,9 @@ cy.get('#example-input')
 There are positive and negative assertions. Examples of positive assertions are:
 
 ```javascript
-cy.get('.todo-item').should('have.length', 2).and('have.class', 'completed')
+cy.get('[data-testid="todo-item"]')
+  .should('have.length', 2)
+  .and('have.class', 'completed')
 ```
 
 The negative assertions have the "not" chainer prefixed to the assertion.
@@ -350,7 +361,7 @@ Examples of negative assertions are:
 
 ```javascript
 cy.contains('first todo').should('not.have.class', 'completed')
-cy.get('#loading').should('not.be.visible')
+cy.get('[data-testid="loading"]').should('not.be.visible')
 ```
 
 #### ⚠️ False passing tests
@@ -369,11 +380,12 @@ like adding a blank Todo, instead of adding the new Todo with the text "Write
 tests".
 
 ```javascript
-cy.get('li.todo').should('have.length', 2)
-cy.get('input#new-todo').type('Write tests{enter}')
+cy.get('[data-testid="todos"]').should('have.length', 2)
+cy.get('[data-testid="new-todo"]').type('Write tests{enter}')
 
-// using a positive assertion to check the exact number of items
-cy.get('li.todo').should('have.length', 3)
+// using a positive assertion to check the
+// exact number of items
+cy.get('[data-testid="todos"]').should('have.length', 3)
 ```
 
 **Negative assertions**
@@ -388,11 +400,12 @@ pass when the application behaves in multiple unexpected ways:
 - An infinite variety of possible application mistakes
 
 ```javascript
-cy.get('li.todo').should('have.length', 2)
-cy.get('input#new-todo').type('Write tests{enter}')
+cy.get('[data-testid="todos"]').should('have.length', 2)
+cy.get('[data-testid="new-todo"]').type('Write tests{enter}')
 
-// using negative assertion to check it's not a number of items
-cy.get('li.todo').should('not.have.length', 2)
+// using negative assertion to check it's
+// not a number of items
+cy.get('[data-testid="todos"]').should('not.have.length', 2)
 ```
 
 **Recommendation**
@@ -404,17 +417,24 @@ removed.
 
 ```javascript
 // at first the item is marked completed
-cy.contains('li.todo', 'Write tests')
+cy.contains('[data-testid="todos"]', 'Write tests')
   .should('have.class', 'completed')
-  .find('.toggle')
+  .find('[data-testid="toggle"]')
   .click()
 
 // the CSS class has been removed
-cy.contains('li.todo', 'Write tests').should('not.have.class', 'completed')
+cy.contains('[data-testid="todos"]', 'Write tests').should(
+  'not.have.class',
+  'completed'
+)
 ```
+
+<Alert type="info">
 
 For more examples, please read the blog post
 [Be Careful With Negative Assertions](https://glebbahmutov.com/blog/negative-assertions/).
+
+</Alert>
 
 ## Should callback
 
@@ -444,13 +464,18 @@ cy.get('div').should(($div) => {
 You can attach multiple assertions to the same command.
 
 ```html
-<a class="assertions-link active" href="https://on.cypress.io" target="_blank"
-  >Cypress Docs</a
+<a
+  data-testid="assertions-link"
+  class="active"
+  href="https://on.cypress.io"
+  target="_blank"
 >
+  Cypress Docs
+</a>
 ```
 
 ```js
-cy.get('.assertions-link')
+cy.get('[data-testid="assertions-link"]')
   .should('have.class', 'active')
   .and('have.attr', 'href')
   .and('include', 'cypress.io')
@@ -463,15 +488,15 @@ be visible and invisible at the same time:
 
 ```js
 // ⛔️ DOES NOT WORK
-cy.get('#loading').should('be.visible').and('not.be.visible')
+cy.get('[data-testid="loading"]').should('be.visible').and('not.be.visible')
 ```
 
 Instead you should split the assertions and re-query the element:
 
 ```js
 // ✅ THE CORRECT WAY
-cy.get('#loading').should('be.visible')
-cy.get('#loading').should('not.be.visible')
+cy.get('[data-testid="loading"]').should('be.visible')
+cy.get('[data-testid="loading"]').should('not.be.visible')
 ```
 
 ## See also

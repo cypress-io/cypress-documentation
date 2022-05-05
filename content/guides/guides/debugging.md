@@ -39,7 +39,7 @@ cy.mount(<MyComponent />)
 it('let me debug like a fiend', () => {
   __VISIT_MOUNT_PLACEHOLDER__
 
-  cy.get('.selector-in-question')
+  cy.get('[data-testid="selector-in-question"]')
 
   debugger // Doesn't work
 })
@@ -66,7 +66,7 @@ execution and add a `debugger` at the appropriate time:
 ```js
 cy.visit('/my/page/path')
 
-cy.get('.selector-in-question').then(($selectedElement) => {
+cy.get('[data-testid="selector-in-question"]').then(($selectedElement) => {
   // Debugger is hit after the cy.visit
   // and cy.get commands have completed
   debugger
@@ -76,7 +76,7 @@ cy.get('.selector-in-question').then(($selectedElement) => {
 ```js
 cy.mount(<MyComponent />)
 
-cy.get('.selector-in-question').then(($selectedElement) => {
+cy.get('[data-testid="selector-in-question"]').then(($selectedElement) => {
   // Debugger is hit after the cy.mount
   // and cy.get commands have completed
   debugger
@@ -128,7 +128,7 @@ cy.mount(<MyComponent />)
 it('let me debug like a fiend', () => {
   __VISIT_MOUNT_PLACEHOLDER__
 
-  cy.get('.selector-in-question').debug()
+  cy.get('[data-testid="selector-in-question"]').debug()
 })
 ```
 
@@ -152,7 +152,7 @@ You can run the test command by command using the
 ```javascript
 it('adds items', () => {
   cy.pause()
-  cy.get('.new-todo')
+  cy.get('[data-testid="new-todo"]')
   // more commands
 })
 ```

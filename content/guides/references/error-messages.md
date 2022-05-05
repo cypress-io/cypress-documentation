@@ -179,8 +179,8 @@ Let's take a look at an example below.
 
 ```html
 <body>
-  <div id="parent">
-    <button>delete</button>
+  <div data-testid="parent">
+    <button>Delete</button>
   </div>
 </body>
 ```
@@ -213,7 +213,7 @@ We can prevent Cypress from throwing this error by rewriting our test code.
 
 ```javascript
 cy.get('button').click()
-cy.get('#parent')
+cy.get('[data-testid="parent"]')
 ```
 
 The above example is an oversimplification. Let's look at a more complex
@@ -237,9 +237,13 @@ When we say _guard_, this usually means:
 
 #### More info
 
+<Alert type="info">
+
 Read the blog post
 [Do Not Get Too Detached](https://www.cypress.io/blog/2020/07/22/do-not-get-too-detached/)
 for another example of this error, and how to solve it.
+
+</Alert>
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy....()` failed because the element cannot be interacted with
 
@@ -309,7 +313,7 @@ element there are a few options:
   continuously retry.
 
 ```javascript
-cy.get('#modal button').click({ waitForAnimations: false })
+cy.get('[data-testid="modal-close"]').click({ waitForAnimations: false })
 ```
 
 You can globally disable animation error checking, or increase the threshold by

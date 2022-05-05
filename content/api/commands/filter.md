@@ -117,7 +117,7 @@ test needs to use the Unicode value `\u00a0` instead of `&nbsp;`.
 ```
 
 ```javascript
-cy.get('[data-testid=testattr]').filter(':contains("Hello\u00a0world")')
+cy.get('[data-testid="testattr"]').filter(':contains("Hello\u00a0world")')
 ```
 
 ## Rules

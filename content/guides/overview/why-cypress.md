@@ -161,11 +161,11 @@ performs actions via the UI just like a real user would.
 ```js
 it('adds todos', () => {
   cy.visit('https://todo.app.com')
-  cy.get('[data-testid=new-todo]')
+  cy.get('[data-testid="new-todo"]')
     .type('write code{enter}')
     .type('write tests{enter}')
   // confirm the application is showing two items
-  cy.get('[data-testid=todos]').should('have.length', 2)
+  cy.get('[data-testid="todos"]').should('have.length', 2)
 })
 ```
 
@@ -187,7 +187,7 @@ it('contains the correct number of todos', () => {
 
   mount(<TodoList todos={todos} />)
   // the component starts running like a mini web app
-  cy.get('[data-testid=todos]').should('have.length', todos.length)
+  cy.get('[data-testid="todos"]').should('have.length', todos.length)
 })
 ```
 

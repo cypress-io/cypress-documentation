@@ -359,14 +359,16 @@ cy.intercept('/search*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as(
 // our autocomplete field is throttled
 // meaning it only makes a request after
 // 500ms from the last keyPress
-cy.get('#autocomplete').type('Book')
+cy.get('[data-testid="autocomplete"]').type('Book')
 
 // wait for the request + response
 // thus insulating us from the
 // throttled request
 cy.wait('@getSearch')
 
-cy.get('#results').should('contain', 'Book 1').and('contain', 'Book 2')
+cy.get('[data-testid="results"]')
+  .should('contain', 'Book 1')
+  .and('contain', 'Book 2')
 ```
 
 <Alert type="info">
@@ -435,19 +437,21 @@ sent data as a query string in the URL. Although we're mocking the response, we
 can still verify that our application sends the correct request.
 
 ```javascript
-// any request to "/search/*" endpoint will automatically receive
-// an array with two book objects
+// any request to "/search/*" endpoint will
+// automatically receive an array with two book objects
 cy.intercept('/search/*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as(
   'getSearch'
 )
 
-cy.get('#autocomplete').type('Book')
+cy.get('[data-testid="autocomplete"]').type('Book')
 
-// this yields us the interception cycle object which includes
-// fields for the request and response
+// this yields us the interception cycle object
+// which includes fields for the request and response
 cy.wait('@getSearch').its('request.url').should('include', '/search?query=Book')
 
-cy.get('#results').should('contain', 'Book 1').and('contain', 'Book 2')
+cy.get('[data-testid="results"]')
+  .should('contain', 'Book 1')
+  .and('contain', 'Book 2')
 ```
 
 **_The interception object that [`cy.wait()`](/api/commands/wait) yields you has
@@ -466,11 +470,13 @@ everything you need to make assertions including:_**
 ```javascript
 // spy on POST requests to /users endpoint
 cy.intercept('POST', '/users').as('new-user')
-// trigger network calls by manipulating web app's user interface, then
+
+// trigger network calls by manipulating web app's
+// user interface, then
 cy.wait('@new-user').should('have.property', 'response.statusCode', 201)
 
-// we can grab the completed interception object again to run more assertions
-// using cy.get(<alias>)
+// we can grab the completed interception object
+// again to run more assertions using cy.get(<alias>)
 cy.get('@new-user') // yields the same interception object
   .its('request.body')
   .should(
@@ -482,7 +488,8 @@ cy.get('@new-user') // yields the same interception object
     })
   )
 
-// and we can place multiple assertions in a single "should" callback
+// and we can place multiple assertions in a
+// single "should" callback
 cy.get('@new-user').should(({ request, response }) => {
   expect(request.url).to.match(/\/users$/)
   expect(request.method).to.equal('POST')
