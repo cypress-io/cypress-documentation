@@ -82,15 +82,15 @@ command definition, a code example and a link to the full documentation page.
 
 ##### Autocomplete while typing Cypress commands
 
-<DocsVideo src="/img/snippets/intellisense-cypress-assertion-matchers.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/intellisense-cypress-assertion-matchers.mp4" title="Intellisense Autocomplete Cypress commands"></DocsVideo>
 
 ##### Signature help when writing and hovering on Cypress commands
 
-<DocsVideo src="/img/snippets/intellisense-method-signature-examples.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/intellisense-method-signature-examples.mp4" title="Intellisense on hover"></DocsVideo>
 
 ##### Autocomplete while typing assertion chains, including only showing DOM assertions if testing on a DOM element.
 
-<DocsVideo src="/img/snippets/intellisense-assertion-chainers.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/intellisense-assertion-chainers.mp4" title="Intellisense Autocomplete DOM assertions"></DocsVideo>
 
 #### Set up in your Dev Environment
 
@@ -115,7 +115,7 @@ your spec file.
 /// <reference types="Cypress" />
 ```
 
-<DocsVideo src="/img/snippets/intellisense-setup.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/intellisense-setup.mp4" title="Intellisense triple-slash directive"></DocsVideo>
 
 If you write [custom commands](/api/cypress-api/custom-commands) and provide
 TypeScript definitions for them, you can use the triple slash directives to show

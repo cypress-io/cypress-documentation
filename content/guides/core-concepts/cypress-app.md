@@ -285,7 +285,7 @@ The Selector Playground is an interactive feature that helps you:
 - See what elements match a given selector.
 - See what element matches a string of text.
 
-<DocsVideo src="/img/snippets/selector-playground.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/selector-playground.mp4" title="Selector Playground demo"></DocsVideo>
 
 ### Uniqueness
 
@@ -450,7 +450,7 @@ forward through each command in the test.
 
 In action:
 
-<DocsVideo src="/img/snippets/first-test-debugging-30fps.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/first-test-debugging-30fps.mp4" title="Pause test runner demo"></DocsVideo>
 
 ## History
 

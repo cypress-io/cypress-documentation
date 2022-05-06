@@ -124,28 +124,28 @@ do that no other testing framework can:
 There are no servers, drivers, or any other dependencies to install or
 configure. You can write your first passing test in 60 seconds.
 
-<DocsVideo src="/img/snippets/installing-cli.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/installing-cli.mp4" title="Installing and opening Cypress"></DocsVideo>
 
 ### <Icon name="code"></Icon> Writing tests
 
 Tests written in Cypress are meant to be easy to read and understand. Our API
 comes fully baked, on top of tools you are familiar with already.
 
-<DocsVideo src="/img/snippets/writing-tests.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/writing-tests.mp4" title="Writing Tests"></DocsVideo>
 
 ### <Icon name="play-circle"></Icon> Running tests
 
 Cypress runs as fast as your browser can render content. You can watch tests run
 in real time as you develop your applications. TDD FTW!
 
-<DocsVideo src="/img/snippets/running-tests.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/running-tests.mp4" title="Running Tests"></DocsVideo>
 
 ### <Icon name="bug"></Icon> Debugging tests
 
 Readable error messages help you to debug quickly. You also have access to all
 the developer tools you know and love.
 
-<DocsVideo src="/img/snippets/debugging.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/debugging.mp4" title="Debugging Tests"></DocsVideo>
 
 ## Test types
 
