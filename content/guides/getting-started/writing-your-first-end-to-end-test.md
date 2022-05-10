@@ -46,8 +46,6 @@ about how we do this in [Launching Browsers](/guides/guides/launching-browsers).
 
 </Alert>
 
-<DocsVideo src="/img/snippets/empty-file-30fps.mp4"></DocsVideo>
-
 We are now officially in the [Cypress App](/guides/core-concepts/cypress-app).
 This is where we will spend the majority of your time testing.
 
@@ -137,8 +135,6 @@ The [Cypress App](/guides/core-concepts/cypress-app) gives you a visual
 structure of suites, tests, and assertions. Soon you'll also see commands, page
 events, network requests, and more.
 
-<DocsVideo src="/img/snippets/first-test-30fps.mp4"></DocsVideo>
-
 <Alert type="info">
 
 <strong class="alert-header">What are describe, it, and expect?</strong>
@@ -217,7 +213,7 @@ Had this request come back with a non `2xx` status code such as `404` or `500`,
 or if there was a JavaScript error in the application's code, the test would
 have failed.
 
-<DocsVideo src="/img/snippets/first-test-visit-30fps.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/first-test-visit-30fps.mp4" title="First test with cy.visit()"></DocsVideo>
 
 <Alert type="danger">
 
@@ -303,7 +299,7 @@ the error's display, read about
 Before we add another command - let's get this test back to passing. Replace
 `hype` with `type`.
 
-<DocsVideo src="/img/snippets/first-test-contains-30fps.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/first-test-contains-30fps.mp4" title="First test with cy.contains()"></DocsVideo>
 
 ### <Icon name="mouse-pointer"></Icon> Step 3: Click an element
 
@@ -331,7 +327,7 @@ destination page:
 
 Now we can assert something about this new page!
 
-<DocsVideo src="/img/snippets/first-test-click-30fps.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/first-test-click-30fps.mp4" title="First test with .click()"></DocsVideo>
 
 <Alert type="info">
 
@@ -426,7 +422,7 @@ And hey, this is a very clean test! We didn't have to say anything about _how_
 things work, just that we'd like to verify a particular series of events and
 outcomes.
 
-<DocsVideo src="/img/snippets/first-test-assertions-30fps.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/first-test-assertions-30fps.mp4" title="First test with assertions"></DocsVideo>
 
 <Alert type="info">
 

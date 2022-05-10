@@ -90,7 +90,7 @@ in the correct directory.
 
 </Alert>
 
-<DocsVideo src="/img/snippets/installing-cli.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/installing-cli.mp4" title="Install via CLI"></DocsVideo>
 
 <Alert type="info">
 
@@ -154,7 +154,7 @@ will be detected automatically.
 Then you can manually unzip and double click. Cypress will run without needing
 to install any dependencies.
 
-<DocsVideo src="/img/snippets/installing-global.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/installing-global.mp4" title="Install via direct download"></DocsVideo>
 
 <Alert type="info">
 
