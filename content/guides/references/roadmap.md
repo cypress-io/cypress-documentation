@@ -4,7 +4,7 @@ title: Roadmap
 
 ## Upcoming features
 
-_Last updated Sep 23, 2021_
+_Last updated Apr 25, 2022_
 
 Our team is always planning and working on really "big" upcoming features.
 Priorities can change as we move forward, but here is an outline of where
