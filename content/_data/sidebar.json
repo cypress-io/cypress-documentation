@@ -43,14 +43,44 @@
             },
             {
               "title": "Component Testing"
-            },            
-            {
-              "title": "Writing Your First Test",
-              "slug": "writing-your-first-component-test"
             },
             {
-              "title": "Getting Components to Work",
-              "slug": "getting-components-to-work"
+              "title": "Overview",
+              "slug": "component-testing"
+            },
+            {
+              "title": "Who Are You Testing For?",
+              "slug": "devs-vs-users"
+            },
+            {
+              "title": "Framework Configuration",
+              "slug": "component-setup"
+            },
+            {
+              "title": "Vue Component Testing"
+            },
+            {
+              "title": "Quickstart",
+              "slug": "quickstart-vue"
+            },
+            {
+              "title": "Mounting Components",
+              "slug": "mounting-vue"
+            },
+            {
+              "title": "Testing Props",
+              "slug": "props-vue"
+            },
+            {
+              "title": "Testing Emitted Events",
+              "slug": "events-vue"
+            },
+            {
+              "title": "Mounting a Component",
+              "slug": "writing-your-first-vue-component-test"
+            },
+            {
+              "title": "React Component Testing"
             },
             {
               "title": "Rendering Components Correctly",

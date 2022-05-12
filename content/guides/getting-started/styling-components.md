@@ -324,3 +324,20 @@ by injecting themselves around your application. When you're component testing,
 you haven't rendered the component hierarchy surrounding your component.
 
 TO solve issues like these, people review the Custom Commands and Wrappers
+
+---
+
+To first explain why it's not right, you first have to explain what
+production-like even means.
+
+So we have this before & after up, and now our job is to step through the
+component under test and try to figure out where the differences between
+Production and Test are.
+
+Sometimes these are as simple as colors or fonts not lining up. Other times, the
+entire component or sections of it may not compile.
+
+The reason this doesn't look right is because:
+
+1. My browser supports dark mode
+2. The <App> component provides its own styles
