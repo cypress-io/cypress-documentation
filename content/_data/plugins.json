@@ -646,11 +646,10 @@
         }, 
         {
           "name": "Pact Cypress Adapter",
-          "description": "Simple commands that generates pact from Cypress for pact test",
+          "description": "Simple commands to generate Pact contracts from your existing Cypress tests, maintained by the Pactflow team",
           "link": "https://github.com/pactflow/pact-cypress-adapter",
-          "keywords": ["pact", "contract testing", "commands"],
-          "badge": "official"
-
+          "keywords": ["pact","pactflow", "contract testing", "commands"],
+          "badge": "community"
         }
       ]
     },
