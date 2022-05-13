@@ -117,7 +117,7 @@ correctly.
 If you are purposefully writing commands outside of a test, there is probably a
 better way to accomplish what you're trying to do. Read through the
 [Examples](/examples/examples/recipes),
-[chat with someone in our chat](https://gitter.im/cypress-io/cypress), or
+[chat with someone in Discord](https://discord.gg/ncdA3Jz63n), or
 [open an issue](https://github.com/cypress-io/cypress/issues/new/choose).
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy...()` failed because the element you are chaining off of has become detached or removed from the dom
@@ -732,6 +732,38 @@ before finally completing. You must add more groups during that time period.
 
 Please review our [parallelization](/guides/guides/parallelization)
 documentation to learn more.
+
+<a name='win-max-path-length'></a>
+
+### <Icon name="exclamation-triangle" color="red"></Icon> The Cypress App could not be unzipped. This is most likely because the maximum path length is being exceeded on your system.
+
+When Cypress is installed, it unzips to the designated cache location on your
+computer. This error means that Cypress detected that it has exceeded the
+maximum path length while unzipping Cypress.
+
+This is common on Windows, where the maximum path length used to be 260
+characters.
+
+To fix this error, enable "long paths" on your Windows system:
+
+1. Go to the Start Menu, and right click on PowerShell. Select "Run as
+   administrator."
+2. Run this command:
+
+```powershell
+New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" `
+  -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
+```
+
+3. Restart your computer.
+
+This should get rid of the error. If you are still receiving this error, please
+[search for an open issue](https://github.com/cypress-io/cypress/issues) or
+[open a new one](https://github.com/cypress-io/cypress/issues/new/choose).
+
+If you do not have Powershell available, you can also make this change via
+regedit or gpedit.
+[See Microsoft's documentation for details.](https://docs.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation)
 
 ## Page Load Errors
 

@@ -49,7 +49,7 @@ Cypress will prefix the URL with the `baseUrl` configured in your
 
 If the `baseUrl` has not been set, you will need to specify a fully qualified
 URL or Cypress will attempt to act as your web server. See the
-[prefixes notes](#prefixes) for more details.
+[prefixes notes](#Prefixes) for more details.
 
 **Note:** visiting a new domain requires the Test Runner window to reload. You
 cannot visit different super domains in a single test.
