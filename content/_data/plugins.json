@@ -934,6 +934,16 @@
             "testing service"
           ],
           "badge": "community"
+        },
+        {
+          "name": "Cypress Chrome Recorder",
+          "description": "Tool for exporting Cypress Tests from Google Chrome DevTools' Recordings",
+          "link": "https://github.com/cypress-io/cypress-chrome-recorder",
+          "keywords": [
+            "visual testing",
+            "recorder"
+          ],
+          "badge": "experimental"
         }
       ]
     },
