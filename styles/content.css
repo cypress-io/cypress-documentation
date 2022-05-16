@@ -239,7 +239,8 @@
 .nuxt-content blockquote {
   @apply border-l-4;
   @apply px-12;
-  @apply py-6;
+  @apply pt-6;
+  @apply pb-5;
   @apply bg-gray-100;
   @apply mb-8;
   @apply italic;

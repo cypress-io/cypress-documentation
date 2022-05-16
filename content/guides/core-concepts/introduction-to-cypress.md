@@ -482,7 +482,7 @@ cy
   })
 ```
 
-<Alert type="info">
+<Alert type="success">
 
 <strong class="alert-header">Core Concept</strong>
 
