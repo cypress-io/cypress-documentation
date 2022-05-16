@@ -453,7 +453,7 @@ const loginByApi = (name, password) => {
 
 ### Where to call `cy.visit()`
 
-If you call `cy.visit()` immediately after `cy.setup()` in your login function
+If you call `cy.visit()` immediately after `cy.session()` in your login function
 or custom command, it will effectively behave the same as a login function
 without any session caching.
 
