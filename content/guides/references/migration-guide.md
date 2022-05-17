@@ -581,7 +581,7 @@ configuration will result in an error when Cypress loads.
 ### Updated Test File Locations
 
 Previously, you could specify the locations of test files and folders using the
-configuration options: `componentFolder`, `integrationFolder`, or `testFiles`.
+configuration options: `componentFolder`, or `integrationFolder`, and `testFiles`.
 These options have been replaced with `specPattern`, which is not valid at the
 top-level, but within the
 [`component`](/guides/references/configuration#component) or
