@@ -80,6 +80,10 @@
               "slug": "writing-your-first-vue-component-test"
             },
             {
+              "title": "Customizing Mount",
+              "slug": "mount-guide-vue"
+            },
+            {
               "title": "React Component Testing"
             },
             {
@@ -97,6 +101,10 @@
             {
               "title": "Testing Events",
               "slug": "events-react"
+            },
+            {
+              "title": "Customizing Mount",
+              "slug": "mount-guide-react"
             },
             {
               "title": "Rendering Components Correctly",
