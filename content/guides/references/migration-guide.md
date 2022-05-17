@@ -15,9 +15,9 @@ version 10.0.0.
   rethought/revisited in a later release.
 - Unsupported browser versions can no longer be run via `cypress run` or
   `cypress open`. Instead, an error will display.
-- In 9.x and earlier versions, `cypress open --project` would bring you directly
-  to the project specs list. In 10.0.0, you must pass `--browser` and
-  `--e2e/--ct` as well to launch Cypress to the specs list.
+- In 9.x and earlier versions, `cypress open` would bring you directly to the
+  project specs list. In 10.0.0, you must pass `--browser` and `--e2e/--ct` as
+  well to launch Cypress directly to the specs list.
 
 ### Configuration file changes
 
