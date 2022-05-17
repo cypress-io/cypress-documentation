@@ -2,27 +2,13 @@
 title: Component Troubleshooting
 ---
 
-There are times when you will encounter errors or unexpected behavior with
-Cypress itself. In this situation, we recommend checking these support resources
-**first**.
+This guide covers some common issues specific to Cypress Component Testing. For
+more general troubleshooting of Cypress, visit the main
+[Troubleshooting Guide](/guides/references/troubleshooting).
 
-## Support channels
+## Common Issues
 
-- Connect with our community in [Discord](https://discord.gg/ncdA3Jz63n)
-- Search existing [GitHub issues](https://github.com/cypress-io/cypress/issues)
-- Search this documentation (search is in the top right) 😉
-- Search [Stack Overflow](https://stackoverflow.com/questions/tagged/cypress)
-  for relevant answers
-- If your organization signs up for one of our
-  [paid plans](https://www.cypress.io/pricing/), you can get dedicated email
-  support, which gives you one-on-one help from our team.
-- If you still haven't found a solution,
-  [open an issue](https://github.com/cypress-io/cypress/issues/new/choose) _with
-  a reproducible example_.
-
-## Common issues
-
-### Spec file doesn't appear in the Cypress App
+### Spec File Doesn't Appear in the Cypress App
 
 If something appears missing from the spec list, make sure the files have the
 [proper extension and the `specPattern` is correctly defined](/guides/getting-started/writing-your-first-component-test#Naming-the-spec-file).
@@ -37,7 +23,7 @@ Installing and configuring the
 [`eslint-plugin-cypress`](https://www.npmjs.com/package/eslint-plugin-cypress)
 often helps to solve this.
 
-### TypeScript types conflict
+### TypeScript Types Conflict
 
 Some frameworks or libraries are strongly opinionated about TypeScript
 configuration. For example, Create React App assumes the root level
@@ -82,7 +68,7 @@ Don't forget to udpate your
 [`specPattern`](https://docs.cypress.io/guides/references/configuration#component)
 to include the new file location.
 
-### Next.js global style error
+### Next.js Global Style Error
 
 If you import the Next `styles/globals.css` in `cypress/support/component.js` to
 style your components, you'll get an error from Next about not allowing
