@@ -626,9 +626,6 @@ Dashboard. Because of this, if we detect your project is using the Dashboard
 during automatic migration, we won't suggest changing your spec files. We also
 don't recommend doing it manually if you are a Dashboard user.
 
-A future update to the Cypress app will cover updating the `specPattern` and
-maintaining history in the Dashboard.
-
 </Alert>
 
 ### Generated Files
