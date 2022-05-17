@@ -329,13 +329,7 @@ Now we can assert something about this new page!
 
 <DocsVideo src="/img/snippets/first-test-click-30fps.mp4" title="First test with .click()"></DocsVideo>
 
-<Alert type="info">
-
-<Icon name="magic"></Icon> You can see IntelliSense in your spec files by adding
-a single special comment line. Read about
-[Intelligent Code Completion](/guides/tooling/IDE-integration#Triple-slash-directives).
-
-</Alert>
+::include{file=partials/intellisense-code-completion.md}
 
 ### <Icon name="check-square"></Icon> Step 4: Make an assertion
 
