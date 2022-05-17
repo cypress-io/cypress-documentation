@@ -679,7 +679,7 @@ API page, the user still needs to manually define their own `cy.mount()` command
 with `Cypress.Commands.add('mount', ...)`.
 
 If you set up your app using the automatic configuration wizard, a basic
-`cy.mount` command will have been created in your support file. You can
+`cy.mount()` command will be imported for you in your support file from one our supported frameworks. You can
 customize that command to fit your needs. See the
 [Mount API](/api/commands/mount) guide for more information.
 
