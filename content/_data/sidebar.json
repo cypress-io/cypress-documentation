@@ -83,6 +83,22 @@
               "title": "React Component Testing"
             },
             {
+              "title": "Quickstart",
+              "slug": "quickstart-react"
+            },
+            {
+              "title": "Mounting Components",
+              "slug": "mounting-react"
+            },
+            {
+              "title": "Testing Components",
+              "slug": "testing-react"
+            },
+            {
+              "title": "Testing Events",
+              "slug": "events-react"
+            },
+            {
               "title": "Rendering Components Correctly",
               "slug": "styling-components"
             },
