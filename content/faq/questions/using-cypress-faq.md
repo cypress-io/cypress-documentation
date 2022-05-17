@@ -386,8 +386,8 @@ You can specify which test files to run during
 matching the files you want to run. You should be able to pass a glob matching
 the specific folder where the tests are you want to run.
 
-This feature is not available when using
-[cypress open](/guides/guides/command-line#cypress-open) however.
+This feature is only available when using
+[cypress run](/guides/guides/command-line#cypress-run).
 
 ## <Icon name="angle-right"></Icon> Is there a suggested way or best practice for how I should target elements or write element selectors?
 

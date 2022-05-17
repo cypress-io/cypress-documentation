@@ -488,6 +488,10 @@ Options passed to `cypress open` will automatically be applied to the project
 you open. These persist on all projects until you quit the Cypress App. These
 options will also override values in the Cypress configuration file.
 
+By passing `--browser`, `--project`, and `--e2e`/`--component`, you can open the
+Cypress App and the browser at the same time. Otherwise, you will be guided
+through selecting a browser, project, and/or testing type.
+
 | Option                | Description                                                                                                                   |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | `--browser`, `-b`     | [Path to a custom browser to be added to the list of available browsers in Cypress](#cypress-open-browser-lt-browser-path-gt) |
