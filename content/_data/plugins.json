@@ -13,7 +13,7 @@
         {
           "name": "Cucumber",
           "description": "Run cucumber/gherkin-syntaxed specs with cypress.io",
-          "link": "https://github.com/TheBrainFamily/cypress-cucumber-preprocessor",
+          "link": "https://github.com/badeball/cypress-cucumber-preprocessor",
           "keywords": ["file-watcher", "cucumber"],
           "badge": "community"
         },
@@ -643,6 +643,13 @@
           "link": "https://picklejs.com",
           "keywords": ["cucumber", "collection", "actions", "commands"],
           "badge": "community"
+        }, 
+        {
+          "name": "Pact Cypress Adapter",
+          "description": "Simple commands to generate Pact contracts from your existing Cypress tests, maintained by the Pactflow team",
+          "link": "https://github.com/pactflow/pact-cypress-adapter",
+          "keywords": ["pact","pactflow", "contract testing", "commands"],
+          "badge": "community"
         }
       ]
     },
@@ -928,6 +935,16 @@
             "testing service"
           ],
           "badge": "community"
+        },
+        {
+          "name": "Cypress Chrome Recorder",
+          "description": "Tool for exporting Cypress Tests from Google Chrome DevTools' Recordings",
+          "link": "https://github.com/cypress-io/cypress-chrome-recorder",
+          "keywords": [
+            "visual testing",
+            "recorder"
+          ],
+          "badge": "experimental"
         }
       ]
     },

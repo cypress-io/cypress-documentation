@@ -731,6 +731,9 @@ following repositories:
 - [bahmutov/next-and-cypress-example](https://github.com/bahmutov/next-and-cypress-example)
   shows how to get back end and front end coverage for a Next.js project.
   `middleware/nextjs.js`.
+- [ericorruption/cypress-code-coverage-typescript-webpack-ts-loader](https://github.com/ericorruption/cypress-code-coverage-typescript-webpack-ts-loader)
+  shows how to collect coverage for a TypeScript + webpack project using
+  `ts-loader` instead of `babel-loader`.
 
 Find the full list of examples linked in
 [cypress-io/code-coverage#external-examples](https://github.com/cypress-io/code-coverage#external-examples).
