@@ -710,6 +710,13 @@ respectively.
 Any previous dev servers or mounting libraries from the `@cypress` namespace
 should be uninstalled in Cypress 10.
 
+### Code Coverage Plugin
+
+The [Cypress Code Coverage](https://github.com/cypress-io/code-coverage#readme)
+plugin will need to be updated to version >= 3.10 to work with Cypress 10. Using
+a previous version will result in an error when tests are ran with code coverage
+enabled.
+
 ## Migrating from `cypress-file-upload` to [`.selectFile()`](/api/commands/selectfile)
 
 Selecting files with input elements or dropping them over the page is available
