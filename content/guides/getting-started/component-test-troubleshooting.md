@@ -39,7 +39,7 @@ often helps to solve this.
 
 ### TypeScript types conflict
 
-Some frameworks or libraries are strongly opinionated about Typescript
+Some frameworks or libraries are strongly opinionated about TypeScript
 configuration. For example, Create React App assumes the root level
 `tsconfig.json` is the source of truth for compiling your application. CRA comes
 with Jest integrated, but does not support additional tsconfig files.
