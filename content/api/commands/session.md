@@ -552,8 +552,8 @@ describe('other page tests', () => {
 ### Where to call `cy.visit()` <E2EOnlyBadge />
 
 If you call [`cy.visit()`](/api/commands/visit) immediately after `cy.session()`
-in your login function or custom command, it will always end up visiting the
-specified URL.
+in your login function or custom command, it will effectively behave the same as
+a login function without any session caching.
 
 ```javascript
 const login = (name) => {
