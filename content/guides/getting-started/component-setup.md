@@ -97,7 +97,7 @@ export default {
 }
 ```
 
-<Alert type="warn">
+<Alert type="warning">
 
 **Troubleshooting Tip**
 

@@ -20,10 +20,11 @@ In this guide, we'll use a `<Stepper/>` component with zero dependencies and one
 bit of internal state -- a simple "counter" that can be incremented and
 decremented by two buttons.
 
-We'll add one prop to set the initial counter.
+We'll add one prop, called `initial` to set the initial value in the
+`<Stepper>`.
 
 Then, we'll emit a custom "change" event whenever the user clicks on the
-increment and decrement buttons. This is covered in
+increment and decrement buttons. Testing this is covered in
 "[Testing Emitted Events]()".
 
 We'll start simple and build out our Stepper as we go.
@@ -88,7 +89,7 @@ We want to be able to control the _initial value of the stepper_. To do this,
 we'll declare `initial` as an optional prop and test that the prop is used by
 the component.
 
-Here's `Stepper.vue` component, with the `initial` prop set to **100**:
+Here's the `Stepper.vue` component, with the `initial` prop set to **100**:
 <stepper :initial="100"></stepper>
 
 To test this component, we'll exercise the Stepper's API and validate that the
@@ -118,9 +119,6 @@ it('supports an "initial" prop to set the value', () => {
     .get('[data-testid=stepper]')
     .should('contain.text', 100)
 })
-
-// JSX for Vue components? Yes, and for good reason!
-// See the section on JSX in the Sidebar
 ```
 
 </code-block>
@@ -172,15 +170,15 @@ applications.
 
 ### What else should you test in this component?
 
-We should also test that the `initial` prop is used to set `count`, which is
-**reactive data** and should change when the `increment` and `decrement` buttons
+We should also test that the `initial` prop is used to set the `counter`, which
+is **reactive** and should change when the `increment` and `decrement` buttons
 are clicked.
 
 If we didn't interact with the component, our test wouldn't catch various logic
 issues -- such as using `{{ initial }}` in the template, or hard-coding the
 template to be `100`.
 
-I'd like to pause here though.
+<alert type="info">
 
 You'll notice that we're talking about technical, Vue-specific concepts. A
 well-written, comprehensive test for our Stepper component can instead be done
@@ -190,12 +188,15 @@ Don't think about `data`, `methods`, or `emitted` events. Think solely about the
 UI and use your test to automate what you would naturally do as a user.
 
 This way, you'll test the component thoroughly, without getting bogged down in
-details. At the end of the day, all that matters is that if the developer uses
-the component with a given API, the end user will be able to use it as expected.
+the technical details. At the end of the day, all that matters is that if the
+developer uses the component with a given API, the end user will be able to use
+it as expected.
 
-Now, let's test the Stepper component!
+</alert>
 
-1. You can see the initial value of the stepper
+Now, let's render and interact with the Stepper component as a user would!
+
+1. First, ensure that the initial value of the Stepper is correct
 
 ```js
 const stepperSelector = '[data-testid=stepper]'
@@ -207,7 +208,8 @@ it('supports an initial prop', () => {
 })
 ```
 
-2. You can increment and decrement the stepper
+2. Next, ensure that you can increment and decrement the Stepper by clicking on
+   the correct buttons.
 
 ```js
 const stepperSelector = '[data-testid=stepper]'
@@ -231,8 +233,11 @@ it('can be decremented', () => {
 })
 ```
 
-3. Finally, test the Stepper as you would if you were to play with it as a user.
-   This can be seen as an integration-style test.
+3. Finally, run through the behavior of the Stepper as a user would. There is
+   duplication of coverage here -- but that's okay because it exercises the
+   component in a more real-world usage. This test is more likely to fail if
+   there are _any_ issues in the component, not just with specific buttons or
+   text rendered.
 
 <stepper initial="100"></stepper>
 

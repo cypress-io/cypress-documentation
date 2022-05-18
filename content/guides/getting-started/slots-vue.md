@@ -3,209 +3,495 @@ title: Testing Vue Components with Slots
 ---
 
 Slots are one of the most powerful language features in Vue. With the ability to
-define fallback content, named slots, and scoped slots, they allow consuming
-components to inject their own markup and styles.
+define fallback content, named slots, and scoped slots, they allow parent
+components to inject their own markup, styles, and behavior.
 
 Like props and events, slots are part of the component's public API.
 
 Common components like Buttons and Inputs often use slots like "prefix" and
-"suffix" to allow you to define icon placement.
+"suffix" to allow you to define icon placement and use SVGs or entire Icon
+components.
 
 Page-level layout components like a Sidebar or Footer also commonly make use of
 slots.
 
-Lastly, renderless components, like a Loading or ApolloQuery component make
-heavy use of slots in order to define what to render for states like: error,
-loading, and default (success).
+Lastly, renderless components, like a Loading component or ApolloQuery component
+make heavy use of slots in order to define what to render in various states
+like: error, loading, and success.
 
-We'll be showing off how to test a
+## The simplest slot
 
-### Why JSX is helpful for your Vue component tests
+We'll be showing off how to test a Modal that uses a default `<slot/>`. Like in
+previous sections, we'll start simple.
 
-JSX is not supported out of the box for Vue projects and is not considered to be
-"idiomatic Vue".
+<div style="position: relative; display: flex; justify-content: center; align-items: center; background: rgba(0,0,0,0.2); width: 400px; height: 320px;">
+  <div style="padding: 10px; position: absolute; background: white; border-radius: 3px; min-height: 300px; min-width: 350px; margin: 0 auto;">
+    <div>
+      Modal's body content (passed in via slot)
+    </div>
+  </div>
+</div>
 
-Even so, when writing Cypress component tests, JSX is extremely useful because
-it allows us to more easily:
+<code-group style="padding-top: 20px;">
 
-1. Pass in spies to emitted events
-2. Create custom DOM wrappers and styles
-3. Make our components reactive when the parent controls state
-4. Elegantly provide slots
+<code-block label="Test" active>
 
-#### Default slots
-
-Most re-usable components in Vue make use of default slots.
-
-Consider pulling out the content you expect to be rendered into a variable,
-passing it into the component's render function, and then use it in an assertion
-later on.
-
-```jsx
-it('renders a button', () => {
-  const text = 'My awesome button!'
-  cy.mount(() => <CustomButton>{text}</CustomButton>).contains(text)
+```js
+it('renders the modal content', () => {
+  cy.mount(Modal, { slots: { default: () => 'Content' } })
+    .get(modalSelector)
+    .should('have.text', 'Content')
 })
-```
 
-#### Named slots
-
-Another powerful feature of Vue is Named Slots.
-
-In the below example, we want to make sure that the CustomButton is rendering
-the `prefixIcon` slot when it's passed in.
-
-Notice that when we test for the name slot's existence we pass in our own
-selector to ensure that it's not only rendered, but **visible**.
-
-If our component were to
-
-<code-group>
-
-<code-block label="With slot" active>
-
-```jsx
-it('renders a prefix-icon slot when passed in', () => {
-  const text = 'My awesome button!'
-  const prefixIcon = () => <span data-testid="my-prefix">🚀</span>
-
-  const slots = {
-    default: () => text,
-    prefixIcon,
-  }
-
-  cy.mount(() => <CustomButton vSlots={slots} />)
-    .contains(text)
-    .get('[data-testid=my-prefix]')
-    .should('be.visible')
-    .and('have.text', '🚀')
+it('can be closed', () => {
+  cy.mount(Modal, { slots: { default: () => 'Content' } })
+    .get(modalSelector)
+    .should('have.text', 'Content')
+    .get(closeButtonSelector)
+    .should('have.text', 'Close')
+    .click()
+    // Repeat the assertion to make sure the text
+    // is no longer visible
+    .get(modalSelector)
+    .should('not.have.text', 'Content')
 })
 ```
 
 </code-block>
 
-<code-block label="Without slot">
+<code-block label="With JSX">
 
-```jsx
-it('does not render the prefix-icon slot when not passed in', () => {
-  const text = 'My awesome button!'
+```js
+it('renders the modal content', () => {
+  cy.mount(() => <Modal>Content</Modal>)
+    .get(modalSelector)
+    .should('have.text', 'Content')
+})
 
-  cy.mount(() => <CustomButton>{text}</CustomButton>)
-    .contains(text)
-    .get('[data-testid=custom-button-prefix]')
-    .should('not.exist')
+it('can be closed', () => {
+  cy.mount(() => <Modal>Content</Modal>)
+    .get(modalSelector)
+    .should('have.text', 'Content')
+    .get(closeButtonSelector)
+    .should('have.text', 'Close')
+    .click()
+    // Repeat the assertion to make sure the text
+    // is no longer visible
+    .get(modalSelector)
+    .should('not.have.text', 'Content')
 })
 ```
 
 </code-block>
 
-<code-block label="Source">
+<code-block label="Composition">
 
-```html
+```vue
 <template>
-  <button>
-    <!-- Additional styles omitted for brevity -->
-    <span
-      v-if="$slots.prefixIcon"
-      data-testid="custom-button-prefix"
-      style="margin-right: 0.85rem;"
-    >
-      <slot name="prefix-icon" />
-    </span>
-
-    <slot />
-  </button>
+  <div class="overlay" v-if="show">
+    <div class="modal">
+      <button @click="show = !show">Close</button>
+      <slot />
+    </div>
+  </div>
 </template>
+
+<script setup>
+import { ref } from 'vue'
+const show = ref(true)
+</script>
+
+<style scoped>
+.overlay {
+  position: fixed;
+  display: flex;
+  padding-top: 120px;
+  justify-content: center;
+  background: rgba(100, 100, 100, 30%);
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.modal {
+  position: absolute;
+  min-height: 350px;
+  min-width: 400px;
+  background: white;
+}
+</style>
+```
+
+</code-block>
+
+<code-block label="Options">
+
+```vue
+<template>
+  <div class="overlay" v-if="show">
+    <div class="modal">
+      <button @click="show = !show">Close</button>
+      <slot />
+    </div>
+  </div>
+</template>
+
+<script setup>
+export default {
+  data() {
+    return {
+      show: true,
+    }
+  },
+}
+</script>
+
+<style scoped>
+.overlay {
+  position: fixed;
+  display: flex;
+  padding-top: 120px;
+  justify-content: center;
+  background: rgba(100, 100, 100, 30%);
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.modal {
+  position: absolute;
+  min-height: 350px;
+  min-width: 400px;
+  background: white;
+}
+</style>
 ```
 
 </code-block>
 
 </code-group>
 
-#### Scoped slots
+## Named Slots
 
-In Vue's JSX syntax, props are provided as the first argument to a scoped slot.
+Named slots in Vue give the parent component the ability to inject different
+markup and logic from the parent into container components.
+
+In the case of our modal, the modal might define a header, footer, and body
+named slot.
+
+This is all part of the component's API and exercising it thoroughly is the
+responsibility of the test.
+
+<div style="position: relative; display: flex; justify-content: center; align-items: center; background: rgba(0,0,0,0.2); width: 400px; height: 320px;">
+  <div style="padding: 10px; position: absolute; display: flex; flex-direction: column; background: white; border-radius: 3px; min-height: 300px; min-width: 350px; margin: 0 auto;">
+    <div style="font-size: 1.25rem">Header Content</div>
+    <hr/>
+    <div style="flex-grow: 1;">
+      Modal's body content (passed in via slot)
+    </div>
+    <hr/>
+    <div style="bottom: 0; display: flex; justify-content: space-between; width: 100%;">
+    <button>Cancel</button>
+    <button>Continue</button>
+    </div>
+  </div>
+</div>
+
+<code-group style="padding-top: 20px;">
+
+<code-block label="Test" active>
+
+```js
+const footerText = 'My Custom Footer'
+const headerText = 'My Custom Header'
+
+const slots = {
+  default: () => 'Content',
+  footer: () => footerText,
+  header: () => headerText
+}
+
+it('renders the default modal content', () => {
+  cy.mount(Modal, { slots })
+    .get(modalSelector).should('have.text', 'Content')
+})
+
+it('renders a custom footer', () => {
+  const footerText = 'My Custom Footer'
+  cy.mount(Modal, { slots })
+    .get(modalSelector).should('have.text', 'Content')
+    .and('have.text' footerText)
+})
+
+it('renders a custom header', () => {
+  const headerText = 'My Custom Header'
+  cy.mount(Modal, { slots })
+    .get(modalSelector).should('have.text', 'Content')
+    .and('have.text' headerText)
+})
+
+it('renders the fallback "Close" button when no footer is provided', () => {
+  cy.mount(Modal, { slots })
+    .get(modalSelector).should('have.text', 'Content')
+    .get(closeButtonSelector).should('have.text', 'Close').click()
+    // Repeat the assertion to make sure the text
+    // is no longer visible
+    .get(modalSelector).should('not.have.text', 'Content')
+})
+```
+
+</code-block>
+
+<code-block label="With JSX">
+
+```js
+const footerText = 'My Custom Footer'
+const headerText = 'My Custom Header'
+
+const slots = {
+  footer: () => footerText,
+  header: () => headerText
+}
+
+it('renders the default modal content', () => {
+  cy.mount(() => <Modal {...slots}>Content</Modal>)
+    .get(modalSelector).should('have.text', 'Content')
+})
+
+it('renders a custom footer', () => {
+  const footerText = 'My Custom Footer'
+  cy.mount(() => <Modal {...slots}>Content</Modal>)
+    .get(modalSelector).should('have.text', 'Content')
+    .and('have.text' footerText)
+})
+
+it('renders a custom header', () => {
+  const headerText = 'My Custom Header'
+  cy.mount(() => <Modal {...slots}>Content</Modal>)
+    .get(modalSelector).should('have.text', 'Content')
+    .and('have.text' headerText)
+})
+
+it('renders the fallback "Close" button when no footer is provided', () => {
+  cy.mount(() => <Modal>Content</Modal>)
+    .get(modalSelector).should('have.text', 'Content')
+    .get(closeButtonSelector).should('have.text', 'Close').click()
+    // Repeat the assertion to make sure the text
+    // is no longer visible
+    .get(modalSelector).should('not.have.text', 'Content')
+})
+```
+
+</code-block>
+
+<code-block label="Composition">
+
+```vue
+<template>
+  <div class="overlay" v-if="show">
+    <div class="modal">
+      <div class="header"><slot name="header"></div>
+      <hr/>
+      <div class="content"><slot/></div>
+      <hr/>
+      <div class="footer"><slot name="footer"><button @click="show = !show">Close</button></slot></div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+const show = ref(true)
+</script>
+
+<style scoped>
+.overlay { /* Styles */ }
+.modal {
+  /* Styles */
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  font-size: 1.25rem;
+}
+
+.content {
+  flex-grow: 1;
+}
+</style>
+```
+
+</code-block>
+
+<code-block label="Options">
+
+```vue
+<template>
+  <div class="overlay" v-if="show">
+    <div class="modal">
+      <div class="header"><slot name="header"></div>
+      <hr/>
+      <div class="content"><slot/></div>
+      <hr/>
+      <div class="footer"><slot name="footer">
+        <button @click="show = !show">Close</button>
+      </slot></div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+export default {
+  data() {
+    return {
+      show: true
+    }
+  }
+}
+</script>
+
+<style scoped>
+.overlay { /* Styles */ }
+.modal {
+  /* Styles */
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  font-size: 1.25rem;
+}
+
+.content {
+  flex-grow: 1;
+}
+</style>
+```
+
+</code-block>
+
+</code-group>
+
+## Scoped Slots
+
+Now, what if we want to allow the parent to control when to close the modal? We
+can provide a slot prop, a function, called **close** to any of the slots we
+want.
+
+The implementation of our modal will change slightly and we only have to show
+off the template to demonstrate the change.
+
+```vue
+<template>
+  <div class="overlay" v-if="show">
+    <div class="modal">
+      <div class="header"><slot name="header" :close="onClose"></div>
+      <hr/>
+      <div class="content"><slot :close="onClose"/></div>
+      <hr/>
+      <div class="footer"><slot name="footer" :close="onClose">
+        <button @click="show = !show">Close</button>
+      </slot></div>
+    </div>
+  </div>
+</template>
+```
+
+Now here, we can write a few new tests! Each of our parent components should be
+able to utilize the method and make sure it's wired up correctly. We're going to
+import `h` from Vue to create real virtual nodes so that we can interact with
+them from the _outside_ of the test.
+
+This is one of the points at which you may find JSX/TSX tests more elegant to
+work with.
 
 <code-group>
 
 <code-block label="Test" active>
 
-```jsx
-it('exposes the number of times the button has been pressed', () => {
-  const defaultSlotSelector = '[data-testid=content]'
-  const text = 'My awesome button!'
-  const slots = {
-    default: ({ totalClicks }) => <span data-testid="content">Clicked: { totalClicks } times</span>,
-  }
-
-  cy.mount(() => <CustomButton vSlots={slots} />)
-    .get(defaultSlotSelector)
-    .should('contain.text', '0')
-    .click()
-    .get(defaultSlotSelector)
-    .should('contain.text', '1')
-    .click()
-    .get(defaultSlotSelector)
-    .should('contain.text', '2')
-```
-
-</code-block>
-
-<code-block label="Source">
-
-```html
-<template>
-  <button @click="totalClicks++">
-    <slot :totalClicks="totalClicks" />
-  </button>
-</template>
-```
-
-</code-block>
-
-</code-group>
-
-<code-group>
-<code-block label="Source (Object API)">
-
 ```js
-export default {
-  props: {
-    initial: {
-      type: Number,
-      default: 0,
-    },
-  },
+import { h } from 'vue'
+
+const footerSelector = '[data-testid=footer-close]'
+const headerSelector = '[data-testid=header-close]'
+const contentSelector = '[data-testid=content-close]'
+const text = 'Close me!'
+
+const slots = {
+  footer: ({ close }) => h('div', { onClick: close, 'data-testid': 'footer-close' }, text }),
+  header: ({ close }) => h('div', { onClick: close, 'data-testid': 'header-close' }, text }),
+  default: ({ close }) => h('div', { onClick: close, 'data-testid': 'content-close' }, text }),
 }
-```
 
-</code-block>
+it('The footer slot binds the close method', () => {
+  cy.mount(Modal, { slots })
+    .get(footerSelector).should('have.text', text)
+    .click()
+    .get(modalSelector).should('not.exist')
+})
 
-<code-block label="Source (Composition)">
+it('The header slot binds the close method', () => {
+  cy.mount(Modal, { slots })
+    .get(headerSelector).should('have.text', text)
+    .click()
+    .get(modalSelector).should('not.exist')
+})
 
-```js
-defineProps({
-  initial: {
-    type: Number,
-    default: 0,
-  },
+it('The default slot binds the close method', () => {
+  cy.mount(Modal, { slots })
+    .get(contentSelector).should('have.text', text)
+    .click()
+    .get(modalSelector).should('not.exist')
 })
 ```
 
 </code-block>
 
-<code-block label="Vue 3 Test" active>
+<code-block label="With JSX">
 
-```js
-cy.mount(Stepper, { props: { initial: 10 } })
+```jsx
+const footerSelector = '[data-testid=footer-close]'
+const headerSelector = '[data-testid=header-close]'
+const contentSelector = '[data-testid=content-close]'
+const text = 'Close me!'
+
+const slots = {
+  footer: ({ close }) => <div onClick={close} data-testid="footer-close">{text}</div>),
+  header: ({ close }) => <div onClick={close} data-testid="header-close">{text}</div>),
+  default: ({ close }) => <div onClick={close} data-testid="content-close">{text}</div>),
+}
+
+it('The footer slot binds the close method', () => {
+  cy.mount(() => <Modal {...slots}/>)
+    .get(footerSelector).should('have.text', text)
+    .click()
+    .get(modalSelector).should('not.exist')
+})
+
+it('The header slot binds the close method', () => {
+  cy.mount(() => <Modal {...slots}/>)
+    .get(headerSelector).should('have.text', text)
+    .click()
+    .get(modalSelector).should('not.exist')
+})
+
+it('The default slot binds the close method', () => {
+  cy.mount(() => <Modal {...slots}/>)
+    .get(contentSelector).should('have.text', text)
+    .click()
+    .get(modalSelector).should('not.exist')
+})
 ```
 
 </code-block>
-<code-block label="Vue 2 Test">
 
-```js
-cy.mount(Stepper, { propsData: { initial: 10 } })
-```
-
-</code-block>
 </code-group>
+
+Now that you're comfortable mounting components and asserting on their slots,
+scoped slots, and fallbacks, you should be ready to test most components!
+
+Let's work on configuring a custom mount command to handle applications like
+Vuetify and plugins like Vue Router.

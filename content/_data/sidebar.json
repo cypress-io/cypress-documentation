@@ -76,8 +76,12 @@
               "slug": "events-vue"
             },
             {
-              "title": "Mounting a Component",
-              "slug": "writing-your-first-vue-component-test"
+              "title": "Testing Slots",
+              "slug": "slots-vue"
+            },
+            {
+              "title": "Custom Mount Commands",
+              "slug": "custom-mount-vue"
             },
             {
               "title": "React Component Testing"
