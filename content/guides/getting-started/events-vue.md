@@ -51,7 +51,6 @@ You would use the `<Stepper>` from a parent component like so:
 This is what the implementation would look like:
 
 <code-group>
-
 <code-block label="Composition" active>
 
 ```html
@@ -81,7 +80,6 @@ This is what the implementation would look like:
 ```
 
 </code-block>
-
 <code-block label="Options">
 
 ```html
@@ -113,7 +111,6 @@ This is what the implementation would look like:
 ```
 
 </code-block>
-
 </code-group>
 
 As the developer of the Stepper component, you want to make sure that when the
@@ -137,6 +134,9 @@ First, we **Arrange** our test.
 
 1. Let's setup the spies.
 
+<code-group>
+<code-block label="Stepper.cy.js" active>
+
 ```js
 it('clicking increment fires a change event with the incremented value', () => {
   const onChangeSpy = cy.spy().as('changeSpy')
@@ -149,6 +149,9 @@ it('clicking decrement fires a change event with the decremented value', () => {
 })
 ```
 
+</code-block>
+</code-group>
+
 <alert type="info">
 
 We're aliasing the spy with `cy.as('aliasName')` so that the Cypress Reporter
@@ -160,8 +163,7 @@ inspect the arguments of the emitted event in your browser.
 2. Let's mount the component with the spies bound.
 
 <code-group>
-
-<code-block label="Test" active>
+<code-block label="Stepper.cy.js" active>
 
 ```js
 it('clicking + fires a change event with the incremented value', () => {
@@ -171,8 +173,7 @@ it('clicking + fires a change event with the incremented value', () => {
 ```
 
 </code-block>
-
-<code-block label="With JSX">
+<code-block label="Stepper.cy.jsx (With JSX)">
 
 ```jsx
 it('clicking + fires a change event with the incremented value', () => {
@@ -182,7 +183,6 @@ it('clicking + fires a change event with the incremented value', () => {
 ```
 
 </code-block>
-
 </code-group>
 
 <alert type="warning">
@@ -205,8 +205,7 @@ tests.
 Next, we **Act** by firing a click event for the increment button.
 
 <code-group>
-
-<code-block label="Test" active>
+<code-block label="Stepper.cy.js" active>
 
 ```js
 const incrementSelector = '[aria-label=increment]'
@@ -220,8 +219,7 @@ it('clicking + fires a change event with the incremented value', () => {
 ```
 
 </code-block>
-
-<code-block label="With JSX">
+<code-block label="Stepper.cy.jsx (With JSX)">
 
 ```jsx
 const incrementSelector = '[aria-label=increment]'
@@ -235,7 +233,6 @@ it('clicking + fires a change event with the incremented value', () => {
 ```
 
 </code-block>
-
 </code-group>
 
 ### Assert
@@ -244,8 +241,7 @@ Finally, we **Assert** that the `change` event was emitted with the correct
 value.
 
 <code-group>
-
-<code-block label="Test" active>
+<code-block label="Stepper.cy.js" active>
 
 ```js
 const incrementSelector = '[aria-label=increment]'
@@ -261,8 +257,7 @@ it('clicking + fires a change event with the incremented value', () => {
 ```
 
 </code-block>
-
-<code-block label="With JSX">
+<code-block label="Stepper.cy.jsx (With JSX)">
 
 ```jsx
 const incrementSelector = '[aria-label=increment]'
@@ -278,7 +273,6 @@ it('clicking + fires a change event with the incremented value', () => {
 ```
 
 </code-block>
-
 </code-group>
 
 We may decide to combine this test with the previous tests we've written that
@@ -343,7 +337,6 @@ issues you have in Vue Test Utils tests where you have to use `await` frequently
 in order to make sure the DOM has updated or any reactive events have fired.
 
 <code-group>
-
 <code-block label="With emitted" active>
 
 ```js
@@ -358,7 +351,6 @@ cy.mount(Stepper, { props: { initial: 100 } })
 ```
 
 </code-block>
-
 <code-block label="With spies">
 
 ```js
