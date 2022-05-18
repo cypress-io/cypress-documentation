@@ -24,6 +24,6 @@ export default {
 
 <style scoped>
 .nav-button {
-  @apply items-center rounded-md py-2 px-4 bg-white text-base font-medium text-contrastGreen shadow-sm hover:bg-lightGreen hover:text-contrastGreen border border-lightGreen !important;
+  @apply items-center rounded-md py-2 px-4 bg-white text-base font-medium text-blue shadow-sm hover:bg-indigo-500 hover:text-white border border-indigo-500 !important;
 }
 </style>
