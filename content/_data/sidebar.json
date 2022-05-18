@@ -54,7 +54,15 @@
             },
             {
               "title": "Framework Configuration",
-              "slug": "component-setup"
+              "slug": "component-framework-configuration"
+            },
+            {
+              "title": "Rendering Components Correctly",
+              "slug": "styling-components"
+            },
+            {
+              "title": "Component Troubleshooting",
+              "slug": "component-test-troubleshooting"
             },
             {
               "title": "Vue Component Testing"
@@ -84,10 +92,6 @@
               "slug": "custom-mount-vue"
             },
             {
-              "title": "Customizing Mount",
-              "slug": "mount-guide-vue"
-            },
-            {
               "title": "React Component Testing"
             },
             {
@@ -107,21 +111,9 @@
               "slug": "events-react"
             },
             {
-              "title": "Customizing Mount",
-              "slug": "mount-guide-react"
-            },
-            {
-              "title": "Rendering Components Correctly",
-              "slug": "styling-components"
-            },
-            {
-              "title": "Framework Configuration",
-              "slug": "component-framework-configuration"
-            },
-            {
-              "title": "Component Troubleshooting",
-              "slug": "component-test-troubleshooting"
-            }
+              "title": "Custom Mount Commands",
+              "slug": "custom-mount-react"
+            }            
           ]
         },
         {

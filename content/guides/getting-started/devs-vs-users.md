@@ -1,5 +1,5 @@
 ---
-title: Who are you testing for?
+title: Who are you Testing for?
 ---
 
 When testing components, you should first realize that you have TWO kinds users:
@@ -10,7 +10,7 @@ elements based on accessible queries and human-readable text) as well as
 Developer concerns (What is the component's signature? Does it have any "output"
 when used in conjunction with other components?).
 
-### Developer concerns
+### Developer Concerns
 
 Developers care about the API of the component. They want to make sure that if
 they exercise the component in a particular way, with certain props, that it'll
@@ -20,7 +20,7 @@ coverage over the component's usage and signature.
 Component testing written with developers in mind heavily covers props, events
 (Vue), and children/slots (React + Vue).
 
-### End-user concerns
+### End-User Concerns
 
 Users think the way a non-technical product owner might.
 
@@ -40,7 +40,7 @@ tests.
 By doing so, you'll gain the same kind of coverage and benefits as you would in
 an end-to-end test, without the penalties of speed, setup, and complexity.
 
-### Your test has an audience
+### Your Test has an Audience
 
 People often assign labels like "integration testing" or "unit testing" when
 testing components in order to try and describe differences in detail and

@@ -16,11 +16,10 @@ would; however your assertions are focused on the developer's expectations. When
 you interact with the component, does that component emit the correct events, at
 the correct time, with the correct arguments?
 
-# Testing emitted events
+# Testing Emitted Events
 
-In our current Stepper component, we bind native DOM click listeners with
-callbacks to buttons that increment and decrement the Stepper's internal
-`counter`.
+In the Stepper component, we bind native DOM click listeners with callbacks to
+buttons that increment and decrement the Stepper's internal `counter`.
 
 Because all of the state is managed internally, it is opaque to the developer or
 parent component consuming the Stepper.
@@ -49,7 +48,7 @@ You would use the `<Stepper>` from a parent component like so:
 </div>
 ```
 
-This is what the implementation might look like:
+This is what the implementation would look like:
 
 <code-group>
 
@@ -126,7 +125,7 @@ Test Util's own `emitted()` API, but the Vue Test Utils developers recommend
 against doing so and would really rather you use the spy-based API Cypress ships
 with.
 
-## Using spies
+## Using Spies
 
 How do we test that the custom `change` event is firing the incremented and
 decremented values for the Stepper? We can use spies when we **Arrange**,
@@ -385,6 +384,8 @@ events.
 <!-- TODO: do we need this still?
 Cypress has custom DX and failure messages built-in to the Sinon spies that power Cypress's method spies and mocks, so we strongly recommend using the first option. -->
 
-## What's next?
+## What's Next?
 
 We're going to create a container component and learn how to test slots.
+
+<NavGuide prev="/guides/getting-started/props-vue" next="/guides/getting-started/slots-vue" />

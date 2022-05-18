@@ -19,7 +19,7 @@ Lastly, renderless components, like a Loading component or ApolloQuery component
 make heavy use of slots in order to define what to render in various states
 like: error, loading, and success.
 
-## The simplest slot
+## The Simplest Slot
 
 We'll be showing off how to test a Modal that uses a default `<slot/>`. Like in
 previous sections, we'll start simple.
@@ -490,8 +490,12 @@ it('The default slot binds the close method', () => {
 
 </code-group>
 
+## What's Next?
+
 Now that you're comfortable mounting components and asserting on their slots,
 scoped slots, and fallbacks, you should be ready to test most components!
 
 Let's work on configuring a custom mount command to handle applications like
 Vuetify and plugins like Vue Router.
+
+<NavGuide prev="/guides/getting-started/events-vue" next="/guides/getting-started/custom-mount-vue" />

@@ -59,14 +59,14 @@ setup, you'll be dropped into the "Browser Selection" screen.
 
 Pick your favorite and click "Launch" to open the Cypress App.
 
-### In an empty project
+### In an Empty Project
 
 In an empty project, we'll prompt you to use one of our new spec generators to
 create a file that matches your project's `specPattern`.
 
 <!-- TODO: Video of Generator -->
 
-### If you have existing specs
+### If You have Existing Specs
 
 Certain Vue templates will have already set you up with your first component
 spec! Awesome.
@@ -84,3 +84,5 @@ when they were last modified, and their `git` status.
 ## Next Steps
 
 Learn about the mount command!
+
+<NavGuide next="/guides/getting-started/mounting-vue" />

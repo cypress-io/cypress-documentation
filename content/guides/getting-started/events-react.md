@@ -16,10 +16,10 @@ however, your assertions focus on the developer's expectations. Does that
 component emit the correct events with the right arguments at the proper time
 when interacting with the component?
 
-## Testing events
+## Testing Events
 
-In our current Stepper component, we bind native DOM click listeners with
-callbacks to buttons that increment and decrement the internal counter value.
+In the Stepper component, we bind React `onClick` listeners with callbacks to
+buttons that increment and decrement the internal counter value.
 
 Because the component manages all of the state internally, it is opaque to the
 developer or parent component consuming the Stepper.
@@ -54,7 +54,7 @@ You would use the `<Stepper>` from a parent component like so:
 </div>
 ```
 
-Here is what the implementation might look like:
+Here is what the implementation would look like:
 
 <code-group>
 
@@ -94,7 +94,7 @@ export default function Stepper({ initial = 0, onChange = () => {} }) {
 </code-group>
 
 Above, we added a new `onChange` prop and abstracted the buttons `onClick`
-events into their methods.
+events into their own methods.
 
 As the developer of the Stepper component, you want to make sure that when the
 end-user clicks the increment and decrement buttons, that the **onChange** prop
@@ -102,43 +102,17 @@ is called to the consuming component.
 
 In tests, we use "spies" to accomplish this.
 
-## Using spies
+## Using Spies
 
 How do we test that the custom `onChange` prop is called with the incremented
 and decremented values for the Stepper? We can use spies and **Arrange**,
 **Act**, and **Assert** on the Stepper.
 
-The "Arrange, Act, Assert" pattern was first coined in 2001 by Bill Wilke and is
-explained thoroughly in his blog post
-["3A - Arrange, Act, Assert"](https://xp123.com/articles/3a-arrange-act-assert/).
-
 ### Arrange
 
 First, we **Arrange** our test.
 
-1. Let's set up the spies.
-
-```jsx
-it('clicking increment fires a change event with the incremented value', () => {
-  const onChangeSpy = cy.spy().as('onChangeSpy')
-  // ...
-})
-
-it('clicking decrement fires a change event with the decremented value', () => {
-  const onChangeSpy = cy.spy().as('onChangeSpy')
-  // ...
-})
-```
-
-<alert type="info">
-
-We're aliasing the spy with `cy.as('aliasName')` so that the Cypress Reporter
-prints out the spy's name any time it is invoked. Doing so lets you visually
-inspect the arguments of the emitted event in your browser.
-
-</alert>
-
-2. Let's mount the component with the spies bound.
+Let's set up the spies and bind them to the component:
 
 <code-group>
 <code-block label="Stepper.cy.jsx" active>
@@ -153,6 +127,14 @@ it('clicking + fires a change event with the incremented value', () => {
 
 </code-block>
 </code-group>
+
+<alert type="info">
+
+We're aliasing the spy with `cy.as('aliasName')` so that the Cypress Reporter
+prints out the spy's name any time it is invoked. Doing so lets you visually
+inspect the arguments of the emitted event in your browser.
+
+</alert>
 
 ### Act
 
@@ -204,18 +186,20 @@ Doing so is up to the discretion of the developer. Combining tests will result
 in a faster overall test run. However, it may be more challenging to isolate why
 a test failed in the first place. We recommend having longer tests for
 end-to-end tests because setup and visiting pages are expensive. Longer tests
-are not necessarily a problem for Component tests because they are comparatively
+are not necessarily a problem for component tests because they are comparatively
 quick.
 
-## Learn more
+## Learn More
 
 Spying is a powerful technique for observing behavior in Cypress. Learn more
 about using Spies in our
 [Stubs, Spies, and Clocks guide](/guides/guides/stubs-spies-and-clocks)
 
-## What's next?
+## What's Next?
 
 Congratulations, you covered the basics for component testing!
 
-Coming up next, we will dive into more advanced topics such as how to set up a
-component library and how to work with providers.
+Next, we will dive into more advanced topics such as how to customize our mount
+command.
+
+<NavGuide prev="/guides/getting-started/testing-react" next="/guides/getting-started/mount-guide-react" />

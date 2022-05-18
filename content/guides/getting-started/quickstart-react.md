@@ -149,3 +149,5 @@ export default function Stepper({ initial = 0 }) {
 ## Next Steps
 
 Next, learn how to mount the `<Stepper />` component with the mount command!
+
+<NavGuide next="/guides/getting-started/mounting-react" />

@@ -37,7 +37,7 @@ To follow along with this section, you can download the latest version of
 Cypress and create a Vue application by following the
 [Quickstart Guide](./quickstart-vue).
 
-## What is the mount function?
+## What is the Mount Function?
 
 For each front-end framework Cypress supports, we ship a `mount` function. It
 can be imported from the `cypress` package. It is responsible for rendering your
@@ -48,7 +48,7 @@ framework-specific cleanup.
 import { mount } from 'cypress/vue'
 ```
 
-### The simplest usage of mount
+### The Simplest Usage of Mount
 
 You'll import the component you want to test and then use Cypress's normal API
 to interact with the DOM rendered by your component.
@@ -74,7 +74,7 @@ describe('<Stepper>', () => {
 })
 ```
 
-### Making cy.mount available anywhere
+### Making cy.mount Available Anywhere
 
 While you can import the `mount` function at the top of any file, you'll be
 using it in every single component test, so we recommend adding it as a Cypress
@@ -161,3 +161,10 @@ identical signature.
 The Cypress docs will cover many common use-cases for how to test Vue
 components, however if you still need more information, please refer to the Vue
 Test Utils documentation.
+
+## Next Steps
+
+Now that we have our component mounted, next we will learn how to write tests
+against it.
+
+<NavGuide prev="/guides/getting-started/quickstart-vue" next="/guides/getting-started/props-vue" />

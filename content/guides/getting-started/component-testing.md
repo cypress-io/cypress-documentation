@@ -26,9 +26,9 @@ the pros of component-driven development and may aide you when trying to figure
 out if you should be taking a page-based or component-based approach to building
 and testing a given feature.
 
-### Component vs. End-to-end in a nutshell
+### Component vs. End-to-End in a Nutshell
 
-We cover the differences between Component and End-to-end testing in-depth in
+We cover the differences between component and end-to-end testing in-depth in
 the ["Choosing your testing type"]() guide.
 
 But in short, Cypress Component Testing uses the same Cypress test runner,
@@ -37,7 +37,7 @@ commands, and API to test components instead of pages.
 The primary technical difference is that your components are built using a
 development server, instead of rendered within the context of a complete
 website. This results in tests that are faster and have fewer dependencies on
-infrastructure than End-to-end tests that cover the same code paths.
+infrastructure than end-to-end tests that cover the same code paths.
 
 Lastly, Cypress's API is user-centric and built for testing things that render
 in the web. Therefor, many of your tests will appear framework-agnostic and

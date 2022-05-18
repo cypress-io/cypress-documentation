@@ -2,7 +2,7 @@
 title: Vue Components with Props
 ---
 
-## Mounting your first component
+## Mounting Your First Component
 
 Simple components with few environmental dependencies will be easiest to test.
 
@@ -81,7 +81,7 @@ it('renders the Stepper, with a default of 0', () => {
 
 </code-group>
 
-## Testing a component with props
+## Testing a Component with Props
 
 We're going to add functionality to our `Stepper.vue` component.
 
@@ -168,7 +168,7 @@ applications.
 
 </Alert>
 
-### What else should you test in this component?
+### What Else Should You Test in This Component?
 
 We should also test that the `initial` prop is used to set the `counter`, which
 is **reactive** and should change when the `increment` and `decrement` buttons
@@ -273,6 +273,13 @@ In general, this guide will be using Vue 3 syntax.
 
 </Alert>
 
-## What's next?
+## Learn More
+
+The [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress)
+guide goes deeper into how to write tests with Cypress.
+
+## What's Next?
 
 We're going to emit a custom event from our Stepper component.
+
+<NavGuide prev="/guides/getting-started/mounting-vue" next="/guides/getting-started/events-vue" />

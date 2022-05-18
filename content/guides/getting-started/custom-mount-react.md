@@ -1,5 +1,5 @@
 ---
-title: Customizing Mount Commands for React
+title: Custom Mount Commands for React
 ---
 
 If your React component relies on context to work properly, you need to wrap
@@ -176,3 +176,5 @@ is important that the store be initialized with each new test to ensure changes
 to the store don't affect other tests.
 
 </Alert>
+
+<NavGuide prev="/guides/getting-started/events-react" />

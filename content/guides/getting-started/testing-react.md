@@ -2,12 +2,22 @@
 title: Testing React Components
 ---
 
-## Testing the Stepper Component
+Now that the component is mounted, the next step is to start selecting and
+interacting with parts of the component. This is the **Act** step in "Arrange,
+Act, Assert".
 
-One of the props the `<Stepper />` component has is `initial`, which lets us
-control the initial value of the stepper. Let's write a test verifying that the
-stepper's initial value is `0` when we don't pass the `initial` prop and a
-custom value when we do.
+Once we are done acting on the component, we can then verify the expected state
+of the component is what we think it should be. This is the **Assert** step.
+
+## Selecting the Stepper Component
+
+By default, the `<Stepper />` component's counter is initialized to "0". It also
+has a prop that can specify an initial count.
+
+Let's test that mounting the component (Arrange) in its default state has a
+count of "0" (Assert).
+
+Then, test that setting the initial count also works.
 
 In your spec file, add the following tests inside the existing `describe` block:
 
@@ -21,12 +31,16 @@ const incrementSelector = '[aria-label=increment]'
 const decrementSelector = '[aria-label=decrement]'
 
 it('stepper should default to 0', () => {
+  // Arrange
   cy.mount(<Stepper />)
+  // Assert
   cy.get(stepperSelector).should('contain.text', 0)
 })
 
 it('supports an "initial" prop to set the value', () => {
+  // Arrange
   cy.mount(<Stepper initial={100} />)
+  // Assert
   cy.get(stepperSelector).should('contain.text', 100)
 })
 ```
@@ -34,10 +48,12 @@ it('supports an "initial" prop to set the value', () => {
 </code-block>
 </code-group>
 
-### What else should you test in this component?
+### What Else Should You Test in This Component?
 
-We should also test that when a user interacts with the component by clicking
-the "increment" and "decrement" buttons that the value of `count` changes.
+In the above tests, we arranged and asserted, but didn't act on the component.
+We should should also test that when a user interacts with the component by
+clicking the "increment" and "decrement" buttons that the value of `count`
+changes.
 
 I want to pause here, though.
 
@@ -61,14 +77,20 @@ Now, let's test the Stepper component!
 
 ```js
 it('can be incremented', () => {
+  // Arrange
   cy.mount(<Stepper />)
+  // Act
   cy.get(incrementSelector).click()
+  // Assert
   cy.get(stepperSelector).should('contain.text', 1)
 })
 
 it('can be decremented', () => {
+  // Arrange
   cy.mount(<Stepper />)
+  // Act
   cy.get(decrementSelector).click()
+  // Assert
   cy.get(stepperSelector).should('contain.text', -1)
 })
 ```
@@ -76,7 +98,7 @@ it('can be decremented', () => {
 </code-block>
 </code-group>
 
-2. Finally, test the Stepper as you would if you were to play with it as a user,
+2. Next, test the Stepper as you would if you were to play with it as a user,
    which we could consider an integration-style test.
 
 <!-- <stepper initial="100"></stepper> -->
@@ -97,44 +119,13 @@ it('has an initial counter that can be incremented and decremented', () => {
 </code-block>
 </code-group>
 
-### Cypress and Testing Library
-
-Cypress loves the Testing Library project. We use Testing Library internally at
-Cypress! Cypress's philosophy aligns closely with Testing Library's ethos and
-approach to writing tests, and we strongly endorse their best practices.
-
-In particular, if you're looking for more resources to understand how we
-recommend you approach testing your components, look to:
-
-- [Guiding Principles - Testing Library](https://testing-library.com/docs/guiding-principles)
-- [Priority of Queries - Testing Library](https://testing-library.com/docs/queries/about#priority)
-
-For fans of
-[Testing Library](https://testing-library.com/docs/cypress-testing-library/intro/),
-you'll want to install `@testing-library/cypress` _instead_ of the
-`@testing-library/react` package.
-
-```shell
-npm i -D @testing-library/cypress
-```
-
-The setup instructions are the same for end-to-end and component testing. Within
-your **component support file**, import the custom commands.
-
-```js
-// cypress/support/component.js
-// cy.findBy* commands will now be available.
-// This calls Cypress.Commands.add under the hood
-import '@testing-library/cypress/add-commands'
-```
-
-For TypeScript users, types are packaged along with the Testing Library package.
-Refer to the latest setup instructions in the Testing Library docs.
-
 ## Learn More
 
-...links to selectors, best practices, etc..
+The [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress)
+guide goes deeper into how to write tests with Cypress.
 
-## What's next?
+## What's Next?
 
 Next, we will look at how to listen to events coming from our component.
+
+<NavGuide prev="/guides/getting-started/mounting-react" next="/guides/getting-started/events-react" />
