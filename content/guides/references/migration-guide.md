@@ -2,7 +2,7 @@
 title: Migration Guide
 ---
 
-## Migrating to Cypress version 10.0.0
+## Migrating to Cypress version 10.0
 
 This guide details the changes and how to change your code to migrate to Cypress
 version 10.0.
