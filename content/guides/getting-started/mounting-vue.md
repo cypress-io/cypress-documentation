@@ -41,7 +41,7 @@ Cypress and create a Vue application by following the
 
 For each front-end framework Cypress supports, we ship a `mount` function. It
 can be imported from the `cypress` package. It is responsible for rendering your
-component within Cypress's sandboxed iframe as well as handling and
+component within Cypress's sandboxed iframe as well as handling any
 framework-specific cleanup.
 
 ```js
@@ -92,6 +92,7 @@ available in any Cypress test under `cy.mount`.
 If you're using providers, plugins, directives, or other global app-level setup
 in your Vue app, you'll want to follow the
 "[Customizing cy.mount guide for Vue]()".
+
 <!-- TODO: link to customizing cy.mount command -->
 
 ```js
@@ -102,6 +103,17 @@ Cypress.Commands.add('mount', mount)
 
 cy.mount // this command now works in any test!
 ```
+
+### Optional JSX Support
+
+The mount command supports the Vue Test Utils object syntax, but it can also be
+used with Vue's JSX syntax (provided that you've configured your bundler to
+support transpiling JSX or TSX files).
+
+The object syntax for the mount function is identical to the Vue Test Utils
+version you'd use with your application's version of Vue.
+
+## Other Mounting Options
 
 ### Cypress and Testing Library
 
@@ -149,12 +161,3 @@ identical signature.
 The Cypress docs will cover many common use-cases for how to test Vue
 components, however if you still need more information, please refer to the Vue
 Test Utils documentation.
-
-### Optional JSX Support
-
-The mount command supports the Vue Test Utils object syntax, but it can also be
-used with Vue's JSX syntax (provided that you've configured your bundler to
-support transpiling JSX or TSX files).
-
-The object syntax for the mount function is identical to the Vue Test Utils
-version you'd use with your application's version of Vue.

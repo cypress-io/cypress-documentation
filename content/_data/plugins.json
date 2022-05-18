@@ -6,7 +6,7 @@
         {
           "name": "Cucumber",
           "description": "Run cucumber/gherkin-syntaxed specs with cypress.io",
-          "link": "https://github.com/TheBrainFamily/cypress-cucumber-preprocessor",
+          "link": "https://github.com/badeball/cypress-cucumber-preprocessor",
           "keywords": ["file-watcher", "cucumber"],
           "badge": "community"
         },
@@ -589,6 +589,20 @@
           "link": "https://github.com/BrandedEntertainmentNetwork/cypress-rest-graphql",
           "keywords": ["api", "rest", "graphQL"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-forced-colors",
+          "description": "Cypress commands to enable and disable browser forced colors mode",
+          "link": "https://github.com/ling1726/cypress-forced-colors",
+          "keywords": ["forced colors", "high contrast", "high contrast mode", "contrast", "testing"],
+          "badge": "community"
+        },
+        {
+          "name": "cy-verify-downloads",
+          "description": "Cypress custom command to wait and verify that file was downloaded",
+          "link": "https://github.com/elaichenkov/cy-verify-downloads",
+          "keywords": ["commands", "assertions", "wait", "verify", "download"],
+          "badge": "community"
         }
       ]
     },
@@ -621,6 +635,13 @@
           "description": "An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: \"I click on an <Element>\", \"I should see an <Element>\")",
           "link": "https://picklejs.com",
           "keywords": ["cucumber", "collection", "actions", "commands"],
+          "badge": "community"
+        }, 
+        {
+          "name": "Pact Cypress Adapter",
+          "description": "Simple commands to generate Pact contracts from your existing Cypress tests, maintained by the Pactflow team",
+          "link": "https://github.com/pactflow/pact-cypress-adapter",
+          "keywords": ["pact","pactflow", "contract testing", "commands"],
           "badge": "community"
         }
       ]
@@ -907,6 +928,16 @@
             "testing service"
           ],
           "badge": "community"
+        },
+        {
+          "name": "Cypress Chrome Recorder",
+          "description": "Tool for exporting Cypress Tests from Google Chrome DevTools' Recordings",
+          "link": "https://github.com/cypress-io/cypress-chrome-recorder",
+          "keywords": [
+            "visual testing",
+            "recorder"
+          ],
+          "badge": "experimental"
         }
       ]
     },

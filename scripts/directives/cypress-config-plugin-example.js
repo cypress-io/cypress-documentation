@@ -38,9 +38,6 @@ function processNode(node, { _require, error, warn }) {
       alert: endent`
         <Alert type="warning">
 
-        <strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
-        Deprecated</strong>
-
         The \`cypress.json\` file and plugins file are no longer supported as of Cypress
         version 10.0.0.
 
@@ -52,11 +49,11 @@ function processNode(node, { _require, error, warn }) {
         </Alert>
       `,
       body: endent`
-        // cypress.json (deprecated)
+        // cypress.json (no longer supported)
 
         __FIX_INDENT__${cypressJson}
 
-        // plugins file (deprecated)
+        // plugins file (no longer supported)
 
         __FIX_INDENT__${pluginsFile}
       `,

@@ -19,7 +19,8 @@ the correct time, with the correct arguments?
 # Testing emitted events
 
 In our current Stepper component, we bind native DOM click listeners with
-callbacks to buttons that increment and decrement the internal counter value.
+callbacks to buttons that increment and decrement the Stepper's internal
+`counter`.
 
 Because all of the state is managed internally, it is opaque to the developer or
 parent component consuming the Stepper.
@@ -128,8 +129,8 @@ with.
 ## Using spies
 
 How do we test that the custom `change` event is firing the incremented and
-decremented values for the Stepper? We can use spies and **Arrange**, **Act**,
-and **Assert** on the Stepper.
+decremented values for the Stepper? We can use spies when we **Arrange**,
+**Act**, and **Assert** in our test.
 
 ### Arrange
 
@@ -192,7 +193,8 @@ mount. While this isn't "idiomatic Vue", it's the current signature of Vue Test
 Utils.
 
 In the future, Cypress may propose an API change to Vue Test Utils so that this
-syntax feels more natural.
+syntax feels more natural, because **onChange** isn't actually a prop -- it's an
+event.
 
 As such, JSX may feel more idiomatic. At Cypress, we use TSX for all of our Vue
 tests.
@@ -208,6 +210,8 @@ Next, we **Act** by firing a click event for the increment button.
 <code-block label="Test" active>
 
 ```js
+const incrementSelector = '[aria-label=increment]'
+
 it('clicking + fires a change event with the incremented value', () => {
   const onChangeSpy = cy.spy().as('changeSpy')
   cy.mount(Stepper, { props: { onChange: onChangeSpy } })
@@ -221,6 +225,8 @@ it('clicking + fires a change event with the incremented value', () => {
 <code-block label="With JSX">
 
 ```jsx
+const incrementSelector = '[aria-label=increment]'
+
 it('clicking + fires a change event with the incremented value', () => {
   const onChangeSpy = cy.spy().as('changeSpy')
   cy.mount(() => <Stepper onChange={onChangeSpy} />)
@@ -243,6 +249,8 @@ value.
 <code-block label="Test" active>
 
 ```js
+const incrementSelector = '[aria-label=increment]'
+
 it('clicking + fires a change event with the incremented value', () => {
   const onChangeSpy = cy.spy().as('changeSpy')
   cy.mount(Stepper, { props: { onChange: onChangeSpy } })
@@ -258,6 +266,8 @@ it('clicking + fires a change event with the incremented value', () => {
 <code-block label="With JSX">
 
 ```jsx
+const incrementSelector = '[aria-label=increment]'
+
 it('clicking + fires a change event with the incremented value', () => {
   const onChangeSpy = cy.spy().as('changeSpy')
   cy.mount(() => <Stepper onChange={onChangeSpy} />)
@@ -299,6 +309,8 @@ recommend you write a [custom mount command]() and create a Cypress alias to get
 back at the `wrapper`.
 
 ```js
+import { mount } from 'cypress/vue'
+
 Cypress.Commands.add('mount', (...args) => {
   return mount(...args).then((wrapper) => {
     return cy.wrap(wrapper).as('vue')
@@ -316,10 +328,11 @@ DOM events that were fired, as well as Custom Events that were emitted by your
 component under test.
 
 Because `wrapper.emitted()` is only data, and NOT spy-based you will have to
-unpack its results and each argument in order to write rich, semantic assertions
-such as `to.have.been.called` and `to.have.been.called.with`.
+unpack its results to write assertions.
 
-Your test failure messages will not be as helpful.
+Your test failure messages will not be as helpful because you're not able to use
+the Sinon-Chai library that Cypress ships, which comes with methods such as
+`to.have.been.called` and `to.have.been.called.with`.
 
 Usage of the `cy.get('@vue')` alias may look something like the below code
 snippet.
@@ -327,8 +340,12 @@ snippet.
 Notice that we're using the `'should'` function signature in order to take
 advantage of Cypress's [retryability]() <!-- TODO: Retryability link -->. If we
 chained using `cy.then` instead of `cy.should`, we may run into the kinds of
-issues you have in Vue Test Utils tests where you have to use `await`
-frequently.
+issues you have in Vue Test Utils tests where you have to use `await` frequently
+in order to make sure the DOM has updated or any reactive events have fired.
+
+<code-group>
+
+<code-block label="With emitted" active>
 
 ```js
 cy.mount(Stepper, { props: { initial: 100 } })
@@ -337,12 +354,28 @@ cy.mount(Stepper, { props: { initial: 100 } })
   .get('@vue')
   .should((wrapper) => {
     expect(wrapper.emitted('change')).to.have.length
-    expect(wrapper.emitted('change')[0]).to.equal('101')
+    expect(wrapper.emitted('change')[0][0]).to.equal('101')
   })
 ```
 
+</code-block>
+
+<code-block label="With spies">
+
+```js
+const onChangeSpy = cy.spy().as('changeSpy')
+
+cy.mount(Stepper, { props: { initial: 100, onChange: onChangeSpy } })
+  .get(incrementSelector)
+  .click()
+  .get('@changeSpy')
+  .should('have.been.called.with', '101')
+```
+
+</code-block>
+
 Regardless of our recommendation to use spies instead of the internal Vue Test
-Utils API, you may decide to continue using `emitted` as it automatically
+Utils API, you may decide to continue using `emitted` as it _automatically_
 records every single event emitted from the component, and so you won't have to
 create a spy for every event emitted.
 

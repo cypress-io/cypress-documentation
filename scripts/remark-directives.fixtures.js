@@ -1,15 +1,11 @@
 const CYPRESS_JSON_ALERT = `<alert type="warning">
-<p><strong class="alert-header"><icon name="exclamation-triangle"></icon>
-Deprecated</strong></p>
-<p>The <code>cypress.json</code> file is no longer supported as of Cypress version 10.0.0. We recommend
-that you update your configuration.</p>
+<p>The <code>cypress.json</code> file has been replaced by <code>cypress.config.js</code> or <code>cypress.config.ts</code> in Cypress version 10.0.0. We recommend
+that you update your configuration accordingly.</p>
 <p>Please see the <a href="/guides/references/configuration">new configuration guide</a> and the
-<a href="/guides/references/migration-guide">migration guide</a> for more information.</p>
+<a href="/guides/references/migration-guide#Migrating-to-Cypress-version-10-0-0">migration guide</a> for more information.</p>
 </alert>`
 
 const PLUGINS_FILE_ALERT = `<alert type="warning">
-<p><strong class="alert-header"><icon name="exclamation-triangle"></icon>
-Deprecated</strong></p>
 <p>The plugins file is no longer supported as of Cypress version 10.0.0.</p>
 <p>We recommend that you update your configuration. Please see the
 <a href="/guides/tooling/plugins-guide">plugins guide</a> and the
@@ -17,8 +13,6 @@ Deprecated</strong></p>
 </alert>`
 
 const CYPRESS_JSON_PLUGINS_FILE_ALERT = `<alert type="warning">
-<p><strong class="alert-header"><icon name="exclamation-triangle"></icon>
-Deprecated</strong></p>
 <p>The <code>cypress.json</code> file and plugins file are no longer supported as of Cypress
 version 10.0.0.</p>
 <p>We recommend that you update your configuration. Please see the
@@ -44,7 +38,7 @@ const cypressConfigExample = ({ tab1, tab2, tab3 }) => {
 </code-block>
 ${
   tab3
-    ? `<code-block label="cypress.json (deprecated)">
+    ? `<code-block label="cypress.json">
 <template v-slot:alert>${CYPRESS_JSON_ALERT}
 </template>
 <pre><code class="language-json">${tab3}
@@ -163,7 +157,7 @@ const cypressPluginExample = ({ tab1, tab2, tab3 }) => {
 </code-block>
 ${
   tab3
-    ? `<code-block label="plugins file (deprecated)">
+    ? `<code-block label="plugins file">
 <template v-slot:alert>${PLUGINS_FILE_ALERT}
 </template>
 <pre><code class="language-js">${tab3}
@@ -407,7 +401,7 @@ export default defineConfig({
     specPattern: '**/*.cy.{js,jsx,ts,tsx}'
   }
 })`,
-  tab3: `// cypress.json (deprecated)
+  tab3: `// cypress.json (no longer supported)
 
 {
   "component": {
@@ -415,7 +409,7 @@ export default defineConfig({
   }
 }
 
-// plugins file (deprecated)
+// plugins file (no longer supported)
 
 const injectDevServer = require('@cypress/react/plugins/react-scripts')
 
@@ -440,7 +434,7 @@ const cypressEnvExample = ({ tab1, tab2, tab3 }) => {
 <pre><code class="language-ts">${tab2}
 </code></pre>
 </code-block>
-<code-block label="plugins file (deprecated)">
+<code-block label="plugins file">
 <template v-slot:alert>${PLUGINS_FILE_ALERT}
 </template>
 <pre><code class="language-js">${tab3}

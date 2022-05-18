@@ -5,10 +5,17 @@ componentSpecific: true
 
 <Alert type="warning">
 
-Cypress does not have a `cy.mount()` command out-of-the-box. See below for info
-on how to craft your own.
+Cypress does not have a built-in `cy.mount()` command. The command must be set
+up in your [support file](/guides/references/configuration#component). By
+default, when you use the Cypress app to configure your project, one will be
+automatically scaffolded for you in this file.
+
+This guide covers how to customize the `cy.mount()` command to fit the needs of
+your app.
 
 </Alert>
+
+<CtBetaAlert></CtBetaAlert>
 
 For
 [Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing),
@@ -46,7 +53,7 @@ to start with for your commands:
 <template #react>
 
 ```js
-import { mount } from '@cypress/react'
+import { mount } from 'cypress/react'
 
 Cypress.Commands.add('mount', (component, options) => {
   // Wrap any parent components needed
@@ -59,7 +66,7 @@ Cypress.Commands.add('mount', (component, options) => {
 <template #vue2>
 
 ```js
-import { mount } from '@cypress/vue'
+import { mount } from 'cypress/vue-2'
 
 Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
@@ -85,7 +92,7 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 <template #vue3>
 
 ```js
-import { mount } from '@cypress/vue'
+import { mount } from 'cypress/vue'
 
 Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
@@ -127,7 +134,7 @@ example as a starting point for customizing your own command:
 <template #react>
 
 ```ts
-import { MountOptions, MountReturn } from '@cypress/react'
+import { MountOptions, MountReturn } from 'cypress/react'
 
 declare global {
   namespace Cypress {
@@ -150,7 +157,7 @@ declare global {
 <template #vue>
 
 ```ts
-import { mount } from '@cypress/vue'
+import { mount } from 'cypress/vue'
 
 type MountParams = Parameters<typeof mount>
 type OptionsParam = MountParams[1]

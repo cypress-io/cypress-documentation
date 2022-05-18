@@ -4,14 +4,13 @@ title: IDE Integration
 
 ## File Opener Preference
 
-When clicking on a file path from the
-[Cypress App](/guides/core-concepts/cypress-app) in the
-[command log](/guides/core-concepts/cypress-app#Open-files-in-your-IDE) or an
-[error](/guides/guides/debugging#Errors), Cypress will attempt to open the file
-on your system. If the editor supports inline highlighting of the file, the file
-will open with the cursor located on the line and column of interest.
+When clicking on a file path or an [error](/guides/guides/debugging#Errors) in
+the [command log](/guides/core-concepts/cypress-app#Command-Log), Cypress will
+attempt to open the file on your system. If the editor supports inline
+highlighting of the file, the file will open with the cursor located on the line
+and column of interest.
 
-<DocsImage src="/img/guides/file-opener-ide-go-to-line.gif" alt="Open file at line in VS Code" ></DocsImage>
+<DocsImage src="/img/guides/cypress-app/v10/open-file-in-IDE.gif" alt="Open file in your IDE"></DocsImage>
 
 The first time you click a file path, Cypress will prompt you to select which
 location you prefer to open the file. You can choose to open it in your:
@@ -34,7 +33,7 @@ your selected application without prompting you to choose. If you want to change
 your selection, you can do so in the **Settings** tab of the Cypress App by
 clicking under **File Opener Preference**.
 
-<DocsImage src="/img/guides/file-opener-preference-settings-tab.png" alt="screenshot of Cypress App settings tab with file opener preference panel" ></DocsImage>
+<DocsImage src="/img/guides/IDE-integration/file-opener-preference-settings-tab.png" alt="screenshot of Cypress App settings tab with file opener preference panel"></DocsImage>
 
 ## Extensions & Plugins
 
@@ -83,15 +82,15 @@ command definition, a code example and a link to the full documentation page.
 
 ##### Autocomplete while typing Cypress commands
 
-<DocsVideo src="/img/snippets/intellisense-cypress-assertion-matchers.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/intellisense-cypress-assertion-matchers.mp4" title="Intellisense Autocomplete Cypress commands"></DocsVideo>
 
 ##### Signature help when writing and hovering on Cypress commands
 
-<DocsVideo src="/img/snippets/intellisense-method-signature-examples.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/intellisense-method-signature-examples.mp4" title="Intellisense on hover"></DocsVideo>
 
 ##### Autocomplete while typing assertion chains, including only showing DOM assertions if testing on a DOM element.
 
-<DocsVideo src="/img/snippets/intellisense-assertion-chainers.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/intellisense-assertion-chainers.mp4" title="Intellisense Autocomplete DOM assertions"></DocsVideo>
 
 #### Set up in your Dev Environment
 
@@ -116,7 +115,7 @@ your spec file.
 /// <reference types="Cypress" />
 ```
 
-<DocsVideo src="/img/snippets/intellisense-setup.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/intellisense-setup.mp4" title="Intellisense triple-slash directive"></DocsVideo>
 
 If you write [custom commands](/api/cypress-api/custom-commands) and provide
 TypeScript definitions for them, you can use the triple slash directives to show

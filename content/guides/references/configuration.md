@@ -2,23 +2,25 @@
 title: Configuration
 ---
 
-## Configuration file
+## Configuration File
 
-The first time you open the Cypress App, it creates the `cypress.config.js`
-configuration file. This Javascript file is used to store any configuration
-values you supply. If you
-[configure your tests to record](/guides/dashboard/projects#Setup) the results
-to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction) the
-`projectId` will be written in this file too.
+Launching the Cypress App for the first time, you will be guided through a
+wizard that will create a Cypress configuration file for you. This file will be
+`cypress.config.js` for JavaScript apps or `cypress.config.ts` for
+[TypeScript](/guides/tooling/typescript-support) apps. This file is used to
+store any configuration specific to Cypress.
 
-Alternately, Cypress supports a [TypeScript](/guides/tooling/typescript-support)
-`cypress.config.ts` configuration file, and a (deprecated) `cypress.json`
-configuration file.
+Cypress additionally supports config files with `.mjs` or `.cjs` extensions.
+
+Using a `.mjs` file will allow you to use
+[ESM Module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
+syntax in your config without the need of a transpiler step.
+
+A '.cjs' file uses the [CommonJS](https://nodejs.org/api/modules.html) module
+syntax, which is the default for JavaScript files. All JavaScript config
+examples in our docs use the CommonJS format.
 
 <Alert type="warning">
-
-<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
-Deprecated</strong>
 
 Configuring Cypress via `cypress.json` is no longer supported as of Cypress
 version 10.0.0.
@@ -30,14 +32,9 @@ to update your configuration.
 
 </Alert>
 
-<Alert type="info">
-
-<strong class="alert-header">Change Configuration File</strong>
-
-You can change the configuration file with the
-[`--config-file` flag](/guides/guides/command-line#cypress-open-config-file-lt-configuration-file-gt).
-
-</Alert>
+If you [configure your tests to record](/guides/dashboard/projects#Setup) the
+results to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction)
+the `projectId` will be stored in the config file as well.
 
 ## Intelligent Code Completion
 
@@ -66,9 +63,10 @@ default values.
 
 ### Global
 
+<!-- prettier-ignore-start -->
+
 | Option                 | Default                           | Description                                                                                                                                                                                  |
 | ---------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `baseUrl`              | `null`                            | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL.                                                                         |
 | `clientCertificates`   | `[]`                              | An optional array of [client certificates](/guides/references/client-certificates).                                                                                                          |
 | `env`                  | `{}`                              | Any values to be set as [environment variables](/guides/guides/environment-variables).                                                                                                       |
 | `includeShadowDom`     | `false`                           | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get)).                                |
@@ -187,7 +185,7 @@ The Node version is used in Cypress to:
 - Execute code in the
   [pluginsFile](/guides/references/configuration#Folders-Files).
 
-<DocsImage src="/img/guides/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Cypress App" ></DocsImage>
+<DocsImage src="/img/guides/configuration/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Cypress App"></DocsImage>
 
 ### Experiments
 
@@ -204,13 +202,14 @@ creating `e2e` and `component` objects inside your Cypress configuration.
 These options are available to be specified inside the `e2e` configuration
 object:
 
-| Option               | Default                               | Description                                                                                                                                                                                         |
-| -------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `setupNodeEvents`    | `null`                                | Function in which node events can be registered and config can be modified. Takes the place of the (deprecated) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
-| `supportFile`        | `cypress/support/e2e.{js,jsx,ts,tsx}` | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                           |
-| `specPattern`        | `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` | A String or Array of glob patterns of the test files to load.                                                                                                                                       |
-| `excludeSpecPattern` | `*.hot-update.js`                     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludeSpecPattern)                       |
-| `slowTestThreshold`  | `10000`                               | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                             |
+| Option               | Default                               | Description                                                                                                                                                                                           |
+| -------------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `baseUrl`            | `null`                                | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL.                                                                                  |
+| `setupNodeEvents`    | `null`                                | Function in which node events can be registered and config can be modified. Takes the place of the (removed) pluginFile option. [Please read the notes for examples on using this.](#setupNodeEvents) |
+| `supportFile`        | `cypress/support/e2e.{js,jsx,ts,tsx}` | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                             |
+| `specPattern`        | `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` | A String or Array of glob patterns of the test files to load.                                                                                                                                         |
+| `excludeSpecPattern` | `*.hot-update.js`                     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludeSpecPattern)                         |
+| `slowTestThreshold`  | `10000`                               | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                               |
 
 :::cypress-config-example{noJson}
 
@@ -229,15 +228,14 @@ object:
 These options are available to be specified inside the `component` configuration
 object:
 
-| Option               | Default                                  | Description                                                                                                                                                                                         |
-| -------------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `devServer`          | `null`                                   | Required function used to configure the component testing dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                                               |
-| `devServerConfig`    | `null`                                   | Optional dev server configuration. Config options will be determined by the dev server. [Please read the notes for examples on using this.](#devServer-devServerConfig)                             |
-| `setupNodeEvents`    | `null`                                   | Function in which node events can be registered and config can be modified. Takes the place of the (deprecated) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
-| `supportFile`        | `cypress/support/component.js`           | Path to file to load before test files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                           |
-| `specPattern`        | `**/*.cy.{js,jsx,ts,tsx}`                | A String or Array of glob patterns of the test files to load. <br><br>Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.**                            |
-| `excludeSpecPattern` | `['/snapshots/*', '/image_snapshots/*']` | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludeSpecPattern)                       |
-| `slowTestThreshold`  | `250`                                    | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                             |
+| Option               | Default                                  | Description                                                                                                                                                                                      |
+| -------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `devServer`          | `null`                                   | Required option used to configure the component testing dev server. [Please read the notes for examples on using this.](#devServer)                                              |
+| `setupNodeEvents`    | `null`                                   | Function in which node events can be registered and config can be modified. Takes the place of the (removed) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
+| `supportFile`        | `cypress/support/component.js`           | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                        |
+| `specPattern`        | `**/*.cy.{js,jsx,ts,tsx}`                | A glob pattern String or Array of glob pattern Strings of the spec files to load. <br><br>Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.** |
+| `excludeSpecPattern` | `['/snapshots/*', '/image_snapshots/*']` | A String or Array of glob patterns used to ignore spec files that would otherwise be shown in your list of specs. [Please read the notes on using this.](#excludeSpecPattern)                    |
+| `slowTestThreshold`  | `250`                                    | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                          |
 
 :::cypress-config-example{noJson}
 
@@ -251,23 +249,30 @@ object:
 
 :::
 
+<!-- prettier-ignore-end -->
+
 ## Overriding Options
 
 Cypress gives you the option to dynamically alter configuration options. This is
 helpful when running Cypress in multiple environments and on multiple developer
 machines.
 
-### Command Line
+### Overriding Individual Options
 
 When running Cypress from the command line you can pass a `--config` flag to
-override individual config options or a `--config-file` flag to specify an
-entirely different configuration file.
+override individual config options.
 
-For example:
+For example, to override `viewportWidth` and `viewportHeight`, you can run:
 
 ```shell
 cypress run --browser firefox --config viewportWidth=1280,viewportHeight=720
 ```
+
+### Specifying an Alternative Config File
+
+In the Cypress CLI, you can change which config file Cypress will use with the
+[`--config-file`](/guides/guides/command-line#cypress-open-config-file-lt-configuration-file-gt)
+flag.
 
 ```shell
 cypress run --config-file tests/cypress.config.js
@@ -289,10 +294,6 @@ For example:
 :::cypress-config-example{noJson}
 
 ```js
-const { devServer } = require('@cypress/webpack-dev-server')
-```
-
-```js
 {
   // These settings apply everywhere unless overridden
   defaultCommandTimeout: 5000,
@@ -300,7 +301,6 @@ const { devServer } = require('@cypress/webpack-dev-server')
   viewportHeight: 600,
   // Viewport settings overridden for component tests
   component: {
-    devServer,
     viewportWidth: 500
     viewportHeight: 500
   },
@@ -451,10 +451,10 @@ it('Show warning outside Chrome', { browser: '!chrome' }, () => {
 
 ## Resolved Configuration
 
-When you open a Cypress project, clicking on the **Settings** tab will display
-the resolved configuration to you. This helps you to understand and see where
-different values came from. Each set value is highlighted to show where the
-value has been set via the following ways:
+When you open a Cypress project, expanding the Project Settings panel under
+**Settings** will display the resolved configuration to you. This helps you to
+understand and see where different values came from. Each set value is
+highlighted to show where the value has been set via the following ways:
 
 - Default value
 - [Cypress configuration file](/guides/references/configuration)
@@ -463,9 +463,9 @@ value has been set via the following ways:
 - System
   [environment variables](/guides/guides/environment-variables#Option-3-CYPRESS)
 - [Command Line arguments](/guides/guides/command-line)
-- [Plugins file](/api/plugins/configuration-api)
+- [setupNodeEvents](#setupNodeEvents)
 
-<DocsImage src="/img/guides/configuration/see-resolved-configuration.jpg" alt="See resolved configuration" ></DocsImage>
+<DocsImage src="/img/guides/configuration/v10/see-resolved-configuration.png" alt="See resolved configuration"></DocsImage>
 
 ## Notes
 
@@ -534,24 +534,27 @@ For instance given a URL: `https://google.com/search?q=cypress`
 
 When Cypress blocks a request made to a matching host, it will automatically
 send a `503` status code. As a convenience it also sets a
-`x-cypress-matched-blocked-host` header so you can see which rule it matched.
+`x-cypress-matched-blacklisted-host` header so you can see which rule it
+matched.
 
-<DocsImage src="/img/guides/blocked-host.png" alt="Network tab of dev tools with analytics.js request selected and the response header highlighted " ></DocsImage>
+<DocsImage src="/img/guides/references/v10/blocked-host.png" alt="Network tab of dev tools with analytics.js request selected and the response header highlighted"></DocsImage>
 
-### devServer / devServerConfig
+### devServer
 
-The `devServer` function is a required [`component`](#component) testing
-specific option, and allows you to register a component testing dev server. It
-receives a `cypressDevServerConfig` argument which is passed to the dev server
-module.
+The `devServer` option is required for [`component`](#component) testing, and
+allows you to register a component testing dev server.
+
+Typically, you will specify a `framework` and `bundler` options in `devServer`
+for your framework and UI library like so:
 
 :::cypress-config-example{noJson}
 
 ```js
 {
   component: {
-    devServer(cypressDevServerConfig) {
-      // start dev server here
+    devServer: {
+      framework: 'create-react-app',
+      bundler: 'webpack'
     },
   },
 }
@@ -559,19 +562,27 @@ module.
 
 :::
 
-The `devServerConfig` object is optional and specific to the dev server that
-you've specified. If provided, it will be passed into the `devServer` function
-as the second argument.
+See
+[Framework Configuration](/guides/getting-started/component-framework-configuration)
+guide for more info on all the available `framework` and `bundler` options, as
+well as additional configuration options.
+
+#### Custom Dev Server
+
+It is possible to customize the devServer and provide your own function for
+custom or advanced setups.
+
+The devServer function receives a `cypressConfig` argument:
 
 :::cypress-config-example{noJson}
 
 ```js
 {
   component: {
-    devServer(cypressDevServerConfig, devServerConfig) {
-      // this ^ devServerConfig is the same as the one below
+    devServer(cypressConfig) {
+      // return dev server instance or a promise that resolves to
+      // a dev server instance here
     },
-    devServerConfig: {/* optional config object */},
   },
 }
 ```
@@ -579,8 +590,8 @@ as the second argument.
 :::
 
 See the
-[component testing framework configuration guide](/guides/getting-started/component-framework-configuration)
-for specific examples.
+[Custom Dev Server](/guides/getting-started/component-framework-configuration)
+guide for more info.
 
 ### excludeSpecPattern
 
@@ -625,7 +636,7 @@ interact with the browser.
 Because GC adds additional time to the overall run, we've added the amount of
 time this routine has taken to the bottom of the Command Log in the Cypress App.
 
-<DocsImage src="/img/guides/firefox-gc-interval-in-command-log.jpg" alt="GC duration shown"></DocsImage>
+<DocsImage src="/img/guides/configuration/firefox-gc-interval-in-command-log.jpg" alt="GC duration shown"></DocsImage>
 
 #### Configuration
 
@@ -755,7 +766,7 @@ an [`e2e`](#e2e) or [`component`](#component) testing specific option.
 
 <Alert type="info">
 
-This function was added in Cypress version 10.0.0 to replace the deprecated
+This function was added in Cypress version `10.0.0` to replace the deprecated
 [plugins file](/guides/references/legacy-configuration#Plugins).
 
 </Alert>
