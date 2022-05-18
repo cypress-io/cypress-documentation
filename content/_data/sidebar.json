@@ -43,27 +43,77 @@
             },
             {
               "title": "Component Testing"
-            },            
-            {
-              "title": "Writing Your First Test",
-              "slug": "writing-your-first-component-test"
             },
             {
-              "title": "Getting Components to Work",
-              "slug": "getting-components-to-work"
+              "title": "Overview",
+              "slug": "component-testing"
             },
             {
-              "title": "Rendering Components Correctly",
-              "slug": "rendering-components-correctly"
+              "title": "Who Are You Testing For?",
+              "slug": "devs-vs-users"
             },
             {
               "title": "Framework Configuration",
               "slug": "component-framework-configuration"
             },
             {
+              "title": "Rendering Components Correctly",
+              "slug": "styling-components"
+            },
+            {
               "title": "Component Troubleshooting",
               "slug": "component-test-troubleshooting"
-            }
+            },
+            {
+              "title": "Vue Component Testing"
+            },
+            {
+              "title": "Quickstart",
+              "slug": "quickstart-vue"
+            },
+            {
+              "title": "Mounting Components",
+              "slug": "mounting-vue"
+            },
+            {
+              "title": "Testing Props",
+              "slug": "props-vue"
+            },
+            {
+              "title": "Testing Emitted Events",
+              "slug": "events-vue"
+            },
+            {
+              "title": "Testing Slots",
+              "slug": "slots-vue"
+            },
+            {
+              "title": "Custom Mount Commands",
+              "slug": "custom-mount-vue"
+            },
+            {
+              "title": "React Component Testing"
+            },
+            {
+              "title": "Quickstart",
+              "slug": "quickstart-react"
+            },
+            {
+              "title": "Mounting Components",
+              "slug": "mounting-react"
+            },
+            {
+              "title": "Testing Components",
+              "slug": "testing-react"
+            },
+            {
+              "title": "Testing Events",
+              "slug": "events-react"
+            },
+            {
+              "title": "Custom Mount Commands",
+              "slug": "custom-mount-react"
+            }            
           ]
         },
         {

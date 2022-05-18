@@ -16,24 +16,34 @@ title: Writing Your First Component Test
 
 </Alert>
 
-## Getting Started
+## Configuration
 
-In order to get the most out of this guide, we recommend that you follow along.
-Clone the
+Assuming you have an existing application with components, the first step is to
+create a new component spec file and compile it.
+
+Cypress officially supports the following frameworks and bundlers: Create React
+App, Next, Nuxt, Webpack, Vue CLI, and Vite.
+
+Cypress also has official framework mount utilities for: React and Vue.
+
+Most projects have complex build configurations, and so in order to play with
+component testing, we recommend starting our with one of our Demo or Playground
+projects. You can find a variety of them at the
 [cypress-component-testing-examples](https://github.com/cypress-io/cypress-component-testing-examples)
-repo and then follow the instructions at the top of the `README` of either of
-the following folders to get started:
-
-- React version:
-  [guide-getting-started-react](https://github.com/cypress-io/cypress-component-testing-examples/tree/main/guide-getting-started-react)
-- Vue version:
-  [guide-getting-started-vue](https://github.com/cypress-io/cypress-component-testing-examples/tree/main/guide-getting-started-vue)
+repo.
 
 If you want to use your own project, follow the steps in the
 [Framework Configuration Guide](/guides/getting-started/component-framework-configuration)
 before continuing.
 
-## The example component
+## Your first component test
+
+Component tests can be written for any scale of component, large or small. In
+this guide we'll focus on a small `Counter` component, with one prop and one bit
+of internal state.
+
+If you're using Vue, we'll also teach you how to test emitted events. The test
+code you'll end up with is actually identical between Vue and React.
 
 In this guide, we'll be testing a `LoginForm` component. This component is
 similar to many of the components you will be testing in your application, in

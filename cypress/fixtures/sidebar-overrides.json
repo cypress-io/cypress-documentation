@@ -9,7 +9,7 @@
     "/guides/dashboard/introduction": "Dashboard",
     "/guides/migrating-to-cypress/protractor": "Migrating from Protractor to Cypress",
     "/guides/getting-started/writing-your-first-end-to-end-test": "Writing Your First End-to-End Test",
-    "/guides/getting-started/writing-your-first-component-test": "Writing Your First Component Test",
+    "/guides/getting-started/testing-components": "What is Component Testing?",
     "/guides/references/assertions": "Assertions",
     "/guides/references/legacy-configuration": "Configuration (Legacy)",
     "/api/utilities/_": "Cypress._",
