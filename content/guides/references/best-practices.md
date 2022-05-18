@@ -102,14 +102,14 @@ Given a button that we want to interact with:
 
 Let's investigate how we could target it:
 
-| Selector                              | Recommended                                                        | Notes                                                           |
-| ------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------------- |
-| `cy.get('button').click()`            | <Icon name="exclamation-triangle" color="red"></Icon> Never        | Worst - too generic, no context.                                |
-| `cy.get('.btn.btn-large').click()`    | <Icon name="exclamation-triangle" color="red"></Icon> Never        | Bad. Coupled to styling. Highly subject to change.              |
-| `cy.get('#main').click()`             | <Icon name="exclamation-triangle" color="orange"></Icon> Sparingly | Better. But still coupled to styling or JS event listeners.     |
-| `cy.get('[name=submission]').click()` | <Icon name="exclamation-triangle" color="orange"></Icon> Sparingly | Coupled to the `name` attribute which has HTML semantics.       |
-| `cy.contains('Submit').click()`       | <Icon name="check-circle" color="green"></Icon> Depends            | Much better. But still coupled to text content that may change. |
-| `cy.get('[data-cy=submit]').click()`  | <Icon name="check-circle" color="green"></Icon> Always             | Best. Isolated from all changes.                                |
+| Selector                                | Recommended                                                        | Notes                                                           |
+| --------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------------- |
+| `cy.get('button').click()`              | <Icon name="exclamation-triangle" color="red"></Icon> Never        | Worst - too generic, no context.                                |
+| `cy.get('.btn.btn-large').click()`      | <Icon name="exclamation-triangle" color="red"></Icon> Never        | Bad. Coupled to styling. Highly subject to change.              |
+| `cy.get('#main').click()`               | <Icon name="exclamation-triangle" color="orange"></Icon> Sparingly | Better. But still coupled to styling or JS event listeners.     |
+| `cy.get('[name="submission"]').click()` | <Icon name="exclamation-triangle" color="orange"></Icon> Sparingly | Coupled to the `name` attribute which has HTML semantics.       |
+| `cy.contains('Submit').click()`         | <Icon name="check-circle" color="green"></Icon> Depends            | Much better. But still coupled to text content that may change. |
+| `cy.get('[data-cy="submit"]').click()`  | <Icon name="check-circle" color="green"></Icon> Always             | Best. Isolated from all changes.                                |
 
 Targeting the element above by `tag`, `class` or `id` is very volatile and
 highly subject to change. You may swap out the element, you may refactor CSS and
@@ -434,11 +434,11 @@ describe('my form', () => {
   __VISIT_MOUNT_PLACEHOLDER__
 
   it('requires first name', () => {
-    cy.get('#first').type('Johnny')
+    cy.get('[data-testid="first-name"]').type('Johnny')
   })
 
   it('requires last name', () => {
-    cy.get('#last').type('Appleseed')
+    cy.get('[data-testid="last-name"]').type('Appleseed')
   })
 
   it('can submit a valid form', () => {
@@ -477,10 +477,10 @@ describe('my form', () => {
     __VISIT_MOUNT_PLACEHOLDER__
 
     cy.log('filling out first name') // if you really need this
-    cy.get('#first').type('Johnny')
+    cy.get('[data-testid="first-name"]').type('Johnny')
 
     cy.log('filling out last name') // if you really need this
-    cy.get('#last').type('Appleseed')
+    cy.get('[data-testid="last-name"]').type('Appleseed')
 
     cy.log('submitting form') // if you really need this
     cy.get('form').submit()
@@ -510,14 +510,15 @@ cy.mount(<NewUser />)
 describe('my form', () => {
   beforeEach(() => {
     __VISIT_MOUNT_PLACEHOLDER__
-    cy.get('#first').type('Johnny')
-    cy.get('#last').type('Appleseed')
+    cy.get('[data-testid="first-name"]').type('Johnny')
+    cy.get('[data-testid="last-name"]').type('Appleseed')
   })
 
   it('displays form validation', () => {
-    cy.get('#first').clear() // clear out first name
+    // clear out first name
+    cy.get('[data-testid="first-name"]').clear()
     cy.get('form').submit()
-    cy.get('#errors').should('contain', 'First name is required')
+    cy.get('[data-testid="errors"]').should('contain', 'First name is required')
   })
 
   it('can submit a valid form', () => {
@@ -557,19 +558,25 @@ We've seen many users writing this kind of code:
 describe('my form', () => {
   beforeEach(() => {
     cy.visit('/users/new')
-    cy.get('#first').type('johnny')
+    cy.get('[data-testid="first-name"]').type('johnny')
   })
 
   it('has validation attr', () => {
-    cy.get('#first').should('have.attr', 'data-validation', 'required')
+    cy.get('[data-testid="first-name"]').should(
+      'have.attr',
+      'data-validation',
+      'required'
+    )
   })
 
   it('has active class', () => {
-    cy.get('#first').should('have.class', 'active')
+    cy.get('[data-testid="first-name"]').should('have.class', 'active')
   })
 
   it('has formatted first name', () => {
-    cy.get('#first').should('have.value', 'Johnny') // capitalized first letter
+    cy.get('[data-testid="first-name"]')
+      // capitalized first letter
+      .should('have.value', 'Johnny')
   })
 })
 ```
@@ -606,7 +613,7 @@ describe('my form', () => {
   })
 
   it('validates and formats first name', () => {
-    cy.get('#first')
+    cy.get('[data-testid="first-name"]')
       .type('johnny')
       .should('have.attr', 'data-validation', 'required')
       .and('have.class', 'active')
@@ -879,7 +886,7 @@ aliased route.
 cy.intercept('GET', '/users', [{ name: 'Maggy' }, { name: 'Joan' }]).as(
   'getUsers'
 )
-cy.get('#fetch').click()
+cy.get('[data-testid="fetch-users"]').click()
 cy.wait('@getUsers') // <--- wait explicitly for this route to finish
 cy.get('table tr').should('have.length', 2)
 ```
@@ -980,7 +987,7 @@ port.
 
 ### Without `baseUrl` set, Cypress loads main window in `localhost` + random port
 
-<DocsImage src="/img/guides/cypress-loads-in-localhost-and-random-port.png" alt="Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.coffee" ></DocsImage>
+<DocsImage src="/img/guides/references/cypress-loads-in-localhost-and-random-port.png" alt="Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.coffee" ></DocsImage>
 
 As soon as it encounters a [cy.visit()](/api/commands/visit), Cypress then
 switches to the url of the main window to the url specified in your visit. This
@@ -1005,17 +1012,17 @@ load the main window in the `baseUrl` you specified as soon as your tests start.
 
 ### With `baseUrl` set, Cypress loads main window in `baseUrl`
 
-<DocsImage src="/img/guides/cypress-loads-window-in-base-url-localhost.png" alt="Url address bar shows localhost:8484/__tests/integration/organizations/list_spec.coffee" ></DocsImage>
+<DocsImage src="/img/guides/references/cypress-loads-window-in-base-url-localhost.png" alt="Url address bar shows localhost:8484/__tests/integration/organizations/list_spec.coffee" ></DocsImage>
 
 Having a `baseUrl` set gives you the added bonus of seeing an error if your
 server is not running during `cypress open` at the specified `baseUrl`.
 
-<DocsImage src="/img/guides/cypress-ensures-baseUrl-server-is-running.png" alt="Cypress App with warning about how Cypress could not verify server set as the baseUrl is running"></DocsImage>
+<DocsImage src="/img/guides/references/cypress-ensures-baseUrl-server-is-running.png" alt="Cypress App with warning about how Cypress could not verify server set as the baseUrl is running"></DocsImage>
 
 We also display an error if your server is not running at the specified
 `baseUrl` during `cypress run` after several retries.
 
-<DocsImage src="/img/guides/cypress-verifies-server-is-running-during-cypress-run.png" alt="The terminal warns and retries when the url at your baseUrl is not running" ></DocsImage>
+<DocsImage src="/img/guides/references/cypress-verifies-server-is-running-during-cypress-run.png" alt="The terminal warns and retries when the url at your baseUrl is not running" ></DocsImage>
 
 ### Usage of `baseUrl` in depth
 

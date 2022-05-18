@@ -20,6 +20,8 @@ evaluated via an import statement in the
 ```javascript
 Cypress.Commands.add(name, callbackFn)
 Cypress.Commands.add(name, options, callbackFn)
+Cypress.Commands.addAll(callbackObj)
+Cypress.Commands.addAll(options, callbackObj)
 Cypress.Commands.overwrite(name, callbackFn)
 ```
 
@@ -29,6 +31,10 @@ Cypress.Commands.overwrite(name, callbackFn)
 
 ```javascript
 Cypress.Commands.add('login', (email, pw) => {})
+Cypress.Commands.addAll({
+  login(email, pw) {},
+  visit(orig, url, options) {},
+})
 Cypress.Commands.overwrite('visit', (orig, url, options) => {})
 ```
 
@@ -41,6 +47,10 @@ The name of the command you're either adding or overwriting.
 **<Icon name="angle-right"></Icon> callbackFn** **_(Function)_**
 
 Pass a function that receives the arguments passed to the command.
+
+**<Icon name="angle-right"></Icon> callbackObj** **_(Object)_**
+
+An object with `callbackFn`s as properties.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 

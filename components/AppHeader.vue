@@ -84,8 +84,8 @@ export default {
             <div class="flex-shrink-0">
               <a href="/">
                 <img
-                  class="block h-8 w-auto"
-                  :src="require('~/assets/cypress-logo.png')"
+                  class="block h-9 w-auto"
+                  :src="require('~/assets/cypress-logo.svg')"
                   alt="Cypress Docs Logo"
                 />
               </a>
@@ -106,6 +106,13 @@ export default {
                 >
                   {{ link.label }}
                 </nuxt-link>
+                <a
+                  href="https://learn.cypress.io"
+                  class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-bold"
+                >
+                  <span class="sr-only">Learn</span>
+                  Learn
+                </a>
                 <a
                   href="https://github.com/cypress-io/cypress"
                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-bold"
@@ -192,12 +199,18 @@ export default {
             {{ link.label }}
           </nuxt-link>
           <a
+            href="https://learn.cypress.io"
+            class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+          >
+            Learn
+          </a>
+          <a
             href="https://github.com/cypress-io/cypress"
             class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
           >
             GitHub
           </a>
-          <app-header-mobile-section
+          <AppHeaderMobileSection
             v-for="(group, index) in mobileMenuItems"
             :key="`navgroup-${index}`"
             :name="group.slug"

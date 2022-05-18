@@ -124,28 +124,28 @@ do that no other testing framework can:
 There are no servers, drivers, or any other dependencies to install or
 configure. You can write your first passing test in 60 seconds.
 
-<DocsVideo src="/img/snippets/installing-cli.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/installing-cli.mp4" title="Installing and opening Cypress"></DocsVideo>
 
 ### <Icon name="code"></Icon> Writing tests
 
 Tests written in Cypress are meant to be easy to read and understand. Our API
 comes fully baked, on top of tools you are familiar with already.
 
-<DocsVideo src="/img/snippets/writing-tests.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/writing-tests.mp4" title="Writing Tests"></DocsVideo>
 
 ### <Icon name="play-circle"></Icon> Running tests
 
 Cypress runs as fast as your browser can render content. You can watch tests run
 in real time as you develop your applications. TDD FTW!
 
-<DocsVideo src="/img/snippets/running-tests.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/running-tests.mp4" title="Running Tests"></DocsVideo>
 
 ### <Icon name="bug"></Icon> Debugging tests
 
 Readable error messages help you to debug quickly. You also have access to all
 the developer tools you know and love.
 
-<DocsVideo src="/img/snippets/debugging.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/debugging.mp4" title="Debugging Tests"></DocsVideo>
 
 ## Test types
 
@@ -161,9 +161,11 @@ performs actions via the UI just like a real user would.
 ```js
 it('adds todos', () => {
   cy.visit('https://todo.app.com')
-  cy.get('.new-input').type('write code{enter}').type('write tests{enter}')
+  cy.get('[data-testid="new-todo"]')
+    .type('write code{enter}')
+    .type('write tests{enter}')
   // confirm the application is showing two items
-  cy.get('li.todo').should('have.length', 2)
+  cy.get('[data-testid="todos"]').should('have.length', 2)
 })
 ```
 
@@ -185,7 +187,7 @@ it('contains the correct number of todos', () => {
 
   mount(<TodoList todos={todos} />)
   // the component starts running like a mini web app
-  cy.get('[data-testid=todos]').should('have.length', todos.length)
+  cy.get('[data-testid="todos"]').should('have.length', todos.length)
 })
 ```
 
@@ -221,7 +223,7 @@ and other types of tests.
 
 ## Cypress in the Real World
 
-<DocsImage src="/img/guides/real-world-app.png" alt="Cypress Real World App"></DocsImage>
+<DocsImage src="/img/guides/overview/v10/real-world-app.png" alt="Cypress Real World App"></DocsImage>
 
 Cypress makes it quick and easy to start testing, and as you begin to test your
 app, **you'll often wonder if you're using best practices or scalable

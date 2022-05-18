@@ -26,16 +26,7 @@ An object containing any or all of the following options:
 | `selectorPriority` | `Array of strings` | Determines the order of preference for which selector is chosen for the element.                                                                                      |
 | `onElement`        | `function`         | A function called with the element that should return a unique selector string for the element. If a falsey value is returned, the default selector function is used. |
 
-**_Default Selector Priority:_**
-
-- `data-cy`
-- `data-test`
-- `data-testid`
-- `id`
-- `class`
-- `tag`
-- `attributes`
-- `nth-child`
+::include{file=partials/default-selector-priority.md}
 
 **<Icon name="angle-right"></Icon> $el** **_(Object)_**
 

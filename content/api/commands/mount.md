@@ -5,10 +5,17 @@ componentSpecific: true
 
 <Alert type="warning">
 
-Cypress does not have a `cy.mount()` command out-of-the-box. See below for info
-on how to craft your own.
+Cypress does not have a built-in `cy.mount()` command. The command must be set
+up in your [support file](/guides/references/configuration#component). By
+default, when you use the Cypress app to configure your project, one will be
+automatically scaffolded for you in this file.
+
+This guide covers how to customize the `cy.mount()` command to fit the needs of
+your app.
 
 </Alert>
+
+<CtBetaAlert></CtBetaAlert>
 
 For
 [Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing),
@@ -46,7 +53,7 @@ to start with for your commands:
 <template #react>
 
 ```js
-import { mount } from '@cypress/react'
+import { mount } from 'cypress/react'
 
 Cypress.Commands.add('mount', (component, options) => {
   // Wrap any parent components needed
@@ -59,7 +66,7 @@ Cypress.Commands.add('mount', (component, options) => {
 <template #vue2>
 
 ```js
-import { mount } from '@cypress/vue'
+import { mount } from 'cypress/vue-2'
 
 Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
@@ -85,7 +92,7 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 <template #vue3>
 
 ```js
-import { mount } from '@cypress/vue'
+import { mount } from 'cypress/vue'
 
 Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
@@ -127,7 +134,7 @@ example as a starting point for customizing your own command:
 <template #react>
 
 ```ts
-import { MountOptions, MountReturn } from '@cypress/react'
+import { MountOptions, MountReturn } from 'cypress/react'
 
 declare global {
   namespace Cypress {
@@ -150,7 +157,7 @@ declare global {
 <template #vue>
 
 ```ts
-import { mount } from '@cypress/vue'
+import { mount } from 'cypress/vue'
 
 type MountParams = Parameters<typeof mount>
 type OptionsParam = MountParams[1]
@@ -179,13 +186,6 @@ include the `cypress.d.ts` file in all your `tsconfig.json` files like so:
 "include": ["./src", "cypress.d.ts"]
 ```
 
-## Additional Mount Commands
-
-You're not limited to a single `cy.mount()` command. If needed, you can create
-any number of custom mount commands, as long as they have unique names.
-
-Below are some examples for common uses cases and libraries.
-
 ## React Examples
 
 If your React component relies on context to work properly, you need to wrap
@@ -203,10 +203,10 @@ a React Router provider. Below is a sample mount command that uses
 `MemoryRouter` to wrap the component.
 
 ```jsx
-import { mount } from '@cypress/react'
+import { mount } from 'cypress/react'
 import { MemoryRouter } from 'react-router-dom'
 
-Cypress.Commands.add('mountWithRouter', (component, options = {}) => {
+Cypress.Commands.add('mount', (component, options = {}) => {
   const { routerProps = { initialEntries: ['/'] }, ...mountOptions } = options
 
   const wrapped = <MemoryRouter {...routerProps}>{component}</MemoryRouter>
@@ -218,7 +218,7 @@ Cypress.Commands.add('mountWithRouter', (component, options = {}) => {
 Typings:
 
 ```ts
-import { MountOptions, MountReturn } from '@cypress/react'
+import { MountOptions, MountReturn } from 'cypress/react'
 import { MemoryRouterProps } from 'react-router-dom'
 
 declare global {
@@ -229,7 +229,7 @@ declare global {
        * @param component React Node to mount
        * @param options Additional options to pass into mount
        */
-      mountWithRouter(
+      mount(
         component: React.ReactNode,
         options?: MountOptions & { routerProps?: MemoryRouterProps }
       ): Cypress.Chainable<MountReturn>
@@ -248,13 +248,13 @@ import { Navigation } from './Navigation'
 
 it('home link should be active when url is "/"', () => {
   // No need to pass in custom initialEntries as default url is '/'
-  cy.mountWithRouter(<Navigation />)
+  cy.mount(<Navigation />)
 
   cy.get('a').contains('Home').should('have.class', 'active')
 })
 
 it('login link should be active when url is "/login"', () => {
-  cy.mountWithRouter(<Navigation />, {
+  cy.mount(<Navigation />, {
     routerProps: {
       initialEntries: ['/login'],
     },
@@ -267,15 +267,15 @@ it('login link should be active when url is "/login"', () => {
 ### Redux
 
 To use a component that consumes state or actions from a
-[Redux](https://react-redux.js.org/) store, create a `mountWithRedux` command
-that will wrap your component in a Redux Provider:
+[Redux](https://react-redux.js.org/) store, create a `mount` command that will
+wrap your component in a Redux Provider:
 
 ```jsx
-import { mount } from '@cypress/react'
+import { mount } from 'cypress/react'
 import { Provider } from 'react-redux'
 import { getStore } from '../../src/store'
 
-Cypress.Commands.add('mountWithRedux', (component, options = {}) => {
+Cypress.Commands.add('mount', (component, options = {}) => {
   // Use the default store if one is not provided
   const { reduxStore = getStore(), ...mountOptions } = options
 
@@ -288,7 +288,7 @@ Cypress.Commands.add('mountWithRedux', (component, options = {}) => {
 Typings:
 
 ```ts
-import { MountOptions, MountReturn } from '@cypress/react'
+import { MountOptions, MountReturn } from 'cypress/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { RootState } from './src/StoreState'
 
@@ -300,7 +300,7 @@ declare global {
        * @param component React Node to mount
        * @param options Additional options to pass into mount
        */
-      mountWithRedux(
+      mount(
         component: React.ReactNode,
         options?: MountOptions & { reduxStore?: EnhancedStore<RootState> }
       ): Cypress.Chainable<MountReturn>
@@ -325,7 +325,7 @@ it('User profile should display user name', () => {
   // setUser is an action exported from the user slice
   store.dispatch(setUser(user))
 
-  cy.mountWithRedux(<UserProfile />, { reduxStore: store })
+  cy.mount(<UserProfile />, { reduxStore: store })
 
   cy.get('div.name').should('have.text', user.name)
 })
@@ -335,7 +335,7 @@ it('User profile should display user name', () => {
 
 The `getStore` method is a factory method that initializes a new Redux store. It
 is important that the store be initialized with each new test to ensure changes
-to the store don't affect other tests.
+to the store won't affect other tests.
 
 </Alert>
 
@@ -344,7 +344,7 @@ to the store don't affect other tests.
 Adding plugins and global components are some common scenarios for creating
 custom mount commands in Vue. Below are examples that demonstrate how set up a
 mount command for a few popular Vue libraries. These examples can be adapted to
-fit other libraries as well.
+fit other libraries.
 
 ### Vue Router
 
@@ -355,12 +355,12 @@ implementation of the router via the options param:
 <template #vue2>
 
 ```js
-import { mount } from '@cypress/vue'
+import { mount } from 'cypress/vue-2'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { router } from '../../src/router'
 
-Cypress.Commands.add('mountWithRouter', (component, options = {}) => {
+Cypress.Commands.add('mount', (component, options = {}) => {
   // Add the VueRouter plugin
   Vue.use(VueRouter)
 
@@ -375,7 +375,7 @@ Cypress.Commands.add('mountWithRouter', (component, options = {}) => {
 Typings:
 
 ```ts
-import { mount } from '@cypress/vue'
+import { mount } from 'cypress/vue-2'
 import VueRouter from 'vue-router'
 
 type MountParams = Parameters<typeof mount>
@@ -389,7 +389,7 @@ declare global {
        * @param component Vue Component or JSX Element to mount
        * @param options Options passed to Vue Test Utils
        */
-      mountWithRouter(component: any, options?: OptionsParam): Chainable<any>
+      mount(component: any, options?: OptionsParam): Chainable<any>
     }
   }
 }
@@ -404,7 +404,7 @@ import { routes } from '../router'
 
 it('home link should be active when url is "/"', () => {
   // No need to pass in custom router as default url is '/'
-  cy.mountWithRouter(Navigation)
+  cy.mount(Navigation)
 
   cy.get('a').contains('Home').should('have.class', 'router-link-active')
 })
@@ -420,7 +420,7 @@ it('login link should be active when url is "/login"', () => {
   router.push('/login')
 
   // Pass the already initialized router for use
-  cy.mountWithRouter(Navigation, { router })
+  cy.mount(Navigation, { router })
 
   cy.get('a').contains('Login').should('have.class', 'router-link-active')
 })
@@ -430,11 +430,11 @@ it('login link should be active when url is "/login"', () => {
 <template #vue3>
 
 ```js
-import { mount } from '@cypress/vue'
+import { mount } from 'cypress/vue'
 import { createMemoryHistory, createRouter } from 'vue-router'
 import { routes } from '../../src/router'
 
-Cypress.Commands.add('mountWithRouter', (component, options = {}) => {
+Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
   options.global = options.global || {}
   options.global.plugins = options.global.plugins || []
@@ -461,7 +461,7 @@ Cypress.Commands.add('mountWithRouter', (component, options = {}) => {
 Typings:
 
 ```ts
-import { mount } from '@cypress/vue'
+import { mount } from 'cypress/vue'
 import { Router } from 'vue-router'
 
 type MountParams = Parameters<typeof mount>
@@ -475,7 +475,7 @@ declare global {
        * @param component Vue Component or JSX Element to mount
        * @param options Options passed to Vue Test Utils
        */
-      mountWithRouter(component: any, options?: OptionsParam): Chainable<any>
+      mount(component: any, options?: OptionsParam): Chainable<any>
     }
   }
 }
@@ -494,7 +494,7 @@ import { createMemoryHistory, createRouter } from 'vue-router'
 
 it('home link should be active when url is "/"', () => {
   // No need to pass in custom router as default url is '/'
-  cy.mountWithRouter(<Navigation />)
+  cy.mount(<Navigation />)
 
   cy.get('a').contains('Home').should('have.class', 'router-link-active')
 })
@@ -511,7 +511,7 @@ it('login link should be active when url is "/login"', () => {
   cy.wrap(router.push('/login'))
 
   // Pass the already initialized router for use
-  cy.mountWithRouter(<Navigation />, { router })
+  cy.mount(<Navigation />, { router })
 
   cy.get('a').contains('Login').should('have.class', 'router-link-active')
 })
@@ -522,18 +522,18 @@ it('login link should be active when url is "/login"', () => {
 
 ### Vuex
 
-To use a component that uses [Vuex](https://vuex.vuejs.org/), create a
-`mountWithVuex` command that configures a Vuex store for your component:
+To use a component that uses [Vuex](https://vuex.vuejs.org/), create a `mount`
+command that configures a Vuex store for your component:
 
 <code-group-vue2-vue3>
 <template #vue2>
 
 ```js
-import { mount } from '@cypress/vue'
+import { mount } from 'cypress/vue-2'
 import Vuex from 'vuex'
 import { getStore } from '../../src/plugins/store'
 
-Cypress.Commands.add('mountWithVuex', (component, options = {}) => {
+Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
   options.extensions = options.extensions || {}
   options.extensions.plugins = options.extensions.plugins || []
@@ -559,7 +559,7 @@ ensure changes to the store don't affect other tests.
 Typings:
 
 ```ts
-import { mount } from '@cypress/vue'
+import { mount } from 'cypress/vue-2'
 import { Store } from 'vuex'
 
 type MountParams = Parameters<typeof mount>
@@ -573,7 +573,7 @@ declare global {
        * @param component Vue Component or JSX Element to mount
        * @param options Options passed to Vue Test Utils
        */
-      mountWithVuex(
+      mount(
         component: any,
         options?: OptionsParam & { store?: Store }
       ): Chainable<any>
@@ -597,7 +597,7 @@ it.only('User profile should display user name', () => {
   // mutate the store with user
   store.commit('setUser', user)
 
-  cy.mountWithVuex(UserProfile, {
+  cy.mount(UserProfile, {
     store,
   })
 
@@ -609,10 +609,10 @@ it.only('User profile should display user name', () => {
 <template #vue3>
 
 ```js
-import { mount } from '@cypress/vue'
+import { mount } from 'cypress/vue'
 import { getStore } from '../../src/plugins/store'
 
-Cypress.Commands.add('mountWithVuex', (component, options = {}) => {
+Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
   options.global = options.global || {}
   options.global.stubs = options.global.stubs || {}
@@ -645,7 +645,7 @@ ensure changes to the store don't affect other tests.
 Typings:
 
 ```ts
-import { mount } from '@cypress/vue'
+import { mount } from 'cypress/vue'
 import { Store } from 'vuex'
 
 type MountParams = Parameters<typeof mount>
@@ -659,7 +659,7 @@ declare global {
        * @param component Vue Component or JSX Element to mount
        * @param options Options passed to Vue Test Utils
        */
-      mountWithVuex(
+      mount(
         component: any,
         options?: OptionsParam & { store?: Store }
       ): Chainable<any>
@@ -683,7 +683,7 @@ it.only('User profile should display user name', () => {
   // mutate the store with user
   store.commit('setUser', user)
 
-  cy.mountWithVuex(UserProfile, {
+  cy.mount(UserProfile, {
     store,
   })
 
@@ -704,7 +704,7 @@ properly:
 <template #vue2>
 
 ```js
-import { mount } from '@cypress/vue'
+import { mount } from 'cypress/vue-2'
 import Button from '../../src/components/Button.vue'
 
 Cypress.Commands.add('mount', (component, options = {}) => {
@@ -724,7 +724,7 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 <template #vue3>
 
 ```js
-import { mount } from '@cypress/vue'
+import { mount } from 'cypress/vue'
 import Button from '../../src/components/Button.vue'
 
 Cypress.Commands.add('mount', (component, options = {}) => {

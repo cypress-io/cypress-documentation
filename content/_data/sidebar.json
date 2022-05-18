@@ -93,6 +93,10 @@
             {
               "title": "Framework Configuration",
               "slug": "component-framework-configuration"
+            },
+            {
+              "title": "Component Troubleshooting",
+              "slug": "component-test-troubleshooting"
             }
           ]
         },
@@ -621,6 +625,10 @@
             {
               "title": "not",
               "slug": "not"
+            },
+            {
+              "title": "origin",
+              "slug": "origin"
             },
             {
               "title": "parent",

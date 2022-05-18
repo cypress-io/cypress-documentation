@@ -39,7 +39,7 @@ cy.mount(<MyComponent />)
 it('let me debug like a fiend', () => {
   __VISIT_MOUNT_PLACEHOLDER__
 
-  cy.get('.selector-in-question')
+  cy.get('[data-testid="selector-in-question"]')
 
   debugger // Doesn't work
 })
@@ -66,7 +66,7 @@ execution and add a `debugger` at the appropriate time:
 ```js
 cy.visit('/my/page/path')
 
-cy.get('.selector-in-question').then(($selectedElement) => {
+cy.get('[data-testid="selector-in-question"]').then(($selectedElement) => {
   // Debugger is hit after the cy.visit
   // and cy.get commands have completed
   debugger
@@ -76,7 +76,7 @@ cy.get('.selector-in-question').then(($selectedElement) => {
 ```js
 cy.mount(<MyComponent />)
 
-cy.get('.selector-in-question').then(($selectedElement) => {
+cy.get('[data-testid="selector-in-question"]').then(($selectedElement) => {
   // Debugger is hit after the cy.mount
   // and cy.get commands have completed
   debugger
@@ -128,7 +128,7 @@ cy.mount(<MyComponent />)
 it('let me debug like a fiend', () => {
   __VISIT_MOUNT_PLACEHOLDER__
 
-  cy.get('.selector-in-question').debug()
+  cy.get('[data-testid="selector-in-question"]').debug()
 })
 ```
 
@@ -138,7 +138,7 @@ The current subject that is yielded by the [`cy.get()`](/api/commands/get) is
 exposed as the variable `subject` within your Developer Tools so that you can
 interact with it in the console.
 
-<DocsImage src="/img/guides/debugging-subject.png" alt="Debugging Subject" ></DocsImage>
+<DocsImage src="/img/guides/debugging/debugging-subject.png" alt="Debugging Subject"></DocsImage>
 
 Use [`.debug()`](/api/commands/debug) to quickly inspect any (or many!) part(s)
 of your application during the test. You can attach it to any Cypress chain of
@@ -152,7 +152,7 @@ You can run the test command by command using the
 ```javascript
 it('adds items', () => {
   cy.pause()
-  cy.get('.new-todo')
+  cy.get('[data-testid="new-todo"]')
   // more commands
 })
 ```
@@ -210,32 +210,9 @@ it('reroutes on users page', () => {
 ```
 
 The center of the `<li>Users</li>` element is hidden from view in our
-application under test, so the test above will fail. Within Cypress, an error
-will show on failure that includes the following pieces of information:
+application under test, so the test above will fail.
 
-1. **Error name**: This is the type of the error (e.g. AssertionError,
-   CypressError)
-1. **Error message**: This generally tells you what went wrong. It can vary in
-   length. Some are short like in the example, while some are long, and may tell
-   you exactly how to fix the error.
-1. **Learn more:** Some error messages contain a Learn more link that will take
-   you to relevant Cypress documentation.
-1. **Code frame file**: This is usually the top line of the stack trace and it
-   shows the file, line number, and column number that is highlighted in the
-   code frame below. Clicking on this link will open the file in your
-   [preferred file opener](https://on.cypress.io/IDE-integration#File-Opener-Preference)
-   and highlight the line and column in editors that support it.
-1. **Code frame**: This shows a snippet of code where the failure occurred, with
-   the relevant line and column highlighted.
-1. **View stack trace**: Clicking this toggles the visibility of the stack
-   trace. Stack traces vary in length. Clicking on a blue file path will open
-   the file in your
-   [preferred file opener](https://on.cypress.io/IDE-integration#File-Opener-Preference).
-1. **Print to console button**: Click this to print the full error to your
-   DevTools console. This will usually allow you to click on lines in the stack
-   trace and open files in your DevTools.
-
-<DocsImage src="/img/guides/command-failure-error.png" alt="example command failure error" ></DocsImage>
+::include{file=partials/anatomy-of-an-error.md}
 
 ### Source maps
 

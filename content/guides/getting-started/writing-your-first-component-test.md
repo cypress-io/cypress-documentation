@@ -2,6 +2,8 @@
 title: Writing Your First Component Test
 ---
 
+<CtBetaAlert></CtBetaAlert>
+
 <Alert type="info">
 
 ## <Icon name="graduation-cap"></Icon> What you'll learn
@@ -216,7 +218,7 @@ If you haven't already done so,
 The Cypress app should update to show the newly-created file in its list of
 specs.
 
-(SCREENSHOT OF SPEC FILE LIST)
+<DocsImage src="/img/guides/getting-started/ct/v10/spec-file-list.png" alt="Cypress spec file list"></DocsImage>
 
 If you have any issues getting the spec file to appear in the Cypress app,
 please see the [Troubleshooting](#Troubleshooting) section of this guide.
@@ -224,7 +226,7 @@ please see the [Troubleshooting](#Troubleshooting) section of this guide.
 Now select the spec file in the Cypress app. Cypress will tell you that no tests
 could be found, which is to be expected, since we haven't yet written any tests.
 
-(SCREENSHOT OF SELECTED SPEC WITH NO TESTS MESSAGE)
+<DocsImage src="/img/guides/getting-started/ct/v10/no-tests-message.png" alt="Cypress app with no tests message"></DocsImage>
 
 Now that we've created our first spec file and have confirmed that Cypress can
 load it, let's write our first test.
@@ -307,7 +309,7 @@ to the test name in the
 failing assertion of `expected false to equal true` in the test body, and a few
 options for getting more information about the failing test.
 
-(SCREENSHOT OF FAILING HELLO WORLD TEST)
+<DocsImage src="/img/guides/getting-started/ct/v10/failing-hello-world-test.png" alt="Cypress failing hello world test"></DocsImage>
 
 ### Updating a failing test
 
@@ -326,19 +328,20 @@ Now, the test should pass, and should have a green check mark next to the test
 name, along with a passing assertion of `expected true to equal true` in the
 test body.
 
-(SCREENSHOT OF PASSING HELLO WORLD TEST)
+<DocsImage src="/img/guides/getting-started/ct/v10/passing-hello-world-test.png" alt="Cypress passing hello world test"></DocsImage>
 
 Congratulations! You've written your first test using Cypress component testing.
 Now let's write some meaningful component tests.
 
 ## Testing components
 
-In order to test components, we're going to need to import two things into our
-spec file: a function to mount our component, and the component itself.
+In order to test components, we will use the custom
+[`cy.mount()`](/api/commands/mount) command that is scaffolded during
+[setup](/guides/getting-started/component-framework-configuration) to mount our
+components. Mounting the component will allow us to write tests against its
+rendered output.
 
-### Setting up imports
-
-::include{file=partials/import-mount-functions.md}
+### Importing the component
 
 Because our example `LoginForm` component is exported as a default export, we
 will import it into our spec file like so (if the component was exported as a
@@ -351,8 +354,7 @@ import LoginForm from './LoginForm'
 
 ### Mounting the component
 
-Now that both the `mount()` function and the component have been imported, we
-can write our first component test.
+Now we can begin to write our first component test.
 
 Replace the contents of your spec file with this, and then save it:
 
@@ -360,11 +362,10 @@ Replace the contents of your spec file with this, and then save it:
 <template #react>
 
 ```js
-import { mount } from '@cypress/react'
 import LoginForm from './LoginForm'
 
 it('should mount the component', () => {
-  mount(<LoginForm />)
+  cy.mount(<LoginForm />)
 })
 ```
 
@@ -372,11 +373,10 @@ it('should mount the component', () => {
 <template #vue>
 
 ```js
-import { mount } from '@cypress/vue'
 import LoginForm from './LoginForm'
 
 it('should mount the component', () => {
-  mount(LoginForm)
+  cy.mount(LoginForm)
 })
 ```
 
@@ -387,7 +387,7 @@ Just like in the previous section, we should see one passing test. However, this
 time, because we're mounting a component, we should also see the component
 rendering in the Cypress app.
 
-(SCREENSHOT OF CYPRESS APP WITH MOUNTED COMPONENT)
+<DocsImage src="/img/guides/getting-started/ct/v10/mounted-component.png" alt="Cypress app showing mounted component"></DocsImage>
 
 If you have any issues getting the component to mount or render properly, please
 see the [Troubleshooting](#Troubleshooting) section of this guide.
@@ -413,7 +413,7 @@ this to assert that there is an `input` element with a `type` attribute of
 
 ```js
 it('should have password input', () => {
-  mount(<LoginForm />)
+  cy.mount(<LoginForm />)
   cy.get('input[type="password"]')
 })
 ```
@@ -423,7 +423,7 @@ it('should have password input', () => {
 
 ```js
 it('should have password input', () => {
-  mount(LoginForm)
+  cy.mount(LoginForm)
   cy.get('input[type="password"]')
 })
 ```
@@ -451,7 +451,7 @@ After your last test, add this test and save the spec file:
 
 ```js
 it('should have password input of type password', () => {
-  mount(<LoginForm />)
+  cy.mount(<LoginForm />)
   cy.contains('Password').find('input').should('have.attr', 'type', 'password')
 })
 ```
@@ -461,7 +461,7 @@ it('should have password input of type password', () => {
 
 ```js
 it('should have password input of type password', () => {
-  mount(LoginForm)
+  cy.mount(LoginForm)
   cy.contains('Password').find('input').should('have.attr', 'type', 'password')
 })
 ```
@@ -496,7 +496,7 @@ After your last test, add this test and save the spec file:
 
 ```js
 it('should render title with default text', () => {
-  mount(<LoginForm />)
+  cy.mount(<LoginForm />)
   cy.get('legend').should('have.text', 'Log In')
 })
 ```
@@ -506,7 +506,7 @@ it('should render title with default text', () => {
 
 ```js
 it('should render title with default text', () => {
-  mount(LoginForm)
+  cy.mount(LoginForm)
   cy.get('legend').should('have.text', 'Log In')
 })
 ```
@@ -526,7 +526,7 @@ After your last test, add this test and save the spec file:
 ```js
 it('should render title with specified text', () => {
   const title = 'Please Authenticate'
-  mount(<LoginForm title={title} />)
+  cy.mount(<LoginForm title={title} />)
   cy.get('legend').should('have.text', title)
 })
 ```
@@ -537,7 +537,7 @@ it('should render title with specified text', () => {
 ```js
 it('should render title with specified text', () => {
   const title = 'Please Authenticate'
-  mount(LoginForm, {
+  cy.mount(LoginForm, {
     propsData: {
       title,
     },
@@ -607,24 +607,24 @@ Your tests should now look something like this:
 ```js
 describe('LoginForm', () => {
   it('should mount the component', () => {
-    mount(<LoginForm />)
+    cy.mount(<LoginForm />)
   })
 
   it('should have password input of type password', () => {
-    mount(<LoginForm />)
+    cy.mount(<LoginForm />)
     cy.contains('Password')
       .find('input')
       .should('have.attr', 'type', 'password')
   })
 
   it('should render title with default text', () => {
-    mount(<LoginForm />)
+    cy.mount(<LoginForm />)
     cy.get('legend').should('have.text', 'Log In')
   })
 
   it('should render title with specified text', () => {
     const title = 'Please Authenticate'
-    mount(<LoginForm title={title} />)
+    cy.mount(<LoginForm title={title} />)
     cy.get('legend').should('have.text', title)
   })
 })
@@ -636,24 +636,24 @@ describe('LoginForm', () => {
 ```js
 describe('LoginForm', () => {
   it('should mount the component', () => {
-    mount(LoginForm)
+    cy.mount(LoginForm)
   })
 
   it('should have password input of type password', () => {
-    mount(LoginForm)
+    cy.mount(LoginForm)
     cy.contains('Password')
       .find('input')
       .should('have.attr', 'type', 'password')
   })
 
   it('should render title with default text', () => {
-    mount(LoginForm)
+    cy.mount(LoginForm)
     cy.get('legend').should('have.text', 'Log In')
   })
 
   it('should render title with specified text', () => {
     const title = 'Please Authenticate'
-    mount(LoginForm, {
+    cy.mount(LoginForm, {
       propsData: {
         title,
       },
@@ -668,7 +668,7 @@ describe('LoginForm', () => {
 
 And the Cypress app should look like this:
 
-(SCREENSHOT OF CYPRESS APP SHOWING TESTS UNDER DESCRIBE BLOCK)
+<DocsImage src="/img/guides/getting-started/ct/v10/describe-block.png" alt="Cypress app showing test describe block"></DocsImage>
 
 ### Nested grouping
 
@@ -757,7 +757,7 @@ passing in the spy as the `onLogin` prop.
 ```js
 it.only('should call onLogin with username and password on login', () => {
   const onLoginSpy = cy.spy()
-  mount(<LoginForm onLogin={onLoginSpy} />)
+  cy.mount(<LoginForm onLogin={onLoginSpy} />)
 })
 ```
 
@@ -767,7 +767,7 @@ it.only('should call onLogin with username and password on login', () => {
 ```js
 it.only('should call onLogin with username and password on login', () => {
   const onLoginSpy = cy.spy()
-  mount(LoginForm, {
+  cy.mount(LoginForm, {
     propsData: {
       onLogin: onLoginSpy,
     },
@@ -782,7 +782,7 @@ In the Cypress app, you should now see that the test details has an expandable
 "Spies / Stubs" panel showing details about the spy, including the number of
 calls.
 
-(SCREENSHOT OF SPIES / STUBS PANEL)
+<DocsImage src="/img/guides/getting-started/ct/v10/spies-stubs-panel.png" alt="Cypress app showing spies and stubs panel"></DocsImage>
 
 Now that the component is mounted inside the test, we can then instruct Cypress
 to find the Username field and type a username into it, find the Password field
@@ -796,7 +796,7 @@ section above to get these form controls.
 ```js
 it.only('should call onLogin with username and password on login', () => {
   const onLoginSpy = cy.spy()
-  mount(<LoginForm onLogin={onLoginSpy} />)
+  cy.mount(<LoginForm onLogin={onLoginSpy} />)
   cy.contains('Username').find('input').type('testuser123')
   cy.contains('Password').find('input').type('s3cret')
   cy.get('button').contains('Login').click()
@@ -809,7 +809,7 @@ it.only('should call onLogin with username and password on login', () => {
 ```js
 it.only('should call onLogin with username and password on login', () => {
   const onLoginSpy = cy.spy()
-  mount(LoginForm, {
+  cy.mount(LoginForm, {
     propsData: {
       onLogin: onLoginSpy,
     },
@@ -832,7 +832,7 @@ the [`.type()`](/api/commands/type) command.
 You should also see that the spy was called after the button click, and the
 number of calls has been updated to 1 in the "Spies / Stubs" panel.
 
-(SCREENSHOT SHOWING SPIES / STUBS PANEL AND RENDERED COMPONENT)
+<DocsImage src="/img/guides/getting-started/ct/v10/spies-stubs-panel-and-rendered-component.png" alt="Cypress app showing spies and stubs panel with rendered component"></DocsImage>
 
 While visually confirming that the spy was called is helpful, we should actually
 assert this in our test.
@@ -849,7 +849,7 @@ the form.
 ```js
 it.only('should call onLogin with username and password on login', () => {
   const onLoginSpy = cy.spy().as('onLoginSpy')
-  mount(<LoginForm onLogin={onLoginSpy} />)
+  cy.mount(<LoginForm onLogin={onLoginSpy} />)
   cy.contains('Username').find('input').type('testuser123')
   cy.contains('Password').find('input').type('s3cret')
   cy.get('button').contains('Login').click()
@@ -866,7 +866,7 @@ it.only('should call onLogin with username and password on login', () => {
 ```js
 it.only('should call onLogin with username and password on login', () => {
   const onLoginSpy = cy.spy().as('onLoginSpy')
-  mount(LoginForm, {
+  cy.mount(LoginForm, {
     propsData: {
       onLogin: onLoginSpy,
     },
@@ -962,7 +962,7 @@ then move the spy creation and component mounting code into it, like so:
 describe('form tests', () => {
   beforeEach(() => {
     const onLoginSpy = cy.spy().as('onLoginSpy')
-    mount(<LoginForm onLogin={onLoginSpy} />)
+    cy.mount(<LoginForm onLogin={onLoginSpy} />)
   })
 
   it.only('should call onLogin with username and password on login', () => {
@@ -984,7 +984,7 @@ describe('form tests', () => {
 describe('form tests', () => {
   beforeEach(() => {
     const onLoginSpy = cy.spy().as('onLoginSpy')
-    mount(LoginForm, {
+    cy.mount(LoginForm, {
       propsData: {
         onLogin: onLoginSpy,
       },
@@ -1007,7 +1007,7 @@ describe('form tests', () => {
 </code-group-react-vue>
 
 The Cypress app should run the test exactly like before, however you should now
-see that the `mount` command has moved from the "test body" section to a
+see that the `cy.mount` command has moved from the "test body" section to a
 separate "before each" section.
 
 In order to get the most out of the `beforeEach()` hook, we should also separate
@@ -1039,7 +1039,7 @@ Password input, and Login button, like so:
 describe('form tests', () => {
   beforeEach(() => {
     const onLoginSpy = cy.spy().as('onLoginSpy')
-    mount(<LoginForm onLogin={onLoginSpy} />)
+    cy.mount(<LoginForm onLogin={onLoginSpy} />)
     cy.contains('Username').find('input').as('usernameInput')
     cy.contains('Password').find('input').as('passwordInput')
     cy.get('button').contains('Login').as('loginButton')
@@ -1064,7 +1064,7 @@ describe('form tests', () => {
 describe('form tests', () => {
   beforeEach(() => {
     const onLoginSpy = cy.spy().as('onLoginSpy')
-    mount(LoginForm, {
+    cy.mount(LoginForm, {
       propsData: {
         onLogin: onLoginSpy,
       },
@@ -1104,7 +1104,7 @@ describe('form tests', () => {
 
   beforeEach(() => {
     const onLoginSpy = cy.spy().as('onLoginSpy')
-    mount(<LoginForm onLogin={onLoginSpy} />)
+    cy.mount(<LoginForm onLogin={onLoginSpy} />)
     cy.contains('Username').find('input').as('usernameInput')
     cy.contains('Password').find('input').as('passwordInput')
     cy.get('button').contains('Login').as('loginButton')
@@ -1141,7 +1141,7 @@ describe('form tests', () => {
 
   beforeEach(() => {
     const onLoginSpy = cy.spy().as('onLoginSpy')
-    mount(LoginForm, {
+    cy.mount(LoginForm, {
       propsData: {
         onLogin: onLoginSpy,
       },
@@ -1221,7 +1221,7 @@ it('should not show any validation errors before login is attempted', () => {
 })
 ```
 
-(SCREENSHOT OF CYPRESS APP WITH ALL THE PASSING TESTS)
+<DocsImage src="/img/guides/getting-started/ct/v10/all-passing-tests.png" alt="Cypress app showing all passing tests"></DocsImage>
 
 ## Summary
 

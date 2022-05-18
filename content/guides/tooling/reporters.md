@@ -333,7 +333,7 @@ It generates the beautiful standalone HTML report file
 `mochawesome-report/mochawesome.html` shown below. As you can see all test
 results, timing information, and even test bodies are included.
 
-<DocsImage src="/img/guides/mochawesome-report.png" alt="Mochawesome HTML report" ></DocsImage>
+<DocsImage src="/img/guides/reporters/mochawesome-report.png" alt="Mochawesome HTML report"></DocsImage>
 
 For more information, see
 [Integrating Mochawesome reporter with Cypress's](http://antontelesh.github.io/testing/2019/02/04/mochawesome-merge.html)
