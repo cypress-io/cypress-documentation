@@ -2,6 +2,8 @@
 title: Styling Components
 ---
 
+<CtBetaAlert></CtBetaAlert>
+
 <Alert type="info">
 
 ## <Icon name="graduation-cap"></Icon> What you'll learn

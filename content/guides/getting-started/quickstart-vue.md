@@ -2,6 +2,8 @@
 title: 'Quickstart: Vue'
 ---
 
+<CtBetaAlert></CtBetaAlert>
+
 To follow along with the docs, you'll need a Vue 3 or Vue 2 application.
 
 The quickest way to get started writing component tests for Vue is to use Vue's

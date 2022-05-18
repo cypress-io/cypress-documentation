@@ -2,6 +2,8 @@
 title: Testing Your Components with Cypress
 ---
 
+<CtBetaAlert></CtBetaAlert>
+
 Cypress Component Testing provides a **testable component workbench** for you to
 quickly build and test any component — no matter how simple or complex.
 

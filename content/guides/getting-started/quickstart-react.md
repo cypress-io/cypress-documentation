@@ -2,6 +2,8 @@
 title: 'Quickstart: React'
 ---
 
+<CtBetaAlert></CtBetaAlert>
+
 To follow along with this guide, you'll need a React application.
 
 The quickest way to get started writing component tests for React is to use one
