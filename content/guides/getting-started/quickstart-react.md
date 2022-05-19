@@ -12,7 +12,7 @@ of the frameworks out there that can create a React project for you, like
 [Vite](https://vitejs.dev/). In this guide, we will use Vite as it's quick to
 get up and running.
 
-To create a React project with Vite, run:
+To create a React project with Vite:
 
 1. Run the scaffold command
 
@@ -54,7 +54,7 @@ configuration files, and ensure all required dependencies are installed.
 
 <img src="/img/component-testing-automatic-configuration.png" style="border: none; box-shadow: none; margin-bottom: 1rem;" />
 <p style="font-size: 0.85rem; text-align: center;">The Cypress Launchpad will scaffold all of these files for you.</p>
- 
+
 After setting up component testing, you will be at the Browser Selection screen.
 
 <!-- TODO: Browser Selection screen with lots of browsers -->
@@ -80,7 +80,7 @@ Simple components with few environmental dependencies will be the easiest to
 test.
 
 Here are a few examples of similar components that will be easier or harder to
-test.
+test:
 
 | Easier-to-test             | Harder-to-test                          |
 | :------------------------- | :-------------------------------------- |
