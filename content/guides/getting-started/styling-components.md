@@ -41,7 +41,6 @@ usually exist by the time you mount the component. Some examples include:
 1. Run-time JavaScript code (state management, routers, UI libraries)
 2. Global styles (style resets, Tailwind)
 
-<!-- see GitHub comment -->
 As a rule, your Component Support File should look **very similar** to your
 application's `main.js` and `main.css` files.
 
@@ -52,7 +51,6 @@ What you would see is classes being applied in the inspector, but no styles. e.g
 
 PopperJS (Floating UI) is probably a better example because the UI is malformed -- not just missing. e.g. the :after CSS being semi-visible
 -->
-<!-- see GitHub comment -->
 Components can have three parts: markup, styles, and script logic. All three of
 these work together in order to deliver a working component.
 

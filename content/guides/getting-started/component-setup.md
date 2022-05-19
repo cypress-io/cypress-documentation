@@ -28,7 +28,6 @@ cypress open
 
 The Launchpad's setup wizard will do the following things:
 1. Determine what changes need to be merged into your Cypress Config file.
-<!-- see GitHub comment-->
 2. Create a component support file for [configuring global styles]() and
    installing component libraries.
 3. Globally register the correct `cy.mount` command based on your framework.
