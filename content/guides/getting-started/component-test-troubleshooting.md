@@ -9,7 +9,7 @@ This guide covers some common issues specific to Cypress Component Testing.
 For more general troubleshooting of Cypress, visit the main
 [Troubleshooting Guide](/guides/references/troubleshooting). For information on
 migrating to Cypress v10.0, visit the
-[Migration Guide](http://localhost:3000/guides/references/migration-guide#Migrating-to-Cypress-version-10-0).
+[Migration Guide](/guides/references/migration-guide#Migrating-to-Cypress-version-10-0).
 
 ## Common Issues
 
