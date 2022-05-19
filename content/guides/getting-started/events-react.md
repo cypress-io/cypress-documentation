@@ -37,12 +37,12 @@ developer or parent component consuming the Stepper.
 ```
 
 This can be fine, but depending on the needs of the developer, it can be
-difficult for the _consumer of the Stepper_ (e.g. parent components) to listen
-to when change occurs or when the user interacts with the Stepper's various
+difficult for the _consumer of the Stepper_ (e.g. parent components) to know
+when change occurs or when the user interacts with the Stepper's various
 buttons.
 
-One solution is to "emit" an event called `onChange` to the consuming component
-with the new internal state of the `Stepper`.
+One solution is to accept an `onChange` prop and call it when the internal
+state of the `Stepper` changes.
 
 You would use the `<Stepper>` from a parent component like so:
 
@@ -202,4 +202,4 @@ Congratulations, you covered the basics for component testing!
 Next, we will dive into more advanced topics such as how to customize our mount
 command.
 
-<NavGuide prev="/guides/getting-started/testing-react" next="/guides/getting-started/mount-guide-react" />
+<NavGuide prev="/guides/getting-started/testing-react" next="/guides/getting-started/custom-mount-react" />
