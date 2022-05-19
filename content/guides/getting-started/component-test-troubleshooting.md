@@ -4,9 +4,12 @@ title: Component Troubleshooting
 
 <CtBetaAlert></CtBetaAlert>
 
-This guide covers some common issues specific to Cypress Component Testing. For
-more general troubleshooting of Cypress, visit the main
-[Troubleshooting Guide](/guides/references/troubleshooting).
+This guide covers some common issues specific to Cypress Component Testing.
+
+For more general troubleshooting of Cypress, visit the main
+[Troubleshooting Guide](/guides/references/troubleshooting). For information on
+migrating to Cypress v10.0, visit the
+[Migration Guide](http://localhost:3000/guides/references/migration-guide#Migrating-to-Cypress-version-10-0).
 
 ## Common Issues
 
@@ -83,7 +86,7 @@ update the Next Webpack configuration.
 <Alert type="info">
 
 See our <Icon name="github"></Icon>
-[example Next application](https://github.com/cypress-io/cypress-component-testing-apps/blob/v10-complete/react-next12-ts/next.config.js)
+[example Next.js application](https://github.com/cypress-io/cypress-component-testing-apps/blob/v10-complete/react-next12-ts/next.config.js)
 for a demonstration of this configuration.
 
 </Alert>
