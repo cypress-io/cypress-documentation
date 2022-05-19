@@ -2,8 +2,7 @@
 title: Who Are You Testing For?
 ---
 
-When testing components, you should first realize that you have TWO kinds users:
-End Users and Developers.
+When testing components, there are two kinds of users: End Users and Developers.
 
 A good component test covers End User concerns (finding and interacting with
 elements based on accessible queries and human-readable text) as well as
@@ -40,7 +39,7 @@ tests.
 By doing so, you'll gain the same kind of coverage and benefits as you would in
 an end-to-end test, without the penalties of speed, setup, and complexity.
 
-### Your Test has an Audience
+### Your Test Has an Audience
 
 People often assign labels like "integration testing" or "unit testing" when
 testing components in order to try and describe differences in detail and
