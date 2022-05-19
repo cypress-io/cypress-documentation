@@ -576,7 +576,7 @@ The index file allows you to add in global assets, such as styles, fonts, and
 external scripts.
 
 You can provide an alternative path to the file using the `indexHtmlFile` option
-in the [component](/guides/references/configuration#component) config options:
+in the [component config](/guides/references/configuration#component) options:
 
 ```js
 {
