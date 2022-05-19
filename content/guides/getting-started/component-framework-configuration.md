@@ -606,5 +606,5 @@ subdirectories.
 
 ### Additional Config
 
-For more information on all the available configuration options, see
+For more information on all the available configuration options, see the
 [configuration reference](/guides/references/configuration).

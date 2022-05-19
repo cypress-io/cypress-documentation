@@ -96,7 +96,7 @@ ThemeProviders or Material UI, is covered on the
 [Getting Components to Work](/guides/getting-started/getting-components-to-work)
 page.
 
-Depending on how your application is built, the first time your mount a new
+Depending on how your application is built, the first time you mount a new
 component, it may be completely or somewhat unstyled.
 
 This makes sense. Many applications have some amount of one-time setup that is
