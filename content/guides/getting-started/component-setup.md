@@ -27,8 +27,8 @@ cypress open
 ```
 
 The Launchpad's setup wizard will do the following things:
-
 1. Determine what changes need to be merged into your Cypress Config file.
+<!-- see GitHub comment-->
 2. Create a component support file for [configuring global styles]() and
    installing component libraries.
 3. Globally register the correct `cy.mount` command based on your framework.
@@ -68,7 +68,7 @@ like sass, JSX, or autoprefixer to your build configuration, those tools will be
 applied to your tests the same way they are to your source code.
 
 If your dev server has compiled your `Stepper.cy.js` spec correctly, you'll get
-a passing test. If not, read the "[Dev Server Troubleshooting]()" section.
+a passing test. If not, read the [Dev Server Troubleshooting]() section.
 
 <Alert>
 
