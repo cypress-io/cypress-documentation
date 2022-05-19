@@ -16,15 +16,13 @@ they exercise the component in a particular way, with certain props, it'll
 behave the way they expect it to. A test written for a developer provides
 coverage over the component's usage and signature.
 
-Component testing written with developers in mind heavily covers props, events
-(Vue), and children/slots (React + Vue).
+Component testing written with developers in mind heavily covers props, events, and children.
 
 ### End-User Concerns
 
 Users think the way a non-technical product owner might.
 
-They use their eyes or, more accessibly, assistive devices such as screen
-readers.
+They access and interact with the site in various ways, i.e. assistive devices such as screen readers.
 
 Is the component supposed to tell you what's in your cart? Should you be able to
 enter a text value into a numerical `Stepper` component like it was an input? Is

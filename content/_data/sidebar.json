@@ -56,6 +56,7 @@
               "title": "Framework Configuration",
               "slug": "component-framework-configuration"
             },
+            // see GitHub comment
             {
               "title": "Rendering Components Correctly",
               "slug": "styling-components"
