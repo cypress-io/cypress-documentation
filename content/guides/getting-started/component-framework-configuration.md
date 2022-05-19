@@ -29,7 +29,7 @@ Testing, the app will automatically guide you and set up your configuration.
 Cypress offers **automatic configuration** for supported front-end frameworks
 and bundlers.
 
-For first-time setup of React of Vue apps, we strongly recommend using automatic
+For first-time setup of React or Vue apps, we strongly recommend using automatic
 configuration to create all of the necessary configuration files.
 
 ### Automatic Configuration Setup
