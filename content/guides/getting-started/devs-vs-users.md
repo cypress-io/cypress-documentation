@@ -12,7 +12,7 @@ when used in conjunction with other components?).
 ### Developer Concerns
 
 Developers care about the API of the component. They want to make sure that if
-they exercise the component in a particular way, with certain props, that it'll
+they exercise the component in a particular way, with certain props, it'll
 behave the way they expect it to. A test written for a developer provides
 coverage over the component's usage and signature.
 

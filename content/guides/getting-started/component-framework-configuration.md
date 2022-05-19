@@ -35,7 +35,7 @@ configuration to create all of the necessary configuration files.
 ### Automatic Configuration Setup
 
 You should use the Cypress Launchpad to configure Component Testing for the
-first time. To follow the UI prompts displayed the Launchpad, simply open
+first time. To start the setup wizard, simply open
 Cypress and choose "Component Testing".
 
 <!-- TODO: Video -->
@@ -567,7 +567,7 @@ export default defineConfig({
 </template>
 </cypress-config-file>
 
-### Custom Index file
+### Custom Index File
 
 By default, Cypress renders your components into an HTML file located at
 `cypress/support/component-index.html`.
