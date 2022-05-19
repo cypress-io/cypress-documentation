@@ -42,7 +42,7 @@ website. This results in tests that are faster and have fewer dependencies on
 infrastructure than end-to-end tests that cover the same code paths.
 
 Lastly, Cypress's API is user-centric and built for testing things that render
-in the web. Therefor, many of your tests will appear framework-agnostic and
+in the web. Therefore, many of your tests will appear framework-agnostic and
 **approachable for developers coming from any background**.
 
 ### Next Steps
