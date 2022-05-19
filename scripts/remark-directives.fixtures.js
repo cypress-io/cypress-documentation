@@ -168,7 +168,9 @@ ${
 }</code-group>
 <h2>bbb</h2>`
 }
-
+/*
+  How does this demonstrate the difference between JS and TS? It looks like ES5 vs ES6 syntax
+*/
 cpe.functionBody = cypressPluginExample({
   tab1: `const { defineConfig } = require('cypress')
 
