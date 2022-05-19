@@ -13,7 +13,7 @@ when used in conjunction with other components?).
 ### Developer Concerns
 
 Developers care about the API of the component. They want to make sure that if
-they exercise the component in a particular way, with certain props, that it'll
+they exercise the component in a particular way, with certain props, it'll
 behave the way they expect it to. A test written for a developer provides
 coverage over the component's usage and signature.
 
@@ -40,7 +40,7 @@ tests.
 By doing so, you'll gain the same kind of coverage and benefits as you would in
 an end-to-end test, without the penalties of speed, setup, and complexity.
 
-### Your Test has an Audience
+### Your Test Has an Audience
 
 People often assign labels like "integration testing" or "unit testing" when
 testing components in order to try and describe differences in detail and

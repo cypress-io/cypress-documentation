@@ -93,7 +93,7 @@ Overlays + Modals are usually really good.
 This guide will help you setup your test infrastructure to render your
 component's styles properly. Solving certain runtime errors, such as those with
 ThemeProviders or Material UI, is covered on the
-"[Getting Components to Work](/guides/getting-started/getting-components-to-work)"
+[Getting Components to Work](/guides/getting-started/getting-components-to-work)
 page.
 
 Depending on how your application is built, the first time your mount a new
@@ -137,7 +137,9 @@ runners.
 
 Each application or component library imports styles a little differently. We'll
 go over a few methods and describe how you can quickly restructure your
-components to become more testable. If you do not follow this guide, your
+components to become more testable. 
+
+If you do not follow this guide, your
 components will mount, but they won't look correct and you may not be able to
 benefit from some of the most valuable parts of Cypress. Namely, implicit checks
 for width, height, and overflow to ensure that your components not only exist in
@@ -145,7 +147,7 @@ the page's HTML but are also visible.
 
 ## Rules for Setting Up Your Styles
 
-All of your Application's styles need to end up in Cypress so that when your
+All of your application's styles need to end up in Cypress so that when your
 component mounts, it looks right.
 
 We expose two hooks for you to configure your styles:

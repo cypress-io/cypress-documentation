@@ -17,7 +17,7 @@ Advanced usage: You can _always_ manually configure component testing using the
 # Automatic Configuration (Recommended)
 
 You should use the Cypress Launchpad to configure Component Testing for the
-first time. To follow the UI prompts displayed the Launchpad, simply open
+first time. To start the setup wizard, simply open
 Cypress and choose "Component Testing".
 
 <!-- TODO: Video -->
