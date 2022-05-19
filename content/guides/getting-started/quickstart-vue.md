@@ -68,7 +68,7 @@ create a file that matches your project's `specPattern`.
 
 <!-- TODO: Video of Generator -->
 
-### If You have Existing Specs
+### If You Have Existing Specs
 
 Certain Vue templates will have already set you up with your first component
 spec! Awesome.
