@@ -50,9 +50,9 @@ The Launchpad's setup wizard will do the following things:
 2. Create a component support file for [configuring global styles]() and
    installing component libraries.
 3. Globally register the correct `cy.mount` command based on your framework.
-4. Create an index HTML file to let you add your application's fonts and global
+4. Create `component-index.html` to let you add your application's fonts and global
    CDN downloads.
-5. Add in any framework-specific setup into the support or component HTML files.
+5. Add any framework-specific setup to your support files.
 
 <!-- TODO: pic of all the files we make, collapsed -->
 
