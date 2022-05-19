@@ -29,17 +29,17 @@ Ensure that whatever you're doing in production is happening within either the C
 
 ## Component Support File
 
-When you first load a component or end-to-end spec file, it will first load
+When you load a component or end-to-end spec file, it will first load
 something called a supportFile. By default, this is created for you during
 first-time setup of Cypress Component Testing and is located at
-`cypress/support/component.js`. This file gives you the opportunity to setup
+`cypress/support/component.js`. This file gives you the opportunity to set up
 your spec's environment.
 
-For component specs, you use this file to setup page-level concerns that would
+For component specs, you use this file to set up page-level concerns that would
 usually exist by the time you mount the component. Some examples include:
 
-1. Run-time JavaScript code (State Management, Routers, UI Libraries)
-2. Global Styles (Style Resets, Tailwind)
+1. Run-time JavaScript code (state management, routers, UI libraries)
+2. Global styles (style resets, Tailwind)
 
 As a rule, your Component Support File should look **very similar** to your
 application's `main.js` and `main.css` files.

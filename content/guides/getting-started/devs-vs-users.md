@@ -1,5 +1,5 @@
 ---
-title: Who are you Testing for?
+title: Who Are You Testing For?
 ---
 
 When testing components, you should first realize that you have TWO kinds users:
@@ -32,8 +32,8 @@ enter a text value into a numerical `Stepper` component like it was an input? Is
 that `Stepper` component supposed to increment and decrement when you click the
 correct buttons?
 
-People are often more comfortable putting on their End-user hat when writing
-End-to-end tests because they're not able to access any application internals.
+People are often more comfortable putting on their end-user hat when writing
+end-to-end tests because they're not able to access any application internals.
 We encourage you to carry over that kind of thinking when writing your component
 tests.
 
