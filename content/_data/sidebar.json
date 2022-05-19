@@ -50,15 +50,15 @@
             },
             {
               "title": "Who Are You Testing For?",
-              "slug": "who-are-you-testing-for"
+              "slug": "devs-vs-users"
             },
             {
               "title": "Framework Configuration",
               "slug": "component-framework-configuration"
             },
             {
-              "title": "Rendering Components Correctly",
-              "slug": "rendering-components-correctly"
+              "title": "Styling Components",
+              "slug": "styling-components"
             },
             {
               "title": "Component Troubleshooting",
