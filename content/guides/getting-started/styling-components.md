@@ -42,7 +42,7 @@ usually exist by the time you mount the component. Some examples include:
 2. Global styles (style resets, Tailwind)
 
 As a rule, your Component Support File should look **very similar** to your
-application's `main.js` and `main.css` files.
+application's main JavaScript (ie: main.js, index.js) and main CSS (ie: main.css, index.css) files.
 
 ## 3rd Party CSS Libraries (Tailwind, Bootstrap, PopperJS)
 
