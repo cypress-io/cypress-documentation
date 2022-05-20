@@ -13,7 +13,6 @@ version 10.0.
 - The “Run all specs” and “Run filtered specs” functionality have been removed.
 - The experimental "Cypress Studio" has been removed and will be
   rethought/revisited in a later release.
-  <!-- Which browser versions are unsupported that would have run without error before? Do we have a supported browser version policy we can link to here? -->
 - Unsupported browser versions can no longer be run via `cypress run` or
   `cypress open`. Instead, an error will display.
 
