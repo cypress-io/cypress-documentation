@@ -29,13 +29,13 @@ Testing, the app will automatically guide you and set up your configuration.
 Cypress offers **automatic configuration** for supported front-end frameworks
 and bundlers.
 
-For first-time setup of React of Vue apps, we strongly recommend using automatic
+For first-time setup of React or Vue apps, we strongly recommend using automatic
 configuration to create all of the necessary configuration files.
 
 ### Automatic Configuration Setup
 
 You should use the Cypress Launchpad to configure Component Testing for the
-first time. To follow the UI prompts displayed the Launchpad, simply open
+first time. To start the setup wizard, simply open
 Cypress and choose "Component Testing".
 
 <!-- TODO: Video -->
@@ -50,9 +50,9 @@ The Launchpad's setup wizard will do the following things:
 2. Create a component support file for [configuring global styles]() and
    installing component libraries.
 3. Globally register the correct `cy.mount` command based on your framework.
-4. Create an index HTML file to let you add your application's fonts and global
+4. Create `component-index.html` to let you add your application's fonts and global
    CDN downloads.
-5. Add in any framework-specific setup into the support or component HTML files.
+5. Add any framework-specific setup to your support files.
 
 <!-- TODO: pic of all the files we make, collapsed -->
 
@@ -567,7 +567,7 @@ export default defineConfig({
 </template>
 </cypress-config-file>
 
-### Custom Index file
+### Custom Index File
 
 By default, Cypress renders your components into an HTML file located at
 `cypress/support/component-index.html`.
@@ -576,7 +576,7 @@ The index file allows you to add in global assets, such as styles, fonts, and
 external scripts.
 
 You can provide an alternative path to the file using the `indexHtmlFile` option
-in the [component](/guides/references/configuration#component) config options:
+in the [component config](/guides/references/configuration#component) options:
 
 ```js
 {
@@ -606,5 +606,5 @@ subdirectories.
 
 ### Additional Config
 
-For more information on all the available configuration options, see
+For more information on all the available configuration options, see the
 [configuration reference](/guides/references/configuration).

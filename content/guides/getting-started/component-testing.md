@@ -31,7 +31,7 @@ and testing a given feature.
 ### Component vs. End-to-End in a Nutshell
 
 We cover the differences between component and end-to-end testing in-depth in
-the ["Choosing your testing type"]() guide.
+the [Choosing a Testing Type](/guides/overview/choosing-testing-type) guide.
 
 But in short, Cypress Component Testing uses the same Cypress test runner,
 commands, and API to test components instead of pages.
@@ -42,7 +42,7 @@ website. This results in tests that are faster and have fewer dependencies on
 infrastructure than end-to-end tests that cover the same code paths.
 
 Lastly, Cypress's API is user-centric and built for testing things that render
-in the web. Therefor, many of your tests will appear framework-agnostic and
+in the web. Therefore, many of your tests will appear framework-agnostic and
 **approachable for developers coming from any background**.
 
 ### Next Steps

@@ -61,7 +61,7 @@ you'll want to follow the
 // cypress/support/component.js
 import { mount } from 'cypress/react'
 
-Cypress.Commands.add('react', mount)
+Cypress.Commands.add('mount', mount)
 ```
 
 Now we can update our `<Stepper />` component by removing the `mount` import and
