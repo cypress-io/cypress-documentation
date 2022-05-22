@@ -21,14 +21,45 @@ Cypress currently supports the following frameworks for component testing:
 | [Vue with Vite](#Vue-with-Vite)                      | Vue        | Vite    |
 | [Vue with Webpack](#Vue-with-Webpack)                | Vue        | Webpack |
 
-## Automatic Setup
+## Automatic Configuration (Recommended)
 
 When you launch Cypress for the first time in a project and select Component
 Testing, the app will automatically guide you and set up your configuration.
 
-To get started, visit the
-[installation guide](/guides/getting-started/installing-cypress#Installing) on
-how to install and launch Cypress for the first time.
+Cypress offers **automatic configuration** for supported front-end frameworks
+and bundlers.
+
+For first-time setup of React or Vue apps, we strongly recommend using automatic
+configuration to create all of the necessary configuration files.
+
+### Automatic Configuration Setup
+
+You should use the Cypress Launchpad to configure Component Testing for the
+first time. To start the setup wizard, simply open
+Cypress and choose "Component Testing".
+
+<!-- TODO: Video -->
+
+```shell
+cypress open
+```
+
+The Launchpad's setup wizard will do the following things:
+
+1. Determine what changes need to be merged into your Cypress Config file.
+2. Create a component support file for [configuring global styles]() and
+   installing component libraries.
+3. Globally register the correct `cy.mount` command based on your framework.
+4. Create `component-index.html` to let you add your application's fonts and global
+   CDN downloads.
+5. Add any framework-specific setup to your support files.
+
+<!-- TODO: pic of all the files we make, collapsed -->
+
+Once you click through all of the prompts, you'll be asked to choose a browser
+and launch the Cypress App.
+
+<!-- TODO: start cypress, take a pic of Choose a Browser -->
 
 ## Manual Setup
 
@@ -89,8 +120,10 @@ export default defineConfig({
 </template>
 </cypress-config-file>
 
-You can find an example Create React App project
-[here](https://github.com/cypress-io/cypress-component-examples/tree/main/setup-create-react-app).
+#### Sample Create React Apps
+
+- [CRA 4 with JavaScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-cra4-js)
+- [CRA 5 with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-cra5-ts)
 
 ### Next.js
 
@@ -140,9 +173,6 @@ export default defineConfig({
 </template>
 </cypress-config-file>
 
-You can find an example Next.js project
-[here](https://github.com/cypress-io/cypress-component-examples/tree/main/setup-create-next-app).
-
 #### Next.js Caveats
 
 There are some specific caveats to consider when testing Next.js
@@ -160,6 +190,10 @@ end-to-end test would execute and test a page entirely.
 Because of this, we recommend using end-to-end testing over component testing
 for Next.js pages and component testing for individual components in a Next.js
 app.
+
+#### Sample Next.js Apps
+
+- [Next.js 12 with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-next12-ts)
 
 ### React with Vite
 
@@ -202,8 +236,9 @@ export default defineConfig({
 </template>
 </cypress-config-file>
 
-You can find an example React project that uses Vite
-[here](https://github.com/cypress-io/cypress-component-examples/tree/main/setup-vite-react-app).
+#### Sample React Vite Apps
+
+- [React Vite with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-next12-ts)
 
 ### React with Webpack
 
@@ -252,6 +287,10 @@ export default defineConfig({
 If you don't provide a webpack config, Cypress will try to infer it. If Cypress
 cannot do so, or you want to make modifications to your config, you can specify
 it via the `webpackConfig` option.
+
+#### Sample React Webpack Apps
+
+- [React Webpack 5 with JavaScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-webpack5-js)
 
 You can find an example React project that uses Webpack
 [here](https://github.com/cypress-io/cypress-component-examples/tree/main/setup-webpack-react-app).
@@ -315,10 +354,10 @@ for more information.
 
 </Alert>
 
-You can find an example Vue 3 CLI project
-[here](https://github.com/cypress-io/cypress-component-examples/tree/main/setup-vue-cli-vue3),
-and an example Vue 2 CLI project
-[here](https://github.com/cypress-io/cypress-component-examples/tree/main/setup-vue-cli-vue2).
+#### Sample Vue CLI Apps
+
+- [Vue 3 CLI 5 with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue3-cli5-ts)
+- [Vue 2 CLI 4 with JavaScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue2-cli4-js)
 
 ### Nuxt
 
@@ -367,8 +406,9 @@ export default defineConfig({
 </template>
 </cypress-config-file>
 
-You can find a sample Vue Nuxt project
-[here](https://github.com/cypress-io/cypress-component-examples/tree/main/setup-nuxt-vue-2).
+#### Nuxt Sample Apps
+
+- [Vue 2 Nuxt 2 with JavaScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue2-nuxt2-js)
 
 ### Vue with Vite
 
@@ -411,8 +451,9 @@ export default defineConfig({
 </template>
 </cypress-config-file>
 
-You can find an example Vue project that uses Vite
-[here](https://github.com/cypress-io/cypress-component-examples/tree/main/setup-vite-vue-app).
+#### Vue Vite Sample Apps
+
+- [Vue 3 Vite with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue2-nuxt2-js)
 
 ### Vue with Webpack
 
@@ -462,8 +503,9 @@ If you don't provide one, Cypress will try to infer your webpack config. If
 Cypress cannot or you want to make modifications to your config, you can pass it
 in manually via the `webpackConfig` option.
 
-You can find an example Vue project that uses Webpack
-[here](https://github.com/cypress-io/cypress-component-examples/tree/main/setup-webpack-vue-app).
+#### Vue Webpack Sample Apps
+
+- [Vue 3 Webpack 5 with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue3-webpack-ts)
 
 ## Component Testing Config
 
@@ -525,7 +567,7 @@ export default defineConfig({
 </template>
 </cypress-config-file>
 
-### Custom Index file
+### Custom Index File
 
 By default, Cypress renders your components into an HTML file located at
 `cypress/support/component-index.html`.
@@ -534,7 +576,7 @@ The index file allows you to add in global assets, such as styles, fonts, and
 external scripts.
 
 You can provide an alternative path to the file using the `indexHtmlFile` option
-in the [component](/guides/references/configuration#component) config options:
+in the [component config](/guides/references/configuration#component) options:
 
 ```js
 {
@@ -564,5 +606,5 @@ subdirectories.
 
 ### Additional Config
 
-For more information on all the available configuration options, see
+For more information on all the available configuration options, see the
 [configuration reference](/guides/references/configuration).
