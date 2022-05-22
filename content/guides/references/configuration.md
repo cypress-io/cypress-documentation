@@ -2,6 +2,18 @@
 title: Configuration
 ---
 
+<Alert type="warning">
+
+This guide is for Cypress 10 and the new JavaScript configuration file format.
+
+If you are on an older version of Cypress that uses `cypress.json`, please see
+the [legacy configuration](/guides/references/legacy-configuration) guide.
+
+For more info on upgrading configuration to Cypress 10, see the
+[migration guide](/guides/references/migration-guide#Migrating-to-Cypress-version-10-0).
+
+</Alert>
+
 ## Configuration File
 
 Launching the Cypress App for the first time, you will be guided through a
@@ -19,18 +31,6 @@ syntax in your config without the need of a transpiler step.
 A '.cjs' file uses the [CommonJS](https://nodejs.org/api/modules.html) module
 syntax, which is the default for JavaScript files. All JavaScript config
 examples in our docs use the CommonJS format.
-
-<Alert type="warning">
-
-Configuring Cypress via `cypress.json` is no longer supported as of Cypress
-version 10.0.0.
-
-If your project has a `cypress.json` file, please see the
-[legacy configuration](/guides/references/legacy-configuration) page for
-configuration instructions and the migration guide for more information on how
-to update your configuration.
-
-</Alert>
 
 If you [configure your tests to record](/guides/dashboard/projects#Setup) the
 results to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction)
@@ -233,7 +233,7 @@ object:
 | `devServer`          | `null`                                   | Required option used to configure the component testing dev server. [Please read the notes for examples on using this.](#devServer)                                              |
 | `setupNodeEvents`    | `null`                                   | Function in which node events can be registered and config can be modified. Takes the place of the (removed) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
 | `supportFile`        | `cypress/support/component.js`           | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                        |
-| `specPattern`        | `**/*.cy.{js,jsx,ts,tsx}`                | A glob pattern String or Array of glob pattern Strings of the spec files to load. <br><br>Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.**  ** |
+| `specPattern`        | `**/*.cy.{js,jsx,ts,tsx}`                | A glob pattern String or Array of glob pattern Strings of the spec files to load. <br><br>Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.** |
 | `excludeSpecPattern` | `['/snapshots/*', '/image_snapshots/*']` | A String or Array of glob patterns used to ignore spec files that would otherwise be shown in your list of specs. [Please read the notes on using this.](#excludeSpecPattern)                    |
 | `slowTestThreshold`  | `250`                                    | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                          |
 

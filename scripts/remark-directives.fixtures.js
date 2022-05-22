@@ -168,7 +168,6 @@ ${
 }</code-group>
 <h2>bbb</h2>`
 }
-
 cpe.functionBody = cypressPluginExample({
   tab1: `const { defineConfig } = require('cypress')
 

@@ -74,7 +74,7 @@
   border-bottom-width: 1px;
   border-bottom-color: rgb(238, 238, 238);
   color: var(--font-color-black);
-  @apply text-3xl;
+  @apply text-2xl;
   @apply font-bold;
   @apply mt-10;
   @apply mb-6;
@@ -131,7 +131,7 @@
   border-bottom-color: rgb(238, 238, 238);
   color: rgb(46, 49, 56);
   @apply font-bold;
-  @apply text-3xl;
+  @apply text-2xl;
   @apply mt-16;
   @apply mb-6;
   @apply pb-3;
@@ -239,7 +239,8 @@
 .nuxt-content blockquote {
   @apply border-l-4;
   @apply px-12;
-  @apply py-6;
+  @apply pt-6;
+  @apply pb-5;
   @apply bg-gray-100;
   @apply mb-8;
   @apply italic;
@@ -256,7 +257,6 @@
 }
 
 .nuxt-content p {
-  @apply text-lg;
   @apply mb-5;
 }
 

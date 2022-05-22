@@ -2,11 +2,11 @@
 title: Migration Guide
 ---
 
-## Migrating to Cypress 10.0.0
+## Migrating to Cypress version 10.0
 
 This guide details the changes and how to change your code to migrate to Cypress
-version 10.0.0.
-[See the full changelog for version 10.0.0](/guides/references/changelog#10-0-0).
+version 10.0.
+[See the full changelog for version 10.0](/guides/references/changelog#10-0-0).
 
 ### Cypress App Changes
 
@@ -625,9 +625,6 @@ extensions of your spec files will result in a loss of data in the Cypress
 Dashboard. Because of this, if we detect your project is using the Dashboard
 during automatic migration, we won't suggest changing your spec files. We also
 don't recommend doing it manually if you are a Dashboard user.
-
-A future update to the Cypress app will cover updating the `specPattern` and
-maintaining history in the Dashboard.
 
 </Alert>
 
