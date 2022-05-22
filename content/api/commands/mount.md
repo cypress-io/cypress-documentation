@@ -3,25 +3,18 @@ title: mount
 componentSpecific: true
 ---
 
-<Alert type="warning">
+<CtBetaAlert></CtBetaAlert>
 
 Cypress does not have a built-in `cy.mount()` command. The command must be set
-up in your [support file](/guides/references/configuration#component). By
-default, when you use the Cypress app to configure your project, one will be
-automatically scaffolded for you in this file.
+up in your support file. By default, when you use the Cypress app to
+[configure](guides/getting-started/component-framework-configuration#Automatic-Configuration-Recommended)
+your project, one will be automatically scaffolded for you.
 
 This guide covers how to customize the `cy.mount()` command to fit the needs of
 your app.
 
-</Alert>
-
-<CtBetaAlert></CtBetaAlert>
-
-For
-[Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing),
-we recommend creating a custom `cy.mount()` command to wrap the mount command
-from the framework-specific libraries in your component tests. Doing so offers a
-few advantages:
+We recommend setting up a custom `cy.mount()` command instead of importing the
+mount command from the mounting libraries. Doing so offers a few advantages:
 
 - You don't need to import the mount command into every test as the `cy.mount()`
   command is available globally.
@@ -29,14 +22,6 @@ few advantages:
   wrapping a component in a
   [React Provider](https://reactjs.org/docs/context.html) or adding
   [Vue plugins](https://vuejs.org/v2/guide/plugins.html).
-
-However, if you attempt to use `cy.mount()` before creating it, you will get a
-warning:
-
-<DocsImage src="/img/guides/component-testing/cy-mount-must-be-implemented.png" alt="cy.mount() must be implemented by the user."></DocsImage>
-
-This is to inform you that a `cy.mount()` command is custom to your application
-and needs to be set up manually.
 
 Let's take a look at how to implement the command.
 
