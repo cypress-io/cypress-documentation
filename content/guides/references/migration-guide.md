@@ -581,9 +581,9 @@ configuration will result in an error when Cypress loads.
 ### Updated Test File Locations
 
 Previously, you could specify the locations of test files and folders using the
-configuration options: `componentFolder`, or `integrationFolder`, and `testFiles`.
-These options have been replaced with `specPattern`, which is not valid at the
-top-level, but within the
+configuration options: `componentFolder`, or `integrationFolder`, and
+`testFiles`. These options have been replaced with `specPattern`, which is not
+valid at the top-level, but within the
 [`component`](/guides/references/configuration#component) or
 [`e2e`](/guides/references/configuration#e2e) configuration objects. For
 example:
@@ -679,8 +679,8 @@ API page, the user still needs to manually define their own `cy.mount()` command
 with `Cypress.Commands.add('mount', ...)`.
 
 If you set up your app using the automatic configuration wizard, a basic
-`cy.mount()` command will be imported for you in your support file from one our supported frameworks. You can
-customize that command to fit your needs. See the
+`cy.mount()` command will be imported for you in your support file from one our
+supported frameworks. You can customize that command to fit your needs. See the
 [Mount API](/api/commands/mount) guide for more information.
 
 #### `Cypress.Commands.add()`
@@ -698,8 +698,9 @@ testing via the command `cypress open-ct` is now deprecated. To launch directly
 into component testing, use the `cypress open --component` command instead.
 
 All the Component Testing dev servers are now included in the main `cypress` npm
-package. Configuration of the dev server is now done in the main configuration
-file. See
+package. Configuring them is done via specifying a framework and bundler in the
+`devServer` config option, and the packages are no longer directly importable.
+See
 [Framework Configuration](/guides/getting-started/component-framework-configuration)
 for more info.
 
