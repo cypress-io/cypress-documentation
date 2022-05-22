@@ -673,15 +673,9 @@ Here are a few examples, assuming the value of `videosFolder` is
 
 #### `cy.mount()`
 
-A default `cy.mount()` command has been added for mounting components in
-Component Testing. Note that this command only warns and redirect users to the
-API page, the user still needs to manually define their own `cy.mount()` command
-with `Cypress.Commands.add('mount', ...)`.
-
 If you set up your app using the automatic configuration wizard, a basic
-`cy.mount()` command will be imported for you in your support file from one our
-supported frameworks. You can customize that command to fit your needs. See the
-[Mount API](/api/commands/mount) guide for more information.
+[`cy.mount()`]((/api/commands/mount) command will be imported for you in your
+support file from one our supported frameworks.
 
 #### `Cypress.Commands.add()`
 
