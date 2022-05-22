@@ -443,9 +443,31 @@ it('does not forget to return a promise', () => {
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` failed because you are attempting to visit a second unique domain
 
+<Alert type="info">
+
+<strong class="alert-header">🎉 Workaround 🎉</strong>
+
+As of Cypress [v9.6.0](https://on.cypress.io/changelog#9-6-0), you can easily
+test multi-domain workflows in a single test by using the experimental
+[cy.origin()](https://on.cypress.io/origin) command. For more details, read
+[our blog post](https://cypress.io/blog/2022/04/25/cypress-9-6-0-easily-test-multi-domain-workflows-with-cy-origin/).
+
+</Alert>
+
 See our [Web Security](/guides/guides/web-security#Limitations) documentation.
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` failed because you are attempting to visit a different origin domain
+
+<Alert type="info">
+
+<strong class="alert-header">🎉 Workaround 🎉</strong>
+
+As of Cypress [v9.6.0](https://on.cypress.io/changelog#9-6-0), you can easily
+test multi-domain workflows in a single test by using the experimental
+[cy.origin()](https://on.cypress.io/origin) command. For more details, read
+[our blog post](https://cypress.io/blog/2022/04/25/cypress-9-6-0-easily-test-multi-domain-workflows-with-cy-origin/).
+
+</Alert>
 
 Two URLs have the same origin if the `protocol`, `port` (if specified), and
 `host` are the same for both. You can only visit domains that are of the
