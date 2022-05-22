@@ -2,7 +2,12 @@
 title: Configuration (Legacy)
 ---
 
-::include{file=partials/warning-cypress-json.md}
+<Alert type="warning">
+
+Configuring Cypress via `cypress.json` no longer supported in Cypress 10.0. This
+guide covers legacy configuration for Cypress 9 and below.
+
+</Alert>
 
 ## cypress.json
 
@@ -19,7 +24,7 @@ to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction) the
 
 You can change the configuration file or turn off the use of a configuration
 file by using the
-[`--config-file` flag](/guides/guides/command-line#cypress-open-config-file-lt-configuration-file-gt).
+[`--config-file` flag](/guides/guides/command-line#cypress-open-config-file-lt-config-file-gt).
 
 </Alert>
 
@@ -56,14 +61,15 @@ you should understand well. The default values listed here are meaningful.
 
 </Alert>
 
-| Option                  | Default | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| ----------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `defaultCommandTimeout` | `4000`  | Time, in milliseconds, to wait until most DOM based commands are considered timed out                                                                                                                                                                                                                                                                                                                                                                                             |
-| `execTimeout`           | `60000` | Time, in milliseconds, to wait for a system command to finish executing during a [`cy.exec()`](/api/commands/exec) command                                                                                                                                                                                                                                                                                                                                                        |
-| `taskTimeout`           | `60000` | Time, in milliseconds, to wait for a task to finish executing during a [`cy.task()`](/api/commands/task) command                                                                                                                                                                                                                                                                                                                                                                  |
-| `pageLoadTimeout`       | `60000` | Time, in milliseconds, to wait for `page transition events` or [`cy.visit()`](/api/commands/visit), [`cy.go()`](/api/commands/go), [`cy.reload()`](/api/commands/reload) commands to fire their page `load` events. Network requests are limited by the underlying operating system, and may still time out if this value is increased.                                                                                                                                           |
-| `requestTimeout`        | `5000`  | Time, in milliseconds, to wait for a request to go out in a [`cy.wait()`](/api/commands/wait) command                                                                                                                                                                                                                                                                                                                                                                             |
-| `responseTimeout`       | `30000` | Time, in milliseconds, to wait until a response in a [`cy.request()`](/api/commands/request), [`cy.wait()`](/api/commands/wait), [`cy.fixture()`](/api/commands/fixture), [`cy.getCookie()`](/api/commands/getcookie), [`cy.getCookies()`](/api/commands/getcookies), [`cy.setCookie()`](/api/commands/setcookie), [`cy.clearCookie()`](/api/commands/clearcookie), [`cy.clearCookies()`](/api/commands/clearcookies), and [`cy.screenshot()`](/api/commands/screenshot) commands |
+| Option                  | Default        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ----------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `defaultCommandTimeout` | `4000`         | Time, in milliseconds, to wait until most DOM based commands are considered timed out                                                                                                                                                                                                                                                                                                                                                                                             |
+| `execTimeout`           | `60000`        | Time, in milliseconds, to wait for a system command to finish executing during a [`cy.exec()`](/api/commands/exec) command                                                                                                                                                                                                                                                                                                                                                        |
+| `taskTimeout`           | `60000`        | Time, in milliseconds, to wait for a task to finish executing during a [`cy.task()`](/api/commands/task) command                                                                                                                                                                                                                                                                                                                                                                  |
+| `pageLoadTimeout`       | `60000`        | Time, in milliseconds, to wait for `page transition events` or [`cy.visit()`](/api/commands/visit), [`cy.go()`](/api/commands/go), [`cy.reload()`](/api/commands/reload) commands to fire their page `load` events. Network requests are limited by the underlying operating system, and may still time out if this value is increased.                                                                                                                                           |
+| `requestTimeout`        | `5000`         | Time, in milliseconds, to wait for a request to go out in a [`cy.wait()`](/api/commands/wait) command                                                                                                                                                                                                                                                                                                                                                                             |
+| `responseTimeout`       | `30000`        | Time, in milliseconds, to wait until a response in a [`cy.request()`](/api/commands/request), [`cy.wait()`](/api/commands/wait), [`cy.fixture()`](/api/commands/fixture), [`cy.getCookie()`](/api/commands/getcookie), [`cy.getCookies()`](/api/commands/getcookies), [`cy.setCookie()`](/api/commands/setcookie), [`cy.clearCookie()`](/api/commands/clearcookie), [`cy.clearCookies()`](/api/commands/clearcookies), and [`cy.screenshot()`](/api/commands/screenshot) commands |
+| `slowTestThreshold`     | `10000 \| 250` | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter. You will often want to configure this differently for component and e2e testing. Default is 10000 for e2e and 250 for component tests.                                                                                                                                                                                                    |
 
 ### Folders / Files
 
@@ -138,11 +144,19 @@ For more information, see the docs on
 
 ### Node version
 
-| Option        | Default   | Description                                                                                                                                                                                                         |
-| ------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `nodeVersion` | `bundled` | If set to `system`, Cypress will try to find a Node executable on your path to use when executing your [plugins](/guides/tooling/plugins-guide). Otherwise, Cypress will use the Node version bundled with Cypress. |
+<Alert type="warning">
 
-The Node version printed in the Node.js Version panel is used in Cypress to:
+The `nodeVersion` configuration option is deprecated and will be removed in a
+future version of Cypress. Please remove this option from your configuration
+file.
+
+</Alert>
+
+| Option        | Default  | Description                                                                                                                                                                                                                                                                                                                                |
+| ------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `nodeVersion` | `system` | Can be `system` or `bundled`. If set to `system`, Cypress will try to use the same Node version that launched Cypress to execute your [plugins](/guides/tooling/plugins-guide). If that can't be determined, Cypress will use the Node version bundled with Cypress. If set to `bundled` Cypress will use the version bundled with Cypress |
+
+The Node version is used in Cypress to:
 
 - Build files in the
   [integrationFolder](/guides/references/configuration#Folders-Files).
@@ -151,28 +165,7 @@ The Node version printed in the Node.js Version panel is used in Cypress to:
 - Execute code in the
   [pluginsFile](/guides/references/configuration#Folders-Files).
 
-Cypress comes automatically bundled with a set Node version by default. You can
-see the bundled version by running the
-[`cypress version`](/guides/guides/command-line#cypress-version) command, for
-example:
-
-```shell
-npx cypress version
-Cypress package version: 6.2.1
-Cypress binary version: 6.2.1
-Electron version: 11.1.1
-Bundled Node version: 12.18.3
-```
-
-You may want to use a different Node version if the code executing from the
-plugins file requires features present in a different Node version from the Node
-version bundled with Cypress. You can use the Node version detected on your
-system by setting the
-[nodeVersion](/guides/references/configuration#Node-version) configuration to
-`system`. For example, you need to use the system Node if you want to load
-`node-sass` or `sqlite3` modules from your plugins file.
-
-<DocsImage src="/img/guides/configuration/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Test Runner"></DocsImage>
+<DocsImage src="/img/guides/configuration/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Test Runner" ></DocsImage>
 
 ### Experiments
 
@@ -218,8 +211,8 @@ cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*
 ### Runner Specific Overrides
 
 You can override configuration for either the E2E or
-[Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing)
-runner using the `e2e` and `component` options.
+[Component Testing](/guides/component-testing/introduction/) runner using the
+`e2e` and `component` options.
 
 #### Examples
 
@@ -237,20 +230,23 @@ default):
 }
 ```
 
-E2E specific timeouts in configuration file (`cypress.json` by default):
+Testing type specific timeouts in configuration file (`cypress.json` by
+default):
 
 ```json
 {
   "defaultCommandTimeout": 5000,
   "e2e": {
-    "defaultCommandTimeout": 10000
+    "defaultCommandTimeout": 10000,
+    "slowTestThreshold": 5000
+  },
+  "component": {
+    "slowTestThreshold": 150
   }
 }
 ```
 
 ### Plugins
-
-::include{file=partials/warning-plugins-file.md}
 
 The Cypress plugins file runs in Node environment before the browser running a
 spec file launches, giving you the most flexibility to set the configuration
@@ -328,19 +324,48 @@ You can
 
 </Alert>
 
-### `Cypress.config()`
+## Test Configuration
+
+We provide two options to override the configuration while your test are
+running, `Cypress.config()` and suite-specific or test-specific configuration
+overrides.
+
+<Icon name="exclamation-triangle" color="red"></Icon> **Note:** The
+configuration values below are all writeable and **can be changed** via per test
+configuration. Any other configuration values are readonly and cannot be changed
+at run time.
+
+- `animationDistanceThreshold`
+- `baseUrl`
+- `blockHosts`
+- `defaultCommandTimeout`
+- `env` **note:** Provided environment variables will be merged with current
+  environment variables.
+- `execTimeout`
+- `experimentalSessionSupport`
+- `includeShadowDom`
+- `keystrokeDelay`
+- `numTestsKeptInMemory`
+- `pageLoadTimeout`
+- `redirectionLimit`
+- `requestTimeout`
+- `responseTimeout`
+- `retries`
+- `screenshotOnRunFailure`
+- `scrollBehavior`
+- `slowTestThreshold`
+- `viewportHeight`
+- `viewportWidth`
+- `waitForAnimations`
+
+#### `Cypress.config()`
 
 You can also override configuration values within your test using
 [`Cypress.config()`](/api/cypress-api/config).
 
-<Alert type="warning">
-
-<strong class="alert-header">Scope</strong>
-
-Configuration set using `Cypress.config` _is only in scope for the current spec
-file._
-
-</Alert>
+This changes the configuration _for the remaining execution of the current spec
+file_. The values will reset to the previous default values after the spec has
+complete.
 
 ```javascript
 Cypress.config('pageLoadTimeout', 100000)
@@ -348,7 +373,7 @@ Cypress.config('pageLoadTimeout', 100000)
 Cypress.config('pageLoadTimeout') // => 100000
 ```
 
-### Test Configuration
+#### Test-specific Configuration
 
 To apply specific Cypress [configuration](/guides/references/configuration)
 values to a suite or test, pass a configuration object to the test or suite
@@ -358,29 +383,21 @@ The configuration values passed in will only take effect during the suite or
 test where they are set. The values will then reset to the previous default
 values after the suite or test is complete.
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Note:** Some
-configuration values are readonly and cannot be changed via test configuration.
-The following configuration values **can be changed** via per test
-configuration:
+##### Syntax
 
-- `animationDistanceThreshold`
-- `baseUrl`
-- `browser` **note:** filters whether the tests or a suite of tests runs
-  depending on the current browser
-- `defaultCommandTimeout`
-- `execTimeout`
-- `env` **note:** Provided environment variables will be merged with current
-  environment variables.
-- `includeShadowDom`
-- `requestTimeout`
-- `responseTimeout`
-- `retries`
-- `scrollBehavior`
-- `viewportHeight`
-- `viewportWidth`
-- `waitForAnimations`
+```javascript
+describe(name, config, fn)
+context(name, config, fn)
+it(name, config, fn)
+specify(name, config, fn)
+```
 
-#### Suite configuration
+##### Suite configuration
+
+If you want to target a suite of tests to run or be excluded when run in a
+specific browser, you can override the `browser` configuration within the suite
+configuration. The `browser` option accepts the same arguments as
+[`Cypress.isBrowser()`](/api/cypress-api/isbrowser).
 
 You can configure the number of times to retries a suite of tests if they fail
 during `cypress run` and `cypress open` separately.
@@ -406,18 +423,7 @@ describe(
 )
 ```
 
-You can set the `baseUrl` value for a single test:
-
-```js
-it('navigates through the tab',
-  { baseUrl: Cypress.env('APP_AT') },
-  () => {
-    ...
-  }
-)
-```
-
-#### Single test configuration
+##### Single test configuration
 
 If you want to target a test to run or be excluded when run in a specific
 browser, you can override the `browser` configuration within the test
@@ -518,10 +524,9 @@ For instance given a URL: `https://google.com/search?q=cypress`
 
 When Cypress blocks a request made to a matching host, it will automatically
 send a `503` status code. As a convenience it also sets a
-`x-cypress-matched-blacklisted-host` header so you can see which rule it
-matched.
+`x-cypress-matched-blocked-host` header so you can see which rule it matched.
 
-<DocsImage src="/img/guides/references/v10/blocked-host.png" alt="Network tab of dev tools with analytics.js request selected and the response header highlighted"></DocsImage>
+<DocsImage src="/img/guides/references/v10/blocked-host.png" alt="Network tab of dev tools with analytics.js request selected and the response header highlighted " ></DocsImage>
 
 ### modifyObstructiveCode
 
@@ -576,7 +581,7 @@ We've disabled running GC during
 interact with the browser.
 
 Because GC adds additional time to the overall run, we've added the amount of
-time this routine has taken to the bottom of the Command Log in the Cypress App.
+time this routine has taken to the bottom of the Command Log in the Test Runner.
 
 <DocsImage src="/img/guides/configuration/firefox-gc-interval-in-command-log.jpg" alt="GC duration shown"></DocsImage>
 
@@ -705,7 +710,7 @@ You can also find a few tips on setting the `baseUrl` in this
 When using the `--spec <path or mask>` argument, make it relative to the
 project's folder. If the specs are still missing, run Cypress with
 [DEBUG logs](/guides/references/troubleshooting#Print-DEBUG-logs) with the
-following setting to see how the Cypress App is looking for spec files:
+following setting to see how the Test Runner is looking for spec files:
 
 ```shell
 DEBUG=cypress:cli,cypress:server:specs
@@ -713,9 +718,20 @@ DEBUG=cypress:cli,cypress:server:specs
 
 ## History
 
-| Version                                       | Changes                                              |
-| --------------------------------------------- | ---------------------------------------------------- |
-| [10.0.0](/guides/references/changelog#10-0-0) | Added page due to deprecation of `cypress.json` file |
+| Version                                       | Changes                                                 |
+| --------------------------------------------- | ------------------------------------------------------- |
+| [10.0.0](/guides/references/changelog#10-0-0) | Added page due to deprecation of `cypress.json` file    |
+| [8.7.0](/guides/references/changelog#8-7-0)   | Added `slowTestThreshold` option                        |
+| [8.0.0](/guides/references/changelog#8-0-0)   | Added `clientCertificates` option                       |
+| [7.0.0](/guides/references/changelog#7-0-0)   | Added `e2e` and `component` options.                    |
+| [7.0.0](/guides/references/changelog#7-0-0)   | Added `redirectionLimit` option.                        |
+| [6.1.0](/guides/references/changelog#6-1-0)   | Added `scrollBehavior` option.                          |
+| [5.2.0](/guides/references/changelog#5-2-0)   | Added `includeShadowDom` option.                        |
+| [5.0.0](/guides/references/changelog#5-0-0)   | Added `retries` configuration.                          |
+| [5.0.0](/guides/references/changelog#5-0-0)   | Renamed `blacklistHosts` configuration to `blockHosts`. |
+| [4.1.0](/guides/references/changelog#4-12-0)  | Added `screenshotOnRunFailure` configuration.           |
+| [4.0.0](/guides/references/changelog#4-0-0)   | Added `firefoxGcInterval` configuration.                |
+| [3.5.0](/guides/references/changelog#3-5-0)   | Added `nodeVersion` configuration.                      |
 
 ## See also
 

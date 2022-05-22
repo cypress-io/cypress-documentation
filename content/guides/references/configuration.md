@@ -2,6 +2,18 @@
 title: Configuration
 ---
 
+<Alert type="warning">
+
+This guide is for Cypress 10 and the new JavaScript configuration file format.
+
+If you are on an older version of Cypress that uses `cypress.json`, please see
+the [legacy configuration](/guides/references/legacy-configuration) guide.
+
+For more info on upgrading configuration to Cypress 10, see the
+[migration guide](/guides/references/migration-guide#Migrating-to-Cypress-version-10-0).
+
+</Alert>
+
 ## Configuration File
 
 Launching the Cypress App for the first time, you will be guided through a
@@ -19,18 +31,6 @@ syntax in your config without the need of a transpiler step.
 A '.cjs' file uses the [CommonJS](https://nodejs.org/api/modules.html) module
 syntax, which is the default for JavaScript files. All JavaScript config
 examples in our docs use the CommonJS format.
-
-<Alert type="warning">
-
-Configuring Cypress via `cypress.json` is no longer supported as of Cypress
-version 10.0.0.
-
-If your project has a `cypress.json` file, please see the
-[legacy configuration](/guides/references/legacy-configuration) page for
-configuration instructions and the migration guide for more information on how
-to update your configuration.
-
-</Alert>
 
 If you [configure your tests to record](/guides/dashboard/projects#Setup) the
 results to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction)
