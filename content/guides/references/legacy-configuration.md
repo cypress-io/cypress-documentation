@@ -6,12 +6,11 @@ title: Configuration (Legacy)
 
 ## cypress.json
 
-The first time you open Cypress Test Runner, it creates the `cypress.json`
-configuration file. This JSON file is used to store any configuration values you
-supply. If you
-[configure your tests to record](/guides/dashboard/projects#Setup) the results
-to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction) the
-`projectId` will be written in this file too.
+The first time you open Cypress, it creates the `cypress.json` configuration
+file. This JSON file is used to store any configuration values you supply. If
+you [configure your tests to record](/guides/dashboard/projects#Setup) the
+results to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction)
+the `projectId` will be written in this file too.
 
 <Alert type="warning">
 
