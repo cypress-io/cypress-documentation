@@ -67,6 +67,8 @@ need to be aware of.
 
 ### Same superdomain per test
 
+::include{file=partials/single-domain-workaround.md}
+
 Because Cypress changes its own host URL to match that of your applications, it
 requires that the URLs navigated to have the same superdomain for the entirety
 of a single test.

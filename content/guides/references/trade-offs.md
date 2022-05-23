@@ -270,6 +270,8 @@ communicate with each other.
 
 ### Same-origin
 
+::include{file=partials/single-domain-workaround.md}
+
 Each test is limited to only visiting the domains that are determined to be of
 the same-origin rule.
 
