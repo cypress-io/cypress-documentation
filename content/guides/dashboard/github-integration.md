@@ -283,6 +283,11 @@ steps:
 3. Click **Configure** beside the Cypress app.
 4. Click **Uninstall** below the "Uninstall Cypress" section.
 
+## Troubleshooting
+
+See
+[Common Problems and Solutions](http://on.cypress.io/github-actions#Common-problems-and-solutions)
+
 ## See also
 
 - [Cypress GitHub Action + Examples](https://github.com/cypress-io/github-action)
