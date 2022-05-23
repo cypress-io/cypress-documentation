@@ -2,6 +2,17 @@
 title: Cypress.Cookies
 ---
 
+<Alert type="warning">
+
+⚠️ **`Cypress.Cookies.preserveOnce()` and `Cypress.Cookies.defaults()` are
+deprecated in Cypress 9.7.0**. In a future release, support for
+`Cypress.Cookies.preserveOnce()` and `Cypress.Cookies.defaults()` will be
+removed. Consider using the experimental [`cy.session()`](/api/commands/session)
+command instead to cache and restore cookies and other sessions details between
+tests.
+
+</Alert>
+
 `Cookies.preserveOnce()` and `Cookies.defaults()` enable you to control Cypress'
 cookie behavior.
 
@@ -212,6 +223,7 @@ Cypress.Cookies.defaults({
 
 | Version                                       | Changes                                                                                       |
 | --------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| [9.7.0](/guides/references/changelog#9-7-0)   | Deprecated `preserveOnce` and `defaults`                                                      |
 | [5.0.0](/guides/references/changelog#5-0-0)   | Renamed `whitelist` option to `preserve`                                                      |
 | [0.16.1](/guides/references/changelog#0-16-1) | `{verbose: false}` option added                                                               |
 | [0.16.0](/guides/references/changelog#0-16-0) | Removed support for `Cypress.Cookies.get`, `Cypress.Cookies.set` and `Cypress.Cookies.remove` |
