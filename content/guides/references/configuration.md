@@ -352,7 +352,7 @@ at run time.
 - `env` **note:** Provided environment variables will be merged with current
   environment variables.
 - `execTimeout`
-- `experimentalSessionSupport`
+- `experimentalSessionAndOrigin`
 - `includeShadowDom`
 - `keystrokeDelay`
 - `numTestsKeptInMemory`
