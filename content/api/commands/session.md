@@ -1,5 +1,6 @@
 ---
 title: session
+e2eSpecific: true
 ---
 
 Cache and restore [cookies](/api/cypress-api/cookies),
