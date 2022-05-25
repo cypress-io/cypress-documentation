@@ -286,7 +286,7 @@ steps:
 ## Troubleshooting
 
 See
-[Common Problems and Solutions](http://on.cypress.io/github-actions#Common-problems-and-solutions)
+[Common Problems and Solutions](http://on.cypress.io/github-actions#Common-problems-and-solutions).
 
 ## See also
 

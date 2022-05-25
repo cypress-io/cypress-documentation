@@ -511,7 +511,7 @@ jobs:
           COMMIT_INFO_SHA: ${{github.event.pull_request.head.sha}}
 ```
 
-<Alert type="warning">
+<Alert type="info">
 
 We also recommend adding `COMMIT_INFO_SHA` to re-enable
 [Cypress bot PR comments](https://on.cypress.io/github-integration#Pull-request-comments).
