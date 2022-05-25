@@ -488,7 +488,7 @@ Options passed to `cypress open` will automatically be applied to the project
 you open. These persist on all projects until you quit the Cypress App. These
 options will also override values in the Cypress configuration file.
 
-By passing `--browser` and `--e2e`/`--component` when launching a project, you
+By passing `--browser` and `--e2e` or `--component` when launching a project, you
 can open the Cypress App and launch the browser at the same time. Otherwise, you
 will be guided through selecting a browser, project, and/or testing type.
 
