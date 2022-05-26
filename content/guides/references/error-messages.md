@@ -457,9 +457,13 @@ it('does not forget to return a promise', () => {
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` failed because you are attempting to visit a second unique domain
 
+::include{file=partials/single-domain-workaround.md}
+
 See our [Web Security](/guides/guides/web-security#Limitations) documentation.
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` failed because you are attempting to visit a different origin domain
+
+::include{file=partials/single-domain-workaround.md}
 
 Two URLs have the same origin if the `protocol`, `port` (if specified), and
 `host` are the same for both. You can only visit domains that are of the
