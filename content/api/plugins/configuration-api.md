@@ -202,20 +202,6 @@ or
 type was selected in the Cypress App. This allows you to configure test
 type-specific plugins.
 
-#### Use Cypress React Plugin Conditionally
-
-Conditionally apply the Cypress React Plugin if launching via Component Testing:
-
-```js
-module.exports = (on, config) => {
-  if (config.testingType === 'component') {
-    require('@cypress/react/plugins/react-scripts')(on, config)
-  }
-
-  return config
-}
-```
-
 ## History
 
 | Version                               | Changes                                   |

@@ -581,8 +581,8 @@ to test application's code, a good practice is to give it an alias and use the
 
 For example, when confirming that the button component invokes the `click` prop
 testing with the
-[@cypress/react](https://github.com/cypress-io/cypress/tree/master/npm/react)
-plugin, the following test might or might not work:
+[cypress/react](https://github.com/cypress-io/cypress/tree/master/npm/react)
+mounting library, the following test might or might not work:
 
 #### <Icon name="exclamation-triangle" color="red"></Icon> Incorrectly checking if the stub was called
 
