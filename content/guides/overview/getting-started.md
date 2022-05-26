@@ -1,0 +1,233 @@
+---
+title: Getting Started
+---
+
+<Alert type="info">
+
+## <Icon name="graduation-cap"></Icon> What you'll learn
+
+- How to install Cypress via `npm`
+- How to install Cypress via direct download
+- How to version and run Cypress via `package.json`
+- How to run Cypress on `wsl2` in windows
+
+</Alert>
+
+## System requirements
+
+#### Operating System
+
+Cypress is a desktop application that is installed on your computer. The desktop
+application supports these operating systems:
+
+- **macOS** 10.9 and above _(64-bit only)_
+- **Linux** Ubuntu 12.04 and above, Fedora 21 and Debian 8 _(64-bit only)_
+- **Windows** 7 and above _(64-bit only)_
+
+#### Node.js
+
+If you're using `npm` to install Cypress, we support:
+
+- **Node.js** 12 or 14 and above
+
+#### Linux
+
+If you're using Linux, you'll want to have the required dependencies installed
+on your system.
+
+#### Ubuntu/Debian
+
+```shell
+apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+```
+
+#### CentOS
+
+```shell
+yum install -y xorg-x11-server-Xvfb gtk2-devel gtk3-devel libnotify-devel GConf2 nss libXScrnSaver alsa-lib
+```
+
+#### Docker
+
+Docker images with all of the required dependencies installed are available
+under [cypress/base](https://github.com/cypress-io/cypress-docker-images)
+
+If you're running your projects in containers, then you'll want Cypress in the
+container with the Node.js process.
+
+```
+  ui:
+    image: cypress/base:latest
+    # if targeting a specific node version, use e.g.
+    # image: cypress/base:14
+```
+
+`cypress/base` is a drop-in replacement for
+[base docker node images](https://hub.docker.com/_/node/).
+
+## Installing
+
+### <Icon name="terminal"></Icon> `npm install`
+
+Install Cypress via `npm`:
+
+```shell
+cd /your/project/path
+```
+
+```shell
+npm install cypress --save-dev
+```
+
+This will install Cypress locally as a dev dependency for your project.
+
+<Alert type="info">
+
+Make sure that you have already run
+[`npm init`](https://docs.npmjs.com/cli/init) or have a `node_modules` folder or
+`package.json` file in the root of your project to ensure cypress is installed
+in the correct directory.
+
+</Alert>
+
+<DocsVideo src="/img/snippets/installing-cli.mp4" title="Install via CLI"></DocsVideo>
+
+<Alert type="info">
+
+Notice that the Cypress `npm` package is a wrapper around the Cypress binary.
+The version of the `npm` package determines the version of the binary
+downloaded. As of version `3.0`, the binary is downloaded to a global cache
+directory to be used across projects.
+
+System proxy properties `http_proxy`, `https_proxy` and `no_proxy` are respected
+for the download of the Cypress binary. You can also use the npm properties
+`npm_config_proxy` and `npm_config_https_proxy`. Those have lower priority, so
+they will only be used if the system properties are being resolved to not use a
+proxy.
+
+</Alert>
+
+<Alert type="success">
+
+<strong class="alert-header">Best Practice</strong>
+
+The recommended approach is to install Cypress with `npm` because:
+
+- Cypress is versioned like any other dependency.
+- It simplifies running Cypress in
+  [Continuous Integration](/guides/continuous-integration/introduction).
+
+</Alert>
+
+### <Icon name="terminal"></Icon> `yarn add`
+
+Installing Cypress via [`yarn`](https://yarnpkg.com):
+
+```shell
+cd /your/project/path
+```
+
+```shell
+yarn add cypress --dev
+```
+
+System proxy properties `http_proxy`, `https_proxy` and `no_proxy` are respected
+for the download of the Cypress binary.
+
+### <Icon name="download"></Icon> Direct download
+
+If you're not using Node or `npm` in your project or you want to try Cypress out
+quickly, you can always
+[download Cypress directly from our CDN](https://download.cypress.io/desktop).
+
+<Alert type="warning">
+
+Recording runs to the Dashboard is not possible from the direct download. This
+download is only intended as a quick way to try out Cypress. To record tests to
+the Dashboard, you'll need to install Cypress as an `npm` dependency.
+
+</Alert>
+
+The direct download will always grab the latest available version. Your platform
+will be detected automatically.
+
+Then you can manually unzip and double click. Cypress will run without needing
+to install any dependencies.
+
+<DocsVideo src="/img/snippets/installing-global.mp4" title="Install via direct download"></DocsVideo>
+
+<Alert type="info">
+
+<strong class="alert-header">Direct downloading for old versions</strong>
+
+It is possible to download an old version from our CDN by suffixing the URL with
+the desired version (ex.
+[https://download.cypress.io/desktop/6.8.0](https://download.cypress.io/desktop/6.8.0)).
+
+</Alert>
+
+### <Icon name="sync-alt"></Icon> Continuous integration
+
+Please read our
+[Continuous Integration](/guides/continuous-integration/introduction) docs for
+help installing Cypress in CI. When running in linux you'll need to install some
+[system dependencies](/guides/continuous-integration/introduction#Dependencies)
+or you can use our [Docker images](/examples/examples/docker) which have
+everything you need prebuilt.
+
+### <Icon name="cog"></Icon> Advanced Installation
+
+If you have more complex requirements, want to level-up your Cypress workflow or
+just need help with troubleshooting, check out our
+[Advanced Installation](/reference/advanced-installation) reference.
+
+## Opening Cypress
+
+If you used `npm` to install, Cypress has now been installed to your
+`./node_modules` directory, with its binary executable accessible from
+`./node_modules/.bin`.
+
+Now you can open Cypress from your **project root** one of the following ways:
+
+**The long way with the full path**
+
+```shell
+./node_modules/.bin/cypress open
+```
+
+**Or with the shortcut using `npm bin`**
+
+```shell
+$(npm bin)/cypress open
+```
+
+**Or by using `npx`**
+
+**note**: [npx](https://www.npmjs.com/package/npx) is included with `npm > v5.2`
+or can be installed separately.
+
+```shell
+npx cypress open
+```
+
+**Or by using `yarn`**
+
+```shell
+yarn run cypress open
+```
+
+After a moment, the Cypress App will launch.
+
+## The Launchpad
+
+TODO Welcome to the Launchpad.
+
+TODO Screenshot & summary of testing type choice with link to
+/core-concepts/testing-types for more detail.
+
+TODO Screenshot & summary of config/scaffolding step.
+
+TODO Brief mention of browser selection with link to /guides/launching-browsers.
+
+TODO "to write your first E2E test go here, to get started with component
+testing go here" - goes to test type section

@@ -1,5 +1,5 @@
 ---
-title: 'Choosing a Testing Type'
+title: 'Testing Types'
 ---
 
 <Alert type="info">

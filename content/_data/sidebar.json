@@ -13,40 +13,36 @@
               "slug": "why-cypress"
             },
             {
-              "title": "Choosing a Testing Type",
-              "slug": "choosing-testing-type"
-            },
-            {
               "title": "Key Differences",
               "slug": "key-differences"
+            },
+            {
+              "title": "Getting Started",
+              "slug": "getting-started"
             }
           ]
         },
         {
-          "title": "Getting Started",
-          "slug": "getting-started",
+          "title": "End-to-End Testing",
+          "slug": "end-to-end-testing",
           "children": [
             {
-              "title": "Installing Cypress",
-              "slug": "installing-cypress"
-            },
-            {
-              "title": "End-to-End Testing"
-            },
-            {
-              "title": "Writing Your First Test",
+              "title": "Writing Your First End-to-End Test",
               "slug": "writing-your-first-end-to-end-test"
             },
             {
               "title": "Testing Your App",
               "slug": "testing-your-app"
-            },
+            }
+          ]
+        },
+        {
+          "title": "Component Testing",
+          "slug": "component-testing",
+          "children": [
             {
-              "title": "Component Testing"
-            },
-            {
-              "title": "Overview",
-              "slug": "component-testing"
+              "title": "Testing Your Components with Cypress",
+              "slug": "testing-your-components-with-cypress"
             },
             {
               "title": "Who Are You Testing For?",
@@ -123,6 +119,10 @@
             {
               "title": "Introduction to Cypress",
               "slug": "introduction-to-cypress"
+            },
+            {
+              "title": "Testing Types",
+              "slug": "testing-types"
             },
             {
               "title": "Writing and Organizing Tests",
@@ -369,6 +369,10 @@
             {
               "title": "Assertions",
               "slug": "assertions"
+            },
+            {
+              "title": "Advanced Installation",
+              "slug": "advanced-installation"
             },
             {
               "title": "Configuration",

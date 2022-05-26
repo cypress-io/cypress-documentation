@@ -5,9 +5,19 @@ title: Who Are You Testing For?
 There are two kinds of users to consider when testing components: end-users and
 developers.
 
+<<<<<<< HEAD:content/guides/getting-started/devs-vs-users.md
 A good component test covers the concerns of each of these types of users. This
 guide covers examples of common problems differentiating these users and a
 recommendation regarding your test audience!
+=======
+When testing components, you should first realize that you have TWO kinds of
+users: End Users and Developers. A good component test covers the concerns of
+each of these types of users. For some examples of common concerns
+differentiating these users and a recommendation regarding your test audience,
+keep reading! elements based on accessible queries and human-readable text) as
+well as Developer concerns (What is the component's signature? Does it have any
+"output" when used in conjunction with other components?).
+>>>>>>> UDX-216: Overview/Getting Started Docs Restructure:content/guides/component-testing/devs-vs-users.md
 
 ### Developer Concerns
 
@@ -23,8 +33,13 @@ and children.
 
 Users think the way a non-technical product owner might.
 
+<<<<<<< HEAD:content/guides/getting-started/devs-vs-users.md
 They access and interact with the site in various ways, i.e., via a browser or
 assistive devices such as screen readers.
+=======
+They access and interact with the site in various ways, i.e. assistive devices
+such as screen readers.
+>>>>>>> UDX-216: Overview/Getting Started Docs Restructure:content/guides/component-testing/devs-vs-users.md
 
 Is the component supposed to tell you what's in your cart? Should you be able to
 enter a text value into a numerical `Stepper` component like it was an input? Is
