@@ -41,8 +41,8 @@ difficult for the _consumer of the Stepper_ (e.g. parent components) to know
 when change occurs or when the user interacts with the Stepper's various
 buttons.
 
-One solution is to accept an `onChange` prop and call it when the internal
-state of the `Stepper` changes.
+One solution is to accept an `onChange` prop and call it when the internal state
+of the `Stepper` changes.
 
 You would use the `<Stepper>` from a parent component like so:
 

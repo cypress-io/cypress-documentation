@@ -17,8 +17,8 @@ Advanced usage: You can _always_ manually configure component testing using the
 # Automatic Configuration (Recommended)
 
 You should use the Cypress Launchpad to configure Component Testing for the
-first time. To start the setup wizard, simply open
-Cypress and choose "Component Testing".
+first time. To start the setup wizard, simply open Cypress and choose "Component
+Testing".
 
 <!-- TODO: Video -->
 
@@ -27,12 +27,13 @@ cypress open
 ```
 
 The Launchpad's setup wizard will do the following things:
+
 1. Determine what changes need to be merged into your Cypress Config file.
 2. Create a component support file for [configuring global styles]() and
    installing component libraries.
 3. Globally register the correct `cy.mount` command based on your framework.
-4. Create `component-index.html` to let you add your application's fonts and global
-   CDN downloads.
+4. Create `component-index.html` to let you add your application's fonts and
+   global CDN downloads.
 5. Add any framework-specific setup to your support files.
 
 <!-- TODO: pic of all the files we make, collapsed -->
