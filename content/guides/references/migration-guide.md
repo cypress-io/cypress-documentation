@@ -66,18 +66,15 @@ Related notes:
 
 :::
 
-### Plugins file removed
+### Plugins File Removed
 
 Because Cypress now supports JavaScript and TypeScript configuration files, a
 separate "plugins file" (which used to default to `cypress/plugins/index.js`) is
 no longer needed.
 
-Accordingly, the plugins file is now no longer supported. It has been replaced
-with the new
-[`setupNodeEvents`](/guides/references/configuration#setupNodeEvents) function
-and the
-[`devServer` and `devServerConfig`](/guides/references/configuration#devServer-devServerConfig)
-options.
+Support for the plugins file has been removed, and it has been replaced with the
+new [`setupNodeEvents()`](/guides/references/configuration#setupNodeEvents) and
+[`devServer`](/guides/references/configuration#devServer) config options.
 
 Related notes:
 
