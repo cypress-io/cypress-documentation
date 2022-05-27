@@ -386,8 +386,8 @@ You can specify which test files to run during
 matching the files you want to run. You should be able to pass a glob matching
 the specific folder where the tests are you want to run.
 
-This feature is not available when using
-[cypress open](/guides/guides/command-line#cypress-open) however.
+This feature is only available when using
+[cypress run](/guides/guides/command-line#cypress-run).
 
 ## <Icon name="angle-right"></Icon> Is there a suggested way or best practice for how I should target elements or write element selectors?
 
@@ -1018,6 +1018,11 @@ store, and even drive the application via Redux actions.
   blog post and [Vue + Vuex + REST Testing](/examples/examples/recipes#Blogs)
   recipe.
 
+For component testing, you have a bit more control on how you set up your
+providers and plugins for state stores. See the
+[Mount API Guide](/api/commands/mount) for various examples on using stores with
+component testing.
+
 ## <Icon name="angle-right"></Icon> How do I spy on console.log?
 
 To spy on `console.log` you should use [cy.stub()](/api/commands/stub).
@@ -1114,7 +1119,7 @@ preprocessor then converts the scenarios and step definitions into "regular"
 JavaScript Cypress tests.
 
 - try using the
-  [Cucumber preprocessor](https://github.com/TheBrainFamily/cypress-cucumber-preprocessor)
+  [Cucumber preprocessor](https://github.com/badeball/cypress-cucumber-preprocessor)
   and search our [Plugins](/plugins/directory) page for additional helper
   plugins
 - read
@@ -1123,25 +1128,34 @@ JavaScript Cypress tests.
 
 ## <Icon name="angle-right"></Icon> Can I test Next.js sites using Cypress?
 
-Yes, absolutely. See an example in the
+For end-to-end tests, yes, absolutely. See an example in the
 [next-and-cypress-example](https://github.com/bahmutov/next-and-cypress-example)
 repository where we show how to instrument the application's source code to get
 [code coverage](/guides/tooling/code-coverage) from tests. You can learn how to
 set good Cypress tests for a Next.js application in this
 [tutorial](https://getstarted.sh/bulletproof-next/e2e-testing-with-cypress).
 
+For component tests, Next.js support is currently in alpha. See the
+[Framework Configuration Guide on Next.js](/guides/getting-started/component-framework-configuration#Next-js)
+for more info.
+
 ## <Icon name="angle-right"></Icon> Can I test Gatsby.js sites using Cypress?
 
-Yes, as you can read in the official
+For end-to-end tests, yes, as you can read in the official
 [Gatsby docs](https://www.gatsbyjs.com/docs/end-to-end-testing/). You can also
 watch the "Cypress + Gatsby webinar"
 [recording](https://www.youtube.com/watch?v=Tx6Lg9mwcCE) and browse the
 webinar's
 [slides](https://cypress.slides.com/amirrustam/cypress-gatsby-confidently-fast-web-development).
 
+For component testing, Gatsby is not currently supported out of the box, but it
+might be possible by
+[configuring a custom devServer](/guides/references/configuration#devServer).
+
 ## <Icon name="angle-right"></Icon> Can I test React applications using Cypress?
 
-Yes, absolutely. A good example of a fully tested React application is our
+For end-to-end testing, yes, absolutely. A good example of a fully tested React
+application is our
 [Cypress RealWorld App](https://github.com/cypress-io/cypress-example-realworld)
 and
 [TodoMVC Redux App](https://github.com/cypress-io/cypress-example-todomvc-redux).
@@ -1151,9 +1165,10 @@ If you really need to select React components by their name, props, or state,
 check out
 [cypress-react-selector](https://github.com/abhinaba-ghosh/cypress-react-selector).
 
-Finally, you might want to check out the
-[React Component Testing](/guides/getting-started/component-framework-configuration#React-Create-React-App)
-adaptor that allows you to test your React components right inside Cypress.
+For component testing, we support various different frameworks like Create React
+App, Vite, and Next.js for React applications. See the
+[Framework Configuration Guide](/guides/getting-started/component-framework-configuration)
+for more info.
 
 ## <Icon name="angle-right"></Icon> Can I check the GraphQL network calls using Cypress?
 

@@ -9,7 +9,6 @@ const remarkFootnotes = require('remark-footnotes')
 const gfm = require('remark-gfm')
 const remarkRehype = require('remark-rehype')
 const rehypeRaw = require('rehype-raw')
-const rehypeStringify = require('rehype-stringify')
 const handlersFn = require('@nuxt/content/parsers/markdown/handlers')
 const endent = require('endent').default
 
@@ -36,8 +35,9 @@ const CONTENT_PATH = path.join(__dirname, '../content')
 // - this project's nuxt.config.js
 // - https://github.com/nuxt/content/blob/main/packages/content/lib/utils.js
 // - https://github.com/nuxt/content/blob/main/packages/content/parsers/markdown/index.js
-const processText = (text) => {
+const processText = async (text) => {
   const handlers = handlersFn()
+  const rehypeStringify = (await import('rehype-stringify')).default
 
   // Don't use the nuxt-content code formatting
   delete handlers.code

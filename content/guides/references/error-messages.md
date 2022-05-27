@@ -11,7 +11,7 @@ This message means that Cypress was unable to find tests in the specified file.
 You'll likely get this message if you have an empty test file and have not yet
 written any tests.
 
-<DocsImage src="/img/guides/no-tests-found.png" alt="No tests found" ></DocsImage>
+<DocsImage src="/img/guides/references/no-tests-found.png" alt="No tests found" ></DocsImage>
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> We found an error preparing your test file
 
@@ -33,7 +33,8 @@ When the error is fixed in your test file, your tests will automatically re-run.
 
 The `supportFolder` option was removed from Cypress in version
 [`0.18.0`](/guides/references/changelog#0-18-0) and was replaced by module
-support and the [`supportFile`](/guides/references/configuration#Folders-Files)
+support and the
+[`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
 configuration option.
 
 Cypress used to automatically include any scripts in the `supportFolder` before
@@ -69,19 +70,26 @@ it('uses modules', () => {
 It's still useful to load a setup file before your test code. If you are setting
 Cypress defaults or utilizing custom Cypress commands, instead of needing to
 import/require those defaults/commands in every test file, you can use the
-[`supportFile`](/guides/references/configuration#Folders-Files) configuration
-option within each testing type's configuration object.
+[`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
+configuration option within each testing type's configuration object.
+
+<Alert type="danger">
+
+⚠️ For a given testing type, multiple matching `supportFile` files will result
+in an error when Cypress loads.
+
+</Alert>
 
 Just like with your test files, the
-[`supportFile`](/guides/references/configuration#Folders-Files) can use ES2015+,
-[TypeScript](/guides/tooling/typescript-support) or CoffeeScript and modules, so
-you can import/require other files as needed.
+[`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
+can use ES2015+, [TypeScript](/guides/tooling/typescript-support) or
+CoffeeScript and modules, so you can import/require other files as needed.
 
 ## Command Errors
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> Cypress cannot execute commands outside a running test
 
-<DocsImage src="/img/guides/cypress-cannot-execute.png" alt="Cannot execute commands" ></DocsImage>
+<DocsImage src="/img/guides/references/cypress-cannot-execute.png" alt="Cannot execute commands" ></DocsImage>
 
 This message means you tried to execute one or more Cypress commands outside of
 a currently running test. Cypress has to be able to associate commands to a
@@ -115,7 +123,7 @@ correctly.
 If you are purposefully writing commands outside of a test, there is probably a
 better way to accomplish what you're trying to do. Read through the
 [Examples](/examples/examples/recipes),
-[chat with someone in our chat](https://gitter.im/cypress-io/cypress), or
+[chat with someone in Discord](https://discord.gg/ncdA3Jz63n), or
 [open an issue](https://github.com/cypress-io/cypress/issues/new/choose).
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy...()` failed because the element you are chaining off of has become detached or removed from the dom
@@ -159,7 +167,7 @@ describe('detachment example', () => {
 })
 -->
 
-<DocsImage src="/img/guides/cy-method-failed-element-is-detached.png" alt="cy.method() failed because element is detached" ></DocsImage>
+<DocsImage src="/img/guides/references/cy-method-failed-element-is-detached.png" alt="cy.method() failed because element is detached" ></DocsImage>
 
 Cypress errors because it can't interact with "dead" elements - much like a real
 user could not do this either. Understanding how this happens is very
@@ -171,8 +179,8 @@ Let's take a look at an example below.
 
 ```html
 <body>
-  <div id="parent">
-    <button>delete</button>
+  <div data-testid="parent">
+    <button>Delete</button>
   </div>
 </body>
 ```
@@ -205,7 +213,7 @@ We can prevent Cypress from throwing this error by rewriting our test code.
 
 ```javascript
 cy.get('button').click()
-cy.get('#parent')
+cy.get('[data-testid="parent"]')
 ```
 
 The above example is an oversimplification. Let's look at a more complex
@@ -229,9 +237,13 @@ When we say _guard_, this usually means:
 
 #### More info
 
+<Alert type="info">
+
 Read the blog post
 [Do Not Get Too Detached](https://www.cypress.io/blog/2020/07/22/do-not-get-too-detached/)
 for another example of this error, and how to solve it.
+
+</Alert>
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy....()` failed because the element cannot be interacted with
 
@@ -281,7 +293,7 @@ describe('animating example', () => {
 })
 -->
 
-<DocsImage src="/img/guides/cy-method-failed-element-is-animating.png" alt="cy.method() failed because element is animating" ></DocsImage>
+<DocsImage src="/img/guides/references/cy-method-failed-element-is-animating.png" alt="cy.method() failed because element is animating" ></DocsImage>
 
 By default Cypress detects if an element you're trying to interact with is
 animating. This check ensures that an element is not animating too quickly for a
@@ -301,7 +313,7 @@ element there are a few options:
   continuously retry.
 
 ```javascript
-cy.get('#modal button').click({ waitForAnimations: false })
+cy.get('[data-testid="modal-close"]').click({ waitForAnimations: false })
 ```
 
 You can globally disable animation error checking, or increase the threshold by
@@ -326,7 +338,7 @@ Let's examine several different ways you may get this error message. In every
 situation, you'll need to change something in your test code to prevent the
 error.
 
-<DocsImage src="/img/guides/the-test-has-finished.png" alt="The test has finished but Cypress still has commands" ></DocsImage>
+<DocsImage src="/img/guides/references/the-test-has-finished.png" alt="The test has finished but Cypress still has commands" ></DocsImage>
 
 <Alert type="warning">
 
@@ -445,9 +457,13 @@ it('does not forget to return a promise', () => {
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` failed because you are attempting to visit a second unique domain
 
+::include{file=partials/single-domain-workaround.md}
+
 See our [Web Security](/guides/guides/web-security#Limitations) documentation.
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` failed because you are attempting to visit a different origin domain
+
+::include{file=partials/single-domain-workaround.md}
 
 Two URLs have the same origin if the `protocol`, `port` (if specified), and
 `host` are the same for both. You can only visit domains that are of the
@@ -734,6 +750,38 @@ before finally completing. You must add more groups during that time period.
 
 Please review our [parallelization](/guides/guides/parallelization)
 documentation to learn more.
+
+<a name='win-max-path-length'></a>
+
+### <Icon name="exclamation-triangle" color="red"></Icon> The Cypress App could not be unzipped. This is most likely because the maximum path length is being exceeded on your system.
+
+When Cypress is installed, it unzips to the designated cache location on your
+computer. This error means that Cypress detected that it has exceeded the
+maximum path length while unzipping Cypress.
+
+This is common on Windows, where the maximum path length used to be 260
+characters.
+
+To fix this error, enable "long paths" on your Windows system:
+
+1. Go to the Start Menu, and right click on PowerShell. Select "Run as
+   administrator."
+2. Run this command:
+
+```powershell
+New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" `
+  -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
+```
+
+3. Restart your computer.
+
+This should get rid of the error. If you are still receiving this error, please
+[search for an open issue](https://github.com/cypress-io/cypress/issues) or
+[open a new one](https://github.com/cypress-io/cypress/issues/new/choose).
+
+If you do not have Powershell available, you can also make this change via
+regedit or gpedit.
+[See Microsoft's documentation for details.](https://docs.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation)
 
 ## Page Load Errors
 

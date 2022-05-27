@@ -52,14 +52,11 @@ function processNode(node, { _require, error }) {
       `,
     },
     {
-      label: 'plugins file (deprecated)',
+      label: 'plugins file',
       language: 'js',
       alert: endent`
         <Alert type="warning">
         
-        <strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
-        Deprecated</strong>
-
         The plugins file is no longer supported as of Cypress version 10.0.0.
 
         We recommend that you update your configuration. Please see the

@@ -1,7 +1,7 @@
 <template>
   <div ref="root" :class="$style.codeGroup">
     <div
-      class="rounded-t-md border-b-2 border-gray-700 px-2 bg-gray-800 text-sm text-white relative flex flex-row"
+      class="rounded-t-md mt-2 border-b-2 border-gray-700 px-2 bg-gray-800 text-sm text-white relative flex flex-row"
     >
       <button
         v-for="(

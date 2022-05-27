@@ -9,7 +9,7 @@
     "/guides/dashboard/introduction": "Dashboard",
     "/guides/migrating-to-cypress/protractor": "Migrating from Protractor to Cypress",
     "/guides/getting-started/writing-your-first-end-to-end-test": "Writing Your First End-to-End Test",
-    "/guides/getting-started/writing-your-first-component-test": "Writing Your First Component Test",
+    "/guides/getting-started/testing-components": "What is Component Testing?",
     "/guides/references/assertions": "Assertions",
     "/guides/references/legacy-configuration": "Configuration (Legacy)",
     "/api/utilities/_": "Cypress._",
@@ -47,6 +47,16 @@
     "/api/plugins/after-spec-api": "After Spec API",
     "/api/plugins/browser-launch-api": "Browser Launch API",
     "/api/plugins/after-screenshot-api": "After Screenshot API",
-    "/examples/examples/tutorials": "Tutorial Videos"
+    "/examples/examples/tutorials": "Tutorial Videos",
+    "/guides/getting-started/component-testing": "Testing Your Components with Cypress",
+    "/guides/getting-started/quickstart-vue": "Quickstart: Vue",
+    "/guides/getting-started/props-vue": "Vue Components with Props",
+    "/guides/getting-started/events-vue": "Testing Vue Components with Emitted Events",
+    "/guides/getting-started/slots-vue": "Testing Vue Components with Slots",
+    "/guides/getting-started/custom-mount-vue": "Custom Mount Commands and Styles",
+    "/guides/getting-started/quickstart-react": "Quickstart: React",
+    "/guides/getting-started/testing-react": "Testing React Components",
+    "/guides/getting-started/events-react": "Testing React Components with Events",
+    "/guides/getting-started/custom-mount-react": "Custom Mount Commands for React"
   }
 }

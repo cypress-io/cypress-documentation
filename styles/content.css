@@ -74,7 +74,7 @@
   border-bottom-width: 1px;
   border-bottom-color: rgb(238, 238, 238);
   color: var(--font-color-black);
-  @apply text-3xl;
+  @apply text-2xl;
   @apply font-bold;
   @apply mt-10;
   @apply mb-6;
@@ -131,7 +131,7 @@
   border-bottom-color: rgb(238, 238, 238);
   color: rgb(46, 49, 56);
   @apply font-bold;
-  @apply text-3xl;
+  @apply text-2xl;
   @apply mt-16;
   @apply mb-6;
   @apply pb-3;
@@ -185,17 +185,11 @@
   @apply text-2xl;
   @apply font-bold;
   @apply mt-8;
-  @apply flex;
-  @apply flex-wrap;
-  @apply items-center;
 }
 
 .nuxt-content > h4 {
   @apply text-xl;
   @apply font-medium;
-  @apply flex;
-  @apply flex-wrap;
-  @apply items-center;
 }
 
 .nuxt-content h2 > em,
@@ -245,7 +239,8 @@
 .nuxt-content blockquote {
   @apply border-l-4;
   @apply px-12;
-  @apply py-6;
+  @apply pt-6;
+  @apply pb-5;
   @apply bg-gray-100;
   @apply mb-8;
   @apply italic;
@@ -255,14 +250,13 @@
   @apply mb-0;
 }
 
-.nuxt-content svg {
+.nuxt-content svg, .toc-content svg {
   height: 1em;
   width: 1em;
   @apply inline-block;
 }
 
 .nuxt-content p {
-  @apply text-lg;
   @apply mb-5;
 }
 
@@ -400,4 +394,12 @@ span.token.keyword.control-flow {
     height: 100%;
     background: rgb(252, 162, 162);
   }
+}
+
+/* This style seems to be stripped out of css in prod builds from FA, so adding it in manually */
+.svg-inline--fa {
+    display: inline-block;
+    font-size: inherit;
+    height: 1em;
+    vertical-align: -0.125em;
 }

@@ -141,7 +141,7 @@ cy.mount(<MyComponent />)
 ```
 
 ```ts
-// from your cypress/e2e/spec..cy.ts
+// from your cypress/e2e/spec.cy.ts
 it('works', () => {
   __VISIT_MOUNT_PLACEHOLDER__
   // IntelliSense and TS compiler should
@@ -181,13 +181,13 @@ declare global {
 
 ```typescript
 // cypress/support/index.ts
-Cypress.Commands.add('typeRandomWords', { prevSubject: 'element' }, (
-  subject /* :JQuery<HTMLElement> */,
-  count = 3,
-  options?
-) => {
-  return cy.wrap(subject).type(generateRandomWords(count), options)
-})
+Cypress.Commands.add(
+  'typeRandomWords',
+  { prevSubject: 'element' },
+  (subject /* :JQuery<HTMLElement> */, count = 3, options?) => {
+    return cy.wrap(subject).type(generateRandomWords(count), options)
+  }
+)
 ```
 
 #### Overwriting child or dual commands

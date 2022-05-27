@@ -68,6 +68,8 @@ need to be aware of.
 
 ### Same superdomain per test
 
+::include{file=partials/single-domain-workaround.md}
+
 Because Cypress changes its own host URL to match that of your applications, it
 requires that the URLs navigated to have the same superdomain for the entirety
 of a single test.
@@ -379,7 +381,7 @@ Disabling web security is only supported in Chrome-based browsers. Settings in
 `chromeWebSecurity` will have no effect in other browsers. We will log a warning
 in this case.
 
-<DocsImage src="/img/guides/chrome-web-security-stdout-warning.jpg" alt='chromeWebSecurity warning in stdout'></DocsImage>
+<DocsImage src="/img/guides/web-security/chrome-web-security-stdout-warning.jpg" alt='chromeWebSecurity warning in stdout'></DocsImage>
 
 If you rely on disabling web security, you will not be able to run tests on
 browsers that do not support this feature.

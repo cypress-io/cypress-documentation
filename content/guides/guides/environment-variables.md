@@ -67,8 +67,7 @@ different use case.
 - [Create a `cypress.env.json`](#Option-2-cypress-env-json)
 - [Export as `CYPRESS_*`](#Option-3-CYPRESS_)
 - [Pass in the CLI as `--env`](#Option-4-env)
-- [Set an environment variable within your plugins.](#Option-5-Plugins)
-- [Set an environment variable within test configuration.](#Option-6-Test-Configuration)
+- [Set an environment variable within test configuration.](#Option-5-Test-Configuration)
 
 Don't feel obligated to pick just one method. It is common to use one strategy
 for local development but another when running in
@@ -311,66 +310,7 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 </Alert>
 
-### Option #5: Plugins
-
-::include{file=partials/warning-plugins-file.md}
-
-Instead of setting environment variables in a file, you can use plugins to
-dynamically set them with Node code. This enables you to do things like use `fs`
-and read off configuration values and dynamically change them.
-
-For example, if you use the [dotenv](https://github.com/motdotla/dotenv#readme)
-package to read the `.env` file, you could then grab the needed environment
-variables from the `process.env` object and place them into `config.env` to make
-available in the tests:
-
-```
-// .env file
-USER_NAME=aTester
-```
-
-```js
-require('dotenv').config()
-
-module.exports = (on, config) => {
-  // copy any needed variables from process.env to config.env
-  config.env.username = process.env.USER_NAME
-
-  // do not forget to return the changed config object!
-  return config
-}
-```
-
-```js
-// integration/spec.cy.js
-it('has username to use', () => {
-  expect(Cypress.env('username')).to.be.a('string')
-})
-```
-
-[We've fully documented how to do this here.](/api/plugins/configuration-api)
-
-#### Overview
-
-<Alert type="success">
-
-<strong class="alert-header">Benefits</strong>
-
-- Most amount of flexibility
-- Ability to manage configuration however you'd like
-
-</Alert>
-
-<Alert type="danger">
-
-<strong class="alert-header">Downsides</strong>
-
-- Requires knowledge of writing in Node
-- More challenging
-
-</Alert>
-
-### Option #6: Test Configuration
+### Option #5: Test Configuration
 
 You can set environment variables for specific suites or tests by passing the
 `env` values to the

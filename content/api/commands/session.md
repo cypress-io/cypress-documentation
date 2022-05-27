@@ -1,5 +1,6 @@
 ---
 title: session
+e2eSpecific: true
 ---
 
 Cache and restore [cookies](/api/cypress-api/cookies),
@@ -14,14 +15,13 @@ in order to reduce test setup times.
 Experimental</strong>
 
 The `session` API is currently experimental, and can be enabled by setting the
-[`experimentalSessionSupport`](/guides/references/experiments) flag to `true` in
-the Cypress config or by using [`Cypress.config()`](/api/cypress-api/config) at
-the top of a spec file.
+[`experimentalSessionAndOrigin`](/guides/references/experiments) option to
+`true` in the Cypress config.
 
 Enabling this flag does the following:
 
-- It adds the [`cy.session()`](/api/commands/session) command for use in tests.
-- It adds the [`Cypress.session`](/api/cypress-api/session) API.
+- It adds the `cy.session()` and [`cy.origin()`](/api/commands/origin) commands,
+  and [`Cypress.session`](/api/cypress-api/session) API.
 - It adds the following new behaviors (that will be the default in a future
   major update of Cypress) at the beginning of each test:
   - The page is cleared (by setting it to `about:blank`).
@@ -30,6 +30,9 @@ Enabling this flag does the following:
 - It overrides the
   [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
   [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
+- Cross-domain navigations will no longer fail immediately, but instead, time
+  out based on [`pageLoadTimeout`](/guides/references/configuration#Timeouts).
+- Tests will no longer wait on page loads before moving on to the next test.
 
 Because the page is cleared at the beginning of each test,
 [`cy.mount()`](/api/commands/mount) or [`cy.visit()`](/api/commands/visit) must
@@ -550,8 +553,8 @@ describe('other page tests', () => {
 ### Where to call `cy.visit()` <E2EOnlyBadge />
 
 If you call [`cy.visit()`](/api/commands/visit) immediately after `cy.session()`
-in your login function or custom command, it will always end up visiting the
-specified URL.
+in your login function or custom command, it will effectively behave the same as
+a login function without any session caching.
 
 ```javascript
 const login = (name) => {

@@ -53,7 +53,7 @@ modified from the `setupNodeEvents` function in the Cypress configuration.**
 
 Resolved values will show up in the "Settings" tab of the Cypress App.
 
-<DocsImage src="/img/guides/plugin-configuration.png" alt="Resolved configuration in the Desktop app" ></DocsImage>
+<DocsImage src="/img/guides/configuration/plugin-configuration.png" alt="Resolved configuration in the Desktop app" ></DocsImage>
 
 ### Promises
 
@@ -68,7 +68,8 @@ for a full example.
 ### Customize available browsers
 
 The configuration includes the list of browsers found on your system that are
-available to Cypress.
+available to Cypress. You can, for example, change or augment that list for
+different testing purposes.
 
 <Alert type="info">
 
@@ -76,48 +77,6 @@ Read our full guide on [Launching Browsers](/guides/guides/launching-browsers)
 for more information on how this works.
 
 </Alert>
-
-In [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin), you can
-filter the list of browsers passed inside the `config` object and return the
-list of browsers you want available for selection during `cypress open`.
-
-:::cypress-plugin-example
-
-```javascript
-// inside config.browsers array each object has information like
-// {
-//   name: 'chrome',
-//   family: 'chromium',
-//   channel: 'canary',
-//   displayName: 'Canary',
-//   version: '80.0.3966.0',
-//   path:
-//    '/Applications/Canary.app/Contents/MacOS/Canary',
-//   majorVersion: 80
-// }
-return {
-  browsers: config.browsers.filter((b) => b.family === 'chromium'),
-}
-```
-
-:::
-
-When you open the Cypress App in a project that uses the above modifications,
-only the Chrome browsers found on the system will display in the list of
-available browsers.
-
-<DocsImage src="/img/guides/plugins/chrome-browsers-only.png" alt="Filtered list of Chrome browsers" ></DocsImage>
-
-<Alert type="info">
-
-If you return an empty list of browsers or `browsers: null`, the default list
-will be restored automatically.
-
-</Alert>
-
-If you modify the list of browsers, you can see the
-[resolved configuration](/guides/references/configuration#Resolved-Configuration)
-in the **Settings** tab of the Cypress App.
 
 ### Switch between multiple configuration files
 
@@ -242,20 +201,6 @@ or
 [Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing)
 type was selected in the Cypress App. This allows you to configure test
 type-specific plugins.
-
-#### Use Cypress React Plugin Conditionally
-
-Conditionally apply the Cypress React Plugin if launching via Component Testing:
-
-```js
-module.exports = (on, config) => {
-  if (config.testingType === 'component') {
-    require('@cypress/react/plugins/react-scripts')(on, config)
-  }
-
-  return config
-}
-```
 
 ## History
 

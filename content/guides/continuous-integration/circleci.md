@@ -15,7 +15,7 @@ title: CircleCI
 
 <DocsVideo src="https://youtube.com/embed/J-xbNtKgXfY"></DocsVideo>
 
-<DocsVideo src="/img/snippets/running-in-ci.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/running-in-ci.mp4" title="Cypress in CircleCI"></DocsVideo>
 
 <!-- textlint-enable -->
 
@@ -27,6 +27,8 @@ install, cache and run Cypress with very little effort.
 
 Full documentation can be found at the
 [`cypress-io/circleci-orb`](https://github.com/cypress-io/circleci-orb) repo.
+For the Orb Quick Start Guide and usage cases, view the CircleCI
+[Cypress orb documentation](https://circleci.com/developer/orbs/orb/cypress-io/cypress).
 
 A typical project can have:
 

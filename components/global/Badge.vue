@@ -14,7 +14,8 @@ export default {
   props: {
     type: {
       type: String,
-      required: true,
+      required: false,
+      default: 'info'
     },
     path: {
       type: String,
@@ -31,7 +32,6 @@ export default {
   display: inline-block;
   color: #fff;
   padding: 0.25em 0.4em;
-  margin-left: 0.5rem;
   font-size: 0.7rem;
   line-height: 0.7rem;
   font-weight: 700;

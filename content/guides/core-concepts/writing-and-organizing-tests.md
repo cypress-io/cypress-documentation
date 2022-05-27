@@ -113,7 +113,7 @@ these should also be ignored when you check into source control.
 
 </Alert>
 
-### Test files
+### Spec files
 
 Test files are located in `cypress/e2e` by default, but can be
 [configured](/guides/references/configuration#Folders-Files) to another
@@ -121,6 +121,8 @@ directory. Test files may be written as:
 
 - `.js`
 - `.jsx`
+- `.ts`
+- `.tsx`
 - `.coffee`
 - `.cjsx`
 
@@ -140,10 +142,6 @@ Check out our recipe using
 To see an example of every command used in Cypress, open the
 [`2-advanced-examples` folder](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/cypress/integration/2-advanced-examples)
 within your `cypress/e2e` folder.
-
-To start writing tests for your app, create a new file like `app.cy.js` within
-your `cypress/e2e` folder. Refresh your tests list in the Cypress App and your
-new file should have appeared in the list.
 
 ### Fixture Files
 
@@ -263,31 +261,54 @@ The initial imported plugins file can be
 
 ### Support file
 
+To include code before your test files, set the
+[`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
+path. By default,
+[`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
+is set to look for one of the following files:
+
+**Component:**
+
+- `cypress/support/component.js`
+- `cypress/support/component.jsx`
+- `cypress/support/component.ts`
+- `cypress/support/component.tsx`
+
+**End-to-End:**
+
+- `cypress/support/e2e.js`
+- `cypress/support/e2e.jsx`
+- `cypress/support/e2e.ts`
+- `cypress/support/e2e.tsx`
+
+<Alert type="danger">
+
+⚠️ For a given testing type, multiple matching `supportFile` files will result
+in an error when Cypress loads.
+
+</Alert>
+
+::testing-type-specific-option{option=supportFile}
+
+The Cypress App automatically creates an example support file for each
+configured testing type, which has several commented out examples.
+
+This file runs **before** every single spec file. We do this purely as a
+convenience mechanism so you don't have to import this file.
+
 By default Cypress will automatically include type-specific support files. For
 E2E, the default is `cypress/support/e2e.{js,jsx,ts,tsx}`, and for Component
 Testing `cypress/support/e2e.{js,jsx,ts,tsx}`.
-
-The default support file can be configured to another file or turned off
-completely within each testing type's configuration object using the
-[supportFile](/guides/references/configuration#Folders-Files) configuration.
-
-This file runs **before** every single spec file. We do this purely as a
-convenience mechanism so you don't have to import this file in every single one
-of your spec files.
-
-The initial imported support file can be configured to another file or turned
-off completely using the
-[supportFile](/guides/references/configuration#Folders-Files) configuration.
 
 The support file is a great place to put reusable behavior such as
 [custom commands](/api/cypress-api/custom-commands) or global overrides that you
 want applied and available to all of your spec files.
 
+The initial imported support file can be configured to another file or turned
+off completely using the
+[supportFile](/guides/references/configuration#Folders-Files) configuration.
 From your support file you can `import` or `require` other files to keep things
 organized.
-
-We automatically seed an example support file for each configured testing type,
-which has several commented out examples.
 
 You can define behaviors in a `before` or `beforeEach` within any of the
 `cypress/support` files:
@@ -298,7 +319,7 @@ beforeEach(() => {
 })
 ```
 
-<DocsImage src="/img/guides/global-hooks.png" alt="Global hooks for tests" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/global-hooks.png" alt="Global hooks for tests"></DocsImage>
 
 <Alert type="info">
 
@@ -344,6 +365,14 @@ style.
 
 If you're familiar with writing tests in JavaScript, then writing tests in
 Cypress will be a breeze.
+
+<Alert type="info">
+
+To start writing tests for your app, follow our guides for writing your first
+[Component](/guides/getting-started/writing-your-first-component-test) or
+[End-to-End](/guides/getting-started/writing-your-first-end-to-end-test) test.
+
+</Alert>
 
 ### Test Structure
 
@@ -555,7 +584,7 @@ browsers.
 ```js
 describe('When NOT in Chrome', { browser: '!chrome' }, () => {
   it('Shows warning', () => {
-    cy.get('.browser-warning').should(
+    cy.get('[data-testid="browser-warning"]').should(
       'contain',
       'For optimal viewing, use Chrome browser'
     )
@@ -639,7 +668,7 @@ describe('if your app uses jQuery', () => {
       // event that causes the event callback to fire
       cy.get('#with-jquery')
         .invoke('trigger', event)
-        .get('#messages')
+        .get('[data-testid="messages"]')
         .should('contain', 'the event ' + event + 'was fired')
     })
   })
@@ -687,7 +716,7 @@ You can run a test by clicking on the spec filename. For example the
 has multiple test files, but below we run the "new-transaction.spec.ts" test
 file by clicking on it.
 
-<DocsImage src="/img/guides/core-concepts/run-single-spec.gif" alt="Running a single spec" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/run-single-spec.gif" alt="Running a single spec"></DocsImage>
 
 ## Test statuses
 
@@ -699,7 +728,7 @@ After the Cypress spec completes every test has one of 4 statuses: **passed**,
 Passed tests have successfully completed all their commands without failing any
 assertions. The test screenshot below shows a passed test:
 
-<DocsImage src="/img/guides/core-concepts/passing-test.png" alt="Cypress App with a single passed test" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-passing-test.png" alt="Cypress App with a single passed test"></DocsImage>
 
 Note that a test can pass after several
 [test retries](/guides/guides/test-retries). In that case the Command Log shows
@@ -710,7 +739,7 @@ some failed attempts, but ultimately the entire test finishes successfully.
 Good news - the failed test has found a problem. Could be much worse - it could
 be a user hitting this bug!
 
-<DocsImage src="/img/guides/core-concepts/failing-test.png" alt="Cypress App with a single failed test" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-failing-test.png" alt="Cypress App with a single failed test"></DocsImage>
 
 After a test fails, the screenshots and videos can help find the problem so it
 can be fixed.
@@ -726,8 +755,10 @@ describe('TodoMVC', () => {
 
   it.skip('adds 2 todos', function () {
     cy.visit('/')
-    cy.get('.new-todo').type('learn testing{enter}').type('be cool{enter}')
-    cy.get('.todo-list li').should('have.length', 100)
+    cy.get('[data-testid="new-todo"]')
+      .type('learn testing{enter}')
+      .type('be cool{enter}')
+    cy.get('[data-testid="todo-list"] li').should('have.length', 100)
   })
 
   xit('another test', () => {
@@ -739,7 +770,7 @@ describe('TodoMVC', () => {
 All 3 tests above are marked _pending_ when Cypress finishes running the spec
 file.
 
-<DocsImage src="/img/guides/core-concepts/different-pending.png" alt="Cypress App with three pending tests" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-pending-tests.png" alt="Cypress App with three pending test"></DocsImage>
 
 So remember - if you (the test writer) knowingly skip a test using one of the
 above three ways, Cypress counts it as a _pending_ test.
@@ -760,19 +791,21 @@ describe('TodoMVC', () => {
   })
 
   it('hides footer initially', () => {
-    cy.get('.filters').should('not.exist')
+    cy.get('[data-testid="filters"]').should('not.exist')
   })
 
   it('adds 2 todos', () => {
-    cy.get('.new-todo').type('learn testing{enter}').type('be cool{enter}')
-    cy.get('.todo-list li').should('have.length', 2)
+    cy.get('[data-testid="new-todo"]')
+      .type('learn testing{enter}')
+      .type('be cool{enter}')
+    cy.get('[data-testid="todo-list"] li').should('have.length', 2)
   })
 })
 ```
 
 If the `beforeEach` hook completes and both tests finish, two tests are passing.
 
-<DocsImage src="/img/guides/core-concepts/two-passing.png" alt="Cypress App showing two passing tests" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-2-tests-passing.png" alt="Cypress App showing two passing tests"></DocsImage>
 
 But what happens if a command inside the `beforeEach` hook fails? For example,
 let's pretend we want to visit a non-existent page `/does-not-exist` instead of
@@ -790,12 +823,12 @@ once, why would we execute it _again_ before the second test? It would just fail
 the same way! So Cypress _skips_ the remaining tests in that block, because they
 would also fail due to the `beforeEach` hook failure.
 
-<DocsImage src="/img/guides/core-concepts/1-skipped.png" alt="Cypress App showing a skipped test" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-failed-and-skipped-tests.png" alt="Cypress App showing one failed and one skipped test"></DocsImage>
 
 If we collapse the test commands, we can see the empty box marking the skipped
 test "adds 2 todos".
 
-<DocsImage src="/img/guides/core-concepts/skipped.png" alt="Cypress App showing one failed and one skipped test" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-skipped-test.png" alt="Cypress App showing one skipped test"></DocsImage>
 
 The tests that were meant to be executed but were skipped due to some run-time
 problem are marked "skipped" by Cypress.

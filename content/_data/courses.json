@@ -1,6 +1,23 @@
 {
   "courses": [
     {
+      "title": "Cypress Network Testing Exercises",
+      "url": "https://cypress.tips/courses",
+      "author": "Gleb Bahmutov",
+      "authorTwitter": "bahmutov",
+      "sourceName": "Cypress.Tips",
+      "sourceUrl": "https://cypress.tips/"
+    },
+    {
+      "title": "Cypress.io kurz",
+      "url": "https://academy.tesena.com/p/cypress-io",
+      "author": "Filip Hric",
+      "authorTwitter": "filip_hric",
+      "sourceName": "Tesena",
+      "sourceUrl": "https://academy.tesena.com",
+      "language": "Slovak"
+    },
+    {
       "title": "Cypress: Web Automation Testing from Zero to Hero",
       "url": "https://www.udemy.com/course/cypress-web-automation-testing-from-zero-to-hero/?couponCode=CYPRESSDOCS",
       "author": "Artem Bondar",
@@ -95,11 +112,11 @@
     },
     {
       "title": "Test automatizácia v Cypress.io",
-      "url": "https://www.learn2code.sk/kurzy/test-automatizacia-v-cypress-io",
+      "url": "https://skillmea.sk/kurzy/test-automatizacia-v-cypress-io",
       "author": "Filip Hric",
       "authorTwitter": "filip_hric",
-      "sourceName": "Learn2code",
-      "sourceUrl": "https://www.learn2code.sk",
+      "sourceName": "Skillmea",
+      "sourceUrl": "https://www.skillmea.sk",
       "language": "Slovak"
     },
     {

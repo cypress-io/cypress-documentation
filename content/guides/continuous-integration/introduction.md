@@ -403,11 +403,11 @@ Typically you'd set this inside of your CI provider.
 
 **_CircleCI Environment Variable_**
 
-<DocsImage src="/img/guides/cypress-record-key-as-environment-variable.png" alt="Record key environment variable" ></DocsImage>
+<DocsImage src="/img/guides/continuous-integration/cypress-record-key-as-environment-variable.png" alt="Record key environment variable"></DocsImage>
 
 **_TravisCI Environment Variable_**
 
-<DocsImage src="/img/guides/cypress-record-key-as-env-var-travis.png" alt="Travis key environment variable" ></DocsImage>
+<DocsImage src="/img/guides/continuous-integration/cypress-record-key-as-env-var-travis.png" alt="Travis key environment variable"></DocsImage>
 
 #### Git information
 

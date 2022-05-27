@@ -46,8 +46,6 @@ about how we do this in [Launching Browsers](/guides/guides/launching-browsers).
 
 </Alert>
 
-<DocsVideo src="/img/snippets/empty-file-30fps.mp4"></DocsVideo>
-
 We are now officially in the [Cypress App](/guides/core-concepts/cypress-app).
 This is where we will spend the majority of your time testing.
 
@@ -91,7 +89,7 @@ Over in the [Command Log](/guides/core-concepts/cypress-app#Command-Log) you'll
 see Cypress display the suite, the test and your first assertion (which should
 be passing in green).
 
-<DocsImage src="/img/guides/first-test.png" alt="My first test shown passing in the Cypress App" ></DocsImage>
+<DocsImage src="/img/guides/getting-started/e2e/v10/first-test.png" alt="My first test shown passing in the Cypress App"></DocsImage>
 
 <Alert type="info">
 
@@ -131,13 +129,11 @@ describe('My First Test', () => {
 })
 -->
 
-<DocsImage src="/img/guides/failing-test.png" alt="Failing test" ></DocsImage>
+<DocsImage src="/img/guides/getting-started/e2e/v10/first-test-failing.png" alt="Failing test"></DocsImage>
 
-Cypress provides a nice [Cypress App](/guides/core-concepts/cypress-app) that
-gives you a visual structure of suites, tests, and assertions. Soon you'll also
-see commands, page events, network requests, and more.
-
-<DocsVideo src="/img/snippets/first-test-30fps.mp4"></DocsVideo>
+The [Cypress App](/guides/core-concepts/cypress-app) gives you a visual
+structure of suites, tests, and assertions. Soon you'll also see commands, page
+events, network requests, and more.
 
 <Alert type="info">
 
@@ -217,7 +213,7 @@ Had this request come back with a non `2xx` status code such as `404` or `500`,
 or if there was a JavaScript error in the application's code, the test would
 have failed.
 
-<DocsVideo src="/img/snippets/first-test-visit-30fps.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/first-test-visit-30fps.mp4" title="First test with cy.visit()"></DocsVideo>
 
 <Alert type="danger">
 
@@ -286,7 +282,7 @@ describe('My First Test', () => {
 })
 -->
 
-<DocsImage src="/img/guides/first-test-failing-contains.png" alt="Test failing to not find content 'hype'" ></DocsImage>
+<DocsImage src="/img/guides/getting-started/e2e/v10/first-test-failing-contains.png" alt="Test failing to not find content 'hype'"></DocsImage>
 
 <Alert type="warning">
 
@@ -303,7 +299,7 @@ the error's display, read about
 Before we add another command - let's get this test back to passing. Replace
 `hype` with `type`.
 
-<DocsVideo src="/img/snippets/first-test-contains-30fps.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/first-test-contains-30fps.mp4" title="First test with cy.contains()"></DocsVideo>
 
 ### <Icon name="mouse-pointer"></Icon> Step 3: Click an element
 
@@ -331,15 +327,9 @@ destination page:
 
 Now we can assert something about this new page!
 
-<DocsVideo src="/img/snippets/first-test-click-30fps.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/first-test-click-30fps.mp4" title="First test with .click()"></DocsVideo>
 
-<Alert type="info">
-
-<Icon name="magic"></Icon> You can see IntelliSense in your spec files by adding
-a single special comment line. Read about
-[Intelligent Code Completion](/guides/tooling/IDE-integration#Triple-slash-directives).
-
-</Alert>
+::include{file=partials/intellisense-code-completion.md}
 
 ### <Icon name="check-square"></Icon> Step 4: Make an assertion
 
@@ -357,7 +347,8 @@ describe('My First Test', () => {
 
     cy.contains('type').click()
 
-    // Should be on a new URL which includes '/commands/actions'
+    // Should be on a new URL which
+    // includes '/commands/actions'
     cy.url().should('include', '/commands/actions')
   })
 })
@@ -372,10 +363,11 @@ likely to change your application state in more than one way.
 We can continue the interactions and assertions in this test by adding another
 chain to interact with and verify the behavior of elements on this new page.
 
-We can use [cy.get()](/api/commands/get) to select an element based on a CSS
-class. Then we can use the [.type()](/api/commands/type) command to enter text
-into the selected input. Finally, we can verify that the value of the input
-reflects the text that was typed with another [.should()](/api/commands/should).
+We can use [cy.get()](/api/commands/get) to select an element based on a
+`data-*` attribute. Then we can use the [.type()](/api/commands/type) command to
+enter text into the selected input. Finally, we can verify that the value of the
+input reflects the text that was typed with another
+[.should()](/api/commands/should).
 
 ```js
 describe('My First Test', () => {
@@ -384,11 +376,13 @@ describe('My First Test', () => {
 
     cy.contains('type').click()
 
-    // Should be on a new URL which includes '/commands/actions'
+    // Should be on a new URL which
+    // includes '/commands/actions'
     cy.url().should('include', '/commands/actions')
 
-    // Get an input, type into it and verify that the value has been updated
-    cy.get('.action-email')
+    // Get an input, type into it and verify
+    // that the value has been updated
+    cy.get('[data-testid="action-email"]')
       .type('fake@email.com')
       .should('have.value', 'fake@email.com')
   })
@@ -404,7 +398,7 @@ the new page. If we read it out loud, it might sound like:
 > 3. Click on it
 > 4. Get the URL
 > 5. Assert it includes: `/commands/actions`
-> 6. Get the input with the `.action-email` class
+> 6. Get the input with the `action-email` data-testid
 > 7. Type `fake@email.com` into the input
 > 8. Assert the input reflects the new value
 
@@ -412,15 +406,17 @@ Or in the Given, When, Then syntax:
 
 > 1. Given a user visits `https://example.cypress.io`
 > 2. When they click the link labeled `type`
-> 3. And they type "fake@email.com" into the `.action-email` input
+> 3. And they type "fake@email.com" into the `[data-testid="action-email"]`
+>    input
 > 4. Then the URL should include `/commands/actions`
-> 5. And the `.action-email` input has "fake@email.com" as its value
+> 5. And the `[data-testid="action-email"]` input has "fake@email.com" as its
+>    value
 
 And hey, this is a very clean test! We didn't have to say anything about _how_
 things work, just that we'd like to verify a particular series of events and
 outcomes.
 
-<DocsVideo src="/img/snippets/first-test-assertions-30fps.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/first-test-assertions-30fps.mp4" title="First test with assertions"></DocsVideo>
 
 <Alert type="info">
 
@@ -468,4 +464,4 @@ These various timeouts are defined in the
   strategies in a real-world project.
 - Search Cypress's documentation to quickly find what you need.
 
-<DocsImage src="/img/guides/search-box.png" alt="Use the search box to find relevant documentation" ></DocsImage>
+<DocsImage src="/img/guides/getting-started/e2e/search-box.png" alt="Use the search box to find relevant documentation"></DocsImage>
