@@ -1,5 +1,5 @@
 ---
-title: Getting Started
+title: Installing Cypress
 ---
 
 <Alert type="info">
@@ -9,7 +9,6 @@ title: Getting Started
 - How to install Cypress via `npm`
 - How to install Cypress via direct download
 - How to version and run Cypress via `package.json`
-- How to run Cypress on `wsl2` in windows
 
 </Alert>
 
@@ -179,55 +178,9 @@ everything you need prebuilt.
 
 If you have more complex requirements, want to level-up your Cypress workflow or
 just need help with troubleshooting, check out our
-[Advanced Installation](/reference/advanced-installation) reference.
+[Advanced Installation](/guides/reference/advanced-installation) reference.
 
-## Opening Cypress
+## Next Steps
 
-If you used `npm` to install, Cypress has now been installed to your
-`./node_modules` directory, with its binary executable accessible from
-`./node_modules/.bin`.
-
-Now you can open Cypress from your **project root** one of the following ways:
-
-**The long way with the full path**
-
-```shell
-./node_modules/.bin/cypress open
-```
-
-**Or with the shortcut using `npm bin`**
-
-```shell
-$(npm bin)/cypress open
-```
-
-**Or by using `npx`**
-
-**note**: [npx](https://www.npmjs.com/package/npx) is included with `npm > v5.2`
-or can be installed separately.
-
-```shell
-npx cypress open
-```
-
-**Or by using `yarn`**
-
-```shell
-yarn run cypress open
-```
-
-After a moment, the Cypress App will launch.
-
-## The Launchpad
-
-TODO Welcome to the Launchpad.
-
-TODO Screenshot & summary of testing type choice with link to
-/core-concepts/testing-types for more detail.
-
-TODO Screenshot & summary of config/scaffolding step.
-
-TODO Brief mention of browser selection with link to /guides/launching-browsers.
-
-TODO "to write your first E2E test go here, to get started with component
-testing go here" - goes to test type section
+[Open the app](/guides/getting-started/opening-the-app) and take it for a test
+drive!

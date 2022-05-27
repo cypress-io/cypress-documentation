@@ -15,10 +15,20 @@
             {
               "title": "Key Differences",
               "slug": "key-differences"
+            }
+          ]
+        },
+        {
+          "title": "Getting Started",
+          "slug": "getting-started",
+          "children": [
+            {
+              "title": "Installing Cypress",
+              "slug": "installing-cypress"
             },
             {
-              "title": "Getting Started",
-              "slug": "getting-started"
+              "title": "Opening the App",
+              "slug": "opening-the-app"
             }
           ]
         },
