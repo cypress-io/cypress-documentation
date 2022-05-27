@@ -4,10 +4,13 @@ title: Who Are You Testing For?
 
 When testing components, there are two kinds of users: End Users and Developers.
 
-When testing components, you should first realize that you have TWO kinds of users: End Users and Developers. A good component test covers the concerns of each of these types of users. For some examples of common concerns differentiating these users and a recommendation regarding your test audience, keep reading!
-elements based on accessible queries and human-readable text) as well as
-Developer concerns (What is the component's signature? Does it have any "output"
-when used in conjunction with other components?).
+When testing components, you should first realize that you have TWO kinds of
+users: End Users and Developers. A good component test covers the concerns of
+each of these types of users. For some examples of common concerns
+differentiating these users and a recommendation regarding your test audience,
+keep reading! elements based on accessible queries and human-readable text) as
+well as Developer concerns (What is the component's signature? Does it have any
+"output" when used in conjunction with other components?).
 
 ### Developer Concerns
 
@@ -16,13 +19,15 @@ they exercise the component in a particular way, with certain props, it'll
 behave the way they expect it to. A test written for a developer provides
 coverage over the component's usage and signature.
 
-Component testing written with developers in mind heavily covers props, events, and children.
+Component testing written with developers in mind heavily covers props, events,
+and children.
 
 ### End-User Concerns
 
 Users think the way a non-technical product owner might.
 
-They access and interact with the site in various ways, i.e. assistive devices such as screen readers.
+They access and interact with the site in various ways, i.e. assistive devices
+such as screen readers.
 
 Is the component supposed to tell you what's in your cart? Should you be able to
 enter a text value into a numerical `Stepper` component like it was an input? Is
