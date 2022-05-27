@@ -37,6 +37,9 @@
           "slug": "end-to-end-testing",
           "children": [
             {
+              "title": "Introduction to End-to-End Testing"
+            },
+            {
               "title": "Writing Your First End-to-End Test",
               "slug": "writing-your-first-end-to-end-test"
             },
@@ -74,12 +77,18 @@
           "slug": "component-testing",
           "children": [
             {
+              "title": "Introduction to Component Testing"
+            },
+            {
               "title": "Testing Your Components with Cypress",
               "slug": "testing-your-components-with-cypress"
             },
             {
               "title": "Who Are You Testing For?",
               "slug": "devs-vs-users"
+            },
+            {
+              "title": "Diving Deeper"
             },
             {
               "title": "Framework Configuration",
