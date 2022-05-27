@@ -286,7 +286,7 @@ steps:
 ## Troubleshooting
 
 See
-[Common Problems and Solutions](/guides/continuous-integration/github-actions#Common-problems-and-solutions).
+[Common Problems and Solutions](/guides/continuous-integration/github-actions#Common-Problems-and-Solutions).
 
 ## See also
 
