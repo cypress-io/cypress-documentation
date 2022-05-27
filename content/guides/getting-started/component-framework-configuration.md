@@ -8,18 +8,19 @@ Writing tests in Cypress is the same regardless of whichever UI library you
 choose (React or Vue, currently). However, each framework requires a different
 setup configuration.
 
-Cypress currently supports the following frameworks for component testing:
+Cypress currently supports the following frameworks and versions for component
+testing:
 
-| Framework                                            | UI Library | Bundler |
-| ---------------------------------------------------- | ---------- | ------- |
-| [Create React App](#Create-React-App-CRA)            | React      | Webpack |
-| [Next.js](#Next-js) <Badge type="info">Alpha</Badge> | React      | Webpack |
-| [React with Vite](#React-with-Vite)                  | React      | Vite    |
-| [React with Webpack](#React-with-Webpack)            | React      | Webpack |
-| [Vue CLI](#Vue-CLI)                                  | Vue        | Webpack |
-| [Nuxt](#Nuxt) <Badge type="info">Alpha</Badge>       | Vue        | Webpack |
-| [Vue with Vite](#Vue-with-Vite)                      | Vue        | Vite    |
-| [Vue with Webpack](#Vue-with-Webpack)                | Vue        | Webpack |
+| Framework                                                | UI Library | Bundler    |
+| -------------------------------------------------------- | ---------- | ---------- |
+| [Create React App 4+](#Create-React-App-CRA)             | React 16+  | Webpack 4+ |
+| [Next.js 11+](#Next-js) <Badge type="info">Alpha</Badge> | React 16+  | Webpack 5  |
+| [React with Vite](#React-with-Vite)                      | React 16+  | Vite 2     |
+| [React with Webpack](#React-with-Webpack)                | React 16+  | Webpack 4+ |
+| [Vue CLI](#Vue-CLI)                                      | Vue 2+     | Webpack 4+ |
+| [Nuxt 2](#Nuxt) <Badge type="info">Alpha</Badge>         | Vue 2+     | Webpack 4+ |
+| [Vue with Vite](#Vue-with-Vite)                          | Vue 2+     | Vite 2     |
+| [Vue with Webpack](#Vue-with-Webpack)                    | Vue 2+     | Webpack 4+ |
 
 ## Automatic Configuration (Recommended)
 
