@@ -43,6 +43,29 @@
             {
               "title": "Testing Your App",
               "slug": "testing-your-app"
+            },
+            {
+              "title": "Testing Strategies"
+            },
+            {
+              "title": "Auth0 Authentication",
+              "slug": "auth0-authentication"
+            },
+            {
+              "title": "Amazon Cognito Authentication",
+              "slug": "amazon-cognito-authentication"
+            },
+            {
+              "title": "Okta Authentication",
+              "slug": "okta-authentication"
+            },
+            {
+              "title": "Google Authentication",
+              "slug": "google-authentication"
+            },
+            {
+              "title": "Working with GraphQL",
+              "slug": "working-with-graphql"
             }
           ]
         },
@@ -269,32 +292,6 @@
             {
               "title": "Web Security",
               "slug": "web-security"
-            }
-          ]
-        },
-        {
-          "title": "Testing Strategies",
-          "slug": "testing-strategies",
-          "children": [
-            {
-              "title": "Auth0 Authentication",
-              "slug": "auth0-authentication"
-            },
-            {
-              "title": "Amazon Cognito Authentication",
-              "slug": "amazon-cognito-authentication"
-            },
-            {
-              "title": "Okta Authentication",
-              "slug": "okta-authentication"
-            },
-            {
-              "title": "Google Authentication",
-              "slug": "google-authentication"
-            },
-            {
-              "title": "Working with GraphQL",
-              "slug": "working-with-graphql"
             }
           ]
         },
