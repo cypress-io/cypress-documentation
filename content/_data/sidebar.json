@@ -339,16 +339,6 @@
           ]
         },
         {
-          "title": "Migrating to Cypress",
-          "slug": "migrating-to-cypress",
-          "children": [
-            {
-              "title": "Protractor",
-              "slug": "protractor"
-            }
-          ]
-        },
-        {
           "title": "Tooling",
           "slug": "tooling",
           "children": [
@@ -397,6 +387,10 @@
             {
               "title": "Legacy Configuration",
               "slug": "legacy-configuration"
+            },
+            {
+              "title": "Migrating from Protractor to Cypress",
+              "slug": "migrating-from-protractor-to-cypress"
             },
             {
               "title": "Client Certificates",
