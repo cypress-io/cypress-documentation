@@ -27,7 +27,6 @@ configuration to Cypress.
 | `experimentalInteractiveRunEvents` | `false` | Allows listening to the [`before:run`](/api/plugins/before-run-api), [`after:run`](/api/plugins/after-run-api), [`before:spec`](/api/plugins/before-spec-api), and [`after:spec`](/api/plugins/after-spec-api) events in the [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function during interactive mode. |
 | `experimentalSessionAndOrigin`     | `false` | Enables cross-origin and improved session support, including the [`cy.origin()`](/api/commands/origin) and [`cy.session()`](/api/commands/session) commands. Only available in end-to-end testing.                                                                                                                             |
 | `experimentalSourceRewriting`      | `false` | Enables AST-based JS/HTML rewriting. This may fix issues caused by the existing regex-based JS/HTML replacement algorithm. See [#5273](https://github.com/cypress-io/cypress/issues/5273) for details.                                                                                                                         |
-| `experimentalStudio`               | `false` | Generate and save commands directly to your test suite by interacting with your app as an end user would. See [Cypress Studio](/guides/core-concepts/cypress-studio) for more details.                                                                                                                                         |
 
 ## History
 

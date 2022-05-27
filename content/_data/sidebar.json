@@ -113,7 +113,7 @@
             {
               "title": "Custom Mount Commands",
               "slug": "custom-mount-react"
-            }            
+            }
           ]
         },
         {
@@ -147,10 +147,6 @@
             {
               "title": "Cypress App",
               "slug": "cypress-app"
-            },
-            {
-              "title": "Cypress Studio",
-              "slug": "cypress-studio"
             }
           ]
         },
