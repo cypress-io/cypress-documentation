@@ -31,8 +31,7 @@ and testing a given feature.
 ### Component vs. End-to-End in a Nutshell
 
 We cover the differences between component and end-to-end testing in-depth in
-the [Choosing a Testing Type](/guides/core-concepts/choosing-testing-type)
-guide.
+the [Choosing a Testing Type](/guides/core-concepts/testing-types) guide.
 
 But in short, Cypress Component Testing uses the same Cypress test runner,
 commands, and API to test components instead of pages.
