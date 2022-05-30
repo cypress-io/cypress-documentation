@@ -52,33 +52,54 @@ After a moment, the Cypress App will launch.
 
 ## The Launchpad
 
-TODO Welcome to the Launchpad.
+<DocsImage src="/img/guides/getting-started/opening-the-app/launchpad.png" alt="The Launchpad window"></DocsImage>
+
+Your Cypress testing journey begins with the Launchpad. Its job is to guide you
+through the decisions and configuration tasks you need to complete before you
+start writing your first test.
+
+If this is your first time using Cypress it will take you through the following
+steps in order.
 
 ### Choosing a Testing Type
 
-<DocsImage src="/img/guides/getting-started/choose-testing-type.png" alt="Launchpad showing test type selector"></DocsImage>
+<DocsImage src="/img/guides/getting-started/opening-the-app/choose-testing-type.png" alt="The Launchpad test type selector"></DocsImage>
 
-Now the Launchpad presents you with your first decision: what type of testing
-shall I do? <strong>End-to-end testing</strong>, where I run my whole
-application and visit pages to test them? Or <strong>component testing</strong>,
-where I mount individual components of my app and test them in isolation? For
-more background on this critical decision, read
+The Launchpad presents you with your biggest decision first: What type of
+testing shall I do?
+[End-to-End Testing](/guides/core-concepts/testing-types#What-is-End-to-end-Testing),
+where I run my whole application and visit pages to test them? Or
+[Component Testing](/guides/core-concepts/testing-types#What-is-Component-Testing),
+where I mount individual components of my app and test them in isolation?
+
+For more background on this critical decision, read
 [Testing Types](/guides/core-concepts/testing-types). Alternatively, if you're
 not sure which type you want and just want to get on with your testing journey,
-just choose End-to-end for now - you can always change this later!
+just choose End-to-End for now - you can always change this later!
 
 ### Quick Configuration
 
-TODO Screenshot & summary of config/scaffolding step.
+<DocsImage src="/img/guides/getting-started/opening-the-app/scaffolded-files.png" alt="The Launchpad scaffolded files list"></DocsImage>
+
+On the next step, the Launchpad will scaffold out a set of configuration files
+appropriate to your chosen testing type, and the changes will be listed for you
+to review. For more information about the generated config check out the
+[Cypress configuration reference](/guides/references/configuration), or you can
+just scroll down and hit "Continue".
 
 ### Launching a Browser
 
-TODO Screenshot & brief mention of browser selection with link to
-/guides/launching-browsers.
+<DocsImage src="/img/guides/getting-started/opening-the-app/select-browser.png" alt="The Launchpad browser selector"></DocsImage>
+
+Lastly, you're presented with the list of compatible browsers Cypress found on
+your system. To understand more about your options here, see
+[our guide on launching browsers](/guides/guides/launching-browsers). Again,
+don't sweat it, you can switch browsers whenever you want. Now <strong>MASH THAT
+START BUTTON!</strong>
 
 ## Next Steps
 
-Time to get testing! If you want
-[to write your first E2E test, go here](/guides/end-to-end-testing/writing-your-first-end-to-end-test).
-Alternatively,
-[to get started with component testing go here](/guides/component-testing/testing-your-components-with-cypress).
+Time to get testing! If you chose
+[to start with E2E testing, go here](/guides/end-to-end-testing/writing-your-first-end-to-end-test).
+Alternatively, if you decided
+[to try component testing, go here](/guides/component-testing/testing-your-components-with-cypress).
