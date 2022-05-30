@@ -173,7 +173,7 @@ it('adds todos', () => {
 
 You can also use Cypress to mount components from some web frameworks and
 execute
-[component tests](/guides/overview/choosing-testing-type#What-is-Component-Testing).
+[component tests](/guides/core-concepts/testing-types#What-is-Component-Testing).
 
 ```js
 import { mount } from '@cypress/react' // or @cypress/vue

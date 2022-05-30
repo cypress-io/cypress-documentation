@@ -178,7 +178,7 @@ everything you need prebuilt.
 
 If you have more complex requirements, want to level-up your Cypress workflow or
 just need help with troubleshooting, check out our
-[Advanced Installation](/guides/reference/advanced-installation) reference.
+[Advanced Installation](/guides/references/advanced-installation) reference.
 
 ## Next Steps
 

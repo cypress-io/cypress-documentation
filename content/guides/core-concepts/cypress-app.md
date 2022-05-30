@@ -164,7 +164,7 @@ Under Test is rendered.
 ### Application Under Test <E2EOnlyBadge />
 
 In
-[End-to-End testing](/guides/overview/choosing-testing-type#What-is-End-to-end-Testing),
+[End-to-End testing](/guides/core-concepts/testing-types#What-is-End-to-end-Testing),
 the righthand side of the Cypress App is used to display the Application Under
 Test (AUT): the application that was navigated to using a
 [`cy.visit()`](/api/commands/visit) or any subsequent routing calls made from
@@ -213,14 +213,12 @@ unexpected behaviors
 ### Component Under Test <ComponentOnlyBadge />
 
 In
-[Component testing](/guides/overview/choosing-testing-type#What-is-Component-Testing),
+[Component testing](/guides/core-concepts/testing-types#What-is-Component-Testing),
 the righthand side of the Cypress App is used to display the Component Under
 Test (CUT): the component that was mounted using the
 [`cy.mount()`](/api/commands/mount) command.
 
-In the following example, taken from the
-[Writing Your First Component Test](/guides/getting-started/writing-your-first-component-test)
-guide, we wrote the following test in our spec file:
+In the following example, we have the following test in our spec file:
 
 <code-group-react-vue>
 <template #react>

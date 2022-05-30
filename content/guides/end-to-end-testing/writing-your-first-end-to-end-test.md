@@ -17,10 +17,9 @@ title: Writing Your First End-to-End Test
 ## Add a test file
 
 Assuming you've successfully
-[installed the Cypress App](/guides/getting-started/installing-cypress#Installing)
-and
-[opened the Cypress app](/guides/getting-started/installing-cypress#Opening-Cypress),
-now it's time to write our first test. We're going to:
+[installed the Cypress App](/guides/getting-started/installing-cypress) and
+[opened the Cypress app](/guides/getting-started/opening-the-app), now it's time
+to write our first test. We're going to:
 
 1. Create a `sample.cy.js` file.
 2. Watch Cypress update our list of specs.
@@ -454,7 +453,7 @@ These various timeouts are defined in the
 ## Next steps
 
 - Learn more about the [Cypress App](/guides/core-concepts/cypress-app) UI.
-- Start [testing your app](/guides/getting-started/testing-your-app).
+- Start [testing your app](/guides/end-to-end-testing/testing-your-app).
 - Set up
   [intelligent code completion](/guides/tooling/IDE-integration#Intelligent-Code-Completion)
   for Cypress commands and assertions.

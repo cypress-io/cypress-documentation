@@ -150,7 +150,7 @@ Related notes:
 See the dev server documentation for the UI framework you’re using for more
 specific instructions on what the `devServer` should be for that framework. Some
 examples can be found in our
-[framework documentation](/guides/getting-started/component-framework-configuration).
+[framework documentation](/guides/component-testing/component-framework-configuration).
 
 </Alert>
 

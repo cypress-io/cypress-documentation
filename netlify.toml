@@ -55,19 +55,67 @@
 	
 [[redirects]]
   from = "/guides/component-testing/introduction"
-  to = "/guides/overview/choosing-testing-type#What-is-Component-Testing"
+  to = "/guides/core-concepts/testing-types#What-is-Component-Testing"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing/framework-configuration"
-  to = "/guides/getting-started/component-framework-configuration/"
+  to = "/guides/component-testing/component-framework-configuration/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/core-concepts/test-runner"
   to = "/guides/core-concepts/cypress-app"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/getting-started/writing-your-first-test"
+  to = "/guides/end-to-end-testing/writing-your-first-end-to-end-test"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/getting-started/testing-your-app"
+  to = "/guides/end-to-end-testing/testing-your-app"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/testing-strategies/auth0-authentication"
+  to = "/guides/end-to-end-testing/auth0-authentication"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/testing-strategies/amazon-cognito-authentication"
+  to = "/guides/end-to-end-testing/amazon-cognito-authentication"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/testing-strategies/okta-authentication"
+  to = "/guides/end-to-end-testing/okta-authentication"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/testing-strategies/google-authentication"
+  to = "/guides/end-to-end-testing/google-authentication"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/testing-strategies/working-with-graphql"
+  to = "/guides/end-to-end-testing/working-with-graphql"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/migrating-to-cypress/protractor"
+  to = "/guides/references/migrating-from-protractor-to-cypress"
   status = 301
   force = true
 

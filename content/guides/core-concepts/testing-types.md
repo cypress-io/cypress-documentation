@@ -80,7 +80,7 @@ on how to handle this complexity.
 </Alert>
 
 To learn more about end-to-end testing in Cypress, visit our guide on
-[Writing Your First End-to-end Test](/guides/getting-started/writing-your-first-end-to-end-test).
+[Writing Your First End-to-end Test](/guides/end-to-end-testing/writing-your-first-end-to-end-test).
 
 ## What is Component Testing?
 
@@ -141,7 +141,7 @@ set of tests specializing in what they do best.
 </Alert>
 
 To learn more about component testing in Cypress, visit our guide on
-[Writing Your First Component Test](/guides/getting-started/writing-your-first-component-test).
+[Testing Your Components with Cypress](/guides/component-testing/testing-your-components-with-cypress).
 
 ## Test Type Comparison
 

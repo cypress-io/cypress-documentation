@@ -16,7 +16,7 @@ migrating to Cypress v10.0, visit the
 ### Spec File Doesn't Appear in the Cypress App
 
 If something appears missing from the spec list, make sure the files have the
-[proper extension and the `specPattern` is correctly defined](/guides/getting-started/writing-your-first-component-test#Naming-the-spec-file).
+[proper extension and the `specPattern` is correctly defined](/guides/component-testing/component-framework-configuration#Spec-Pattern-for-Component-Tests).
 
 ### ESLint Global Errors
 
