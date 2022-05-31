@@ -50,13 +50,43 @@ yarn run cypress open
 
 After a moment, the Cypress App will launch.
 
+### Adding npm scripts
+
+While there's nothing wrong with writing out the full path to the Cypress
+executable each time, it's much easier and clearer to add Cypress commands to
+the `scripts` field in your `package.json` file.
+
+```javascript
+{
+  "scripts": {
+    "cypress:open": "cypress open"
+  }
+}
+```
+
+Now you can invoke the command from your project root like so:
+
+```shell
+npm run cypress:open
+```
+
+...and Cypress will open right up for you.
+
+### CLI tools
+
+By installing Cypress through `npm` you also get access to many other CLI
+commands. On top of that, Cypress is also a fully baked JavaScript library you
+can import into your Node scripts.
+
+You can [read more about the CLI here](/guides/guides/command-line).
+
 ## The Launchpad
 
 <DocsImage src="/img/guides/getting-started/opening-the-app/launchpad.png" alt="The Launchpad window"></DocsImage>
 
-Your Cypress testing journey begins with the Launchpad. Its job is to guide you
-through the decisions and configuration tasks you need to complete before you
-start writing your first test.
+On opening Cypress, your testing journey begins with the Launchpad. Its job is
+to guide you through the decisions and configuration tasks you need to complete
+before you start writing your first test.
 
 If this is your first time using Cypress it will take you through the following
 steps in order.

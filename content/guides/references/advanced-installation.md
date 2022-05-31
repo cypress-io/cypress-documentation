@@ -2,38 +2,6 @@
 title: Advanced Installation
 ---
 
-## Adding npm scripts
-
-While there's nothing wrong with writing out the full path to the Cypress
-executable each time, it's much easier and clearer to add Cypress commands to
-the `scripts` field in your `package.json` file.
-
-```javascript
-{
-  "scripts": {
-    "cypress:open": "cypress open"
-  }
-}
-```
-
-Now you can invoke the command from your project root like so:
-
-```shell
-npm run cypress:open
-```
-
-...and Cypress will open right up for you.
-
-## CLI tools
-
-By installing Cypress through `npm` you also get access to many other CLI
-commands.
-
-As of version `0.20.0` Cypress is also a fully baked `node_module` you can
-require in your Node scripts.
-
-You can [read more about the CLI here](/guides/guides/command-line).
-
 ## Environment variables
 
 | Name                             | Description                                                                                              |
