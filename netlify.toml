@@ -121,7 +121,7 @@
 
 [[redirects]]
   from = "/guides/migrating-to-cypress/protractor"
-  to = "/guides/references/migrating-from-protractor-to-cypress"
+  to = "/guides/end-to-end-testing/protractor-to-cypress"
   status = 301
   force = true
 

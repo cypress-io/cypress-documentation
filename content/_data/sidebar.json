@@ -69,6 +69,13 @@
             {
               "title": "Working with GraphQL",
               "slug": "working-with-graphql"
+            },
+            {
+              "title": "Migrating from Other Frameworks"
+            },
+            {
+              "title": "Protractor to Cypress",
+              "slug": "protractor-to-cypress"
             }
           ]
         },
@@ -391,10 +398,6 @@
             {
               "title": "Legacy Configuration",
               "slug": "legacy-configuration"
-            },
-            {
-              "title": "Migrating from Protractor to Cypress",
-              "slug": "migrating-from-protractor-to-cypress"
             },
             {
               "title": "Client Certificates",
