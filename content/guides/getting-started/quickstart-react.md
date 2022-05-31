@@ -44,7 +44,7 @@ npx cypress open
 ## Configuring Component Testing
 
 Whenever you run Cypress for the first time in a project, the app will prompt
-you to set up either E2E testing or Component Testing. Choose Component Testing
+you to set up either E2E Testing or Component Testing. Choose Component Testing
 and step through the configuration wizard.
 
 The Cypress Launchpad will detect your framework and generate all the necessary

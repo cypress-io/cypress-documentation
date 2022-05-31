@@ -288,7 +288,7 @@ complexity. You will be battling synchronizing the state between your server and
 your browser - and you'll always need to set up / tear down this state before
 tests (which is slow).
 
-The good news is that we aren't Selenium, nor are we a traditional e2e testing
+The good news is that we aren't Selenium, nor are we a traditional E2E Testing
 tool. That means we're not bound to the same restrictions.
 
 **With Cypress, there are several other approaches that can offer an arguably

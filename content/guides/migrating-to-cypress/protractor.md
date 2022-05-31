@@ -74,7 +74,7 @@ while there are often ideals of complete code coverage, the realities of
 business and deadlines often take precedence and the tests are left unwritten,
 or worse, ignored when errors are being reported because they are not reliable.
 Not only does Cypress make sure that your tests will be reliable, but it
-provides developers with tools that make e2e testing an asset to development
+provides developers with tools that make E2E Testing an asset to development
 rather than a hindrance.
 
 ### Interact with your tests in a browser

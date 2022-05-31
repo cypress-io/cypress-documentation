@@ -420,7 +420,7 @@ module.exports = (on, config) => {
     // component testing dev server setup code
     // component testing node events setup code
   } else {
-    // e2e testing node events setup code
+    // E2E Testing node events setup code
   }
 }
 ```
@@ -441,7 +441,7 @@ module.exports = (on, config) => {
   },
   e2e: {
     setupNodeEvents(on, config) {
-      // e2e testing node events setup code
+      // E2E Testing node events setup code
     },
   },
 }

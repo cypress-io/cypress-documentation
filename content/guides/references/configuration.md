@@ -777,7 +777,7 @@ This function was added in Cypress version `10.0.0` to replace the deprecated
 {
   e2e: {
     setupNodeEvents(on, config) {
-      // e2e testing node events setup code
+      // E2E Testing node events setup code
     },
   },
   component: {
