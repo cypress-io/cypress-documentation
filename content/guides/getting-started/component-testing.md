@@ -12,7 +12,7 @@ quickly build and test any component — no matter how simple or complex.
 
 Our test runner is browser-based, which allows you to test-drive your
 component's **styles and API** and **isolate your component away from the page
-it'll be rendered in**. Isolating your components out of your website enables
+Cypress will render it in**. Separating the components of your website enables
 you to further break down work into more manageable chunks and ultimately
 results in components built mindfully.
 
@@ -24,7 +24,7 @@ results in components built mindfully.
 
 For additional reading, we encourage folks to check out the
 [Component Driven](https://componentdriven.org) organization, which talks about
-the pros of component-driven development and may aide you when trying to figure
+the pros of component-driven development and may aid you when trying to figure
 out if you should be taking a page-based or component-based approach to building
 and testing a given feature.
 
@@ -36,15 +36,17 @@ the [Choosing a Testing Type](/guides/overview/choosing-testing-type) guide.
 But in short, Cypress Component Testing uses the same Cypress test runner,
 commands, and API to test components instead of pages.
 
-The primary technical difference is that your components are built using a
-development server, instead of rendered within the context of a complete
-website. This results in tests that are faster and have fewer dependencies on
-infrastructure than end-to-end tests that cover the same code paths.
+The primary difference is that Cypress Component Testing builds your components
+using a development server instead of rendering within a complete website, which
+results in faster tests and fewer dependencies on infrastructure than end-to-end
+tests covering the same code paths.
 
 Lastly, Cypress's API is user-centric and built for testing things that render
-in the web. Therefore, many of your tests will appear framework-agnostic and
+on the web. Therefore, many of your tests will appear framework-agnostic and
 **approachable for developers coming from any background**.
 
-### Next Steps
+### Getting Started
 
-Learn the mount syntax.
+Ready to get started? Check out our quickstart guides for
+[Vue](/guides/getting-started/quickstart-vue) and
+[React](/guides/getting-started/quickstart-vue).
