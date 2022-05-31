@@ -1256,7 +1256,7 @@ repo.
 
 specific issues
 
-- spec file doesn't show up in the test runner
+- spec file doesn't show up in the Cypress app
 - spec file not loading
 - spec file not automatically updating when it is changed -- ???
 - spec file not working properly
