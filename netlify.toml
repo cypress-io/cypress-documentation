@@ -55,13 +55,13 @@
 	
 [[redirects]]
   from = "/guides/component-testing/introduction"
-  to = "/guides/component-testing/testing-your-components-with-cypress"
+  to = "/guides/component-testing/writing-your-first-component-test"
   status = 301
   force = true
 
 [[redirects]]
   from = "/guides/component-testing"
-  to = "/guides/component-testing/testing-your-components-with-cypress"
+  to = "/guides/component-testing/writing-your-first-component-test"
   status = 301
   force = true
 

@@ -102,4 +102,4 @@ START BUTTON!</strong>
 Time to get testing! If you chose
 [to start with E2E testing, go here](/guides/end-to-end-testing/writing-your-first-end-to-end-test).
 Alternatively, if you decided
-[to try component testing, go here](/guides/component-testing/testing-your-components-with-cypress).
+[to try component testing, go here](/guides/component-testing/writing-your-first-component-test).
