@@ -87,4 +87,4 @@ when they were last modified, and their `git` status.
 
 Learn about the mount command!
 
-<NavGuide next="/guides/getting-started/mounting-vue" />
+<NavGuide next="/guides/component-testing/mounting-vue" />

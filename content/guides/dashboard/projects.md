@@ -16,7 +16,7 @@ To set up your project to record, you must use the
 [Cypress App](/guides/core-concepts/cypress-app).
 
 Make sure you [install](/guides/getting-started/installing-cypress) and
-[open](/guides/getting-started/installing-cypress#Opening-Cypress) it first!
+[open](/guides/getting-started/opening-the-app) it first!
 
 </Alert>
 

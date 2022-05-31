@@ -1,5 +1,5 @@
 ---
-title: 'Choosing a Testing Type'
+title: 'Testing Types'
 ---
 
 <Alert type="info">
@@ -45,7 +45,7 @@ End-to-end tests are great at verifying your app runs as intended, from the
 front end to the back end. However, end-to-end tests can be more difficult to
 set up, run, and maintain. There are often infrastructure needs in setting up a
 backend for testing purposes. Your team will need to develop a
-[strategy](https://docs.cypress.io/guides/getting-started/testing-your-app#Testing-strategies)
+[strategy](https://docs.cypress.io/guides/end-to-end-testing/testing-your-app#Testing-strategies)
 on how to handle this complexity.
 
 <Alert type="success">
@@ -80,7 +80,7 @@ on how to handle this complexity.
 </Alert>
 
 To learn more about end-to-end testing in Cypress, visit our guide on
-[Writing Your First End-to-end Test](/guides/getting-started/writing-your-first-end-to-end-test).
+[Writing Your First End-to-end Test](/guides/end-to-end-testing/writing-your-first-end-to-end-test).
 
 ## What is Component Testing?
 
@@ -141,7 +141,7 @@ set of tests specializing in what they do best.
 </Alert>
 
 To learn more about component testing in Cypress, visit our guide on
-[Writing Your First Component Test](/guides/getting-started/writing-your-first-component-test).
+[Testing Your Components with Cypress](/guides/component-testing/testing-your-components-with-cypress).
 
 ## Test Type Comparison
 

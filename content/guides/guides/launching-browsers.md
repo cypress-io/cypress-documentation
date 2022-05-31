@@ -7,6 +7,17 @@ When you run tests in Cypress, we launch a browser for you. This enables us to:
 1. Create a clean, pristine testing environment.
 2. Access the privileged browser APIs for automation.
 
+<Alert type="info">
+
+<strong class="alert-header">Cross Browser Support</strong>
+
+Cypress currently supports Firefox and Chrome-family browsers (including Edge
+and Electron). To run tests optimally across these browsers in CI, check out the
+strategies demonstrated in the
+[cross browser Testing](/guides/guides/cross-browser-testing) guide.
+
+</Alert>
+
 ## Browsers
 
 When the Cypress App is initially launched, you can choose to test your

@@ -177,4 +177,4 @@ to the store don't affect other tests.
 
 </Alert>
 
-<NavGuide prev="/guides/getting-started/events-react" />
+<NavGuide prev="/guides/component-testing/events-react" />

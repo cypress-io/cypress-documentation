@@ -24,6 +24,10 @@ export const redirects = [
     redirect: '/plugins/directory',
   },
   {
+    path: '/guides/component-testing',
+    redirect: '/guides/component-testing/testing-your-components-with-cypress',
+  },
+  {
     path: '/guides/dashboard/dashboard-introduction',
     redirect: '/guides/dashboard/introduction',
   },

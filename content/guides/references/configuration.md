@@ -285,9 +285,9 @@ See the [Command Line](/guides/guides/command-line) guide for more examples.
 In addition to setting
 [Testing Type-Specific options](#Testing-Type-Specific-Options), you can
 override other configuration options for either the
-[End-to-End Testing](/guides/overview/choosing-testing-type#What-is-End-to-end-Testing)
+[End-to-End Testing](/guides/core-concepts/testing-types#What-is-End-to-end-Testing)
 or
-[Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing).
+[Component Testing](/guides/core-concepts/testing-types#What-is-Component-Testing).
 
 For example:
 
@@ -563,7 +563,7 @@ for your framework and UI library like so:
 :::
 
 See
-[Framework Configuration](/guides/getting-started/component-framework-configuration)
+[Framework Configuration](/guides/component-testing/component-framework-configuration)
 guide for more info on all the available `framework` and `bundler` options, as
 well as additional configuration options.
 
@@ -590,7 +590,7 @@ The devServer function receives a `cypressConfig` argument:
 :::
 
 See the
-[Custom Dev Server](/guides/getting-started/component-framework-configuration)
+[Custom Dev Server](/guides/component-testing/component-framework-configuration)
 guide for more info.
 
 ### excludeSpecPattern

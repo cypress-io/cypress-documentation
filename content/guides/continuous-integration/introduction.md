@@ -348,7 +348,7 @@ minutes off install time by preventing a large binary download.
   [`npm ci`](https://docs.npmjs.com/cli/ci) equivalent.
 
 - If you need to override the binary location for some reason, use
-  [CYPRESS_CACHE_FOLDER](/guides/getting-started/installing-cypress#Binary-cache)
+  [CYPRESS_CACHE_FOLDER](/guides/references/advanced-installation#Binary-cache)
   environment variable.
 
 - Make sure you are not restoring the previous cache using lax keys; then the

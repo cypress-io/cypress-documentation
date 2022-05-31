@@ -498,4 +498,4 @@ scoped slots, and fallbacks, you should be ready to test most components!
 Let's work on configuring a custom mount command to handle applications like
 Vuetify and plugins like Vue Router.
 
-<NavGuide prev="/guides/getting-started/events-vue" next="/guides/getting-started/custom-mount-vue" />
+<NavGuide prev="/guides/component-testing/events-vue" next="/guides/component-testing/custom-mount-vue" />

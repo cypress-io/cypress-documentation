@@ -344,7 +344,7 @@ patch as soon as possible.
 
 The Cypress App runs locally so no data is sent to Cypress aside from exception
 data, which can be disabled using the instructions
-[here](https://docs.cypress.io/guides/getting-started/installing-cypress#Opt-out-of-sending-exception-data-to-Cypress).
+[here](https://docs.cypress.io/guides/references/advanced-installation#Opt-out-of-sending-exception-data-to-Cypress).
 
 ## <Icon name="angle-right"></Icon> Can I write API tests using Cypress? <E2EOnlyBadge />
 

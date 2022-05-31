@@ -31,7 +31,7 @@ and testing a given feature.
 ### Component vs. End-to-End in a Nutshell
 
 We cover the differences between component and end-to-end testing in-depth in
-the [Choosing a Testing Type](/guides/overview/choosing-testing-type) guide.
+the [Choosing a Testing Type](/guides/core-concepts/testing-types) guide.
 
 But in short, Cypress Component Testing uses the same Cypress test runner,
 commands, and API to test components instead of pages.
@@ -48,5 +48,5 @@ on the web. Therefore, many of your tests will appear framework-agnostic and
 ### Getting Started
 
 Ready to get started? Check out our quickstart guides for
-[Vue](/guides/getting-started/quickstart-vue) and
-[React](/guides/getting-started/quickstart-vue).
+[Vue](/guides/component-testing/quickstart-vue) and
+[React](/guides/component-testing/quickstart-react).

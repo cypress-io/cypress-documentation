@@ -68,7 +68,7 @@ The rest of this guide covers configuring your project manually.
 
 ### Prerequisites
 
-- [Install](/guides/getting-started/installing-cypress#Installing) Cypress.
+- [Install](/guides/getting-started/installing-cypress) Cypress.
 - Create an empty cypress.config.js (or .ts) file at the root of your project.
 - Create an empty cypress/support/component.js (or .ts) file.
 

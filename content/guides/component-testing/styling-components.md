@@ -92,10 +92,7 @@ Overlays + Modals are usually really good.
 6. UI Libraries
 
 This guide will help you setup your test infrastructure to render your
-component's styles properly. Solving certain runtime errors, such as those with
-ThemeProviders or Material UI, is covered on the
-[Getting Components to Work](/guides/getting-started/getting-components-to-work)
-page.
+component's styles properly.
 
 Depending on how your application is built, the first time you mount a new
 component, it may be completely or somewhat unstyled.

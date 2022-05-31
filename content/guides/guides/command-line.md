@@ -111,7 +111,7 @@ cypress run [options]
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `--browser`, `-b`          | [Run Cypress in the browser with the given name. If a filesystem path is supplied, Cypress will attempt to use the browser at that path.](#cypress-run-browser-lt-browser-name-or-path-gt) |
 | `--ci-build-id`            | [Specify a unique identifier for a run to enable grouping or parallelization.](#cypress-run-ci-build-id-lt-id-gt)                                                                          |
-| `--component`              | [Run component tests](/guides/overview/choosing-testing-type#What-is-Component-Testing)                                                                                                    |
+| `--component`              | [Run component tests](/guides/core-concepts/testing-types#What-is-Component-Testing)                                                                                                       |
 | `--config`, `-c`           | [Specify configuration](#cypress-run-config-lt-config-gt)                                                                                                                                  |
 | `--config-file`, `-C`      | [Specify configuration file](#cypress-run-config-file-lt-configuration-file-gt)                                                                                                            |
 | `--e2e`                    | Run end to end tests (default)                                                                                                                                                             |
@@ -495,7 +495,7 @@ you will be guided through selecting a browser, project, and/or testing type.
 | Option                | Description                                                                                                                   |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | `--browser`, `-b`     | [Path to a custom browser to be added to the list of available browsers in Cypress](#cypress-open-browser-lt-browser-path-gt) |
-| `--component`         | [Run component tests](/guides/overview/choosing-testing-type#What-is-Component-Testing)                                       |
+| `--component`         | [Run component tests](/guides/core-concepts/testing-types#What-is-Component-Testing)                                          |
 | `--config`, `-c`      | [Specify configuration](#cypress-open-config-lt-config-gt)                                                                    |
 | `--config-file`, `-C` | [Specify configuration file](#cypress-open-config-file-lt-configuration-file-gt)                                              |
 | `--detached`, `-d`    | Open Cypress in detached mode                                                                                                 |
@@ -722,7 +722,7 @@ installs of Cypress across your machine, global or not.
 
 Print the `path` to the Cypress cache folder. You can change the path where the
 Cypress cache is located by following
-[these instructions](/guides/getting-started/installing-cypress#Binary-cache).
+[these instructions](/guides/references/advanced-installation#Binary-cache).
 
 ```shell
 cypress cache path

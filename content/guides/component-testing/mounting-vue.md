@@ -167,4 +167,4 @@ Test Utils documentation.
 Now that we have our component mounted, next we will learn how to write tests
 against it.
 
-<NavGuide prev="/guides/getting-started/quickstart-vue" next="/guides/getting-started/props-vue" />
+<NavGuide prev="/guides/component-testing/quickstart-vue" next="/guides/component-testing/props-vue" />

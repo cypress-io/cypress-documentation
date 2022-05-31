@@ -281,4 +281,4 @@ guide goes deeper into how to write tests with Cypress.
 
 We're going to emit a custom event from our Stepper component.
 
-<NavGuide prev="/guides/getting-started/mounting-vue" next="/guides/getting-started/events-vue" />
+<NavGuide prev="/guides/component-testing/mounting-vue" next="/guides/component-testing/events-vue" />

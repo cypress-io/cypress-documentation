@@ -4,7 +4,7 @@ const chalk = require('chalk')
 const { logger } = require('./utils/logger')
 const { prettyPrintStatusCode } = require('./utils/prettyPrintStatusCode')
 
-const DOCS_SITE_URL = 'https://docs.cypress.io/'
+const docsSiteUrl = process.env.DOCS_SITE_URL || 'https://docs.cypress.io/'
 
 const makeSiteChecker = () => {
   return new Promise((resolve, reject) => {
@@ -63,15 +63,15 @@ const makeSiteChecker = () => {
           numLinksChecked++
         },
         end: () => {
-          logger.log(`Finished scanning url ${DOCS_SITE_URL}`)
+          logger.log(`Finished scanning url ${docsSiteUrl}`)
           logger.log(`Number of links checked: ${numLinksChecked}`)
           resolve(brokenLinkRecords)
         },
       }
     )
 
-    logger.log(`🔗 Starting link checker for url: ${DOCS_SITE_URL}`)
-    siteChecker.enqueue(DOCS_SITE_URL)
+    logger.log(`🔗 Starting link checker for url: ${docsSiteUrl}`)
+    siteChecker.enqueue(docsSiteUrl)
   })
 }
 

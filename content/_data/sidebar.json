@@ -13,10 +13,6 @@
               "slug": "why-cypress"
             },
             {
-              "title": "Choosing a Testing Type",
-              "slug": "choosing-testing-type"
-            },
-            {
               "title": "Key Differences",
               "slug": "key-differences"
             }
@@ -31,10 +27,20 @@
               "slug": "installing-cypress"
             },
             {
-              "title": "End-to-End Testing"
+              "title": "Opening the App",
+              "slug": "opening-the-app"
+            }
+          ]
+        },
+        {
+          "title": "End-to-End Testing",
+          "slug": "end-to-end-testing",
+          "children": [
+            {
+              "title": "Introduction to End-to-End Testing"
             },
             {
-              "title": "Writing Your First Test",
+              "title": "Writing Your First End-to-End Test",
               "slug": "writing-your-first-end-to-end-test"
             },
             {
@@ -42,15 +48,47 @@
               "slug": "testing-your-app"
             },
             {
-              "title": "Component Testing"
+              "title": "Testing Strategies"
             },
             {
-              "title": "Overview",
-              "slug": "component-testing"
+              "title": "Auth0 Authentication",
+              "slug": "auth0-authentication"
+            },
+            {
+              "title": "Amazon Cognito Authentication",
+              "slug": "amazon-cognito-authentication"
+            },
+            {
+              "title": "Okta Authentication",
+              "slug": "okta-authentication"
+            },
+            {
+              "title": "Google Authentication",
+              "slug": "google-authentication"
+            },
+            {
+              "title": "Working with GraphQL",
+              "slug": "working-with-graphql"
+            }
+          ]
+        },
+        {
+          "title": "Component Testing",
+          "slug": "component-testing",
+          "children": [
+            {
+              "title": "Introduction to Component Testing"
+            },
+            {
+              "title": "Testing Your Components with Cypress",
+              "slug": "testing-your-components-with-cypress"
             },
             {
               "title": "Who Are You Testing For?",
               "slug": "devs-vs-users"
+            },
+            {
+              "title": "Diving Deeper"
             },
             {
               "title": "Framework Configuration",
@@ -123,6 +161,10 @@
             {
               "title": "Introduction to Cypress",
               "slug": "introduction-to-cypress"
+            },
+            {
+              "title": "Testing Types",
+              "slug": "testing-types"
             },
             {
               "title": "Writing and Organizing Tests",
@@ -263,32 +305,6 @@
           ]
         },
         {
-          "title": "Testing Strategies",
-          "slug": "testing-strategies",
-          "children": [
-            {
-              "title": "Auth0 Authentication",
-              "slug": "auth0-authentication"
-            },
-            {
-              "title": "Amazon Cognito Authentication",
-              "slug": "amazon-cognito-authentication"
-            },
-            {
-              "title": "Okta Authentication",
-              "slug": "okta-authentication"
-            },
-            {
-              "title": "Google Authentication",
-              "slug": "google-authentication"
-            },
-            {
-              "title": "Working with GraphQL",
-              "slug": "working-with-graphql"
-            }
-          ]
-        },
-        {
           "title": "Continuous Integration",
           "slug": "continuous-integration",
           "children": [
@@ -319,16 +335,6 @@
             {
               "title": "AWS CodeBuild",
               "slug": "aws-codebuild"
-            }
-          ]
-        },
-        {
-          "title": "Migrating to Cypress",
-          "slug": "migrating-to-cypress",
-          "children": [
-            {
-              "title": "Protractor",
-              "slug": "protractor"
             }
           ]
         },
@@ -371,12 +377,20 @@
               "slug": "assertions"
             },
             {
+              "title": "Advanced Installation",
+              "slug": "advanced-installation"
+            },
+            {
               "title": "Configuration",
               "slug": "configuration"
             },
             {
               "title": "Legacy Configuration",
               "slug": "legacy-configuration"
+            },
+            {
+              "title": "Migrating from Protractor to Cypress",
+              "slug": "migrating-from-protractor-to-cypress"
             },
             {
               "title": "Client Certificates",
