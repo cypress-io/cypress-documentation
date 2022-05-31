@@ -16,6 +16,7 @@ export default {
     },
     max: {
       type: Number,
+      default: null,
       required: false
     },
     initial: {
