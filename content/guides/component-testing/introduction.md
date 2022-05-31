@@ -42,7 +42,10 @@ With Cypress as the Test Runner and assertions framework, component tests in
 React and Vue look very similar. Here's an example, written in React:
 
 ```javascript
-import { mount } from '@cypress/react' // or @cypress/vue
+import { mount } from '@cypress/react' 
+// @cypress/vue@3 for Vue 3
+// @cypress/vue@2 for Vue 2
+
 import TodoList from './components/TodoList'
 
 describe('TodoList', () => {
@@ -74,7 +77,7 @@ Let's go through the setup to start testing components. You can set it up with
 an existing React or Vue project, or start a new project from scratch. This
 guide assumes your project uses a [Webpack based](https://webpack.js.org/) tool
 chain. For our experimental Vite based instructions, please see the information
-here.
+[here](#Vite).
 
 <alert type="info">
 
@@ -397,9 +400,15 @@ export default function (on, config) {
 }
 ```
 
+**Vue and Vite**
+
+Vue 3 support Vite only works with Vue 3 by **default**. For Vue 3, please run `npm i -D @cypress/vue@3`. For Vue 2 compatibility, [update your Vite config to support Vue 2](https://vitejs.dev/guide/features.html#vue) and then you can use `npm i -D @cypress/vue@2`.
+
+**Differences between Webpack and Vite**
+
 Exactly like Webpack, you should start Cypress with `yarn cypress open-ct`.
 Writing component tests when using Vite is _exactly_ the same as when using
-Webpack. Minor differences may occur depending on the
+Webpack. Your network tab will have more requests than you would when using Webpack (due to the nature of Vite's ESM based loader) and you will likely want to tweak the [`optimizeDeps` option](https://vitejs.dev/config/#optimizedeps-include) within your Vite config to prebundle CJS dependencies. We suggest using the Vite plugin [`vite-plugin-optimize-persist`](https://github.com/antfu/vite-plugin-optimize-persist) to manage the `optimizeDeps` field automatically.
 
 **Known issues**
 
