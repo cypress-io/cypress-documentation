@@ -2,6 +2,16 @@
 title: Cypress Studio
 ---
 
+<Alert type="warning">
+
+<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
+Removed</strong>
+
+Cypress Studio has been removed in Cypress v10 and will be rethought/revisited
+in a later release. This page is for reference only.
+
+</Alert>
+
 <Alert type="info">
 
 ## <Icon name="graduation-cap"></Icon> What you'll learn
