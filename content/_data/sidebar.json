@@ -189,6 +189,10 @@
             {
               "title": "Cypress App",
               "slug": "cypress-app"
+            },
+            {
+              "title": "Cypress Studio",
+              "slug": "cypress-studio"
             }
           ]
         },
