@@ -139,7 +139,7 @@ events, network requests, and more.
 <strong class="alert-header">What are describe, it, and expect?</strong>
 
 All of these functions come from
-[Bundled Tools](/guides/references/bundled-tools) that Cypress bakes in.
+[Bundled Libraries](/guides/references/bundled-libraries) that Cypress bakes in.
 
 - `describe` and `it` come from [Mocha](https://mochajs.org)
 - `expect` comes from [Chai](http://www.chaijs.com)

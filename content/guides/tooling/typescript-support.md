@@ -52,8 +52,8 @@ with the following configuration:
 The `"types"` will tell the TypeScript compiler to only include type definitions
 from Cypress. This will address instances where the project also uses
 `@types/chai` or `@types/jquery`. Since
-[Chai](/guides/references/bundled-tools#Chai) and
-[jQuery](/guides/references/bundled-tools#Other-Library-Utilities) are
+[Chai](/guides/references/bundled-libraries#Chai) and
+[jQuery](/guides/references/bundled-libraries#Other-Library-Utilities) are
 namespaces (globals), incompatible versions will cause the package manager
 (`yarn` or `npm`) to nest and include multiple definitions and cause conflicts.
 
