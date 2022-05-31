@@ -25,7 +25,7 @@ Learn how to use Cypress to solve specific testing problems from the videos in
 the playlists below.
 
 - [Official Cypress.io YouTube Channel](https://www.youtube.com/cypress_io)
-- [Cypress.io - end-to-end Testing Framework](https://www.youtube.com/playlist?list=PLzDWIPKHyNmK9NX9_ng2IdrkEr8L4WwB0)
+- [Cypress.io - E2E Testing Framework](https://www.youtube.com/playlist?list=PLzDWIPKHyNmK9NX9_ng2IdrkEr8L4WwB0)
   by [Bushra Alam](https://twitter.com/imBushraAlam)
 - [Cypress Tips & Tricks](https://www.youtube.com/playlist?list=PLP9o9QNnQuAYYRpJzDNWpeuOVTwxmIxcI)
   by [Gleb Bahmutov](https://twitter.com/bahmutov)

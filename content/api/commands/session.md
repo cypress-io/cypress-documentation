@@ -65,7 +65,7 @@ cy.session([username, password], () => {
 })
 
 // Caching session when logging in via page visit
-// Used in End-to-End testing
+// Used in E2E Testing
 cy.session(name, () => {
   cy.visit('/login')
   cy.get('[data-test=name]').type(name)
