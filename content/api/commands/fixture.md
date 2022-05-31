@@ -113,12 +113,14 @@ The example above would resolve in the following order:
 
 #### Use import statement
 
-If you are loading a JSON fixture, you can simply use the `import` statement and
-let the bundler load it:
+If you are loading a JSON fixture, you can use the `import` statement and let
+the bundler load it:
 
 ```js
 // cypress/integration/spec.js
+
 import user from '../fixtures/user.json'
+
 it('loads the same object', () => {
   cy.fixture('user').then((userFixture) => {
     expect(user, 'the same data').to.deep.equal(userFixture)
@@ -342,7 +344,7 @@ practical purposes it should never happen.
 - [`cy.intercept()`](/api/commands/intercept)
 - [`.then()`](/api/commands/then)
 - [`.readFile()`](/api/commands/readFile) for a similar command without caching
-  and with builtin retryability
+  and with builtin retry-ability
 - [Recipe: Bootstrapping App Test Data](/examples/examples/recipes#Server-Communication)
 - [Fixtures](https://github.com/cypress-io/testing-workshop-cypress#fixtures)
   section of the Cypress Testing Workshop

@@ -545,14 +545,17 @@ plugin, the following test might or might not work:
 #### <Icon name="exclamation-triangle" color="red"></Icon> Incorrectly checking if the stub was called
 
 ```js
-const Clicker = ({ click }) => (
-  <div>
-    <button onClick={click}>Click me</button>
-  </div>
-)
+const Clicker = ({ click }) => {
+  return (
+    <div>
+      <button onClick={click}>Click me</button>
+    </div>
+  )
+}
 
 it('calls the click prop twice', () => {
   const onClick = cy.stub()
+
   // "mount" function comes from
   // https://github.com/cypress-io/cypress/tree/master/npm/react
   mount(<Clicker click={onClick} />)
@@ -571,11 +574,13 @@ The above example will fail if the component calls the `click` prop after a
 delay.
 
 ```js
-const Clicker = ({ click }) => (
-  <div>
-    <button onClick={() => setTimeout(click, 500)}>Click me</button>
-  </div>
-)
+const Clicker = ({ click }) => {
+  return (
+    <div>
+      <button onClick={() => setTimeout(click, 500)}>Click me</button>
+    </div>
+  )
+}
 ```
 
 <DocsImage src="/img/guides/retry-ability/delay-click.png" alt="Expect fails the test without waiting for the delayed stub" width-600 ></DocsImage>
@@ -591,6 +596,7 @@ using `cy.get('@alias').should(...)` assertions.
 ```js
 it('calls the click prop', () => {
   const onClick = cy.stub().as('clicker')
+
   // "mount" function comes from
   // https://github.com/cypress-io/cypress/tree/master/npm/react
   mount(<Clicker click={onClick} />)

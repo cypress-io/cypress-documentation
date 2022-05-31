@@ -186,9 +186,9 @@ If you want to permanently override these options you could do so by setting
 
 ```javascript
 cy.server({
-  urlMatchingOptions: { matchBase: false, dot: true }
+  urlMatchingOptions: { matchBase: false, dot: true },
 })
-cy.route(...)
+cy.route(/*...*/)
 ```
 
 ### With Stubbing

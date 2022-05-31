@@ -207,7 +207,7 @@ cy.contains('The code example')
 ```
 
 **Tip:** Cypress has a built-in Chai-jQuery assertion to confirm the attribute.
-The above example can be written simply as:
+The above example can be written as:
 
 ```js
 cy.contains('The code example').should('have.attr', 'id', 'code-snippet')

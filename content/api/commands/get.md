@@ -164,6 +164,7 @@ cy.get('#comparison')
   // and the div.feature inside
   .should('have.class', 'test-title')
   .and('have.class', 'feature')
+
 cy.get('#comparison')
   .find('div')
   // the search is limited to the tree at #comparison element

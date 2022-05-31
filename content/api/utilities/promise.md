@@ -25,7 +25,7 @@ new Cypress.Promise((resolve, reject) => { ... })
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-new cy.Promise(...)  // Errors, cannot be chained off 'cy'
+new cy.Promise(/*...*/) // Errors, cannot be chained off 'cy'
 ```
 
 ## Examples

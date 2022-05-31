@@ -38,6 +38,7 @@ queries and mutations.
 // Utility to match GraphQL mutation based on the operation name
 export const hasOperationName = (req, operationName) => {
   const { body } = req
+
   return (
     body.hasOwnProperty('operationName') && body.operationName === operationName
   )
@@ -132,6 +133,7 @@ context('Tests', () => {
   it('should not display the load more button on the launches page', () => {
     cy.intercept('POST', 'http://localhost:3000/graphql', (req) => {
       const { body } = req
+
       if (hasOperationName(req, 'GetLaunchList')) {
         // Declare the alias from the initial intercept in the beforeEach
         req.alias = 'gqlGetLaunchListQuery'

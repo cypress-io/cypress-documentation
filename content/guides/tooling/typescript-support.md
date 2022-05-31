@@ -267,7 +267,7 @@ Both Jest and Expect (bundled inside Cypress) provide the clashing types for the
 1. Configure a separate `tsconfig.json` for E2E tests. See our example
    [cypress-io/cypress-and-jest-typescript-example](https://github.com/cypress-io/cypress-and-jest-typescript-example)
    repo.
-2. Remove Cypress global variables by using NPM package
+2. Remove Cypress global variables by using npm package
    [local-cypress](https://github.com/bahmutov/local-cypress). Read the blog
    post
    [How to Avoid Using Global Cypress Variables](https://glebbahmutov.com/blog/local-cypress/)

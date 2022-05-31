@@ -217,10 +217,10 @@ case, the `Promise` will be rejected with a detailed error.
 There is a third option - Cypress could run, but the tests could not start for
 some reason. In that case the resolved value is an object with two fields
 
-```js
+```json
 {
-  "failures": 1,    // non-zero number
-  "message": "..."  // error message
+  "failures": 1, // non-zero number
+  "message": "..." // error message
 }
 ```
 
@@ -231,22 +231,25 @@ In order to handle these possible errors, you can add a `catch` to
 // e2e-run-tests.js
 const cypress = require('cypress')
 
-cypress.run({...})
-.then(result => {
-  if (result.failures) {
-    console.error('Could not execute tests')
-    console.error(result.message)
-    process.exit(result.failures)
-  }
+cypress
+  .run({
+    /*...*/
+  })
+  .then((result) => {
+    if (result.failures) {
+      console.error('Could not execute tests')
+      console.error(result.message)
+      process.exit(result.failures)
+    }
 
-  // print test results and exit
-  // with the number of failed tests as exit code
-  process.exit(result.totalFailed)
-})
-.catch(err => {
-  console.error(err.message)
-  process.exit(1)
-})
+    // print test results and exit
+    // with the number of failed tests as exit code
+    process.exit(result.totalFailed)
+  })
+  .catch((err) => {
+    console.error(err.message)
+    process.exit(1)
+  })
 ```
 
 ## `cypress.open()`

@@ -240,16 +240,14 @@ cy.intercept({
 ```
 
 ```js
-cy.intercept(
-  {
-    // this RegExp matches any URL beginning with
-    // 'http://api.example.com/' and ending with '/edit' or '/save'
-    url: /^http:\/\/api\.example\.com\/.*\/(edit|save)/,
-    // matching requests must also contain this header
-    headers: {
-      'x-requested-with': 'exampleClient',
-    },
-  }
+cy.intercept({
+  // this RegExp matches any URL beginning with
+  // 'http://api.example.com/' and ending with '/edit' or '/save'
+  url: /^http:\/\/api\.example\.com\/.*\/(edit|save)/,
+  // matching requests must also contain this header
+  headers: {
+    'x-requested-with': 'exampleClient',
+  },
 })
 ```
 
@@ -468,7 +466,7 @@ cy.intercept('/users*', (req) => {
 <Alert type="info">
 
 Throughout these examples we will refer to the incoming HTTP request as `req`.
-Those of you with [Express.js](https://expressjs.com/)
+Those of you with [Express](https://expressjs.com/)
 [middleware](https://expressjs.com/en/guide/writing-middleware.html) experience
 should be familiar with this syntax.
 
@@ -778,7 +776,7 @@ traffic _before_ Cypress can intercept it.
 
 `cy.intercept()` cannot be debugged using
 [`cy.request()`](/api/commands/request)! Cypress only intercepts requests made
-by your front-end application.
+by your front end application.
 
 </Alert>
 
@@ -788,7 +786,7 @@ The intercepted request passed to the route handler (hereafter referred to as
 `req`, though you can use any name) contains methods to dynamically control the
 response to a request:
 
-- `req.reply()` - stub out a response requiring no dependency on a real back-end
+- `req.reply()` - stub out a response requiring no dependency on a real back end
 - `req.continue()` - modify or make assertions on the real response
 - `req.destroy()` - destroy the request and respond with a network error
 - `req.redirect()` - respond to the request with a redirect to a specified
@@ -805,15 +803,15 @@ argument:
 cy.intercept('POST', '/users', (req) => {
   req.reply({
     headers: {
-      Set-Cookie: 'newUserName=Peter Pan;'
+      'Set-Cookie': 'newUserName=Peter Pan;',
     },
     statusCode: 201,
     body: {
-      name: 'Peter Pan'
+      name: 'Peter Pan',
     },
     delay: 10, // milliseconds
     throttleKbps: 1000, // to simulate a 3G connection
-    forceNetworkError: false // default
+    forceNetworkError: false, // default
   })
 })
 
@@ -821,7 +819,7 @@ cy.intercept('POST', '/users', (req) => {
 cy.intercept('GET', '/users', (req) => {
   req.reply({
     statusCode: 200, // default
-    fixture: 'users.json'
+    fixture: 'users.json',
   })
 })
 ```
@@ -856,8 +854,8 @@ See also
 Modifying the real response (`continue`):
 
 The `continue` method accepts a function which is passed an object representing
-the real response being intercepted on its way back to the client (your
-front-end application).
+the real response being intercepted on its way back to the client (your front
+end application).
 
 ```js
 // pass the request through and make an assertion on
@@ -907,6 +905,7 @@ cy.intercept('GET', '/users', (req) => {
     // do something when the `before:response` event is triggered
   })
 })
+
 cy.intercept('POST', '/users', (req) => {
   req.on('response', (res) => {
     // do something when the `response` event is triggered
@@ -1075,6 +1074,7 @@ interceptor:
 cy.intercept('/billing', (req) => {
   // dynamically get billing plan name at request-time
   const planName = getPlanName()
+
   // this object will automatically be JSON.stringified and
   // sent as the response
   req.reply({ plan: planName })
@@ -1093,6 +1093,7 @@ of 500ms:
 cy.intercept('/api/users/*', async (req) => {
   // asynchronously retrieve fixture filename at request-time
   const fixtureFilename = await getFixtureFilenameForUrl(req.url)
+
   req.reply({
     fixture: fixtureFilename,
     delay: 500,
