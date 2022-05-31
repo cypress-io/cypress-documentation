@@ -239,6 +239,7 @@ describe('User Login', () => {
 'user-login-errors (attempt 3).png'
 // screenshot filename on 3rd failed attempt
 'user-login-errors (failed) (attempt 3).png'
+
 ```
 
 ## Videos
