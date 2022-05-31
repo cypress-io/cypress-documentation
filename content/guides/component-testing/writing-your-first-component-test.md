@@ -1,5 +1,5 @@
 ---
-title: Testing Your Components with Cypress
+title: Writing Your First Component Test
 ---
 
 <CtBetaAlert></CtBetaAlert>

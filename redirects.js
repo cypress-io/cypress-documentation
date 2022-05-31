@@ -25,7 +25,7 @@ export const redirects = [
   },
   {
     path: '/guides/component-testing',
-    redirect: '/guides/component-testing/testing-your-components-with-cypress',
+    redirect: '/guides/component-testing/writing-your-first-component-test',
   },
   {
     path: '/guides/dashboard/dashboard-introduction',

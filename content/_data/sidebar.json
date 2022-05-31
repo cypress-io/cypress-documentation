@@ -80,8 +80,8 @@
               "title": "Introduction to Component Testing"
             },
             {
-              "title": "Testing Your Components with Cypress",
-              "slug": "testing-your-components-with-cypress"
+              "title": "Writing Your First Component Test",
+              "slug": "writing-your-first-component-test"
             },
             {
               "title": "Who Are You Testing For?",
