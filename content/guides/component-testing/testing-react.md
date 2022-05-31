@@ -128,4 +128,4 @@ guide goes deeper into how to write tests with Cypress.
 
 Next, we will look at how to listen to events coming from our component.
 
-<NavGuide prev="/guides/getting-started/mounting-react" next="/guides/getting-started/events-react" />
+<NavGuide prev="/guides/component-testing/mounting-react" next="/guides/component-testing/events-react" />

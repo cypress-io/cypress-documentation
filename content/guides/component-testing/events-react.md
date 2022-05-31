@@ -202,4 +202,4 @@ Congratulations, you covered the basics for component testing!
 Next, we will dive into more advanced topics such as how to customize our mount
 command.
 
-<NavGuide prev="/guides/getting-started/testing-react" next="/guides/getting-started/custom-mount-react" />
+<NavGuide prev="/guides/component-testing/testing-react" next="/guides/component-testing/custom-mount-react" />

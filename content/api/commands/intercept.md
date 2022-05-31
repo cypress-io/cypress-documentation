@@ -314,7 +314,7 @@ cy.wait('@gqlMutation')
 <Alert type="info">
 
 For more guidance around aliasing requests with GraphQL, see
-[Working with GraphQL](/guides/testing-strategies/working-with-graphql)
+[Working with GraphQL](/guides/end-to-end-testing/working-with-graphql)
 
 </Alert>
 

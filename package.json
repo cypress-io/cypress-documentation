@@ -13,6 +13,7 @@
     "start:ci": "cross-env NODE_ENV=test yarn build && cd dist/ && yarn serve:dist",
     "changed-files-broken-link-checker:ci": "node scripts/changedFilesBrokenLinkChecker.js",
     "broken-link-checker:prod": "node scripts/recursiveBrokenLinkChecker.js",
+    "broken-link-checker:dev": "DOCS_SITE_URL=http://localhost:3000/ node scripts/recursiveBrokenLinkChecker.js",
     "serve:dist": "node scripts/server.js",
     "fix:markdown": "prettier --write '**/*.md'",
     "lint:markdown": "prettier --check '**/*.md'",

@@ -590,7 +590,7 @@ The devServer function receives a `cypressConfig` argument:
 :::
 
 See the
-[Custom Dev Server](/guides/getting-started/component-framework-configuration)
+[Custom Dev Server](/guides/component-testing/component-framework-configuration)
 guide for more info.
 
 ### excludeSpecPattern

@@ -45,7 +45,7 @@ End-to-end tests are great at verifying your app runs as intended, from the
 front end to the back end. However, end-to-end tests can be more difficult to
 set up, run, and maintain. There are often infrastructure needs in setting up a
 backend for testing purposes. Your team will need to develop a
-[strategy](https://docs.cypress.io/guides/getting-started/testing-your-app#Testing-strategies)
+[strategy](https://docs.cypress.io/guides/end-to-end-testing/testing-your-app#Testing-strategies)
 on how to handle this complexity.
 
 <Alert type="success">

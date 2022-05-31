@@ -150,4 +150,4 @@ Refer to the latest setup instructions in the Testing Library docs.
 Now that we have our component mounted, next we will learn how to write tests
 against it.
 
-<NavGuide prev="/guides/getting-started/quickstart-react" next="/guides/getting-started/testing-react" />
+<NavGuide prev="/guides/component-testing/quickstart-react" next="/guides/component-testing/testing-react" />

@@ -679,4 +679,4 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 </template>
 </code-group-vue2-vue3>
 
-<NavGuide prev="/guides/getting-started/slots-vue" />
+<NavGuide prev="/guides/component-testing/slots-vue" />

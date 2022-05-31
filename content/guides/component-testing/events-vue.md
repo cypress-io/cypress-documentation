@@ -380,4 +380,4 @@ Cypress has custom DX and failure messages built-in to the Sinon spies that powe
 
 We're going to create a container component and learn how to test slots.
 
-<NavGuide prev="/guides/getting-started/props-vue" next="/guides/getting-started/slots-vue" />
+<NavGuide prev="/guides/component-testing/props-vue" next="/guides/component-testing/slots-vue" />

@@ -174,5 +174,6 @@ include the `cypress.d.ts` file in all your `tsconfig.json` files like so:
 ## Additional Mount Command Examples
 
 Visit the guides for scenarios in
-[React](/guides/getting-started/custom-mount-react) and
-[Vue](/guides/getting-started/custom-mount-vue) for customizing a mount command.
+[React](/guides/component-testing/custom-mount-react) and
+[Vue](/guides/component-testing/custom-mount-vue) for customizing a mount
+command.
