@@ -114,7 +114,7 @@ cypress run [options]
 | `--component`              | [Run component tests](/guides/overview/choosing-testing-type#What-is-Component-Testing)                                                                                                    |
 | `--config`, `-c`           | [Specify configuration](#cypress-run-config-lt-config-gt)                                                                                                                                  |
 | `--config-file`, `-C`      | [Specify configuration file](#cypress-run-config-file-lt-configuration-file-gt)                                                                                                            |
-| `--e2e`                    | Run end to end tests (default)                                                                                                                                                             |
+| `--e2e`                    | Run end-to-end tests (default)                                                                                                                                                             |
 | `--env`, `-e`              | [Specify environment variables](#cypress-run-env-lt-env-gt)                                                                                                                                |
 | `--group`                  | [Group recorded tests together under a single run](#cypress-run-group-lt-name-gt)                                                                                                          |
 | `--headed`                 | [Displays the browser instead of running headlessly](#cypress-run-headed)                                                                                                                  |
@@ -499,7 +499,7 @@ you will be guided through selecting a browser, project, and/or testing type.
 | `--config`, `-c`      | [Specify configuration](#cypress-open-config-lt-config-gt)                                                                    |
 | `--config-file`, `-C` | [Specify configuration file](#cypress-open-config-file-lt-configuration-file-gt)                                              |
 | `--detached`, `-d`    | Open Cypress in detached mode                                                                                                 |
-| `--e2e`               | Run end to end tests (default)                                                                                                |
+| `--e2e`               | Run end-to-end tests (default)                                                                                                |
 | `--env`, `-e`         | [Specify environment variables](#cypress-open-env-lt-env-gt)                                                                  |
 | `--global`            | [Run in global mode](#cypress-open-global)                                                                                    |
 | `--help`, `-h`        | Output usage information                                                                                                      |
