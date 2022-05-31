@@ -4,7 +4,7 @@ title: Cypress.testingType
 
 `Cypress.testingType` returns the current testing type, determined by your
 selection in the Cypress App. The `Cypress.testingType` returns `e2e` for
-[End-to-End Testing](/guides/overview/choosing-testing-type#What-is-End-to-end-Testing)
+[E2E Testing](/guides/overview/choosing-testing-type#What-is-End-to-end-Testing)
 or `component` for
 [Component Testing](/guides/overview/choosing-testing-type#What-is-Component-Testing).
 

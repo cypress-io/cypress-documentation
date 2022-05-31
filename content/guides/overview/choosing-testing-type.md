@@ -24,12 +24,12 @@ but how do you choose right now?
 Let's go over each of these test types, the benefits they bring, things to
 consider, and scenarios for each.
 
-## What is End-to-end Testing?
+## What is E2E Testing?
 
-End-to-end testing is a technique that tests your app from the web browser
-through to the back end of your application, as well as testing integrations
-with third-party APIs and services. These types of tests are great at making
-sure your entire app is functioning as a cohesive whole.
+E2E Testing is a technique that tests your app from the web browser through to
+the back end of your application, as well as testing integrations with
+third-party APIs and services. These types of tests are great at making sure
+your entire app is functioning as a cohesive whole.
 
 Cypress runs end-to-end tests the same way users interact with your app by using
 a real browser, visiting URLs, viewing content, clicking on links and buttons,

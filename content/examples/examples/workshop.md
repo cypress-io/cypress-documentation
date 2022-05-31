@@ -3,9 +3,9 @@ title: Workshops
 containerClass: examples
 ---
 
-## End-to-end Testing with Cypress.io
+## E2E Testing with Cypress.io
 
-<DocsImage src="/img/examples/end-to-end-testing-workshop.jpg" alt="End-to-end Testing Workshop" ></DocsImage>
+<DocsImage src="/img/examples/end-to-end-testing-workshop.jpg" alt="E2E Testing Workshop" ></DocsImage>
 
 Cypress has put together a full day workshop that teaches how to test a modern
 web application using Cypress. You can preview the slides here:

@@ -146,7 +146,7 @@ blog post.
 | [Code Coverage](/guides/tooling/code-coverage)                                                                         | Official Cypress guide to code coverage                                                    |
 | [Detect Page Reload](https://glebbahmutov.com/blog/detect-page-reload/)                                                | How to detect from Cypress test when a page reloads using object property assertions       |
 | [Run in Docker](https://www.cypress.io/blog/2019/05/02/run-cypress-with-a-single-docker-command/)                      | Run Cypress with a single Docker command                                                   |
-| [SSR E2E](https://glebbahmutov.com/blog/ssr-e2e/)                                                                      | End-to-end Testing for Server-Side Rendered Pages                                          |
+| [SSR E2E](https://glebbahmutov.com/blog/ssr-e2e/)                                                                      | E2E Testing for Server-Side Rendered Pages                                                 |
 | [Using TS aliases](https://glebbahmutov.com/blog/using-ts-aliases-in-cypress-tests/)                                   | Using TypeScript aliases in Cypress tests                                                  |
 | [Stub Navigator API](https://glebbahmutov.com/blog/stub-navigator-api/)                                                | Stub navigator API in end-to-end tests                                                     |
 | [Readable Cypress.io tests](https://glebbahmutov.com/blog/readable-tests/)                                             | How to write readable tests using custom commands and custom Chai assertions               |
