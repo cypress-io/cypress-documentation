@@ -55,7 +55,13 @@
 	
 [[redirects]]
   from = "/guides/component-testing/introduction"
-  to = "/guides/core-concepts/testing-types#What-is-Component-Testing"
+  to = "/guides/component-testing/testing-your-components-with-cypress"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing"
+  to = "/guides/component-testing/testing-your-components-with-cypress"
   status = 301
   force = true
 
