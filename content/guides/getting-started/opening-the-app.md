@@ -50,7 +50,7 @@ yarn run cypress open
 
 After a moment, the Cypress App will launch.
 
-### Adding npm scripts
+### Adding npm Scripts
 
 While there's nothing wrong with writing out the full path to the Cypress
 executable each time, it's much easier and clearer to add Cypress commands to
