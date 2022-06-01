@@ -90,6 +90,12 @@
   force = true
 
 [[redirects]]
+  from = "/guides/getting-started/component-testing"
+  to = "/guides/component-testing/writing-your-first-component-test"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/guides/testing-strategies/auth0-authentication"
   to = "/guides/end-to-end-testing/auth0-authentication"
   status = 301
