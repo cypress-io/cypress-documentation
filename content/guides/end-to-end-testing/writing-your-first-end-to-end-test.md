@@ -35,7 +35,7 @@ and close it with the ✕ button.
 <DocsImage src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/new-spec-added-confirmation.png" alt="The new spec confirmation dialog"></DocsImage>
 
 Once we've created that file, you should see the Cypress App immediately display
-it in the list of Integration Tests. Cypress monitors your spec files for any
+it in the list of end-to-end specs. Cypress monitors your spec files for any
 changes and automatically displays any changes.
 
 <DocsImage src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/spec-list-with-new-spec.png" alt="The Cypress App showing the spec list with the newly created spec"></DocsImage>
