@@ -125,8 +125,8 @@ is being called by your test and still have the original method action invoked.
 #### Assertion Support
 
 Cypress has also built-in
-[sinon-chai](/guides/references/bundled-libraries#Sinon-Chai) support, so any
-[assertions supported by `sinon-chai`](/guides/references/assertions#Sinon-Chai)
+[Sinon-Chai](/guides/references/bundled-libraries#Sinon-Chai) support, so any
+[assertions supported by `Sinon-Chai`](/guides/references/assertions#Sinon-Chai)
 can be used without any configuration.
 
 ## Rules
