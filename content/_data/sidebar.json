@@ -74,7 +74,7 @@
               "title": "Migrating from Other Frameworks"
             },
             {
-              "title": "Protractor to Cypress",
+              "title": "Migrating from Protractor to Cypress",
               "slug": "protractor-to-cypress"
             }
           ]
@@ -113,7 +113,7 @@
               "title": "Vue Component Testing"
             },
             {
-              "title": "Quickstart",
+              "title": "Quickstart: Vue",
               "slug": "quickstart-vue"
             },
             {
@@ -121,26 +121,26 @@
               "slug": "mounting-vue"
             },
             {
-              "title": "Testing Props",
+              "title": "Vue Components with Props",
               "slug": "props-vue"
             },
             {
-              "title": "Testing Emitted Events",
+              "title": "Testing Vue Components with Emitted Events",
               "slug": "events-vue"
             },
             {
-              "title": "Testing Slots",
+              "title": "Testing Vue Components with Slots",
               "slug": "slots-vue"
             },
             {
-              "title": "Custom Mount Commands",
+              "title": "Custom Mount Commands and Styles",
               "slug": "custom-mount-vue"
             },
             {
               "title": "React Component Testing"
             },
             {
-              "title": "Quickstart",
+              "title": "Quickstart: React",
               "slug": "quickstart-react"
             },
             {
@@ -148,15 +148,15 @@
               "slug": "mounting-react"
             },
             {
-              "title": "Testing Components",
+              "title": "Testing React Components",
               "slug": "testing-react"
             },
             {
-              "title": "Testing Events",
+              "title": "Testing React Components with Events",
               "slug": "events-react"
             },
             {
-              "title": "Custom Mount Commands",
+              "title": "Custom Mount Commands for React",
               "slug": "custom-mount-react"
             }
           ]
