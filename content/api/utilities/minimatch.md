@@ -73,4 +73,4 @@ Cypress.minimatch('/foo/bar/baz/123/quux?a=b&c=2', '/foo/*', {
 
 ## See also
 
-- [Bundled Tools](/guides/references/bundled-tools)
+- [Bundled Libraries](/guides/references/bundled-libraries)

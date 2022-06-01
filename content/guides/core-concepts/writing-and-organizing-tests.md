@@ -358,10 +358,10 @@ DEBUG=cypress:server:specs npx cypress run
 
 ## Writing tests
 
-Cypress is built on top of [Mocha](/guides/references/bundled-tools#Mocha) and
-[Chai](/guides/references/bundled-tools#Chai). We support both Chai's `BDD` and
-`TDD` assertion styles. Tests you write in Cypress will mostly adhere to this
-style.
+Cypress is built on top of [Mocha](/guides/references/bundled-libraries#Mocha)
+and [Chai](/guides/references/bundled-libraries#Chai). We support both Chai's
+`BDD` and `TDD` assertion styles. Tests you write in Cypress will mostly adhere
+to this style.
 
 If you're familiar with writing tests in JavaScript, then writing tests in
 Cypress will be a breeze.
@@ -378,7 +378,7 @@ test.
 ### Test Structure
 
 The test interface, borrowed from
-[Mocha](/guides/references/bundled-tools#Mocha), provides `describe()`,
+[Mocha](/guides/references/bundled-libraries#Mocha), provides `describe()`,
 `context()`, `it()` and `specify()`.
 
 `context()` is identical to `describe()` and `specify()` is identical to `it()`,
@@ -429,7 +429,7 @@ describe('Unit test our math functions', () => {
 ### Hooks
 
 Cypress also provides hooks (borrowed from
-[Mocha](/guides/references/bundled-tools#Mocha)).
+[Mocha](/guides/references/bundled-libraries#Mocha)).
 
 These are helpful to set conditions that you want to run before a set of tests
 or before each test. They're also helpful to clean up conditions after a set of

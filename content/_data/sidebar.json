@@ -416,8 +416,8 @@
               "slug": "error-messages"
             },
             {
-              "title": "Bundled Tools",
-              "slug": "bundled-tools"
+              "title": "Bundled Libraries",
+              "slug": "bundled-libraries"
             },
             {
               "title": "Trade-offs",

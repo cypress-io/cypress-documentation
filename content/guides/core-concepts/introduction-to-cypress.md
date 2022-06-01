@@ -100,9 +100,9 @@ cy.get('.my-selector')
 ```
 
 In fact, Cypress
-[bundles jQuery](/guides/references/bundled-tools#Other-Library-Utilities) and
-exposes many of its DOM traversal methods to you so you can work with complex
-HTML structures with ease using APIs you're already familiar with.
+[bundles jQuery](/guides/references/bundled-libraries#Other-Library-Utilities)
+and exposes many of its DOM traversal methods to you so you can work with
+complex HTML structures with ease using APIs you're already familiar with.
 
 ```js
 // Each method is equivalent to its jQuery counterpart. Use what you know!
@@ -1205,10 +1205,10 @@ cy.wrap(obj).its('foo')
 
 ### List of Assertions
 
-Cypress bundles [Chai](/guides/references/bundled-tools#Chai),
-[Chai-jQuery](/guides/references/bundled-tools#Chai-jQuery), and
-[Sinon-Chai](/guides/references/bundled-tools#Sinon-Chai) to provide built-in
-assertions. You can see a comprehensive list of them in
+Cypress bundles [Chai](/guides/references/bundled-libraries#Chai),
+[Chai-jQuery](/guides/references/bundled-libraries#Chai-jQuery), and
+[Sinon-Chai](/guides/references/bundled-libraries#Sinon-Chai) to provide
+built-in assertions. You can see a comprehensive list of them in
 [the list of assertions reference](/guides/references/assertions). You can also
 [write your own assertions as Chai plugins](/examples/examples/recipes#Fundamentals)
 and use them in Cypress.

@@ -393,9 +393,9 @@ cy.get('button')
 
 #### How do I know which assertions change the subject and which keep it the same?
 
-The chainers that come from [Chai](/guides/references/bundled-tools#Chai) or
-[Chai-jQuery](/guides/references/bundled-tools#Chai-jQuery) will always document
-what they return.
+The chainers that come from [Chai](/guides/references/bundled-libraries#Chai) or
+[Chai-jQuery](/guides/references/bundled-libraries#Chai-jQuery) will always
+document what they return.
 
 #### Using a callback function will not change what is yielded
 

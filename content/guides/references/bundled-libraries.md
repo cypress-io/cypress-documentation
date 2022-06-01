@@ -1,5 +1,5 @@
 ---
-title: Bundled Tools
+title: Bundled Libraries
 ---
 
 <Alert type="info">

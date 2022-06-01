@@ -75,7 +75,7 @@ cy.get('@setColor').should(
   example page
 - [Sinon matchers](https://sinonjs.org/releases/latest/matchers/) documentation
   page
-- [Bundled Tools](/guides/references/bundled-tools)
+- [Bundled Libraries](/guides/references/bundled-libraries)
 - [`cy.spy()`](/api/commands/spy)
 - [`cy.stub()`](/api/commands/stub)
 - [Stubs, Spies, and Clocks](/guides/guides/stubs-spies-and-clocks) guide
