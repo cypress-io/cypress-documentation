@@ -31,4 +31,8 @@ export const redirects = [
     path: '/guides/dashboard/dashboard-introduction',
     redirect: '/guides/dashboard/introduction',
   },
+  {
+    path: '/guides/references/bundled-tools',
+    redirect: '/guides/references/bundled-libraries',
+  },
 ]
