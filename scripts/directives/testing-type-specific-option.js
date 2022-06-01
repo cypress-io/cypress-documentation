@@ -16,7 +16,7 @@ function processNode(node, { error }) {
     <strong class="alert-header"><Icon name="cogs"></Icon> \`${option}\` per testing
     type</strong>
 
-    Depending on which [testing type](/guides/overview/choosing-testing-type)
+    Depending on which [testing type](/guides/core-concepts/testing-types)
     you are using, you can configure your \`${option}\` accordingly.
 
     - [component](/guides/references/configuration#component)

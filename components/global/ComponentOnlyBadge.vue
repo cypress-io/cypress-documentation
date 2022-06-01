@@ -10,8 +10,8 @@ export default {
 
 <template>
   <Badge
-  type="hint"
-  path="/guides/overview/choosing-testing-type#What-is-Component-Testing"
+    type="hint"
+    path="/guides/core-concepts/testing-types#What-is-Component-Testing"
   >
     Component Only
   </Badge>

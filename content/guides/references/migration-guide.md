@@ -695,7 +695,7 @@ All the Component Testing dev servers are now included in the main `cypress` npm
 package. Configuring them is done via specifying a framework and bundler in the
 `devServer` config option, and the packages are no longer directly importable.
 See
-[Framework Configuration](/guides/getting-started/component-framework-configuration)
+[Framework Configuration](/guides/component-testing/component-framework-configuration)
 for more info.
 
 The mount libraries for React and Vue have also been included in the main
