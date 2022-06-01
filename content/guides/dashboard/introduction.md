@@ -101,7 +101,7 @@ Additionally we've integrated the tests run into the Cypress
 [Cypress App](/guides/core-concepts/cypress-app). This means you can see the
 tests run in the _Runs_ tab from within every project.
 
-<DocsImage src="/img/dashboard/runs-list-in-desktop-gui.png" alt="Runs List" ></DocsImage>
+<DocsImage src="/img/dashboard/v10/runs-list-in-cypress-app.png" alt="Runs List" ></DocsImage>
 
 <Alert type="info">
 
