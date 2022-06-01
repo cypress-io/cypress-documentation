@@ -95,11 +95,11 @@ From the Dashboard you can:
 
 - Integrate Cypress into Slack on every recorded test run.
 
-#### See tests runs in the Cypress App
+#### See test runs in the Cypress App
 
-Additionally we've integrated the tests run into the Cypress
-[Cypress App](/guides/core-concepts/cypress-app). This means you can see the
-tests run in the _Runs_ tab from within every project.
+Additionally we've integrated the latest test run info into the
+[Cypress app](/guides/core-concepts/cypress-app). This means you can see the
+status of your tests in the _Runs_ tab from within each project.
 
 <DocsImage src="/img/dashboard/v10/runs-list-in-cypress-app.png" alt="Runs List" ></DocsImage>
 
@@ -108,7 +108,7 @@ tests run in the _Runs_ tab from within every project.
 <strong class="alert-header">Have a question you don't see answered
 here?</strong>
 
-[We have answered some common questions about the Dashboard Service in our FAQ.](/faq/questions/dashboard-faq).
+[We have answered some common questions about the Dashboard Service in our FAQ](/faq/questions/dashboard-faq).
 
 </Alert>
 
