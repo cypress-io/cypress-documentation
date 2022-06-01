@@ -19,58 +19,42 @@ title: Writing Your First End-to-End Test
 Assuming you've successfully
 [installed the Cypress App](/guides/getting-started/installing-cypress) and
 [opened the Cypress app](/guides/getting-started/opening-the-app), now it's time
-to write our first test. We're going to:
+to add your first test. We're going to do this with the <strong>Create new empty
+spec</strong> button in the Cypress App.
 
-1. Create a `sample.cy.js` file.
-2. Watch Cypress update our list of specs.
-3. Launch the Cypress App.
+<DocsImage src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/create-new-empty-spec.png" alt="The Cypress App with the Create new empty spec button highlighted"></DocsImage>
 
-Let's create a new file in the `cypress/e2e` folder that was created for us:
+On clicking it, you should see a dialog where you can enter the name of your new
+spec. Just accept the default name for now.
 
-```shell
-touch {your_project}/cypress/e2e/sample.cy.js
-```
+<DocsImage src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/enter-path-for-new-spec.png" alt="The new spec path dialog"></DocsImage>
 
-Once we've created that file, we should see the Cypress App immediately display
-it in the list of Integration Tests. Cypress monitors your spec files for any
+The newly-generated spec is displayed in a confirmation dialog. Just go ahead
+and close it with the ✕ button.
+
+<DocsImage src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/new-spec-added-confirmation.png" alt="The new spec confirmation dialog"></DocsImage>
+
+Once we've created that file, you should see the Cypress App immediately display
+it in the list of end-to-end specs. Cypress monitors your spec files for any
 changes and automatically displays any changes.
 
-Even though we haven't written any tests yet - that's okay - let's click on
-`sample.cy.js` and watch Cypress launch your browser.
+<DocsImage src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/spec-list-with-new-spec.png" alt="The Cypress App showing the spec list with the newly created spec"></DocsImage>
 
-<Alert type="info">
-
-Cypress opens the test in a browser installed on your system. You can read more
-about how we do this in [Launching Browsers](/guides/guides/launching-browsers).
-
-</Alert>
-
-We are now officially in the [Cypress App](/guides/core-concepts/cypress-app).
-This is where we will spend the majority of your time testing.
-
-<Alert type="warning">
-
-Notice Cypress displays the message that it couldn't find any tests. This is
-normal - we haven't written any tests! Sometimes you'll also see this message if
-there was an error parsing your test file. You can always open your **Dev
-Tools** to inspect the Console for any syntax or parsing errors that prevented
-Cypress from reading your tests.
-
-</Alert>
+Even though we haven't written any code yet - that's okay - let's click on your
+new spec and watch Cypress launch it. Spoiler alert: it's probably going to
+**FAIL**. Don't worry, it's just because you haven't set up Cypress to visit a
+page in your app yet! Let's try something different.
 
 ## Write your first test
 
-Now it's time to write our first test. We're going to:
+Now it's time to write your first test. We're going to:
 
-1. Write our first passing test.
-2. Write our first failing test.
+1. Write your first passing test.
+2. Update it so it fails.
 3. Watch Cypress reload in real time.
 
-As we continue to save our new test file we'll see the browser auto reloading in
-real time.
-
-Open up your favorite IDE and add the code below to our `sample.cy.js` test
-file.
+Open up your favorite IDE and replace the contents of your spec with the code
+below.
 
 ```js
 describe('My First Test', () => {
@@ -80,7 +64,7 @@ describe('My First Test', () => {
 })
 ```
 
-Once you save this file you should see the browser reload.
+Once you save this change you should see the browser reload.
 
 Although it doesn't do anything useful, this is our first passing test! ✅
 
