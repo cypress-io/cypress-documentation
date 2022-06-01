@@ -130,8 +130,8 @@ you'll want to install `@testing-library/cypress` _instead_ of the
 npm i -D @testing-library/cypress
 ```
 
-The setup instructions are the same for end-to-end and component testing. Within
-your **component support file**, import the custom commands.
+The setup instructions are the same for E2E and Component Testing. Within your
+**component support file**, import the custom commands.
 
 ```js
 // cypress/support/component.js

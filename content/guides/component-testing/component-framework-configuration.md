@@ -188,9 +188,8 @@ While you could pass in props directly to the page component in a component
 test, that would leave these server-side methods untested. However, an
 end-to-end test would execute and test a page entirely.
 
-Because of this, we recommend using end-to-end testing over component testing
-for Next.js pages and component testing for individual components in a Next.js
-app.
+Because of this, we recommend using E2E Testing over Component Testing for
+Next.js pages and Component Testing for individual components in a Next.js app.
 
 #### Sample Next.js Apps
 

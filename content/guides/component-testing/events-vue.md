@@ -280,7 +280,7 @@ test multiple things at once in a given scenario.
 
 This is up to the discretion of the developer. Combining tests will result in a
 faster overall test run, however it may be more difficult to isolate why a test
-failed in the first place. For End-to-end tests, because setup and visiting
+failed in the first place. For end-to-end tests, because setup and visiting
 pages is expensive, we recommend having longer tests. This is not necessarily a
 problem for Component tests because they are comparatively quick.
 

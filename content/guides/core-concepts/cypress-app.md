@@ -164,7 +164,7 @@ Under Test is rendered.
 ### Application Under Test <E2EOnlyBadge />
 
 In
-[End-to-End testing](/guides/core-concepts/testing-types#What-is-End-to-end-Testing),
+[E2E Testing](/guides/core-concepts/testing-types#What-is-End-to-end-Testing),
 the righthand side of the Cypress App is used to display the Application Under
 Test (AUT): the application that was navigated to using a
 [`cy.visit()`](/api/commands/visit) or any subsequent routing calls made from

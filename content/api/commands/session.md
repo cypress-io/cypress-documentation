@@ -53,7 +53,7 @@ cy.session(id, setup, options)
 
 ```javascript
 // Caching session when logging in via API
-// Used in both End-to-End and Component testing
+// Used in both E2E and Component Testing
 cy.session([username, password], () => {
   cy.request({
     method: 'POST',
@@ -65,7 +65,7 @@ cy.session([username, password], () => {
 })
 
 // Caching session when logging in via page visit
-// Used in End-to-End testing
+// Used in E2E Testing
 cy.session(name, () => {
   cy.visit('/login')
   cy.get('[data-test=name]').type(name)

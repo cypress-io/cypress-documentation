@@ -9,7 +9,7 @@ by Bill Wilke and is explained thoroughly in his blog post
 
 When it comes to component testing, mounting your component is where we
 **Arrange** our component under test. It is analogous to visiting a page in an
-End-to-End test.
+end-to-end test.
 
 This section covers how to mount **simple** Vue components in a Cypress test --
 like Buttons, SVGs, Icons, or a Stepper component.
@@ -136,8 +136,8 @@ you'll want to install `@testing-library/cypress` _instead_ of the
 npm i -D @testing-library/cypress
 ```
 
-The setup instructions are the same for End-to-end and Component testing. Within
-your **component support file**, import the custom commands.
+The setup instructions are the same for E2E and Component Testing. Within your
+**component support file**, import the custom commands.
 
 ```js
 // cypress/support/component.js

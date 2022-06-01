@@ -591,7 +591,7 @@ Why you do this pattern in component and unit tests:
 - There was no performance penalty splitting up multiple tests because they run
   really fast
 
-Why you shouldn't do this in End-to-End tests:
+Why you shouldn't do this in end-to-end tests:
 
 - Writing integration tests is not the same as unit tests
 - You will always know (and can visually see) which assertion failed in a large

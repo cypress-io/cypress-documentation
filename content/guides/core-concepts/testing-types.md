@@ -6,13 +6,13 @@ title: 'Testing Types'
 
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
-- What is end-to-end testing and component testing
+- What is E2E Testing and Component Testing
 - Considerations for each testing type
 - How to choose which test type based on your scenario
 
 </Alert>
 
-## End-to-end or Component Tests?
+## End-to-End or Component Tests?
 
 One of the first decisions you will need to make on your testing journey is what
 type of test to create. Cypress offers two options: end-to-end and component
@@ -24,12 +24,12 @@ but how do you choose right now?
 Let's go over each of these test types, the benefits they bring, things to
 consider, and scenarios for each.
 
-## What is End-to-end Testing?
+## What is E2E Testing?
 
-End-to-end testing is a technique that tests your app from the web browser
-through to the back end of your application, as well as testing integrations
-with third-party APIs and services. These types of tests are great at making
-sure your entire app is functioning as a cohesive whole.
+E2E Testing is a technique that tests your app from the web browser through to
+the back end of your application, as well as testing integrations with
+third-party APIs and services. These types of tests are great at making sure
+your entire app is functioning as a cohesive whole.
 
 Cypress runs end-to-end tests the same way users interact with your app by using
 a real browser, visiting URLs, viewing content, clicking on links and buttons,
@@ -143,9 +143,9 @@ set of tests specializing in what they do best.
 To learn more about component testing in Cypress, visit our guide on
 [Testing Your Components with Cypress](/guides/component-testing/writing-your-first-component-test).
 
-## Test Type Comparison
+## Testing Type Comparison
 
-|                        |                    End-to-end                    |                   Component                   |
+|                        |                       E2E                        |                   Component                   |
 | ---------------------- | :----------------------------------------------: | :-------------------------------------------: |
 | What's Tested          |                  All app layers                  |             Individual component              |
 | Characteristics        | Comprehensive, slower, more suspectable to flake |         Specialized, quick, reliable          |

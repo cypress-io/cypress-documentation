@@ -96,7 +96,7 @@ the first time, (shown above with the [`cy.get()`](/api/commands/get)chain and
 its [`.then()`](/api/commands/then) attached) the commands are enqueued for
 Cypress to execute. The `it` block exits, and Cypress starts its work:
 
-1. In an End-to-End Test, the page is visited and Cypress waits for it to load.
+1. In an end-to-end test, the page is visited and Cypress waits for it to load.
    Alternatively, the component is mounted and rendered in a Component Test.
 2. The element is queried, and Cypress automatically waits and retries for a few
    moments if it isn't found immediately.

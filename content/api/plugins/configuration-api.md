@@ -196,8 +196,7 @@ off of the file system - you could store them all in memory inside of
 
 You can access the type of tests running via the `config.testingType` property.
 The testing type is either `e2e` or `component` depending on if the
-[End-to-End Testing](/guides/core-concepts/testing-types#What-is-End-to-end-Testing)
-or
+[E2E Testing](/guides/core-concepts/testing-types#What-is-E2E-Testing) or
 [Component Testing](/guides/core-concepts/testing-types#What-is-Component-Testing)
 type was selected in the Cypress App. This allows you to configure test
 type-specific plugins.
