@@ -7,7 +7,6 @@ module.exports = defineConfig({
     openMode: 0,
   },
   e2e: {
-    setupNodeEvents() {},
     baseUrl: 'http://localhost:3000',
     specPattern: 'cypress/e2e/**/*.spec.js',
   },
