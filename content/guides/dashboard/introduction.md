@@ -108,7 +108,7 @@ status of your tests in the _Runs_ tab from within each project.
 <strong class="alert-header">Have a question you don't see answered
 here?</strong>
 
-[We have answered some common questions about the Dashboard Service in our FAQ.](/faq/questions/dashboard-faq).
+[We have answered some common questions about the Dashboard Service in our FAQ](/faq/questions/dashboard-faq).
 
 </Alert>
 
