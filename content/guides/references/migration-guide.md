@@ -2,6 +2,8 @@
 title: Migration Guide
 ---
 
+<DocsVideo src="https://youtube.com/embed/mIqKNhLlPcU"></DocsVideo>
+
 ## Migrating to Cypress version 10.0
 
 This guide details the changes and how to change your code to migrate to Cypress
