@@ -274,7 +274,7 @@ is set to look for one of the following files:
 - `cypress/support/component.ts`
 - `cypress/support/component.tsx`
 
-**End-to-End:**
+**E2E:**
 
 - `cypress/support/e2e.js`
 - `cypress/support/e2e.jsx`

@@ -103,7 +103,7 @@ expect(removeStub).to.be.called
 
 #### Replace built-in window methods like prompt
 
-In End-to-End tests, replacing built-in `window` methods needs to happen _after_
+In end-to-end tests, replacing built-in `window` methods needs to happen _after_
 the page is visited, but _before_ the application under test is loaded. You can
 do this by stubbing functions inside the [`cy.visit()`](/api/commands/visit)
 command `onBeforeLoad` function.

@@ -67,15 +67,15 @@ steps in order.
 
 The Launchpad presents you with your biggest decision first: What type of
 testing shall I do?
-[End-to-End Testing](/guides/core-concepts/testing-types#What-is-End-to-end-Testing),
-where I run my whole application and visit pages to test them? Or
+[E2E Testing](/guides/core-concepts/testing-types#What-is-E2E-Testing), where I
+run my whole application and visit pages to test them? Or
 [Component Testing](/guides/core-concepts/testing-types#What-is-Component-Testing),
 where I mount individual components of my app and test them in isolation?
 
 For more background on this critical decision, read
 [Testing Types](/guides/core-concepts/testing-types). Alternatively, if you're
 not sure which type you want and just want to get on with your testing journey,
-just choose End-to-End for now - you can always change this later!
+just choose **E2E** for now - you can always change this later!
 
 ### Quick Configuration
 
@@ -100,6 +100,6 @@ START BUTTON!</strong>
 ## Next Steps
 
 Time to get testing! If you chose
-[to start with E2E testing, go here](/guides/end-to-end-testing/writing-your-first-end-to-end-test).
+[to start with E2E Testing, go here](/guides/end-to-end-testing/writing-your-first-end-to-end-test).
 Alternatively, if you decided
-[to try component testing, go here](/guides/component-testing/writing-your-first-component-test).
+[to try Component Testing, go here](/guides/component-testing/writing-your-first-component-test).

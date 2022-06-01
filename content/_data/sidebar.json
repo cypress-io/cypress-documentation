@@ -37,7 +37,7 @@
           "slug": "end-to-end-testing",
           "children": [
             {
-              "title": "Introduction to End-to-End Testing"
+              "title": "Introduction to E2E Testing"
             },
             {
               "title": "Writing Your First End-to-End Test",

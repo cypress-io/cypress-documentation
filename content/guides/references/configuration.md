@@ -285,8 +285,7 @@ See the [Command Line](/guides/guides/command-line) guide for more examples.
 In addition to setting
 [Testing Type-Specific options](#Testing-Type-Specific-Options), you can
 override other configuration options for either the
-[End-to-End Testing](/guides/core-concepts/testing-types#What-is-End-to-end-Testing)
-or
+[E2E Testing](/guides/core-concepts/testing-types#What-is-E2E-Testing) or
 [Component Testing](/guides/core-concepts/testing-types#What-is-Component-Testing).
 
 For example:
