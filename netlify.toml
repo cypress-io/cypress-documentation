@@ -48,6 +48,12 @@
   force = true
 
 [[redirects]]
+  from = "/guides/overview/choosing-testing-type"
+  to = "/guides/core-concepts/testing-types/"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/guides/dashboard/dashboard-introduction"
   to = "/guides/dashboard/introduction/"
   status = 301
