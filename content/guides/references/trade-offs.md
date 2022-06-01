@@ -1,6 +1,7 @@
 ---
 title: Trade-offs
 containerClass: faq
+e2eSpecific: true
 ---
 
 Cypress automates the browser with its own unique architecture. While this

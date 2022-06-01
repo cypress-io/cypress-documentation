@@ -31,7 +31,7 @@ cy.get('td').closest('.filled') // Yield closest el with class '.filled'
 
 ```javascript
 cy.closest('.active') // Errors, cannot be chained off 'cy'
-cy.url().closest() // Errors, 'url' does not yield DOM element
+cy.clock().closest() // Errors, 'clock' does not yield DOM elements
 ```
 
 ### Arguments
@@ -46,7 +46,7 @@ Pass in an options object to change the default behavior of `.closest()`.
 
 | Option    | Default                                                              | Description                                                                              |
 | --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.closest()` to resolve before [timing out](#Timeouts)                  |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)

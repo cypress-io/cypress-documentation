@@ -49,7 +49,11 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ['@/plugins/vue-scrollactive', '@/plugins/sanity-client', {src: '@/plugins/fullstory', mode: 'client'}],
+  plugins: [
+    '@/plugins/vue-scrollactive',
+    '@/plugins/sanity-client',
+    { src: '@/plugins/fullstory', mode: 'client' },
+  ],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -87,23 +91,21 @@ export default {
    */
   content: {
     markdown: {
-      remarkPlugins: (_defaultPlugins) => {
-        return [
-          'remark-directive',
-          '~/scripts/remark-directives.js',
-          'remark-squeeze-paragraphs',
-          'remark-slug',
-          'remark-autolink-headings',
-          'remark-external-links',
-          'remark-footnotes',
-          'remark-gfm',
-        ]
-      },
+      remarkPlugins: [
+        'remark-directive',
+        '~/scripts/remark-directives.js',
+        'remark-squeeze-paragraphs',
+        'remark-slug',
+        'remark-autolink-headings',
+        'remark-external-links',
+        'remark-footnotes',
+        'remark-gfm',
+      ],
       prism: {
         theme: 'prism-themes/themes/prism-material-oceanic.css',
       },
-      liveEdit: false
     },
+    liveEdit: false,
   },
   /*
    ** Build configuration
@@ -158,6 +160,31 @@ export default {
         'faVideo',
       ],
       brands: ['faGithub', 'faTwitter', 'faYoutube'],
+    },
+  },
+  hooks: {
+    // Override some default nuxt behavior to allow remark plugins to access
+    // the path of the file being parsed, for better error logging.
+    'content:file:beforeInsert'(document, database) {
+      if (!database.markdown._generateBody) {
+        let path
+
+        // https://github.com/nuxt/content/blob/main/packages/content/parsers/markdown/index.js
+        database.extendParser = {
+          ...database.extendParser,
+          '.md'(data, obj) {
+            path = obj.path
+
+            return database.markdown.toJSON(data)
+          },
+        }
+
+        // https://github.com/nuxt/content/blob/main/packages/content/parsers/markdown/index.js
+        database.markdown._generateBody = database.markdown.generateBody
+        database.markdown.generateBody = (content, data) => {
+          return database.markdown._generateBody(content, { ...data, path })
+        }
+      }
     },
   },
 }

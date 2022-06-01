@@ -59,7 +59,7 @@ Pass in an options object to change the default behavior of `.dblclick()`.
 | `altKey`                     | `false`                                                                        | Activates the alt key (option key for Mac). Aliases: <code>optionKey</code>.                                                                       |
 | `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).  |
 | `ctrlKey`                    | `false`                                                                        | Activates the control key. Aliases: <code>controlKey</code>.                                                                                       |
-| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                                                           |
+| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                           |
 | `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions)                                                                               |
 | `metaKey`                    | `false`                                                                        | Activates the meta key (Windows key or command key for Mac). Aliases: <code>commandKey</code>, <code>cmdKey</code>.                                |
 | `multiple`                   | `true`                                                                         | Serially click multiple elements                                                                                                                   |
@@ -132,7 +132,7 @@ cy.get('button').dblclick(60, 60, { force: true })
 
 By default, Cypress will iteratively apply the double click to each element and
 will also log to the
-[Command Log](/guides/core-concepts/test-runner#Command-Log) multiple times.
+[Command Log](/guides/core-concepts/cypress-app#Command-Log) multiple times.
 
 You can turn this off by passing `multiple: false` to `.dblclick()`.
 

@@ -102,14 +102,14 @@ Given a button that we want to interact with:
 
 Let's investigate how we could target it:
 
-| Selector                              | Recommended                                                        | Notes                                                           |
-| ------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------------- |
-| `cy.get('button').click()`            | <Icon name="exclamation-triangle" color="red"></Icon> Never        | Worst - too generic, no context.                                |
-| `cy.get('.btn.btn-large').click()`    | <Icon name="exclamation-triangle" color="red"></Icon> Never        | Bad. Coupled to styling. Highly subject to change.              |
-| `cy.get('#main').click()`             | <Icon name="exclamation-triangle" color="orange"></Icon> Sparingly | Better. But still coupled to styling or JS event listeners.     |
-| `cy.get('[name=submission]').click()` | <Icon name="exclamation-triangle" color="orange"></Icon> Sparingly | Coupled to the `name` attribute which has HTML semantics.       |
-| `cy.contains('Submit').click()`       | <Icon name="check-circle" color="green"></Icon> Depends            | Much better. But still coupled to text content that may change. |
-| `cy.get('[data-cy=submit]').click()`  | <Icon name="check-circle" color="green"></Icon> Always             | Best. Isolated from all changes.                                |
+| Selector                                | Recommended                                                        | Notes                                                           |
+| --------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------------- |
+| `cy.get('button').click()`              | <Icon name="exclamation-triangle" color="red"></Icon> Never        | Worst - too generic, no context.                                |
+| `cy.get('.btn.btn-large').click()`      | <Icon name="exclamation-triangle" color="red"></Icon> Never        | Bad. Coupled to styling. Highly subject to change.              |
+| `cy.get('#main').click()`               | <Icon name="exclamation-triangle" color="orange"></Icon> Sparingly | Better. But still coupled to styling or JS event listeners.     |
+| `cy.get('[name="submission"]').click()` | <Icon name="exclamation-triangle" color="orange"></Icon> Sparingly | Coupled to the `name` attribute which has HTML semantics.       |
+| `cy.contains('Submit').click()`         | <Icon name="check-circle" color="green"></Icon> Depends            | Much better. But still coupled to text content that may change. |
+| `cy.get('[data-cy="submit"]').click()`  | <Icon name="check-circle" color="green"></Icon> Always             | Best. Isolated from all changes.                                |
 
 Targeting the element above by `tag`, `class` or `id` is very volatile and
 highly subject to change. You may swap out the element, you may refactor CSS and
@@ -129,7 +129,7 @@ by test code.
 
 <strong class="alert-header">Did you know?</strong>
 
-The [Selector Playground](/guides/core-concepts/test-runner#Selector-Playground)
+The [Selector Playground](/guides/core-concepts/cypress-app#Selector-Playground)
 automatically follows these best practices.
 
 When determining an unique selector it will automatically prefer elements with:
@@ -353,7 +353,7 @@ passwords, your server schedules an email to be delivered.
 
 1. If your application is running locally and is sending the emails directly
    through an SMTP server, you can use a temporary local test SMTP server
-   running inside Cypress Test Runner. Read the blog post
+   running inside the Cypress App. Read the blog post
    ["Testing HTML Emails using Cypress"](https://www.cypress.io/blog/2021/05/11/testing-html-emails-using-cypress/)
    for details.
 2. If your application is using a 3rd party email service, or you cannot stub
@@ -414,19 +414,31 @@ How to solve this:
 
 Let's imagine the following test that is filling out the form.
 
-```javascript
+:::visit-mount-test-example
+
+```js
+it('visits the form', () => {
+  cy.visit('/users/new')
+})
+```
+
+```js
+it('mounts the form', () => {
+  cy.mount(<UserForm />)
+})
+```
+
+```js
 // an example of what NOT TO DO
 describe('my form', () => {
-  it('visits the form', () => {
-    cy.visit('/users/new')
-  })
+  __VISIT_MOUNT_PLACEHOLDER__
 
   it('requires first name', () => {
-    cy.get('#first').type('Johnny')
+    cy.get('[data-testid="first-name"]').type('Johnny')
   })
 
   it('requires last name', () => {
-    cy.get('#last').type('Appleseed')
+    cy.get('[data-testid="last-name"]').type('Appleseed')
   })
 
   it('can submit a valid form', () => {
@@ -434,6 +446,8 @@ describe('my form', () => {
   })
 })
 ```
+
+:::
 
 What's wrong with the above tests? They are all coupled together!
 
@@ -446,17 +460,27 @@ Here's 2 ways we can fix this:
 
 ### 1. Combine into one test
 
-```javascript
+:::visit-mount-test-example
+
+```js
+cy.visit('/users/new')
+```
+
+```js
+cy.mount(<NewUser />)
+```
+
+```js
 // a bit better
 describe('my form', () => {
   it('can submit a valid form', () => {
-    cy.visit('/users/new')
+    __VISIT_MOUNT_PLACEHOLDER__
 
     cy.log('filling out first name') // if you really need this
-    cy.get('#first').type('Johnny')
+    cy.get('[data-testid="first-name"]').type('Johnny')
 
     cy.log('filling out last name') // if you really need this
-    cy.get('#last').type('Appleseed')
+    cy.get('[data-testid="last-name"]').type('Appleseed')
 
     cy.log('submitting form') // if you really need this
     cy.get('form').submit()
@@ -464,24 +488,37 @@ describe('my form', () => {
 })
 ```
 
+:::
+
 Now we can put an `.only` on this test and it will run successfully irrespective
 of any other test. The ideal Cypress workflow is writing and iterating on a
 single test at a time.
 
 ### 2. Run shared code before each test
 
-```javascript
+:::visit-mount-test-example
+
+```js
+cy.visit('/users/new')
+```
+
+```js
+cy.mount(<NewUser />)
+```
+
+```js
 describe('my form', () => {
   beforeEach(() => {
-    cy.visit('/users/new')
-    cy.get('#first').type('Johnny')
-    cy.get('#last').type('Appleseed')
+    __VISIT_MOUNT_PLACEHOLDER__
+    cy.get('[data-testid="first-name"]').type('Johnny')
+    cy.get('[data-testid="last-name"]').type('Appleseed')
   })
 
   it('displays form validation', () => {
-    cy.get('#first').clear() // clear out first name
+    // clear out first name
+    cy.get('[data-testid="first-name"]').clear()
     cy.get('form').submit()
-    cy.get('#errors').should('contain', 'First name is required')
+    cy.get('[data-testid="errors"]').should('contain', 'First name is required')
   })
 
   it('can submit a valid form', () => {
@@ -489,6 +526,8 @@ describe('my form', () => {
   })
 })
 ```
+
+:::
 
 This above example is ideal because now we are resetting the state between each
 test and ensuring nothing in previous tests leaks into subsequent ones.
@@ -497,7 +536,7 @@ We're also paving the way to make it less complicated to write multiple tests
 against the "default" state of the form. That way each test stays lean but each
 can be run independently and pass.
 
-## Creating "tiny" tests with a single assertion
+## Creating "tiny" tests with a single assertion <E2EOnlyBadge />
 
 <Alert type="danger">
 
@@ -515,30 +554,36 @@ assertions and don't worry about it
 
 We've seen many users writing this kind of code:
 
-```javascript
+```js
 describe('my form', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit('/users/new')
-    cy.get('#first').type('johnny')
+    cy.get('[data-testid="first-name"]').type('johnny')
   })
 
   it('has validation attr', () => {
-    cy.get('#first').should('have.attr', 'data-validation', 'required')
+    cy.get('[data-testid="first-name"]').should(
+      'have.attr',
+      'data-validation',
+      'required'
+    )
   })
 
   it('has active class', () => {
-    cy.get('#first').should('have.class', 'active')
+    cy.get('[data-testid="first-name"]').should('have.class', 'active')
   })
 
   it('has formatted first name', () => {
-    cy.get('#first').should('have.value', 'Johnny') // capitalized first letter
+    cy.get('[data-testid="first-name"]')
+      // capitalized first letter
+      .should('have.value', 'Johnny')
   })
 })
 ```
 
 While technically this runs fine - this is really excessive, and not performant.
 
-Why you did this pattern in unit tests:
+Why you do this pattern in component and unit tests:
 
 - When assertions failed you relied on the test's title to know what failed
 - You were told that adding multiple assertions was bad and accepted this as
@@ -546,7 +591,7 @@ Why you did this pattern in unit tests:
 - There was no performance penalty splitting up multiple tests because they run
   really fast
 
-Why you shouldn't do this in Cypress:
+Why you shouldn't do this in end-to-end tests:
 
 - Writing integration tests is not the same as unit tests
 - You will always know (and can visually see) which assertion failed in a large
@@ -561,14 +606,14 @@ could implicitly fail**.
 
 How you should rewrite those tests:
 
-```javascript
+```js
 describe('my form', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit('/users/new')
   })
 
   it('validates and formats first name', () => {
-    cy.get('#first')
+    cy.get('[data-testid="first-name"]')
       .type('johnny')
       .should('have.attr', 'data-validation', 'required')
       .and('have.class', 'active')
@@ -689,14 +734,12 @@ test - even if you refreshed Cypress in the middle of an existing one!
 
 This is also a great opportunity to use
 [root level hooks in mocha](https://github.com/mochajs/mochajs.github.io/blob/master/index.md#root-level-hooks).
-A perfect place to put these is in the
-[`cypress/support/index.js` file](/guides/core-concepts/writing-and-organizing-tests#Support-file)
-because it is always evaluated before any test code from your spec files.
+::include{file=partials/support-file-configuration.md}
 
 **Hooks you add to the root will always run on all suites!**
 
 ```js
-// cypress/support/index.js
+// cypress/support/e2e.js or cypress/support/component.js
 
 beforeEach(() => {
   // now this runs prior to every test
@@ -731,7 +774,7 @@ called `db:seed` in a `beforeEach` hook. This allows each test to start from a
 clean slate and a deterministic state. For example:
 
 ```ts
-// cypress/tests/ui/auth.spec.ts
+// cypress/tests/ui/auth.cy.ts
 
 beforeEach(function () {
   cy.task('db:seed')
@@ -740,16 +783,16 @@ beforeEach(function () {
 ```
 
 > _<Icon name="github"></Icon> Source:
-> [cypress/tests/ui/auth.spec.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui/auth.spec.ts)_
+> [cypress/tests/ui/auth.cy.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/ui/auth.spec.ts)_
 
 The `db:seed` task is defined within the
-[plugins file](/guides/core-concepts/writing-and-organizing-tests#Plugin-files)
-of the project, and in this case sends a request to a dedicated back end API of
-the app to appropriately re-seed the database.
+[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function of the
+project, and in this case sends a request to a dedicated back end API of the app
+to appropriately re-seed the database.
 
-```ts
-// cypress/plugins/index.ts
+:::cypress-plugin-example
 
+```js
 on('task', {
   async 'db:seed'() {
     // Send request to backend API to re-seed database with test data
@@ -759,6 +802,8 @@ on('task', {
   //...
 })
 ```
+
+:::
 
 > _<Icon name="github"></Icon> Source:
 > [cypress/plugins/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/plugins/index.ts)_
@@ -806,7 +851,7 @@ cy.request('http://localhost:8080/db/seed')
 cy.wait(5000) // <--- this is unnecessary
 ```
 
-### Unnecessary wait for `cy.visit()`
+### Unnecessary wait for `cy.visit()` <E2EOnlyBadge />
 
 Waiting for this is unnecessary because the [cy.visit()](/api/commands/visit)
 resolves once the page fires its `load` event. By that time all of your assets
@@ -841,7 +886,7 @@ aliased route.
 cy.intercept('GET', '/users', [{ name: 'Maggy' }, { name: 'Joan' }]).as(
   'getUsers'
 )
-cy.get('#fetch').click()
+cy.get('[data-testid="fetch-users"]').click()
 cy.wait('@getUsers') // <--- wait explicitly for this route to finish
 cy.get('table tr').should('have.length', 2)
 ```
@@ -884,8 +929,8 @@ Trying to start a web server from [cy.exec()](/api/commands/exec) or
 
 Because there is no guarantee that code running in an `after` will always run.
 
-While working in the Cypress Test Runner you can always restart / refresh while
-in the middle of a test. When that happens, code in an `after` won't execute.
+While working in the Cypress App you can always restart / refresh while in the
+middle of a test. When that happens, code in an `after` won't execute.
 
 **What should I do then?**
 
@@ -908,8 +953,7 @@ We have
 <Alert type="success">
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Set a
-`baseUrl` in your
-[configuration file (`cypress.json` by default)](/guides/references/configuration).
+`baseUrl` in your [Cypress configuration](/guides/references/configuration).
 
 </Alert>
 
@@ -943,7 +987,7 @@ port.
 
 ### Without `baseUrl` set, Cypress loads main window in `localhost` + random port
 
-<DocsImage src="/img/guides/cypress-loads-in-localhost-and-random-port.png" alt="Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.coffee" ></DocsImage>
+<DocsImage src="/img/guides/references/cypress-loads-in-localhost-and-random-port.png" alt="Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.coffee" ></DocsImage>
 
 As soon as it encounters a [cy.visit()](/api/commands/visit), Cypress then
 switches to the url of the main window to the url specified in your visit. This
@@ -952,27 +996,33 @@ can result in a 'flash' or 'reload' when your tests first start.
 By setting the `baseUrl`, you can avoid this reload altogether. Cypress will
 load the main window in the `baseUrl` you specified as soon as your tests start.
 
-### Configuration file (`cypress.json` by default)
+### Cypress configuration file
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "baseUrl": "http://localhost:8484"
+  e2e: {
+    baseUrl: 'http://localhost:8484'
+  }
 }
 ```
 
+:::
+
 ### With `baseUrl` set, Cypress loads main window in `baseUrl`
 
-<DocsImage src="/img/guides/cypress-loads-window-in-base-url-localhost.png" alt="Url address bar shows localhost:8484/__tests/integration/organizations/list_spec.coffee" ></DocsImage>
+<DocsImage src="/img/guides/references/cypress-loads-window-in-base-url-localhost.png" alt="Url address bar shows localhost:8484/__tests/integration/organizations/list_spec.coffee" ></DocsImage>
 
 Having a `baseUrl` set gives you the added bonus of seeing an error if your
 server is not running during `cypress open` at the specified `baseUrl`.
 
-<DocsImage src="/img/guides/cypress-ensures-baseUrl-server-is-running.png" alt="Test Runner with warning about how Cypress could not verify server set as the baseUrl is running"></DocsImage>
+<DocsImage src="/img/guides/references/cypress-ensures-baseUrl-server-is-running.png" alt="Cypress App with warning about how Cypress could not verify server set as the baseUrl is running"></DocsImage>
 
 We also display an error if your server is not running at the specified
 `baseUrl` during `cypress run` after several retries.
 
-<DocsImage src="/img/guides/cypress-verifies-server-is-running-during-cypress-run.png" alt="The terminal warns and retries when the url at your baseUrl is not running" ></DocsImage>
+<DocsImage src="/img/guides/references/cypress-verifies-server-is-running-during-cypress-run.png" alt="The terminal warns and retries when the url at your baseUrl is not running" ></DocsImage>
 
 ### Usage of `baseUrl` in depth
 

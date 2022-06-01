@@ -27,12 +27,137 @@
               "slug": "installing-cypress"
             },
             {
-              "title": "Writing Your First Test",
-              "slug": "writing-your-first-test"
+              "title": "Opening the App",
+              "slug": "opening-the-app"
+            }
+          ]
+        },
+        {
+          "title": "End-to-End Testing",
+          "slug": "end-to-end-testing",
+          "children": [
+            {
+              "title": "Introduction to E2E Testing"
+            },
+            {
+              "title": "Writing Your First End-to-End Test",
+              "slug": "writing-your-first-end-to-end-test"
             },
             {
               "title": "Testing Your App",
               "slug": "testing-your-app"
+            },
+            {
+              "title": "Testing Strategies"
+            },
+            {
+              "title": "Auth0 Authentication",
+              "slug": "auth0-authentication"
+            },
+            {
+              "title": "Amazon Cognito Authentication",
+              "slug": "amazon-cognito-authentication"
+            },
+            {
+              "title": "Okta Authentication",
+              "slug": "okta-authentication"
+            },
+            {
+              "title": "Google Authentication",
+              "slug": "google-authentication"
+            },
+            {
+              "title": "Working with GraphQL",
+              "slug": "working-with-graphql"
+            },
+            {
+              "title": "Migrating from Other Frameworks"
+            },
+            {
+              "title": "Migrating from Protractor to Cypress",
+              "slug": "protractor-to-cypress"
+            }
+          ]
+        },
+        {
+          "title": "Component Testing",
+          "slug": "component-testing",
+          "children": [
+            {
+              "title": "Introduction to Component Testing"
+            },
+            {
+              "title": "Writing Your First Component Test",
+              "slug": "writing-your-first-component-test"
+            },
+            {
+              "title": "Who Are You Testing For?",
+              "slug": "devs-vs-users"
+            },
+            {
+              "title": "Diving Deeper"
+            },
+            {
+              "title": "Framework Configuration",
+              "slug": "component-framework-configuration"
+            },
+            {
+              "title": "Styling Components",
+              "slug": "styling-components"
+            },
+            {
+              "title": "Component Troubleshooting",
+              "slug": "component-test-troubleshooting"
+            },
+            {
+              "title": "Vue Component Testing"
+            },
+            {
+              "title": "Quickstart: Vue",
+              "slug": "quickstart-vue"
+            },
+            {
+              "title": "Mounting Components",
+              "slug": "mounting-vue"
+            },
+            {
+              "title": "Vue Components with Props",
+              "slug": "props-vue"
+            },
+            {
+              "title": "Testing Vue Components with Emitted Events",
+              "slug": "events-vue"
+            },
+            {
+              "title": "Testing Vue Components with Slots",
+              "slug": "slots-vue"
+            },
+            {
+              "title": "Custom Mount Commands and Styles",
+              "slug": "custom-mount-vue"
+            },
+            {
+              "title": "React Component Testing"
+            },
+            {
+              "title": "Quickstart: React",
+              "slug": "quickstart-react"
+            },
+            {
+              "title": "Mounting Components",
+              "slug": "mounting-react"
+            },
+            {
+              "title": "Testing React Components",
+              "slug": "testing-react"
+            },
+            {
+              "title": "Testing React Components with Events",
+              "slug": "events-react"
+            },
+            {
+              "title": "Custom Mount Commands for React",
+              "slug": "custom-mount-react"
             }
           ]
         },
@@ -43,6 +168,10 @@
             {
               "title": "Introduction to Cypress",
               "slug": "introduction-to-cypress"
+            },
+            {
+              "title": "Testing Types",
+              "slug": "testing-types"
             },
             {
               "title": "Writing and Organizing Tests",
@@ -65,8 +194,8 @@
               "slug": "conditional-testing"
             },
             {
-              "title": "The Test Runner",
-              "slug": "test-runner"
+              "title": "Cypress App",
+              "slug": "cypress-app"
             },
             {
               "title": "Cypress Studio",
@@ -187,32 +316,6 @@
           ]
         },
         {
-          "title": "Testing Strategies",
-          "slug": "testing-strategies",
-          "children": [
-            {
-              "title": "Auth0 Authentication",
-              "slug": "auth0-authentication"
-            },
-            {
-              "title": "Amazon Cognito Authentication",
-              "slug": "amazon-cognito-authentication"
-            },
-            {
-              "title": "Okta Authentication",
-              "slug": "okta-authentication"
-            },
-            {
-              "title": "Google Authentication",
-              "slug": "google-authentication"
-            },
-            {
-              "title": "Working with GraphQL",
-              "slug": "working-with-graphql"
-            }
-          ]
-        },
-        {
           "title": "Continuous Integration",
           "slug": "continuous-integration",
           "children": [
@@ -243,30 +346,6 @@
             {
               "title": "AWS CodeBuild",
               "slug": "aws-codebuild"
-            }
-          ]
-        },
-        {
-          "title": "Component Testing",
-          "slug": "component-testing",
-          "children": [
-            {
-              "title": "Introduction",
-              "slug": "introduction"
-            },
-            {
-              "title": "Framework Configuration",
-              "slug": "framework-configuration"
-            }
-          ]
-        },
-        {
-          "title": "Migrating to Cypress",
-          "slug": "migrating-to-cypress",
-          "children": [
-            {
-              "title": "Protractor",
-              "slug": "protractor"
             }
           ]
         },
@@ -309,8 +388,16 @@
               "slug": "assertions"
             },
             {
+              "title": "Advanced Installation",
+              "slug": "advanced-installation"
+            },
+            {
               "title": "Configuration",
               "slug": "configuration"
+            },
+            {
+              "title": "Legacy Configuration",
+              "slug": "legacy-configuration"
             },
             {
               "title": "Client Certificates",
@@ -329,8 +416,8 @@
               "slug": "error-messages"
             },
             {
-              "title": "Bundled Tools",
-              "slug": "bundled-tools"
+              "title": "Bundled Libraries",
+              "slug": "bundled-libraries"
             },
             {
               "title": "Trade-offs",
@@ -551,6 +638,10 @@
             {
               "title": "log",
               "slug": "log"
+            },
+            {
+              "title": "mount",
+              "slug": "mount"
             },
             {
               "title": "next",

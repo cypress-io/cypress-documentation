@@ -68,7 +68,7 @@ Pass in an options object to change the default behavior of `.rightclick()`.
 | `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).  |
 | `ctrlKey`                    | `false`                                                                        | Activates the control key. Aliases: <code>controlKey</code>.                                                                                       |
 | `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions)                                                                               |
-| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                                                           |
+| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                           |
 | `metaKey`                    | `false`                                                                        | Activates the meta key (Windows key or command key for Mac). Aliases: <code>commandKey</code>, <code>cmdKey</code>.                                |
 | `multiple`                   | `false`                                                                        | Serially click multiple elements                                                                                                                   |
 | `scrollBehavior`             | [`scrollBehavior`](/guides/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#Scrolling) before executing the command |
@@ -141,7 +141,7 @@ cy.get('#open-menu').rightclick(5, 60, { force: true })
 By default, Cypress will error if you're trying to right click multiple
 elements. By passing `{ multiple: true }` Cypress will iteratively apply the
 right click to each element and will also log to the
-[Command Log](/guides/core-concepts/test-runner#Command-Log) multiple times.
+[Command Log](/guides/core-concepts/cypress-app#Command-Log) multiple times.
 
 ```javascript
 cy.get('.open-menu').rightclick({ multiple: true })

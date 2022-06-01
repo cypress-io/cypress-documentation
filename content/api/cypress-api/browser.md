@@ -17,7 +17,7 @@ The object has the following properties:
 | `channel`      | `string`  | Release channel of the browser, such as `stable`, `dev`, or `canary`.       |
 | `displayName`  | `string`  | Human-readable display name for the browser.                                |
 | `family`       | `string`  | Rendering engine being used. `chromium` or `firefox`.                       |
-| `isChosen`     | `boolean` | Whether the browser is selected in the browser selector of the Test Runner. |
+| `isChosen`     | `boolean` | Whether the browser is selected in the browser selector of the Cypress App. |
 | `majorVersion` | `number`  | The major version number of the browser.                                    |
 | `name`         | `string`  | Machine-friendly name, like `chrome`, `electron`, or `firefox`.             |
 | `path`         | `string`  | Path to the browser on disk. Blank for Electron.                            |

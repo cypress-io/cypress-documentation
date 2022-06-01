@@ -25,7 +25,7 @@ cy.getCookies().each(() => {...}) // Iterate through each cookie
 ```javascript
 
 cy.each(() => {...})            // Errors, cannot be chained off 'cy'
-cy.location().each(() => {...}) // Errors, 'location' doesn't yield an array
+cy.clock().each(() => {...})    // Errors, 'clock' does not yield an array
 ```
 
 ### Arguments

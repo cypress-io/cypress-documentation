@@ -27,7 +27,7 @@ Pass in an options object to change the default behavior of `cy.window()`.
 
 | Option    | Default                                                              | Description                                                                              |
 | --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.window()` to resolve before [timing out](#Timeouts)                 |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
@@ -40,13 +40,24 @@ Pass in an options object to change the default behavior of `cy.window()`.
 
 #### Yield the remote window object
 
-```javascript
+:::visit-mount-test-example
+
+```js
 cy.visit('http://localhost:8080/app')
+```
+
+```js
+cy.mount(<MyComponent />)
+```
+
+```js
+__VISIT_MOUNT_PLACEHOLDER__
 cy.window().then((win) => {
   // win is the remote window
-  // of the page at: http://localhost:8080/app
 })
 ```
+
+:::
 
 #### Check a custom property
 
@@ -72,7 +83,7 @@ it('equals bar', () => {
   let foo
 
   cy.window().then((win) => {
-    foo = win.foo
+    foo = win.tags.foo
   })
 
   // variable "foo" is still undefined
@@ -90,7 +101,7 @@ it('equals bar', () => {
 
   cy.window()
     .then((win) => {
-      foo = win.foo
+      foo = win.tags.foo
     })
     .then(() => {
       // variable "foo" has been set
@@ -112,11 +123,11 @@ if (window.Cypress) {
 }
 ```
 
-Cypress Test Runner can wait for the property `window.appReady` to be `true`
-before every test
+The Cypress App can wait for the property `window.appReady` to be `true` before
+every test
 
-```javascript
-// spec.js
+```js
+// spec.cy.js
 beforeEach(() => {
   cy.visit('/')
   cy.window().should('have.property', 'appReady', true)
@@ -130,8 +141,8 @@ beforeEach(() => {
 [This blog post](https://www.cypress.io/blog/2018/02/05/when-can-the-test-start/)
 explains how to use `cy.window()` to spy on the DOM `prototype` to detect when
 the application starts adding event listeners to the DOM elements. When this
-happens for the first time, the Test Runner knows that the application has
-started and the tests can begin.
+happens for the first time, the Cypress App knows that the application under
+test has started and the tests can begin.
 
 See
 [Set flag to start tests](https://glebbahmutov.com/blog/set-flag-to-start-tests/)
@@ -172,7 +183,7 @@ it('test', (done) => {
 It fails. But the interesting thing is that the type of `event` is
 `KeyboardEvent` when you `console.log(event)`.
 
-It's because the Test Runner uses an `iframe` to load the application under
+It's because the Cypress App uses an `iframe` to load the application under
 test. In other words, the `KeyboardEvent` used in the the code above and the
 `KeyboardEvent` class from which the `event` variable is constructed are
 different `KeyboardEvent`s.

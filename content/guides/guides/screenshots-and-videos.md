@@ -27,8 +27,9 @@ taken during `cypress open`.
 
 Capturing of screenshots when a test fails can be turned off entirely by setting
 [`screenshotOnRunFailure`](/guides/references/configuration#Screenshots) to
-`false` from within your [configuration](/guides/references/configuration) or by
-setting `screenshotOnRunFailure` to `false` in the
+`false` from within the
+[Cypress configuration](/guides/references/configuration) or by setting
+`screenshotOnRunFailure` to `false` in the
 [Cypress.Screenshot.defaults()](/api/cypress-api/screenshot-api).
 
 Screenshots are stored in the
@@ -85,22 +86,30 @@ make the encoding a little bit faster. Here are some common scenarios:
 
 **Change compression value**
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "videoCompression": 15
+  videoCompression: 15
 }
 ```
+
+:::
 
 A lower `videoCompression` value will spend less time compressing and result in
 a bigger video file size.
 
 **Disable compression**
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "videoCompression": false
+  videoCompression: false
 }
 ```
+
+:::
 
 The compression step will be skipped completely, so the video will be large, but
 the processing should be faster.
@@ -134,29 +143,31 @@ The example below shows how to delete the recorded video for specs that had no
 retry attempts or failures when using Cypress
 [test retries](/guides/guides/test-retries).
 
-```js
-// plugins/index.js
+:::cypress-plugin-example
 
+```js
 // need to install these dependencies
 // npm i lodash del --save-dev
 const _ = require('lodash')
 const del = require('del')
-
-module.exports = (on, config) => {
-  on('after:spec', (spec, results) => {
-    if (results && results.video) {
-      // Do we have failures for any retry attempts?
-      const failures = _.some(results.tests, (test) => {
-        return _.some(test.attempts, { state: 'failed' })
-      })
-      if (!failures) {
-        // delete the video if the spec passed and no tests retried
-        return del(results.video)
-      }
-    }
-  })
-}
 ```
+
+```js
+on('after:spec', (spec, results) => {
+  if (results && results.video) {
+    // Do we have failures for any retry attempts?
+    const failures = _.some(results.tests, (test) => {
+      return _.some(test.attempts, { state: 'failed' })
+    })
+    if (!failures) {
+      // delete the video if the spec passed and no tests retried
+      return del(results.video)
+    }
+  }
+})
+```
+
+:::
 
 ## Now What?
 

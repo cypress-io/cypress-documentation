@@ -7,15 +7,7 @@ via `cypress open`, the event will fire when the browser launches.
 
 ## Syntax
 
-<Alert type="warning">
-
-⚠️ This code is part of the
-[plugins file](/guides/core-concepts/writing-and-organizing-tests#Plugin-files)
-and thus executes in the Node environment. You cannot call `Cypress` or `cy`
-commands in this file, but you do have the direct access to the file system and
-the rest of the operating system.
-
-</Alert>
+::include{file=partials/warning-setup-node-events.md}
 
 <Alert type="warning">
 
@@ -25,21 +17,25 @@ is enabled.
 
 </Alert>
 
+:::cypress-plugin-example
+
 ```js
 on('before:spec', (spec) => {
   /* ... */
 })
 ```
 
+:::
+
 **<Icon name="angle-right"></Icon> spec** **_(Object)_**
 
 Details of the spec file, including the following properties:
 
-| Property   | Description                                                                                          |
-| ---------- | ---------------------------------------------------------------------------------------------------- |
-| `name`     | The base name of the spec file (e.g. `login_spec.js`)                                                |
-| `relative` | The path to the spec file, relative to the project root (e.g. `cypress/integration/login_spec.js`)   |
-| `absolute` | The absolute path to the spec file (e.g. `/Users/janelane/my-app/cypress/integration/login_spec.js`) |
+| Property   | Description                                                                                |
+| ---------- | ------------------------------------------------------------------------------------------ |
+| `name`     | The base name of the spec file (e.g. `login.cy.js`)                                        |
+| `relative` | The path to the spec file, relative to the project root (e.g. `cypress/e2e/login.cy.js`)   |
+| `absolute` | The absolute path to the spec file (e.g. `/Users/janelane/my-app/cypress/e2e/login.cy.js`) |
 
 ## Usage
 
@@ -53,9 +49,9 @@ module.exports = (on, config) => {
   on('before:spec', (spec) => {
     // spec will look something like this:
     // {
-    //   name: 'login_spec.js',
-    //   relative: 'cypress/integration/login_spec.js',
-    //   absolute: '/Users/janelane/app/cypress/integration/login_spec.js',
+    //   name: 'login.cy.js',
+    //   relative: 'cypress/e2e/login.cy.js',
+    //   absolute: '/Users/janelane/app/cypress/e2e/login.cy.js',
     // }
 
     console.log('Running', spec.relative)

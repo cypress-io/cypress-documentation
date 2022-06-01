@@ -112,7 +112,7 @@ from a known filesystem path to bypass browser auto detection.
 
 You can see the full list of found browsers and their properties within the
 [resolved configuration](/guides/references/configuration#Resolved-Configuration)
-in the **Settings** tab of the Test Runner.
+in the **Settings** tab of the Cypress App.
 
 Another way to log what is found by Cypress is to run Cypress with the
 [DEBUG environment variable](#Print-DEBUG-logs) set to `cypress:launcher`. This
@@ -191,7 +191,7 @@ cypress open --browser C:/User/Application/browser.exe:chrome
 
 ## Allow the Cypress Chrome extension
 
-Cypress utilizes a Chrome extension within the Test Runner in order to run
+Cypress utilizes a Chrome extension within the Cypress App in order to run
 properly. If you or your company block specific Chrome extensions, this may
 cause problems with running Cypress. You will want to ask your administrator to
 allow the Cypress extension ID below:
@@ -315,7 +315,6 @@ want to enable them
 | `cypress:net-stubbing*`         | Network interception in the proxy layer                               |
 | `cypress:server:reporter`       | Problems with test reporters                                          |
 | `cypress:server:preprocessor`   | Processing specs                                                      |
-| `cypress:server:plugins`        | Running the plugins file and bundling specs                           |
 | `cypress:server:socket-e2e`     | Watching spec files                                                   |
 | `cypress:server:task`           | Invoking the `cy.task()` command                                      |
 | `cypress:server:socket-base`    | Debugging `cy.request()` command                                      |
@@ -394,7 +393,7 @@ delete localStorage.debug
 ```
 
 Reload the browser and turn on 'Verbose' logs to see debug messages within the
-Developer Tools console. You will only see the "cypress:driver" package logs
+Developer Tools console. You will only see the **cypress\:driver** package logs
 that run in the browser, as you can see below.
 
 <DocsImage src="/img/api/debug/debug-driver.jpg" alt="Debug logs in browser" ></DocsImage>
@@ -420,7 +419,7 @@ cypress run
 
 In the resulting output, processes are grouped by their name.
 
-<DocsImage src="/img/guides/troubleshooting-cypress-process-profiler-cli.jpg" alt="Process printout of Cypress in CLI" ></DocsImage>
+<DocsImage src="/img/guides/troubleshooting/troubleshooting-cypress-process-profiler-cli.jpg" alt="Process printout of Cypress in CLI"></DocsImage>
 
 By default, process information is collected and summarized is printed once
 every 10 seconds. You can override this interval by setting the
@@ -432,10 +431,10 @@ verbose `cypress-verbose:server:util:process_profiler` debug stream.
 
 ## Disable the Command Log
 
-In some cases the [Command Log](/guides/core-concepts/test-runner#Command-Log),
-responsible for displaying test commands, assertions, and statuses in the Test
-Runner, may cause performance issues resulting in slower tests or the browser
-crashing.
+In some cases the [Command Log](/guides/core-concepts/cypress-app#Command-Log),
+responsible for displaying test commands, assertions, and statuses in the
+Cypress App, may cause performance issues resulting in slower tests or the
+browser crashing.
 
 In order to isolate these issues, you can hide the Command Log by passing the
 environment variable below during `cypress open` or `cypress run`.
@@ -453,7 +452,7 @@ You can include the plugin
 tests. This plugin writes the list of Cypress commands to the terminal as well
 as a JSON file if a test fails.
 
-<DocsImage src="/img/api/debug/failed-log.png" alt="cypress-failed-log terminal output" ></DocsImage>
+<DocsImage src="/img/api/debug/failed-log.png" alt="cypress-failed-log terminal output"></DocsImage>
 
 ## Hacking on Cypress
 
@@ -472,8 +471,8 @@ to learn about the many ways you can contribute.
 ### Run the Cypress app by itself
 
 Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb
-server (if necessary), and then opens the Test Runner application built on top
-of [Electron](https://electronjs.org/).
+server (if necessary), and then opens the Cypress App built on top of
+[Electron](https://electronjs.org/).
 
 Some common situations on why you would want to run the Cypress app by itself
 are to:
@@ -529,8 +528,8 @@ ldd /home/person/.cache/Cypress/3.3.1/Cypress/Cypress
 dependencies by copying them from one of our official Docker images.
 
 **Note:** verbose Electron logging might show warnings that still allow Cypress
-to work normally. For example, the Cypress Test Runner opens normally despite
-the scary output below:
+to work normally. For example, the Cypress App opens normally despite the scary
+output below:
 
 ```shell
 ELECTRON_ENABLE_LOGGING=true DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress
@@ -541,7 +540,7 @@ ELECTRON_ENABLE_LOGGING=true DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/C
 You might need to use a local HTTP server (instead of file://): https://fb.me/react-devtools-faq", source: file:///root/.cache/Cypress/3.3.1/Cypress/resources/app/packages/desktop-gui/dist/app.js (73292)
 ```
 
-You can also see verbose Cypress logs when running the Test Runner binary
+You can also see verbose Cypress logs when running the Cypress App binary
 
 ```shell
 DEBUG=cypress* DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress --smoke-test --ping=101
@@ -578,8 +577,8 @@ Calling _exit(1). Core file will not be generated.
 ### Patch Cypress
 
 Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb
-server (if necessary), and then opens the Test Runner application built on top
-of [Electron](https://electronjs.org/).
+server (if necessary), and then opens the Cypress App built on top of
+[Electron](https://electronjs.org/).
 
 If you're encountering a bug in the current version of Cypress, you can
 implementing a temporary fix by patching Cypress in your own project. Here is an
@@ -630,9 +629,9 @@ official fix faster.
 
 ### Edit the installed Cypress code
 
-The installed Test Runner comes with the fully transpiled, unobfuscated
+The installed application comes with the fully transpiled, unobfuscated
 JavaScript source code that you can hack on. You might want to directly modify
-the installed Test Runner code to:
+the installed app code to:
 
 - investigate a hard to recreate bug that happens on your machine
 - change the run-time behavior of Cypress before opening a pull request
@@ -649,7 +648,7 @@ npx cypress cache path
 ```
 
 Second, open the source code at the following path in any code editor. Make sure
-to substitute `3.3.1` for the desired version of the Test Runner you want to
+to substitute `3.3.1` for the desired version of the Cypress App you want to
 edit.
 
 ```text
@@ -658,9 +657,9 @@ edit.
 
 You can change anything in the JavaScript code:
 
-<DocsImage src="/img/guides/source-code.png" alt="Source code of the Test Runner in a text editor" ></DocsImage>
+<DocsImage src="/img/guides/troubleshooting/source-code.png" alt="Source code of the Cypress App in a text editor" ></DocsImage>
 
-When finished, if necessary, remove the edited Test Runner version and reinstall
+When finished, if necessary, remove the edited Cypress App version and reinstall
 the Cypress official version to get back to the official released code.
 
 ```shell

@@ -2,6 +2,716 @@
 title: Migration Guide
 ---
 
+## Migrating to Cypress version 10.0
+
+This guide details the changes and how to change your code to migrate to Cypress
+version 10.0.
+[See the full changelog for version 10.0](/guides/references/changelog#10-0-0).
+
+### Cypress App Changes
+
+- The “Run all specs” and “Run filtered specs” functionality have been removed.
+- The experimental "Cypress Studio" has been removed and will be
+  rethought/revisited in a later release.
+- Unsupported browser versions can no longer be run via `cypress run` or
+  `cypress open`. Instead, an error will display.
+- In 9.x and earlier versions, `cypress open` would bring you directly to the
+  project specs list. In 10.0.0, you must pass `--browser` and `--e2e` or
+  `--component` as well to launch Cypress directly to the specs list.
+
+### Configuration File Changes
+
+Cypress now supports JavaScript and TypeScript configuration files. By default,
+Cypress will automatically load a `cypress.config.js` or `cypress.config.ts`
+file in the project root if one exists. The
+[Configuration guide](/guides/references/configuration) has been updated to
+reflect these changes, and explains them in greater detail.
+
+Because of this, support for `cypress.json` has been removed. Documentation for
+`cypress.json` has been moved to the
+[Legacy Configuration guide](/guides/references/legacy-configuration).
+
+Related notes:
+
+- If no config file exists when you open the Cypress App, the automatic set up
+  process will begin and either a JavaScript or TypeScript config file will be
+  created depending on what your project uses.
+- You may use the `--config-file` command line flag or the `configFile`
+  [module API](/guides/guides/module-api) option to specify a `.js` or `.ts`
+  file. JSON config files are no longer supported.
+- Cypress now requires a config file, so specifying `--config-file false` on the
+  command line or a `configFile` value of `false` in the module API is no longer
+  valid.
+- You can't have both `cypress.config.js` _and_ `cypress.config.ts` files. This
+  will result in an error when Cypress loads.
+- A
+  [`defineConfig()`](/guides/references/configuration#Intelligent-Code-Completion)
+  helper function is now exported by Cypress, which provides automatic code
+  completion for configuration in many popular code editors. For TypeScript
+  users, the `defineConfig` function will ensure the configuration object passed
+  into it satisfies the type definition of the configuration file.
+- Many pages and examples throughout the documentation have been updated to show
+  configuration using `cypress.config.js` and `cypress.config.ts` vs the older
+  `cypress.json`. For example:
+
+:::cypress-config-example
+
+```js
+{
+  e2e: {
+    baseUrl: 'http://localhost:1234'
+  }
+}
+```
+
+:::
+
+### Plugins File Removed
+
+Because Cypress now supports JavaScript and TypeScript configuration files, a
+separate "plugins file" (which used to default to `cypress/plugins/index.js`) is
+no longer needed.
+
+Support for the plugins file has been removed, and it has been replaced with the
+new [`setupNodeEvents()`](/guides/references/configuration#setupNodeEvents) and
+[`devServer`](/guides/references/configuration#devServer) config options.
+
+Related notes:
+
+- The `cypress/plugins/index.js` plugins file is no longer automatically loaded
+  by Cypress.
+- The [`setupNodeEvents()`](/guides/references/configuration#setupNodeEvents)
+  config option is functionally equivalent to the function exported from the
+  plugins file; it takes the same `on` and `config` arguments, and should return
+  the same value. See the [Config option changes section](#setupNodeEvents) of
+  this migration guide for more details.
+- The [`devServer`](/guides/references/configuration#devServer) config option is
+  specific to component testing, and offers a much more streamlined and
+  consistent way to configure a component testing dev server than using the
+  plugins file. See the [Config option changes section](#devServer) of this
+  migration guide for more details.
+- Many pages and examples throughout the documentation have been updated to show
+  configuration in `setupNodeEvents` as well as the legacy plugins file. For
+  example:
+
+:::cypress-plugin-example
+
+```js
+// bind to the event we care about
+on('<event>', (arg1, arg2) => {
+  // plugin stuff here
+})
+```
+
+:::
+
+### Config Option Changes
+
+#### `baseUrl`
+
+The `baseUrl` config option is no longer valid at the top level of the
+configuration, and may only be defined inside the
+[`e2e`](/guides/references/configuration#e2e) configuration object.
+
+<Alert type="warning">
+
+Attempting to set the `baseUrl` config option at the top level of the
+configuration will result in an error when Cypress loads.
+
+</Alert>
+
+#### `componentFolder`
+
+The `componentFolder` config option is no longer used, as it has been replaced
+by the `specPattern`
+[testing-type specific option](/guides/references/configuration#Testing-Type-Specific-Options).
+
+<Alert type="warning">
+
+Attempting to set the `componentFolder` config option will result in an error
+when Cypress loads.
+
+</Alert>
+
+#### `devServer`
+
+All functionality related to starting a component testing dev server previously
+in the `pluginsFile` has moved here. These options are not valid at the
+top-level, and may only be defined in the
+[`component`](/guides/references/configuration#component) configuration object.
+
+Related notes:
+
+- Do not configure your dev server inside `setupNodeEvents()`, use the
+  `devServer` config option instead.
+
+<Alert type="info">
+
+See the dev server documentation for the UI framework you’re using for more
+specific instructions on what the `devServer` should be for that framework. Some
+examples can be found in our
+[framework documentation](/guides/component-testing/component-framework-configuration).
+
+</Alert>
+
+**Variant 1 (webpack & vite dev servers)**
+
+<Badge type="danger">Before</Badge>
+
+<code-group>
+<code-block label="cypress/plugins/index.js" active>
+
+```js
+const { startDevServer } = require('@cypress/webpack-dev-server')
+const webpackConfig = require('../../webpack.config.js')
+
+module.exports = (on, config) => {
+  if (config.testingType === 'component') {
+    on('dev-server:start', async (options) =>
+      startDevServer({ options, webpackConfig })
+    )
+  }
+}
+```
+
+</code-block>
+</code-group>
+
+<Badge type="success">After</Badge>
+
+<code-group>
+<code-block label="cypress.config.js" active>
+
+```js
+const { defineConfig } = require('cypress')
+const webpackConfig = require('./webpack.config.js')
+
+module.exports = defineConfig({
+  component: {
+    devServer: {
+      framework: 'react', // or vue
+      bundler: 'webpack',
+      webpackConfig,
+    },
+  },
+})
+```
+
+</code-block>
+<code-block label="(verbose)">
+
+```js
+const { defineConfig } = require('cypress')
+const webpackConfig = require('./webpack.config.js')
+
+module.exports = defineConfig({
+  component: {
+    devServer(cypressConfig) {
+      return devServer({
+        framework: 'react', // or vue
+        cypressConfig,
+        webpackConfig,
+      })
+    },
+  },
+})
+```
+
+</code-block>
+<code-block label="cypress.config.ts">
+
+```js
+import { defineConfig } from 'cypress'
+import webpackConfig from './webpack.config'
+
+export default defineConfig({
+  component: {
+    devServer: {
+      framework: 'react', // or vue
+      bundler: 'webpack',
+      webpackConfig,
+    },
+  },
+})
+```
+
+</code-block>
+<code-block label="(verbose)">
+
+```js
+import { defineConfig } from 'cypress'
+import { devServer } from '@cypress/webpack-dev-server'
+import webpackConfig from './webpack.config'
+
+export default defineConfig({
+  component: {
+    devServer(cypressConfig) {
+      return devServer({
+        framework: 'react', // or vue
+        cypressConfig,
+        webpackConfig,
+      })
+    },
+  },
+})
+```
+
+</code-block>
+</code-group>
+
+**Variant 2 (react plugin dev servers)**
+
+<Badge type="danger">Before</Badge>
+
+```js
+const devServer = require('@cypress/react/plugins/react-scripts')
+
+module.exports = (on, config) => {
+  if (config.testingType === 'component') {
+    injectDevServer(on, config, {})
+  }
+}
+```
+
+<Badge type="success">After</Badge>
+
+<code-group>
+<code-block label="cypress.config.js" active>
+
+```js
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  component: {
+    devServer: {
+      framework: 'react', // or vue
+      bundler: 'webpack',
+    },
+  },
+})
+```
+
+</code-block>
+<code-block label="more verbose">
+
+```js
+const { defineConfig } = require('cypress')
+const webpackConfig = require('./webpack.config.js')
+
+module.exports = defineConfig({
+  component: {
+    devServer(cypressConfig) {
+      return devServer({
+        framework: 'react', // or vue
+        cypressConfig,
+        webpackConfig,
+      })
+    },
+  },
+})
+```
+
+</code-block>
+</code-group>
+
+#### `experimentalStudio`
+
+This option is no longer used. The experimental "Cypress Studio" has been
+removed and will be rethought/revisited in a later release.
+
+<Alert type="warning">
+
+Attempting to set the `experimentalStudio` config option will result in an error
+when Cypress loads.
+
+</Alert>
+
+#### `ignoreTestFiles` → `excludeSpecPattern`
+
+The `ignoreTestFiles` option is no longer used, and has been replaced with the
+`excludeSpecPattern`
+[testing-type specific option](/guides/references/configuration#Testing-Type-Specific-Options).
+
+Default values
+
+- `e2e.excludeSpecPattern` default value is `*.hot-update.js` (same as pervious
+  ignore value)
+- `component.excludeSpecPattern` default value is
+  `['/snapshots/*', '/image_snapshots/*']` updated from `*.hot-update.js`
+- The `**/node_modules/**` pattern is automatically added to both
+  `e2e.specExcludePattern` and `component.specExcludePattern`, and does not need
+  to be specified (and can't be overridden).
+
+<Badge type="danger">Before</Badge>
+
+```js
+{
+  "ignoreTestFiles": "path/to/**/*.js"
+}
+```
+
+<Badge type="success">After</Badge>
+
+```js
+{
+  component: {
+    excludeSpecPattern: "path/to/**/*.js"
+  },
+  e2e: {
+    excludeSpecPattern: "other/path/to/**/*.js"
+  }
+}
+```
+
+<Alert type="warning">
+
+Attempting to set the `ignoreTestFiles` config option will result in an error
+when Cypress loads.
+
+Also, attempting to set the `excludeSpecPattern` config option at the top level
+of the configuration will result in an error when Cypress loads.
+
+</Alert>
+
+#### `integrationFolder`
+
+This option is no longer used, as it has been replaced by the `specPattern`
+[testing-type specific option](/guides/references/configuration#Testing-Type-Specific-Options).
+
+<Alert type="warning">
+
+Attempting to set the `integrationFolder` config option will result in an error
+when Cypress loads.
+
+</Alert>
+
+#### `pluginsFile`
+
+This option is no longer used, and all plugin file functionality has moved into
+the [`setupNodeEvents()`](/guides/references/configuration#setupNodeEvents) and
+[`devServer`](/guides/references/configuration#devServer) options. See the
+[Plugins file removed](#Plugins-file-removed) section of this migration guide
+for more details.
+
+<Alert type="warning">
+
+Attempting to set the `pluginsFile` config option will result in an error when
+Cypress loads.
+
+</Alert>
+
+#### `setupNodeEvents()`
+
+All functionality related to setting up events or modifying the config,
+previously done in the plugins file, has moved into the `setupNodeEvents()`
+config options. This option is not valid at the top level of the config, and may
+only be defined inside the `component` or `e2e`
+[configuration objects](/guides/references/configuration#Testing-Type-Specific-Options).
+
+More information can be found in the
+[Plugins API documentation](/api/plugins/writing-a-plugin#Plugins-API) and the
+[Configuration API documentation](/api/plugins/configuration-api#Usage).
+
+<Badge type="danger">Before</Badge> `cypress/plugins/index.js`
+
+```js
+module.exports = (on, config) => {
+  if (config.testingType === 'component') {
+    // component testing dev server setup code
+    // component testing node events setup code
+  } else {
+    // e2e testing node events setup code
+  }
+}
+```
+
+<Badge type="success">After</Badge>
+
+:::cypress-config-example{noJson}
+
+```js
+{
+  component: {
+    devServer(cypressConfig) {
+      // component testing dev server setup code
+    },
+    setupNodeEvents(on, config) {
+      // component testing node events setup code
+    },
+  },
+  e2e: {
+    setupNodeEvents(on, config) {
+      // e2e testing node events setup code
+    },
+  },
+}
+```
+
+:::
+
+Alternately, you can continue to use an external plugins file, but you will need
+to load that file explicitly, and also update it to move any component testing
+dev server code into the [`devServer`](#devServer) config option.
+
+<code-group>
+<code-block label="cypress.config.js" active>
+
+```js
+const { defineConfig } = require('cypress')
+const setupNodeEvents = require('./cypress/plugins/index.js')
+
+module.exports = defineConfig({
+  component: {
+    devServer(cypressConfig) {
+      // component testing dev server setup code
+    },
+    setupNodeEvents,
+  },
+  e2e: {
+    setupNodeEvents,
+  },
+})
+```
+
+</code-block>
+<code-block label="cypress.config.ts">
+
+```js
+import { defineConfig } from 'cypress'
+import setupNodeEvents from './cypress/plugins/index.js'
+
+export default defineConfig({
+  component: {
+    devServer(cypressConfig) {
+      // component testing dev server setup code
+    },
+    setupNodeEvents,
+  },
+  e2e: {
+    setupNodeEvents,
+  },
+})
+```
+
+</code-block>
+</code-group>
+
+#### `slowTestThreshold`
+
+The `slowTestThreshold` configuration option is no longer valid at the top level
+of the configuration, and is now a
+[testing-type specific option](/guides/references/configuration#Testing-Type-Specific-Options).
+
+Note that the default values are unchanged (`10000` for `e2e` and `250` for
+`component`).
+
+<Alert type="warning">
+
+Attempting to set the `slowTestThreshold` config option at the top level of the
+configuration will result in an error when Cypress loads.
+
+</Alert>
+
+#### `supportFile`
+
+The `supportFile` configuration option is no longer valid at the top level of
+the configuration, and is now a
+[testing-type specific option](/guides/references/configuration#Testing-Type-Specific-Options).
+More information can be found in the
+[support file docs](/guides/core-concepts/writing-and-organizing-tests#Support-file).
+
+<Badge type="danger">Before</Badge>
+
+```js
+{
+  "supportFile": "cypress/support/index.js"
+}
+```
+
+<Badge type="success">After</Badge>
+
+```js
+{
+  component: {
+    supportFile: 'cypress/support/component.js'
+  },
+  e2e: {
+    supportFile: 'cypress/support/e2e.js'
+  }
+}
+```
+
+<Alert type="warning">
+
+Attempting to set the `supportFile` config option at the top level of the
+configuration will result in an error when Cypress loads.
+
+Also, for a given testing type, multiple matching `supportFile` files will
+result in an error when Cypress loads.
+
+</Alert>
+
+#### `testFiles` → `specPattern`
+
+The `testFiles` option is no longer used, and has been replaced with the
+`specPattern` option, which must be defined inside the
+[`component`](/guides/references/configuration#component) and
+[`e2e`](/guides/references/configuration#e2e) configuration objects.
+
+Default values:
+
+- No longer matches with `.coffee` or `.cjsx`.
+- `e2e.specPattern` default value is `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}`.
+- `component.specPattern` default value is `**/*.cy.{js,jsx,ts,tsx}`.
+
+Important note about matching:
+
+- E2E tests will be found using the `e2e.specPattern` value.
+- Component tests will be found using the `component.specPattern` value but any
+  tests found matching the `e2e.specPattern` value will be automatically
+  excluded.
+
+<Alert type="warning">
+
+Attempting to set the `testFiles` config option will result in an error when
+Cypress loads.
+
+Also, attempting to set the `specPattern` config option at the top level of the
+configuration will result in an error when Cypress loads.
+
+</Alert>
+
+### Updated Test File Locations
+
+Previously, you could specify the locations of test files and folders using the
+configuration options: `componentFolder`, or `integrationFolder`, and
+`testFiles`. These options have been replaced with `specPattern`, which is not
+valid at the top-level, but within the
+[`component`](/guides/references/configuration#component) or
+[`e2e`](/guides/references/configuration#e2e) configuration objects. For
+example:
+
+<Badge type="danger">Before</Badge>
+
+```js
+{
+  "componentFolder": "src",
+  "integrationFolder": "cypress/integration",
+  "testFiles": "**/*.cy.js"
+}
+```
+
+<Badge type="success">After</Badge>
+
+```js
+{
+  component: {
+    specPattern: 'src/**/*.cy.js'
+  },
+  e2e: {
+    specPattern: 'cypress/integration/**/*.cy.js'
+  }
+}
+```
+
+<Alert type="warning">
+
+Attempting to set `componentFolder`, `integrationFolder`, or `testFiles` in the
+config will result in an error when Cypress loads.
+
+</Alert>
+
+<Alert type="danger">
+
+For Cypress Dashboard users, changing your `specPattern` and files names or
+extensions of your spec files will result in a loss of data in the Cypress
+Dashboard. Because of this, if we detect your project is using the Dashboard
+during automatic migration, we won't suggest changing your spec files. We also
+don't recommend doing it manually if you are a Dashboard user.
+
+</Alert>
+
+### Generated Files
+
+Generated screenshots and videos will still be created inside their respective
+[folders](/guides/references/configuration#Folders-Files) (`screenshotsFolder`,
+`videosFolder`). However, the paths of generated files inside those folders will
+be stripped of any common ancestor paths shared between all spec files found by
+the `specPattern` option (or via the `--spec` command line option or `spec`
+module API option, if specified).
+
+Here are a few examples, assuming the value of `videosFolder` is
+`cypress/videos`, `screenshotsFolder` is `cypress/screenshots` and
+`cy.screenshot('my-screenshot')` is called once per spec file:
+
+**Example 1**
+
+- Spec file found
+  - `cypress/e2e/path/to/file/one.cy.js`
+- Common ancestor paths (calculated at runtime)
+  - `cypress/e2e/path/to/file`
+- Generated screenshot file
+  - `cypress/screenshots/one.cy.js/my-screenshot.png`
+- Generated video file
+  - `cypress/videos/one.cy.js.mp4`
+
+**Example 2**
+
+- Spec files found
+  - `cypress/e2e/path/to/file/one.cy.js`
+  - `cypress/e2e/path/to/two.cy.js`
+- Common ancestor paths (calculated at runtime)
+  - `cypress/e2e/path/to`
+- Generated screenshot files
+  - `cypress/screenshots/file/one.cy.js/my-screenshot.png`
+  - `cypress/screenshots/two.cy.js/my-screenshot.png`
+- Generated video files
+  - `cypress/videos/file/one.cy.js.mp4`
+  - `cypress/videos/two.cy.js.mp4`
+
+### Command / Cypress API Changes
+
+#### `cy.mount()`
+
+If you set up your app using the automatic configuration wizard, a basic
+[`cy.mount()`]((/api/commands/mount) command will be imported for you in your
+support file from one our supported frameworks.
+
+#### `Cypress.Commands.add()`
+
+[`Cypress.Commands.add()`](/api/cypress-api/custom-commands) has been updated to
+allow the built-in “placeholder” custom `mount` and `hover` commands to be
+overwritten without needing to use `Cypress.Commands.overwrite()`.
+
+### Component Testing Changes
+
+Component Testing has moved from experimental to beta status in 10.0.0.
+
+Component Testing can now be ran from the main app, and launching into component
+testing via the command `cypress open-ct` is now deprecated. To launch directly
+into component testing, use the `cypress open --component` command instead.
+
+All the Component Testing dev servers are now included in the main `cypress` npm
+package. Configuring them is done via specifying a framework and bundler in the
+`devServer` config option, and the packages are no longer directly importable.
+See
+[Framework Configuration](/guides/getting-started/component-framework-configuration)
+for more info.
+
+The mount libraries for React and Vue have also been included in the main
+`cypress` package and can be imported from `cypress/react` and `cypress/vue`
+respectively.
+
+Any previous dev servers or mounting libraries from the `@cypress` namespace
+should be uninstalled in Cypress 10.
+
+### Code Coverage Plugin
+
+The [Cypress Code Coverage](https://github.com/cypress-io/code-coverage#readme)
+plugin will need to be updated to version >= 3.10 to work with Cypress 10. Using
+a previous version will result in an error when tests are ran with code coverage
+enabled.
+
 ## Migrating from `cypress-file-upload` to [`.selectFile()`](/api/commands/selectfile)
 
 Selecting files with input elements or dropping them over the page is available
@@ -450,7 +1160,7 @@ it.
 limited to configuration and there are no breaking changes to the `mount` API.
 The migration guide contains the following steps:
 
-1. [Update your configuration file, `cypress.json` by default, to remove `experimentalComponentTesting`](/guides/references/migration-guide#1-Remove-experimentalComponentTesting-config)
+1. [Update your Cypress configuration to remove `experimentalComponentTesting`](/guides/references/migration-guide#1-Remove-experimentalComponentTesting-config)
 2. [Install updated dependencies](/guides/references/migration-guide##2-Install-component-testing-dependencies)
 3. [Update the plugins file](/guides/references/migration-guide#3-Update-plugins-file-to-use-dev-server-start)
 4. [Use CLI commands to launch](/guides/references/migration-guide#4-Use-CLI-commands-to-launch)
@@ -541,8 +1251,8 @@ In 7.0 Cypress component tests require that code is bundled with your local
 development server, via a new `dev-server:start` event. This event replaces the
 previous `file:preprocessor` event.
 
-<Badge type="danger">Before</Badge> Plugins file registers the file:preprocessor
-event
+<Badge type="danger">Before</Badge> Plugins file registers the
+file\:preprocessor event
 
 ```js
 const webpackPreprocessor = require('@cypress/webpack-preprocessor')
@@ -553,7 +1263,7 @@ module.exports = (on, config) => {
 }
 ```
 
-<Badge type="success">After</Badge> Plugins file registers the dev-server:start
+<Badge type="success">After</Badge> Plugins file registers the dev-server\:start
 event
 
 ```js
@@ -805,22 +1515,22 @@ const { mount } = require('@cypress/react')
 describe('Component teardown behavior', () => {
   it('modifies the document and mounts a component', () => {
     // HTML unrelated to the component is mounted
-    Cypress.$('body').append('<div id="some-html"/>')
+    Cypress.$('body').append('<div data-cy="some-html"/>')
 
     // A component is mounted
-    mount(<Button id="my-button"></Button>)
+    mount(<Button data-cy="my-button"></Button>)
 
-    cy.get('#some-html').should('exist')
-    cy.get('#my-button').should('exist')
+    cy.get('[data-cy="some-html"]').should('exist')
+    cy.get('[data-cy="my-button"]').should('exist')
   })
 
   it('cleans up any HTML', () => {
     // The component is automatically unmounted by Cypress
-    cy.get('#my-button').should('not.exist')
+    cy.get('[data-cy="my-button"]').should('not.exist')
 
     // The HTML left over from the previous test has been cleaned up
     // This was done automatically by Cypress
-    cy.get('#some-html').should('not.exist')
+    cy.get('[data-cy="some-html"]').should('not.exist')
   })
 })
 ```
@@ -834,21 +1544,21 @@ const { mount } = require('@cypress/react')
 describe('Component teardown behavior', () => {
   it('modifies the document and mounts a component', () => {
     // HTML unrelated to the component is mounted
-    Cypress.$('body').append('<div id="some-html"/>')
+    Cypress.$('body').append('<div data-cy="some-html"/>')
 
     // A component is mounted
-    mount(<Button id="my-button"></Button>)
+    mount(<Button data-cy="my-button"></Button>)
 
-    cy.get('#some-html').should('exist')
-    cy.get('#my-button').should('exist')
+    cy.get('[data-cy="some-html"]').should('exist')
+    cy.get('[data-cy="my-button"]').should('exist')
   })
 
   it('only cleans up *components* between tests', () => {
     // The component is automatically unmounted by Cypress
-    cy.get('#my-button').should('not.exist')
+    cy.get('[data-cy="my-button"]').should('not.exist')
 
     // The HTML left over from the previous test should be manually cleared
-    cy.get('#some-html').should('not.exist')
+    cy.get('[data-cy="some-html"]').should('not.exist')
   })
 })
 ```
@@ -1076,12 +1786,12 @@ cy.get('#dropdon').should('not.have.class', 'open')
 cy.get('#dropdon').should('not.contain', 'Cypress')
 ```
 
-<DocsImage src="/img/guides/el-incorrectly-passes-existence-check.png" alt="non-existent element before 6.0"></DocsImage>
+<DocsImage src="/img/guides/migration-guide/el-incorrectly-passes-existence-check.png" alt="non-existent element before 6.0"></DocsImage>
 
 In 6.0, these assertions will now correctly fail, telling us that the `#dropdon`
 element doesn't exist in the DOM.
 
-<DocsImage src="/img/guides/el-correctly-fails-existence-check.png" alt="non-existent element in 6.0"></DocsImage>
+<DocsImage src="/img/guides/migration-guide/el-correctly-fails-existence-check.png" alt="non-existent element in 6.0"></DocsImage>
 
 #### Assertions on non-existent elements
 
@@ -1095,11 +1805,11 @@ visible
 
 ```js
 it('test', () => {
-  // the .modal element is removed from the DOM on click
-  cy.get('.modal').find('.close').click()
+  // the modal element is removed from the DOM on click
+  cy.get('[data-cy="modal"]').find('.close').click()
   // assertions below pass in < 6.0, but properly fail in 6.0+
-  cy.get('.modal').should('not.be.visible')
-  cy.get('.modal').should('not.contain', 'Upgrade')
+  cy.get('[data-cy="modal"]').should('not.be.visible')
+  cy.get('[data-cy="modal"]').should('not.contain', 'Upgrade')
 })
 ```
 
@@ -1108,10 +1818,10 @@ exist
 
 ```js
 it('test', () => {
-  // the .modal element is removed from the DOM on click
-  cy.get('.modal').find('.close').click()
+  // the modal element is removed from the DOM on click
+  cy.get('data-cy="modal"').find('.close').click()
   // we should instead assert that the element doesn't exist
-  cy.get('.modal').should('not.exist')
+  cy.get('data-cy="modal"').should('not.exist')
 })
 ```
 
@@ -1490,11 +2200,10 @@ The `blacklistHosts` configuration has been renamed to
 behavior.
 
 This should be updated in all places where Cypress configuration can be set
-including the via the configuration file (`cypress.json` by default), command
-line arguments, the `pluginsFile`, `Cypress.config()` or environment variables.
+including via the Cypress configuration file, command line arguments, the
+`pluginsFile`, `Cypress.config()` or environment variables.
 
-<Badge type="danger">Before</Badge> `blacklistHosts` configuration in
-`cypress.json`
+<Badge type="danger">Before</Badge> `blacklistHosts` configuration
 
 ```json
 {
@@ -1502,7 +2211,7 @@ line arguments, the `pluginsFile`, `Cypress.config()` or environment variables.
 }
 ```
 
-<Badge type="success">After</Badge> `blockHosts` configuration in `cypress.json`
+<Badge type="success">After</Badge> `blockHosts` configuration
 
 ```json
 {

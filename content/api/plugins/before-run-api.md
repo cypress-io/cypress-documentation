@@ -11,15 +11,7 @@ once for each machine on which the tests are run.
 
 ## Syntax
 
-<Alert type="warning">
-
-⚠️ This code is part of the
-[plugins file](/guides/core-concepts/writing-and-organizing-tests#Plugin-files)
-and thus executes in the Node environment. You cannot call `Cypress` or `cy`
-commands in this file, but you do have the direct access to the file system and
-the rest of the operating system.
-
-</Alert>
+::include{file=partials/warning-setup-node-events.md}
 
 <Alert type="warning">
 
@@ -29,11 +21,15 @@ is enabled.
 
 </Alert>
 
+:::cypress-plugin-example
+
 ```js
 on('before:run', (details) => {
   /* ... */
 })
 ```
+
+:::
 
 **<Icon name="angle-right"></Icon> details** **_(Object)_**
 
@@ -71,14 +67,14 @@ module.exports = (on, config) => {
     //   cypressVersion: '6.1.0',
     //   specs: [
     //     {
-    //       name: 'login_spec.js',
-    //       relative: 'cypress/integration/login_spec.js',
-    //       absolute: '/Users/janelane/app/cypress/integration/login_spec.js',
+    //       name: 'login_cy.js',
+    //       relative: 'cypress/e2e/login_cy.js',
+    //       absolute: '/Users/janelane/app/cypress/e2e/login_cy.js',
     //     },
     //     // ... more specs
     //   ],
     //   specPattern: [
-    //     '**/*_spec.js'
+    //     '**/*.cy.{js,jsx,ts,tsx}'
     //   ],
     //   parallel: false,
     //   group: 'group-1',

@@ -1,10 +1,11 @@
 <script>
-import AppSidebar from '../../components/AppSidebar'
-import AppHeader from '../../components/AppHeader'
-import TableOfContents from '../../components/TableOfContents'
-import Footer from '../../components/Footer'
-import { getMetaData, getMetaDescription, getTitle } from '../../utils'
-import { fetchBanner } from '../../utils/sanity'
+import AppSidebar from '@/components/AppSidebar'
+import AppHeader from '@/components/AppHeader'
+import TableOfContents from '@/components/TableOfContents'
+import Footer from '@/components/Footer'
+import MainContentHeader from '@/components/MainContentHeader'
+import { getMetaData, getMetaDescription, getTitle } from '@/utils'
+import { fetchBanner } from '@/utils/sanity'
 
 export default {
   components: {
@@ -12,6 +13,7 @@ export default {
     AppHeader,
     TableOfContents,
     Footer,
+    MainContentHeader
   },
   async asyncData({ $content, app, params, error }) {
     const path = `/guides/${params.pathMatch || 'index'}`
@@ -87,9 +89,11 @@ export default {
       />
       <div class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
-          <h1 class="main-content-title">
-            {{ (guide && guide.title) || 'Cypress Documentation' }}
-          </h1>
+          <MainContentHeader
+            :title="(guide && guide.title) || 'Cypress Documentation'"
+            :e2e-specific="guide.e2eSpecific"
+            :component-specific="guide.componentSpecific"
+          />
           <nuxt-content :document="guide"></nuxt-content>
           <Footer />
         </article>

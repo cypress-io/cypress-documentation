@@ -24,7 +24,15 @@ export const redirects = [
     redirect: '/plugins/directory',
   },
   {
+    path: '/guides/component-testing',
+    redirect: '/guides/component-testing/writing-your-first-component-test',
+  },
+  {
     path: '/guides/dashboard/dashboard-introduction',
     redirect: '/guides/dashboard/introduction',
+  },
+  {
+    path: '/guides/references/bundled-tools',
+    redirect: '/guides/references/bundled-libraries',
   },
 ]

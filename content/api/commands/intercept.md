@@ -314,7 +314,7 @@ cy.wait('@gqlMutation')
 <Alert type="info">
 
 For more guidance around aliasing requests with GraphQL, see
-[Working with GraphQL](/guides/testing-strategies/working-with-graphql)
+[Working with GraphQL](/guides/end-to-end-testing/working-with-graphql)
 
 </Alert>
 
@@ -531,11 +531,10 @@ cy.wait('@headers')
 #### Add, modify or delete a header to all outgoing requests
 
 You can add, modify or delete a header to all outgoing requests using a
-`beforeEach()` in the `cypress/support/index.js` file
+`beforeEach()` in the
+[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file).
 
 ```js
-// cypress/support/index.ts
-
 beforeEach(() => {
   cy.intercept(
     { url: 'http://localhost:3001/**', middleware: true },
@@ -663,25 +662,25 @@ cy.intercept('/users', (req) => {
 #### Throttle or delay response all incoming responses
 
 You can throttle or delay all incoming responses using a `beforeEach()` in the
-`cypress/support/index.js` file
+[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file).
 
 ```js
-// cypress/support/index.ts
-
 // Throttle API responses to simulate real-world conditions
-cy.intercept(
-  {
-    url: 'http://localhost:3001/**',
-    middleware: true,
-  },
-  (req) => {
-    req.on('response', (res) => {
-      // Throttle the response to 1 Mbps to simulate a
-      // mobile 3G connection
-      res.setThrottle(1000)
-    })
-  }
-)
+beforeEach(() => {
+  cy.intercept(
+    {
+      url: 'http://localhost:3001/**',
+      middleware: true,
+    },
+    (req) => {
+      req.on('response', (res) => {
+        // Throttle the response to 1 Mbps to simulate a
+        // mobile 3G connection
+        res.setThrottle(1000)
+      })
+    }
+  )
+})
 ```
 
 ### Request/Response Modification with `routeHandler`
@@ -1454,7 +1453,7 @@ cy.intercept('/users?_limit=+(3|5)')
 Under the hood, `cy.intercept` uses the [minimatch](/api/utilities/minimatch)
 library with the `{ matchBase: true }` option applied for glob matching and
 provides access to it via the `Cypress` global. This enables you to test your
-pattern in your spec or in the Test Runner browser console.
+pattern in your spec or in the Cypress App browser console.
 
 You can invoke the `Cypress.minimatch` with just two arguments - the URL
 (`string`) and the pattern (`string`), respectively - and if it yields `true`,

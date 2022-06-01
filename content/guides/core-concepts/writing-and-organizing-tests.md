@@ -31,43 +31,60 @@ organizing your tests.
 After adding a new project, Cypress will automatically scaffold out a suggested
 folder structure. By default it will create:
 
+<code-group>
+<code-block label="JavaScript" active>
+
 ```text
-/cypress
-  /fixtures
-    - example.json
+E2E:
+/cypress.config.js
+/cypress/fixtures/example.json
+/cypress/support/commands.js
+/cypress/support/e2e.js
 
-  /integration
-    /examples
-      /1-getting-started
-        - todo.spec.js
-      /2-advanced-examples
-        - actions.spec.js
-        - aliasing.spec.js
-        - assertions.spec.js
-        - connectors.spec.js
-        - cookies.spec.js
-        - cypress_api.spec.js
-        - files.spec.js
-        - local_storage.spec.js
-        - location.spec.js
-        - misc.spec.js
-        - navigation.spec.js
-        - network_requests.spec.js
-        - querying.spec.js
-        - spies_stubs_clocks.spec.js
-        - traversal.spec.js
-        - utilities.spec.js
-        - viewport.spec.js
-        - waiting.spec.js
-        - window.spec.js
+Component:
+/cypress.config.js
+/cypress/fixtures/example.json
+/cypress/support/commands.js
+/cypress/support/component.js
+/cypress/support/component-index.html
 
-  /plugins
-    - index.js
-
-  /support
-    - commands.js
-    - index.js
+Both:
+/cypress.config.js
+/cypress/fixtures/example.json
+/cypress/support/commands.js
+/cypress/support/e2e.js
+/cypress/support/component.js
+/cypress/support/component-index.html
 ```
+
+</code-block>
+<code-block label="TypeScript">
+
+```text
+E2E:
+/cypress.config.ts
+/cypress/fixtures/example.json
+/cypress/support/commands.ts
+/cypress/support/e2e.ts
+
+Component:
+/cypress.config.ts
+/cypress/fixtures/example.json
+/cypress/support/commands.ts
+/cypress/support/component.ts
+/cypress/support/component-index.html
+
+Both:
+/cypress.config.ts
+/cypress/fixtures/example.json
+/cypress/support/commands.ts
+/cypress/support/e2e.ts
+/cypress/support/component.ts
+/cypress/support/component-index.html
+```
+
+</code-block>
+</code-group>
 
 ### Configuring Folder Structure
 
@@ -75,8 +92,9 @@ While Cypress allows you to configure where your tests, fixtures, and support
 files are located, if you're starting your first project, we recommend you use
 the above structure.
 
-You can modify the folder configuration in your configuration file. See
-[configuration](/guides/references/configuration#Folders-Files) for more detail.
+You can modify the folder configuration in your configuration file. See the
+[Cypress configuration](/guides/references/configuration#Folders-Files) for more
+detail.
 
 <Alert type="info">
 
@@ -88,21 +106,23 @@ Cypress will create a
 [`videosFolder`](/guides/references/configuration#Videos) to store the
 screenshots and videos taken during the testing of your application. Many users
 will opt to add these folders to their `.gitignore` file. Additionally, if you
-are storing sensitive environment variables in your configuration file
-(`cypress.json` by default) or
+are storing sensitive environment variables in your
+[Cypress configuration](/guides/references/configuration) or
 [`cypress.env.json`](/guides/guides/environment-variables#Option-2-cypress-env-json),
 these should also be ignored when you check into source control.
 
 </Alert>
 
-### Test files
+### Spec files
 
-Test files are located in `cypress/integration` by default, but can be
+Test files are located in `cypress/e2e` by default, but can be
 [configured](/guides/references/configuration#Folders-Files) to another
 directory. Test files may be written as:
 
 - `.js`
 - `.jsx`
+- `.ts`
+- `.tsx`
 - `.coffee`
 - `.cjsx`
 
@@ -121,11 +141,7 @@ Check out our recipe using
 
 To see an example of every command used in Cypress, open the
 [`2-advanced-examples` folder](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/cypress/integration/2-advanced-examples)
-within your `cypress/integration` folder.
-
-To start writing tests for your app, create a new file like `app_spec.js` within
-your `cypress/integration` folder. Refresh your tests list in the Cypress Test
-Runner and your new file should have appeared in the list.
+within your `cypress/e2e` folder.
 
 ### Fixture Files
 
@@ -168,7 +184,7 @@ to `cypress/screenshots` by default.
 ```text
 /cypress
   /screenshots
-    /app_spec.js
+    /app.cy.js
       - Navigates to main menu (failures).png
 ```
 
@@ -184,13 +200,48 @@ Any videos recorded of the run are stored in the
 ```text
 /cypress
   /videos
-    - app_spec.js.mp4
+    - app.cy.js.mp4
 ```
+
+#### Asset File Paths
+
+Generated screenshots and videos are saved inside their respective folders
+(`cypress/screenshots`, `cypress/videos`). The paths of the generated files will
+be stripped of any common ancestor paths shared between all spec files found by
+the `specPattern` option (or via the `--spec` command line option or `spec`
+module API option, if specified)
+
+**Example 1:**
+
+- Spec file found
+  - `cypress/e2e/path/to/file/one.cy.js`
+- Common ancester paths (calculated at runtime)
+  - `cypress/e2e/path/to/file`
+- Generated screenshot file
+  - `cypress/screenshots/one.cy.js/your-screenshot.png`
+- Generated video file
+  - `cypress/videos/one.cy.js.mp4`
+
+**Example 2:**
+
+- Spec files found
+  - `cypress/e2e/path/to/file/one.cy.js`
+  - `cypress/e2e/path/to/two.cy.js`
+- Common ancester paths (calculated at runtime)
+  - `cypress/e2e/path/to/`
+- Generated screenshot files
+  - `cypress/screenshots/file/one.cy.js/your-screenshot.png`
+  - `cypress/screenshots/two.cy.js/your-screenshot.png`
+- Generated video files
+  - `cypress/videos/file/one.cy.js.mp4`
+  - `cypress/videos/two.cy.js.mp4`
 
 To learn more about videos and settings available, see
 [Screenshots and Videos](/guides/guides/screenshots-and-videos#Screenshots)
 
 ### Plugins file
+
+::include{file=partials/warning-plugins-file.md}
 
 The plugins file is a special file that executes in Node before the project is
 loaded, before the browser launches, and during your test execution. While the
@@ -210,33 +261,54 @@ The initial imported plugins file can be
 
 ### Support file
 
-By default Cypress will automatically include the support file
-`cypress/support/index.js`. This file runs **before** every single spec file. We
-do this purely as a convenience mechanism so you don't have to import this file
-in every single one of your spec files.
+To include code before your test files, set the
+[`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
+path. By default,
+[`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
+is set to look for one of the following files:
+
+**Component:**
+
+- `cypress/support/component.js`
+- `cypress/support/component.jsx`
+- `cypress/support/component.ts`
+- `cypress/support/component.tsx`
+
+**E2E:**
+
+- `cypress/support/e2e.js`
+- `cypress/support/e2e.jsx`
+- `cypress/support/e2e.ts`
+- `cypress/support/e2e.tsx`
 
 <Alert type="danger">
 
-<Icon name="exclamation-triangle"></Icon> Keep in mind, when clicking "Run all
-specs" after [cypress open](/guides/guides/command-line#cypress-open), the code
-in the support file is executed once before all spec files, instead of once
-before each spec file. See [Execution](#Execution) for more details.
+⚠️ For a given testing type, multiple matching `supportFile` files will result
+in an error when Cypress loads.
 
 </Alert>
 
-The initial imported support file can be configured to another file or turned
-off completely using the
-[supportFile](/guides/references/configuration#Folders-Files) configuration.
+::testing-type-specific-option{option=supportFile}
+
+The Cypress App automatically creates an example support file for each
+configured testing type, which has several commented out examples.
+
+This file runs **before** every single spec file. We do this purely as a
+convenience mechanism so you don't have to import this file.
+
+By default Cypress will automatically include type-specific support files. For
+E2E, the default is `cypress/support/e2e.{js,jsx,ts,tsx}`, and for Component
+Testing `cypress/support/e2e.{js,jsx,ts,tsx}`.
 
 The support file is a great place to put reusable behavior such as
 [custom commands](/api/cypress-api/custom-commands) or global overrides that you
 want applied and available to all of your spec files.
 
+The initial imported support file can be configured to another file or turned
+off completely using the
+[supportFile](/guides/references/configuration#Folders-Files) configuration.
 From your support file you can `import` or `require` other files to keep things
 organized.
-
-We automatically seed an example support file, which has several commented out
-examples.
 
 You can define behaviors in a `before` or `beforeEach` within any of the
 `cypress/support` files:
@@ -247,7 +319,7 @@ beforeEach(() => {
 })
 ```
 
-<DocsImage src="/img/guides/global-hooks.png" alt="Global hooks for tests" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/global-hooks.png" alt="Global hooks for tests"></DocsImage>
 
 <Alert type="info">
 
@@ -258,46 +330,19 @@ beforeEach(() => {
 
 #### Execution
 
-Cypress executes the support file before the spec file. For example when you
-click on a test file named `spec-a.js` via
-[cypress open](/guides/guides/command-line#cypress-open), then the Test Runner
-executes the files in the following order:
+Cypress executes the support file before the spec file. For example, when
+Cypress executes a spec file via `cypress open` or `cypress run`, it executes
+the files in the following order:
 
-```html
-<!-- bundled support file -->
-<script src="support/index.js"></script>
-<!-- bundled spec file -->
-<script src="integration/spec-a.js"></script>
-```
+**e2e example:**
 
-The same happens when using the
-[cypress run](/guides/guides/command-line#cypress-run) command: a new browser
-window is opened for each support and spec file pair.
+1. `support/e2e.js` (your support file)
+2. `e2e/spec-a.cy.js` (your spec file)
 
-But when you click on "Run all specs" button after
-[cypress open](/guides/guides/command-line#cypress-open), the Test Runner
-bundles and concatenates all specs together, in essence running scripts like
-shown below. This means the code in the support file is executed once before all
-spec files, instead of once before each spec file.
+**component example:**
 
-```html
-<!-- bundled support file -->
-<script src="support/index.js"></script>
-<!-- bundled first spec file, second spec file, etc -->
-<script src="integration/spec-a.js"></script>
-<script src="integration/spec-b.js"></script>
-...
-<script src="integration/spec-n.js"></script>
-```
-
-<Alert type="info">
-
-Having a single support file when running all specs together might execute
-`before` and `beforeEach` hooks in ways you may not anticipate. Read
-[Be careful when running all specs together](https://glebbahmutov.com/blog/run-all-specs/)
-for examples.
-
-</Alert>
+1. `support/component.js` (your support file)
+2. `components/Button/Button.cy.js` (your spec file)
 
 ### Troubleshooting
 
@@ -313,18 +358,27 @@ DEBUG=cypress:server:specs npx cypress run
 
 ## Writing tests
 
-Cypress is built on top of [Mocha](/guides/references/bundled-tools#Mocha) and
-[Chai](/guides/references/bundled-tools#Chai). We support both Chai's `BDD` and
-`TDD` assertion styles. Tests you write in Cypress will mostly adhere to this
-style.
+Cypress is built on top of [Mocha](/guides/references/bundled-libraries#Mocha)
+and [Chai](/guides/references/bundled-libraries#Chai). We support both Chai's
+`BDD` and `TDD` assertion styles. Tests you write in Cypress will mostly adhere
+to this style.
 
 If you're familiar with writing tests in JavaScript, then writing tests in
 Cypress will be a breeze.
 
+<Alert type="info">
+
+To start writing tests for your app, follow our guides for writing your first
+[Component](/guides/component-testing/writing-your-first-component-test) or
+[End-to-End](/guides/end-to-end-testing/writing-your-first-end-to-end-test)
+test.
+
+</Alert>
+
 ### Test Structure
 
 The test interface, borrowed from
-[Mocha](/guides/references/bundled-tools#Mocha), provides `describe()`,
+[Mocha](/guides/references/bundled-libraries#Mocha), provides `describe()`,
 `context()`, `it()` and `specify()`.
 
 `context()` is identical to `describe()` and `specify()` is identical to `it()`,
@@ -375,7 +429,7 @@ describe('Unit test our math functions', () => {
 ### Hooks
 
 Cypress also provides hooks (borrowed from
-[Mocha](/guides/references/bundled-tools#Mocha)).
+[Mocha](/guides/references/bundled-libraries#Mocha)).
 
 These are helpful to set conditions that you want to run before a set of tests
 or before each test. They're also helpful to clean up conditions after a set of
@@ -432,15 +486,6 @@ describe('Hooks', () => {
 <Icon name="exclamation-triangle"></Icon> Before writing `after()` or
 `afterEach()` hooks, please see our
 [thoughts on the anti-pattern of cleaning up state with `after()` or `afterEach()`](/guides/references/best-practices#Using-after-or-afterEach-hooks).
-
-</Alert>
-
-<Alert type="danger">
-
-<Icon name="exclamation-triangle"></Icon> Be wary of root-level hooks, as they
-could execute in a surprising order when clicking the "Run all specs" button.
-Instead place them inside `describe` or `context` suites for isolation. Read
-[Be careful when running all specs together](https://glebbahmutov.com/blog/run-all-specs/).
 
 </Alert>
 
@@ -540,7 +585,7 @@ browsers.
 ```js
 describe('When NOT in Chrome', { browser: '!chrome' }, () => {
   it('Shows warning', () => {
-    cy.get('.browser-warning').should(
+    cy.get('[data-testid="browser-warning"]').should(
       'contain',
       'For optimal viewing, use Chrome browser'
     )
@@ -607,8 +652,7 @@ it('should redirect unauthenticated user to sign-in page', {
       openMode: 2
     }
   } () => {
-    cy.visit('/')
-    // ...
+    // test code...
   })
 })
 ```
@@ -625,7 +669,7 @@ describe('if your app uses jQuery', () => {
       // event that causes the event callback to fire
       cy.get('#with-jquery')
         .invoke('trigger', event)
-        .get('#messages')
+        .get('[data-testid="messages"]')
         .should('contain', 'the event ' + event + 'was fired')
     })
   })
@@ -668,47 +712,12 @@ cy.wrap(add(1, 2)).should('equal', 3)
 
 ## Running tests
 
-### Run a single spec file
-
-We suggest running test files individually by clicking on the spec filename to
-ensure the best performance. For example the
+You can run a test by clicking on the spec filename. For example the
 [Cypress RealWorld App](https://github.com/cypress-io/cypress-example-realworld)
-has multiple test files, but below we run a single "new-transaction.spec.ts"
-test file.
+has multiple test files, but below we run the "new-transaction.spec.ts" test
+file by clicking on it.
 
-<DocsImage src="/img/guides/core-concepts/run-single-spec.gif" alt="Running a single spec" ></DocsImage>
-
-### Run all specs
-
-You can run all spec files together by clicking the "Run all specs" button. This
-mode is equivalent to concatenating all spec files together into a single piece
-of test code.
-
-<DocsImage src="/img/guides/core-concepts/run-all-specs.gif" alt="Running all specs" ></DocsImage>
-
-<Alert type="danger">
-
-<Icon name="exclamation-triangle"></Icon> Be wary of root-level hooks, as they
-could execute in a surprising order when clicking the "Run all specs" button.
-Instead place them inside `describe` or `context` suites for isolation. Read
-[Be careful when running all specs together](https://glebbahmutov.com/blog/run-all-specs/).
-
-</Alert>
-
-### Run filtered specs
-
-You can also run a subset of all specs by entering a text search filter. Only
-the specs with relative file paths containing the search filter will remain and
-be run as if concatenating all spec files together when clicking the "Run N
-specs" button.
-
-- The search filter is case-insensitive; the filter "ui" will match both
-  "UI-spec.js" and "admin-ui-spec.js" files.
-- The search filter is applied to the entire relative spec file path, thus you
-  can use folder names to limit the specs; the filter "ui" will match both
-  "admin-ui.spec.js" and "ui/admin.spec.js" files.
-
-<DocsImage src="/img/guides/core-concepts/run-selected-specs.gif" alt="Running specs matching the search filter" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/run-single-spec.gif" alt="Running a single spec"></DocsImage>
 
 ## Test statuses
 
@@ -720,7 +729,7 @@ After the Cypress spec completes every test has one of 4 statuses: **passed**,
 Passed tests have successfully completed all their commands without failing any
 assertions. The test screenshot below shows a passed test:
 
-<DocsImage src="/img/guides/core-concepts/passing-test.png" alt="Test runner with a single passed test" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-passing-test.png" alt="Cypress App with a single passed test"></DocsImage>
 
 Note that a test can pass after several
 [test retries](/guides/guides/test-retries). In that case the Command Log shows
@@ -731,7 +740,7 @@ some failed attempts, but ultimately the entire test finishes successfully.
 Good news - the failed test has found a problem. Could be much worse - it could
 be a user hitting this bug!
 
-<DocsImage src="/img/guides/core-concepts/failing-test.png" alt="Test runner with a single failed test" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-failing-test.png" alt="Cypress App with a single failed test"></DocsImage>
 
 After a test fails, the screenshots and videos can help find the problem so it
 can be fixed.
@@ -747,8 +756,10 @@ describe('TodoMVC', () => {
 
   it.skip('adds 2 todos', function () {
     cy.visit('/')
-    cy.get('.new-todo').type('learn testing{enter}').type('be cool{enter}')
-    cy.get('.todo-list li').should('have.length', 100)
+    cy.get('[data-testid="new-todo"]')
+      .type('learn testing{enter}')
+      .type('be cool{enter}')
+    cy.get('[data-testid="todo-list"] li').should('have.length', 100)
   })
 
   xit('another test', () => {
@@ -760,7 +771,7 @@ describe('TodoMVC', () => {
 All 3 tests above are marked _pending_ when Cypress finishes running the spec
 file.
 
-<DocsImage src="/img/guides/core-concepts/different-pending.png" alt="Test runner with three pending tests" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-pending-tests.png" alt="Cypress App with three pending test"></DocsImage>
 
 So remember - if you (the test writer) knowingly skip a test using one of the
 above three ways, Cypress counts it as a _pending_ test.
@@ -781,19 +792,21 @@ describe('TodoMVC', () => {
   })
 
   it('hides footer initially', () => {
-    cy.get('.filters').should('not.exist')
+    cy.get('[data-testid="filters"]').should('not.exist')
   })
 
   it('adds 2 todos', () => {
-    cy.get('.new-todo').type('learn testing{enter}').type('be cool{enter}')
-    cy.get('.todo-list li').should('have.length', 2)
+    cy.get('[data-testid="new-todo"]')
+      .type('learn testing{enter}')
+      .type('be cool{enter}')
+    cy.get('[data-testid="todo-list"] li').should('have.length', 2)
   })
 })
 ```
 
 If the `beforeEach` hook completes and both tests finish, two tests are passing.
 
-<DocsImage src="/img/guides/core-concepts/two-passing.png" alt="Test runner showing two passing tests" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-2-tests-passing.png" alt="Cypress App showing two passing tests"></DocsImage>
 
 But what happens if a command inside the `beforeEach` hook fails? For example,
 let's pretend we want to visit a non-existent page `/does-not-exist` instead of
@@ -811,12 +824,12 @@ once, why would we execute it _again_ before the second test? It would just fail
 the same way! So Cypress _skips_ the remaining tests in that block, because they
 would also fail due to the `beforeEach` hook failure.
 
-<DocsImage src="/img/guides/core-concepts/1-skipped.png" alt="Test runner showing a skipped test" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-failed-and-skipped-tests.png" alt="Cypress App showing one failed and one skipped test"></DocsImage>
 
 If we collapse the test commands, we can see the empty box marking the skipped
 test "adds 2 todos".
 
-<DocsImage src="/img/guides/core-concepts/skipped.png" alt="Test runner showing one failed and one skipped test" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-skipped-test.png" alt="Cypress App showing one skipped test"></DocsImage>
 
 The tests that were meant to be executed but were skipped due to some run-time
 problem are marked "skipped" by Cypress.
@@ -855,14 +868,13 @@ behavior.
 
 #### Files
 
-- [Configuration file (`cypress.json`) by default](/guides/references/configuration)
+- [Cypress configuration](/guides/references/configuration)
 - [cypress.env.json](/guides/guides/environment-variables)
 
 #### Folders
 
-- Integration directory (`cypress/integration/` by default)
+- E2E directory (`cypress/e2e/` by default)
 - Support directory (`cypress/support/` by default)
-- Plugins directory (`cypress/plugins/` by default)
 
 The folder, the files within the folder, and all child folders and their files
 (recursively) are watched.

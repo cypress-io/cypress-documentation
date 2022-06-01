@@ -11,7 +11,7 @@ This message means that Cypress was unable to find tests in the specified file.
 You'll likely get this message if you have an empty test file and have not yet
 written any tests.
 
-<DocsImage src="/img/guides/no-tests-found.png" alt="No tests found" ></DocsImage>
+<DocsImage src="/img/guides/references/no-tests-found.png" alt="No tests found" ></DocsImage>
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> We found an error preparing your test file
 
@@ -33,13 +33,22 @@ When the error is fixed in your test file, your tests will automatically re-run.
 
 The `supportFolder` option was removed from Cypress in version
 [`0.18.0`](/guides/references/changelog#0-18-0) and was replaced by module
-support and the [`supportFile`](/guides/references/configuration#Folders-Files)
+support and the
+[`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
 configuration option.
 
 Cypress used to automatically include any scripts in the `supportFolder` before
 your test files. However, automatically including all the files in a certain
 directory is somewhat magical and unintuitive, and requires creating globals for
 the purpose of utility functions.
+
+### <Icon name="exclamation-triangle" color="red"></Icon> Error Loading Config
+
+The `supportFile` configuration option was removed from the root configutation
+object in Cypress version `10.0.0`. Instead, it must be added within each
+testing type's configuration object as a separate property if you would like to
+use a file other than the default
+[supportFile](/guides/references/configuration#Folders-Files) configuration.
 
 #### Use modules for utility functions
 
@@ -61,28 +70,26 @@ it('uses modules', () => {
 It's still useful to load a setup file before your test code. If you are setting
 Cypress defaults or utilizing custom Cypress commands, instead of needing to
 import/require those defaults/commands in every test file, you can use the
-[`supportFile`](/guides/references/configuration#Folders-Files) configuration
-option.
+[`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
+configuration option within each testing type's configuration object.
 
-To include code before your test files, set the
-[`supportFile`](/guides/references/configuration#Folders-Files) path. By
-default, [`supportFile`](/guides/references/configuration#Folders-Files) is set
-to look for one of the following files:
+<Alert type="danger">
 
-- `cypress/support/index.js`
-- `cypress/support/index.ts`
-- `cypress/support/index.coffee`
+⚠️ For a given testing type, multiple matching `supportFile` files will result
+in an error when Cypress loads.
+
+</Alert>
 
 Just like with your test files, the
-[`supportFile`](/guides/references/configuration#Folders-Files) can use ES2015+,
-[TypeScript](/guides/tooling/typescript-support) or CoffeeScript and modules, so
-you can import/require other files as needed.
+[`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
+can use ES2015+, [TypeScript](/guides/tooling/typescript-support) or
+CoffeeScript and modules, so you can import/require other files as needed.
 
 ## Command Errors
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> Cypress cannot execute commands outside a running test
 
-<DocsImage src="/img/guides/cypress-cannot-execute.png" alt="Cannot execute commands" ></DocsImage>
+<DocsImage src="/img/guides/references/cypress-cannot-execute.png" alt="Cannot execute commands" ></DocsImage>
 
 This message means you tried to execute one or more Cypress commands outside of
 a currently running test. Cypress has to be able to associate commands to a
@@ -105,7 +112,6 @@ describe('Some Tests', () => {
     // these cypress commands below
     // are running outside of a test and cypress
     // throws an error
-    cy.visit('http://localhost:8080')
     cy.get('h1').should('contain', 'todos')
   })
 })
@@ -161,7 +167,7 @@ describe('detachment example', () => {
 })
 -->
 
-<DocsImage src="/img/guides/cy-method-failed-element-is-detached.png" alt="cy.method() failed because element is detached" ></DocsImage>
+<DocsImage src="/img/guides/references/cy-method-failed-element-is-detached.png" alt="cy.method() failed because element is detached" ></DocsImage>
 
 Cypress errors because it can't interact with "dead" elements - much like a real
 user could not do this either. Understanding how this happens is very
@@ -173,8 +179,8 @@ Let's take a look at an example below.
 
 ```html
 <body>
-  <div id="parent">
-    <button>delete</button>
+  <div data-testid="parent">
+    <button>Delete</button>
   </div>
 </body>
 ```
@@ -207,7 +213,7 @@ We can prevent Cypress from throwing this error by rewriting our test code.
 
 ```javascript
 cy.get('button').click()
-cy.get('#parent')
+cy.get('[data-testid="parent"]')
 ```
 
 The above example is an oversimplification. Let's look at a more complex
@@ -231,9 +237,13 @@ When we say _guard_, this usually means:
 
 #### More info
 
+<Alert type="info">
+
 Read the blog post
 [Do Not Get Too Detached](https://www.cypress.io/blog/2020/07/22/do-not-get-too-detached/)
 for another example of this error, and how to solve it.
+
+</Alert>
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy....()` failed because the element cannot be interacted with
 
@@ -283,7 +293,7 @@ describe('animating example', () => {
 })
 -->
 
-<DocsImage src="/img/guides/cy-method-failed-element-is-animating.png" alt="cy.method() failed because element is animating" ></DocsImage>
+<DocsImage src="/img/guides/references/cy-method-failed-element-is-animating.png" alt="cy.method() failed because element is animating" ></DocsImage>
 
 By default Cypress detects if an element you're trying to interact with is
 animating. This check ensures that an element is not animating too quickly for a
@@ -303,20 +313,24 @@ element there are a few options:
   continuously retry.
 
 ```javascript
-cy.get('#modal button').click({ waitForAnimations: false })
+cy.get('[data-testid="modal-close"]').click({ waitForAnimations: false })
 ```
 
 You can globally disable animation error checking, or increase the threshold by
-modifying the [configuration](/guides/references/configuration).
+modifying the [Cypress configuration](/guides/references/configuration).
 
-#### Configuration file (`cypress.json` by default)
+#### Cypress configuration file
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "waitForAnimations": false,
-  "animationDistanceThreshold": 50
+  waitForAnimations: false,
+  animationDistanceThreshold: 50
 }
 ```
+
+:::
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> The test has finished but Cypress still has commands in its queue
 
@@ -324,7 +338,7 @@ Let's examine several different ways you may get this error message. In every
 situation, you'll need to change something in your test code to prevent the
 error.
 
-<DocsImage src="/img/guides/the-test-has-finished.png" alt="The test has finished but Cypress still has commands" ></DocsImage>
+<DocsImage src="/img/guides/references/the-test-has-finished.png" alt="The test has finished but Cypress still has commands" ></DocsImage>
 
 <Alert type="warning">
 
@@ -552,7 +566,7 @@ Since no record key was passed, Cypress checks for any environment variable with
 the name `CYPRESS_RECORD_KEY`. In this case, that was also not found.
 
 You can get your project's record key by locating it in your settings tab in the
-Test Runner or in the [Dashboard Service](https://on.cypress.io/dashboard).
+Cypress App or in the [Dashboard Service](https://on.cypress.io/dashboard).
 
 You will want to then
 [add the key to your config file or as an environment variable](/guides/continuous-integration/introduction#Record-tests).
@@ -806,16 +820,20 @@ origin-policy, Cypress is unable to communicate with it, and thus fails.
 
 If you find yourself stuck and can't work around these issues you can set
 `chromeWebSecurity` to `false` in your
-[configuration file (`cypress.json` by default)](/guides/references/configuration)
-when running in Chrome family browsers (this setting will not work in other
-browsers). Before doing so you should really understand and
+[Cypress configuration](/guides/references/configuration) when running in Chrome
+family browsers (this setting will not work in other browsers). Before doing so
+you should really understand and
 [read about the reasoning here](/guides/guides/web-security).
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "chromeWebSecurity": false
+  chromeWebSecurity: false
 }
 ```
+
+:::
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> Cypress detected that an uncaught error was thrown from a cross-origin script.
 
@@ -855,7 +873,7 @@ remaining tests and print out this error.
 There is an [open issue](https://github.com/cypress-io/cypress/issues/349) to
 recover from browser crashes automatically, so tests can continue to run.
 
-## Test Runner errors
+## Cypress App errors
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> Whoops, we can't run your tests
 
@@ -880,9 +898,9 @@ one of the following:
 
 **You visit the Cypress proxy URL outside of a Cypress browser.**
 
-- Don't copy the URL you see when launching a Cypress browser from the Test
-  Runner and open it in a non-Cypress browser. If you want to run your tests in
-  a different browser, follow the instructions in the
+- Don't copy the URL you see when launching a Cypress browser from the Cypress
+  App and open it in a non-Cypress browser. If you want to run your tests in a
+  different browser, follow the instructions in the
   [Cross Browser Testing](/guides/guides/cross-browser-testing) guide.
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> Cannot connect to API server

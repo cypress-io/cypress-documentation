@@ -2,6 +2,16 @@
 title: Cypress Studio
 ---
 
+<Alert type="warning">
+
+<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
+Removed</strong>
+
+Cypress Studio has been removed in Cypress v10 and will be rethought/revisited
+in a later release. This page is for reference only.
+
+</Alert>
+
 <Alert type="info">
 
 ## <Icon name="graduation-cap"></Icon> What you'll learn
@@ -13,7 +23,7 @@ title: Cypress Studio
 
 ## Overview
 
-Cypress Studio provides a visual way to generate tests within the Test Runner,
+Cypress Studio provides a visual way to generate tests within the Cypress App,
 by _recording interactions_ against the application under test.
 
 The [`.click()`](/api/commands/click), [`.type()`](/api/commands/type),
@@ -28,16 +38,20 @@ like to assert on.
 <Alert type="info">
 
 Cypress Studio is an experimental feature and can be enabled by adding the
-[experimentalStudio](/guides/references/experiments) attribute to your
-configuration file (`cypress.json` by default).
+[experimentalStudio](/guides/references/experiments) attribute to your Cypress
+configuration.
 
 </Alert>
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "experimentalStudio": true
+  experimentalStudio: true
 }
 ```
+
+:::
 
 The Cypress <Icon name="github"></Icon>
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) is
@@ -47,9 +61,8 @@ used to demonstrate the functionality of Cypress Studio below.
 
 ### Extending a Test
 
-You can extend any preexisting test or start by creating a new test in your
-[integrationFolder](/guides/references/configuration#Folders-Files)
-(`cypress/integration` by default) with the following test scaffolding.
+You can extend any preexisting test or start by creating a new test with the
+following test scaffolding.
 
 ```js
 // Code from Real World App (RWA)
@@ -77,7 +90,7 @@ describe('Cypress Studio Demo', () => {
 Clone the <Icon name="github"></Icon>
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and
 refer to the
-[cypress/tests/demo/cypress-studio.spec.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts)
+[cypress/tests/demo/cypress-studio.cy.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts)
 file.
 
 </Alert>
@@ -85,7 +98,7 @@ file.
 #### Step 1 - Run the spec
 
 We will use Cypress Studio to perform a "New Transaction" user journey. First,
-launch the Test Runner and run the spec created in the previous step.
+launch the Cypress App and run the spec created in the previous step.
 
 <DocsImage src="/img/guides/cypress-studio/run-spec-1.png" alt="Cypress Studio" no-border></DocsImage>
 
@@ -99,7 +112,7 @@ Clicking on "Add Commands to Test" will launch the Cypress Studio.
 <Alert type="info">
 
 Cypress Studio is directly integrated with the
-[Command Log](/guides/core-concepts/test-runner#Command-Log).
+[Command Log](/guides/core-concepts/cypress-app#Command-Log).
 
 </Alert>
 
@@ -113,7 +126,7 @@ the application inside the `beforeEach` block).
 
 </Alert>
 
-Next, the Test Runner will execute the test in isolation and pause after the
+Next, the Cypress App will execute the test in isolation and pause after the
 last command in the test.
 
 <DocsImage src="/img/guides/cypress-studio/extend-ready.png" alt="Cypress Studio Ready" no-border></DocsImage>
@@ -279,7 +292,7 @@ describe('Cypress Studio Demo', () => {
 Clone the <Icon name="github"></Icon>
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and
 refer to the
-[cypress/tests/demo/cypress-studio.spec.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts)
+[cypress/tests/demo/cypress-studio.cy.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts)
 file.
 
 </Alert>

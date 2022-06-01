@@ -63,4 +63,4 @@ cy.get('input[type=file]').selectFile(files)
 
 ## See also
 
-- [Bundled Tools](/guides/references/bundled-tools)
+- [Bundled Libraries](/guides/references/bundled-libraries)

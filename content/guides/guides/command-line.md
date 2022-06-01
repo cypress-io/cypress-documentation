@@ -77,14 +77,14 @@ your `package.json`
 Dashboard, the command should be:
 
 ```shell
-npm run cy:run -- --record --spec "cypress/integration/my-spec.js"
+npm run cy:run -- --record --spec "cypress/e2e/my-spec.cy.js"
 ```
 
 If you are using the [npx](https://github.com/zkat/npx) tool, you can invoke the
 locally installed Cypress tool directly:
 
 ```shell
-npx cypress run --record --spec "cypress/integration/my-spec.js"
+npx cypress run --record --spec "cypress/e2e/my-spec.cy.js"
 ```
 
 <Alert type="info">
@@ -111,15 +111,17 @@ cypress run [options]
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `--browser`, `-b`          | [Run Cypress in the browser with the given name. If a filesystem path is supplied, Cypress will attempt to use the browser at that path.](#cypress-run-browser-lt-browser-name-or-path-gt) |
 | `--ci-build-id`            | [Specify a unique identifier for a run to enable grouping or parallelization.](#cypress-run-ci-build-id-lt-id-gt)                                                                          |
+| `--component`              | [Run component tests](/guides/core-concepts/testing-types#What-is-Component-Testing)                                                                                                       |
 | `--config`, `-c`           | [Specify configuration](#cypress-run-config-lt-config-gt)                                                                                                                                  |
-| `--config-file`, `-C`      | [Specify configuration file](#cypress-run-config-file-lt-config-file-gt)                                                                                                                   |
+| `--config-file`, `-C`      | [Specify configuration file](#cypress-run-config-file-lt-configuration-file-gt)                                                                                                            |
+| `--e2e`                    | Run end to end tests (default)                                                                                                                                                             |
 | `--env`, `-e`              | [Specify environment variables](#cypress-run-env-lt-env-gt)                                                                                                                                |
 | `--group`                  | [Group recorded tests together under a single run](#cypress-run-group-lt-name-gt)                                                                                                          |
 | `--headed`                 | [Displays the browser instead of running headlessly](#cypress-run-headed)                                                                                                                  |
 | `--headless`               | [Hide the browser instead of running headed (default during `cypress run`)](#cypress-run-headless)                                                                                         |
 | `--help`, `-h`             | Output usage information                                                                                                                                                                   |
 | `--key`, `-k`              | [Specify your secret record key](#cypress-run-record-key-lt-record-key-gt)                                                                                                                 |
-| `--no-exit`                | [Keep Cypress Test Runner open after tests in a spec file run](#cypress-run-no-exit)                                                                                                       |
+| `--no-exit`                | [Keep the Cypress App open after tests in a spec file run](#cypress-run-no-exit)                                                                                                           |
 | `--parallel`               | [Run recorded specs in parallel across multiple machines](#cypress-run-parallel)                                                                                                           |
 | `--port`,`-p`              | [Override default port](#cypress-run-port-lt-port-gt)                                                                                                                                      |
 | `--project`, `-P`          | [Path to a specific project](#cypress-run-project-lt-project-path-gt)                                                                                                                      |
@@ -169,11 +171,21 @@ Only valid when providing a `--group` or `--parallel` flag. Read our
 #### `cypress run --config <config>`
 
 Set [configuration](/guides/references/configuration) values. Separate multiple
-values with a comma. The values set here override any values set in your
+values with commas. The values set here override any values set in your
 configuration file.
 
 ```shell
 cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
+```
+
+For more complex configuration objects, you may want to consider passing a
+[JSON.stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+object surrounded by single quotes.
+
+Here, we're passing in the configuration for component spec files.
+
+```shell
+cypress run --config '{"watchForFileChanges":false,"specPattern":["**/*.cy.js","**/*.cy.ts"]}'
 ```
 
 <Alert type="info">
@@ -195,20 +207,13 @@ testing locally and in dedicated CI jobs. Examples:
 
 </Alert>
 
-#### `cypress run --config-file <config-file>`
+#### `cypress run --config-file <configuration-file>`
 
-You can specify a path to a JSON file where
-[configuration](/guides/references/configuration) values are set. This defaults
-to `cypress.json`.
-
-```shell
-cypress run --config-file tests/cypress-config.json
-```
-
-You can pass `false` to disable the use of a configuration file entirely.
+You can specify a path to a file where
+[Cypress configuration](/guides/references/configuration) values are set.
 
 ```shell
-cypress run --config-file false
+cypress run --config-file tests/cypress.config.js
 ```
 
 #### `cypress run --env <env>`
@@ -244,11 +249,11 @@ You can add multiple groups to the same run by passing a different name. This
 can help distinguish groups of specs from each other.
 
 ```shell
-cypress run --group admin-tests --spec 'cypress/integration/admin/**/*'
+cypress run --group admin-tests --spec 'cypress/e2e/admin/**/*'
 ```
 
 ```shell
-cypress run --group user-tests --spec 'cypress/integration/user/**/*'
+cypress run --group user-tests --spec 'cypress/e2e/user/**/*'
 ```
 
 Specifying the `--ci-build-id` may also be necessary.
@@ -268,8 +273,8 @@ cypress run --headed
 
 #### `cypress run --no-exit`
 
-To prevent the Cypress Test Runner from exiting after running tests in a spec
-file, use `--no-exit`.
+To prevent the Cypress App from exiting after running tests in a spec file, use
+`--no-exit`.
 
 You can pass `--headed --no-exit` in order to view the **command log** or have
 access to **developer tools** after a `spec` has run.
@@ -362,20 +367,20 @@ path should be an absolute path or can relative to the current working
 directory.
 
 ```shell
-cypress run --spec "cypress/integration/examples/actions.spec.js"
+cypress run --spec "cypress/e2e/examples/actions.cy.js"
 ```
 
 Run tests within the folder matching the glob _(Note: Using double quotes is
 strongly recommended)_.
 
 ```shell
-cypress run --spec "cypress/integration/login/**/*"
+cypress run --spec "cypress/e2e/login/**/*"
 ```
 
 Run tests specifying multiple test files to run.
 
 ```shell
-cypress run --spec "cypress/integration/examples/actions.spec.js,cypress/integration/examples/files.spec.js"
+cypress run --spec "cypress/e2e/examples/actions.cy.js,cypress/e2e/examples/files.cy.js"
 ```
 
 Use in combination with `--project` parameter. Imagine the Cypress tests are in
@@ -391,13 +396,13 @@ app/
       cypress/
         integration/
           spec.js
-      cypress.json
+      cypress.config.js
 ```
 
 If we are in the `app` folder, we can run the specs using the following command
 
 ```shell
-cypress run --project tests/e2e --spec ./tests/e2e/cypress/integration/spec.js
+cypress run --project tests/e2e --spec ./tests/e2e/cypress/e2e/spec.js
 ```
 
 #### `cypress run --tag <tag>`
@@ -471,7 +476,7 @@ $ echo $?
 
 ### `cypress open`
 
-Opens the Cypress Test Runner.
+Opens the Cypress App.
 
 ```shell
 cypress open [options]
@@ -480,16 +485,21 @@ cypress open [options]
 #### Options:
 
 Options passed to `cypress open` will automatically be applied to the project
-you open. These persist on all projects until you quit the Cypress Test Runner.
-These options will also override values in your configuration file
-(`cypress.json` by default).
+you open. These persist on all projects until you quit the Cypress App. These
+options will also override values in the Cypress configuration file.
+
+By passing `--browser` and `--e2e` or `--component` when launching a project,
+you can open the Cypress App and launch the browser at the same time. Otherwise,
+you will be guided through selecting a browser, project, and/or testing type.
 
 | Option                | Description                                                                                                                   |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | `--browser`, `-b`     | [Path to a custom browser to be added to the list of available browsers in Cypress](#cypress-open-browser-lt-browser-path-gt) |
+| `--component`         | [Run component tests](/guides/core-concepts/testing-types#What-is-Component-Testing)                                          |
 | `--config`, `-c`      | [Specify configuration](#cypress-open-config-lt-config-gt)                                                                    |
-| `--config-file`, `-C` | [Specify configuration file](#cypress-open-config-file-lt-config-file-gt)                                                     |
+| `--config-file`, `-C` | [Specify configuration file](#cypress-open-config-file-lt-configuration-file-gt)                                              |
 | `--detached`, `-d`    | Open Cypress in detached mode                                                                                                 |
+| `--e2e`               | Run end to end tests (default)                                                                                                |
 | `--env`, `-e`         | [Specify environment variables](#cypress-open-env-lt-env-gt)                                                                  |
 | `--global`            | [Run in global mode](#cypress-open-global)                                                                                    |
 | `--help`, `-h`        | Output usage information                                                                                                      |
@@ -509,7 +519,7 @@ cypress open --browser /usr/bin/chromium
 ```
 
 If found, the specified browser will be added to the list of available browsers
-in the Cypress Test Runner.
+in the Cypress App.
 
 Currently, only browsers in the Chrome family (including the new Chromium-based
 Microsoft Edge and Brave) and Firefox are supported.
@@ -526,20 +536,23 @@ configuration file.
 cypress open --config pageLoadTimeout=100000,watchForFileChanges=false
 ```
 
-#### `cypress open --config-file <config-file>`
+For more complex configuration objects, you may want to consider passing a
+[JSON.stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+object.
 
-You can specify a path to a JSON file where
-[configuration](/guides/references/configuration) values are set. This defaults
-to `cypress.json`.
+Here, we're passing in the configuration for component spec files.
 
 ```shell
-cypress open --config-file tests/cypress-config.json
+cypress open --config "{\"watchForFileChanges\":false,\"specPattern\":[\"**/*.cy.js\",\"**/*.cy.ts\"]}"
 ```
 
-You can pass `false` to disable the use of a configuration file entirely.
+#### `cypress open --config-file <configuration-file>`
+
+You can specify a path to a file where
+[Cypress configuration](/guides/references/configuration) values are set.
 
 ```shell
-cypress open --config-file false
+cypress open --config-file tests/cypress.config.js
 ```
 
 #### `cypress open --env <env>`
@@ -709,7 +722,7 @@ installs of Cypress across your machine, global or not.
 
 Print the `path` to the Cypress cache folder. You can change the path where the
 Cypress cache is located by following
-[these instructions](/guides/getting-started/installing-cypress#Binary-cache).
+[these instructions](/guides/references/advanced-installation#Binary-cache).
 
 ```shell
 cypress cache path

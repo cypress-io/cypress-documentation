@@ -75,4 +75,4 @@ return Cypress.Blob.imgSrcToDataURL('/assets/img/logo.png').then((dataUrl) => {
 
 ## See also
 
-- [Bundled Tools](/guides/references/bundled-tools)
+- [Bundled Libraries](/guides/references/bundled-libraries)

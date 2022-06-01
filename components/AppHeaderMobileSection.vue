@@ -52,7 +52,7 @@ export default {
           :name="child.slug"
           :children="child.children"
         />
-        <div v-else-if="child.redirect">
+        <div v-if="child.redirect">
           <nuxt-link
             :to="`${child.redirect}`"
             class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
@@ -60,13 +60,16 @@ export default {
             {{ child.title }}
           </nuxt-link>
         </div>
-        <div v-else>
+        <div v-else-if="child.slug">
           <nuxt-link
             :to="`/${section}/${folder}/${child.slug}`"
             class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
           >
             {{ child.title }}
           </nuxt-link>
+        </div>
+        <div v-else class="pl-3 py-0 mt-4 text-base font-extrabold text-gray-300 grid grid-cols-1">
+          {{ child.title }}
         </div>
       </li>
     </ul>

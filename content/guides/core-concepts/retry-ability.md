@@ -39,24 +39,24 @@ it('creates 2 items', () => {
   cy.focused() // command
     .should('have.class', 'new-todo') // assertion
 
-  cy.get('.new-todo') // command
+  cy.get('[data-testid="new-todo"]') // command
     .type('todo A{enter}') // command
     .type('todo B{enter}') // command
 
-  cy.get('.todo-list li') // command
+  cy.get('[data-testid="todo-list"] li') // command
     .should('have.length', 2) // assertion
 })
 ```
 
-The [Command Log](/guides/core-concepts/test-runner#Command-Log) shows both
+The [Command Log](/guides/core-concepts/cypress-app#Command-Log) shows both
 commands and assertions with passing assertions showing in green.
 
-<DocsImage src="/img/guides/retry-ability/commands-assertions.png" alt="ommands and assertions" ></DocsImage>
+<DocsImage src="/img/guides/retry-ability/v10/command-assertions.png" alt="Cypress tests shoing commands and assertions"></DocsImage>
 
 Let's look at the last command and assertion pair:
 
 ```javascript
-cy.get('.todo-list li') // command
+cy.get('[data-testid="todo-list"] li') // command
   .should('have.length', 2) // assertion
 ```
 
@@ -107,11 +107,11 @@ app.TodoModel.prototype.addTodo = function (title) {
 }
 ```
 
-My test still passes! The last `cy.get('.todo-list')` and the assertion
-`should('have.length', 2)` are clearly showing the spinning indicators, meaning
-Cypress is requerying for them.
+My test still passes! The last `cy.get('[data-testid="todo-list"]')` and the
+assertion `should('have.length', 2)` are clearly showing the spinning
+indicators, meaning Cypress is requerying for them.
 
-<DocsImage src="/img/guides/retry-ability/retry-2-items.gif" alt="Retrying finding 2 items" ></DocsImage>
+<DocsImage src="/img/guides/retry-ability/v10/retry-2-items.gif" alt="Retrying finding 2 items"></DocsImage>
 
 Within a few milliseconds after the DOM updates, `cy.get()` finds two elements
 and the `should('have.length', 2)` assertion passes
@@ -131,7 +131,7 @@ function with 2 [`expect`](/guides/references/assertions#BDD-Assertions)
 assertions inside of it.
 
 ```javascript
-cy.get('.todo-list li') // command
+cy.get('[data-testid="todo-list"] li') // command
   .should('have.length', 2) // assertion
   .and(($li) => {
     // 2 more assertions
@@ -147,7 +147,7 @@ Command Log correctly shows that the first encountered assertion
 `should('have.length', 2)` passed, but the second assertion and the command
 itself failed.
 
-<DocsImage src="/img/guides/retry-ability/second-assertion-fails.gif" alt="Retrying multiple assertions" ></DocsImage>
+<DocsImage src="/img/guides/retry-ability/v10/second-assertion-fails.gif" alt="Retrying multiple assertions"></DocsImage>
 
 ## Not every command is retried
 
@@ -192,12 +192,12 @@ even without any attached assertions until it finds an element with the given
 index in the previously yielded list of elements.
 
 ```javascript
-cy.get('.todo-list li') // command
+cy.get('[data-testid="todo-list"] li') // command
   .should('have.length', 2) // assertion
   .eq(3) // command
 ```
 
-<DocsImage src="/img/guides/retry-ability/eq.gif" alt="Retrying built-in assertion" ></DocsImage>
+<DocsImage src="/img/guides/retry-ability/v10/eq.gif" alt="Retrying built-in assertion"></DocsImage>
 
 Some commands that cannot be retried still have built-in _waiting_. For example,
 as described in the "Assertions" section of [.click()](/api/commands/click), the
@@ -238,7 +238,7 @@ time. For example:
 
 ```javascript
 // we've modified the timeout which affects default + added assertions
-cy.get('.mobile-nav', { timeout: 10000 })
+cy.get('[data-testid="mobile-nav"]', { timeout: 10000 })
   .should('be.visible')
   .and('contain', 'Home')
 ```
@@ -256,35 +256,51 @@ since it will spend 0 milliseconds retrying.
 ```javascript
 // check synchronously that the element does not exist (no retry)
 // for example just after a server-side render
-cy.get('#ssr-error', { timeout: 0 }).should('not.exist')
+cy.get('[data-testid="ssr-error"]', { timeout: 0 }).should('not.exist')
 ```
 
 ## Only the last command is retried
 
 Here is a short test that demonstrates some flake.
 
-```javascript
+:::visit-mount-test-example
+
+```js
+cy.visit('/')
+```
+
+```js
+cy.mount(<Todos />)
+```
+
+```js
 it('adds two items', () => {
-  cy.visit('/')
+  __VISIT_MOUNT_PLACEHOLDER__
 
-  cy.get('.new-todo').type('todo A{enter}')
-  cy.get('.todo-list li').find('label').should('contain', 'todo A')
+  cy.get('[data-testid="new-todo"]').type('todo A{enter}')
+  cy.get('[data-testid="todo-list"] li')
+    .find('label')
+    .should('contain', 'todo A')
 
-  cy.get('.new-todo').type('todo B{enter}')
-  cy.get('.todo-list li').find('label').should('contain', 'todo B')
+  cy.get('[data-testid="new-todo"]').type('todo B{enter}')
+  cy.get('[data-testid="todo-list"] li')
+    .find('label')
+    .should('contain', 'todo B')
 })
 ```
 
+:::
+
 The test passes in Cypress without a hitch.
 
-<DocsImage src="/img/guides/retry-ability/adds-two-items-passes.gif" alt="Test passes" ></DocsImage>
+<DocsImage src="/img/guides/retry-ability/v10/adds-two-items-passes.gif" alt="Test passes"></DocsImage>
 
 But sometimes the test fails - not usually locally, no - it almost always fails
 on our continuous integration server. When the test fails, the recorded video
 and screenshots are NOT showing any obvious problems! Here is the failing test
 video:
 
-<DocsImage src="/img/guides/retry-ability/adds-two-items-fails.gif" alt="Test fails" ></DocsImage>
+<DocsImage src="/img/guides/retry-ability/v10/adds-two-items-fails.gif" alt="Test fails"></DocsImage>
 
 The problem looks weird - I can clearly see the label "todo B" present in the
 list, so why isn't Cypress finding it? What is going on?
@@ -313,35 +329,37 @@ step.
 
 In the failing test, the first label was indeed found correctly:
 
-<DocsImage src="/img/guides/retry-ability/first-item-label.png" alt="First item label" ></DocsImage>
+<DocsImage src="/img/guides/retry-ability/v10/first-item-label.png" alt="First item label"></DocsImage>
 
 Hover over the second "FIND label" command - something is wrong here. It found
 the _first label_, then kept requerying to find the text "todo B", but the first
 item always remains "todo A".
 
-<DocsImage src="/img/guides/retry-ability/second-item-label.png" alt="Second item label" ></DocsImage>
+<DocsImage src="/img/guides/retry-ability/v10/second-item-label.png" alt="Second item label"></DocsImage>
 
 Hmm, weird, why is Cypress only looking at the _first_ item? Let's hover over
 the "GET .todo-list li" command to inspect what _that command found_. Ohh,
 interesting - there was only one item at that moment.
 
-<DocsImage src="/img/guides/retry-ability/second-get-li.png" alt="Second get li" ></DocsImage>
+<DocsImage src="/img/guides/retry-ability/v10/second-get-li.png" alt="Second get li"></DocsImage>
 
-During the test, the `cy.get('.todo-list li')` command quickly found the
-rendered `<li>` item - and that item was the first and only "todo A" item. Our
-application was waiting 100ms before appending the second item "todo B" to the
-list. By the time the second item was added, Cypress had already "moved on",
-working only with the first `<li>` element. It only searched for `<label>`
-inside the first `<li>` element, completely ignoring the newly created 2nd item.
+During the test, the `cy.get('[data-testid="todo-list"] li')` command quickly
+found the rendered `<li>` item - and that item was the first and only "todo A"
+item. Our application was waiting 100ms before appending the second item "todo
+B" to the list. By the time the second item was added, Cypress had already
+"moved on", working only with the first `<li>` element. It only searched for
+`<label>` inside the first `<li>` element, completely ignoring the newly created
+2nd item.
 
 To confirm this, let's remove the artificial delay to see what's happening in
 the passing test.
 
-<DocsImage src="/img/guides/retry-ability/two-items.png" alt="Two items" ></DocsImage>
+<DocsImage src="/img/guides/retry-ability/v10/two-items.png" alt="Two items"></DocsImage>
 
 When the web application runs without the delay, it gets its items into the DOM
-before the Cypress command `cy.get('.todo-list li')` runs. After the `cy.get()`
-returns 2 items, the `.find()` command just has to find the right label. Great.
+before the Cypress command `cy.get('[data-testid="todo-list"] li')` runs. After
+the `cy.get()` returns 2 items, the `.find()` command just has to find the right
+label. Great.
 
 Now that we understand the real reason behind the flaky test, we need to think
 about why the default retry-ability has not helped us in this situation. Why
@@ -351,8 +369,8 @@ For a variety of implementation reasons, Cypress commands **only** retry the
 **last command** before the assertion. In our test:
 
 ```javascript
-cy.get('.new-todo').type('todo B{enter}')
-cy.get('.todo-list li') // queries immediately, finds 1 <li>
+cy.get('[data-testid="new-todo"]').type('todo B{enter}')
+cy.get('[data-testid="todo-list"] li') // queries immediately, finds 1 <li>
   .find('label') // retried, retried, retried with 1 <li>
   .should('contain', 'todo B') // never succeeds with only 1st <li>
 ```
@@ -365,29 +383,41 @@ command is used for assertion retries, we can fix this test for good.
 ### Merging queries
 
 The first solution we recommend is to avoid unnecessarily splitting commands
-that query elements. Instead of `cy.get('.todo-list li').find('label')` we can
-combine two separate queries into one - forcing the combined query to be
-retried.
+that query elements. Instead of
+`cy.get('[data-testid="todo-list"] li').find('label')` we can combine two
+separate queries into one - forcing the combined query to be retried.
 
-```javascript
+:::visit-mount-test-example
+
+```js
+cy.visit('/')
+```
+
+```js
+cy.mount(<Todos />)
+```
+
+```js
 it('adds two items', () => {
-  cy.visit('/')
+  __VISIT_MOUNT_PLACEHOLDER__
 
-  cy.get('.new-todo').type('todo A{enter}')
-  cy.get('.todo-list li label') // 1 query command
+  cy.get('[data-testid="new-todo"]').type('todo A{enter}')
+  cy.get('[data-testid="todo-list"] li label') // 1 query command
     .should('contain', 'todo A') // assertion
 
-  cy.get('.new-todo').type('todo B{enter}')
-  cy.get('.todo-list li label') // 1 query command
+  cy.get('[data-testid="new-todo"]').type('todo B{enter}')
+  cy.get('[data-testid="todo-list"] li label') // 1 query command
     .should('contain', 'todo B') // assertion
 })
 ```
+
+:::
 
 To show the retries, I increased the application's artificial delay to 500ms.
 The test now always passes because the entire selector is retried. It finds 2
 list elements when the second "todo B" is added to the DOM.
 
-<DocsImage src="/img/guides/retry-ability/combined-selectors.gif" alt="Combined selector" ></DocsImage>
+<DocsImage src="/img/guides/retry-ability/v10/combined-selectors.gif" alt="Combined selector"></DocsImage>
 
 <Alert type="info">
 
@@ -400,12 +430,12 @@ list elements when the second "todo B" is added to the DOM.
 command.
 
 ```javascript
-cy.get('.new-todo').type('todo A{enter}')
-cy.contains('.todo-list li', 'todo A')
-cy.get('.new-todo').type('todo B{enter}')
+cy.get('[data-testid="new-todo"]').type('todo A{enter}')
+cy.contains('[data-testid="todo-list"] li', 'todo A')
+cy.get('[data-testid="new-todo"]').type('todo B{enter}')
 // you can use a regular expression
 // to match the text exactly
-cy.contains('.todo-list li', /^todo B$/)
+cy.contains('[data-testid="todo-list"] li', /^todo B$/)
 ```
 
 </Alert>
@@ -440,31 +470,43 @@ There is another way to fix our flaky test. Whenever you write a longer test, we
 recommend alternating commands with assertions. In this case, I will add an
 assertion after the `cy.get()` command, but before the `.find()` command.
 
-```javascript
-it('adds two items', () => {
-  cy.visit('/')
+:::visit-mount-test-example
 
-  cy.get('.new-todo').type('todo A{enter}')
-  cy.get('.todo-list li') // command
+```js
+cy.visit('/')
+```
+
+```js
+cy.mount(<Todos />)
+```
+
+```js
+it('adds two items', () => {
+  __VISIT_MOUNT_PLACEHOLDER__
+
+  cy.get('[data-testid="new-todo"]').type('todo A{enter}')
+  cy.get('[data-testid="todo-list"] li') // command
     .should('have.length', 1) // assertion
     .find('label') // command
     .should('contain', 'todo A') // assertion
 
-  cy.get('.new-todo').type('todo B{enter}')
-  cy.get('.todo-list li') // command
+  cy.get('[data-testid="new-todo"]').type('todo B{enter}')
+  cy.get('[data-testid="todo-list"] li') // command
     .should('have.length', 2) // assertion
     .find('label') // command
     .should('contain', 'todo B') // assertion
 })
 ```
 
-<DocsImage src="/img/guides/retry-ability/alternating.png" alt="Passing test" ></DocsImage>
+:::
 
-The test passes, because the second `cy.get('.todo-list li')` is retried with
-its own assertion now `.should('have.length', 2)`. Only after successfully
-finding two `<li>` elements, the command `.find('label')` and its assertion
-starts, and by now, the item with the correct "todo B" label has been correctly
-queried.
+<DocsImage src="/img/guides/retry-ability/v10/alternating-commands-assertions.png" alt="Passing test"></DocsImage>
+
+The test passes, because the second `cy.get('[data-testid="todo-list"] li')` is
+retried with its own assertion now `.should('have.length', 2)`. Only after
+successfully finding two `<li>` elements, the command `.find('label')` and its
+assertion starts, and by now, the item with the correct "todo B" label has been
+correctly queried.
 
 ### Use `.should()` with a callback
 
@@ -487,7 +529,7 @@ Below is an example where the number value is set after a delay:
 </script>
 ```
 
-<DocsImage src="/img/guides/retry-ability/random-number.gif" alt="Random number" ></DocsImage>
+<DocsImage src="/img/guides/retry-ability/v10/random-number.gif" alt="Random number"></DocsImage>
 
 #### <Icon name="exclamation-triangle" color="red"></Icon> Incorrectly waiting for values
 
@@ -497,7 +539,7 @@ following values, noted in the comments, before failing.
 
 ```javascript
 // WRONG: this test will not work as intended
-cy.get('#random-number') // <div>🎁</div>
+cy.get('[data-testid="random-number"]') // <div>🎁</div>
   .invoke('text') // "🎁"
   .then(parseFloat) // NaN
   .should('be.gte', 1) // fails
@@ -507,7 +549,7 @@ cy.get('#random-number') // <div>🎁</div>
 Unfortunately, the [.then()](/api/commands/then) command is not retried. Thus
 the test only runs the entire chain once before failing.
 
-<DocsImage src="/img/guides/retry-ability/random-number-first-attempt.png" alt="First attempt at writing the test" width-600 ></DocsImage>
+<DocsImage src="/img/guides/retry-ability/v10/random-number-first-attempt.png" alt="First attempt at writing the test"></DocsImage>
 
 #### <Icon name="check-circle" color="green"></Icon> Correctly waiting for values
 
@@ -516,7 +558,7 @@ We need to retry getting the element, invoking the `text()` method, calling the
 this using the `.should(callbackFn)`.
 
 ```javascript
-cy.get('#random-number').should(($div) => {
+cy.get('[data-testid="random-number"]').should(($div) => {
   // all the code inside here will retry
   // until it passes or times out
   const n = parseFloat($div.text())
@@ -529,7 +571,7 @@ The above test retries getting the element and invoking the text of the element
 to get the number. When the number is finally set in the application, then the
 `gte` and `lte` assertions pass and the test passes.
 
-<DocsImage src="/img/guides/retry-ability/random-number-callback.gif" alt="Random number using callback" ></DocsImage>
+<DocsImage src="/img/guides/retry-ability/v10/random-number-callback.gif" alt="Random number using callback"></DocsImage>
 
 ### Use aliases
 
@@ -539,8 +581,8 @@ to test application's code, a good practice is to give it an alias and use the
 
 For example, when confirming that the button component invokes the `click` prop
 testing with the
-[@cypress/react](https://github.com/cypress-io/cypress/tree/master/npm/react)
-plugin, the following test might or might not work:
+[cypress/react](https://github.com/cypress-io/cypress/tree/master/npm/react)
+mounting library, the following test might or might not work:
 
 #### <Icon name="exclamation-triangle" color="red"></Icon> Incorrectly checking if the stub was called
 
@@ -553,9 +595,7 @@ const Clicker = ({ click }) => (
 
 it('calls the click prop twice', () => {
   const onClick = cy.stub()
-  // "mount" function comes from
-  // https://github.com/cypress-io/cypress/tree/master/npm/react
-  mount(<Clicker click={onClick} />)
+  cy.mount(<Clicker click={onClick} />)
   cy.get('button')
     .click()
     .click()
@@ -578,7 +618,7 @@ const Clicker = ({ click }) => (
 )
 ```
 
-<DocsImage src="/img/guides/retry-ability/delay-click.png" alt="Expect fails the test without waiting for the delayed stub" width-600 ></DocsImage>
+<DocsImage src="/img/guides/retry-ability/v10/delay-click.png" alt="Expect fails the test without waiting for the delayed stub"></DocsImage>
 
 The test finishes before the component calls the `click` prop twice, and without
 retrying the assertion `expect(onClick).to.be.calledTwice`.
@@ -591,9 +631,7 @@ using `cy.get('@alias').should(...)` assertions.
 ```js
 it('calls the click prop', () => {
   const onClick = cy.stub().as('clicker')
-  // "mount" function comes from
-  // https://github.com/cypress-io/cypress/tree/master/npm/react
-  mount(<Clicker click={onClick} />)
+  cy.mount(<Clicker click={onClick} />)
   cy.get('button').click().click()
 
   // good practice 💡
@@ -602,7 +640,7 @@ it('calls the click prop', () => {
 })
 ```
 
-<DocsImage src="/img/guides/retry-ability/click-twice.gif" alt="Retrying the assertions using a stub alias" ></DocsImage>
+<DocsImage src="/img/guides/retry-ability/v10/click-twice.gif" alt="Retrying the assertions using a stub alias"></DocsImage>
 
 Watch the short video below to see this example in action
 

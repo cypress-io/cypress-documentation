@@ -14,22 +14,33 @@ title: Visual Testing
 
 ## Functional vs visual testing
 
-Cypress is a _functional_ Test Runner. It drives the web application the way a
+Cypress is a _functional_ test runner. It drives the web application the way a
 user would, and checks if the app _functions_ as expected: if the expected
 message appears, an element is removed, or a CSS class is added after the
 appropriate user action. A typical Cypress test, for example, can check if a
 toggled "Todo" item gets a class of "completed" after the `.toggle` is checked:
 
+:::visit-mount-test-example
+
+```js
+cy.visit('/') // opens TodoMVC running at "baseUrl"
+```
+
+```js
+cy.mount(<Todos />)
+```
+
 ```js
 it('completes todo', () => {
-  // opens TodoMVC running at "baseUrl"
-  cy.visit('/')
+  __VISIT_MOUNT_PLACEHOLDER__
   cy.get('.new-todo').type('write tests{enter}')
   cy.contains('.todo-list li', 'write tests').find('.toggle').check()
 
   cy.contains('.todo-list li', 'write tests').should('have.class', 'completed')
 })
 ```
+
+:::
 
 <DocsImage src="/img/guides/visual-testing/completed-test.gif" alt="Passing Cypress functional test" ></DocsImage>
 
@@ -94,9 +105,9 @@ it('completes todo', () => {
 ```
 
 This open source plugin compares the baseline and the current images side by
-side within the Cypress Test Runner if pixel difference is above the threshold;
-notice how the baseline image (_Expected result_) has the label text with the
-line through, while the new image (_Actual result_) does not have it.
+side within the Cypress App if pixel difference is above the threshold; notice
+how the baseline image (_Expected result_) has the label text with the line
+through, while the new image (_Actual result_) does not have it.
 
 <DocsImage src="/img/guides/visual-testing/diff.png" alt="Baseline vs current image" ></DocsImage>
 
@@ -110,7 +121,7 @@ mouse hover:
 There are several published, open source plugins, listed in the
 [Visual Testing plugins](/plugins/directory#visual-testing) section, and several
 commercial companies have developed visual testing solutions on top of the
-Cypress Test Runner listed below.
+Cypress App listed below.
 
 ### Open source
 
@@ -128,7 +139,7 @@ First joint webinar with Applitools
 <!-- textlint-enable -->
 
 Second joint webinar with Applitools with a focus on
-[Component Testing](/guides/component-testing/introduction)
+[Component Testing](/guides/core-concepts/testing-types#What-is-Component-Testing)
 
 <!-- textlint-disable -->
 

@@ -9,46 +9,41 @@ tests in TypeScript.
 
 ### Install TypeScript
 
-You'll need to have TypeScript 3.4+ installed within your project to have
-TypeScript support within Cypress.
+To use TypeScript with Cypress, you will need TypeScript 3.4+. If you do not
+already have TypeScript installed as a part of your framework, you will need to
+install it:
 
-#### With npm
+<npm-or-yarn>
+<template #npm>
 
 ```shell
 npm install --save-dev typescript
 ```
 
-#### With yarn
+</template>
+<template #yarn>
 
 ```shell
 yarn add --dev typescript
 ```
 
-### Set up your dev environment
-
-Please refer to your code editor in
-[TypeScript's Editor Support doc](https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support)
-and follow the instructions for your IDE to get TypeScript support and
-[intelligent code completion](/guides/tooling/IDE-integration#Intelligent-Code-Completion)
-configured in your developer environment before continuing. TypeScript support
-is built in for [Visual Studio Code](https://code.visualstudio.com/),
-[Visual Studio](https://www.visualstudio.com/), and
-[WebStorm](https://www.jetbrains.com/webstorm/) - all other editors require
-extra setup.
+</template>
+</npm-or-yarn>
 
 ### Configure tsconfig.json
 
-We recommend the following configuration in a
+We recommend creating a
 [`tsconfig.json`](http://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
 inside your
-[`cypress` folder](/guides/core-concepts/writing-and-organizing-tests#Folder-Structure).
+[`cypress` folder](/guides/core-concepts/writing-and-organizing-tests#Folder-Structure)
+with the following configuration:
 
 ```json
 {
   "compilerOptions": {
     "target": "es5",
     "lib": ["es5", "dom"],
-    "types": ["cypress"]
+    "types": ["cypress", "node"]
   },
   "include": ["**/*.ts"]
 }
@@ -57,8 +52,8 @@ inside your
 The `"types"` will tell the TypeScript compiler to only include type definitions
 from Cypress. This will address instances where the project also uses
 `@types/chai` or `@types/jquery`. Since
-[Chai](/guides/references/bundled-tools#Chai) and
-[jQuery](/guides/references/bundled-tools#Other-Library-Utilities) are
+[Chai](/guides/references/bundled-libraries#Chai) and
+[jQuery](/guides/references/bundled-libraries#Other-Library-Utilities) are
 namespaces (globals), incompatible versions will cause the package manager
 (`yarn` or `npm`) to nest and include multiple definitions and cause conflicts.
 
@@ -76,7 +71,7 @@ If that does not work, try restarting the IDE.
 
 </Alert>
 
-### Types for custom commands
+### Types for Custom Commands
 
 When adding [custom commands](/api/cypress-api/custom-commands) to the `cy`
 object, you can manually add their types to avoid TypeScript errors.
@@ -130,15 +125,28 @@ automatically based on the declared interface. Thus, in the example above, the
 
 In your specs, you can now use the custom command as expected
 
-```typescript
-// from your cypress/integration/spec.ts
+:::visit-mount-test-example
+
+```ts
+// from your cypress/e2e/spec.cy.ts
+cy.visit('/')
+```
+
+```ts
+// from your src/components/MyComponent.cy.ts
+cy.mount(<MyComponent />)
+```
+
+```ts
 it('works', () => {
-  cy.visit('/')
+  __VISIT_MOUNT_PLACEHOLDER__
   // IntelliSense and TS compiler should
   // not complain about unknown method
   cy.dataCy('greeting')
 })
 ```
+
+:::
 
 #### Adding child or dual commands
 
@@ -241,6 +249,8 @@ instructions.
 
 ### Types for plugins
 
+::include{file=partials/warning-plugins-file.md}
+
 You can utilize Cypress's type declarations in your
 [plugins file](/guides/tooling/plugins-guide) by annotating it like the
 following:
@@ -255,6 +265,79 @@ following:
  */
 module.exports = (on, config) => {}
 ```
+
+### Using an External Typings File
+
+You might find it easier to organize your types by moving them from the support
+file into an external
+[declaration (\*.d.ts) file](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html).
+To do so, create a new file, like _cypress.d.ts_, and cut the types for your
+custom commands/assertions from the _support_ file and into the new file. Below
+is an example of moving the custom `cy.mount` typings that come by default with
+a component testing app into a root level _cypress.d.ts_ file.
+
+<code-group>
+<code-block label="cypress.d.ts" active>
+
+```ts
+import { mount } from 'cypress/react'
+
+// Augment the Cypress namespace to include type definitions for
+// your custom command.
+// Alternatively, can be defined in cypress/support/component.d.ts
+// with a <reference path="./component" /> at the top of your spec.
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      mount: typeof mount
+    }
+  }
+}
+```
+
+</code-block>
+</code-group>
+
+You might need to include the _\*.d.ts_ in the include options in any
+_tsconfig.json_ files in your project for TypeScript to pick up the new types:
+
+<code-group>
+<code-block label="tsconfig.json" active>
+
+```json
+"include": [
+  "src",
+  "./cypress.d.ts"
+]
+```
+
+</code-block>
+</code-group>
+
+<code-group>
+<code-block label="./cypress/tsconfig.json" active>
+
+```json
+"include": [
+  "**/*.ts",
+  "../cypress.d.ts"
+]
+```
+
+</code-block>
+</code-group>
+
+### Set up your dev environment
+
+Please refer to your code editor in
+[TypeScript's Editor Support doc](https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support)
+and follow the instructions for your IDE to get TypeScript support and
+[intelligent code completion](/guides/tooling/IDE-integration#Intelligent-Code-Completion)
+configured in your developer environment before continuing. TypeScript support
+is built in for [Visual Studio Code](https://code.visualstudio.com/),
+[Visual Studio](https://www.visualstudio.com/), and
+[WebStorm](https://www.jetbrains.com/webstorm/) - all other editors require
+extra setup.
 
 ### Clashing types with Jest
 
@@ -275,10 +358,11 @@ Both Jest and Expect (bundled inside Cypress) provide the clashing types for the
 
 ## History
 
-| Version                                     | Changes                                                                                    |
-| ------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| [5.0.0](/guides/references/changelog#5-0-0) | Raised minimum required TypeScript version from 2.9+ to 3.4+                               |
-| [4.4.0](/guides/references/changelog#4-4-0) | Added support for TypeScript without needing your own transpilation through preprocessors. |
+| Version                                       | Changes                                                                                    |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| [10.0.0](/guides/references/changelog#10-0-0) | Update guide to cover TypeScript setup for component testing                               |
+| [5.0.0](/guides/references/changelog#5-0-0)   | Raised minimum required TypeScript version from 2.9+ to 3.4+                               |
+| [4.4.0](/guides/references/changelog#4-4-0)   | Added support for TypeScript without needing your own transpilation through preprocessors. |
 
 ## See also
 

@@ -5,7 +5,7 @@ export default {
       type: String,
       default: 'info',
       validator(value) {
-        return ['info', 'success', 'warning', 'danger'].includes(value) !== -1
+        return ['info', 'success', 'warning', 'danger'].includes(value)
       },
     },
   },
@@ -110,6 +110,20 @@ h2 {
 .alert > code {
   background-color: rgb(220, 241, 247);
 }
+
+/* #region inside-code-block-component */
+
+:global(.code-block) .alert {
+  @apply px-6;
+  @apply py-4;
+  @apply mb-0;
+}
+
+:global(.code-block) .alert p {
+  @apply text-sm;
+}
+
+/* #endregion inside-code-block-component */
 
 /* #region success */
 

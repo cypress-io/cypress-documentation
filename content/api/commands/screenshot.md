@@ -3,7 +3,7 @@ title: screenshot
 ---
 
 Take a screenshot of the application under test and, optionally, the
-[Cypress Command Log](/guides/core-concepts/test-runner#Command-Log).
+[Cypress Command Log](/guides/core-concepts/cypress-app#Command-Log).
 
 ## Syntax
 
@@ -46,9 +46,9 @@ Pass in an options object to change the default behavior of `.screenshot()`.
 
 | Option                       | Default                                                        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | ---------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `log`                        | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| `log`                        | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `blackout`                   | `[]`                                                           | Array of string selectors used to match elements that should be blacked out when the screenshot is taken. Does not apply to `runner` captures.                                                                                                                                                                                                                                                                                                                                                                               |
-| `capture`                    | `'fullPage'`                                                   | Which parts of the Test Runner to capture. This value is ignored for element screenshot captures. Valid values are `viewport`, `fullPage`, or `runner`. When `viewport`, the application under test is captured in the current viewport. When `fullPage`, the application under test is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress Command Log, is captured. For screenshots automatically taken on test failure, capture is always coerced to `runner`. |
+| `capture`                    | `'fullPage'`                                                   | Which parts of the Cypress App to capture. This value is ignored for element screenshot captures. Valid values are `viewport`, `fullPage`, or `runner`. When `viewport`, the application under test is captured in the current viewport. When `fullPage`, the application under test is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress Command Log, is captured. For screenshots automatically taken on test failure, capture is always coerced to `runner`. |
 | `clip`                       | `null`                                                         | Position and dimensions (in pixels) used to crop the final screenshot image. Should have the following shape: `{ x: 0, y: 0, width: 100, height: 100 }`                                                                                                                                                                                                                                                                                                                                                                      |
 | `disableTimersAndAnimations` | `true`                                                         | When true, prevents JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.                                                                                                                                                                                                                                                                                                                                                                                      |
 | `padding`                    | `null`                                                         | Padding used to alter the dimensions of a screenshot of an element. It can either be a number, or an array of up to four numbers [using CSS shorthand notation](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties). This property is only applied for element screenshots and is ignored for all other types.                                                                                                                                                                                            |
@@ -70,20 +70,20 @@ command.</li></List>
 ## Examples
 
 The screenshot will be stored in the `cypress/screenshots` folder by default.
-You can change the directory where screenshots are saved in your
-[configuration](/guides/references/configuration#Folders-Files).
+You can change the directory where screenshots are saved in the
+[Cypress configuration](/guides/references/configuration#Folders-Files).
 
 ### No Args
 
 #### Take a screenshot
 
 ```javascript
-// cypress/integration/users.spec.js
+// cypress/e2e/users.cy.js
 
 describe('my tests', () => {
   it('takes a screenshot', () => {
     // screenshot will be saved as
-    // cypress/screenshots/users.spec.js/my tests -- takes a screenshot.png
+    // cypress/screenshots/users.cy.js/my tests -- takes a screenshot.png
     cy.screenshot()
   })
 })
@@ -95,7 +95,7 @@ describe('my tests', () => {
 
 ```javascript
 // screenshot will be saved as
-// cypress/screenshots/spec.js/clicking-on-nav.png
+// cypress/screenshots/spec.cy.js/clicking-on-nav.png
 cy.screenshot('clicking-on-nav')
 ```
 
@@ -103,7 +103,7 @@ cy.screenshot('clicking-on-nav')
 
 ```javascript
 // screenshot will be saved as
-// cypress/screenshots/spec.js/actions/login/clicking-login.png
+// cypress/screenshots/spec.cy.js/actions/login/clicking-login.png
 cy.screenshot('actions/login/clicking-login')
 ```
 
@@ -146,7 +146,7 @@ cy.screenshot('my-screenshot', {
     // including but not limited to the following:
     // {
     //   name: 'my-screenshot',
-    //   path: '/Users/janelane/project/screenshots/spec.js/my-screenshot.png',
+    //   path: '/Users/janelane/project/screenshots/spec.cy.js/my-screenshot.png',
     //   size: '15 kb',
     //   dimensions: {
     //     width: 1000,
@@ -166,15 +166,17 @@ cy.screenshot('my-screenshot', {
 
 Screenshot naming follows these rules:
 
-- By default, a screenshot is saved to a file with a path relative to the
-  [screenshots folder](/guides/references/configuration#Folders-Files), appended
-  by a path relating to where the spec file exists, with a name including the
-  current test's suites and test name:
-  `{screenshotsFolder}/{specPath}/{testName}.png`
+- Screenshots are saved inside the
+  [screenshots folder](/guides/core-concepts/writing-and-organizing-tests#Asset-File-Paths).
+  Inside that folder, the screenshot is saved inside a folder structure relative
+  to the path of the spec file, which is adjusted to remove any common ancestor
+  paths shared with all other spec files. Inside this folder, the screenshot
+  will be saved with the test name:
+  `{screenshotsFolder}/{adjustedSpecPath}/{testName}.png`
 - For a named screenshot, the name is used instead of the suites and test name:
-  `{screenshotsFolder}/{specPath}/{name}.png`
+  `{screenshotsFolder}/{adjustedSpecPath}/{name}.png`
 - For any duplicate screenshots (named or not), they will be appended with a
-  number: `{screenshotsFolder}/{specPath}/{testName} (1).png`.
+  number: `{screenshotsFolder}/{adjustedSpecPath}/{testName} (1).png`.
 
 <Alert type="info">
 
@@ -185,27 +187,45 @@ This behavior can be changed by passing the `{overwrite: true}` option to
 
 - For a failure screenshot, the default naming scheme is used and the name is
   appended with ` (failed)`:
-  `{screenshotsFolder}/{specPath}/{testName} (failed).png`
+  ```javascript
+  {screenshotsFolder}/{adjustedSpecPath}/{testName} (failed).png
+  ```
 
-For example, given a spec file located at
-`cypress/integration/users/login_spec.js`:
+For example, given a spec file located at `cypress/e2e/users/login.cy.js`:
 
 ```javascript
 describe('my tests', () => {
   it('takes a screenshot', () => {
-    cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot.png
-    cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (1).png
-    cy.screenshot() // cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (2).png
+    // NOTE: This file has multiple screenshots
+    // each screenshot has a common ancestor path of `/users/`.
+    // In this scenario `/users/` is stripped from the path.
+    // cypress/screenshots/login.cy.js/my tests -- takes a screenshot.png
+    cy.screenshot()
+    // cypress/screenshots/login.cy.js/my tests -- takes a screenshot (1).png
+    cy.screenshot()
+    // cypress/screenshots/login.cy.js/my tests -- takes a screenshot (2).png
+    cy.screenshot()
 
-    cy.screenshot('my-screenshot') // cypress/screenshots/users/login_spec.js/my-screenshot.png
-    cy.screenshot('my-screenshot') // cypress/screenshots/users/login_spec.js/my-screenshot (1).png
+    // cypress/screenshots/login.cy.js/my-screenshot.png
+    cy.screenshot('my-screenshot')
+    // cypress/screenshots/login.cy.js/my-screenshot (1).png
+    cy.screenshot('my-screenshot')
+    // cypress/screenshots/login.cy.js/my/nested/screenshot.png
+    cy.screenshot('my/nested/screenshot')
 
-    cy.screenshot('my/nested/screenshot') // cypress/screenshots/users/login_spec.js/my/nested/screenshot.png
-
-    // if this test fails, the screenshot will be saved to cypress/screenshots/users/login_spec.js/my tests -- takes a screenshot (failed).png
+    // if this test fails, the screenshot will be saved to
+    // cypress/screenshots/login.cy.js/my tests -- takes a screenshot (failed).png
   })
 })
 ```
+
+<Alert type="info">
+
+To learn more about how to write and organize tests and how assets are saved,
+see
+[Writing And Organizing Tests](/guides/core-concepts/writing-and-organizing-tests#Asset-Files)
+
+</Alert>
 
 ### `after:screenshot` plugin event
 
