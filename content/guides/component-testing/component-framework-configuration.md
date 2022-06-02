@@ -24,7 +24,7 @@ testing:
 
 <Alert type="info">
 
-Currently Cypress does not officially suppoort Component Testing with Angular,
+Currently Cypress does not officially support Component Testing with Angular,
 but this is planned for a future release. Until then, users may roll their own
 solution with a
 [custom `cy.mount()` command](/api/commands/mount#Creating-a-New-cy-mount-Command),
