@@ -1,6 +1,14 @@
 {
   "courses": [
     {
+      "title": "Cypress 9 Fundamentals",
+      "url": "https://app.pluralsight.com/library/courses/cypress-9-fundamentals/",
+      "author": "Adhithi Ravichandran",
+      "authorTwitter": "AdhithiRavi",
+      "sourceName": "Pluralsight",
+      "sourceUrl": "https://www.pluralsight.com"
+    },
+    {
       "title": "Cypress Network Testing Exercises",
       "url": "https://cypress.tips/courses",
       "author": "Gleb Bahmutov",
