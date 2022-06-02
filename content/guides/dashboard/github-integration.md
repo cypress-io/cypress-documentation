@@ -286,4 +286,4 @@ steps:
 ## See also
 
 - [Cypress GitHub Action + Examples](https://github.com/cypress-io/github-action)
-- [Example project that uses both Cypress GitHub Action and Cypress GitHub Integration](https://github.com/cypress-io/gh-action-and-gh-integration)
+- [Real World App](https://github.com/cypress-io/cypress-realworld-app)

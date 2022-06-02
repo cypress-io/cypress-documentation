@@ -50,9 +50,7 @@ preview the slides at
 [cypress-workshop-ci.netlify.app](https://cypress-workshop-ci.netlify.app/). The
 repository
 [github.com/cypress-io/cypress-workshop-ci](https://github.com/cypress-io/cypress-workshop-ci)
-has the Markdown slides with all content and teaches you how to test the
-[example application](https://github.com/cypress-io/cypress-workshop-ci-example)
-on:
+has the Markdown slides with all content and teaches you how to test on:
 
 - generic continuous integration service
 - GitHub Actions using

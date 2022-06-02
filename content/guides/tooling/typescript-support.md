@@ -347,9 +347,7 @@ and Cypress provide the clashing types for the `describe` and `it` functions.
 Both Jest and Expect (bundled inside Cypress) provide the clashing types for the
 `expect` assertion, etc. There are two solutions to disentangle the types:
 
-1. Configure a separate `tsconfig.json` for E2E tests. See our example
-   [cypress-io/cypress-and-jest-typescript-example](https://github.com/cypress-io/cypress-and-jest-typescript-example)
-   repo.
+1. Configure a separate `tsconfig.json` for E2E tests.
 2. Remove Cypress global variables by using NPM package
    [local-cypress](https://github.com/bahmutov/local-cypress). Read the blog
    post
