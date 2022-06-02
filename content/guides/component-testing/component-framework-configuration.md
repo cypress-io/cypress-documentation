@@ -22,6 +22,17 @@ testing:
 | [Vue with Vite](#Vue-with-Vite)                          | Vue 2+     | Vite 2     |
 | [Vue with Webpack](#Vue-with-Webpack)                    | Vue 2+     | Webpack 4+ |
 
+<Alert type="info">
+
+Currently Cypress does not officially suppoort Component Testing with Angular,
+but this is planned for a future release. Until then, users may roll their own
+solution with a
+[custom `cy.mount()` command](/api/commands/mount#Creating-a-New-cy-mount-Command),
+or take as a starting point
+[this unofficial solution from one of our own developers](https://github.com/jordanpowell88/angular-ct).
+
+</Alert>
+
 ## Automatic Configuration (Recommended)
 
 When you launch Cypress for the first time in a project and select Component
