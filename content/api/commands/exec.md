@@ -34,7 +34,7 @@ cy.exec('npm run build')
 **<Icon name="angle-right"></Icon> command** **_(String)_**
 
 The system command to be executed from the project root (the directory that
-contains the default `cypress.json` configuration file).
+contains the [Cypress configuration file](/guides/references/configuration)).
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -42,7 +42,7 @@ Pass in an options object to change the default behavior of `cy.exec()`.
 
 | Option              | Default                                                    | Description                                                                                                                                                  |
 | ------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `log`               | `true`                                                     | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                                                                     |
+| `log`               | `true`                                                     | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                                     |
 | `env`               | `{}`                                                       | Object of environment variables to set before the command executes (e.g. `{USERNAME: 'johndoe'}`). Will be merged with existing system environment variables |
 | `failOnNonZeroExit` | `true`                                                     | whether to fail if the command exits with a non-zero code                                                                                                    |
 | `timeout`           | [`execTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.exec()` to resolve before [timing out](#Timeouts)                                                                                       |
@@ -210,13 +210,13 @@ exist.</li></List>
 
 ## Command Log
 
-**_List the contents of the default `cypress.json` configuration file_**
+**_List the contents of your package.json file_**
 
 ```javascript
 if (Cypress.platform === 'win32') {
-  cy.exec('print cypress.json').its('stderr').should('be.empty')
+  cy.exec('print package.json').its('stderr').should('be.empty')
 } else {
-  cy.exec('cat cypress.json').its('stderr').should('be.empty')
+  cy.exec('cat package.json').its('stderr').should('be.empty')
 }
 ```
 

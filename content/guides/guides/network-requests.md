@@ -205,7 +205,7 @@ cy.intercept(
 When you use [`cy.intercept()`](/api/commands/intercept) to define a route,
 Cypress displays this under "Routes" in the Command Log.
 
-<DocsImage src="/img/guides/server-routing-table.png" alt="Routing Table"></DocsImage>
+<DocsImage src="/img/guides/network-requests/v10/server-routing-table.png" alt="Routing Table"></DocsImage>
 
 When a new test runs, Cypress will restore the default behavior and remove all
 routes and stubs. For a complete reference of the API and options, refer to the
@@ -273,13 +273,25 @@ Cypress you might want to check that out first.
 
 Here is an example of aliasing requests and then subsequently waiting on them:
 
-```javascript
+:::visit-mount-test-example
+
+```js
+// visiting the dashboard should make requests that match
+// the two routes above
+cy.visit('http://localhost:8888/dashboard')
+```
+
+```js
+// mounting the dashboard should make requests that match
+// the two routes above
+cy.mount(<Dashboard />)
+```
+
+```js
 cy.intercept('/activities/*', { fixture: 'activities' }).as('getActivities')
 cy.intercept('/messages/*', { fixture: 'messages' }).as('getMessages')
 
-// visit the dashboard, which should make requests that match
-// the two routes above
-cy.visit('http://localhost:8888/dashboard')
+__VISIT_MOUNT_PLACEHOLDER__
 
 // pass an array of Route Aliases that forces Cypress to wait
 // until it sees a response for each request that matches
@@ -289,6 +301,8 @@ cy.wait(['@getActivities', '@getMessages'])
 // these commands will not run until the wait command resolves above
 cy.get('h1').should('contain', 'Dashboard')
 ```
+
+:::
 
 If you would like to check the response data of each response of an aliased
 route, you can use several `cy.wait()` calls.
@@ -345,14 +359,16 @@ cy.intercept('/search*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as(
 // our autocomplete field is throttled
 // meaning it only makes a request after
 // 500ms from the last keyPress
-cy.get('#autocomplete').type('Book')
+cy.get('[data-testid="autocomplete"]').type('Book')
 
 // wait for the request + response
 // thus insulating us from the
 // throttled request
 cy.wait('@getSearch')
 
-cy.get('#results').should('contain', 'Book 1').and('contain', 'Book 2')
+cy.get('[data-testid="results"]')
+  .should('contain', 'Book 1')
+  .and('contain', 'Book 2')
 ```
 
 <Alert type="info">
@@ -404,7 +420,7 @@ it('test', () => {
 })
 -->
 
-<DocsImage src="/img/guides/clear-source-of-failure.png" alt="Wait Failure"></DocsImage>
+<DocsImage src="/img/guides/network-requests/v10/clear-source-of-failure.png" alt="Wait Failure"></DocsImage>
 
 Now we know exactly why our test failed. It had nothing to do with the DOM.
 Instead we can see that either our request never went out or a request went out
@@ -421,19 +437,21 @@ sent data as a query string in the URL. Although we're mocking the response, we
 can still verify that our application sends the correct request.
 
 ```javascript
-// any request to "/search/*" endpoint will automatically receive
-// an array with two book objects
+// any request to "/search/*" endpoint will
+// automatically receive an array with two book objects
 cy.intercept('/search/*', [{ item: 'Book 1' }, { item: 'Book 2' }]).as(
   'getSearch'
 )
 
-cy.get('#autocomplete').type('Book')
+cy.get('[data-testid="autocomplete"]').type('Book')
 
-// this yields us the interception cycle object which includes
-// fields for the request and response
+// this yields us the interception cycle object
+// which includes fields for the request and response
 cy.wait('@getSearch').its('request.url').should('include', '/search?query=Book')
 
-cy.get('#results').should('contain', 'Book 1').and('contain', 'Book 2')
+cy.get('[data-testid="results"]')
+  .should('contain', 'Book 1')
+  .and('contain', 'Book 2')
 ```
 
 **_The interception object that [`cy.wait()`](/api/commands/wait) yields you has
@@ -452,11 +470,13 @@ everything you need to make assertions including:_**
 ```javascript
 // spy on POST requests to /users endpoint
 cy.intercept('POST', '/users').as('new-user')
-// trigger network calls by manipulating web app's user interface, then
+
+// trigger network calls by manipulating web app's
+// user interface, then
 cy.wait('@new-user').should('have.property', 'response.statusCode', 201)
 
-// we can grab the completed interception object again to run more assertions
-// using cy.get(<alias>)
+// we can grab the completed interception object
+// again to run more assertions using cy.get(<alias>)
 cy.get('@new-user') // yields the same interception object
   .its('request.body')
   .should(
@@ -468,7 +488,8 @@ cy.get('@new-user') // yields the same interception object
     })
   )
 
-// and we can place multiple assertions in a single "should" callback
+// and we can place multiple assertions in a
+// single "should" callback
 cy.get('@new-user').should(({ request, response }) => {
   expect(request.url).to.match(/\/users$/)
   expect(request.method).to.equal('POST')

@@ -21,9 +21,9 @@ Excluding [Electron](/guides/guides/launching-browsers#Electron-Browser), any
 browser you want to run Cypress tests in needs to be installed on your local
 system or CI environment. A full list of detected browsers is displayed within
 the browser selection menu of the
-[Test Runner](/guides/core-concepts/test-runner).
+[Cypress App](/guides/core-concepts/cypress-app).
 
-<DocsImage src="/img/guides/cross-browser-testing/cypress-browser-selector.png" alt="Cypress Test Runner with Firefox selected as the browser"></DocsImage>
+<DocsImage src="/img/guides/cross-browser-testing/v10/browser-select-FF.png" alt="Cypress App with Firefox selected as the browser"></DocsImage>
 
 The desired browser can also specified via the
 [`--browser`](/guides/guides/command-line#Options) flag when using
@@ -194,7 +194,7 @@ workflows:
           record: true
           group: firefox-critical-path
           browser: firefox
-          spec: 'cypress/integration/signup.spec.js,cypress/integration/login.spec.js'
+          spec: 'cypress/e2e/signup.cy.js,cypress/e2e/login.cy.js'
 ```
 
 ### Parallelize per browser
@@ -247,7 +247,7 @@ workflows:
           parallelism: 2
           group: firefox
           browser: firefox
-          spec: 'cypress/integration/app.spec.js,cypress/integration/login.spec.js,cypress/integration/about.spec.js'
+          spec: 'cypress/e2e/app.cy.js,cypress/e2e/login.cy.js,cypress/e2e/about.cy.js'
 ```
 
 ### Running Specific Tests by Browser

@@ -26,7 +26,7 @@ cy.writeFile('menu.json')
 **<Icon name="angle-right"></Icon> filePath** **_(String)_**
 
 A path to a file within the project root (the directory that contains the
-default `cypress.json`).
+[Cypress configuration file](/guides/references/configuration))
 
 **<Icon name="angle-right"></Icon> contents** **_(String, Array, Object or
 Buffer)_**
@@ -60,7 +60,7 @@ Pass in an options object to change the default behavior of `cy.writeFile()`.
 
 | Option     | Default                                                              | Description                                                                                         |
 | ---------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `log`      | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)            |
+| `log`      | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)            |
 | `flag`     | `w`                                                                  | File system flag as used with [`fs.writeFile`](https://nodejs.org/api/fs.html#fs_file_system_flags) |
 | `encoding` | `utf8`                                                               | The encoding to be used when writing to the file                                                    |
 | `timeout`  | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.writeFile()` to resolve before [timing out](#Timeouts)                           |

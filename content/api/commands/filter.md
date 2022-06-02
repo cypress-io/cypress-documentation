@@ -36,7 +36,7 @@ cy.get('td').filter('.users') // Yield all el's with class '.users'
 
 ```javascript
 cy.filter('.animated') // Errors, cannot be chained off 'cy'
-cy.location().filter() // Errors, 'location' does not yield DOM element
+cy.clock().filter() // Errors, 'clock' does not yield DOM elements
 ```
 
 ### Arguments
@@ -51,7 +51,7 @@ Pass in an options object to change the default behavior of `.filter()`.
 
 | Option    | Default                                                              | Description                                                                              |
 | --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.filter()` to resolve before [timing out](#Timeouts)                   |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
@@ -117,7 +117,7 @@ test needs to use the Unicode value `\u00a0` instead of `&nbsp;`.
 ```
 
 ```javascript
-cy.get('[data-testid=testattr]').filter(':contains("Hello\u00a0world")')
+cy.get('[data-testid="testattr"]').filter(':contains("Hello\u00a0world")')
 ```
 
 ## Rules

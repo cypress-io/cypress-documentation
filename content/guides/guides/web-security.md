@@ -1,5 +1,6 @@
 ---
 title: Web Security
+e2eSpecific: true
 ---
 
 Browsers adhere to a strict
@@ -380,7 +381,7 @@ Disabling web security is only supported in Chrome-based browsers. Settings in
 `chromeWebSecurity` will have no effect in other browsers. We will log a warning
 in this case.
 
-<DocsImage src="/img/guides/chrome-web-security-stdout-warning.jpg" alt='chromeWebSecurity warning in stdout'></DocsImage>
+<DocsImage src="/img/guides/web-security/chrome-web-security-stdout-warning.jpg" alt='chromeWebSecurity warning in stdout'></DocsImage>
 
 If you rely on disabling web security, you will not be able to run tests on
 browsers that do not support this feature.
@@ -403,10 +404,14 @@ restriction.
 
 Still here? That's cool, let's disable web security!
 
-#### Set `chromeWebSecurity` to `false` in your [configuration file (`cypress.json` by default)](/guides/references/configuration)
+#### Set `chromeWebSecurity` to `false` in the [Cypress configuration](/guides/references/configuration)
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "chromeWebSecurity": false
+  chromeWebSecurity: false
 }
 ```
+
+:::

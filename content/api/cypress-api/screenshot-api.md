@@ -30,7 +30,7 @@ An object containing one or more of the following:
 | Option                       | Default      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | ---------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `blackout`                   | `[]`         | Array of string selectors used to match elements that should be blacked out when the screenshot is taken. Does not apply to `runner` captures.                                                                                                                                                                                                                                                                                                                                                                                 |
-| `capture`                    | `'fullPage'` | Which parts of the Test Runner to capture. This value is ignored for element screenshot captures. Valid values are `viewport`, `fullPage`, or `runner`. When `viewport`, your application under test is captured in the current viewport. When `fullPage`, your application under test is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress Command Log, is captured. For screenshots automatically taken on test failure, capture is always coerced to `runner`. |
+| `capture`                    | `'fullPage'` | Which parts of the Cypress App to capture. This value is ignored for element screenshot captures. Valid values are `viewport`, `fullPage`, or `runner`. When `viewport`, your application under test is captured in the current viewport. When `fullPage`, your application under test is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress Command Log, is captured. For screenshots automatically taken on test failure, capture is always coerced to `runner`. |
 | `disableTimersAndAnimations` | `true`       | When true, prevents JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.                                                                                                                                                                                                                                                                                                                                                                                        |
 | `scale`                      | `false`      | Whether to scale the app to fit into the browser viewport. This is always coerced to `true` for `runner` captures.                                                                                                                                                                                                                                                                                                                                                                                                             |
 | `screenshotOnRunFailure`     | `true`       | When true, automatically takes a screenshot when there is a failure during `cypress run`.                                                                                                                                                                                                                                                                                                                                                                                                                                      |
@@ -52,10 +52,10 @@ Cypress.Screenshot.defaults({
 })
 ```
 
-### Take a screenshot of the entire Test Runner
+### Take a screenshot of the entire Cypress App
 
 By default, [`cy.screenshot()`](/api/commands/screenshot) only captures your
-application under test. You may want it to capture the entire Test Runner for
+application under test. You may want it to capture the entire Cypress App for
 debugging purposes.
 
 ```javascript
@@ -170,9 +170,7 @@ Cypress.Screenshot.defaults({
 
 #### Where to put screenshot configuration
 
-A great place to put this configuration is in your
-[`cypress/support/index.js` file](/guides/core-concepts/writing-and-organizing-tests#Support-file),
-since it is loaded before any test files are evaluated.
+::include{file=partials/support-file-configuration.md}
 
 ## History
 

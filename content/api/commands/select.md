@@ -25,7 +25,7 @@ cy.get('select').select('user-1') // Select the 'user-1' option
 
 ```javascript
 cy.select('John Adams') // Errors, cannot be chained off 'cy'
-cy.location().select() // Errors, 'location' does not yield <select> element
+cy.clock().select() // Errors, 'clock' does not yield a <select> element
 ```
 
 ### Arguments
@@ -46,7 +46,7 @@ Pass in an options object to change the default behavior of `.select()`.
 | Option    | Default                                                              | Description                                                                              |
 | --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | `force`   | `false`                                                              | Forces the action, disables [waiting for actionability](#Assertions)                     |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.select()` to resolve before [timing out](#Timeouts)                   |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)

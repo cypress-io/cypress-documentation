@@ -104,7 +104,7 @@ canceled by members of the project.
   the run details page
 - Click **Yes, cancel this run** to confirm. **Note: this cannot be undone**
 
-<DocsVideo src="/img/snippets/cancelling-run.mp4"></DocsVideo>
+<DocsVideo src="/img/snippets/cancelling-run.mp4" title="Dashboard cancel runs"></DocsVideo>
 
 ### What happens when a run is canceled?
 

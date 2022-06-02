@@ -212,12 +212,12 @@ Get-ChildItem Env:
 
 ## View proxy settings in Cypress
 
-Your current proxy settings can be viewed from within the Cypress Test Runner.
-Follow these steps:
+Your current proxy settings can be viewed from within the Cypress App. Follow
+these steps:
 
 1. Open up your project in Cypress via `cypress open`.
 2. Click the "Settings" tab.
 3. Click the "Proxy Settings" section to expand it and view the proxy settings
    that Cypress is currently using.
 
-<DocsImage src="/img/guides/test-runner-settings-proxy-configuration.jpg" alt="Proxy configuration in the Desktop app" ></DocsImage>
+<DocsImage src="/img/guides/configuration/test-runner-settings-proxy-configuration.jpg" alt="Proxy configuration in the Desktop app"></DocsImage>

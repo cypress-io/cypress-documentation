@@ -31,8 +31,8 @@ You can [check out the API docs here](/api/plugins/writing-a-plugin).
 ### Configuration
 
 With plugins, you can programmatically alter the resolved configuration and
-environment variables that come from
-[your configuration file (`cypress.json` by default)](/guides/references/configuration),
+environment variables that come from the
+[Cypress configuration file](/guides/references/configuration),
 [`cypress.env.json`](/guides/guides/environment-variables#Option-2-cypress-env-json),
 the [command line](/guides/guides/command-line), or system environment
 variables.
@@ -155,19 +155,11 @@ The [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
 uses [tasks](/api/commands/task) to re-seed its database, and to filter/find
 test data for various testing scenarios.
 
-<Alert type="warning">
+::include{file=partials/warning-setup-node-events.md}
 
-⚠️ This code is part of the
-[plugins file](/guides/core-concepts/writing-and-organizing-tests#Plugin-files)
-and thus executes in the Node environment. You cannot call `Cypress` or `cy`
-commands in this file, but you do have the direct access to the file system and
-the rest of the operating system.
+:::cypress-plugin-example
 
-</Alert>
-
-```ts
-// cypress/plugins/index.ts
-
+```js
   on("task", {
     async "db:seed"() {
       // seed database with test data
@@ -186,6 +178,8 @@ the rest of the operating system.
   // ..
 };
 ```
+
+:::
 
 > _<Icon name="github"></Icon> Source:
 > [cypress/plugins/index.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/plugins/index.ts)_
@@ -215,35 +209,26 @@ npm install <plugin name> --save-dev
 
 ## Using a plugin
 
-Whether you install an npm module, or want to write your own code - you should
-do all of that in this file:
+There are two ways to use a plugin in Cypress:
 
-```text
-cypress/plugins/index.js
-```
+1. As of Cypress version 10.0.0, you will need to add your plugin to the
+   [`setupNodeEvents`](/guides/references/configuration#setupNodeEvents)
+   function in the [Cypress configuration](/guides/references/configuration).
+2. If you're using an older version of Cypress, you can add your plugin to the
+   (deprecated) [plugins file](/guides/references/legacy-configuration#Plugins).
 
-<Alert type="info">
+Here's an example of what this might look like:
 
-By default Cypress seeds this file for new projects, but if you have an existing
-project create this file yourself.
-
-</Alert>
-
-Inside of this file, you will export a function. Cypress will call this
-function, pass you the project's configuration, and enable you to bind to the
-events exposed.
+:::cypress-plugin-example
 
 ```javascript
-// cypress/plugins/index.js
-
-// export a function
-module.exports = (on, config) => {
-  // bind to the event we care about
-  on('<event>', (arg1, arg2) => {
-    // plugin stuff here
-  })
-}
+// bind to the event we care about
+on('<event>', (arg1, arg2) => {
+  // plugin stuff here
+})
 ```
 
-For more information on writing plugins, please
-[check out our API docs here](/api/plugins/writing-a-plugin).
+:::
+
+For information on writing plugins, please check out our
+[Writing a Plugin](/api/plugins/writing-a-plugin) guide.

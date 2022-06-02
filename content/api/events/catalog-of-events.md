@@ -43,7 +43,7 @@ These are the most useful events for you to listen to.
 
 | Event            | Details                                                                                                                                                                                                                     |
 | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Name:**        | `window:before:load`                                                                                                                                                                                                        |
+| **Name:**        | `window:before:load` <E2EOnlyBadge />                                                                                                                                                                                       |
 | **Yields:**      | the remote window **(Object)**                                                                                                                                                                                              |
 | **Description:** | Fires as the page begins to load, but before any of your applications JavaScript has executed. This fires at the exact same time as `cy.visit()` `onBeforeLoad` callback. Useful to modify the window on a page transition. |
 
@@ -55,13 +55,13 @@ These are the most useful events for you to listen to.
 
 | Event            | Details                                                                                                                                                                            |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Name:**        | `window:before:unload`                                                                                                                                                             |
+| **Name:**        | `window:before:unload` <E2EOnlyBadge />                                                                                                                                            |
 | **Yields:**      | the actual beforeunload event **(Object)**                                                                                                                                         |
 | **Description:** | Fires when your application is about to navigate away. The real event object is provided to you. Your app may have set a `returnValue` on the event, which is useful to assert on. |
 
 | Event            | Details                                                                                                                                  |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| **Name:**        | `window:unload`                                                                                                                          |
+| **Name:**        | `window:unload` <E2EOnlyBadge />                                                                                                         |
 | **Yields:**      | the actual unload event **(Object)**                                                                                                     |
 | **Description:** | Fires when your application has unloaded and is navigating away. The real event object is provided to you. This event is not cancelable. |
 
@@ -145,8 +145,8 @@ These are all useful to listen to for debugging purposes.
 ### Other Events
 
 There are a myriad of other events Cypress fires to communicate with the Node
-server process, automation servers, mocha, the runner, and the reporter. They
-are strictly internal to the way Cypress works and not useful for users.
+server process, automation servers, mocha, the application, and the reporter.
+They are strictly internal to the way Cypress works and not useful for users.
 
 ## Binding to Events
 
@@ -183,11 +183,9 @@ single test.
 
 #### To turn off all uncaught exception handling
 
-```javascript
-// likely want to do this in a support file
-// so it's applied to all spec files
-// cypress/support/index.js
+::include{file=partials/support-file-configuration.md}
 
+```javascript
 Cypress.on('uncaught:exception', (err, runnable) => {
   // returning false here prevents Cypress from
   // failing the test
@@ -197,10 +195,9 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 
 ### To conditionally turn off uncaught exception handling for a certain error
 
+::include{file=partials/support-file-configuration.md}
+
 ```javascript
-// likely want to do this in a support file
-// so it's applied to all spec files
-// cypress/support/index.js
 Cypress.on('uncaught:exception', (err, runnable) => {
   // we expect a 3rd party library error with message 'list not defined'
   // and don't want to fail the test so we return false
@@ -214,10 +211,9 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 
 ### To conditionally turn off uncaught exception handling unhandled promise rejections
 
+::include{file=partials/support-file-configuration.md}
+
 ```javascript
-// likely want to do this in a support file
-// so it's applied to all spec files
-// cypress/support/index.js
 Cypress.on('uncaught:exception', (err, runnable, promise) => {
   // when the exception originated from an unhandled promise
   // rejection, the promise is provided as a third argument
@@ -258,10 +254,11 @@ it('is doing something very important', (done) => {
 
 #### Debug the moment a test fails
 
+If you want to debug when any test fails you'll likely want to put this in a
+[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file),
+or at the top of an individual spec file.
+
 ```javascript
-// if you want to debug when any test fails
-// You likely want to put this in a support file,
-// or at the top of an individual spec file
 Cypress.on('fail', (error, runnable) => {
   debugger
 
@@ -282,7 +279,7 @@ Read
 [Cypress Metaprogramming](https://glebbahmutov.com/blog/cy-metaprogramming/) for
 more examples.
 
-### Page Navigation
+### Page Navigation <E2EOnlyBadge />
 
 #### Test that your application was redirected
 
@@ -314,7 +311,7 @@ it('redirects to another page on click', (done) => {
 })
 ```
 
-### Window Before Load
+### Window Before Load <E2EOnlyBadge />
 
 #### Modify your Application before it loads after page transitions
 

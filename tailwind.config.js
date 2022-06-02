@@ -2,7 +2,7 @@ module.exports = {
   /**
    * All utilities will be marked with !important
    * @see https://tailwindcss.com/docs/configuration#important
-  */
+   */
   darkMode: 'class',
   important: false,
   plugins: [require('@tailwindcss/forms')],
@@ -23,6 +23,12 @@ module.exports = {
         yellow: '#e6ff1e',
         violet: '#b163ff',
         lightGray: '#f9fcfb',
+        indigo: {
+          50: '#F0F1FF',
+          100: '#DADDFE',
+          500: '#4956E3',
+          900: '#1C236D',
+        },
       },
       textColor: {
         blue: '#1079c3',
