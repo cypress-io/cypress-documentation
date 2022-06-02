@@ -249,7 +249,7 @@ export default defineConfig({
 
 #### Sample React Vite Apps
 
-- [React Vite with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-next12-ts)
+- [React Vite with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-vite-ts)
 
 ### React with Webpack
 
