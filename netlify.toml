@@ -84,6 +84,12 @@
   force = true
 
 [[redirects]]
+  from = "/guides/core-concepts/cypress-studio"
+  to = "/guides/references/cypress-studio"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/guides/getting-started/writing-your-first-test"
   to = "/guides/end-to-end-testing/writing-your-first-end-to-end-test"
   status = 301
