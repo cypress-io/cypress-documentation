@@ -196,10 +196,6 @@
             {
               "title": "Cypress App",
               "slug": "cypress-app"
-            },
-            {
-              "title": "Cypress Studio",
-              "slug": "cypress-studio"
             }
           ]
         },
@@ -398,6 +394,10 @@
             {
               "title": "Legacy Configuration",
               "slug": "legacy-configuration"
+            },
+            {
+              "title": "Cypress Studio",
+              "slug": "cypress-studio"
             },
             {
               "title": "Client Certificates",
