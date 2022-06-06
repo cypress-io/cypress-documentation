@@ -32,7 +32,10 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/img/favicon.ico' }],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico', sizes: "any" },
+      { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+    ],
     script: [{ src: '/js/removeTrailingSlash.js' }],
   },
   /*
@@ -62,7 +65,12 @@ export default {
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: ['@nuxtjs/tailwindcss', '@nuxtjs/fontawesome', '@nuxt/image', 'nuxt-webpack-optimisations'],
+  buildModules: [
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/fontawesome',
+    '@nuxt/image',
+    'nuxt-webpack-optimisations',
+  ],
   /*
    ** Nuxt.js modules
    */
