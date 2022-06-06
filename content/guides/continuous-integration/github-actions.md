@@ -72,7 +72,7 @@ jobs:
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           build: npm run build
           start: npm start
@@ -131,7 +131,7 @@ jobs:
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           # Specify Browser since container image is compile with Firefox
           browser: firefox
@@ -178,7 +178,7 @@ jobs:
           path: build
 
       - name: Cypress install
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           # Disable running of tests within install job
           runTests: false
@@ -214,7 +214,7 @@ jobs:
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           # Specify Browser since container image is compile with Firefox
           browser: firefox
@@ -282,7 +282,7 @@ jobs:
           path: build
 
       - name: Cypress install
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           # Disable running of tests within install job
           runTests: false
@@ -338,7 +338,7 @@ jobs:
           path: build
 
       - name: 'UI Tests - Chrome'
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           # we have already installed all dependencies above
           install: false
@@ -474,7 +474,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           record: true
         env:
@@ -501,7 +501,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           record: true
         env:
