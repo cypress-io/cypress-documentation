@@ -165,20 +165,20 @@ the desired version (ex.
 
 </Alert>
 
-### <Icon name="sync-alt"></Icon> Continuous integration
-
-Please read our
-[Continuous Integration](/guides/continuous-integration/introduction) docs for
-help installing Cypress in CI. When running in linux you'll need to install some
-[system dependencies](/guides/continuous-integration/introduction#Dependencies)
-or you can use our [Docker images](/examples/examples/docker) which have
-everything you need prebuilt.
-
 ### <Icon name="cog"></Icon> Advanced Installation
 
 If you have more complex requirements, want to level-up your Cypress workflow or
 just need help with troubleshooting, check out our
 [Advanced Installation](/guides/references/advanced-installation) reference.
+
+### <Icon name="sync-alt"></Icon> Continuous integration
+
+Please read our
+[Continuous Integration](/guides/continuous-integration/introduction) docs for
+help installing Cypress in CI. When running in Linux you'll need to install some
+[system dependencies](/guides/continuous-integration/introduction#Dependencies)
+or you can use our [Docker images](/examples/examples/docker) which have
+everything you need prebuilt.
 
 ## Next Steps
 
