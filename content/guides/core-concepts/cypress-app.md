@@ -14,10 +14,90 @@ title: Cypress App
 
 ## Overview
 
-Cypress runs tests in a unique interactive application that allows you to see
-commands as they execute while also viewing the Application or Component Under
-Test.
+The Cypress App is a desktop application with powerful features for creating,
+configuring, browsing and most importantly running your tests. We'll touch on a
+few of the different functions before moving on to the Test Runner, the heart of
+the Cypress testing experience.
 
+<Alert type="warning">
+
+<strong class="alert-header">Dashboard Syndication</strong>
+
+A number of the features described below will only be shown if you are logged
+into the [Cypress Dashboard](/guides/dashboard/introduction). If you're not sure
+whether you're logged in, you can always check using the profile control in the
+top right of the window.
+
+As the data used by these features are syndicated from our cloud servers, they
+will only reflect test results that were
+[recorded](/guides/dashboard/projects#Set-up-a-project-to-record).
+
+</Alert>
+
+### The Launchpad
+
+<DocsImage src="/img/guides/core-concepts/cypress-app/the-launchpad.png" alt="The Launchpad"></DocsImage>
+
+The Launchpad is your portal to Cypress, helping with onboarding, choosing a
+testing type and launching a browser.
+
+Once you get comfortable with Cypress you might find you don't need the
+Launchpad any more. In this case you can launch the App with
+[`cypress open --e2e` or ` --component`](/guides/guides/command-line#cypress-open)
+to go straight to the Spec Explorer.
+
+### The Spec Explorer
+
+TODO Image with rest of columns
+<DocsImage src="/img/guides/core-concepts/cypress-app/spec-explorer.png" alt="The Spec Explorer"></DocsImage>
+
+On choosing your browser in the Launchpad, you'll be presented with a list of
+your specs, their names, locations, and associated metadata columns. Here you
+can launch specs by clicking them, create new blank or example specs, or search
+specs by name (handy for large test suites).
+
+There are currently three spec metadata columns.
+
+#### Last updated
+
+This column shows when the code of this spec was last updated, using your local
+system's own file metadata. This metadata will vary from machine to machine, as
+it reflects the state of the code as stored on that computer.
+
+#### Latest runs
+
+This column shows the last time the spec was run, and what status was returned.
+This metadata is syndicated from the Dashboard (see [note above](#Overview)) so
+should be the same everywhere.
+
+#### Average duration
+
+This column shows the average time taken to run the entire spec file. Again,
+this metadata is syndicated from the Dashboard.
+
+### Recorded Runs (Recent Runs? Latest Runs?)
+
+TODO Ideally runs would show different commits
+<DocsImage src="/img/guides/core-concepts/cypress-app/recorded-runs.png" alt="Recorded Runs"></DocsImage>
+
+This screen shows detailed information about the most recently recorded test
+runs, latest first. This metadata is syndicated from the Dashboard (see
+[note above](#Overview)) so should be the same everywhere.
+
+The title of each run is taken from the
+[git commit message](https://www.educative.io/edpresso/git-commit-message-simply-explained)
+for that change, and clicking on it will take you to the corresponding run page
+in the Dashboard.
+
+TODO More detail needed?
+
+## The Test Runner
+
+At the core of the app is the Test Runner itself. Cypress runs tests
+interactively, allowing you to see commands as they execute while also viewing
+the Application or Component Under Test, and exploring its DOM.
+
+TODO Update this image
 <DocsImage src="/img/guides/cypress-app/gui-diagram.png" alt="Cypress App"></DocsImage>
 
 ## Command Log
