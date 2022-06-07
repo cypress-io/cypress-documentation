@@ -64,8 +64,8 @@ it('renders the Stepper, with a default of 0', () => {
 <script>
   export default {
     data: () => ({
-      count: 0
-    }
+      count: 0,
+    }),
   }
 </script>
 ```
@@ -90,8 +90,7 @@ initial prop sets the internal `count` state for the first time.
 ```js
 it('supports an "initial" prop to set the value', () => {
   cy.mount(Stepper, { props: { initial: 100 } })
-    .get('[data-testid=stepper]')
-    .should('contain.text', 100)
+  cy.get('[data-testid=stepper]').should('contain.text', 100)
 })
 ```
 
@@ -101,8 +100,7 @@ it('supports an "initial" prop to set the value', () => {
 ```js
 it('supports an "initial" prop to set the value', () => {
   cy.mount(() => <Stepper initial={100} />)
-    .get('[data-testid=stepper]')
-    .should('contain.text', 100)
+  cy.get('[data-testid=stepper]').should('contain.text', 100)
 })
 ```
 
@@ -124,15 +122,15 @@ it('supports an "initial" prop to set the value', () => {
       initial: {
         type: Number,
         default: 0,
-        required: false
-      }
+        required: false,
+      },
     },
     data: () => ({
-      count: 0
-    },
+      count: 0,
+    }),
     created() {
       this.count = this.initial
-    }
+    },
   }
 </script>
 ```
@@ -189,8 +187,7 @@ const stepperSelector = '[data-testid=stepper]'
 
 it('supports an initial prop', () => {
   cy.mount(Stepper, { props: { initial: 100 } })
-    .get(stepperSelector)
-    .should('contain.text', 100),
+  cy.get(stepperSelector).should('contain.text', 100)
 })
 ```
 
@@ -210,18 +207,14 @@ const decrementSelector = '[aria-label=decrement]'
 
 it('can be incremented', () => {
   cy.mount(Stepper)
-    .get(incrementSelector)
-    .click()
-    .get(stepperSelector)
-    .should('contain.text', 1)
+  cy.get(incrementSelector).click()
+  cy.get(stepperSelector).should('contain.text', 1)
 })
 
 it('can be decremented', () => {
   cy.mount(Stepper)
-    .get(decrementSelector)
-    .click()
-    .get(stepperSelector)
-    .should('contain.text', -1)
+  cy.get(decrementSelector).click()
+  cy.get(stepperSelector).should('contain.text', -1)
 })
 ```
 
@@ -244,16 +237,11 @@ const decrementSelector = '[aria-label=decrement]'
 
 it('has an initial counter that can be incremented and decremented', () => {
   cy.mount(Stepper, { props: { initial: 100 } })
-    .get(stepperSelector)
-    .should('contain.text', 100),
-    .get(incrementSelector)
-    .click()
-    .get(stepperSelector)
-    .should('contain.text', 101)
-    .get(decrementSelector)
-    .click()
-    .click()
-    .should('contain.text', 99)
+  cy.get(stepperSelector).should('contain.text', 100)
+  cy.get(incrementSelector).click()
+  cy.get(stepperSelector).should('contain.text', 101)
+  cy.get(decrementSelector).click().click()
+  cy.get(stepperSelector).should('contain.text', 99)
 })
 ```
 
