@@ -112,7 +112,8 @@ it('has an initial counter that can be incremented and decremented', () => {
   cy.get(stepperSelector).should('contain.text', 100)
   cy.get(incrementSelector).click()
   cy.get(stepperSelector).should('contain.text', 101)
-  cy.get(decrementSelector).click().click().should('contain.text', 99)
+  cy.get(decrementSelector).click().click()
+  cy.get(stepperSelector).should('contain.text', 99)
 })
 ```
 
