@@ -15,11 +15,30 @@ title: Opening the App
 
 ## `cypress open`
 
-If you used `npm` to install, Cypress has now been installed to your
+<Alert type="info">
+
+If you used `npm` or `yarn` to install, Cypress is now added to your
 `./node_modules` directory, with its binary executable accessible from
 `./node_modules/.bin`.
 
+</Alert>
+
 Now you can open Cypress from your **project root** one of the following ways:
+
+**Using `npx`**
+
+**Note**: [npx](https://www.npmjs.com/package/npx) is included with `npm > v5.2`
+or can be installed separately.
+
+```shell
+npx cypress open
+```
+
+**Or by using `yarn`**
+
+```shell
+yarn run cypress open
+```
 
 **The long way with the full path**
 
@@ -31,21 +50,6 @@ Now you can open Cypress from your **project root** one of the following ways:
 
 ```shell
 $(npm bin)/cypress open
-```
-
-**Or by using `npx`**
-
-**note**: [npx](https://www.npmjs.com/package/npx) is included with `npm > v5.2`
-or can be installed separately.
-
-```shell
-npx cypress open
-```
-
-**Or by using `yarn`**
-
-```shell
-yarn run cypress open
 ```
 
 After a moment, the Cypress App will launch.
