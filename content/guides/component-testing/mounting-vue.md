@@ -67,9 +67,9 @@ import Stepper from './Stepper.vue'
 describe('<Stepper>', () => {
   it('is visible', () => {
     mount(Stepper)
-      cy.get('[data-testid=stepper]')
-        .should('be.visible')
-        .and('contain.text', '1')
+    cy.get('[data-testid=stepper]')
+      .should('be.visible')
+      .and('contain.text', '1')
   })
 })
 ```
