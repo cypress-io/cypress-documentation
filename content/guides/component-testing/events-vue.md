@@ -252,7 +252,7 @@ it('clicking + fires a change event with the incremented value', () => {
     .get(incrementSelector)
     .click()
     .get('@changeSpy')
-    .should('have.been.called.with', 1)
+    .should('have.been.calledWith', 1)
 })
 ```
 
@@ -268,7 +268,7 @@ it('clicking + fires a change event with the incremented value', () => {
     .get(incrementSelector)
     .click()
     .get('@changeSpy')
-    .should('have.been.called.with', 1)
+    .should('have.been.calledWith', 1)
 })
 ```
 
@@ -325,7 +325,7 @@ unpack its results to write assertions.
 
 Your test failure messages will not be as helpful because you're not able to use
 the Sinon-Chai library that Cypress ships, which comes with methods such as
-`to.have.been.called` and `to.have.been.called.with`.
+`to.have.been.called` and `to.have.been.calledWith`.
 
 Usage of the `cy.get('@vue')` alias may look something like the below code
 snippet.
@@ -360,7 +360,7 @@ cy.mount(Stepper, { props: { initial: 100, onChange: onChangeSpy } })
   .get(incrementSelector)
   .click()
   .get('@changeSpy')
-  .should('have.been.called.with', '101')
+  .should('have.been.calledWith', '101')
 ```
 
 </code-block>
