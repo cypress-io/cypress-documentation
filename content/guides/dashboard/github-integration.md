@@ -12,6 +12,7 @@ GitHub integration.
 <DocsImage src="/img/dashboard/github-integration/pull-request-cypress-integration-comments-github-checks.jpg" alt="Cypress GitHub App PR" ></DocsImage>
 
 <Alert type="warning">
+
 GitHub Integration is dependent on your CI environment reliably providing commit
 SHA data (typically via an environment variable). This is not a problem for most
 users, but if you are facing GitHub integration issues with your CI setup,
@@ -19,6 +20,7 @@ please make sure the git information is being sent properly by following
 [these guidelines](/guides/continuous-integration/introduction#Git-information).
 If you are still facing issues after this, please
 [contact us](mailto:hello@cypress.io).
+
 </Alert>
 
 ## GitHub Enterprise
@@ -44,9 +46,10 @@ and finally
 ## Install the Cypress GitHub app
 
 Before you can enable GitHub integration for your Cypress projects, you must
-first install the Cypress GitHub App. You can start the GitHub App installation
-process via your organization's settings page or a project's settings page in
-the [Cypress Dashboard](https://on.cypress.io/dashboard).
+first install the [Cypress GitHub App](https://github.com/apps/cypress). You can
+start the GitHub App installation process via your organization's settings page
+or a project's settings page in the
+[Cypress Dashboard](https://on.cypress.io/dashboard).
 
 ### Install via organization integration settings
 
