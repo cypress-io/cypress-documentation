@@ -258,6 +258,7 @@ const incrementSelector = '[aria-label=increment]'
 it('clicking + fires a change event with the incremented value', () => {
   const onChangeSpy = cy.spy().as('onChangeSpy')
   cy.mount(Stepper, { props: { onChange: onChangeSpy } })
+
   cy.get(incrementSelector).click()
   cy.get('@onChangeSpy').should('have.been.calledWith', 1)
 })
@@ -272,6 +273,7 @@ const incrementSelector = '[aria-label=increment]'
 it('clicking + fires a change event with the incremented value', () => {
   const onChangeSpy = cy.spy().as('onChangeSpy')
   cy.mount(() => <Stepper onChange={onChangeSpy} />)
+
   cy.get(incrementSelector).click()
   cy.get('@onChangeSpy').should('have.been.calledWith', 1)
 })
@@ -330,7 +332,7 @@ unpack its results to write assertions.
 
 Your test failure messages will not be as helpful because you're not able to use
 the Sinon-Chai library that Cypress ships, which comes with methods such as
-`to.have.been.called` and `to.have.been.called.with`.
+`to.have.been.called` and `to.have.been.calledWith`.
 
 Usage of the `cy.get('@vue')` alias may look something like the below code
 snippet.
@@ -360,8 +362,9 @@ cy.get('@vue').should((wrapper) => {
 const onChangeSpy = cy.spy().as('onChangeSpy')
 
 cy.mount(Stepper, { props: { initial: 100, onChange: onChangeSpy } })
+
 cy.get(incrementSelector).click()
-cy.get('@onChangeSpy').should('have.been.called.with', '101')
+cy.get('@onChangeSpy').should('have.been.calledWith', '101')
 ```
 
 </code-block>
