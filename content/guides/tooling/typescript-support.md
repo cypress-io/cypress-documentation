@@ -102,7 +102,7 @@ declare global {
        * Custom command to select DOM element by data-cy attribute.
        * @example cy.dataCy('greeting')
        */
-      dataCy(value: string): Chainable<Element>
+      dataCy(value: string): Chainable<JQuery<Element>>
     }
   }
 }
