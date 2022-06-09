@@ -14,12 +14,12 @@ title: Cypress App
 
 ## Overview
 
-The Cypress app is a desktop application with powerful features for creating,
-configuring, browsing and most importantly running your tests. We'll touch on a
-few of the different functions before moving on to the Test Runner, the heart of
-the Cypress testing experience.
+The Cypress desktop app has powerful features for creating, configuring,
+browsing, and most importantly running your tests. We'll touch on a few of the
+different functions before moving on to the Test Runner, the heart of the
+Cypress testing experience.
 
-<Alert type="warning">
+<Alert type="info">
 
 <strong class="alert-header">Dashboard Integration</strong>
 
@@ -28,8 +28,8 @@ into the [Cypress Dashboard](/guides/dashboard/introduction). If you're not sure
 whether you're logged in, you can always check using the profile control in the
 top right of the window.
 
-As the data used by these features are syndicated from our cloud servers, they
-will only reflect test results that were
+As the data used by these features are pulled from our cloud servers, they will
+only reflect test results that were
 [recorded](/guides/dashboard/projects#Set-up-a-project-to-record).
 
 </Alert>
@@ -42,8 +42,8 @@ The Launchpad is your portal to Cypress, helping with onboarding, choosing a
 testing type and launching a browser.
 
 Once you get comfortable with Cypress you might find you don't need the
-Launchpad any more. In this case you can launch the app with
-[`cypress open --e2e` or ` --component`](/guides/guides/command-line#cypress-open)
+Launchpad any more. In this case
+[you can run `cypress open` with the `--browser` and `--component` or `--e2e` options](/guides/guides/command-line#cypress-open)
 to go straight to the Spec Explorer.
 
 ### The Spec Explorer
@@ -67,29 +67,28 @@ it reflects the state of the code as stored on that computer.
 #### Latest runs
 
 This column shows the last time the spec was run, and what status was returned.
-This metadata is syndicated from the Dashboard (see [note above](#Overview)) so
-should be the same everywhere.
+This metadata comes from the Dashboard (see [note above](#Overview)) so should
+be the same everywhere.
 
 #### Average duration
 
 This column shows the average time taken to run the entire spec file. Again,
-this metadata is syndicated from the Dashboard.
+this metadata comes from the Dashboard.
 
 ### Project Runs
 
 TODO Ideally runs would show different commits
 <DocsImage src="/img/guides/core-concepts/cypress-app/recorded-runs.png" alt="Recorded Runs"></DocsImage>
 
-This screen shows detailed information about the most recently recorded test
-runs, latest first. This metadata is syndicated from the Dashboard (see
-[note above](#Overview)) so should be the same everywhere. -- across branches --
+This screen shows detailed information about the most recently recorded
+[test runs](/guides/dashboard/runs) across all git branches, latest first. This
+metadata comes from the Dashboard (see [note above](#Overview)) so should be the
+same everywhere.
 
 The title of each run is taken from the
 [git commit message](https://www.educative.io/edpresso/git-commit-message-simply-explained)
 for that change, and clicking on it will take you to the corresponding run page
 in the Dashboard.
-
-TODO More detail needed? TODO link to dash runs
 
 ## The Test Runner
 
