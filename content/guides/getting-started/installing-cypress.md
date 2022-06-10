@@ -12,8 +12,7 @@ title: Installing Cypress
 
 </Alert>
 
-First, make sure you have all the [system requirements](#System-requirements),
-and then...
+First, make sure you have all the [system requirements](#System-requirements).
 
 ## Installing
 
