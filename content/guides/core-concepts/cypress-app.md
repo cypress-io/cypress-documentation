@@ -23,12 +23,13 @@ Cypress testing experience.
 
 <strong class="alert-header">Dashboard Integration</strong>
 
-A number of the features described below will only be shown if you are logged
-into the [Cypress Dashboard](/guides/dashboard/introduction). If you're not sure
-whether you're logged in, you can always check using the profile control in the
-top right of the window.
+A number of the features described below are additional functionality shown only
+to users that are logged into the
+[Cypress Dashboard](/guides/dashboard/introduction). If you're not sure whether
+you're logged in, you can always check using the profile control in the top
+right of the window.
 
-As the data used by these features are pulled from our cloud servers, they will
+The data used by these features are pulled from our cloud servers, so they will
 only reflect test results that were
 [recorded](/guides/dashboard/projects#Set-up-a-project-to-record).
 
@@ -56,7 +57,7 @@ your specs, their names, locations, and associated metadata columns. Here you
 can launch specs by clicking them, create new blank or example specs, or search
 specs by name (handy for large test suites).
 
-There are currently three spec metadata columns.
+We've made the following spec metadata available directly in the Spec Explorer:
 
 #### Last updated
 
