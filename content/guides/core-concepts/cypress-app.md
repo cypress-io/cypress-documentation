@@ -23,14 +23,14 @@ Cypress testing experience.
 
 <strong class="alert-header">Dashboard Integration</strong>
 
-A number of the features described below are additional functionality shown only
-to users that are logged into the
-[Cypress Dashboard](/guides/dashboard/introduction). If you're not sure whether
-you're logged in, you can always check using the profile control in the top
-right of the window.
+When you configure Cypress to record tests to the
+[Dashboard](/guides/dashboard/introduction) you'll see data from your latest
+recorded runs in the Cypress app, increasing visibility into your test history.
+If you're not sure whether you're logged in, you can always check using the
+profile control in the top right of the window.
 
-The data used by these features are pulled from our cloud servers, so they will
-only reflect test results that were
+The data used by these features is pulled from the Dashboard, so they will only
+reflect test results that were
 [recorded](/guides/dashboard/projects#Set-up-a-project-to-record).
 
 </Alert>
@@ -53,28 +53,28 @@ TODO Image with rest of columns
 <DocsImage src="/img/guides/core-concepts/cypress-app/spec-explorer.png" alt="The Spec Explorer"></DocsImage>
 
 On choosing your browser in the Launchpad, you'll be presented with a list of
-your specs, their names, locations, and associated metadata columns. Here you
-can launch specs by clicking them, create new blank or example specs, or search
-specs by name (handy for large test suites).
+your specs, their names, locations, and data from your latest recorded runs.
+Here you can launch specs by clicking them, create new blank or example specs,
+or search specs by name (handy for large test suites).
 
 We've made the following spec metadata available directly in the Spec Explorer:
 
 #### Last updated
 
 This column shows when the code of this spec was last updated, using your local
-system's own file metadata. This metadata will vary from machine to machine, as
-it reflects the state of the code as stored on that computer.
+system's own metadata. This metadata will vary from machine to machine, as it
+reflects the state of the code as stored on that computer.
 
 #### Latest runs
 
-This column shows the last time the spec was run, and what status was returned.
-This metadata comes from the Dashboard (see [note above](#Overview)) so should
-be the same everywhere.
+This column shows the last time the spec was run, and the last four returned
+statuses. This metadata comes from the Dashboard (see [note above](#Overview))
+so should be the same everywhere.
 
 #### Average duration
 
-This column shows the average time taken to run the entire spec file. Again,
-this metadata comes from the Dashboard.
+This column shows the average time taken to run the entire spec file, over the
+last four runs. Again, this metadata comes from the Dashboard.
 
 ### Project Runs
 
