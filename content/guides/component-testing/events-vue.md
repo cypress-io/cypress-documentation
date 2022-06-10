@@ -55,26 +55,29 @@ This is what the implementation would look like:
 
 ```html
 <template>
-  <button aria-label="decrement" @click="decrement">-</button>
-  {{ counter }}
-  <button aria-label="increment" @click="increment">+</button>
+  <div data-testid="stepper">
+    <button aria-label="decrement" @click="decrement">-</button>
+    {{ count }}
+    <button aria-label="increment" @click="increment">+</button>
+  </div>
 </template>
 
 <script setup>
   import { ref } from 'vue'
+  const props = defineProps(['initial'])
 
   const emit = defineEmits(['change'])
 
-  const counter = ref(0)
+  const count = ref(props.initial || 0)
 
   const increment = () => {
-    counter.value++
-    emit('change', counter.value)
+    count.value++
+    emit('change', count.value)
   }
 
   const decrement = () => {
-    counter.value--
-    emit('change', counter.value)
+    count.value--
+    emit('change', count.value)
   }
 </script>
 ```
@@ -85,25 +88,33 @@ This is what the implementation would look like:
 ```html
 <template>
   <button aria-label="decrement" @click="decrement">-</button>
-  {{ counter }}
+  {{ count }}
   <button aria-label="increment" @click="increment">+</button>
 </template>
 
 <script>
   export default {
-    data() {
-      return {
-        counter: 0,
-      }
+    props: {
+      initial: {
+        type: Number,
+        default: 0,
+        required: false,
+      },
+    },
+    data: () => ({
+      count: 0,
+    }),
+    created() {
+      this.count = this.initial
     },
     methods: {
       increment() {
-        this.counter++
-        this.$emit('change', this.counter)
+        this.count++
+        this.$emit('change', this.count)
       },
       decrement() {
-        this.counter--
-        this.$emit('change', this.counter)
+        this.count--
+        this.$emit('change', this.count)
       },
     },
   }
@@ -139,12 +150,12 @@ First, we **Arrange** our test.
 
 ```js
 it('clicking increment fires a change event with the incremented value', () => {
-  const onChangeSpy = cy.spy().as('changeSpy')
+  const onChangeSpy = cy.spy().as('onChangeSpy')
   // ...
 })
 
 it('clicking decrement fires a change event with the decremented value', () => {
-  const onChangeSpy = cy.spy().as('changeSpy')
+  const onChangeSpy = cy.spy().as('onChangeSpy')
   // ...
 })
 ```
@@ -167,7 +178,7 @@ inspect the arguments of the emitted event in your browser.
 
 ```js
 it('clicking + fires a change event with the incremented value', () => {
-  const onChangeSpy = cy.spy().as('changeSpy')
+  const onChangeSpy = cy.spy().as('onChangeSpy')
   cy.mount(Stepper, { props: { onChange: onChangeSpy } })
 })
 ```
@@ -177,7 +188,7 @@ it('clicking + fires a change event with the incremented value', () => {
 
 ```jsx
 it('clicking + fires a change event with the incremented value', () => {
-  const onChangeSpy = cy.spy().as('changeSpy')
+  const onChangeSpy = cy.spy().as('onChangeSpy')
   cy.mount(() => <Stepper onChange={onChangeSpy} />)
 })
 ```
@@ -211,10 +222,9 @@ Next, we **Act** by firing a click event for the increment button.
 const incrementSelector = '[aria-label=increment]'
 
 it('clicking + fires a change event with the incremented value', () => {
-  const onChangeSpy = cy.spy().as('changeSpy')
+  const onChangeSpy = cy.spy().as('onChangeSpy')
   cy.mount(Stepper, { props: { onChange: onChangeSpy } })
-    .get(incrementSelector)
-    .click()
+  cy.get(incrementSelector).click()
 })
 ```
 
@@ -225,10 +235,9 @@ it('clicking + fires a change event with the incremented value', () => {
 const incrementSelector = '[aria-label=increment]'
 
 it('clicking + fires a change event with the incremented value', () => {
-  const onChangeSpy = cy.spy().as('changeSpy')
+  const onChangeSpy = cy.spy().as('onChangeSpy')
   cy.mount(() => <Stepper onChange={onChangeSpy} />)
-    .get(incrementSelector)
-    .click()
+  cy.get(incrementSelector).click()
 })
 ```
 
@@ -247,12 +256,11 @@ value.
 const incrementSelector = '[aria-label=increment]'
 
 it('clicking + fires a change event with the incremented value', () => {
-  const onChangeSpy = cy.spy().as('changeSpy')
+  const onChangeSpy = cy.spy().as('onChangeSpy')
   cy.mount(Stepper, { props: { onChange: onChangeSpy } })
-    .get(incrementSelector)
-    .click()
-    .get('@changeSpy')
-    .should('have.been.calledWith', 1)
+
+  cy.get(incrementSelector).click()
+  cy.get('@onChangeSpy').should('have.been.calledWith', 1)
 })
 ```
 
@@ -263,12 +271,11 @@ it('clicking + fires a change event with the incremented value', () => {
 const incrementSelector = '[aria-label=increment]'
 
 it('clicking + fires a change event with the incremented value', () => {
-  const onChangeSpy = cy.spy().as('changeSpy')
+  const onChangeSpy = cy.spy().as('onChangeSpy')
   cy.mount(() => <Stepper onChange={onChangeSpy} />)
-    .get(incrementSelector)
-    .click()
-    .get('@changeSpy')
-    .should('have.been.calledWith', 1)
+
+  cy.get(incrementSelector).click()
+  cy.get('@onChangeSpy').should('have.been.calledWith', 1)
 })
 ```
 
@@ -341,26 +348,23 @@ in order to make sure the DOM has updated or any reactive events have fired.
 
 ```js
 cy.mount(Stepper, { props: { initial: 100 } })
-  .get(incrementSelector)
-  .click()
-  .get('@vue')
-  .should((wrapper) => {
-    expect(wrapper.emitted('change')).to.have.length
-    expect(wrapper.emitted('change')[0][0]).to.equal('101')
-  })
+cy.get(incrementSelector).click()
+cy.get('@vue').should((wrapper) => {
+  expect(wrapper.emitted('change')).to.have.length
+  expect(wrapper.emitted('change')[0][0]).to.equal('101')
+})
 ```
 
 </code-block>
 <code-block label="With spies">
 
 ```js
-const onChangeSpy = cy.spy().as('changeSpy')
+const onChangeSpy = cy.spy().as('onChangeSpy')
 
 cy.mount(Stepper, { props: { initial: 100, onChange: onChangeSpy } })
-  .get(incrementSelector)
-  .click()
-  .get('@changeSpy')
-  .should('have.been.calledWith', '101')
+
+cy.get(incrementSelector).click()
+cy.get('@onChangeSpy').should('have.been.calledWith', '101')
 ```
 
 </code-block>

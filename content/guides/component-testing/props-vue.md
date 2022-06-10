@@ -64,8 +64,8 @@ it('renders the Stepper, with a default of 0', () => {
 <script>
   export default {
     data: () => ({
-      count: 0
-    }
+      count: 0,
+    }),
   }
 </script>
 ```
@@ -122,15 +122,15 @@ it('supports an "initial" prop to set the value', () => {
       initial: {
         type: Number,
         default: 0,
-        required: false
-      }
+        required: false,
+      },
     },
     data: () => ({
-      count: 0
-    },
+      count: 0,
+    }),
     created() {
       this.count = this.initial
-    }
+    },
   }
 </script>
 ```

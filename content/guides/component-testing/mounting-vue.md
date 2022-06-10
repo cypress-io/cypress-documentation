@@ -156,7 +156,7 @@ Vue Test Utils is the official **low-level testing library of Vue**.
 Cypress's mount command is a thin wrapper around Vue Test Utils and shares an
 identical signature.
 
-<!-- Not necessary: Vue's own documentation recommends against using it directly and instead asks users to either use Vue Testing Library or Cypress. <!-- citation needed -->
+<!-- Not necessary: Vue's own documentation recommends against using it directly and instead asks users to either use Vue Testing Library or Cypress.
 
 The Cypress docs will cover many common use-cases for how to test Vue
 components, however if you still need more information, please refer to the Vue
