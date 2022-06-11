@@ -24,14 +24,17 @@ Cypress testing experience.
 <strong class="alert-header">Dashboard Integration</strong>
 
 When you configure Cypress to record tests to the
-[Dashboard](/guides/dashboard/introduction) you'll see data from your latest
-recorded runs in the Cypress app, increasing visibility into your test history.
-If you're not sure whether you're logged in, you can always check using the
-profile control in the top right of the window.
+[Dashboard](/guides/dashboard/introduction), you'll see data from your latest
+recorded runs in the Cypress app. This increased visibility into your test
+history allows you to debug your tests faster and more effectively, all within
+your local workflow.
 
 The data used by these features is pulled from the Dashboard, so they will only
 reflect test results that were
 [recorded](/guides/dashboard/projects#Set-up-a-project-to-record).
+
+If you're not sure whether you're logged in, you can always check using the
+profile control in the top right of the window.
 
 </Alert>
 
@@ -53,28 +56,39 @@ TODO Image with rest of columns
 <DocsImage src="/img/guides/core-concepts/cypress-app/spec-explorer.png" alt="The Spec Explorer"></DocsImage>
 
 On choosing your browser in the Launchpad, you'll be presented with a list of
-your specs, their names, locations, and data from your latest recorded runs.
-Here you can launch specs by clicking them, create new blank or example specs,
-or search specs by name (handy for large test suites).
+your specs, their names, locations, and information about your latest recorded
+runs. Here you can launch specs by clicking them, create new blank or example
+specs, or search specs by name (handy for large test suites).
 
-We've made the following spec metadata available directly in the Spec Explorer:
+We've made the following spec data available directly in the Spec Explorer:
 
 #### Last updated
 
-This column shows when the code of this spec was last updated, using your local
-system's own metadata. This metadata will vary from machine to machine, as it
-reflects the state of the code as stored on that computer.
+This column tells you when the code of this spec was last updated, using local
+file data from git or your own filesystem. It surfaces the change history of
+your tests, so you can quickly find the most relevant specs as you’re browsing
+your project.
+
+This column will vary from machine to machine, as it reflects the state of the
+code as stored on that computer.
 
 #### Latest runs
 
 This column shows the last time the spec was run, and the last four returned
-statuses. This metadata comes from the Dashboard (see [note above](#Overview))
-so should be the same everywhere.
+statuses. With this intelligence you can monitor, run, and fix tests locally
+within CI workflows, and then further dig into your results by clicking through
+to the Dashboard.
+
+The runs data is sourced from the Dashboard (see [note above](#Overview)) so
+should be the same everywhere.
 
 #### Average duration
 
-This column shows the average time taken to run the entire spec file, over the
-last four runs. Again, this metadata comes from the Dashboard.
+This column indicates the time taken to run the entire spec file, averaged over
+the last four runs, so that you can quickly identify and take action to improve
+the performance of your long-running tests.
+
+Again, this analysis comes from the Dashboard.
 
 ### Project Runs
 
@@ -83,7 +97,7 @@ TODO Ideally runs would show different commits
 
 This screen shows detailed information about the most recently recorded
 [test runs](/guides/dashboard/runs) across all git branches, latest first. This
-metadata comes from the Dashboard (see [note above](#Overview)) so should be the
+data comes from the Dashboard (see [note above](#Overview)) so should be the
 same everywhere.
 
 The title of each run is taken from the
