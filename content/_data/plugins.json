@@ -603,6 +603,13 @@
           "link": "https://github.com/elaichenkov/cy-verify-downloads",
           "keywords": ["commands", "assertions", "wait", "verify", "download"],
           "badge": "community"
+        }, 
+        {
+          "name": "@mavrou/cy-grapgql",
+          "description": "Cypress commands for end-to-end GraphQL testing",
+          "link": "https://github.com/dimavroudis/cy-graphql",
+          "keywords": ["commands", "graphQL"],
+          "badge": "community"
         }
       ]
     },
