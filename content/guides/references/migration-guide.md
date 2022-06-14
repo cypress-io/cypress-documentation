@@ -685,6 +685,17 @@ support file from one our supported frameworks.
 allow the built-in “placeholder” custom `mount` and `hover` commands to be
 overwritten without needing to use `Cypress.Commands.overwrite()`.
 
+#### `Cypress.spec`
+[`Cypress.spec`](/api/cypress-api/spec) has been updated. Specifically, the `name` property now only specifies the filename of the spec, where previously it contained common ancestor paths. Custom commands and plugins will need to be updated accordingly.
+
+```js
+// Previous
+  name: 'foo/bar/file_name.ts'
+// In Cypress 10.x
+  name: 'file_name.ts'
+```
+
+
 ### Component Testing Changes
 
 Component Testing has moved from experimental to beta status in 10.0.0.
