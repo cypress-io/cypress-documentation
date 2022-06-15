@@ -139,8 +139,9 @@ everything you need prebuilt.
 Cypress is a desktop application that is installed on your computer. The desktop
 application supports these operating systems:
 
-- **macOS** 10.9 and above _(64-bit only)_
-- **Linux** Ubuntu 12.04 and above, Fedora 21 and Debian 8 _(64-bit only)_
+- **macOS** 10.9 and above _(Intel or Apple Silicon 64-bit (x64 or arm64))_
+- **Linux** Ubuntu 12.04 and above, Fedora 21 and Debian 8 _(x86_64 or Arm
+  64-bit (x64 or arm64))_
 - **Windows** 7 and above _(64-bit only)_
 
 #### Node.js
