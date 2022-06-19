@@ -606,7 +606,7 @@
         },
         {
           "name": "cypress-ag-grid",
-          "description": "Cypress plugin for interacting with and validating against ag grid",
+          "description": "Cypress plugin for interacting with and validating against AG Grid",
           "link": "https://github.com/kpmck/cypress-ag-grid",
           "keywords": ["aggrid", "ag-grid", "ag grid"],
           "badge": "community"
