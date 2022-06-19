@@ -603,7 +603,15 @@
           "link": "https://github.com/elaichenkov/cy-verify-downloads",
           "keywords": ["commands", "assertions", "wait", "verify", "download"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-ag-grid",
+          "description": "Cypress plugin for interacting with and validating against ag grid",
+          "link": "https://github.com/kpmck/cypress-ag-grid",
+          "keywords": ["aggrid", "ag-grid", "ag grid"],
+          "badge": "community"
         }
+
       ]
     },
     {
