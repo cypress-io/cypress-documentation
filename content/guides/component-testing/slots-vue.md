@@ -3,8 +3,8 @@ title: Testing Vue Components with Slots
 ---
 
 Slots are one of the most powerful language features in Vue. With the ability to
-define fallback content, named slots, and scoped slots, they allow parent
-components to inject their own markup, styles, and behavior.
+define fallback content, named slots, and scoped slots. They allow parent
+components to inject their markup, styles, and behavior.
 
 Like props and events, slots are part of the component's public API.
 
@@ -16,12 +16,12 @@ Page-level layout components like a Sidebar or Footer also commonly make use of
 slots.
 
 Lastly, renderless components, like a Loading component or ApolloQuery component
-make heavy use of slots in order to define what to render in various states
-like: error, loading, and success.
+make heavy use of slots to define what to render in various states like: error,
+loading, and success.
 
 ## The Simplest Slot
 
-We'll be showing off how to test a Modal that uses a default `<slot/>`. Like in
+We'll show off how to test a Modal that uses a default `<slot/>`. Like in
 previous sections, we'll start simple.
 
 <div style="position: relative; display: flex; justify-content: center; align-items: center; background: rgba(0,0,0,0.2); width: 400px; height: 320px;">
@@ -378,10 +378,10 @@ export default {
 ## Scoped Slots
 
 Now, what if we want to allow the parent to control when to close the modal? We
-can provide a slot prop, a function, called **close** to any of the slots we
+can provide a slot prop, a function called **close** to any of the slots we
 want.
 
-The implementation of our modal will change slightly and we only have to show
+The implementation of our modal will change slightly, and we only have to show
 off the template to demonstrate the change.
 
 ```vue
@@ -401,9 +401,9 @@ off the template to demonstrate the change.
 ```
 
 Now here, we can write a few new tests! Each of our parent components should be
-able to utilize the method and make sure it's wired up correctly. We're going to
-import `h` from Vue to create real virtual nodes so that we can interact with
-them from the _outside_ of the test.
+able to utilize the method and make sure it's wired up correctly. We will import
+`h` from Vue to create actual virtual nodes so that we can interact with them
+from the _outside_ of the test.
 
 This is one of the points at which you may find JSX/TSX tests more elegant to
 work with.
@@ -492,8 +492,8 @@ it('The default slot binds the close method', () => {
 
 ## What's Next?
 
-Now that you're comfortable mounting components and asserting on their slots,
-scoped slots, and fallbacks, you should be ready to test most components!
+Now that you're comfortable mounting components and asserting their slots, you
+should be ready to test most components with scoped slots and fallbacks!
 
 Let's work on configuring a custom mount command to handle applications like
 Vuetify and plugins like Vue Router.
