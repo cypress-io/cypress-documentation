@@ -225,13 +225,11 @@ Then add the separate `reporter-config.json` file (defined in your
 configuration) to enable `spec` and `junit` reporters and direct the `junit`
 reporter to save separate XML files.
 
-:::cypress-config-example
-
-```js
+```json
 {
-  reporterEnabled: 'spec, mocha-junit-reporter',
-  mochaJunitReporterReporterOptions: {
-    mochaFile: 'cypress/results/results-[hash].xml'
+  "reporterEnabled": "spec, mocha-junit-reporter",
+  "mochaJunitReporterReporterOptions": {
+    "mochaFile": "cypress/results/results-[hash].xml"
   }
 }
 ```
