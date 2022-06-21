@@ -6,18 +6,15 @@ title: 'Quickstart: Vue'
 
 To follow along with this guide, you'll need a Vue application.
 
-The quickest way to get started writing component tests for Vue is to use Vue's
-own project scaffolding tool, and then to install and open Cypress. If you
-choose to add Cypress during Vue's CLI setup wizard, skip to
-["Launch the Cypress App"](#Launch-the-Cypress-App).
+The quickest way to get started writing component tests for Vue is to use
+[Vue's own project scaffolding tool](https://vuejs.org/guide/quick-start.html).
 
-This will launch Cypress's Launchpad and create all the necessary files for
-getting started.
+To create a Vue project:
 
 1. Run the scaffold command
 
 ```bash
-npm create vue
+npm init vue@latest
 ```
 
 Follow the prompts to create your app. During the setup, you will be asked if
