@@ -20,11 +20,7 @@ export default {
     noBorder: {
       type: Boolean,
       default: false,
-    },
-    shadow: {
-      type: Boolean,
-      default: false,
-    },
+    }
   },
   computed: {
     filePath() {
