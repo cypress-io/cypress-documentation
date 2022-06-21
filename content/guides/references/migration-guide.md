@@ -676,7 +676,7 @@ Here are a few examples, assuming the value of `videosFolder` is
 #### `cy.mount()`
 
 If you set up your app using the automatic configuration wizard, a basic
-[`cy.mount()`]((/api/commands/mount) command will be imported for you in your
+[`cy.mount()`](/api/commands/mount) command will be imported for you in your
 support file from one our supported frameworks.
 
 #### `Cypress.Commands.add()`
