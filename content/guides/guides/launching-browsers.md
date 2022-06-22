@@ -7,10 +7,21 @@ When you run tests in Cypress, we launch a browser for you. This enables us to:
 1. Create a clean, pristine testing environment.
 2. Access the privileged browser APIs for automation.
 
+<Alert type="info">
+
+<strong class="alert-header">Cross Browser Support</strong>
+
+Cypress currently supports Firefox and Chrome-family browsers (including Edge
+and Electron). To run tests optimally across these browsers in CI, check out the
+strategies demonstrated in the
+[cross browser Testing](/guides/guides/cross-browser-testing) guide.
+
+</Alert>
+
 ## Browsers
 
-When Cypress is initially run from the Test Runner, you can choose to run
-Cypress in a select number of browsers including:
+When the Cypress App is initially launched, you can choose to test your
+application using number of browsers including:
 
 - [Chrome](https://www.google.com/chrome/)
 - [Chrome Beta](https://www.google.com/chrome/beta/)
@@ -26,9 +37,9 @@ Cypress in a select number of browsers including:
 - [Firefox Nightly](https://www.mozilla.org/firefox/nightly/)
 
 Cypress automatically detects available browsers on your OS. You can switch the
-browser in the Test Runner by using the drop down in the top right corner:
+browser in the Cypress App by using the drop down near the top right corner:
 
-<DocsImage src="/img/guides/browser-list-dropdown.png" alt="Select a different browser" ></DocsImage>
+<DocsImage src="/img/guides/launching-browsers/v10/browser-list-dropdown.png" alt="Select a different browser"></DocsImage>
 
 ### Browser versions supported
 
@@ -164,35 +175,36 @@ tests.
 For example, your web application might _only_ be designed to work in a Chrome
 browser, and not inside the Electron browser.
 
-In the plugins file, you can filter the list of browsers passed inside the
-`config` object and return the list of browsers you want available for selection
-during `cypress open`.
+In the [setupNodeEvents](/api/plugins/configuration-api) function, you can
+filter the list of browsers passed inside the `config` object and return the
+list of browsers you want available for selection during `cypress open`.
+
+:::cypress-plugin-example
 
 ```javascript
-// cypress/plugins/index.js
-module.exports = (on, config) => {
-  // inside config.browsers array each object has information like
-  // {
-  //   name: 'chrome',
-  //   channel: 'canary',
-  //   family: 'chromium',
-  //   displayName: 'Canary',
-  //   version: '80.0.3966.0',
-  //   path:
-  //    '/Applications/Canary.app/Contents/MacOS/Canary',
-  //   majorVersion: 80
-  // }
-  return {
-    browsers: config.browsers.filter((b) => b.family === 'chromium'),
-  }
+// inside config.browsers array each object has information like
+// {
+//   name: 'chrome',
+//   channel: 'canary',
+//   family: 'chromium',
+//   displayName: 'Canary',
+//   version: '80.0.3966.0',
+//   path:
+//    '/Applications/Canary.app/Contents/MacOS/Canary',
+//   majorVersion: 80
+// }
+return {
+  browsers: config.browsers.filter(
+    (b) => b.family === 'chromium' && b.name !== 'electron'
+  ),
 }
 ```
 
-When you open the Test Runner in a project that uses the above modifications to
-your plugins file, only the Chrome browsers found on the system will display in
-the list of available browsers.
+:::
 
-<DocsImage src="/img/guides/plugins/chrome-browsers-only.png" alt="Filtered list of Chrome browsers" ></DocsImage>
+When you open the Cypress App in a project that uses the above modifications to
+the `setupNodeEvents` function, Electron will no longer display in the list of
+available browsers.
 
 <Alert type="info">
 
@@ -203,11 +215,12 @@ will be restored automatically.
 
 If you have installed a Chromium-based browser like [Brave](https://brave.com/),
 [Vivaldi](https://vivaldi.com/) you can add them to the list of returned
-browsers. Here is a plugins file that inserts a local Brave browser into the
+browsers. Here is a configuration that inserts a local Brave browser into the
 returned list.
 
-```javascript
-// cypress/plugins/index.js
+:::cypress-plugin-example
+
+```js
 const execa = require('execa')
 const findBrowser = () => {
   // the path is hard-coded for simplicity
@@ -230,26 +243,26 @@ const findBrowser = () => {
     }
   })
 }
-
-module.exports = (on, config) => {
-  return findBrowser().then((browser) => {
-    return {
-      browsers: config.browsers.concat(browser),
-    }
-  })
-}
 ```
 
-<DocsImage src="/img/guides/plugins/brave-browser.png" alt="List of browsers includes Brave browser" ></DocsImage>
+```js
+return findBrowser().then((browser) => {
+  return {
+    browsers: config.browsers.concat(browser),
+  }
+})
+```
+
+:::
 
 Once selected, the Brave browser is detected using the same approach as any
 other browser of the `chromium` family.
 
-<DocsImage src="/img/guides/plugins/brave-running-tests.png" alt="Brave browser executing end-to-end tests" ></DocsImage>
+<DocsImage src="/img/guides/launching-browsers/v10/brave-running-tests.png" alt="Brave browser executing end-to-end tests"></DocsImage>
 
 If you modify the list of browsers, you can see the
 [resolved configuration](/guides/references/configuration#Resolved-Configuration)
-in the **Settings** tab of the Test Runner.
+in the **Settings** tab of the Cypress App.
 
 ### Unsupported Browsers
 
@@ -319,7 +332,7 @@ You can see all of the default chrome command line switches we send
 You might notice that if you already have the browser open you will see two of
 the same browser icons in your dock.
 
-<DocsVideo src="/img/snippets/switching-between-cypress-and-other-chrome-browser.mp4"></DocsVideo>
+<DocsImage src="/img/guides/launching-browsers/v10/multiple-chrome-icons.png" alt="Cypress icon with 2 Google Chrome icons"></DocsImage>
 
 We understand that when Cypress is running in its own profile it can be
 difficult to tell the difference between your normal browser and Cypress.
@@ -329,13 +342,11 @@ versions (Dev, Canary, etc) useful. These browsers have different icons from the
 standard stable browser, making them more distinguishable. You can also use the
 bundled [Electron browser](#Electron-Browser), which does not have a dock icon.
 
-<DocsVideo src="/img/snippets/switching-cypress-browser-and-canary-browser.mp4"></DocsVideo>
-
 Additionally, in Chrome-based browsers, we've made the browser spawned by
 Cypress look different than regular sessions. You'll see a darker theme around
 the chrome of the browser. You'll always be able to visually distinguish these.
 
-<DocsImage src="/img/guides/cypress-browser-chrome.png" alt="Cypress Browser with darker chrome" ></DocsImage>
+<DocsImage src="/img/guides/launching-browsers/v10/cypress-browser-chrome.png" alt="Cypress Browser with darker chrome"></DocsImage>
 
 ## Troubleshooting
 

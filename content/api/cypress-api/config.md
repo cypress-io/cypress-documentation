@@ -60,13 +60,17 @@ Set multiple configuration options with an object literal.
 
 ### No Arguments
 
-#### Get all configuration options from [configuration](/guides/references/configuration) file (`cypress.json` by default)
+#### Get all configuration options from the [Cypress configuration](/guides/references/configuration)
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "defaultCommandTimeout": 10000
+  defaultCommandTimeout: 10000
 }
 ```
+
+:::
 
 <!-- textlint-disable -->
 
@@ -78,13 +82,17 @@ Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, ..
 
 ### Name
 
-#### Return a single configuration option from [configuration](/guides/references/configuration) file (`cypress.json` by default)
+#### Return a single configuration option from the [Cypress configuration](/guides/references/configuration)
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "pageLoadTimeout": 60000
+  pageLoadTimeout: 60000
 }
 ```
+
+:::
 
 ```javascript
 Cypress.config('pageLoadTimeout') // => 60000
@@ -92,7 +100,7 @@ Cypress.config('pageLoadTimeout') // => 60000
 
 ### Name and Value
 
-#### Change the values of configuration options from configuration file (`cypress.json` by default) from within your tests
+#### Change the values of configuration options from the [Cypress configuration](/guides/references/configuration) from within your tests
 
 <Alert type="warning">
 
@@ -103,12 +111,16 @@ effect for the remainder of the tests _in the same spec file._
 
 </Alert>
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "viewportWidth": 1280,
-  "viewportHeight": 720
+  viewportWidth: 1280,
+  viewportHeight: 720
 }
 ```
+
+:::
 
 ```javascript
 Cypress.config('viewportWidth', 800)
@@ -118,14 +130,18 @@ Cypress.config('viewportWidth') // => 800
 
 ### Object
 
-#### Override multiple options from configuration file (`cypress.json` by default) by passing an object literal
+#### Override multiple options from the [Cypress configuration](/guides/references/configuration) by passing an object
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "defaultCommandTimeout": 4000,
-  "pageLoadTimeout": 30000
+  defaultCommandTimeout: 4000,
+  pageLoadTimeout: 30000
 }
 ```
+
+:::
 
 ```javascript
 Cypress.config({
@@ -140,11 +156,11 @@ Cypress.config() // => {defaultCommandTimeout: 10000, viewportHeight: 900, ...}
 
 ### Not all config values can be changed at all times
 
-Some configuration values are readonly and cannot be changed during running a
-test. Anything that is not listed in the
-[test configuration options](/guides/references/configuration#Test-Configuration)
-cannot be updated at runtime. Be sure to review the list of
-[test configuration options](/guides/references/configuration##Test-Configuration).
+Some configuration values are readonly and cannot be changed while running a
+test. Anything that's not directly under Cypress's control - like timeouts,
+`userAgent`, or environment variables - will be ignored at run-time. Be sure to
+review the list of
+[test configuration options](/guides/references/configuration#Test-Configuration).
 
 ### Test Configuration vs `Cypress.config()`
 
@@ -199,6 +215,6 @@ and by that time `Cypress.config` was public API.
 
 ## See also
 
-- [configuration](/guides/references/configuration)
+- [Cypress configuration](/guides/references/configuration)
 - The [Environment Variable](/guides/guides/environment-variables) guide
 - [Test Configuration](/guides/references/configuration#Test-Configuration)

@@ -4,13 +4,6 @@
       "name": "Preprocessors",
       "plugins": [
         {
-          "name": "Browserify",
-          "description": "Watches and bundles your spec files via browserify. This is the default preprocessor that's built into Cypress.",
-          "link": "https://github.com/cypress-io/cypress-browserify-preprocessor",
-          "keywords": ["browserify"],
-          "badge": "official"
-        },
-        {
           "name": "Cucumber",
           "description": "Run cucumber/gherkin-syntaxed specs with cypress.io",
           "link": "https://github.com/badeball/cypress-cucumber-preprocessor",
@@ -206,10 +199,10 @@
         },
         {
           "name": "@cypress/fiddle",
-          "description": "Quickly generates Cypress tests from HTML and JS code",
+          "description": "Quickly generates Cypress E2E tests from HTML and JS code",
           "link": "https://github.com/cypress-io/cypress-fiddle",
           "keywords": ["prototype"],
-          "badge": "official"
+          "badge": "community"
         },
         {
           "name": "npm-cy",
@@ -519,7 +512,7 @@
           "description": "Simple commands to skip a test based on platform, browser or a url",
           "link": "https://github.com/cypress-io/cypress-skip-test",
           "keywords": ["commands"],
-          "badge": "official"
+          "badge": "community"
         },
         {
           "name": "cypress-websocket-testing",
@@ -1060,6 +1053,18 @@
           "link": "https://github.com/mailslurp/cypress-mailslurp",
           "keywords": ["email", "mailslurp", "test", "commands"],
           "badge": "community"
+        }
+      ]
+    },
+    {
+      "name": "Legacy",
+      "plugins": [
+        {
+          "name": "Browserify",
+          "description": "Watches and bundles your spec files via browserify.",
+          "link": "https://github.com/cypress-io/cypress-browserify-preprocessor",
+          "keywords": ["browserify"],
+          "badge": "official"
         }
       ]
     }

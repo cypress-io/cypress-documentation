@@ -1,5 +1,6 @@
 ---
 title: origin
+e2eSpecific: true
 ---
 
 Visit multiple domains of different

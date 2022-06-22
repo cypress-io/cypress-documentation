@@ -166,7 +166,7 @@ Imagine you have a button:
 Oftentimes either the `<i>` or `<span>` element is covering the exact coordinate
 we're attempting to interact with. In those cases, the event fires on the child.
 We even note this for you in the
-[Command Log](/guides/core-concepts/test-runner#Command-Log).
+[Command Log](/guides/core-concepts/cypress-app#Command-Log).
 
 ### Scrolling
 
@@ -216,14 +216,14 @@ cy.get('button').click({ position: 'topLeft' })
 ```
 
 The coordinates we fired the event at will generally be available when clicking
-the command in the [Command Log](/guides/core-concepts/test-runner#Command-Log).
+the command in the [Command Log](/guides/core-concepts/cypress-app#Command-Log).
 
-<DocsImage src="/img/guides/coords.png" alt="Event coordinates" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/coords.png" alt="Event coordinates"></DocsImage>
 
 Additionally we'll display a red "hitbox" - which is a dot indicating the
 coordinates of the event.
 
-<DocsImage src="/img/guides/hitbox.png" alt="Hitbox" ></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/hitbox.png" alt="Hitbox"></DocsImage>
 
 ## Debugging
 
@@ -233,7 +233,7 @@ actionable by Cypress.
 Although you _should_ see a nice error message, nothing beats visually
 inspecting and poking at the DOM yourself to understand the reason why.
 
-When you use the [Command Log](/guides/core-concepts/test-runner#Command-Log) to
+When you use the [Command Log](/guides/core-concepts/cypress-app#Command-Log) to
 hover over a command, you'll notice that we will always scroll the element the
 command was applied to into view. Please note that this is _NOT_ using the same
 algorithms that we described above.

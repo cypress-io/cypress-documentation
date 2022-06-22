@@ -1,5 +1,6 @@
 ---
 title: visit
+e2eSpecific: true
 ---
 
 Visit a remote URL.
@@ -51,7 +52,7 @@ If the `baseUrl` has not been set, you will need to specify a fully qualified
 URL or Cypress will attempt to act as your web server. See the
 [prefixes notes](#Prefixes) for more details.
 
-**Note:** visiting a new domain requires the Test Runner window to reload. You
+**Note:** visiting a new domain requires the Cypress App window to reload. You
 cannot visit different super domains in a single test.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
@@ -69,7 +70,7 @@ By default, the `cy.visit()` commands' will use the `pageLoadTimeout` and
 | `body`                     | `null`                                                         | An optional body to send along with a `POST` request. If it is a string, it will be passed along unmodified. If it is an object, it will be URL encoded to a string and sent with a `Content-Type: application/x-www-urlencoded` header. |
 | `headers`                  | `{}`                                                           | An object that maps HTTP header names to values to be sent along with the request. _Note:_ `headers` will only be sent for the initial `cy.visit()` request, not for any subsequent requests.                                            |
 | `qs`                       | `null`                                                         | Query parameters to append to the `url` of the request                                                                                                                                                                                   |
-| `log`                      | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                                                                                                                                                 |
+| `log`                      | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                                                                                                                 |
 | `auth`                     | `null`                                                         | Adds Basic Authorization headers                                                                                                                                                                                                         |
 | `failOnStatusCode`         | `true`                                                         | Whether to fail on response codes other than `2xx` and `3xx`                                                                                                                                                                             |
 | `onBeforeLoad`             | `function`                                                     | Called before your page has loaded all of its resources.                                                                                                                                                                                 |
@@ -79,7 +80,7 @@ By default, the `cy.visit()` commands' will use the `pageLoadTimeout` and
 | `timeout`                  | [`pageLoadTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.visit()` to resolve before [timing out](#Timeouts) Note: Network requests are limited by the underlying operating system, and may still time out if this value is increased.                                        |
 
 You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl`
-globally in [configuration](/guides/references/configuration).
+globally in the [Cypress configuration](/guides/references/configuration).
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
@@ -236,20 +237,25 @@ cy.visit({
 
 ## Notes
 
-## Prefixes
+### Prefixes
 
-### Visit is automatically prefixed with `baseUrl`
+#### Visit is automatically prefixed with `baseUrl`
 
-Cypress will prefix the URL with the `baseUrl` if it has been set. We
-recommending configuring the `baseUrl` in the your
-[configuration](/guides/references/configuration) file (`cypress.json` by
-default) to prevent repeating yourself in every `cy.visit()` command.
+Cypress will prefix the URL with the `baseUrl` if it has been set. Configure
+`baseUrl` in the [Cypress configuration](/guides/references/configuration) to
+prevent repeating yourself in every `cy.visit()` command.
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "baseUrl": "http://localhost:3000/#/"
+  e2e: {
+    baseUrl: 'http://localhost:3000/#/'
+  }
 }
 ```
+
+:::
 
 ```javascript
 cy.visit('dashboard') // Visits http://localhost:3000/#/dashboard
@@ -262,32 +268,39 @@ provide the fully qualified URL you would like to go to.
 cy.visit('http://google.com')
 ```
 
-### Visit local files
+#### Visit local files
 
 Cypress will automatically attempt to serve your files if you don't provide a
-host and the `baseUrl` **is not defined**. The path should be relative to your
-project's root folder (where the `cypress.json` file is generated by default).
+host and `baseUrl` **is not defined**. The path should be relative to your
+project's root folder (the directory that contains the
+[Cypress configuration file](/guides/references/configuration)).
 
 Having Cypress serve your files is useful in smaller projects and example apps,
 but isn't recommended for production apps. It is always better to run your own
-server and provide the URL to Cypress.
+server and provide the url to Cypress.
 
 ```javascript
 cy.visit('app/index.html')
 ```
 
-#### Visit local file when `baseUrl` is set
+##### Visit local file when `baseUrl` is set
 
 If you have `baseUrl` set, but need to visit a local file in a single test or a
-group of tests, set the `baseUrl` to `null` by using
-[a test configuration](/guides/references/configuration#Test-Configuration).
-Given our `cypress.json` file:
+group of tests, disable the `baseUrl` using
+[per-test configuration](/guides/references/configuration#Test-Configuration).
+Imagine this Cypress configuration:
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "baseUrl": "https://example.cypress.io"
+  e2e: {
+    baseUrl: 'https://example.cypress.io'
+  }
 }
 ```
+
+:::
 
 The first test visits the `baseUrl`, while the second test visits the local
 file.

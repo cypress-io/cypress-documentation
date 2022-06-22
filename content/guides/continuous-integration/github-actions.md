@@ -72,7 +72,7 @@ jobs:
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           build: npm run build
           start: npm start
@@ -131,7 +131,7 @@ jobs:
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           # Specify Browser since container image is compile with Firefox
           browser: firefox
@@ -178,7 +178,7 @@ jobs:
           path: build
 
       - name: Cypress install
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           # Disable running of tests within install job
           runTests: false
@@ -214,7 +214,7 @@ jobs:
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           # Specify Browser since container image is compile with Firefox
           browser: firefox
@@ -282,7 +282,7 @@ jobs:
           path: build
 
       - name: Cypress install
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           # Disable running of tests within install job
           runTests: false
@@ -338,7 +338,7 @@ jobs:
           path: build
 
       - name: 'UI Tests - Chrome'
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           # we have already installed all dependencies above
           install: false
@@ -453,6 +453,73 @@ refer to the
 file.
 
 <DocsImage src="/img/guides/github-actions/rwa-run-matrix.png" alt="Cypress Real World App GitHub Actions Matrix"></DocsImage>
+
+## Common Problems and Solutions
+
+### Re-run jobs passing with empty tests
+
+We recommend passing the `GITHUB_TOKEN` secret (created by the GH Action
+automatically) as an environment variable. This will allow the accurate
+identification of each build to avoid confusion when re-running a build.
+
+```
+name: Cypress tests
+on: [push]
+jobs:
+  cypress-run:
+    name: Cypress run
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v4
+        with:
+          record: true
+        env:
+          # pass GitHub token to detect new build vs re-run build
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+```
+
+### Pull requests commit message is `merge SHA into SHA`
+
+You can overwrite the commit message sent to the Dashboard by setting an
+environment variable. See
+[Issue #124](https://github.com/cypress-io/github-action/issues/124) for more
+details.
+
+```
+name: Cypress tests
+on: [push]
+jobs:
+  cypress-run:
+    name: Cypress run
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v4
+        with:
+          record: true
+        env:
+          # overwrite commit message sent to Dashboard
+          COMMIT_INFO_MESSAGE: ${{github.event.pull_request.title}}
+          # re-enable PR comment bot
+          COMMIT_INFO_SHA: ${{github.event.pull_request.head.sha}}
+```
+
+<Alert type="info">
+
+We also recommend adding `COMMIT_INFO_SHA` to re-enable
+[Cypress bot PR comments](https://on.cypress.io/github-integration#Pull-request-comments).
+See
+[this comment](https://github.com/cypress-io/github-action/issues/124#issuecomment-716584972)
+for more details.
+
+</Alert>
 
 ## See also
 

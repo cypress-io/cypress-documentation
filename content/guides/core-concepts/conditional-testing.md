@@ -170,7 +170,7 @@ with it.
 Let's explore some examples of conditional testing that will pass or fail 100%
 of the time.
 
-### A/B campaign
+### A/B campaign <E2EOnlyBadge />
 
 In this example let's assume you visit your website and the content will be
 different based on which A/B campaign your server decides to send. Perhaps it is
@@ -246,7 +246,7 @@ cy.get('html')
   })
 ```
 
-### Welcome wizard
+### Welcome wizard <E2EOnlyBadge />
 
 In this example, let's imagine you are running a bunch of tests and each time
 you load your application, it may show a "Welcome Wizard" modal.

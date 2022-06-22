@@ -1,6 +1,7 @@
 ---
 title: Trade-offs
 containerClass: faq
+e2eSpecific: true
 ---
 
 Cypress automates the browser with its own unique architecture. While this
@@ -269,6 +270,8 @@ end-to-end test that provides 100% confidence that the two clients can
 communicate with each other.
 
 ### Same-origin
+
+::include{file=partials/single-domain-workaround.md}
 
 Each test is limited to only visiting the domains that are determined to be of
 the same-origin rule.
