@@ -75,9 +75,12 @@ code as stored on that computer.
 #### Latest runs
 
 This column shows the last time the spec was run, and the last four returned
-statuses. With this intelligence you can monitor, run, and fix tests locally
-within CI workflows, and then further dig into your results by clicking through
-to the Dashboard.
+statuses. Results are scoped to your current git branch if available, falling
+back to the default branch if not, then finally all branches.
+
+With this intelligence you can monitor, run, and fix tests locally within CI
+workflows, and then further dig into your results by clicking through to the
+Dashboard.
 
 The runs data is sourced from the Dashboard (see [note above](#Overview)) so
 should be the same everywhere.
