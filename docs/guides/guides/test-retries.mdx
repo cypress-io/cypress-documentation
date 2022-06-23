@@ -204,8 +204,7 @@ number.
 With the following test code, you would see the below screenshot filenames when
 all 3 attempts fail:
 
-<e2e-or-ct>
-<template #e2e>
+<E2EOrCtTabs>
 
 ```js
 describe('User Login', () => {
@@ -217,9 +216,6 @@ describe('User Login', () => {
 })
 ```
 
-</template>
-<template #ct>
-
 ```js
 describe('User Login', () => {
   it('displays login errors', () => {
@@ -230,8 +226,7 @@ describe('User Login', () => {
 })
 ```
 
-</template>
-</e2e-or-ct>
+</E2EOrCtTabs>
 
 ```js
 // screenshot filename from cy.screenshot() on 1st attempt

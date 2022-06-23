@@ -273,8 +273,7 @@ Cypress you might want to check that out first.
 
 Here is an example of aliasing requests and then subsequently waiting on them:
 
-<e2e-or-ct>
-<template #e2e>
+<E2EOrCtTabs>
 
 ```js
 cy.intercept('/activities/*', { fixture: 'activities' }).as('getActivities')
@@ -293,9 +292,6 @@ cy.wait(['@getActivities', '@getMessages'])
 cy.get('h1').should('contain', 'Dashboard')
 ```
 
-</template>
-<template #ct>
-
 ```js
 cy.intercept('/activities/*', { fixture: 'activities' }).as('getActivities')
 cy.intercept('/messages/*', { fixture: 'messages' }).as('getMessages')
@@ -313,8 +309,7 @@ cy.wait(['@getActivities', '@getMessages'])
 cy.get('h1').should('contain', 'Dashboard')
 ```
 
-</template>
-</e2e-or-ct>
+</E2EOrCtTabs>
 
 If you would like to check the response data of each response of an aliased
 route, you can use several `cy.wait()` calls.

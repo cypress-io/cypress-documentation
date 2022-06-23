@@ -414,8 +414,7 @@ How to solve this:
 
 Let's imagine the following test that is filling out the form.
 
-<e2e-or-ct>
-<template #e2e>
+<E2EOrCtTabs>
 
 ```js
 // an example of what NOT TO DO
@@ -438,9 +437,6 @@ describe('my form', () => {
 })
 ```
 
-</template>
-<template #ct>
-
 ```js
 // an example of what NOT TO DO
 describe('my form', () => {
@@ -462,8 +458,7 @@ describe('my form', () => {
 })
 ```
 
-</template>
-</e2e-or-ct>
+</E2EOrCtTabs>
 
 What's wrong with the above tests? They are all coupled together!
 
@@ -476,8 +471,7 @@ Here's 2 ways we can fix this:
 
 ### 1. Combine into one test
 
-<e2e-or-ct>
-<template #e2e>
+<E2EOrCtTabs>
 
 ```js
 // a bit better
@@ -497,9 +491,6 @@ describe('my form', () => {
 })
 ```
 
-</template>
-<template #ct>
-
 ```js
 // a bit better
 describe('my form', () => {
@@ -518,8 +509,7 @@ describe('my form', () => {
 })
 ```
 
-</template>
-</e2e-or-ct>
+</E2EOrCtTabs>
 
 Now we can put an `.only` on this test and it will run successfully irrespective
 of any other test. The ideal Cypress workflow is writing and iterating on a
@@ -527,8 +517,7 @@ single test at a time.
 
 ### 2. Run shared code before each test
 
-<e2e-or-ct>
-<template #e2e>
+<E2EOrCtTabs>
 
 ```js
 describe('my form', () => {
@@ -551,9 +540,6 @@ describe('my form', () => {
 })
 ```
 
-</template>
-<template #ct>
-
 ```js
 describe('my form', () => {
   beforeEach(() => {
@@ -575,8 +561,7 @@ describe('my form', () => {
 })
 ```
 
-</template>
-</e2e-or-ct>
+</E2EOrCtTabs>
 
 This above example is ideal because now we are resetting the state between each
 test and ensuring nothing in previous tests leaks into subsequent ones.

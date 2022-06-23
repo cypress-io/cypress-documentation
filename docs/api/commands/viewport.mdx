@@ -132,8 +132,7 @@ describe('Nav Menus', () => {
 
 #### Dynamically test multiple viewports
 
-<e2e-or-ct>
-<template #e2e>
+<E2EOrCtTabs>
 
 ```js
 const sizes = ['iphone-6', 'ipad-2', [1024, 768]]
@@ -156,9 +155,6 @@ describe('Logo', () => {
 })
 ```
 
-</template>
-<template #ct>
-
 ```js
 const sizes = ['iphone-6', 'ipad-2', [1024, 768]]
 
@@ -180,8 +176,7 @@ describe('Logo', () => {
 })
 ```
 
-</template>
-</e2e-or-ct>
+</E2EOrCtTabs>
 
 <DocsImage src="/img/api/viewport/loop-through-an-array-of-multiple-viewports.png" alt="Command Log of multiple viewports" ></DocsImage>
 

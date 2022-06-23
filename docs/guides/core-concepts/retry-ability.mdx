@@ -282,8 +282,7 @@ cy.get('[data-testid="ssr-error"]', { timeout: 0 }).should("not.exist");
 
 Here is a short test that demonstrates some flake.
 
-<e2e-or-ct>
-<template #e2e>
+<E2EOrCtTabs>
 
 ```js
 it('adds two items', () => {
@@ -301,9 +300,6 @@ it('adds two items', () => {
 })
 ```
 
-</template>
-<template #ct>
-
 ```js
 it('adds two items', () => {
   cy.mount(<Todos />)
@@ -320,8 +316,7 @@ it('adds two items', () => {
 });
 ```
 
-</template>
-</e2e-or-ct>
+</E2EOrCtTabs>
 
 The test passes in Cypress without a hitch.
 
@@ -437,8 +432,7 @@ that query elements. Instead of
 `cy.get('[data-testid="todo-list"] li').find('label')` we can combine two
 separate queries into one - forcing the combined query to be retried.
 
-<e2e-or-ct>
-<template #e2e>
+<E2EOrCtTabs>
 
 ```js
 it('adds two items', () => {
@@ -454,9 +448,6 @@ it('adds two items', () => {
 })
 ```
 
-</template>
-<template #ct>
-
 ```js
 it('adds two items', () => {
   cy.mount(<Todos />)
@@ -471,8 +462,7 @@ it('adds two items', () => {
 });
 ```
 
-</template>
-</e2e-or-ct>
+</E2EOrCtTabs>
 
 To show the retries, I increased the application's artificial delay to 500ms.
 The test now always passes because the entire selector is retried. It finds 2
@@ -535,8 +525,7 @@ There is another way to fix our flaky test. Whenever you write a longer test, we
 recommend alternating commands with assertions. In this case, I will add an
 assertion after the `cy.get()` command, but before the `.find()` command.
 
-<e2e-or-ct>
-<template #e2e>
+<E2EOrCtTabs>
 
 ```js
 it('adds two items', () => {
@@ -556,9 +545,6 @@ it('adds two items', () => {
 })
 ```
 
-</template>
-<template #ct>
-
 ```js
 it('adds two items', () => {
   cy.mount(<Todos />)
@@ -577,8 +563,7 @@ it('adds two items', () => {
 });
 ```
 
-</template>
-</e2e-or-ct>
+</E2EOrCtTabs>
 
 <DocsImage
   src="/img/guides/retry-ability/v10/alternating-commands-assertions.png"

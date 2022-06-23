@@ -104,8 +104,7 @@ For a detailed explanation of aliasing,
 
 #### Wait for a specific request to respond
 
-<e2e-or-ct>
-<template #e2e>
+<E2EOrCtTabs>
 
 ```js
 // Wait for the alias 'getAccount' to respond
@@ -119,9 +118,6 @@ cy.wait('@getAccount').then((interception) => {
 })
 ```
 
-</template>
-<template #ct>
-
 ```js
 // Wait for the alias 'getAccount' to respond
 // without changing or stubbing its response
@@ -134,8 +130,7 @@ cy.wait('@getAccount').then((interception) => {
 })
 ```
 
-</template>
-</e2e-or-ct>
+</E2EOrCtTabs>
 
 #### Wait automatically increments responses
 
@@ -174,8 +169,7 @@ cy.get('#book-results').should('have.length', 1)
 When passing an array of aliases to `cy.wait()`, Cypress will wait for all
 requests to complete within the given `requestTimeout` and `responseTimeout`.
 
-<e2e-or-ct>
-<template #e2e>
+<E2EOrCtTabs>
 
 ```js
 cy.intercept('/users/*').as('getUsers')
@@ -193,9 +187,6 @@ cy.wait(['@getUsers', '@getActivities', '@getComments']).then(
 )
 ```
 
-</template>
-<template #ct>
-
 ```js
 cy.intercept('/users/*').as('getUsers')
 cy.intercept('/activities/*').as('getActivities')
@@ -212,8 +203,7 @@ cy.wait(['@getUsers', '@getActivities', '@getComments']).then(
 )
 ```
 
-</template>
-</e2e-or-ct>
+</E2EOrCtTabs>
 
 #### Using [`.spread()`](/api/commands/spread) to spread the array into multiple arguments.
 

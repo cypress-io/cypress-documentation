@@ -362,8 +362,7 @@ Even a single test can cover a lot of the application code. For example, let's
 run the following test that adds a few items, then marks one of them as
 completed.
 
-<e2e-or-ct>
-<template #e2e>
+<E2EOrCtTabs>
 
 ```js
 it('adds and completes todos', () => {
@@ -381,9 +380,6 @@ it('adds and completes todos', () => {
 })
 ```
 
-</template>
-<template #ct>
-
 ```js
 it('adds and completes todos', () => {
   cy.mount(<AddTodo />)
@@ -400,8 +396,7 @@ it('adds and completes todos', () => {
 })
 ```
 
-</template>
-</e2e-or-ct>
+</E2EOrCtTabs>
 
 After running the test and opening the HTML report, we see 76% code coverage in
 our application.

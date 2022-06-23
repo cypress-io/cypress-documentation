@@ -183,8 +183,7 @@ cy.fixture('users').then((json) => {
 You can modify fixture data directly before visiting a URL or mounting a
 component that makes a network request to that URL.
 
-<e2e-or-ct>
-<template #e2e>
+<E2EOrCtTabs>
 
 ```js
 cy.fixture('user').then((user) => {
@@ -198,9 +197,6 @@ cy.wait('@getUser').then(({ request }) => {
 })
 ```
 
-</template>
-<template #ct>
-
 ```js
 cy.fixture('user').then((user) => {
   user.firstName = 'Jane'
@@ -213,8 +209,7 @@ cy.wait('@getUser').then(({ request }) => {
 })
 ```
 
-</template>
-</e2e-or-ct>
+</E2EOrCtTabs>
 
 ## Notes
 

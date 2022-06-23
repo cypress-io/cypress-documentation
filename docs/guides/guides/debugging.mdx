@@ -25,8 +25,7 @@ browser makes available to you, like `document`, `window`, and `debugger`.
 Based on those statements, you might be tempted to throw a `debugger` into your
 test, like so:
 
-<e2e-or-ct>
-<template #e2e>
+<E2EOrCtTabs>
 
 ```js
 it('let me debug like a fiend', () => {
@@ -38,9 +37,6 @@ it('let me debug like a fiend', () => {
 })
 ```
 
-</template>
-<template #ct>
-
 ```js
 it('let me debug like a fiend', () => {
   cy.mount(<MyComponent />)
@@ -51,8 +47,7 @@ it('let me debug like a fiend', () => {
 })
 ```
 
-</template>
-</e2e-or-ct>
+</E2EOrCtTabs>
 
 This may not work exactly as you are expecting. As you may remember from the
 [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress), `cy`
@@ -68,8 +63,7 @@ same behavior is expected in Component Tests when using
 Let's use [`.then()`](/api/commands/then) to tap into the Cypress command during
 execution and add a `debugger` at the appropriate time:
 
-<e2e-or-ct>
-<template #e2e>
+<E2EOrCtTabs>
 
 ```js
 it('let me debug when the after the command executes', () => {
@@ -83,9 +77,6 @@ it('let me debug when the after the command executes', () => {
 })
 ```
 
-</template>
-<template #ct>
-
 ```js
 it('let me debug when the after the command executes', () => {
   cy.mount(<MyComponent />)
@@ -98,8 +89,7 @@ it('let me debug when the after the command executes', () => {
 })
 ```
 
-</template>
-</e2e-or-ct>
+</E2EOrCtTabs>
 
 Now we're in business! When you're visiting a page or mounting a component for
 the first time, (shown above with the [`cy.get()`](/api/commands/get)chain and
@@ -124,8 +114,7 @@ Cypress also exposes a shortcut for debugging commands,
 [`.debug()`](/api/commands/debug). Let's rewrite the test above using this
 helper method:
 
-<e2e-or-ct>
-<template #e2e>
+<E2EOrCtTabs>
 
 ```js
 it('let me debug like a fiend', () => {
@@ -135,9 +124,6 @@ it('let me debug like a fiend', () => {
 })
 ```
 
-</template>
-<template #ct>
-
 ```js
 it('let me debug like a fiend', () => {
   cy.mount(<MyComponent />)
@@ -146,8 +132,7 @@ it('let me debug like a fiend', () => {
 })
 ```
 
-</template>
-</e2e-or-ct>
+</E2EOrCtTabs>
 
 The current subject that is yielded by the [`cy.get()`](/api/commands/get) is
 exposed as the variable `subject` within your Developer Tools so that you can

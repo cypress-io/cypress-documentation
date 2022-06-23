@@ -32,8 +32,7 @@ After you're done, we suggest watching some of our <Icon name="video"></Icon>
 Simplicity is all about getting more done with less typing. Let's look at an
 example:
 
-<e2e-or-ct>
-<template #e2e>
+<E2EOrCtTabs>
 
 ```js
 describe('Post Resource', () => {
@@ -55,9 +54,6 @@ describe('Post Resource', () => {
 })
 ```
 
-</template>
-<template #ct>
-
 ```js
 describe('Post Resource', () => {
   it('Creating a New Post', () => {
@@ -78,8 +74,7 @@ describe('Post Resource', () => {
 });
 ```
 
-</template>
-</e2e-or-ct>
+</E2EOrCtTabs>
 
 Can you read this? If you did, it might sound something like this:
 
@@ -544,8 +539,7 @@ is what we mean when we say Cypress commands are asynchronous.
 
 #### Take this short test, for example:
 
-<e2e-or-ct>
-<template #e2e>
+<E2EOrCtTabs>
 
 ```js
 it('hides the thing when it is clicked', () => {
@@ -562,9 +556,6 @@ it('hides the thing when it is clicked', () => {
 // Cypress will begin running them in order!
 ```
 
-</template>
-<template #ct>
-
 ```js
 it('hides the thing when it is clicked', () => {
   cy.mount(<MyComponent />) // Nothing happens yet
@@ -580,8 +571,7 @@ it('hides the thing when it is clicked', () => {
 // Cypress will begin running them in order!
 ```
 
-</template>
-</e2e-or-ct>
+</E2EOrCtTabs>
 
 Cypress doesn't kick off the browser automation magic until the test function
 exits.
@@ -849,8 +839,7 @@ commands that were enqueued using the `cy.*` command chains.
 
 #### Let's take another look at an example
 
-<e2e-or-ct>
-<template #e2e>
+<E2EOrCtTabs>
 
 ```js
 it('hides the thing when it is clicked', () => {
@@ -863,9 +852,6 @@ it('hides the thing when it is clicked', () => {
 })
 ```
 
-</template>
-<template #ct>
-
 ```js
 it('hides the thing when it is clicked', () => {
   cy.mount(<MyComponent />) // 1.
@@ -877,8 +863,7 @@ it('hides the thing when it is clicked', () => {
 });
 ```
 
-</template>
-</e2e-or-ct>
+</E2EOrCtTabs>
 
 The test above would cause an execution in this order:
 
@@ -1082,8 +1067,7 @@ basic part of testing?
 
 #### Consider this example:
 
-<e2e-or-ct>
-<template #e2e>
+<E2EOrCtTabs>
 
 ```js
 cy.visit('/home')
@@ -1095,9 +1079,6 @@ cy.get('.title').type('My Awesome Project')
 cy.get('form').submit()
 ```
 
-</template>
-<template #ct>
-
 ```js
 cy.mount(<MyComponent />)
 
@@ -1108,8 +1089,7 @@ cy.get(".title").type("My Awesome Project");
 cy.get("form").submit();
 ```
 
-</template>
-</e2e-or-ct>
+</E2EOrCtTabs>
 
 Without a single explicit assertion, there are dozens of ways this test can
 fail! Here's a few:
