@@ -3,8 +3,7 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
 interface E2eOrCtTabsProps {
-  e2e: React.ReactNode
-  ct: React.ReactNode
+  children: React.ReactNode;
 }
 
 const E2EOrCtTabs: React.FC<E2eOrCtTabsProps> = ({children}) => {
