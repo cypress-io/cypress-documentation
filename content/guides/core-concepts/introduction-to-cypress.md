@@ -31,20 +31,13 @@ After you're done, we suggest watching some of our <Icon name="video"></Icon>
 Simplicity is all about getting more done with less typing. Let's look at an
 example:
 
-:::visit-mount-test-example
-
-```js
-cy.visit('/posts/new')
-```
-
-```js
-cy.mount(<PostBuilder />)
-```
+<e2e-or-ct>
+<template #e2e>
 
 ```js
 describe('Post Resource', () => {
   it('Creating a New Post', () => {
-    __VISIT_MOUNT_PLACEHOLDER__ // 1.
+    cy.visit('/posts/new') // 1.
 
     cy.get('input.post-title') // 2.
       .type('My First Post') // 3.
@@ -61,7 +54,31 @@ describe('Post Resource', () => {
 })
 ```
 
-:::
+</template>
+<template #ct>
+
+```js
+describe('Post Resource', () => {
+  it('Creating a New Post', () => {
+    cy.mount(<PostBuilder />) // 1.
+
+    cy.get('input.post-title') // 2.
+      .type('My First Post') // 3.
+
+    cy.get('input.post-body') // 4.
+      .type('Hello, world!') // 5.
+
+    cy.contains('Submit') // 6.
+      .click() // 7.
+
+    cy.get('h1') // 8.
+      .should('contain', 'My First Post')
+  })
+})
+```
+
+</template>
+</e2e-or-ct>
 
 Can you read this? If you did, it might sound something like this:
 
@@ -523,19 +540,12 @@ is what we mean when we say Cypress commands are asynchronous.
 
 #### Take this short test, for example:
 
-:::visit-mount-test-example
-
-```js
-cy.visit('/my/resource/path') // Nothing happens yet
-```
-
-```js
-cy.mount(<MyComponent />) // Nothing happens yet
-```
+<e2e-or-ct>
+<template #e2e>
 
 ```js
 it('hides the thing when it is clicked', () => {
-  __VISIT_MOUNT_PLACEHOLDER__
+  cy.visit('/my/resource/path') // Nothing happens yet
 
   cy.get('.hides-when-clicked') // Still nothing happening
     .should('be.visible') // Still absolutely nothing
@@ -548,7 +558,26 @@ it('hides the thing when it is clicked', () => {
 // Cypress will begin running them in order!
 ```
 
-:::
+</template>
+<template #ct>
+
+```js
+it('hides the thing when it is clicked', () => {
+  cy.mount(<MyComponent />) // Nothing happens yet
+
+  cy.get('.hides-when-clicked') // Still nothing happening
+    .should('be.visible') // Still absolutely nothing
+    .click() // Nope, nothing
+    .should('not.be.visible') // Definitely nothing happening yet
+})
+
+// Ok, the test function has finished executing...
+// We've queued all of these commands and now
+// Cypress will begin running them in order!
+```
+
+</template>
+</e2e-or-ct>
 
 Cypress doesn't kick off the browser automation magic until the test function
 exits.
@@ -810,19 +839,12 @@ commands that were enqueued using the `cy.*` command chains.
 
 #### Let's take another look at an example
 
-:::visit-mount-test-example
-
-```js
-cy.visit('/my/resource/path') // 1.
-```
-
-```js
-cy.mount(<MyComponent />) // 1.
-```
+<e2e-or-ct>
+<template #e2e>
 
 ```js
 it('hides the thing when it is clicked', () => {
-  __VISIT_MOUNT_PLACEHOLDER__
+  cy.visit('/my/resource/path') // 1.
 
   cy.get('.hides-when-clicked') // 2.
     .should('be.visible') // 3.
@@ -831,7 +853,22 @@ it('hides the thing when it is clicked', () => {
 })
 ```
 
-:::
+</template>
+<template #ct>
+
+```js
+it('hides the thing when it is clicked', () => {
+  cy.mount(<MyComponent />) // 1.
+
+  cy.get('.hides-when-clicked') // 2.
+    .should('be.visible') // 3.
+    .click() // 4.
+    .should('not.be.visible') // 5.
+})
+```
+
+</template>
+</e2e-or-ct>
 
 The test above would cause an execution in this order:
 
@@ -1035,18 +1072,11 @@ basic part of testing?
 
 #### Consider this example:
 
-:::visit-mount-test-example
+<e2e-or-ct>
+<template #e2e>
 
 ```js
 cy.visit('/home')
-```
-
-```js
-cy.mount(<MyComponent />)
-```
-
-```js
-__VISIT_MOUNT_PLACEHOLDER__
 
 cy.get('.main-menu').contains('New Project').click()
 
@@ -1055,7 +1085,21 @@ cy.get('.title').type('My Awesome Project')
 cy.get('form').submit()
 ```
 
-:::
+</template>
+<template #ct>
+
+```js
+cy.mount(<MyComponent />)
+
+cy.get('.main-menu').contains('New Project').click()
+
+cy.get('.title').type('My Awesome Project')
+
+cy.get('form').submit()
+```
+
+</template>
+</e2e-or-ct>
 
 Without a single explicit assertion, there are dozens of ways this test can
 fail! Here's a few:

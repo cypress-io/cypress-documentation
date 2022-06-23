@@ -40,24 +40,28 @@ Pass in an options object to change the default behavior of `cy.window()`.
 
 #### Yield the remote window object
 
-:::visit-mount-test-example
+<e2e-or-ct>
+<template #e2e>
 
 ```js
 cy.visit('http://localhost:8080/app')
-```
-
-```js
-cy.mount(<MyComponent />)
-```
-
-```js
-__VISIT_MOUNT_PLACEHOLDER__
 cy.window().then((win) => {
   // win is the remote window
 })
 ```
 
-:::
+</template>
+<template #ct>
+
+```js
+cy.mount(<MyComponent />)
+cy.window().then((win) => {
+  // win is the remote window
+})
+```
+
+</template>
+</e2e-or-ct>
 
 #### Check a custom property
 
