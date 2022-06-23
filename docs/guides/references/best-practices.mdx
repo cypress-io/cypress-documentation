@@ -414,24 +414,15 @@ How to solve this:
 
 Let's imagine the following test that is filling out the form.
 
-:::visit-mount-test-example
-
-```js
-it('visits the form', () => {
-  cy.visit('/users/new')
-})
-```
-
-```js
-it('mounts the form', () => {
-  cy.mount(<UserForm />)
-})
-```
+<e2e-or-ct>
+<template #e2e>
 
 ```js
 // an example of what NOT TO DO
 describe('my form', () => {
-  __VISIT_MOUNT_PLACEHOLDER__
+  it('visits the form', () => {
+    cy.visit('/users/new')
+  })
 
   it('requires first name', () => {
     cy.get('[data-testid="first-name"]').type('Johnny')
@@ -447,7 +438,32 @@ describe('my form', () => {
 })
 ```
 
-:::
+</template>
+<template #ct>
+
+```js
+// an example of what NOT TO DO
+describe('my form', () => {
+  it('mounts the form', () => {
+    cy.mount(<UserForm />)
+  })
+
+  it('requires first name', () => {
+    cy.get('[data-testid="first-name"]').type('Johnny')
+  })
+
+  it('requires last name', () => {
+    cy.get('[data-testid="last-name"]').type('Appleseed')
+  })
+
+  it('can submit a valid form', () => {
+    cy.get('form').submit()
+  })
+})
+```
+
+</template>
+</e2e-or-ct>
 
 What's wrong with the above tests? They are all coupled together!
 
@@ -460,21 +476,14 @@ Here's 2 ways we can fix this:
 
 ### 1. Combine into one test
 
-:::visit-mount-test-example
-
-```js
-cy.visit('/users/new')
-```
-
-```js
-cy.mount(<NewUser />)
-```
+<e2e-or-ct>
+<template #e2e>
 
 ```js
 // a bit better
 describe('my form', () => {
   it('can submit a valid form', () => {
-    __VISIT_MOUNT_PLACEHOLDER__
+    cy.visit('/users/new')
 
     cy.log('filling out first name') // if you really need this
     cy.get('[data-testid="first-name"]').type('Johnny')
@@ -488,7 +497,29 @@ describe('my form', () => {
 })
 ```
 
-:::
+</template>
+<template #ct>
+
+```js
+// a bit better
+describe('my form', () => {
+  it('can submit a valid form', () => {
+    cy.mount(<NewUser />)
+
+    cy.log('filling out first name') // if you really need this
+    cy.get('[data-testid="first-name"]').type('Johnny')
+
+    cy.log('filling out last name') // if you really need this
+    cy.get('[data-testid="last-name"]').type('Appleseed')
+
+    cy.log('submitting form') // if you really need this
+    cy.get('form').submit()
+  })
+})
+```
+
+</template>
+</e2e-or-ct>
 
 Now we can put an `.only` on this test and it will run successfully irrespective
 of any other test. The ideal Cypress workflow is writing and iterating on a
@@ -496,20 +527,13 @@ single test at a time.
 
 ### 2. Run shared code before each test
 
-:::visit-mount-test-example
-
-```js
-cy.visit('/users/new')
-```
-
-```js
-cy.mount(<NewUser />)
-```
+<e2e-or-ct>
+<template #e2e>
 
 ```js
 describe('my form', () => {
   beforeEach(() => {
-    __VISIT_MOUNT_PLACEHOLDER__
+    cy.visit('/users/new')
     cy.get('[data-testid="first-name"]').type('Johnny')
     cy.get('[data-testid="last-name"]').type('Appleseed')
   })
@@ -527,7 +551,32 @@ describe('my form', () => {
 })
 ```
 
-:::
+</template>
+<template #ct>
+
+```js
+describe('my form', () => {
+  beforeEach(() => {
+    cy.mount(<NewUser />)
+    cy.get('[data-testid="first-name"]').type('Johnny')
+    cy.get('[data-testid="last-name"]').type('Appleseed')
+  })
+
+  it('displays form validation', () => {
+    // clear out first name
+    cy.get('[data-testid="first-name"]').clear()
+    cy.get('form').submit()
+    cy.get('[data-testid="errors"]').should('contain', 'First name is required')
+  })
+
+  it('can submit a valid form', () => {
+    cy.get('form').submit()
+  })
+})
+```
+
+</template>
+</e2e-or-ct>
 
 This above example is ideal because now we are resetting the state between each
 test and ensuring nothing in previous tests leaks into subsequent ones.

@@ -132,15 +132,8 @@ describe('Nav Menus', () => {
 
 #### Dynamically test multiple viewports
 
-:::visit-mount-test-example
-
-```js
-cy.visit('https://www.cypress.io')
-```
-
-```js
-cy.mount(<MyComponent />)
-```
+<e2e-or-ct>
+<template #e2e>
 
 ```js
 const sizes = ['iphone-6', 'ipad-2', [1024, 768]]
@@ -156,14 +149,39 @@ describe('Logo', () => {
         cy.viewport(size)
       }
 
-      __VISIT_MOUNT_PLACEHOLDER__
+      cy.visit('https://www.cypress.io')
       cy.get('#logo').should('be.visible')
     })
   })
 })
 ```
 
-:::
+</template>
+<template #ct>
+
+```js
+const sizes = ['iphone-6', 'ipad-2', [1024, 768]]
+
+describe('Logo', () => {
+  sizes.forEach((size) => {
+    // make assertions on the logo using
+    // an array of different viewports
+    it(`Should display logo on ${size} screen`, () => {
+      if (Cypress._.isArray(size)) {
+        cy.viewport(size[0], size[1])
+      } else {
+        cy.viewport(size)
+      }
+
+      cy.mount(<MyComponent />)
+      cy.get('#logo').should('be.visible')
+    })
+  })
+})
+```
+
+</template>
+</e2e-or-ct>
 
 <DocsImage src="/img/api/viewport/loop-through-an-array-of-multiple-viewports.png" alt="Command Log of multiple viewports" ></DocsImage>
 

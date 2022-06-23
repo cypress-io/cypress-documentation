@@ -183,15 +183,8 @@ cy.fixture('users').then((json) => {
 You can modify fixture data directly before visiting a URL or mounting a
 component that makes a network request to that URL.
 
-:::visit-mount-test-example
-
-```js
-cy.visit('/users')
-```
-
-```js
-cy.mount(<Users />)
-```
+<e2e-or-ct>
+<template #e2e>
 
 ```js
 cy.fixture('user').then((user) => {
@@ -199,13 +192,29 @@ cy.fixture('user').then((user) => {
   cy.intercept('GET', '/users/1', user).as('getUser')
 })
 
-__VISIT_MOUNT_PLACEHOLDER__
+cy.visit('/users')
 cy.wait('@getUser').then(({ request }) => {
   expect(request.body.firstName).to.eq('Jane')
 })
 ```
 
-:::
+</template>
+<template #ct>
+
+```js
+cy.fixture('user').then((user) => {
+  user.firstName = 'Jane'
+  cy.intercept('GET', '/users/1', user).as('getUser')
+})
+
+cy.mount(<Users />)
+cy.wait('@getUser').then(({ request }) => {
+  expect(request.body.firstName).to.eq('Jane')
+})
+```
+
+</template>
+</e2e-or-ct>
 
 ## Notes
 

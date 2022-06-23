@@ -204,27 +204,34 @@ number.
 With the following test code, you would see the below screenshot filenames when
 all 3 attempts fail:
 
-:::visit-mount-test-example
-
-```js
-cy.visit('/')
-```
-
-```js
-cy.mount(<Login />)
-```
+<e2e-or-ct>
+<template #e2e>
 
 ```js
 describe('User Login', () => {
   it('displays login errors', () => {
-    __VISIT_MOUNT_PLACEHOLDER__
+    cy.visit('/')
     cy.screenshot('user-login-errors')
     // ...
   })
 })
 ```
 
-:::
+</template>
+<template #ct>
+
+```js
+describe('User Login', () => {
+  it('displays login errors', () => {
+    cy.mount(<Login />)
+    cy.screenshot('user-login-errors')
+    // ...
+  })
+})
+```
+
+</template>
+</e2e-or-ct>
 
 ```js
 // screenshot filename from cy.screenshot() on 1st attempt
