@@ -1,0 +1,194 @@
+---
+title: Auth0 Authentication
+---
+
+:::info
+
+## <Icon name="graduation-cap"></Icon> What you'll learn
+
+- Programmatically authenticate with [Auth0](https://auth0.com) via a custom
+  Cypress command
+- Adapting your [Auth0](https://auth0.com) application for programmatic
+  authentication during testing
+
+:::
+
+:::tip
+
+<strong class="alert-header">Why authenticate programmatically?</strong>
+
+Typically, logging in a user within your app by authenticating via a third-party
+provider requires visiting login pages hosted on a different domain. Since each
+Cypress test is limited to visiting domains of the same origin, we can subvert
+visiting and testing third-party login pages by programmatically interacting
+with the third-party authentication API to login a user.
+
+:::
+
+:::caution
+
+This guide is setup for testing against an [Auth0](https://auth0.com) Single
+Page Application using the
+[Classic Universal Login Experience](https://auth0.com/docs/universal-login/classic).
+This configuration is recommended for a "Test Tenant" and/or "Test API" setup
+for automated end-to-end testing.
+
+:::
+
+## Auth0 Application Setup
+
+To get started with Auth0, an application needs to be setup within the
+[Auth0 Dashboard](https://manage.auth0.com/dashboard) via the following steps:
+
+1. Visit the [Auth0 Dashboard](https://manage.auth0.com/dashboard) and click the
+   "Create Application" button.
+2. Enter the desired name for your application.
+3. Select "Single Page Application"
+
+Once your application is created, visit the
+[Application Settings](https://auth0.com/docs/dashboard/reference/settings-application)
+tab under your application, and add your local development URL and port (e.g
+`http://localhost:3000`) under the following sections:
+
+- Allowed Callback URLs
+- Allowed Logout URLs
+- Allowed Web Origins
+- Allowed Origins (CORS)
+
+In the bottom of
+[Application Settings](https://auth0.com/docs/dashboard/reference/settings-application),
+click
+[Show Advanced Settings](https://auth0.com/docs/dashboard/reference/settings-application#advanced-settings),
+select "Grant Types" tab and check "Password" (unchecked by default).
+
+Next, click your Tenant icon (upper right avatar menu) to go to your
+[Tenant Settings](https://manage.auth0.com/#/tenant). On the
+[General](https://auth0.com/docs/dashboard/reference/settings-tenant#general)
+tab go to the
+[API Authorization Settings](https://auth0.com/docs/dashboard/reference/settings-tenant#api-authorization-settings)
+
+- Set "Default Audience" to the Audience URL for the Application you are testing
+  (e.g. `https://your-api-id.auth0.com/api/v2/`)
+- Set "Default Directory" to **"Username-Password-Authentication"**
+
+:::info
+
+Refer to the
+[Auth0 Tenant Settings documentation](https://auth0.com/docs/dashboard/reference/settings-tenant)
+for additional details.
+
+:::
+
+Finally, create a user in the
+[Auth0 User Store](https://auth0.com/docs/connections/database#using-the-auth0-user-store)
+for testing with Cypress. This testing-dedicated target user will be login to
+your application within your test specs. If required for your testing purposes,
+you can make as many users needed to test your specific application.
+
+## Setting Auth0 app credentials in Cypress
+
+To have access to test user credentials within our tests we need to configure
+Cypress to use the [Auth0](https://auth0.com) environment variables set in the
+`.env` file.
+
+:::cypress-env-example
+
+```js
+// Populate process.env with values from .env file
+require("dotenv").config();
+```
+
+```json
+{
+  "auth0_username": "AUTH0_USERNAME",
+  "auth0_password": "AUTH0_PASSWORD",
+  "auth0_domain": "REACT_APP_AUTH0_DOMAIN",
+  "auth0_audience": "REACT_APP_AUTH0_AUDIENCE",
+  "auth0_scope": "REACT_APP_AUTH0_SCOPE",
+  "auth0_client_id": "REACT_APP_AUTH0_CLIENTID",
+  "auth0_client_secret": "AUTH0_CLIENT_SECRET"
+}
+```
+
+:::
+
+## Custom Command for Auth0 Authentication
+
+Below is a command to programmatically login into [Auth0](https://auth0.com),
+using the
+[/oauth/token endpoint](https://auth0.com/docs/protocols/protocol-oauth2#token-endpoint)
+and set an item in localStorage with the authenticated users details, which we
+will use in our application code to verify we are authenticated under test.
+
+The `loginByAuth0Api` command will execute the following steps:
+
+1. Use the
+   [/oauth/token endpoint](https://auth0.com/docs/protocols/protocol-oauth2#token-endpoint)
+   to perform the programmatic login.
+2. Finally the `auth0Cypress` localStorage item is set with the `access token`,
+   `id_token` and user profile.
+
+```jsx
+// cypress/support/commands.js
+Cypress.Commands.add(
+  "loginByAuth0Api",
+  (username: string, password: string) => {
+    cy.log(`Logging in as ${username}`);
+    const client_id = Cypress.env("auth0_client_id");
+    const client_secret = Cypress.env("auth0_client_secret");
+    const audience = Cypress.env("auth0_audience");
+    const scope = Cypress.env("auth0_scope");
+
+    cy.request({
+      method: "POST",
+      url: `https://${Cypress.env("auth0_domain")}/oauth/token`,
+      body: {
+        grant_type: "password",
+        username,
+        password,
+        audience,
+        scope,
+        client_id,
+        client_secret,
+      },
+    }).then(({ body }) => {
+      const claims = jwt.decode(body.id_token);
+      const {
+        nickname,
+        name,
+        picture,
+        updated_at,
+        email,
+        email_verified,
+        sub,
+        exp,
+      } = claims;
+
+      const item = {
+        body: {
+          ...body,
+          decodedToken: {
+            claims,
+            user: {
+              nickname,
+              name,
+              picture,
+              updated_at,
+              email,
+              email_verified,
+              sub,
+            },
+            audience,
+            client_id,
+          },
+        },
+        expiresAt: exp,
+      };
+
+      window.localStorage.setItem("auth0Cypress", JSON.stringify(item));
+
+      cy.visit("/");
+    });
+  }
+);
+```
