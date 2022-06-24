@@ -30,7 +30,7 @@ cy.getCookies().spread(() => {}) // Yield all cookies
 
 ```javascript
 cy.spread(() => {}) // Errors, cannot be chained off 'cy'
-cy.location().spread() // Errors, 'location' does not yield an array
+cy.clock().spread() // Errors, 'clock' does not yield an array
 ```
 
 ### Arguments

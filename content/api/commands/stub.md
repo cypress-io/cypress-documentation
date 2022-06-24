@@ -103,10 +103,20 @@ expect(removeStub).to.be.called
 
 #### Replace built-in window methods like prompt
 
-```javascript
-// assume App.start uses prompt to set the value of an element with class "name"
+In end-to-end tests, replacing built-in `window` methods needs to happen _after_
+the page is visited, but _before_ the application under test is loaded. You can
+do this by stubbing functions inside the [`cy.visit()`](/api/commands/visit)
+command `onBeforeLoad` function.
+
+In Component tests, because the page isn't being reloaded, all you need to do is
+stub functions before mounting your component.
+
+:::e2e-component-example
+
+```js
 cy.visit('http://localhost:3000', {
   onBeforeLoad(win) {
+    // Stub your functions here
     cy.stub(win, 'prompt').returns('my custom message')
   },
 })
@@ -116,6 +126,19 @@ App.start()
 cy.window().its('prompt').should('be.called')
 cy.get('.name').should('have.value', 'my custom message')
 ```
+
+```js
+// Stub your functions here
+cy.stub(window, 'prompt').returns('my custom message')
+
+// After that, mount your component
+cy.mount(<MyComponent />)
+
+cy.window().its('prompt').should('be.called')
+cy.get('.name').should('have.value', 'my custom message')
+```
+
+:::
 
 #### Disable logging to Command Log
 

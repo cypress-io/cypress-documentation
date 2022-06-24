@@ -39,7 +39,7 @@ Pass in an options object to change the default behavior of `cy.clearCookie()`.
 
 | Option    | Default                                                        | Description                                                                              |
 | --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.clearCookie()` to resolve before [timing out](#Timeouts)            |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
@@ -51,7 +51,7 @@ chained further.</li></List>
 
 ### No Args
 
-#### Clear a cookie after logging in
+#### Clear a cookie after logging in <E2EOnlyBadge />
 
 In this example, on first login, our server sends us back a session cookie.
 After invoking `cy.clearCookie('session_id')`, this clears the session cookie.

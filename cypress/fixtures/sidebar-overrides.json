@@ -7,8 +7,10 @@
   },
   "PAGE_TITLE": {
     "/guides/dashboard/introduction": "Dashboard",
-    "/guides/migrating-to-cypress/protractor": "Migrating from Protractor to Cypress",
+    "/guides/end-to-end-testing/protractor-to-cypress": "Migrating from Protractor to Cypress",
+    "/guides/end-to-end-testing/writing-your-first-end-to-end-test": "Writing Your First E2E Test",
     "/guides/references/assertions": "Assertions",
+    "/guides/references/legacy-configuration": "Configuration (Legacy)",
     "/api/utilities/_": "Cypress._",
     "/api/utilities/$": "Cypress.$",
     "/api/utilities/buffer": "Cypress.Buffer",
@@ -44,6 +46,18 @@
     "/api/plugins/after-spec-api": "After Spec API",
     "/api/plugins/browser-launch-api": "Browser Launch API",
     "/api/plugins/after-screenshot-api": "After Screenshot API",
-    "/examples/examples/tutorials": "Tutorial Videos"
+    "/examples/examples/tutorials": "Tutorial Videos",
+    "/guides/component-testing/devs-vs-users": "Who Are You Testing For?",
+    "/guides/component-testing/component-framework-configuration": "Framework Configuration",
+    "/guides/component-testing/component-test-troubleshooting": "Component Troubleshooting",
+    "/guides/component-testing/quickstart-vue": "Quickstart: Vue",
+    "/guides/component-testing/props-vue": "Vue Components with Props",
+    "/guides/component-testing/events-vue": "Testing Vue Components with Emitted Events",
+    "/guides/component-testing/slots-vue": "Testing Vue Components with Slots",
+    "/guides/component-testing/custom-mount-vue": "Custom Mount Commands and Styles",
+    "/guides/component-testing/quickstart-react": "Quickstart: React",
+    "/guides/component-testing/testing-react": "Testing React Components",
+    "/guides/component-testing/events-react": "Testing React Components with Events",
+    "/guides/component-testing/custom-mount-react": "Custom Mount Commands for React"
   }
 }

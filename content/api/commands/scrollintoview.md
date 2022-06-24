@@ -36,7 +36,7 @@ Pass in an options object to change the default behavior of `.scrollIntoView()`.
 | ---------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | `duration` | `0`                                                                  | Scrolls over the duration (in ms)                                                        |
 | `easing`   | `swing`                                                              | Will scroll with the easing animation                                                    |
-| `log`      | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `log`      | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `offset`   | `{top: 0, left: 0}`                                                  | Amount to scroll after the element has been scrolled into view                           |
 | `timeout`  | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.scrollIntoView()` to resolve before [timing out](#Timeouts)           |
 

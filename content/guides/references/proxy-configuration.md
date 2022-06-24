@@ -82,7 +82,7 @@ variables looks like this:
 set HTTP_PROXY=http://my-company-proxy.com
 ```
 
-To accomplish the same thing in Powershell:
+To accomplish the same thing in PowerShell:
 
 ```shell
 $env:HTTP_PROXY = "http://my-company-proxy.com"
@@ -160,7 +160,7 @@ env | grep -i proxy
 ### Windows
 
 Setting environment variables in Windows is different depending on if you're
-using _command prompt_ or _Powershell_.
+using _command prompt_ or _PowerShell_.
 
 #### Set an environment variable for current session
 
@@ -170,7 +170,7 @@ _Command prompt:_
 set SOME_VARIABLE=some-value
 ```
 
-_Powershell:_
+_PowerShell:_
 
 ```shell
 $env:SOME_VARIABLE = "some-value"
@@ -190,7 +190,7 @@ _Command prompt:_
 set SOME_VARIABLE=
 ```
 
-_Powershell:_
+_PowerShell:_
 
 ```shell
 Remove-Item Env:\SOME_VARIABLE
@@ -204,7 +204,7 @@ _Command prompt:_
 set
 ```
 
-_Powershell:_
+_PowerShell:_
 
 ```shell
 Get-ChildItem Env:
@@ -212,12 +212,12 @@ Get-ChildItem Env:
 
 ## View proxy settings in Cypress
 
-Your current proxy settings can be viewed from within the Cypress Test Runner.
-Follow these steps:
+Your current proxy settings can be viewed from within the Cypress App. Follow
+these steps:
 
 1. Open up your project in Cypress via `cypress open`.
 2. Click the "Settings" tab.
 3. Click the "Proxy Settings" section to expand it and view the proxy settings
    that Cypress is currently using.
 
-<DocsImage src="/img/guides/test-runner-settings-proxy-configuration.jpg" alt="Proxy configuration in the Desktop app" ></DocsImage>
+<DocsImage src="/img/guides/configuration/test-runner-settings-proxy-configuration.jpg" alt="Proxy configuration in the Desktop app"></DocsImage>

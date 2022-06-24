@@ -32,7 +32,7 @@ cy.focused().clear() // Clear focused input/textarea
 ```javascript
 cy.clear() // Errors, cannot be chained off 'cy'
 cy.get('nav').clear() // Errors, 'get' doesn't yield input or textarea
-cy.url().clear() // Errors, 'url' doesn't yield DOM element
+cy.clock().clear() // Errors, 'clock' does not yield DOM elements
 ```
 
 ### Arguments
@@ -45,7 +45,7 @@ Pass in an options object to change the default behavior of `.clear()`.
 | ---------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).  |
 | `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions)                                                                               |
-| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                                                           |
+| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                           |
 | `scrollBehavior`             | [`scrollBehavior`](/guides/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#Scrolling) before executing the command |
 | `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.clear()` to resolve before [timing out](#Timeouts)                                                                              |
 | `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |

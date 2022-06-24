@@ -44,7 +44,6 @@ further.</li></List>
 
 ```javascript
 cy.click('Login')
-cy.url().should('not.include', 'login')
 cy.log('Login successful')
 ```
 

@@ -43,12 +43,17 @@ cy.request('users/1.json') //  URL is  http://localhost:8080/users/1.json
    host is the `baseUrl` property configured inside of of your
    [configuration file](/guides/references/configuration).
 
-```json
-// cypress.json
+:::cypress-config-example
+
+```js
 {
-  "baseUrl": "http://localhost:1234"
+  e2e: {
+    baseUrl: 'http://localhost:1234'
+  }
 }
 ```
+
+:::
 
 ```javascript
 cy.request('seed/admin') // URL is http://localhost:1234/seed/admin
@@ -104,7 +109,7 @@ globally in [configuration](/guides/references/configuration).
 
 | Option                     | Default                                                        | Description                                                                                                                                                                                              |
 | -------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `log`                      | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                                                                                                                 |
+| `log`                      | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                                                                                 |
 | `url`                      | `null`                                                         | The URL to make the request to                                                                                                                                                                           |
 | `method`                   | `GET`                                                          | The HTTP method to use in the request                                                                                                                                                                    |
 | `auth`                     | `null`                                                         | Adds Authorization headers. [Accepts these options.](https://github.com/request/request#http-authentication)                                                                                             |
@@ -119,6 +124,9 @@ globally in [configuration](/guides/references/configuration).
 | `retryOnStatusCodeFailure` | `false`                                                        | Whether Cypress should automatically retry status code errors under the hood. Cypress will retry a request up to 4 times if this is set to true.                                                         |
 | `retryOnNetworkFailure`    | `true`                                                         | Whether Cypress should automatically retry transient network errors under the hood. Cypress will retry a request up to 4 times if this is set to true.                                                   |
 | `timeout`                  | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.request()` to resolve before [timing out](#Timeouts)                                                                                                                                |
+
+You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout`
+globally in the [Cypress configuration](/guides/references/configuration).
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
@@ -319,8 +327,8 @@ cy
 #### Request is not displayed in the Network Tab of Developer Tools
 
 Cypress does not _actually_ make an XHR request from the browser. We are
-actually making the HTTP request from the Cypress Test Runner (in Node). So, you
-won't see the request inside of your Developer Tools.
+actually making the HTTP request from the Cypress App (in Node). So, you won't
+see the request inside of your Developer Tools.
 
 ### CORS
 
