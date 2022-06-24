@@ -152,25 +152,26 @@ cy.get('.timer').then(($timer) => {
 
 #### Specify a now timestamp
 
-:::visit-mount-test-example
+<E2EOrCtTabs>
 
 ```js
+const now = new Date(2021, 3, 14) // month is 0-indexed
+
+cy.clock(now)
 cy.visit('/index.html')
-```
-
-```js
-cy.mount(<DatePicker id="date" />)
+cy.get('#date').should('have.value', '04/14/2021')
 ```
 
 ```js
 const now = new Date(2021, 3, 14) // month is 0-indexed
 
 cy.clock(now)
-__VISIT_MOUNT_PLACEHOLDER__
+cy.mount(<DatePicker id="date" />)
 cy.get('#date').should('have.value', '04/14/2021')
 ```
 
-:::
+</E2EOrCtTabs>
+
 
 ### Function names
 
@@ -256,17 +257,25 @@ of a test, the page under test is reloaded or changed.
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.clock()` requires being chained off of `cy`.</li></List>
+<List>
+  <li>`cy.clock()` requires being chained off of `cy`.</li>
+</List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.clock()` is a utility command.</li><li>`cy.clock()` will not run
-assertions. Assertions will pass through as if this command did not
-exist.</li></List>
+<List>
+  <li>`cy.clock()` is a utility command.</li>
+  <li>
+    `cy.clock()` will not run assertions. Assertions will pass through as if
+    this command did not exist.
+  </li>
+</List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.clock()` cannot time out.</li></List>
+<List>
+  <li>`cy.clock()` cannot time out.</li>
+</List>
 
 ## Command Log
 
@@ -279,12 +288,18 @@ cy.tick(1000)
 
 The command above will display in the Command Log as:
 
-<DocsImage src="/img/api/clock/clock-displays-in-command-log.png" alt="Command Log clock" ></DocsImage>
+<DocsImage
+  src="/img/api/clock/clock-displays-in-command-log.png"
+  alt="Command Log clock"
+></DocsImage>
 
 When clicking on the `clock` command within the command log, the console outputs
 the following:
 
-<DocsImage src="/img/api/clock/clock-displays-methods-replaced-in-console.png" alt="console.log clock command" ></DocsImage>
+<DocsImage
+  src="/img/api/clock/clock-displays-methods-replaced-in-console.png"
+  alt="console.log clock command"
+></DocsImage>
 
 ## See also
 
