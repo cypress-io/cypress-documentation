@@ -104,21 +104,14 @@ For a detailed explanation of aliasing,
 
 #### Wait for a specific request to respond
 
-:::visit-mount-test-example
-
-```js
-cy.visit('/accounts/123')
-```
-
-```js
-cy.mount(<Account />)
-```
+<e2e-or-ct>
+<template #e2e>
 
 ```js
 // Wait for the alias 'getAccount' to respond
 // without changing or stubbing its response
 cy.intercept('/accounts/*').as('getAccount')
-__VISIT_MOUNT_PLACEHOLDER__
+cy.visit('/accounts/123')
 cy.wait('@getAccount').then((interception) => {
   // we can now access the low level interception
   // that contains the request body,
@@ -126,7 +119,23 @@ cy.wait('@getAccount').then((interception) => {
 })
 ```
 
-:::
+</template>
+<template #ct>
+
+```js
+// Wait for the alias 'getAccount' to respond
+// without changing or stubbing its response
+cy.intercept('/accounts/*').as('getAccount')
+cy.mount(<Account />)
+cy.wait('@getAccount').then((interception) => {
+  // we can now access the low level interception
+  // that contains the request body,
+  // response body, status, etc
+})
+```
+
+</template>
+</e2e-or-ct>
 
 #### Wait automatically increments responses
 
@@ -165,21 +174,14 @@ cy.get('#book-results').should('have.length', 1)
 When passing an array of aliases to `cy.wait()`, Cypress will wait for all
 requests to complete within the given `requestTimeout` and `responseTimeout`.
 
-:::visit-mount-test-example
-
-```js
-cy.visit('/dashboard')
-```
-
-```js
-cy.mount(<Dashboard />)
-```
+<e2e-or-ct>
+<template #e2e>
 
 ```js
 cy.intercept('/users/*').as('getUsers')
 cy.intercept('/activities/*').as('getActivities')
 cy.intercept('/comments/*').as('getComments')
-__VISIT_MOUNT_PLACEHOLDER__
+cy.visit('/dashboard')
 
 cy.wait(['@getUsers', '@getActivities', '@getComments']).then(
   (interceptions) => {
@@ -191,7 +193,27 @@ cy.wait(['@getUsers', '@getActivities', '@getComments']).then(
 )
 ```
 
-:::
+</template>
+<template #ct>
+
+```js
+cy.intercept('/users/*').as('getUsers')
+cy.intercept('/activities/*').as('getActivities')
+cy.intercept('/comments/*').as('getComments')
+cy.mount(<Dashboard />)
+
+cy.wait(['@getUsers', '@getActivities', '@getComments']).then(
+  (interceptions) => {
+    // interceptions will now be an array of matching requests
+    // interceptions[0] <-- getUsers
+    // interceptions[1] <-- getActivities
+    // interceptions[2] <-- getComments
+  }
+)
+```
+
+</template>
+</e2e-or-ct>
 
 #### Using [`.spread()`](/api/commands/spread) to spread the array into multiple arguments.
 
