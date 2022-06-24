@@ -52,7 +52,6 @@ to go straight to the Spec Explorer.
 
 ### The Spec Explorer
 
-TODO Image with rest of columns
 <DocsImage src="/img/guides/core-concepts/cypress-app/spec-explorer.png" alt="The Spec Explorer"></DocsImage>
 
 On choosing your browser in the Launchpad, you'll be presented with a list of
@@ -95,7 +94,6 @@ Again, this analysis comes from the Dashboard.
 
 ### Project Runs
 
-TODO Ideally runs would show different commits
 <DocsImage src="/img/guides/core-concepts/cypress-app/recorded-runs.png" alt="Recorded Runs"></DocsImage>
 
 This screen shows detailed information about the most recently recorded
