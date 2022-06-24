@@ -39,19 +39,19 @@ describe('Post Resource', () => {
   it('Creating a New Post', () => {
     cy.visit('/posts/new') // 1.
 
-    cy.get('input.post-title') // 2.
-      .type('My First Post') // 3.
+    cy.get("input.post-title") // 2.
+      .type("My First Post"); // 3.
 
-    cy.get('input.post-body') // 4.
-      .type('Hello, world!') // 5.
+    cy.get("input.post-body") // 4.
+      .type("Hello, world!"); // 5.
 
-    cy.contains('Submit') // 6.
-      .click() // 7.
+    cy.contains("Submit") // 6.
+      .click(); // 7.
 
-    cy.get('h1') // 8.
-      .should('contain', 'My First Post')
-  })
-})
+    cy.get("h1") // 8.
+      .should("contain", "My First Post");
+  });
+});
 ```
 
 ```js
@@ -545,11 +545,11 @@ is what we mean when we say Cypress commands are asynchronous.
 it('hides the thing when it is clicked', () => {
   cy.visit('/my/resource/path') // Nothing happens yet
 
-  cy.get('.hides-when-clicked') // Still nothing happening
-    .should('be.visible') // Still absolutely nothing
+  cy.get(".hides-when-clicked") // Still nothing happening
+    .should("be.visible") // Still absolutely nothing
     .click() // Nope, nothing
-    .should('not.be.visible') // Definitely nothing happening yet
-})
+    .should("not.be.visible"); // Definitely nothing happening yet
+});
 
 // Ok, the test function has finished executing...
 // We've queued all of these commands and now
@@ -845,11 +845,11 @@ commands that were enqueued using the `cy.*` command chains.
 it('hides the thing when it is clicked', () => {
   cy.visit('/my/resource/path') // 1.
 
-  cy.get('.hides-when-clicked') // 2.
-    .should('be.visible') // 3.
+  cy.get(".hides-when-clicked") // 2.
+    .should("be.visible") // 3.
     .click() // 4.
-    .should('not.be.visible') // 5.
-})
+    .should("not.be.visible"); // 5.
+});
 ```
 
 ```js

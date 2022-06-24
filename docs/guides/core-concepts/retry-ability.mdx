@@ -288,16 +288,16 @@ Here is a short test that demonstrates some flake.
 it('adds two items', () => {
   cy.visit('/')
 
-  cy.get('[data-testid="new-todo"]').type('todo A{enter}')
+  cy.get('[data-testid="new-todo"]').type("todo A{enter}");
   cy.get('[data-testid="todo-list"] li')
-    .find('label')
-    .should('contain', 'todo A')
+    .find("label")
+    .should("contain", "todo A");
 
-  cy.get('[data-testid="new-todo"]').type('todo B{enter}')
+  cy.get('[data-testid="new-todo"]').type("todo B{enter}");
   cy.get('[data-testid="todo-list"] li')
-    .find('label')
-    .should('contain', 'todo B')
-})
+    .find("label")
+    .should("contain", "todo B");
+});
 ```
 
 ```js
@@ -438,14 +438,14 @@ separate queries into one - forcing the combined query to be retried.
 it('adds two items', () => {
   cy.visit('/')
 
-  cy.get('[data-testid="new-todo"]').type('todo A{enter}')
+  cy.get('[data-testid="new-todo"]').type("todo A{enter}");
   cy.get('[data-testid="todo-list"] li label') // 1 query command
-    .should('contain', 'todo A') // assertion
+    .should("contain", "todo A"); // assertion
 
-  cy.get('[data-testid="new-todo"]').type('todo B{enter}')
+  cy.get('[data-testid="new-todo"]').type("todo B{enter}");
   cy.get('[data-testid="todo-list"] li label') // 1 query command
-    .should('contain', 'todo B') // assertion
-})
+    .should("contain", "todo B"); // assertion
+});
 ```
 
 ```js
@@ -531,18 +531,18 @@ assertion after the `cy.get()` command, but before the `.find()` command.
 it('adds two items', () => {
   cy.visit('/')
 
-  cy.get('[data-testid="new-todo"]').type('todo A{enter}')
+  cy.get('[data-testid="new-todo"]').type("todo A{enter}");
   cy.get('[data-testid="todo-list"] li') // command
-    .should('have.length', 1) // assertion
-    .find('label') // command
-    .should('contain', 'todo A') // assertion
+    .should("have.length", 1) // assertion
+    .find("label") // command
+    .should("contain", "todo A"); // assertion
 
-  cy.get('[data-testid="new-todo"]').type('todo B{enter}')
+  cy.get('[data-testid="new-todo"]').type("todo B{enter}");
   cy.get('[data-testid="todo-list"] li') // command
-    .should('have.length', 2) // assertion
-    .find('label') // command
-    .should('contain', 'todo B') // assertion
-})
+    .should("have.length", 2) // assertion
+    .find("label") // command
+    .should("contain", "todo B"); // assertion
+});
 ```
 
 ```js
