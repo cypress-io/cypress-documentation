@@ -152,25 +152,30 @@ cy.get('.timer').then(($timer) => {
 
 #### Specify a now timestamp
 
-:::visit-mount-test-example
-
-```js
-cy.visit('/index.html')
-```
-
-```js
-cy.mount(<DatePicker id="date" />)
-```
+<e2e-or-ct>
+<template #e2e>
 
 ```js
 const now = new Date(2021, 3, 14) // month is 0-indexed
 
 cy.clock(now)
-__VISIT_MOUNT_PLACEHOLDER__
+cy.visit('/index.html')
 cy.get('#date').should('have.value', '04/14/2021')
 ```
 
-:::
+</template>
+<template #ct>
+
+```js
+const now = new Date(2021, 3, 14) // month is 0-indexed
+
+cy.clock(now)
+cy.mount(<DatePicker id="date" />)
+cy.get('#date').should('have.value', '04/14/2021')
+```
+
+</template>
+</e2e-or-ct>
 
 ### Function names
 

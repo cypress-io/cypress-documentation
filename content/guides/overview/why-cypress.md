@@ -171,12 +171,11 @@ it('adds todos', () => {
 
 ### Component
 
-You can also use Cypress to mount components from some web frameworks and
+You can also use Cypress to mount components from supported web frameworks and
 execute
-[component tests](/guides/core-concepts/testing-types#What-is-Component-Testing).
+[component tests](/guides/component-testing/writing-your-first-component-test).
 
 ```js
-import { mount } from '@cypress/react' // or @cypress/vue
 import TodoList from './components/TodoList'
 
 it('contains the correct number of todos', () => {
@@ -185,7 +184,7 @@ it('contains the correct number of todos', () => {
     { text: 'Learn Component Testing', id: 2 },
   ]
 
-  mount(<TodoList todos={todos} />)
+  cy.mount(<TodoList todos={todos} />)
   // the component starts running like a mini web app
   cy.get('[data-testid="todos"]').should('have.length', todos.length)
 })
