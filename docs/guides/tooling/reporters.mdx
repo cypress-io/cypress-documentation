@@ -51,15 +51,25 @@ You would specify the path to your custom reporter in either of the ways below.
 
 #### Cypress configuration
 
-:::cypress-config-example
+<CypressConfigFileTabs>
 
 ```js
-{
-  reporter: "reporters/custom.js";
-}
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  reporter: 'reporters/custom.js'
+})
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  reporter: 'reporters/custom.js'
+})
+```
+
+</CypressConfigFileTabs>
 
 #### Command Line
 
@@ -73,15 +83,25 @@ When using custom reporters via npm, specify the package name.
 
 #### Cypress configuration
 
-:::cypress-config-example
+<CypressConfigFileTabs>
 
 ```js
-{
-  reporter: "mochawesome";
-}
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  reporter: 'mochawesome'
+})
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  reporter: 'mochawesome'
+})
+```
+
+</CypressConfigFileTabs>
 
 #### Command line
 
@@ -104,19 +124,33 @@ into an XML file.
 
 #### Cypress configuration
 
-:::cypress-config-example
+<CypressConfigFileTabs>
 
 ```js
-{
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
   reporter: 'junit',
   reporterOptions: {
     mochaFile: 'results/my-test-output.xml',
     toConsole: true
   }
-}
+})
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  reporter: 'junit',
+  reporterOptions: {
+    mochaFile: 'results/my-test-output.xml',
+    toConsole: true
+  }
+})
+```
+
+</CypressConfigFileTabs>
 
 #### Command line
 
@@ -139,18 +173,31 @@ the [mochawesome-merge](https://github.com/antontelesh/mochawesome-merge) tool.
 
 #### Cypress configuration
 
-:::cypress-config-example
+<CypressConfigFileTabs>
 
 ```js
-{
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
   reporter: 'junit',
   reporterOptions: {
     mochaFile: 'results/my-test-output-[hash].xml'
   }
-}
+})
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  reporter: 'junit',
+  reporterOptions: {
+    mochaFile: 'results/my-test-output-[hash].xml'
+  }
+})
+```
+
+</CypressConfigFileTabs>
 
 #### Command line
 
@@ -201,18 +248,32 @@ the [command line](/guides/guides/command-line).
 
 #### Cypress configuration
 
-:::cypress-config-example
+<CypressConfigFileTabs>
 
 ```js
-{
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
   reporter: 'cypress-multi-reporters',
   reporterOptions: {
     configFile: 'reporter-config.json'
   }
-}
+})
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  reporter: 'cypress-multi-reporters',
+  reporterOptions: {
+    configFile: 'reporter-config.json'
+  }
+})
+
+```
+
+</CypressConfigFileTabs>
 
 #### Command line
 
@@ -225,18 +286,31 @@ Then add the separate `reporter-config.json` file (defined in your
 configuration) to enable `spec` and `junit` reporters and direct the `junit`
 reporter to save separate XML files.
 
-:::cypress-config-example
+<CypressConfigFileTabs>
 
 ```js
-{
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
   reporterEnabled: 'spec, mocha-junit-reporter',
   mochaJunitReporterReporterOptions: {
     mochaFile: 'cypress/results/results-[hash].xml'
   }
-}
+})
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  reporterEnabled: 'spec, mocha-junit-reporter',
+  mochaJunitReporterReporterOptions: {
+    mochaFile: 'cypress/results/results-[hash].xml'
+  }
+})
+```
+
+</CypressConfigFileTabs>
 
 We recommend deleting all files from the `cypress/results` folder before running
 this command, since each run will output new XML files. For example, you can add
@@ -289,10 +363,12 @@ folder.
 
 #### Cypress configuration
 
-:::cypress-config-example
+<CypressConfigFileTabs>
 
 ```js
-{
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
   reporter: 'mochawesome',
   reporterOptions: {
     reportDir: 'cypress/results',
@@ -300,10 +376,24 @@ folder.
     html: false,
     json: true
   }
-}
+})
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  reporter: 'mochawesome',
+  reporterOptions: {
+    reportDir: 'cypress/results',
+    overwrite: false,
+    html: false,
+    json: true
+  }
+})
+```
+
+</CypressConfigFileTabs>
 
 #### Command line
 

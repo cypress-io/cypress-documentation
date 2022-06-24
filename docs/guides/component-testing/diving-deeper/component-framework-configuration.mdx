@@ -98,8 +98,7 @@ To configure component testing for a React app that uses
 `devServer` with a `framework` of "create-react-app" and a `bundler` of
 "webpack" like so:
 
-<Tabs>
-<TabItem value='cypress.config.js'>
+<CypressConfigFileTabs>
 
 ```js
 const { defineConfig } = require("cypress");
@@ -114,9 +113,6 @@ module.exports = defineConfig({
 });
 ```
 
-</TabItem>
-<TabItem value='cypress.config.ts'>
-
 ```ts
 import { defineConfig } from "cypress";
 
@@ -130,8 +126,7 @@ export default defineConfig({
 });
 ```
 
-</TabItem>
-</Tabs>
+</CypressConfigFileTabs>
 
 #### Sample Create React Apps
 
@@ -151,8 +146,7 @@ To configure component testing for a React app that uses
 [Next.js](https://nextjs.org/), you will need to configure a `devServer` with a
 `framework` of "next" and a `bundler` of "webpack" like so:
 
-<Tabs>
-<TabItem value='cypress.config.js'>
+<CypressConfigFileTabs>
 
 ```js
 const { defineConfig } = require("cypress");
@@ -167,9 +161,6 @@ module.exports = defineConfig({
 });
 ```
 
-</TabItem>
-<TabItem value='cypress.config.ts'>
-
 ```ts
 import { defineConfig } from "cypress";
 
@@ -183,8 +174,7 @@ export default defineConfig({
 });
 ```
 
-</TabItem>
-</Tabs>
+</CypressConfigFileTabs>
 
 #### Next.js Caveats
 
@@ -213,8 +203,7 @@ To configure component testing for a React app that uses
 [Vite](https://vitejs.dev/), you will need to configure a `devServer` with a
 `framework` of "react" and a `bundler` of "vite" like so:
 
-<Tabs>
-<TabItem value='cypress.config.js'>
+<CypressConfigFileTabs>
 
 ```js
 const { defineConfig } = require("cypress");
@@ -229,9 +218,6 @@ module.exports = defineConfig({
 });
 ```
 
-</TabItem>
-<TabItem value='cypress.config.ts'>
-
 ```ts
 import { defineConfig } from "cypress";
 
@@ -245,8 +231,7 @@ export default defineConfig({
 });
 ```
 
-</TabItem>
-</Tabs>
+</CypressConfigFileTabs>
 
 #### Sample React Vite Apps
 
@@ -258,8 +243,7 @@ To configure component testing for a React app that uses a custom
 [Webpack](https://webpack.js.org/) config, you will need to configure a
 `devServer` with a `framework` of "react" and a `bundler` of "webpack" like so:
 
-<Tabs>
-<TabItem value='cypress.config.js'>
+<CypressConfigFileTabs>
 
 ```js
 module.exports = {
@@ -273,9 +257,6 @@ module.exports = {
   },
 })
 ```
-
-</TabItem>
-<TabItem value='cypress.config.ts'>
 
 ```ts
 import { defineConfig } from "cypress";
@@ -293,8 +274,7 @@ export default defineConfig({
 });
 ```
 
-</TabItem>
-</Tabs>
+</CypressConfigFileTabs>
 
 If you don't provide a webpack config, Cypress will try to infer it. If Cypress
 cannot do so, or you want to make modifications to your config, you can specify
@@ -320,8 +300,7 @@ To configure component testing for a Vue app that uses
 [Vue CLI](https://cli.vuejs.org/), you will need to configure a `devServer` with
 a `framework` of "vue-cli" and a `bundler` of "webpack" like so:
 
-<Tabs>
-<TabItem value='cypress.config.js'>
+<CypressConfigFileTabs>
 
 ```js
 const { defineConfig } = require("cypress");
@@ -336,9 +315,6 @@ module.exports = defineConfig({
 });
 ```
 
-</TabItem>
-<TabItem value='cypress.config.ts'>
-
 ```ts
 import { defineConfig } from "cypress";
 
@@ -352,8 +328,7 @@ export default defineConfig({
 });
 ```
 
-</TabItem>
-</Tabs>
+</CypressConfigFileTabs>
 
 :::caution
 
@@ -383,8 +358,7 @@ To configure component testing for a Vue app that uses
 [Nuxt](https://nuxtjs.org/), you will need to configure a `devServer` with a
 `framework` of "nuxt" and a `bundler` of "webpack" like so:
 
-<Tabs>
-<TabItem value='cypress.config.js'>
+<CypressConfigFileTabs>
 
 ```js
 const { defineConfig } = require("cypress");
@@ -399,9 +373,6 @@ module.exports = defineConfig({
 });
 ```
 
-</TabItem>
-<TabItem value='cypress.config.ts'>
-
 ```ts
 import { defineConfig } from "cypress";
 
@@ -415,8 +386,7 @@ export default defineConfig({
 });
 ```
 
-</TabItem>
-</Tabs>
+</CypressConfigFileTabs>
 
 #### Nuxt Sample Apps
 
@@ -428,8 +398,7 @@ To configure component testing for a Vue app that uses
 [Vite](https://vitejs.dev/), you will need to configure a `devServer` with a
 `framework` of "vue" and a `bundler` of "vite" like so:
 
-<Tabs>
-<TabItem value='cypress.config.js'>
+<CypressConfigFileTabs>
 
 ```js
 const { defineConfig } = require("cypress");
@@ -444,9 +413,6 @@ module.exports = defineConfig({
 });
 ```
 
-</TabItem>
-<TabItem value='cypress.config.ts'>
-
 ```ts
 import { defineConfig } from "cypress";
 
@@ -460,8 +426,7 @@ export default defineConfig({
 });
 ```
 
-</TabItem>
-</Tabs>
+</CypressConfigFileTabs>
 
 #### Vue Vite Sample Apps
 
@@ -473,8 +438,7 @@ To configure component testing for a Vue app that uses a custom
 [Webpack](https://webpack.js.org/) config, you will need to configure a
 `devServer` with a `framework` of "vue" and a `bundler` of "webpack" like so:
 
-<Tabs>
-<TabItem value='cypress.config.js'>
+<CypressConfigFileTabs>
 
 ```js
 module.exports = {
@@ -488,9 +452,6 @@ module.exports = {
   },
 };
 ```
-
-</TabItem>
-<TabItem value='cypress.config.ts'>
 
 ```ts
 import { defineConfig } from "cypress";
@@ -508,8 +469,7 @@ export default defineConfig({
 });
 ```
 
-</TabItem>
-</Tabs>
+</CypressConfigFileTabs>
 
 If you don't provide one, Cypress will try to infer your webpack config. If
 Cypress cannot or you want to make modifications to your config, you can pass it
@@ -536,8 +496,7 @@ The function's signature takes in a
 parameter and returns either an instance of a `devServer` or a promise that
 resolves to a `devServer` instance.
 
-<Tabs>
-<TabItem value='cypress.config.js'>
+<CypressConfigFileTabs>
 
 ```js
 const { defineConfig } = require("cypress");
@@ -556,9 +515,6 @@ module.exports = defineConfig({
 });
 ```
 
-</TabItem>
-<TabItem value='cypress.config.ts'>
-
 ```ts
 import { defineConfig } from "cypress";
 
@@ -576,8 +532,7 @@ export default defineConfig({
 });
 ```
 
-</TabItem>
-</Tabs>
+</CypressConfigFileTabs>
 
 ### Custom Index File
 

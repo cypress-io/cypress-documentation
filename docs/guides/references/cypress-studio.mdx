@@ -7,7 +7,7 @@ title: Cypress Studio
 <strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
 Removed</strong>
 
-Cypress Studio has been removed in Cypress v10 and will be rethought/revisited
+Cypress Studio has been removed in Cypress 10 and will be rethought/revisited
 in a later release. This page is for reference only.
 
 :::
@@ -43,15 +43,25 @@ configuration.
 
 :::
 
-:::cypress-config-example
+<CypressConfigFileTabs>
 
 ```js
-{
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
   experimentalStudio: true
-}
+})
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  experimentalStudio: true
+})
+```
+
+</CypressConfigFileTabs>
 
 The Cypress <Icon name="github"></Icon>
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) is

@@ -1032,17 +1032,29 @@ load the main window in the `baseUrl` you specified as soon as your tests start.
 
 ### Cypress configuration file
 
-:::cypress-config-example
+<CypressConfigFileTabs>
 
 ```js
-{
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
   e2e: {
     baseUrl: 'http://localhost:8484'
   }
-}
+})
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  e2e: {
+    baseUrl: 'http://localhost:8484'
+  }
+})
+```
+
+</CypressConfigFileTabs>
 
 ### With `baseUrl` set, Cypress loads main window in `baseUrl`
 

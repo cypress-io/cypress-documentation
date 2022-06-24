@@ -245,17 +245,29 @@ Cypress will prefix the URL with the `baseUrl` if it has been set. Configure
 `baseUrl` in the [Cypress configuration](/guides/references/configuration) to
 prevent repeating yourself in every `cy.visit()` command.
 
-:::cypress-config-example
+<CypressConfigFileTabs>
 
 ```js
-{
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3000/#/'
   }
-}
+})
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  e2e: {
+    baseUrl: 'http://localhost:3000/#/'
+  }
+})
+```
+
+</CypressConfigFileTabs>
 
 ```javascript
 cy.visit('dashboard') // Visits http://localhost:3000/#/dashboard
@@ -290,17 +302,29 @@ group of tests, disable the `baseUrl` using
 [per-test configuration](/guides/references/configuration#Test-Configuration).
 Imagine this Cypress configuration:
 
-:::cypress-config-example
+<CypressConfigFileTabs>
 
 ```js
-{
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
   e2e: {
     baseUrl: 'https://example.cypress.io'
   }
-}
+})
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  e2e: {
+    baseUrl: 'https://example.cypress.io'
+  }
+})
+```
+
+</CypressConfigFileTabs>
 
 The first test visits the `baseUrl`, while the second test visits the local
 file.

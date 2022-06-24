@@ -406,12 +406,22 @@ Still here? That's cool, let's disable web security!
 
 #### Set `chromeWebSecurity` to `false` in the [Cypress configuration](/guides/references/configuration)
 
-:::cypress-config-example
+<CypressConfigFileTabs>
 
 ```js
-{
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
   chromeWebSecurity: false
-}
+})
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  chromeWebSecurity: false
+})
+```
+
+</CypressConfigFileTabs>

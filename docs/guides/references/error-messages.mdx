@@ -321,16 +321,27 @@ modifying the [Cypress configuration](/guides/references/configuration).
 
 #### Cypress configuration file
 
-:::cypress-config-example
+<CypressConfigFileTabs>
 
 ```js
-{
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
   waitForAnimations: false,
   animationDistanceThreshold: 50
-}
+})
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  waitForAnimations: false,
+  animationDistanceThreshold: 50
+})
+```
+
+</CypressConfigFileTabs>
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> The test has finished but Cypress still has commands in its queue
 
@@ -825,15 +836,25 @@ family browsers (this setting will not work in other browsers). Before doing so
 you should really understand and
 [read about the reasoning here](/guides/guides/web-security).
 
-:::cypress-config-example
+<CypressConfigFileTabs>
 
 ```js
-{
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
   chromeWebSecurity: false
-}
+})
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  chromeWebSecurity: false
+})
+```
+
+</CypressConfigFileTabs>
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> Cypress detected that an uncaught error was thrown from a cross-origin script.
 
