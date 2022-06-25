@@ -273,25 +273,16 @@ Cypress you might want to check that out first.
 
 Here is an example of aliasing requests and then subsequently waiting on them:
 
-:::visit-mount-test-example
-
-```js
-// visiting the dashboard should make requests that match
-// the two routes above
-cy.visit('http://localhost:8888/dashboard')
-```
-
-```js
-// mounting the dashboard should make requests that match
-// the two routes above
-cy.mount(<Dashboard />)
-```
+<e2e-or-ct>
+<template #e2e>
 
 ```js
 cy.intercept('/activities/*', { fixture: 'activities' }).as('getActivities')
 cy.intercept('/messages/*', { fixture: 'messages' }).as('getMessages')
 
-__VISIT_MOUNT_PLACEHOLDER__
+// visiting the dashboard should make requests that match
+// the two routes above
+cy.visit('http://localhost:8888/dashboard')
 
 // pass an array of Route Aliases that forces Cypress to wait
 // until it sees a response for each request that matches
@@ -302,7 +293,28 @@ cy.wait(['@getActivities', '@getMessages'])
 cy.get('h1').should('contain', 'Dashboard')
 ```
 
-:::
+</template>
+<template #ct>
+
+```js
+cy.intercept('/activities/*', { fixture: 'activities' }).as('getActivities')
+cy.intercept('/messages/*', { fixture: 'messages' }).as('getMessages')
+
+// mounting the dashboard should make requests that match
+// the two routes above
+cy.mount(<Dashboard />)
+
+// pass an array of Route Aliases that forces Cypress to wait
+// until it sees a response for each request that matches
+// each of these aliases
+cy.wait(['@getActivities', '@getMessages'])
+
+// these commands will not run until the wait command resolves above
+cy.get('h1').should('contain', 'Dashboard')
+```
+
+</template>
+</e2e-or-ct>
 
 If you would like to check the response data of each response of an aliased
 route, you can use several `cy.wait()` calls.
