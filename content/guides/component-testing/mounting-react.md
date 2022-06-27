@@ -47,7 +47,7 @@ the framework-specific mount command.
 You can customize `cy.mount()` to fit your needs. For instance, if you are using
 providers or other global app-level setups in your React app, you can configure
 them here. For more info, see the
-[Customizing cy.mount guide for React](/guides/component-testing/custom-mount-react).
+[Customizing cy.mount() guide for React](/guides/component-testing/custom-mount-react).
 
 ### Your First Component Test
 
