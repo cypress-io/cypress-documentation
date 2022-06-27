@@ -65,8 +65,8 @@ installed.
 
 After setting up component testing, you will be at the Browser Selection screen.
 
-Pick your favorite and click the "Start Component Testing" button to open the
-Cypress app.
+Pick the browser of your choice and click the "Start Component Testing" button
+to open the Cypress app.
 
 <DocsImage 
   src="/img/guides/component-testing/select-browser.png" 
