@@ -30,19 +30,49 @@ cy.task(event, arg, options)
 cy.task('log', 'This will be output to the terminal')
 ```
 
-:::cypress-plugin-example
+<CypressConfigFileTabs>
 
-```javascript
-on('task', {
-  log(message) {
-    console.log(message)
+```js
+const { defineConfig } = require('cypress')
 
-    return null
-  },
+module.exports = defineConfig({
+  // setupNodeEvents can be defined in either
+  // the e2e or component configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('task', {
+        log(message) {
+          console.log(message)
+      
+          return null
+        },
+      })
+    }
+  }
 })
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  // setupNodeEvents can be defined in either
+  // the e2e or component configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('task', {
+        log(message) {
+          console.log(message)
+      
+          return null
+        },
+      })
+    }
+  }
+})
+```
+
+</CypressConfigFileTabs>
 
 The `task` plugin event handler can return a value or a promise. The command
 will fail if `undefined` is returned or if the promise is resolved with
@@ -74,20 +104,51 @@ If you need to pass multiple arguments, use an object
 cy.task('hello', { greeting: 'Hello', name: 'World' })
 ```
 
-:::cypress-plugin-example
+<CypressConfigFileTabs>
 
 ```js
-on('task', {
-  // deconstruct the individual properties
-  hello({ greeting, name }) {
-    console.log('%s, %s', greeting, name)
+const { defineConfig } = require('cypress')
 
-    return null
-  },
+module.exports = defineConfig({
+  // setupNodeEvents can be defined in either
+  // the e2e or component configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('task', {
+        // deconstruct the individual properties
+        hello({ greeting, name }) {
+          console.log('%s, %s', greeting, name)
+      
+          return null
+        },
+      })
+    }
+  }
 })
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  // setupNodeEvents can be defined in either
+  // the e2e or component configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('task', {
+        // deconstruct the individual properties
+        hello({ greeting, name }) {
+          console.log('%s, %s', greeting, name)
+      
+          return null
+        },
+      })
+    }
+  }
+})
+```
+
+</CypressConfigFileTabs>
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -125,25 +186,57 @@ need to read a file that might not exist, use `cy.task`.
 cy.task('readFileMaybe', 'my-file.txt').then((textOrNull) => { ... })
 ```
 
-:::cypress-plugin-example
-
-```javascript
-const fs = require('fs')
-```
+<CypressConfigFileTabs>
 
 ```js
-on('task', {
-  readFileMaybe(filename) {
-    if (fs.existsSync(filename)) {
-      return fs.readFileSync(filename, 'utf8')
-    }
+const { defineConfig } = require('cypress')
 
-    return null
-  },
+const fs = require('fs')
+
+module.exports = defineConfig({
+  // setupNodeEvents can be defined in either
+  // the e2e or component configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('task', {
+        readFileMaybe(filename) {
+          if (fs.existsSync(filename)) {
+            return fs.readFileSync(filename, 'utf8')
+          }
+      
+          return null
+        },
+      })
+    }
+  }
 })
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+const fs = require('fs')
+
+export default defineConfig({
+  // setupNodeEvents can be defined in either
+  // the e2e or component configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('task', {
+        readFileMaybe(filename) {
+          if (fs.existsSync(filename)) {
+            return fs.readFileSync(filename, 'utf8')
+          }
+      
+          return null
+        },
+      })
+    }
+  }
+})
+```
+
+</CypressConfigFileTabs>
 
 ### Return number of files in the folder
 
@@ -152,29 +245,66 @@ on('task', {
 cy.task('countFiles', 'cypress/downloads').then((count) => { ... })
 ```
 
-:::cypress-plugin-example
-
-```javascript
-const fs = require('fs')
-```
+<CypressConfigFileTabs>
 
 ```js
-on('task', {
-  countFiles(folderName) {
-    return new Promise((resolve, reject) => {
-      fs.readdir(folderName, (err, files) => {
-        if (err) {
-          return reject(err)
-        }
+const { defineConfig } = require('cypress')
 
-        resolve(files.length)
+const fs = require('fs')
+
+module.exports = defineConfig({
+  // setupNodeEvents can be defined in either
+  // the e2e or component configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('task', {
+        countFiles(folderName) {
+          return new Promise((resolve, reject) => {
+            fs.readdir(folderName, (err, files) => {
+              if (err) {
+                return reject(err)
+              }
+      
+              resolve(files.length)
+            })
+          })
+        },
       })
-    })
-  },
+    }
+  }
 })
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+const fs = require('fs')
+
+export default defineConfig({
+  // setupNodeEvents can be defined in either
+  // the e2e or component configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('task', {
+        countFiles(folderName) {
+          return new Promise((resolve, reject) => {
+            fs.readdir(folderName, (err, files) => {
+              if (err) {
+                return reject(err)
+              }
+      
+              resolve(files.length)
+            })
+          })
+        },
+      })
+    }
+  }
+})
+```
+
+</CypressConfigFileTabs>
+
 
 ### Seed a database
 
@@ -192,23 +322,53 @@ describe('e2e', () => {
 })
 ```
 
-:::cypress-plugin-example
+<CypressConfigFileTabs>
 
 ```js
+const { defineConfig } = require('cypress')
+
 // we require some code in our app that
 // is responsible for seeding our database
 const db = require('../../server/src/db')
-```
 
-```js
-on('task', {
-  'defaults:db': () => {
-    return db.seed('defaults')
-  },
+module.exports = defineConfig({
+  // setupNodeEvents can be defined in either
+  // the e2e or component configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('task', {
+        'defaults:db': () => {
+          return db.seed('defaults')
+        },
+      })
+    }
+  }
 })
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+// we require some code in our app that
+// is responsible for seeding our database
+const db = require('../../server/src/db')
+
+export default defineConfig({
+  // setupNodeEvents can be defined in either
+  // the e2e or component configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('task', {
+        'defaults:db': () => {
+          return db.seed('defaults')
+        },
+      })
+    }
+  }
+})
+```
+
+</CypressConfigFileTabs>
 
 ### Return a Promise from an asynchronous task
 
@@ -217,20 +377,51 @@ on('task', {
 cy.task('pause', 1000)
 ```
 
-:::cypress-plugin-example
+<CypressConfigFileTabs>
 
-```javascript
-on('task', {
-  pause(ms) {
-    return new Promise((resolve) => {
-      // tasks should not resolve with undefined
-      setTimeout(() => resolve(null), ms)
-    })
-  },
+```js
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  // setupNodeEvents can be defined in either
+  // the e2e or component configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('task', {
+        pause(ms) {
+          return new Promise((resolve) => {
+            // tasks should not resolve with undefined
+            setTimeout(() => resolve(null), ms)
+          })
+        },
+      })
+    }
+  }
 })
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  // setupNodeEvents can be defined in either
+  // the e2e or component configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('task', {
+        pause(ms) {
+          return new Promise((resolve) => {
+            // tasks should not resolve with undefined
+            setTimeout(() => resolve(null), ms)
+          })
+        },
+      })
+    }
+  }
+})
+```
+
+</CypressConfigFileTabs>
 
 ### Save a variable across non same-origin URL visits
 
@@ -265,24 +456,55 @@ describe('Href visit', () => {
 })
 ```
 
-:::cypress-plugin-example
+<CypressConfigFileTabs>
 
 ```js
+const { defineConfig } = require('cypress')
+
 let href
-```
 
-```js
-on('task', {
-  setHref: (val) => {
-    return (href = val)
-  },
-  getHref: () => {
-    return href
-  },
+module.exports = defineConfig({
+  // setupNodeEvents can be defined in either
+  // the e2e or component configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('task', {
+        setHref: (val) => {
+          return (href = val)
+        },
+        getHref: () => {
+          return href
+        },
+      })
+    }
+  }
 })
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+let href
+
+export default defineConfig({
+  // setupNodeEvents can be defined in either
+  // the e2e or component configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('task', {
+        setHref: (val) => {
+          return (href = val)
+        },
+        getHref: () => {
+          return href
+        },
+      })
+    }
+  }
+})
+```
+
+</CypressConfigFileTabs>
 
 ### Command options
 
@@ -321,9 +543,11 @@ are using
 [cypress-skip-and-only-ui](https://github.com/bahmutov/cypress-skip-and-only-ui)
 plugin and want to install your own task to read a file that might not exist:
 
-:::cypress-plugin-example
+<CypressConfigFileTabs>
 
 ```js
+const { defineConfig } = require('cypress')
+
 const skipAndOnlyTask = require('cypress-skip-and-only-ui/task')
 const fs = require('fs')
 const myTask = {
@@ -335,16 +559,51 @@ const myTask = {
     return null
   },
 }
+
+module.exports = defineConfig({
+  // setupNodeEvents can be defined in either
+  // the e2e or component configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      // register plugin's task
+      on('task', skipAndOnlyTask)
+      // and register my own task
+      on('task', myTask)
+    }
+  }
+})
 ```
 
-```js
-// register plugin's task
-on('task', skipAndOnlyTask)
-// and register my own task
-on('task', myTask)
+```ts
+import { defineConfig } from 'cypress'
+
+const skipAndOnlyTask = require('cypress-skip-and-only-ui/task')
+const fs = require('fs')
+const myTask = {
+  readFileMaybe(filename) {
+    if (fs.existsSync(filename)) {
+      return fs.readFileSync(filename, 'utf8')
+    }
+
+    return null
+  },
+}
+
+export default defineConfig({
+  // setupNodeEvents can be defined in either
+  // the e2e or component configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      // register plugin's task
+      on('task', skipAndOnlyTask)
+      // and register my own task
+      on('task', myTask)
+    }
+  }
+})
 ```
 
-:::
+</CypressConfigFileTabs>
 
 See [#2284](https://github.com/cypress-io/cypress/issues/2284) for
 implementation.
@@ -409,9 +668,11 @@ const query = 'SELECT * FROM users'
 cy.task('queryDatabase', { dbName, query })
 ```
 
-:::cypress-plugin-example
+<CypressConfigFileTabs>
 
 ```js
+const { defineConfig } = require('cypress')
+
 const mysql = require('mysql')
 // the connection strings for different databases could
 // come from the Cypress configuration or from environment variables
@@ -448,24 +709,92 @@ function queryDB(connectionInfo, query) {
     })
   })
 }
-```
 
-```js
-on('task', {
-  // destructure the argument into the individual fields
-  queryDatabase({ dbName, query }) {
-    const connectionInfo = connections[dbName]
-
-    if (!connectionInfo) {
-      throw new Error(`Do not have DB connection under name ${dbName}`)
+module.exports = defineConfig({
+  // setupNodeEvents can be defined in either
+  // the e2e or component configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('task', {
+        // destructure the argument into the individual fields
+        queryDatabase({ dbName, query }) {
+          const connectionInfo = connections[dbName]
+      
+          if (!connectionInfo) {
+            throw new Error(`Do not have DB connection under name ${dbName}`)
+          }
+      
+          return queryDB(connectionInfo, query)
+        },
+      })
     }
-
-    return queryDB(connectionInfo, query)
-  },
+  }
 })
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+const mysql = require('mysql')
+// the connection strings for different databases could
+// come from the Cypress configuration or from environment variables
+const connections = {
+  stagingA: {
+    host: 'staging.my.co',
+    user: 'test',
+    password: '***',
+    database: 'users',
+  },
+  stagingB: {
+    host: 'staging-b.my.co',
+    user: 'test',
+    password: '***',
+    database: 'users',
+  },
+}
+
+// querying the database from Node
+function queryDB(connectionInfo, query) {
+  const connection = mysql.createConnection(connectionInfo)
+
+  connection.connect()
+
+  return new Promise((resolve, reject) => {
+    connection.query(query, (error, results) => {
+      if (error) {
+        return reject(error)
+      }
+
+      connection.end()
+
+      return resolve(results)
+    })
+  })
+}
+
+export default defineConfig({
+  // setupNodeEvents can be defined in either
+  // the e2e or component configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('task', {
+        // destructure the argument into the individual fields
+        queryDatabase({ dbName, query }) {
+          const connectionInfo = connections[dbName]
+      
+          if (!connectionInfo) {
+            throw new Error(`Do not have DB connection under name ${dbName}`)
+          }
+      
+          return queryDB(connectionInfo, query)
+        },
+      })
+    }
+  }
+})
+```
+
+</CypressConfigFileTabs>
 
 ### Argument should be serializable
 
@@ -484,22 +813,55 @@ cy.task('date', new Date()).then((s) => {
 })
 ```
 
-:::cypress-plugin-example
+<CypressConfigFileTabs>
 
-```javascript
-on('task', {
-  date(s) {
-    // s is a string, so convert it to Date
-    const d = new Date(s)
+```js
+const { defineConfig } = require('cypress')
 
-    // do something with the date
-    // and return it back
-    return d
-  },
+module.exports = defineConfig({
+  // setupNodeEvents can be defined in either
+  // the e2e or component configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('task', {
+        date(s) {
+          // s is a string, so convert it to Date
+          const d = new Date(s)
+      
+          // do something with the date
+          // and return it back
+          return d
+        },
+      })
+    }
+  }
 })
 ```
 
-:::
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  // setupNodeEvents can be defined in either
+  // the e2e or component configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('task', {
+        date(s) {
+          // s is a string, so convert it to Date
+          const d = new Date(s)
+      
+          // do something with the date
+          // and return it back
+          return d
+        },
+      })
+    }
+  }
+})
+```
+
+</CypressConfigFileTabs>
 
 ## Rules
 
