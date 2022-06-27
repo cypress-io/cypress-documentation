@@ -930,6 +930,20 @@
           "badge": "community"
         },
         {
+          "name": "Visual Regression Diff",
+          "description": "Perform visual regression test with a nice GUI as help. 💅 Supports both e2e and component-testing",
+          "link": "https://github.com/FRSOURCE/cypress-plugin-visual-regression-diff",
+          "keywords": [
+            "screenshots",
+            "visual regression",
+            "visual testing",
+            "image-diff",
+            "image comparison",
+            "image snapshot"
+          ],
+          "badge": "community"
+        },
+        {
           "name": "Cypress Chrome Recorder",
           "description": "Tool for exporting Cypress Tests from Google Chrome DevTools' Recordings",
           "link": "https://github.com/cypress-io/cypress-chrome-recorder",
