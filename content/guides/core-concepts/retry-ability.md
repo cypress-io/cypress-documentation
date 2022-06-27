@@ -263,19 +263,12 @@ cy.get('[data-testid="ssr-error"]', { timeout: 0 }).should('not.exist')
 
 Here is a short test that demonstrates some flake.
 
-:::visit-mount-test-example
-
-```js
-cy.visit('/')
-```
-
-```js
-cy.mount(<Todos />)
-```
+<e2e-or-ct>
+<template #e2e>
 
 ```js
 it('adds two items', () => {
-  __VISIT_MOUNT_PLACEHOLDER__
+  cy.visit('/')
 
   cy.get('[data-testid="new-todo"]').type('todo A{enter}')
   cy.get('[data-testid="todo-list"] li')
@@ -289,7 +282,27 @@ it('adds two items', () => {
 })
 ```
 
-:::
+</template>
+<template #ct>
+
+```js
+it('adds two items', () => {
+  cy.mount(<Todos />)
+
+  cy.get('[data-testid="new-todo"]').type('todo A{enter}')
+  cy.get('[data-testid="todo-list"] li')
+    .find('label')
+    .should('contain', 'todo A')
+
+  cy.get('[data-testid="new-todo"]').type('todo B{enter}')
+  cy.get('[data-testid="todo-list"] li')
+    .find('label')
+    .should('contain', 'todo B')
+})
+```
+
+</template>
+</e2e-or-ct>
 
 The test passes in Cypress without a hitch.
 
@@ -387,19 +400,12 @@ that query elements. Instead of
 `cy.get('[data-testid="todo-list"] li').find('label')` we can combine two
 separate queries into one - forcing the combined query to be retried.
 
-:::visit-mount-test-example
-
-```js
-cy.visit('/')
-```
-
-```js
-cy.mount(<Todos />)
-```
+<e2e-or-ct>
+<template #e2e>
 
 ```js
 it('adds two items', () => {
-  __VISIT_MOUNT_PLACEHOLDER__
+  cy.visit('/')
 
   cy.get('[data-testid="new-todo"]').type('todo A{enter}')
   cy.get('[data-testid="todo-list"] li label') // 1 query command
@@ -411,7 +417,25 @@ it('adds two items', () => {
 })
 ```
 
-:::
+</template>
+<template #ct>
+
+```js
+it('adds two items', () => {
+  cy.mount(<Todos />)
+
+  cy.get('[data-testid="new-todo"]').type('todo A{enter}')
+  cy.get('[data-testid="todo-list"] li label') // 1 query command
+    .should('contain', 'todo A') // assertion
+
+  cy.get('[data-testid="new-todo"]').type('todo B{enter}')
+  cy.get('[data-testid="todo-list"] li label') // 1 query command
+    .should('contain', 'todo B') // assertion
+})
+```
+
+</template>
+</e2e-or-ct>
 
 To show the retries, I increased the application's artificial delay to 500ms.
 The test now always passes because the entire selector is retried. It finds 2
@@ -470,19 +494,12 @@ There is another way to fix our flaky test. Whenever you write a longer test, we
 recommend alternating commands with assertions. In this case, I will add an
 assertion after the `cy.get()` command, but before the `.find()` command.
 
-:::visit-mount-test-example
-
-```js
-cy.visit('/')
-```
-
-```js
-cy.mount(<Todos />)
-```
+<e2e-or-ct>
+<template #e2e>
 
 ```js
 it('adds two items', () => {
-  __VISIT_MOUNT_PLACEHOLDER__
+  cy.visit('/')
 
   cy.get('[data-testid="new-todo"]').type('todo A{enter}')
   cy.get('[data-testid="todo-list"] li') // command
@@ -498,7 +515,29 @@ it('adds two items', () => {
 })
 ```
 
-:::
+</template>
+<template #ct>
+
+```js
+it('adds two items', () => {
+  cy.mount(<Todos />)
+
+  cy.get('[data-testid="new-todo"]').type('todo A{enter}')
+  cy.get('[data-testid="todo-list"] li') // command
+    .should('have.length', 1) // assertion
+    .find('label') // command
+    .should('contain', 'todo A') // assertion
+
+  cy.get('[data-testid="new-todo"]').type('todo B{enter}')
+  cy.get('[data-testid="todo-list"] li') // command
+    .should('have.length', 2) // assertion
+    .find('label') // command
+    .should('contain', 'todo B') // assertion
+})
+```
+
+</template>
+</e2e-or-ct>
 
 <DocsImage src="/img/guides/retry-ability/v10/alternating-commands-assertions.png" alt="Passing test"></DocsImage>
 

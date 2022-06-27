@@ -17,7 +17,7 @@ To create a React project with Vite:
 1. Run the scaffold command
 
 ```bash
-npm create vite@latest my-awesom-app -- --template react
+npm create vite@latest my-awesome-app -- --template react
 ```
 
 2. Go into the directory and run `npm install`

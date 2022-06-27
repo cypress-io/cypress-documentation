@@ -28,7 +28,7 @@ Vue 2 projects will import the `mount` function from `cypress/vue2` like so:
 import { mount } from 'cypress/vue2'
 ```
 
-### Using cy.mount Anywhere
+### Using `cy.mount()` Anywhere
 
 While you can use the `mount` function in your tests, we recommend using
 [`cy.mount`](/api/commands/mount), which is added as a
@@ -47,13 +47,13 @@ Cypress.Commands.add('mount', mount)
 </code-block>
 </code-group>
 
-This allows you to use `cy.mount` in any component test without having to import
+This allows you to use `cy.mount()` in any component test without having to import
 the framework-specific mount command.
 
 You can customize `cy.mount` to fit your needs. For instance, if you are using
 plugins or other global app-level setups in your Vue app, you can configure them
 here. For more info, see the
-[Customizing cy.mount guide for Vue](/guides/component-testing/custom-mount-vue).
+[Customizing cy.mount() guide for Vue](/guides/component-testing/custom-mount-vue).
 
 ### Your First Component Test
 

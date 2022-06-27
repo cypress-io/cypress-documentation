@@ -125,28 +125,34 @@ automatically based on the declared interface. Thus, in the example above, the
 
 In your specs, you can now use the custom command as expected
 
-:::visit-mount-test-example
-
-```ts
-// from your cypress/e2e/spec.cy.ts
-cy.visit('/')
-```
-
-```ts
-// from your src/components/MyComponent.cy.ts
-cy.mount(<MyComponent />)
-```
+<e2e-or-ct>
+<template #e2e>
 
 ```ts
 it('works', () => {
-  __VISIT_MOUNT_PLACEHOLDER__
+  // from your cypress/e2e/spec.cy.ts
+  cy.visit('/')
   // IntelliSense and TS compiler should
   // not complain about unknown method
   cy.dataCy('greeting')
 })
 ```
 
-:::
+</template>
+<template #ct>
+
+```ts
+it('works', () => {
+  // from your src/components/MyComponent.cy.ts
+  cy.mount(<MyComponent />)
+  // IntelliSense and TS compiler should
+  // not complain about unknown method
+  cy.dataCy('greeting')
+})
+```
+
+</template>
+</e2e-or-ct>
 
 #### Adding child or dual commands
 

@@ -22,10 +22,10 @@ cleanup.
 import { mount } from 'cypress/react'
 ```
 
-### Using cy.mount Anywhere
+### Using `cy.mount()` Anywhere
 
 While you can use the `mount` function in your tests, we recommend using
-[`cy.mount`](/api/commands/mount), which is added as a
+[`cy.mount()`](/api/commands/mount), which is added as a
 [custom command](/api/cypress-api/custom-commands) in the
 **cypress/support/component.js** file:
 
@@ -41,17 +41,17 @@ Cypress.Commands.add('mount', mount)
 </code-block>
 </code-group>
 
-This allows you to use `cy.mount` in any component test without having to import
+This allows you to use `cy.mount()` in any component test without having to import
 the framework-specific mount command.
 
-You can customize `cy.mount` to fit your needs. For instance, if you are using
+You can customize `cy.mount()` to fit your needs. For instance, if you are using
 providers or other global app-level setups in your React app, you can configure
 them here. For more info, see the
-[Customizing cy.mount guide for React](/guides/component-testing/custom-mount-react).
+[Customizing cy.mount() guide for React](/guides/component-testing/custom-mount-react).
 
 ### Your First Component Test
 
-Now that you have a component and know how to mount it let's write our first
+Now that you have a component and know how to mount it, let's write our first
 test.
 
 To get started, create a spec file in the same directory as the `Stepper.jsx`
