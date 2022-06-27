@@ -53,7 +53,7 @@ the framework-specific mount command.
 You can customize `cy.mount` to fit your needs. For instance, if you are using
 plugins or other global app-level setups in your Vue app, you can configure them
 here. For more info, see the
-[Customizing cy.mount guide for Vue](/guides/component-testing/custom-mount-vue).
+[Customizing cy.mount() guide for Vue](/guides/component-testing/custom-mount-vue).
 
 ### Your First Component Test
 
