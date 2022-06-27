@@ -31,7 +31,7 @@ import { mount } from 'cypress/vue2'
 ### Using `cy.mount()` Anywhere
 
 While you can use the `mount` function in your tests, we recommend using
-[`cy.mount`](/api/commands/mount), which is added as a
+[`cy.mount()`](/api/commands/mount), which is added as a
 [custom command](/api/cypress-api/custom-commands) in the
 **cypress/support/component.js** file:
 
