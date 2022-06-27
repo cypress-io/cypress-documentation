@@ -51,7 +51,7 @@ them here. For more info, see the
 
 ### Your First Component Test
 
-Now that you have a component and know how to mount it let's write our first
+Now that you have a component and know how to mount it, let's write our first
 test.
 
 To get started, create a spec file in the same directory as the `Stepper.jsx`
