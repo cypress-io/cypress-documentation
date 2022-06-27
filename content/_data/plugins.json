@@ -342,6 +342,13 @@
           "link": "https://github.com/nils-hoyer/cypress-fail-on-console-error",
           "keywords": ["console", "error", "fail"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-codegen",
+          "description": "A Cypress plugin which automatically adds and enables IntelliSense for custom commands",
+          "link": "https://github.com/ExpediaGroup/cypress-codegen",
+          "keywords": ["commands", "development", "codegen"],
+          "badge": "community"
         }
       ]
     },
