@@ -12,7 +12,7 @@ const CypressConfigFileTabs: React.FC<CypressConfigFileTabsProps> = ({ children 
       <TabItem value="js" label="cypress.config.js">
         {children && children[0]}
       </TabItem>
-      <TabItem value="ts" label="cyppress.config.ts">
+      <TabItem value="ts" label="cypress.config.ts">
         {children && children[1]}
       </TabItem>
     </Tabs>
