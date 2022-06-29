@@ -93,6 +93,10 @@ You can also group your Cypress tests and Jest tests inside separate folders
 You will need to add a `tsconfig.json` to the folder and specify the types the
 files inside that folder should use.
 
+In cypress 10, you will need to exclude `cypress.config.ts` in `tsconfig.json`.
+Please see our
+[Migrating to Cypress version 10.0](/guides/references/migration-guide#Clashing-types-with-Jest)
+
 Don't forget to update your
 [`specPattern`](https://docs.cypress.io/guides/references/configuration#component)
 to include the new file location.

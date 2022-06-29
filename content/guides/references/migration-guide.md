@@ -714,6 +714,18 @@ plugin will need to be updated to version >= 3.10 to work with Cypress 10. Using
 a previous version will result in an error when tests are ran with code coverage
 enabled.
 
+### Clashing types with Jest
+
+Configuring your app with separate `tsconfig.json` to solve
+[clashing types with jest](/guides/tooling/typescript-support#Clashing-types-with-Jest).
+You will need to exclude `cypress.config.ts` in your root `tsconfig.json` file.
+
+```json
+{
+  "exclude": ["cypress.config.ts"]
+}
+```
+
 ## Migrating from `cypress-file-upload` to [`.selectFile()`](/api/commands/selectfile)
 
 Selecting files with input elements or dropping them over the page is available
