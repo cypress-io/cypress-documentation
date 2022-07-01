@@ -121,6 +121,28 @@ cy.get('[data-cy=draggable]')
   .trigger('mouseup')
 ```
 
+Also, depending on how the draggable elements are implemented, it could be necessary to consider two additional things:
+<List><li>Could be necessary to programatically fetch pageX and pageY</li></List>
+<List><li>Could be necessary to add an assertion before the `.trigger('mouseup')` to ensure that the `ui-sortable-placeholder` div is in place before dropping the element</li></List>
+
+```javascript
+cy.get('[data-cy=draggable]')
+      .then((el) => {
+        const rect = el[0].getBoundingClientRect();
+        const pageYDragAmount = -100;
+        cy.window().then((window) => {
+          const pageY = rect.top + window.pageYOffset;
+          cy.wrap(el)
+            .trigger('mousedown', { which: 1, pageX: rect.left, pageY })
+            .trigger('mousemove', { which: 1, pageX: rect.left, pageY: pageY + pageYDragAmount })
+            .then((el) => {
+              cy.get('[data-cy=parent-container]').children().should('have.class', 'ui-sortable-placeholder')
+              cy.get(el).trigger("mouseup");
+            })
+        });
+      })
+```
+
 #### Drag and Drop
 
 <Alert type="info">
