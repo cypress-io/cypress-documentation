@@ -132,24 +132,57 @@ everything you need prebuilt.
 
 ## System requirements
 
-<Alert type="info">
-
-#### Operating System
+### Operating System
 
 Cypress is a desktop application that is installed on your computer. The desktop
 application supports these operating systems:
 
-- **macOS** 10.9 and above _(64-bit only)_
-- **Linux** Ubuntu 12.04 and above, Fedora 21 and Debian 8 _(64-bit only)_
+- **macOS** 10.9 and above _(Intel or Apple Silicon 64-bit (x64 or arm64))_
+- **Linux** Ubuntu 12.04 and above, Fedora 21 and Debian 8 _(x86_64 or Arm
+  64-bit (x64 or arm64))_ (see [Linux Prerequisites](#Linux-Prerequisites) down
+  below)
 - **Windows** 7 and above _(64-bit only)_
 
-#### Node.js
+### Node.js
 
 If you're using `npm` to install Cypress, we support:
 
 - **Node.js** 12 or 14 and above
 
-#### Linux
+### Hardware
+
+When running Cypress locally, it should run comfortably on any machine that is
+capable of modern web development.
+
+When running Cypress in CI, however, some of the lower-tier configurations might
+not be able to run Cypress reliably, especially when recording videos or doing
+longer test runs.
+
+Some issues you might run into in CI that could be a sign of insufficient
+resources are:
+
+- Exiting early during `cypress run` or abruptly closing (“crashing”)
+- Frozen or missing frames in the video that is captured
+- Increased runtime
+
+When running Cypress in CI, we recommend that you have the following hardware
+requirements:
+
+#### CPU
+
+- 2 CPUs minimum to run Cypress
+- 1 additional CPU if video recording is enabled
+- 1 additional CPU per process you run outside of Cypress, such as:
+  - App server (frontend)
+  - App server (backend)
+  - App database
+  - Any additional infrastructure (Redis, Kafka, etc..)
+
+### Memory
+
+- 4GB minimum, 8GB+ for longer test runs
+
+### Linux Prerequisites
 
 If you're using Linux, you'll want to have the required dependencies installed
 on your system.
@@ -185,8 +218,6 @@ container with the Node.js process.
 [base docker node images](https://hub.docker.com/_/node/).
 
 **Great, now [install Cypress](#Installing)!**
-
-</Alert>
 
 ## Next Steps
 

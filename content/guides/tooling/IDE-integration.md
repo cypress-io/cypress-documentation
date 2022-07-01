@@ -10,7 +10,7 @@ attempt to open the file on your system. If the editor supports inline
 highlighting of the file, the file will open with the cursor located on the line
 and column of interest.
 
-<DocsImage src="/img/guides/cypress-app/v10/open-file-in-IDE.gif" alt="Open file in your IDE"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/cypress-app/open-file-in-IDE.gif" alt="Open file in your IDE"></DocsImage>
 
 The first time you click a file path, Cypress will prompt you to select which
 location you prefer to open the file. You can choose to open it in your:
