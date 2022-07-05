@@ -36,6 +36,7 @@
   "devDependencies": {
     "@docusaurus/module-type-aliases": "2.0.0-beta.21",
     "@tsconfig/docusaurus": "^1.0.5",
+    "prettier": "^2.7.1",
     "typescript": "^4.6.4"
   },
   "browserslist": {

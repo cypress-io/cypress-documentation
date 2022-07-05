@@ -1,0 +1,42 @@
+This "package" is a remark plugin that will take a TypeScript code block, make a
+copy of it, and convert it to a JavaScript block. To do so, put the
+`copyTsToJs` as meta data for the code block.
+
+Usage:
+
+```typescript copyTsToJs
+const name: string = 'joe'
+
+export default name
+```
+
+Will output:
+
+```js
+const name = 'joe'
+
+module.exports = name
+```
+
+```typescript
+const name: string = 'joe'
+
+export default name
+```
+
+> Note that the JS code block is the first one
+
+From here, a custom MDX component can do what it wishes with the outputted code
+blocks.
+
+Inspired from
+https://github.com/sapphiredev/documentation-plugins/tree/main/packages/ts2esm2cjs
+and modified for our needs.
+
+This is developed as a separate "package" so it can be in TS and have its own
+tests/builds outside of the main docs. The docs reference the compiled JS files
+in the dist folder, so its intended that the dist folder be checked into git.
+
+To build run `yarn build`
+
+To test run `yarn test`
