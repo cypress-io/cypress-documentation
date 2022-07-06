@@ -80,10 +80,8 @@ Pass in an options object to change the default behavior of `cy.viewport()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-
 - `cy.viewport()` yields `null`
 - `cy.viewport()` cannot be chained further
-
 
 ## Examples
 
@@ -230,27 +228,14 @@ You can
 [change these default dimensions](/guides/references/configuration#Viewport) by
 adding the following to your Cypress configuration:
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  viewportWidth: 1000,
-  viewportHeight: 660,
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
   viewportWidth: 1000,
-  viewportHeight: 660
+  viewportHeight: 660,
 })
 ```
-
-</CypressConfigFileTabs>
 
 Additionally, Cypress automatically sets the viewport to its default size
 between each test.

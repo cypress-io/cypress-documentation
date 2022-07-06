@@ -62,25 +62,13 @@ Set multiple configuration options with an object literal.
 
 #### Get all configuration options from the [Cypress configuration](/guides/references/configuration)
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  defaultCommandTimeout: 10000
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
-  defaultCommandTimeout: 10000
+  defaultCommandTimeout: 10000,
 })
 ```
-
-</CypressConfigFileTabs>
 
 <!-- textlint-disable -->
 
@@ -94,25 +82,13 @@ Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, ..
 
 #### Return a single configuration option from the [Cypress configuration](/guides/references/configuration)
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  pageLoadTimeout: 60000
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
-  pageLoadTimeout: 60000
+  pageLoadTimeout: 60000,
 })
 ```
-
-</CypressConfigFileTabs>
 
 ```javascript
 Cypress.config('pageLoadTimeout') // => 60000
@@ -131,27 +107,14 @@ effect for the remainder of the tests _in the same spec file._
 
 :::
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  viewportWidth: 1280,
-  viewportHeight: 720
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
   viewportWidth: 1280,
-  viewportHeight: 720
+  viewportHeight: 720,
 })
 ```
-
-</CypressConfigFileTabs>
 
 ```javascript
 Cypress.config('viewportWidth', 800)
@@ -163,27 +126,14 @@ Cypress.config('viewportWidth') // => 800
 
 #### Override multiple options from the [Cypress configuration](/guides/references/configuration) by passing an object
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  defaultCommandTimeout: 4000,
-  pageLoadTimeout: 30000
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
   defaultCommandTimeout: 4000,
-  pageLoadTimeout: 30000
+  pageLoadTimeout: 30000,
 })
 ```
-
-</CypressConfigFileTabs>
 
 ```javascript
 Cypress.config({

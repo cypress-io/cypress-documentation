@@ -56,19 +56,7 @@ Related notes:
   configuration using `cypress.config.js` and `cypress.config.ts` vs the older
   `cypress.json`. For example:
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  e2e: {
-    baseUrl: 'http://localhost:1234',
-  },
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
@@ -77,8 +65,6 @@ export default defineConfig({
   },
 })
 ```
-
-</CypressConfigFileTabs>
 
 ### Plugins File Removed
 
@@ -172,10 +158,7 @@ examples can be found in our
 
 <Badge type="danger">Before</Badge>
 
-<Tabs>
-<TabItem value="cypress/plugins/index.js" active>
-
-```js
+```js title="cypress/plugins/index.js"
 const { startDevServer } = require('@cypress/webpack-dev-server')
 const webpackConfig = require('../../webpack.config.js')
 
@@ -187,9 +170,6 @@ module.exports = (on, config) => {
   }
 }
 ```
-
-</TabItem>
-</Tabs>
 
 <Badge type="success">After</Badge>
 
@@ -441,29 +421,7 @@ module.exports = (on, config) => {
 
 <Badge type="success">After</Badge>
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  component: {
-    devServer(cypressConfig) {
-      // component testing dev server setup code
-    },
-    setupNodeEvents(on, config) {
-      // component testing node events setup code
-    },
-  },
-  e2e: {
-    setupNodeEvents(on, config) {
-      // e2e testing node events setup code
-    },
-  },
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
@@ -483,33 +441,11 @@ export default defineConfig({
 })
 ```
 
-</CypressConfigFileTabs>
-
-
 Alternately, you can continue to use an external plugins file, but you will need
 to load that file explicitly, and also update it to move any component testing
 dev server code into the [`devServer`](#devServer) config option.
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-const setupNodeEvents = require('./cypress/plugins/index.js')
-
-module.exports = defineConfig({
-  component: {
-    devServer(cypressConfig) {
-      // component testing dev server setup code
-    },
-    setupNodeEvents,
-  },
-  e2e: {
-    setupNodeEvents,
-  },
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 import setupNodeEvents from './cypress/plugins/index.js'
 
@@ -525,8 +461,6 @@ export default defineConfig({
   },
 })
 ```
-
-</CypressConfigFileTabs>
 
 #### `slowTestThreshold`
 

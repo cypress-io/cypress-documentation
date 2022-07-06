@@ -84,8 +84,11 @@ globally in the [Cypress configuration](/guides/references/configuration).
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.visit()` yields the `window` object after the page finishes
-loading</li></List>
+<List>
+  <li>
+    `cy.visit()` yields the `window` object after the page finishes loading
+  </li>
+</List>
 
 Let's confirm the `window.navigator.language` after visiting the site:
 
@@ -245,29 +248,15 @@ Cypress will prefix the URL with the `baseUrl` if it has been set. Configure
 `baseUrl` in the [Cypress configuration](/guides/references/configuration) to
 prevent repeating yourself in every `cy.visit()` command.
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  e2e: {
-    baseUrl: 'http://localhost:3000/#/'
-  }
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
   e2e: {
-    baseUrl: 'http://localhost:3000/#/'
-  }
+    baseUrl: 'http://localhost:3000/#/',
+  },
 })
 ```
-
-</CypressConfigFileTabs>
 
 ```javascript
 cy.visit('dashboard') // Visits http://localhost:3000/#/dashboard
@@ -302,29 +291,15 @@ group of tests, disable the `baseUrl` using
 [per-test configuration](/guides/references/configuration#Test-Configuration).
 Imagine this Cypress configuration:
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  e2e: {
-    baseUrl: 'https://example.cypress.io'
-  }
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
   e2e: {
-    baseUrl: 'https://example.cypress.io'
-  }
+    baseUrl: 'https://example.cypress.io',
+  },
 })
 ```
-
-</CypressConfigFileTabs>
 
 The first test visits the `baseUrl`, while the second test visits the local
 file.
@@ -420,22 +395,34 @@ does so immediately before any of your application code runs.
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.visit()` requires being chained off of `cy`.</li><li>`cy.visit()`
-requires the response to be `content-type: text/html`.</li><li>`cy.visit()`
-requires the response code to be `2xx` after following
-redirects.</li><li>`cy.visit()` requires the load `load` event to eventually
-fire.</li></List>
+<List>
+  <li>`cy.visit()` requires being chained off of `cy`.</li>
+  <li>`cy.visit()` requires the response to be `content-type: text/html`.</li>
+  <li>
+    `cy.visit()` requires the response code to be `2xx` after following
+    redirects.
+  </li>
+  <li>`cy.visit()` requires the load `load` event to eventually fire.</li>
+</List>
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.visit()` will automatically wait for assertions you have chained
-to pass</li></List>
+<List>
+  <li>
+    `cy.visit()` will automatically wait for assertions you have chained to pass
+  </li>
+</List>
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.visit()` can time out waiting for the page to fire its `load`
-event.</li><li>`cy.visit()` can time out waiting for assertions you've added to
-pass.</li></List>
+<List>
+  <li>
+    `cy.visit()` can time out waiting for the page to fire its `load` event.
+  </li>
+  <li>
+    `cy.visit()` can time out waiting for assertions you've added to pass.
+  </li>
+</List>
 
 ## Command Log
 
@@ -449,12 +436,18 @@ beforeEach(() => {
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/visit/visit-example-page-in-before-each-of-test.png" alt="Command Log visit" ></DocsImage>
+<DocsImage
+  src="/img/api/visit/visit-example-page-in-before-each-of-test.png"
+  alt="Command Log visit"
+></DocsImage>
 
 When clicking on `visit` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/visit/visit-shows-any-redirect-or-cookies-set-in-the-console.png" alt="console Log visit" ></DocsImage>
+<DocsImage
+  src="/img/api/visit/visit-shows-any-redirect-or-cookies-set-in-the-console.png"
+  alt="console Log visit"
+></DocsImage>
 
 ## History
 

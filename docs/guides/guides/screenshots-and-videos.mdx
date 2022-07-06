@@ -86,50 +86,26 @@ make the encoding a little bit faster. Here are some common scenarios:
 
 **Change compression value**
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  videoCompression: 15
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
   videoCompression: 15
 })
 ```
-
-</CypressConfigFileTabs>
 
 A lower `videoCompression` value will spend less time compressing and result in
 a bigger video file size.
 
 **Disable compression**
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  videoCompression: false
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
   videoCompression: false
 })
 ```
-
-</CypressConfigFileTabs>
 
 The compression step will be skipped completely, so the video will be large, but
 the processing should be faster.

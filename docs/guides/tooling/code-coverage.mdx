@@ -633,21 +633,7 @@ environment settings under `env.codeCoverage.url` key. For example, if the
 application back end is running at port 3000 and we are using the default "GET
 /**coverage**" endpoint, set the following:
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  env: {
-    codeCoverage: {
-      url: 'http://localhost:3000/__coverage__'
-    }
-  }
-})
-```
-
-```ts
+```ts cypressConfigSample 
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
@@ -659,7 +645,6 @@ export default defineConfig({
 })
 ```
 
-</CypressConfigFileTabs>
 
 From now on, the front end code coverage collected during end-to-end tests will
 be merged with the code coverage from the instrumented back end code and saved

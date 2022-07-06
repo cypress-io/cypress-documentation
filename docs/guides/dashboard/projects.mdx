@@ -126,25 +126,13 @@ your project and automatically insert it into your Cypress configuration file.
 
 #### The `projectId` is a 6 character string in your Cypress configuration
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  projectId: 'a7bq2k',
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
   projectId: 'a7bq2k',
 })
 ```
-
-</CypressConfigFileTabs>
 
 This helps us uniquely identify your project. If you manually alter this,
 **Cypress will no longer be able to identify your project or find the recorded

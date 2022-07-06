@@ -43,19 +43,7 @@ automatic code completion for configuration in many popular code editors. While
 it's not strictly necessary for Cypress to parse your configuration, we
 recommend wrapping your config object with `defineConfig()` like this:
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  e2e: {
-    baseUrl: 'http://localhost:1234',
-  },
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
@@ -64,8 +52,6 @@ export default defineConfig({
   },
 })
 ```
-
-</CypressConfigFileTabs>
 
 ## Options
 
@@ -223,19 +209,7 @@ object:
 | `excludeSpecPattern` | `*.hot-update.js`                     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludeSpecPattern)                         |
 | `slowTestThreshold`  | `10000`                               | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                               |
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  e2e: {
-    // e2e options here
-  }
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
@@ -244,8 +218,6 @@ export default defineConfig({
   }
 })
 ```
-
-</CypressConfigFileTabs>
 
 ### component
 
@@ -261,19 +233,8 @@ object:
 | `excludeSpecPattern` | `['/snapshots/*', '/image_snapshots/*']` | A String or Array of glob patterns used to ignore spec files that would otherwise be shown in your list of specs. [Please read the notes on using this.](#excludeSpecPattern)                    |
 | `slowTestThreshold`  | `250`                                    | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                          |
 
-<CypressConfigFileTabs>
 
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  component: {
-    // component options here
-  }
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
@@ -282,8 +243,6 @@ export default defineConfig({
   }
 })
 ```
-
-</CypressConfigFileTabs>
 
 <!-- prettier-ignore-end -->
 
@@ -326,29 +285,7 @@ override other configuration options for either the
 
 For example:
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  // These settings apply everywhere unless overridden
-  defaultCommandTimeout: 5000,
-  viewportWidth: 1000,
-  viewportHeight: 600,
-  // Viewport settings overridden for component tests
-  component: {
-    viewportWidth: 500
-    viewportHeight: 500
-  },
-  // Command timeout overridden for E2E tests
-  e2e: {
-    defaultCommandTimeout: 10000
-  }
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
@@ -358,17 +295,15 @@ export default defineConfig({
   viewportHeight: 600,
   // Viewport settings overridden for component tests
   component: {
-    viewportWidth: 500
-    viewportHeight: 500
+    viewportWidth: 500,
+    viewportHeight: 500,
   },
   // Command timeout overridden for E2E tests
   e2e: {
-    defaultCommandTimeout: 10000
-  }
+    defaultCommandTimeout: 10000,
+  },
 })
 ```
-
-</CypressConfigFileTabs>
 
 ### Environment Variables
 
@@ -608,35 +543,18 @@ allows you to register a component testing dev server.
 Typically, you will specify a `framework` and `bundler` options in `devServer`
 for your framework and UI library like so:
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  component: {
-    devServer: {
-      framework: 'create-react-app',
-      bundler: 'webpack'
-    },
-  },
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
   component: {
     devServer: {
       framework: 'create-react-app',
-      bundler: 'webpack'
+      bundler: 'webpack',
     },
   },
 })
 ```
-
-</CypressConfigFileTabs>
 
 See
 [Framework Configuration](/guides/component-testing/component-framework-configuration)
@@ -650,22 +568,7 @@ custom or advanced setups.
 
 The devServer function receives a `cypressConfig` argument:
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  component: {
-    devServer(cypressConfig) {
-      // return dev server instance or a promise that resolves to
-      // a dev server instance here
-    },
-  },
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
@@ -677,8 +580,6 @@ export default defineConfig({
   },
 })
 ```
-
-</CypressConfigFileTabs>
 
 See the
 [Custom Dev Server](/guides/component-testing/component-framework-configuration)
@@ -745,31 +646,16 @@ By default, we force GC cleanup between every test during
 cleanup during [cypress open](/guides/guides/command-line#cypress-open) using
 the configuration below:
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  firefoxGcInterval: {
-    runMode: 1,
-    openMode: null
-  }
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
   firefoxGcInterval: {
     runMode: 1,
-    openMode: null
-  }
+    openMode: null,
+  },
 })
 ```
-
-</CypressConfigFileTabs>
 
 You can override how often Cypress runs GC cleanup by setting the
 `firefoxGcInterval` config value to:
@@ -786,79 +672,40 @@ You can override how often Cypress runs GC cleanup by setting the
 
 Turn off GC cleanup all modes
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  firefoxGcInterval: null
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
-  firefoxGcInterval: null
+  firefoxGcInterval: null,
 })
 ```
-
-</CypressConfigFileTabs>
 
 Run GC cleanup before every other test during
 [cypress run](/guides/guides/command-line#cypress-run) and
 [cypress open](/guides/guides/command-line#cypress-open)
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  firefoxGcInterval: 2
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
-  firefoxGcInterval: 2
+  firefoxGcInterval: 2,
 })
 ```
-
-</CypressConfigFileTabs>
 
 Run GC cleanup before every 3rd test during
 [cypress run](/guides/guides/command-line#cypress-run) and disable running GC
 cleanup during [cypress open](/guides/guides/command-line#cypress-open).
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  firefoxGcInterval: {
-    runMode: 3,
-    openMode: null
-  }
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
   firefoxGcInterval: {
     runMode: 3,
-    openMode: null
-  }
+    openMode: null,
+  },
 })
 ```
-
-</CypressConfigFileTabs>
 
 ### isInteractive
 
@@ -911,26 +758,7 @@ This function was added in Cypress version `10.0.0` to replace the deprecated
 
 :::
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  e2e: {
-    setupNodeEvents(on, config) {
-      // e2e testing node events setup code
-    },
-  },
-  component: {
-    setupNodeEvents(on, config) {
-      // component testing node events setup code
-    },
-  },
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
@@ -946,8 +774,6 @@ export default defineConfig({
   },
 })
 ```
-
-</CypressConfigFileTabs>
 
 See the [plugins guide](/guides/tooling/plugins-guide) for more information.
 
@@ -958,68 +784,34 @@ See the [plugins guide](/guides/tooling/plugins-guide) for more information.
 Make sure you do not accidentally place the `baseUrl` config option into the
 `env` object. The following configuration is _incorrect_ and will not work:
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  // ⛔️ DOES NOT WORK
-  env: {
-    baseUrl: 'http://localhost:3030',
-    FOO: 'bar'
-  }
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
   // ⛔️ DOES NOT WORK
   env: {
     baseUrl: 'http://localhost:3030',
-    FOO: 'bar'
-  }
+    FOO: 'bar',
+  },
 })
 ```
-
-</CypressConfigFileTabs>
 
 Solution: place the `baseUrl` property outside the `env` object and inside the
 [e2e](/guides/references/configuration#e2e) testing-type specific object.
 
-<CypressConfigFileTabs>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  // ✅ THE CORRECT WAY
-  env: {
-    FOO: 'bar'
-  },
-  e2e: {
-    baseUrl: 'http://localhost:3030',
-  }
-})
-```
-
-```ts
+```ts cypressConfigSample
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
   // ✅ THE CORRECT WAY
   env: {
-    FOO: 'bar'
+    FOO: 'bar',
   },
   e2e: {
     baseUrl: 'http://localhost:3030',
-  }
+  },
 })
 ```
-
-</CypressConfigFileTabs>
 
 You can also find a few tips on setting the `baseUrl` in this
 [short video](https://www.youtube.com/watch?v=f5UaXuAc52c).
@@ -1039,7 +831,7 @@ DEBUG=cypress:cli,cypress:server:specs
 
 | Version                                       | Changes                                                                              |
 | --------------------------------------------- | ------------------------------------------------------------------------------------ |
-| [10.0.0](/guides/references/changelog#10-0-0) | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files |
+| [10.0.0](/guides/references/changelog#10-0-0) | Reworked page to support new `cypress.config.js` and removed `cypress.json` examples |
 | [8.7.0](/guides/references/changelog#8-7-0)   | Added `slowTestThreshold` option                                                     |
 | [8.0.0](/guides/references/changelog#8-0-0)   | Added `clientCertificates` option                                                    |
 | [7.0.0](/guides/references/changelog#7-0-0)   | Added `e2e` and `component` options.                                                 |
