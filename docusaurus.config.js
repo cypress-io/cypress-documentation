@@ -4,11 +4,11 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github')
 const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 const fs = require('fs')
-const { copyTsToJs } = require('./plugins/copyTsToJs/dist')
 const {
+  copyTsToJs,
   cypressConfigPluginSample,
   cypressConfigSample,
-} = require('./plugins/cypressConfigSamples/dist')
+} = require('./plugins/cypressRemarkPlugins/dist')
 const prettierConfig = JSON.parse(fs.readFileSync('./.prettierrc', 'utf-8'))
 
 /** @type {import('@docusaurus/types').Config} */

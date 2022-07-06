@@ -1,4 +1,4 @@
-import type { Code, Content, Text } from 'mdast'
+import type { Code, Content } from 'mdast'
 import type { Node, Parent } from 'unist'
 import visit from 'unist-util-visit'
 

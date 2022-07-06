@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.cypressConfigPluginSample = void 0;
 const unist_util_visit_1 = __importDefault(require("unist-util-visit"));
-const createDirective_1 = require("./createDirective");
-const hydratePluginSample_1 = require("./hydratePluginSample");
+const createDirective_1 = require("../utils/createDirective");
+const hydratePluginSample_1 = require("../cypressConfigPluginSample/hydratePluginSample");
 const tagName = 'cypress-plugin-sample';
 function cypressConfigPluginSample() {
     (0, createDirective_1.createDirective)(this, tagName);

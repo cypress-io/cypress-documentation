@@ -1,8 +1,8 @@
 import type { Code, Content, Text, Root } from 'mdast'
 import type { Node, Parent } from 'unist'
 import visit from 'unist-util-visit'
-import { createDirective } from './createDirective'
-import { hydratePluginSample } from './hydratePluginSample'
+import { createDirective } from '../utils/createDirective'
+import { hydratePluginSample } from '../cypressConfigPluginSample/hydratePluginSample'
 
 const tagName = 'cypress-plugin-sample'
 
