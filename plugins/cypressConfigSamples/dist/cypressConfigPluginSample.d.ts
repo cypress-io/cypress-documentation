@@ -1,1 +1,2 @@
-export declare function cypressConfigPluginSample(): (root: any) => void;
+import type { Root } from 'mdast';
+export declare function cypressConfigPluginSample(this: any): (root: Root) => void;

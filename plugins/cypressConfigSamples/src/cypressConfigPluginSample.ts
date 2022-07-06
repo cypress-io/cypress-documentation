@@ -1,23 +1,25 @@
-import type { Code, Content, Text } from 'mdast'
+import type { Code, Content, Text, Root } from 'mdast'
 import type { Node, Parent } from 'unist'
 import visit from 'unist-util-visit'
-import { hydratePluginSample } from './hydratePluginSample';
+import { createDirective } from './createDirective'
+import { hydratePluginSample } from './hydratePluginSample'
 
-export function cypressConfigPluginSample() {
-  return (root) => {
-    visit(root, (node: Node) => {
-      if (isParent(node)) {
-        let index = 0
-        while (index < node.children.length) {
-          const child = node.children[index]!
-          if (matchNode(child)) {
-            const result = transformNode(child)
-            node.children.splice(index, 1, ...result)
-            index += result.length
-          } else {
-            index += 1
-          }
+const tagName = 'cypress-plugin-sample'
+
+export function cypressConfigPluginSample(this: any) {
+  createDirective(this as any, tagName)
+  return (root: Root) => {
+    visit(root, 'containerDirective', (node: Node) => {
+      if (isParent(node) && node.data?.hName === tagName) {
+        let result: Node[] = []
+        if (node.children.length === 1 && isCode(node.children[0])) {
+          result = transformNode(node.children[0])
+        } else if (isCode(node.children[0]) && isCode(node.children[1])) {
+          result = transformNode(node.children[1], node.children[0])
+        } else {
+          result = node.children
         }
+        node.children = result
       }
     })
   }
@@ -27,16 +29,12 @@ function isParent(node: Node): node is Parent {
   return Array.isArray((node as Parent).children)
 }
 
-function matchNode(node: Node): node is Code {
-  return (
-    node.type === 'code' &&
-    typeof (node as Code).meta === 'string' &&
-    ((node as Code).meta ?? '').startsWith('cypressConfigPluginSample')
-  )
+function isCode(node: Node): node is Code {
+  return node.type === 'code'
 }
 
-function transformNode(node: Code) {
-  const tsCode = hydratePluginSample(node.value)
+function transformNode(codeNode: Code, importNode?: Code) {
+  const tsCode = hydratePluginSample(codeNode.value, importNode?.value)
 
   return [
     {
@@ -44,7 +42,7 @@ function transformNode(node: Code) {
       value: `<CypressConfigFileTabs>\n`,
     },
     {
-      type: node.type,
+      type: 'code',
       lang: 'typescript',
       meta: 'copyTsToJs',
       value: tsCode,
