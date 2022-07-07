@@ -56,4 +56,3 @@ function createDirective(ctx, tagName) {
     Parser.blockMethods.splice(Parser.blockMethods.indexOf('fencedCode') + 1, 0, tagName);
 }
 exports.createDirective = createDirective;
-//# sourceMappingURL=createDirective.js.map

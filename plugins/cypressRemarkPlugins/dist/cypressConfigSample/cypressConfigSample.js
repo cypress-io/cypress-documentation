@@ -5,36 +5,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.cypressConfigSample = void 0;
 const unist_util_visit_1 = __importDefault(require("unist-util-visit"));
+const createDirective_1 = require("../utils/createDirective");
+const matchHelpers_1 = require("../utils/matchHelpers");
 function cypressConfigSample() {
+    const tagName = 'cypress-config-sample';
+    (0, createDirective_1.createDirective)(this, tagName);
     return (root) => {
-        (0, unist_util_visit_1.default)(root, (node) => {
-            if (isParent(node)) {
-                let index = 0;
-                while (index < node.children.length) {
-                    const child = node.children[index];
-                    if (matchNode(child)) {
-                        const result = transformNode(child);
-                        node.children.splice(index, 1, ...result);
-                        index += result.length;
-                    }
-                    else {
-                        index += 1;
-                    }
+        (0, unist_util_visit_1.default)(root, 'containerDirective', (node) => {
+            if ((0, matchHelpers_1.isMatchedDirective)(node, tagName)) {
+                let result = [];
+                if (node.children.length === 1 && (0, matchHelpers_1.isCode)(node.children[0])) {
+                    result = transformNode(node.children[0]);
                 }
+                else {
+                    result = node.children;
+                }
+                node.children = result;
             }
         });
     };
 }
 exports.cypressConfigSample = cypressConfigSample;
-function isParent(node) {
-    return Array.isArray(node.children);
-}
-function matchNode(node) {
-    var _a;
-    return (node.type === 'code' &&
-        typeof node.meta === 'string' &&
-        ((_a = node.meta) !== null && _a !== void 0 ? _a : '').startsWith('cypressConfigSample'));
-}
 function transformNode(node) {
     const tsCode = node.value;
     return [
@@ -54,3 +45,4 @@ function transformNode(node) {
         },
     ];
 }
+//# sourceMappingURL=cypressConfigSample.js.map

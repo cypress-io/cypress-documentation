@@ -34,3 +34,4 @@ function convertExports(code) {
     result = result.replace(exportRegex, 'module.exports.');
     return result;
 }
+//# sourceMappingURL=transformEsmToCjs.js.map

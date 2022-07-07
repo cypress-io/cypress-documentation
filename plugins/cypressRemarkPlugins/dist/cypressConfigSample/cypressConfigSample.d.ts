@@ -1,1 +1,1 @@
-export declare function cypressConfigSample(): (root: any) => void;
+export declare function cypressConfigSample(this: any): (root: any) => void;

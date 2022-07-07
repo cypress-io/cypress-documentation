@@ -1,37 +1,25 @@
 import type { Code, Content } from 'mdast'
-import type { Node, Parent } from 'unist'
+import type { Node } from 'unist'
 import visit from 'unist-util-visit'
+import { createDirective } from '../utils/createDirective'
+import { isCode, isMatchedDirective } from '../utils/matchHelpers';
 
-export function cypressConfigSample() {
+export function cypressConfigSample(this: any) {
+  const tagName = 'cypress-config-sample'
+  createDirective(this, tagName)
   return (root) => {
-    visit(root, (node: Node) => {
-      if (isParent(node)) {
-        let index = 0
-        while (index < node.children.length) {
-          const child = node.children[index]!
-          if (matchNode(child)) {
-            const result = transformNode(child)
-            node.children.splice(index, 1, ...result)
-            index += result.length
-          } else {
-            index += 1
-          }
+    visit(root, 'containerDirective', (node: Node) => {
+      if (isMatchedDirective(node, tagName)) {
+        let result: Node[] = []
+        if (node.children.length === 1 && isCode(node.children[0])) {
+          result = transformNode(node.children[0])
+        } else {
+          result = node.children
         }
+        node.children = result
       }
     })
   }
-}
-
-function isParent(node: Node): node is Parent {
-  return Array.isArray((node as Parent).children)
-}
-
-function matchNode(node: Node): node is Code {
-  return (
-    node.type === 'code' &&
-    typeof (node as Code).meta === 'string' &&
-    ((node as Code).meta ?? '').startsWith('cypressConfigSample')
-  )
 }
 
 function transformNode(node: Code) {

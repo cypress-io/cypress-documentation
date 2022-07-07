@@ -19,3 +19,4 @@ function hydratePluginSample(code, importCode) {
     return pluginTemplate.replace('/** replace import **/', importCode || '').replace('/** replace code **/', code);
 }
 exports.hydratePluginSample = hydratePluginSample;
+//# sourceMappingURL=hydratePluginSample.js.map

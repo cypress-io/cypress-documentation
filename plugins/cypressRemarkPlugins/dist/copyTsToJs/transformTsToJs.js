@@ -44,3 +44,4 @@ function tsToEsm(code, options) {
         compilerOptions: makeTsCompilerOptions(options.typescriptCompilerOptions),
     });
 }
+//# sourceMappingURL=transformTsToJs.js.map

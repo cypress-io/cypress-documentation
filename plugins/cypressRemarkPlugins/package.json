@@ -6,6 +6,7 @@
   "scripts": {
     "prebuild": "rm -rf ./dist",
     "build": "tsc",
+    "build:watch": "yarn prebuild && tsc --watch",
     "test": "vitest",
     "test2": "jest",
     "test:watch": "jest --watch"
