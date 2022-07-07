@@ -15,6 +15,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./copyTsToJs"), exports);
-__exportStar(require("./cypressConfigPluginSample"), exports);
-__exportStar(require("./cypressConfigSample"), exports);
+__exportStar(require("./cypressConfigPluginExample"), exports);
+__exportStar(require("./cypressConfigExample"), exports);
 //# sourceMappingURL=index.js.map

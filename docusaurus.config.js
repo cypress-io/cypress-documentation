@@ -6,8 +6,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 const fs = require('fs')
 const {
   copyTsToJs,
-  cypressConfigPluginSample,
-  cypressConfigSample,
+  cypressConfigPluginExample,
+  cypressConfigExample,
 } = require('./plugins/cypressRemarkPlugins/dist')
 const prettierConfig = JSON.parse(fs.readFileSync('./.prettierrc', 'utf-8'))
 
@@ -47,8 +47,8 @@ const config = {
           routeBasePath: '/',
           lastVersion: 'current',
           remarkPlugins: [
-            cypressConfigSample,
-            cypressConfigPluginSample,
+            cypressConfigExample,
+            cypressConfigPluginExample,
             [copyTsToJs, { prettierOptions: prettierConfig }],
           ],
           // versions: {

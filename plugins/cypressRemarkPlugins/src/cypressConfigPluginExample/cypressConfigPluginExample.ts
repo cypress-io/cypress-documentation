@@ -1,18 +1,21 @@
-import type { Code, Content } from 'mdast'
+import type { Code, Content, Root } from 'mdast'
 import type { Node } from 'unist'
 import visit from 'unist-util-visit'
 import { createDirective } from '../utils/createDirective'
+import { hydratePluginSample } from './hydratePluginSample'
 import { isCode, isMatchedDirective } from '../utils/matchHelpers';
 
-export function cypressConfigSample(this: any) {
-  const tagName = 'cypress-config-sample'
+export function cypressConfigPluginExample(this: any) {
+  const tagName = 'cypress-config-plugin-example'
   createDirective(this, tagName)
-  return (root) => {
+  return (root: Root) => {
     visit(root, 'containerDirective', (node: Node) => {
       if (isMatchedDirective(node, tagName)) {
         let result: Node[] = []
         if (node.children.length === 1 && isCode(node.children[0])) {
           result = transformNode(node.children[0])
+        } else if (isCode(node.children[0]) && isCode(node.children[1])) {
+          result = transformNode(node.children[1], node.children[0])
         } else {
           result = node.children
         }
@@ -22,8 +25,8 @@ export function cypressConfigSample(this: any) {
   }
 }
 
-function transformNode(node: Code) {
-  const tsCode = node.value
+function transformNode(codeNode: Code, importNode?: Code) {
+  const tsCode = hydratePluginSample(codeNode.value, importNode?.value)
 
   return [
     {
@@ -31,7 +34,7 @@ function transformNode(node: Code) {
       value: `<CypressConfigFileTabs>\n`,
     },
     {
-      type: node.type,
+      type: 'code',
       lang: 'typescript',
       meta: 'copyTsToJs',
       value: tsCode,
