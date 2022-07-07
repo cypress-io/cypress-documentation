@@ -52,10 +52,10 @@ To configure CA / client certificates within your Cypress configuration, you can
 add the `clientCertificates` key to define an array of client certificates as
 shown below:
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   clientCertificates: [
     {
       url: 'https://a.host.com',
@@ -89,8 +89,10 @@ export default defineConfig({
       ],
     },
   ],
-})
+}
 ```
+
+:::
 
 ## History
 

@@ -151,15 +151,17 @@ leverage that now.
 Open up your [configuration file](/guides/references/configuration). It starts
 out empty, but let's add the `baseUrl` option.
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   e2e: {
     baseUrl: 'http://localhost:8080'
   }
-})
+}
 ```
+
+:::
 
 This will automatically **prefix** [`cy.visit()`](/api/commands/visit) and
 [`cy.request()`](/api/commands/request) commands with this baseUrl.

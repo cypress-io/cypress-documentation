@@ -633,17 +633,19 @@ environment settings under `env.codeCoverage.url` key. For example, if the
 application back end is running at port 3000 and we are using the default "GET
 /**coverage**" endpoint, set the following:
 
-```ts cypressConfigSample 
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts 
+{
   env: {
     codeCoverage: {
       url: 'http://localhost:3000/__coverage__'
     }
   }
-})
+}
 ```
+
+:::
 
 
 From now on, the front end code coverage collected during end-to-end tests will

@@ -98,18 +98,20 @@ To configure component testing for a React app that uses
 `devServer` with a `framework` of "create-react-app" and a `bundler` of
 "webpack" like so:
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   component: {
     devServer: {
       framework: 'create-react-app',
       bundler: 'webpack',
     },
   },
-})
+}
 ```
+
+:::
 
 #### Sample Create React Apps
 
@@ -129,18 +131,20 @@ To configure component testing for a React app that uses
 [Next.js](https://nextjs.org/), you will need to configure a `devServer` with a
 `framework` of "next" and a `bundler` of "webpack" like so:
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   component: {
     devServer: {
       framework: 'next',
       bundler: 'webpack',
     },
   },
-})
+}
 ```
+
+:::
 
 #### Next.js Caveats
 
@@ -169,18 +173,20 @@ To configure component testing for a React app that uses
 [Vite](https://vitejs.dev/), you will need to configure a `devServer` with a
 `framework` of "react" and a `bundler` of "vite" like so:
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   component: {
     devServer: {
       framework: 'react',
       bundler: 'vite',
     },
   },
-})
+}
 ```
+
+:::
 
 #### Sample React Vite Apps
 
@@ -192,11 +198,14 @@ To configure component testing for a React app that uses a custom
 [Webpack](https://webpack.js.org/) config, you will need to configure a
 `devServer` with a `framework` of "react" and a `bundler` of "webpack" like so:
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
-import webpackConfig from './webpack.config'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+import webpackConfig from './webpack.config'
+```
+
+```ts
+{
   component: {
     devServer: {
       framework: 'react',
@@ -205,8 +214,10 @@ export default defineConfig({
       webpackConfig,
     },
   },
-})
+}
 ```
+
+:::
 
 If you don't provide a webpack config, Cypress will try to infer it. If Cypress
 cannot do so, or you want to make modifications to your config, you can specify
@@ -232,18 +243,20 @@ To configure component testing for a Vue app that uses
 [Vue CLI](https://cli.vuejs.org/), you will need to configure a `devServer` with
 a `framework` of "vue-cli" and a `bundler` of "webpack" like so:
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   component: {
     devServer: {
       framework: 'vue-cli',
       bundler: 'webpack',
     },
   },
-})
+}
 ```
+
+:::
 
 :::caution
 
@@ -273,18 +286,20 @@ To configure component testing for a Vue app that uses
 [Nuxt](https://nuxtjs.org/), you will need to configure a `devServer` with a
 `framework` of "nuxt" and a `bundler` of "webpack" like so:
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   component: {
     devServer: {
       framework: 'nuxt',
       bundler: 'webpack',
     },
   },
-})
+}
 ```
+
+:::
 
 #### Nuxt Sample Apps
 
@@ -296,18 +311,20 @@ To configure component testing for a Vue app that uses
 [Vite](https://vitejs.dev/), you will need to configure a `devServer` with a
 `framework` of "vue" and a `bundler` of "vite" like so:
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   component: {
     devServer: {
       framework: 'vue',
       bundler: 'vite',
     },
   },
-})
+}
 ```
+
+:::
 
 #### Vue Vite Sample Apps
 
@@ -319,11 +336,14 @@ To configure component testing for a Vue app that uses a custom
 [Webpack](https://webpack.js.org/) config, you will need to configure a
 `devServer` with a `framework` of "vue" and a `bundler` of "webpack" like so:
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
-import webpackConfig from './webpack.config'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+import webpackConfig from './webpack.config'
+```
+
+```ts
+{
   component: {
     devServer: {
       framework: 'vue',
@@ -332,8 +352,10 @@ export default defineConfig({
       webpackConfig,
     },
   },
-})
+}
 ```
+
+:::
 
 If you don't provide one, Cypress will try to infer your webpack config. If
 Cypress cannot or you want to make modifications to your config, you can pass it
@@ -360,10 +382,10 @@ The function's signature takes in a
 parameter and returns either an instance of a `devServer` or a promise that
 resolves to a `devServer` instance.
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   component: {
     devServer(cypressConfig: CypressConfiguration) {
       // return devServer instance or a promise that resolves to
@@ -374,8 +396,10 @@ export default defineConfig({
       }
     },
   },
-})
+}
 ```
+
+:::
 
 ### Custom Index File
 
@@ -388,7 +412,9 @@ external scripts.
 You can provide an alternative path to the file using the `indexHtmlFile` option
 in the [component config](/guides/references/configuration#component) options:
 
-```js
+:::cypress-config-example
+
+```ts
 {
   component: {
     devServer,
@@ -396,6 +422,8 @@ in the [component config](/guides/references/configuration#component) options:
   }
 }
 ```
+
+:::
 
 ### Spec Pattern for Component Tests
 
@@ -406,13 +434,17 @@ the following example, we've configured Cypress to look for spec files with
 those same extensions, but only in the `src` folder or any of its
 subdirectories.
 
-```js
+:::cypress-config-example
+
+```ts
 {
   component: {
     specPattern: 'src/**/*.cy.{js,jsx,ts,tsx}'
   }
 }
 ```
+
+:::
 
 ### Additional Config
 

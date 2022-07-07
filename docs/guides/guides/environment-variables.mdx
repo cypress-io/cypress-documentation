@@ -83,17 +83,19 @@ Any key/value you set in your
 [Cypress configuration](/guides/references/configuration) under the `env` key
 will become an environment variable.
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   projectId: '128076ed-9868-4e98-9cef-98dd8b705d75',
   env: {
     login_url: '/login',
     products_url: '/products'
   }
-})
+}
 ```
+
+:::
 
 #### Test file
 

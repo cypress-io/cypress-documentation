@@ -43,15 +43,17 @@ automatic code completion for configuration in many popular code editors. While
 it's not strictly necessary for Cypress to parse your configuration, we
 recommend wrapping your config object with `defineConfig()` like this:
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   e2e: {
     baseUrl: 'http://localhost:1234',
   },
-})
+}
 ```
+
+:::
 
 ## Options
 
@@ -209,15 +211,17 @@ object:
 | `excludeSpecPattern` | `*.hot-update.js`                     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludeSpecPattern)                         |
 | `slowTestThreshold`  | `10000`                               | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                               |
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   e2e: {
     // e2e options here
   }
-})
+}
 ```
+
+:::
 
 ### component
 
@@ -234,15 +238,17 @@ object:
 | `slowTestThreshold`  | `250`                                    | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                          |
 
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   component: {
     // component options here
   }
-})
+}
 ```
+
+:::
 
 <!-- prettier-ignore-end -->
 
@@ -285,10 +291,10 @@ override other configuration options for either the
 
 For example:
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   // These settings apply everywhere unless overridden
   defaultCommandTimeout: 5000,
   viewportWidth: 1000,
@@ -302,8 +308,10 @@ export default defineConfig({
   e2e: {
     defaultCommandTimeout: 10000,
   },
-})
+}
 ```
+
+:::
 
 ### Environment Variables
 
@@ -543,18 +551,20 @@ allows you to register a component testing dev server.
 Typically, you will specify a `framework` and `bundler` options in `devServer`
 for your framework and UI library like so:
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   component: {
     devServer: {
       framework: 'create-react-app',
       bundler: 'webpack',
     },
   },
-})
+}
 ```
+
+:::
 
 See
 [Framework Configuration](/guides/component-testing/component-framework-configuration)
@@ -568,18 +578,20 @@ custom or advanced setups.
 
 The devServer function receives a `cypressConfig` argument:
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   component: {
     devServer(cypressConfig) {
       // return dev server instance or a promise that resolves to
       // a dev server instance here
     },
   },
-})
+}
 ```
+
+:::
 
 See the
 [Custom Dev Server](/guides/component-testing/component-framework-configuration)
@@ -646,16 +658,18 @@ By default, we force GC cleanup between every test during
 cleanup during [cypress open](/guides/guides/command-line#cypress-open) using
 the configuration below:
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   firefoxGcInterval: {
     runMode: 1,
     openMode: null,
   },
-})
+}
 ```
+
+:::
 
 You can override how often Cypress runs GC cleanup by setting the
 `firefoxGcInterval` config value to:
@@ -672,40 +686,46 @@ You can override how often Cypress runs GC cleanup by setting the
 
 Turn off GC cleanup all modes
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   firefoxGcInterval: null,
-})
+}
 ```
+
+:::
 
 Run GC cleanup before every other test during
 [cypress run](/guides/guides/command-line#cypress-run) and
 [cypress open](/guides/guides/command-line#cypress-open)
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   firefoxGcInterval: 2,
-})
+}
 ```
+
+:::
 
 Run GC cleanup before every 3rd test during
 [cypress run](/guides/guides/command-line#cypress-run) and disable running GC
 cleanup during [cypress open](/guides/guides/command-line#cypress-open).
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   firefoxGcInterval: {
     runMode: 3,
     openMode: null,
   },
-})
+}
 ```
+
+:::
 
 ### isInteractive
 
@@ -758,10 +778,10 @@ This function was added in Cypress version `10.0.0` to replace the deprecated
 
 :::
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   e2e: {
     setupNodeEvents(on, config) {
       // e2e testing node events setup code
@@ -772,8 +792,10 @@ export default defineConfig({
       // component testing node events setup code
     },
   },
-})
+}
 ```
+
+:::
 
 See the [plugins guide](/guides/tooling/plugins-guide) for more information.
 
@@ -784,25 +806,27 @@ See the [plugins guide](/guides/tooling/plugins-guide) for more information.
 Make sure you do not accidentally place the `baseUrl` config option into the
 `env` object. The following configuration is _incorrect_ and will not work:
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   // ⛔️ DOES NOT WORK
   env: {
     baseUrl: 'http://localhost:3030',
     FOO: 'bar',
   },
-})
+}
 ```
+
+:::
 
 Solution: place the `baseUrl` property outside the `env` object and inside the
 [e2e](/guides/references/configuration#e2e) testing-type specific object.
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   // ✅ THE CORRECT WAY
   env: {
     FOO: 'bar',
@@ -810,8 +834,10 @@ export default defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3030',
   },
-})
+}
 ```
+
+:::
 
 You can also find a few tips on setting the `baseUrl` in this
 [short video](https://www.youtube.com/watch?v=f5UaXuAc52c).

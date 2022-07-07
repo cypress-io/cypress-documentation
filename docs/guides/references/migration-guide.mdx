@@ -56,15 +56,17 @@ Related notes:
   configuration using `cypress.config.js` and `cypress.config.ts` vs the older
   `cypress.json`. For example:
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   e2e: {
     baseUrl: 'http://localhost:1234',
   },
-})
+}
 ```
+
+:::
 
 ### Plugins File Removed
 
@@ -421,10 +423,10 @@ module.exports = (on, config) => {
 
 <Badge type="success">After</Badge>
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   component: {
     devServer(cypressConfig) {
       // component testing dev server setup code
@@ -438,18 +440,23 @@ export default defineConfig({
       // e2e testing node events setup code
     },
   },
-})
+}
 ```
+
+:::
 
 Alternately, you can continue to use an external plugins file, but you will need
 to load that file explicitly, and also update it to move any component testing
 dev server code into the [`devServer`](#devServer) config option.
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
-import setupNodeEvents from './cypress/plugins/index.js'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+import setupNodeEvents from './cypress/plugins/index.js'
+```
+
+```ts
+{
   component: {
     devServer(cypressConfig) {
       // component testing dev server setup code
@@ -459,8 +466,10 @@ export default defineConfig({
   e2e: {
     setupNodeEvents,
   },
-})
+}
 ```
+
+:::
 
 #### `slowTestThreshold`
 

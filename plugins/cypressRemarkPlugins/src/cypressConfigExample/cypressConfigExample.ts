@@ -3,6 +3,7 @@ import type { Node } from 'unist'
 import visit from 'unist-util-visit'
 import { createDirective } from '../utils/createDirective'
 import { isCode, isMatchedDirective } from '../utils/matchHelpers';
+import { hydrateConfigSample } from './hydrateConfigSample';
 
 export function cypressConfigExample(this: any) {
   const tagName = 'cypress-config-example'
@@ -13,6 +14,8 @@ export function cypressConfigExample(this: any) {
         let result: Node[] = []
         if (node.children.length === 1 && isCode(node.children[0])) {
           result = transformNode(node.children[0])
+        } else if (isCode(node.children[0]) && isCode(node.children[1])) {
+          result = transformNode(node.children[1], node.children[0])
         } else {
           result = node.children
         }
@@ -22,8 +25,8 @@ export function cypressConfigExample(this: any) {
   }
 }
 
-function transformNode(node: Code) {
-  const tsCode = node.value
+function transformNode(codeNode: Code, importNode?: Code) {
+  const tsCode = hydrateConfigSample(codeNode.value, importNode?.value)
 
   return [
     {
@@ -31,7 +34,7 @@ function transformNode(node: Code) {
       value: `<CypressConfigFileTabs>\n`,
     },
     {
-      type: node.type,
+      type: codeNode.type,
       lang: 'typescript',
       meta: 'copyTsToJs',
       value: tsCode,

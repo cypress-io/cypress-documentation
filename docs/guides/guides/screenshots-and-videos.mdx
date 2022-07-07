@@ -86,26 +86,30 @@ make the encoding a little bit faster. Here are some common scenarios:
 
 **Change compression value**
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   videoCompression: 15
-})
+}
 ```
+
+:::cypress-config-example
 
 A lower `videoCompression` value will spend less time compressing and result in
 a bigger video file size.
 
 **Disable compression**
 
-```ts cypressConfigSample
-import { defineConfig } from 'cypress'
+:::cypress-config-example
 
-export default defineConfig({
+```ts
+{
   videoCompression: false
-})
+}
 ```
+
+:::
 
 The compression step will be skipped completely, so the video will be large, but
 the processing should be faster.
