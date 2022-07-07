@@ -2,8 +2,8 @@
 node_modules
 
 # Production
-/build
-/dist
+build
+dist
 
 # Generated files
 .docusaurus
