@@ -1,15 +1,25 @@
 This "package" contains a few remark plugins for creating Tabs/code-blocks for
 Cypress config samples.
 
-## cypressConfigSample
+This is developed as a separate package so it can be in TS and have its own
+tests/builds outside of the main docs.
 
-This is a remark plugin that will take a TypeScript code block and turn it into
-a cypress config example with TS and JS code blocks. It uses the
-`CypressConfigFileTabs` component to display each code block in its own tab.
+To build run `yarn build`
+
+To test run `yarn test`
+
+## cypress-config-example directive
+
+This is a remark plugin that will take a triple colon directive
+(`:::cypress-config-example`) with a single TS code block and convert/copy it to
+JS code block, and wrap it with the `CypressConfigFileTabs` component to display
+each code block in its own tab.
 
 Usage:
 
-```ts cypressConfigSample
+:::cypress-config-example
+
+```ts
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
@@ -18,6 +28,8 @@ export default defineConfig({
   },
 })
 ```
+
+:::
 
 Will output:
 
@@ -47,29 +59,21 @@ export default defineConfig({
 
 > Note that the JS code block is the first one outputed
 
-This is developed as a separate "package" so it can be in TS and have its own
-tests/builds outside of the main docs. The docs reference the compiled JS files
-in the dist folder, so its intended that the dist folder be checked into git.
-
-To build run `yarn build`
-
-To test run `yarn test`
-
-## cypress-plugin-sample directive
+## cypress-config-plugin-example directive
 
 This "package" is a remark plugin that will take a triple colon directive
-(`:::cypress-plugin-sample`) with one or two code blocks and convert it to a
-tabs with examples on how to use the plugin in TS and JS. If two code blocks are
-present, then the first will be included after the initial imports, and the
-second will be included in the `setupNodeEvents` method. If only one code block
-exists, it will be included in the `setupNodeEvents` method.
+(`:::cypress-config-plugin-example`) with one or two code blocks and convert it
+to a tabs with examples on how to use the plugin in TS and JS. If two code
+blocks are present, then the first will be included after the initial imports,
+and the second will be included in the `setupNodeEvents` method. If only one
+code block exists, it will be included in the `setupNodeEvents` method.
 
 It uses the `CypressConfigFileTabs` component to display each code block in its
 own tab.
 
 Usage:
 
-:::cypress-plugin-sample
+:::cypress-config-plugin-example
 
 ```ts
 import fs from 'fs'
@@ -125,19 +129,11 @@ export default defineConfig({
 
 > Note that the JS code block is the first one outputed
 
-This is developed as a separate "package" so it can be in TS and have its own
-tests/builds outside of the main docs. The docs reference the compiled JS files
-in the dist folder, so its intended that the dist folder be checked into git.
-
-To build run `yarn build`
-
-To test run `yarn test`
-
 ## copyTsToJs Plugin
 
 This "package" is a remark plugin that will take a TypeScript code block, make a
-copy of it, and convert it to a JavaScript block. To do so, put the
-`copyTsToJs` as meta data for the code block.
+copy of it, and convert it to a JavaScript block. To do so, put the `copyTsToJs`
+as meta data for the code block.
 
 Usage:
 
@@ -166,15 +162,4 @@ export default name
 From here, a custom MDX component can do what it wishes with the outputted code
 blocks.
 
-Inspired from
-https://github.com/sapphiredev/documentation-plugins/tree/main/packages/ts2esm2cjs
-and modified for our needs.
-
-This is developed as a separate "package" so it can be in TS and have its own
-tests/builds outside of the main docs. The docs reference the compiled JS files
-in the dist folder, so its intended that the dist folder be checked into git.
-
-To build run `yarn build`
-
-To test run `yarn test`
 
