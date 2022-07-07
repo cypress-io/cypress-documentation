@@ -17,7 +17,7 @@ is enabled.
 
 :::
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
 ```js
 on('after:spec', (spec, results) => {
@@ -52,6 +52,8 @@ awaited before Cypress proceeds with processing the spec's video or moving on to
 further specs if there are any.
 
 ### Log the relative spec path to stdout after the spec is run
+
+:::cypress-config-plugin-example
 
 ```javascript
 module.exports = (on, config) => {
@@ -93,6 +95,8 @@ module.exports = (on, config) => {
 }
 ```
 
+:::
+
 ## Examples
 
 ### Delete the recorded video if the spec passed
@@ -104,15 +108,15 @@ Dashboard.
 The example below shows how to delete the recorded video for specs with no
 failing tests.
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```javascript
+```ts
 // need to install the "del" module as a dependency
 // npm i del --save-dev
-const del = require('del')
+import del from 'del'
 ```
 
-```js
+```ts
 on('after:spec', (spec, results) => {
   if (results && results.stats.failures === 0 && results.video) {
     // `del()` returns a promise, so it's important to return it to ensure
@@ -133,16 +137,16 @@ Dashboard.
 The example below shows how to delete the recorded video for specs that had no
 retry attempts when using Cypress [test retries](/guides/guides/test-retries).
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
+```ts
 // need to install these dependencies
 // npm i lodash del --save-dev
-const _ = require('lodash')
-const del = require('del')
+import _ from 'lodash'
+import del from 'del'
 ```
 
-```js
+```ts
 on('after:spec', (spec, results) => {
   if (results && results.video) {
     // Do we have failures for any retry attempts?

@@ -824,9 +824,9 @@ The `db:seed` task is defined within the
 project, and in this case sends a request to a dedicated back end API of the app
 to appropriately re-seed the database.
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
+```ts
 on('task', {
   async 'db:seed'() {
     // Send request to backend API to re-seed database with test data

@@ -30,7 +30,7 @@ cy.task(event, arg, options)
 cy.task('log', 'This will be output to the terminal')
 ```
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
 ```javascript
 on('task', {
@@ -74,9 +74,9 @@ If you need to pass multiple arguments, use an object
 cy.task('hello', { greeting: 'Hello', name: 'World' })
 ```
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
+```ts
 on('task', {
   // deconstruct the individual properties
   hello({ greeting, name }) {
@@ -125,13 +125,13 @@ need to read a file that might not exist, use `cy.task`.
 cy.task('readFileMaybe', 'my-file.txt').then((textOrNull) => { ... })
 ```
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```javascript
-const fs = require('fs')
+```ts
+import fs from 'fs'
 ```
 
-```js
+```ts
 on('task', {
   readFileMaybe(filename) {
     if (fs.existsSync(filename)) {
@@ -152,13 +152,13 @@ on('task', {
 cy.task('countFiles', 'cypress/downloads').then((count) => { ... })
 ```
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```javascript
-const fs = require('fs')
+```ts
+import fs from 'fs'
 ```
 
-```js
+```ts
 on('task', {
   countFiles(folderName) {
     return new Promise((resolve, reject) => {
@@ -192,15 +192,15 @@ describe('e2e', () => {
 })
 ```
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
+```ts
 // we require some code in our app that
 // is responsible for seeding our database
-const db = require('../../server/src/db')
+import db from '../../server/src/db'
 ```
 
-```js
+```ts
 on('task', {
   'defaults:db': () => {
     return db.seed('defaults')
@@ -217,9 +217,9 @@ on('task', {
 cy.task('pause', 1000)
 ```
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```javascript
+```ts
 on('task', {
   pause(ms) {
     return new Promise((resolve) => {
@@ -265,13 +265,13 @@ describe('Href visit', () => {
 })
 ```
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
-let href
+```ts
+let href: string
 ```
 
-```js
+```ts
 on('task', {
   setHref: (val) => {
     return (href = val)
@@ -321,11 +321,11 @@ are using
 [cypress-skip-and-only-ui](https://github.com/bahmutov/cypress-skip-and-only-ui)
 plugin and want to install your own task to read a file that might not exist:
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
-const skipAndOnlyTask = require('cypress-skip-and-only-ui/task')
-const fs = require('fs')
+```ts
+import skipAndOnlyTask from 'cypress-skip-and-only-ui/task'
+import fs from 'fs'
 const myTask = {
   readFileMaybe(filename) {
     if (fs.existsSync(filename)) {
@@ -337,7 +337,7 @@ const myTask = {
 }
 ```
 
-```js
+```ts
 // register plugin's task
 on('task', skipAndOnlyTask)
 // and register my own task
@@ -409,10 +409,10 @@ const query = 'SELECT * FROM users'
 cy.task('queryDatabase', { dbName, query })
 ```
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
-const mysql = require('mysql')
+```ts
+import mysql from 'mysql'
 // the connection strings for different databases could
 // come from the Cypress configuration or from environment variables
 const connections = {
@@ -450,7 +450,7 @@ function queryDB(connectionInfo, query) {
 }
 ```
 
-```js
+```ts
 on('task', {
   // destructure the argument into the individual fields
   queryDatabase({ dbName, query }) {
@@ -484,7 +484,7 @@ cy.task('date', new Date()).then((s) => {
 })
 ```
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
 ```javascript
 on('task', {

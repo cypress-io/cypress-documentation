@@ -11,9 +11,9 @@ and modify other options from the
 
 <WarningSetupNodeEvents />
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
+```ts
 on('before:browser:launch', (browser = {}, launchOptions) => {
   /* ... */
 })
@@ -74,9 +74,9 @@ Here are args available for the currently supported browsers:
 
 ##### Open devtools by default
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
+```ts
 on('before:browser:launch', (browser = {}, launchOptions) => {
   // `args` is an array of all the arguments that will
   // be passed to browsers when it launches
@@ -106,9 +106,9 @@ on('before:browser:launch', (browser = {}, launchOptions) => {
 
 #### Add browser extensions:
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
+```ts
 on('before:browser:launch', (browser, launchOptions) => {
   // supply the absolute path to an unpacked extension's folder
   // NOTE: extensions cannot be loaded in headless Chrome
@@ -129,7 +129,7 @@ Here are preferences available for the currently supported browsers:
 - Firefox: visit `about:config` URL within your Firefox browser to see all
   available preferences.
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
 ```js
 on('before:browser:launch', (browser, launchOptions) => {
@@ -218,9 +218,9 @@ for details.
 
 :::
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
+```ts
 on('before:browser:launch', (browser, launchOptions) => {
   if (browser.name === 'chrome' && browser.isHeadless) {
     // fullPage screenshot size is 1400x1200 on non-retina screens
@@ -255,9 +255,9 @@ on('before:browser:launch', (browser, launchOptions) => {
 
 ### Override the device pixel ratio
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
+```ts
 on('before:browser:launch', (browser, launchOptions) => {
   if (browser.name === 'chrome' && browser.isHeadless) {
     // force screen to behave like retina
@@ -274,7 +274,7 @@ on('before:browser:launch', (browser, launchOptions) => {
 
 ### Start fullscreen
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
 ```js
 on('before:browser:launch', (browser = {}, launchOptions) => {
@@ -305,9 +305,9 @@ without having to have the necessary hardware to test.
 You can however send your own video file for testing by passing a Chrome command
 line switch pointing to a video file.
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
+```ts
 on('before:browser:launch', (browser = {}, launchOptions) => {
   if (browser.family === 'chromium' && browser.name !== 'electron') {
     // Mac/Linux
@@ -330,9 +330,9 @@ on('before:browser:launch', (browser = {}, launchOptions) => {
 Cypress supports a myriad of mime types when testing file downloads, but in case
 you have a unique one, you can add support for it.
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
+```ts
 on('before:browser:launch', (browser, options) => {
   // only Firefox requires all mime types to be listed
   if (browser.family === 'firefox') {
@@ -363,9 +363,9 @@ on('before:browser:launch', (browser, options) => {
 If we need to set a particular Firefox flag, like `browser.send_pings` we can do
 it via preferences
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
+```ts
 on('before:browser:launch', (browser = {}, launchOptions) => {
   if (browser.family === 'firefox') {
     launchOptions.preferences['browser.send_pings'] = true

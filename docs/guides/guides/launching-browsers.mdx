@@ -179,9 +179,9 @@ In the [setupNodeEvents](/api/plugins/configuration-api) function, you can
 filter the list of browsers passed inside the `config` object and return the
 list of browsers you want available for selection during `cypress open`.
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```javascript
+```ts
 // inside config.browsers array each object has information like
 // {
 //   name: 'chrome',
@@ -218,10 +218,10 @@ If you have installed a Chromium-based browser like [Brave](https://brave.com/),
 browsers. Here is a configuration that inserts a local Brave browser into the
 returned list.
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
-const execa = require('execa')
+```ts
+import execa from 'execa'
 const findBrowser = () => {
   // the path is hard-coded for simplicity
   const browserPath =
@@ -245,7 +245,7 @@ const findBrowser = () => {
 }
 ```
 
-```js
+```ts
 return findBrowser().then((browser) => {
   return {
     browsers: config.browsers.concat(browser),
