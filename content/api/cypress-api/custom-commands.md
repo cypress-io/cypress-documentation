@@ -94,7 +94,7 @@ Examples of parent commands:
 - [`cy.get()`](/api/commands/get)
 - [`cy.request()`](/api/commands/request)
 - [`cy.exec()`](/api/commands/exec)
-- [`cy.route()`](/api/commands/route)
+- [`cy.intercept()`](/api/commands/intercept)
 
 #### Click link containing text
 
@@ -738,7 +738,7 @@ const search = (term, options = {}) => {
   // chain off this function below
   return cy
     .log(`Searching for: ${term} `)
-    .route({
+    .intercept({
       url: '/search/**',
       response: `fixture:${fixture}`,
       headers: headers,
