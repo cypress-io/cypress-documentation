@@ -346,11 +346,10 @@ likely to change your application state in more than one way.
 We can continue the interactions and assertions in this test by adding another
 chain to interact with and verify the behavior of elements on this new page.
 
-We can use [cy.get()](/api/commands/get) to select an element based on a
-`data-*` attribute. Then we can use the [.type()](/api/commands/type) command to
-enter text into the selected input. Finally, we can verify that the value of the
-input reflects the text that was typed with another
-[.should()](/api/commands/should).
+We can use [cy.get()](/api/commands/get) to select an element based on its
+class. Then we can use the [.type()](/api/commands/type) command to enter text
+into the selected input. Finally, we can verify that the value of the input
+reflects the text that was typed with another [.should()](/api/commands/should).
 
 ```js
 describe('My First Test', () => {
@@ -365,7 +364,7 @@ describe('My First Test', () => {
 
     // Get an input, type into it and verify
     // that the value has been updated
-    cy.get('[data-testid="action-email"]')
+    cy.get('.action-email')
       .type('fake@email.com')
       .should('have.value', 'fake@email.com')
   })
@@ -381,7 +380,7 @@ the new page. If we read it out loud, it might sound like:
 > 3. Click on it
 > 4. Get the URL
 > 5. Assert it includes: `/commands/actions`
-> 6. Get the input with the `action-email` data-testid
+> 6. Get the input with the `action-email` class
 > 7. Type `fake@email.com` into the input
 > 8. Assert the input reflects the new value
 
@@ -389,11 +388,9 @@ Or in the Given, When, Then syntax:
 
 > 1. Given a user visits `https://example.cypress.io`
 > 2. When they click the link labeled `type`
-> 3. And they type "fake@email.com" into the `[data-testid="action-email"]`
->    input
+> 3. And they type "fake@email.com" into the `.action-email` input
 > 4. Then the URL should include `/commands/actions`
-> 5. And the `[data-testid="action-email"]` input has "fake@email.com" as its
->    value
+> 5. And the `.action-email` input has "fake@email.com" as its value
 
 And hey, this is a very clean test! We didn't have to say anything about _how_
 things work, just that we'd like to verify a particular series of events and
