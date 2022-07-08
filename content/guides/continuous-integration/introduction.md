@@ -243,7 +243,9 @@ maintained images and configurations on several CI providers.
 
 Hardware requirements to run Cypress depend how much memory the browser, the
 application under test, and the server (if running it locally) need to run the
-tests without crashing.
+tests without crashing. Visit our
+[System Requirements](/guides/getting-started/installing-cypress#System-requirements)
+guide for minimum hardware recommendations.
 
 **Some signs that your machine may not have enough CPU or memory to run
 Cypress:**
@@ -348,7 +350,7 @@ minutes off install time by preventing a large binary download.
   [`npm ci`](https://docs.npmjs.com/cli/ci) equivalent.
 
 - If you need to override the binary location for some reason, use
-  [CYPRESS_CACHE_FOLDER](/guides/getting-started/installing-cypress#Binary-cache)
+  [CYPRESS_CACHE_FOLDER](/guides/references/advanced-installation#Binary-cache)
   environment variable.
 
 - Make sure you are not restoring the previous cache using lax keys; then the
@@ -366,7 +368,7 @@ You can set various environment variables to modify how Cypress runs.
 #### Configuration Values
 
 You can set any configuration value as an environment variable. This overrides
-values in your configuration file (`cypress.json` by default).
+values in the Cypress configuration.
 
 **_Typical use cases would be modifying things like:_**
 
@@ -403,11 +405,11 @@ Typically you'd set this inside of your CI provider.
 
 **_CircleCI Environment Variable_**
 
-<DocsImage src="/img/guides/cypress-record-key-as-environment-variable.png" alt="Record key environment variable" ></DocsImage>
+<DocsImage src="/img/guides/continuous-integration/cypress-record-key-as-environment-variable.png" alt="Record key environment variable"></DocsImage>
 
 **_TravisCI Environment Variable_**
 
-<DocsImage src="/img/guides/cypress-record-key-as-env-var-travis.png" alt="Travis key environment variable" ></DocsImage>
+<DocsImage src="/img/guides/continuous-integration/cypress-record-key-as-env-var-travis.png" alt="Travis key environment variable"></DocsImage>
 
 #### Git information
 

@@ -95,20 +95,20 @@ From the Dashboard you can:
 
 - Integrate Cypress into Slack on every recorded test run.
 
-#### See tests runs in the Test Runner
+#### See test runs in the Cypress App
 
-Additionally we've integrated the tests run into the Cypress
-[Test Runner](/guides/core-concepts/test-runner). This means you can see the
-tests run in the _Runs_ tab from within every project.
+Additionally we've integrated the latest test run info into the
+[Cypress app](/guides/core-concepts/cypress-app). This means you can see the
+status of your tests in the _Runs_ tab from within each project.
 
-<DocsImage src="/img/dashboard/runs-list-in-desktop-gui.png" alt="Runs List" ></DocsImage>
+<DocsImage src="/img/dashboard/v10/runs-list-in-cypress-app.png" alt="Runs List" ></DocsImage>
 
 <Alert type="info">
 
 <strong class="alert-header">Have a question you don't see answered
 here?</strong>
 
-[We have answered some common questions about the Dashboard Service in our FAQ.](/faq/questions/dashboard-faq).
+[We have answered some common questions about the Dashboard Service in our FAQ](/faq/questions/dashboard-faq).
 
 </Alert>
 
@@ -123,4 +123,3 @@ can view any [public project](/guides/dashboard/projects#Public-vs-Private).
 - [<Icon name="folder-open"></Icon> cypress-example-recipes](https://dashboard.cypress.io/#/projects/6p53jw)
 - [<Icon name="folder-open"></Icon> cypress-example-kitchensink](https://dashboard.cypress.io/#/projects/4b7344)
 - [<Icon name="folder-open"></Icon> cypress-example-todomvc](https://dashboard.cypress.io/#/projects/245obj)
-- [<Icon name="folder-open"></Icon> cypress-example-piechopper](https://dashboard.cypress.io/#/projects/fuduzp)

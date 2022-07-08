@@ -64,7 +64,7 @@ Pass in an options object to change the default behavior of `cy.scrollTo()`.
 | `duration`         | `0`                                                                  | Scrolls over the duration (in ms)                                                        |
 | `easing`           | `swing`                                                              | Will scroll with the easing animation                                                    |
 | `ensureScrollable` | `true`                                                               | Ensure element is scrollable. Error if element cannot scroll.                            |
-| `log`              | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `log`              | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.scrollTo()` to resolve before [timing out](#Timeouts)                 |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)

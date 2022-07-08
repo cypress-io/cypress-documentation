@@ -35,7 +35,7 @@ cy.get('div').nextUntil('.warning') // Yield siblings after 'div' until '.warnin
 
 ```javascript
 cy.nextUntil() // Errors, cannot be chained off 'cy'
-cy.location().nextUntil('path') // Errors, 'location' does not yield DOM element
+cy.clock().nextUntil('path') // Errors, 'clock' does not yield DOM elements
 ```
 
 ### Arguments
@@ -58,7 +58,7 @@ Pass in an options object to change the default behavior of `.nextUntil()`.
 
 | Option    | Default                                                              | Description                                                                              |
 | --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.nextUntil()` to resolve before [timing out](#Timeouts)                |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)

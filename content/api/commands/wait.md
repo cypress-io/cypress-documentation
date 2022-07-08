@@ -55,7 +55,7 @@ Pass in an options object to change the default behavior of `cy.wait()`.
 
 | Option            | Default                                                                                                                       | Description                                                                              |
 | ----------------- | ----------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`             | `true`                                                                                                                        | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `log`             | `true`                                                                                                                        | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout`         | [`requestTimeout`](/guides/references/configuration#Timeouts), [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.wait()` to resolve before [timing out](#Timeouts)                   |
 | `requestTimeout`  | [`requestTimeout`](/guides/references/configuration#Timeouts)                                                                 | Overrides the global `requestTimeout` for this request. Defaults to `timeout`.           |
 | `responseTimeout` | [`responseTimeout`](/guides/references/configuration#Timeouts)                                                                | Overrides the global `responseTimeout` for this request. Defaults to `timeout`.          |
@@ -104,8 +104,11 @@ For a detailed explanation of aliasing,
 
 #### Wait for a specific request to respond
 
-```javascript
-// Wait for the route aliased as 'getAccount' to respond
+<e2e-or-ct>
+<template #e2e>
+
+```js
+// Wait for the alias 'getAccount' to respond
 // without changing or stubbing its response
 cy.intercept('/accounts/*').as('getAccount')
 cy.visit('/accounts/123')
@@ -115,6 +118,24 @@ cy.wait('@getAccount').then((interception) => {
   // response body, status, etc
 })
 ```
+
+</template>
+<template #ct>
+
+```js
+// Wait for the alias 'getAccount' to respond
+// without changing or stubbing its response
+cy.intercept('/accounts/*').as('getAccount')
+cy.mount(<Account />)
+cy.wait('@getAccount').then((interception) => {
+  // we can now access the low level interception
+  // that contains the request body,
+  // response body, status, etc
+})
+```
+
+</template>
+</e2e-or-ct>
 
 #### Wait automatically increments responses
 
@@ -153,7 +174,10 @@ cy.get('#book-results').should('have.length', 1)
 When passing an array of aliases to `cy.wait()`, Cypress will wait for all
 requests to complete within the given `requestTimeout` and `responseTimeout`.
 
-```javascript
+<e2e-or-ct>
+<template #e2e>
+
+```js
 cy.intercept('/users/*').as('getUsers')
 cy.intercept('/activities/*').as('getActivities')
 cy.intercept('/comments/*').as('getComments')
@@ -168,6 +192,28 @@ cy.wait(['@getUsers', '@getActivities', '@getComments']).then(
   }
 )
 ```
+
+</template>
+<template #ct>
+
+```js
+cy.intercept('/users/*').as('getUsers')
+cy.intercept('/activities/*').as('getActivities')
+cy.intercept('/comments/*').as('getComments')
+cy.mount(<Dashboard />)
+
+cy.wait(['@getUsers', '@getActivities', '@getComments']).then(
+  (interceptions) => {
+    // interceptions will now be an array of matching requests
+    // interceptions[0] <-- getUsers
+    // interceptions[1] <-- getActivities
+    // interceptions[2] <-- getComments
+  }
+)
+```
+
+</template>
+</e2e-or-ct>
 
 #### Using [`.spread()`](/api/commands/spread) to spread the array into multiple arguments.
 

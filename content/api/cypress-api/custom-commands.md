@@ -10,9 +10,8 @@ defined below.
 
 A great place to define or overwrite commands is in your
 `cypress/support/commands.js` file, since it is loaded before any test files are
-evaluated via an import statement in your
-[supportFile](/guides/references/configuration#Folders-Files)
-(`cypress/support/index.js` by default).
+evaluated via an import statement in the
+[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file).
 
 </Alert>
 
@@ -21,6 +20,8 @@ evaluated via an import statement in your
 ```javascript
 Cypress.Commands.add(name, callbackFn)
 Cypress.Commands.add(name, options, callbackFn)
+Cypress.Commands.addAll(callbackObj)
+Cypress.Commands.addAll(options, callbackObj)
 Cypress.Commands.overwrite(name, callbackFn)
 ```
 
@@ -30,6 +31,10 @@ Cypress.Commands.overwrite(name, callbackFn)
 
 ```javascript
 Cypress.Commands.add('login', (email, pw) => {})
+Cypress.Commands.addAll({
+  login(email, pw) {},
+  visit(orig, url, options) {},
+})
 Cypress.Commands.overwrite('visit', (orig, url, options) => {})
 ```
 
@@ -42,6 +47,10 @@ The name of the command you're either adding or overwriting.
 **<Icon name="angle-right"></Icon> callbackFn** **_(Function)_**
 
 Pass a function that receives the arguments passed to the command.
+
+**<Icon name="angle-right"></Icon> callbackObj** **_(Object)_**
+
+An object with `callbackFn`s as properties.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
@@ -231,7 +240,7 @@ Cypress.Commands.add('logout', () => {
 })
 ```
 
-#### Log out command using `localStorage`
+#### Log out command using `localStorage` <E2EOnlyBadge />
 
 ```js
 Cypress.Commands.add('logout', () => {
@@ -433,9 +442,8 @@ that all you're doing is swapping out base urls for `development` vs
 This is usually unnecessary because Cypress is already configured to swap out a
 `baseUrl` that both [cy.visit()](/api/commands/visit) and
 [cy.request()](/api/commands/request) use. Set the `baseUrl` configuration
-property in your [configuration](/guides/references/configuration) file
-(`cypress.json` by default) and override it with the `CYPRESS_BASE_URL`
-environment variable.
+property in your [Cypress configuration](/guides/references/configuration) and
+override it with the `CYPRESS_BASE_URL` environment variable.
 
 For more complex use cases feel free to overwrite existing commands.
 
@@ -445,7 +453,7 @@ For more complex use cases feel free to overwrite existing commands.
 
 If you are typing into a password field, the password input is masked
 automatically within your application. But [.type()](/api/commands/type)
-automatically logs any typed content into the Test Runner's Command Log.
+automatically logs any typed content into the Cypress App's Command Log.
 
 ```js
 cy.get('#username').type('username@email.com')
@@ -457,7 +465,7 @@ cy.get('#password').type('superSecret123')
 You may want to mask some values passed to the [.type()](/api/commands/type)
 command so that sensitive data does not display in screenshots or videos of your
 test run. This example overwrites the [.type()](/api/commands/type) command to
-allow you to mask sensitive data in the Test Runner's Command Log.
+allow you to mask sensitive data in the Cypress App's Command Log.
 
 ```js
 Cypress.Commands.overwrite('type', (originalFn, element, text, options) => {
@@ -481,7 +489,7 @@ cy.get('#username').type('username@email.com')
 cy.get('#password').type('superSecret123', { sensitive: true })
 ```
 
-Now our sensitive password is not printed to the Test Runner's Command Log when
+Now our sensitive password is not printed to the Cypress App's Command Log when
 `sensitive: true` is passed as an option to [.type()](/api/commands/type).
 
 <DocsImage src="/img/api/custom-commands/custom-command-type-masked-password.png"></DocsImage>
@@ -686,6 +694,12 @@ to those commands, and programmatically controlling your custom command. This
 will cleanup the Command Log and be much more visually appealing and
 understandable.
 
+### `cy.hover()` and `cy.mount()`
+
+Cypress does not have `cy.hover()` or `cy.mount()` commands out-of-the-box. See
+how to craft your own [`cy.hover()`](/api/commands/hover) and
+[`cy.mount()`](/api/commands/mount) custom commands.
+
 ### Best Practices
 
 #### 1. Don't make everything a custom command
@@ -700,7 +714,7 @@ However, this pattern can be used and abused. Let's not forget - writing Cypress
 tests is **JavaScript**, and it's often more efficient to write a function for
 repeatable behavior that's specific to only **a single spec file**.
 
-If you're working on a `search_spec.js` file and want to compose several
+If you're working on a `search.cy.js` file and want to compose several
 repeatable actions together, you should first ask yourself:
 
 > Can this be written as a function?

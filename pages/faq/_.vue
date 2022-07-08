@@ -1,11 +1,12 @@
 <script>
-import AppSidebar from '../../components/AppSidebar'
-import AppHeader from '../../components/AppHeader'
-import Footer from '../../components/Footer'
-import TableOfContents from '../../components/TableOfContents'
-import TableOfContentsList from '../../components/TableOfContentsList.vue'
-import { getMetaData, getMetaDescription, getTitle } from '../../utils'
-import { fetchBanner } from '../../utils/sanity'
+import AppSidebar from '@/components/AppSidebar'
+import AppHeader from '@/components/AppHeader'
+import Footer from '@/components/Footer'
+import TableOfContents from '@/components/TableOfContents'
+import TableOfContentsList from '@/components/TableOfContentsList'
+import MainContentHeader from '@/components/MainContentHeader'
+import { getMetaData, getMetaDescription, getTitle } from '@/utils'
+import { fetchBanner } from '@/utils/sanity'
 
 export default {
   components: {
@@ -14,6 +15,7 @@ export default {
     Footer,
     TableOfContents,
     TableOfContentsList,
+    MainContentHeader
   },
   async asyncData({ $content, app, params, error }) {
     const path = `/faq/${params.pathMatch || 'index'}`
@@ -87,7 +89,7 @@ export default {
       />
       <div class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
-          <h1 class="main-content-title">{{ faqItem.title }}</h1>
+          <MainContentHeader :title="faqItem.title" />
           <div class="w-full flex flex-col justify-between">
             <TableOfContentsList :toc="faqItem.toc" />
             <nuxt-content :document="faqItem"></nuxt-content>

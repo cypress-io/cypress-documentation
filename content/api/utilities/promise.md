@@ -106,5 +106,5 @@ in the spec file.
 
 ## See also
 
-- [Bundled Tools](/guides/references/bundled-tools)
+- [Bundled Libraries](/guides/references/bundled-libraries)
 - The recipe [Handling errors](/examples/examples/recipes#Fundamentals)

@@ -59,7 +59,7 @@ Pass in an options object to change the default behavior of `.click()`.
 | `altKey`                     | `false`                                                                        | Activates the alt key (option key for Mac). Aliases: <code>optionKey</code>.                                                                       |
 | `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).  |
 | `ctrlKey`                    | `false`                                                                        | Activates the control key. Aliases: <code>controlKey</code>.                                                                                       |
-| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log)                                                           |
+| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                           |
 | `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions)                                                                               |
 | `metaKey`                    | `false`                                                                        | Activates the meta key (Windows key or command key for Mac). Aliases: <code>commandKey</code>, <code>cmdKey</code>.                                |
 | `multiple`                   | `false`                                                                        | Serially click multiple elements                                                                                                                   |
@@ -134,7 +134,7 @@ cy.get('#footer .next').click(5, 60, { force: true })
 By default, Cypress will error if you're trying to click multiple elements. By
 passing `{ multiple: true }` Cypress will iteratively apply the click to each
 element and will also log to the
-[Command Log](/guides/core-concepts/test-runner#Command-Log) multiple times.
+[Command Log](/guides/core-concepts/cypress-app#Command-Log) multiple times.
 
 ```javascript
 cy.get('[id^=btn]').click({ multiple: true })

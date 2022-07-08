@@ -7,15 +7,7 @@ The `after:spec` event fires after a spec file is run. When running cypress via
 
 ## Syntax
 
-<Alert type="warning">
-
-⚠️ This code is part of the
-[plugins file](/guides/core-concepts/writing-and-organizing-tests#Plugin-files)
-and thus executes in the Node environment. You cannot call `Cypress` or `cy`
-commands in this file, but you do have the direct access to the file system and
-the rest of the operating system.
-
-</Alert>
+::include{file=partials/warning-setup-node-events.md}
 
 <Alert type="warning">
 
@@ -25,21 +17,25 @@ is enabled.
 
 </Alert>
 
+:::cypress-plugin-example
+
 ```js
 on('after:spec', (spec, results) => {
   /* ... */
 })
 ```
 
+:::
+
 **<Icon name="angle-right"></Icon> spec** **_(Object)_**
 
 Details of the spec file, including the following properties:
 
-| Property   | Description                                                                                          |
-| ---------- | ---------------------------------------------------------------------------------------------------- |
-| `name`     | The base name of the spec file (e.g. `login_spec.js`)                                                |
-| `relative` | The path to the spec file, relative to the project root (e.g. `cypress/integration/login_spec.js`)   |
-| `absolute` | The absolute path to the spec file (e.g. `/Users/janelane/my-app/cypress/integration/login_spec.js`) |
+| Property   | Description                                                                                |
+| ---------- | ------------------------------------------------------------------------------------------ |
+| `name`     | The base name of the spec file (e.g. `login.cy.js`)                                        |
+| `relative` | The path to the spec file, relative to the project root (e.g. `cypress/e2e/login.cy.js`)   |
+| `absolute` | The absolute path to the spec file (e.g. `/Users/janelane/my-app/cypress/e2e/login.cy.js`) |
 
 **<Icon name="angle-right"></Icon> results** **_(Object)_**
 
@@ -62,9 +58,9 @@ module.exports = (on, config) => {
   on('after:spec', (spec, results) => {
     // spec will look something like this:
     // {
-    //   name: 'login_spec.js',
-    //   relative: 'cypress/integration/login_spec.js',
-    //   absolute: '/Users/janelane/my-app/cypress/integration/login_spec.js',
+    //   name: 'login.cy.js',
+    //   relative: 'cypress/e2e/login.cy.js',
+    //   absolute: '/Users/janelane/my-app/cypress/e2e/login.cy.js',
     // }
 
     // results will look something like this:
@@ -88,7 +84,7 @@ module.exports = (on, config) => {
     //     }
     //   ],
     //   error: null,
-    //   video: '/Users/janelane/my-app/cypress/videos/login_spec.js.mp4',
+    //   video: '/Users/janelane/my-app/cypress/videos/login.cy.js.mp4',
     //   screenshots: [],
     //   // ...more properties...
     // }
@@ -108,23 +104,25 @@ Dashboard.
 The example below shows how to delete the recorded video for specs with no
 failing tests.
 
-```javascript
-// plugins/index.js
+:::cypress-plugin-example
 
+```javascript
 // need to install the "del" module as a dependency
 // npm i del --save-dev
 const del = require('del')
-
-module.exports = (on, config) => {
-  on('after:spec', (spec, results) => {
-    if (results && results.stats.failures === 0 && results.video) {
-      // `del()` returns a promise, so it's important to return it to ensure
-      // deleting the video is finished before moving on
-      return del(results.video)
-    }
-  })
-}
 ```
+
+```js
+on('after:spec', (spec, results) => {
+  if (results && results.stats.failures === 0 && results.video) {
+    // `del()` returns a promise, so it's important to return it to ensure
+    // deleting the video is finished before moving on
+    return del(results.video)
+  }
+})
+```
+
+:::
 
 ### Delete the recorded video if no tests retried
 
@@ -135,29 +133,31 @@ Dashboard.
 The example below shows how to delete the recorded video for specs that had no
 retry attempts when using Cypress [test retries](/guides/guides/test-retries).
 
-```javascript
-// plugins/index.js
+:::cypress-plugin-example
 
+```js
 // need to install these dependencies
 // npm i lodash del --save-dev
 const _ = require('lodash')
 const del = require('del')
-
-module.exports = (on, config) => {
-  on('after:spec', (spec, results) => {
-    if (results && results.video) {
-      // Do we have failures for any retry attempts?
-      const failures = _.some(results.tests, (test) => {
-        return _.some(test.attempts, { state: 'failed' })
-      })
-      if (!failures) {
-        // delete the video if the spec passed and no tests retried
-        return del(results.video)
-      }
-    }
-  })
-}
 ```
+
+```js
+on('after:spec', (spec, results) => {
+  if (results && results.video) {
+    // Do we have failures for any retry attempts?
+    const failures = _.some(results.tests, (test) => {
+      return _.some(test.attempts, { state: 'failed' })
+    })
+    if (!failures) {
+      // delete the video if the spec passed and no tests retried
+      return del(results.video)
+    }
+  }
+})
+```
+
+:::
 
 ## See also
 

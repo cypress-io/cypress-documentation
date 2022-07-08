@@ -12,21 +12,17 @@ return the updated details about the image.
 
 ## Syntax
 
-<Alert type="warning">
+::include{file=partials/warning-setup-node-events.md}
 
-⚠️ This code is part of the
-[plugins file](/guides/core-concepts/writing-and-organizing-tests#Plugins-file)
-and thus executes in the Node environment. You cannot call `Cypress` or `cy`
-commands in this file, but you do have the direct access to the file system and
-the rest of the operating system.
-
-</Alert>
+:::cypress-plugin-example
 
 ```js
 on('after:screenshot', (details) => {
   /* ... */
 })
 ```
+
+:::
 
 **<Icon name="angle-right"></Icon> details** **_(object)_**
 
@@ -51,8 +47,8 @@ properties:
 
 ### Modify screenshot details
 
-Using your [pluginsFile](/guides/tooling/plugins-guide) you can tap into the
-`after:screenshot` event.
+Using [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) you can
+tap into the `after:screenshot` event.
 
 If you change the `path`, `size` or `dimensions` of the image, you'll want to
 update the new values so that the details are correctly reported in the test
@@ -78,30 +74,33 @@ The properties will be merged into the screenshot details and passed to the
 If you move the location of the screenshot image, you'll want to specify the new
 `path` of the image.
 
+:::cypress-plugin-example
+
 ```js
-// cypress/plugins/index.js
 const fs = require('fs')
+```
 
-module.exports = (on, config) => {
-  on('after:screenshot', (details) => {
-    console.log(details) // print all details to terminal
+```js
+on('after:screenshot', (details) => {
+  console.log(details) // print all details to terminal
 
-    const newPath = '/new/path/to/screenshot.png'
+  const newPath = '/new/path/to/screenshot.png'
 
-    return new Promise((resolve, reject) => {
-      // fs.rename moves the file to the existing directory 'new/path/to'
-      // and renames the image to 'screenshot.png'
-      fs.rename(details.path, newPath, (err) => {
-        if (err) return reject(err)
+  return new Promise((resolve, reject) => {
+    // fs.rename moves the file to the existing directory 'new/path/to'
+    // and renames the image to 'screenshot.png'
+    fs.rename(details.path, newPath, (err) => {
+      if (err) return reject(err)
 
-        // because we renamed and moved the image, resolve with the new path
-        // so it is accurate in the test results
-        resolve({ path: newPath })
-      })
+      // because we renamed and moved the image, resolve with the new path
+      // so it is accurate in the test results
+      resolve({ path: newPath })
     })
   })
-}
+})
 ```
+
+:::
 
 ## See also
 
