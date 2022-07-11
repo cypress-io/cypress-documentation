@@ -152,26 +152,17 @@ cy.get('.timer').then(($timer) => {
 
 #### Specify a now timestamp
 
-<E2EOrCtTabs>
+:::visit-mount-example
 
 ```js
 const now = new Date(2021, 3, 14) // month is 0-indexed
 
 cy.clock(now)
-cy.visit('/index.html')
+-{cy.visit('/index.html')::cy.mount(<DatePicker id="date" />)}-
 cy.get('#date').should('have.value', '04/14/2021')
 ```
 
-```js
-const now = new Date(2021, 3, 14) // month is 0-indexed
-
-cy.clock(now)
-cy.mount(<DatePicker id="date" />)
-cy.get('#date').should('have.value', '04/14/2021')
-```
-
-</E2EOrCtTabs>
-
+:::
 
 ### Function names
 

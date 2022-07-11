@@ -318,7 +318,7 @@ You can set environment variables for specific suites or tests by passing the
 
 #### Suite of test configuration
 
-<E2EOrCtTabs>
+:::visit-mount-example
 
 ```js
 // change environment variable for single suite of tests
@@ -331,32 +331,14 @@ describe(
   },
   () => {
     it('displays Spanish', () => {
-      cy.visit(`https://docs.cypress.io/${Cypress.env('language')}/`)
+      -{cy.visit(`https://docs.cypress.io/${Cypress.env('language')}/`)::cy.mount(<International lang={Cypress.env('language')} />)}-
       cy.contains('¿Por qué Cypress?')
     })
   }
 )
 ```
 
-```js
-// change environment variable for single suite of tests
-describe(
-  'test against Spanish content',
-  {
-    env: {
-      language: 'es',
-    },
-  },
-  () => {
-    it('displays Spanish', () => {
-      cy.mount(<International lang={Cypress.env('language')} />)
-      cy.contains('¿Por qué Cypress?')
-    })
-  }
-)
-```
-
-</E2EOrCtTabs>
+:::
 
 #### Single test configuration
 

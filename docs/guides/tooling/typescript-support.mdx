@@ -125,29 +125,20 @@ automatically based on the declared interface. Thus, in the example above, the
 
 In your specs, you can now use the custom command as expected
 
-<E2EOrCtTabs>
+:::visit-mount-example
 
 ```ts
 it('works', () => {
-  // from your cypress/e2e/spec.cy.ts
-  cy.visit('/')
+  -{// from your cypress/e2e/spec.cy.ts
+  cy.visit('/')::// from your src/components/MyComponent.cy.ts
+  cy.mount(<MyComponent />)}-
   // IntelliSense and TS compiler should
   // not complain about unknown method
   cy.dataCy('greeting')
 })
 ```
 
-```ts
-it('works', () => {
-  // from your src/components/MyComponent.cy.ts
-  cy.mount(<MyComponent />)
-  // IntelliSense and TS compiler should
-  // not complain about unknown method
-  cy.dataCy('greeting')
-})
-```
-
-</E2EOrCtTabs>
+:::
 
 #### Adding child or dual commands
 

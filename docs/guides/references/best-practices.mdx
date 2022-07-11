@@ -413,13 +413,13 @@ How to solve this:
 
 Let's imagine the following test that is filling out the form.
 
-<E2EOrCtTabs>
+:::visit-mount-example
 
 ```js
 // an example of what NOT TO DO
 describe('my form', () => {
   it('visits the form', () => {
-    cy.visit('/users/new')
+    -{cy.visit('/users/new')::cy.mount(<UserForm />)}-
   })
 
   it('requires first name', () => {
@@ -436,28 +436,7 @@ describe('my form', () => {
 })
 ```
 
-```js
-// an example of what NOT TO DO
-describe('my form', () => {
-  it('mounts the form', () => {
-    cy.mount(<UserForm />)
-  })
-
-  it('requires first name', () => {
-    cy.get('[data-testid="first-name"]').type('Johnny')
-  })
-
-  it('requires last name', () => {
-    cy.get('[data-testid="last-name"]').type('Appleseed')
-  })
-
-  it('can submit a valid form', () => {
-    cy.get('form').submit()
-  })
-})
-```
-
-</E2EOrCtTabs>
+:::
 
 What's wrong with the above tests? They are all coupled together!
 
@@ -470,13 +449,13 @@ Here's 2 ways we can fix this:
 
 ### 1. Combine into one test
 
-<E2EOrCtTabs>
+:::visit-mount-example
 
 ```js
 // a bit better
 describe('my form', () => {
   it('can submit a valid form', () => {
-    cy.visit('/users/new')
+    -{cy.visit('/users/new')::cy.mount(<NewUser />)}-
 
     cy.log('filling out first name') // if you really need this
     cy.get('[data-testid="first-name"]').type('Johnny')
@@ -490,25 +469,7 @@ describe('my form', () => {
 })
 ```
 
-```js
-// a bit better
-describe('my form', () => {
-  it('can submit a valid form', () => {
-    cy.mount(<NewUser />)
-
-    cy.log('filling out first name') // if you really need this
-    cy.get('[data-testid="first-name"]').type('Johnny')
-
-    cy.log('filling out last name') // if you really need this
-    cy.get('[data-testid="last-name"]').type('Appleseed')
-
-    cy.log('submitting form') // if you really need this
-    cy.get('form').submit()
-  })
-})
-```
-
-</E2EOrCtTabs>
+:::
 
 Now we can put an `.only` on this test and it will run successfully irrespective
 of any other test. The ideal Cypress workflow is writing and iterating on a
@@ -516,12 +477,12 @@ single test at a time.
 
 ### 2. Run shared code before each test
 
-<E2EOrCtTabs>
+:::visit-mount-example
 
 ```js
 describe('my form', () => {
   beforeEach(() => {
-    cy.visit('/users/new')
+    -{cy.visit('/users/new')::cy.mount(<NewUser />)}-
     cy.get('[data-testid="first-name"]').type('Johnny')
     cy.get('[data-testid="last-name"]').type('Appleseed')
   })
@@ -539,28 +500,7 @@ describe('my form', () => {
 })
 ```
 
-```js
-describe('my form', () => {
-  beforeEach(() => {
-    cy.mount(<NewUser />)
-    cy.get('[data-testid="first-name"]').type('Johnny')
-    cy.get('[data-testid="last-name"]').type('Appleseed')
-  })
-
-  it('displays form validation', () => {
-    // clear out first name
-    cy.get('[data-testid="first-name"]').clear()
-    cy.get('form').submit()
-    cy.get('[data-testid="errors"]').should('contain', 'First name is required')
-  })
-
-  it('can submit a valid form', () => {
-    cy.get('form').submit()
-  })
-})
-```
-
-</E2EOrCtTabs>
+:::
 
 This above example is ideal because now we are resetting the state between each
 test and ensuring nothing in previous tests leaks into subsequent ones.

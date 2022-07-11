@@ -25,11 +25,11 @@ browser makes available to you, like `document`, `window`, and `debugger`.
 Based on those statements, you might be tempted to throw a `debugger` into your
 test, like so:
 
-<E2EOrCtTabs>
+:::visit-mount-example
 
 ```js
 it('let me debug like a fiend', () => {
-  cy.visit('/my/page/path')
+  -{cy.visit('/my/page/path')::cy.mount(<MyComponent />)}-
 
   cy.get('[data-testid="selector-in-question"]')
 
@@ -37,17 +37,7 @@ it('let me debug like a fiend', () => {
 })
 ```
 
-```js
-it('let me debug like a fiend', () => {
-  cy.mount(<MyComponent />)
-
-  cy.get('[data-testid="selector-in-question"]')
-
-  debugger // Doesn't work
-})
-```
-
-</E2EOrCtTabs>
+:::
 
 This may not work exactly as you are expecting. As you may remember from the
 [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress), `cy`
@@ -63,11 +53,11 @@ same behavior is expected in Component Tests when using
 Let's use [`.then()`](/api/commands/then) to tap into the Cypress command during
 execution and add a `debugger` at the appropriate time:
 
-<E2EOrCtTabs>
+:::visit-mount-example
 
 ```js
 it('let me debug when the after the command executes', () => {
-  cy.visit('/my/page/path')
+  -{cy.visit('/my/page/path')::cy.mount(<MyComponent />)}-
 
   cy.get('[data-testid="selector-in-question"]').then(($selectedElement) => {
     // Debugger is hit after the cy.visit
@@ -77,19 +67,7 @@ it('let me debug when the after the command executes', () => {
 })
 ```
 
-```js
-it('let me debug when the after the command executes', () => {
-  cy.mount(<MyComponent />)
-
-  cy.get('[data-testid="selector-in-question"]').then(($selectedElement) => {
-    // Debugger is hit after the cy.mount
-    // and cy.get commands have completed
-    debugger
-  })
-})
-```
-
-</E2EOrCtTabs>
+:::
 
 Now we're in business! When you're visiting a page or mounting a component for
 the first time, (shown above with the [`cy.get()`](/api/commands/get)chain and
@@ -114,25 +92,17 @@ Cypress also exposes a shortcut for debugging commands,
 [`.debug()`](/api/commands/debug). Let's rewrite the test above using this
 helper method:
 
-<E2EOrCtTabs>
+:::visit-mount-example
 
 ```js
 it('let me debug like a fiend', () => {
-  cy.visit('/my/page/path')
+  -{cy.visit('/my/page/path')::cy.mount(<MyComponent />)}-
 
   cy.get('[data-testid="selector-in-question"]').debug()
 })
 ```
 
-```js
-it('let me debug like a fiend', () => {
-  cy.mount(<MyComponent />)
-
-  cy.get('[data-testid="selector-in-question"]').debug()
-})
-```
-
-</E2EOrCtTabs>
+:::
 
 The current subject that is yielded by the [`cy.get()`](/api/commands/get) is
 exposed as the variable `subject` within your Developer Tools so that you can

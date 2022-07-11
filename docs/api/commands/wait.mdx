@@ -104,13 +104,13 @@ For a detailed explanation of aliasing,
 
 #### Wait for a specific request to respond
 
-<E2EOrCtTabs>
+:::visit-mount-example
 
 ```js
 // Wait for the alias 'getAccount' to respond
 // without changing or stubbing its response
 cy.intercept('/accounts/*').as('getAccount')
-cy.visit('/accounts/123')
+-{cy.visit('/accounts/123')::cy.mount(<Account />)}-
 cy.wait('@getAccount').then((interception) => {
   // we can now access the low level interception
   // that contains the request body,
@@ -118,19 +118,7 @@ cy.wait('@getAccount').then((interception) => {
 })
 ```
 
-```js
-// Wait for the alias 'getAccount' to respond
-// without changing or stubbing its response
-cy.intercept('/accounts/*').as('getAccount')
-cy.mount(<Account />)
-cy.wait('@getAccount').then((interception) => {
-  // we can now access the low level interception
-  // that contains the request body,
-  // response body, status, etc
-})
-```
-
-</E2EOrCtTabs>
+:::
 
 #### Wait automatically increments responses
 
@@ -169,13 +157,13 @@ cy.get('#book-results').should('have.length', 1)
 When passing an array of aliases to `cy.wait()`, Cypress will wait for all
 requests to complete within the given `requestTimeout` and `responseTimeout`.
 
-<E2EOrCtTabs>
+:::visit-mount-example
 
 ```js
 cy.intercept('/users/*').as('getUsers')
 cy.intercept('/activities/*').as('getActivities')
 cy.intercept('/comments/*').as('getComments')
-cy.visit('/dashboard')
+-{cy.visit('/dashboard')::cy.mount(<Dashboard />)}-
 
 cy.wait(['@getUsers', '@getActivities', '@getComments']).then(
   (interceptions) => {
@@ -187,23 +175,7 @@ cy.wait(['@getUsers', '@getActivities', '@getComments']).then(
 )
 ```
 
-```js
-cy.intercept('/users/*').as('getUsers')
-cy.intercept('/activities/*').as('getActivities')
-cy.intercept('/comments/*').as('getComments')
-cy.mount(<Dashboard />)
-
-cy.wait(['@getUsers', '@getActivities', '@getComments']).then(
-  (interceptions) => {
-    // interceptions will now be an array of matching requests
-    // interceptions[0] <-- getUsers
-    // interceptions[1] <-- getActivities
-    // interceptions[2] <-- getComments
-  }
-)
-```
-
-</E2EOrCtTabs>
+:::
 
 #### Using [`.spread()`](/api/commands/spread) to spread the array into multiple arguments.
 

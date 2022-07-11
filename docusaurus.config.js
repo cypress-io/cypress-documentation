@@ -8,6 +8,7 @@ const {
   copyTsToJs,
   cypressConfigPluginExample,
   cypressConfigExample,
+  visitMountExample,
 } = require('./plugins/cypressRemarkPlugins/dist')
 const prettierConfig = JSON.parse(fs.readFileSync('./.prettierrc', 'utf-8'))
 
@@ -49,6 +50,7 @@ const config = {
           remarkPlugins: [
             cypressConfigExample,
             cypressConfigPluginExample,
+            visitMountExample,
             [copyTsToJs, { prettierOptions: prettierConfig }],
           ],
           // versions: {

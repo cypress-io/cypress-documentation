@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "prestart": "yarn build:plugins",
     "start": "docusaurus start",
     "prebuild": "rm -rf dist && yarn build:plugins",
     "build": "docusaurus build --out-dir dist",
