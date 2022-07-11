@@ -8,6 +8,8 @@
 @tailwind components;
 @tailwind utilities; */
 
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+
 /* You can override the default Infima variables here. */
 :root {
   --ifm-color-primary: #2e8555;
@@ -17,11 +19,21 @@
   --ifm-color-primary-light: #33925d;
   --ifm-color-primary-lighter: #359962;
   --ifm-color-primary-lightest: #3cad6e;
-  --ifm-code-font-size: 95%;
+  --ifm-code-font-size: 85%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-font-family-base: 'Source Sans Pro';
+  --ifm-toc-border-color: #eee
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme="light"] {
+  --ifm-font-color-base: #2e3138
+}
+
+[data-theme="light"] .menu__link--active:not(.menu__link--sublist) {
+  background: #cff1e6;
+}
+
 [data-theme="dark"] {
   --ifm-color-primary: #25c2a0;
   --ifm-color-primary-dark: #21af90;
@@ -31,11 +43,125 @@
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-toc-border-color: var(--ifm-color-gray-700)
+}
+
+[data-theme="dark"] .menu {
+  background-color: #1b1b1d;
+  border-right: 1px solid var(--ifm-toc-border-color);
+}
+
+[data-theme="dark"] div.markdown h2 {
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+}
+
+[data-theme="dark"] .admonition .admonition-content h2 {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+[data-theme="dark"] .admonition .admonition-content h2 {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* CUSTOMIZATIONS */
+article {
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+header h1 {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+}
+
+.navbar {
+  height: 4rem;
+  padding: 0 2rem;
+}
+
+.navbar__logo {
+  height: 2.3rem;
+}
+
+.navbar__item {
+  padding: 0 1.2rem;
+  font-weight: bold;
+  font-size: large;
+}
+
+.theme-doc-sidebar-menu {
+  padding: 0.75rem;
+  font-weight: 600;
+  font-size: larger;
+}
+
+.theme-doc-sidebar-item-link-level-2,.theme-doc-sidebar-item-link-level-3>.menu__link {
+  font-weight: 500;
+  font-size: large;
+}
+
+.menu {
+  background-color: #f9fcfb;
+  border-right: 1px solid #f0f3f2;
+}
+
+.theme-doc-sidebar-item-category {
+  padding-bottom: 0.3rem;
+}
+
+.admonition {
+  font-size: large;
+  margin-bottom: 2rem;
+}
+
+.admonition li {
+  margin: 1rem 0
+}
+
+.admonition-icon,
+.admonition-heading {
+  display: none;
+}
+
+div.markdown {
+  font-size: large;
+}
+
+div.markdown a {
+  color: #1079c3;
+  text-decoration: none;
+  border-bottom: 1px dotted #1079c3;
+}
+
+div.markdown a:hover {
+  border-bottom-style: solid;
+}
+
+div.markdown h2, h3, h4 {
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+/* test-type pills */
+div.markdown h2 > a {
+  border-bottom: none;
+}
+
+.admonition .admonition-content h2, h3 {
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
 /* Font Awesome Icons */
 .svg-inline--fa {
   display: inline-block;
+  margin-right: .5rem;
   height: 1em;
   width: 1em;
 }
