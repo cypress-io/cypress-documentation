@@ -164,7 +164,7 @@
       "img": "/img/examples/red-green-refactor-cypress.png"
     },
     {
-      "title": "Improve Your App Testing With Amplify Console’s Pull Request Previews and Cypress Testing",
+      "title": "Improve Your App Testing With Amplify Console's Pull Request Previews and Cypress Testing",
       "url": "https://aws.amazon.com/blogs/aws/improve-your-app-testing-with-amplify-consoles-pull-requests-previews-and-cypress-testing/",
       "sourceName": "AWS News Blog",
       "sourceUrl": "https://aws.amazon.com/",
@@ -452,7 +452,7 @@
       "img": "/img/examples/challenging-testing-pyramid.png"
     },
     {
-      "title": "Integrating Cypress.io into Fundbox’s core products",
+      "title": "Integrating Cypress.io into Fundbox's core products",
       "url": "https://medium.com/fundbox-engineering/integrating-cypress-io-into-fundboxs-core-products-61ba9db3c32c",
       "sourceName": "Medium",
       "sourceUrl": "https://medium.com/",
@@ -1001,7 +1001,7 @@
       "img": "/img/examples/e2e-with-auth0.jpg"
     },
     {
-      "title": "What I’ve Learned Using Cypress.io for the Past Three Weeks",
+      "title": "What I've Learned Using Cypress.io for the Past Three Weeks",
       "url": "https://levelup.gitconnected.com/what-ive-learnt-using-cypress-io-for-the-past-three-weeks-c1597999cd2f",
       "sourceName": "gitconnected",
       "sourceUrl": "https://levelup.gitconnected.com/",
@@ -1100,7 +1100,7 @@
       "img": "/img/examples/circleci-launches-orbs.jpg"
     },
     {
-      "title": "Strava’s New End-to-End Testing Setup",
+      "title": "Strava's New End-to-End Testing Setup",
       "url": "https://medium.com/strava-engineering/stravas-new-end-to-end-testing-setup-18b541727555",
       "sourceName": "Strava Engineering",
       "sourceUrl": "https://medium.com/strava-engineering",
@@ -1532,7 +1532,7 @@
       "img": "/img/examples/cypress-and-quizlet-tech-comparison.jpg"
     },
     {
-      "title": "A newbie’s toe dip into JS based Test automation using Cypress.io",
+      "title": "A newbie's toe dip into JS based Test automation using Cypress.io",
       "url": "https://thereluctanttester.com/2018/02/05/a-newbies-toe-dip-into-js-based-test-automation-using-cypress-io/",
       "sourceName": "The_reluctant_tester",
       "sourceUrl": "https://thereluctanttester.com/",
