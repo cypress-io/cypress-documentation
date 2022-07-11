@@ -12,57 +12,7 @@ title: Installing Cypress
 
 </Alert>
 
-## System requirements
-
-#### Operating System
-
-Cypress is a desktop application that is installed on your computer. The desktop
-application supports these operating systems:
-
-- **macOS** 10.9 and above _(64-bit only)_
-- **Linux** Ubuntu 12.04 and above, Fedora 21 and Debian 8 _(64-bit only)_
-- **Windows** 7 and above _(64-bit only)_
-
-#### Node.js
-
-If you're using `npm` to install Cypress, we support:
-
-- **Node.js** 12 or 14 and above
-
-#### Linux
-
-If you're using Linux, you'll want to have the required dependencies installed
-on your system.
-
-#### Ubuntu/Debian
-
-```shell
-apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
-```
-
-#### CentOS
-
-```shell
-yum install -y xorg-x11-server-Xvfb gtk2-devel gtk3-devel libnotify-devel GConf2 nss libXScrnSaver alsa-lib
-```
-
-#### Docker
-
-Docker images with all of the required dependencies installed are available
-under [cypress/base](https://github.com/cypress-io/cypress-docker-images)
-
-If you're running your projects in containers, then you'll want Cypress in the
-container with the Node.js process.
-
-```
-  ui:
-    image: cypress/base:latest
-    # if targeting a specific node version, use e.g.
-    # image: cypress/base:14
-```
-
-`cypress/base` is a drop-in replacement for
-[base docker node images](https://hub.docker.com/_/node/).
+First, make sure you have all the [system requirements](#System-requirements).
 
 ## Installing
 
@@ -165,20 +115,109 @@ the desired version (ex.
 
 </Alert>
 
-### <Icon name="sync-alt"></Icon> Continuous integration
-
-Please read our
-[Continuous Integration](/guides/continuous-integration/introduction) docs for
-help installing Cypress in CI. When running in linux you'll need to install some
-[system dependencies](/guides/continuous-integration/introduction#Dependencies)
-or you can use our [Docker images](/examples/examples/docker) which have
-everything you need prebuilt.
-
 ### <Icon name="cog"></Icon> Advanced Installation
 
 If you have more complex requirements, want to level-up your Cypress workflow or
 just need help with troubleshooting, check out our
 [Advanced Installation](/guides/references/advanced-installation) reference.
+
+### <Icon name="sync-alt"></Icon> Continuous integration
+
+Please read our
+[Continuous Integration](/guides/continuous-integration/introduction) docs for
+help installing Cypress in CI. When running in Linux you'll need to install some
+[system dependencies](/guides/continuous-integration/introduction#Dependencies)
+or you can use our [Docker images](/examples/examples/docker) which have
+everything you need prebuilt.
+
+## System requirements
+
+### Operating System
+
+Cypress is a desktop application that is installed on your computer. The desktop
+application supports these operating systems:
+
+- **macOS** 10.9 and above _(Intel or Apple Silicon 64-bit (x64 or arm64))_
+- **Linux** Ubuntu 12.04 and above, Fedora 21 and Debian 8 _(x86_64 or Arm
+  64-bit (x64 or arm64))_ (see [Linux Prerequisites](#Linux-Prerequisites) down
+  below)
+- **Windows** 7 and above _(64-bit only)_
+
+### Node.js
+
+If you're using `npm` to install Cypress, we support:
+
+- **Node.js** 12 or 14 and above
+
+### Hardware
+
+When running Cypress locally, it should run comfortably on any machine that is
+capable of modern web development.
+
+When running Cypress in CI, however, some of the lower-tier configurations might
+not be able to run Cypress reliably, especially when recording videos or doing
+longer test runs.
+
+Some issues you might run into in CI that could be a sign of insufficient
+resources are:
+
+- Exiting early during `cypress run` or abruptly closing (“crashing”)
+- Frozen or missing frames in the video that is captured
+- Increased runtime
+
+When running Cypress in CI, we recommend that you have the following hardware
+requirements:
+
+#### CPU
+
+- 2 CPUs minimum to run Cypress
+- 1 additional CPU if video recording is enabled
+- 1 additional CPU per process you run outside of Cypress, such as:
+  - App server (frontend)
+  - App server (backend)
+  - App database
+  - Any additional infrastructure (Redis, Kafka, etc..)
+
+### Memory
+
+- 4GB minimum, 8GB+ for longer test runs
+
+### Linux Prerequisites
+
+If you're using Linux, you'll want to have the required dependencies installed
+on your system.
+
+#### Ubuntu/Debian
+
+```shell
+apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+```
+
+#### CentOS
+
+```shell
+yum install -y xorg-x11-server-Xvfb gtk2-devel gtk3-devel libnotify-devel GConf2 nss libXScrnSaver alsa-lib
+```
+
+#### Docker
+
+Docker images with all of the required dependencies installed are available
+under [cypress/base](https://github.com/cypress-io/cypress-docker-images)
+
+If you're running your projects in containers, then you'll want Cypress in the
+container with the Node.js process.
+
+```
+  ui:
+    image: cypress/base:latest
+    # if targeting a specific node version, use e.g.
+    # image: cypress/base:14
+```
+
+`cypress/base` is a drop-in replacement for
+[base docker node images](https://hub.docker.com/_/node/).
+
+**Great, now [install Cypress](#Installing)!**
 
 ## Next Steps
 
