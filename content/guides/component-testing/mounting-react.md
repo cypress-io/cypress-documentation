@@ -41,8 +41,8 @@ Cypress.Commands.add('mount', mount)
 </code-block>
 </code-group>
 
-This allows you to use `cy.mount()` in any component test without having to import
-the framework-specific mount command.
+This allows you to use `cy.mount()` in any component test without having to
+import the framework-specific mount command.
 
 You can customize `cy.mount()` to fit your needs. For instance, if you are using
 providers or other global app-level setups in your React app, you can configure
