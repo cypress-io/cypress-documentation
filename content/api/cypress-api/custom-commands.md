@@ -738,10 +738,12 @@ const search = (term, options = {}) => {
   // chain off this function below
   return cy
     .log(`Searching for: ${term} `)
-    .intercept({
-      url: '/search/**',
-      response: `fixture:${fixture}`,
-      headers: headers,
+    .intercept('GET', '/search/**', (req) => {
+      req.reply({
+        statusCode: 200,
+        body: `fixture:${fixture}`,
+        headers: headers,
+      })
     })
     .as('getSearchResults')
     .get('#search')
