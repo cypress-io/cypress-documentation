@@ -191,7 +191,7 @@ cy.fixture('user').then((user) => {
   cy.intercept('GET', '/users/1', user).as('getUser')
 })
 
--{cy.visit('/users')::}-cy.mount(<Users />)}-
+-{cy.visit('/users')::cy.mount(<Users />)}-
 cy.wait('@getUser').then(({ request }) => {
   expect(request.body.firstName).to.eq('Jane')
 })
