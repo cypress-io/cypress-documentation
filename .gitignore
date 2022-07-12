@@ -21,3 +21,9 @@ yarn-debug.log*
 yarn-error.log*
 
 .vscode
+cypress/screenshots
+cypress/videos
+
+# Generated files
+.docusaurus
+.cache-loader

@@ -181,9 +181,8 @@ file.
 The Node version is used in Cypress to:
 
 - Build files in the
-  [supportFile](/guides/references/configuration#Folders-Files).
-- Execute code in the
-  [pluginsFile](/guides/references/configuration#Folders-Files).
+  [supportFile](#Folders-Files).
+- Execute code in the config file.
 
 <DocsImage src="/img/guides/configuration/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Cypress App"></DocsImage>
 

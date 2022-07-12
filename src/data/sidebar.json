@@ -95,21 +95,6 @@
               "slug": "devs-vs-users"
             },
             {
-              "title": "Diving Deeper"
-            },
-            {
-              "title": "Framework Configuration",
-              "slug": "component-framework-configuration"
-            },
-            {
-              "title": "Styling Components",
-              "slug": "styling-components"
-            },
-            {
-              "title": "Component Troubleshooting",
-              "slug": "component-test-troubleshooting"
-            },
-            {
               "title": "Vue Component Testing"
             },
             {
@@ -121,8 +106,8 @@
               "slug": "mounting-vue"
             },
             {
-              "title": "Vue Components with Props",
-              "slug": "props-vue"
+              "title": "Testing Vue Components",
+              "slug": "testing-vue"
             },
             {
               "title": "Testing Vue Components with Emitted Events",
@@ -158,6 +143,21 @@
             {
               "title": "Custom Mount Commands for React",
               "slug": "custom-mount-react"
+            },
+            {
+              "title": "Diving Deeper"
+            },
+            {
+              "title": "Framework Configuration",
+              "slug": "component-framework-configuration"
+            },
+            {
+              "title": "Styling Components",
+              "slug": "styling-components"
+            },
+            {
+              "title": "Component Troubleshooting",
+              "slug": "component-test-troubleshooting"
             }
           ]
         },
@@ -172,6 +172,10 @@
             {
               "title": "Testing Types",
               "slug": "testing-types"
+            },
+            {
+              "title": "Cypress App",
+              "slug": "cypress-app"
             },
             {
               "title": "Writing and Organizing Tests",
@@ -192,10 +196,6 @@
             {
               "title": "Conditional Testing",
               "slug": "conditional-testing"
-            },
-            {
-              "title": "Cypress App",
-              "slug": "cypress-app"
             }
           ]
         },
