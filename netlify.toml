@@ -149,6 +149,12 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/guides/component-testing/props-vue"
+  to = "/guides/component-testing/testing-vue"
+  status = 301
+  force = true
+
 [[plugins]]
 package = "@netlify/plugin-sitemap"
 
