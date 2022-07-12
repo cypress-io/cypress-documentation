@@ -17,7 +17,7 @@ To create a React project with Vite:
 1. Run the scaffold command
 
 ```bash
-npm create vite@latest my-react-app -- --template react
+npm create vite@latest my-awesome-app -- --template react
 ```
 
 2. Go into the directory and run `npm install`
@@ -44,69 +44,47 @@ npx cypress open
 ## Configuring Component Testing
 
 Whenever you run Cypress for the first time in a project, the app will prompt
-you to set up either E2E testing or Component Testing. Choose Component Testing
-and step through the configuration wizard.
+you to set up either **E2E Testing** or **Component Testing**. Choose
+**Component Testing** and step through the configuration wizard.
 
-The Cypress Launchpad will detect your framework and generate all the necessary
-configuration files, and ensure all required dependencies are installed.
+<DocsImage 
+  src="/img/guides/component-testing/select-test-type.png" 
+  caption="Choose Component Testing"> </DocsImage>
 
-<!-- TODO: while it's nice to have this photo, it'd be even better to have a video! -->
+The Project Setup screen automatically detects your framework and bundler, which
+is React and Vite in our case. Cypress Component Testing uses your existing
+development server config to render components, helping ensure your components
+act and display in testing the same as they do in production.
 
-<img src="/img/component-testing-automatic-configuration.png" style="border: none; box-shadow: none; margin-bottom: 1rem;" />
-<p style="font-size: 0.85rem; text-align: center;">The Cypress Launchpad will scaffold all of these files for you.</p>
+<DocsImage 
+  src="/img/guides/component-testing/project-setup-react.png" 
+  caption=""> </DocsImage>
+
+Next, the Cypress setup will detect your framework and generate all the
+necessary configuration files, and ensure all required dependencies are
+installed.
+
+<DocsImage 
+  src="/img/guides/component-testing/scaffolded-files.png" 
+  caption="The Cypress launchpad will scaffold all of these files for you">
+</DocsImage>
 
 After setting up component testing, you will be at the Browser Selection screen.
 
-<!-- TODO: Browser Selection screen with lots of browsers -->
+Pick the browser of your choice and click the "Start Component Testing" button
+to open the Cypress app.
 
-<!-- Extraneous, belongs somewhere else: This page displays all of the browsers on your computer that we support. This generally means you'll see all Chromium-based browsers, Electron, and Firefox that are on your computer.  -->
-
-Pick your favorite and click "Launch" to open the Cypress app.
-
-<!-- Leaving out until we have a spec generator -->
-
-<!-- ### In an empty project
-
-In an empty project, we'll prompt you to use one of our new spec generators to
-create a file that matches your project's `specPattern`. -->
-
-<!-- TODO: Video of Generator -->
+<DocsImage 
+  src="/img/guides/component-testing/select-browser.png" 
+  caption="Choose your browser"> </DocsImage>
 
 ## Creating a Component
 
 At this point, your project is set up but has no components to test yet.
 
-Simple components with few environmental dependencies will be the easiest to
-test.
-
-Here are a few examples of similar components that will be easier or harder to
-test:
-
-| Easier-to-test             | Harder-to-test                          |
-| :------------------------- | :-------------------------------------- |
-| A Presentational Component | A Presentational Component w/ Chakra UI |
-| Layout Component w/ Slots  | Layout Component w/ React Router        |
-| Product List with Props    | Product List w/ Redux or Mobx           |
-
-This section covers how to mount **simple** React components in a Cypress test
--- like Buttons, SVGs, Icons, or a Stepper component.
-
-<!-- TODO: Switch between variants using a richer experience than just rendering them in a flat list. A tabbed controller? IDK. -->
-
-<div style="display: flex; justify-content: space-evenly; border: 1px solid #ccc; padding-top: 1.25rem">
-
-<button style="min-width: 120px; border: 1px solid indigo; padding: 0.5rem 0.5rem; border-radius: 3px;" >Outline</button>
-
-<button style="min-width: 120px; background: indigo; color: white; font-weight: medium; border: 1px solid indigo; padding: 0.5rem 0.5rem; border-radius: 3px;" >Primary</button>
-
-<button style="color: indigo; min-width: 120px; border: 1px solid indigo; padding: 0.5rem 0.5rem; border-radius: 3px;" ><icon name="graduation-cap" style="margin: 0 0.5rem;"></icon>With
-an icon</button>
-
-</div>
-
-<p style="font-size: 0.85rem; text-align: center;">A button is an example of a component that is easier to test.</p>
-
-<!-- TODO: Add links for each key word -->
+In this guide, we'll use a `<Stepper/>` component with zero dependencies and one
+bit of internal state -- a "counter" that can be incremented and decremented by
+two buttons.
 
 <alert type="info">
 
@@ -115,10 +93,6 @@ setups, you will need additional work to get your component mounting. This is
 covered in a later section.
 
 </alert>
-
-In this guide, we'll use a `<Stepper/>` component with zero dependencies and one
-bit of internal state -- a "counter" that can be incremented and decremented by
-two buttons.
 
 Add the Stepper component to your project:
 
@@ -132,11 +106,11 @@ export default function Stepper({ initial = 0 }) {
   const [count, setCount] = useState(initial)
 
   return (
-    <div data-testid="stepper">
+    <div>
       <button aria-label="decrement" onClick={() => setCount(count - 1)}>
         -
       </button>
-      {count}
+      <span data-cy="counter">{count}</span>
       <button aria-label="increment" onClick={() => setCount(count + 1)}>
         +
       </button>
@@ -150,6 +124,6 @@ export default function Stepper({ initial = 0 }) {
 
 ## Next Steps
 
-Next, learn how to mount the `<Stepper />` component with the mount command!
+Next, we will learn to mount the `<Stepper />` component with the mount command!
 
 <NavGuide next="/guides/component-testing/mounting-react" />
