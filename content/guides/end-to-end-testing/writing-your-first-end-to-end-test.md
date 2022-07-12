@@ -371,6 +371,16 @@ describe('My First Test', () => {
 })
 ```
 
+<Alert type="warning">
+
+We normally don't suggest selecting and finding elements by their class names,
+but we do so here since we are querying an external site, and sometimes that is
+all we have to work with.
+
+For more information on our guidance on selector best practices, see our guide on it [here](/guides/references/best-practices#Selecting-Elements).
+
+</Alert>
+
 And there you have it: a short test in Cypress that visits a page, finds and
 clicks a link, verifies the URL and then verifies the behavior of an element on
 the new page. If we read it out loud, it might sound like:
