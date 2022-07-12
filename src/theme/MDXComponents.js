@@ -10,6 +10,7 @@ import DocsImage from "@site/src/components/docs-image";
 import DocsVideo from "@site/src/components/docs-video";
 import E2EOnlyBadge from "@site/src/components/e2e-only-badge";
 import E2EOrCtTabs from "@site/src/components/e2e-or-ct-tabs";
+import VueSyntaxTabs from "@site/src/components/vue-syntax-tabs";
 import Icon from "@site/src/components/icon";
 import ImportMountFunctions from "@site/docs/partials/_import-mount-functions.mdx";
 import IntellisenseCodeCompletion from "@site/docs/partials/_intellisense-code-completion.mdx";
@@ -120,6 +121,7 @@ export default {
   DocsVideo,
   E2EOnlyBadge,
   E2EOrCtTabs,
+  VueSyntaxTabs,
   Icon,
   ImportMountFunctions,
   IntellisenseCodeCompletion,

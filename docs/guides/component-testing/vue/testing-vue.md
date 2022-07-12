@@ -1,5 +1,6 @@
 ---
 title: Testing Vue Components
+sidebar_position: 30
 ---
 
 Now that the component is mounted, the next step is to start selecting and
@@ -21,34 +22,9 @@ Then, we will test that setting the initial count also works.
 
 In your spec file, add the following inside the existing `describe` block:
 
-<code-group>
-<code-block label="Stepper.cy.js" active>
+<VueSyntaxTabs>
 
-```jsx
-// Set up some constants for the selectors
-const counterSelector = '[data-cy=counter]'
-const incrementSelector = '[aria-label=increment]'
-const decrementSelector = '[aria-label=decrement]'
-
-it('stepper should default to 0', () => {
-  // Arrange
-  cy.mount(Stepper)
-  // Assert
-  cy.get(counterSelector).should('have.text', '0')
-})
-
-it('supports an "initial" prop to set the value', () => {
-  // Arrange
-  cy.mount(Stepper, { props: { initial: 100 } })
-  // Assert
-  cy.get(counterSelector).should('have.text', '100')
-})
-```
-
-</code-block>
-<code-block label="Stepper.cy.jsx (With JSX)">
-
-```jsx
+```jsx title=Stepper.cy.jsx
 // Set up some constants for the selectors
 const counterSelector = '[data-cy=counter]'
 const incrementSelector = '[aria-label=increment]'
@@ -69,10 +45,30 @@ it('supports an "initial" prop to set the value', () => {
 })
 ```
 
-</code-block>
-</code-group>
+```js title=Stepper.cy.js
+// Set up some constants for the selectors
+const counterSelector = '[data-cy=counter]'
+const incrementSelector = '[aria-label=increment]'
+const decrementSelector = '[aria-label=decrement]'
 
-<Alert type="info">
+it('stepper should default to 0', () => {
+  // Arrange
+  cy.mount(Stepper)
+  // Assert
+  cy.get(counterSelector).should('have.text', '0')
+})
+
+it('supports an "initial" prop to set the value', () => {
+  // Arrange
+  cy.mount(Stepper, { props: { initial: 100 } })
+  // Assert
+  cy.get(counterSelector).should('have.text', '100')
+})
+```
+
+</VueSyntaxTabs>
+
+:::info
 
 Depending on your Vue version, the syntax for how to mount your component will
 change slightly. Please refer to the
@@ -82,7 +78,7 @@ syntax when using the mount function's Object API.
 The main difference is that "props" should be "propsData" for Vue 2
 applications.
 
-</Alert>
+:::
 
 ### What Else Should You Test in This Component?
 
@@ -110,33 +106,9 @@ Now, let's test the Stepper component! Add the following tests:
 
 1. You can increment and decrement the stepper
 
-<code-group>
-<code-block label="Stepper.cy.js" active>
+<VueSyntaxTabs>
 
-```js
-it('when the increment button is pressed, the counter is incremented', () => {
-  // Arrange
-  cy.mount(Stepper)
-  // Act
-  cy.get(incrementSelector).click()
-  // Assert
-  cy.get(counterSelector).should('have.text', '1')
-})
-
-it('when the decrement button is pressed, the counter is decremented', () => {
-  // Arrange
-  cy.mount(Stepper)
-  // Act
-  cy.get(decrementSelector).click()
-  // Assert
-  cy.get(counterSelector).should('have.text', '-1')
-})
-```
-
-</code-block>
-<code-block label="Stepper.cy.jsx (With JSX)">
-
-```js
+```jsx title=Stepper.cy.jsx
 it('when the increment button is pressed, the counter is incremented', () => {
   // Arrange
   cy.mount(<Stepper />)
@@ -156,8 +128,26 @@ it('when the decrement button is pressed, the counter is decremented', () => {
 })
 ```
 
-</code-block>
-</code-group>
+```js title=Stepper.cy.js
+it('when the increment button is pressed, the counter is incremented', () => {
+  // Arrange
+  cy.mount(Stepper)
+  // Act
+  cy.get(incrementSelector).click()
+  // Assert
+  cy.get(counterSelector).should('have.text', '1')
+})
+
+it('when the decrement button is pressed, the counter is decremented', () => {
+  // Arrange
+  cy.mount(Stepper)
+  // Act
+  cy.get(decrementSelector).click()
+  // Assert
+  cy.get(counterSelector).should('have.text', '-1')
+})
+```
+</VueSyntaxTabs>
 
 2. Next, run through the behavior of the Stepper as a user would. There is
    duplication of coverage here -- but that's okay because it exercises the
@@ -165,24 +155,9 @@ it('when the decrement button is pressed, the counter is decremented', () => {
    there are _any_ issues in the component, not just with specific buttons or
    text rendered.
 
-<code-group>
-<code-block label="Stepper.cy.js" active>
+<VueSyntaxTabs>
 
-```js
-it('when clicking increment and decrement buttons, the counter is changed as expected', () => {
-  cy.mount(Stepper, { props: { initial: 100 } })
-  cy.get(counterSelector).should('have.text', '100')
-  cy.get(incrementSelector).click()
-  cy.get(counterSelector).should('have.text', '101')
-  cy.get(decrementSelector).click().click()
-  cy.get(counterSelector).should('have.text', '99')
-})
-```
-
-</code-block>
-<code-block label="Stepper.cy.jsx (With JSX)">
-
-```jsx
+```jsx title=Stepper.cy.jsx
 it('when clicking increment and decrement buttons, the counter is changed as expected', () => {
   cy.mount(<Stepper initial={100} />)
   cy.get(counterSelector).should('have.text', '100')
@@ -193,8 +168,17 @@ it('when clicking increment and decrement buttons, the counter is changed as exp
 })
 ```
 
-</code-block>
-</code-group>
+```js title=Stepper.cy.js
+it('when clicking increment and decrement buttons, the counter is changed as expected', () => {
+  cy.mount(Stepper, { props: { initial: 100 } })
+  cy.get(counterSelector).should('have.text', '100')
+  cy.get(incrementSelector).click()
+  cy.get(counterSelector).should('have.text', '101')
+  cy.get(decrementSelector).click().click()
+  cy.get(counterSelector).should('have.text', '99')
+})
+```
+</VueSyntaxTabs>
 
 ## Learn More
 

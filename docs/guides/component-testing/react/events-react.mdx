@@ -57,24 +57,21 @@ You would use the `<Stepper>` from a parent component like so:
 
 Here is what the implementation would look like:
 
-<code-group>
-<code-block label="Stepper.jsx" active>
-
-```jsx
+```jsx title=Stepper.jsx
 export default function Stepper({ initial = 0, onChange = () => {} }) {
-  const [count, setCount] = useState(initial);
+  const [count, setCount] = useState(initial)
 
   const increment = () => {
-    const newCount = count + 1;
-    setCount(newCount);
-    onChange(newCount);
-  };
+    const newCount = count + 1
+    setCount(newCount)
+    onChange(newCount)
+  }
 
   const decrement = () => {
-    const newCount = count - 1;
-    setCount(newCount);
-    onChange(newCount);
-  };
+    const newCount = count - 1
+    setCount(newCount)
+    onChange(newCount)
+  }
 
   return (
     <div>
@@ -86,12 +83,9 @@ export default function Stepper({ initial = 0, onChange = () => {} }) {
         +
       </button>
     </div>
-  );
+  )
 }
 ```
-
-</TabItem>
-</Tabs>
 
 Above, we added a new `onChange` prop and abstracted the buttons `onClick`
 events into their own methods.
@@ -114,19 +108,13 @@ First, we **Arrange** our test.
 
 Let's set up the spies and bind them to the component:
 
-<Tabs>
-<TabItem value="Stepper.cy.jsx" active>
-
-```jsx
+```jsx title=Stepper.cy.jsx
 it("clicking + fires a change event with the incremented value", () => {
   // Arrange
   const onChangeSpy = cy.spy().as('onChangeSpy')
   cy.mount(<Stepper onClick={onChangeSpy})
 })
 ```
-
-</TabItem>
-</Tabs>
 
 > We're [aliasing](/guides/core-concepts/variables-and-aliases) the spy with
 > `cy.as('onChangeSpy')` so that the Cypress Reporter prints out the name of the
@@ -138,44 +126,32 @@ it("clicking + fires a change event with the incremented value", () => {
 
 Next, we **Act** by firing a click event for the increment button.
 
-<Tabs>
-<TabItem value="Stepper.cy.jsx" active>
-
-```jsx
-it("clicking + fires a change event with the incremented value", () => {
+```jsx title=Stepper.cy.jsx
+it('clicking + fires a change event with the incremented value', () => {
   // Arrange
-  const onChangeSpy = cy.spy().as("onChangeSpy");
-  cy.mount(<Stepper onChange={onChangeSpy} />);
+  const onChangeSpy = cy.spy().as('onChangeSpy')
+  cy.mount(<Stepper onChange={onChangeSpy} />)
   // Act
-  cy.get(incrementSelector).click();
-});
+  cy.get(incrementSelector).click()
+})
 ```
-
-</TabItem>
-</Tabs>
 
 ### Assert
 
 Finally, we **Assert** that the `onChange` prop was called with the correct
 value.
 
-<Tabs>
-<TabItem value="Stepper.cy.jsx" active>
-
-```jsx
-it("clicking + fires a change event with the incremented value", () => {
+```jsx title=Stepper.cy.jsx
+it('clicking + fires a change event with the incremented value', () => {
   // Arrange
-  const onChangeSpy = cy.spy().as("onChangeSpy");
-  cy.mount(<Stepper onChange={onChangeSpy} />);
+  const onChangeSpy = cy.spy().as('onChangeSpy')
+  cy.mount(<Stepper onChange={onChangeSpy} />)
   // Act
-  cy.get(incrementSelector).click();
+  cy.get(incrementSelector).click()
   // Assert
   cy.get('@onChangeSpy').should('have.been.calledWith', 1)
 })
 ```
-
-</TabItem>
-</Tabs>
 
 We may decide to combine this test with the previous tests we've written that
 test multiple things at once in a given scenario.

@@ -27,11 +27,11 @@ previous sections, we'll start simple.
 
 <div
   style={{
-    position: "relative",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "rgba(0,0,0,0.2)",
+    position: 'relative',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    background: 'rgba(0,0,0,0.2)',
     width: 400,
     height: 320,
   }}
@@ -39,12 +39,12 @@ previous sections, we'll start simple.
   <div
     style={{
       padding: 10,
-      position: "absolute",
-      background: "white",
+      position: 'absolute',
+      background: 'white',
       borderRadius: 3,
       minHeight: 300,
       minWidth: 350,
-      margin: "0 auto",
+      margin: '0 auto',
     }}
   >
     <div>Modal's body content (passed in via slot)</div>
@@ -55,24 +55,24 @@ previous sections, we'll start simple.
 <TabItem value="Test" active>
 
 ```js
-it("renders the modal content", () => {
-  cy.mount(Modal, { slots: { default: () => "Content" } })
+it('renders the modal content', () => {
+  cy.mount(Modal, { slots: { default: () => 'Content' } })
     .get(modalSelector)
-    .should("have.text", "Content");
-});
+    .should('have.text', 'Content')
+})
 
-it("can be closed", () => {
-  cy.mount(Modal, { slots: { default: () => "Content" } })
+it('can be closed', () => {
+  cy.mount(Modal, { slots: { default: () => 'Content' } })
     .get(modalSelector)
-    .should("have.text", "Content")
+    .should('have.text', 'Content')
     .get(closeButtonSelector)
-    .should("have.text", "Close")
+    .should('have.text', 'Close')
     .click()
     // Repeat the assertion to make sure the text
     // is no longer visible
     .get(modalSelector)
-    .should("not.have.text", "Content");
-});
+    .should('not.have.text', 'Content')
+})
 ```
 
 </TabItem>
@@ -80,24 +80,24 @@ it("can be closed", () => {
 <TabItem value="With JSX">
 
 ```js
-it("renders the modal content", () => {
+it('renders the modal content', () => {
   cy.mount(() => <Modal>Content</Modal>)
     .get(modalSelector)
-    .should("have.text", "Content");
-});
+    .should('have.text', 'Content')
+})
 
-it("can be closed", () => {
+it('can be closed', () => {
   cy.mount(() => <Modal>Content</Modal>)
     .get(modalSelector)
-    .should("have.text", "Content")
+    .should('have.text', 'Content')
     .get(closeButtonSelector)
-    .should("have.text", "Close")
+    .should('have.text', 'Close')
     .click()
     // Repeat the assertion to make sure the text
     // is no longer visible
     .get(modalSelector)
-    .should("not.have.text", "Content");
-});
+    .should('not.have.text', 'Content')
+})
 ```
 
 </TabItem>
@@ -145,7 +145,7 @@ const show = ref(true)
 
 <TabItem value="Options">
 
-```vue
+```html
 <template>
   <div class="overlay" v-if="show">
     <div class="modal">
@@ -203,11 +203,11 @@ responsibility of the test.
 
 <div
   style={{
-    position: "relative",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "rgba(0,0,0,0.2)",
+    position: 'relative',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    background: 'rgba(0,0,0,0.2)',
     width: 400,
     height: 320,
   }}
@@ -215,26 +215,26 @@ responsibility of the test.
   <div
     style={{
       padding: 10,
-      position: "absolute",
-      display: "flex",
-      flexDirection: "column",
-      background: "white",
+      position: 'absolute',
+      display: 'flex',
+      flexDirection: 'column',
+      background: 'white',
       borderRadius: 3,
       minHeight: 300,
       minWidth: 350,
-      margin: "0 auto",
+      margin: '0 auto',
     }}
   >
-    <div style={{ fontSize: "1.25rem" }}>Header Content</div>
+    <div style={{ fontSize: '1.25rem' }}>Header Content</div>
     <hr />
     <div style={{ flexGrow: 1 }}>Modal's body content (passed in via slot)</div>
     <hr />
     <div
       style={{
         bottom: 0,
-        display: "flex",
-        justifyContent: "space-between",
-        width: "100%",
+        display: 'flex',
+        justifyContent: 'space-between',
+        width: '100%',
       }}
     >
       <button>Cancel</button>
@@ -286,7 +286,6 @@ it('renders the fallback "Close" button when no footer is provided', () => {
 ```
 
 </TabItem>
-
 <TabItem value="With JSX">
 
 ```js
@@ -328,10 +327,9 @@ it('renders the fallback "Close" button when no footer is provided', () => {
 ```
 
 </TabItem>
-
 <TabItem value="Composition">
 
-```vue
+```html
 <template>
   <div class="overlay" v-if="show">
     <div class="modal">
@@ -427,7 +425,7 @@ want.
 The implementation of our modal will change slightly, and we only have to show
 off the template to demonstrate the change.
 
-```vue
+```html
 <template>
   <div class="overlay" v-if="show">
     <div class="modal">

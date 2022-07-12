@@ -1,5 +1,5 @@
 ---
-title: "Quickstart: Vue"
+title: 'Quickstart: Vue'
 sidebar_position: 10
 ---
 
@@ -42,36 +42,42 @@ If you did not, then when you run Cypress for the first time in a project, the
 app will prompt you to set up either **E2E Testing** or **Component Testing**.
 Choose **Component Testing** and step through the configuration wizard.
 
-<DocsImage 
-  src="/img/guides/component-testing/select-test-type.png" 
-  caption="Choose Component Testing"> </DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/select-test-type.png"
+  caption="Choose Component Testing"
+>
+  {' '}
+</DocsImage>
 
 The Project Setup screen automatically detects your framework and bundler, which
 is Vue and Vite in our case. Cypress Component Testing uses your existing
 development server config to render components, helping ensure your components
 act and display in testing the same as they do in production.
 
-<DocsImage 
-  src="/img/guides/component-testing/project-setup-vue.png" 
-  caption=""> </DocsImage>
+<DocsImage src="/img/guides/component-testing/project-setup-vue.png" caption="">
+  {' '}
+</DocsImage>
 
 Next, the Cypress setup will detect your framework and generate all the
 necessary configuration files, and ensure all required dependencies are
 installed.
 
-<DocsImage 
-  src="/img/guides/component-testing/scaffolded-files.png" 
-  caption="The Cypress launchpad will scaffold all of these files for you">
-</DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/scaffolded-files.png"
+  caption="The Cypress launchpad will scaffold all of these files for you"
+></DocsImage>
 
 After setting up component testing, you will be at the Browser Selection screen.
 
 Pick the browser of your choice and click the "Start Component Testing" button
 to open the Cypress app.
 
-<DocsImage 
-  src="/img/guides/component-testing/select-browser.png" 
-  caption="Choose your browser"> </DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/select-browser.png"
+  caption="Choose your browser"
+>
+  {' '}
+</DocsImage>
 
 ## Creating a Component
 
@@ -81,20 +87,17 @@ In this guide, we'll use a `<Stepper/>` component with zero dependencies and one
 bit of internal state, a "counter" that can be incremented and decremented by
 two buttons.
 
-<alert type="info">
+:::info
 
 If your component uses plugins, network requests, or other environmental setups,
 you will need additional work to get your component mounting. This is covered in
 a later section.
 
-</alert>
+:::
 
 Add the Stepper component to your project:
 
-<code-group>
-<code-block label="Stepper.vue" active>
-
-```html
+```html title=Stepper.vue
 <template>
   <div>
     <button aria-label="decrement" @click="count--">-</button>
@@ -112,9 +115,6 @@ Add the Stepper component to your project:
   const count = ref(props.initial || 0)
 </script>
 ```
-
-</code-block>
-</code-group>
 
 > We are using Vue's Composition API with script setup in this guide, but that
 > is not required for Cypress Component testing and you can use the Options API

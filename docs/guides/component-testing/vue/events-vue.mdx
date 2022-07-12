@@ -51,10 +51,7 @@ You would use the `<Stepper>` from a parent component like so:
 
 Here is what the implementation would look like:
 
-<code-group>
-<code-block label="Stepper.vue" active>
-
-```html
+```html title=Stepper.vue
 <template>
   <div>
     <button aria-label="decrement" @click="decrement">-</button>
@@ -82,9 +79,6 @@ Here is what the implementation would look like:
 </script>
 ```
 
-</code-block>
-</code-group>
-
 Above, we added a new `change` emitted event and abstracted the buttons `click`
 events into their own methods.
 
@@ -106,10 +100,17 @@ First, we **Arrange** our test.
 
 Let's set up the spies and bind them to the component:
 
-<Tabs>
-<TabItem value="Stepper.cy.js" active>
+<VueSyntaxTabs>
 
-```js
+```jsx title=Stepper.cy.jsx
+it('clicking + fires a change event with the incremented value', () => {
+  // Arrange
+  const onChangeSpy = cy.spy().as('changeSpy')
+  cy.mount(() => <Stepper onChange={onChangeSpy} />)
+})
+```
+
+```js title=Stepper.cy.js
 it('clicking + fires a change event with the incremented value', () => {
   // Arrange
   const onChangeSpy = cy.spy().as('onChangeSpy')
@@ -117,19 +118,7 @@ it('clicking + fires a change event with the incremented value', () => {
 })
 ```
 
-</code-block>
-
-<code-block label="Stepper.cy.jsx (With JSX)">
-
-```jsx
-it("clicking + fires a change event with the incremented value", () => {
-  const onChangeSpy = cy.spy().as("changeSpy");
-  cy.mount(() => <Stepper onChange={onChangeSpy} />);
-});
-```
-
-</TabItem>
-</Tabs>
+</VueSyntaxTabs>
 
 > We're [aliasing](/guides/core-concepts/variables-and-aliases) the spy with
 > `cy.as('onChangeSpy')` so that the Cypress Reporter prints out the name of the
@@ -137,7 +126,7 @@ it("clicking + fires a change event with the incremented value", () => {
 > the emitted event in your browser. We are also able to acesss the spy by name
 > later.
 
-<alert type="warning">
+:::warning
 
 You may notice the syntax above in the non-JSX example relies on binding events
 to the `props` key in mount. While this isn't "idiomatic Vue", it's the current
@@ -149,29 +138,15 @@ event.
 
 As such, JSX may feel more idiomatic.
 
-</alert>
+:::
 
 ### Act
 
 Next, we **Act** by firing a click event for the increment button.
 
-<Tabs>
-<TabItem value="Stepper.cy.js" active>
+<VueSyntaxTabs>
 
-```js
-it('clicking + fires a change event with the incremented value', () => {
-  // Arrange
-  const onChangeSpy = cy.spy().as('onChangeSpy')
-  cy.mount(Stepper, { props: { onChange: onChangeSpy } })
-  // Act
-  cy.get(incrementSelector).click()
-})
-```
-
-</TabItem>
-<TabItem value="Stepper.cy.jsx (With JSX)">
-
-```jsx
+```jsx title=Stepper.cy.jsx
 it('clicking + fires a change event with the incremented value', () => {
   // Arrange
   const onChangeSpy = cy.spy().as('onChangeSpy')
@@ -181,33 +156,26 @@ it('clicking + fires a change event with the incremented value', () => {
 })
 ```
 
-</TabItem>
-</Tabs>
+```js title=Stepper.cy.js
+it('clicking + fires a change event with the incremented value', () => {
+  // Arrange
+  const onChangeSpy = cy.spy().as('onChangeSpy')
+  cy.mount(Stepper, { props: { onChange: onChangeSpy } })
+  // Act
+  cy.get(incrementSelector).click()
+})
+```
+
+</VueSyntaxTabs>
 
 ### Assert
 
 Finally, we **Assert** that the `change` event was emitted with the correct
 value.
 
-<Tabs>
-<TabItem value="Stepper.cy.js" active>
+<VueSyntaxTabs>
 
-```js
-it('clicking + fires a change event with the incremented value', () => {
-  // Arrange
-  const onChangeSpy = cy.spy().as('onChangeSpy')
-  cy.mount(Stepper, { props: { onChange: onChangeSpy } })
-  // Act
-  cy.get(incrementSelector).click()
-  // Assert
-  cy.get('@onChangeSpy').should('have.been.calledWith', 1)
-})
-```
-
-</TabItem>
-<TabItem value="Stepper.cy.jsx (With JSX)">
-
-```jsx
+```jsx title=Stepper.cy.jsx
 it('clicking + fires a change event with the incremented value', () => {
   // Arrange
   const onChangeSpy = cy.spy().as('onChangeSpy')
@@ -219,8 +187,19 @@ it('clicking + fires a change event with the incremented value', () => {
 })
 ```
 
-</TabItem>
-</Tabs>
+```js title=Stepper.cy.js
+it('clicking + fires a change event with the incremented value', () => {
+  // Arrange
+  const onChangeSpy = cy.spy().as('onChangeSpy')
+  cy.mount(Stepper, { props: { onChange: onChangeSpy } })
+  // Act
+  cy.get(incrementSelector).click()
+  // Assert
+  cy.get('@onChangeSpy').should('have.been.calledWith', 1)
+})
+```
+
+</VueSyntaxTabs>
 
 We may decide to combine this test with the previous tests we've written that
 test multiple things at once in a given scenario.
@@ -240,7 +219,7 @@ Cypress, we support using Vue Test Utils' API.
 ```js
 cy.mount(Stepper).then((wrapper) => {
   // this is the Vue Test Utils wrapper
-});
+})
 ```
 
 <!-- TODO: Custom mount command docs -->
@@ -250,17 +229,17 @@ recommend you write a [custom mount command](/api/commands/mount) and create a
 Cypress alias to get back at the `wrapper`.
 
 ```js
-import { mount } from "cypress/vue";
+import { mount } from 'cypress/vue'
 
-Cypress.Commands.add("mount", (...args) => {
+Cypress.Commands.add('mount', (...args) => {
   return mount(...args).then((wrapper) => {
-    return cy.wrap(wrapper).as("vue");
-  });
-});
+    return cy.wrap(wrapper).as('vue')
+  })
+})
 
 // the "@vue" alias will now work anywhere
 // after you've mounted your component
-cy.mount(Stepper).doStuff().get("@vue"); // The subject is now the Vue Wrapper
+cy.mount(Stepper).doStuff().get('@vue') // The subject is now the Vue Wrapper
 ```
 
 This means that you are able to get to the resulting `wrapper` returned from the
@@ -291,24 +270,24 @@ in order to make sure the DOM has updated or any reactive events have fired.
 cy.mount(Stepper, { props: { initial: 100 } })
   .get(incrementSelector)
   .click()
-  .get("@vue")
+  .get('@vue')
   .should((wrapper) => {
-    expect(wrapper.emitted("change")).to.have.length;
-    expect(wrapper.emitted("change")[0][0]).to.equal("101");
-  });
+    expect(wrapper.emitted('change')).to.have.length
+    expect(wrapper.emitted('change')[0][0]).to.equal('101')
+  })
 ```
 
 </TabItem>
 <TabItem value="With spies">
 
 ```js
-const onChangeSpy = cy.spy().as("changeSpy");
+const onChangeSpy = cy.spy().as('changeSpy')
 
 cy.mount(Stepper, { props: { initial: 100, onChange: onChangeSpy } })
   .get(incrementSelector)
   .click()
-  .get("@changeSpy")
-  .should("have.been.calledWith", "101");
+  .get('@changeSpy')
+  .should('have.been.calledWith', '101')
 ```
 
 </TabItem>
@@ -332,4 +311,7 @@ about using Spies in our
 
 We're going to create a container component and learn how to test slots.
 
-<NavGuide prev="/guides/component-testing/testing-vue" next="/guides/component-testing/slots-vue" />
+<NavGuide
+  prev="/guides/component-testing/testing-vue"
+  next="/guides/component-testing/slots-vue"
+/>

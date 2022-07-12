@@ -36,17 +36,11 @@ While you can use the `mount` function in your tests, we recommend using
 [custom command](/api/cypress-api/custom-commands) in the
 **cypress/support/component.js** file:
 
-<code-group>
-<code-block label="cypress/support/component.js" active>
-
-```js
+```js title="cypress/support/component.js"
 import { mount } from 'cypress/vue'
 
 Cypress.Commands.add('mount', mount)
 ```
-
-</code-block>
-</code-group>
 
 This allows you to use `cy.mount()` in any component test without having to
 import the framework-specific mount command.
@@ -64,10 +58,7 @@ test.
 To get started, create a spec file in the same directory as the `Stepper.vue`
 component and name it **Stepper.cy.js**. Then paste the following into it:
 
-<code-group>
-<code-block label="Stepper.cy.js" active>
-
-```js
+```js title=Stepper.cy.js
 import Stepper from './Stepper.vue'
 
 describe('<Stepper>', () => {
@@ -76,9 +67,6 @@ describe('<Stepper>', () => {
   })
 })
 ```
-
-</code-block>
-</code-group>
 
 Here, we have a single test that ensures that our component mounts.
 
@@ -103,9 +91,12 @@ And launch the browser of your choice. In the spec list, click on
 **Stepper.cy.js** and you will see the stepper component mounted in the test
 area.
 
-<DocsImage 
-  src="/img/guides/component-testing/first-test-run-vue.png" 
-  caption="Stepper Mount Test"> </DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/first-test-run-vue.png"
+  caption="Stepper Mount Test"
+>
+  {' '}
+</DocsImage>
 
 A basic test that mounts a component in its default state is an excellent way to
 start testing. Since Cypress renders your component in a real browser, you have
@@ -159,7 +150,7 @@ The setup instructions are the same for E2E and Component Testing. Within your
 // cypress/support/component.js
 // cy.findBy* commands will now be available.
 // This calls Cypress.Commands.add under the hood
-import "@testing-library/cypress/add-commands";
+import '@testing-library/cypress/add-commands'
 ```
 
 For TypeScript users, types are packaged along with the Testing Library package.
@@ -170,4 +161,7 @@ Refer to the latest setup instructions in the Testing Library docs.
 Now that we have our component mounted, next we will learn how to write tests
 against it.
 
-<NavGuide prev="/guides/component-testing/quickstart-vue" next="/guides/component-testing/testing-vue" />
+<NavGuide
+  prev="/guides/component-testing/quickstart-vue"
+  next="/guides/component-testing/testing-vue"
+/>

@@ -10,7 +10,7 @@ automatic configuration step.
 If you're using a UI Library like Vuetify or Tailwind, you'll want to replicate
 the setup you're doing in your normal application for your components.
 
-<alert type="error">
+:::caution
 
 Failure to replicate the environment completely may lead to:
 
@@ -19,7 +19,7 @@ Failure to replicate the environment completely may lead to:
 1. Broken styles. (Icon fonts, )
 1. Error logs in the console.
 
-</alert>
+:::
 
 ## Broken Styles
 
@@ -46,20 +46,12 @@ Additionally, make sure that any page-level styles are not dependent on
 component hierarchy, but are instead extracted into a `main.css` (or scss) file
 and imported at the top of your support file.
 
-<Tabs>
-<TabItem value="Component Support File">
-
-```js
-// cypress/support/component.js
-
+```js title=cypress/support/component.js
 // Should import normalize.css, etc
 // The top of this supportfile should look very similar
 // to your main.js
-import "../../src/main.css";
+import '../../src/main.css'
 ```
-
-</TabItem>
-</Tabs>
 
 ## Replicating the HTML fixtures
 
@@ -108,36 +100,36 @@ plugins.
 <TabItem value="JavaScript" active>
 
 ```js
-import { createPinia } from "pinia"; // or Vuex
-import { createI18n } from "vue-i18n";
-import { mount } from "cypress/vue";
-import { h } from "vue";
+import { createPinia } from 'pinia' // or Vuex
+import { createI18n } from 'vue-i18n'
+import { mount } from 'cypress/vue'
+import { h } from 'vue'
 
 // We recommend that you pull this out
 // into a constants file that you share with
 // your main.js file.
 const i18nOptions = {
-  locale: "en",
+  locale: 'en',
   messages: {
     en: {
-      hello: "hello!",
+      hello: 'hello!',
     },
     ja: {
-      hello: "こんにちは！",
+      hello: 'こんにちは！',
     },
   },
-};
+}
 
-Cypress.Commands.add("mount", (component, ...args) => {
-  args.global = args.global || {};
-  args.global.plugins = args.global.plugins || [];
-  args.global.plugins.push(createPinia());
-  args.global.plugins.push(createI18n());
+Cypress.Commands.add('mount', (component, ...args) => {
+  args.global = args.global || {}
+  args.global.plugins = args.global.plugins || []
+  args.global.plugins.push(createPinia())
+  args.global.plugins.push(createI18n())
 
   return mount(() => {
-    return h(VApp, {}, component);
-  }, ...args);
-});
+    return h(VApp, {}, component)
+  }, ...args)
+})
 ```
 
 </TabItem>
@@ -145,30 +137,30 @@ Cypress.Commands.add("mount", (component, ...args) => {
 <TabItem value="With JSX">
 
 ```jsx
-import { createPinia } from "pinia"; // or Vuex
-import { createI18n } from "vue-i18n";
-import { mount } from "cypress/vue";
+import { createPinia } from 'pinia' // or Vuex
+import { createI18n } from 'vue-i18n'
+import { mount } from 'cypress/vue'
 
 // We recommend that you pull this out
 // into a constants file that you share with
 // your main.js file.
 const i18nOptions = {
-  locale: "en",
+  locale: 'en',
   messages: {
     en: {
-      hello: "hello!",
+      hello: 'hello!',
     },
     ja: {
-      hello: "こんにちは！",
+      hello: 'こんにちは！',
     },
   },
-};
+}
 
-Cypress.Commands.add("mount", (component, ...args) => {
-  args.global = args.global || {};
-  args.global.plugins = args.global.plugins || [];
-  args.global.plugins.push(createPinia());
-  args.global.plugins.push(createI18n());
+Cypress.Commands.add('mount', (component, ...args) => {
+  args.global = args.global || {}
+  args.global.plugins = args.global.plugins || []
+  args.global.plugins.push(createPinia())
+  args.global.plugins.push(createI18n())
 
   // <component> is a built-in component that comes with Vue
   return mount(
@@ -178,8 +170,8 @@ Cypress.Commands.add("mount", (component, ...args) => {
       </VApp>
     ),
     ...args
-  );
-});
+  )
+})
 ```
 
 </TabItem>
@@ -207,25 +199,25 @@ everything to compile.
 <TabItem value="JavaScript" active>
 
 ```js
-import Vuetify from "vuetify/lib";
-import { VApp } from "vuetify";
-import { mount } from "cypress/vue";
-import { h } from "vue";
+import Vuetify from 'vuetify/lib'
+import { VApp } from 'vuetify'
+import { mount } from 'cypress/vue'
+import { h } from 'vue'
 
 // We recommend that you pull this out
 // into a constants file that you share with
 // your main.js file.
-const vuetifyOptions = {};
+const vuetifyOptions = {}
 
-Cypress.Commands.add("mount", (component, ...args) => {
-  args.global = args.global || {};
-  args.global.plugins = args.global.plugins || [];
-  args.global.plugins.push(new Vuetify(vuetifyOptions));
+Cypress.Commands.add('mount', (component, ...args) => {
+  args.global = args.global || {}
+  args.global.plugins = args.global.plugins || []
+  args.global.plugins.push(new Vuetify(vuetifyOptions))
 
   return mount(() => {
-    return h(VApp, {}, component);
-  }, ...args);
-});
+    return h(VApp, {}, component)
+  }, ...args)
+})
 ```
 
 </TabItem>
@@ -233,19 +225,19 @@ Cypress.Commands.add("mount", (component, ...args) => {
 <TabItem value="With JSX">
 
 ```jsx
-import Vuetify from "vuetify/lib";
-import { VApp } from "vuetify";
-import { mount } from "cypress/vue";
+import Vuetify from 'vuetify/lib'
+import { VApp } from 'vuetify'
+import { mount } from 'cypress/vue'
 
 // We recommend that you pull this out
 // into a constants file that you share with
 // your main.js file.
-const vuetifyOptions = {};
+const vuetifyOptions = {}
 
-Cypress.Commands.add("mount", (component, ...args) => {
-  args.global = args.global || {};
-  args.global.plugins = args.global.plugins || [];
-  args.global.plugins.push(new Vuetify(vuetifyOptions));
+Cypress.Commands.add('mount', (component, ...args) => {
+  args.global = args.global || {}
+  args.global.plugins = args.global.plugins || []
+  args.global.plugins.push(new Vuetify(vuetifyOptions))
 
   // <component> is a built-in component that comes with Vue
   return mount(
@@ -255,8 +247,8 @@ Cypress.Commands.add("mount", (component, ...args) => {
       </VApp>
     ),
     ...args
-  );
-});
+  )
+})
 ```
 
 </TabItem>
@@ -278,32 +270,32 @@ implementation of the router via the options param:
 <TabItem value='Vue 3'>
 
 ```js
-import { mount } from "cypress/vue";
-import { createMemoryHistory, createRouter } from "vue-router";
-import { routes } from "../../src/router";
+import { mount } from 'cypress/vue'
+import { createMemoryHistory, createRouter } from 'vue-router'
+import { routes } from '../../src/router'
 
-Cypress.Commands.add("mount", (component, options = {}) => {
+Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
-  options.global = options.global || {};
-  options.global.plugins = options.global.plugins || [];
+  options.global = options.global || {}
+  options.global.plugins = options.global.plugins || []
 
   // create router if one is not provided
   if (!options.router) {
     options.router = createRouter({
       routes: routes,
       history: createMemoryHistory(),
-    });
+    })
   }
 
   // Add router plugin
   options.global.plugins.push({
     install(app) {
-      app.use(options.router);
+      app.use(options.router)
     },
-  });
+  })
 
-  return mount(component, options);
-});
+  return mount(component, options)
+})
 ```
 
 </TabItem>
@@ -311,21 +303,21 @@ Cypress.Commands.add("mount", (component, options = {}) => {
 <TabItem value='Vue 2'>
 
 ```js
-import { mount } from "cypress/vue";
-import Vue from "vue";
-import VueRouter from "vue-router";
-import { router } from "../../src/router";
+import { mount } from 'cypress/vue'
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import { router } from '../../src/router'
 
-Cypress.Commands.add("mount", (component, options = {}) => {
+Cypress.Commands.add('mount', (component, options = {}) => {
   // Add the VueRouter plugin
-  Vue.use(VueRouter);
+  Vue.use(VueRouter)
 
   // Use the router passed in via options,
   // or the default one if not provided
-  options.router = options.router || router;
+  options.router = options.router || router
 
-  return mount(component, options);
-});
+  return mount(component, options)
+})
 ```
 
 </TabItem>
@@ -337,11 +329,11 @@ Cypress.Commands.add("mount", (component, options = {}) => {
 <TabItem value="Vue 3 - TypeScript Typings" active>
 
 ```ts
-import { mount } from "cypress/vue";
-import { Router } from "vue-router";
+import { mount } from 'cypress/vue'
+import { Router } from 'vue-router'
 
-type MountParams = Parameters<typeof mount>;
-type OptionsParam = MountParams[1] & { router?: Router };
+type MountParams = Parameters<typeof mount>
+type OptionsParam = MountParams[1] & { router?: Router }
 
 declare global {
   namespace Cypress {
@@ -351,7 +343,7 @@ declare global {
        * @param component Vue Component or JSX Element to mount
        * @param options Options passed to Vue Test Utils
        */
-      mount(component: any, options?: OptionsParam): Chainable<any>;
+      mount(component: any, options?: OptionsParam): Chainable<any>
     }
   }
 }
@@ -362,11 +354,11 @@ declare global {
 <TabItem value="Vue 2 - TypeScript Typings" active>
 
 ```ts
-import { mount } from "cypress/vue";
-import VueRouter from "vue-router";
+import { mount } from 'cypress/vue'
+import VueRouter from 'vue-router'
 
-type MountParams = Parameters<typeof mount>;
-type OptionsParam = MountParams[1] & { router?: VueRouter };
+type MountParams = Parameters<typeof mount>
+type OptionsParam = MountParams[1] & { router?: VueRouter }
 
 declare global {
   namespace Cypress {
@@ -376,7 +368,7 @@ declare global {
        * @param component Vue Component or JSX Element to mount
        * @param options Options passed to Vue Test Utils
        */
-      mount(component: any, options?: OptionsParam): Chainable<any>;
+      mount(component: any, options?: OptionsParam): Chainable<any>
     }
   }
 }
@@ -395,33 +387,33 @@ Use the [cy.wrap](/api/commands/wrap) command to have Cypress await the
 promise's resolve before it continues with other commands:
 
 ```js
-import Navigation from "./Navigation.vue";
-import { routes } from "../router";
-import { createMemoryHistory, createRouter } from "vue-router";
+import Navigation from './Navigation.vue'
+import { routes } from '../router'
+import { createMemoryHistory, createRouter } from 'vue-router'
 
 it('home link should be active when url is "/"', () => {
   // No need to pass in custom router as default url is '/'
-  cy.mount(<Navigation />);
+  cy.mount(<Navigation />)
 
-  cy.get("a").contains("Home").should("have.class", "router-link-active");
-});
+  cy.get('a').contains('Home').should('have.class', 'router-link-active')
+})
 
 it('login link should be active when url is "/login"', () => {
   // Create a new router instance for each test
   const router = createRouter({
     routes: routes,
     history: createMemoryHistory(),
-  });
+  })
 
   // Change location to `/login`,
   // and await on the promise with cy.wrap
-  cy.wrap(router.push("/login"));
+  cy.wrap(router.push('/login'))
 
   // Pass the already initialized router for use
-  cy.mount(<Navigation />, { router });
+  cy.mount(<Navigation />, { router })
 
-  cy.get("a").contains("Login").should("have.class", "router-link-active");
-});
+  cy.get('a').contains('Login').should('have.class', 'router-link-active')
+})
 ```
 
 </TabItem>
@@ -429,32 +421,32 @@ it('login link should be active when url is "/login"', () => {
   <TabItem value="Vue 2 - Usage">
 
 ```js
-import VueRouter from "vue-router";
-import Navigation from "./Navigation.vue";
-import { routes } from "../router";
+import VueRouter from 'vue-router'
+import Navigation from './Navigation.vue'
+import { routes } from '../router'
 
 it('home link should be active when url is "/"', () => {
   // No need to pass in custom router as default url is '/'
-  cy.mount(Navigation);
+  cy.mount(Navigation)
 
-  cy.get("a").contains("Home").should("have.class", "router-link-active");
-});
+  cy.get('a').contains('Home').should('have.class', 'router-link-active')
+})
 
 it('login link should be active when url is "/login"', () => {
   // Create a new router instance for each test
   const router = new VueRouter({
-    mode: "history",
+    mode: 'history',
     routes,
-  });
+  })
 
   // Change location to `/login`
-  router.push("/login");
+  router.push('/login')
 
   // Pass the already initialized router for use
-  cy.mount(Navigation, { router });
+  cy.mount(Navigation, { router })
 
-  cy.get("a").contains("Login").should("have.class", "router-link-active");
-});
+  cy.get('a').contains('Login').should('have.class', 'router-link-active')
+})
 ```
 
 </TabItem>
@@ -471,29 +463,29 @@ command that configures a Vuex store for your component:
 <TabItem value='Vue 3'>
 
 ```js
-import { mount } from "cypress/vue";
-import { getStore } from "../../src/plugins/store";
+import { mount } from 'cypress/vue'
+import { getStore } from '../../src/plugins/store'
 
-Cypress.Commands.add("mount", (component, options = {}) => {
+Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
-  options.global = options.global || {};
-  options.global.stubs = options.global.stubs || {};
-  options.global.stubs["transition"] = false;
-  options.global.components = options.global.components || {};
-  options.global.plugins = options.global.plugins || [];
+  options.global = options.global || {}
+  options.global.stubs = options.global.stubs || {}
+  options.global.stubs['transition'] = false
+  options.global.components = options.global.components || {}
+  options.global.plugins = options.global.plugins || []
 
   // Use store passed in from options, or initialize a new one
-  const { store = getStore(), ...mountOptions } = options;
+  const { store = getStore(), ...mountOptions } = options
 
   // Add Vuex plugin
   options.global.plugins.push({
     install(app) {
-      app.use(store);
+      app.use(store)
     },
-  });
+  })
 
-  return mount(component, mountOptions);
-});
+  return mount(component, mountOptions)
+})
 ```
 
 </TabItem>
@@ -501,23 +493,23 @@ Cypress.Commands.add("mount", (component, options = {}) => {
 <TabItem value='Vue 2'>
 
 ```js
-import { mount } from "cypress/vue";
-import Vuex from "vuex";
-import { getStore } from "../../src/plugins/store";
+import { mount } from 'cypress/vue'
+import Vuex from 'vuex'
+import { getStore } from '../../src/plugins/store'
 
-Cypress.Commands.add("mount", (component, options = {}) => {
+Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
-  options.extensions = options.extensions || {};
-  options.extensions.plugins = options.extensions.plugins || [];
+  options.extensions = options.extensions || {}
+  options.extensions.plugins = options.extensions.plugins || []
 
   // Use store passed in from options, or initialize a new one
-  options.store = options.store || getStore();
+  options.store = options.store || getStore()
 
   // Add Vuex plugin
-  options.extensions.plugins.push(Vuex);
+  options.extensions.plugins.push(Vuex)
 
-  return mount(component, options);
-});
+  return mount(component, options)
+})
 ```
 
 </TabItem>
@@ -534,11 +526,11 @@ ensure changes to the store don't affect other tests.
 <!-- TypeScript Typings -->
 
 ```ts title="TypeScript Typings"
-import { mount } from "cypress/vue";
-import { Store } from "vuex";
+import { mount } from 'cypress/vue'
+import { Store } from 'vuex'
 
-type MountParams = Parameters<typeof mount>;
-type OptionsParam = MountParams[1];
+type MountParams = Parameters<typeof mount>
+type OptionsParam = MountParams[1]
 
 declare global {
   namespace Cypress {
@@ -551,31 +543,31 @@ declare global {
       mount(
         component: any,
         options?: OptionsParam & { store?: Store }
-      ): Chainable<any>;
+      ): Chainable<any>
     }
   }
 }
 ```
 
 ```js title="Usage"
-import { getStore } from "@/plugins/store";
-import UserProfile from "./UserProfile.vue";
+import { getStore } from '@/plugins/store'
+import UserProfile from './UserProfile.vue'
 
-it.only("User profile should display user name", () => {
-  const user = { name: "test person" };
+it.only('User profile should display user name', () => {
+  const user = { name: 'test person' }
 
   // getStore is a factory method that creates a new store
-  const store = getStore();
+  const store = getStore()
 
   // mutate the store with user
-  store.commit("setUser", user);
+  store.commit('setUser', user)
 
   cy.mount(UserProfile, {
     store,
-  });
+  })
 
-  cy.get("div.name").should("have.text", user.name);
-});
+  cy.get('div.name').should('have.text', user.name)
+})
 ```
 
 ### Global Components
@@ -588,39 +580,39 @@ properly:
 <TabItem value='Vue 2'>
 
 ```js
-import { mount } from "cypress/vue";
-import Button from "../../src/components/Button.vue";
+import { mount } from 'cypress/vue'
+import Button from '../../src/components/Button.vue'
 
-Cypress.Commands.add("mount", (component, options = {}) => {
+Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
-  options.extensions = options.extensions || {};
-  options.extensions.plugins = options.extensions.plugins || [];
-  options.extensions.components = options.extensions.components || {};
+  options.extensions = options.extensions || {}
+  options.extensions.plugins = options.extensions.plugins || []
+  options.extensions.components = options.extensions.components || {}
 
   // Register global components
-  options.extensions.components["Button"] = Button;
+  options.extensions.components['Button'] = Button
 
-  return mount(component, options);
-});
+  return mount(component, options)
+})
 ```
 
 </TabItem>
 <TabItem value='Vue 3'>
 
 ```js
-import { mount } from "cypress/vue";
-import Button from "../../src/components/Button.vue";
+import { mount } from 'cypress/vue'
+import Button from '../../src/components/Button.vue'
 
-Cypress.Commands.add("mount", (component, options = {}) => {
+Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
-  options.global = options.global || {};
-  options.global.components = options.global.components || {};
+  options.global = options.global || {}
+  options.global.components = options.global.components || {}
 
   // Register global components
-  options.global.components["Button"] = Button;
+  options.global.components['Button'] = Button
 
-  return mount(component, options);
-});
+  return mount(component, options)
+})
 ```
 
 </TabItem>
