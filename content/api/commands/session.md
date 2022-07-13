@@ -778,7 +778,7 @@ const login = (name, token, password, uniqueKey) => {
 ```
 
 The [`uuid`](https://www.npmjs.com/package/uuid) npm package can be used to
-generate random unique ids if a arbitrary name-space does not meet your needs.
+generate random unique ids if an arbitrary name-space does not meet your needs.
 
 ### Common Questions
 
