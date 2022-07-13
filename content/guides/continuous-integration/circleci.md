@@ -76,10 +76,7 @@ provides inside the orb. Using the orb brings simplicity and static checks of
 parameters to CircleCI configuration.
 
 You can find multiple examples at
-[our orb examples page](https://github.com/cypress-io/circleci-orb/blob/master/docs/examples.md)
-and in the
-[cypress-example-circleci-orb](https://github.com/cypress-io/cypress-example-circleci-orb)
-project.
+[our orb examples page](https://github.com/cypress-io/circleci-orb/blob/master/docs/examples.md).
 
 <Alert type="info">
 
@@ -159,10 +156,6 @@ jobs:
             - ~/.cache ## cache both yarn and Cypress!
       - run: $(yarn bin)/cypress run --record --key <record_key>
 ```
-
-Find the complete CircleCI v2 example with caching and artifact upload in the
-[cypress-example-docker-circle](https://github.com/cypress-io/cypress-example-docker-circle)
-repo.
 
 #### RAM Disk
 

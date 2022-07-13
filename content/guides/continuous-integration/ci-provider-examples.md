@@ -170,7 +170,6 @@ and
 
 ### CodeShip Pro
 
-- [cypress-example-docker-codeship](https://github.com/cypress-io/cypress-example-docker-codeship)
 - [Basic](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/basic/codeship-pro)
 - [Parallel codeship-steps.yml](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/codeship-steps.yml)
 - [Parallel codeship-services.yml](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/codeship-services.yml)

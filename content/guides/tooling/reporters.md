@@ -174,9 +174,6 @@ We suggest using the npm module: <Icon name="github"></Icon>
 
 We use multiple reporters for every single one of our internal projects.
 
-The below examples were implemented in
-[https://github.com/cypress-io/cypress-example-circleci-orb](https://github.com/cypress-io/cypress-example-circleci-orb).
-
 ### Examples
 
 #### Spec to `STDOUT`, save JUnit XML files
@@ -271,8 +268,6 @@ added. For example, to combine all files into
 
 #### Spec to `STDOUT`, produce a combined Mochawesome JSON file
 
-This example is shown in the branch `spec-and-single-mochawesome-json` in
-[https://github.com/cypress-io/cypress-example-circleci-orb](https://github.com/cypress-io/cypress-example-circleci-orb).
 We want to output a "spec" report to `STDOUT`, save an individual Mochawesome
 JSON file per test file, and then combine all JSON reports into a single report.
 
