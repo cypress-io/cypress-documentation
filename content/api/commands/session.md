@@ -755,8 +755,8 @@ You run this, but because `cy.session()` is only being passed `name` as its
 login('user1', 'different-token', 'p4ssw0rd')
 ```
 
-In summary, you need to ensure that the `id` is unique from all the parameters
-that are used inside the `setup` function that may change, otherwise `id` values
+In summary, you need to ensure that the `id` is unique. Create it from all the
+parameters used inside the `setup` function that may change, otherwise `id` values
 may collide and create unexpected results.
 
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
