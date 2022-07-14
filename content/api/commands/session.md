@@ -756,8 +756,8 @@ login('user1', 'different-token', 'p4ssw0rd')
 ```
 
 In summary, you need to ensure that the `id` is unique. Create it from all the
-parameters used inside the `setup` function that may change, otherwise `id` values
-may collide and create unexpected results.
+parameters used inside the `setup` function that may change, otherwise `id`
+values may collide and create unexpected results.
 
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
