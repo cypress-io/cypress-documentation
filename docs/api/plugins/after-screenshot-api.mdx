@@ -14,7 +14,7 @@ return the updated details about the image.
 
 <WarningSetupNodeEvents />
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
 ```js
 on('after:screenshot', (details) => {
@@ -74,13 +74,13 @@ The properties will be merged into the screenshot details and passed to the
 If you move the location of the screenshot image, you'll want to specify the new
 `path` of the image.
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
-const fs = require('fs')
+```ts
+import fs from 'fs'
 ```
 
-```js
+```ts
 on('after:screenshot', (details) => {
   console.log(details) // print all details to terminal
 

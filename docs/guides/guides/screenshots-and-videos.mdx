@@ -88,13 +88,13 @@ make the encoding a little bit faster. Here are some common scenarios:
 
 :::cypress-config-example
 
-```js
+```ts
 {
   videoCompression: 15
 }
 ```
 
-:::
+:::cypress-config-example
 
 A lower `videoCompression` value will spend less time compressing and result in
 a bigger video file size.
@@ -103,7 +103,7 @@ a bigger video file size.
 
 :::cypress-config-example
 
-```js
+```ts
 {
   videoCompression: false
 }
@@ -143,16 +143,16 @@ The example below shows how to delete the recorded video for specs that had no
 retry attempts or failures when using Cypress
 [test retries](/guides/guides/test-retries).
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
+```ts
 // need to install these dependencies
 // npm i lodash del --save-dev
-const _ = require('lodash')
-const del = require('del')
+import _ from 'lodash'
+import del from 'del'
 ```
 
-```js
+```ts
 on('after:spec', (spec, results) => {
   if (results && results.video) {
     // Do we have failures for any retry attempts?

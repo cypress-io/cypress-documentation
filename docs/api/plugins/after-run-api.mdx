@@ -22,9 +22,9 @@ is enabled.
 
 :::
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
+```ts
 on('after:run', (results) => {
   /* ... */
 })
@@ -48,7 +48,9 @@ awaited before Cypress proceeds running your specs.
 
 ### Log the number of passed tests of a run
 
-```javascript
+:::cypress-config-plugin-example
+
+```ts
 module.exports = (on, config) => {
   on('after:run', (results) => {
     // results will look something like this when run via `cypress run`:
@@ -83,6 +85,8 @@ module.exports = (on, config) => {
   })
 }
 ```
+
+:::
 
 ## See also
 

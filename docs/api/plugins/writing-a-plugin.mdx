@@ -27,9 +27,9 @@ If you return or resolve with an object, Cypress will then merge this object
 into the `config` which enables you to overwrite configuration or environment
 variables.
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```javascript
+```ts
 // configure plugins here
 ```
 
@@ -42,9 +42,9 @@ that Cypress exposes.
 
 Registering to listen on an event looks like this:
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```javascript
+```ts
 on('<event>', (arg1, arg2) => {
   // plugin stuff here
 })
@@ -140,9 +140,9 @@ For example, if your `package.json` looked like this:
 
 Then you could do any of the following in your `setupNodeEvents` function:
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
+```ts
 const _ = require('lodash') // yup, dev dependencies
 const path = require('path') // yup, core node library
 const debug = require('debug') // yup, dependencies

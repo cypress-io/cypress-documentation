@@ -17,7 +17,7 @@ is enabled.
 
 :::
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
 ```js
 on('before:spec', (spec) => {
@@ -44,7 +44,9 @@ awaited before Cypress proceeds running the spec.
 
 ### Log the relative spec path to stdout before the spec is run
 
-```javascript
+:::cypress-config-plugin-example
+
+```ts
 module.exports = (on, config) => {
   on('before:spec', (spec) => {
     // spec will look something like this:
@@ -58,6 +60,8 @@ module.exports = (on, config) => {
   })
 }
 ```
+
+:::
 
 ## See also
 

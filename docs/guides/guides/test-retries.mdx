@@ -204,29 +204,19 @@ number.
 With the following test code, you would see the below screenshot filenames when
 all 3 attempts fail:
 
-<E2EOrCtTabs>
+:::visit-mount-example
 
 ```js
 describe('User Login', () => {
   it('displays login errors', () => {
-    cy.visit('/')
+    -{cy.visit('/')::cy.mount(<Login />)}-
     cy.screenshot('user-login-errors')
     // ...
   })
 })
 ```
 
-```js
-describe('User Login', () => {
-  it('displays login errors', () => {
-    cy.mount(<Login />)
-    cy.screenshot('user-login-errors')
-    // ...
-  })
-})
-```
-
-</E2EOrCtTabs>
+:::
 
 ```js
 // screenshot filename from cy.screenshot() on 1st attempt
@@ -257,16 +247,16 @@ used to process, compress, and upload the video to the
 The example below shows how to delete the recorded video for specs that had no
 retry attempts or failures when using Cypress test retries.
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
+```ts
 // need to install these dependencies
 // npm i lodash del --save-dev
-const _ = require('lodash')
-const del = require('del')
+import _ from 'lodash'
+import del from 'del'
 ```
 
-```js
+```ts
 on('after:spec', (spec, results) => {
   if (results && results.video) {
     // Do we have failures for any retry attempts?

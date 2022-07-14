@@ -1,9 +1,9 @@
 # Dependencies
-/node_modules
+node_modules
 
 # Production
-/build
-/dist
+build
+dist
 
 # Generated files
 .docusaurus
@@ -19,6 +19,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+.vscode
 cypress/screenshots
 cypress/videos
 

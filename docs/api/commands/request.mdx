@@ -45,7 +45,7 @@ cy.request('users/1.json') //  URL is  http://localhost:8080/users/1.json
 
 :::cypress-config-example
 
-```js
+```ts
 {
   e2e: {
     baseUrl: 'http://localhost:1234'
@@ -371,20 +371,19 @@ actual, running server without having to start the front end application.
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.request()` requires being chained off of
-`cy`.</li><li>`cy.request()` requires that the server sends a
-response.</li><li>`cy.request()` requires that the response status code be `2xx`
-or `3xx` when `failOnStatusCode` is `true`.</li></List>
+- `cy.request()` requires being chained off of `cy`.
+- `cy.request()` requires that the server sends a response.
+- `cy.request()` requires that the response status code be `2xx` or `3xx` when
+  `failOnStatusCode` is `true`.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.request()` will only run assertions you have chained once, and
-will not [retry](/guides/core-concepts/retry-ability).</li></List>
+- `cy.request()` will only run assertions you have chained once, and will not
+  [retry](/guides/core-concepts/retry-ability).
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.request()` can time out waiting for the server to
-respond.</li></List>
+- `cy.request()` can time out waiting for the server to respond.
 
 ## Command Log
 
@@ -401,12 +400,18 @@ cy.request('https://jsonplaceholder.typicode.com/comments').then((response) => {
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/request/testing-request-url-and-its-response-body-headers.png" alt="Command Log request" ></DocsImage>
+<DocsImage
+  src="/img/api/request/testing-request-url-and-its-response-body-headers.png"
+  alt="Command Log request"
+></DocsImage>
 
 When clicking on `request` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/request/console-log-request-response-body-headers-status-url.png" alt="Console Log request" ></DocsImage>
+<DocsImage
+  src="/img/api/request/console-log-request-response-body-headers-status-url.png"
+  alt="Console Log request"
+></DocsImage>
 
 ## History
 

@@ -64,9 +64,9 @@ Set multiple configuration options with an object literal.
 
 :::cypress-config-example
 
-```js
+```ts
 {
-  defaultCommandTimeout: 10000
+  defaultCommandTimeout: 10000,
 }
 ```
 
@@ -86,9 +86,9 @@ Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, ..
 
 :::cypress-config-example
 
-```js
+```ts
 {
-  pageLoadTimeout: 60000
+  pageLoadTimeout: 60000,
 }
 ```
 
@@ -113,10 +113,10 @@ effect for the remainder of the tests _in the same spec file._
 
 :::cypress-config-example
 
-```js
+```ts
 {
   viewportWidth: 1280,
-  viewportHeight: 720
+  viewportHeight: 720,
 }
 ```
 
@@ -134,10 +134,10 @@ Cypress.config('viewportWidth') // => 800
 
 :::cypress-config-example
 
-```js
+```ts
 {
   defaultCommandTimeout: 4000,
-  pageLoadTimeout: 30000
+  pageLoadTimeout: 30000,
 }
 ```
 

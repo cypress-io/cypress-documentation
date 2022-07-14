@@ -302,7 +302,7 @@ Then add the code below to the
 import '@cypress/code-coverage/support'
 ```
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
 ```js
 require('@cypress/code-coverage/task')(on, config)
@@ -362,11 +362,11 @@ Even a single test can cover a lot of the application code. For example, let's
 run the following test that adds a few items, then marks one of them as
 completed.
 
-<E2EOrCtTabs>
+:::visit-mount-example
 
 ```js
 it('adds and completes todos', () => {
-  cy.visit('/')
+  -{cy.visit('/')::cy.mount(<AddTodo />)}-
   cy.get('.new-todo')
     .type('write code{enter}')
     .type('write tests{enter}')
@@ -380,23 +380,7 @@ it('adds and completes todos', () => {
 })
 ```
 
-```js
-it('adds and completes todos', () => {
-  cy.mount(<AddTodo />)
-  cy.get('.new-todo')
-    .type('write code{enter}')
-    .type('write tests{enter}')
-    .type('deploy{enter}')
-
-  cy.get('.todo').should('have.length', 3)
-
-  cy.get('.todo').first().find('.toggle').check()
-
-  cy.get('.todo').first().should('have.class', 'completed')
-})
-```
-
-</E2EOrCtTabs>
+:::
 
 After running the test and opening the HTML report, we see 76% code coverage in
 our application.
@@ -505,7 +489,7 @@ can use the
 again to do this by adding the code below to the
 [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function.
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
 ```javascript
 require('@cypress/code-coverage/task')(on, config)
@@ -635,7 +619,7 @@ application back end is running at port 3000 and we are using the default "GET
 
 :::cypress-config-example
 
-```js
+```ts 
 {
   env: {
     codeCoverage: {
@@ -646,6 +630,7 @@ application back end is running at port 3000 and we are using the default "GET
 ```
 
 :::
+
 
 From now on, the front end code coverage collected during end-to-end tests will
 be merged with the code coverage from the instrumented back end code and saved

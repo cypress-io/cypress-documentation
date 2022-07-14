@@ -5,6 +5,7 @@ import AnatomyOfAnError from "@site/docs/partials/_anatomy-of-an-error.mdx";
 import Badge from "@site/src/components/badge";
 import ComponentOnlyBadge from "@site/src/components/component-only-badge";
 import CtBetaAlert from "@site/docs/partials/_CtBetaAlert.mdx";
+import CypressConfigFileTabs from "@site/src/components/cypress-config-file-tabs";
 import DefaultSelectorPriority from "@site/docs/partials/_default-selector-priority.mdx";
 import DocsImage from "@site/src/components/docs-image";
 import DocsVideo from "@site/src/components/docs-video";
@@ -116,6 +117,7 @@ export default {
   Badge,
   ComponentOnlyBadge,
   CtBetaAlert,
+  CypressConfigFileTabs,
   DefaultSelectorPriority,
   DocsImage,
   DocsVideo,

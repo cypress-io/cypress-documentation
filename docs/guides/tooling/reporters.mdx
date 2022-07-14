@@ -53,9 +53,9 @@ You would specify the path to your custom reporter in either of the ways below.
 
 :::cypress-config-example
 
-```js
+```ts
 {
-  reporter: "reporters/custom.js";
+  reporter: 'reporters/custom.js'
 }
 ```
 
@@ -75,9 +75,9 @@ When using custom reporters via npm, specify the package name.
 
 :::cypress-config-example
 
-```js
+```ts
 {
-  reporter: "mochawesome";
+  reporter: 'mochawesome'
 }
 ```
 
@@ -106,7 +106,7 @@ into an XML file.
 
 :::cypress-config-example
 
-```js
+```ts
 {
   reporter: 'junit',
   reporterOptions: {
@@ -141,7 +141,7 @@ the [mochawesome-merge](https://github.com/antontelesh/mochawesome-merge) tool.
 
 :::cypress-config-example
 
-```js
+```ts
 {
   reporter: 'junit',
   reporterOptions: {
@@ -203,7 +203,7 @@ the [command line](/guides/guides/command-line).
 
 :::cypress-config-example
 
-```js
+```ts
 {
   reporter: 'cypress-multi-reporters',
   reporterOptions: {
@@ -227,7 +227,7 @@ reporter to save separate XML files.
 
 :::cypress-config-example
 
-```js
+```ts
 {
   reporterEnabled: 'spec, mocha-junit-reporter',
   mochaJunitReporterReporterOptions: {
@@ -291,7 +291,7 @@ folder.
 
 :::cypress-config-example
 
-```js
+```ts
 {
   reporter: 'mochawesome',
   reporterOptions: {

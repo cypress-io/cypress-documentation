@@ -43,13 +43,13 @@ automatic code completion for configuration in many popular code editors. While
 it's not strictly necessary for Cypress to parse your configuration, we
 recommend wrapping your config object with `defineConfig()` like this:
 
-:::cypress-config-example{noJson}
+:::cypress-config-example
 
-```js
+```ts
 {
   e2e: {
-    baseUrl: "http://localhost:1234";
-  }
+    baseUrl: 'http://localhost:1234',
+  },
 }
 ```
 
@@ -210,9 +210,9 @@ object:
 | `excludeSpecPattern` | `*.hot-update.js`                     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludeSpecPattern)                         |
 | `slowTestThreshold`  | `10000`                               | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                               |
 
-:::cypress-config-example{noJson}
+:::cypress-config-example
 
-```js
+```ts
 {
   e2e: {
     // e2e options here
@@ -236,9 +236,10 @@ object:
 | `excludeSpecPattern` | `['/snapshots/*', '/image_snapshots/*']` | A String or Array of glob patterns used to ignore spec files that would otherwise be shown in your list of specs. [Please read the notes on using this.](#excludeSpecPattern)                    |
 | `slowTestThreshold`  | `250`                                    | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                          |
 
-:::cypress-config-example{noJson}
 
-```js
+:::cypress-config-example
+
+```ts
 {
   component: {
     // component options here
@@ -289,9 +290,9 @@ override other configuration options for either the
 
 For example:
 
-:::cypress-config-example{noJson}
+:::cypress-config-example
 
-```js
+```ts
 {
   // These settings apply everywhere unless overridden
   defaultCommandTimeout: 5000,
@@ -299,13 +300,13 @@ For example:
   viewportHeight: 600,
   // Viewport settings overridden for component tests
   component: {
-    viewportWidth: 500
-    viewportHeight: 500
+    viewportWidth: 500,
+    viewportHeight: 500,
   },
   // Command timeout overridden for E2E tests
   e2e: {
-    defaultCommandTimeout: 10000
-  }
+    defaultCommandTimeout: 10000,
+  },
 }
 ```
 
@@ -338,10 +339,9 @@ We provide two options to override the configuration while your test are
 running, `Cypress.config()` and suite-specific or test-specific configuration
 overrides.
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Note:** The
-configuration values below are all writeable and **can be changed** via per test
-configuration. Any other configuration values are readonly and cannot be changed
-at run time.
+<Icon name="exclamation-triangle" color="red"></Icon> **Note:** The configuration
+values below are all writeable and **can be changed** via per test configuration.
+Any other configuration values are readonly and cannot be changed at run time.
 
 - `animationDistanceThreshold`
 - `baseUrl`
@@ -376,9 +376,9 @@ file_. The values will reset to the previous default values after the spec has
 complete.
 
 ```javascript
-Cypress.config("pageLoadTimeout", 100000);
+Cypress.config('pageLoadTimeout', 100000)
 
-Cypress.config("pageLoadTimeout"); // => 100000
+Cypress.config('pageLoadTimeout') // => 100000
 ```
 
 #### Test-specific Configuration
@@ -394,10 +394,10 @@ values after the suite or test is complete.
 ##### Syntax
 
 ```javascript
-describe(name, config, fn);
-context(name, config, fn);
-it(name, config, fn);
-specify(name, config, fn);
+describe(name, config, fn)
+context(name, config, fn)
+it(name, config, fn)
+specify(name, config, fn)
 ```
 
 ##### Suite configuration
@@ -412,7 +412,7 @@ during `cypress run` and `cypress open` separately.
 
 ```js
 describe(
-  "login",
+  'login',
   {
     retries: {
       runMode: 3,
@@ -420,15 +420,15 @@ describe(
     },
   },
   () => {
-    it("should redirect unauthenticated user to sign-in page", () => {
+    it('should redirect unauthenticated user to sign-in page', () => {
       // ...
-    });
+    })
 
-    it("allows user to login", () => {
+    it('allows user to login', () => {
       // ...
-    });
+    })
   }
-);
+)
 ```
 
 ##### Single test configuration
@@ -439,12 +439,12 @@ configuration. The `browser` option accepts the same arguments as
 [Cypress.isBrowser()](/api/cypress-api/isbrowser).
 
 ```js
-it("Show warning outside Chrome", { browser: "!chrome" }, () => {
-  cy.get(".browser-warning").should(
-    "contain",
-    "For optimal viewing, use Chrome browser"
-  );
-});
+it('Show warning outside Chrome', { browser: '!chrome' }, () => {
+  cy.get('.browser-warning').should(
+    'contain',
+    'For optimal viewing, use Chrome browser'
+  )
+})
 ```
 
 ## Resolved Configuration
@@ -463,7 +463,10 @@ highlighted to show where the value has been set via the following ways:
 - [Command Line arguments](/guides/guides/command-line)
 - [setupNodeEvents](#setupNodeEvents)
 
-<DocsImage src="/img/guides/configuration/v10/see-resolved-configuration.png" alt="See resolved configuration"></DocsImage>
+<DocsImage
+  src="/img/guides/configuration/v10/see-resolved-configuration.png"
+  alt="See resolved configuration"
+></DocsImage>
 
 ## Notes
 
@@ -479,10 +482,10 @@ To block a host:
 
 - <Icon name="check-circle" color="green"></Icon> Pass only the host
 - <Icon name="check-circle" color="green"></Icon> Use wildcard `*` patterns
-- <Icon name="check-circle" color="green"></Icon> Include the port other than
-  `80` and `443`
-- <Icon name="exclamation-triangle" color="red"></Icon> Do **NOT** include
-  protocol: `http://` or `https://`
+- <Icon name="check-circle" color="green"></Icon> Include the port other than `80`
+  and `443`
+- <Icon name="exclamation-triangle" color="red"></Icon> Do **NOT** include protocol:
+  `http://` or `https://`
 
 :::info
 
@@ -525,8 +528,7 @@ For instance given a URL: `https://google.com/search?q=cypress`
 
 - <Icon name="check-circle" color="green"></Icon> Matches `google.com`
 - <Icon name="check-circle" color="green"></Icon> Matches `*google.com`
-- <Icon name="exclamation-triangle" color="red"></Icon> Does NOT match
-  `*.google.com`
+- <Icon name="exclamation-triangle" color="red"></Icon> Does NOT match `*.google.com`
 
 :::
 
@@ -535,7 +537,10 @@ send a `503` status code. As a convenience it also sets a
 `x-cypress-matched-blacklisted-host` header so you can see which rule it
 matched.
 
-<DocsImage src="/img/guides/references/v10/blocked-host.png" alt="Network tab of dev tools with analytics.js request selected and the response header highlighted"></DocsImage>
+<DocsImage
+  src="/img/guides/references/v10/blocked-host.png"
+  alt="Network tab of dev tools with analytics.js request selected and the response header highlighted"
+></DocsImage>
 
 ### devServer
 
@@ -545,14 +550,14 @@ allows you to register a component testing dev server.
 Typically, you will specify a `framework` and `bundler` options in `devServer`
 for your framework and UI library like so:
 
-:::cypress-config-example{noJson}
+:::cypress-config-example
 
-```js
+```ts
 {
   component: {
     devServer: {
       framework: 'create-react-app',
-      bundler: 'webpack'
+      bundler: 'webpack',
     },
   },
 }
@@ -572,9 +577,9 @@ custom or advanced setups.
 
 The devServer function receives a `cypressConfig` argument:
 
-:::cypress-config-example{noJson}
+:::cypress-config-example
 
-```js
+```ts
 {
   component: {
     devServer(cypressConfig) {
@@ -634,7 +639,10 @@ interact with the browser.
 Because GC adds additional time to the overall run, we've added the amount of
 time this routine has taken to the bottom of the Command Log in the Cypress App.
 
-<DocsImage src="/img/guides/configuration/firefox-gc-interval-in-command-log.jpg" alt="GC duration shown"></DocsImage>
+<DocsImage
+  src="/img/guides/configuration/firefox-gc-interval-in-command-log.jpg"
+  alt="GC duration shown"
+></DocsImage>
 
 #### Configuration
 
@@ -649,14 +657,14 @@ By default, we force GC cleanup between every test during
 cleanup during [cypress open](/guides/guides/command-line#cypress-open) using
 the configuration below:
 
-:::cypress-config-example{noJson}
+:::cypress-config-example
 
-```js
+```ts
 {
   firefoxGcInterval: {
     runMode: 1,
-    openMode: null
-  }
+    openMode: null,
+  },
 }
 ```
 
@@ -677,11 +685,11 @@ You can override how often Cypress runs GC cleanup by setting the
 
 Turn off GC cleanup all modes
 
-:::cypress-config-example{noJson}
+:::cypress-config-example
 
-```js
+```ts
 {
-  firefoxGcInterval: null;
+  firefoxGcInterval: null,
 }
 ```
 
@@ -691,11 +699,11 @@ Run GC cleanup before every other test during
 [cypress run](/guides/guides/command-line#cypress-run) and
 [cypress open](/guides/guides/command-line#cypress-open)
 
-:::cypress-config-example{noJson}
+:::cypress-config-example
 
-```js
+```ts
 {
-  firefoxGcInterval: 2;
+  firefoxGcInterval: 2,
 }
 ```
 
@@ -705,14 +713,14 @@ Run GC cleanup before every 3rd test during
 [cypress run](/guides/guides/command-line#cypress-run) and disable running GC
 cleanup during [cypress open](/guides/guides/command-line#cypress-open).
 
-:::cypress-config-example{noJson}
+:::cypress-config-example
 
-```js
+```ts
 {
   firefoxGcInterval: {
     runMode: 3,
-    openMode: null
-  }
+    openMode: null,
+  },
 }
 ```
 
@@ -726,7 +734,7 @@ code you can query the `isInteractive` property on
 [Cypress.config](/api/cypress-api/config).
 
 ```javascript
-if (Cypress.config("isInteractive")) {
+if (Cypress.config('isInteractive')) {
   // interactive "cypress open" mode!
 } else {
   // "cypress run" mode
@@ -769,9 +777,9 @@ This function was added in Cypress version `10.0.0` to replace the deprecated
 
 :::
 
-:::cypress-config-example{noJson}
+:::cypress-config-example
 
-```js
+```ts
 {
   e2e: {
     setupNodeEvents(on, config) {
@@ -797,15 +805,15 @@ See the [plugins guide](/guides/tooling/plugins-guide) for more information.
 Make sure you do not accidentally place the `baseUrl` config option into the
 `env` object. The following configuration is _incorrect_ and will not work:
 
-:::cypress-config-example{noJson}
+:::cypress-config-example
 
-```js
+```ts
 {
   // ⛔️ DOES NOT WORK
   env: {
     baseUrl: 'http://localhost:3030',
-    FOO: 'bar'
-  }
+    FOO: 'bar',
+  },
 }
 ```
 
@@ -814,17 +822,17 @@ Make sure you do not accidentally place the `baseUrl` config option into the
 Solution: place the `baseUrl` property outside the `env` object and inside the
 [e2e](/guides/references/configuration#e2e) testing-type specific object.
 
-:::cypress-config-example{noJson}
+:::cypress-config-example
 
-```js
+```ts
 {
   // ✅ THE CORRECT WAY
   env: {
-    FOO: 'bar'
+    FOO: 'bar',
   },
   e2e: {
     baseUrl: 'http://localhost:3030',
-  }
+  },
 }
 ```
 
@@ -848,7 +856,7 @@ DEBUG=cypress:cli,cypress:server:specs
 
 | Version                                       | Changes                                                                              |
 | --------------------------------------------- | ------------------------------------------------------------------------------------ |
-| [10.0.0](/guides/references/changelog#10-0-0) | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files |
+| [10.0.0](/guides/references/changelog#10-0-0) | Reworked page to support new `cypress.config.js` and removed `cypress.json` examples |
 | [8.7.0](/guides/references/changelog#8-7-0)   | Added `slowTestThreshold` option                                                     |
 | [8.0.0](/guides/references/changelog#8-0-0)   | Added `clientCertificates` option                                                    |
 | [7.0.0](/guides/references/changelog#7-0-0)   | Added `e2e` and `component` options.                                                 |

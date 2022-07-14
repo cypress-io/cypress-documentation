@@ -157,9 +157,9 @@ test data for various testing scenarios.
 
 <WarningSetupNodeEvents />
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
+```ts
   on("task", {
     async "db:seed"() {
       // seed database with test data
@@ -175,8 +175,6 @@ test data for various testing scenarios.
       return queryDatabase(queryPayload, (data, attrs) => _.find(data.results, attrs));
     },
   });
-  // ..
-};
 ```
 
 :::
@@ -219,9 +217,9 @@ There are two ways to use a plugin in Cypress:
 
 Here's an example of what this might look like:
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```javascript
+```ts
 // bind to the event we care about
 on('<event>', (arg1, arg2) => {
   // plugin stuff here

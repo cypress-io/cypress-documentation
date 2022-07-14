@@ -21,9 +21,9 @@ is enabled.
 
 :::
 
-:::cypress-plugin-example
+:::cypress-config-plugin-example
 
-```js
+```ts
 on('before:run', (details) => {
   /* ... */
 })
@@ -43,7 +43,9 @@ awaited before Cypress proceeds running your specs.
 
 ### Log the browser and the number of specs that will be run
 
-```javascript
+:::cypress-config-plugin-example
+
+```ts
 module.exports = (on, config) => {
   on('before:run', (details) => {
     // details will look something like this when run via `cypress run`:
@@ -109,6 +111,8 @@ module.exports = (on, config) => {
   })
 }
 ```
+
+:::
 
 ## See also
 
