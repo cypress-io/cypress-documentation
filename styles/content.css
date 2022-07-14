@@ -242,8 +242,13 @@
   @apply pt-6;
   @apply pb-5;
   @apply bg-gray-100;
-  @apply mb-8;
+  @apply mt-4;
+  @apply mb-4;
   @apply italic;
+}
+
+.nuxt-content blockquote p {
+  @apply mb-0;
 }
 
 .nuxt-content > p {
