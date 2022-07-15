@@ -56,7 +56,7 @@ Pass in an options object to change the default behavior of `.not()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.not()` yields the new DOM element(s) it found.</li></List>
+- `.not()` yields the new DOM element(s) it found.
 
 ## Examples
 
@@ -82,22 +82,22 @@ cy.get('ul>li').not('.active').should('have.length', 4) // true
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.not()` requires being chained off a command that yields DOM
-element(s).</li></List>
+- `.not()` requires being chained off a command that yields DOM
+element(s).
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.not()` will automatically
+- `.not()` will automatically
 [retry](/guides/core-concepts/retry-ability) until the element(s)
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.not()`
 will automatically [retry](/guides/core-concepts/retry-ability) until all
-chained assertions have passed</li></List>
+chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.not()` can time out waiting for the element(s) to
+- `.not()` can time out waiting for the element(s) to
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.not()`
-can time out waiting for assertions you've added to pass.</li></List>
+can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

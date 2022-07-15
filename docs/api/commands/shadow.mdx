@@ -29,7 +29,7 @@ cy.get('.not-a-shadow-host').shadow() // Errors, subject must host a shadow root
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.shadow()` yields the new DOM element(s) it found.</li></List>
+- `.shadow()` yields the new DOM element(s) it found.
 
 ## Examples
 
@@ -51,27 +51,27 @@ cy.get('.shadow-host').shadow().find('.my-button').click()
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.shadow()` requires being chained off a command that yields a DOM
+- `.shadow()` requires being chained off a command that yields a DOM
 element that is a shadow host (i.e. has a shadow root directly attached to
-it).</li></List>
+it).
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.shadow()` will automatically
+- `.shadow()` will automatically
 [retry](/guides/core-concepts/retry-ability) until the element(s)
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.shadow()`
 will automatically [retry](/guides/core-concepts/retry-ability) until the
 element(s) host(s) a shadow root.</li><li>`.shadow()` will automatically
 [retry](/guides/core-concepts/retry-ability) until all chained assertions have
-passed</li></List>
+passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.shadow()` can time out waiting for the element(s) to
+- `.shadow()` can time out waiting for the element(s) to
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.shadow()`
 can time out waiting for the element(s) to host a shadow
 root.</li><li>`.shadow()` can time out waiting for assertions you've added to
-pass.</li></List>
+pass.
 
 ## Known Issue
 

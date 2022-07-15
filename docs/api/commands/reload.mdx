@@ -38,8 +38,8 @@ reload without cache.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.reload()` 'yields the `window` object after the page finishes
-loading' </li></List>
+- `cy.reload()` 'yields the `window` object after the page finishes
+loading'
 
 ## Examples
 
@@ -67,22 +67,22 @@ cy.reload(true)
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.reload()` requires being chained off of
+- `cy.reload()` requires being chained off of
 `cy`.</li><li>`cy.reload()` requires the response to be
 `content-type: text/html`.</li><li>`cy.reload()` requires the response code to
 be `2xx` after following redirects.</li><li>`cy.reload()` requires the load
-`load` event to eventually fire.</li></List>
+`load` event to eventually fire.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.reload()` will automatically wait for assertions you have chained
-to pass</li></List>
+- `cy.reload()` will automatically wait for assertions you have chained
+to pass
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.reload()` can time out waiting for the page to fire its `load`
+- `cy.reload()` can time out waiting for the page to fire its `load`
 event.</li><li>`cy.reload()` can time out waiting for assertions you've added to
-pass.</li></List>
+pass.
 
 ## Command Log
 

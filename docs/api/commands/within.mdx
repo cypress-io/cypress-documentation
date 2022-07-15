@@ -43,8 +43,8 @@ Pass in an options object to change the default behavior of `.within()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.within()` yields the same subject it was given from the previous
-command.</li></List>
+- `.within()` yields the same subject it was given from the previous
+command.
 
 Trying to return a different element the `.within` callback have no effect:
 
@@ -175,16 +175,16 @@ cy.get('form').within(($form) => {
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.within()` requires being chained off a previous command.</li></List>
+- `.within()` requires being chained off a previous command.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.within()` will only run assertions you have chained once, and will
-not [retry](/guides/core-concepts/retry-ability).</li></List>
+- `.within()` will only run assertions you have chained once, and will
+not [retry](/guides/core-concepts/retry-ability).
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.within()` cannot time out.</li></List>
+- `.within()` cannot time out.
 
 ## Command Log
 

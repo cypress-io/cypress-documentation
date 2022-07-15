@@ -51,8 +51,8 @@ Pass in an options object to change the default behavior of `.select()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.select()` yields the same subject it was given from the previous
-command.</li></List>
+- `.select()` yields the same subject it was given from the previous
+command.
 
 ## Examples
 
@@ -250,22 +250,22 @@ disabled `<optgroup>`. See
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.select()` requires being chained off a command that yields DOM
+- `.select()` requires being chained off a command that yields DOM
 element(s).</li><li>`.select()` requires the element to be a
-`select`.</li></List>
+`select`.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.select()` will automatically wait for the element to reach an
+- `.select()` will automatically wait for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.select()`
 will automatically [retry](/guides/core-concepts/retry-ability) until all
-chained assertions have passed</li></List>
+chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.select()` can time out waiting for the element to reach an
+- `.select()` can time out waiting for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.select()`
-can time out waiting for assertions you've added to pass.</li></List>
+can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

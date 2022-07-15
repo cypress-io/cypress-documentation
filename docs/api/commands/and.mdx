@@ -68,8 +68,8 @@ Whatever was passed to the function is what is yielded.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>In most cases, `.and()` yields the same subject it was given from the
-previous command.</li></List>
+- In most cases, `.and()` yields the same subject it was given from the
+previous command.
 
 ```javascript
 cy.get('nav') // yields <nav>
@@ -233,12 +233,12 @@ cy.get('button')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.and()` requires being chained off a previous command.</li></List>
+- `.and()` requires being chained off a previous command.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.and()` will continue to [retry](/guides/core-concepts/retry-ability)
-its specified assertions until it times out.</li></List>
+- `.and()` will continue to [retry](/guides/core-concepts/retry-ability)
+its specified assertions until it times out.
 
 ```javascript
 cy.get('input', {timeout: 10000}).should('have.value', '10').and('have.class', 'error')

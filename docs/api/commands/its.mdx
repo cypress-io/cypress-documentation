@@ -51,7 +51,7 @@ Pass in an options object to change the default behavior of `.its()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.its()` 'yields the value of the property' </li></List>
+- `.its()` 'yields the value of the property'
 
 ## Examples
 
@@ -193,19 +193,19 @@ cy.window().its('evilProp').should('not.exist')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.its()` requires being chained off a previous command.</li></List>
+- `.its()` requires being chained off a previous command.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.its()` will automatically
+- `.its()` will automatically
 [retry](/guides/core-concepts/retry-ability) until it has a property that is not
-`null` or `undefined`.</li></List>
+`null` or `undefined`.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.its()` can time out waiting for the property to
+- `.its()` can time out waiting for the property to
 exist.</li><li>`.its()` can time out waiting for assertions you've added to
-pass.</li></List>
+pass.
 
 ## Command Log
 

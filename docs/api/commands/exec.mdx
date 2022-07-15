@@ -193,20 +193,20 @@ describe('has data available from database', { execTimeout: 90000 }, () => {
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.exec()` requires being chained off of `cy`.</li><li>`cy.exec()`
+- `cy.exec()` requires being chained off of `cy`.</li><li>`cy.exec()`
 requires the executed system command to eventually exit.</li><li>`cy.exec()`
 requires that the exit code be `0` when `failOnNonZeroExit` is
-`true`.</li></List>
+`true`.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.exec()` will only run assertions you have chained once, and will
-not [retry](/guides/core-concepts/retry-ability).</li></List>
+- `cy.exec()` will only run assertions you have chained once, and will
+not [retry](/guides/core-concepts/retry-ability).
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.exec()` can time out waiting for the system command to
-exist.</li></List>
+- `cy.exec()` can time out waiting for the system command to
+exist.
 
 ## Command Log
 

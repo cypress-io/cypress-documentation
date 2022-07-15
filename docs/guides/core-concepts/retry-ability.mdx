@@ -169,17 +169,8 @@ documentation. For example, "Assertions section" of
 [`.first()`](/api/commands/first) tells us that the command is retried until all
 assertions that follow it are passing.
 
-<List>
-  <li>
-    `.first()` will automatically [retry](/guides/core-concepts/retry-ability)
-    until the element(s) [exist in the
-    DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)
-  </li>
-  <li>
-    `.first()` will automatically [retry](/guides/core-concepts/retry-ability)
-    until all chained assertions have passed
-  </li>
-</List>
+- `.first()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)
+- `.first()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed
 
 ### Why are some commands _NOT_ retried?
 

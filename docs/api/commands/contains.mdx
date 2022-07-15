@@ -64,7 +64,7 @@ Pass in an options object to change the default behavior of `.contains()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.contains()` yields the new DOM element it found.</li></List>
+- `.contains()` yields the new DOM element it found.
 
 ## Examples
 
@@ -424,22 +424,22 @@ cy.contains('Age').find('input').type('29')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.contains()` can be chained off of `cy` or off a command that yields
-DOM element(s).</li></List>
+- `.contains()` can be chained off of `cy` or off a command that yields
+DOM element(s).
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.contains()` will automatically
+- `.contains()` will automatically
 [retry](/guides/core-concepts/retry-ability) until the element(s)
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.contains()`
 will automatically [retry](/guides/core-concepts/retry-ability) until all
-chained assertions have passed</li></List>
+chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.contains()` can time out waiting for the element(s) to
+- `.contains()` can time out waiting for the element(s) to
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.contains()`
-can time out waiting for assertions you've added to pass.</li></List>
+can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
