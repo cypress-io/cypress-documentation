@@ -39,7 +39,7 @@ export default function PluginsList() {
 
           <ul className={s.pluginsList}>
             {plugin.plugins.map((plugin) => (
-              <li key={plugin.name} className="m-3">
+              <li key={plugin.name}>
                 <div className={s.pluginTitle}>
                   <h3>
                     <a
