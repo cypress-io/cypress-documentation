@@ -345,19 +345,26 @@ cy.get('#main').contains('Jane Lane')
 
 ### Default `<input type="submit">` labels
 
-When `value` is omitted in a `<input type=submit>`, the default label is used
-and can be locale-dependent.
+When the `value` attribute is omitted from an `<input type="submit">`, the
+default label is used and can be locale-dependent.
 [More info at MDN.](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/submit#omitting_the_value_attribute)
 
-When this happens, the `value` attribute is an empty string, and there is no
-programmatic way for Cypress to filter elements by the label displayed by the
-user agent. It can cause unexpected failures when trying to use `cy.contains()`
-with submit buttons.
+When this happens, the `value` is an empty string, and there is no programmatic
+way for Cypress to filter elements by the label displayed by the user agent.
+This can cause unexpected failures when using `cy.contains()` with submit
+buttons.
 
-The solution to find submit buttons with the default label is to:
+The solution in this case is to:
 
-- compare the empty string (e.g. `cy.get('#el').should('have.value', '')`, or
-- set the `value` attribute (e.g. `<input type=submit value="Submit" />`)
+```js
+ // assert the empty string
+ cy.get('input').should('have.value', '')
+
+ // ---or---
+
+ // if possible, set the `value` attribute
+ <input type=submit value="Submit" />
+```
 
 ### Preferences
 
