@@ -1,5 +1,5 @@
 ---
-title: Testing React Components
+title: Testing Vue Components
 ---
 
 Now that the component is mounted, the next step is to start selecting and
@@ -22,7 +22,31 @@ Then, we will test that setting the initial count also works.
 In your spec file, add the following inside the existing `describe` block:
 
 <code-group>
-<code-block label="Stepper.cy.jsx" active>
+<code-block label="Stepper.cy.js" active>
+
+```jsx
+// Set up some constants for the selectors
+const counterSelector = '[data-cy=counter]'
+const incrementSelector = '[aria-label=increment]'
+const decrementSelector = '[aria-label=decrement]'
+
+it('stepper should default to 0', () => {
+  // Arrange
+  cy.mount(Stepper)
+  // Assert
+  cy.get(counterSelector).should('have.text', '0')
+})
+
+it('supports an "initial" prop to set the value', () => {
+  // Arrange
+  cy.mount(Stepper, { props: { initial: 100 } })
+  // Assert
+  cy.get(counterSelector).should('have.text', '100')
+})
+```
+
+</code-block>
+<code-block label="Stepper.cy.jsx (With JSX)">
 
 ```jsx
 // Set up some constants for the selectors
@@ -34,24 +58,31 @@ it('stepper should default to 0', () => {
   // Arrange
   cy.mount(<Stepper />)
   // Assert
-  cy.get(counterSelector).should('have.text', '0')
+  cy.get(counterSelector).should('have.text', 0)
 })
 
 it('supports an "initial" prop to set the value', () => {
   // Arrange
   cy.mount(<Stepper initial={100} />)
   // Assert
-  cy.get(counterSelector).should('have.text', '100')
+  cy.get(counterSelector).should('have.text', 100)
 })
 ```
 
-> In the above example, we set up some variables to hold selector patterns so we
-> don't have to type them again and again. See our guide on
-> [selector best practices](/guides/references/best-practices#Selecting-Elements)
-> for more info on how to write selectors.
-
 </code-block>
 </code-group>
+
+<Alert type="info">
+
+Depending on your Vue version, the syntax for how to mount your component will
+change slightly. Please refer to the
+[Vue Test Utils documentation](https://test-utils.vuejs.org/) for the latest
+syntax when using the mount function's Object API.
+
+The main difference is that "props" should be "propsData" for Vue 2
+applications.
+
+</Alert>
 
 ### What Else Should You Test in This Component?
 
@@ -63,7 +94,7 @@ changes.
 I want to pause here, though.
 
 You'll notice that we're talking about how a user would interact with the
-component, and not technical, React-specific concepts.
+component, and not technical, Vue-specific concepts.
 
 You can do a well-written, comprehensive test for our Stepper component by
 approaching this test as a user would.
@@ -80,7 +111,30 @@ Now, let's test the Stepper component! Add the following tests:
 1. You can increment and decrement the stepper
 
 <code-group>
-<code-block label="Stepper.cy.jsx" active>
+<code-block label="Stepper.cy.js" active>
+
+```js
+it('when the increment button is pressed, the counter is incremented', () => {
+  // Arrange
+  cy.mount(Stepper)
+  // Act
+  cy.get(incrementSelector).click()
+  // Assert
+  cy.get(counterSelector).should('have.text', '1')
+})
+
+it('when the decrement button is pressed, the counter is decremented', () => {
+  // Arrange
+  cy.mount(Stepper)
+  // Act
+  cy.get(decrementSelector).click()
+  // Assert
+  cy.get(counterSelector).should('have.text', '-1')
+})
+```
+
+</code-block>
+<code-block label="Stepper.cy.jsx (With JSX)">
 
 ```js
 it('when the increment button is pressed, the counter is incremented', () => {
@@ -112,7 +166,21 @@ it('when the decrement button is pressed, the counter is decremented', () => {
    text rendered.
 
 <code-group>
-<code-block label="Stepper.cy.jsx" active>
+<code-block label="Stepper.cy.js" active>
+
+```js
+it('when clicking increment and decrement buttons, the counter is changed as expected', () => {
+  cy.mount(Stepper, { props: { initial: 100 } })
+  cy.get(counterSelector).should('have.text', '100')
+  cy.get(incrementSelector).click()
+  cy.get(counterSelector).should('have.text', '101')
+  cy.get(decrementSelector).click().click()
+  cy.get(counterSelector).should('have.text', '99')
+})
+```
+
+</code-block>
+<code-block label="Stepper.cy.jsx (With JSX)">
 
 ```jsx
 it('when clicking increment and decrement buttons, the counter is changed as expected', () => {
@@ -128,9 +196,6 @@ it('when clicking increment and decrement buttons, the counter is changed as exp
 </code-block>
 </code-group>
 
-</code-block>
-</code-group>
-
 ## Learn More
 
 The [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress)
@@ -141,4 +206,4 @@ guide goes deeper into how to write tests with Cypress.
 We're going to emit a custom event from our Stepper component and learn how to
 test that it was called.
 
-<NavGuide prev="/guides/component-testing/mounting-react" next="/guides/component-testing/events-react" />
+<NavGuide prev="/guides/component-testing/mounting-vue" next="/guides/component-testing/events-vue" />

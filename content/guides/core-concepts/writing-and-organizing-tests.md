@@ -298,7 +298,7 @@ convenience mechanism so you don't have to import this file.
 
 By default Cypress will automatically include type-specific support files. For
 E2E, the default is `cypress/support/e2e.{js,jsx,ts,tsx}`, and for Component
-Testing `cypress/support/e2e.{js,jsx,ts,tsx}`.
+Testing `cypress/support/component.{js,jsx,ts,tsx}`.
 
 The support file is a great place to put reusable behavior such as
 [custom commands](/api/cypress-api/custom-commands) or global overrides that you
