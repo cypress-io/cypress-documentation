@@ -285,8 +285,7 @@ is set to look for one of the following files:
 
 :::danger
 
-⚠️ For a given testing type, multiple matching `supportFile` files will result
-in an error when Cypress loads.
+<Icon name="exclamation-triangle" /> For a given testing type, multiple matching <code>supportFile</code> files will result in an error when Cypress loads.
 
 :::
 
@@ -488,7 +487,7 @@ describe("Hooks", () => {
 
 :::danger
 
-<Icon name="exclamation-triangle"></Icon> Before writing `after()` or `afterEach()`
+🚨 Before writing `after()` or `afterEach()`
 hooks, please see our [thoughts on the anti-pattern of cleaning up state with `after()`
 or `afterEach()`](/guides/references/best-practices#Using-after-or-afterEach-hooks).
 
@@ -572,9 +571,11 @@ specify(name, config, fn);
 
 #### Allowed config values
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Note:** Some configuration
-values are readonly and cannot be changed via test configuration. Be sure to review
-the list of [test configuration options](/guides/references/configuration##Test-Configuration).
+:::caution
+
+**Note:** Some configuration values are readonly and cannot be changed via test configuration. Be sure to review the list of [test configuration options](/guides/references/configuration##Test-Configuration).
+
+:::
 
 #### Suite configuration
 

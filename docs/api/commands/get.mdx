@@ -127,9 +127,7 @@ cy.get('[id^=local-][id$=-remote]')
 cy.get('#id\\.\\.\\.1234') // escape the character with \\
 ```
 
-### Get in `.within()`
-
-#### `cy.get()` in the [`.within()`](/api/commands/within) command
+### `cy.get()` in the [`.within()`](/api/commands/within) command
 
 Since `cy.get()` is chained off of `cy`, it always looks for the selector within
 the entire `document`. The only exception is when used inside a

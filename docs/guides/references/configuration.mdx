@@ -168,7 +168,7 @@ For more information, see the docs on
 
 :::caution
 
-The `nodeVersion` configuration option is deprecated and will be removed in a
+<Icon name="exclamation-triangle" /> The <code>nodeVersion</code> configuration option is deprecated and will be removed in a
 future version of Cypress. Please remove this option from your configuration
 file.
 
@@ -339,7 +339,7 @@ We provide two options to override the configuration while your test are
 running, `Cypress.config()` and suite-specific or test-specific configuration
 overrides.
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Note:** The configuration
+‼️ **Note:** The configuration
 values below are all writeable and **can be changed** via per test configuration.
 Any other configuration values are readonly and cannot be changed at run time.
 
@@ -480,11 +480,11 @@ To see a working example of this please check out our
 
 To block a host:
 
-- <Icon name="check-circle" color="green"></Icon> Pass only the host
-- <Icon name="check-circle" color="green"></Icon> Use wildcard `*` patterns
-- <Icon name="check-circle" color="green"></Icon> Include the port other than `80`
+- ✅ Pass only the host
+- ✅ Use wildcard `*` patterns
+- ✅ Include the port other than `80`
   and `443`
-- <Icon name="exclamation-triangle" color="red"></Icon> Do **NOT** include protocol:
+- ‼️ Do **NOT** include protocol:
   `http://` or `https://`
 
 :::info
@@ -526,9 +526,9 @@ Be cautious for URL's which have no subdomain.
 
 For instance given a URL: `https://google.com/search?q=cypress`
 
-- <Icon name="check-circle" color="green"></Icon> Matches `google.com`
-- <Icon name="check-circle" color="green"></Icon> Matches `*google.com`
-- <Icon name="exclamation-triangle" color="red"></Icon> Does NOT match `*.google.com`
+- ✅ Matches `google.com`
+- ✅ Matches `*google.com`
+- ‼️ Does NOT match `*.google.com`
 
 :::
 

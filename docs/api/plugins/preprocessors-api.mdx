@@ -84,16 +84,28 @@ on('file:preprocessor', (file) => {
 - A promise\* that eventually rejects with an error that occurred during
   processing.
 
-> \* The promise should resolve only after the file has completed writing to
-> disk. The promise resolving is a signal that the file is ready to be served to
-> the browser.
+:::note
+
+\* The promise should resolve only after the file has completed writing to
+disk. The promise resolving is a signal that the file is ready to be served to
+the browser.
+
+:::
 
 ---
 
-> \*\* The built file is the file that is created by the preprocessor that will
-> eventually be served to the browser.
+:::note
 
-> If, for example, the source file is `spec.coffee`, the preprocessor should:
+\*\* The built file is the file that is created by the preprocessor that will
+eventually be served to the browser.
+
+:::
+
+:::note
+
+If, for example, the source file is `spec.coffee`, the preprocessor should:
+
+:::
 
 1. Compile the CoffeeScript into JavaScript `spec.js`
 2. Write that JavaScript file to disk (example: `/Users/foo/tmp/spec.js`)

@@ -139,7 +139,7 @@ events, network requests, and more.
 
 :::info
 
-<strong class="alert-header">What are describe, it, and expect?</strong>
+**What are _describe_, _it_, and _expect_ ?**
 
 All of these functions come from
 [Bundled Libraries](/guides/references/bundled-libraries) that Cypress bakes in.
@@ -417,22 +417,30 @@ And there you have it: a short test in Cypress that visits a page, finds and
 clicks a link, verifies the URL and then verifies the behavior of an element on
 the new page. If we read it out loud, it might sound like:
 
-> 1. Visit: `https://example.cypress.io`
-> 2. Find the element with content: `type`
-> 3. Click on it
-> 4. Get the URL
-> 5. Assert it includes: `/commands/actions`
-> 6. Get the input with the `action-email` class
-> 7. Type `fake@email.com` into the input
-> 8. Assert the input reflects the new value
+:::note
 
-Or in the Given, When, Then syntax:
+1. _Visit: `https://example.cypress.io`_
+2. _Find the element with content: `type`_
+3. _Click on it_
+4. _Get the URL_
+5. _Assert it includes: `/commands/actions`_
+6. _Get the input with the `action-email` data-testid_
+7. _Type `fake@email.com` into the input_
+8. _Assert the input reflects the new value_
 
-> 1. Given a user visits `https://example.cypress.io`
-> 2. When they click the link labeled `type`
-> 3. And they type "fake@email.com" into the `.action-email` input
-> 4. Then the URL should include `/commands/actions`
-> 5. And the `.action-email` input has "fake@email.com" as its value
+:::
+
+Or in the _Given_, _When_, _Then_ syntax:
+
+:::note
+
+1. _**Given** a user visits `https://example.cypress.io`_
+2. _**When** they click the link labeled `type`_
+3. _And they type "fake@email.com" into the `[data-testid="action-email"]` input_
+4. _**Then** the URL should include `/commands/actions`_
+5. _And the `[data-testid="action-email"]` input has "fake@email.com" as its value_
+
+:::
 
 And hey, this is a very clean test! We didn't have to say anything about _how_
 things work, just that we'd like to verify a particular series of events and

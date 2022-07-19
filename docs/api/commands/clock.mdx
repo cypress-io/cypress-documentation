@@ -248,29 +248,20 @@ of a test, the page under test is reloaded or changed.
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List>
-  <li>`cy.clock()` requires being chained off of `cy`.</li>
-</List>
+- `cy.clock()` requires being chained off of `cy`.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List>
-  <li>`cy.clock()` is a utility command.</li>
-  <li>
-    `cy.clock()` will not run assertions. Assertions will pass through as if
-    this command did not exist.
-  </li>
-</List>
+- `cy.clock()` is a utility command.
+- `cy.clock()` will not run assertions. Assertions will pass through as if this command did not exist.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List>
-  <li>`cy.clock()` cannot time out.</li>
-</List>
+- `cy.clock()` cannot time out.
 
 ## Command Log
 
-**_Create a clock and tick it 1 second_**
+**Create a clock and tick it 1 second**
 
 ```javascript
 cy.clock()

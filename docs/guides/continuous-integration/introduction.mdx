@@ -77,7 +77,7 @@ server before it is ready to be visited.
 Luckily, there are some solutions for this. Instead of introducing arbitrary
 waits (like `sleep 20`) you can use a better option.
 
-**_`wait-on` module_**
+**`wait-on` module**
 
 Using the [wait-on](https://github.com/jeffbski/wait-on) module, you can block
 the `cypress run` command from executing until your server has booted.
@@ -100,7 +100,7 @@ to collect the backgrounded PID and then kill it after `cypress run`.
 
 :::
 
-**_`start-server-and-test` module_**
+**`start-server-and-test` module**
 
 If the server takes a very long time to start, we recommend trying the
 [start-server-and-test](https://github.com/bahmutov/start-server-and-test)

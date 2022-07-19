@@ -58,14 +58,18 @@ describe('Post Resource', () => {
 
 Can you read this? If you did, it might sound something like this:
 
-> 1. Visit page at `/posts/new` (or mount the `PostBuilder` component).
-> 2. Find the `<input>` with class `post-title`.
-> 3. Type "My First Post" into it.
-> 4. Find the `<input>` with class `post-body`.
-> 5. Type "Hello, world!" into it.
-> 6. Find the element containing the text `Submit`.
-> 7. Click it.
-> 8. Find the `h1` tag, ensure it contains the text "My First Post".
+:::note
+
+1. _Visit page at `/posts/new` (or mount the `PostBuilder` component)._
+2. _Find the `<input>` with class `post-title`._
+3. _Type "My First Post" into it._
+4. _Find the `<input>` with class `post-body`._
+5. _Type "Hello, world!" into it._
+6. _Find the element containing the text `Submit`._
+7. _Click it._
+8. _Find the `h1` tag, ensure it contains the text "My First Post"._
+
+:::
 
 This is a relatively straightforward test, but consider how much code has been
 covered by it, both on the client and the server!
@@ -952,8 +956,12 @@ You can read all about how to do
 
 As we mentioned previously in this guide:
 
-> Assertions describe the **desired** state of your **elements**, your
-> **objects**, and your **application**.
+:::note
+
+Assertions describe the **desired** state of your **elements**, your
+**objects**, and your **application**.
+
+:::
 
 What makes Cypress unique from other testing tools is that commands
 **automatically retry** their assertions. In fact, they will look "downstream"
@@ -979,8 +987,12 @@ or waits for assertions to pass.
 
 Let's look at how you'd describe an assertion in English:
 
-> After clicking on this `<button>`, I expect its class to eventually be
-> `active`.
+:::note
+
+After clicking on this `<button>`, I expect its class to eventually be
+`active`.
+
+:::
 
 To express this in Cypress you'd write:
 
@@ -1004,8 +1016,12 @@ $("button").on("click", (e) => {
 
 Here's another example.
 
-> After making an HTTP request to my server, I expect the response body to equal
-> `{name: 'Jane'}`
+:::note
+
+After making an HTTP request to my server, I expect the response body to equal
+`{name: 'Jane'}`
+
+:::
 
 To express this with an assertion you'd write:
 

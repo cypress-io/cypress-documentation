@@ -498,10 +498,8 @@ _Usually_, replaying previous commands will return what you expect, but not
 always. It is recommended that you **alias elements as soon as possible**
 instead of further down a chain of commands.
 
-- `cy.get('nav header [data-testid="user"]').as('user')`
-  <Icon name="check-circle" color="green"></Icon> (good)
-- `cy.get('nav').find('header').find('[data-testid="user"]').as('user')`
-  <Icon name="exclamation-triangle" color="red"></Icon> (bad)
+- <Icon name="check-circle" color="green" /> <code>cy.get('nav header [data-testid="user"]').as('user')</code>
+- <Icon name="exclamation-triangle" color="red" /> <code>cy.get('nav').find('header').find('[data-testid="user"]').as('user')</code>
 
 When in doubt, you can _always_ issue a regular [`cy.get()`](/api/commands/get)
 to query for the elements again.

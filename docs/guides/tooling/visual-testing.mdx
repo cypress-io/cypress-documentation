@@ -12,7 +12,7 @@ title: Visual Testing
 
 :::
 
-## Functional vs visual testing
+## Functional vs. visual testing
 
 Cypress is a _functional_ test runner. It drives the web application the way a
 user would, and checks if the app _functions_ as expected: if the expected
@@ -139,8 +139,10 @@ Second joint webinar with Applitools with a focus on
 
 <!-- textlint-enable -->
 
-<Icon name="external-link-alt"></Icon>
-[https://applitools.com](https://applitools.com/)
+<Icon
+  name="external-link-alt"
+  url="https://applitools.com/"
+/>
 
 | Resource                                                                     | Description                                                                                                                                                   |
 | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -157,7 +159,10 @@ Second joint webinar with Applitools with a focus on
 
 <!-- textlint-enable -->
 
-<Icon name="external-link-alt"></Icon> [https://percy.io](https://percy.io/)
+<Icon
+  name="external-link-alt"
+  url="https://percy.io/"
+/>
 
 :::info
 
@@ -192,7 +197,10 @@ to see these Percy and Cypress in action.
 
 <!-- textlint-enable -->
 
-<Icon name="external-link-alt"></Icon> [https://happo.io/](https://happo.io/)
+<Icon
+  name="external-link-alt"
+  url="https://happo.io/"
+/>
 
 | Resource                                                                             | Description                                                                                                                                 |
 | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -245,7 +253,7 @@ verify the page appearance.
 
 :::tip
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Take a
+<Icon name="check-circle" color="green"></Icon> <strong>Best Practice:</strong> Take a
 snapshot after you confirm the page is done changing.
 
 :::
@@ -277,7 +285,7 @@ cy.mySnapshotCommand()
 
 :::tip
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Control the
+<Icon name="check-circle" color="green"></Icon> <strong>Best Practice:</strong> Control the
 timestamp inside the application under test.
 
 :::
@@ -298,8 +306,7 @@ cy.mySnapshotCommand()
 
 :::tip
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use
-[cy.fixture()](/api/commands/fixture) and network mocking to set the application
+<Icon name="check-circle" color="green"></Icon> <strong>Best Practice:</strong> Use <a href="/api/commands/fixture">cy.fixture()</a> and network mocking to set the application
 state.
 
 :::
@@ -319,7 +326,7 @@ cy.mySnapshotCommand()
 
 :::tip
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use visual
+<Icon name="check-circle" color="green"></Icon> <strong>Best Practice:</strong> Use visual
 diffing to check individual DOM elements rather than the entire page.
 
 :::
@@ -331,9 +338,7 @@ breaking tests in other unrelated components.
 
 :::tip
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use
-[Component Testing plugins](/plugins/directory) to test the individual
-components functionality in addition to end-to-end and visual tests.
+<Icon name="check-circle" color="green"></Icon> <strong>Best Practice:</strong> Use <a href="/plugins/directory"> Component Testing plugins</a> to test the individual components functionality in addition to end-to-end and visual tests.
 
 :::
 
