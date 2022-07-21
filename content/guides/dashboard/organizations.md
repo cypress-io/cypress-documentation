@@ -250,8 +250,8 @@ addition to the documentation below, refer to the Microsoft Guides for
 
 #### Save Configuration
 
-1. Return to the Cypress Dashboard and click **Save Configuration**.
-   The Cypress Dashboard will attempt to authenticate.
+1. Return to the Cypress Dashboard and click **Save Configuration**. The Cypress
+   Dashboard will attempt to authenticate.
 
 🎉 Your integration is now complete! You can invite all of the users in your
 organization to sign in through your SSO provider.
