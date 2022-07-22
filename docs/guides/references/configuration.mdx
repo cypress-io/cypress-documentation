@@ -82,7 +82,7 @@ default values.
 
 :::tip
 
-<strong class="alert-header">Core Concept</strong>
+<strong>Core Concept</strong>
 
 [Timeouts are a core concept](/guides/core-concepts/introduction-to-cypress#Timeouts)
 you should understand well. The default values listed here are meaningful.
@@ -520,7 +520,7 @@ included**.
 
 :::caution
 
-<strong class="alert-header">Subdomains</strong>
+<strong>Subdomains</strong>
 
 Be cautious for URL's which have no subdomain.
 
@@ -800,7 +800,7 @@ See the [plugins guide](/guides/tooling/plugins-guide) for more information.
 
 ## Common problems
 
-#### <Icon name="angle-right"></Icon> `baseUrl` is not set
+#### <Icon name="angle-right" /> `baseUrl` is not set
 
 Make sure you do not accidentally place the `baseUrl` config option into the
 `env` object. The following configuration is _incorrect_ and will not work:
@@ -841,7 +841,7 @@ Solution: place the `baseUrl` property outside the `env` object and inside the
 You can also find a few tips on setting the `baseUrl` in this
 [short video](https://www.youtube.com/watch?v=f5UaXuAc52c).
 
-#### <Icon name="angle-right"></Icon> Test files not found when using `spec` parameter
+#### <Icon name="angle-right" /> Test files not found when using `spec` parameter
 
 When using the `--spec <path or mask>` argument, make it relative to the
 project's folder. If the specs are still missing, run Cypress with

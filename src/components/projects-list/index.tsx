@@ -7,7 +7,7 @@ import projectsJSON from "@site/src/data/projects.json";
 export default function PluginsList() {
   return (
     <>
-      <article className="main-content-article hide-scroll nuxt-content">
+      <article className="main-content-article">
         <ul>
           {projectsJSON.projects.map((project, index) => (
             <li key={index}>

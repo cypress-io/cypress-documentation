@@ -5,7 +5,7 @@ sidebar_position: 10
 
 :::info
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn
 
 - How Cypress queries the DOM
 - How Cypress manages subjects and chains of commands
@@ -16,13 +16,13 @@ sidebar_position: 10
 
 :::tip
 
-<strong class="alert-header">Important!</strong>
+<strong>Important!</strong>
 
 **This is the single most important guide** for understanding how to test with
 Cypress. Read it. Understand it. Ask questions about it so that we can improve
 it.
 
-After you're done, we suggest watching some of our <Icon name="video"></Icon>
+After you're done, we suggest watching some of our <Icon name="video" />
 [Tutorial Videos](/examples/examples/tutorials).
 
 :::
@@ -111,7 +111,7 @@ cy.get("#main-content")
 
 :::tip
 
-<strong class="alert-header">Core Concept</strong>
+<strong>Core Concept</strong>
 
 Cypress leverages jQuery's powerful selector engine to help make tests familiar
 and readable for modern web developers.
@@ -205,7 +205,7 @@ sidesteps all of these flaky issues.
 
 :::tip
 
-<strong class="alert-header">Core Concept</strong>
+<strong>Core Concept</strong>
 
 Cypress wraps all DOM queries with robust retry-and-timeout logic that better
 suits how real web apps work. We trade a minor change in how we find DOM
@@ -245,7 +245,7 @@ class of `my-submit-button`.
 
 :::caution
 
-<strong class="alert-header">Internationalization</strong>
+<strong>Internationalization</strong>
 
 If your app is translated into multiple languages for i18n, make sure you
 consider the implications of using user-facing text to find DOM elements!
@@ -276,7 +276,7 @@ You can also set the timeout globally via the
 
 :::tip
 
-<strong class="alert-header">Core Concept</strong>
+<strong>Core Concept</strong>
 
 To match the behavior of web applications, Cypress is asynchronous and relies on
 timeouts to know when to stop waiting on an app to get into the expected state.
@@ -286,7 +286,7 @@ Timeouts can be configured globally, or on a per-command basis.
 
 :::info
 
-<strong class="alert-header">Timeouts and Performance</strong>
+<strong>Timeouts and Performance</strong>
 
 There is a performance tradeoff here: **tests that have longer timeout periods
 take longer to fail**. Commands always proceed as soon as their expected
@@ -355,7 +355,7 @@ You can usually override this behavior with a `force` option.
 
 :::tip
 
-<strong class="alert-header">Core Concept</strong>
+<strong>Core Concept</strong>
 
 Cypress provides a simple but powerful algorithm when
 [ interacting with elements.](/guides/core-concepts/interacting-with-elements)
@@ -430,7 +430,7 @@ cy.get(".main-container") // Yields an array of matching DOM elements
 
 :::tip
 
-<strong class="alert-header">Core Concept</strong>
+<strong>Core Concept</strong>
 
 Cypress commands do not **return** their subjects, they **yield** them.
 Remember: Cypress commands are asynchronous and get queued for execution at a
@@ -484,7 +484,7 @@ cy
 
 :::tip
 
-<strong class="alert-header">Core Concept</strong>
+<strong>Core Concept</strong>
 
 We have many more examples and use cases of [cy.then()](/api/commands/then) in
 our [Core Concept Guide](/guides/core-concepts/variables-and-aliases) that
@@ -551,7 +551,7 @@ Remembering that Cypress commands run asynchronously is important if you are
 attempting to mix Cypress commands with synchronous code. Synchronous code will
 execute immediately - not waiting for the Cypress commands above it to execute.
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect usage**
+**<Icon name="exclamation-triangle" color="red" /> Incorrect usage**
 
 In the example below, the `el` evaluates immediately, before the `cy.visit()`
 has executed, so will always evaluate to an empty array.
@@ -585,7 +585,7 @@ it("does not work as we expect", () => {
 // Cypress will begin running them in order!
 ```
 
-**<Icon name="check-circle" color="green"></Icon> Correct usage**
+**<Icon name="check-circle" color="green" /> Correct usage**
 
 Below is one way the code above could be rewritten in order to ensure the
 commands run as expected.
@@ -614,7 +614,7 @@ it("does not work as we expect", () => {
 // Cypress will begin running them in order!
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect usage**
+**<Icon name="exclamation-triangle" color="red" /> Incorrect usage**
 
 In the example below, the check on the `username` value gets evaluated
 immediately, before the `cy.visit()` has executed, so will always evaluate to
@@ -650,7 +650,7 @@ it("test", () => {
 // Cypress will begin running them in order!
 ```
 
-**<Icon name="check-circle" color="green"></Icon> Correct usage**
+**<Icon name="check-circle" color="green" /> Correct usage**
 
 Below is one way the code above could be rewritten in order to ensure the
 commands run as expected.
@@ -683,7 +683,7 @@ it("test", () => {
 
 :::tip
 
-<strong class="alert-header">Core Concept</strong>
+<strong>Core Concept</strong>
 
 Each Cypress command (and chain of commands) returns immediately, having only
 been appended to a queue of commands to be executed at a later time.
@@ -699,7 +699,7 @@ we manage commands in a highly controlled deterministic way.
 
 :::info
 
-<strong class="alert-header">Why can't I use async / await?</strong>
+<strong>Why can't I use async / await?</strong>
 
 If you're a modern JS programmer you might hear "asynchronous" and think: **why
 can't I just use `async/await`** instead of learning some proprietary API?
@@ -726,7 +726,7 @@ displayed the test reloads the page and checks again.
 **Note:** you can find this application and the correct test in our
 [Recipes](https://github.com/cypress-io/cypress-example-recipes#testing-the-dom).
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect test**
+**<Icon name="exclamation-triangle" color="red" /> Incorrect test**
 
 The test written below WILL NOT work and most likely will crash your browser.
 
@@ -758,7 +758,7 @@ without executing any! The chain of commands keeps growing, but never executes -
 since the test function never finishes running. The `while` loop never allows
 Cypress to start executing even the very first `cy.get(...)` command.
 
-**<Icon name="check-circle" color="green"></Icon> Correct test**
+**<Icon name="check-circle" color="green" /> Correct test**
 
 We need to give the test a chance to run a few commands before deciding if it
 needs to continue. Thus the correct test would use recursion.
@@ -864,7 +864,7 @@ the [Cypress configuration](/guides/references/configuration).
 
 :::tip
 
-<strong class="alert-header">Core Concept</strong>
+<strong>Core Concept</strong>
 
 Any waiting or retrying that is necessary to ensure a step was successful must
 complete before the next step begins. If they don't complete successfully before
@@ -976,7 +976,7 @@ state.
 
 :::tip
 
-<strong class="alert-header">Core Concept</strong>
+<strong>Core Concept</strong>
 
 Each API Command documents its behavior with assertions - such as how it retries
 or waits for assertions to pass.
@@ -1070,7 +1070,7 @@ Can you think of any more?
 
 :::tip
 
-<strong class="alert-header">Core Concept</strong>
+<strong>Core Concept</strong>
 
 With Cypress, you don't have to assert to have a useful test. Even without
 assertions, a few lines of Cypress can ensure thousands of lines of code are
@@ -1119,7 +1119,7 @@ failing.
 
 :::tip
 
-<strong class="alert-header">Core Concept</strong>
+<strong>Core Concept</strong>
 
 All DOM based commands automatically wait for their elements to exist in the
 DOM.
@@ -1169,7 +1169,7 @@ cy.get("#modal").should("not.exist");
 
 :::tip
 
-<strong class="alert-header">Core Concept</strong>
+<strong>Core Concept</strong>
 
 By adding [`.should('not.exist')`](/api/commands/should) to any DOM command,
 Cypress will reverse its default assertion and automatically wait until the
@@ -1274,7 +1274,7 @@ expect(true).to.be.true;
 
 :::info
 
-<strong class="alert-header">
+<strong>
   Did you know you can write Unit Tests in Cypress?
 </strong>
 
@@ -1295,7 +1295,7 @@ retries** for everything inside of the callback function to pass.
 
 :::info
 
-<strong class="alert-header">Complex Assertions</strong>
+<strong>Complex Assertions</strong>
 
 The example below is a use case where we are asserting across multiple elements.
 Using a [`.should()`](/api/commands/should) callback function is a great way to
@@ -1334,7 +1334,7 @@ cy.get("p").should(($p) => {
 
 :::danger
 
-<strong class="alert-header">Make sure `.should()` is safe</strong>
+<strong>Make sure `.should()` is safe</strong>
 
 When using a callback function with [`.should()`](/api/commands/should), be sure
 that the entire function can be executed multiple times without side effects.

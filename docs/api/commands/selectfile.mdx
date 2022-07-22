@@ -16,7 +16,7 @@ or files into the browser.
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```javascript
 cy.get('input[type=file]').selectFile('file.json')
@@ -33,7 +33,7 @@ cy.get('input[type=file]').selectFile('file.json', { action: 'drag-drop' })
 cy.document().selectFile('file.json', { action: 'drag-drop' })
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
 
 ```javascript
 // Errors, cannot be chained off 'cy'
@@ -46,7 +46,7 @@ cy.get('input[type=file]').selectFile('file contents')
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> file** **_(String, Array, Object or
+**<Icon name="angle-right" /> file** **_(String, Array, Object or
 Cypress.Buffer)_**
 
 Either a single file, or an array of files. A file can be:
@@ -73,7 +73,7 @@ If an object is provided, it can have the following properties.
 | `mimeType`     | The [mimeType](https://developer.mozilla.org/en-US/docs/Web/API/File/type) of the file. If omitted, it will be [inferred](https://github.com/jshttp/mime-types#mimelookuppath) from the file extension. If one cannot be inferred, it will default to an empty string.          |
 | `lastModified` | The file's last modified timestamp, in milliseconds elapsed since the UNIX epoch (eg. [`Date.prototype.getTime()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)). This defaults to `Date.now()`.                              |
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right" /> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.selectFile()`.
 

@@ -4,10 +4,6 @@
  * work well for content-centric websites.
  */
 
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
-
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
 
 /* You can override the default Infima variables here. */
@@ -146,6 +142,11 @@ div.markdown h2, h3, h4 {
   margin-bottom: 1.5rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid #eee;
+}
+
+/* courses list */
+div.markdown li p {
+  margin-top: 0;
 }
 
 /* test-type pills */

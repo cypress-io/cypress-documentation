@@ -4,7 +4,7 @@ title: Visual Testing
 
 :::info
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn
 
 - How visual testing complements functional testing
 - How to implement visual diffing yourself or using 3rd party service
@@ -166,7 +166,7 @@ Second joint webinar with Applitools with a focus on
 
 :::info
 
-##### <Icon name="graduation-cap"></Icon> Real World Example <Badge type="success">New</Badge>
+##### <Icon name="graduation-cap" /> Real World Example <Badge type="success">New</Badge>
 
 The Cypress
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses
@@ -235,7 +235,7 @@ As a general rule there are some best practices when visual testing.
 
 ### Recognize the need for visual testing
 
-**<Icon name="exclamation-triangle" color="red"></Icon> assertions that verify
+**<Icon name="exclamation-triangle" color="red" /> assertions that verify
 style properties**
 
 ```js
@@ -253,14 +253,14 @@ verify the page appearance.
 
 :::tip
 
-<Icon name="check-circle" color="green"></Icon> <strong>Best Practice:</strong> Take a
+<Icon name="check-circle" color="green" /> <strong>Best Practice:</strong> Take a
 snapshot after you confirm the page is done changing.
 
 :::
 
 For example, if the snapshot command is `cy.mySnapshotCommand`:
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
 
 ```js
 // the web application takes time to add the new item,
@@ -269,7 +269,7 @@ cy.get('.new-todo').type('write tests{enter}')
 cy.mySnapshotCommand()
 ```
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```js
 // use a functional assertion to ensure
@@ -285,7 +285,7 @@ cy.mySnapshotCommand()
 
 :::tip
 
-<Icon name="check-circle" color="green"></Icon> <strong>Best Practice:</strong> Control the
+<Icon name="check-circle" color="green" /> <strong>Best Practice:</strong> Control the
 timestamp inside the application under test.
 
 :::
@@ -306,7 +306,7 @@ cy.mySnapshotCommand()
 
 :::tip
 
-<Icon name="check-circle" color="green"></Icon> <strong>Best Practice:</strong> Use <a href="/api/commands/fixture">cy.fixture()</a> and network mocking to set the application
+<Icon name="check-circle" color="green" /> <strong>Best Practice:</strong> Use <a href="/api/commands/fixture">cy.fixture()</a> and network mocking to set the application
 state.
 
 :::
@@ -326,7 +326,7 @@ cy.mySnapshotCommand()
 
 :::tip
 
-<Icon name="check-circle" color="green"></Icon> <strong>Best Practice:</strong> Use visual
+<Icon name="check-circle" color="green" /> <strong>Best Practice:</strong> Use visual
 diffing to check individual DOM elements rather than the entire page.
 
 :::
@@ -338,7 +338,7 @@ breaking tests in other unrelated components.
 
 :::tip
 
-<Icon name="check-circle" color="green"></Icon> <strong>Best Practice:</strong> Use <a href="/plugins/directory"> Component Testing plugins</a> to test the individual components functionality in addition to end-to-end and visual tests.
+<Icon name="check-circle" color="green" /> <strong>Best Practice:</strong> Use <a href="/plugins/directory"> Component Testing plugins</a> to test the individual components functionality in addition to end-to-end and visual tests.
 
 :::
 

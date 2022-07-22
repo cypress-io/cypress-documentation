@@ -43,7 +43,6 @@ ul.pluginsList li {
   padding: 20px;
   border: 1px solid #e8e8e8;
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.15);
-  @apply w-full;
 }
 
 /* stylelint-disable-next-line at-rule-no-unknown */
@@ -93,8 +92,6 @@ ul.pluginsList li p {
   font-weight: 700;
   padding: 0.25em 0.8em;
   line-height: 0.75rem;
-  @apply px-2;
-  @apply py-1;
 }
 
 .badgePill {
@@ -121,5 +118,4 @@ ul.pluginsList li p {
 .keyword {
   font-weight: 300;
   color: #777;
-  @apply mr-2;
 }
