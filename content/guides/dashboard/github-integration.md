@@ -12,6 +12,7 @@ GitHub integration.
 <DocsImage src="/img/dashboard/github-integration/pull-request-cypress-integration-comments-github-checks.jpg" alt="Cypress GitHub App PR" ></DocsImage>
 
 <Alert type="warning">
+
 GitHub Integration is dependent on your CI environment reliably providing commit
 SHA data (typically via an environment variable). This is not a problem for most
 users, but if you are facing GitHub integration issues with your CI setup,
@@ -19,6 +20,7 @@ please make sure the git information is being sent properly by following
 [these guidelines](/guides/continuous-integration/introduction#Git-information).
 If you are still facing issues after this, please
 [contact us](mailto:hello@cypress.io).
+
 </Alert>
 
 ## GitHub Enterprise
@@ -282,6 +284,11 @@ steps:
 2. Click on **Installed GitHub Apps**.
 3. Click **Configure** beside the Cypress app.
 4. Click **Uninstall** below the "Uninstall Cypress" section.
+
+## Troubleshooting
+
+See
+[Common GitHub Actions Problems and Solutions](/guides/continuous-integration/github-actions#Common-Problems-and-Solutions).
 
 ## See also
 

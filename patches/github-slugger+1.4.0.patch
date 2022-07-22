@@ -1,8 +1,14 @@
 diff --git a/node_modules/github-slugger/index.js b/node_modules/github-slugger/index.js
-index c1f2d01..f0d1bfe 100644
+index c1f2d01..ba81018 100644
 --- a/node_modules/github-slugger/index.js
 +++ b/node_modules/github-slugger/index.js
-@@ -19,6 +19,7 @@ function BananaSlug () {
+@@ -1,4 +1,5 @@
+ const regex = require('./regex.js')
++const emoji = require('emoji-regex')
+ 
+ module.exports = BananaSlug
+ 
+@@ -19,6 +20,7 @@ function BananaSlug () {
   * @return {string}       A unique slug string
   */
  BananaSlug.prototype.slug = function (value, maintainCase) {
@@ -10,7 +16,7 @@ index c1f2d01..f0d1bfe 100644
    const self = this
    let slug = slugger(value, maintainCase === true)
    const originalSlug = slug
-@@ -44,7 +45,37 @@ BananaSlug.prototype.reset = function () {
+@@ -44,7 +46,37 @@ BananaSlug.prototype.reset = function () {
  function slugger (string, maintainCase) {
    if (typeof string !== 'string') return ''
    if (!maintainCase) string = string.toLowerCase()
@@ -19,7 +25,7 @@ index c1f2d01..f0d1bfe 100644
 +  /**
 +   * Github Slugger is the package + algorithm used by Remark + Rehype to
 +   * create ids and hrefs for headers that will be unique throughout a page.
-+   * We have custom rules that we use for our own headers.
++   * We (Cypress) have custom rules that we use for our own headers.
 +   * Some of them exist to support legacy links (e.g. case-sensitivity).
 +   */
 +  var specials = regex
@@ -29,9 +35,10 @@ index c1f2d01..f0d1bfe 100644
 +  var lessThan = /</g
 +  var greaterThan = />/g
 +  var twoOrMoreDashes = /-{2,}/g
-+
++  var tagsToRemove = /<(?:E2EOnlyBadge|ComponentOnlyBadge)\s*\/?>/g
 +  var str = string.trim()
 +    .replace(icons, '')
++    .replace(tagsToRemove, '')
 +    .trim()
 +    .replace(periodAtEnd, '')
 +    .replace(shouldBecomeDash, '-')
@@ -39,13 +46,13 @@ index c1f2d01..f0d1bfe 100644
 +    .replace(greaterThan, '-gt')
 +    .replace(specials, '-')
 +    .replace(/\s/g, '-')
++    .replace(emoji(), '')
 +    .replace(twoOrMoreDashes, '-')
-+
 +  if (str.endsWith('-')) {
 +    str = str.slice(0, str.length - 1)
 +  }
-+
 +  return str
  }
  
  BananaSlug.slug = slugger
+\ No newline at end of file

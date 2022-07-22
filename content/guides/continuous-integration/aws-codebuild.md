@@ -153,7 +153,7 @@ The images are available in the following
 
 <strong class="alert-header">Choosing the right Docker Image</strong>
 
-For end-to-end tests on a CI provider like AWS CodeBuild, the
+For E2E Testing on a CI provider like AWS CodeBuild, the
 [Cypress 'browsers' Amazon ECR Public Gallery](https://gallery.ecr.aws/cypress-io/cypress/browsers)
 contains the images to use.
 

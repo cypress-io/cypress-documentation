@@ -13,17 +13,17 @@ can also record your tests when running locally.
 <Alert type="info">
 
 To set up your project to record, you must use the
-[Test Runner](/guides/core-concepts/test-runner).
+[Cypress App](/guides/core-concepts/cypress-app).
 
 Make sure you [install](/guides/getting-started/installing-cypress) and
-[open](/guides/getting-started/installing-cypress#Opening-Cypress) it first!
+[open](/guides/getting-started/opening-the-app) it first!
 
 </Alert>
 
 ### Set up a project to record
 
 1. Click on the **Runs** tab of your project within the
-   [Test Runner](/guides/core-concepts/test-runner).
+   [Cypress App](/guides/core-concepts/cypress-app).
 2. Click **Connect to Dashboard**.
 3. You will need to log in to record your tests, so you'll be prompted to log in
    to the Cypress Dashboard here if you haven't already done so.
@@ -57,9 +57,9 @@ Make sure you [install](/guides/getting-started/installing-cypress) and
    record key.
    <DocsImage src="/img/dashboard/projects/setup-a-project-5.png" alt="Record Instructions" no-border></DocsImage>
 9. After setting up your project, Cypress inserts a unique
-   [projectId](#Identification) into your configuration file, `cypress.json` by
-   default. If you're using source control, we recommend that you check your
-   configuration file, including the `projectId`, into source control.
+   [projectId](#Identification) into your Cypress configuration file. If you're
+   using source control, we recommend that you check your configuration file,
+   including the `projectId`, into source control.
 10. Within [Continuous Integration](/guides/continuous-integration/introduction)
     or from your local computer's terminal pass the displayed
     [Record Key](#Identification) while running the
@@ -81,7 +81,7 @@ Make sure you [install](/guides/getting-started/installing-cypress) and
 
 🎉 Your tests are now recording! As soon as tests finish running, you will see
 them in the [Dashboard](https://on.cypress.io/dashboard) and in the Runs tab of
-the [Test Runner](/guides/core-concepts/test-runner).
+the [Cypress App](/guides/core-concepts/cypress-app).
 
 <DocsImage src="/img/dashboard/dashboard-runs-list.png" alt="Dashboard Screenshot" ></DocsImage>
 
@@ -95,25 +95,29 @@ together to uniquely identify projects.
 ### Project ID
 
 Once you set up your project to record, we generate a unique `projectId` for
-your project and automatically insert it into your `cypress.json` file.
+your project and automatically insert it into your Cypress configuration file.
 
-#### The `projectId` is a 6 character string in your `cypress.json`
+#### The `projectId` is a 6 character string in your Cypress configuration
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "projectId": "a7bq2k"
+  projectId: 'a7bq2k'
 }
 ```
+
+:::
 
 This helps us uniquely identify your project. If you manually alter this,
 **Cypress will no longer be able to identify your project or find the recorded
 builds for it**.
 
-If you're using source control, we recommend that you check your `cypress.json`,
-including the `projectId`, into source control. If you don't want your
-`projectId` visible in your source code you can set it as an environment
-variable using the name `CYPRESS_PROJECT_ID`. The exact mechanism for doing so
-depends on your system but could be something like:
+If you're using source control, we recommend that you check your Cypress
+configuration file, including the `projectId`, into source control. If you don't
+want your `projectId` visible in your source code you can set it as an
+environment variable using the name `CYPRESS_PROJECT_ID`. The exact mechanism
+for doing so depends on your system but could be something like:
 
 ```shell
 export CYPRESS_PROJECT_ID={projectId}
@@ -170,8 +174,8 @@ our [Dashboard](https://on.cypress.io/dashboard).
 
 <DocsImage src="/img/dashboard/record-keys-in-project-settings-dashboard.png" alt="Record key in project settings" ></DocsImage>
 
-You can also find your Record Key inside of the _Settings_ tab in the Test
-Runner.
+You can also find your Record Key inside of the _Settings_ tab in the Cypress
+App.
 
 <DocsImage src="/img/dashboard/record-key-shown-in-desktop-gui-configuration.jpg" alt="Record Key in Configuration Tab" ></DocsImage>
 

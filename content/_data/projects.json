@@ -37,7 +37,7 @@
     },
     {
       "name": "For All Beautiful Earth",
-      "description": "End-to-end browser tests for fab.earth using Cypress.io test runner",
+      "description": "End-to-end browser tests for fab.earth using Cypress.io test application",
       "url": "https://github.com/forallabeautifulearth/fabe-browser-tests"
     },
     {
