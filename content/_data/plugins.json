@@ -1034,6 +1034,13 @@
           "link": "https://github.com/maritome/cypress-msteams-reporter",
           "keywords": ["reporter", "ms-teams", "allure-report"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-tesults-reporter",
+          "description": "Submit test results data to Tesults for analysis and reporting.",
+          "link": "https://github.com/tesults/cypress-tesults-reporter",
+          "keywords": ["reporter", "tesults"],
+          "badge": "community"
         }
       ]
     },
