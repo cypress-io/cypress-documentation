@@ -4,7 +4,7 @@ title: AWS CodeBuild
 
 :::info
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn
 
 - How to run Cypress tests with AWS CodeBuild as part of CI/CD pipeline
 - How to parallelize Cypress test runs within AWS CodeBuild
@@ -57,7 +57,7 @@ phases:
 
 :::tip
 
-<strong class="alert-header">Try it out</strong>
+<strong>Try it out</strong>
 
 To try out the example above yourself, fork the
 [Cypress Kitchen Sink](https://github.com/cypress-io/cypress-example-kitchensink)
@@ -91,7 +91,7 @@ for single build configurations. One way to solve this is using an
 :::
 
 :::info
-<strong class="alert-header">Enabling batch builds in the CodeBuild UI for the project</strong>
+<strong>Enabling batch builds in the CodeBuild UI for the project</strong>
 <br />
 <br />
 
@@ -133,7 +133,7 @@ example, this allows us to run the tests in Firefox by passing the
 
 :::tip
 
-<strong class="alert-header">Cypress Amazon Public ECR</strong>
+<strong>Cypress Amazon Public ECR</strong>
 
 The Cypress team has published it's
 [Docker Images](https://github.com/cypress-io/cypress-docker-images) for running
@@ -151,7 +151,7 @@ The images are available in the following
 
 :::info
 
-<strong class="alert-header">Choosing the right Docker Image</strong>
+<strong>Choosing the right Docker Image</strong>
 
 For E2E Testing on a CI provider like AWS CodeBuild, the
 [Cypress 'browsers' Amazon ECR Public Gallery](https://gallery.ecr.aws/cypress-io/cypress/browsers)
@@ -259,7 +259,7 @@ multiples instances of Cypress at same time as we will see later in this
 section.
 
 :::info
-<strong class="alert-header">Enabling batch builds in the CodeBuild UI for the project</strong>
+<strong>Enabling batch builds in the CodeBuild UI for the project</strong>
 <br />
 <br />
 
@@ -388,7 +388,7 @@ batch:
 
 :::info
 
-<strong class="alert-header">Note</strong>
+<strong>Note</strong>
 
 The `WORKERS` array is filled with filler (or _dummy_) items to provision the
 desired number of CI machine instances within the
@@ -451,8 +451,4 @@ A complete CI workflow against multiple browsers, viewports and operating
 systems is available in the
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app).
 
-Clone the <Icon name="github"></Icon>
-[Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) and
-refer to the
-[buildspec.yml](https://github.com/cypress-io/cypress-realworld-app/blob/develop/buildspec.yml)
-file.
+Clone the <Icon name="github" inline="true" contentType="rwa" /> and refer to the [buildspec.yml](https://github.com/cypress-io/cypress-realworld-app/blob/develop/buildspec.yml) file.

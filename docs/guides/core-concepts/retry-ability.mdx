@@ -5,7 +5,7 @@ sidebar_position: 40
 
 :::info
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn
 
 - How Cypress retries commands and assertions
 - When commands are retried and when they are not
@@ -20,7 +20,7 @@ with fewer run-time surprises.
 
 :::info
 
-<strong class="alert-header">Test Retries</strong>
+<strong>Test Retries</strong>
 
 If you are looking to retry tests a configured number of times when the test
 fails, check out our official guide on
@@ -169,17 +169,8 @@ documentation. For example, "Assertions section" of
 [`.first()`](/api/commands/first) tells us that the command is retried until all
 assertions that follow it are passing.
 
-<List>
-  <li>
-    `.first()` will automatically [retry](/guides/core-concepts/retry-ability)
-    until the element(s) [exist in the
-    DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)
-  </li>
-  <li>
-    `.first()` will automatically [retry](/guides/core-concepts/retry-ability)
-    until all chained assertions have passed
-  </li>
-</List>
+- `.first()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)
+- `.first()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed
 
 ### Why are some commands _NOT_ retried?
 
@@ -445,9 +436,7 @@ list elements when the second "todo B" is added to the DOM.
 
 :::info
 
-<strong class="alert-header">
-  Use [`cy.contains`](/api/commands/contains)
-</strong>
+**Use [`cy.contains()`](/api/commands/contains)**
 
 **Tip:** instead of `cy.get(selector).should('contain', text)` or
 `cy.get(selector).contains(text)` chain, we recommend using
@@ -554,7 +543,7 @@ Below is an example where the number value is set after a delay:
   alt="Random number"
 ></DocsImage>
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Incorrectly waiting for values
+#### <Icon name="exclamation-triangle" color="red" /> Incorrectly waiting for values
 
 You may want to write a test like below, to test that the number is between 1
 and 10, although **this will not work as intended**. The test yields the
@@ -577,7 +566,7 @@ the test only runs the entire chain once before failing.
   alt="First attempt at writing the test"
 ></DocsImage>
 
-#### <Icon name="check-circle" color="green"></Icon> Correctly waiting for values
+#### <Icon name="check-circle" color="green" /> Correctly waiting for values
 
 We need to retry getting the element, invoking the `text()` method, calling the
 `parseFloat` function and running the `gte` and `lte` assertions. We can achieve
@@ -613,7 +602,7 @@ testing with the
 [cypress/react](https://github.com/cypress-io/cypress/tree/master/npm/react)
 mounting library, the following test might or might not work:
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Incorrectly checking if the stub was called
+#### <Icon name="exclamation-triangle" color="red" /> Incorrectly checking if the stub was called
 
 ```js
 const Clicker = ({ click }) => (
@@ -655,7 +644,7 @@ const Clicker = ({ click }) => (
 The test finishes before the component calls the `click` prop twice, and without
 retrying the assertion `expect(onClick).to.be.calledTwice`.
 
-#### <Icon name="check-circle" color="green"></Icon> Correctly waiting for the stub to be called
+#### <Icon name="check-circle" color="green" /> Correctly waiting for the stub to be called
 
 We recommend aliasing the stub using the [`.as`](/api/commands/as) command and
 using `cy.get('@alias').should(...)` assertions.

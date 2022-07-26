@@ -13,7 +13,7 @@ cy.log(message, args...)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```javascript
 cy.log('created new user')
@@ -21,20 +21,20 @@ cy.log('created new user')
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> message** **_(String)_**
+**<Icon name="angle-right" /> message** **_(String)_**
 
 Message to be printed to Cypress Command Log. Accepts a Markdown formatted
 message.
 
-**<Icon name="angle-right"></Icon> args...**
+**<Icon name="angle-right" /> args...**
 
 Additional arguments to be printed to the Cypress Command Log. There is no limit
 to the number of arguments.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.log()` yields `null`.</li><li>`cy.log()` cannot be chained
-further.</li></List>
+- `cy.log()` yields `null`.</li><li>`cy.log()` cannot be chained
+further.
 
 ## Examples
 
@@ -59,15 +59,15 @@ cy.log('events triggered', events)
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.log()` requires being chained off of `cy`.</li></List>
+- `cy.log()` requires being chained off of `cy`.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.log()` cannot have any assertions chained.</li></List>
+- `cy.log()` cannot have any assertions chained.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.log()` cannot time out.</li></List>
+- `cy.log()` cannot time out.
 
 ## Command Log
 

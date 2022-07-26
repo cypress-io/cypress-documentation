@@ -5,7 +5,7 @@ sidebar_position: 20
 
 :::info
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn
 
 - The relationship between Cypress and your back end
 - How to configure Cypress to fit your app
@@ -20,7 +20,7 @@ sidebar_position: 20
 
 <!-- textlint-enable -->
 
-## <Icon name="terminal"></Icon> Step 1: Start your server
+## <Icon name="terminal" /> Step 1: Start your server
 
 Assuming you've successfully
 [installed the Cypress App](/guides/getting-started/installing-cypress) and
@@ -32,7 +32,7 @@ It should look something like **http://localhost:8080**.
 
 :::caution
 
-<strong class="alert-header">Anti-Pattern</strong>
+<strong>Anti-Pattern</strong>
 
 Don't try to start a web server from within Cypress scripts. Read about
 [best practices](/guides/references/best-practices#Web-Servers) here.
@@ -41,7 +41,7 @@ Don't try to start a web server from within Cypress scripts. Read about
 
 :::info
 
-<strong class="alert-header">Why start a local development server?</strong>
+<strong>Why start a local development server?</strong>
 
 You may be wondering - why can't I just visit my application that's already in
 production?
@@ -86,7 +86,7 @@ only against a deployed production app.
 
 :::
 
-## <Icon name="globe"></Icon> Step 2: Visit your server
+## <Icon name="globe" /> Step 2: Visit your server
 
 Once your server is running, it's time to visit it.
 
@@ -140,7 +140,7 @@ it('successfully loads', () => {
 If you've started your server, then you should see your application loaded and
 working.
 
-## <Icon name="cogs"></Icon> Step 3: Configure Cypress
+## <Icon name="cogs" /> Step 3: Configure Cypress
 
 If you think ahead, you'll quickly realize that you're going to be typing this
 URL a lot, since every test is going to need to visit some page of your
@@ -188,7 +188,7 @@ Great! Everything should still be green.
 
 :::info
 
-<strong class="alert-header">Configuration Options</strong>
+<strong>Configuration Options</strong>
 
 Cypress has many more configuration options you can use to customize its
 behavior. Things like where your tests live, default timeout periods,
@@ -346,7 +346,7 @@ stub data. They will be orders of magnitude faster, and much less complex.
 
 :::info
 
-<strong class="alert-header">Guide: Network Requests</strong>
+<strong>Guide: Network Requests</strong>
 
 Please read our [Guide on Network Requests](/guides/guides/network-requests) for
 a much more thorough analysis and approach to accomplishing this.
@@ -423,7 +423,7 @@ Now, once you have your login completely tested - you may be tempted to think:
 
 :::danger
 
-<strong class="alert-header">No! Please don\'t.</strong>
+<strong>No! Please don't.</strong>
 
 Do not use **your UI** to login before each test.
 
@@ -452,7 +452,7 @@ No. You shouldn't do that.
 
 :::caution
 
-<strong class="alert-header">Anti-Pattern</strong>
+<strong>Anti-Pattern</strong>
 
 Don't use your UI to build up state! It's enormously slow, cumbersome, and
 unnecessary.
@@ -525,7 +525,7 @@ requires the state to be set up elsewhere. Just remember - don't use your UI!
 
 :::info
 
-<strong class="alert-header">Authentication Recipes</strong>
+<strong>Authentication Recipes</strong>
 
 Logging in can be more complex than what we've just covered.
 
@@ -555,8 +555,4 @@ From here you may want to explore some more of our guides:
   running Cypress in CI
 - [Cross Browser Testing](/guides/guides/cross-browser-testing) for optimally
   running tests in CI across Firefox and Chrome-family browsers
-- <Icon name="github"></Icon>
-  [Cypress Real World App
-  (RWA)](https://github.com/cypress-io/cypress-realworld-app) for practical
-  demonstrations of Cypress testing practices, configuration, and strategies in
-  a real-world project.
+- <Icon name="github" inline="true" contentType="rwa" /> demonstrations of Cypress testing practices, configuration, and strategies in a real-world project.

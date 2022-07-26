@@ -4,7 +4,7 @@ title: Network Requests
 
 :::info
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn
 
 - How Cypress enables you to stub out the back end with
   [`cy.intercept()`](/api/commands/intercept)
@@ -79,7 +79,7 @@ modern applications that serve JSON can take advantage of stubbing.
 
 :::tip
 
-<strong class="alert-header">Benefits</strong>
+<strong>Benefits</strong>
 
 - More likely to work in production
 - Test coverage around server endpoints
@@ -89,7 +89,7 @@ modern applications that serve JSON can take advantage of stubbing.
 
 :::danger
 
-<strong class="alert-header">Downsides</strong>
+<strong>Downsides</strong>
 
 - Requires seeding data
 - Much slower
@@ -99,7 +99,7 @@ modern applications that serve JSON can take advantage of stubbing.
 
 :::info
 
-<strong class="alert-header">Suggested Use</strong>
+<strong>Suggested Use</strong>
 
 - Use sparingly
 - Great for the _critical paths_ of your application
@@ -114,15 +114,18 @@ including the response `body`, the `status`, `headers`, and even network
 `delay`. Stubbing is extremely fast, most responses will be returned in less
 than 20ms.
 
-> Stubbing responses is a great way to control the data that is returned to your
-> client.
+:::note
+
+Stubbing responses is a great way to control the data that is returned to your client.
+
+:::
 
 You don't have to do any work on the server. Your application will have no idea
 its requests are being stubbed, so there are _no code changes_ needed.
 
 :::tip
 
-<strong class="alert-header">Benefits</strong>
+<strong>Benefits</strong>
 
 - Control of response bodies, status, and headers
 - Can force responses to take longer to simulate network delay
@@ -133,7 +136,7 @@ its requests are being stubbed, so there are _no code changes_ needed.
 
 :::danger
 
-<strong class="alert-header">Downsides</strong>
+<strong>Downsides</strong>
 
 - No guarantee your stubbed responses match the actual data the server sends
 - No test coverage on some server endpoints
@@ -143,7 +146,7 @@ its requests are being stubbed, so there are _no code changes_ needed.
 
 :::info
 
-<strong class="alert-header">Suggested Use</strong>
+<strong>Suggested Use</strong>
 
 - Use for the vast majority of tests
 - Mix and match, typically have one true end-to-end test, and then stub the rest
@@ -153,7 +156,7 @@ its requests are being stubbed, so there are _no code changes_ needed.
 
 :::info
 
-##### <Icon name="graduation-cap"></Icon> Real World Example
+##### <Icon name="graduation-cap" /> Real World Example
 
 The Cypress
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
@@ -365,19 +368,25 @@ cy.get('[data-testid="results"]')
 
 :::info
 
-##### <Icon name="graduation-cap"></Icon> Real World Example
+##### <Icon name="graduation-cap" /> Real World Example
 
-The Cypress
-[Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) has
+The Cypress <Icon name="github" inline="true" contentType="rwa" /> has
 various tests for testing an auto-complete field within a large user journey
 test that properly await requests triggered upon auto-complete input changes.
 Check out the example:
 
-- <Icon name="github"></Icon>
-  [Auto-complete test code](https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/cypress/tests/ui/new-transaction.spec.ts#L36-L50)
-- <Icon name="video"></Icon>
-  [Auto-complete test run video recording](https://dashboard.cypress.io/projects/7s5okt/runs/2352/test-results/3bf064fd-6959-441c-bf31-a9f276db0627/video)
-  in Cypress Dashboard.
+- <Icon
+  name="github"
+  inline="true"
+  url="https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/cypress/tests/ui/new-transaction.spec.ts#L36-L50"
+  callout="Auto-complete test code"
+/>
+
+- <Icon
+  name="video" 
+  url="https://dashboard.cypress.io/projects/7s5okt/runs/2352/test-results/3bf064fd-6959-441c-bf31-a9f276db0627/video"
+  callout="Auto-complete test run video recording"
+/> in Cypress Dashboard.
 
 :::
 

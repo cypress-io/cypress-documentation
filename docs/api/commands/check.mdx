@@ -23,14 +23,14 @@ This element must be an `<input>` with type `checkbox` or `radio`.
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```javascript
 cy.get('[type="checkbox"]').check() // Check checkbox element
 cy.get('[type="radio"]').first().check() // Check first radio element
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
 
 ```javascript
 cy.check('[type="checkbox"]') // Errors, cannot be chained off 'cy'
@@ -39,15 +39,15 @@ cy.get('p:first').check() // Errors, '.get()' does not yield checkbox or radio
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> value** **_(String)_**
+**<Icon name="angle-right" /> value** **_(String)_**
 
 Value of checkbox or radio that should be checked.
 
-**<Icon name="angle-right"></Icon> values** **_(Array)_**
+**<Icon name="angle-right" /> values** **_(Array)_**
 
 Values of checkboxes or radios that should be checked.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right" /> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.check()`.
 
@@ -62,8 +62,8 @@ Pass in an options object to change the default behavior of `.check()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.check()` yields the same subject it was given from the previous
-command.</li></List>
+- `.check()` yields the same subject it was given from the previous
+command.
 
 ## Examples
 
@@ -165,22 +165,22 @@ cy.get('#pick-fruit :checked').should('be.checked').and('have.value', 'apple')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.check()` requires being chained off a command that yields DOM
+- `.check()` requires being chained off a command that yields DOM
 element(s).</li><li>`.check()` requires the element to have type `checkbox` or
-`radio`.</li></List>
+`radio`.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.check()` will automatically wait for the element to reach an
+- `.check()` will automatically wait for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.check()`
 will automatically [retry](/guides/core-concepts/retry-ability) until all
-chained assertions have passed</li></List>
+chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.check()` can time out waiting for the element to reach an
+- `.check()` can time out waiting for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.check()`
-can time out waiting for assertions you've added to pass.</li></List>
+can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

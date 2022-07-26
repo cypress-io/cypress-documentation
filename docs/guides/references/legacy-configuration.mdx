@@ -19,7 +19,7 @@ the `projectId` will be written in this file too.
 
 :::caution
 
-<strong class="alert-header">Change Configuration File</strong>
+<strong>Change Configuration File</strong>
 
 You can change the configuration file or turn off the use of a configuration
 file by using the
@@ -53,7 +53,7 @@ default values.
 
 :::tip
 
-<strong class="alert-header">Core Concept</strong>
+<strong>Core Concept</strong>
 
 [Timeouts are a core concept](/guides/core-concepts/introduction-to-cypress#Timeouts)
 you should understand well. The default values listed here are meaningful.
@@ -145,7 +145,7 @@ For more information, see the docs on
 
 :::caution
 
-The `nodeVersion` configuration option is deprecated and will be removed in a
+<Icon name="exclamation-triangle" /> The <code>nodeVersion</code> configuration option is deprecated and will be removed in a
 future version of Cypress. Please remove this option from your configuration
 file.
 
@@ -329,7 +329,7 @@ We provide two options to override the configuration while your test are
 running, `Cypress.config()` and suite-specific or test-specific configuration
 overrides.
 
-<Icon name="exclamation-triangle" color="red"></Icon> **Note:** The
+‼️ **Note:** The
 configuration values below are all writeable and **can be changed** via per test
 configuration. Any other configuration values are readonly and cannot be changed
 at run time.
@@ -468,11 +468,11 @@ To see a working example of this please check out our
 
 To block a host:
 
-- <Icon name="check-circle" color="green"></Icon> Pass only the host
-- <Icon name="check-circle" color="green"></Icon> Use wildcard `*` patterns
-- <Icon name="check-circle" color="green"></Icon> Include the port other than
+- ✅ Pass only the host
+- ✅ Use wildcard `*` patterns
+- ✅ Include the port other than
   `80` and `443`
-- <Icon name="exclamation-triangle" color="red"></Icon> Do **NOT** include
+- ‼️ Do **NOT** include
   protocol: `http://` or `https://`
 
 :::info
@@ -508,15 +508,15 @@ included**.
 
 :::caution
 
-<strong class="alert-header">Subdomains</strong>
+<strong>Subdomains</strong>
 
 Be cautious for URL's which have no subdomain.
 
 For instance given a URL: `https://google.com/search?q=cypress`
 
-- <Icon name="check-circle" color="green"></Icon> Matches `google.com`
-- <Icon name="check-circle" color="green"></Icon> Matches `*google.com`
-- <Icon name="exclamation-triangle" color="red"></Icon> Does NOT match
+- ✅ Matches `google.com`
+- ✅ Matches `*google.com`
+- ‼️ Does NOT match
   `*.google.com`
 
 :::
@@ -672,7 +672,7 @@ IntelliSense is available for Cypress while editing your configuration file.
 
 ## Common problems
 
-#### <Icon name="angle-right"></Icon> `baseUrl` is not set
+#### <Icon name="angle-right" /> `baseUrl` is not set
 
 Make sure you do not accidentally place the <code>baseUrl</code> or another
 top-level config variable into the <code>env</code> block. The following
@@ -704,7 +704,7 @@ object.
 You can also find a few tips on setting the `baseUrl` in this
 [short video](https://www.youtube.com/watch?v=f5UaXuAc52c).
 
-#### <Icon name="angle-right"></Icon> Test files not found when using `spec` parameter
+#### <Icon name="angle-right" /> Test files not found when using `spec` parameter
 
 When using the `--spec <path or mask>` argument, make it relative to the
 project's folder. If the specs are still missing, run Cypress with

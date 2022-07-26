@@ -13,13 +13,13 @@ Scroll an element into view.
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```javascript
 cy.get('footer').scrollIntoView() // Scrolls 'footer' into view
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
 
 ```javascript
 cy.scrollIntoView('footer') // Errors, cannot be chained off 'cy'
@@ -28,7 +28,7 @@ cy.window().scrollIntoView() // Errors, 'window' does not yield DOM element
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right" /> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.scrollIntoView()`.
 
@@ -42,8 +42,8 @@ Pass in an options object to change the default behavior of `.scrollIntoView()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.scrollIntoView()` yields the same subject it was given from the
-previous command.</li></List>
+- `.scrollIntoView()` yields the same subject it was given from the
+previous command.
 
 ## Examples
 
@@ -89,18 +89,18 @@ or
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.scrollIntoView()` requires being chained off a command that yields
-DOM element(s).</li></List>
+- `.scrollIntoView()` requires being chained off a command that yields
+DOM element(s).
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.scrollIntoView()` will automatically wait for assertions you have
-chained to pass</li></List>
+- `.scrollIntoView()` will automatically wait for assertions you have
+chained to pass
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.scrollIntoView()` can time out waiting for assertions you've added
-to pass.</li></List>
+- `.scrollIntoView()` can time out waiting for assertions you've added
+to pass.
 
 ## Command Log
 

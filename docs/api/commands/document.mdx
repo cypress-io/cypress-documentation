@@ -13,7 +13,7 @@ cy.document(options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```javascript
 cy.document() // yield the window.document object
@@ -21,7 +21,7 @@ cy.document() // yield the window.document object
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right" /> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.document()`.
 
@@ -32,7 +32,7 @@ Pass in an options object to change the default behavior of `cy.document()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.document()` 'yields the `window.document` object' </li></List>
+- `cy.document()` 'yields the `window.document` object' 
 
 ## Examples
 
@@ -56,18 +56,18 @@ cy.document().its('contentType').should('eq', 'text/html')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.document()` requires being chained off of `cy`.</li></List>
+- `cy.document()` requires being chained off of `cy`.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.document()` will automatically
+- `cy.document()` will automatically
 [retry](/guides/core-concepts/retry-ability) until all chained assertions have
-passed</li></List>
+passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.document()` can time out waiting for assertions you've added to
-pass.</li></List>
+- `cy.document()` can time out waiting for assertions you've added to
+pass.
 
 ## Command Log
 

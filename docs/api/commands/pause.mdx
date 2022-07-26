@@ -25,7 +25,7 @@ cy.pause(options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```javascript
 cy.pause().getCookie('app') // Pause at the beginning of commands
@@ -34,7 +34,7 @@ cy.get('nav').pause() // Pause after the 'get' commands yield
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right" /> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.pause()`.
 
@@ -44,8 +44,8 @@ Pass in an options object to change the default behavior of `.pause()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.pause()` yields the same subject it was given from the previous
-command.</li></List>
+- `.pause()` yields the same subject it was given from the previous
+command.
 
 ## Examples
 
@@ -65,18 +65,18 @@ cy.get('button').should('not.be.disabled')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.pause()` can be chained off of `cy` or off another
-command.</li></List>
+- `.pause()` can be chained off of `cy` or off another
+command.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.pause()` is a utility command.</li><li>`.pause()` will not run
+- `.pause()` is a utility command.</li><li>`.pause()` will not run
 assertions. Assertions will pass through as if this command did not
-exist.</li></List>
+exist.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.pause()` cannot time out.</li></List>
+- `.pause()` cannot time out.
 
 ## Command Log
 

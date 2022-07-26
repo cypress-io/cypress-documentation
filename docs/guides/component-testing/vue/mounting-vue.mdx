@@ -70,11 +70,15 @@ describe('<Stepper>', () => {
 
 Here, we have a single test that ensures that our component mounts.
 
-> If you're coming from Vue Test Utils, please note that the return value of
-> `mount` is not used. Cypress Component tests can and should be agnostic to the
-> framework internals and accessing the
-> [`wrapper`](https://test-utils.vuejs.org/api/#wrapper-methods) that Vue Test
-> Utils rely on is rarely necessary.
+:::note
+
+If you're coming from Vue Test Utils, please note that the return value of
+`mount` is not used. Cypress Component tests can and should be agnostic to the
+framework internals and accessing the
+[`wrapper`](https://test-utils.vuejs.org/api/#wrapper-methods) that Vue Test
+Utils rely on is rarely necessary.
+
+:::
 
 ## Running the Test
 

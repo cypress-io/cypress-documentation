@@ -20,7 +20,7 @@ cy.url(options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```javascript
 cy.url() // Yields the current URL as a string
@@ -28,7 +28,7 @@ cy.url() // Yields the current URL as a string
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right" /> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.url()`.
 
@@ -42,7 +42,7 @@ Pass in an options object to change the default behavior of `cy.url()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.url()` 'yields the current URL as a string' </li></List>
+- `cy.url()` 'yields the current URL as a string' 
 
 ## Examples
 
@@ -128,18 +128,18 @@ cy.url().should('contain', '#users/new')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.url()` requires being chained off of `cy`.</li></List>
+- `cy.url()` requires being chained off of `cy`.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.url()` will automatically
+- `cy.url()` will automatically
 [retry](/guides/core-concepts/retry-ability) until all chained assertions have
-passed</li></List>
+passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.url()` can time out waiting for assertions you've added to
-pass.</li></List>
+- `cy.url()` can time out waiting for assertions you've added to
+pass.
 
 ## Command Log
 

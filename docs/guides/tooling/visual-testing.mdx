@@ -4,7 +4,7 @@ title: Visual Testing
 
 :::info
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn
 
 - How visual testing complements functional testing
 - How to implement visual diffing yourself or using 3rd party service
@@ -12,7 +12,7 @@ title: Visual Testing
 
 :::
 
-## Functional vs visual testing
+## Functional vs. visual testing
 
 Cypress is a _functional_ test runner. It drives the web application the way a
 user would, and checks if the app _functions_ as expected: if the expected
@@ -139,8 +139,10 @@ Second joint webinar with Applitools with a focus on
 
 <!-- textlint-enable -->
 
-<Icon name="external-link-alt"></Icon>
-[https://applitools.com](https://applitools.com/)
+<Icon
+  name="external-link-alt"
+  url="https://applitools.com/"
+/>
 
 | Resource                                                                     | Description                                                                                                                                                   |
 | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -157,11 +159,14 @@ Second joint webinar with Applitools with a focus on
 
 <!-- textlint-enable -->
 
-<Icon name="external-link-alt"></Icon> [https://percy.io](https://percy.io/)
+<Icon
+  name="external-link-alt"
+  url="https://percy.io/"
+/>
 
 :::info
 
-##### <Icon name="graduation-cap"></Icon> Real World Example <Badge type="success">New</Badge>
+##### <Icon name="graduation-cap" /> Real World Example <Badge type="success">New</Badge>
 
 The Cypress
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses
@@ -192,7 +197,10 @@ to see these Percy and Cypress in action.
 
 <!-- textlint-enable -->
 
-<Icon name="external-link-alt"></Icon> [https://happo.io/](https://happo.io/)
+<Icon
+  name="external-link-alt"
+  url="https://happo.io/"
+/>
 
 | Resource                                                                             | Description                                                                                                                                 |
 | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -227,7 +235,7 @@ As a general rule there are some best practices when visual testing.
 
 ### Recognize the need for visual testing
 
-**<Icon name="exclamation-triangle" color="red"></Icon> assertions that verify
+**<Icon name="exclamation-triangle" color="red" /> assertions that verify
 style properties**
 
 ```js
@@ -245,14 +253,14 @@ verify the page appearance.
 
 :::tip
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Take a
+<Icon name="check-circle" color="green" /> <strong>Best Practice:</strong> Take a
 snapshot after you confirm the page is done changing.
 
 :::
 
 For example, if the snapshot command is `cy.mySnapshotCommand`:
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
 
 ```js
 // the web application takes time to add the new item,
@@ -261,7 +269,7 @@ cy.get('.new-todo').type('write tests{enter}')
 cy.mySnapshotCommand()
 ```
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```js
 // use a functional assertion to ensure
@@ -277,7 +285,7 @@ cy.mySnapshotCommand()
 
 :::tip
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Control the
+<Icon name="check-circle" color="green" /> <strong>Best Practice:</strong> Control the
 timestamp inside the application under test.
 
 :::
@@ -298,8 +306,7 @@ cy.mySnapshotCommand()
 
 :::tip
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use
-[cy.fixture()](/api/commands/fixture) and network mocking to set the application
+<Icon name="check-circle" color="green" /> <strong>Best Practice:</strong> Use <a href="/api/commands/fixture">cy.fixture()</a> and network mocking to set the application
 state.
 
 :::
@@ -319,7 +326,7 @@ cy.mySnapshotCommand()
 
 :::tip
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use visual
+<Icon name="check-circle" color="green" /> <strong>Best Practice:</strong> Use visual
 diffing to check individual DOM elements rather than the entire page.
 
 :::
@@ -331,9 +338,7 @@ breaking tests in other unrelated components.
 
 :::tip
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Use
-[Component Testing plugins](/plugins/directory) to test the individual
-components functionality in addition to end-to-end and visual tests.
+<Icon name="check-circle" color="green" /> <strong>Best Practice:</strong> Use <a href="/plugins/directory"> Component Testing plugins</a> to test the individual components functionality in addition to end-to-end and visual tests.
 
 :::
 
@@ -351,10 +356,7 @@ the
 - [Plugins](/guides/tooling/plugins-guide)
 - [Visual Testing Plugins](/plugins/directory#visual-testing)
 - [Writing a Plugin](/api/plugins/writing-a-plugin)
-- <Icon name="github"></Icon>
-  [Cypress Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
-  is a full stack example application that demonstrates **best practices and
-  scalable strategies with Cypress in practical and realistic scenarios**.
+- <Icon name="github" contentType="rwa" /> is a full stack example application that demonstrates **best practices and scalable strategies with Cypress in practical and realistic scenarios**.
 - Read the blog post
   [Debug a Flaky Visual Regression Test](https://www.cypress.io/blog/2020/10/02/debug-a-flaky-visual-regression-test/)
 - Read the blog post

@@ -20,13 +20,13 @@ structure as its subject.
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```javascript
 cy.getCookies().spread(() => {}) // Yield all cookies
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
 
 ```javascript
 cy.spread(() => {}) // Errors, cannot be chained off 'cy'
@@ -35,11 +35,11 @@ cy.clock().spread() // Errors, 'clock' does not yield an array
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> fn** **_(Function)_**
+**<Icon name="angle-right" /> fn** **_(Function)_**
 
 Pass a function that expands the array into its arguments.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right" /> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.spread()`.
 
@@ -49,10 +49,10 @@ Pass in an options object to change the default behavior of `.spread()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.spread()` 'yields the return value of your callback function'
+- `.spread()` yields the return value of your callback function
 
-</li><li>`.spread()` wll not change the subject if `null` or `undefined` is
-returned.</li></List>
+- `.spread()` will not change the subject if `null` or `undefined` is
+returned.
 
 ## Examples
 
@@ -85,19 +85,20 @@ cy.getCookies().spread((cookie1, cookie2, cookie3) => {
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.spread()` requires being chained off a previous
-command.</li><li>`.spread()` requires being chained off a command that yields an
-array-like structure.</li></List>
+- `.spread()` requires being chained off a previous
+command.
+- `.spread()` requires being chained off a command that yields an
+array-like structure.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.spread()` will only run assertions you have chained once, and will
-not [retry](/guides/core-concepts/retry-ability).</li></List>
+- `.spread()` will only run assertions you have chained once, and will
+not [retry](/guides/core-concepts/retry-ability).
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.spread()` can time out waiting for a promise you've returned to
-resolve.</li></List>
+- `.spread()` can time out waiting for a promise you've returned to
+resolve.
 
 ## Command Log
 

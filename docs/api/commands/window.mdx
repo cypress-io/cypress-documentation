@@ -13,7 +13,7 @@ cy.window(options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```javascript
 cy.window()
@@ -21,7 +21,7 @@ cy.window()
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right" /> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.window()`.
 
@@ -32,7 +32,7 @@ Pass in an options object to change the default behavior of `cy.window()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.window()` 'yields the `window` object' </li></List>
+- `cy.window()` yields the `window` object
 
 ## Examples
 
@@ -128,7 +128,7 @@ beforeEach(() => {
 
 :::info
 
-<strong class="alert-header">When Can The Test Start?</strong>
+<strong>When Can The Test Start?</strong>
 
 [This blog post](https://www.cypress.io/blog/2018/02/05/when-can-the-test-start/)
 explains how to use `cy.window()` to spy on the DOM `prototype` to detect when
@@ -203,18 +203,18 @@ it('should trigger KeyboardEvent with .type inside Cypress event listener', (don
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.window()` requires being chained off of `cy`.</li></List>
+- `cy.window()` requires being chained off of `cy`.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.window()` will automatically
+- `cy.window()` will automatically
 [retry](/guides/core-concepts/retry-ability) until all chained assertions have
-passed</li></List>
+passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.window()` can time out waiting for assertions you've added to
-pass.</li></List>
+- `cy.window()` can time out waiting for assertions you've added to
+pass.
 
 ## Command Log
 

@@ -17,13 +17,13 @@ Uncheck checkbox(es).
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```javascript
 cy.get('[type="checkbox"]').uncheck() // Unchecks checkbox element
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
 
 ```javascript
 cy.uncheck('[type="checkbox"]') // Errors, cannot be chained off 'cy'
@@ -32,15 +32,15 @@ cy.get('p:first').uncheck() // Errors, '.get()' does not yield checkbox
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> value** **_(String)_**
+**<Icon name="angle-right" /> value** **_(String)_**
 
 Value of checkbox that should be unchecked.
 
-**<Icon name="angle-right"></Icon> values** **_(Array)_**
+**<Icon name="angle-right" /> values** **_(Array)_**
 
 Values of checkboxes that should be unchecked.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right" /> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.uncheck()`.
 
@@ -55,8 +55,8 @@ Pass in an options object to change the default behavior of `.uncheck()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.uncheck()` yields the same subject it was given from the previous
-command.</li></List>
+- `.uncheck()` yields the same subject it was given from the previous
+command.
 
 ## Examples
 
@@ -103,22 +103,22 @@ cy.get('[type="checkbox"]').uncheck(['ga', 'ca'])
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.uncheck()` requires being chained off a command that yields DOM
+- `.uncheck()` requires being chained off a command that yields DOM
 element(s).</li><li>.uncheck() requires the element to have type
-`checkbox`.</li></List>
+`checkbox`.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.uncheck()` will automatically wait for the element to reach an
+- `.uncheck()` will automatically wait for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.uncheck()`
 will automatically [retry](/guides/core-concepts/retry-ability) until all
-chained assertions have passed</li></List>
+chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.uncheck()` can time out waiting for the element to reach an
+- `.uncheck()` can time out waiting for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.uncheck()`
-can time out waiting for assertions you've added to pass.</li></List>
+can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

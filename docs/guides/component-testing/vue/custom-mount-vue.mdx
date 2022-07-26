@@ -10,13 +10,13 @@ automatic configuration step.
 If you're using a UI Library like Vuetify or Tailwind, you'll want to replicate
 the setup you're doing in your normal application for your components.
 
-:::caution
+:::danger
 
 Failure to replicate the environment completely may lead to:
 
 1. Your component not compiling at all.
 1. Partially broken functionality.
-1. Broken styles. (Icon fonts, )
+1. Broken styles. (Icon fonts, etc)
 1. Error logs in the console.
 
 :::
@@ -83,7 +83,7 @@ production.
 ## Custom Mount Commands
 
 If you used the automatic configuration option to setup your app, you'll have
-the global `cy.mount` Cypress Command available throughout your tests.
+the global `cy.mount()` Cypress Command available throughout your tests.
 
 As your application grows past the proof-of-concept stage, you'll want to use
 plugins and tools like Vue Router, Vuex, Pinia, or Vue I18n. These are plugins
@@ -189,7 +189,7 @@ compilation errors and quickly find out that **they need to replicate that
 component hierarchy any time they need to mount a component that uses a Vuetify
 component**!
 
-Custom `cy.mount` commands to the rescue! You may find the JSX syntax to be more
+Custom `cy.mount()` commands to the rescue! You may find the JSX syntax to be more
 straightforward.
 
 You'll also need to replicate the plugin setup steps from the Vuetify docs for

@@ -6,7 +6,7 @@ title: Cypress.config
 
 :::info
 
-<strong class="alert-header">New to Cypress?</strong>
+<strong>New to Cypress?</strong>
 
 [Read about configuration first.](/guides/references/configuration)
 
@@ -14,7 +14,7 @@ title: Cypress.config
 
 :::caution
 
-<strong class="alert-header">Scope</strong>
+<strong>Scope</strong>
 
 Configuration set using `Cypress.config` _is only in scope for the current spec
 file._
@@ -26,7 +26,7 @@ Configuration changed in one spec won't be visible in other specs.
 
 :::caution
 
-<strong class="alert-header">Note</strong>
+<strong>Note</strong>
 
 Not all configuration values can be changed during runtime. See [Notes](#Notes)
 below for details.
@@ -44,15 +44,15 @@ Cypress.config(object)
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> name** **_(String)_**
+**<Icon name="angle-right" /> name** **_(String)_**
 
 The name of the configuration to get or set.
 
-**<Icon name="angle-right"></Icon> value** **_(String)_**
+**<Icon name="angle-right" /> value** **_(String)_**
 
 The value of the configuration to set.
 
-**<Icon name="angle-right"></Icon> object** **_(Object)_**
+**<Icon name="angle-right" /> object** **_(Object)_**
 
 Set multiple configuration options with an object literal.
 
@@ -104,7 +104,7 @@ Cypress.config('pageLoadTimeout') // => 60000
 
 :::caution
 
-<strong class="alert-header">Scope</strong>
+<strong>Scope</strong>
 
 Remember, any changes that you make to configuration using this API will be in
 effect for the remainder of the tests _in the same spec file._

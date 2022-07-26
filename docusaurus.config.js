@@ -87,10 +87,10 @@ const config = {
     {
       navbar: {
         title: '',
+        style: 'dark',
         logo: {
           alt: 'My Site Logo',
-          src: '/img/logo/cypress-logo-light.png',
-          srcDark: '/img/logo/cypress-logo-dark.png',
+          src: '/img/logo/cypress-logo-dark.png',
         },
         items: [
           {
@@ -109,7 +109,7 @@ const config = {
             position: 'left',
           },
           {
-            to: '/examples/recipes',
+            to: '/examples/examples/recipes',
             label: 'Examples',
             position: 'left',
           },
@@ -130,8 +130,9 @@ const config = {
           // },
           {
             href: 'https://github.com/cypress-io/cypress-docs',
-            label: 'GitHub',
             position: 'right',
+            className: 'github-logo',
+            'aria-label': 'GitHub repository',
           },
         ],
       },

@@ -11,15 +11,10 @@ export default function DocsImage({
   caption,
   src,
   title,
-  noBorder,
 }: DocsImageProps) {
   return (
     <div className={s.docsImage}>
       <img
-        className={classNames(
-          `${noBorder ? `${s.imageNoBorder}` : ''}`,
-          'object-contain'
-        )}
         src={src}
         alt={alt || title || caption}
         title={title}

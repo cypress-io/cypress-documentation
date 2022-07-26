@@ -3,13 +3,7 @@
 }
 
 .docsImage img {
-  border: 1px solid #999 !important;
   box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.26) !important;
-}
-
-.imageNoBorder {
-  border: none !important;
-  box-shadow: none !important;
 }
 
 .caption {

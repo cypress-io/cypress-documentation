@@ -5,7 +5,7 @@ sidebar_position: 10
 
 :::info
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn
 
 - How to start testing a new project in Cypress.
 - What passing and failing tests look like.
@@ -139,7 +139,7 @@ events, network requests, and more.
 
 :::info
 
-<strong class="alert-header">What are describe, it, and expect?</strong>
+**What are _describe_, _it_, and _expect_ ?**
 
 All of these functions come from
 [Bundled Libraries](/guides/references/bundled-libraries) that Cypress bakes in.
@@ -154,7 +154,7 @@ already have some familiarity and knowledge of. If not, that's okay too.
 
 :::tip
 
-<strong class="alert-header">Using ESlint?</strong>
+<strong>Using ESlint?</strong>
 
 Check out our
 [Cypress ESLint plugin](https://github.com/cypress-io/eslint-plugin-cypress).
@@ -182,7 +182,7 @@ commands:
 3. Interact with that element.
 4. Assert about the content on the page.
 
-### <Icon name="globe"></Icon> Step 1: Visit a page
+### <Icon name="globe" /> Step 1: Visit a page
 
 First, let's visit a web page. We will visit our
 [Kitchen Sink](/examples/examples/applications#Kitchen-Sink) application in this
@@ -222,7 +222,7 @@ have failed.
 
 :::danger
 
-<strong class="alert-header">Only Test Apps You Control</strong>
+<strong>Only Test Apps You Control</strong>
 
 Although in this guide we are testing our example application:
 [`https://example.cypress.io`](https://example.cypress.io) - you **shouldn't**
@@ -241,7 +241,7 @@ for scripting live, production websites not under your control.
 
 :::
 
-### <Icon name="search"></Icon> Step 2: Query for an element
+### <Icon name="search" /> Step 2: Query for an element
 
 Now that we've got a page loaded, we need to take some action on it. Why don't
 we click a link on the page? Sounds easy enough, let's go look for one we
@@ -294,7 +294,7 @@ describe('My First Test', () => {
 
 :::caution
 
-<strong class="alert-header">Error Messages</strong>
+<strong>Error Messages</strong>
 
 We've taken care at Cypress to write hundreds of custom error messages that
 attempt to clearly explain what went wrong. In this case, Cypress **timed out
@@ -312,7 +312,7 @@ Before we add another command - let's get this test back to passing. Replace
   title="First test with cy.contains()"
 ></DocsVideo>
 
-### <Icon name="mouse-pointer"></Icon> Step 3: Click an element
+### <Icon name="mouse-pointer" /> Step 3: Click an element
 
 Ok, now we want to click on the link we found. How do we do that? Add a
 [.click()](/api/commands/click) command to the end of the previous command, like
@@ -345,7 +345,7 @@ Now we can assert something about this new page!
 
 <IntellisenseCodeCompletion />
 
-### <Icon name="check-square"></Icon> Step 4: Make an assertion
+### <Icon name="check-square" /> Step 4: Make an assertion
 
 Let's make an assertion about something on the new page we clicked into. Perhaps
 we'd like to make sure the new URL is the expected URL. We can do that by
@@ -417,22 +417,30 @@ And there you have it: a short test in Cypress that visits a page, finds and
 clicks a link, verifies the URL and then verifies the behavior of an element on
 the new page. If we read it out loud, it might sound like:
 
-> 1. Visit: `https://example.cypress.io`
-> 2. Find the element with content: `type`
-> 3. Click on it
-> 4. Get the URL
-> 5. Assert it includes: `/commands/actions`
-> 6. Get the input with the `action-email` class
-> 7. Type `fake@email.com` into the input
-> 8. Assert the input reflects the new value
+:::note
 
-Or in the Given, When, Then syntax:
+1. _Visit: `https://example.cypress.io`_
+2. _Find the element with content: `type`_
+3. _Click on it_
+4. _Get the URL_
+5. _Assert it includes: `/commands/actions`_
+6. _Get the input with the `action-email` data-testid_
+7. _Type `fake@email.com` into the input_
+8. _Assert the input reflects the new value_
 
-> 1. Given a user visits `https://example.cypress.io`
-> 2. When they click the link labeled `type`
-> 3. And they type "fake@email.com" into the `.action-email` input
-> 4. Then the URL should include `/commands/actions`
-> 5. And the `.action-email` input has "fake@email.com" as its value
+:::
+
+Or in the _Given_, _When_, _Then_ syntax:
+
+:::note
+
+1. _**Given** a user visits `https://example.cypress.io`_
+2. _**When** they click the link labeled `type`_
+3. _And they type "fake@email.com" into the `[data-testid="action-email"]` input_
+4. _**Then** the URL should include `/commands/actions`_
+5. _And the `[data-testid="action-email"]` input has "fake@email.com" as its value_
+
+:::
 
 And hey, this is a very clean test! We didn't have to say anything about _how_
 things work, just that we'd like to verify a particular series of events and
@@ -445,7 +453,7 @@ outcomes.
 
 :::info
 
-<strong class="alert-header">Page Transitions</strong>
+<strong>Page Transitions</strong>
 
 Worth noting is that this test transitioned across two different pages.
 
@@ -483,9 +491,7 @@ These various timeouts are defined in the
 - Set up
   [intelligent code completion](/guides/tooling/IDE-integration#Intelligent-Code-Completion)
   for Cypress commands and assertions.
-- Check out the <Icon name="github"></Icon>
-  [Cypress Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
-  for practical demonstrations of Cypress testing practices, configuration, and
+- Check out the <Icon name="github" inline="true" contentType="rwa" /> for practical demonstrations of Cypress testing practices, configuration, and
   strategies in a real-world project.
 - Search Cypress's documentation to quickly find what you need.
 

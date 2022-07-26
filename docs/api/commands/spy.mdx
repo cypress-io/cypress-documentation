@@ -20,7 +20,7 @@ cy.spy(object, method)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```javascript
 cy.spy(user, 'addFriend')
@@ -28,11 +28,11 @@ cy.spy(user, 'addFriend')
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> object** **_(Object)_**
+**<Icon name="angle-right" /> object** **_(Object)_**
 
 The `object` that has the `method` to be wrapped.
 
-**<Icon name="angle-right"></Icon> method** **_(String)_**
+**<Icon name="angle-right" /> method** **_(String)_**
 
 The name of the `method` on the `object` to be wrapped.
 
@@ -133,15 +133,15 @@ can be used without any configuration.
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.spy()` requires being chained off of `cy`.</li></List>
+- `cy.spy()` requires being chained off of `cy`.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.spy()` cannot have any assertions chained.</li></List>
+- `cy.spy()` cannot have any assertions chained.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.spy()` cannot time out.</li></List>
+- `cy.spy()` cannot time out.
 
 ## Command Log
 

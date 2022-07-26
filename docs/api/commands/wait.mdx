@@ -18,7 +18,7 @@ cy.wait(aliases, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```javascript
 cy.wait(500)
@@ -27,29 +27,29 @@ cy.wait('@getProfile')
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> time** **_(Number)_**
+**<Icon name="angle-right" /> time** **_(Number)_**
 
 The amount of time to wait in milliseconds.
 
-**<Icon name="angle-right"></Icon> alias** **_(String)_**
+**<Icon name="angle-right" /> alias** **_(String)_**
 
 An aliased route as defined using the [`.as()`](/api/commands/as) command and
 referenced with the `@` character and the name of the alias.
 
 :::info
 
-<strong class="alert-header">Core Concept</strong>
+<strong>Core Concept</strong>
 
 [You can read more about aliasing routes in our Core Concept Guide](/guides/guides/network-requests#Waiting).
 
 :::
 
-**<Icon name="angle-right"></Icon> aliases** **_(Array)_**
+**<Icon name="angle-right" /> aliases** **_(Array)_**
 
 An array of aliased routes as defined using the [`.as()`](/api/commands/as)
 command and referenced with the `@` character and the name of the alias.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right" /> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.wait()`.
 
@@ -64,13 +64,13 @@ Pass in an options object to change the default behavior of `cy.wait()`.
 
 #### When given a `time` argument:
 
-<List><li>`cy.wait()` yields the same subject it was given from the previous
-command.</li></List>
+- `cy.wait()` yields the same subject it was given from the previous
+command.
 
 #### When given an `alias` argument:
 
-<List><li>`cy.wait()` 'yields an object containing the HTTP request and response
-properties of the request' </li></List>
+- `cy.wait()` 'yields an object containing the HTTP request and response
+properties of the request'
 
 ## Examples
 
@@ -84,7 +84,7 @@ cy.wait(2000) // wait for 2 seconds
 
 :::caution
 
-<strong class="alert-header">Anti-Pattern</strong>
+<strong>Anti-Pattern</strong>
 
 You almost **never** need to wait for an arbitrary period of time. There are
 always better ways to express this in Cypress.
@@ -258,20 +258,20 @@ requests to complete within the given `requestTimeout` and `responseTimeout`.
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>When passed a `time` argument `cy.wait()` can be chained off of `cy`
+- When passed a `time` argument `cy.wait()` can be chained off of `cy`
 or off another command..</li><li>When passed an `alias` argument `cy.wait()`
-requires being chained off of `cy`..</li></List>
+requires being chained off of `cy`..
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.wait()` will only run assertions you have chained once, and will
-not [retry](/guides/core-concepts/retry-ability).</li></List>
+- `cy.wait()` will only run assertions you have chained once, and will
+not [retry](/guides/core-concepts/retry-ability).
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.wait()` can time out waiting for the request to go
+- `cy.wait()` can time out waiting for the request to go
 out.</li><li>`cy.wait()` can time out waiting for the response to
-return.</li></List>
+return.
 
 ## Command Log
 

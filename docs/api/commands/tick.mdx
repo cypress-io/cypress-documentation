@@ -20,7 +20,7 @@ cy.tick(milliseconds, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```javascript
 cy.tick(500)
@@ -28,12 +28,12 @@ cy.tick(500)
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> milliseconds** **_(Number)_**
+**<Icon name="angle-right" /> milliseconds** **_(Number)_**
 
 The number of `milliseconds` to move the clock. Any timers within the affected
 range of time will be called.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right" /> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.tick()`.
 
@@ -120,18 +120,18 @@ cy.clock().invoke('restore')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.tick()` requires being chained off of `cy`.</li><li>`cy.tick()`
-requires that `cy.clock()` be called before it.</li></List>
+- `cy.tick()` requires being chained off of `cy`.</li><li>`cy.tick()`
+requires that `cy.clock()` be called before it.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.tick()` is a utility command.</li><li>`cy.tick()` will not run
+- `cy.tick()` is a utility command.</li><li>`cy.tick()` will not run
 assertions. Assertions will pass through as if this command did not
-exist.</li></List>
+exist.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.tick()` cannot time out.</li></List>
+- `cy.tick()` cannot time out.
 
 ## Command Log
 

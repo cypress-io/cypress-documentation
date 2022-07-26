@@ -50,7 +50,7 @@
       "slides": "https://cypress.slides.com/amirrustam/patterns-practices"
     },
     {
-      "title": "How GoFundMe’s QA Engineers and Developers Test 30x Faster with Cypress",
+      "title": "How GoFundMe's QA Engineers and Developers Test 30x Faster with Cypress",
       "date": "August 26, 2020",
       "author": "Cypress & GoFundMe with Gleb Bahmutov and Todd Williams",
       "youtubeId": "fIVZjlHUm8g"
@@ -107,13 +107,13 @@
       "youtubeId": "Tx6Lg9mwcCE"
     },
     {
-      "title": "Spotahome’s Test-First Engineering Culture Using Cypress",
+      "title": "Spotahome's Test-First Engineering Culture Using Cypress",
       "date": "Aug 13, 2019",
       "author": "Cypress & Spotahome with Borja Guzman, David Zambrana & Steven Yi",
       "youtubeId": "3YODposgH5A"
     },
     {
-      "title": "From Zero to Hero with Cypress: Slido’s journey of creating E2E tests without JS experience",
+      "title": "From Zero to Hero with Cypress: Slido's journey of creating E2E tests without JS experience",
       "date": "Aug 7, 2019",
       "author": "Cypress & sli.do with Filip Hric, Lubo Droby, & Steven Yi",
       "youtubeId": "Vnlwy-qF90c"
@@ -131,7 +131,7 @@
       "youtubeId": "LcGHiFnBh3Y"
     },
     {
-      "title": "SaltStack’s QA Turnaround Using Cypress.io",
+      "title": "SaltStack's QA Turnaround Using Cypress.io",
       "date": "May 22, 2019",
       "author": "Cypress & Saltstack with Steve Yi & Nate Watts",
       "youtubeId": "8iBna-2gIzM"

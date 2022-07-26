@@ -24,14 +24,14 @@ cy.contains(selector, content, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```javascript
 cy.get('.nav').contains('About') // Yield el in .nav containing 'About'
 cy.contains('Hello') // Yield first el in document containing 'Hello'
 ```
 
-**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+**<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
 
 ```javascript
 cy.title().contains('My App') // Errors, 'title' does not yield DOM element
@@ -40,18 +40,18 @@ cy.getCookies().contains('_key') // Errors, 'getCookies' does not yield DOM elem
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> content** **_(String, Number, RegExp)_**
+**<Icon name="angle-right" /> content** **_(String, Number, RegExp)_**
 
 Get the DOM element containing the content.
 
-**<Icon name="angle-right"></Icon> selector** **_(String selector)_**
+**<Icon name="angle-right" /> selector** **_(String selector)_**
 
 Specify a selector to filter DOM elements containing the text. Cypress will
 _ignore_ its [default preference order](#Notes) for the specified selector.
 Using a selector allows you to return more _shallow_ elements (higher in the
 tree) that contain the specific text.
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right" /> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.contains()`.
 
@@ -64,7 +64,7 @@ Pass in an options object to change the default behavior of `.contains()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.contains()` yields the new DOM element it found.</li></List>
+- `.contains()` yields the new DOM element it found.
 
 ## Examples
 
@@ -424,22 +424,22 @@ cy.contains('Age').find('input').type('29')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.contains()` can be chained off of `cy` or off a command that yields
-DOM element(s).</li></List>
+- `.contains()` can be chained off of `cy` or off a command that yields
+DOM element(s).
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.contains()` will automatically
+- `.contains()` will automatically
 [retry](/guides/core-concepts/retry-ability) until the element(s)
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.contains()`
 will automatically [retry](/guides/core-concepts/retry-ability) until all
-chained assertions have passed</li></List>
+chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.contains()` can time out waiting for the element(s) to
+- `.contains()` can time out waiting for the element(s) to
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.contains()`
-can time out waiting for assertions you've added to pass.</li></List>
+can time out waiting for assertions you've added to pass.
 
 ## Command Log
 

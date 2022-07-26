@@ -4,7 +4,7 @@ title: Environment Variables
 
 :::caution
 
-<strong class="alert-header">Difference between OS-level and Cypress environment
+<strong>Difference between OS-level and Cypress environment
 variables</strong>
 
 In Cypress, "environment variables" are variables that are accessible via
@@ -36,7 +36,7 @@ cy.request(Cypress.env('EXTERNAL_API')) // points to a dynamic env var
 
 :::info
 
-<strong class="alert-header">Using 'baseUrl'</strong>
+<strong>Using 'baseUrl'</strong>
 
 Environment variables are great at pointing to external services and servers, or
 storing password or other credentials.
@@ -109,7 +109,7 @@ Cypress.env('products_url') // '/products'
 
 :::tip
 
-<strong class="alert-header">Benefits</strong>
+<strong>Benefits</strong>
 
 - Great for values that need to be checked into source control and remain the
   same on all machines.
@@ -118,7 +118,7 @@ Cypress.env('products_url') // '/products'
 
 :::danger
 
-<strong class="alert-header">Downsides</strong>
+<strong>Downsides</strong>
 
 - Only works for values that should be the same on across all machines.
 
@@ -153,7 +153,7 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 :::tip
 
-<strong class="alert-header">Benefits</strong>
+<strong>Benefits</strong>
 
 - Dedicated file just for environment variables.
 - Enables you to generate this file from other build processes.
@@ -165,7 +165,7 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 :::danger
 
-<strong class="alert-header">Downsides</strong>
+<strong>Downsides</strong>
 
 - Another file you have to deal with.
 - Overkill for 1 or 2 environment variables.
@@ -240,7 +240,7 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 :::tip
 
-<strong class="alert-header">Benefits</strong>
+<strong>Benefits</strong>
 
 - Quickly export some values.
 - Can be stored in your `bash_profile`.
@@ -251,7 +251,7 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 :::danger
 
-<strong class="alert-header">Downsides</strong>
+<strong>Downsides</strong>
 
 - Not as obvious where values come from versus the other options.
 - No support for nested fields.
@@ -292,7 +292,7 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 :::tip
 
-<strong class="alert-header">Benefits</strong>
+<strong>Benefits</strong>
 
 - Does not require any changes to files or configuration.
 - More clear where environment variables come from.
@@ -303,7 +303,7 @@ Cypress.env('api_server') // 'http://localhost:8888/api/v1/'
 
 :::danger
 
-<strong class="alert-header">Downsides</strong>
+<strong>Downsides</strong>
 
 - Pain to write the `--env` options everywhere you use Cypress.
 - No support for nested fields.
@@ -374,7 +374,7 @@ it(
 
 :::tip
 
-<strong class="alert-header">Benefits</strong>
+<strong>Benefits</strong>
 
 - Only takes effect for duration of suite or test.
 - More clear where environment variables come from.
@@ -388,14 +388,14 @@ If your environment variables match a standard configuration key, then instead
 of setting an `environment variable` they will instead override the
 configuration value.
 
-**_Change the `baseUrl` configuration value / not set env var in
-`Cypress.env()`_**
+**Change the `baseUrl` configuration value / not set env var in
+`Cypress.env()`**
 
 ```shell
 export CYPRESS_BASE_URL=http://localhost:8080
 ```
 
-**_'foo' does not match config / sets env var in `Cypress.env()`_**
+**'foo' does not match config / sets env var in `Cypress.env()`**
 
 ```shell
 export CYPRESS_FOO=bar

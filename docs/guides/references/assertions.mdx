@@ -10,7 +10,7 @@ powerful assertions for free.
 
 :::info
 
-<strong class="alert-header">New to Cypress?</strong>
+<strong>New to Cypress?</strong>
 
 This document is only a reference to every assertion Cypress supports.
 
@@ -23,8 +23,7 @@ guide.
 
 ## Chai
 
-<Icon name="github"></Icon>
-[https://github.com/chaijs/chai](https://github.com/chaijs/chai)
+<Icon name="github" url="https://github.com/chaijs/chai" />
 
 ### BDD Assertions
 
@@ -134,8 +133,7 @@ entire list of available Chai assertions [here](http://chaijs.com/api/assert/).
 
 ## Chai-jQuery
 
-<Icon name="github"></Icon>
-[https://github.com/chaijs/chai-jquery](https://github.com/chaijs/chai-jquery)
+<Icon name="github" url="https://github.com/chaijs/chai-jquery" />
 
 These chainers are available when asserting about a DOM object.
 
@@ -172,8 +170,7 @@ You will commonly use these chainers after using DOM commands like:
 
 ## Sinon-Chai
 
-<Icon name="github"></Icon>
-[https://github.com/domenic/sinon-chai](https://github.com/domenic/sinon-chai)
+<Icon name="github" url="https://github.com/domenic/sinon-chai" />
 
 These chainers are used on assertions with [`cy.stub()`](/api/commands/stub) and
 [`cy.spy()`](/api/commands/spy).
@@ -366,7 +363,7 @@ cy.contains("first todo").should("not.have.class", "completed");
 cy.get('[data-testid="loading"]').should("not.be.visible");
 ```
 
-#### ⚠️ False passing tests
+#### <Icon name="exclamation-triangle" color="red"/> False passing tests
 
 Negative assertions may pass for reasons you weren't expecting. Let's say we
 want to test that a Todo list app adds a new Todo item after typing the Todo and

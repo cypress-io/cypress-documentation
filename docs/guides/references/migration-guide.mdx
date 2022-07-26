@@ -149,7 +149,7 @@ Related notes:
 
 :::info
 
-See the dev server documentation for the UI framework you’re using for more
+See the dev server documentation for the UI framework you're using for more
 specific instructions on what the `devServer` should be for that framework. Some
 examples can be found in our
 [framework documentation](/guides/component-testing/component-framework-configuration).
@@ -2362,7 +2362,7 @@ changes and new features outlined in their
 [changelog](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md). Some
 changes you might notice are described below.
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Breaking Change: invoke `done` callback and return a promise
+#### <Icon name="exclamation-triangle" color="red" /> Breaking Change: invoke `done` callback and return a promise
 
 Starting with
 [Mocha 3.0.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#300--2016-07-31),
@@ -2461,7 +2461,7 @@ it('uses async/await', async () => {
 })
 ```
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Tests require a title
+#### <Icon name="exclamation-triangle" color="red" /> Tests require a title
 
 Tests now require a title and will error when not provided one.
 
@@ -2478,7 +2478,7 @@ changes and new features outlined in
 [Chai's migration guide](https://github.com/chaijs/chai/issues/781). Some
 changes you might notice are described below.
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Breaking Change: assertions expecting numbers
+#### <Icon name="exclamation-triangle" color="red" /> Breaking Change: assertions expecting numbers
 
 Some assertions will now throw an error if the assertion's target or arguments
 are not numbers, including `within`, `above`, `least`, `below`, `most`,
@@ -2492,7 +2492,7 @@ expect(null).to.be.above(10)
 expect('string').to.have.a.length.of.at.least(3)
 ```
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Breaking Change: `empty` assertions
+#### <Icon name="exclamation-triangle" color="red" /> Breaking Change: `empty` assertions
 
 The `.empty` assertion will now throw when it is passed non-string primitives
 and functions.
@@ -2503,7 +2503,7 @@ expect(Symbol()).to.be.empty
 expect(() => {}).to.be.empty
 ```
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Breaking Change: non-existent properties
+#### <Icon name="exclamation-triangle" color="red" /> Breaking Change: non-existent properties
 
 An error will throw when a non-existent property is read. If there are typos in
 property assertions, they will now appear as failures.
@@ -2513,7 +2513,7 @@ property assertions, they will now appear as failures.
 expect(true).to.be.ture
 ```
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Breaking Change: `include` checks strict equality
+#### <Icon name="exclamation-triangle" color="red" /> Breaking Change: `include` checks strict equality
 
 `include` now always use strict equality unless the `deep` property is set.
 
@@ -2554,7 +2554,7 @@ breaking changes and new features outlined in
 [Sinon.JS's migration guide](https://sinonjs.org/releases/latest/#migration-guides).
 Some changes you might notice are described below.
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Breaking Change: stub non-existent properties
+#### <Icon name="exclamation-triangle" color="red" /> Breaking Change: stub non-existent properties
 
 An error will throw when trying to stub a non-existent property.
 
@@ -2563,7 +2563,7 @@ An error will throw when trying to stub a non-existent property.
 cy.stub(obj, 'nonExistingProperty')
 ```
 
-#### <Icon name="exclamation-triangle" color="red"></Icon> Breaking Change: `reset()` replaced by `resetHistory()`
+#### <Icon name="exclamation-triangle" color="red" /> Breaking Change: `reset()` replaced by `resetHistory()`
 
 For spies and stubs, the `reset()` method was replaced by `resetHistory()`.
 

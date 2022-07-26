@@ -5,7 +5,7 @@ sidebar_position: 60
 
 :::info
 
-## <Icon name="graduation-cap"></Icon> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn
 
 - How to deal with async commands
 - What Aliases are and how they simplify your code
@@ -21,7 +21,7 @@ asynchronous nature of our APIs.
 
 :::tip
 
-<strong class="alert-header">Do not worry!</strong>
+<strong>Do not worry!</strong>
 
 There are many ways to reference, compare and utilize the objects that Cypress
 commands yield you.
@@ -44,7 +44,7 @@ The first and most important concept you should recognize is...
 
 :::danger
 
-<strong class="alert-header">Return Values</strong>
+<strong>Return Values</strong>
 
 **You cannot assign or work with the return values** of any Cypress command.
 Commands are enqueued and run asynchronously.
@@ -214,7 +214,7 @@ We could make our code do some ugly backflips using `let` to get access to it.
 
 :::danger
 
-<strong class="alert-header">Do not do this</strong>
+<strong>Do not do this</strong>
 
 This code below is just for demonstration.
 
@@ -246,7 +246,7 @@ better handle these situations.
 
 :::tip
 
-<strong class="alert-header">Introducing Aliases</strong>
+<strong>Introducing Aliases</strong>
 
 Aliases are a powerful construct in Cypress that have many uses. We'll explore
 each of their capabilities below.
@@ -335,7 +335,7 @@ it("utilize users in some way", function () {
 
 :::danger
 
-<strong class="alert-header">Watch out for async commands</strong>
+<strong>Watch out for async commands</strong>
 
 Do not forget that **Cypress commands are async**!
 
@@ -376,7 +376,7 @@ cy.fixture("users.json").then((users) => {
 
 :::caution
 
-<strong class="alert-header">Arrow Functions</strong>
+<strong>Arrow Functions</strong>
 
 Accessing aliases as properties with `this.*` will not work if you use
 [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
@@ -498,10 +498,8 @@ _Usually_, replaying previous commands will return what you expect, but not
 always. It is recommended that you **alias elements as soon as possible**
 instead of further down a chain of commands.
 
-- `cy.get('nav header [data-testid="user"]').as('user')`
-  <Icon name="check-circle" color="green"></Icon> (good)
-- `cy.get('nav').find('header').find('[data-testid="user"]').as('user')`
-  <Icon name="exclamation-triangle" color="red"></Icon> (bad)
+- <Icon name="check-circle" color="green" /> <code>cy.get('nav header [data-testid="user"]').as('user')</code>
+- <Icon name="exclamation-triangle" color="red" /> <code>cy.get('nav').find('header').find('[data-testid="user"]').as('user')</code>
 
 When in doubt, you can _always_ issue a regular [`cy.get()`](/api/commands/get)
 to query for the elements again.
@@ -539,7 +537,7 @@ cy.contains("Successfully created user: Brian");
 
 :::info
 
-<strong class="alert-header">New to Cypress?</strong>
+<strong>New to Cypress?</strong>
 
 [We have a much more detailed and comprehensive guide on routing Network Requests.](/guides/guides/network-requests)
 

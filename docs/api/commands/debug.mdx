@@ -24,7 +24,7 @@ cy.debug(options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```javascript
 cy.debug().getCookie('app') // Pause to debug at beginning of commands
@@ -33,7 +33,7 @@ cy.get('nav').debug() // Debug the `get` command's yield
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right" /> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.debug()`.
 
@@ -43,8 +43,8 @@ Pass in an options object to change the default behavior of `.debug()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.debug()` yields the same subject it was given from the previous
-command.</li></List>
+- `.debug()` yields the same subject it was given from the previous
+command.
 
 ## Examples
 
@@ -60,18 +60,18 @@ cy.get('a').debug().should('have.attr', 'href')
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`.debug()` can be chained off of `cy` or off another
-command.</li></List>
+- `.debug()` can be chained off of `cy` or off another
+command.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`.debug()` is a utility command.</li><li>`.debug()` will not run
+- `.debug()` is a utility command.</li><li>`.debug()` will not run
 assertions. Assertions will pass through as if this command did not
-exist.</li></List>
+exist.
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`.debug()` cannot time out.</li></List>
+- `.debug()` cannot time out.
 
 ## Command Log
 

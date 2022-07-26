@@ -1,13 +1,12 @@
 .badge {
   display: inline-block;
   color: #fff;
-  padding: 0.25em 0.4em;
-  font-size: 0.7rem;
-  line-height: 0.7rem;
+  padding: 0.35em 0.65em;
+  font-size: 0.8rem;
+  line-height: 0.75rem;
   font-weight: 700;
   border-radius: 9999px;
-  @apply px-2;
-  @apply py-1;
+  letter-spacing: 0.04em;
 }
 
 .success {

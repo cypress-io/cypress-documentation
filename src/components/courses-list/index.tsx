@@ -1,5 +1,5 @@
 import React from "react";
-// import s from "./style.module.css";
+import s from "./style.module.css";
 import { PluginProps } from "./types";
 import Badge from "@site/src/components/badge";
 // @ts-ignore
@@ -9,7 +9,7 @@ export default function CoursesList() {
   return (
     <>
       <div className="main-content-article-wrapper">
-        <article className="main-content-article hide-scroll nuxt-content">
+        <article className="main-content-article">
           <p>
             Online courses from that teach end-to-end testing with Cypress over
             multiple videos. <strong>Note:</strong> Some of the courses require
@@ -17,12 +17,12 @@ export default function CoursesList() {
           </p>
           <ul>
             {coursesJSON.courses.map((course, index) => (
-              <li key={index} className="project">
-                <a href={`${course.url}`} target="_blank" className="font-bold">
+              <li key={index}>
+                <a href={`${course.url}`} target="_blank" className={s.title}>
                   {course.title}
                 </a>
 
-                <p>
+                <p className={s.content}>
                   Published on{" "}
                   <a href={`${course.sourceUrl}`}>{course.sourceName}</a> by{" "}
                   {course.authorTwitter && (

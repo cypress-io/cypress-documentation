@@ -23,7 +23,7 @@ cy.get(alias, options)
 
 ### Usage
 
-**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+**<Icon name="check-circle" color="green" /> Correct Usage**
 
 ```javascript
 cy.get('.list > li') // Yield the <li>'s in .list
@@ -31,11 +31,11 @@ cy.get('.list > li') // Yield the <li>'s in .list
 
 ### Arguments
 
-**<Icon name="angle-right"></Icon> selector** **_(String selector)_**
+**<Icon name="angle-right" /> selector** **_(String selector)_**
 
 A selector used to filter matching DOM elements.
 
-**<Icon name="angle-right"></Icon> alias** **_(String)_**
+**<Icon name="angle-right" /> alias** **_(String)_**
 
 An alias as defined using the [`.as()`](/api/commands/as) command and referenced
 with the `@` character and the name of the alias.
@@ -48,13 +48,13 @@ previously aliased DOM element has gone stale.
 
 :::info
 
-<strong class="alert-header">Core Concept</strong>
+<strong>Core Concept</strong>
 
 [You can read more about aliasing objects and elements in our Core Concept Guide](/guides/core-concepts/variables-and-aliases#Aliases).
 
 :::
 
-**<Icon name="angle-right"></Icon> options** **_(Object)_**
+**<Icon name="angle-right" /> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `cy.get()`.
 
@@ -67,7 +67,7 @@ Pass in an options object to change the default behavior of `cy.get()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.get()` yields the DOM element(s) it found.</li></List>
+- `cy.get()` yields the DOM element(s) it found.
 
 ## Examples
 
@@ -127,9 +127,7 @@ cy.get('[id^=local-][id$=-remote]')
 cy.get('#id\\.\\.\\.1234') // escape the character with \\
 ```
 
-### Get in `.within()`
-
-#### `cy.get()` in the [`.within()`](/api/commands/within) command
+### `cy.get()` in the [`.within()`](/api/commands/within) command
 
 Since `cy.get()` is chained off of `cy`, it always looks for the selector within
 the entire `document`. The only exception is when used inside a
@@ -222,22 +220,22 @@ it('disables on click', () => {
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-<List><li>`cy.get()` requires being chained off a command that yields DOM
-element(s).</li></List>
+- `cy.get()` requires being chained off a command that yields DOM
+element(s).
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-<List><li>`cy.get()` will automatically
+- `cy.get()` will automatically
 [retry](/guides/core-concepts/retry-ability) until the element(s)
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`cy.get()`
 will automatically [retry](/guides/core-concepts/retry-ability) until all
-chained assertions have passed</li></List>
+chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
-<List><li>`cy.get()` can time out waiting for the element(s) to
+- `cy.get()` can time out waiting for the element(s) to
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`cy.get()`
-can time out waiting for assertions you've added to pass.</li></List>
+can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
