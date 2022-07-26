@@ -18,7 +18,10 @@
   --ifm-code-font-size: 85%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
   --ifm-font-family-base: 'Source Sans Pro';
-  --ifm-toc-border-color: #eee
+  --ifm-toc-border-color: #eee;
+  --ifm-line-height-base: 1.8;
+  --ifm-global-spacing: 1.3rem;
+  --ifm-table-stripe-background: rgb(243 244 246 / 1);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -86,19 +89,23 @@ header h1 {
 
 .navbar__item {
   padding: 0 1.2rem;
-  font-weight: bold;
-  font-size: large;
+  font-weight: 700;
+  font-size: 1.05rem;
 }
 
 .theme-doc-sidebar-menu {
   padding: 0.75rem;
-  font-weight: 600;
-  font-size: larger;
+  font-weight: 700;
+  font-size: 1.125rem;
 }
 
 .theme-doc-sidebar-item-link-level-2,.theme-doc-sidebar-item-link-level-3>.menu__link {
   font-weight: 500;
-  font-size: large;
+  font-size: 1rem;
+}
+
+.theme-doc-sidebar-item-category {
+  padding-bottom: 0.3rem;
 }
 
 .menu {
@@ -106,12 +113,12 @@ header h1 {
   border-right: 1px solid #f0f3f2;
 }
 
-.theme-doc-sidebar-item-category {
-  padding-bottom: 0.3rem;
+.menu__link--sublist:after {
+  background: var(--ifm-menu-link-sublist-icon) 50%/1.7rem 1.7rem;
 }
 
 .admonition {
-  font-size: large;
+  font-size: 1.125rem;
   margin-bottom: 2rem;
 }
 
@@ -124,8 +131,13 @@ header h1 {
   display: none;
 }
 
+.table-of-contents {
+  line-height: 1.2rem;
+}
+
 div.markdown {
-  font-size: large;
+  font-size: 1.125rem;
+  word-spacing: 1px;
 }
 
 div.markdown a {
@@ -139,6 +151,7 @@ div.markdown a:hover {
 }
 
 div.markdown h2, h3, h4 {
+  font-weight: 700;
   margin-bottom: 1.5rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid #eee;
