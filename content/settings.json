@@ -1,7 +1,7 @@
 {
   "algolia": {
-    "appId": "R9KDA5FMJB",
-    "apiKey": "b4af59e23bc2fa05281af7dcf13fcae5",
-    "indexName": "docs"
+    "appId": "7R8PXL8CC0",
+    "apiKey": "98bc84a42c513c2225e6ef6cae95b32e",
+    "indexName": "cypress"
   }
 }
