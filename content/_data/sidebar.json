@@ -144,6 +144,30 @@
               "title": "Custom Mount Commands for React",
               "slug": "custom-mount-react"
             },
+
+            {
+              "title": "Angular Component Testing"
+            },
+            {
+              "title": "Quickstart: Angular",
+              "slug": "quickstart-angular"
+            },
+            {
+              "title": "Mounting Components",
+              "slug": "mounting-angular"
+            },
+            {
+              "title": "Testing Angular Components",
+              "slug": "testing-angular"
+            },
+            {
+              "title": "Testing Angular Components with Emitted Events",
+              "slug": "events-angular"
+            },
+            {
+              "title": "Testing Angular Components with Slots",
+              "slug": "slot-angular"
+            },
             {
               "title": "Diving Deeper"
             },
