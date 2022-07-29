@@ -19,7 +19,7 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
   --ifm-font-family-base: 'Source Sans Pro';
   --ifm-toc-border-color: #eee;
-  --ifm-line-height-base: 1.8;
+  --ifm-line-height-base: 1.6;
   --ifm-global-spacing: 1.3rem;
   --ifm-table-stripe-background: rgb(243 244 246 / 1);
 }
@@ -45,6 +45,7 @@
   --ifm-toc-border-color: var(--ifm-color-gray-700)
 }
 
+/* CUSTOMIZATIONS */
 [data-theme="dark"] .menu {
   background-color: #1b1b1d;
   border-right: 1px solid var(--ifm-toc-border-color);
@@ -66,7 +67,6 @@
   padding-bottom: 0;
 }
 
-/* CUSTOMIZATIONS */
 article {
   max-width: 90%;
   margin-left: auto;
@@ -123,7 +123,7 @@ header h1 {
 }
 
 .admonition li {
-  margin: 1rem 0
+  margin: 0.9rem 0
 }
 
 .admonition-icon,
@@ -131,8 +131,9 @@ header h1 {
   display: none;
 }
 
-.table-of-contents {
-  line-height: 1.2rem;
+.admonition .admonition-content > h2, h3 {
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
 div.markdown {
@@ -150,6 +151,10 @@ div.markdown a:hover {
   border-bottom-style: solid;
 }
 
+div.markdown ul li {
+  margin: 0.7rem 0;
+}
+
 div.markdown h2, h3, h4 {
   font-weight: 700;
   margin-bottom: 1.5rem;
@@ -165,11 +170,6 @@ div.markdown li p {
 /* test-type pills */
 div.markdown h2 > a {
   border-bottom: none;
-}
-
-.admonition .admonition-content h2, h3 {
-  border-bottom: none;
-  padding-bottom: 0;
 }
 
 /* Font Awesome Icons */
@@ -201,6 +201,7 @@ div.markdown h2 > a {
   height: 100%;
 }
 
+/* main nav icon - applied in docusaurus.config.js */
 .github-logo::before {
   content: '';
   width: 24px;
@@ -212,4 +213,24 @@ div.markdown h2 > a {
 
 .github-logo:hover {
   opacity: 0.6;
+}
+
+/* footer icons */
+.iconExternalLink_node_modules-\@docusaurus-theme-classic-lib-theme-IconExternalLink-styles-module {
+  display: none;
+}
+
+/* give list breathing room */
+.table-of-contents {
+  line-height: 2;
+}
+
+/* but not as much on the children */
+.table-of-contents li ul li {
+  line-height: 1.2;
+}
+
+/* only target top level section titles */
+.table-of-contents > li > .table-of-contents__link {
+  font-weight: bold;
 }
