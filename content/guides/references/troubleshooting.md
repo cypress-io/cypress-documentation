@@ -230,7 +230,7 @@ an issue you have by clearing this app data.
 ### To clear App Data
 
 1. Open Cypress via `cypress open`
-2. Go to `File` -> `View App Data`
+2. Go to `Developer Tools` -> `View App Data`
 3. This will take you to the directory in your file system where your App Data
    is stored. If you cannot open Cypress, search your file system for a
    directory named `cy` whose content should look something like this:
