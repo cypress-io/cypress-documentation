@@ -201,29 +201,16 @@ component**!
 Custom `cy.mount` commands to the rescue! You may find the JSX syntax to be more
 straightforward.
 
-You'll also need to replicate the plugin setup steps from the Vuetify docs for
-everything to compile.
-
 <code-group>
 
 <code-block label="JavaScript" active>
 
 ```js
-import Vuetify from 'vuetify/lib'
 import { VApp } from 'vuetify'
 import { mount } from 'cypress/vue'
 import { h } from 'vue'
 
-// We recommend that you pull this out
-// into a constants file that you share with
-// your main.js file.
-const vuetifyOptions = {}
-
 Cypress.Commands.add('mount', (component, ...args) => {
-  args.global = args.global || {}
-  args.global.plugins = args.global.plugins || []
-  args.global.plugins.push(new Vuetify(vuetifyOptions))
-
   return mount(() => {
     return h(VApp, {}, component)
   }, ...args)
@@ -235,20 +222,10 @@ Cypress.Commands.add('mount', (component, ...args) => {
 <code-block label="With JSX">
 
 ```jsx
-import Vuetify from 'vuetify/lib'
 import { VApp } from 'vuetify'
 import { mount } from 'cypress/vue'
 
-// We recommend that you pull this out
-// into a constants file that you share with
-// your main.js file.
-const vuetifyOptions = {}
-
 Cypress.Commands.add('mount', (component, ...args) => {
-  args.global = args.global || {}
-  args.global.plugins = args.global.plugins || []
-  args.global.plugins.push(new Vuetify(vuetifyOptions))
-
   // <component> is a built-in component that comes with Vue
   return mount(
     () => (
@@ -269,6 +246,63 @@ At this point, you should be able to setup a complex application and mount
 components that use all of Vue's language features.
 
 Congrats! Happy building. 🎉
+
+### Vuetify
+
+<code-group>
+<code-block label="Vuetify 3" active>
+
+```js
+import { mount } from 'cypress/vue'
+import { createVuetify } from 'vuetify'
+import { mergeDeep } from 'vuetify/lib/util/helpers'
+import 'vuetify/styles'
+
+Cypress.Commands.add('mount', (component, options, vuetifyOptions) => {
+  const vuetify = createVuetify(vuetifyOptions)
+  const defaultOptions = {
+    global: {
+      stubs: {
+        transition: false,
+        'transition-group': false
+      },
+      plugins: [vuetify]
+    }
+  }
+  const mountingOptions = mergeDeep(defaultOptions, options, (a, b) => a.concat(b))
+  return mount(component, mountingOptions).as('wrapper')
+})
+```
+</code-block>
+
+<code-block label="Vuetify 2">
+
+```js
+import { mount } from 'cypress/vue2'
+import Vue from 'vue'
+import Vuetify from 'vuetify/lib/framework'
+import { VApp } from 'vuetify/lib/components/VApp'
+
+Vue.use(Vuetify)
+
+Cypress.Commands.add('mount', (component, args) => {
+  args.vuetify = new Vuetify({})
+  return mount({ render: (h) => h(VApp, [h(component, args)]) }, args)
+})
+```
+</code-block>
+</code-group>
+
+Usage:
+```js
+import HelloWorld from '../HelloWorld.vue'
+
+it('renders', () => {
+  const message = 'Hello Cypress'
+  cy.mount(HelloWorld, { props: { msg: message } })
+  cy.get('h1').should('contain', message)
+})
+```
 
 ### Vue Router
 
