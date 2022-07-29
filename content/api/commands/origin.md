@@ -52,9 +52,9 @@ By default Cypress will search through the response streams coming from your
 server on first party `.html` and `.js` files and replace code that matches
 patterns commonly found in framebusting. When using the `cy.origin()` command,
 the third party code may also need to be modified for framebusting techniques.
-This can be enabled by setting
-the [`experimentalModifyObstructiveThirdPartyCode`](/guides/references/experiments) flag
-to `true` in the Cypress config.
+This can be enabled by setting the
+[`experimentalModifyObstructiveThirdPartyCode`](/guides/references/experiments)
+flag to `true` in the Cypress configuration.
 
 </Alert>
 
