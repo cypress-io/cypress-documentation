@@ -29,6 +29,10 @@
   --ifm-font-color-base: #2e3138
 }
 
+[data-theme="light"] .navbar--dark {
+  background-color: rgb(31 41 55 / 1);
+}
+
 [data-theme="light"] .menu__link--active:not(.menu__link--sublist) {
   background: #cff1e6;
 }
