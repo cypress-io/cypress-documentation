@@ -22,7 +22,6 @@ to have. In a sense they prevent you from writing bad, slow, or flaky tests.
 - There will never be support for [multiple browser tabs](#Multiple-tabs).
 - You cannot use Cypress to drive
   [two browsers at the same time](#Multiple-browsers-open-at-the-same-time).
-- Each test is bound to a [single origin](#Same-origin).
 
 #### Temporary trade-offs:
 
@@ -34,6 +33,7 @@ eventually address. [PRs are welcome ;-)](https://on.cypress.io/contributing)
 Many of these issues are currently being worked on or are on our
 [Roadmap](/guides/references/roadmap).
 
+- Currently, we are working to address each test being bound to a [single origin](#Same-origin), with the use of our experimental [origin command](/api/commands/origin).
 - [Workarounds for the lack of a `cy.hover()` command.](/api/commands/hover)
 - [`cy.tab()` command.](https://github.com/cypress-io/cypress/issues/299)
 - [There is not any native or mobile events support.](https://github.com/cypress-io/cypress/issues/311#issuecomment-339824191)
