@@ -162,6 +162,15 @@ Organization to set up SSO.
 
 Follow the instructions below for your specific SSO provider.
 
+<Alert type="warning">
+
+<strong class="alert-header">Smart Card Authentication</strong>
+
+For Smart Card implementation, please reach out to
+[Support](mailto:support@cypress.io) for assistance.
+
+</Alert>
+
 - [Okta](#Okta)
 - [SAML](#SAML)
 - [Azure AD](#Azure-AD)
