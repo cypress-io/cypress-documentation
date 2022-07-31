@@ -29,6 +29,11 @@
   --ifm-font-color-base: #2e3138
 }
 
+/* acessibility contrast */
+[data-theme="light"] .DocSearch-Button-Placeholder {
+  color: #606770
+}
+
 [data-theme="light"] .navbar--dark {
   background-color: rgb(31 41 55 / 1);
 }
@@ -66,11 +71,6 @@
   padding-bottom: 0;
 }
 
-[data-theme="dark"] .admonition .admonition-content h2 {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
 article {
   max-width: 90%;
   margin-left: auto;
@@ -92,10 +92,23 @@ header h1 {
 }
 
 .navbar__item {
-  padding: 0 1.2rem;
   font-weight: 700;
-  font-size: 1.05rem;
+  font-size: 1.00rem;
+  color: rgb(209 213 219 / 1);
+  margin-left: 1rem;
 }
+
+.navbar__link:hover,
+    .navbar__link--active {
+      color: rgb(255 255 255 / 1);
+      background-color: rgb(55 65 81 / 1);
+      border-radius: 0.375rem;
+      padding-top: 0.45rem;
+      padding-bottom: 0.45rem;
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+      text-decoration: none;
+    }
 
 .theme-doc-sidebar-menu {
   padding: 0.75rem;
