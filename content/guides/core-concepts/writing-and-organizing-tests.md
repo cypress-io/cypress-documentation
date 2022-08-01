@@ -545,6 +545,50 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 })
 ```
 
+### Test Isolation
+
+<Alert type="success">
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Clean up
+state **before** tests run.
+</Alert>
+
+Test isolation is the practice of resetting the state _before_ each test.
+
+Cleaning up state ensures the operations of one test does not affect another
+test downstream. When writing tests, the goal for the test is reliably pass when
+ran standalone or in a randomized order. If you have set up your tests in a way
+that requires the state of a previous test, this could potentially break your
+tests.
+
+Cypress supports two modes of test isolation, `default` and `strict`.
+
+#### Default Mode
+
+When in `default` mode, Cypress handles resetting the state for:
+
+- [aliases](/api/commands/as)
+- [cookies](/api/commands/clearcookies)
+- [clock](/api/commands/clock)
+- [intercepts](/api/commands/intercepts)
+- [localStorage](/api/commands/clearlocalstorage)
+- [routes](/api/commands/route)
+- [sessions](/api/commands/session)
+- [spies](/api/commands/spy)
+- [stubs](/api/commands/stub)
+- [viewport](/api/commands/viewport)
+
+#### Strict Mode
+
+<Alert type="success">
+<Icon name="check-circle" color="green"></Icon> Strict mode is only available when the `experimentalSessionAndOrigin` experiment is used and is the default test isolation behavior.
+</Alert>
+
+When in `strict` mode, Cypress handles resetting the state for everything
+outlined above for `default` mode, in addition to clearing the page by visiting
+`about:blank` before each test. This clears the current application state by
+forcing the tester to re-build the application's state for the test to ensure
+the test can reliably pass when ran standalone or in a randomized order.
+
 ### Test Configuration
 
 It is possible to apply

@@ -681,10 +681,8 @@ describe('my form', () => {
 </Alert>
 
 <Alert type="success">
-
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Clean up
 state **before** tests run.
-
 </Alert>
 
 We see many of our users adding code to an `after` or `afterEach` hook in order
@@ -800,11 +798,10 @@ beforeEach(() => {
 ### Is resetting the state necessary?
 
 One final question you should ask yourself is - is resetting the state even
-necessary? Remember, Cypress already automatically clears
-[localStorage](/api/commands/clearlocalstorage),
-[cookies](/api/commands/clearcookies), sessions, etc before each test. Make sure
-you are not trying to clean up state that is already cleaned up by Cypress
-automatically.
+necessary? Remember, Cypress already automatically enforces [test
+isolation]((/guides/core-concepts/test-isolation) by clearing state before each
+test. Make sure you are not trying to clean up state that is already cleaned up
+by Cypress automatically.
 
 If the state you are trying to clean lives on the server - by all means, clean
 that state. You will need to run these types of routines! But if the state is
