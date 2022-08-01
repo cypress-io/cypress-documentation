@@ -581,8 +581,8 @@ When in `default` mode, Cypress handles resetting the state for:
 
 #### Strict Mode
 
-<Alert type="success">
-<Icon name="check-circle" color="green"></Icon> Strict mode is only available when the `experimentalSessionAndOrigin` experiment is used and is the default test isolation behavior.
+<Alert type="info">
+<Icon name="circle-info" color="#2a98b9"></Icon> Strict mode is only available when the `experimentalSessionAndOrigin` experiment is used and is the default test isolation behavior.
 </Alert>
 
 When in `strict` mode, Cypress handles resetting the state for everything
