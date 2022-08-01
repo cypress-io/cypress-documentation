@@ -19,7 +19,11 @@ components within Cypress's sandboxed iframe and handling and framework-specific
 cleanup.
 
 ```js
+// React 16, 17
 import { mount } from 'cypress/react'
+
+// React 18
+import { mount } from 'cypress/react18'
 ```
 
 ### Using `cy.mount()` Anywhere
