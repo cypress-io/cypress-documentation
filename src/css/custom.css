@@ -21,7 +21,7 @@
   --ifm-toc-border-color: #eee;
   --ifm-line-height-base: 1.6;
   --ifm-global-spacing: 1.3rem;
-  --ifm-table-stripe-background: rgb(243 244 246 / 1);
+  --ifm-table-stripe-background: rgb(243, 244, 246);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -35,7 +35,7 @@
 }
 
 [data-theme="light"] .navbar--dark {
-  background-color: rgb(31 41 55 / 1);
+  background-color: rgb(31, 41, 55);
 }
 
 [data-theme="light"] .menu__link--active:not(.menu__link--sublist) {
@@ -130,6 +130,7 @@ header h1 {
   border-right: 1px solid #f0f3f2;
 }
 
+/* sidebar link chevrons */
 .menu__link--sublist:after {
   background: var(--ifm-menu-link-sublist-icon) 50%/1.7rem 1.7rem;
 }
@@ -151,6 +152,11 @@ header h1 {
 .admonition .admonition-content > h2, h3 {
   border-bottom: none;
   padding-bottom: 0;
+}
+
+div[class^=announcementBar] {
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 div.markdown {
@@ -232,9 +238,16 @@ div.markdown h2 > a {
   opacity: 0.6;
 }
 
-/* footer icons */
+/*
+ * footer icons
+ * this is gross TODO: explore swizzling this component
+*/
 .iconExternalLink_node_modules-\@docusaurus-theme-classic-lib-theme-IconExternalLink-styles-module {
   display: none;
+}
+
+.footer__links {
+  margin-bottom: 2rem;
 }
 
 /* give list breathing room */
@@ -247,7 +260,7 @@ div.markdown h2 > a {
   line-height: 1.2;
 }
 
-/* only target top level section titles */
+/* only target top level section titles in right sode TOC */
 .table-of-contents > li > .table-of-contents__link {
   font-weight: bold;
 }
