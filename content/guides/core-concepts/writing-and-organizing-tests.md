@@ -548,8 +548,10 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 ### Test Isolation
 
 <Alert type="success">
+
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Clean up
 state **before** tests run.
+
 </Alert>
 
 Test isolation is the practice of resetting the state _before_ each test.
