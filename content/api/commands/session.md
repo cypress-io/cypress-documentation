@@ -820,7 +820,7 @@ session `id` value:
   <DocsImage src="/img/api/session/session-collapsed-new.png" alt="New session (collapsed)"></DocsImage>
 
 - A saved session was found, and used:
-  <DocsImage src="/img/api/session/session-collapsed-saved.png" alt="Saved session (collapsed)"></DocsImage>
+  <DocsImage src="/img/api/session/session-collapsed-restored.png" alt="Saved session (collapsed)"></DocsImage>
 
 - A saved session was found, but the `validate` function failed, so the session
   was recreated and saved:
