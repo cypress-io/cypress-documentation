@@ -139,7 +139,14 @@ const config = {
           },
         ],
       },
-
+      // optional, can be commented out
+      announcementBar: {
+        content:
+          '🚀 Looking to move to Cypress v10? Check out the <a target="_blank" rel="noopener noreferrer" href="/guides/references/migration-guide">migration guide!</a>',
+        backgroundColor: 'rgba(255, 186, 0, 0.15)',
+        textColor: '#091E42',
+        isCloseable: false,
+      },
       footer: {
         style: 'dark',
         links: [
