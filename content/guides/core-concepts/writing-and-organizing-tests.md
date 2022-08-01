@@ -581,8 +581,16 @@ When in `default` mode, Cypress handles resetting the state for:
 
 #### Strict Mode
 
-<Alert type="info">
-<Icon name="circle-info" color="#2a98b9"></Icon> Strict mode is only available when the `experimentalSessionAndOrigin` experiment is used and is the default test isolation behavior.
+<Alert type="warning">
+
+<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
+Experimental</strong>
+
+Strict mode is currently experimental and can be enabled by setting
+the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
+to `true` in the Cypress config. This is the default test isolation behavior
+when using the `experimentalSessionAndOrigin` experiment.
+
 </Alert>
 
 When in `strict` mode, Cypress handles resetting the state for everything
