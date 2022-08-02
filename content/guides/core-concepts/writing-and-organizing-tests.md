@@ -556,11 +556,9 @@ state **before** tests run.
 
 Test isolation is the practice of resetting the state _before_ each test.
 
-Cleaning up state ensures the operations of one test does not affect another
-test downstream. When writing tests, the goal for the test is reliably pass when
-ran standalone or in a randomized order. If you have set up your tests in a way
-that requires the state of a previous test, this could potentially break your
-tests.
+Cleaning up state ensures that the operation of one test does not affect another
+test later on. The goal for each test should be to reliably pass whether
+run in isolation or consecutively with other tests. Having tests that depend on the state of an earlier test can potentially cause nondeterministic test failures.
 
 Cypress supports two modes of test isolation, `default` and `strict`.
 
