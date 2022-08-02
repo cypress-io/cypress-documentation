@@ -554,7 +554,7 @@ state **before** tests run.
 
 </Alert>
 
-Test isolation is the practice of resetting the state _before_ each test.
+Test isolation is the practice of resetting application state _before_ each test.
 
 Cleaning up state ensures that the operation of one test does not affect another
 test later on. The goal for each test should be to reliably pass whether
