@@ -24,12 +24,15 @@ declare global {
   }
 }
 
-Cypress.Commands.add('mount', (component: Type<unknown> | string, config) => {
-  return mount(component, {
-    ...config,
-    autoSpyOutputs: true,
-  })
-})
+Cypress.Commands.add(
+  'mount',
+  (component: Type<unknown> | string, config: MountConfig<T>) => {
+    return mount(component, {
+      ...config,
+      autoSpyOutputs: true,
+    })
+  }
+)
 ```
 
 </code-block>
