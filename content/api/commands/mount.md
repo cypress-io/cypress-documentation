@@ -34,7 +34,7 @@ the commands file using
 [`Cypress.Commands.add()`](/api/cypress-api/custom-commands). Below are examples
 to start with for your commands:
 
-<code-group-react-vue2-vue3>
+<code-group-react-vue2-vue3-angular>
 <template #react>
 
 ```js
@@ -102,7 +102,18 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 ```
 
 </template>
-</code-group-react-vue2-vue3>
+<template #angular>
+
+```js
+import { mount } from 'cypress/angular'
+
+Cypress.Commands.add('mount', (component, config) => {
+  return mount(component, config)
+})
+```
+
+</template>
+</code-group-react-vue2-vue3-angular>
 
 ## Adding TypeScript Typings for `cy.mount()` Commands
 
@@ -115,7 +126,7 @@ The typings need to be in a location that any code can access, therefore, we
 recommend creating a `cypress.d.ts` file in the root directory, and use this
 example as a starting point for customizing your own command:
 
-<code-group-react-vue>
+<code-group-react-vue-angular>
 <template #react>
 
 ```ts
@@ -162,7 +173,22 @@ declare global {
 ```
 
 </template>
-</code-group-react-vue>
+<template #angular>
+
+```ts
+import { mount } from 'cypress/angular'
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      mount: typeof mount
+    }
+  }
+}
+```
+
+</template>
+</code-group-react-vue-angular>
 
 If your tests have trouble finding the types for the custom commands, manually
 include the `cypress.d.ts` file in all your `tsconfig.json` files like so:
