@@ -1,14 +1,9 @@
 {
-  "position": 2.5,
   "label": "Changelog",
   "collapsible": true,
-  "collapsed": false,
-  "className": "red",
+  "collapsed": true,
   "link": {
     "type": "generated-index",
-    "title": "Tutorial overview"
-  },
-  "customProps": {
-    "description": "This description can be used in the swizzled DocCard"
+    "title": "Changelog"
   }
 }
