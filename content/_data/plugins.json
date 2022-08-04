@@ -610,6 +610,13 @@
           "link": "https://github.com/elaichenkov/cy-verify-downloads",
           "keywords": ["commands", "assertions", "wait", "verify", "download"],
           "badge": "community"
+        },
+        {
+          "name": "mongodb-cypress",
+          "description": "Cypress custom command to query a MongoDB database",
+          "link": "https://github.com/nilgaar/mongodb-cypress",
+          "keywords": ["commands", "database", "mongo", "mongodb"],
+          "badge": "community"
         }
       ]
     },
