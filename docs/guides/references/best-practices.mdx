@@ -12,7 +12,7 @@ import TOCInline from '@theme/TOCInline';
 
 :::info
 
-### <Icon name="graduation-cap" /> Real World Practices
+### <Icon name="graduation-cap" /> Real World Practices {#Icon-namegraduation-cap--Real-World-Practices}
 
 The Cypress team maintains the <Icon name="github" inline="true" contentType="rwa" />, a
 full stack example application that demonstrates **best practices and scalable strategies with Cypress in practical and realistic scenarios**.
@@ -30,7 +30,7 @@ and start testing.
 
 :::
 
-## Organizing Tests, Logging In, Controlling State
+## Organizing Tests, Logging In, Controlling State {#Organizing-Tests-Logging-In-Controlling-State}
 
 :::danger
 
@@ -57,7 +57,7 @@ We have several
 [Logging in recipes](https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes)
 in our examples.
 
-## Selecting Elements
+## Selecting Elements {#Selecting-Elements}
 
 :::danger
 
@@ -87,7 +87,7 @@ Luckily, it is possible to avoid both of these problems.
 2. Don't target elements that may change their `textContent`
 3. Add `data-*` attributes to make it easier to target elements
 
-### How It Works:
+### How It Works: {#How-It-Works}
 
 Given a button that we want to interact with:
 
@@ -143,7 +143,7 @@ When determining an unique selector it will automatically prefer elements with:
 
 :::
 
-#### <Icon name="graduation-cap" /> Real World Example
+#### <Icon name="graduation-cap" /> Real World Example {#Icon-namegraduation-cap--Real-World-Example}
 
 The [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
 uses two useful custom commands for selecting elements for testing:
@@ -172,7 +172,7 @@ _<Icon name="github" /> Source:
 
 :::
 
-### Text Content:
+### Text Content: {#Text-Content}
 
 After reading the above rules you may be wondering:
 
@@ -205,7 +205,7 @@ If the answer is **no** because the text could be changed - then use
 [`cy.get()`](/api/commands/get) with data attributes. Changing the text to
 `Save` would then not cause a test failure.
 
-## Assigning Return Values
+## Assigning Return Values {#Assigning-Return-Values}
 
 :::danger
 
@@ -260,7 +260,7 @@ If you're familiar with Cypress commands already, but find yourself using
 For working with either of these patterns, please read our
 [Variables and Aliases guide](/guides/core-concepts/variables-and-aliases).
 
-## Visiting external sites
+## Visiting external sites {#Visiting-external-sites}
 
 :::danger
 
@@ -300,7 +300,7 @@ because:
 
 Let's look at a few strategies for dealing with these situations.
 
-### When logging in:
+### When logging in: {#When-logging-in}
 
 Many OAuth providers run A/B experiments, which means that their login screen is
 dynamically changing. This makes automated testing difficult.
@@ -338,7 +338,7 @@ affect other tests downstream.
 
 :::
 
-### 3rd party servers:
+### 3rd party servers: {#3rd-party-servers}
 
 Sometimes actions that you take in your application **may** affect another 3rd
 party application. These situations are not that common, but it is possible.
@@ -352,7 +352,7 @@ GitHub's APIs directly.
 
 This avoids ever needing to touch the UI of another application.
 
-### Verifying sent emails:
+### Verifying sent emails: {#Verifying-sent-emails}
 
 Typically, when going through scenarios like user registration or forgotten
 passwords, your server schedules an email to be delivered.
@@ -387,7 +387,7 @@ email's functionality and visual style:
    environment variables. Some email services already provide
    [Cypress plugins](/plugins/directory#Email) to access emails.
 
-## Having tests rely on the state of previous tests
+## Having tests rely on the state of previous tests {#Having-tests-rely-on-the-state-of-previous-tests}
 
 :::danger
 
@@ -455,7 +455,7 @@ specific order in order to pass.
 
 Here's 2 ways we can fix this:
 
-### 1. Combine into one test
+### 1. Combine into one test {#1-Combine-into-one-test}
 
 :::visit-mount-example
 
@@ -483,7 +483,7 @@ Now we can put an `.only` on this test and it will run successfully irrespective
 of any other test. The ideal Cypress workflow is writing and iterating on a
 single test at a time.
 
-### 2. Run shared code before each test
+### 2. Run shared code before each test {#2-Run-shared-code-before-each-test}
 
 :::visit-mount-example
 
@@ -517,7 +517,7 @@ We're also paving the way to make it less complicated to write multiple tests
 against the "default" state of the form. That way each test stays lean but each
 can be run independently and pass.
 
-## Creating "tiny" tests with a single assertion <E2EOnlyBadge />
+## Creating "tiny" tests with a single assertion <E2EOnlyBadge /> {#Creating-tiny-tests-with-a-single-assertion-E2EOnlyBadge-}
 
 :::danger
 
@@ -603,7 +603,7 @@ describe('my form', () => {
 })
 ```
 
-## Using `after` or `afterEach` hooks
+## Using `after` or `afterEach` hooks {#Using-after-or-afterEach-hooks}
 
 :::danger
 
@@ -642,7 +642,7 @@ describe('logged in user', () => {
 
 Let's look at why this is not really necessary.
 
-### Dangling state is your friend:
+### Dangling state is your friend: {#Dangling-state-is-your-friend}
 
 One of the **best** parts of Cypress is its emphasis on debuggability. Unlike
 other testing tools - when your tests end - you are left with your working
@@ -667,7 +667,7 @@ always leave you with the same login page at the end of the test. In order to
 debug your application or write a partial test, you would always be left
 commenting out your custom `cy.logout()` command.
 
-### It's all downside with no upside:
+### It's all downside with no upside: {#Its-all-downside-with-no-upside}
 
 For the moment, let's assume that for some reason your application desperately
 **needs** that last bit of `after` or `afterEach` code to run. Let's assume that
@@ -705,7 +705,7 @@ If this state cleanup is **truly** required, then the next test will instantly
 fail. Why? Because resetting the state never happened when you refreshed
 Cypress.
 
-### State reset should go before each test:
+### State reset should go before each test: {#State-reset-should-go-before-each-test}
 
 The simplest solution here is to move your reset code to **before** the test
 runs.
@@ -730,7 +730,7 @@ beforeEach(() => {
 })
 ```
 
-### Is resetting the state necessary?
+### Is resetting the state necessary? {#Is-resetting-the-state-necessary}
 
 One final question you should ask yourself is - is resetting the state even
 necessary? Remember, Cypress already automatically clears
@@ -748,7 +748,7 @@ The only times you **ever** need to clean up state, is if the operations that
 one test runs affects another test downstream. In only those cases do you need
 state cleanup.
 
-#### <Icon name="graduation-cap" /> Real World Example
+#### <Icon name="graduation-cap" /> Real World Example {#Icon-namegraduation-cap--Real-World-Example-1}
 
 The [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
 resets and re-seeds its database via a custom [Cypress task](/api/commands/task)
@@ -806,7 +806,7 @@ interacting with your database, you can use [`cy.exec`](/api/commands/exec),
 instead of [`cy.task`](/api/commands/task), to execute any system command or
 script.
 
-## Unnecessary Waiting
+## Unnecessary Waiting {#Unnecessary-Waiting}
 
 :::danger
 
@@ -828,7 +828,7 @@ way.
 
 Let's imagine the following examples:
 
-### Unnecessary wait for `cy.request()`
+### Unnecessary wait for `cy.request()` {#Unnecessary-wait-for-cyrequest}
 
 Waiting here is unnecessary since the [`cy.request()`](/api/commands/request)
 command will not resolve until it receives a response from your server. Adding
@@ -840,7 +840,7 @@ cy.request('http://localhost:8080/db/seed')
 cy.wait(5000) // <--- this is unnecessary
 ```
 
-### Unnecessary wait for `cy.visit()` <E2EOnlyBadge />
+### Unnecessary wait for `cy.visit()` <E2EOnlyBadge /> {#Unnecessary-wait-for-cyvisit-E2EOnlyBadge-}
 
 Waiting for this is unnecessary because the [cy.visit()](/api/commands/visit)
 resolves once the page fires its `load` event. By that time all of your assets
@@ -851,7 +851,7 @@ cy.visit('http://localhost/8080')
 cy.wait(5000) // <--- this is unnecessary
 ```
 
-### Unnecessary wait for `cy.get()`
+### Unnecessary wait for `cy.get()` {#Unnecessary-wait-for-cyget}
 
 Waiting for the [`cy.get()`](/api/commands/get) below is unnecessary because
 [`cy.get()`](/api/commands/get) automatically retries until the table's `tr` has
@@ -880,7 +880,7 @@ cy.wait('@getUsers') // <--- wait explicitly for this route to finish
 cy.get('table tr').should('have.length', 2)
 ```
 
-## Web Servers
+## Web Servers {#Web-Servers}
 
 :::danger
 
@@ -930,7 +930,7 @@ Are you trying to run in CI?
 We have
 [examples showing you how to start and stop your web server](/guides/continuous-integration/introduction#Boot-your-server).
 
-## Setting a global baseUrl
+## Setting a global baseUrl {#Setting-a-global-baseUrl}
 
 :::danger
 
@@ -974,7 +974,7 @@ When you start running your tests, Cypress does not know the url of the app you
 plan to test. So, Cypress initially opens on `https://localhost` + a random
 port.
 
-### Without `baseUrl` set, Cypress loads main window in `localhost` + random port
+### Without `baseUrl` set, Cypress loads main window in `localhost` + random port {#Without-baseUrl-set-Cypress-loads-main-window-in-localhost--random-port}
 
 <DocsImage
   src="/img/guides/references/cypress-loads-in-localhost-and-random-port.png"
@@ -988,7 +988,7 @@ can result in a 'flash' or 'reload' when your tests first start.
 By setting the `baseUrl`, you can avoid this reload altogether. Cypress will
 load the main window in the `baseUrl` you specified as soon as your tests start.
 
-### Cypress configuration file
+### Cypress configuration file {#Cypress-configuration-file}
 
 :::cypress-config-example
 
@@ -1002,7 +1002,7 @@ load the main window in the `baseUrl` you specified as soon as your tests start.
 
 :::
 
-### With `baseUrl` set, Cypress loads main window in `baseUrl`
+### With `baseUrl` set, Cypress loads main window in `baseUrl` {#With-baseUrl-set-Cypress-loads-main-window-in-baseUrl}
 
 <DocsImage
   src="/img/guides/references/cypress-loads-window-in-base-url-localhost.png"
@@ -1025,7 +1025,7 @@ We also display an error if your server is not running at the specified
   alt="The terminal warns and retries when the url at your baseUrl is not running"
 ></DocsImage>
 
-### Usage of `baseUrl` in depth
+### Usage of `baseUrl` in depth {#Usage-of-baseUrl-in-depth}
 
 This [short video](https://www.youtube.com/watch?v=f5UaXuAc52c) explains in
 depth how to use `baseUrl` correctly.

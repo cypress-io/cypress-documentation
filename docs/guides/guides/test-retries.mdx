@@ -4,7 +4,7 @@ title: Test Retries
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - What are test retries?
 - Why are test retries important?
@@ -12,7 +12,7 @@ title: Test Retries
 
 :::
 
-## Introduction
+## Introduction {#Introduction}
 
 End-to-end (E2E) tests excel at testing complex systems. However, there are
 still behaviors that are hard to verify and make tests flaky (i.e., unreliable)
@@ -31,7 +31,7 @@ flakiness and continuous integration (CI) build failures. By doing so, this will
 save your team valuable time and resources so you can focus on what matters most
 to you.
 
-## How It Works
+## How It Works {#How-It-Works}
 
 By default, tests will not retry when they fail. You will need to
 [enable test retries in your configuration](#Configure-Test-Retries) to use this
@@ -94,9 +94,9 @@ to see the number of attempts made in the
 [Command Log](/guides/core-concepts/cypress-app#Command-Log) and expand each
 attempt for review and debugging if desired.
 
-## Configure Test Retries
+## Configure Test Retries {#Configure-Test-Retries}
 
-### Global Configuration
+### Global Configuration {#Global-Configuration}
 
 Typically you will want to define different retry attempts for `cypress run`
 versus `cypress open`. You can configure this in the
@@ -121,7 +121,7 @@ by passing the `retries` option an object with the following options:
 }
 ```
 
-#### Configure retry attempts for all modes
+#### Configure retry attempts for all modes {#Configure-retry-attempts-for-all-modes}
 
 If you want to configure the retry attempts for all tests run in both
 `cypress run` and `cypress open`, you can configure this in the
@@ -134,9 +134,9 @@ by defining the `retries` property and setting the desired number of retries.
 }
 ```
 
-### Custom Configurations
+### Custom Configurations {#Custom-Configurations}
 
-#### Individual Test(s)
+#### Individual Test(s) {#Individual-Tests}
 
 If you want to configure retry attempts on a specific test, you can set this by
 using the
@@ -166,7 +166,7 @@ describe('User sign-up and login', () => {
 })
 ```
 
-#### Test Suite(s)
+#### Test Suite(s) {#Test-Suites}
 
 If you want to configure try attempts for a suite of tests, you can do this by
 setting the suite's configuration.
@@ -194,7 +194,7 @@ describe('User bank accounts', {
 You can find more information about custom configurations here:
 [Test Configuration](/guides/references/configuration#Test-Configuration)
 
-## Screenshots
+## Screenshots {#Screenshots}
 
 When a test retries, Cypress will continue to take screenshots for each failed
 attempt or [cy.screenshot()](/api/commands/screenshot) and suffix each new
@@ -233,7 +233,7 @@ describe('User Login', () => {
 'user-login-errors (failed) (attempt 3).png'
 ```
 
-## Videos
+## Videos {#Videos}
 
 You can use Cypress's [`after:spec`](/api/plugins/after-spec-api) event listener
 that fires after each spec file is run to delete the recorded video for specs
@@ -242,7 +242,7 @@ after the run can save resource space on the machine as well as skip the time
 used to process, compress, and upload the video to the
 [Dashboard Service](/guides/dashboard/introduction).
 
-### Only upload videos for specs with failing or retried tests
+### Only upload videos for specs with failing or retried tests {#Only-upload-videos-for-specs-with-failing-or-retried-tests}
 
 The example below shows how to delete the recorded video for specs that had no
 retry attempts or failures when using Cypress test retries.
@@ -273,7 +273,7 @@ on('after:spec', (spec, results) => {
 
 :::
 
-## Dashboard
+## Dashboard {#Dashboard}
 
 If you are using the [Cypress Dashboard](/guides/dashboard/introduction),
 information related to test retries is displayed on the Test Results tab for a
@@ -301,9 +301,9 @@ can review the
 [Flake Alerting](/guides/dashboard/flaky-test-management#Flake-Alerting)
 features highlighted in the Test Flake Management Guide.
 
-## Frequently Asked Questions (FAQs)
+## Frequently Asked Questions (FAQs) {#Frequently-Asked-Questions-FAQs}
 
-### Will retried tests be counted as more than one test result in my billing?
+### Will retried tests be counted as more than one test result in my billing? {#Will-retried-tests-be-counted-as-more-than-one-test-result-in-my-billing}
 
 No. Tests recorded during `cypress run` with the `--record` flag will be counted
 the same with or without test retries.
@@ -315,7 +315,7 @@ billing.
 You can always see how many tests you've recorded from your organization's
 Billing & Usage page within the [Dashboard](https://on.cypress.io/dashboard).
 
-### Can I access the current attempt counter from the test?
+### Can I access the current attempt counter from the test? {#Can-I-access-the-current-attempt-counter-from-the-test}
 
 Yes, although ordinarily you would not have to, since this is a low-level
 detail. But if you want to use the current attempt number and the total allowed

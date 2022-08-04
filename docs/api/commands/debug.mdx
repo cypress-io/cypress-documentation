@@ -10,7 +10,7 @@ You need to have your Developer Tools open for `.debug()` to hit the breakpoint.
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .debug()
@@ -22,7 +22,7 @@ cy.debug()
 cy.debug(options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -31,7 +31,7 @@ cy.debug().getCookie('app') // Pause to debug at beginning of commands
 cy.get('nav').debug() // Debug the `get` command's yield
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> options** **_(Object)_**
 
@@ -41,39 +41,39 @@ Pass in an options object to change the default behavior of `.debug()`.
 | ------ | ------- | ---------------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.debug()` yields the same subject it was given from the previous
 command.
 
-## Examples
+## Examples {#Examples}
 
-### Debug
+### Debug {#Debug}
 
-#### Pause with debugger after `.get()`
+#### Pause with debugger after `.get()` {#Pause-with-debugger-after-get}
 
 ```javascript
 cy.get('a').debug().should('have.attr', 'href')
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.debug()` can be chained off of `cy` or off another
 command.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.debug()` is a utility command.</li><li>`.debug()` will not run
 assertions. Assertions will pass through as if this command did not
 exist.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.debug()` cannot time out.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Log out the current subject for debugging_**
 
@@ -90,7 +90,7 @@ the following:
 
 <DocsImage src="/img/api/debug/console-gives-all-debug-info-for-command.png" alt="console.log debug" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [Dashboard](https://on.cypress.io/dashboard)
 - [`.pause()`](/api/commands/pause)

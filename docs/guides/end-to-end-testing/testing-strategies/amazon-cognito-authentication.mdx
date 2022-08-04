@@ -4,7 +4,7 @@ title: Amazon Cognito Authentication
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - Programmatically authenticate with
   [Amazon Cognito](https://aws.amazon.com/cognito) via a custom Cypress command
@@ -25,7 +25,7 @@ with the third-party authentication API to login a user.
 
 :::
 
-## What is Amazon Cognito?
+## What is Amazon Cognito? {#What-is-Amazon-Cognito}
 
 Amazon [Cognito](https://aws.amazon.com/cognito) is an authentication provider
 apart of [Amazon Web Services (AWS)](https://aws.amazon.com).
@@ -35,7 +35,7 @@ mobile apps quickly and easily" and "scales to millions of users and supports
 sign-in with social identity providers, such as Facebook, Google, and Amazon,
 and enterprise identity providers via SAML 2.0."
 
-## Programmatic Authentication with Amazon Cognito
+## Programmatic Authentication with Amazon Cognito {#Programmatic-Authentication-with-Amazon-Cognito}
 
 The documentation for [Amazon Cognito](https://aws.amazon.com/cognito)
 recommends using the
@@ -70,7 +70,7 @@ Auth.signIn(username, password)
   .catch((err) => console.log(err));
 ```
 
-## Amazon Cognito Setup
+## Amazon Cognito Setup {#Amazon-Cognito-Setup}
 
 If not already setup, you will need to
 [create an account](https://docs.amplify.aws/start/getting-started/installation/q/integration/react#sign-up-for-an-aws-account)
@@ -128,7 +128,7 @@ Use the `yarn dev:cognito` command when starting the
 
 :::
 
-## Setting Amazon Cognito app credentials in Cypress
+## Setting Amazon Cognito app credentials in Cypress {#Setting-Amazon-Cognito-app-credentials-in-Cypress}
 
 First, we need to configure Cypress to use the
 [AWS Cognito](https://aws.amazon.com/cognito) environment variables set in the
@@ -154,7 +154,7 @@ const awsConfig = require("./aws-exports-es5.js");
 
 :::
 
-## Custom Command for Amazon Cognito Authentication
+## Custom Command for Amazon Cognito Authentication {#Custom-Command-for-Amazon-Cognito-Authentication}
 
 Next, we'll write a command to perform a programmatic login into
 [Amazon Cognito](https://aws.amazon.com/cognito) and set items in localStorage
@@ -254,7 +254,7 @@ describe("Cognito", function () {
 });
 ```
 
-## Adapting an Amazon Cognito App for Testing
+## Adapting an Amazon Cognito App for Testing {#Adapting-an-Amazon-Cognito-App-for-Testing}
 
 The
 [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app) is
@@ -266,7 +266,7 @@ The front end uses the
 The back end uses the [express-jwt](https://github.com/auth0/express-jwt) to
 validate JWTs from [Amazon Cognito](https://aws.amazon.com/cognito).
 
-### Adapting the back end
+### Adapting the back end {#Adapting-the-back-end}
 
 In order to validate API requests from the frontend, we install
 [express-jwt](https://github.com/auth0/express-jwt) and
@@ -311,7 +311,7 @@ if (process.env.REACT_APP_AWS_COGNITO) {
 // routes ...
 ```
 
-### Adapting the front end
+### Adapting the front end {#Adapting-the-front-end}
 
 We need to update our front end React app to allow for authentication with
 [Amazon Cognito](https://aws.amazon.com/cognito) using the

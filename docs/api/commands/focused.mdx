@@ -4,14 +4,14 @@ title: focused
 
 Get the DOM element that is currently focused.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.focused()
 cy.focused(options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -19,7 +19,7 @@ cy.focused(options)
 cy.focused() // Yields the element currently in focus
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> options** **_(Object)_**
 
@@ -30,15 +30,15 @@ Pass in an options object to change the default behavior of `cy.focused()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.focused()` to resolve before [timing out](#Timeouts)                |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `cy.focused()` yields the DOM element(s) it found.
 
-## Examples
+## Examples {#Examples}
 
-### No Args
+### No Args {#No-Args}
 
-#### Get the element that is focused
+#### Get the element that is focused {#Get-the-element-that-is-focused}
 
 ```javascript
 cy.focused().then(($el) => {
@@ -46,26 +46,26 @@ cy.focused().then(($el) => {
 })
 ```
 
-#### Blur the element with focus
+#### Blur the element with focus {#Blur-the-element-with-focus}
 
 ```javascript
 cy.focused().blur()
 ```
 
-#### Make an assertion on the focused element
+#### Make an assertion on the focused element {#Make-an-assertion-on-the-focused-element}
 
 ```javascript
 cy.focused().should('have.attr', 'name', 'username')
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.focused()` requires being chained off a command that yields DOM
 element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.focused()` will automatically
 [retry](/guides/core-concepts/retry-ability) until the element(s)
@@ -73,13 +73,13 @@ element(s).
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.focused()` can time out waiting for the element(s) to
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`cy.focused()`
 can time out waiting for assertions you've added to pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Make an assertion on the focused element_**
 
@@ -96,7 +96,7 @@ outputs the following:
 
 <DocsImage src="/img/api/focused/currently-focused-element-in-an-input.png" alt="console focused" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`.blur()`](/api/commands/blur)
 - [`.focus()`](/api/commands/focus)

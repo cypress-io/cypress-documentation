@@ -4,7 +4,7 @@ title: trigger
 
 Trigger an event on a DOM element.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .trigger(eventName)
@@ -15,7 +15,7 @@ Trigger an event on a DOM element.
 .trigger(eventName, x, y, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -30,7 +30,7 @@ cy.trigger('touchstart') // Errors, cannot be chained off 'cy'
 cy.clock().trigger('mouseleave') // Errors, 'clock' does not yield DOM elements
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> eventName** **_(String)_**
 
@@ -72,16 +72,16 @@ You can also include arbitrary event properties (e.g. `clientX`, `shiftKey`) and
 they will be attached to the event. Passing in coordinate arguments (`clientX`,
 `pageX`, etc) will override the position coordinates.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.trigger()` yields the same subject it was given from the previous
 command.
 
-## Examples
+## Examples {#Examples}
 
-### Mouse Events
+### Mouse Events {#Mouse-Events}
 
-#### Trigger a `mouseover` on the button
+#### Trigger a `mouseover` on the button {#Trigger-a-mouseover-on-the-button}
 
 The DOM element must be in an "interactable" state prior to the triggered event
 happening (it must be visible and not disabled).
@@ -90,7 +90,7 @@ happening (it must be visible and not disabled).
 cy.get('button').trigger('mouseover') // yields 'button'
 ```
 
-#### Simulate a "long press" event
+#### Simulate a "long press" event {#Simulate-a-long-press-event}
 
 ```javascript
 cy.get('.target').trigger('mousedown')
@@ -98,7 +98,7 @@ cy.wait(1000)
 cy.get('.target').trigger('mouseup')
 ```
 
-#### Trigger a `mousedown` from a specific mouse button
+#### Trigger a `mousedown` from a specific mouse button {#Trigger-a-mousedown-from-a-specific-mouse-button}
 
 ```js
 // Main button pressed (usually the left button)
@@ -109,7 +109,7 @@ cy.get('.target').trigger('mousedown', { button: 1 })
 cy.get('.target').trigger('mousedown', { button: 2 })
 ```
 
-#### jQuery UI Sortable
+#### jQuery UI Sortable {#jQuery-UI-Sortable}
 
 To simulate drag and drop using jQuery UI sortable requires `pageX` and `pageY`
 properties along with `which:1`.
@@ -121,7 +121,7 @@ cy.get('[data-cy=draggable]')
   .trigger('mouseup')
 ```
 
-#### Drag and Drop
+#### Drag and Drop {#Drag-and-Drop}
 
 :::info
 
@@ -129,9 +129,9 @@ cy.get('[data-cy=draggable]')
 
 :::
 
-### Change Event
+### Change Event {#Change-Event}
 
-#### Interact with a range input (slider)
+#### Interact with a range input (slider) {#Interact-with-a-range-input-slider}
 
 To interact with a range input (slider), we need to set its value and then
 trigger the appropriate event to signal it has changed.
@@ -148,25 +148,25 @@ cy.get('input[type=range]').as('range').invoke('val', 25).trigger('change')
 cy.get('@range').siblings('p').should('have.text', '25')
 ```
 
-### Position
+### Position {#Position}
 
-#### Trigger a `mousedown` on the top right of a button
+#### Trigger a `mousedown` on the top right of a button {#Trigger-a-mousedown-on-the-top-right-of-a-button}
 
 ```javascript
 cy.get('button').trigger('mousedown', 'topRight')
 ```
 
-### Coordinates
+### Coordinates {#Coordinates}
 
-#### Specify explicit coordinates relative to the top left corner
+#### Specify explicit coordinates relative to the top left corner {#Specify-explicit-coordinates-relative-to-the-top-left-corner}
 
 ```javascript
 cy.get('button').trigger('mouseup', 15, 40)
 ```
 
-### Options
+### Options {#Options}
 
-#### Specify that the event should not bubble
+#### Specify that the event should not bubble {#Specify-that-the-event-should-not-bubble}
 
 By default, the event will bubble up the DOM tree. This will prevent the event
 from bubbling.
@@ -175,7 +175,7 @@ from bubbling.
 cy.get('button').trigger('mouseover', { bubbles: false })
 ```
 
-#### Specify the exact `clientX` and `clientY` the event should have
+#### Specify the exact `clientX` and `clientY` the event should have {#Specify-the-exact-clientX-and-clientY-the-event-should-have}
 
 This overrides the default auto-positioning based on the element itself. Useful
 for events like `mousemove` where you need the position to be outside the
@@ -185,7 +185,7 @@ element itself.
 cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
 ```
 
-### Fire other Event types.
+### Fire other Event types. {#Fire-other-Event-types}
 
 By default, `cy.trigger()` fires
 [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). But you may
@@ -197,18 +197,18 @@ In that case, use the `eventConstructor` option.
 cy.get('button').trigger('mouseover', { eventConstructor: 'MouseEvent' })
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Actionability
+### Actionability {#Actionability}
 
-#### The element must first reach actionability
+#### The element must first reach actionability {#The-element-must-first-reach-actionability}
 
 `.trigger()` is an "action command" that follows all the rules of
 [Actionability](/guides/core-concepts/interacting-with-elements).
 
-### Events
+### Events {#Events}
 
-#### What event should I fire?
+#### What event should I fire? {#What-event-should-I-fire}
 
 `cy.trigger()` is meant to be a low-level utility that makes triggering events
 easier than manually constructing and dispatching them. Since any arbitrary
@@ -217,7 +217,7 @@ should be triggered. This means you'll need to know the implementation details
 (which may be in a 3rd party library) of the event handler(s) receiving the
 event and provide the necessary properties.
 
-#### Why should I manually set the event type?
+#### Why should I manually set the event type? {#Why-should-I-manually-set-the-event-type}
 
 As you can see the documentation of
 [`MouseEvent`](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent),
@@ -225,9 +225,9 @@ most properties of event class instances are read-only. Because of that, it's
 sometimes impossible to set the value of some properties like `pageX`, `pageY`.
 This can be problematic in when testing some situations.
 
-### Differences
+### Differences {#Differences}
 
-#### What's the difference between triggering and event and calling the corresponding cypress command?
+#### What's the difference between triggering and event and calling the corresponding cypress command? {#Whats-the-difference-between-triggering-and-event-and-calling-the-corresponding-cypress-command}
 
 In other words, what's the difference between:
 
@@ -252,27 +252,27 @@ the browser to actually "do" anything for these events. For the most part, it
 shouldn't matter, which is why `.trigger()` is an excellent stop-gap if the
 command / event you're looking for hasn't been implemented yet.
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.trigger()` requires being chained off a command that yields DOM
 element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.trigger()` will automatically wait for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.trigger()`
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.trigger()` can time out waiting for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.trigger()`
 can time out waiting for assertions you've added to pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Trigger a `change` event on input type='range'_**
 
@@ -289,7 +289,7 @@ following:
 
 <DocsImage src="/img/api/trigger/console-log-trigger.png" alt="console log trigger" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                       | Changes                                            |
 | --------------------------------------------- | -------------------------------------------------- |
@@ -297,7 +297,7 @@ following:
 | [3.5.0](/guides/references/changelog#3-5-0)   | Added `screenX` and `screenY` properties to events |
 | [0.20.0](/guides/references/changelog#0-20-0) | `.trigger()` command added                         |
 
-## See also
+## See also {#See-also}
 
 - [`.blur()`](/api/commands/blur)
 - [`.check()`](/api/commands/check)

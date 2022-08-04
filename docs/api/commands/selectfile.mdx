@@ -5,7 +5,7 @@ title: selectFile
 Selects a file or files in an HTML5 input element or simulates dragging a file
 or files into the browser.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .selectFile(file)
@@ -14,7 +14,7 @@ or files into the browser.
 .selectFile([file1, file2, ...], options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -44,7 +44,7 @@ cy.selectFile('file.json')
 cy.get('input[type=file]').selectFile('file contents')
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> file** **_(String, Array, Object or
 Cypress.Buffer)_**
@@ -86,17 +86,17 @@ Pass in an options object to change the default behavior of `.selectFile()`.
 | `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.selectFile()` to resolve before [timing out](#Timeouts).                                                                       |
 | `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.      |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.selectFile()` yields the same subject it was given from the previous
   command.
 
-### Action
+### Action {#Action}
 
 Depending on the `action` set in the `options` argument, `.selectFile()` can
 simulate two different user behaviors:
 
-#### `select` (default)
+#### `select` (default) {#select-default}
 
 By default, `.selectFile()` runs in 'select' mode, mimicking a user selecting
 one or more files on an HTML5 input element. In this mode, the
@@ -104,16 +104,16 @@ one or more files on an HTML5 input element. In this mode, the
 be a single `input` element with `type="file"`, or a `label` element connected
 to an input (either with its `for` attribute or by containing the input).
 
-#### `drag-drop`
+#### `drag-drop` {#drag-drop}
 
 Setting the action to `drag-drop` changes the behavior of the command to instead
 mimic a user dragging files from the operating system into the browser, and
 dropping them over the selected subject. In this mode, the subject can be any
 DOM element or the `document` as a whole.
 
-## Examples
+## Examples {#Examples}
 
-### From a file on disk
+### From a file on disk {#From-a-file-on-disk}
 
 ```javascript
 cy.get('input[type=file]').selectFile('path/to/file.json')
@@ -125,7 +125,7 @@ project root and attach the file exactly as it exists on disk. This is the
 preferred way to work with files on disk, avoiding many encoding-related
 pitfalls.
 
-### On a hidden input
+### On a hidden input {#On-a-hidden-input}
 
 ```javascript
 cy.get('input[type=file]').selectFile('file.json', { force: true })
@@ -136,7 +136,7 @@ view, and activated by a user clicking on a button. In these cases, you will
 need to tell Cypress to ignore its actionability checks and select the file even
 though a user would not be able to directly activate the file input.
 
-### From a fixture
+### From a fixture {#From-a-fixture}
 
 ```javascript
 cy.fixture('file.json', { encoding: null }).as('myFixture')
@@ -150,7 +150,7 @@ preserved, but formatting would not be and the encoding might change. See
 [`cy.fixture`](/api/commands/fixture) or [`cy.readFile`](/api/commands/readfile)
 for more details on file encoding.
 
-### From an API response
+### From an API response {#From-an-API-response}
 
 ```javascript
 cy.request('http://localhost:8888/users/827').its('body').as('responseBody')
@@ -158,7 +158,7 @@ cy.request('http://localhost:8888/users/827').its('body').as('responseBody')
 cy.get('input[type=file]').selectFile('@responseBody')
 ```
 
-### Processing data inside the test
+### Processing data inside the test {#Processing-data-inside-the-test}
 
 ```javascript
 cy.readFile('users.json')
@@ -170,7 +170,7 @@ cy.readFile('users.json')
 cy.get('input[type=file]').selectFile('@myFile')
 ```
 
-### Selecting multiple files
+### Selecting multiple files {#Selecting-multiple-files}
 
 ```javascript
 cy.get('input[type=file]').selectFile([
@@ -186,7 +186,7 @@ This will fail unless the file input has the `multiple` property.
 
 :::
 
-### Custom fileName, mimeType and lastModified
+### Custom fileName, mimeType and lastModified {#Custom-fileName-mimeType-and-lastModified}
 
 ```javascript
 cy.get('input[type=file][multiple]')
@@ -227,17 +227,17 @@ cy.get('input[type=file][multiple]')
   })
 ```
 
-### Dropping a file on the document
+### Dropping a file on the document {#Dropping-a-file-on-the-document}
 
 ```javascript
 cy.document().selectFile('file.json', { action: 'drag-drop' })
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Existence
+### Existence {#Existence}
 
-#### Default file existence assertion
+#### Default file existence assertion {#Default-file-existence-assertion}
 
 Whenever resolving a file path, `.selectFile()` asserts that the file exists and
 will fail if it does not exist. It will retry reading the file if it does not
@@ -248,16 +248,16 @@ initially exist until the file exists or the command times out.
 cy.get('input[type=file]').selectFile('does-not-exist.yaml')
 ```
 
-### Actionability
+### Actionability {#Actionability}
 
-#### The element must first reach actionability
+#### The element must first reach actionability {#The-element-must-first-reach-actionability}
 
 `.selectFile()` is an "action command" that follows all the rules of
 [Actionability](/guides/core-concepts/interacting-with-elements).
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.selectFile()` requires being chained off a command that yields DOM
   element(s). With the `input` action (default), it further requires a single
@@ -266,19 +266,19 @@ cy.get('input[type=file]').selectFile('does-not-exist.yaml')
 - If given an alias, `.selectFile()` requires that the subject of the alias must
   not be `null` or `undefined`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.selectFile()` will automatically wait for the element to reach an
   [actionable state](/guides/core-concepts/interacting-with-elements).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.selectFile()` can time out waiting for the element to reach an
   [actionable state](/guides/core-concepts/interacting-with-elements).
 - `.selectFile()` can time out waiting for a file to exist on disk or for an
   alias to resolve.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Select file for input_**
 
@@ -309,14 +309,14 @@ following:
 
 <DocsImage src="/img/api/selectfile/selectfile-console.png" alt="console.log for selectFile" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                     | Changes                                                                                                                      |
 | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | [9.3.0](/guides/references/changelog#9.3.0) | `.selectFile()` command added                                                                                                |
 | [9.4.0](/guides/references/changelog#9.4.0) | Support for `TypedArray` and `mimeType` property added. Default `fileName` name is no longer lost when working with aliases. |
 
-### Community Recognition
+### Community Recognition {#Community-Recognition}
 
 The `.selectFile()` command draws heavy inspiration from the now-deprecated
 Cypress File Upload plugin. It was made possible by
@@ -324,7 +324,7 @@ Cypress File Upload plugin. It was made possible by
 [cypress-file-upload](https://github.com/abramenal/cypress-file-upload#contributors)
 repository.
 
-## See also
+## See also {#See-also}
 
 - [Guide: Variables and Aliases](/guides/core-concepts/variables-and-aliases)
 - [`.fixture()`](/api/commands/fixture)

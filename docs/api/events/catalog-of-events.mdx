@@ -16,9 +16,9 @@ Here are some examples you can do with these events:
 - Listen for `command:retry` events to understand why Cypress is internally
   retrying for debugging purposes
 
-## Event Types
+## Event Types {#Event-Types}
 
-### App Events
+### App Events {#App-Events}
 
 These events come from the application currently under test (your application).
 These are the most useful events for you to listen to.
@@ -71,7 +71,7 @@ These are the most useful events for you to listen to.
 | **Yields:**      | the new url **(String)**                                                |
 | **Description:** | Fires whenever Cypress detects that your application's URL has changed. |
 
-### Cypress Events
+### Cypress Events {#Cypress-Events}
 
 These events come from Cypress as it issues commands and reacts to their state.
 These are all useful to listen to for debugging purposes.
@@ -142,13 +142,13 @@ These are all useful to listen to for debugging purposes.
 | **Yields:**      | test attributes **(Object)**, runnable instance **(Object)**        |
 | **Description:** | Fires after the test and all **afterEach** and **after** hooks run. |
 
-### Other Events
+### Other Events {#Other-Events}
 
 There are a myriad of other events Cypress fires to communicate with the Node
 server process, automation servers, mocha, the application, and the reporter.
 They are strictly internal to the way Cypress works and not useful for users.
 
-## Binding to Events
+## Binding to Events {#Binding-to-Events}
 
 Both the global `Cypress` and `cy` objects are standard Node event emitters.
 That means you can use the following methods to bind and unbind from events.
@@ -160,7 +160,7 @@ That means you can use the following methods to bind and unbind from events.
 
 It's important to understand why you'd want to bind to either `Cypress` or `cy`.
 
-### Cypress
+### Cypress {#Cypress}
 
 Cypress is a global object that persists for the entirety of all of your tests.
 Any events you bind to Cypress will apply to all tests, and will not be unbound
@@ -170,18 +170,18 @@ This is useful when you're debugging and want to add a single "catch-all" event
 to track down things like test failures, or uncaught exceptions from your
 application.
 
-### cy
+### cy {#cy}
 
 The `cy` object is bound to each individual test. Events bound to `cy` will
 **automatically** be removed when the test ends. You don't have to worry about
 cleanup, and your event listeners will only be called for the duration of the
 single test.
 
-## Examples
+## Examples {#Examples}
 
-### Uncaught Exceptions
+### Uncaught Exceptions {#Uncaught-Exceptions}
 
-#### To turn off all uncaught exception handling
+#### To turn off all uncaught exception handling {#To-turn-off-all-uncaught-exception-handling}
 
 <SupportFileConfiguration />
 
@@ -193,7 +193,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 })
 ```
 
-### To conditionally turn off uncaught exception handling for a certain error
+### To conditionally turn off uncaught exception handling for a certain error {#To-conditionally-turn-off-uncaught-exception-handling-for-a-certain-error}
 
 <SupportFileConfiguration />
 
@@ -209,7 +209,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 })
 ```
 
-### To conditionally turn off uncaught exception handling unhandled promise rejections
+### To conditionally turn off uncaught exception handling unhandled promise rejections {#To-conditionally-turn-off-uncaught-exception-handling-unhandled-promise-rejections}
 
 <SupportFileConfiguration />
 
@@ -226,7 +226,7 @@ Cypress.on('uncaught:exception', (err, runnable, promise) => {
 })
 ```
 
-#### To catch a single uncaught exception
+#### To catch a single uncaught exception {#To-catch-a-single-uncaught-exception}
 
 ```javascript
 it('is doing something very important', (done) => {
@@ -250,9 +250,9 @@ it('is doing something very important', (done) => {
 })
 ```
 
-### Catching Test Failures
+### Catching Test Failures {#Catching-Test-Failures}
 
-#### Debug the moment a test fails
+#### Debug the moment a test fails {#Debug-the-moment-a-test-fails}
 
 If you want to debug when any test fails you'll likely want to put this in a
 [supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file),
@@ -279,9 +279,9 @@ Read
 [Cypress Metaprogramming](https://glebbahmutov.com/blog/cy-metaprogramming/) for
 more examples.
 
-### Page Navigation <E2EOnlyBadge />
+### Page Navigation <E2EOnlyBadge /> {#Page-Navigation-E2EOnlyBadge-}
 
-#### Test that your application was redirected
+#### Test that your application was redirected {#Test-that-your-application-was-redirected}
 
 ```javascript
 // app code
@@ -311,9 +311,9 @@ it('redirects to another page on click', (done) => {
 })
 ```
 
-### Window Before Load <E2EOnlyBadge />
+### Window Before Load <E2EOnlyBadge /> {#Window-Before-Load-E2EOnlyBadge-}
 
-#### Modify your Application before it loads after page transitions
+#### Modify your Application before it loads after page transitions {#Modify-your-Application-before-it-loads-after-page-transitions}
 
 ```javascript
 it('can modify the window prior to page load on all pages', () => {
@@ -347,9 +347,9 @@ it('can modify the window prior to page load on all pages', () => {
 })
 ```
 
-### Window Confirm
+### Window Confirm {#Window-Confirm}
 
-#### Control whether you accept or reject confirmations
+#### Control whether you accept or reject confirmations {#Control-whether-you-accept-or-reject-confirmations}
 
 This enables you to test how your application reacts to accepted confirmations
 and rejected confirmations.
@@ -439,9 +439,9 @@ it('could also use a stub instead of imperative code', () => {
 
 <!-- textlint-enable -->
 
-### Window Alert
+### Window Alert {#Window-Alert}
 
-#### Assert on the alert text
+#### Assert on the alert text {#Assert-on-the-alert-text}
 
 Cypress automatically accepts alerts but you can still assert on the text
 content.
@@ -469,9 +469,9 @@ it('can assert on the alert text content', () => {
 })
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Logging All Events
+### Logging All Events {#Logging-All-Events}
 
 Cypress uses the [`debug`](https://github.com/visionmedia/debug) node module for
 both the back end server process, and for everything running in the browser

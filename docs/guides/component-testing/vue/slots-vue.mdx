@@ -20,7 +20,7 @@ Lastly, renderless components, like a Loading component or ApolloQuery component
 make heavy use of slots to define what to render in various states like: error,
 loading, and success.
 
-## The Simplest Slot
+## The Simplest Slot {#The-Simplest-Slot}
 
 We'll show off how to test a Modal that uses a default `<slot/>`. Like in
 previous sections, we'll start simple.
@@ -190,7 +190,7 @@ export default {
 </TabItem>
 </Tabs>
 
-## Named Slots
+## Named Slots {#Named-Slots}
 
 Named slots in Vue give the parent component the ability to inject different
 markup and logic from the parent into container components.
@@ -416,7 +416,7 @@ export default {
 
 </Tabs>
 
-## Scoped Slots
+## Scoped Slots {#Scoped-Slots}
 
 Now, what if we want to allow the parent to control when to close the modal? We
 can provide a slot prop, a function called **close** to any of the slots we
@@ -531,7 +531,7 @@ it('The default slot binds the close method', () => {
 
 </Tabs>
 
-## What's Next?
+## What's Next? {#Whats-Next}
 
 Now that you're comfortable mounting components and asserting their slots, you
 should be ready to test most components with scoped slots and fallbacks!

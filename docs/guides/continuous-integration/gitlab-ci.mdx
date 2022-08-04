@@ -4,7 +4,7 @@ title: GitLab CI
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - How to run Cypress tests with GitLab as part of CI/CD pipeline
 - How to parallelize Cypress test runs within GitLab CI/CD
@@ -20,7 +20,7 @@ software development through the
 Detailed documentation is available in the
 [GitLab CI/CD Documentation](https://docs.gitlab.com/ee/ci/introduction/).
 
-## Basic Setup
+## Basic Setup {#Basic-Setup}
 
 The example below is basic CI setup and job using
 [GitLab CI/CD](https://about.gitlab.com/stages-devops-lifecycle/continuous-integration/)
@@ -65,7 +65,7 @@ example project and place the above GitHub Action configuration in
   - Start the project web server (`npm start`)
   - Run the Cypress tests within our GitHub repository within Electron.
 
-## Testing in Chrome and Firefox with Cypress Docker Images
+## Testing in Chrome and Firefox with Cypress Docker Images {#Testing-in-Chrome-and-Firefox-with-Cypress-Docker-Images}
 
 The Cypress team maintains the official
 [Docker Images](https://github.com/cypress-io/cypress-docker-images) for running
@@ -89,7 +89,7 @@ test:
     - npx cypress run --browser firefox
 ```
 
-## Caching Dependencies and Build Artifacts
+## Caching Dependencies and Build Artifacts {#Caching-Dependencies-and-Build-Artifacts}
 
 Caching of dependencies and build artifacts can be accomplished with the `cache`
 configuration. The
@@ -126,7 +126,7 @@ test:
     expire_in: 1 day
 ```
 
-## Parallelization
+## Parallelization {#Parallelization}
 
 The [Cypress Dashboard](/guides/dashboard/introduction) offers the ability to
 [parallelize and group test runs](/guides/guides/parallelization) along with
@@ -146,7 +146,7 @@ understand the two different types of jobs that we will declare:
 - **Worker Job**: A job that handles execution of Cypress tests and depends on
   the _install job_.
 
-### Install Job
+### Install Job {#Install-Job}
 
 The separation of installation from test running is necessary when running
 parallel jobs. It allows for reuse of various build steps aided by caching.
@@ -181,7 +181,7 @@ install:
     - npm ci
 ```
 
-### Worker Jobs
+### Worker Jobs {#Worker-Jobs}
 
 Next, we add a `test` stage and define the worker job named `ui-chrome-tests`
 that will run Cypress tests with Chrome in parallel during the `test` stage.
@@ -238,7 +238,7 @@ recording test results to the
 
 :::
 
-## Using the Cypress Dashboard with GitLab CI/CD
+## Using the Cypress Dashboard with GitLab CI/CD {#Using-the-Cypress-Dashboard-with-GitLab-CICD}
 
 In the GitLab CI configuration we have defined in the previous section, we are
 leveraging three useful features of the
@@ -272,7 +272,7 @@ leveraging three useful features of the
    browser into a group labeled "UI - Chrome" in the
    [Cypress Dashboard](https://on.cypress.io/dashboard) report.
 
-## Cypress Real World Example with GitLab CI/CD
+## Cypress Real World Example with GitLab CI/CD {#Cypress-Real-World-Example-with-GitLab-CICD}
 
 A complete CI workflow against multiple browsers, viewports and operating
 systems is available in the Cypress Real World App (RWA).

@@ -12,14 +12,14 @@ For more general troubleshooting of Cypress, visit the main
 migrating to Cypress v10.0, visit the
 [Migration Guide](/guides/references/migration-guide#Migrating-to-Cypress-version-10-0).
 
-## Common Issues
+## Common Issues {#Common-Issues}
 
-### Spec File Doesn't Appear in the Cypress App
+### Spec File Doesn't Appear in the Cypress App {#Spec-File-Doesnt-Appear-in-the-Cypress-App}
 
 If something appears missing from the spec list, make sure the files have the
 [proper extension and the `specPattern` is correctly defined](/guides/component-testing/component-framework-configuration#Spec-Pattern-for-Component-Tests).
 
-### ESLint Global Errors
+### ESLint Global Errors {#ESLint-Global-Errors}
 
 You may experience ESLint errors in your code editor after migrating to Cypress
 `v10.0.0` or while using a framework (e.g. Create React App) that has ESLint
@@ -29,7 +29,7 @@ Installing and configuring the
 [`eslint-plugin-cypress`](https://www.npmjs.com/package/eslint-plugin-cypress)
 often helps to solve this.
 
-### The TypeScript Types for `cy.mount` is Not Working in Component Tests
+### The TypeScript Types for `cy.mount` is Not Working in Component Tests {#The-TypeScript-Types-for-cymount-is-Not-Working-in-Component-Tests}
 
 In some instances, TypeScript might not recognize the custom `cy.mount()`
 command in Cypress spec files not located in the _cypress_ directory. You will
@@ -53,7 +53,7 @@ file in your _tsconfig.json_ file. See our
 [TypeScript Configuration](guides/tooling/typescript-support#Using-an-External-Typings-File)
 guide for more info on doing this.
 
-### Cypress Types Conflict with Jest
+### Cypress Types Conflict with Jest {#Cypress-Types-Conflict-with-Jest}
 
 For frameworks that include Jest out of the box (like Create React App), you
 might run into issues where the Cypress global types for TypeScript conflict
@@ -98,7 +98,7 @@ Don't forget to update your
 [`specPattern`](https://docs.cypress.io/guides/references/configuration#component)
 to include the new file location.
 
-### Next.js Global Style Error
+### Next.js Global Style Error {#Nextjs-Global-Style-Error}
 
 If you import the Next `styles/globals.css` in `cypress/support/component.js` to
 style your components, you'll get an error from Next about not allowing

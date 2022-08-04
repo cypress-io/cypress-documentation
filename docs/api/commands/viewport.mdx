@@ -12,7 +12,7 @@ and `viewportHeight` in the
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.viewport(width, height)
@@ -21,7 +21,7 @@ cy.viewport(width, height, options)
 cy.viewport(preset, orientation, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -30,7 +30,7 @@ cy.viewport(550, 750) // Set viewport to 550px x 750px
 cy.viewport('iphone-6') // Set viewport to 375px x 667px
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> width** **_(Number)_**
 
@@ -78,22 +78,22 @@ Pass in an options object to change the default behavior of `cy.viewport()`.
 | ------ | ------- | ---------------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `cy.viewport()` yields `null`
 - `cy.viewport()` cannot be chained further
 
-## Examples
+## Examples {#Examples}
 
-### Width, Height
+### Width, Height {#Width-Height}
 
-#### Resize the viewport to 1024px x 768px
+#### Resize the viewport to 1024px x 768px {#Resize-the-viewport-to-1024px-x-768px}
 
 ```javascript
 cy.viewport(1024, 768)
 ```
 
-#### Organize desktop vs mobile tests separately
+#### Organize desktop vs mobile tests separately {#Organize-desktop-vs-mobile-tests-separately}
 
 ```javascript
 describe('Nav Menus', () => {
@@ -130,7 +130,7 @@ describe('Nav Menus', () => {
 })
 ```
 
-#### Dynamically test multiple viewports
+#### Dynamically test multiple viewports {#Dynamically-test-multiple-viewports}
 
 :::visit-mount-example
 
@@ -162,17 +162,17 @@ describe('Logo', () => {
   alt="Command Log of multiple viewports"
 ></DocsImage>
 
-### Preset
+### Preset {#Preset}
 
-#### Resize the viewport to iPhone 6 width and height
+#### Resize the viewport to iPhone 6 width and height {#Resize-the-viewport-to-iPhone-6-width-and-height}
 
 ```javascript
 cy.viewport('iphone-6') // viewport will change to 414px x 736px
 ```
 
-### Orientation
+### Orientation {#Orientation}
 
-#### Change the orientation to landscape
+#### Change the orientation to landscape {#Change-the-orientation-to-landscape}
 
 ```javascript
 // the viewport will now be changed to 736px x 414px
@@ -180,25 +180,25 @@ cy.viewport('iphone-6') // viewport will change to 414px x 736px
 cy.viewport('iphone-6', 'landscape')
 ```
 
-## Notes
+## Notes {#Notes}
 
-### devicePixelRatio
+### devicePixelRatio {#devicePixelRatio}
 
-#### `devicePixelRatio` is not simulated
+#### `devicePixelRatio` is not simulated {#devicePixelRatio-is-not-simulated}
 
 Follow [#7075](https://github.com/cypress-io/cypress/issues/7075) if you need
 this supported.
 
-### Restores
+### Restores {#Restores}
 
-#### Cypress will restore the viewport in the snapshot
+#### Cypress will restore the viewport in the snapshot {#Cypress-will-restore-the-viewport-in-the-snapshot}
 
 When hovering over each command, Cypress will automatically display the snapshot
 in the viewport dimensions that existed when that command ran.
 
-### Defaults
+### Defaults {#Defaults}
 
-#### Default sizing
+#### Default sizing {#Default-sizing}
 
 By default, until you issue a `cy.viewport()` command, Cypress sets the width to
 `1000px` and the height to `660px` by default.
@@ -221,9 +221,9 @@ adding the following to your Cypress configuration:
 Additionally, Cypress automatically sets the viewport to its default size
 between each test.
 
-### Scaling
+### Scaling {#Scaling}
 
-#### Auto Scaling
+#### Auto Scaling {#Auto-Scaling}
 
 By default, if your screen is not large enough to display all of the current
 dimension's pixels, Cypress will scale and center your application within the
@@ -236,7 +236,7 @@ The upsides to this are that tests should consistently pass or fail regardless
 of a developers' screen size. Tests will also consistently run in `CI` because
 all of the viewports will be the same no matter what machine Cypress runs on.
 
-### Reset viewport via `Cypress.config()`
+### Reset viewport via `Cypress.config()` {#Reset-viewport-via-Cypressconfig}
 
 You can change the size of the viewport height and width for the remainder of
 the tests by setting the new values for `viewportHeight` or `viewportWidth`
@@ -247,7 +247,7 @@ Cypress.config('viewportWidth', 800)
 Cypress.config('viewportWidth') // => 800
 ```
 
-### Set viewport in the test configuration
+### Set viewport in the test configuration {#Set-viewport-in-the-test-configuration}
 
 You can configure the size of the viewport height and width within a suite or
 test by passing the new configuration value within the
@@ -275,21 +275,21 @@ describe(
 )
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.viewport()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.viewport()` cannot have any assertions chained.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.viewport()` cannot time out.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Change viewport size to test responsive nav_**
 
@@ -319,7 +319,7 @@ following:
   alt="Console Log viewport"
 ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                     | Changes                                                                               |
 | ------------------------------------------- | ------------------------------------------------------------------------------------- |
@@ -330,7 +330,7 @@ following:
 | [3.5.0](/guides/references/changelog#3-5-0) | Increased max viewport size to `4000`                                                 |
 | [0.9.0](/guides/references/changelog#0-9-0) | `cy.viewport()` command added                                                         |
 
-## See also
+## See also {#See-also}
 
 - Read blog post
   [Use meaningful smoke tests](https://www.cypress.io/blog/2019/12/06/use-meaningful-smoke-tests/)

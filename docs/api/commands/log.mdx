@@ -4,14 +4,14 @@ title: log
 
 Print a message to the Cypress Command Log.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.log(message)
 cy.log(message, args...)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -19,7 +19,7 @@ cy.log(message, args...)
 cy.log('created new user')
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> message** **_(String)_**
 
@@ -31,47 +31,47 @@ message.
 Additional arguments to be printed to the Cypress Command Log. There is no limit
 to the number of arguments.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `cy.log()` yields `null`.</li><li>`cy.log()` cannot be chained
 further.
 
-## Examples
+## Examples {#Examples}
 
-### Message
+### Message {#Message}
 
-#### Print a message to the Command Log.
+#### Print a message to the Command Log. {#Print-a-message-to-the-Command-Log}
 
 ```javascript
 cy.click('Login')
 cy.log('Login successful')
 ```
 
-### Args
+### Args {#Args}
 
-#### Print a message with arguments to the Command Log.
+#### Print a message with arguments to the Command Log. {#Print-a-message-with-arguments-to-the-Command-Log}
 
 ```javascript
 cy.log('events triggered', events)
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.log()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.log()` cannot have any assertions chained.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.log()` cannot time out.
 
-## Command Log
+## Command Log {#Command-Log}
 
-#### Print messages with arguments to the Command Log.
+#### Print messages with arguments to the Command Log. {#Print-messages-with-arguments-to-the-Command-Log}
 
 ```javascript
 cy.log('log out any message we want here')
@@ -87,7 +87,7 @@ following:
 
 <DocsImage src="/img/api/log/console-shows-logs-message-and-any-arguments.png" alt="Console Log log" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`cy.exec()`](/api/commands/exec)
 - [`Cypress.log`](/api/cypress-api/cypress-log)

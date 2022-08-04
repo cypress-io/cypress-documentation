@@ -15,14 +15,14 @@ a later release. This page is for reference only.
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - How to extend tests interactively using the Cypress Studio
 - How to add new tests interactively using the Cypress Studio
 
 :::
 
-## Overview
+## Overview {#Overview}
 
 Cypress Studio provides a visual way to generate tests within the Cypress App,
 by _recording interactions_ against the application under test.
@@ -34,7 +34,7 @@ generate test code when interacting with the DOM inside of the Cypress Studio.
 You can also generate assertions by right clicking on an element that you would
 like to assert on.
 
-## Using Cypress Studio
+## Using Cypress Studio {#Using-Cypress-Studio}
 
 :::info
 
@@ -58,7 +58,7 @@ The Cypress <Icon name="github" inline="true" contentType="rwa" /> is
 an open source project implementing a payment application to demonstrate
 real-world usage of Cypress testing methods, patterns, and workflows. It will be used to demonstrate the functionality of Cypress Studio below.
 
-### Extending a Test
+### Extending a Test {#Extending-a-Test}
 
 You can extend any preexisting test or start by creating a new test with the
 following test scaffolding.
@@ -84,14 +84,14 @@ describe('Cypress Studio Demo', () => {
 
 :::info
 
-### <Icon name="graduation-cap" /> Real World Example
+### <Icon name="graduation-cap" /> Real World Example {#Icon-namegraduation-cap--Real-World-Example}
 
 Clone the <Icon name="github" inline="true" contentType="rwa" /> and refer to the
 [cypress/tests/demo/cypress-studio.cy.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts) file.
 
 :::
 
-#### Step 1 - Run the spec
+#### Step 1 - Run the spec {#Step-1---Run-the-spec}
 
 We will use Cypress Studio to perform a "New Transaction" user journey. First,
 launch the Cypress App and run the spec created in the previous step.
@@ -102,7 +102,7 @@ launch the Cypress App and run the spec created in the previous step.
   no-border
 ></DocsImage>
 
-#### Step 2 - Launch Cypress Studio
+#### Step 2 - Launch Cypress Studio {#Step-2---Launch-Cypress-Studio}
 
 Once the tests complete their run, hover over a test in the Command Log to
 reveal an "Add Commands to Test" button.
@@ -141,7 +141,7 @@ last command in the test.
 
 Now, we can begin updating the test to create a new transaction between users.
 
-#### Step 3 - Interact with the Application
+#### Step 3 - Interact with the Application {#Step-3---Interact-with-the-Application}
 
 To record actions, begin interacting with the application. Here we will click on
 the "New" button on the right side of the header and as a result we will see our
@@ -213,7 +213,7 @@ If satisfied with the interactions with the application, click "Save Commands"
 and the test code will be saved to your spec file. Alternatively you can choose
 the "copy" button in order to copy the generated commands to your clipboard.
 
-#### Generated Test Code
+#### Generated Test Code {#Generated-Test-Code}
 
 Viewing our test code, we can see that the test is updated after clicking "Save
 Commands" with the actions we recorded in Cypress Studio.
@@ -251,7 +251,7 @@ describe('Cypress Studio Demo', () => {
 })
 ```
 
-### Adding a New Test
+### Adding a New Test {#Adding-a-New-Test}
 
 You can add a new test to any existing `describe` or `context` block, by
 clicking "Add New Test" on our defined `describe` block.
@@ -351,14 +351,14 @@ describe('Cypress Studio Demo', () => {
 
 :::info
 
-### <Icon name="graduation-cap" /> Real World Example
+### <Icon name="graduation-cap" /> Real World Example {#Icon-namegraduation-cap--Real-World-Example-1}
 
 Clone the <Icon name="github" inline="true" contentType="rwa" /> and refer to the
 [cypress/tests/demo/cypress-studio.cy.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts) file.
 
 :::
 
-## History
+## History {#History}
 
 | Version                                     | Changes                              |
 | ------------------------------------------- | ------------------------------------ |

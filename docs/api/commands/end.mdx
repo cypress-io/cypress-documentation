@@ -4,13 +4,13 @@ title: end
 
 End a chain of commands.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .end()
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -24,12 +24,12 @@ cy.contains('ul').end() // Yield 'null' instead of 'ul' element
 cy.end() // Does not make sense to chain off 'cy'
 ```
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.end()` yields `null`.</li><li>`.end()` cannot be chained
 further.
 
-## Examples
+## Examples {#Examples}
 
 `.end()` is useful when you want to end a chain of commands and force the next
 command to not receive what was yielded in the previous command.
@@ -49,25 +49,25 @@ cy.contains('User: Cheryl').click()
 cy.contains('User: Charles').click() // contains looks for content in document now
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.end()` requires being chained off a previous command.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.end()` cannot have any assertions chained.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.end()` cannot time out.
 
-## Command Log
+## Command Log {#Command-Log}
 
 - `.end()` does _not_ log in the Command Log
 
-## See also
+## See also {#See-also}
 
 - [`.root()`](/api/commands/root)
 - [`.within()`](/api/commands/within)

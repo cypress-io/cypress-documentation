@@ -9,7 +9,7 @@ The event will fire each time `cypress run` executes. As a result, if running
 your specs in [parallel](/guides/guides/parallelization), the event will fire
 once for each machine on which the tests are run.
 
-## Syntax
+## Syntax {#Syntax}
 
 <WarningSetupNodeEvents />
 
@@ -36,12 +36,12 @@ on('before:run', (details) => {
 Details of the run, including the project config, system information, and the
 version of Cypress. More details are included when running via `cypress run`.
 
-## Usage
+## Usage {#Usage}
 
 You can return a promise from the `before:run` event handler and it will be
 awaited before Cypress proceeds running your specs.
 
-### Log the browser and the number of specs that will be run
+### Log the browser and the number of specs that will be run {#Log-the-browser-and-the-number-of-specs-that-will-be-run}
 
 :::cypress-config-plugin-example
 
@@ -114,7 +114,7 @@ module.exports = (on, config) => {
 
 :::
 
-## See also
+## See also {#See-also}
 
 - [After Run API](/api/plugins/after-run-api)
 - [Before Spec API](/api/plugins/before-spec-api)

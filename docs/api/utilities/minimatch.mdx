@@ -7,13 +7,13 @@ and exposes it as `Cypress.minimatch`.
 
 Use `Cypress.minimatch` to test out glob patterns against strings.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 Cypress.minimatch(target: string, pattern: string, options?: MinimatchOptions);
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -29,7 +29,7 @@ Cypress.minimatch('/users/1/comments/2', '/users/*/comments', {
 cy.minimatch() // Errors, cannot be chained off 'cy'
 ```
 
-## Examples
+## Examples {#Examples}
 
 By default Cypress uses `minimatch` to test glob patterns against request URLs.
 
@@ -71,6 +71,6 @@ Cypress.minimatch('/foo/bar/baz/123/quux?a=b&c=2', '/foo/*', {
 })
 ```
 
-## See also
+## See also {#See-also}
 
 - [Bundled Libraries](/guides/references/bundled-libraries)

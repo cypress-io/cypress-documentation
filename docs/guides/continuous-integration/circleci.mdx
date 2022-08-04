@@ -4,7 +4,7 @@ title: CircleCI
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - How to run Cypress tests with CircleCI as part of CI/CD pipeline
 - How to parallelize Cypress test runs within CircleCI
@@ -19,7 +19,7 @@ title: CircleCI
 
 <!-- textlint-enable -->
 
-## Basic Setup
+## Basic Setup {#Basic-Setup}
 
 The [Cypress CircleCI Orb](https://github.com/cypress-io/circleci-orb) is a
 piece of configuration set in your `.circleci/config.yml` file to correctly
@@ -46,7 +46,7 @@ workflows:
       - cypress/run # "run" job comes from "cypress" orb
 ```
 
-## Parallelization
+## Parallelization {#Parallelization}
 
 A more complex project that needs to install dependencies, build an application
 and run tests across 4 CI machines [in parallel](/guides/guides/parallelization)
@@ -83,7 +83,7 @@ project.
 
 :::info
 
-### <Icon name="graduation-cap" /> Real World Example <Badge type="success">New</Badge>
+### <Icon name="graduation-cap" /> Real World Example <Badge type="success">New</Badge> {#Icon-namegraduation-cap--Real-World-Example-Badge-typesuccessNewBadge}
 
 The Cypress
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses
@@ -97,9 +97,9 @@ Check out the full <Icon name="github" inline="true" callout="RWA Circle CI conf
 
 :::
 
-## Additional Examples
+## Additional Examples {#Additional-Examples}
 
-#### Example `.circleci/config.yml` v2 config file
+#### Example `.circleci/config.yml` v2 config file {#Example-circleciconfigyml-v2-config-file}
 
 ```yaml
 version: 2
@@ -130,7 +130,7 @@ jobs:
       - run: $(npm bin)/cypress run --record --key <record_key>
 ```
 
-#### Example `.circleci/config.yml` v2 config file with `yarn`
+#### Example `.circleci/config.yml` v2 config file with `yarn` {#Example-circleciconfigyml-v2-config-file-with-yarn}
 
 ```yaml
 version: 2
@@ -163,7 +163,7 @@ Find the complete CircleCI v2 example with caching and artifact upload in the
 [cypress-example-docker-circle](https://github.com/cypress-io/cypress-example-docker-circle)
 repo.
 
-#### RAM Disk
+#### RAM Disk {#RAM-Disk}
 
 You can speed up Cypress test jobs by using CircleCI RAM disk, read
 [Start CircleCI Machines Faster by Using RAM Disk](https://glebbahmutov.com/blog/circle-ram-disk/)

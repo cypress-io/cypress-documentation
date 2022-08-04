@@ -18,7 +18,7 @@ An alias of [`.should()`](/api/commands/should)
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .and(chainers)
@@ -27,7 +27,7 @@ An alias of [`.should()`](/api/commands/should)
 .and(callbackFn)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -45,7 +45,7 @@ cy.wrap({ foo: 'bar' })
 cy.and('eq', '42') // Should not be chained off 'cy'
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> chainers** **_(String)_**
 
@@ -66,7 +66,7 @@ A method to be called on the chainer.
 Pass a function that can have any number of explicit assertions within it.
 Whatever was passed to the function is what is yielded.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - In most cases, `.and()` yields the same subject it was given from the
 previous command.
@@ -88,19 +88,19 @@ cy.get('nav') // yields <nav>
   .and('match', /serif/) // yields 'sans-serif'
 ```
 
-## Examples
+## Examples {#Examples}
 
-### Chainers
+### Chainers {#Chainers}
 
-#### Chain assertions on the same subject
+#### Chain assertions on the same subject {#Chain-assertions-on-the-same-subject}
 
 ```javascript
 cy.get('button').should('have.class', 'active').and('not.be.disabled')
 ```
 
-### Value
+### Value {#Value}
 
-#### Chain assertions when yield changes
+#### Chain assertions when yield changes {#Chain-assertions-when-yield-changes}
 
 ```html
 <!-- App Code -->
@@ -119,9 +119,9 @@ cy.get('a')
   .and('not.include', '#') // yields string value of href
 ```
 
-### Method and Value
+### Method and Value {#Method-and-Value}
 
-#### Assert the href is equal to '/users'
+#### Assert the href is equal to '/users' {#Assert-the-href-is-equal-to-users}
 
 ```javascript
 cy.get('#header a')
@@ -129,9 +129,9 @@ cy.get('#header a')
   .and('have.attr', 'href', '/users')
 ```
 
-### Function
+### Function {#Function}
 
-#### Verify length, content, and classes from multiple `<p>`
+#### Verify length, content, and classes from multiple `<p>` {#Verify-length-content-and-classes-from-multiple-p}
 
 Passing a function to `.and()` enables you to assert on the yielded subject.
 This gives you the opportunity to _massage_ what you'd like to assert.
@@ -181,11 +181,11 @@ Using a callback function [will not change the subject](#Subjects)
 
 :::
 
-## Notes
+## Notes {#Notes}
 
-### Chai
+### Chai {#Chai}
 
-#### Similarities to Chai
+#### Similarities to Chai {#Similarities-to-Chai}
 
 If you've worked in [Chai](http://chaijs.com/) before, you will recognize that
 `.and()` matches the same fluent assertion syntax.
@@ -198,15 +198,15 @@ expect({ foo: 'bar' }).to.have.property('foo').and.eq('bar')
 
 `.and()` reproduces this same assertion behavior.
 
-### Subjects
+### Subjects {#Subjects}
 
-#### How do I know which assertions change the subject and which keep it the same?
+#### How do I know which assertions change the subject and which keep it the same? {#How-do-I-know-which-assertions-change-the-subject-and-which-keep-it-the-same}
 
 The chainers that come from [Chai](/guides/references/bundled-libraries#Chai) or
 [Chai-jQuery](/guides/references/bundled-libraries#Chai-jQuery) will always
 document what they return.
 
-#### Using a callback function will not change what is yielded
+#### Using a callback function will not change what is yielded {#Using-a-callback-function-will-not-change-what-is-yielded}
 
 Whenever you use a callback function, its return value is always ignored.
 Cypress always forces the command to yield the value from the previous cy
@@ -225,17 +225,17 @@ cy.get('button')
   })
 ```
 
-### Differences
+### Differences {#Differences}
 
 <ThenShouldAndDifference />
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.and()` requires being chained off a previous command.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.and()` will continue to [retry](/guides/core-concepts/retry-ability)
 its specified assertions until it times out.
@@ -258,7 +258,7 @@ cy.get('input', {timeout: 10000}).should('have.value', 'US').and(($input) => {
 })
 ```
 
-## Command Log
+## Command Log {#Command-Log}
 
 **Chain assertions on the same subject**
 
@@ -278,7 +278,7 @@ following:
 
 <DocsImage src="/img/api/and/cypress-assertions-console-log.png" alt="console.log for assertions" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`.should()`](/api/commands/should)
 - [Guide: Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Assertions)

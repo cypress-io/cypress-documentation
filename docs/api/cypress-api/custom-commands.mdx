@@ -15,7 +15,7 @@ evaluated via an import statement in the
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 Cypress.Commands.add(name, callbackFn)
@@ -25,7 +25,7 @@ Cypress.Commands.addAll(options, callbackObj)
 Cypress.Commands.overwrite(name, callbackFn)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -38,7 +38,7 @@ Cypress.Commands.addAll({
 Cypress.Commands.overwrite('visit', (orig, url, options) => {})
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> name** **_(String)_**
 
@@ -80,9 +80,9 @@ declarative subject validations such as:
 - `document`: requires the previous subject be the document
 - `window`: requires the previous subject be the window
 
-## Examples
+## Examples {#Examples}
 
-### Parent Commands
+### Parent Commands {#Parent-Commands}
 
 Parent commands always **begin** a new chain of commands. Even if you've chained
 it off of a previous command, parent commands will always start a new chain, and
@@ -96,7 +96,7 @@ Examples of parent commands:
 - [`cy.exec()`](/api/commands/exec)
 - [`cy.route()`](/api/commands/route)
 
-#### Click link containing text
+#### Click link containing text {#Click-link-containing-text}
 
 ```js
 Cypress.Commands.add('clickLink', (label) => {
@@ -108,7 +108,7 @@ Cypress.Commands.add('clickLink', (label) => {
 cy.clickLink('Buy Now')
 ```
 
-#### Check a token
+#### Check a token {#Check-a-token}
 
 ```js
 Cypress.Commands.add('checkToken', (token) => {
@@ -120,7 +120,7 @@ Cypress.Commands.add('checkToken', (token) => {
 cy.checkToken('abc123')
 ```
 
-#### Download a file
+#### Download a file {#Download-a-file}
 
 Originally used in
 [cypress-downloadfile](https://github.com/Xvier/cypress-downloadfile), this
@@ -143,7 +143,7 @@ Cypress.Commands.add('downloadFile', (url, directory, fileName) => {
 cy.downloadFile('https://path_to_file.pdf', 'mydownloads', 'demo.pdf')
 ```
 
-#### Commands to work with `sessionStorage`
+#### Commands to work with `sessionStorage` {#Commands-to-work-with-sessionStorage}
 
 ```js
 Cypress.Commands.add('getSessionStorage', (key) => {
@@ -162,7 +162,7 @@ cy.setSessionStorage('token', 'abc123')
 cy.getSessionStorage('token').should('eq', 'abc123')
 ```
 
-#### Log in command using UI
+#### Log in command using UI {#Log-in-command-using-UI}
 
 ```js
 Cypress.Commands.add('typeLogin', (user) => {
@@ -176,7 +176,7 @@ Cypress.Commands.add('typeLogin', (user) => {
 cy.typeLogin({ email: 'fake@email.com', password: 'Secret1' })
 ```
 
-#### Log in command using request
+#### Log in command using request {#Log-in-command-using-request}
 
 ```javascript
 Cypress.Commands.add('login', (userType, options = {}) => {
@@ -230,7 +230,7 @@ cy.login('admin')
 cy.get('button').login('user')
 ```
 
-#### Log out command using UI
+#### Log out command using UI {#Log-out-command-using-UI}
 
 ```js
 Cypress.Commands.add('logout', () => {
@@ -240,7 +240,7 @@ Cypress.Commands.add('logout', () => {
 })
 ```
 
-#### Log out command using `localStorage` <E2EOnlyBadge />
+#### Log out command using `localStorage` <E2EOnlyBadge /> {#Log-out-command-using-localStorage-E2EOnlyBadge-}
 
 ```js
 Cypress.Commands.add('logout', () => {
@@ -254,7 +254,7 @@ Cypress.Commands.add('logout', () => {
 cy.logout()
 ```
 
-#### Create a user
+#### Create a user {#Create-a-user}
 
 ```js
 Cypress.Commands.add('createUser', (user) => {
@@ -292,7 +292,7 @@ Log? Read more about [Command Logging](#Command-Logging).
 
 :::
 
-### Child Commands
+### Child Commands {#Child-Commands}
 
 Child commands are always chained off of a **parent** command, or another
 **child** command.
@@ -307,7 +307,7 @@ Examples of child commands:
 - [`.should()`](/api/commands/should)
 - [`.as()`](/api/commands/as)
 
-#### Custom `console` command
+#### Custom `console` command {#Custom-console-command}
 
 ```javascript
 // not a super useful custom command
@@ -362,7 +362,7 @@ immediately use more Cypress commands on that subject.
 
 :::
 
-### Dual Commands
+### Dual Commands {#Dual-Commands}
 
 A dual command can either start a chain of commands or be chained off of an
 existing one. It is basically the hybrid between both a parent and a child
@@ -379,7 +379,7 @@ Examples of dual commands:
 - [`cy.scrollTo()`](/api/commands/scrollto)
 - [`cy.wait()`](/api/commands/wait)
 
-#### Custom Dual Command
+#### Custom Dual Command {#Custom-Dual-Command}
 
 ```javascript
 Cypress.Commands.add('dismiss', {
@@ -405,13 +405,13 @@ cy.dismiss() // no subject
 cy.get('#dialog').dismiss() // with subject
 ```
 
-### Overwrite Existing Commands
+### Overwrite Existing Commands {#Overwrite-Existing-Commands}
 
 You can also modify the behavior of existing Cypress commands. This is useful to
 always set some defaults to avoid creating another command that ends up using
 the original.
 
-#### Overwrite `visit` command
+#### Overwrite `visit` command {#Overwrite-visit-command}
 
 ```javascript
 Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
@@ -449,7 +449,7 @@ For more complex use cases feel free to overwrite existing commands.
 
 :::
 
-#### Overwrite `type` command
+#### Overwrite `type` command {#Overwrite-type-command}
 
 If you are typing into a password field, the password input is masked
 automatically within your application. But [.type()](/api/commands/type)
@@ -504,7 +504,7 @@ to explore another way to keep passwords secret within your tests.
 
 :::
 
-#### Overwrite `screenshot` command
+#### Overwrite `screenshot` command {#Overwrite-screenshot-command}
 
 This example overwrites [cy.screenshot()](/api/commands/screenshot) to always
 wait until a certain element is visible.
@@ -527,7 +527,7 @@ Cypress.Commands.overwrite(
 )
 ```
 
-#### Overwrite `contains` command
+#### Overwrite `contains` command {#Overwrite-contains-command}
 
 This example overwrites [.contains()](/api/commands/contains) to always have the
 `matchCase` option set to `false`.
@@ -550,7 +550,7 @@ Cypress.Commands.overwrite(
 )
 ```
 
-## Validations
+## Validations {#Validations}
 
 As noted in the [Arguments](#Arguments) above, you can also set `prevSubject` to
 one of:
@@ -569,7 +569,7 @@ subject, but not validate its type.
 
 :::
 
-### Require Element
+### Require Element {#Require-Element}
 
 Require subject be of type: `element`.
 
@@ -600,9 +600,9 @@ cy.click() // no subject, will error
 cy.wrap([]).click() // has subject, but not `element`, will error
 ```
 
-### Allow Multiple Types
+### Allow Multiple Types {#Allow-Multiple-Types}
 
-#### `.trigger()`
+#### `.trigger()` {#trigger}
 
 Require subject be one of the following types: `element`, `document` or `window`
 
@@ -637,7 +637,7 @@ cy.wrap(true).trigger() // has subject, but not `element`, will error
 
 Validations always work as "or" not "and".
 
-### Optional with Types
+### Optional with Types {#Optional-with-Types}
 
 You can also mix optional commands **with** validations.
 
@@ -681,9 +681,9 @@ cy.visit().contains() // has subject, and since visit yields `window` it's ok
 cy.wrap(null).contains() // has subject, but not `element`, will error
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Command Logging
+### Command Logging {#Command-Logging}
 
 When creating your own custom command, you can control how it appears and
 behaves in the Command Log.
@@ -694,15 +694,15 @@ to those commands, and programmatically controlling your custom command. This
 will cleanup the Command Log and be much more visually appealing and
 understandable.
 
-### `cy.hover()` and `cy.mount()`
+### `cy.hover()` and `cy.mount()` {#cyhover-and-cymount}
 
 Cypress does not have `cy.hover()` or `cy.mount()` commands out-of-the-box. See
 how to craft your own [`cy.hover()`](/api/commands/hover) and
 [`cy.mount()`](/api/commands/mount) custom commands.
 
-### Best Practices
+### Best Practices {#Best-Practices}
 
-#### 1. Don't make everything a custom command
+#### 1. Don't make everything a custom command {#1-Dont-make-everything-a-custom-command}
 
 Custom commands work well when you're needing to describe behavior that's
 desirable across **all of your tests**. Examples would be a `cy.setup()` or
@@ -807,7 +807,7 @@ it('paginates many search results', () => {
 })
 ```
 
-#### 2. Don't overcomplicate things
+#### 2. Don't overcomplicate things {#2-Dont-overcomplicate-things}
 
 Every custom command you write is generally an abstraction over a series of
 internal commands. That means you and your team members exert much more mental
@@ -838,7 +838,7 @@ prioritized above all else.
 Try not to overcomplicate things and create too many abstractions. When in
 doubt, use a regular function for individual spec files.
 
-#### 3. Don't do too much in a single command
+#### 3. Don't do too much in a single command {#3-Dont-do-too-much-in-a-single-command}
 
 Make your custom commands composable and as unopinionated as possible. Cramming
 too much into them makes them inflexible and requires more and more options
@@ -849,7 +849,7 @@ Those tend to shape your command into a much more rigid structure. Sometimes
 this is unavoidable, but a best practice is to let the calling code choose when
 and how to use assertions.
 
-#### 4. Skip your UI as much as possible
+#### 4. Skip your UI as much as possible {#4-Skip-your-UI-as-much-as-possible}
 
 Custom commands are a great way to abstract away setup (specific to your app).
 When doing those kinds of tasks, skip as much of the UI as possible. Use
@@ -860,20 +860,20 @@ programmatically.
 Having custom commands repeat the same UI actions over and over again is slow,
 and unnecessary. Try to take as many shortcuts as possible.
 
-#### 5. Write TypeScript definitions
+#### 5. Write TypeScript definitions {#5-Write-TypeScript-definitions}
 
 You can describe the method signature for your custom command, allowing
 IntelliSense to show helpful documentation. See the
 [`cypress-example-todomvc`](https://github.com/cypress-io/cypress-example-todomvc#cypress-intellisense)
 repository for a working example.
 
-## History
+## History {#History}
 
 | Version                                       | Changes                      |
 | --------------------------------------------- | ---------------------------- |
 | [0.20.0](/guides/references/changelog#0-20-0) | `Cypress.Commands` API added |
 
-## See also
+## See also {#See-also}
 
 - See how to add
   [TypeScript support for custom commands](/guides/tooling/typescript-support#Types-for-custom-commands)

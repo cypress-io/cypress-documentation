@@ -33,7 +33,7 @@ below for details.
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 Cypress.config()
@@ -42,7 +42,7 @@ Cypress.config(name, value)
 Cypress.config(object)
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> name** **_(String)_**
 
@@ -56,11 +56,11 @@ The value of the configuration to set.
 
 Set multiple configuration options with an object literal.
 
-## Examples
+## Examples {#Examples}
 
-### No Arguments
+### No Arguments {#No-Arguments}
 
-#### Get all configuration options from the [Cypress configuration](/guides/references/configuration)
+#### Get all configuration options from the [Cypress configuration](/guides/references/configuration) {#Get-all-configuration-options-from-the-Cypress-configuration}
 
 :::cypress-config-example
 
@@ -80,9 +80,9 @@ Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, ..
 
 <!-- textlint-enable -->
 
-### Name
+### Name {#Name}
 
-#### Return a single configuration option from the [Cypress configuration](/guides/references/configuration)
+#### Return a single configuration option from the [Cypress configuration](/guides/references/configuration) {#Return-a-single-configuration-option-from-the-Cypress-configuration}
 
 :::cypress-config-example
 
@@ -98,9 +98,9 @@ Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 30000, ..
 Cypress.config('pageLoadTimeout') // => 60000
 ```
 
-### Name and Value
+### Name and Value {#Name-and-Value}
 
-#### Change the values of configuration options from the [Cypress configuration](/guides/references/configuration) from within your tests
+#### Change the values of configuration options from the [Cypress configuration](/guides/references/configuration) from within your tests {#Change-the-values-of-configuration-options-from-the-Cypress-configuration-from-within-your-tests}
 
 :::caution
 
@@ -128,9 +128,9 @@ Cypress.config('viewportWidth', 800)
 Cypress.config('viewportWidth') // => 800
 ```
 
-### Object
+### Object {#Object}
 
-#### Override multiple options from the [Cypress configuration](/guides/references/configuration) by passing an object
+#### Override multiple options from the [Cypress configuration](/guides/references/configuration) by passing an object {#Override-multiple-options-from-the-Cypress-configuration-by-passing-an-object}
 
 :::cypress-config-example
 
@@ -152,9 +152,9 @@ Cypress.config({
 Cypress.config() // => {defaultCommandTimeout: 10000, viewportHeight: 900, ...}
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Not all config values can be changed at all times
+### Not all config values can be changed at all times {#Not-all-config-values-can-be-changed-at-all-times}
 
 Some configuration values are readonly and cannot be changed while running a
 test. Anything that's not directly under Cypress's control - like timeouts,
@@ -162,7 +162,7 @@ test. Anything that's not directly under Cypress's control - like timeouts,
 review the list of
 [test configuration options](/guides/references/configuration#Test-Configuration).
 
-### Test Configuration vs `Cypress.config()`
+### Test Configuration vs `Cypress.config()` {#Test-Configuration-vs-Cypressconfig}
 
 To apply specific Cypress configuration values to a suite or test, you can pass
 a [test configuration](/guides/references/configuration#Test-Configuration)
@@ -176,7 +176,7 @@ default values after the suite or test is complete.
 See the full guide on
 [test configuration](/guides/references/configuration#Test-Configuration).
 
-### `Cypress.config()` executes Synchronously
+### `Cypress.config()` executes Synchronously {#Cypressconfig-executes-Synchronously}
 
 It's important to note that `Cypress.config()` executes synchronously and will
 not wait for the Cypress commands above it to execute. If you need to update
@@ -193,7 +193,7 @@ it('using cy.then', () => {
 })
 ```
 
-### Why is it `Cypress.config` and not `cy.config`?
+### Why is it `Cypress.config` and not `cy.config`? {#Why-is-it-Cypressconfig-and-not-cyconfig}
 
 As a rule of thumb anything you call from `Cypress` affects global state.
 Anything you call from `cy` affects local state.
@@ -207,13 +207,13 @@ test spec file was available in other specs&mdash;but the Cypress team wisely
 made each spec run in isolation in [`3.0.0`](/guides/references/changelog#3-0-0)
 and by that time `Cypress.config` was public API.
 
-## History
+## History {#History}
 
 | Version | Changes                |
 | ------- | ---------------------- |
 | 0.12.6  | `Cypress.config` added |
 
-## See also
+## See also {#See-also}
 
 - [Cypress configuration](/guides/references/configuration)
 - The [Environment Variable](/guides/guides/environment-variables) guide

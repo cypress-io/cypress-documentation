@@ -4,7 +4,7 @@ title: uncheck
 
 Uncheck checkbox(es).
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .uncheck()
@@ -15,7 +15,7 @@ Uncheck checkbox(es).
 .uncheck(values, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -30,7 +30,7 @@ cy.uncheck('[type="checkbox"]') // Errors, cannot be chained off 'cy'
 cy.get('p:first').uncheck() // Errors, '.get()' does not yield checkbox
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> value** **_(String)_**
 
@@ -53,74 +53,74 @@ Pass in an options object to change the default behavior of `.uncheck()`.
 | `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.uncheck()` to resolve before [timing out](#Timeouts)                                                                            |
 | `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.uncheck()` yields the same subject it was given from the previous
 command.
 
-## Examples
+## Examples {#Examples}
 
-### No Args
+### No Args {#No-Args}
 
-#### Uncheck all checkboxes
+#### Uncheck all checkboxes {#Uncheck-all-checkboxes}
 
 ```javascript
 cy.get(':checkbox').uncheck()
 ```
 
-#### Uncheck element with the id 'saveUserName'
+#### Uncheck element with the id 'saveUserName' {#Uncheck-element-with-the-id-saveUserName}
 
 ```javascript
 cy.get('#saveUserName').uncheck()
 ```
 
-### Value
+### Value {#Value}
 
-#### Uncheck the checkbox with the value of 'ga'
+#### Uncheck the checkbox with the value of 'ga' {#Uncheck-the-checkbox-with-the-value-of-ga}
 
 ```javascript
 cy.get('input[type="checkbox"]').uncheck(['ga'])
 ```
 
-### Values
+### Values {#Values}
 
-#### Uncheck the checkboxes with the values 'ga' and 'ca'
+#### Uncheck the checkboxes with the values 'ga' and 'ca' {#Uncheck-the-checkboxes-with-the-values-ga-and-ca}
 
 ```javascript
 cy.get('[type="checkbox"]').uncheck(['ga', 'ca'])
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Actionability
+### Actionability {#Actionability}
 
-#### The element must first reach actionability
+#### The element must first reach actionability {#The-element-must-first-reach-actionability}
 
 `.uncheck()` is an "action command" that follows all the rules of
 [Actionability](/guides/core-concepts/interacting-with-elements).
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.uncheck()` requires being chained off a command that yields DOM
 element(s).</li><li>.uncheck() requires the element to have type
 `checkbox`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.uncheck()` will automatically wait for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.uncheck()`
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.uncheck()` can time out waiting for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.uncheck()`
 can time out waiting for assertions you've added to pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Uncheck the first checkbox_**
 
@@ -141,7 +141,7 @@ following:
 
 <DocsImage src="/img/api/uncheck/console-shows-events-from-clicking-the-checkbox.png" alt="Console Log uncheck" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                       | Changes                       |
 | --------------------------------------------- | ----------------------------- |
@@ -149,7 +149,7 @@ following:
 | [0.6.12](/guides/references/changelog#0-6-12) | Added option `force`          |
 | [0.3.3](/guides/references/changelog#0-3-3)   | `.uncheck()` command added    |
 
-## See also
+## See also {#See-also}
 
 - [`.check()`](/api/commands/check)
 - [`.click()`](/api/commands/click)

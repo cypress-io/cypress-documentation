@@ -11,7 +11,7 @@ The querying behavior of this command matches exactly how
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .prevAll()
@@ -20,7 +20,7 @@ The querying behavior of this command matches exactly how
 .prevAll(selector, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -35,7 +35,7 @@ cy.prevAll() // Errors, cannot be chained off 'cy'
 cy.getCookies().prevAll() // Errors, 'getCookies' does not yield DOM element
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> selector** **_(String selector)_**
 
@@ -50,15 +50,15 @@ Pass in an options object to change the default behavior of `.prevAll()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.prevAll()` to resolve before [timing out](#Timeouts)                  |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.prevAll()` yields the new DOM element(s) it found.
 
-## Examples
+## Examples {#Examples}
 
-### No Args
+### No Args {#No-Args}
 
-#### Find all of the element's siblings before `.third`
+#### Find all of the element's siblings before `.third` {#Find-all-of-the-elements-siblings-before-third}
 
 ```html
 <ul>
@@ -75,9 +75,9 @@ Pass in an options object to change the default behavior of `.prevAll()`.
 cy.get('.third').prevAll()
 ```
 
-### Selector
+### Selector {#Selector}
 
-#### Find all of the previous siblings of each `li`. Keep only the ones with a class `selected`
+#### Find all of the previous siblings of each `li`. Keep only the ones with a class `selected` {#Find-all-of-the-previous-siblings-of-each-li-Keep-only-the-ones-with-a-class-selected}
 
 ```html
 <ul>
@@ -94,14 +94,14 @@ cy.get('.third').prevAll()
 cy.get('li').prevAll('.selected')
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.prevAll()` requires being chained off a command that yields DOM
 element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.prevAll()` will automatically
 [retry](/guides/core-concepts/retry-ability) until the element(s)
@@ -109,13 +109,13 @@ element(s).
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.prevAll()` can time out waiting for the element(s) to
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.prevAll()`
 can time out waiting for assertions you've added to pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Find all elements before the `.active` li_**
 
@@ -132,7 +132,7 @@ following:
 
 <DocsImage src="/img/api/prevall/console-log-all-previous-elements-traversed.png" alt="Console Log prevAll" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`.nextAll()`](/api/commands/nextall)
 - [`.parents()`](/api/commands/parents)

@@ -21,7 +21,7 @@ Failure to replicate the environment completely may lead to:
 
 :::
 
-## Broken Styles
+## Broken Styles {#Broken-Styles}
 
 Because your component's styles are business logic, you need to make sure the
 styles are identical between your test and development environments.
@@ -30,7 +30,7 @@ If your component has Times New Roman font, if the spacing is off, or if your
 icon fonts aren't rendering, you'll need to investigate what the difference
 between the test and development environment is.
 
-### Missing Icons
+### Missing Icons {#Missing-Icons}
 
 Icons are generally installed in your `main.js`, `css`, or at the bundler level
 (e.g. Iconify and unplugin-icons).
@@ -38,7 +38,7 @@ Icons are generally installed in your `main.js`, `css`, or at the bundler level
 Ensure that your Icons are being installed in your support file just like they
 are in your `main.js` file OR as they are in your `index.html` file.
 
-### Times New Roman Fonts
+### Times New Roman Fonts {#Times-New-Roman-Fonts}
 
 Make sure you've added any page-level loaded fonts into the HTML fixture!
 
@@ -53,7 +53,7 @@ and imported at the top of your support file.
 import '../../src/main.css'
 ```
 
-## Replicating the HTML fixtures
+## Replicating the HTML fixtures {#Replicating-the-HTML-fixtures}
 
 Sometimes, you'll have a third-party plugin, like a tooltip, modal, or other
 portal-style component that wants to bind to a DOM node outside of your app's
@@ -68,7 +68,7 @@ If you always make sure your production HTML fixtures are close to your test
 HTML fixtures, you'll rarely have to modify your tests when you refactor the
 implementation of the component.
 
-### Editing your HTML fixture
+### Editing your HTML fixture {#Editing-your-HTML-fixture}
 
 To edit the spec's fixtured HTML, open up the
 `cypress/support/component-index.html` file that was fixtured for you during
@@ -80,7 +80,7 @@ You may also want to load custom libraries like `jquery` or `tailwind` like this
 -- if that's how you load those libraries when your application is shipped to
 production.
 
-## Custom Mount Commands
+## Custom Mount Commands {#Custom-Mount-Commands}
 
 If you used the automatic configuration option to setup your app, you'll have
 the global `cy.mount()` Cypress Command available throughout your tests.
@@ -91,7 +91,7 @@ that are usually installed in your application's entry point file (`main.js`
 usually). You may also pull in global plugins or style resets like
 `normalize.css`
 
-### Replicating Plugins
+### Replicating Plugins {#Replicating-Plugins}
 
 Most applications will have state management or routing. Both of these are Vue
 plugins.
@@ -177,7 +177,7 @@ Cypress.Commands.add('mount', (component, ...args) => {
 </TabItem>
 </Tabs>
 
-### Replicating the expected Component Hierarchy
+### Replicating the expected Component Hierarchy {#Replicating-the-expected-Component-Hierarchy}
 
 Some Vue applications, most famously Vue apps built on top of Vuetify, require
 certain components to be structured in a specific hierarchy.
@@ -259,7 +259,7 @@ components that use all of Vue's language features.
 
 Congrats! Happy building. 🎉
 
-### Vue Router
+### Vue Router {#Vue-Router}
 
 To use Vue Router, create a command to register the plugin and pass in a custom
 implementation of the router via the options param:
@@ -452,7 +452,7 @@ it('login link should be active when url is "/login"', () => {
 </TabItem>
 </Tabs>
 
-### Vuex
+### Vuex {#Vuex}
 
 To use a component that uses [Vuex](https://vuex.vuejs.org/), create a `mount`
 command that configures a Vuex store for your component:
@@ -570,7 +570,7 @@ it.only('User profile should display user name', () => {
 })
 ```
 
-### Global Components
+### Global Components {#Global-Components}
 
 If you have components that are registered globally in the main application
 file, set them up in your mount command so your component will render them

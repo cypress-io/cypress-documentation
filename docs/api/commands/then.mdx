@@ -19,14 +19,14 @@ throw within it but be aware of [differences](/api/commands/should#Differences).
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .then(callbackFn)
 .then(options, callbackFn)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -35,7 +35,7 @@ cy.get('.nav').then(($nav) => {}) // Yields .nav as first arg
 cy.location().then((loc) => {}) // Yields location object as first arg
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> options** **_(Object)_**
 
@@ -49,7 +49,7 @@ Pass in an options object to change the default behavior of `.then()`.
 
 Pass a function that takes the previously yielded subject as its first argument.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 `.then()` is modeled identically to the way Promises work in JavaScript.
 Whatever is returned from the callback function becomes the new subject and will
@@ -66,7 +66,7 @@ Just like Promises, you can return any compatible "thenable" (anything that has
 a `.then()` interface) and Cypress will wait for that to resolve before
 continuing forward through the chain of commands.
 
-## Examples
+## Examples {#Examples}
 
 :::info
 
@@ -76,9 +76,9 @@ the various ways you can use `.then()` to store, compare, and debug values.
 
 :::
 
-### DOM element
+### DOM element {#DOM-element}
 
-#### The `button` element is yielded
+#### The `button` element is yielded {#The-button-element-is-yielded}
 
 ```javascript
 cy.get('button').then(($btn) => {
@@ -88,7 +88,7 @@ cy.get('button').then(($btn) => {
 })
 ```
 
-#### The number is yielded from previous command
+#### The number is yielded from previous command {#The-number-is-yielded-from-previous-command}
 
 ```js
 cy.wrap(1)
@@ -98,9 +98,9 @@ cy.wrap(1)
   .should('equal', 1) // true
 ```
 
-### Change subject
+### Change subject {#Change-subject}
 
-#### The el subject is changed with another command
+#### The el subject is changed with another command {#The-el-subject-is-changed-with-another-command}
 
 ```javascript
 cy.get('button')
@@ -114,7 +114,7 @@ cy.get('button')
   .should('have.class', 'spin') // assert on i element
 ```
 
-#### The number subject is changed with another command
+#### The number subject is changed with another command {#The-number-subject-is-changed-with-another-command}
 
 ```javascript
 cy.wrap(1).then((num) => {
@@ -123,7 +123,7 @@ cy.wrap(1).then((num) => {
 }).should('equal', 2) // true
 ```
 
-#### The number subject is changed by returning
+#### The number subject is changed by returning {#The-number-subject-is-changed-by-returning}
 
 ```javascript
 cy.wrap(1)
@@ -135,7 +135,7 @@ cy.wrap(1)
   .should('equal', 2) // true
 ```
 
-#### Returning `undefined` will not modify the yielded subject
+#### Returning `undefined` will not modify the yielded subject {#Returning-undefined-will-not-modify-the-yielded-subject}
 
 ```javascript
 cy.get('form')
@@ -152,7 +152,7 @@ cy.get('form')
   })
 ```
 
-### Raw HTMLElements are wrapped with jQuery
+### Raw HTMLElements are wrapped with jQuery {#Raw-HTMLElements-are-wrapped-with-jQuery}
 
 ```javascript
 cy.get('div')
@@ -164,11 +164,11 @@ cy.get('div')
   })
 ```
 
-### Promises
+### Promises {#Promises}
 
 Cypress waits for Promises to resolve before continuing
 
-#### Example using Q
+#### Example using Q {#Example-using-Q}
 
 ```javascript
 cy.get('button')
@@ -184,7 +184,7 @@ cy.get('button')
   })
 ```
 
-#### Example using bluebird
+#### Example using bluebird {#Example-using-bluebird}
 
 ```javascript
 cy.get('button')
@@ -194,7 +194,7 @@ cy.get('button')
   })
 ```
 
-#### Example using jQuery deferred's
+#### Example using jQuery deferred's {#Example-using-jQuery-deferreds}
 
 ```javascript
 cy.get('button')
@@ -210,40 +210,40 @@ cy.get('button')
   })
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Differences
+### Differences {#Differences}
 
 <ThenShouldAndDifference />
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.then()` requires being chained off a previous command.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.then()` will only run assertions you have chained once, and will not
 [retry](/guides/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.then()` can time out waiting for a promise you've returned to
 resolve.
 
-## Command Log
+## Command Log {#Command-Log}
 
 - `.then()` does _not_ log in the Command Log
 
-## History
+## History {#History}
 
 | Version                                       | Changes                 |
 | --------------------------------------------- | ----------------------- |
 | [0.14.0](/guides/references/changelog#0-14-0) | Added `timeout` option  |
 | [< 0.3.3](/guides/references/changelog#0-3-3) | `.then()` command added |
 
-## See also
+## See also {#See-also}
 
 - [`.and()`](/api/commands/and)
 - [`.each()`](/api/commands/each)

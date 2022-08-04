@@ -11,7 +11,7 @@ over time, run duration and visibility into tests suite size over time.
   alt="Dashboard Analytics Screenshot"
 ></DocsImage>
 
-## Run status
+## Run status {#Run-status}
 
 <DocsImage
   src="/img/dashboard/analytics/dashboard-analytics-runs-over-time.png"
@@ -23,7 +23,7 @@ Cypress Dashboard, broken down by the final status of the run. Each run
 represents a single invocation of `cypress run --record` for this project,
 whether in CI or on a local machine.
 
-### Filters
+### Filters {#Filters}
 
 <DocsImage
   src="/img/dashboard/analytics/dashboard-analytics-runs-over-time-filters.png"
@@ -36,7 +36,7 @@ Results may be filtered by:
 - Time Range
 - Time Interval (Hourly, Daily, Weekly, Monthly, Quarterly)
 
-### Results
+### Results {#Results}
 
 <DocsImage
   src="/img/dashboard/analytics/dashboard-analytics-runs-over-time-graph.png"
@@ -51,7 +51,7 @@ analysis.
 
 This can be done via the download icon to the right of the filters.
 
-### Key Performance Indicators
+### Key Performance Indicators {#Key-Performance-Indicators}
 
 <DocsImage
   src="/img/dashboard/analytics/dashboard-analytics-runs-over-time-kpi.png"
@@ -69,7 +69,7 @@ respective of the filters selected.
 A table of results grouped by date for the time range filter is displayed with
 passed, failed, running, timed out and errored columns.
 
-## Run duration
+## Run duration {#Run-duration}
 
 <DocsImage
   src="/img/dashboard/analytics/dashboard-analytics-run-duration.png"
@@ -81,7 +81,7 @@ including how test parallelization is impacting your total run time. Note that
 we only include passing runs here — failing or errored runs can sway the average
 away from its typical duration.
 
-### Filters
+### Filters {#Filters-1}
 
 <DocsImage
   src="/img/dashboard/analytics/dashboard-analytics-run-duration-filters.png"
@@ -95,7 +95,7 @@ Results may be filtered by:
 - Time Range
 - Time Interval (Hourly, Daily, Weekly, Monthly, Quarterly)
 
-### Results
+### Results {#Results-1}
 
 <DocsImage
   src="/img/dashboard/analytics/dashboard-analytics-run-duration-graph.png"
@@ -108,7 +108,7 @@ selected.
 The results may be downloaded as a comma-separated values (CSV) file for further
 analysis. This can be done via the download icon to the right of the filters.
 
-### Key Performance Indicators
+### Key Performance Indicators {#Key-Performance-Indicators-1}
 
 <DocsImage
   src="/img/dashboard/analytics/dashboard-analytics-run-duration-kpi.png"
@@ -126,7 +126,7 @@ parallelization are computed respective of the filters selected.
 A table of results grouped by date for the time range filter is displayed with
 average runtime, concurrency and time saved from parallelization columns.
 
-## Test suite size
+## Test suite size {#Test-suite-size}
 
 <DocsImage
   src="/img/dashboard/analytics/dashboard-analytics-test-suite-size.png"
@@ -138,7 +138,7 @@ average number of test cases executed per run for each day in the given time
 period. It excludes runs that errored or timed out since they don't accurately
 represent the size of your test suite.
 
-### Filters
+### Filters {#Filters-2}
 
 <DocsImage
   src="/img/dashboard/analytics/dashboard-analytics-test-suite-size-filters.png"
@@ -152,7 +152,7 @@ Results may be filtered by:
 - Time Range
 - Time Interval (Hourly, Daily, Weekly, Monthly, Quarterly)
 
-### Results
+### Results {#Results-2}
 
 <DocsImage
   src="/img/dashboard/analytics/dashboard-analytics-test-suite-size-graph.png"
@@ -165,7 +165,7 @@ selected.
 The results may be downloaded as a comma-separated values (CSV) file for further
 analysis. This can be done via the download icon to the right of the filters.
 
-### Key Performance Indicators
+### Key Performance Indicators {#Key-Performance-Indicators-2}
 
 <DocsImage
   src="/img/dashboard/analytics/dashboard-analytics-test-suite-size-kpi.png"
@@ -183,7 +183,7 @@ selected.
 A table of results grouped by date for the time range filter is displayed with
 unique tests and spec files.
 
-## Top failures
+## Top failures {#Top-failures}
 
 <DocsImage
   src="/img/dashboard/analytics/dashboard-analytics-top-failures.png"
@@ -192,7 +192,7 @@ unique tests and spec files.
 
 This report shows the top failures in your test suite.
 
-### Filters and Views
+### Filters and Views {#Filters-and-Views}
 
 <DocsImage
   src="/img/dashboard/analytics/dashboard-analytics-top-failures-filters.png"
@@ -219,7 +219,7 @@ Results may also be filtered by:
 - Cypress Version
 - Operating System
 
-### Results
+### Results {#Results-3}
 
 <DocsImage
   src="/img/dashboard/analytics/dashboard-analytics-top-failures-graph.png"
@@ -234,7 +234,7 @@ analysis.
 
 This can be done via the download icon to the right of the filters.
 
-### Key Performance Indicators
+### Key Performance Indicators {#Key-Performance-Indicators-3}
 
 <DocsImage
   src="/img/dashboard/analytics/dashboard-analytics-top-failures-kpi.png"
@@ -254,7 +254,7 @@ The main key performance indicators tracked are:
 A table of results grouped by failure rate is displayed with spec files and
 total runs.
 
-## Slowest tests
+## Slowest tests {#Slowest-tests}
 
 <DocsImage
   src="/img/dashboard/analytics/dashboard-analytics-slowest-tests.png"
@@ -263,7 +263,7 @@ total runs.
 
 This report shows the slowest tests in a test suite.
 
-### Filters and Views
+### Filters and Views {#Filters-and-Views-1}
 
 <DocsImage
   src="/img/dashboard/analytics/dashboard-analytics-slowest-tests-filters.png"
@@ -291,7 +291,7 @@ Results may also be filtered by:
 - Cypress Version
 - Operating System
 
-### Results
+### Results {#Results-4}
 
 <DocsImage
   src="/img/dashboard/analytics/dashboard-analytics-slowest-tests-graph.png"
@@ -303,7 +303,7 @@ The slowest tests are displayed by duration of time.
 The results may be downloaded as a comma-separated values (CSV) file for further
 analysis. This can be done via the download icon to the right of the filters.
 
-### Key Performance Indicators
+### Key Performance Indicators {#Key-Performance-Indicators-4}
 
 <DocsImage
   src="/img/dashboard/analytics/dashboard-analytics-slowest-tests-kpi.png"
@@ -322,7 +322,7 @@ The main key performance indicators tracked are:
 
 A table of results grouped by median duration and total runs.
 
-## Most common errors
+## Most common errors {#Most-common-errors}
 
 This report shows the impact of the most common types of errors across the test
 suite.

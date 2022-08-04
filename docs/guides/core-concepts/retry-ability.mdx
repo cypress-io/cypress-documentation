@@ -5,7 +5,7 @@ sidebar_position: 40
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - How Cypress retries commands and assertions
 - When commands are retried and when they are not
@@ -28,7 +28,7 @@ fails, check out our official guide on
 
 :::
 
-## Commands vs assertions
+## Commands vs assertions {#Commands-vs-assertions}
 
 There are two types of methods you can call in your Cypress tests: **commands**
 and **assertions**. For example, there are 6 commands and 2 assertions in the
@@ -123,7 +123,7 @@ indicators, meaning Cypress is requerying for them.
 Within a few milliseconds after the DOM updates, `cy.get()` finds two elements
 and the `should('have.length', 2)` assertion passes
 
-## Multiple assertions
+## Multiple assertions {#Multiple-assertions}
 
 A single command followed by multiple assertions retries each one of them -- in
 order. Thus when the first assertion passes, the command will be retried with
@@ -159,7 +159,7 @@ itself failed.
   alt="Retrying multiple assertions"
 ></DocsImage>
 
-## Not every command is retried
+## Not every command is retried {#Not-every-command-is-retried}
 
 Cypress only retries commands that query the DOM:
 [`cy.get()`](/api/commands/get), [`.find()`](/api/commands/find),
@@ -172,7 +172,7 @@ assertions that follow it are passing.
 - `.first()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)
 - `.first()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed
 
-### Why are some commands _NOT_ retried?
+### Why are some commands _NOT_ retried? {#Why-are-some-commands-_NOT_-retried}
 
 Commands are not retried when they could potentially change the state of the
 application under test. For example, Cypress will not retry the
@@ -191,7 +191,7 @@ blog post.
 
 :::
 
-## Built-in assertions
+## Built-in assertions {#Built-in-assertions}
 
 Often a Cypress command has built-in assertions that will cause the command to
 be retried. For example, the [`.eq()`](/api/commands/eq) command will be retried
@@ -224,12 +224,12 @@ Cypress tries to act like a human user would using the browser.
 The `.click()` command will automatically wait until multiple built-in assertion
 checks like these pass, and then it will attempt to click just once.
 
-## Timeouts
+## Timeouts {#Timeouts}
 
 By default each command that retries, does so for up to 4 seconds - the
 [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) setting.
 
-### Increase time to retry
+### Increase time to retry {#Increase-time-to-retry}
 
 You can change this timeout for _all commands_. See
 [Configuration: Overriding Options](/guides/references/configuration#Overriding-Options)
@@ -258,7 +258,7 @@ Cypress will retry for up to 10 seconds to find a visible element of class
 [Timeouts](/guides/core-concepts/introduction-to-cypress#Timeouts) section in
 the "Introduction to Cypress" guide.
 
-### Disable retry
+### Disable retry {#Disable-retry}
 
 Overriding the timeout to `0` will essentially disable retrying the command,
 since it will spend 0 milliseconds retrying.
@@ -269,7 +269,7 @@ since it will spend 0 milliseconds retrying.
 cy.get('[data-testid="ssr-error"]', { timeout: 0 }).should("not.exist");
 ```
 
-## Only the last command is retried
+## Only the last command is retried {#Only-the-last-command-is-retried}
 
 Here is a short test that demonstrates some flake.
 
@@ -395,12 +395,12 @@ cy.get('[data-testid="todo-list"] li') // queries immediately, finds 1 <li>
   .should("contain", "todo B"); // never succeeds with only 1st <li>
 ```
 
-## Use retry-ability correctly
+## Use retry-ability correctly {#Use-retry-ability-correctly}
 
 Luckily, once we understand how retry-ability works and how only the last
 command is used for assertion retries, we can fix this test for good.
 
-### Merging queries
+### Merging queries {#Merging-queries}
 
 The first solution we recommend is to avoid unnecessarily splitting commands
 that query elements. Instead of
@@ -478,7 +478,7 @@ See the
 [Set flag to start tests](https://glebbahmutov.com/blog/set-flag-to-start-tests/)
 blog for the full example.
 
-### Alternate commands and assertions
+### Alternate commands and assertions {#Alternate-commands-and-assertions}
 
 There is another way to fix our flaky test. Whenever you write a longer test, we
 recommend alternating commands with assertions. In this case, I will add an
@@ -517,7 +517,7 @@ successfully finding two `<li>` elements, the command `.find('label')` and its
 assertion starts, and by now, the item with the correct "todo B" label has been
 correctly queried.
 
-### Use `.should()` with a callback
+### Use `.should()` with a callback {#Use-should-with-a-callback}
 
 If you have to use commands that cannot be retried, but need to retry the entire
 chain, consider rewriting the commands into a single
@@ -543,7 +543,7 @@ Below is an example where the number value is set after a delay:
   alt="Random number"
 ></DocsImage>
 
-#### <Icon name="exclamation-triangle" color="red" /> Incorrectly waiting for values
+#### <Icon name="exclamation-triangle" color="red" /> Incorrectly waiting for values {#Icon-nameexclamation-triangle-colorred--Incorrectly-waiting-for-values}
 
 You may want to write a test like below, to test that the number is between 1
 and 10, although **this will not work as intended**. The test yields the
@@ -566,7 +566,7 @@ the test only runs the entire chain once before failing.
   alt="First attempt at writing the test"
 ></DocsImage>
 
-#### <Icon name="check-circle" color="green" /> Correctly waiting for values
+#### <Icon name="check-circle" color="green" /> Correctly waiting for values {#Icon-namecheck-circle-colorgreen--Correctly-waiting-for-values}
 
 We need to retry getting the element, invoking the `text()` method, calling the
 `parseFloat` function and running the `gte` and `lte` assertions. We can achieve
@@ -591,7 +591,7 @@ to get the number. When the number is finally set in the application, then the
   alt="Random number using callback"
 ></DocsImage>
 
-### Use aliases
+### Use aliases {#Use-aliases}
 
 When using [`cy.stub()`](/api/commands/stub) or [`cy.spy()`](/api/commands/spy)
 to test application's code, a good practice is to give it an alias and use the
@@ -602,7 +602,7 @@ testing with the
 [cypress/react](https://github.com/cypress-io/cypress/tree/master/npm/react)
 mounting library, the following test might or might not work:
 
-#### <Icon name="exclamation-triangle" color="red" /> Incorrectly checking if the stub was called
+#### <Icon name="exclamation-triangle" color="red" /> Incorrectly checking if the stub was called {#Icon-nameexclamation-triangle-colorred--Incorrectly-checking-if-the-stub-was-called}
 
 ```js
 const Clicker = ({ click }) => (
@@ -644,7 +644,7 @@ const Clicker = ({ click }) => (
 The test finishes before the component calls the `click` prop twice, and without
 retrying the assertion `expect(onClick).to.be.calledTwice`.
 
-#### <Icon name="check-circle" color="green" /> Correctly waiting for the stub to be called
+#### <Icon name="check-circle" color="green" /> Correctly waiting for the stub to be called {#Icon-namecheck-circle-colorgreen--Correctly-waiting-for-the-stub-to-be-called}
 
 We recommend aliasing the stub using the [`.as`](/api/commands/as) command and
 using `cy.get('@alias').should(...)` assertions.
@@ -674,7 +674,7 @@ Watch the short video below to see this example in action
 
 <!-- textlint-enable -->
 
-## See also
+## See also {#See-also}
 
 - Read our blog posts about fighting
   [the test flake](https://cypress.io/blog/tag/flake/).

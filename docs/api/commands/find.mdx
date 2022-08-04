@@ -11,14 +11,14 @@ The querying behavior of this command matches exactly how
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .find(selector)
 .find(selector, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -33,7 +33,7 @@ cy.find('.progress') // Errors, cannot be chained off 'cy'
 cy.exec('node start').find() // Errors, 'exec' does not yield DOM element
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> selector** **_(String selector)_**
 
@@ -49,15 +49,15 @@ Pass in an options object to change the default behavior of `.find()`.
 | `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)              | Time to wait for `.find()` to resolve before [timing out](#Timeouts)                                         |
 | `includeShadowDom` | [`includeShadowDom` config option value](/guides/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.find()` yields the new DOM element(s) it found.
 
-## Examples
+## Examples {#Examples}
 
-### Selector
+### Selector {#Selector}
 
-#### Get li's within parent
+#### Get li's within parent {#Get-lis-within-parent}
 
 ```html
 <ul id="parent">
@@ -71,14 +71,14 @@ Pass in an options object to change the default behavior of `.find()`.
 cy.get('#parent').find('li')
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.find()` requires being chained off a command that yields DOM
 element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.find()` will automatically
 [retry](/guides/core-concepts/retry-ability) until the element(s)
@@ -86,13 +86,13 @@ element(s).
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.find()` can time out waiting for the element(s) to
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.find()`
 can time out waiting for assertions you've added to pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Find the li's within the nav_**
 
@@ -109,12 +109,12 @@ the following:
 
 <DocsImage src="/img/api/find/find-in-console-shows-list-and-yields.png" alt="console.log find" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                     | Changes                          |
 | ------------------------------------------- | -------------------------------- |
 | [5.2.0](/guides/references/changelog#5-2-0) | Added `includeShadowDom` option. |
 
-## See also
+## See also {#See-also}
 
 - [`cy.get()`](/api/commands/get)

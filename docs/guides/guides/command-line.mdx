@@ -4,7 +4,7 @@ title: Command Line
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - How to run Cypress from the command line
 - How to specify which spec files to run
@@ -13,14 +13,14 @@ title: Command Line
 
 :::
 
-## Installation
+## Installation {#Installation}
 
 This guide assumes you've already read our
 [Installing Cypress](/guides/getting-started/installing-cypress) guide and
 installed Cypress as an `npm` module. After installing you'll be able to execute
 all of the commands in this document from your **project root**.
 
-## How to run commands
+## How to run commands {#How-to-run-commands}
 
 :::info
 
@@ -94,9 +94,9 @@ Read how we typically organize and execute npm scripts in the blog post
 
 :::
 
-## Commands
+## Commands {#Commands}
 
-### `cypress run`
+### `cypress run` {#cypress-run}
 
 Runs Cypress tests to completion. By default, `cypress run` will run all tests
 headlessly.
@@ -105,7 +105,7 @@ headlessly.
 cypress run [options]
 ```
 
-#### Options
+#### Options {#Options}
 
 | Option                     | Description                                                                                                                                                                                |
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -132,7 +132,7 @@ cypress run [options]
 | `--spec`, `-s`             | [Specify the spec files to run](#cypress-run-spec-lt-spec-gt)                                                                                                                              |
 | `--tag`, `-t`              | [Identify a run with a tag or tags](#cypress-run-tag-lt-tag-gt)                                                                                                                            |
 
-#### `cypress run --browser <browser-name-or-path>`
+#### `cypress run --browser <browser-name-or-path>` {#cypress-run---browser-browser-name-or-path}
 
 ```shell
 cypress run --browser chrome
@@ -153,7 +153,7 @@ cypress run --browser /usr/bin/chromium
 
 [Having trouble with browser detection? Check out our troubleshooting guide](/guides/references/troubleshooting#Launching-browsers)
 
-#### `cypress run --ci-build-id <id>`
+#### `cypress run --ci-build-id <id>` {#cypress-run---ci-build-id-id}
 
 This value should be automatically detected for most CI providers and is
 unnecessary to define unless Cypress is unable to determine it.
@@ -168,7 +168,7 @@ cypress run --ci-build-id BUILD_NUMBER
 Only valid when providing a `--group` or `--parallel` flag. Read our
 [parallelization](/guides/guides/parallelization) documentation to learn more.
 
-#### `cypress run --config <config>`
+#### `cypress run --config <config>` {#cypress-run---config-config}
 
 Set [configuration](/guides/references/configuration) values. Separate multiple
 values with commas. The values set here override any values set in your
@@ -190,7 +190,7 @@ cypress run --config '{"watchForFileChanges":false,"specPattern":["**/*.cy.js","
 
 :::info
 
-### <Icon name="graduation-cap" /> Real World Example
+### <Icon name="graduation-cap" /> Real World Example {#Icon-namegraduation-cap--Real-World-Example}
 
 The Cypress
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses
@@ -215,7 +215,7 @@ Examples:
 
 :::
 
-#### `cypress run --config-file <configuration-file>`
+#### `cypress run --config-file <configuration-file>` {#cypress-run---config-file-configuration-file}
 
 You can specify a path to a file where
 [Cypress configuration](/guides/references/configuration) values are set.
@@ -224,7 +224,7 @@ You can specify a path to a file where
 cypress run --config-file tests/cypress.config.js
 ```
 
-#### `cypress run --env <env>`
+#### `cypress run --env <env>` {#cypress-run---env-env}
 
 Set Cypress [environment variables](/guides/guides/environment-variables).
 
@@ -245,7 +245,7 @@ Pass an object as a JSON in a string.
 cypress run --env flags='{"feature-a":true,"feature-b":false}'
 ```
 
-#### `cypress run --group <name>`
+#### `cypress run --group <name>` {#cypress-run---group-name}
 
 Group recorded tests together under a single run.
 
@@ -268,7 +268,7 @@ Specifying the `--ci-build-id` may also be necessary.
 
 [Read more about grouping.](/guides/guides/parallelization#Grouping-test-runs)
 
-#### `cypress run --headed`
+#### `cypress run --headed` {#cypress-run---headed}
 
 By default, Cypress will run tests headlessly during `cypress run`.
 
@@ -279,7 +279,7 @@ any browser via `cypress open`.
 cypress run --headed
 ```
 
-#### `cypress run --no-exit`
+#### `cypress run --no-exit` {#cypress-run---no-exit}
 
 To prevent the Cypress App from exiting after running tests in a spec file, use
 `--no-exit`.
@@ -291,7 +291,7 @@ access to **developer tools** after a `spec` has run.
 cypress run --headed --no-exit
 ```
 
-#### `cypress run --parallel`
+#### `cypress run --parallel` {#cypress-run---parallel}
 
 Run recorded specs in [parallel](/guides/guides/parallelization) across multiple
 machines.
@@ -310,13 +310,13 @@ cypress run --record --parallel --group e2e-staging-specs
 Read our [parallelization](/guides/guides/parallelization) documentation to
 learn more.
 
-#### `cypress run --port <port>`
+#### `cypress run --port <port>` {#cypress-run---port-port}
 
 ```shell
 cypress run --port 8080
 ```
 
-#### `cypress run --project <project-path>`
+#### `cypress run --project <project-path>` {#cypress-run---project-project-path}
 
 To see this in action we've set up an
 [example repo to demonstrate this here](https://github.com/cypress-io/cypress-test-nested-projects).
@@ -325,7 +325,7 @@ To see this in action we've set up an
 cypress run --project ./some/nested/folder
 ```
 
-#### `cypress run --record --key <record-key>`
+#### `cypress run --record --key <record-key>` {#cypress-run---record---key-record-key}
 
 Record video of tests running after
 [setting up your project to record](/guides/dashboard/projects#Setup). After
@@ -353,7 +353,7 @@ cypress run --record
 
 You can [read more about recording runs here](/guides/dashboard/projects#Setup).
 
-#### `cypress run --reporter <reporter>`
+#### `cypress run --reporter <reporter>` {#cypress-run---reporter-reporter}
 
 You can tests specifying a specific [Mocha reporter](/guides/tooling/reporters).
 
@@ -368,7 +368,7 @@ You can specify reporter options using the
 cypress run --reporter junit --reporter-options mochaFile=result.xml,toConsole=true
 ```
 
-#### `cypress run --spec <spec>`
+#### `cypress run --spec <spec>` {#cypress-run---spec-spec}
 
 Run tests specifying a single test file to run instead of all tests. The spec
 path should be an absolute path or can relative to the current working
@@ -413,7 +413,7 @@ If we are in the `app` folder, we can run the specs using the following command
 cypress run --project tests/e2e --spec ./tests/e2e/cypress/e2e/spec.js
 ```
 
-#### `cypress run --tag <tag>`
+#### `cypress run --tag <tag>` {#cypress-run---tag-tag}
 
 Add a tag or tags to the recorded run. This can be used to help identify
 separate run when displayed in the Dashboard.
@@ -432,7 +432,7 @@ The Dashboard will display any tags sent with the appropriate run.
 
 <DocsImage src="/img/dashboard/dashboard-run-with-tags.png" alt="Cypress run in the Dashboard displaying flags" ></DocsImage>
 
-#### Exit code
+#### Exit code {#Exit-code}
 
 When Cypress finishes running tests, it exits. If there are no failed tests, the
 exit code will be 0.
@@ -482,7 +482,7 @@ $ echo $?
 1
 ```
 
-### `cypress open`
+### `cypress open` {#cypress-open}
 
 Opens the Cypress App.
 
@@ -490,7 +490,7 @@ Opens the Cypress App.
 cypress open [options]
 ```
 
-#### Options:
+#### Options: {#Options-1}
 
 Options passed to `cypress open` will automatically be applied to the project
 you open. These persist on all projects until you quit the Cypress App. These
@@ -514,7 +514,7 @@ you will be guided through selecting a browser, project, and/or testing type.
 | `--port`, `-p`        | [Override default port](#cypress-open-port-lt-port-gt)                                                                        |
 | `--project`, `-P`     | [Path to a specific project](#cypress-open-project-lt-project-path-gt)                                                        |
 
-#### `cypress open --browser <browser-path>`
+#### `cypress open --browser <browser-path>` {#cypress-open---browser-browser-path}
 
 By default, Cypress will automatically find and allow you to use the browsers
 installed on your system.
@@ -534,7 +534,7 @@ Microsoft Edge and Brave) and Firefox are supported.
 
 [Having trouble launching a browser? Check out our troubleshooting guide](/guides/references/troubleshooting#Launching-browsers)
 
-#### `cypress open --config <config>`
+#### `cypress open --config <config>` {#cypress-open---config-config}
 
 Set [configuration](/guides/references/configuration) values. Separate multiple
 values with a comma. The values set here override any values set in your
@@ -554,7 +554,7 @@ Here, we're passing in the configuration for component spec files.
 cypress open --config "{\"watchForFileChanges\":false,\"specPattern\":[\"**/*.cy.js\",\"**/*.cy.ts\"]}"
 ```
 
-#### `cypress open --config-file <configuration-file>`
+#### `cypress open --config-file <configuration-file>` {#cypress-open---config-file-configuration-file}
 
 You can specify a path to a file where
 [Cypress configuration](/guides/references/configuration) values are set.
@@ -563,7 +563,7 @@ You can specify a path to a file where
 cypress open --config-file tests/cypress.config.js
 ```
 
-#### `cypress open --env <env>`
+#### `cypress open --env <env>` {#cypress-open---env-env}
 
 Set Cypress [environment variables](/guides/guides/environment-variables).
 
@@ -584,7 +584,7 @@ Pass an object as a JSON in a string.
 cypress open --env flags='{"feature-a":true,"feature-b":false}'
 ```
 
-#### `cypress open --global`
+#### `cypress open --global` {#cypress-open---global}
 
 Opening Cypress in global mode is useful if you have multiple nested projects
 but want to share a single global installation of Cypress. In this case you can
@@ -595,13 +595,13 @@ to switch between them.
 cypress open --global
 ```
 
-#### `cypress open --port <port>`
+#### `cypress open --port <port>` {#cypress-open---port-port}
 
 ```shell
 cypress open --port 8080
 ```
 
-#### `cypress open --project <project-path>`
+#### `cypress open --project <project-path>` {#cypress-open---project-project-path}
 
 To see this in action we've set up an
 [example repo to demonstrate this here](https://github.com/cypress-io/cypress-test-nested-projects).
@@ -610,7 +610,7 @@ To see this in action we've set up an
 cypress open --project ./some/nested/folder
 ```
 
-### `cypress info`
+### `cypress info` {#cypress-info}
 
 Prints information about Cypress and the current environment such as:
 
@@ -669,7 +669,7 @@ System Memory: 17.2 GB free 670 MB
 to `cypress:launcher` when running `cypress info` to troubleshoot browser
 detection.
 
-### `cypress verify`
+### `cypress verify` {#cypress-verify}
 
 Verify that Cypress is installed correctly and is executable.
 
@@ -691,7 +691,7 @@ and `cypress run` commands. The `CYPRESS_VERIFY_TIMEOUT` environment variable
 should be provided for those commands if you wish to modify the timeout
 duration.
 
-### `cypress version`
+### `cypress version` {#cypress-version}
 
 Prints the installed Cypress binary version, the Cypress package version, the
 version of Electron used to build Cypress, and the bundled Node version.
@@ -721,12 +721,12 @@ cypress version --component node
 12.14.1
 ```
 
-### `cypress cache [command]`
+### `cypress cache [command]` {#cypress-cache-command}
 
 Commands for managing the global Cypress cache. The Cypress cache applies to all
 installs of Cypress across your machine, global or not.
 
-#### `cypress cache path`
+#### `cypress cache path` {#cypress-cache-path}
 
 Print the `path` to the Cypress cache folder. You can change the path where the
 Cypress cache is located by following
@@ -737,7 +737,7 @@ cypress cache path
 /Users/jane/Library/Caches/Cypress
 ```
 
-#### `cypress cache list`
+#### `cypress cache list` {#cypress-cache-list}
 
 Print all existing installed versions of Cypress. The output will be a table
 with cached versions and the last time the binary was used by the user,
@@ -769,7 +769,7 @@ cypress cache list --size
 └─────────┴──────────────┴─────────┘
 ```
 
-#### `cypress cache clear`
+#### `cypress cache clear` {#cypress-cache-clear}
 
 Clear the contents of the Cypress cache. This is useful when you want Cypress to
 clear out all installed versions of Cypress that may be cached on your machine.
@@ -780,7 +780,7 @@ running Cypress again.
 cypress cache clear
 ```
 
-#### `cypress cache prune`
+#### `cypress cache prune` {#cypress-cache-prune}
 
 Deletes all installed Cypress versions from the cache except for the
 currently-installed version.
@@ -789,9 +789,9 @@ currently-installed version.
 cypress cache prune
 ```
 
-## Debugging commands
+## Debugging commands {#Debugging-commands}
 
-### Enable Debug Logs
+### Enable Debug Logs {#Enable-Debug-Logs}
 
 Cypress is built using the [debug](https://github.com/visionmedia/debug) module.
 That means you can receive helpful debugging output by running Cypress with this
@@ -836,7 +836,7 @@ DEBUG=cypress:launcher cypress run
 DEBUG=cypress:server:project cypress run
 ```
 
-## History
+## History {#History}
 
 | Version                               | Changes                                                |
 | ------------------------------------- | ------------------------------------------------------ |

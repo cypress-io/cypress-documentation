@@ -7,7 +7,7 @@ sidebar_position: 20
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - How to load CSS libraries like Tailwind or Bootstrap
 - How to render icon fonts like Font Awesome
@@ -28,7 +28,7 @@ behaving** like it will in production.
 Ensure that whatever you're doing in production is happening within either the Component HTML file or the Component Support File.
 :::
 
-## Component Support File
+## Component Support File {#Component-Support-File}
 
 When you load a component or end-to-end spec file, it will first load something
 called a supportFile. By default, this is created for you during first-time
@@ -46,7 +46,7 @@ As a rule, your Component Support File should look **very similar** to your
 application's main JavaScript (ie: main.js, index.js) and main CSS (ie:
 main.css, index.css) files.
 
-## 3rd Party CSS Libraries (Tailwind, Bootstrap, PopperJS)
+## 3rd Party CSS Libraries (Tailwind, Bootstrap, PopperJS) {#3rd-Party-CSS-Libraries-Tailwind-Bootstrap-PopperJS}
 
 <!--
 What you would see is classes being applied in the inspector, but no styles. e.g. bg-red-500 wouldn't do anything, but it would show up in Chrome.
@@ -111,7 +111,7 @@ that environment back together. We'll go into that in a moment. First, let's
 talk about stylesheets, testing, and one of Cypress's biggest differences in
 contrast to other component testing tools.
 
-## Why Test Your Component's Styles?
+## Why Test Your Component's Styles? {#Why-Test-Your-Components-Styles}
 
 Stylesheets are a critical part of your component's business logic. One of the
 best examples of this is a modal component. Common modal bugs include: z-index
@@ -132,7 +132,7 @@ makes sure the UI you're trying to assert on and interact with is visible and
 interactible for your end users. This is a benefit unique to browser-based test
 runners.
 
-## Importing Stylesheets
+## Importing Stylesheets {#Importing-Stylesheets}
 
 Each application or component library imports styles a little differently. We'll
 go over a few methods and describe how you can quickly restructure your
@@ -143,7 +143,7 @@ correct and you may not be able to benefit from some of the most valuable parts
 of Cypress. Namely, implicit checks for width, height, and overflow to ensure
 that your components not only exist in the page's HTML but are also visible.
 
-## Rules for Setting Up Your Styles
+## Rules for Setting Up Your Styles {#Rules-for-Setting-Up-Your-Styles}
 
 All of your application's styles need to end up in Cypress so that when your
 component mounts, it looks right.
@@ -214,7 +214,7 @@ The rest of this section is dedicated to discussing specific style problems you
 may have, including: Fonts, Icon Fonts, Style Resets, Global App Styles, and 3rd
 party component library styles.
 
-### Global App Styles
+### Global App Styles {#Global-App-Styles}
 
 Your global application styles are usually in one of the following places:
 
@@ -269,12 +269,12 @@ import "./main.css";
 You're usually providing public paths to these stylesheets. You can import the
 same paths within your `cypress/support/component-index.html` file.
 
-### CSS Reset or Normalize isn't applied
+### CSS Reset or Normalize isn't applied {#CSS-Reset-or-Normalize-isnt-applied}
 
 Are you importing your normalize file within
 `cypress/support/component-index.html` or within `cypress/support/component.js`?
 
-### Fonts: Everything is rendering in Times New Roman
+### Fonts: Everything is rendering in Times New Roman {#Fonts-Everything-is-rendering-in-Times-New-Roman}
 
 Most applications handle fonts in one of two ways.
 
@@ -317,9 +317,9 @@ Or via an `@import` statement
 }
 ```
 
-### Icon Fonts: None of my icons are rendering
+### Icon Fonts: None of my icons are rendering {#Icon-Fonts-None-of-my-icons-are-rendering}
 
-### Theme Providers: My components don't look right/compile because they can't access providers
+### Theme Providers: My components don't look right/compile because they can't access providers {#Theme-Providers-My-components-dont-look-rightcompile-because-they-cant-access-providers}
 
 Theme Provider or other application-level wrappers like I18n or Material UI work
 by injecting themselves around your application. When you're component testing,

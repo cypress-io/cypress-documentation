@@ -11,14 +11,14 @@ This is an alias of [`cy.location('href')`](/api/commands/location)
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.url()
 cy.url(options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -26,7 +26,7 @@ cy.url(options)
 cy.url() // Yields the current URL as a string
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> options** **_(Object)_**
 
@@ -40,15 +40,15 @@ Pass in an options object to change the default behavior of `cy.url()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.url()` to resolve before [timing out](#Timeouts)                    |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `cy.url()` 'yields the current URL as a string' 
 
-## Examples
+## Examples {#Examples}
 
-### No Args
+### No Args {#No-Args}
 
-#### Assert the URL is `http://localhost:8000/users/1/edit`
+#### Assert the URL is `http://localhost:8000/users/1/edit` {#Assert-the-URL-is-httplocalhost8000users1edit}
 
 ```javascript
 // clicking the anchor causes the browser to follow the link
@@ -57,7 +57,7 @@ cy.url().should('include', '/users/1/edit') // => true
 cy.url().should('eq', 'http://localhost:8000/users/1/edit') // => true
 ```
 
-### `decode` option
+### `decode` option {#decode-option}
 
 When the URL contains non-ASCII characters, use the `decode` option.
 
@@ -66,11 +66,11 @@ When the URL contains non-ASCII characters, use the `decode` option.
 cy.url({ decode: true }).should('contain', '사랑')
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Href Shorthand
+### Href Shorthand {#Href-Shorthand}
 
-#### URL is an alias for `cy.location('href')`
+#### URL is an alias for `cy.location('href')` {#URL-is-an-alias-for-cylocationhref}
 
 `cy.url()` uses `href` under the hood.
 
@@ -79,9 +79,9 @@ cy.url() // these yield the same string
 cy.location('href') // these yield the same string
 ```
 
-### Differences
+### Differences {#Differences}
 
-#### URL versus href
+#### URL versus href {#URL-versus-href}
 
 Given the remote URL, `http://localhost:8000/index.html`, all 3 of these
 assertions are the same.
@@ -103,7 +103,7 @@ object.
 `cy.url()` exists because it's what most developers naturally assume would
 return them the full current URL. We almost never refer to the URL as an `href`.
 
-#### Hardcoded versus using the configuration object
+#### Hardcoded versus using the configuration object {#Hardcoded-versus-using-the-configuration-object}
 
 Instead of hard-coding the URL used in the assertion, we recommend you define a
 `baseUrl` in your [Cypress configuration](/guides/references/configuration). For
@@ -118,30 +118,30 @@ cy.url().should('eq', 'http://localhost:8000/index.html')
 cy.url().should('eq', Cypress.config().baseUrl + '/index.html') // tests won't fail in case the port changes
 ```
 
-#### Assert that the url contains "#users/new"
+#### Assert that the url contains "#users/new" {#Assert-that-the-url-contains-usersnew}
 
 ```javascript
 cy.url().should('contain', '#users/new')
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.url()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.url()` will automatically
 [retry](/guides/core-concepts/retry-ability) until all chained assertions have
 passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.url()` can time out waiting for assertions you've added to
 pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 The commands above will display in the Command Log as:
 
@@ -151,14 +151,14 @@ When clicking on URL within the Command Log, the console outputs the following:
 
 <DocsImage src="/img/api/url/console-log-of-browser-url-string.png" alt="Console Log url" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                       | Changes                  |
 | --------------------------------------------- | ------------------------ |
 | [8.4.0](/guides/references/changelog#8-4-0)   | `decode` option added    |
 | [< 0.3.3](/guides/references/changelog#0-3-3) | `cy.url()` command added |
 
-## See also
+## See also {#See-also}
 
 - [`cy.hash()`](/api/commands/hash)
 - [`cy.location()`](/api/commands/location)

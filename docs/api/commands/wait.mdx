@@ -5,7 +5,7 @@ title: wait
 Wait for a number of milliseconds or wait for an aliased resource to resolve
 before moving on to the next command.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.wait(time)
@@ -16,7 +16,7 @@ cy.wait(alias, options)
 cy.wait(aliases, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -25,7 +25,7 @@ cy.wait(500)
 cy.wait('@getProfile')
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> time** **_(Number)_**
 
@@ -60,23 +60,23 @@ Pass in an options object to change the default behavior of `cy.wait()`.
 | `requestTimeout`  | [`requestTimeout`](/guides/references/configuration#Timeouts)                                                                 | Overrides the global `requestTimeout` for this request. Defaults to `timeout`.           |
 | `responseTimeout` | [`responseTimeout`](/guides/references/configuration#Timeouts)                                                                | Overrides the global `responseTimeout` for this request. Defaults to `timeout`.          |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
-#### When given a `time` argument:
+#### When given a `time` argument: {#When-given-a-time-argument}
 
 - `cy.wait()` yields the same subject it was given from the previous
 command.
 
-#### When given an `alias` argument:
+#### When given an `alias` argument: {#When-given-an-alias-argument}
 
 - `cy.wait()` 'yields an object containing the HTTP request and response
 properties of the request'
 
-## Examples
+## Examples {#Examples}
 
-### Time
+### Time {#Time}
 
-#### Wait for an arbitrary period of milliseconds:
+#### Wait for an arbitrary period of milliseconds: {#Wait-for-an-arbitrary-period-of-milliseconds}
 
 ```js
 cy.wait(2000) // wait for 2 seconds
@@ -97,12 +97,12 @@ Read about
 Additionally, it is often much easier to use [`cy.debug()`](/api/commands/debug)
 or [`cy.pause()`](/api/commands/pause) when debugging your test code.
 
-### Alias
+### Alias {#Alias}
 
 For a detailed explanation of aliasing,
 [read more about waiting on routes here](/guides/guides/network-requests#Waiting).
 
-#### Wait for a specific request to respond
+#### Wait for a specific request to respond {#Wait-for-a-specific-request-to-respond}
 
 :::visit-mount-example
 
@@ -120,7 +120,7 @@ cy.wait('@getAccount').then((interception) => {
 
 :::
 
-#### Wait automatically increments responses
+#### Wait automatically increments responses {#Wait-automatically-increments-responses}
 
 Each time we use `cy.wait()` for an alias, Cypress waits for the next nth
 matching request.
@@ -150,9 +150,9 @@ cy.wait('@getBooks')
 cy.get('#book-results').should('have.length', 1)
 ```
 
-### Aliases
+### Aliases {#Aliases}
 
-#### You can pass an array of aliases that will be waited on before resolving.
+#### You can pass an array of aliases that will be waited on before resolving. {#You-can-pass-an-array-of-aliases-that-will-be-waited-on-before-resolving}
 
 When passing an array of aliases to `cy.wait()`, Cypress will wait for all
 requests to complete within the given `requestTimeout` and `responseTimeout`.
@@ -177,7 +177,7 @@ cy.wait(['@getUsers', '@getActivities', '@getComments']).then(
 
 :::
 
-#### Using [`.spread()`](/api/commands/spread) to spread the array into multiple arguments.
+#### Using [`.spread()`](/api/commands/spread) to spread the array into multiple arguments. {#Using-spread-to-spread-the-array-into-multiple-arguments}
 
 ```javascript
 cy.intercept('/users/*').as('getUsers')
@@ -190,9 +190,9 @@ cy.wait(['@getUsers', '@getActivities', '@getComments']).spread(
 )
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Nesting
+### Nesting {#Nesting}
 
 Cypress automatically waits for the network call to complete before proceeding
 to the next command.
@@ -216,9 +216,9 @@ cy.get(...)
 Read
 [Guide: Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Commands-Run-Serially)
 
-### Timeouts
+### Timeouts {#Timeouts}
 
-#### `requestTimeout` and `responseTimeout`
+#### `requestTimeout` and `responseTimeout` {#requestTimeout-and-responseTimeout}
 
 When used with an alias, `cy.wait()` goes through two separate "waiting"
 periods.
@@ -249,31 +249,31 @@ This gives you the best of both worlds - a fast error feedback loop when
 requests never go out and a much longer duration for the actual external
 response.
 
-#### Using an Array of Aliases
+#### Using an Array of Aliases {#Using-an-Array-of-Aliases}
 
 When passing an array of aliases to `cy.wait()`, Cypress will wait for all
 requests to complete within the given `requestTimeout` and `responseTimeout`.
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - When passed a `time` argument `cy.wait()` can be chained off of `cy`
 or off another command..</li><li>When passed an `alias` argument `cy.wait()`
 requires being chained off of `cy`..
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.wait()` will only run assertions you have chained once, and will
 not [retry](/guides/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.wait()` can time out waiting for the request to go
 out.</li><li>`cy.wait()` can time out waiting for the response to
 return.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Wait for the PUT to users to resolve._**
 
@@ -302,14 +302,14 @@ following:
 
 <DocsImage src="/img/api/wait/wait-console-log-displays-all-the-data-of-the-route-request-and-response.png" alt="Console Log wait" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                       | Changes                                             |
 | --------------------------------------------- | --------------------------------------------------- |
 | [3.1.3](/guides/references/changelog#3-1-3)   | Added `requestTimeout` and `responseTimeout` option |
 | [< 0.3.3](/guides/references/changelog#0.3.3) | `cy.wait()` command added                           |
 
-## See also
+## See also {#See-also}
 
 - [`.as()`](/api/commands/as)
 - [`cy.intercept()`](/api/commands/intercept)

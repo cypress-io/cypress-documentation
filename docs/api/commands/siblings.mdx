@@ -4,7 +4,7 @@ title: siblings
 
 Get sibling DOM elements.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .siblings()
@@ -13,7 +13,7 @@ Get sibling DOM elements.
 .siblings(selector, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -29,7 +29,7 @@ cy.siblings('.error') // Errors, cannot be chained off 'cy'
 cy.clock().siblings() // Errors, 'clock' does not yield DOM elements
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> selector** **_(String selector)_**
 
@@ -44,15 +44,15 @@ Pass in an options object to change the default behavior of `.siblings()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.siblings()` to resolve before [timing out](#Timeouts)                 |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.siblings()` yields the new DOM element(s) it found.
 
-## Examples
+## Examples {#Examples}
 
-### No Args
+### No Args {#No-Args}
 
-#### Get the siblings of each `li`
+#### Get the siblings of each `li` {#Get-the-siblings-of-each-li}
 
 ```html
 <ul>
@@ -68,23 +68,23 @@ Pass in an options object to change the default behavior of `.siblings()`.
 cy.get('.active').siblings()
 ```
 
-### Selector
+### Selector {#Selector}
 
-#### Get siblings of element with class `active`
+#### Get siblings of element with class `active` {#Get-siblings-of-element-with-class-active}
 
 ```javascript
 // yields <li class="active">Services</li>
 cy.get('li').siblings('.active')
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.siblings()` requires being chained off a command that yields DOM
 element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.siblings()` will automatically
 [retry](/guides/core-concepts/retry-ability) until the element(s)
@@ -92,13 +92,13 @@ element(s).
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.siblings()` can time out waiting for the element(s) to
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.siblings()`
 can time out waiting for assertions you've added to pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Get the siblings of element with class `active`_**
 
@@ -115,13 +115,13 @@ following:
 
 <DocsImage src="/img/api/siblings/console-log-of-sibling-elements.png" alt="Console Log siblings" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                       | Changes                     |
 | --------------------------------------------- | --------------------------- |
 | [< 0.3.3](/guides/references/changelog#0-3-3) | `.siblings()` command added |
 
-## See also
+## See also {#See-also}
 
 - [`.prev()`](/api/commands/prev)
 - [`.next()`](/api/commands/next)

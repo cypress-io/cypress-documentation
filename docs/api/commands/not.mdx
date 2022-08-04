@@ -17,14 +17,14 @@ The querying behavior of this command matches exactly how
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .not(selector)
 .not(selector, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -39,7 +39,7 @@ cy.not('.icon') // Errors, cannot be chained off 'cy'
 cy.clock().not() // Errors, 'clock' does not yield DOM elements
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> selector** **_(String selector)_**
 
@@ -54,15 +54,15 @@ Pass in an options object to change the default behavior of `.not()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.not()` to resolve before [timing out](#Timeouts)                      |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.not()` yields the new DOM element(s) it found.
 
-## Examples
+## Examples {#Examples}
 
-### Selector
+### Selector {#Selector}
 
-#### Yield the elements that do not have class `active`
+#### Yield the elements that do not have class `active` {#Yield-the-elements-that-do-not-have-class-active}
 
 ```html
 <ul>
@@ -78,14 +78,14 @@ Pass in an options object to change the default behavior of `.not()`.
 cy.get('ul>li').not('.active').should('have.length', 4) // true
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.not()` requires being chained off a command that yields DOM
 element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.not()` will automatically
 [retry](/guides/core-concepts/retry-ability) until the element(s)
@@ -93,13 +93,13 @@ element(s).
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.not()` can time out waiting for the element(s) to
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.not()`
 can time out waiting for assertions you've added to pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Find all buttons that are not of type submit_**
 
@@ -116,6 +116,6 @@ following:
 
 <DocsImage src="/img/api/not/log-elements-found-when-using-cy-not.png" alt="Console Log not" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`.filter()`](/api/commands/filter)

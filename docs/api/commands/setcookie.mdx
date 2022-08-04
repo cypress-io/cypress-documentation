@@ -4,14 +4,14 @@ title: setCookie
 
 Set a browser cookie.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.setCookie(name, value)
 cy.setCookie(name, value, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -19,7 +19,7 @@ cy.setCookie(name, value, options)
 cy.setCookie('auth_key', '123key') // Set the 'auth_key' cookie to '123key'
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> name** **_(String)_**
 
@@ -44,7 +44,7 @@ Pass in an options object to change the default behavior of `cy.setCookie()`.
 | `timeout`  | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.setCookie()` to resolve before [timing out](#Timeouts)                                                                                                                                           |
 | `sameSite` | `undefined`                                                    | Cookie's SameSite value. If set, should be one of `lax`, `strict`, or `no_restriction`. Pass `undefined` to use the browser's default. Note: `no_restriction` can only be used if the `secure` flag is set to `true`. |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 `cy.setCookie()` yields a cookie object with the following properties:
 
@@ -57,11 +57,11 @@ Pass in an options object to change the default behavior of `cy.setCookie()`.
 - `secure`
 - `value`
 
-## Examples
+## Examples {#Examples}
 
-### Name Value
+### Name Value {#Name-Value}
 
-#### Set a cookie
+#### Set a cookie {#Set-a-cookie}
 
 ```javascript
 cy.getCookies().should('be.empty')
@@ -73,18 +73,18 @@ cy.getCookie('session_id').should(
 )
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.setCookie()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.setCookie()` will only run assertions you have chained once, and will not
   [retry](/guides/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.setCookie()` should never time out.
 
@@ -96,7 +96,7 @@ practical purposes it should never happen.
 
 :::
 
-## Command Log
+## Command Log {#Command-Log}
 
 ```javascript
 cy.getCookies().should('be.empty')
@@ -113,7 +113,7 @@ following:
 
 <DocsImage src="/img/api/setcookie/see-cookie-properties-expiry-domain-and-others-in-test.png" alt="Console Log setcookie" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                       | Changes                                                                                                                                          |
 | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -121,7 +121,7 @@ following:
 | [4.3.0](/guides/references/changelog#4-3-0)   | Added `sameSite` property when the [experimentalGetCookiesSameSite](/guides/references/configuration#Experiments) configuration value is `true`. |
 | [0.16.0](/guides/references/changelog#0-16-0) | `cy.setCookie()` command added                                                                                                                   |
 
-## See also
+## See also {#See-also}
 
 - [`cy.clearCookie()`](/api/commands/clearcookie)
 - [`cy.clearCookies()`](/api/commands/clearcookies)

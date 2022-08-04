@@ -8,7 +8,7 @@ Cypress automatically includes [jQuery](http://jquery.com) and exposes it as
 This is a great way to _synchronously_ query for elements when debugging from
 Developer Tools.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 Cypress.$(selector)
@@ -23,7 +23,7 @@ Cypress.$.getScript
 Cypress.$.post
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -37,9 +37,9 @@ Cypress.$('p')
 cy.$('p') // Errors, cannot be chained off 'cy'
 ```
 
-## Examples
+## Examples {#Examples}
 
-### Selector
+### Selector {#Selector}
 
 ```javascript
 const $li = Cypress.$('ul li:first')
@@ -50,9 +50,9 @@ cy.wrap($li)
   .should('have.class', 'active')
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Cypress.$ vs. cy.$$
+### Cypress.$ vs. cy.$$ {#Cypress-vs-cy}
 
 You can also query DOM elements with `cy.$$`. But `Cypress.$` and `cy.$$` are
 different.
@@ -83,6 +83,6 @@ cy.$$.each([1, 2, 3], (index, value) => {
 }) // fails
 ```
 
-## See also
+## See also {#See-also}
 
 - [Bundled Libraries](/guides/references/bundled-libraries)

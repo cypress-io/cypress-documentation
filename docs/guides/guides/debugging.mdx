@@ -4,7 +4,7 @@ title: Debugging
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - How Cypress runs in the same event loop with your code, keeping debugging less
   demanding and more understandable
@@ -14,13 +14,13 @@ title: Debugging
 
 :::
 
-## Using `debugger`
+## Using `debugger` {#Using-debugger}
 
 Your Cypress test code runs in the same run loop as your application. This means
 you have access to the code running on the page, as well as the things the
 browser makes available to you, like `document`, `window`, and `debugger`.
 
-### Debug just like you always do
+### Debug just like you always do {#Debug-just-like-you-always-do}
 
 Based on those statements, you might be tempted to throw a `debugger` into your
 test, like so:
@@ -86,7 +86,7 @@ Cypress to execute. The `it` block exits, and Cypress starts its work:
 5. You're in! Inspect the state of your application like you normally would if
    you'd dropped the `debugger` into your application code.
 
-### Using [`.debug()`](/api/commands/debug)
+### Using [`.debug()`](/api/commands/debug) {#Using-debug}
 
 Cypress also exposes a shortcut for debugging commands,
 [`.debug()`](/api/commands/debug). Let's rewrite the test above using this
@@ -114,7 +114,7 @@ Use [`.debug()`](/api/commands/debug) to quickly inspect any (or many!) part(s)
 of your application during the test. You can attach it to any Cypress chain of
 commands to have a look at the system's state at that moment.
 
-## Step through test commands
+## Step through test commands {#Step-through-test-commands}
 
 You can run the test command by command using the
 [`.pause()`](/api/commands/pause) command.
@@ -130,7 +130,7 @@ it('adds items', () => {
 This allows you to inspect the web application, the DOM, the network, and any
 storage after each command to make sure everything happens as expected.
 
-## Using the Developer Tools
+## Using the Developer Tools {#Using-the-Developer-Tools}
 
 Though Cypress has built out
 [an excellent application](/guides/core-concepts/cypress-app) to help you
@@ -141,14 +141,14 @@ modern ecosystem, opting to leverage these tools wherever possible.
 
 :::info
 
-### <Icon name="video" /> See it in action!
+### <Icon name="video" /> See it in action! {#Icon-namevideo--See-it-in-action}
 
 You can see a walk-through of debugging some application code from Cypress
 [in this segment from our React tutorial series](https://vimeo.com/242961930#t=264s).
 
 :::
 
-### Get console logs for commands
+### Get console logs for commands {#Get-console-logs-for-commands}
 
 All of Cypress's commands, when clicked on within the
 [Command Log](/guides/core-concepts/cypress-app#Command-Log), print extra
@@ -156,18 +156,18 @@ information about the command, its subject, and its yielded result. Try clicking
 around the Command Log with your Developer Tools open! You may find some useful
 information here.
 
-#### When clicking on `.type()` command, the Developer Tools console outputs the following:
+#### When clicking on `.type()` command, the Developer Tools console outputs the following: {#When-clicking-on-type-command-the-Developer-Tools-console-outputs-the-following}
 
 <DocsImage src="/img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png" alt="Console Log type" ></DocsImage>
 
-## Errors
+## Errors {#Errors}
 
 Sometimes tests fail. Sometimes we want them to fail, just so we know they're
 testing the right thing when they pass. But other times, tests fail
 unintentionally and we need to figure out why. Cypress provides some tools to
 help make that process as easy as possible.
 
-### Anatomy of an error
+### Anatomy of an error {#Anatomy-of-an-error}
 
 Let's take a look at the anatomy of an error and how it is displayed in Cypress,
 by way of a failing test.
@@ -184,7 +184,7 @@ application under test, so the test above will fail.
 
 <AnatomyOfAnError />
 
-### Source maps
+### Source maps {#Source-maps}
 
 Cypress utilizes source maps to enhance the error experience. Stack traces are
 translated so that your source files are shown instead of the generated file
@@ -200,7 +200,7 @@ for example, set
 [the `devtool` option](https://webpack.js.org/configuration/devtool/) to
 `inline-source-map`.
 
-## Debugging flake
+## Debugging flake {#Debugging-flake}
 
 While Cypress is
 [flake-resistant](/guides/overview/key-differences#Flake-resistant), some users
@@ -237,14 +237,14 @@ For more advice on dealing with flake read a
 [Identifying Code Smells in Cypress](https://codingitwrong.com/2020/10/09/identifying-code-smells-in-cypress.html)
 by [Cypress Ambassador](https://www.cypress.io/ambassadors/) Josh Justice.
 
-## Log Cypress events
+## Log Cypress events {#Log-Cypress-events}
 
 Cypress emits multiple events you can listen to as shown below.
 [Read more about logging events in the browser here](/api/events/catalog-of-events#Logging-All-Events).
 
 <DocsImage src="/img/api/catalog-of-events/console-log-events-debug.png" alt="console log events for debugging" ></DocsImage>
 
-## Run Cypress command outside the test
+## Run Cypress command outside the test {#Run-Cypress-command-outside-the-test}
 
 If you need to run a Cypress command straight from the Developer Tools console,
 you can use the internal command `cy.now('command name', ...arguments)`. For
@@ -262,7 +262,7 @@ The `cy.now()` command is an internal command and may change in the future.
 
 :::
 
-## Cypress fiddle
+## Cypress fiddle {#Cypress-fiddle}
 
 While learning Cypress it may be a good idea to try small tests against some
 HTML. We have written a
@@ -270,13 +270,13 @@ HTML. We have written a
 It can quickly mount any given HTML and run some Cypress test commands against
 it.
 
-## Troubleshooting Cypress
+## Troubleshooting Cypress {#Troubleshooting-Cypress}
 
 There are times when you will encounter errors or unexpected behavior with
 Cypress itself. In this situation, we recommend checking out our
 [Troubleshooting Guide](/guides/references/troubleshooting).
 
-## More info
+## More info {#More-info}
 
 Often debugging a failing Cypress test means understanding better how your own
 application works, and how the application might race against the test commands.

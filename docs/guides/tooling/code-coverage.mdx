@@ -4,7 +4,7 @@ title: Code Coverage
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - How to instrument your application code
 - How to save the coverage information collected during end-to-end and unit
@@ -19,7 +19,7 @@ title: Code Coverage
 
 <!-- textlint-enable -->
 
-## Introduction
+## Introduction {#Introduction}
 
 As you write more and more end-to-end tests, you will find yourself wondering -
 do I need to write more tests? Are there parts of the application still
@@ -157,7 +157,7 @@ repository.
 
 :::
 
-## Instrumenting code
+## Instrumenting code {#Instrumenting-code}
 
 Cypress does not instrument your code - you need to do it yourself. The golden
 standard for JavaScript code instrumentation is the battle-hardened
@@ -171,7 +171,7 @@ ways:
   [`babel-plugin-istanbul`](https://github.com/istanbuljs/babel-plugin-istanbul)
   tool.
 
-### Using NYC
+### Using NYC {#Using-NYC}
 
 To instrument the application code located in your `src` folder and save it in
 an `instrumented` folder use the following command:
@@ -227,7 +227,7 @@ statements were each executed once and the last statement was never executed (it
 probably was inside an `if` statement). By using the application, we can both
 increment the counters and flip some of the zero counters into positive numbers.
 
-### Using code transpilation pipeline
+### Using code transpilation pipeline {#Using-code-transpilation-pipeline}
 
 Instead of using the `npx instrument` command, we can use
 [`babel-plugin-istanbul`](https://github.com/istanbuljs/babel-plugin-istanbul)
@@ -271,7 +271,7 @@ not 3rd party dependencies from `node_modules`.
 
 :::
 
-## E2E code coverage
+## E2E code coverage {#E2E-code-coverage}
 
 To handle code coverage collected during each test, we created a
 [`@cypress/code-coverage`](https://github.com/cypress-io/code-coverage) Cypress
@@ -279,7 +279,7 @@ plugin. It merges coverage from each test and saves the combined result. It also
 calls `nyc` (its peer dependency) to generate static HTML reports for human
 consumption.
 
-### Install the plugin
+### Install the plugin {#Install-the-plugin}
 
 :::info
 
@@ -329,7 +329,7 @@ page locally after the tests finish. You can also call `nyc report` to generate
 other reports, for example, sending the coverage information to 3rd party
 services.
 
-### See code coverage summary
+### See code coverage summary {#See-code-coverage-summary}
 
 To see the summary of the code coverage after tests run, run the command below.
 
@@ -356,7 +356,7 @@ the browser.
 
 <DocsImage src="/img/guides/code-coverage/circleci-coverage-report.png" alt="coverage HTML report on CircleCI" ></DocsImage>
 
-## Code coverage as a guide
+## Code coverage as a guide {#Code-coverage-as-a-guide}
 
 Even a single test can cover a lot of the application code. For example, let's
 run the following test that adds a few items, then marks one of them as
@@ -421,7 +421,7 @@ If possible, we advise implementing
 [visual testing](/guides/tooling/visual-testing) in addition to Cypress
 functional tests to avoid CSS and visual regressions.
 
-## Combining code coverage from parallel tests
+## Combining code coverage from parallel tests {#Combining-code-coverage-from-parallel-tests}
 
 If you execute Cypress tests in [parallel](/guides/guides/parallelization), each
 machine ends up with a code coverage report that only shows a portion of the
@@ -436,7 +436,7 @@ partial reports for you. If you do want to merge the reports yourself:
 You can find an example of merging partial reports in our
 [cypress-io/cypress-example-conduit-app](https://github.com/cypress-io/cypress-example-conduit-app)
 
-## E2E and unit code coverage
+## E2E and unit code coverage {#E2E-and-unit-code-coverage}
 
 Let's look at the one file that has a "missed" line. It is the
 `src/selectors/index.js` file shown below.
@@ -535,7 +535,7 @@ and if we execute all spec files - we will get 100% code coverage.
 
 <DocsImage src="/img/guides/code-coverage/100percent.png" alt="Full code coverage" ></DocsImage>
 
-## Full stack code coverage
+## Full stack code coverage {#Full-stack-code-coverage}
 
 A complex application might have a Node back end with its own complex logic.
 From the front end web application, the calls to the API go through layers of
@@ -650,7 +650,7 @@ Read the blog post
 [Back end Code Coverage from Cypress API tests](https://glebbahmutov.com/blog/backend-coverage/)
 for the full tutorial.
 
-## Future work
+## Future work {#Future-work}
 
 We are currently exploring two additional features for code coverage during
 end-to-end tests. First, we would like to avoid the "manual" instrumentation
@@ -667,43 +667,43 @@ additional
 [API tests](https://www.cypress.io/blog/2017/11/07/add-gui-to-your-e2e-api-tests/)
 that Cypress can perform can effectively cover a lot of back end code.
 
-## Videos
+## Videos {#Videos}
 
 There is a series of videos we have recorded showing code coverage in Cypress
 
-#### How to instrument react-scripts web application for code coverage
+#### How to instrument react-scripts web application for code coverage {#How-to-instrument-react-scripts-web-application-for-code-coverage}
 
 <!-- textlint-disable terminology -->
 
 <DocsVideo src="https://youtube.com/embed/edgeQZ8UpD0"></DocsVideo>
 
-#### Get code coverage reports from Cypress tests
+#### Get code coverage reports from Cypress tests {#Get-code-coverage-reports-from-Cypress-tests}
 
 <DocsVideo src="https://youtube.com/embed/y8StkffYra0"></DocsVideo>
 
-#### Excluding code from code coverage reports
+#### Excluding code from code coverage reports {#Excluding-code-from-code-coverage-reports}
 
 <DocsVideo src="https://youtube.com/embed/DlceMpRpbAw"></DocsVideo>
 
-#### Check code coverage robustly using 3rd party tool
+#### Check code coverage robustly using 3rd party tool {#Check-code-coverage-robustly-using-3rd-party-tool}
 
 <DocsVideo src="https://youtube.com/embed/dwU5gUG2"></DocsVideo>
 
-#### Adding code coverage badge to your project
+#### Adding code coverage badge to your project {#Adding-code-coverage-badge-to-your-project}
 
 <DocsVideo src="https://youtube.com/embed/bNVRxb-MKGo"></DocsVideo>
 
-#### Show code coverage in commit status check
+#### Show code coverage in commit status check {#Show-code-coverage-in-commit-status-check}
 
 <DocsVideo src="https://youtube.com/embed/AAl4HmJ3YuM"></DocsVideo>
 
-#### Checking code coverage on pull request
+#### Checking code coverage on pull request {#Checking-code-coverage-on-pull-request}
 
 <DocsVideo src="https://youtube.com/embed/9Eq_gIshK0o"></DocsVideo>
 
 <!-- textlint-enable -->
 
-## Examples
+## Examples {#Examples}
 
 You can find full examples showing different code coverage setups in the
 following repositories:
@@ -748,7 +748,7 @@ following repositories:
 Find the full list of examples linked in
 [cypress-io/code-coverage#external-examples](https://github.com/cypress-io/code-coverage#external-examples).
 
-## See also
+## See also {#See-also}
 
 - The official
   [@cypress/code-coverage](https://github.com/cypress-io/code-coverage) plugin

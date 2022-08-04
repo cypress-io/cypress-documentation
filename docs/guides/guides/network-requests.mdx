@@ -4,7 +4,7 @@ title: Network Requests
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - How Cypress enables you to stub out the back end with
   [`cy.intercept()`](/api/commands/intercept)
@@ -22,7 +22,7 @@ at [cy.request()](/api/commands/request)
 
 :::
 
-## Testing Strategies
+## Testing Strategies {#Testing-Strategies}
 
 Cypress helps you test the entire lifecycle of HTTP requests within your
 application. Cypress provides you access to the objects with information about
@@ -48,7 +48,7 @@ your server.
 Let's investigate both strategies, why you would use one versus the other, and
 why you should regularly use both.
 
-### Use Server Responses
+### Use Server Responses {#Use-Server-Responses}
 
 Requests that are not stubbed actually reach your server. By _not_ stubbing your
 responses, you are writing true _end-to-end_ tests. This means you are driving
@@ -107,7 +107,7 @@ modern applications that serve JSON can take advantage of stubbing.
 
 :::
 
-### Stub Responses
+### Stub Responses {#Stub-Responses}
 
 Stubbing responses enables you to control every aspect of the response,
 including the response `body`, the `status`, `headers`, and even network
@@ -156,7 +156,7 @@ its requests are being stubbed, so there are _no code changes_ needed.
 
 :::info
 
-### <Icon name="graduation-cap" /> Real World Example
+### <Icon name="graduation-cap" /> Real World Example {#Icon-namegraduation-cap--Real-World-Example}
 
 The Cypress
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
@@ -177,7 +177,7 @@ to see Cypress network handling in action.
 
 :::
 
-## Stubbing
+## Stubbing {#Stubbing}
 
 Cypress enables you to stub a response and control the `body`, `status`,
 `headers`, or even delay.
@@ -193,7 +193,7 @@ examples on stubbing responses.
 
 :::
 
-## Routing
+## Routing {#Routing}
 
 ```javascript
 cy.intercept(
@@ -214,7 +214,7 @@ When a new test runs, Cypress will restore the default behavior and remove all
 routes and stubs. For a complete reference of the API and options, refer to the
 documentation for [`cy.intercept()`](/api/commands/intercept).
 
-## Fixtures
+## Fixtures {#Fixtures}
 
 A fixture is a fixed set of data located in a file that is used in your tests.
 The purpose of a test fixture is to ensure that there is a well known and fixed
@@ -234,7 +234,7 @@ into responses.
 cy.intercept('GET', '/activities/*', { fixture: 'activities.json' })
 ```
 
-### Organizing
+### Organizing {#Organizing}
 
 Cypress automatically scaffolds out a suggested folder structure for organizing
 your fixtures on every new project. By default it will create an `example.json`
@@ -260,7 +260,7 @@ your [`cy.fixture()`](/api/commands/fixture) command.
 cy.fixture('images/dogs.png') // yields dogs.png as Base64
 ```
 
-## Waiting
+## Waiting {#Waiting}
 
 Whether or not you choose to stub responses, Cypress enables you to
 declaratively [`cy.wait()`](/api/commands/wait) for requests and their
@@ -330,7 +330,7 @@ Waiting on an aliased route has big advantages:
 
 Let's investigate each benefit.
 
-### Flake
+### Flake {#Flake}
 
 One advantage of declaratively waiting for responses is that it decreases test
 flake. You can think of [`cy.wait()`](/api/commands/wait) as a guard that
@@ -368,7 +368,7 @@ cy.get('[data-testid="results"]')
 
 :::info
 
-### <Icon name="graduation-cap" /> Real World Example
+### <Icon name="graduation-cap" /> Real World Example {#Icon-namegraduation-cap--Real-World-Example-1}
 
 The Cypress <Icon name="github" inline="true" contentType="rwa" /> has
 various tests for testing an auto-complete field within a large user journey
@@ -390,7 +390,7 @@ Check out the example:
 
 :::
 
-### Failures
+### Failures {#Failures}
 
 In our example above, we added an assertion to the display of the search
 results.
@@ -427,7 +427,7 @@ Now we know exactly why our test failed. It had nothing to do with the DOM.
 Instead we can see that either our request never went out or a request went out
 to the wrong URL.
 
-### Assertions
+### Assertions {#Assertions}
 
 Another benefit of using [`cy.wait()`](/api/commands/wait) on requests is that
 it allows you to access the actual request object. This is useful when you want
@@ -512,7 +512,7 @@ console
 cy.wait('@new-user').then(console.log)
 ```
 
-## Command Log
+## Command Log {#Command-Log}
 
 Cypress logs all `XMLHttpRequest`s and `fetch`es made by the application under
 test in the Command Log. Here is an example of what this looks like:
@@ -597,7 +597,7 @@ following:
 
 <DocsImage src="/img/guides/network-requests/request-console-props.png" alt="Screenshot of request that has had the req modified"></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`cy.intercept()` docs](/api/commands/intercept)
 - [Network requests in Kitchen Sink example](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/2-advanced-examples/network_requests.spec.js)

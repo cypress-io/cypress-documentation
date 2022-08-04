@@ -38,7 +38,7 @@ Cypress.
 
 :::
 
-## Set a proxy on Linux or macOS
+## Set a proxy on Linux or macOS {#Set-a-proxy-on-Linux-or-macOS}
 
 To set your proxy on Linux or macOS, run the following command in a terminal
 before running Cypress:
@@ -58,7 +58,7 @@ To make these changes permanent, you can add these commands to your shell's
 `~/.profile` (`~/.zsh_profile`, `~/.bash_profile`, etc.) to run them on every
 login.
 
-## Set a proxy on Windows
+## Set a proxy on Windows {#Set-a-proxy-on-Windows}
 
 When starting up after being installed, Cypress will attempt to load the proxy
 configured in the Windows registry by default.
@@ -95,7 +95,7 @@ To save the `HTTP_PROXY` variable and use your proxy for all new shells, use
 setx HTTP_PROXY http://my-company-proxy.com
 ```
 
-## Proxy environment variables
+## Proxy environment variables {#Proxy-environment-variables}
 
 :::caution
 
@@ -117,21 +117,21 @@ If an uppercase and a lowercase version of the proxy settings are supplied (for
 example, `HTTP_PROXY` and `http_proxy` are both set), the lowercase variable
 will be preferred.
 
-## View, unset, and set environment variables
+## View, unset, and set environment variables {#View-unset-and-set-environment-variables}
 
 In order to properly configure your proxy configuration, it can be helpful to
 know how to view currently set environment variables, unset unwanted environment
 variables, and set environment variables depending on your operating system.
 
-### Linux or macOS
+### Linux or macOS {#Linux-or-macOS}
 
-#### Set an environment variable for the current session
+#### Set an environment variable for the current session {#Set-an-environment-variable-for-the-current-session}
 
 ```shell
 export SOME_VARIABLE=some-value
 ```
 
-#### Unset an environment variable
+#### Unset an environment variable {#Unset-an-environment-variable}
 
 ```shell
 unset SOME_VARIABLE
@@ -143,7 +143,7 @@ unset SOME_VARIABLE
 echo $SOME_VARIABLE
 ```
 
-#### See all the currently set environment variables
+#### See all the currently set environment variables {#See-all-the-currently-set-environment-variables}
 
 Print all env vars:
 
@@ -157,12 +157,12 @@ Print environment variables with `proxy` (case insensitive) in the name:
 env | grep -i proxy
 ```
 
-### Windows
+### Windows {#Windows}
 
 Setting environment variables in Windows is different depending on if you're
 using _command prompt_ or _PowerShell_.
 
-#### Set an environment variable for current session
+#### Set an environment variable for current session {#Set-an-environment-variable-for-current-session}
 
 _Command prompt:_
 
@@ -176,13 +176,13 @@ _PowerShell:_
 $env:SOME_VARIABLE = "some-value"
 ```
 
-#### Set environment variable globally for all future sessions
+#### Set environment variable globally for all future sessions {#Set-environment-variable-globally-for-all-future-sessions}
 
 ```shell
 setx SOME_VARIABLE some-value
 ```
 
-#### Unset an environment variable in the current session
+#### Unset an environment variable in the current session {#Unset-an-environment-variable-in-the-current-session}
 
 _Command prompt:_
 
@@ -196,7 +196,7 @@ _PowerShell:_
 Remove-Item Env:\SOME_VARIABLE
 ```
 
-#### See all currently set environment variables
+#### See all currently set environment variables {#See-all-currently-set-environment-variables}
 
 _Command prompt:_
 
@@ -210,7 +210,7 @@ _PowerShell:_
 Get-ChildItem Env:
 ```
 
-## View proxy settings in Cypress
+## View proxy settings in Cypress {#View-proxy-settings-in-Cypress}
 
 Your current proxy settings can be viewed from within the Cypress App. Follow
 these steps:

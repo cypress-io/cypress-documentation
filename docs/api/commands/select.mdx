@@ -4,7 +4,7 @@ title: select
 
 Select an `<option>` within a `<select>`.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .select(value)
@@ -13,7 +13,7 @@ Select an `<option>` within a `<select>`.
 .select(values, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -28,7 +28,7 @@ cy.select('John Adams') // Errors, cannot be chained off 'cy'
 cy.clock().select() // Errors, 'clock' does not yield a <select> element
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> value** **_(String, Number)_**
 
@@ -49,16 +49,16 @@ Pass in an options object to change the default behavior of `.select()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.select()` to resolve before [timing out](#Timeouts)                   |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.select()` yields the same subject it was given from the previous
 command.
 
-## Examples
+## Examples {#Examples}
 
-### Text Content
+### Text Content {#Text-Content}
 
-#### Select the `option` with the text `apples`
+#### Select the `option` with the text `apples` {#Select-the-option-with-the-text-apples}
 
 ```html
 <select>
@@ -73,9 +73,9 @@ command.
 cy.get('select').select('apples').should('have.value', '456')
 ```
 
-### Value
+### Value {#Value}
 
-#### Select the `option` with the value "456"
+#### Select the `option` with the value "456" {#Select-the-option-with-the-value-456}
 
 ```html
 <select>
@@ -90,9 +90,9 @@ cy.get('select').select('apples').should('have.value', '456')
 cy.get('select').select('456').should('have.value', '456')
 ```
 
-### Index
+### Index {#Index}
 
-#### Select the `option` with index 0
+#### Select the `option` with index 0 {#Select-the-option-with-index-0}
 
 ```html
 <select>
@@ -107,9 +107,9 @@ cy.get('select').select('456').should('have.value', '456')
 cy.get('select').select(0).should('have.value', '456')
 ```
 
-### Select multiple options
+### Select multiple options {#Select-multiple-options}
 
-#### Select the options with the texts "apples" and "bananas"
+#### Select the options with the texts "apples" and "bananas" {#Select-the-options-with-the-texts-apples-and-bananas}
 
 ```html
 <select multiple>
@@ -126,7 +126,7 @@ cy.get('select')
   .should('deep.equal', ['456', '458'])
 ```
 
-#### Select the options with the values "456" and "457"
+#### Select the options with the values "456" and "457" {#Select-the-options-with-the-values-456-and-457}
 
 ```html
 <select multiple>
@@ -143,7 +143,7 @@ cy.get('select')
   .should('deep.equal', ['456', '457'])
 ```
 
-#### Select the options with the indexes 0 and 1
+#### Select the options with the indexes 0 and 1 {#Select-the-options-with-the-indexes-0-and-1}
 
 ```html
 <select multiple>
@@ -169,9 +169,9 @@ an empty array will clear selections on all options.
 
 :::
 
-### Force select
+### Force select {#Force-select}
 
-#### Force select a hidden `<select>`
+#### Force select a hidden `<select>` {#Force-select-a-hidden-select}
 
 ```html
 <select style="display: none;">
@@ -191,7 +191,7 @@ cy.get('select')
   .should('eq', 'banana')
 ```
 
-#### Force select a disabled `<select>`
+#### Force select a disabled `<select>` {#Force-select-a-disabled-select}
 
 Passing `{ force: true }` to `.select()` will override the actionability checks
 for selecting a disabled `<select>`. However, it will not override the
@@ -217,7 +217,7 @@ cy.get('select')
   .should('eq', 'okra')
 ```
 
-### Selected option
+### Selected option {#Selected-option}
 
 You can get the currently selected option using the jQuery's
 [:selected selector](https://api.jquery.com/selected-selector/).
@@ -234,9 +234,9 @@ You can get the currently selected option using the jQuery's
 cy.get('select#name option:selected').should('have.text', 'Peter')
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Actionability
+### Actionability {#Actionability}
 
 `.select()` is an action command that follows the rules of
 [Actionability](/guides/core-concepts/interacting-with-elements).
@@ -246,28 +246,28 @@ actionability checks for selecting a disabled `<option>` or an option within a
 disabled `<optgroup>`. See
 [this issue](https://github.com/cypress-io/cypress/issues/107) for more detail.
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.select()` requires being chained off a command that yields DOM
 element(s).</li><li>`.select()` requires the element to be a
 `select`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.select()` will automatically wait for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.select()`
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.select()` can time out waiting for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.select()`
 can time out waiting for assertions you've added to pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Select the option with the text "Homer Simpson"_**
 
@@ -284,7 +284,7 @@ following:
 
 <DocsImage src="/img/api/select/console-log-for-select-shows-option-and-any-events-caused-from-clicking.png" alt="Console Log select" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - Read
   [Working with Select elements and Select2 widgets in Cypress](https://www.cypress.io/blog/2020/03/20/working-with-select-elements-and-select2-widgets-in-cypress/)

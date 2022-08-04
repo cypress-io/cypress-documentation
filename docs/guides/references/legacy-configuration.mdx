@@ -9,7 +9,7 @@ guide covers legacy configuration for Cypress 9 and below.
 
 :::
 
-## cypress.json
+## cypress.json {#cypressjson}
 
 The first time you open Cypress, it creates the `cypress.json` configuration
 file. This JSON file is used to store any configuration values you supply. If
@@ -27,13 +27,13 @@ file by using the
 
 :::
 
-## Options
+## Options {#Options}
 
 The default behavior of Cypress can be modified by supplying any of the
 following configuration options. Below is a list of available options and their
 default values.
 
-### Global
+### Global {#Global}
 
 | Option                 | Default                           | Description                                                                                                                                                                                  |
 | ---------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -49,7 +49,7 @@ default values.
 | `retries`              | `{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. See [Test Retries](/guides/guides/test-retries) for more information. |
 | `watchForFileChanges`  | `true`                            | Whether Cypress will watch and restart tests on test file changes                                                                                                                            |
 
-### Timeouts
+### Timeouts {#Timeouts}
 
 :::tip
 
@@ -70,7 +70,7 @@ you should understand well. The default values listed here are meaningful.
 | `responseTimeout`       | `30000`        | Time, in milliseconds, to wait until a response in a [`cy.request()`](/api/commands/request), [`cy.wait()`](/api/commands/wait), [`cy.fixture()`](/api/commands/fixture), [`cy.getCookie()`](/api/commands/getcookie), [`cy.getCookies()`](/api/commands/getcookies), [`cy.setCookie()`](/api/commands/setcookie), [`cy.clearCookie()`](/api/commands/clearcookie), [`cy.clearCookies()`](/api/commands/clearcookies), and [`cy.screenshot()`](/api/commands/screenshot) commands |
 | `slowTestThreshold`     | `10000 \| 250` | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter. You will often want to configure this differently for component and e2e testing. Default is 10000 for e2e and 250 for component tests.                                                                                                                                                                                                    |
 
-### Folders / Files
+### Folders / Files {#Folders--Files}
 
 | Option              | Default                    | Description                                                                                                                                                                                                                                                                                |
 | ------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -85,7 +85,7 @@ you should understand well. The default values listed here are meaningful.
 | `testFiles`         | `**/*.*`                   | A String or Array of glob patterns of the test files to load                                                                                                                                                                                                                               |
 | `videosFolder`      | `cypress/videos`           | Path to folder where videos will be saved during `cypress run`                                                                                                                                                                                                                             |
 
-### Screenshots
+### Screenshots {#Screenshots}
 
 | Option                   | Default               | Description                                                                                                                                          |
 | ------------------------ | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -96,7 +96,7 @@ you should understand well. The default values listed here are meaningful.
 For more options regarding screenshots, view the
 [Cypress.Screenshot API](/api/cypress-api/screenshot-api).
 
-### Videos
+### Videos {#Videos}
 
 | Option                  | Default          | Description                                                                                                                                                                                                                                                                                                              |
 | ----------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -106,14 +106,14 @@ For more options regarding screenshots, view the
 | `video`                 | `true`           | Whether Cypress will capture a video of the tests run with `cypress run`.                                                                                                                                                                                                                                                |
 | `videoUploadOnPasses`   | `true`           | Whether Cypress will process, compress, and upload videos to the [Dashboard](/guides/dashboard/introduction) even when all tests in a spec file are passing. This only applies when recording your runs to the Dashboard. Turn this off if you'd like to only upload the spec file's video when there are failing tests. |
 
-### Downloads
+### Downloads {#Downloads}
 
 | Option                  | Default             | Description                                                                                                                                  |
 | ----------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | `downloadsFolder`       | `cypress/downloads` | Path to folder where files downloaded during a test are saved                                                                                |
 | `trashAssetsBeforeRuns` | `true`              | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`. |
 
-### Browser
+### Browser {#Browser}
 
 | Option                  | Default                              | Description                                                                                                                                                                                                                                                                                                                                                        |
 | ----------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -123,14 +123,14 @@ For more options regarding screenshots, view the
 | `modifyObstructiveCode` | `true`                               | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. [Please read the notes for more information on this setting.](#modifyObstructiveCode)                                                                                                                                                                                   |
 | `userAgent`             | `null`                               | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See [User-Agent MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for example user agent values.              |
 
-### Viewport
+### Viewport {#Viewport}
 
 | Option           | Default | Description                                                                                                                          |
 | ---------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | `viewportHeight` | `660`   | Default height in pixels for the application under tests' viewport (Override with [`cy.viewport()`](/api/commands/viewport) command) |
 | `viewportWidth`  | `1000`  | Default width in pixels for the application under tests' viewport. (Override with [`cy.viewport()`](/api/commands/viewport) command) |
 
-### Actionability
+### Actionability {#Actionability}
 
 | Option                       | Default | Description                                                                                                                                                                      |
 | ---------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -141,7 +141,7 @@ For more options regarding screenshots, view the
 For more information, see the docs on
 [actionability](/guides/core-concepts/interacting-with-elements#Actionability).
 
-### Node version
+### Node version {#Node-version}
 
 :::caution
 
@@ -166,12 +166,12 @@ The Node version is used in Cypress to:
 
 <DocsImage src="/img/guides/configuration/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Test Runner" ></DocsImage>
 
-### Experiments
+### Experiments {#Experiments}
 
 Configuration might include experimental options currently being tested. See
 [Experiments](/guides/references/experiments) page.
 
-## Overriding Options
+## Overriding Options {#Overriding-Options}
 
 Cypress gives you the option to dynamically alter configuration values. This is
 helpful when running Cypress in multiple environments and on multiple developer
@@ -180,12 +180,12 @@ machines.
 This gives you the option to do things like override the `baseUrl` or
 environment variables.
 
-### Command Line
+### Command Line {#Command-Line}
 
 When [running Cypress from the Command Line](/guides/guides/command-line) you
 can pass a `--config` flag.
 
-#### Examples:
+#### Examples: {#Examples}
 
 ```shell
 cypress open --config pageLoadTimeout=30000,baseUrl=https://myapp.com
@@ -207,13 +207,13 @@ object surrounded by single quotes.
 cypress open --config '{"watchForFileChanges":false,"testFiles":["**/*.js","**/*.ts"]}'
 ```
 
-### Runner Specific Overrides
+### Runner Specific Overrides {#Runner-Specific-Overrides}
 
 You can override configuration for either the E2E or
 [Component Testing](/guides/component-testing/introduction/) runner using the
 `e2e` and `component` options.
 
-#### Examples
+#### Examples {#Examples-1}
 
 Component Testing specific viewports in configuration file (`cypress.json` by
 default):
@@ -245,7 +245,7 @@ default):
 }
 ```
 
-### Plugins
+### Plugins {#Plugins}
 
 The Cypress plugins file runs in Node environment before the browser running a
 spec file launches, giving you the most flexibility to set the configuration
@@ -279,7 +279,7 @@ module.exports = (on, config) => {
 We've fully documented how to set the configuration values from plugin file
 [here](/api/plugins/configuration-api).
 
-### Environment Variables
+### Environment Variables {#Environment-Variables}
 
 You can also use [environment variables](/guides/guides/environment-variables)
 to override configuration values. This is especially useful in
@@ -303,7 +303,7 @@ the `CYPRESS_`, camelcase any keys and automatically convert values into
 `Number` or `Boolean`. Make sure to prefix your environment variables with
 `CYPRESS_` else they will be ignored.
 
-#### Both options below are valid
+#### Both options below are valid {#Both-options-below-are-valid}
 
 ```shell
 export CYPRESS_pageLoadTimeout=100000
@@ -323,7 +323,7 @@ You can
 
 :::
 
-## Test Configuration
+## Test Configuration {#Test-Configuration}
 
 We provide two options to override the configuration while your test are
 running, `Cypress.config()` and suite-specific or test-specific configuration
@@ -357,7 +357,7 @@ at run time.
 - `viewportWidth`
 - `waitForAnimations`
 
-#### `Cypress.config()`
+#### `Cypress.config()` {#Cypressconfig}
 
 You can also override configuration values within your test using
 [`Cypress.config()`](/api/cypress-api/config).
@@ -372,7 +372,7 @@ Cypress.config('pageLoadTimeout', 100000)
 Cypress.config('pageLoadTimeout') // => 100000
 ```
 
-#### Test-specific Configuration
+#### Test-specific Configuration {#Test-specific-Configuration}
 
 To apply specific Cypress [configuration](/guides/references/configuration)
 values to a suite or test, pass a configuration object to the test or suite
@@ -382,7 +382,7 @@ The configuration values passed in will only take effect during the suite or
 test where they are set. The values will then reset to the previous default
 values after the suite or test is complete.
 
-##### Syntax
+##### Syntax {#Syntax}
 
 ```javascript
 describe(name, config, fn)
@@ -391,7 +391,7 @@ it(name, config, fn)
 specify(name, config, fn)
 ```
 
-##### Suite configuration
+##### Suite configuration {#Suite-configuration}
 
 If you want to target a suite of tests to run or be excluded when run in a
 specific browser, you can override the `browser` configuration within the suite
@@ -422,7 +422,7 @@ describe(
 )
 ```
 
-##### Single test configuration
+##### Single test configuration {#Single-test-configuration}
 
 If you want to target a test to run or be excluded when run in a specific
 browser, you can override the `browser` configuration within the test
@@ -438,7 +438,7 @@ it('Show warning outside Chrome', { browser: '!chrome' }, () => {
 })
 ```
 
-## Resolved Configuration
+## Resolved Configuration {#Resolved-Configuration}
 
 When you open a Cypress project, clicking on the **Settings** tab will display
 the resolved configuration to you. This helps you to understand and see where
@@ -456,9 +456,9 @@ value has been set via the following ways:
 
 <DocsImage src="/img/guides/configuration/see-resolved-configuration.jpg" alt="See resolved configuration" ></DocsImage>
 
-## Notes
+## Notes {#Notes}
 
-### blockHosts
+### blockHosts {#blockHosts}
 
 By passing a string or array of strings you can block requests made to one or
 more hosts.
@@ -527,7 +527,7 @@ send a `503` status code. As a convenience it also sets a
 
 <DocsImage src="/img/guides/references/v10/blocked-host.png" alt="Network tab of dev tools with analytics.js request selected and the response header highlighted " ></DocsImage>
 
-### modifyObstructiveCode
+### modifyObstructiveCode {#modifyObstructiveCode}
 
 With this option enabled - Cypress will search through the response streams
 coming from your server on `.html` and `.js` files and replace code that matches
@@ -549,7 +549,7 @@ not** implement these security measures. Additionally it's possible that the
 patterns we search for may accidentally rewrite valid JS code. If that's the
 case, please disable this option.
 
-### firefoxGcInterval
+### firefoxGcInterval {#firefoxGcInterval}
 
 :::caution
 
@@ -584,7 +584,7 @@ time this routine has taken to the bottom of the Command Log in the Test Runner.
 
 <DocsImage src="/img/guides/configuration/firefox-gc-interval-in-command-log.jpg" alt="GC duration shown"></DocsImage>
 
-#### Configuration
+#### Configuration {#Configuration}
 
 You can control how often GC cleanup runs via the `firefoxGcInterval`
 configuration value.
@@ -650,7 +650,7 @@ cleanup during [cypress open](/guides/guides/command-line#cypress-open).
 }
 ```
 
-### isInteractive
+### isInteractive {#isInteractive}
 
 You can open Cypress in the interactive mode via the `cypress open` command, and
 in run mode via the `cypress run` command. To detect the mode from your test
@@ -665,14 +665,14 @@ if (Cypress.config('isInteractive')) {
 }
 ```
 
-### Intelligent Code Completion
+### Intelligent Code Completion {#Intelligent-Code-Completion}
 
 IntelliSense is available for Cypress while editing your configuration file.
 [Learn how to set up Intelligent Code Completion.](/guides/tooling/IDE-integration#Intelligent-Code-Completion)
 
-## Common problems
+## Common problems {#Common-problems}
 
-#### <Icon name="angle-right" /> `baseUrl` is not set
+#### <Icon name="angle-right" /> `baseUrl` is not set {#Icon-nameangle-right--baseUrl-is-not-set}
 
 Make sure you do not accidentally place the <code>baseUrl</code> or another
 top-level config variable into the <code>env</code> block. The following
@@ -704,7 +704,7 @@ object.
 You can also find a few tips on setting the `baseUrl` in this
 [short video](https://www.youtube.com/watch?v=f5UaXuAc52c).
 
-#### <Icon name="angle-right" /> Test files not found when using `spec` parameter
+#### <Icon name="angle-right" /> Test files not found when using `spec` parameter {#Icon-nameangle-right--Test-files-not-found-when-using-spec-parameter}
 
 When using the `--spec <path or mask>` argument, make it relative to the
 project's folder. If the specs are still missing, run Cypress with
@@ -715,7 +715,7 @@ following setting to see how the Test Runner is looking for spec files:
 DEBUG=cypress:cli,cypress:server:specs
 ```
 
-## History
+## History {#History}
 
 | Version                                       | Changes                                                 |
 | --------------------------------------------- | ------------------------------------------------------- |
@@ -732,7 +732,7 @@ DEBUG=cypress:cli,cypress:server:specs
 | [4.0.0](/guides/references/changelog#4-0-0)   | Added `firefoxGcInterval` configuration.                |
 | [3.5.0](/guides/references/changelog#3-5-0)   | Added `nodeVersion` configuration.                      |
 
-## See also
+## See also {#See-also}
 
 - [Cypress.config()](/api/cypress-api/config) and
   [Cypress.env()](/api/cypress-api/env)

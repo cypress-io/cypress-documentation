@@ -4,7 +4,7 @@ title: readFile
 
 Read a file and yield its contents.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.readFile(filePath)
@@ -13,7 +13,7 @@ cy.readFile(filePath, options)
 cy.readFile(filePath, encoding, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -21,7 +21,7 @@ cy.readFile(filePath, encoding, options)
 cy.readFile('menu.json')
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> filePath** **_(String)_**
 
@@ -59,15 +59,15 @@ Pass in an options object to change the default behavior of `cy.readFile()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.readFile()` to resolve before [timing out](#Timeouts)               |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `cy.readFile()` yields the contents of the file.
 
-## Examples
+## Examples {#Examples}
 
-### Text
+### Text {#Text}
 
-#### Read a `.txt` file
+#### Read a `.txt` file {#Read-a-txt-file}
 
 For any file other than JSON, the contents of the file are returned.
 
@@ -81,7 +81,7 @@ Hello World
 cy.readFile('path/to/message.txt').should('eq', 'Hello World') // true
 ```
 
-### JSON
+### JSON {#JSON}
 
 For JSON, the contents yielded are parsed into JavaScript and returned.
 
@@ -98,9 +98,9 @@ For JSON, the contents yielded are parsed into JavaScript and returned.
 cy.readFile('path/to/data.json').its('name').should('eq', 'Eliza') // true
 ```
 
-### YAML
+### YAML {#YAML}
 
-#### Get translation data from a YAML file
+#### Get translation data from a YAML file {#Get-translation-data-from-a-YAML-file}
 
 ```javascript
 const YAML = require('yamljs')
@@ -119,9 +119,9 @@ cy.readFile('languages/en.yml').then((str) => {
 })
 ```
 
-### Encoding
+### Encoding {#Encoding}
 
-#### Specify the encoding with the second argument
+#### Specify the encoding with the second argument {#Specify-the-encoding-with-the-second-argument}
 
 ```javascript
 cy.readFile('path/to/logo.png', 'base64').then((logo) => {
@@ -131,7 +131,7 @@ cy.readFile('path/to/logo.png', 'base64').then((logo) => {
 })
 ```
 
-#### Read
+#### Read {#Read}
 
 ```javascript
 cy.fixture('path/to/logo.png', null).then((logo) => {
@@ -141,7 +141,7 @@ cy.fixture('path/to/logo.png', null).then((logo) => {
 })
 ```
 
-### Playing MP3 file
+### Playing MP3 file {#Playing-MP3-file}
 
 ```javascript
 cy.readFile('audio/sound.mp3', 'base64').then((mp3) => {
@@ -152,11 +152,11 @@ cy.readFile('audio/sound.mp3', 'base64').then((mp3) => {
 })
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Existence
+### Existence {#Existence}
 
-#### Default file existence assertion
+#### Default file existence assertion {#Default-file-existence-assertion}
 
 By default, `cy.readFile()` asserts that the file exists and will fail if it
 does not exist. It will retry reading the file if it does not initially exist
@@ -167,7 +167,7 @@ until the file exists or the command times out.
 cy.readFile('does-not-exist.yaml')
 ```
 
-#### Asserting file non-existence
+#### Asserting file non-existence {#Asserting-file-non-existence}
 
 You can assert that a file does not exist like so:
 
@@ -176,13 +176,13 @@ You can assert that a file does not exist like so:
 cy.readFile('does-not-exist.yaml').should('not.exist')
 ```
 
-#### Read a file that might not exist
+#### Read a file that might not exist {#Read-a-file-that-might-not-exist}
 
 [See our example on using `cy.task()` to read a file that _may_ not exist.](/api/commands/task#Read-a-file-that-might-not-exist)
 
-### Retries
+### Retries {#Retries}
 
-#### Automatic retries
+#### Automatic retries {#Automatic-retries}
 
 `cy.readFile()` will continue to read the file until it passes all of its
 assertions.
@@ -193,27 +193,27 @@ assertions.
 cy.readFile('some/nested/path/story.txt').should('eq', 'Once upon a time...')
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.readFile()` requires being chained off of `cy`.
 - `cy.readFile()` requires the file must exist.
 - `cy.readFile()` requires the file be successfully read from disk.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.readFile()` will automatically
   [retry](/guides/core-concepts/retry-ability) until all chained assertions have
   passed.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.readFile()` can time out waiting for assertions you've added to pass.
 - `cy.readFile()` can time out when the content being read takes a significant
   amount of time to encode.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_List the contents of your package.json file_**
 
@@ -235,7 +235,7 @@ outputs the following:
 
 <DocsImage src="/img/api/readfile/console-log-shows-content-from-file-formatted-as-javascript.png" alt="Console Log readFile" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                       | Changes                                   |
 | --------------------------------------------- | ----------------------------------------- |
@@ -243,7 +243,7 @@ outputs the following:
 | [0.17.2](/guides/references/changelog#0-17-2) | Improved error messaging                  |
 | [0.17.1](/guides/references/changelog#0-17-1) | `cy.readFile()` command added             |
 
-## See also
+## See also {#See-also}
 
 - [`cy.exec()`](/api/commands/exec)
 - [`cy.fixture()`](/api/commands/fixture) for a similar command with caching

@@ -11,7 +11,7 @@ The querying behavior of this command matches exactly how
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .prev()
@@ -20,7 +20,7 @@ The querying behavior of this command matches exactly how
 .prev(selector, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -35,7 +35,7 @@ cy.prev() // Errors, cannot be chained off 'cy'
 cy.getCookies().prev() // Errors, 'getCookies' does not yield DOM element
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> selector** **_(String selector)_**
 
@@ -50,15 +50,15 @@ Pass in an options object to change the default behavior of `.prev()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.prev()` to resolve before [timing out](#Timeouts)                     |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.prev()` yields the new DOM element(s) it found.
 
-## Examples
+## Examples {#Examples}
 
-### No Args
+### No Args {#No-Args}
 
-#### Find the previous element of the element with class of `active`
+#### Find the previous element of the element with class of `active` {#Find-the-previous-element-of-the-element-with-class-of-active}
 
 ```html
 <ul>
@@ -75,9 +75,9 @@ Pass in an options object to change the default behavior of `.prev()`.
 cy.get('.active').prev()
 ```
 
-### Selector
+### Selector {#Selector}
 
-#### Find the previous element with a class of `active`
+#### Find the previous element with a class of `active` {#Find-the-previous-element-with-a-class-of-active}
 
 ```html
 <ul>
@@ -94,14 +94,14 @@ cy.get('.active').prev()
 cy.get('li').prev('.active')
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.prev()` requires being chained off a command that yields DOM
 element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.prev()` will automatically
 [retry](/guides/core-concepts/retry-ability) until the element(s)
@@ -109,13 +109,13 @@ element(s).
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.prev()` can time out waiting for the element(s) to
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.prev()`
 can time out waiting for assertions you've added to pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Find the previous element of the active `li`_**
 
@@ -132,7 +132,7 @@ following:
 
 <DocsImage src="/img/api/prev/previous-element-in-console-log.png" alt="Console Log prev" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`.next()`](/api/commands/next)
 - [`.prevAll()`](/api/commands/prevall)

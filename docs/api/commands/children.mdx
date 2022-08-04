@@ -11,7 +11,7 @@ The querying behavior of this command matches exactly how
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .children()
@@ -20,7 +20,7 @@ The querying behavior of this command matches exactly how
 .children(selector, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -35,7 +35,7 @@ cy.children() // Errors, cannot be chained off 'cy'
 cy.clock().children() // Errors, 'clock' does not yield DOM elements
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> selector** **_(String selector)_**
 
@@ -50,15 +50,15 @@ Pass in an options object to change the default behavior of `.children()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.children()` to resolve before [timing out](#Timeouts)                 |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.children()` yields the new DOM element(s) it found.
 
-## Examples
+## Examples {#Examples}
 
-### No Args
+### No Args {#No-Args}
 
-#### Get the children of the `.secondary-nav`
+#### Get the children of the `.secondary-nav` {#Get-the-children-of-the-secondary-nav}
 
 ```html
 <ul>
@@ -91,9 +91,9 @@ Pass in an options object to change the default behavior of `.children()`.
 cy.get('ul.secondary-nav').children()
 ```
 
-### Selector
+### Selector {#Selector}
 
-#### Get the children with class `active`
+#### Get the children with class `active` {#Get-the-children-with-class-active}
 
 ```html
 <div>
@@ -111,14 +111,14 @@ cy.get('ul.secondary-nav').children()
 cy.get('ul').children('.active')
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.children()` requires being chained off a command that yields DOM
 element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.children()` will automatically
 [retry](/guides/core-concepts/retry-ability) until the element(s)
@@ -126,13 +126,13 @@ element(s).
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.children()` can time out waiting for the element(s) to
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.children()`
 can time out waiting for assertions you've added to pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Assert that there should be 8 children elements in a nav_**
 
@@ -149,7 +149,7 @@ outputs the following:
 
 <DocsImage src="/img/api/children/children-yielded-in-console.png" alt="console.log for children" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`.next()`](/api/commands/next)
 - [`.parent()`](/api/commands/parent)

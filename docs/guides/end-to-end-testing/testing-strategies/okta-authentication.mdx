@@ -4,7 +4,7 @@ title: Okta Authentication
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - Programmatically authenticate with [Okta](https://okta.com) via a custom
   Cypress command
@@ -34,7 +34,7 @@ with the third-party authentication API to login a user.
 
 :::
 
-## Okta Developer Console Setup
+## Okta Developer Console Setup {#Okta-Developer-Console-Setup}
 
 If not already setup, you will need to
 [create an Okta application](https://okta.com) within the Okta Developer
@@ -43,7 +43,7 @@ provide a **Client ID**, which will used alongside your **Okta domain** to
 [configure Okta SDKs](https://developer.okta.com/docs/guides/sign-into-spa/react/configure-the-sdk/)
 as shown in the subsequent sections of this guide.
 
-## Setting Okta app credentials in Cypress
+## Setting Okta app credentials in Cypress {#Setting-Okta-app-credentials-in-Cypress}
 
 To have access to test user credentials within our tests we need to configure
 Cypress to use the [Okta](https://okta.com) environment variables set in the
@@ -67,7 +67,7 @@ require("dotenv").config();
 
 :::
 
-## Custom Command for Okta Authentication
+## Custom Command for Okta Authentication {#Custom-Command-for-Okta-Authentication}
 
 Next, we will write a command named `loginByOktaApi` to perform a programmatic
 login into [Okta](https://okta.com) and set an item in localStorage with the
@@ -165,7 +165,7 @@ is in the
 
 :::
 
-## Adapting an Okta App for Testing
+## Adapting an Okta App for Testing {#Adapting-an-Okta-App-for-Testing}
 
 :::info
 
@@ -201,7 +201,7 @@ Use the `yarn dev:okta` command when starting the
 
 :::
 
-### Adapting the back end
+### Adapting the back end {#Adapting-the-back-end}
 
 In order to validate API requests from the frontend, we install
 [Okta JWT Verifier for Node.js](https://github.com/okta/okta-oidc-js/tree/master/packages/jwt-verifier)
@@ -280,7 +280,7 @@ if (process.env.REACT_APP_OKTA) {
 // routes ...
 ```
 
-### Adapting the front end
+### Adapting the front end {#Adapting-the-front-end}
 
 We need to update our front end React app to allow for authentication with
 [Okta](https://okta.com) using the

@@ -10,14 +10,14 @@ An alias for [`.type('{selectall}{backspace}')`](/api/commands/type)
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .clear()
 .clear(options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -35,7 +35,7 @@ cy.get('nav').clear() // Errors, 'get' doesn't yield input or textarea
 cy.clock().clear() // Errors, 'clock' does not yield DOM elements
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> options** **_(Object)_**
 
@@ -50,59 +50,59 @@ Pass in an options object to change the default behavior of `.clear()`.
 | `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.clear()` to resolve before [timing out](#Timeouts)                                                                              |
 | `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.clear()` yields the same subject it was given from the previous
 command.
 
-## Examples
+## Examples {#Examples}
 
-### No Args
+### No Args {#No-Args}
 
-#### Clear the input and type a new value
+#### Clear the input and type a new value {#Clear-the-input-and-type-a-new-value}
 
 ```javascript
 cy.get('textarea').clear().type('Hello, World')
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Actionability
+### Actionability {#Actionability}
 
-#### The element must first reach actionability
+#### The element must first reach actionability {#The-element-must-first-reach-actionability}
 
 `.clear()` is an "action command" that follows all the rules of
 [Actionability](/guides/core-concepts/interacting-with-elements).
 
-### Documentation
+### Documentation {#Documentation}
 
 `.clear()` is an alias for
 [`.type({selectall}{backspace})`](/api/commands/type).
 
 Please read the [`.type()`](/api/commands/type) documentation for more details.
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.clear()` requires being chained off a command that yields DOM
 element(s).</li><li>`.clear()` requires the element to be an `input` or
 `textarea`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.clear()` will automatically wait for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.clear()`
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.clear()` can time out waiting for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.clear()`
 can time out waiting for assertions you've added to pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Clear the input and type a new value_**
 
@@ -119,7 +119,7 @@ following:
 
 <DocsImage src="/img/api/clear/one-input-cleared-in-tests.png" alt="console.log for clear" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`.blur()`](/api/commands/blur)
 - [`.focus()`](/api/commands/focus)

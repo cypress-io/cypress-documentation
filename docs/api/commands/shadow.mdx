@@ -4,14 +4,14 @@ title: shadow
 
 Traverse into the shadow DOM of an element.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .shadow(selector)
 .shadow(selector, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -27,13 +27,13 @@ cy.exec('npm start').shadow() // Errors, 'exec' does not yield DOM element
 cy.get('.not-a-shadow-host').shadow() // Errors, subject must host a shadow root
 ```
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.shadow()` yields the new DOM element(s) it found.
 
-## Examples
+## Examples {#Examples}
 
-### Find and click on a button inside the shadow DOM
+### Find and click on a button inside the shadow DOM {#Find-and-click-on-a-button-inside-the-shadow-DOM}
 
 ```html
 <div class="shadow-host">
@@ -47,15 +47,15 @@ cy.get('.not-a-shadow-host').shadow() // Errors, subject must host a shadow root
 cy.get('.shadow-host').shadow().find('.my-button').click()
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.shadow()` requires being chained off a command that yields a DOM
 element that is a shadow host (i.e. has a shadow root directly attached to
 it).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.shadow()` will automatically
 [retry](/guides/core-concepts/retry-ability) until the element(s)
@@ -65,7 +65,7 @@ element(s) host(s) a shadow root.</li><li>`.shadow()` will automatically
 [retry](/guides/core-concepts/retry-ability) until all chained assertions have
 passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.shadow()` can time out waiting for the element(s) to
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.shadow()`
@@ -73,7 +73,7 @@ can time out waiting for the element(s) to host a shadow
 root.</li><li>`.shadow()` can time out waiting for assertions you've added to
 pass.
 
-## Known Issue
+## Known Issue {#Known-Issue}
 
 When working with `cy.click()`, it sometimes won't click the right element in
 Chrome. It's happening because of
@@ -88,7 +88,7 @@ cy.get('#element')
   .click({ position: 'top' })
 ```
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Traverse into the shadow DOM of an element_**
 
@@ -105,7 +105,7 @@ outputs the following:
 
 <DocsImage src="/img/api/shadow/shadow-in-console.png" alt="console.log shadow" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`cy.get()`](/api/commands/get#Arguments) with `includeShadowDom` option
 - [`cy.find()`](/api/commands/find#Arguments) with `includeShadowDom` option

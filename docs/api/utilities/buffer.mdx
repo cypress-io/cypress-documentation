@@ -11,13 +11,13 @@ returned by [`cy.readFile()`](/api/commands/readfile) and
 [`cy.fixture()`](/api/commands/fixture), and it is used with
 [`.selectFile()`](/api/commands/selectfile).
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 Cypress.Buffer.method()
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -31,9 +31,9 @@ Cypress.Buffer.method()
 cy.Buffer.method() // Errors, cannot be chained off 'cy'
 ```
 
-## Examples
+## Examples {#Examples}
 
-### Loading binary data read from disk
+### Loading binary data read from disk {#Loading-binary-data-read-from-disk}
 
 ```javascript
 cy.readFile('images/logo.png', null).then((file) => {
@@ -42,7 +42,7 @@ cy.readFile('images/logo.png', null).then((file) => {
 })
 ```
 
-### Using dynamic file contents with `.selectFile()`
+### Using dynamic file contents with `.selectFile()` {#Using-dynamic-file-contents-with-selectFile}
 
 ```javascript
 const files = []
@@ -55,12 +55,12 @@ for (var i = 1; i <= 10; i++) {
 cy.get('input[type=file]').selectFile(files)
 ```
 
-## History
+## History {#History}
 
 | Version                               | Changes                 |
 | ------------------------------------- | ----------------------- |
 | [9.3.0](/guides/references/changelog) | Added `Cypress.Buffer`. |
 
-## See also
+## See also {#See-also}
 
 - [Bundled Libraries](/guides/references/bundled-libraries)

@@ -17,7 +17,7 @@ however, your assertions focus on the developer's expectations. Does that
 component emit the correct events with the right arguments at the proper time
 when interacting with the component?
 
-## Testing Events
+## Testing Events {#Testing-Events}
 
 In the Stepper component, we bind React `onClick` listeners with callbacks to
 buttons that increment and decrement the internal counter value.
@@ -96,13 +96,13 @@ is called to the consuming component.
 
 In Cypress, we use "spies" to accomplish this.
 
-## Using Spies
+## Using Spies {#Using-Spies}
 
 How do we test that the custom `onChange` prop is called with the incremented
 and decremented values for the Stepper? We can use spies and **Arrange**,
 **Act**, and **Assert** on the Stepper.
 
-### Arrange
+### Arrange {#Arrange}
 
 First, we **Arrange** our test.
 
@@ -126,7 +126,7 @@ later.
 
 :::
 
-### Act
+### Act {#Act}
 
 Next, we **Act** by firing a click event for the increment button.
 
@@ -140,7 +140,7 @@ it('clicking + fires a change event with the incremented value', () => {
 })
 ```
 
-### Assert
+### Assert {#Assert}
 
 Finally, we **Assert** that the `onChange` prop was called with the correct
 value.
@@ -167,13 +167,13 @@ end-to-end tests because setup and visiting pages are expensive. Longer tests
 are not necessarily a problem for component tests because they are comparatively
 quick.
 
-## Learn More
+## Learn More {#Learn-More}
 
 Spying is a powerful technique for observing behavior in Cypress. Learn more
 about using Spies in our
 [Stubs, Spies, and Clocks guide](/guides/guides/stubs-spies-and-clocks).
 
-## What's Next?
+## What's Next? {#Whats-Next}
 
 Congratulations, you covered the basics for component testing!
 

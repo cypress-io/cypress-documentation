@@ -4,14 +4,14 @@ title: getCookies
 
 Get all of the browser cookies.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.getCookies()
 cy.getCookies(options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -19,7 +19,7 @@ cy.getCookies(options)
 cy.getCookies() // Get all cookies
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> options** **_(Object)_**
 
@@ -30,7 +30,7 @@ Pass in an options object to change the default behavior of `cy.getCookies()`.
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.getCookies()` to resolve before [timing out](#Timeouts)             |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 `cy.getCookies()` yields an array of cookie objects. Each cookie object has the
 following properties:
@@ -44,11 +44,11 @@ following properties:
 - `secure`
 - `value`
 
-## Examples
+## Examples {#Examples}
 
-### Get Cookies
+### Get Cookies {#Get-Cookies}
 
-#### Get cookies after logging in
+#### Get cookies after logging in {#Get-cookies-after-logging-in}
 
 In this example, on first login our server sends us back a session cookie.
 
@@ -63,18 +63,18 @@ cy.getCookies()
   })
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.getCookies()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.getCookies()` will only run assertions you have chained once, and will not
   [retry](/guides/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.getCookies()` should never time out.
 
@@ -86,7 +86,7 @@ practical purposes it should never happen.
 
 :::
 
-## Command Log
+## Command Log {#Command-Log}
 
 ```javascript
 cy.getCookies()
@@ -110,14 +110,14 @@ following:
 
 <DocsImage src="/img/api/getcookies/test-application-cookies.png" alt="Console Log getcookies" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                     | Changes                                                                                                                                          |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | [5.0.0](/guides/references/changelog#5-0-0) | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.                                                          |
 | [4.3.0](/guides/references/changelog#4-3-0) | Added `sameSite` property when the [experimentalGetCookiesSameSite](/guides/references/configuration#Experiments) configuration value is `true`. |
 
-## See also
+## See also {#See-also}
 
 - [`cy.clearCookie()`](/api/commands/clearcookie)
 - [`cy.clearCookies()`](/api/commands/clearcookies)

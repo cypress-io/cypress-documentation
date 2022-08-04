@@ -12,14 +12,14 @@ you're using it to clear a specific cookie inside a single test.
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.clearCookies()
 cy.clearCookies(options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -27,7 +27,7 @@ cy.clearCookies(options)
 cy.clearCookies() // clear all cookies
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> options** **_(Object)_**
 
@@ -38,16 +38,16 @@ Pass in an options object to change the default behavior of `cy.clearCookies()`.
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.clearCookies()` to resolve before [timing out](#Timeouts)           |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `cy.clearCookies()` yields `null`.</li><li>`cy.clearCookies()` cannot
 be chained further.
 
-## Examples
+## Examples {#Examples}
 
-### No Args
+### No Args {#No-Args}
 
-#### Clear all cookies after logging in <E2EOnlyBadge />
+#### Clear all cookies after logging in <E2EOnlyBadge /> {#Clear-all-cookies-after-logging-in-E2EOnlyBadge-}
 
 In this example, on first login our server sends us back a session cookie. After
 invoking `cy.clearCookies()` this clears the session cookie, and upon navigating
@@ -62,17 +62,17 @@ cy.visit('/dashboard') // we should be redirected back to login
 cy.url().should('include', 'login')
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.clearCookies()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.clearCookies()` cannot have any assertions chained.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.clearCookies()` should never time out.
 
@@ -84,7 +84,7 @@ practical purposes it should never happen.
 
 :::
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Clear cookies after getting cookies_**
 
@@ -103,7 +103,7 @@ following:
 
 <DocsImage src="/img/api/clearcookies/inspect-cleared-cookies-in-console.png" alt="Console Log" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`cy.clearCookie()`](/api/commands/clearcookie)
 - [`cy.getCookie()`](/api/commands/getcookie)

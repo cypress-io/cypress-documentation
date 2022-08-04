@@ -7,7 +7,7 @@ Cypress ships with
 for [TypeScript](https://www.typescriptlang.org/). This allows you to write your
 tests in TypeScript.
 
-### Install TypeScript
+### Install TypeScript {#Install-TypeScript}
 
 To use TypeScript with Cypress, you will need TypeScript 3.4+. If you do not
 already have TypeScript installed as a part of your framework, you will need to
@@ -30,7 +30,7 @@ yarn add --dev typescript
 </TabItem>
 </Tabs>
 
-### Configure tsconfig.json
+### Configure tsconfig.json {#Configure-tsconfigjson}
 
 We recommend creating a
 [`tsconfig.json`](http://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
@@ -71,7 +71,7 @@ If that does not work, try restarting the IDE.
 
 :::
 
-### Types for Custom Commands
+### Types for Custom Commands {#Types-for-Custom-Commands}
 
 When adding [custom commands](/api/cypress-api/custom-commands) to the `cy`
 object, you can manually add their types to avoid TypeScript errors.
@@ -140,7 +140,7 @@ it('works', () => {
 
 :::
 
-#### Adding child or dual commands
+#### Adding child or dual commands {#Adding-child-or-dual-commands}
 
 When you add a custom command with `prevSubject`, Cypress will infer the subject
 type automatically based on the specified `prevSubject`.
@@ -178,7 +178,7 @@ Cypress.Commands.add(
 )
 ```
 
-#### Overwriting child or dual commands
+#### Overwriting child or dual commands {#Overwriting-child-or-dual-commands}
 
 When overwriting either built-in or custom commands which make use of
 `prevSubject`, you must specify generic parameters to help the type-checker to
@@ -219,7 +219,7 @@ As you can see there are generic parameters `<'type', 'element'>` are used:
    - 'document' infers it as `Document`
    - 'optional' infers it as `unknown`
 
-#### Examples:
+#### Examples: {#Examples}
 
 - Find
   [the standalone example](https://github.com/cypress-io/add-cypress-custom-command-in-typescript).
@@ -232,14 +232,14 @@ As you can see there are generic parameters `<'type', 'element'>` are used:
   [cypress-example-todomvc custom commands](https://github.com/cypress-io/cypress-example-todomvc#custom-commands)
   uses custom commands to avoid boilerplate code.
 
-### Types for custom assertions
+### Types for custom assertions {#Types-for-custom-assertions}
 
 If you extend Cypress assertions, you can extend the assertion types to make the
 TypeScript compiler understand the new methods. See the
 [Recipe: Adding Chai Assertions](/examples/examples/recipes#Fundamentals) for
 instructions.
 
-### Types for plugins
+### Types for plugins {#Types-for-plugins}
 
 <WarningPluginsFile />
 
@@ -258,7 +258,7 @@ following:
 module.exports = (on, config) => {}
 ```
 
-### Using an External Typings File
+### Using an External Typings File {#Using-an-External-Typings-File}
 
 You might find it easier to organize your types by moving them from the support
 file into an external
@@ -319,7 +319,7 @@ _tsconfig.json_ files in your project for TypeScript to pick up the new types:
 </TabItem>
 </Tabs>
 
-### Set up your dev environment
+### Set up your dev environment {#Set-up-your-dev-environment}
 
 Please refer to your code editor in
 [TypeScript's Editor Support doc](https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support)
@@ -331,7 +331,7 @@ is built in for [Visual Studio Code](https://code.visualstudio.com/),
 [WebStorm](https://www.jetbrains.com/webstorm/) - all other editors require
 extra setup.
 
-### Clashing types with Jest
+### Clashing types with Jest {#Clashing-types-with-Jest}
 
 If you are using both Jest and Cypress in the same project, the TypeScript types
 registered globally by the two test runners can clash. For example, both Jest
@@ -348,7 +348,7 @@ Both Jest and Expect (bundled inside Cypress) provide the clashing types for the
    [How to Avoid Using Global Cypress Variables](https://glebbahmutov.com/blog/local-cypress/)
    for details.
 
-## History
+## History {#History}
 
 | Version                                       | Changes                                                                                    |
 | --------------------------------------------- | ------------------------------------------------------------------------------------------ |
@@ -356,6 +356,6 @@ Both Jest and Expect (bundled inside Cypress) provide the clashing types for the
 | [5.0.0](/guides/references/changelog#5-0-0)   | Raised minimum required TypeScript version from 2.9+ to 3.4+                               |
 | [4.4.0](/guides/references/changelog#4-4-0)   | Added support for TypeScript without needing your own transpilation through preprocessors. |
 
-## See also
+## See also {#See-also}
 
 - [IDE Integration](/guides/tooling/IDE-integration)

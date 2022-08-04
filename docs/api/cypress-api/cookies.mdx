@@ -27,7 +27,7 @@ You can take advantage of `Cypress.Cookies.preserveOnce()` or even preserve
 cookies by their name to preserve values across multiple tests. This enables you
 to preserve sessions through several tests.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 Cypress.Cookies.debug(enable, options)
@@ -35,7 +35,7 @@ Cypress.Cookies.preserveOnce(names...)
 Cypress.Cookies.defaults(options)
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> enable** **_(Boolean)_**
 
@@ -50,11 +50,11 @@ Names of cookies to be preserved. Pass an unlimited number of arguments.
 Set defaults for all cookies, such as preserving a set of cookies to bypass
 being cleared before each test.
 
-## Examples
+## Examples {#Examples}
 
-### Debug
+### Debug {#Debug}
 
-#### Log when cookie values are created, modified or deleted
+#### Log when cookie values are created, modified or deleted {#Log-when-cookie-values-are-created-modified-or-deleted}
 
 By turning on debugging, Cypress will automatically generate logs to the console
 when it _sets_ or _clears_ cookie values. This is useful to help you understand
@@ -70,7 +70,7 @@ cy.setCookie('foo', 'bar')
 
 <DocsImage src="/img/api/cookies/cookies-in-console-log.png" alt="Console log when debugging cookies" ></DocsImage>
 
-#### Turn off verbose debugging output
+#### Turn off verbose debugging output {#Turn-off-verbose-debugging-output}
 
 By default Cypress will log the cookie object which allows you to inspect all of
 its properties. However you may not need that level of detail and you can turn
@@ -90,9 +90,9 @@ Debugging will be turned on until you explicitly turn it off.
 Cypress.Cookies.debug(false) // now debugging is turned off
 ```
 
-### Preserve Once
+### Preserve Once {#Preserve-Once}
 
-#### Preserve cookies through multiple tests
+#### Preserve cookies through multiple tests {#Preserve-cookies-through-multiple-tests}
 
 Cypress gives you an interface to automatically preserve cookies for multiple
 tests. Cypress automatically clears all cookies before each new test starts by
@@ -153,9 +153,9 @@ describe('Dashboard', () => {
 })
 ```
 
-### Defaults
+### Defaults {#Defaults}
 
-#### Set global default cookies
+#### Set global default cookies {#Set-global-default-cookies}
 
 You can modify the global defaults and preserve a set of Cookies which will
 always be preserved across tests.
@@ -169,14 +169,14 @@ single test.
 
 :::
 
-#### `preserve` accepts:
+#### `preserve` accepts: {#preserve-accepts}
 
 - String
 - Array
 - RegExp
 - Function
 
-#### Preserve String
+#### Preserve String {#Preserve-String}
 
 ```javascript
 // now any cookie with the name 'session_id' will
@@ -186,7 +186,7 @@ Cypress.Cookies.defaults({
 })
 ```
 
-#### Preserve Array
+#### Preserve Array {#Preserve-Array}
 
 ```javascript
 // now any cookie with the name 'session_id' or 'remember_token'
@@ -196,7 +196,7 @@ Cypress.Cookies.defaults({
 })
 ```
 
-#### Preserve RegExp
+#### Preserve RegExp {#Preserve-RegExp}
 
 ```javascript
 // now any cookie that matches this RegExp
@@ -206,7 +206,7 @@ Cypress.Cookies.defaults({
 })
 ```
 
-#### Preserve Function
+#### Preserve Function {#Preserve-Function}
 
 ```javascript
 Cypress.Cookies.defaults({
@@ -219,7 +219,7 @@ Cypress.Cookies.defaults({
 })
 ```
 
-## History
+## History {#History}
 
 | Version                                       | Changes                                                                                       |
 | --------------------------------------------- | --------------------------------------------------------------------------------------------- |
@@ -229,7 +229,7 @@ Cypress.Cookies.defaults({
 | [0.16.0](/guides/references/changelog#0-16-0) | Removed support for `Cypress.Cookies.get`, `Cypress.Cookies.set` and `Cypress.Cookies.remove` |
 | [0.12.4](/guides/references/changelog#0-12-4) | `Cypress.Cookies` API added                                                                   |
 
-## See also
+## See also {#See-also}
 
 - [`cy.clearCookie()`](/api/commands/clearcookie)
 - [`cy.clearCookies()`](/api/commands/clearcookies)

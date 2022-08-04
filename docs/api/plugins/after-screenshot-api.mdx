@@ -10,7 +10,7 @@ failure. The event is called after the screenshot image is written to disk.
 This allows you to record those details, manipulate the image as needed, and
 return the updated details about the image.
 
-## Syntax
+## Syntax {#Syntax}
 
 <WarningSetupNodeEvents />
 
@@ -43,9 +43,9 @@ properties:
 | `scaled`     | `boolean` | Whether the application under test was scaled to fit into the browser viewport. May be `scale` argument passed in via [cy.screenshot()](/api/commands/screenshot#Arguments) |
 | `blackout`   | `array`   | The `blackout` argument passed in via [cy.screenshot()](/api/commands/screenshot#Arguments)                                                                                 |
 
-## Usage
+## Usage {#Usage}
 
-### Modify screenshot details
+### Modify screenshot details {#Modify-screenshot-details}
 
 Using [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) you can
 tap into the `after:screenshot` event.
@@ -69,7 +69,7 @@ The properties will be merged into the screenshot details and passed to the
 [Cypress.Screenshot.defaults()](/api/cypress-api/screenshot-api) and/or
 [cy.screenshot()](/api/commands/screenshot)).
 
-#### Modify screenshot path
+#### Modify screenshot path {#Modify-screenshot-path}
 
 If you move the location of the screenshot image, you'll want to specify the new
 `path` of the image.
@@ -102,7 +102,7 @@ on('after:screenshot', (details) => {
 
 :::
 
-## See also
+## See also {#See-also}
 
 - [cy.screenshot()](/api/commands/screenshot)
 - [Dashboard Service](/guides/dashboard/introduction)

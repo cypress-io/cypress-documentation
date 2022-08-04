@@ -43,14 +43,14 @@ to visit a page in your application.
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```js
 cy.origin(url, callbackFn)
 cy.origin(url, options, callbackFn)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -88,7 +88,7 @@ cy.origin('https://www.acme.com', () => {
 cy.get('h1').contains('My cool site under test')
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> url** **_(String)_**
 
@@ -137,7 +137,7 @@ There are a number of limitations placed on commands run inside the callback,
 please see [Callback restrictions](#Callback-restrictions) section below for a
 full list.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `cy.origin()` yields the value yielded by the last Cypress command in the
   callback function.
@@ -146,9 +146,9 @@ full list.
 - In either of the two cases above, if the value is not serializable, attempting
   to access the yielded value will throw an error.
 
-## Examples
+## Examples {#Examples}
 
-### Using dynamic data in a secondary origin
+### Using dynamic data in a secondary origin {#Using-dynamic-data-in-a-secondary-origin}
 
 Callbacks are executed inside an entirely separate instance of Cypress, so
 arguments must be transmitted to the other instance by means of
@@ -171,7 +171,7 @@ cy.origin(
 )
 ```
 
-### Yielding a value
+### Yielding a value {#Yielding-a-value}
 
 Values returned or yielded from the callback function **must** be serializable
 or they will not be returned to the primary origin. For example, the following
@@ -197,7 +197,7 @@ cy.origin('https://www.acme.com', () => {
 }).should('equal', 'ACME CORP') // 👍
 ```
 
-### Navigating to secondary origin with cy.visit
+### Navigating to secondary origin with cy.visit {#Navigating-to-secondary-origin-with-cyvisit}
 
 When navigating to a secondary origin using `cy.visit()`, it is essential to
 trigger the navigation **after** entering the origin callback, otherwise a
@@ -218,7 +218,7 @@ and the protocol defaults to `https`. When `cy.visit()` is called with the path
 `/history/founder`, the three are concatenated to make
 `https://www.acme.com/history/founder`.
 
-### Navigating to secondary origin with UI
+### Navigating to secondary origin with UI {#Navigating-to-secondary-origin-with-UI}
 
 When navigating to a secondary origin by clicking a link or button in the
 primary origin, it is essential to trigger the navigation _before_ entering the
@@ -234,7 +234,7 @@ cy.origin('www.acme.com', () => {
 })
 ```
 
-### Navigating to multiple secondary origins in succession
+### Navigating to multiple secondary origins in succession {#Navigating-to-multiple-secondary-origins-in-succession}
 
 Callbacks may **not** themselves contain `cy.origin()` calls, so when visiting
 multiple origins, do so at the top level of the test.
@@ -262,7 +262,7 @@ A future version of Cypress will allow the use of nested `cy.origin()` calls.
 
 :::
 
-### SSO login custom command
+### SSO login custom command {#SSO-login-custom-command}
 
 A very common requirement is logging in to a site before running a test. If
 login itself is not the specific focus of the test, it's good to encapsulate
@@ -327,9 +327,9 @@ Cypress.Commands.add('login', (username, password) => {
 })
 ```
 
-## Learn More
+## Learn More {#Learn-More}
 
-### How to Test Multiple Origins
+### How to Test Multiple Origins {#How-to-Test-Multiple-Origins}
 
 <DocsVideo src="https://youtube.com/embed/Fohrq5GZSD8"></DocsVideo>
 
@@ -337,9 +337,9 @@ In this video we walk through how to test multiple origins in a single test. We
 also look at how to use the `cy.session()` command to cache session information
 and reuse it across tests.
 
-## Notes
+## Notes {#Notes}
 
-### Migrating existing tests
+### Migrating existing tests {#Migrating-existing-tests}
 
 Enabling the `experimentalSessionAndOrigin` flag makes the test-runner work
 slightly differently, and some test suites that rely on the existing behaviour
@@ -414,7 +414,7 @@ it('securely edits content', () => {
 Always remember,
 [Cypress tests are not unit tests](https://docs.cypress.io/guides/references/best-practices#Creating-tiny-tests-with-a-single-assertion).
 
-### Serialization
+### Serialization {#Serialization}
 
 When entering a `cy.origin()` block, Cypress injects itself at runtime, with all
 your configuration settings, into the requested origin, and sets up
@@ -458,7 +458,7 @@ of
 [restrictions on the data which may be passed](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#things_that_dont_work_with_structured_clone)
 into the callback.
 
-### Callback restrictions
+### Callback restrictions {#Callback-restrictions}
 
 Because of the way in which the callback is transmitted and executed, there are
 certain limitations on what code may be run inside it. In particular, the
@@ -501,7 +501,7 @@ it('clicks the secondary origin link', () => {
 })
 ```
 
-### Other limitations
+### Other limitations {#Other-limitations}
 
 There are other testing scenarios which are not currently covered by
 `cy.origin()`:
@@ -516,7 +516,7 @@ There are other testing scenarios which are not currently covered by
 However, `<iframe>` support is on [our roadmap](/guides/references/roadmap) for
 inclusion in a future version of Cypress.
 
-## See also
+## See also {#See-also}
 
 - [Easily test multi-domain workflows with cy.origin](https://cypress.io/blog/2022/04/25/cypress-9-6-0-easily-test-multi-domain-workflows-with-cy-origin/)
 - [Custom Commands](/api/cypress-api/custom-commands)

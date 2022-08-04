@@ -4,14 +4,14 @@ title: root
 
 Get the root DOM element.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.root()
 cy.root(options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -22,7 +22,7 @@ cy.get('nav').within(($nav) => {
 })
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> options** **_(Object)_**
 
@@ -33,7 +33,7 @@ Pass in an options object to change the default behavior of `.root()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.root()` to resolve before [timing out](#Timeouts)                   |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 `.root()` yields the root DOM element.
 
@@ -41,19 +41,19 @@ The root element yielded is `<html>` by default. However, when calling `.root()`
 from a [`.within()`](/api/commands/within) command, the root element will point
 to the element you are "within".
 
-## Examples
+## Examples {#Examples}
 
-### HTML
+### HTML {#HTML}
 
-#### Get the root element
+#### Get the root element {#Get-the-root-element}
 
 ```javascript
 cy.root() // yields <html>
 ```
 
-### Within
+### Within {#Within}
 
-#### Get the root element in a [`.within()`](/api/commands/within) callback function
+#### Get the root element in a [`.within()`](/api/commands/within) callback function {#Get-the-root-element-in-a-within-callback-function}
 
 ```javascript
 cy.get('form').within(($form) => {
@@ -63,26 +63,26 @@ cy.get('form').within(($form) => {
 })
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.root()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.root()` will automatically
 [retry](/guides/core-concepts/retry-ability) until all chained assertions have
 passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.root()` can time out waiting for assertions you've added to
 pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
-#### Get root element
+#### Get root element {#Get-root-element}
 
 ```javascript
 cy.root().should('match', 'html')
@@ -101,7 +101,7 @@ the following:
 
 <DocsImage src="/img/api/root/console-log-root-which-is-usually-the-main-document.png" alt="Console Log root" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`cy.get()`](/api/commands/get)
 - [`.within()`](/api/commands/within)

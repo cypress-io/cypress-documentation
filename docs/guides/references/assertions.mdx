@@ -21,11 +21,11 @@ guide.
 
 :::
 
-## Chai
+## Chai {#Chai}
 
 <Icon name="github" url="https://github.com/chaijs/chai" />
 
-### BDD Assertions
+### BDD Assertions {#BDD-Assertions}
 
 These chainers are available for BDD assertions (`expect`/`should`). Aliases
 listed can be used interchangeably with their original chainer. You can see the
@@ -84,7 +84,7 @@ anything, but they enable you to write clear, english sentences.
 | ------------------------------------------------------------------------------------------- |
 | `to`, `be`, `been`, `is`, `that`, `which`, `and`, `has`, `have`, `with`, `at`, `of`, `same` |
 
-### TDD Assertions
+### TDD Assertions {#TDD-Assertions}
 
 These assertions are available for TDD assertions (`assert`). You can see the
 entire list of available Chai assertions [here](http://chaijs.com/api/assert/).
@@ -131,7 +131,7 @@ entire list of available Chai assertions [here](http://chaijs.com/api/assert/).
 | .typeOf(_value_, _name_, _[message]_)                       | `assert.typeOf('e2e', 'string', 'val is string')`      |
 | .notTypeOf(_value_, _name_, _[message]_)                    | `assert.notTypeOf('e2e', 'number', 'val not number')`  |
 
-## Chai-jQuery
+## Chai-jQuery {#Chai-jQuery}
 
 <Icon name="github" url="https://github.com/chaijs/chai-jquery" />
 
@@ -168,7 +168,7 @@ You will commonly use these chainers after using DOM commands like:
 
 <!-- textlint-enable -->
 
-## Sinon-Chai
+## Sinon-Chai {#Sinon-Chai}
 
 <Icon name="github" url="https://github.com/domenic/sinon-chai" />
 
@@ -201,7 +201,7 @@ These chainers are used on assertions with [`cy.stub()`](/api/commands/stub) and
 | threw                    | `expect(spy).to.have.thrown(errorObjOrErrorTypeStringOrNothing)`        |
 | alwaysThrew              | `expect(spy).to.have.always.thrown(errorObjOrErrorTypeStringOrNothing)` |
 
-## Adding New Assertions
+## Adding New Assertions {#Adding-New-Assertions}
 
 Because we are using `chai`, that means you can extend it however you'd like.
 Cypress will "just work" with new assertions added to `chai`. You can:
@@ -217,35 +217,35 @@ Cypress will "just work" with new assertions added to `chai`. You can:
 
 :::
 
-## Common Assertions
+## Common Assertions {#Common-Assertions}
 
 Here is a list of common element assertions. Notice how we use these assertions
 (listed above) with [`.should()`](/api/commands/should). You may also want to
 read about how Cypress [retries](/guides/core-concepts/retry-ability)
 assertions.
 
-### Length
+### Length {#Length}
 
 ```javascript
 // retry until we find 3 matching <li.selected>
 cy.get("li.selected").should("have.length", 3);
 ```
 
-### Class
+### Class {#Class}
 
 ```javascript
 // retry until this input does not have class disabled
 cy.get("form").find("input").should("not.have.class", "disabled");
 ```
 
-### Value
+### Value {#Value}
 
 ```javascript
 // retry until this textarea has the correct value
 cy.get("textarea").should("have.value", "foo bar baz");
 ```
 
-### Text Content
+### Text Content {#Text-Content}
 
 ```javascript
 // assert the element's text content is exactly the given text
@@ -270,7 +270,7 @@ cy.contains('[data-testid="greeting"]', /^Hello/);
 
 :::
 
-### Visibility
+### Visibility {#Visibility}
 
 ```javascript
 // retry until the element with
@@ -295,21 +295,21 @@ Watch the short video
 ["Multiple elements and should('be.visible') assertion"](https://www.youtube.com/watch?v=LxkrhUEE2Qk)
 that shows how to correctly check the visibility of elements.
 
-### Existence
+### Existence {#Existence}
 
 ```javascript
 // retry until loading spinner no longer exists
 cy.get('[data-testid="loading"]').should("not.exist");
 ```
 
-### State
+### State {#State}
 
 ```javascript
 // retry until our radio is checked
 cy.get(":radio").should("be.checked");
 ```
 
-### CSS
+### CSS {#CSS}
 
 ```javascript
 // retry until element has matching css
@@ -326,7 +326,7 @@ cy.get('[data-testid="completed"]').should(
 cy.get('[data-testid="accordion"]').should("not.have.css", "display", "none");
 ```
 
-### Disabled property
+### Disabled property {#Disabled-property}
 
 ```html
 <input type="text" data-testid="example-input" disabled />
@@ -345,7 +345,7 @@ cy.get('[data-testid="example-input"]')
   .and("not.be.disabled");
 ```
 
-## Negative assertions
+## Negative assertions {#Negative-assertions}
 
 There are positive and negative assertions. Examples of positive assertions are:
 
@@ -363,7 +363,7 @@ cy.contains("first todo").should("not.have.class", "completed");
 cy.get('[data-testid="loading"]').should("not.be.visible");
 ```
 
-#### <Icon name="exclamation-triangle" color="red"/> False passing tests
+#### <Icon name="exclamation-triangle" color="red"/> False passing tests {#Icon-nameexclamation-triangle-colorred-False-passing-tests}
 
 Negative assertions may pass for reasons you weren't expecting. Let's say we
 want to test that a Todo list app adds a new Todo item after typing the Todo and
@@ -435,7 +435,7 @@ For more examples, please read the blog post
 
 :::
 
-## Should callback
+## Should callback {#Should-callback}
 
 If built-in assertions are not enough, you can write your own assertion function
 and pass it as a callback to the `.should()` command. Cypress will automatically
@@ -458,7 +458,7 @@ cy.get("div").should(($div) => {
 });
 ```
 
-## Multiple assertions
+## Multiple assertions {#Multiple-assertions}
 
 You can attach multiple assertions to the same command.
 
@@ -498,7 +498,7 @@ cy.get('[data-testid="loading"]').should("be.visible");
 cy.get('[data-testid="loading"]').should("not.be.visible");
 ```
 
-## See also
+## See also {#See-also}
 
 - [Guide: Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Assertions)
 - [cypress-example-kitchensink Assertions](https://example.cypress.io/commands/assertions)

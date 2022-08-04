@@ -5,7 +5,7 @@ title: Before Spec API
 The `before:spec` event fires before a spec file is run. When running cypress
 via `cypress open`, the event will fire when the browser launches.
 
-## Syntax
+## Syntax {#Syntax}
 
 <WarningSetupNodeEvents />
 
@@ -37,12 +37,12 @@ Details of the spec file, including the following properties:
 | `relative` | The path to the spec file, relative to the project root (e.g. `cypress/e2e/login.cy.js`)   |
 | `absolute` | The absolute path to the spec file (e.g. `/Users/janelane/my-app/cypress/e2e/login.cy.js`) |
 
-## Usage
+## Usage {#Usage}
 
 You can return a promise from the `before:spec` event handler and it will be
 awaited before Cypress proceeds running the spec.
 
-### Log the relative spec path to stdout before the spec is run
+### Log the relative spec path to stdout before the spec is run {#Log-the-relative-spec-path-to-stdout-before-the-spec-is-run}
 
 :::cypress-config-plugin-example
 
@@ -63,7 +63,7 @@ module.exports = (on, config) => {
 
 :::
 
-## See also
+## See also {#See-also}
 
 - [After Spec API](/api/plugins/after-spec-api)
 - [Before Run API](/api/plugins/before-run-api)

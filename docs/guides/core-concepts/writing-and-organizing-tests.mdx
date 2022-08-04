@@ -5,7 +5,7 @@ sidebar_position: 30
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - How to organize your test and support files.
 - What languages are supported in your test files.
@@ -27,7 +27,7 @@ organizing your tests.
 
 :::
 
-## Folder structure
+## Folder structure {#Folder-structure}
 
 After adding a new project, Cypress will automatically scaffold out a suggested
 folder structure. By default it will create:
@@ -87,7 +87,7 @@ Both:
 </TabItem>
 </Tabs>
 
-### Configuring Folder Structure
+### Configuring Folder Structure {#Configuring-Folder-Structure}
 
 While Cypress allows you to configure where your tests, fixtures, and support
 files are located, if you're starting your first project, we recommend you use
@@ -115,7 +115,7 @@ these should also be ignored when you check into source control.
 
 :::
 
-### Spec files
+### Spec files {#Spec-files}
 
 Test files are located in `cypress/e2e` by default, but can be
 [configured](/guides/references/configuration#Folders-Files) to another
@@ -145,7 +145,7 @@ To see an example of every command used in Cypress, open the
 [`2-advanced-examples` folder](https://github.com/cypress-io/cypress-example-kitchensink/tree/master/cypress/integration/2-advanced-examples)
 within your `cypress/e2e` folder.
 
-### Fixture Files
+### Fixture Files {#Fixture-Files}
 
 Fixtures are used as external pieces of static data that can be used by your
 tests. Fixture files are located in `cypress/fixtures` by default, but can be
@@ -156,7 +156,7 @@ You would typically use them with the [`cy.fixture()`](/api/commands/fixture)
 command and most often when you're stubbing
 [Network Requests](/guides/guides/network-requests).
 
-### Asset Files
+### Asset Files {#Asset-Files}
 
 There are some folders that may be generated after a test run, containing assets
 that were generated during the test run.
@@ -164,7 +164,7 @@ that were generated during the test run.
 You may consider adding these folders to your `.gitignore` file to ignore
 checking these files into source control.
 
-#### Download Files
+#### Download Files {#Download-Files}
 
 Any files downloaded while testing an application's file download feature will
 be stored in the [`downloadsFolder`](/guides/references/configuration#Downloads)
@@ -176,7 +176,7 @@ which is set to `cypress/downloads` by default.
     - records.csv
 ```
 
-#### Screenshot Files
+#### Screenshot Files {#Screenshot-Files}
 
 If screenshots were taken via the [cy.screenshot()](/api/commands/screenshot)
 command or automatically when a test fails, the screenshots are stored in the
@@ -193,7 +193,7 @@ to `cypress/screenshots` by default.
 To learn more about screenshots and settings available, see
 [Screenshots and Videos](/guides/guides/screenshots-and-videos#Screenshots)
 
-#### Video Files
+#### Video Files {#Video-Files}
 
 Any videos recorded of the run are stored in the
 [`videosFolder`](/guides/references/configuration#Videos) which is set to
@@ -205,7 +205,7 @@ Any videos recorded of the run are stored in the
     - app.cy.js.mp4
 ```
 
-#### Asset File Paths
+#### Asset File Paths {#Asset-File-Paths}
 
 Generated screenshots and videos are saved inside their respective folders
 (`cypress/screenshots`, `cypress/videos`). The paths of the generated files will
@@ -241,7 +241,7 @@ module API option, if specified)
 To learn more about videos and settings available, see
 [Screenshots and Videos](/guides/guides/screenshots-and-videos#Screenshots)
 
-### Plugins file
+### Plugins file {#Plugins-file}
 
 <WarningPluginsFile />
 
@@ -261,7 +261,7 @@ more details and examples.
 The initial imported plugins file can be
 [configured to another file](/guides/references/configuration#Folders-Files).
 
-### Support file
+### Support file {#Support-file}
 
 To include code before your test files, set the
 [`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
@@ -332,7 +332,7 @@ beforeEach(() => {
 
 :::
 
-#### Execution
+#### Execution {#Execution}
 
 Cypress executes the support file before the spec file. For example, when
 Cypress executes a spec file via `cypress open` or `cypress run`, it executes
@@ -348,7 +348,7 @@ the files in the following order:
 1. `support/component.js` (your support file)
 2. `components/Button/Button.cy.js` (your spec file)
 
-### Troubleshooting
+### Troubleshooting {#Troubleshooting}
 
 If Cypress does not find the spec files for some reason, you can troubleshoot
 its logic by opening or running Cypress with
@@ -360,7 +360,7 @@ DEBUG=cypress:server:specs npx cypress open
 DEBUG=cypress:server:specs npx cypress run
 ```
 
-## Writing tests
+## Writing tests {#Writing-tests}
 
 Cypress is built on top of [Mocha](/guides/references/bundled-libraries#Mocha)
 and [Chai](/guides/references/bundled-libraries#Chai). We support both Chai's
@@ -379,7 +379,7 @@ test.
 
 :::
 
-### Test Structure
+### Test Structure {#Test-Structure}
 
 The test interface, borrowed from
 [Mocha](/guides/references/bundled-libraries#Mocha), provides `describe()`,
@@ -430,7 +430,7 @@ describe("Unit test our math functions", () => {
 // -- End: Our Cypress Tests --
 ```
 
-### Hooks
+### Hooks {#Hooks}
 
 Cypress also provides hooks (borrowed from
 [Mocha](/guides/references/bundled-libraries#Mocha)).
@@ -477,7 +477,7 @@ describe("Hooks", () => {
 });
 ```
 
-#### The order of hook and test execution is as follows:
+#### The order of hook and test execution is as follows: {#The-order-of-hook-and-test-execution-is-as-follows}
 
 - All `before()` hooks run (once)
 - Any `beforeEach()` hooks run
@@ -493,7 +493,7 @@ or `afterEach()`](/guides/references/best-practices#Using-after-or-afterEach-hoo
 
 :::
 
-### Excluding and Including Tests
+### Excluding and Including Tests {#Excluding-and-Including-Tests}
 
 To run a specified suite or test, append `.only` to the function. All nested
 suites will also be executed. This gives us the ability to run one test at a
@@ -549,7 +549,7 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 });
 ```
 
-### Test Configuration
+### Test Configuration {#Test-Configuration}
 
 It is possible to apply
 [test configuration](/guides/references/configuration#Test-Configuration) values
@@ -560,7 +560,7 @@ This configuration will take effect during the suite or tests where they are set
 then return to their previous default values after the suite or tests are
 complete.
 
-#### Syntax
+#### Syntax {#Syntax}
 
 ```javascript
 describe(name, config, fn);
@@ -569,7 +569,7 @@ it(name, config, fn);
 specify(name, config, fn);
 ```
 
-#### Allowed config values
+#### Allowed config values {#Allowed-config-values}
 
 :::caution
 
@@ -577,7 +577,7 @@ specify(name, config, fn);
 
 :::
 
-#### Suite configuration
+#### Suite configuration {#Suite-configuration}
 
 If you want to target a suite of tests to run or be excluded when run in a
 specific browser, you can override the `browser` configuration within the suite
@@ -644,7 +644,7 @@ describe(
 );
 ```
 
-#### Single test configuration
+#### Single test configuration {#Single-test-configuration}
 
 You can configure the number of retry attempts during `cypress run` or
 `cypress open`. See [Test Retries](/guides/guides/test-retries) for more
@@ -662,7 +662,7 @@ it('should redirect unauthenticated user to sign-in page', {
 })
 ```
 
-### Dynamically Generate Tests
+### Dynamically Generate Tests {#Dynamically-Generate-Tests}
 
 You can dynamically generate tests using JavaScript.
 
@@ -691,7 +691,7 @@ The code above will produce a suite with 4 tests:
   > triggers event: 'mouseleave'
 ```
 
-### Assertion Styles
+### Assertion Styles {#Assertion-Styles}
 
 Cypress supports both BDD (`expect`/`should`) and TDD (`assert`) style plain
 assertions. [Read more about plain assertions.](/guides/references/assertions)
@@ -715,7 +715,7 @@ of Cypress commands.
 cy.wrap(add(1, 2)).should("equal", 3);
 ```
 
-## Running tests
+## Running tests {#Running-tests}
 
 You can run a test by clicking on the spec filename. For example the
 [Cypress RealWorld App](https://github.com/cypress-io/cypress-example-realworld)
@@ -727,12 +727,12 @@ file by clicking on it.
   alt="Running a single spec"
 ></DocsImage>
 
-## Test statuses
+## Test statuses {#Test-statuses}
 
 After the Cypress spec completes every test has one of 4 statuses: **passed**,
 **failed**, **pending**, or **skipped**.
 
-### Passed
+### Passed {#Passed}
 
 Passed tests have successfully completed all their commands without failing any
 assertions. The test screenshot below shows a passed test:
@@ -746,7 +746,7 @@ Note that a test can pass after several
 [test retries](/guides/guides/test-retries). In that case the Command Log shows
 some failed attempts, but ultimately the entire test finishes successfully.
 
-### Failed
+### Failed {#Failed}
 
 Good news - the failed test has found a problem. Could be much worse - it could
 be a user hitting this bug!
@@ -759,7 +759,7 @@ be a user hitting this bug!
 After a test fails, the screenshots and videos can help find the problem so it
 can be fixed.
 
-### Pending
+### Pending {#Pending}
 
 You can write _placeholder_ tests in several ways as shown below, and Cypress
 knows NOT to run them. Cypress marks all the tests below as _pending_.
@@ -793,7 +793,7 @@ file.
 So remember - if you (the test writer) knowingly skip a test using one of the
 above three ways, Cypress counts it as a _pending_ test.
 
-### Skipped
+### Skipped {#Skipped}
 
 The last test status is for tests that you _meant_ to run, but these tests were
 skipped due to some run-time error. For example, imagine a group of tests
@@ -868,7 +868,7 @@ blog post
 to learn how to use the pending tests to tracking the test strategy
 implementation.
 
-## Watching tests
+## Watching tests {#Watching-tests}
 
 When running in using [cypress open](/guides/guides/command-line#cypress-open),
 Cypress watches the filesystem for changes to your spec files. Soon after adding
@@ -890,14 +890,14 @@ behavior.
 
 :::
 
-### What is watched?
+### What is watched? {#What-is-watched}
 
-#### Files
+#### Files {#Files}
 
 - [Cypress configuration](/guides/references/configuration)
 - [cypress.env.json](/guides/guides/environment-variables)
 
-#### Folders
+#### Folders {#Folders}
 
 - E2E directory (`cypress/e2e/` by default)
 - Support directory (`cypress/support/` by default)
@@ -914,7 +914,7 @@ specific to your configuration will be watched.
 
 :::
 
-### What isn't watched?
+### What isn't watched? {#What-isnt-watched}
 
 Everything else; this includes, but isn't limited to, the following:
 
@@ -927,7 +927,7 @@ likely got support for some form of hot module replacement which is responsible
 for watching your application code&mdash;HTML, CSS, JS, etc.&mdash;and
 transparently reloading your application in response to changes.
 
-### Configuration
+### Configuration {#Configuration}
 
 Set the [`watchForFileChanges`](/guides/references/configuration#Global)
 configuration property to `false` to disable file watching.

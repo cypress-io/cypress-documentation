@@ -5,7 +5,7 @@ sidebar_position: 20
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - What makes Cypress unique
 - How its architecture differs from Selenium
@@ -13,7 +13,7 @@ sidebar_position: 20
 
 :::
 
-## Architecture
+## Architecture {#Architecture}
 
 Most testing tools (like Selenium) operate by running outside of the browser and
 executing remote commands across the network. _Cypress is the exact opposite._
@@ -43,7 +43,7 @@ makes performing tasks such as
 general [file system operations](/api/commands/exec) and
 [network operations](/api/commands/request) possible.
 
-## Native access
+## Native access {#Native-access}
 
 Because Cypress operates within your application, that means it has native
 access to every single object. Whether it is the `window`, the `document`, a DOM
@@ -53,7 +53,7 @@ serialization, there is no over-the-wire protocol - you have access to
 everything. Your test code can access all the same objects that your application
 code can.
 
-## New kind of testing
+## New kind of testing {#New-kind-of-testing}
 
 Having ultimate control over your application, the network traffic, and native
 access to every host object unlocks a new way of testing that has never been
@@ -87,7 +87,7 @@ artificially like you would in an unit test. For instance you can:
   can control WebSocket messages from within Cypress, conditionally load 3rd
   party scripts, or call functions directly on your application.
 
-## Shortcuts
+## Shortcuts {#Shortcuts}
 
 Trying to test hard to reach areas of your application? Don't like the side
 effects an action creates? Tired of repeating the same repetitive and slow
@@ -107,7 +107,7 @@ Cookies are automatically sent and applied back. Worried about CORS? Don't be,
 it is completely bypassed. The power to choose when to test like a user and when
 to skip slow and repetitive parts is yours.
 
-## Flake resistant
+## Flake resistant {#Flake-resistant}
 
 Cypress knows and understands everything that happens in your application
 synchronously. It is notified the moment the page loads and the moment the page
@@ -132,7 +132,7 @@ reach this state before moving on. You are completely insulated from fussing
 with manual waits or retries. Cypress automatically waits for elements to exist
 and will never yield you stale elements that have been detached from the DOM.
 
-## Debuggability
+## Debuggability {#Debuggability}
 
 Above all else Cypress has been built for usability.
 
@@ -151,7 +151,7 @@ debugger statements in your spec code or your application code. There is no
 fidelity loss - you can use all the tools you're already comfortable with. This
 enables you to test and develop all at the same time.
 
-## Trade offs
+## Trade offs {#Trade-offs}
 
 While there are many new and powerful capabilities of Cypress - there are also
 important trade-offs that we've made in making this possible.

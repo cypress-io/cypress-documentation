@@ -12,7 +12,7 @@ The querying behavior of this command is similar to how
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.get(selector)
@@ -21,7 +21,7 @@ cy.get(selector, options)
 cy.get(alias, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -29,7 +29,7 @@ cy.get(alias, options)
 cy.get('.list > li') // Yield the <li>'s in .list
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> selector** **_(String selector)_**
 
@@ -65,69 +65,69 @@ Pass in an options object to change the default behavior of `cy.get()`.
 | `withinSubject`    | null                                                                              | Element to search for children in. If null, search begins from root-level DOM element                        |
 | `includeShadowDom` | [`includeShadowDom` config option value](/guides/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `cy.get()` yields the DOM element(s) it found.
 
-## Examples
+## Examples {#Examples}
 
-### Selector
+### Selector {#Selector}
 
-#### Get the input element
+#### Get the input element {#Get-the-input-element}
 
 ```javascript
 cy.get('input').should('be.disabled')
 ```
 
-#### Find the first `li` descendent within a `ul`
+#### Find the first `li` descendent within a `ul` {#Find-the-first-li-descendent-within-a-ul}
 
 ```javascript
 cy.get('ul li:first').should('have.class', 'active')
 ```
 
-#### Find the dropdown-menu and click it
+#### Find the dropdown-menu and click it {#Find-the-dropdown-menu-and-click-it}
 
 ```javascript
 cy.get('.dropdown-menu').click()
 ```
 
-#### Find 5 elements with the given data attribute
+#### Find 5 elements with the given data attribute {#Find-5-elements-with-the-given-data-attribute}
 
 ```javascript
 cy.get('[data-test-id="test-example"]').should('have.length', 5)
 ```
 
-#### Find the link with an href attribute containing the word "questions" and click it
+#### Find the link with an href attribute containing the word "questions" and click it {#Find-the-link-with-an-href-attribute-containing-the-word-questions-and-click-it}
 
 ```javascript
 cy.get('a[href*="questions"]').click()
 ```
 
-#### Find the element with id that starts with "local-"
+#### Find the element with id that starts with "local-" {#Find-the-element-with-id-that-starts-with-local-}
 
 ```javascript
 cy.get('[id^=local-]')
 ```
 
-#### Find the element with id that ends with "-remote"
+#### Find the element with id that ends with "-remote" {#Find-the-element-with-id-that-ends-with--remote}
 
 ```javascript
 cy.get('[id$=-remote]')
 ```
 
-#### Find the element with id that starts with "local-" and ends with "-remote"
+#### Find the element with id that starts with "local-" and ends with "-remote" {#Find-the-element-with-id-that-starts-with-local--and-ends-with--remote}
 
 ```javascript
 cy.get('[id^=local-][id$=-remote]')
 ```
 
-#### Find the element with id that has characters used in CSS like ".", ":".
+#### Find the element with id that has characters used in CSS like ".", ":". {#Find-the-element-with-id-that-has-characters-used-in-CSS-like--}
 
 ```javascript
 cy.get('#id\\.\\.\\.1234') // escape the character with \\
 ```
 
-### `cy.get()` in the [`.within()`](/api/commands/within) command
+### `cy.get()` in the [`.within()`](/api/commands/within) command {#cyget-in-the-within-command}
 
 Since `cy.get()` is chained off of `cy`, it always looks for the selector within
 the entire `document`. The only exception is when used inside a
@@ -140,7 +140,7 @@ cy.get('form').within(() => {
 })
 ```
 
-### Get vs Find
+### Get vs Find {#Get-vs-Find}
 
 The `cy.get` command always starts its search from the
 [cy.root](https://on.cypress.io/root) element. In most cases, it is the
@@ -170,12 +170,12 @@ cy.get('#comparison')
   .and('have.class', 'feature')
 ```
 
-### Alias
+### Alias {#Alias}
 
 For a detailed explanation of aliasing,
 [read more about aliasing here](/guides/core-concepts/variables-and-aliases#Aliases).
 
-#### Get the aliased 'todos' elements
+#### Get the aliased 'todos' elements {#Get-the-aliased-todos-elements}
 
 ```javascript
 cy.get('ul#todos').as('todos')
@@ -186,7 +186,7 @@ cy.get('ul#todos').as('todos')
 cy.get('@todos')
 ```
 
-#### Get the aliased 'submitBtn' element
+#### Get the aliased 'submitBtn' element {#Get-the-aliased-submitBtn-element}
 
 ```javascript
 beforeEach(() => {
@@ -198,7 +198,7 @@ it('disables on click', () => {
 })
 ```
 
-#### Get the aliased 'users' fixture
+#### Get the aliased 'users' fixture {#Get-the-aliased-users-fixture}
 
 ```javascript
 beforeEach(() => {
@@ -216,14 +216,14 @@ it('disables on click', () => {
 })
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.get()` requires being chained off a command that yields DOM
 element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.get()` will automatically
 [retry](/guides/core-concepts/retry-ability) until the element(s)
@@ -231,13 +231,13 @@ element(s).
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.get()` can time out waiting for the element(s) to
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`cy.get()`
 can time out waiting for assertions you've added to pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Get an input and assert on the value_**
 
@@ -254,13 +254,13 @@ the following:
 
 <DocsImage src="/img/api/get/console-log-get-command-and-elements-found.png" alt="Console Log get" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                     | Changes                          |
 | ------------------------------------------- | -------------------------------- |
 | [5.2.0](/guides/references/changelog#5-2-0) | Added `includeShadowDom` option. |
 
-## See also
+## See also {#See-also}
 
 - [`.as()`](/api/commands/as)
 - [`cy.contains()`](/api/commands/contains)

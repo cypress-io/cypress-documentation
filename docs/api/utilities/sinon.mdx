@@ -8,14 +8,14 @@ Cypress automatically includes [Sinon.JS](http://sinonjs.org/) and exposes it as
 common use for `Cypress.sinon` is to provide flexible
 [matchers](https://sinonjs.org/releases/latest/matchers/) when doing assertions.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 Cypress.sinon.match(value)
 Cypress.sinon.match.<matcher name>
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -29,9 +29,9 @@ Cypress.sinon.match.string
 cy.sinon.match.string // Errors, cannot be chained off 'cy'
 ```
 
-## Examples
+## Examples {#Examples}
 
-### `match.string`
+### `match.string` {#matchstring}
 
 This example comes from the recipe
 [Root style](https://github.com/cypress-io/cypress-example-recipes#testing-the-dom).
@@ -69,7 +69,7 @@ cy.get('@setColor').should(
 )
 ```
 
-## See also
+## See also {#See-also}
 
 - [Spies, stubs & clocks](https://example.cypress.io/commands/spies-stubs-clocks)
   example page

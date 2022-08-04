@@ -9,13 +9,13 @@ Cypress automatically includes a
 Use `Cypress.Blob` to convert `base64` strings to Blob objects. Useful for
 testing uploads.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 Cypress.Blob.method()
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -29,11 +29,11 @@ Cypress.Blob.method()
 cy.Blob.method() // Errors, cannot be chained off 'cy'
 ```
 
-## Examples
+## Examples {#Examples}
 
-### Image Fixture
+### Image Fixture {#Image-Fixture}
 
-#### Using an image fixture for jQuery plugin upload
+#### Using an image fixture for jQuery plugin upload {#Using-an-image-fixture-for-jQuery-plugin-upload}
 
 ```javascript
 // programmatically upload the logo
@@ -50,9 +50,9 @@ cy.get('input[type=file]').then(function ($input) {
 })
 ```
 
-### Getting dataUrl string
+### Getting dataUrl string {#Getting-dataUrl-string}
 
-#### Create an `img` element and set its `src` to the `dataUrl`
+#### Create an `img` element and set its `src` to the `dataUrl` {#Create-an-img-element-and-set-its-src-to-the-dataUrl}
 
 ```javascript
 return Cypress.Blob.imgSrcToDataURL('/assets/img/logo.png').then((dataUrl) => {
@@ -66,13 +66,13 @@ return Cypress.Blob.imgSrcToDataURL('/assets/img/logo.png').then((dataUrl) => {
 })
 ```
 
-## History
+## History {#History}
 
 | Version                               | Changes                                                                                                                                            |
 | ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [5.0.0](/guides/references/changelog) | Return type of `arrayBufferToBlob`, `base64StringToBlob`, `binaryStringToBlob`, and `dataURLToBlob` methods changed from `Promise<Blob>` to `Blob` |
 | [5.0.0](/guides/references/changelog) | Added `arrayBufferToBinaryString`, `binaryStringToArrayBuffer` methods.                                                                            |
 
-## See also
+## See also {#See-also}
 
 - [Bundled Libraries](/guides/references/bundled-libraries)

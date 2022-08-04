@@ -11,14 +11,14 @@ If you want to call a `function` on the previously yielded subject, use
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .its(propertyName)
 .its(propertyName, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -34,7 +34,7 @@ cy.its('window') // Errors, cannot be chained off 'cy'
 cy.clearCookies().its('length') // Errors, 'clearCookies' does not yield Object
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> propertyName** **_(String, Number)_**
 
@@ -49,31 +49,31 @@ Pass in an options object to change the default behavior of `.its()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.its()` to resolve before [timing out](#Timeouts)                      |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.its()` 'yields the value of the property'
 
-## Examples
+## Examples {#Examples}
 
-### Objects
+### Objects {#Objects}
 
-#### Get property
+#### Get property {#Get-property}
 
 ```javascript
 cy.wrap({ age: 52 }).its('age').should('eq', 52) // true
 ```
 
-### Arrays
+### Arrays {#Arrays}
 
-#### Get index
+#### Get index {#Get-index}
 
 ```javascript
 cy.wrap(['Wai Yan', 'Yu']).its(1).should('eq', 'Yu') // true
 ```
 
-### DOM Elements
+### DOM Elements {#DOM-Elements}
 
-#### Get the `length` property of a DOM element
+#### Get the `length` property of a DOM element {#Get-the-length-property-of-a-DOM-element}
 
 ```javascript
 cy.get('ul li') // this yields us a jquery object
@@ -81,9 +81,9 @@ cy.get('ul li') // this yields us a jquery object
   .should('be.gt', 2) // ensure the length is greater than 2
 ```
 
-### Requests
+### Requests {#Requests}
 
-#### Get the `user` object of the response's `body`
+#### Get the `user` object of the response's `body` {#Get-the-user-object-of-the-responses-body}
 
 ```javascript
 cy
@@ -101,17 +101,17 @@ cy
   .then(({user}) => ...)
 ```
 
-### Strings
+### Strings {#Strings}
 
-#### Get `length` of title
+#### Get `length` of title {#Get-length-of-title}
 
 ```javascript
 cy.title().its('length').should('eq', 24)
 ```
 
-### Functions
+### Functions {#Functions}
 
-#### Get function as property
+#### Get function as property {#Get-function-as-property}
 
 ```javascript
 const fn = () => {
@@ -121,7 +121,7 @@ const fn = () => {
 cy.wrap({ getNum: fn }).its('getNum').should('be.a', 'function')
 ```
 
-#### Access function properties
+#### Access function properties {#Access-function-properties}
 
 You can access functions to then drill into their own properties instead of
 invoking them.
@@ -147,7 +147,7 @@ cy.window() // yields window object
   .invoke('create', 'arg') // now invoke properties on it
 ```
 
-#### Use `.its()` to test `window.fetch`
+#### Use `.its()` to test `window.fetch` {#Use-its-to-test-windowfetch}
 
 :::info
 
@@ -155,7 +155,7 @@ cy.window() // yields window object
 
 :::
 
-### Nested Properties
+### Nested Properties {#Nested-Properties}
 
 You can drill into nested properties by using _dot notation_.
 
@@ -171,9 +171,9 @@ const user = {
 cy.wrap(user).its('contacts.work.name').should('eq', 'Kamil') // true
 ```
 
-### Existence
+### Existence {#Existence}
 
-#### Wait for some property to exist on `window`
+#### Wait for some property to exist on `window` {#Wait-for-some-property-to-exist-on-window}
 
 ```javascript
 cy.window()
@@ -183,31 +183,31 @@ cy.window()
   })
 ```
 
-#### Assert that a property does not exist on `window`
+#### Assert that a property does not exist on `window` {#Assert-that-a-property-does-not-exist-on-window}
 
 ```javascript
 cy.window().its('evilProp').should('not.exist')
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.its()` requires being chained off a previous command.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.its()` will automatically
 [retry](/guides/core-concepts/retry-ability) until it has a property that is not
 `null` or `undefined`.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.its()` can time out waiting for the property to
 exist.</li><li>`.its()` can time out waiting for assertions you've added to
 pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Get `responseBody` of aliased route_**
 
@@ -234,14 +234,14 @@ following:
 
 <DocsImage src="/img/api/its/response-body-yielded-with-its-command-log.png" alt="Console Log for its" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                     | Changes                                                       |
 | ------------------------------------------- | ------------------------------------------------------------- |
 | [3.8.0](/guides/references/changelog#3-8-0) | Added support for `options` argument                          |
 | [3.7.0](/guides/references/changelog#3-7-0) | Added support for arguments of type Number for `propertyName` |
 
-## See also
+## See also {#See-also}
 
 - [`.invoke()`](/api/commands/invoke)
 - [`.then()`](/api/commands/then)

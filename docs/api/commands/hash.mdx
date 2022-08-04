@@ -11,14 +11,14 @@ This is an alias of [`cy.location('hash')`](/api/commands/location)
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.hash()
 cy.hash(options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -26,7 +26,7 @@ cy.hash(options)
 cy.hash() // Get the url hash
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> options** **_(Object)_**
 
@@ -39,29 +39,29 @@ Pass in an options object to change the default behavior of `cy.hash()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.hash()` to resolve before [timing out](#Timeouts)                   |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
-#### When the current URL contains a hash:
+#### When the current URL contains a hash: {#When-the-current-URL-contains-a-hash}
 
 - `cy.hash()` "yields the current URL's hash (including the `#`
 character)" 
 
-#### When the current URL does not contain a hash:
+#### When the current URL does not contain a hash: {#When-the-current-URL-does-not-contain-a-hash}
 
 - `cy.hash()` "yields an empty string" 
 
-## Examples
+## Examples {#Examples}
 
-### No Args
+### No Args {#No-Args}
 
-#### Assert that hash is `#/users/1` given remote URL: `http://localhost:8000/app/#/users/1`
+#### Assert that hash is `#/users/1` given remote URL: `http://localhost:8000/app/#/users/1` {#Assert-that-hash-is-users1-given-remote-URL-httplocalhost8000appusers1}
 
 ```javascript
 // yields #/users/1
 cy.hash().should('eq', '#/users/1') // => true
 ```
 
-#### Assert that the hash matches via RegExp
+#### Assert that the hash matches via RegExp {#Assert-that-the-hash-matches-via-RegExp}
 
 ```html
 <ul id="users">
@@ -76,24 +76,24 @@ cy.get('#users li').find('a').click()
 cy.hash().should('match', /users\/.+$/) // => true
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.hash()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.hash()` will automatically
 [retry](/guides/core-concepts/retry-ability) until all chained assertions have
 passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.hash()` can time out waiting for assertions you've added to
 pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Assert that the hash matches `#users/new`_**
 
@@ -110,7 +110,7 @@ following:
 
 <DocsImage src="/img/api/hash/hash-command-yields-url-after-hash.png" alt="Console Log for hash" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`cy.location()`](/api/commands/location)
 - [`cy.url()`](/api/commands/url)

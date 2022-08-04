@@ -13,7 +13,7 @@ We do not recommend starting a web server using `cy.task()`. Read about
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.task(event)
@@ -21,7 +21,7 @@ cy.task(event, arg)
 cy.task(event, arg, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -52,7 +52,7 @@ handled.
 If you do not need to return a value, explicitly return `null` to signal that
 the given event has been handled.
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> event** **_(String)_**
 
@@ -98,12 +98,12 @@ Pass in an options object to change the default behavior of `cy.task()`.
 | `log`     | `true`                                                     | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`taskTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.task()` to resolve before [timing out](#Timeouts)                   |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 `cy.task()` yields the value returned or resolved by the `task` event in
 [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin).
 
-## Examples
+## Examples {#Examples}
 
 `cy.task()` provides an escape hatch for running arbitrary Node code, so you can
 take actions necessary for your tests outside of the scope of Cypress. This is
@@ -115,7 +115,7 @@ great for:
   Cypress.
 - Running an external process.
 
-### Read a file that might not exist
+### Read a file that might not exist {#Read-a-file-that-might-not-exist}
 
 Command [cy.readFile()](/api/commands/readfile) assumes the file exists. If you
 need to read a file that might not exist, use `cy.task`.
@@ -145,7 +145,7 @@ on('task', {
 
 :::
 
-### Return number of files in the folder
+### Return number of files in the folder {#Return-number-of-files-in-the-folder}
 
 ```javascript
 // in test
@@ -176,7 +176,7 @@ on('task', {
 
 :::
 
-### Seed a database
+### Seed a database {#Seed-a-database}
 
 ```js
 // in test
@@ -210,7 +210,7 @@ on('task', {
 
 :::
 
-### Return a Promise from an asynchronous task
+### Return a Promise from an asynchronous task {#Return-a-Promise-from-an-asynchronous-task}
 
 ```javascript
 // in test
@@ -232,7 +232,7 @@ on('task', {
 
 :::
 
-### Save a variable across non same-origin URL visits
+### Save a variable across non same-origin URL visits {#Save-a-variable-across-non-same-origin-URL-visits}
 
 When visiting non same-origin URL, Cypress will
 [change the hosted URL to the new URL](/guides/guides/web-security), wiping the
@@ -284,9 +284,9 @@ on('task', {
 
 :::
 
-### Command options
+### Command options {#Command-options}
 
-#### Change the timeout
+#### Change the timeout {#Change-the-timeout}
 
 You can increase the time allowed to execute the task, although _we do not
 recommend executing tasks that take a long time to exit_.
@@ -299,11 +299,11 @@ finished, so a long-running command will drastically slow down your test runs.
 cy.task('seedDatabase', null, { timeout: 20000 })
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Tasks must end
+### Tasks must end {#Tasks-must-end}
 
-#### Tasks that do not end are not supported
+#### Tasks that do not end are not supported {#Tasks-that-do-not-end-are-not-supported}
 
 `cy.task()` does not support tasks that do not end, such as:
 
@@ -313,7 +313,7 @@ cy.task('seedDatabase', null, { timeout: 20000 })
 
 A task must end within the `taskTimeout` or Cypress will fail the current test.
 
-### Tasks are merged automatically
+### Tasks are merged automatically {#Tasks-are-merged-automatically}
 
 Sometimes you might be using plugins that export their tasks for registration.
 Cypress automatically merges `on('task')` objects for you. For example if you
@@ -359,7 +359,7 @@ will overwrite the first one.
 
 :::
 
-### Reset timeout via `Cypress.config()`
+### Reset timeout via `Cypress.config()` {#Reset-timeout-via-Cypressconfig}
 
 You can change the timeout of `cy.task()` for the remainder of the tests by
 setting the new values for `taskTimeout` within
@@ -370,7 +370,7 @@ Cypress.config('taskTimeout', 30000)
 Cypress.config('taskTimeout') // => 30000
 ```
 
-### Set timeout in the test configuration
+### Set timeout in the test configuration {#Set-timeout-in-the-test-configuration}
 
 You can configure the `cy.task()` timeout within a suite or test by passing the
 new configuration value within the
@@ -393,7 +393,7 @@ describe('has data available from database', { taskTimeout: 90000 }, () => {
 })
 ```
 
-### Allows a single argument only
+### Allows a single argument only {#Allows-a-single-argument-only}
 
 The syntax `cy.task(name, arg, options)` only has place for a single argument to
 be passed from the test code to the plugins code. In the situations where you
@@ -467,7 +467,7 @@ on('task', {
 
 :::
 
-### Argument should be serializable
+### Argument should be serializable {#Argument-should-be-serializable}
 
 The argument `arg` sent via `cy.task(name, arg)` should be serializable; it
 cannot have circular dependencies (issue
@@ -501,23 +501,23 @@ on('task', {
 
 :::
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.task()` requires being chained off of `cy`.</li><li>`cy.task()`
 requires the task to eventually end.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.task()` will only run assertions you have chained once, and will
 not [retry](/guides/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.task()` can time out waiting for the task to end.
 
-## Command Log
+## Command Log {#Command-Log}
 
 This example uses the
 [Return number of files in the folder](#Return-number-of-files-in-the-folder)
@@ -540,13 +540,13 @@ the following:
 
 <DocsImage src="/img/api/task/console-shows-task-result.png" alt="Console Log task" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                     | Changes                   |
 | ------------------------------------------- | ------------------------- |
 | [3.0.0](/guides/references/changelog#3-0-0) | `cy.task()` command added |
 
-## See also
+## See also {#See-also}
 
 - [`cy.exec()`](/api/commands/exec)
 - [`cy.fixture()`](/api/commands/fixture)

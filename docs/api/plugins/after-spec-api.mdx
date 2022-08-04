@@ -5,7 +5,7 @@ title: After Spec API
 The `after:spec` event fires after a spec file is run. When running cypress via
 `cypress open`, the event will fire when the browser closes.
 
-## Syntax
+## Syntax {#Syntax}
 
 <WarningSetupNodeEvents />
 
@@ -45,13 +45,13 @@ details on the tests themselves.
 Results are only provided when running via `cypress run`. When running via
 `cypress open`, the results will be undefined.
 
-## Usage
+## Usage {#Usage}
 
 You can return a promise from the `after:spec` event handler and it will be
 awaited before Cypress proceeds with processing the spec's video or moving on to
 further specs if there are any.
 
-### Log the relative spec path to stdout after the spec is run
+### Log the relative spec path to stdout after the spec is run {#Log-the-relative-spec-path-to-stdout-after-the-spec-is-run}
 
 :::cypress-config-plugin-example
 
@@ -97,9 +97,9 @@ module.exports = (on, config) => {
 
 :::
 
-## Examples
+## Examples {#Examples}
 
-### Delete the recorded video if the spec passed
+### Delete the recorded video if the spec passed {#Delete-the-recorded-video-if-the-spec-passed}
 
 You can delete the recorded video for a spec when certain conditions are met.
 This will skip the compression and uploading of the video when recording to the
@@ -128,7 +128,7 @@ on('after:spec', (spec, results) => {
 
 :::
 
-### Delete the recorded video if no tests retried
+### Delete the recorded video if no tests retried {#Delete-the-recorded-video-if-no-tests-retried}
 
 You can delete the recorded video for a spec when certain conditions are met.
 This will skip the compression and uploading of the video when recording to the
@@ -163,7 +163,7 @@ on('after:spec', (spec, results) => {
 
 :::
 
-## See also
+## See also {#See-also}
 
 - [Before Spec API](/api/plugins/before-spec-api)
 - [Before Run API](/api/plugins/before-run-api)

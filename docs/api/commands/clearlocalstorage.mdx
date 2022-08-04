@@ -12,7 +12,7 @@ using it to clear localStorage inside a single test.
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.clearLocalStorage()
@@ -21,7 +21,7 @@ cy.clearLocalStorage(options)
 cy.clearLocalStorage(keys, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -29,7 +29,7 @@ cy.clearLocalStorage(keys, options)
 cy.clearLocalStorage() // clear all local storage
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> keys** **_(String, RegExp)_**
 
@@ -44,52 +44,52 @@ Pass in an options object to change the default behavior of
 | ------ | ------- | ---------------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `cy.clearLocalStorage()` yields
 `null`.</li><li>`cy.clearLocalStorage()` cannot be chained further.
 
-## Examples
+## Examples {#Examples}
 
-### No Args
+### No Args {#No-Args}
 
-#### Clear all localStorage
+#### Clear all localStorage {#Clear-all-localStorage}
 
 ```javascript
 cy.clearLocalStorage()
 ```
 
-### Specific Key
+### Specific Key {#Specific-Key}
 
-#### Clear localStorage with the key 'appName'
+#### Clear localStorage with the key 'appName' {#Clear-localStorage-with-the-key-appName}
 
 ```javascript
 cy.clearLocalStorage('appName')
 ```
 
-#### Clear all localStorage matching `/app-/` RegExp
+#### Clear all localStorage matching `/app-/` RegExp {#Clear-all-localStorage-matching-app--RegExp}
 
 ```javascript
 cy.clearLocalStorage(/app-/)
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.clearLocalStorage()` requires being chained off of
 `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.clearLocalStorage()` cannot have any assertions
 chained.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.clearLocalStorage()` cannot time out.
 
-## Command Log
+## Command Log {#Command-Log}
 
 ```javascript
 cy.clearLocalStorage(/prop1|2/).then((ls) => {
@@ -108,6 +108,6 @@ the following:
 
 <DocsImage src="/img/api/clearlocalstorage/local-storage-object-shown-in-console.png" alt="console.log for clearLocalStorage" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`cy.clearCookies()`](/api/commands/clearcookies)

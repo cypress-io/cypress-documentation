@@ -5,7 +5,7 @@ sidebar_position: 10
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - An overview of Continuous Integration
 - How to run Cypress tests in Continuous Integration
@@ -15,11 +15,11 @@ sidebar_position: 10
 
 :::
 
-## What is Continuous Integration?
+## What is Continuous Integration? {#What-is-Continuous-Integration}
 
 <DocsVideo src="https://youtube.com/embed/USX6AntcPyg"></DocsVideo>
 
-## Setting up CI
+## Setting up CI {#Setting-up-CI}
 
 <!-- textlint-disable -->
 
@@ -27,7 +27,7 @@ sidebar_position: 10
 
 <!-- textlint-enable -->
 
-### Basics
+### Basics {#Basics}
 
 Running Cypress in Continuous Integration is almost the same as running it
 locally in your terminal. You generally only need to do two things:
@@ -49,9 +49,9 @@ to refer to your CI provider's documentation to know where to add the commands
 to install and run Cypress. For more configuration examples check out our
 [examples](/guides/continuous-integration/ci-provider-examples).
 
-### Boot your server
+### Boot your server {#Boot-your-server}
 
-#### Challenges
+#### Challenges {#Challenges}
 
 Typically you will need to boot a local server prior to running Cypress. When
 you boot your web server, it runs as a **long running process** that will never
@@ -72,7 +72,7 @@ guarantee that when the next command runs (`cypress run`) that your web server
 is up and available. So your Cypress test may start and try to visit your local
 server before it is ready to be visited.
 
-#### Solutions
+#### Solutions {#Solutions}
 
 Luckily, there are some solutions for this. Instead of introducing arbitrary
 waits (like `sleep 20`) you can use a better option.
@@ -156,7 +156,7 @@ local certificate:
 }
 ```
 
-### Record tests
+### Record tests {#Record-tests}
 
 Cypress can record your tests and make the results available in the
 [Cypress Dashboard](/guides/dashboard/introduction), which is a service that
@@ -164,7 +164,7 @@ gives you access to recorded tests - typically when running Cypress tests from
 your [CI provider](/guides/continuous-integration/introduction). The Dashboard
 provides you insight into what happened when your tests ran.
 
-#### Recording tests allow you to:
+#### Recording tests allow you to: {#Recording-tests-allow-you-to}
 
 - See the number of failed, pending and passing tests.
 - Get the entire stack trace of failed tests.
@@ -174,7 +174,7 @@ provides you insight into what happened when your tests ran.
 - See which machines ran each test when
   [parallelized](/guides/guides/parallelization).
 
-#### To record tests:
+#### To record tests: {#To-record-tests}
 
 1. [Set up your project to record](/guides/dashboard/projects#Setup)
 2. [Pass the `--record` flag to `cypress run`](/guides/guides/command-line#cypress-run)
@@ -186,7 +186,7 @@ cypress run --record --key=abc123
 
 [Read the full guide on the Dashboard Service.](/guides/dashboard/introduction)
 
-### Run tests in parallel
+### Run tests in parallel {#Run-tests-in-parallel}
 
 Cypress can run tests in parallel across multiple machines.
 
@@ -203,7 +203,7 @@ cypress run --record --key=abc123 --parallel
 
 [Read the full guide on parallelization.](/guides/guides/parallelization)
 
-### Official Cypress Docker Images
+### Official Cypress Docker Images {#Official-Cypress-Docker-Images}
 
 We have [created](https://github.com/cypress-io/cypress-docker-images) an
 official [cypress/base](https://hub.docker.com/r/cypress/base/) container with
@@ -233,14 +233,14 @@ cypress.
 
 :::
 
-#### Docker images & CI examples
+#### Docker images & CI examples {#Docker-images--CI-examples}
 
 See our [examples](/examples/examples/docker) for additional information on our
 maintained images and configurations on several CI providers.
 
-## Advanced setup
+## Advanced setup {#Advanced-setup}
 
-### Machine requirements
+### Machine requirements {#Machine-requirements}
 
 Hardware requirements to run Cypress depend how much memory the browser, the
 application under test, and the server (if running it locally) need to run the
@@ -306,33 +306,33 @@ node -p 'os.cpus()'
 shorter ones, following
 [this example](https://glebbahmutov.com/blog/split-spec/).
 
-### Dependencies
+### Dependencies {#Dependencies}
 
 If you are not using one of the above CI providers then make sure your system
 has these dependencies installed.
 
-#### Linux
+#### Linux {#Linux}
 
-#### Ubuntu/Debian
+#### Ubuntu/Debian {#UbuntuDebian}
 
 ```shell
 apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 ```
 
-#### CentOS
+#### CentOS {#CentOS}
 
 ```shell
 yum install -y xorg-x11-server-Xvfb gtk2-devel gtk3-devel libnotify-devel GConf2 nss libXScrnSaver alsa-lib
 ```
 
-### Caching
+### Caching {#Caching}
 
 As of [Cypress version 3.0](/guides/references/changelog#3-0-0), Cypress
 downloads its binary to the global system cache - on linux that is
 `~/.cache/Cypress`. By ensuring this cache persists across builds you can save
 minutes off install time by preventing a large binary download.
 
-#### We recommend users:
+#### We recommend users: {#We-recommend-users}
 
 - Cache the `~/.cache` folder after running `npm install`, `yarn`,
   [`npm ci`](https://docs.npmjs.com/cli/ci) or equivalents as demonstrated in
@@ -362,11 +362,11 @@ minutes off install time by preventing a large binary download.
 [cypress-example-kitchensink](https://github.com/cypress-io/cypress-example-kitchensink#ci-status)
 repository.
 
-### Environment variables
+### Environment variables {#Environment-variables}
 
 You can set various environment variables to modify how Cypress runs.
 
-#### Configuration Values
+#### Configuration Values {#Configuration-Values}
 
 You can set any configuration value as an environment variable. This overrides
 values in the Cypress configuration.
@@ -418,7 +418,7 @@ Typically you'd set this inside of your CI provider.
   alt="Travis key environment variable"
 ></DocsImage>
 
-#### Git information
+#### Git information {#Git-information}
 
 Cypress uses the
 [@cypress/commit-info](https://github.com/cypress-io/commit-info) package to
@@ -450,7 +450,7 @@ the commit information is unavailable.
 DEBUG=commit-info,cypress:server:record
 ```
 
-#### Custom Environment Variables
+#### Custom Environment Variables {#Custom-Environment-Variables}
 
 You can also set custom environment variables for use in your tests. These
 enable your code to reference dynamic values.
@@ -476,7 +476,7 @@ Refer to the dedicated
 [Environment Variables Guide](/guides/guides/environment-variables) for more
 examples.
 
-### Module API
+### Module API {#Module-API}
 
 Oftentimes it can be less complex to programmatically control and boot your
 servers with a Node script.
@@ -505,9 +505,9 @@ return server.start().then(() => {
 node scripts/run-cypress-tests.js
 ```
 
-## Common problems and solutions
+## Common problems and solutions {#Common-problems-and-solutions}
 
-### Missing binary
+### Missing binary {#Missing-binary}
 
 When npm or yarn install the `cypress` package, a `postinstall` hook is executed
 that downloads the platform-specific Cypress binary. If the hook is skipped for
@@ -537,13 +537,13 @@ See
 for an example that runs the `npx cypress install` command to ensure the Cypress
 binary is always present before the tests begin.
 
-### In Docker
+### In Docker {#In-Docker}
 
 If you are running long runs on Docker, you need to set the `ipc` to `host`
 mode. [This issue](https://github.com/cypress-io/cypress/issues/350) describes
 exactly what to do.
 
-### Xvfb
+### Xvfb {#Xvfb}
 
 When running on Linux, Cypress needs an X11 server; otherwise it spawns its own
 X11 server during the test run. When running several Cypress instances in
@@ -596,7 +596,7 @@ crashing.
 
 :::
 
-### Running headless tests without Xvfb
+### Running headless tests without Xvfb {#Running-headless-tests-without-Xvfb}
 
 :::caution
 
@@ -620,7 +620,7 @@ Electron and cannot be opened without an X11 server.
 
 :::
 
-### Colors
+### Colors {#Colors}
 
 If you want colors to be disabled, you can pass the `NO_COLOR` environment
 variable to disable colors. You may want to do this if ASCII characters or
@@ -630,13 +630,13 @@ colors are not properly formatted in your CI.
 NO_COLOR=1 cypress run
 ```
 
-## Workshop
+## Workshop {#Workshop}
 
 Cypress team has created a full workshop showing how to run Cypress on popular
 CI providers. Find the workshop at
 [github.com/cypress-io/cypress-workshop-ci](https://github.com/cypress-io/cypress-workshop-ci).
 
-## See also
+## See also {#See-also}
 
 - [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app)
   runs parallelized CI jobs across multiple operating systems, browsers, and

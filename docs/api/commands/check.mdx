@@ -10,7 +10,7 @@ This element must be an `<input>` with type `checkbox` or `radio`.
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .check()
@@ -21,7 +21,7 @@ This element must be an `<input>` with type `checkbox` or `radio`.
 .check(values, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -37,7 +37,7 @@ cy.check('[type="checkbox"]') // Errors, cannot be chained off 'cy'
 cy.get('p:first').check() // Errors, '.get()' does not yield checkbox or radio
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> value** **_(String)_**
 
@@ -60,36 +60,36 @@ Pass in an options object to change the default behavior of `.check()`.
 | `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.check()` to resolve before [timing out](#Timeouts)                                                                              |
 | `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.check()` yields the same subject it was given from the previous
 command.
 
-## Examples
+## Examples {#Examples}
 
-### No Args
+### No Args {#No-Args}
 
-#### Check all checkboxes
+#### Check all checkboxes {#Check-all-checkboxes}
 
 ```javascript
 cy.get('[type="checkbox"]').check()
 ```
 
-#### Select all radios
+#### Select all radios {#Select-all-radios}
 
 ```javascript
 cy.get('[type="radio"]').check()
 ```
 
-#### Check the element with id of 'saveUserName'
+#### Check the element with id of 'saveUserName' {#Check-the-element-with-id-of-saveUserName}
 
 ```javascript
 cy.get('#saveUserName').check()
 ```
 
-### Value
+### Value {#Value}
 
-#### Select the radio with the value of 'US'
+#### Select the radio with the value of 'US' {#Select-the-radio-with-the-value-of-US}
 
 ```html
 <form>
@@ -104,9 +104,9 @@ cy.get('#saveUserName').check()
 cy.get('[type="radio"]').check('US')
 ```
 
-### Values
+### Values {#Values}
 
-#### Check the checkboxes with the values 'subscribe' and 'accept'
+#### Check the checkboxes with the values 'subscribe' and 'accept' {#Check-the-checkboxes-with-the-values-subscribe-and-accept}
 
 ```html
 <form>
@@ -121,9 +121,9 @@ cy.get('[type="radio"]').check('US')
 cy.get('form input').check(['subscribe', 'accept'])
 ```
 
-### Options
+### Options {#Options}
 
-#### Check an invisible checkbox
+#### Check an invisible checkbox {#Check-an-invisible-checkbox}
 
 You can ignore Cypress' default behavior of checking that the element is
 visible, clickable and not disabled by setting `force` to `true` in the options.
@@ -135,7 +135,7 @@ cy.get('.action-checkboxes')
   .should('be.checked') // Passes
 ```
 
-### Find checked option
+### Find checked option {#Find-checked-option}
 
 You can get the currently checked option using the jQuery's
 [:checked selector](https://api.jquery.com/checked-selector/).
@@ -152,37 +152,37 @@ You can get the currently checked option using the jQuery's
 cy.get('#pick-fruit :checked').should('be.checked').and('have.value', 'apple')
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Actionability
+### Actionability {#Actionability}
 
-#### The element must first reach actionability
+#### The element must first reach actionability {#The-element-must-first-reach-actionability}
 
 `.check()` is an "action command" that follows all the rules of
 [Actionability](/guides/core-concepts/interacting-with-elements).
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.check()` requires being chained off a command that yields DOM
 element(s).</li><li>`.check()` requires the element to have type `checkbox` or
 `radio`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.check()` will automatically wait for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.check()`
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.check()` can time out waiting for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.check()`
 can time out waiting for assertions you've added to pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_check the element with name of 'emailUser'_**
 
@@ -199,7 +199,7 @@ following:
 
 <DocsImage src="/img/api/check/console-showing-events-on-check.png" alt="console.log for check" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`.click()`](/api/commands/click)
 - [`.uncheck()`](/api/commands/uncheck)

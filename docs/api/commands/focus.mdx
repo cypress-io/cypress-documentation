@@ -4,14 +4,14 @@ title: focus
 
 Focus on a DOM element.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .focus()
 .focus(options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -26,7 +26,7 @@ cy.focus('#search') // Errors, cannot be chained off 'cy'
 cy.window().focus() // Errors, 'window' does not yield DOM element
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> options** **_(Object)_**
 
@@ -37,33 +37,33 @@ Pass in an options object to change the default behavior of `.focus()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.focus()` to resolve before [timing out](#Timeouts)                    |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.focus()` yields the same subject it was given from the previous
 command.
 
-## Examples
+## Examples {#Examples}
 
-### No Args
+### No Args {#No-Args}
 
-#### Focus on an input
+#### Focus on an input {#Focus-on-an-input}
 
 ```javascript
 cy.get('[type="input"]').focus()
 ```
 
-#### Focus, type, and blur a textarea
+#### Focus, type, and blur a textarea {#Focus-type-and-blur-a-textarea}
 
 ```javascript
 // yields the <textarea> for further chaining
 cy.get('textarea').focus().type('Nice Product!').blur()
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Actionability
+### Actionability {#Actionability}
 
-#### Focus is not an action command
+#### Focus is not an action command {#Focus-is-not-an-action-command}
 
 `.focus()` is not implemented like other action commands, and does not follow
 the same rules of
@@ -79,23 +79,23 @@ trying to test.
 If you want the other guarantees of waiting for an element to become actionable,
 you should use a different command like [`.click()`](/api/commands/click).
 
-### Blur Events
+### Blur Events {#Blur-Events}
 
-#### Cypress blurs other focused elements first
+#### Cypress blurs other focused elements first {#Cypress-blurs-other-focused-elements-first}
 
 If there is currently a different DOM element with focus, Cypress issues a
 `blur` event to that element before running the `.focus()` command.
 
-### Focusable
+### Focusable {#Focusable}
 
-#### Can only be called on a valid focusable element
+#### Can only be called on a valid focusable element {#Can-only-be-called-on-a-valid-focusable-element}
 
 Ensure the element you are trying to call `.focus()` on is a
 [focusable element](https://www.w3.org/TR/html5/editing.html#focusable).
 
-### Timeouts
+### Timeouts {#Timeouts}
 
-#### Can time out because your browser did not receive any focus events
+#### Can time out because your browser did not receive any focus events {#Can-time-out-because-your-browser-did-not-receive-any-focus-events}
 
 If you see this error, you may want to ensure that the main browser window is
 currently focused. This means not being focused in debugger or any other window
@@ -106,25 +106,25 @@ necessary to replicate what the browser does. Unfortunately the browser will
 still behave differently when not in focus - for instance it may throttle async
 events. Your best bet here is to keep Cypress focused when working on a test.
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.focus()` requires being chained off a command that yields DOM
 element(s).</li><li>`.focus()` requires the element to be able to receive
 focus.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.focus()` will automatically wait for assertions you have chained to
 pass
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.focus()` can time out waiting for assertions you've added to
 pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Focus the textarea_**
 
@@ -141,7 +141,7 @@ the following:
 
 <DocsImage src="/img/api/focus/console-log-textarea-that-was-focused-on.png" alt="console.log focus" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`.blur()`](/api/commands/blur)
 - [`.click()`](/api/commands/click)

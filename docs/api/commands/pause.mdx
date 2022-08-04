@@ -13,7 +13,7 @@ This does not set a `debugger` in your code, unlike
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .pause()
@@ -23,7 +23,7 @@ cy.pause()
 cy.pause(options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -32,7 +32,7 @@ cy.pause().getCookie('app') // Pause at the beginning of commands
 cy.get('nav').pause() // Pause after the 'get' commands yield
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> options** **_(Object)_**
 
@@ -42,16 +42,16 @@ Pass in an options object to change the default behavior of `.pause()`.
 | ------ | ------- | ---------------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.pause()` yields the same subject it was given from the previous
 command.
 
-## Examples
+## Examples {#Examples}
 
-### No Args
+### No Args {#No-Args}
 
-#### Pause after assertion
+#### Pause after assertion {#Pause-after-assertion}
 
 ```javascript
 cy.get('a')
@@ -61,26 +61,26 @@ cy.get('a')
 cy.get('button').should('not.be.disabled')
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.pause()` can be chained off of `cy` or off another
 command.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.pause()` is a utility command.</li><li>`.pause()` will not run
 assertions. Assertions will pass through as if this command did not
 exist.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.pause()` cannot time out.
 
-## Command Log
+## Command Log {#Command-Log}
 
-### Pause and step through each `.click()` command
+### Pause and step through each `.click()` command {#Pause-and-step-through-each-click-command}
 
 ```javascript
 cy.get('#action-canvas')
@@ -101,31 +101,31 @@ The commands above will display in the Command Log as:
 When clicking on "Next: 'click'" at the top of the Command Log, the Command Log
 will run only the next command and pause again.
 
-#### Click "Next"
+#### Click "Next" {#Click-Next}
 
 <DocsImage src="/img/api/pause/next-goes-on-to-next-command-during-pause.png" alt="Pause command after clicking next" ></DocsImage>
 
-#### Click "Next" again
+#### Click "Next" again {#Click-Next-again}
 
 <DocsImage src="/img/api/pause/continue-in-pause-command-just-like-debugger.png" alt="Continue to next command during pause" ></DocsImage>
 
-#### Click "Next" again
+#### Click "Next" again {#Click-Next-again-1}
 
 <DocsImage src="/img/api/pause/pause-goes-to-show-next-click.png" alt="Pause command" ></DocsImage>
 
-#### Click "Next" again
+#### Click "Next" again {#Click-Next-again-2}
 
 <DocsImage src="/img/api/pause/clicking-on-canvas-continues-as-we-click-next.png" alt="Pause command" ></DocsImage>
 
-#### Click "Next" again
+#### Click "Next" again {#Click-Next-again-3}
 
 <DocsImage src="/img/api/pause/last-next-click-before-out-test-is-finished.png" alt="Pause command" ></DocsImage>
 
-#### Click "Next" again, then 'Resume'
+#### Click "Next" again, then 'Resume' {#Click-Next-again-then-Resume}
 
 <DocsImage src="/img/api/pause/next-then-resume-shows-our-test-has-ended.png" alt="Pause command" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [Dashboard](https://on.cypress.io/dashboard)
 - [`cy.debug()`](/api/commands/debug)

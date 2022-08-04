@@ -4,7 +4,7 @@ title: Visual Testing
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - How visual testing complements functional testing
 - How to implement visual diffing yourself or using 3rd party service
@@ -12,7 +12,7 @@ title: Visual Testing
 
 :::
 
-## Functional vs. visual testing
+## Functional vs. visual testing {#Functional-vs-visual-testing}
 
 Cypress is a _functional_ test runner. It drives the web application the way a
 user would, and checks if the app _functions_ as expected: if the expected
@@ -108,19 +108,19 @@ mouse hover:
 
 <DocsImage src="/img/guides/visual-testing/diff-2.png" alt="Highlighted changes" ></DocsImage>
 
-## Tooling
+## Tooling {#Tooling}
 
 There are several published, open source plugins, listed in the
 [Visual Testing plugins](/plugins/directory#visual-testing) section, and several
 commercial companies have developed visual testing solutions on top of the
 Cypress App listed below.
 
-### Open source
+### Open source {#Open-source}
 
 Listed in the [Visual Testing plugins](/plugins/directory#Visual%20Testing)
 section.
 
-### Applitools
+### Applitools {#Applitools}
 
 First joint webinar with Applitools
 
@@ -151,7 +151,7 @@ Second joint webinar with Applitools with a focus on
 | [Webinar](https://applitools.com/blog/cypress-applitools-end-to-end-testing) | _Creating a Flawless User Experience, End-to-End, Functional to Visual – Practical Hands-on Session_, a webinar recorded together with Cypress and Applitools |
 | [Blog](https://glebbahmutov.com/blog/testing-a-chart/)                       | Testing a chart with Cypress and Applitools                                                                                                                   |
 
-### Percy
+### Percy {#Percy}
 
 <!-- textlint-disable -->
 
@@ -166,7 +166,7 @@ Second joint webinar with Applitools with a focus on
 
 :::info
 
-### <Icon name="graduation-cap" /> Real World Example <Badge type="success">New</Badge>
+### <Icon name="graduation-cap" /> Real World Example <Badge type="success">New</Badge> {#Icon-namegraduation-cap--Real-World-Example-Badge-typesuccessNewBadge}
 
 The Cypress
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses
@@ -189,7 +189,7 @@ to see these Percy and Cypress in action.
 | [Slides](https://slides.com/bahmutov/visual-testing-with-percy)                                                                         | The companion slides for the Cypress + Percy webinar                                                                            |
 | [Blog](https://glebbahmutov.com/blog/testing-visually/)                                                                                 | Testing how an application renders a drawing with Cypress and Percy                                                             |
 
-### Happo
+### Happo {#Happo}
 
 <!-- textlint-disable -->
 
@@ -209,7 +209,7 @@ to see these Percy and Cypress in action.
 | [Blog](https://www.cypress.io/blog/2020/05/27/webcast-recording-keep-your-ui-sharp/) | The companion blog for the Cypress + Happo webinar                                                                                          |
 | [Slides](https://cypress.slides.com/cypress-io/cypress-and-happo)                    | The companion slides for the Cypress + Happo webinar                                                                                        |
 
-### Do It Yourself
+### Do It Yourself {#Do-It-Yourself}
 
 Even if you decide to skip using a 3rd party image storage and comparison
 service, you can still perform visual testing. Follow these examples
@@ -229,11 +229,11 @@ become a chore when going with a DIY solution.
 
 :::
 
-## Best practices
+## Best practices {#Best-practices}
 
 As a general rule there are some best practices when visual testing.
 
-### Recognize the need for visual testing
+### Recognize the need for visual testing {#Recognize-the-need-for-visual-testing}
 
 **<Icon name="exclamation-triangle" color="red" /> assertions that verify
 style properties**
@@ -249,7 +249,7 @@ If your end-to-end tests become full of assertions checking visibility, color
 and other style properties, it might be time to start using visual diffing to
 verify the page appearance.
 
-### DOM state
+### DOM state {#DOM-state}
 
 :::tip
 
@@ -281,7 +281,7 @@ cy.contains('.todo-list li', 'write tests')
 cy.mySnapshotCommand()
 ```
 
-### Timestamps
+### Timestamps {#Timestamps}
 
 :::tip
 
@@ -302,7 +302,7 @@ cy.clock(now)
 cy.mySnapshotCommand()
 ```
 
-### Application state
+### Application state {#Application-state}
 
 :::tip
 
@@ -322,7 +322,7 @@ cy.wait('@getItems')
 cy.mySnapshotCommand()
 ```
 
-### Visual diff elements
+### Visual diff elements {#Visual-diff-elements}
 
 :::tip
 
@@ -334,7 +334,7 @@ diffing to check individual DOM elements rather than the entire page.
 Targeting specific DOM element will help avoid visual changes from component "X"
 breaking tests in other unrelated components.
 
-### Component testing
+### Component testing {#Component-testing}
 
 :::tip
 
@@ -348,7 +348,7 @@ browse [slides](https://slides.com/bahmutov/i-see-what-is-going-on), and watch
 the
 [companion videos](https://www.youtube.com/playlist?list=PLP9o9QNnQuAYhotnIDEUQNXuvXL7ZmlyZ).
 
-## See also
+## See also {#See-also}
 
 - [After Screenshot API](/api/plugins/after-screenshot-api)
 - [cy.screenshot()](/api/commands/screenshot)

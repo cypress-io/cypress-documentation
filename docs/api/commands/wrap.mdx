@@ -5,14 +5,14 @@ title: wrap
 Yield the object passed into `.wrap()`. If the object is a promise, yield its
 resolved value.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.wrap(subject)
 cy.wrap(subject, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -20,7 +20,7 @@ cy.wrap(subject, options)
 cy.wrap({ name: 'Jane Lane' })
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> subject** **_(Object)_**
 
@@ -35,15 +35,15 @@ Pass in an options object to change the default behavior of `cy.wrap()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.wrap()` to resolve before [timing out](#Timeouts)                   |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `cy.wrap()` 'yields the object it was called with'
 
-## Examples
+## Examples {#Examples}
 
-### Objects
+### Objects {#Objects}
 
-#### Invoke the function on the subject in wrap and return the new value
+#### Invoke the function on the subject in wrap and return the new value {#Invoke-the-function-on-the-subject-in-wrap-and-return-the-new-value}
 
 ```javascript
 const getName = () => {
@@ -53,9 +53,9 @@ const getName = () => {
 cy.wrap({ name: getName }).invoke('name').should('eq', 'Jane Lane') // true
 ```
 
-### Elements
+### Elements {#Elements}
 
-#### Wrap elements to continue executing commands
+#### Wrap elements to continue executing commands {#Wrap-elements-to-continue-executing-commands}
 
 ```javascript
 cy.get('form').within(($form) => {
@@ -65,7 +65,7 @@ cy.get('form').within(($form) => {
 })
 ```
 
-#### Conditionally wrap elements
+#### Conditionally wrap elements {#Conditionally-wrap-elements}
 
 ```javascript
 cy.get('button').then(($button) => {
@@ -80,7 +80,7 @@ cy.get('button').then(($button) => {
 })
 ```
 
-### Promises
+### Promises {#Promises}
 
 You can wrap promises returned by the application code. Cypress commands will
 automatically wait for the promise to resolve before continuing with the yielded
@@ -88,7 +88,7 @@ value to the next command or assertion. See the
 [Logging in using application code](/examples/examples/recipes#Logging-In)
 recipe for the full example.
 
-#### Simple example
+#### Simple example {#Simple-example}
 
 ```js
 const myPromise = new Promise((resolve, reject) => {
@@ -108,7 +108,7 @@ it('should wait for promises to resolve', () => {
 
 <DocsImage src="/img/api/wrap/cypress-wrapped-promise-waits-to-resolve.gif" alt="Wrap of promises" ></DocsImage>
 
-#### Application example <E2EOnlyBadge />
+#### Application example <E2EOnlyBadge /> {#Application-example-E2EOnlyBadge-}
 
 ```javascript
 // import application code for logging in
@@ -185,13 +185,13 @@ cy.get('some-submit-button')
   })
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.wrap()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.wrap()`, when its argument is a promise, will automatically wait
 until the promise resolves. If the promise is rejected, `cy.wrap()` will fail
@@ -199,12 +199,12 @@ the test.</li><li>`cy.wrap()` will automatically
 [retry](/guides/core-concepts/retry-ability) until all chained assertions have
 passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.wrap()` can time out waiting for assertions you've added to
 pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **Make assertions about object**
 
@@ -221,14 +221,14 @@ the following:
 
 <DocsImage src="/img/api/wrap/console-log-only-shows-yield-of-wrap.png" alt="Console Log wrap" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                     | Changes                                                                             |
 | ------------------------------------------- | ----------------------------------------------------------------------------------- |
 | [3.2.0](/guides/references/changelog#3-2-0) | Retry `cy.wrap()` if `undefined` when followed by [.should()](/api/commands/should) |
 | [0.4.5](/guides/references/changelog#0.4.5) | `cy.wrap()` command added                                                           |
 
-## See also
+## See also {#See-also}
 
 - [`.invoke()`](/api/commands/invoke)
 - [`.its()`](/api/commands/its)

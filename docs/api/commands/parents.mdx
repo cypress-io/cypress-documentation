@@ -15,7 +15,7 @@ The querying behavior of this command matches exactly how
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .parents()
@@ -24,7 +24,7 @@ The querying behavior of this command matches exactly how
 .parents(selector, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -39,7 +39,7 @@ cy.parents() // Errors, cannot be chained off 'cy'
 cy.clock().parents() // Errors, 'clock' does not yield DOM elements
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> selector** **_(String selector)_**
 
@@ -54,15 +54,15 @@ Pass in an options object to change the default behavior of `.parents()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.parents()` to resolve before [timing out](#Timeouts)                  |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.parents()` yields the new DOM element(s) it found.
 
-## Examples
+## Examples {#Examples}
 
-### No Args
+### No Args {#No-Args}
 
-#### Get the parents of the active li
+#### Get the parents of the active li {#Get-the-parents-of-the-active-li}
 
 ```html
 <ul class="main-nav">
@@ -83,23 +83,23 @@ Pass in an options object to change the default behavior of `.parents()`.
 cy.get('li.active').parents()
 ```
 
-### Selector
+### Selector {#Selector}
 
-#### Get the parents with class `main-nav` of the active li
+#### Get the parents with class `main-nav` of the active li {#Get-the-parents-with-class-main-nav-of-the-active-li}
 
 ```javascript
 // yields [.main-nav]
 cy.get('li.active').parents('.main-nav')
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.parents()` requires being chained off a command that yields DOM
 element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.parents()` will automatically
 [retry](/guides/core-concepts/retry-ability) until the element(s)
@@ -107,13 +107,13 @@ element(s).
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.parents()` can time out waiting for the element(s) to
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.parents()`
 can time out waiting for assertions you've added to pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Get the parents of the active `li`_**
 
@@ -128,7 +128,7 @@ outputs the following:
 
 <DocsImage src="/img/api/parents/parents-elements-displayed-in-devtools-console.png" alt="Console Log parents" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`.children()`](/api/commands/children)
 - [`.parent()`](/api/commands/parent)

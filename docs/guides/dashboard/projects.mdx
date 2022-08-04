@@ -9,7 +9,7 @@ You typically want to record when running tests in
 [Continuous Integration](/guides/continuous-integration/introduction), but you
 can also record your tests when running locally.
 
-## Setup
+## Setup {#Setup}
 
 :::info
 
@@ -21,7 +21,7 @@ Make sure you [install](/guides/getting-started/installing-cypress) and
 
 :::
 
-### Set up a project to record
+### Set up a project to record {#Set-up-a-project-to-record}
 
 1. Click on the **Runs** tab of your project within the
    [Cypress App](/guides/core-concepts/cypress-app).
@@ -114,17 +114,17 @@ the [Cypress App](/guides/core-concepts/cypress-app).
   alt="Runs List"
 ></DocsImage>
 
-## Identification
+## Identification {#Identification}
 
 Cypress uses your [projectId](#Project-ID) and [Record Key](#Record-key)
 together to uniquely identify projects.
 
-### Project ID
+### Project ID {#Project-ID}
 
 Once you set up your project to record, we generate a unique `projectId` for
 your project and automatically insert it into your Cypress configuration file.
 
-#### The `projectId` is a 6 character string in your Cypress configuration
+#### The `projectId` is a 6 character string in your Cypress configuration {#The-projectId-is-a-6-character-string-in-your-Cypress-configuration}
 
 :::cypress-config-example
 
@@ -150,7 +150,7 @@ for doing so depends on your system but could be something like:
 export CYPRESS_PROJECT_ID={projectId}
 ```
 
-### Record key
+### Record key {#Record-key}
 
 The record key is used to authenticate that your project is _allowed_ to record
 tests to the Dashboard Service. As long as your record key stays _private_,
@@ -190,7 +190,7 @@ more [here](/guides/continuous-integration/introduction#Environment-variables).
 Once you're set up to record test runs, we automatically generate a _Record Key_
 for the project.
 
-#### A record key is a GUID that looks like this
+#### A record key is a GUID that looks like this {#A-record-key-is-a-GUID-that-looks-like-this}
 
 ```text
 f4466038-70c2-4688-9ed9-106bf013cd73
@@ -212,12 +212,12 @@ App.
   alt="Record Key in Configuration Tab"
 ></DocsImage>
 
-## Record keys
+## Record keys {#Record-keys}
 
 See [Record key](#Record-key) for a full description of how the record keys are
 used.
 
-### Create new record key
+### Create new record key {#Create-new-record-key}
 
 1. Go to your organization's projects page.
 2. Select the project you want to change access to.
@@ -238,7 +238,7 @@ used.
 5. Click **Create New Key**. A new key will be automatically generated for your
    project.
 
-### Delete record key
+### Delete record key {#Delete-record-key}
 
 1. Go to your organization's projects page.
 2. Select the project you want to change access to.
@@ -258,9 +258,9 @@ used.
    ></DocsImage>
 5. Click **Delete** beside the record key you want to delete.
 
-## Parallelization settings
+## Parallelization settings {#Parallelization-settings}
 
-### Run completion delay
+### Run completion delay {#Run-completion-delay}
 
 You can edit the number of seconds that a run will wait for new groups to join
 before transitioning to 'completed'. See our
@@ -272,7 +272,7 @@ learn more.
   alt="Run completion delay settings"
 ></DocsImage>
 
-## GitHub Integration
+## GitHub Integration {#GitHub-Integration}
 
 You can integrate your project with GitHub and edit its settings from within the
 project settings page.
@@ -285,7 +285,7 @@ project settings page.
 See our [GitHub Integration guide](/guides/dashboard/github-integration) to
 learn more.
 
-## Slack Integration
+## Slack Integration {#Slack-Integration}
 
 You can integrate your project with Slack and edit its settings from within the
 project settings page.
@@ -298,12 +298,12 @@ project settings page.
 See our [Slack Integration guide](/guides/dashboard/slack-integration) to learn
 more.
 
-## README Badges
+## README Badges {#README-Badges}
 
 README badges allow you to increase visibility of your project's test status and
 test count to other developers viewing your project's README file.
 
-### Create a README badge
+### Create a README badge {#Create-a-README-badge}
 
 1. In your Cypress Dashboard account, select the project for which you'd like to
    create a README badge.
@@ -341,7 +341,7 @@ See also
 [Highlight your project's test status with Cypress README badges](https://www.cypress.io/blog/2020/09/02/highlight-your-projects-test-status-with-cypress-readme-badges/)
 announcement.
 
-## Access to Runs
+## Access to Runs {#Access-to-Runs}
 
 Visit your project settings to see who has access to your project's runs.
 
@@ -350,7 +350,7 @@ Visit your project settings to see who has access to your project's runs.
   alt="Visit project settings"
 ></DocsImage>
 
-### Public vs Private
+### Public vs Private {#Public-vs-Private}
 
 - **Public** means that anyone can see the recorded test runs for the project.
   It is similar to how public projects on GitHub, Travis CI, or CircleCI are
@@ -362,7 +362,7 @@ Visit your project settings to see who has access to your project's runs.
   runs. Even if someone knows your `projectId`, they will not have access to
   your runs unless you have invited them.
 
-### Change project access
+### Change project access {#Change-project-access}
 
 1. Go to your organization's projects page.
 2. Select the project you want to change access to.
@@ -382,9 +382,9 @@ Visit your project settings to see who has access to your project's runs.
      alt="access-to-runs"
    ></DocsImage>
 
-## Transfer ownership
+## Transfer ownership {#Transfer-ownership}
 
-### Transfer project to other user or organization
+### Transfer project to other user or organization {#Transfer-project-to-other-user-or-organization}
 
 You can transfer projects that you own to another
 [organization](/guides/dashboard/organizations) you are a part of or to another
@@ -414,7 +414,7 @@ user in the organization. Projects can only be transferred from the
      alt="Transfer Project dialog"
    ></DocsImage>
 
-### Cancel project transfer
+### Cancel project transfer {#Cancel-project-transfer}
 
 Upon transferring, you can cancel the transfer at any time by visiting the
 organization's projects and clicking **Cancel Transfer**.
@@ -424,7 +424,7 @@ organization's projects and clicking **Cancel Transfer**.
   alt="Cancel pending transfer of project"
 ></DocsImage>
 
-### Accept or reject transferred project
+### Accept or reject transferred project {#Accept-or-reject-transferred-project}
 
 When a project is transferred to you, you will receive an email notifying you.
 You will be able to accept or reject the transferred project by clicking the
@@ -440,7 +440,7 @@ notification in the sidebar and clicking 'Accept' or 'Reject'.
   alt="Accept or reject a transferred project"
 ></DocsImage>
 
-## Delete Project
+## Delete Project {#Delete-Project}
 
 You can delete projects you own. This will also delete all of their recorded
 test runs. Deleting projects can only be done from the

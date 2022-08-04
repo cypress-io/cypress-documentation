@@ -7,13 +7,13 @@ This is the internal API for controlling what gets printed to the Command Log.
 Useful when writing your own
 [custom commands](/api/cypress-api/custom-commands).
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 Cypress.log(options)
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> options** **_(Object)_**
 
@@ -27,7 +27,7 @@ Pass in an options object to `Cypress.log()`.
 | `message`      | `command args`        |
 | `consoleProps` | `function() {}`       |
 
-## Examples
+## Examples {#Examples}
 
 We want the Command Log and the console in the DevTools to log specific
 properties of our custom command.
@@ -62,6 +62,6 @@ properties shown on click of the command.
 
 <DocsImage src="/img/api/Cypress.log-custom-logging-and-console.png" alt="Custom logging of custom command" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`Commands`](/api/cypress-api/custom-commands)

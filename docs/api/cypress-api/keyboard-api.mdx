@@ -5,13 +5,13 @@ title: Cypress.Keyboard
 The Keyboard API allows you set the default values for how the
 [.type()](/api/commands/type) command is executed.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 Cypress.Keyboard.defaults(options)
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> options** **_(Object)_**
 
@@ -21,9 +21,9 @@ An object containing the following:
 | ---------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `keystrokeDelay` | `10`    | The delay, in milliseconds, between keystrokes while typing with [.type()](/api/commands/type). Set to `0` to remove the delay. Must be a non-negative number. |
 
-## Examples
+## Examples {#Examples}
 
-### Slow down typing by increasing the keystroke delay
+### Slow down typing by increasing the keystroke delay {#Slow-down-typing-by-increasing-the-keystroke-delay}
 
 ```javascript
 Cypress.Keyboard.defaults({
@@ -31,7 +31,7 @@ Cypress.Keyboard.defaults({
 })
 ```
 
-### Remove the keystroke delay
+### Remove the keystroke delay {#Remove-the-keystroke-delay}
 
 ```javascript
 Cypress.Keyboard.defaults({
@@ -39,13 +39,13 @@ Cypress.Keyboard.defaults({
 })
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Where to put Keyboard configuration
+### Where to put Keyboard configuration {#Where-to-put-Keyboard-configuration}
 
 <SupportFileConfiguration />
 
-### Set the keystroke delay in test configuration
+### Set the keystroke delay in test configuration {#Set-the-keystroke-delay-in-test-configuration}
 
 The keystroke delay can also be set via
 [test configuration](/guides/core-concepts/writing-and-organizing-tests#Test-Configuration),
@@ -68,6 +68,6 @@ describe('removes keystroke delay in all tests in this suite', { keystrokeDelay:
 }))
 ```
 
-## See also
+## See also {#See-also}
 
 - [`.type()`](/api/commands/type)

@@ -12,13 +12,13 @@ to override native time functions first.
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.tick(milliseconds, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -26,7 +26,7 @@ cy.tick(milliseconds, options)
 cy.tick(500)
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> milliseconds** **_(Number)_**
 
@@ -41,7 +41,7 @@ Pass in an options object to change the default behavior of `cy.tick()`.
 | ------ | ------- | ---------------------------------------------------------------------------------------- |
 | `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 `cy.tick()` yields a `clock` object with the following methods:
 
@@ -58,11 +58,11 @@ Pass in an options object to change the default behavior of `cy.tick()`.
 You can also access the `clock` object via `this.clock` in a
 [`.then()`](/api/commands/then) callback.
 
-## Examples
+## Examples {#Examples}
 
-### Milliseconds
+### Milliseconds {#Milliseconds}
 
-#### Create a clock and move time to trigger a `setTimeout`
+#### Create a clock and move time to trigger a `setTimeout` {#Create-a-clock-and-move-time-to-trigger-a-setTimeout}
 
 ```javascript
 // app code loaded by index.html
@@ -81,7 +81,7 @@ cy.tick(500)
 cy.get('#header').should('have.text', 'Hello, World')
 ```
 
-#### Using `cy.clock()` with `cy.tick()`
+#### Using `cy.clock()` with `cy.tick()` {#Using-cyclock-with-cytick}
 
 :::info
 
@@ -89,7 +89,7 @@ cy.get('#header').should('have.text', 'Hello, World')
 
 :::
 
-### Restore clock
+### Restore clock {#Restore-clock}
 
 You can restore the clock and allow your application to resume normally without
 manipulating native global functions related to time. This is automatically
@@ -116,24 +116,24 @@ You could also restore by using [.invoke()](/api/commands/invoke) to invoke the
 cy.clock().invoke('restore')
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.tick()` requires being chained off of `cy`.</li><li>`cy.tick()`
 requires that `cy.clock()` be called before it.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.tick()` is a utility command.</li><li>`cy.tick()` will not run
 assertions. Assertions will pass through as if this command did not
 exist.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.tick()` cannot time out.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Create a clock and tick it 1 second_**
 
@@ -151,14 +151,14 @@ the following:
 
 <DocsImage src="/img/api/tick/console-shows-same-clock-object-as-clock-command.png" alt="Console Log tick" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                       | Changes                           |
 | --------------------------------------------- | --------------------------------- |
 | [7.0.0](/guides/references/changelog#7-0-0)   | `log` option added to `cy.tick()` |
 | [0.18.8](/guides/references/changelog#0-18-8) | `cy.tick()` command added         |
 
-## See also
+## See also {#See-also}
 
 - [`cy.clock()`](/api/commands/clock)
 - [`cy.spy()`](/api/commands/spy)

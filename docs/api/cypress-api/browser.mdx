@@ -4,7 +4,7 @@ title: Cypress.browser
 
 `Cypress.browser` returns you properties of the browser.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 Cypress.browser // returns browser object
@@ -25,11 +25,11 @@ The object has the following properties:
 | `isHeadless`   | `boolean` | Whether the browser is running headlessly.                                  |
 | `isHeaded`     | `boolean` | Whether the browser displays headed.                                        |
 
-## Examples
+## Examples {#Examples}
 
-### Log browser information
+### Log browser information {#Log-browser-information}
 
-#### `Cypress.browser` returns browser object
+#### `Cypress.browser` returns browser object {#Cypressbrowser-returns-browser-object}
 
 ```js
 it('log browser info', () => {
@@ -49,9 +49,9 @@ it('log browser info', () => {
 })
 ```
 
-### Conditionals
+### Conditionals {#Conditionals}
 
-#### Check that Chrome specific styles are applied
+#### Check that Chrome specific styles are applied {#Check-that-Chrome-specific-styles-are-applied}
 
 ```css
 @media and (-webkit-min-device-pixel-ratio: 0) {
@@ -70,7 +70,7 @@ it('has correct Chrome specific css property', () => {
 })
 ```
 
-#### Screenshot only in headless browser
+#### Screenshot only in headless browser {#Screenshot-only-in-headless-browser}
 
 ```javascript
 Cypress.Commands.overwrite(
@@ -90,13 +90,13 @@ Cypress.Commands.overwrite(
 cy.screenshot()
 ```
 
-## History
+## History {#History}
 
 | Version                                     | Changes                      |
 | ------------------------------------------- | ---------------------------- |
 | [3.0.2](/guides/references/changelog#3-0-2) | `Cypress.browser` introduced |
 
-## See also
+## See also {#See-also}
 
 - [Browser Launch API](/api/plugins/browser-launch-api)
 - [Cross Browser Testing](/guides/guides/cross-browser-testing)

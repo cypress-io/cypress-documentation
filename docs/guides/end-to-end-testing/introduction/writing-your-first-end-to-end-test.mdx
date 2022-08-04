@@ -5,7 +5,7 @@ sidebar_position: 10
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - How to start testing a new project in Cypress.
 - What passing and failing tests look like.
@@ -15,7 +15,7 @@ sidebar_position: 10
 
 <DocsVideo src="https://vimeo.com/237115455"></DocsVideo>
 
-## Add a test file
+## Add a test file {#Add-a-test-file}
 
 Assuming you've successfully
 [installed the Cypress App](/guides/getting-started/installing-cypress) and
@@ -58,7 +58,7 @@ new spec and watch Cypress launch it. Spoiler alert: it's probably going to
 **FAIL**. Don't worry, it's just because you haven't set up Cypress to visit a
 page in your app yet! Let's try something different.
 
-## Write your first test
+## Write your first test {#Write-your-first-test}
 
 Now it's time to write your first test. We're going to:
 
@@ -161,7 +161,7 @@ Check out our
 
 :::
 
-## Write a _real_ test
+## Write a _real_ test {#Write-a-_real_-test}
 
 **A solid test generally covers 3 phases:**
 
@@ -182,7 +182,7 @@ commands:
 3. Interact with that element.
 4. Assert about the content on the page.
 
-### <Icon name="globe" /> Step 1: Visit a page
+### <Icon name="globe" /> Step 1: Visit a page {#Icon-nameglobe--Step-1-Visit-a-page}
 
 First, let's visit a web page. We will visit our
 [Kitchen Sink](/examples/examples/applications#Kitchen-Sink) application in this
@@ -241,7 +241,7 @@ for scripting live, production websites not under your control.
 
 :::
 
-### <Icon name="search" /> Step 2: Query for an element
+### <Icon name="search" /> Step 2: Query for an element {#Icon-namesearch--Step-2-Query-for-an-element}
 
 Now that we've got a page loaded, we need to take some action on it. Why don't
 we click a link on the page? Sounds easy enough, let's go look for one we
@@ -312,7 +312,7 @@ Before we add another command - let's get this test back to passing. Replace
   title="First test with cy.contains()"
 ></DocsVideo>
 
-### <Icon name="mouse-pointer" /> Step 3: Click an element
+### <Icon name="mouse-pointer" /> Step 3: Click an element {#Icon-namemouse-pointer--Step-3-Click-an-element}
 
 Ok, now we want to click on the link we found. How do we do that? Add a
 [.click()](/api/commands/click) command to the end of the previous command, like
@@ -345,7 +345,7 @@ Now we can assert something about this new page!
 
 <IntellisenseCodeCompletion />
 
-### <Icon name="check-square" /> Step 4: Make an assertion
+### <Icon name="check-square" /> Step 4: Make an assertion {#Icon-namecheck-square--Step-4-Make-an-assertion}
 
 Let's make an assertion about something on the new page we clicked into. Perhaps
 we'd like to make sure the new URL is the expected URL. We can do that by
@@ -368,7 +368,7 @@ describe("My First Test", () => {
 });
 ```
 
-#### Adding more commands and assertions
+#### Adding more commands and assertions {#Adding-more-commands-and-assertions}
 
 We are not limited to a single interaction and assertion in a given test. In
 fact, many interactions in an application may require multiple steps and are
@@ -484,7 +484,7 @@ These various timeouts are defined in the
 
 :::
 
-## Next steps
+## Next steps {#Next-steps}
 
 - Learn more about the [Cypress App](/guides/core-concepts/cypress-app) UI.
 - Start [testing your app](/guides/end-to-end-testing/testing-your-app).

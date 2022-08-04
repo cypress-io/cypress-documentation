@@ -11,7 +11,7 @@ subject, use [`.its()`](/api/commands/its).
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .invoke(functionName)
@@ -21,7 +21,7 @@ subject, use [`.its()`](/api/commands/its).
 
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -37,7 +37,7 @@ cy.invoke('convert') // Errors, cannot be chained off 'cy'
 cy.wrap({ name: 'Jane' }).invoke('name') // Errors, 'name' is not a function
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> functionName** **_(String, Number)_**
 
@@ -57,11 +57,11 @@ Pass in an options object to change the default behavior of `.invoke()`.
 Additional arguments to be given to the function call. There is no limit to the
 number of arguments.
 
-## Examples
+## Examples {#Examples}
 
-### Function
+### Function {#Function}
 
-#### Assert on a function's return value
+#### Assert on a function's return value {#Assert-on-a-functions-return-value}
 
 ```javascript
 const fn = () => {
@@ -71,7 +71,7 @@ const fn = () => {
 cy.wrap({ foo: fn }).invoke('foo').should('eq', 'bar') // true
 ```
 
-#### Use `.invoke()` to test HTML content
+#### Use `.invoke()` to test HTML content {#Use-invoke-to-test-HTML-content}
 
 :::info
 
@@ -79,7 +79,7 @@ cy.wrap({ foo: fn }).invoke('foo').should('eq', 'bar') // true
 
 :::
 
-#### Properties that are functions are invoked
+#### Properties that are functions are invoked {#Properties-that-are-functions-are-invoked}
 
 In the example below, we use `.invoke()` to force a hidden div to be
 `'display: block'` so we can interact with its children elements.
@@ -93,7 +93,7 @@ cy.get('div.container')
   .type('Cypress is great') // and type text
 ```
 
-#### Use `.invoke('show')` and `.invoke('trigger')`
+#### Use `.invoke('show')` and `.invoke('trigger')` {#Use-invokeshow-and-invoketrigger}
 
 :::info
 
@@ -101,9 +101,9 @@ cy.get('div.container')
 
 :::
 
-### Function with Arguments
+### Function with Arguments {#Function-with-Arguments}
 
-#### Send specific arguments to the function
+#### Send specific arguments to the function {#Send-specific-arguments-to-the-function}
 
 ```javascript
 const fn = (a, b, c) => {
@@ -116,7 +116,7 @@ cy.wrap({ sum: fn })
   .and('be.lt', 20) // true
 ```
 
-#### Use `cy.invoke('removeAttr', 'target')` to get around new tab
+#### Use `cy.invoke('removeAttr', 'target')` to get around new tab {#Use-cyinvokeremoveAttr-target-to-get-around-new-tab}
 
 :::info
 
@@ -124,13 +124,13 @@ cy.wrap({ sum: fn })
 
 :::
 
-#### Arguments are automatically forwarded to the function
+#### Arguments are automatically forwarded to the function {#Arguments-are-automatically-forwarded-to-the-function}
 
 ```javascript
 cy.get('img').invoke('attr', 'src').should('include', 'myLogo')
 ```
 
-### Arrays
+### Arrays {#Arrays}
 
 In the above examples, the subject was an object, but `cy.invoke` also works on
 arrays and allows using numerical index to pick a function to run.
@@ -143,7 +143,7 @@ const double = (n) => n * n
 cy.wrap([reverse, double]).invoke(1, 4).should('eq', 16)
 ```
 
-### Invoking an async function
+### Invoking an async function {#Invoking-an-async-function}
 
 In this example we have a little text input field and we invoke an async action
 which will disable this input field. `.invoke()` will then wait until the
@@ -190,7 +190,7 @@ the recipe:
 
 :::
 
-### jQuery method
+### jQuery method {#jQuery-method}
 
 If the parent command yields a jQuery element, we can invoke a jQuery method,
 like `attr`, `text`, or `val`. To confirm the element's `id` attribute for
@@ -213,11 +213,11 @@ The above example can be written simply as:
 cy.contains('The code example').should('have.attr', 'id', 'code-snippet')
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Third Party Plugins
+### Third Party Plugins {#Third-Party-Plugins}
 
-#### Using a Kendo DropDown
+#### Using a Kendo DropDown {#Using-a-Kendo-DropDown}
 
 If you are using `jQuery` then the `jQuery` wrapped elements will automatically
 have your 3rd party plugins available to be called.
@@ -241,7 +241,7 @@ cy.get('input')
   .should('match', /apples/)
 ```
 
-### Retries
+### Retries {#Retries}
 
 `.invoke()` automatically retries invoking the specified method until the
 returned value satisfies the attached assertions. The example below passes after
@@ -267,13 +267,13 @@ cy.wrap(english).invoke('greeting').should('equal', 'bye')
 
 <DocsImage src="/img/api/invoke/invoke-retries.gif" alt="Invoke retries example" width-600 ></DocsImage>
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.invoke()` requires being chained off a previous command.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.invoke()` will wait for the `function` to exist on the subject
 before running.</li><li>`.invoke()` will wait for the promise to resolve if the
@@ -281,13 +281,13 @@ invoked `function` returns a promise.</li><li>`.invoke()` will automatically
 [retry](/guides/core-concepts/retry-ability) until all chained assertions have
 passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.invoke()` can time out waiting for assertions you've added to
 pass.</li><li>`.invoke()` can time out waiting for a promise you've returned to
 resolve.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Invoke jQuery show method on element_**
 
@@ -307,14 +307,14 @@ following:
 
 <DocsImage src="/img/api/invoke/log-function-invoked-and-return.png" alt="Console Log for invoke" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                     | Changes                                                       |
 | ------------------------------------------- | ------------------------------------------------------------- |
 | [3.8.0](/guides/references/changelog#3-8-0) | Added support for `options` argument                          |
 | [3.7.0](/guides/references/changelog#3-7-0) | Added support for arguments of type Number for `functionName` |
 
-## See also
+## See also {#See-also}
 
 - [`.its()`](/api/commands/its)
 - [`.then()`](/api/commands/then)

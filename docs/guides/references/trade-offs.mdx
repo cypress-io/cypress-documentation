@@ -14,7 +14,7 @@ While at first it may seem like these are strict limitations in Cypress - we
 think you will soon realize that many of these boundaries are actually **good**
 to have. In a sense they prevent you from writing bad, slow, or flaky tests.
 
-#### Permanent trade-offs:
+#### Permanent trade-offs: {#Permanent-trade-offs}
 
 - Cypress is not a general purpose [automation tool](#Automation-restrictions).
 - Cypress commands run [inside of a browser](#Inside-the-browser).
@@ -23,7 +23,7 @@ to have. In a sense they prevent you from writing bad, slow, or flaky tests.
   [two browsers at the same time](#Multiple-browsers-open-at-the-same-time).
 - Each test is bound to a [single origin](#Same-origin).
 
-#### Temporary trade-offs:
+#### Temporary trade-offs: {#Temporary-trade-offs}
 
 We have [open issues](https://github.com/cypress-io/cypress/issues) where you
 can find a full list of things Cypress will eventually address, we wanted to
@@ -39,9 +39,9 @@ Many of these issues are currently being worked on or are on our
 - [Testing file uploads is application specific.](https://github.com/cypress-io/cypress/issues/170#issuecomment-340012621)
 - [iframe support is somewhat limited, but does work.](https://github.com/cypress-io/cypress/issues/136)
 
-## Permanent trade-offs
+## Permanent trade-offs {#Permanent-trade-offs-1}
 
-### Automation restrictions
+### Automation restrictions {#Automation-restrictions}
 
 Cypress is a specialized tool that does one thing really well: end-to-end
 testing web applications while they are under development. You should not use
@@ -59,7 +59,7 @@ The **sweet spot** of Cypress is to be used as a tool to test your own
 application **as you build it**. It is built for developers and QA engineers,
 not manual testers or exploratory testing.
 
-### Inside the browser
+### Inside the browser {#Inside-the-browser}
 
 In case you missed it before - Cypress tests run inside of the browser! This
 means we can do things nobody else can. There is no object serialization or JSON
@@ -94,7 +94,7 @@ the browser may take a little extra work.
 In the future we **do** have plans to release back end adapters for other
 languages.
 
-### Multiple tabs
+### Multiple tabs {#Multiple-tabs}
 
 Because Cypress runs in the browser, it will never have multi-tabs support. We
 do have access to the browser automation APIs to actually switch tabs, but there
@@ -122,7 +122,7 @@ This principle applies to everything in Cypress. Do not test what does not need
 testing. It is slow, brittle, and adds zero value. Only test the underlying
 thing that causes the behavior you care about testing.
 
-### Multiple browsers open at the same time
+### Multiple browsers open at the same time {#Multiple-browsers-open-at-the-same-time}
 
 Just like with multiple tabs - Cypress does not support controlling more than 1
 open browser at a time.
@@ -150,7 +150,7 @@ While outside the scope of this article, you could test a chat application using
 the following principles. Each one will incrementally introduce more
 collaboration:
 
-#### 1. Use only the browser:
+#### 1. Use only the browser: {#1-Use-only-the-browser}
 
 ```text
     ↓
@@ -168,7 +168,7 @@ disconnections, group chat, etc. Everything that happens inside of the browser
 can be fully tested. Requests leaving the browser could also be stubbed and you
 could assert that the request bodies were correct.
 
-#### 2. Stub the other connection:
+#### 2. Stub the other connection: {#2-Stub-the-other-connection}
 
 ```text
 server → browser
@@ -191,7 +191,7 @@ connection and yet still fulfills the bidirectional browser and server contract.
 This means you could also test edge cases (disconnections, etc) without actually
 handling real connections.
 
-#### 3: Introduce another connection:
+#### 3: Introduce another connection: {#3-Introduce-another-connection}
 
 ```text
 server → browser
@@ -268,7 +268,7 @@ This avoids ever needing a second open browser, but still gives you an
 end-to-end test that provides 100% confidence that the two clients can
 communicate with each other.
 
-### Same-origin
+### Same-origin {#Same-origin}
 
 <SingleDomainWorkaround />
 
@@ -333,7 +333,7 @@ it('navigates to new origin', () => {
 This limitation exists because Cypress switches to the domain under each
 specific test when it runs.
 
-#### Other workarounds
+#### Other workarounds {#Other-workarounds}
 
 There are other ways of testing the interaction between 2 superdomains. Because
 the browser has a natural security barrier called `origin policy` this means

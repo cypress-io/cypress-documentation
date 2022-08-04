@@ -34,7 +34,7 @@ or take as a starting point
 
 :::
 
-## Automatic Configuration (Recommended)
+## Automatic Configuration (Recommended) {#Automatic-Configuration-Recommended}
 
 When you launch Cypress for the first time in a project and select Component
 Testing, the app will automatically guide you and set up your configuration.
@@ -45,7 +45,7 @@ and bundlers.
 For first-time setup of React or Vue apps, we strongly recommend using automatic
 configuration to create all of the necessary configuration files.
 
-### Automatic Configuration Setup
+### Automatic Configuration Setup {#Automatic-Configuration-Setup}
 
 You should use the Cypress Launchpad to configure Component Testing for the
 first time. To start the setup wizard, simply open Cypress and choose "Component
@@ -74,11 +74,11 @@ and launch the Cypress App.
 
 <!-- TODO: start cypress, take a pic of Choose a Browser -->
 
-## Manual Setup
+## Manual Setup {#Manual-Setup}
 
 The rest of this guide covers configuring your project manually.
 
-### Prerequisites
+### Prerequisites {#Prerequisites}
 
 - [Install](/guides/getting-started/installing-cypress) Cypress.
 - Create an empty cypress.config.js (or .ts) file at the root of your project.
@@ -86,12 +86,12 @@ The rest of this guide covers configuring your project manually.
 
 Next, follow the instructions for your framework.
 
-## React
+## React {#React}
 
 For React apps, we have built-in support for Create React App, Next.js, Vite,
 and a custom webpack config.
 
-### Create React App (CRA)
+### Create React App (CRA) {#Create-React-App-CRA}
 
 To configure component testing for a React app that uses
 [Create React App](https://create-react-app.dev/), you will need to configure a
@@ -113,12 +113,12 @@ To configure component testing for a React app that uses
 
 :::
 
-#### Sample Create React Apps
+#### Sample Create React Apps {#Sample-Create-React-Apps}
 
 - [CRA 4 with JavaScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-cra4-js)
 - [CRA 5 with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-cra5-ts)
 
-### Next.js
+### Next.js {#Nextjs}
 
 :::caution
 
@@ -146,7 +146,7 @@ To configure component testing for a React app that uses
 
 :::
 
-#### Next.js Caveats
+#### Next.js Caveats {#Nextjs-Caveats}
 
 There are some specific caveats to consider when testing Next.js
 [Pages](https://nextjs.org/docs/basic-features/pages) in component testing.
@@ -163,11 +163,11 @@ end-to-end test would execute and test a page entirely.
 Because of this, we recommend using E2E Testing over Component Testing for
 Next.js pages and Component Testing for individual components in a Next.js app.
 
-#### Sample Next.js Apps
+#### Sample Next.js Apps {#Sample-Nextjs-Apps}
 
 - [Next.js 12 with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-next12-ts)
 
-### React with Vite
+### React with Vite {#React-with-Vite}
 
 To configure component testing for a React app that uses
 [Vite](https://vitejs.dev/), you will need to configure a `devServer` with a
@@ -188,11 +188,11 @@ To configure component testing for a React app that uses
 
 :::
 
-#### Sample React Vite Apps
+#### Sample React Vite Apps {#Sample-React-Vite-Apps}
 
 - [React Vite with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-vite-ts)
 
-### React with Webpack
+### React with Webpack {#React-with-Webpack}
 
 To configure component testing for a React app that uses a custom
 [Webpack](https://webpack.js.org/) config, you will need to configure a
@@ -223,7 +223,7 @@ If you don't provide a webpack config, Cypress will try to infer it. If Cypress
 cannot do so, or you want to make modifications to your config, you can specify
 it via the `webpackConfig` option.
 
-#### Sample React Webpack Apps
+#### Sample React Webpack Apps {#Sample-React-Webpack-Apps}
 
 - [React Webpack 5 with JavaScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-webpack5-js)
 
@@ -232,12 +232,12 @@ You can find an example React project that uses Webpack
 
 <!-- Couldn't simply call this next section "Vue" because using "## Vue" by itself killed the tabs in the code examples -->
 
-## Vue 2 & Vue 3
+## Vue 2 & Vue 3 {#Vue-2--Vue-3}
 
 For Vue apps, we have built-in support for Vue CLI, Nuxt, Vite, and a custom
 webpack config.
 
-### Vue CLI
+### Vue CLI {#Vue-CLI}
 
 To configure component testing for a Vue app that uses
 [Vue CLI](https://cli.vuejs.org/), you will need to configure a `devServer` with
@@ -269,12 +269,12 @@ for more information.
 
 :::
 
-#### Sample Vue CLI Apps
+#### Sample Vue CLI Apps {#Sample-Vue-CLI-Apps}
 
 - [Vue 3 CLI 5 with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue3-cli5-ts)
 - [Vue 2 CLI 4 with JavaScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue2-cli4-js)
 
-### Nuxt
+### Nuxt {#Nuxt}
 
 :::caution
 
@@ -301,11 +301,11 @@ To configure component testing for a Vue app that uses
 
 :::
 
-#### Nuxt Sample Apps
+#### Nuxt Sample Apps {#Nuxt-Sample-Apps}
 
 - [Vue 2 Nuxt 2 with JavaScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue2-nuxt2-js)
 
-### Vue with Vite
+### Vue with Vite {#Vue-with-Vite}
 
 To configure component testing for a Vue app that uses
 [Vite](https://vitejs.dev/), you will need to configure a `devServer` with a
@@ -326,11 +326,11 @@ To configure component testing for a Vue app that uses
 
 :::
 
-#### Vue Vite Sample Apps
+#### Vue Vite Sample Apps {#Vue-Vite-Sample-Apps}
 
 - [Vue 3 Vite with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue2-nuxt2-js)
 
-### Vue with Webpack
+### Vue with Webpack {#Vue-with-Webpack}
 
 To configure component testing for a Vue app that uses a custom
 [Webpack](https://webpack.js.org/) config, you will need to configure a
@@ -361,16 +361,16 @@ If you don't provide one, Cypress will try to infer your webpack config. If
 Cypress cannot or you want to make modifications to your config, you can pass it
 in manually via the `webpackConfig` option.
 
-#### Vue Webpack Sample Apps
+#### Vue Webpack Sample Apps {#Vue-Webpack-Sample-Apps}
 
 - [Vue 3 Webpack 5 with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue3-webpack-ts)
 
-## Component Testing Config
+## Component Testing Config {#Component-Testing-Config}
 
 Below are a few additional configuration values that are specific to component
 testing.
 
-### Custom Dev Server
+### Custom Dev Server {#Custom-Dev-Server}
 
 A custom function can be passed into the `devServer` option, which allows the
 use of other dev servers not provided by Cypress out of the box. These can be
@@ -401,7 +401,7 @@ resolves to a `devServer` instance.
 
 :::
 
-### Custom Index File
+### Custom Index File {#Custom-Index-File}
 
 By default, Cypress renders your components into an HTML file located at
 `cypress/support/component-index.html`.
@@ -425,7 +425,7 @@ in the [component config](/guides/references/configuration#component) options:
 
 :::
 
-### Spec Pattern for Component Tests
+### Spec Pattern for Component Tests {#Spec-Pattern-for-Component-Tests}
 
 By default, Cypress looks for spec files anywhere in your project with an
 extension of `.cy.js`, `.cy.jsx`, `.cy.ts`, or `.cy.tsx`. However, you can
@@ -446,7 +446,7 @@ subdirectories.
 
 :::
 
-### Additional Config
+### Additional Config {#Additional-Config}
 
 For more information on all the available configuration options, see the
 [configuration reference](/guides/references/configuration).

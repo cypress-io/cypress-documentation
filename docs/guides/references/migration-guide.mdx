@@ -4,13 +4,13 @@ title: Migration Guide
 
 <DocsVideo src="https://youtube.com/embed/mIqKNhLlPcU"></DocsVideo>
 
-## Migrating to Cypress version 10.0
+## Migrating to Cypress version 10.0 {#Migrating-to-Cypress-version-100}
 
 This guide details the changes and how to change your code to migrate to Cypress
 version 10.0.
 [See the full changelog for version 10.0](/guides/references/changelog#10-0-0).
 
-### Cypress App Changes
+### Cypress App Changes {#Cypress-App-Changes}
 
 - The “Run all specs” and “Run filtered specs” functionality have been removed.
 - The experimental "Cypress Studio" has been removed and will be
@@ -21,7 +21,7 @@ version 10.0.
   project specs list. In 10.0.0, you must pass `--browser` and `--e2e` or
   `--component` as well to launch Cypress directly to the specs list.
 
-### Configuration File Changes
+### Configuration File Changes {#Configuration-File-Changes}
 
 Cypress now supports JavaScript and TypeScript configuration files. By default,
 Cypress will automatically load a `cypress.config.js` or `cypress.config.ts`
@@ -68,7 +68,7 @@ Related notes:
 
 :::
 
-### Plugins File Removed
+### Plugins File Removed {#Plugins-File-Removed}
 
 Because Cypress now supports JavaScript and TypeScript configuration files, a
 separate "plugins file" (which used to default to `cypress/plugins/index.js`) is
@@ -107,9 +107,9 @@ on('<event>', (arg1, arg2) => {
 
 :::
 
-### Config Option Changes
+### Config Option Changes {#Config-Option-Changes}
 
-#### `baseUrl`
+#### `baseUrl` {#baseUrl}
 
 The `baseUrl` config option is no longer valid at the top level of the
 configuration, and may only be defined inside the
@@ -122,7 +122,7 @@ configuration will result in an error when Cypress loads.
 
 :::
 
-#### `componentFolder`
+#### `componentFolder` {#componentFolder}
 
 The `componentFolder` config option is no longer used, as it has been replaced
 by the `specPattern`
@@ -135,7 +135,7 @@ when Cypress loads.
 
 :::
 
-#### `devServer`
+#### `devServer` {#devServer}
 
 All functionality related to starting a component testing dev server previously
 in the `pluginsFile` has moved here. These options are not valid at the
@@ -310,7 +310,7 @@ module.exports = defineConfig({
 </TabItem>
 </Tabs>
 
-#### `experimentalStudio`
+#### `experimentalStudio` {#experimentalStudio}
 
 This option is no longer used. The experimental "Cypress Studio" has been
 removed and will be rethought/revisited in a later release.
@@ -322,7 +322,7 @@ when Cypress loads.
 
 :::
 
-#### `ignoreTestFiles` → `excludeSpecPattern`
+#### `ignoreTestFiles` → `excludeSpecPattern` {#ignoreTestFiles--excludeSpecPattern}
 
 The `ignoreTestFiles` option is no longer used, and has been replaced with the
 `excludeSpecPattern`
@@ -369,7 +369,7 @@ of the configuration will result in an error when Cypress loads.
 
 :::
 
-#### `integrationFolder`
+#### `integrationFolder` {#integrationFolder}
 
 This option is no longer used, as it has been replaced by the `specPattern`
 [testing-type specific option](/guides/references/configuration#Testing-Type-Specific-Options).
@@ -381,7 +381,7 @@ when Cypress loads.
 
 :::
 
-#### `pluginsFile`
+#### `pluginsFile` {#pluginsFile}
 
 This option is no longer used, and all plugin file functionality has moved into
 the [`setupNodeEvents()`](/guides/references/configuration#setupNodeEvents) and
@@ -396,7 +396,7 @@ Cypress loads.
 
 :::
 
-#### `setupNodeEvents()`
+#### `setupNodeEvents()` {#setupNodeEvents}
 
 All functionality related to setting up events or modifying the config,
 previously done in the plugins file, has moved into the `setupNodeEvents()`
@@ -471,7 +471,7 @@ import setupNodeEvents from './cypress/plugins/index.js'
 
 :::
 
-#### `slowTestThreshold`
+#### `slowTestThreshold` {#slowTestThreshold}
 
 The `slowTestThreshold` configuration option is no longer valid at the top level
 of the configuration, and is now a
@@ -487,7 +487,7 @@ configuration will result in an error when Cypress loads.
 
 :::
 
-#### `supportFile`
+#### `supportFile` {#supportFile}
 
 The `supportFile` configuration option is no longer valid at the top level of
 the configuration, and is now a
@@ -526,7 +526,7 @@ result in an error when Cypress loads.
 
 :::
 
-#### `testFiles` → `specPattern`
+#### `testFiles` → `specPattern` {#testFiles--specPattern}
 
 The `testFiles` option is no longer used, and has been replaced with the
 `specPattern` option, which must be defined inside the
@@ -556,7 +556,7 @@ configuration will result in an error when Cypress loads.
 
 :::
 
-### Updated Test File Locations
+### Updated Test File Locations {#Updated-Test-File-Locations}
 
 Previously, you could specify the locations of test files and folders using the
 configuration options: `componentFolder`, or `integrationFolder`, and
@@ -606,7 +606,7 @@ don't recommend doing it manually if you are a Dashboard user.
 
 :::
 
-### Generated Files
+### Generated Files {#Generated-Files}
 
 Generated screenshots and videos will still be created inside their respective
 [folders](/guides/references/configuration#Folders-Files) (`screenshotsFolder`,
@@ -644,21 +644,21 @@ Here are a few examples, assuming the value of `videosFolder` is
   - `cypress/videos/file/one.cy.js.mp4`
   - `cypress/videos/two.cy.js.mp4`
 
-### Command / Cypress API Changes
+### Command / Cypress API Changes {#Command--Cypress-API-Changes}
 
-#### `cy.mount()`
+#### `cy.mount()` {#cymount}
 
 If you set up your app using the automatic configuration wizard, a basic
 [`cy.mount()`](/api/commands/mount) command will be imported for you in your
 support file from one our supported frameworks.
 
-#### `Cypress.Commands.add()`
+#### `Cypress.Commands.add()` {#CypressCommandsadd}
 
 [`Cypress.Commands.add()`](/api/cypress-api/custom-commands) has been updated to
 allow the built-in “placeholder” custom `mount` and `hover` commands to be
 overwritten without needing to use `Cypress.Commands.overwrite()`.
 
-### Component Testing Changes
+### Component Testing Changes {#Component-Testing-Changes}
 
 Component Testing has moved from experimental to beta status in 10.0.0.
 
@@ -680,14 +680,14 @@ respectively.
 Any previous dev servers or mounting libraries from the `@cypress` namespace
 should be uninstalled in Cypress 10.
 
-### Code Coverage Plugin
+### Code Coverage Plugin {#Code-Coverage-Plugin}
 
 The [Cypress Code Coverage](https://github.com/cypress-io/code-coverage#readme)
 plugin will need to be updated to version >= 3.10 to work with Cypress 10. Using
 a previous version will result in an error when tests are ran with code coverage
 enabled.
 
-## Migrating from `cypress-file-upload` to [`.selectFile()`](/api/commands/selectfile)
+## Migrating from `cypress-file-upload` to [`.selectFile()`](/api/commands/selectfile) {#Migrating-from-cypress-file-upload-to-selectFile}
 
 Selecting files with input elements or dropping them over the page is available
 in Cypress 9.3. Read the [`.selectFile()` API docs](/api/commands/selectfile)
@@ -696,7 +696,7 @@ to change your test code to migrate from the
 [`cypress-file-upload`](https://github.com/abramenal/cypress-file-upload) plugin
 to `.selectFile()`.
 
-### Quick guide
+### Quick guide {#Quick-guide}
 
 The argument signature is different for Cypress' builtin `.selectFile()` command
 than the `.attachFile` command the `cypress-file-upload` plugin provided. You
@@ -729,12 +729,12 @@ In the second argument:
 - `force`: Works the same with `.selectFile()` as it did in
   `cypress-file-upload`. No change necessary.
 
-### Examples
+### Examples {#Examples}
 
 Below are several examples of migrating various commands from
 `cypress-file-upload` to the builtin `.selectFile()` command.
 
-#### Read and attach a fixture
+#### Read and attach a fixture {#Read-and-attach-a-fixture}
 
 <Badge type="danger">Before</Badge> Attaching a fixture from disk with `cypress-file-upload`
 
@@ -754,7 +754,7 @@ cy.fixture('myfixture.json', { encoding: null }).as('myfixture')
 cy.get('[data-cy="file-input"]').selectFile('@myfixture')
 ```
 
-#### Using drag-n-drop
+#### Using drag-n-drop {#Using-drag-n-drop}
 
 <Badge type="danger">Before</Badge> Dragging and dropping a file with `cypress-file-upload`
 
@@ -773,7 +773,7 @@ cy.get('[data-cy="dropzone"]').selectFile('fixtures/myfixture.json', {
 })
 ```
 
-#### Overriding the file name
+#### Overriding the file name {#Overriding-the-file-name}
 
 <Badge type="danger">Before</Badge> Dragging and dropping a file with `cypress-file-upload`
 
@@ -794,7 +794,7 @@ cy.get('[data-cy="dropzone"]').selectFile({
 })
 ```
 
-#### Working with file contents
+#### Working with file contents {#Working-with-file-contents}
 
 <Badge type="danger">Before</Badge> Working with file contents before using using
 `cypress-file-upload`
@@ -842,7 +842,7 @@ cy.fixture(special, { encoding: null })
 cy.get('[data-cy="file-input"]').selectFile('@special')
 ```
 
-#### Specifying a custom mimeType
+#### Specifying a custom mimeType {#Specifying-a-custom-mimeType}
 
 <Badge type="danger">Before</Badge> Specifying the MIME type with `cypress-file-upload`
 
@@ -862,12 +862,12 @@ cy.get('[data-cy="dropzone"]').selectFile({
 })
 ```
 
-## Migrating to Cypress 8.0
+## Migrating to Cypress 8.0 {#Migrating-to-Cypress-80}
 
 This guide details the changes and how to change your code to migrate to Cypress
 8.0. [See the full changelog for 8.0](/guides/references/changelog#8-0-0).
 
-### `cypress run` runs all browsers `--headless`
+### `cypress run` runs all browsers `--headless` {#cypress-run-runs-all-browsers---headless}
 
 When running `cypress run` previous to 8.0, some browsers would launch headed
 while others were launched headless by default. In 8.0, we've normalized all
@@ -910,7 +910,7 @@ cypress run --browser=chrome
 cypress run --browser=firefox
 ```
 
-### Default screen size during `--headless`
+### Default screen size during `--headless` {#Default-screen-size-during---headless}
 
 The default screen size when running a headless browser has been reverted back
 to 1280x720 pixels. If you have any code in the
@@ -951,17 +951,17 @@ module.exports = (on, config) => {
 }
 ```
 
-## Migrating to Cypress 7.0
+## Migrating to Cypress 7.0 {#Migrating-to-Cypress-70}
 
 This guide details the changes and how to change your code to migrate to Cypress
 7.0. [See the full changelog for 7.0](/guides/references/changelog#7-0-0).
 
-### [`cy.intercept()`][intercept] changes
+### [`cy.intercept()`][intercept] changes {#cyinterceptintercept-changes}
 
 [Cypress 7.0](/guides/references/changelog#7-0-0) comes with some breaking
 changes to [`cy.intercept()`][intercept]:
 
-#### Handler ordering is reversed
+#### Handler ordering is reversed {#Handler-ordering-is-reversed}
 
 Previous to Cypress 7.0, [`cy.intercept()`][intercept] handlers were run in the
 order that they are defined, stopping after the first handler to call
@@ -1000,7 +1000,7 @@ cy.intercept(url, (req) => {
 
 [Read more about the `cy.intercept()` interception lifecycle.](/api/commands/intercept#Interception-lifecycle)
 
-#### URL matching is stricter
+#### URL matching is stricter {#URL-matching-is-stricter}
 
 Before Cypress 7.0, [`cy.intercept()`][intercept] would match URLs against
 strings by using `minimatch`, substring match, or by equality.
@@ -1038,7 +1038,7 @@ Additionally, the `matchUrlAgainstPath` `RouteMatcher` option that was added in
 Cypress 6.2.0 has been removed in Cypress 7.0. It can be safely removed from
 tests.
 
-#### Deprecated `cy.route2()` command removed
+#### Deprecated `cy.route2()` command removed {#Deprecated-cyroute2-command-removed}
 
 `cy.route2()` was the original name for `cy.intercept()` during the experimental
 phase of the feature. It was deprecated in Cypress 6.0. In Cypress 7.0, it has
@@ -1057,7 +1057,7 @@ cy.route2('/widgets/*', { fixture: 'widget.json' }).as('widget')
 cy.intercept('/widgets/*', { fixture: 'widget.json' }).as('widget')
 ```
 
-#### `res.delay()` and `res.throttle()` have been renamed
+#### `res.delay()` and `res.throttle()` have been renamed {#resdelay-and-resthrottle-have-been-renamed}
 
 The `res.delay()` and `res.throttle()` functions that exist on responses yielded
 to response handlers have been renamed.
@@ -1088,7 +1088,7 @@ cy.intercept('/slow', (req) => {
 
 [Read more about available functions on `res`.](/api/commands/intercept#intercepted-response)
 
-#### Falsy values are no longer dropped in `StaticResponse` bodies
+#### Falsy values are no longer dropped in `StaticResponse` bodies {#Falsy-values-are-no-longer-dropped-in-StaticResponse-bodies}
 
 Previously, falsy values supplied as the `body` of a `StaticResponse` would get
 dropped (the same as if no body was supplied). Now, the bodies are properly
@@ -1108,7 +1108,7 @@ cy.intercept('/does-it-exist', { body: false })
 // Requests to `/does-it-exist` receive a response body of `false`
 ```
 
-#### Errors thrown by request and response handlers are no longer wrapped
+#### Errors thrown by request and response handlers are no longer wrapped {#Errors-thrown-by-request-and-response-handlers-are-no-longer-wrapped}
 
 Previously, errors thrown inside of `req` and `res` handlers would be wrapped by
 a `CypressError`. In 7.0.0, errors thrown inside of these handlers are not
@@ -1117,7 +1117,7 @@ wrapped before failing the test.
 This should only affect users who are explicitly asserting on global errors. See
 [#15189](https://github.com/cypress-io/cypress/issues/15189) for more details.
 
-### Component Testing
+### Component Testing {#Component-Testing}
 
 In 7.0, component testing is no longer experimental. Cypress now ships with a
 dedicated component test runner with a new UI and dedicated commands to launch
@@ -1133,7 +1133,7 @@ The migration guide contains the following steps:
 4. [Use CLI commands to launch](/guides/references/migration-guide#4-Use-CLI-commands-to-launch)
 5. [Update the support file (optionally)](/guides/references/migration-guide#5-Update-the-support-file-optionally)
 
-#### 1. Remove `experimentalComponentTesting` config
+#### 1. Remove `experimentalComponentTesting` config {#1-Remove-experimentalComponentTesting-config}
 
 The `experimentalComponentTesting` configuration is no longer needed to run
 component tests. Remove this flag in order to run Cypress tests without
@@ -1159,7 +1159,7 @@ for component testing
 }
 ```
 
-#### 2. Install component testing dependencies
+#### 2. Install component testing dependencies {#2-Install-component-testing-dependencies}
 
 The Component Test Runner requires the following dependencies:
 
@@ -1209,7 +1209,7 @@ npm i cypress @cypress/vue@next @cypress/webpack-dev-server -D
 npm i cypress @cypress/vue @cypress/webpack-dev-server -D
 ```
 
-#### 3. Update plugins file to use `dev-server:start`
+#### 3. Update plugins file to use `dev-server:start` {#3-Update-plugins-file-to-use-dev-serverstart}
 
 **Re-using a project's local development server instead of file preprocessors**
 
@@ -1324,7 +1324,7 @@ module.exports = (on, config) => {
 }
 ```
 
-#### 4. Use CLI commands to launch
+#### 4. Use CLI commands to launch {#4-Use-CLI-commands-to-launch}
 
 To run your component tests you _must_ use the dedicated component testing
 subcommands.
@@ -1362,7 +1362,7 @@ cypress open
 cypress run
 ```
 
-#### 5. Update the support file (optionally)
+#### 5. Update the support file (optionally) {#5-Update-the-support-file-optionally}
 
 Previously, a support file was required to set up the component testing target
 node. This is no longer necessary.
@@ -1381,7 +1381,7 @@ from [@cypress/react](https://www.npmjs.com/package/@cypress/react)
 import '@cypress/react/hooks'
 ```
 
-#### Expanded stylesheet support
+#### Expanded stylesheet support {#Expanded-stylesheet-support}
 
 Stylesheets are now bundled and imported within spec and support files.
 Previously, many of `mount`'s mounting options such as `stylesheets`,
@@ -1431,13 +1431,13 @@ it('renders a Button', () => {
 })
 ```
 
-#### Desktop GUI no longer displays component tests
+#### Desktop GUI no longer displays component tests {#Desktop-GUI-no-longer-displays-component-tests}
 
 Previously, the Desktop GUI displayed _both_ end-to-end and component tests.
 Now, component tests are only displayed when launching via the component
 testing-specific subcommands. `cypress open-ct` (or `run-ct` in CI)
 
-#### Executing all or some component tests
+#### Executing all or some component tests {#Executing-all-or-some-component-tests}
 
 In 6.X, the Desktop GUI had support for finding and executing a subset of
 component tests. In 7.0, this is possible with the `--headed` command and a spec
@@ -1447,7 +1447,7 @@ glob, like so:
 cypress run-ct --headed --spec **/some-folder/*spec.*
 ```
 
-#### Coverage
+#### Coverage {#Coverage}
 
 Previously, the [`@cypress/react`](https://www.npmjs.com/package/@cypress/vue)
 4.X package embedded code coverage in your tests automatically.
@@ -1456,14 +1456,14 @@ If you still wish to record code coverage in your tests, you must manually
 install it. Please see our [code coverage guide](/guides/tooling/code-coverage)
 for the latest steps.
 
-#### cypress-react-selector
+#### cypress-react-selector {#cypress-react-selector}
 
 If you use `cy.react()` in your tests, you must manually install
 [`cypress-react-selector`](https://www.npmjs.com/package/cypress-react-selector)
 with `npm i cypress-react-selector -D`. You do not need to update your support
 file.
 
-#### HTML Side effects
+#### HTML Side effects {#HTML-Side-effects}
 
 As of 7.0, we only clean up components mounted by Cypress via
 [`@cypress/react`](https://www.npmjs.com/package/@cypress/react) or
@@ -1528,7 +1528,7 @@ describe('Component teardown behavior', () => {
 })
 ```
 
-#### Legacy `cypress-react-unit-test` and `cypress-vue-unit-test` packages
+#### Legacy `cypress-react-unit-test` and `cypress-vue-unit-test` packages {#Legacy-cypress-react-unit-test-and-cypress-vue-unit-test-packages}
 
 For users upgrading from
 [`cypress-react-unit-tests`](https://www.npmjs.com/package/cypress-react-unit-test)
@@ -1539,7 +1539,7 @@ please update all references to use
 [`@cypress/vue`](https://www.npmjs.com/package/@cypress/vue). These packages
 have been deprecated and moved to the Cypress scope on npm.
 
-### Uncaught exception and unhandled rejections
+### Uncaught exception and unhandled rejections {#Uncaught-exception-and-unhandled-rejections}
 
 In 7.0, Cypress now fails tests in more situations where there is an uncaught
 exception and also if there is an unhandled promise rejection in the application
@@ -1548,7 +1548,7 @@ under test.
 You can ignore these situations and not fail the Cypress test with the code
 below.
 
-#### Turn off all uncaught exception handling
+#### Turn off all uncaught exception handling {#Turn-off-all-uncaught-exception-handling}
 
 ```javascript
 Cypress.on('uncaught:exception', (err, runnable) => {
@@ -1558,7 +1558,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 })
 ```
 
-#### Turn off uncaught exception handling unhandled promise rejections
+#### Turn off uncaught exception handling unhandled promise rejections {#Turn-off-uncaught-exception-handling-unhandled-promise-rejections}
 
 ```javascript
 Cypress.on('uncaught:exception', (err, runnable, promise) => {
@@ -1573,7 +1573,7 @@ Cypress.on('uncaught:exception', (err, runnable, promise) => {
 })
 ```
 
-### Node.js 12+ support
+### Node.js 12+ support {#Nodejs-12-support}
 
 Cypress comes bundled with its own
 [Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version).
@@ -1586,7 +1586,7 @@ end of life on June 1, 2019.
 versions will no longer be supported when installing Cypress. The minimum
 Node.js version supported to install Cypress is Node.js 12 or Node.js 14+.
 
-## Migrating `cy.route()` to [`cy.intercept()`][intercept]
+## Migrating `cy.route()` to [`cy.intercept()`][intercept] {#Migrating-cyroute-to-cyinterceptintercept}
 
 This guide details how to change your test code to migrate from `cy.route()` to
 [`cy.intercept()`][intercept]. `cy.server()` and `cy.route()` are deprecated in
@@ -1595,7 +1595,7 @@ will be removed.
 
 Please also refer to the full documentation for [cy.intercept()][intercept].
 
-### Match simple route
+### Match simple route {#Match-simple-route}
 
 In many use cases, you can replace `cy.route()` with [cy.intercept()][intercept]
 and remove the call to `cy.server()` (which is no longer necessary).
@@ -1619,7 +1619,7 @@ cy.intercept('POST', '/project').as('createProject')
 cy.intercept('PATCH', '/projects/*').as('updateProject')
 ```
 
-### Match against `url` and `path`
+### Match against `url` and `path` {#Match-against-url-and-path}
 
 The `url` argument to [cy.intercept()][intercept] matches against the full url,
 as opposed to the `url` or `path` in `cy.route()`. If you're using the `url`
@@ -1654,7 +1654,7 @@ cy.intercept({
 }).as('getUsers')
 ```
 
-### `cy.wait()` object
+### `cy.wait()` object {#cywait-object}
 
 The object returned by `cy.wait()` is different from intercepted HTTP requests
 using [`cy.intercept()`][intercept] than the object returned from an awaited
@@ -1686,7 +1686,7 @@ cy.wait('@createUser').then(({ request, response }) => {
 })
 ```
 
-### Fixtures
+### Fixtures {#Fixtures}
 
 You can stub requests and response with fixture data by defining a `fixture`
 property in the `routeHandler` argument for [`cy.intercept()`][intercept].
@@ -1707,7 +1707,7 @@ cy.intercept('GET', '/projects', {
 })
 ```
 
-### Override intercepts
+### Override intercepts {#Override-intercepts}
 
 As of 7.0, newer intercepts are called before older intercepts, allowing users
 to override intercepts.
@@ -1716,12 +1716,12 @@ to override intercepts.
 Before 7.0, intercepts could not be overridden. See
 [#9302](https://github.com/cypress-io/cypress/issues/9302) for more details.
 
-## Migrating to Cypress 6.0
+## Migrating to Cypress 6.0 {#Migrating-to-Cypress-60}
 
 This guide details the changes and how to change your code to migrate to Cypress
 6.0. [See the full changelog for 6.0](/guides/references/changelog#6-0-0).
 
-### Non-existent element assertions
+### Non-existent element assertions {#Non-existent-element-assertions}
 
 :::info
 
@@ -1764,7 +1764,7 @@ element doesn't exist in the DOM.
   alt="non-existent element in 6.0"
 ></DocsImage>
 
-#### Assertions on non-existent elements
+#### Assertions on non-existent elements {#Assertions-on-non-existent-elements}
 
 This fix may cause some breaking changes in your tests if you are relying on
 assertions such as `not.be.visible` or `not.contains` to test that the DOM
@@ -1794,7 +1794,7 @@ it('test', () => {
 })
 ```
 
-### Opacity visibility
+### Opacity visibility {#Opacity-visibility}
 
 DOM elements with `opacity: 0` style are no longer considered to be visible.
 This includes elements with an ancestor that has `opacity: 0` since a child
@@ -1807,7 +1807,7 @@ and
 used to interact with the element will perform the action. This matches
 browser's implementation on how they regard elements with `opacity: 0`.
 
-#### Assert visibility of `opacity: 0` element
+#### Assert visibility of `opacity: 0` element {#Assert-visibility-of-opacity-0-element}
 
 <Badge type="danger">Before</Badge> Failed assertion that `opacity: 0` element is
 not visible.
@@ -1831,7 +1831,7 @@ it('test', () => {
 })
 ```
 
-#### Perform actions on `opacity: 0` element
+#### Perform actions on `opacity: 0` element {#Perform-actions-on-opacity-0-element}
 
 In all versions of Cypress, you can interact with elements that have
 `opacity: 0` style.
@@ -1846,7 +1846,7 @@ it('test', () => {
 })
 ```
 
-### `cy.wait(alias)` type
+### `cy.wait(alias)` type {#cywaitalias-type}
 
 [cy.route()](/api/commands/route) is deprecated in 6.0.0. We encourage the use
 of [cy.intercept()][intercept] instead. Due to this deprecation, the type
@@ -1859,7 +1859,7 @@ would yield an object of type `WaitXHR`.
 will yield an object of type `Interception`. This matches the new interception object
 type used for [cy.intercept()][intercept].
 
-#### Restore old behavior
+#### Restore old behavior {#Restore-old-behavior}
 
 If you need to restore the type behavior prior to 6.0.0 for
 [cy.wait(alias)](/api/commands/wait), you can declare a global override for
@@ -1875,7 +1875,7 @@ declare global {
 }
 ```
 
-### `—disable-dev-shm-usage`
+### `—disable-dev-shm-usage` {#disable-dev-shm-usage}
 
 We now pass `—disable-dev-shm-usage` to the Chrome browser flags by default. If
 you're passing this flag in your `plugins` file, you can now remove this code.
@@ -1902,17 +1902,17 @@ module.exports = (on, config) => {
 module.exports = (on, config) => {}
 ```
 
-#### Restore old behavior
+#### Restore old behavior {#Restore-old-behavior-1}
 
 If you need to remove the flag in 6.0.0+, you can follow the workaround
 documented here: [#9242](https://github.com/cypress-io/cypress/issues/9242).
 
-## Migrating to Cypress 5.0
+## Migrating to Cypress 5.0 {#Migrating-to-Cypress-50}
 
 This guide details the changes and how to change your code to migrate to Cypress
 5.0. [See the full changelog for 5.0](/guides/references/changelog#5-0-0).
 
-### Tests retries
+### Tests retries {#Tests-retries}
 
 Test retries are available in Cypress 5.0. This means that tests can be re-run a
 number of times before potentially being marked as a failed test. Read the
@@ -1931,7 +1931,7 @@ guidance below on how to migrate from the
 [`cypress-plugin-retries`](https://github.com/Bkucera/cypress-plugin-retries)
 plugin to Cypress's built-in test retries.
 
-#### Configure test retries via the CLI
+#### Configure test retries via the CLI {#Configure-test-retries-via-the-CLI}
 
 <Badge type="danger">Before</Badge> Setting retries with `cypress-plugin-retries`
 via env vars
@@ -1946,7 +1946,7 @@ CYPRESS_RETRIES=2 cypress run
 CYPRESS_RETRIES=2 cypress run
 ```
 
-#### Configure test retries in the configuration file
+#### Configure test retries in the configuration file {#Configure-test-retries-in-the-configuration-file}
 
 <Badge type="danger">Before</Badge> Setting retries with `cypress-plugin-retries`
 via configuration
@@ -1981,7 +1981,7 @@ via configuration
 }
 ```
 
-#### Configure test retries per test
+#### Configure test retries per test {#Configure-test-retries-per-test}
 
 <Badge type="danger">Before</Badge> Setting retries with `cypress-plugin-retries`
 via the test
@@ -2027,7 +2027,7 @@ it(
 )
 ```
 
-### Module API results
+### Module API results {#Module-API-results}
 
 To more accurately reflect result data for runs with
 [test retries](/guides/guides/test-retries), the structure of each run's `runs`
@@ -2138,7 +2138,7 @@ result of each test retry.
 }
 ```
 
-### Cookies `whitelist` option renamed
+### Cookies `whitelist` option renamed {#Cookies-whitelist-option-renamed}
 
 The [Cypress.Cookies.defaults()](/api/cypress-api/cookies) `whitelist` option
 has been renamed to `preserve` to more closely reflect its behavior.
@@ -2159,7 +2159,7 @@ Cypress.Cookies.defaults({
 })
 ```
 
-### `blacklistHosts` configuration renamed
+### `blacklistHosts` configuration renamed {#blacklistHosts-configuration-renamed}
 
 The `blacklistHosts` configuration has been renamed to
 [blockHosts](/guides/references/configuration#Notes) to more closely reflect its
@@ -2185,7 +2185,7 @@ including via the Cypress configuration file, command line arguments, the
 }
 ```
 
-### Return type of `Cypress.Blob` changed
+### Return type of `Cypress.Blob` changed {#Return-type-of-CypressBlob-changed}
 
 We updated the [Blob](https://github.com/nolanlawson/blob-util) library used
 behind [Cypress.Blob](/api/utilities/blob) from `1.3.3` to `2.0.2`.
@@ -2210,7 +2210,7 @@ const blob = Cypress.Blob.base64StringToBlob(this.logo, 'image/png')
 // work with the returned blob
 ```
 
-### `cy.server()` `whitelist` option renamed
+### `cy.server()` `whitelist` option renamed {#cyserver-whitelist-option-renamed}
 
 The [cy.server()](/api/commands/server) `whitelist` option has been renamed to
 `ignore` to more closely reflect its behavior.
@@ -2235,7 +2235,7 @@ cy.server({
 })
 ```
 
-### Cookies `sameSite` property
+### Cookies `sameSite` property {#Cookies-sameSite-property}
 
 Values yielded by [cy.setCookie()](/api/commands/setcookie),
 [cy.getCookie()](/api/commands/getcookie), and
@@ -2281,7 +2281,7 @@ cy.getCookie('token').then((cookie) => {
 })
 ```
 
-### dirname / filename
+### dirname / filename {#dirname--filename}
 
 The globals `__dirname` and `__filename` no longer include a leading slash.
 
@@ -2305,7 +2305,7 @@ it('do not include leading slash >= 5.0', () => {
 })
 ```
 
-### Linux dependencies
+### Linux dependencies {#Linux-dependencies}
 
 Running Cypress on Linux now requires the `libgbm` dependency (on Debian-based
 systems, this is available as `libgbm-dev`). To install all required
@@ -2315,7 +2315,7 @@ dependencies on Ubuntu/Debian, you can run the script below:
 apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 ```
 
-### TypeScript esModuleInterop
+### TypeScript esModuleInterop {#TypeScript-esModuleInterop}
 
 Cypress no longer forces the `esModuleInterop` compiler option for TypeScript to
 be `true` for spec, support, and plugins files. We recommend setting it in your
@@ -2331,13 +2331,13 @@ project's `tsconfig.json` instead if you need to.
 }
 ```
 
-### TypeScript 3.4+ support
+### TypeScript 3.4+ support {#TypeScript-34-support}
 
 Cypress 5.0 raises minimum required TypeScript version from 2.9+ to 3.4+. You'll
 need to have TypeScript 3.4+ installed within your project to have TypeScript
 support within Cypress.
 
-### Node.js 10+ support
+### Node.js 10+ support {#Nodejs-10-support}
 
 Cypress comes bundled with its own
 [Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version).
@@ -2350,19 +2350,19 @@ of life on June 1, 2019.
 versions will no longer be supported when installing Cypress. The minimum
 Node.js version supported to install Cypress is Node.js 10 or Node.js 12+.
 
-## Migrating to Cypress 4.0
+## Migrating to Cypress 4.0 {#Migrating-to-Cypress-40}
 
 This guide details the changes and how to change your code to migrate to Cypress
 4.0. [See the full changelog for 4.0](/guides/references/changelog#4-0-0).
 
-### Mocha upgrade
+### Mocha upgrade {#Mocha-upgrade}
 
 Mocha was upgraded from `2.5.3` to `7.0.1`, which includes a number of breaking
 changes and new features outlined in their
 [changelog](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md). Some
 changes you might notice are described below.
 
-#### <Icon name="exclamation-triangle" color="red" /> Breaking Change: invoke `done` callback and return a promise
+#### <Icon name="exclamation-triangle" color="red" /> Breaking Change: invoke `done` callback and return a promise {#Icon-nameexclamation-triangle-colorred--Breaking-Change-invoke-done-callback-and-return-a-promise}
 
 Starting with
 [Mocha 3.0.0](https://github.com/mochajs/mocha/blob/master/CHANGELOG.md#300--2016-07-31),
@@ -2381,7 +2381,7 @@ that may be released in a future version of Mocha.
 In the meantime, you can fix the error by choosing a single way to signal the
 end of your test's execution.
 
-##### Example #1
+##### Example #1 {#Example-1}
 
 <Badge type="danger">Before</Badge> This test has a done callback and a promise
 
@@ -2405,7 +2405,7 @@ it('uses invokes done and returns promise', () => {
 })
 ```
 
-##### Example #2
+##### Example #2 {#Example-2}
 
 <Badge type="danger">Before</Badge> Sometimes it might make more sense to use the
 `done` callback and not return a promise:
@@ -2434,7 +2434,7 @@ it('uses invokes done and returns promise', (done) => {
 })
 ```
 
-##### Example #3
+##### Example #3 {#Example-3}
 
 Test functions using `async/await` automatically return a promise, so they need
 to be refactored to not use a `done` callback.
@@ -2461,7 +2461,7 @@ it('uses async/await', async () => {
 })
 ```
 
-#### <Icon name="exclamation-triangle" color="red" /> Tests require a title
+#### <Icon name="exclamation-triangle" color="red" /> Tests require a title {#Icon-nameexclamation-triangle-colorred--Tests-require-a-title}
 
 Tests now require a title and will error when not provided one.
 
@@ -2471,14 +2471,14 @@ Tests now require a title and will error when not provided one.
 it() // Test argument "title" should be a string. Received type "undefined"
 ```
 
-### Chai upgrade
+### Chai upgrade {#Chai-upgrade}
 
 Chai was upgraded from `3.5.0` to `4.2.0`, which includes a number of breaking
 changes and new features outlined in
 [Chai's migration guide](https://github.com/chaijs/chai/issues/781). Some
 changes you might notice are described below.
 
-#### <Icon name="exclamation-triangle" color="red" /> Breaking Change: assertions expecting numbers
+#### <Icon name="exclamation-triangle" color="red" /> Breaking Change: assertions expecting numbers {#Icon-nameexclamation-triangle-colorred--Breaking-Change-assertions-expecting-numbers}
 
 Some assertions will now throw an error if the assertion's target or arguments
 are not numbers, including `within`, `above`, `least`, `below`, `most`,
@@ -2492,7 +2492,7 @@ expect(null).to.be.above(10)
 expect('string').to.have.a.length.of.at.least(3)
 ```
 
-#### <Icon name="exclamation-triangle" color="red" /> Breaking Change: `empty` assertions
+#### <Icon name="exclamation-triangle" color="red" /> Breaking Change: `empty` assertions {#Icon-nameexclamation-triangle-colorred--Breaking-Change-empty-assertions}
 
 The `.empty` assertion will now throw when it is passed non-string primitives
 and functions.
@@ -2503,7 +2503,7 @@ expect(Symbol()).to.be.empty
 expect(() => {}).to.be.empty
 ```
 
-#### <Icon name="exclamation-triangle" color="red" /> Breaking Change: non-existent properties
+#### <Icon name="exclamation-triangle" color="red" /> Breaking Change: non-existent properties {#Icon-nameexclamation-triangle-colorred--Breaking-Change-non-existent-properties}
 
 An error will throw when a non-existent property is read. If there are typos in
 property assertions, they will now appear as failures.
@@ -2513,7 +2513,7 @@ property assertions, they will now appear as failures.
 expect(true).to.be.ture
 ```
 
-#### <Icon name="exclamation-triangle" color="red" /> Breaking Change: `include` checks strict equality
+#### <Icon name="exclamation-triangle" color="red" /> Breaking Change: `include` checks strict equality {#Icon-nameexclamation-triangle-colorred--Breaking-Change-include-checks-strict-equality}
 
 `include` now always use strict equality unless the `deep` property is set.
 
@@ -2547,14 +2547,14 @@ cy.wrap([
 })
 ```
 
-### Sinon.JS upgrade
+### Sinon.JS upgrade {#SinonJS-upgrade}
 
 Sinon.JS was upgraded from `3.2.0` to `8.1.1`, which includes a number of
 breaking changes and new features outlined in
 [Sinon.JS's migration guide](https://sinonjs.org/releases/latest/#migration-guides).
 Some changes you might notice are described below.
 
-#### <Icon name="exclamation-triangle" color="red" /> Breaking Change: stub non-existent properties
+#### <Icon name="exclamation-triangle" color="red" /> Breaking Change: stub non-existent properties {#Icon-nameexclamation-triangle-colorred--Breaking-Change-stub-non-existent-properties}
 
 An error will throw when trying to stub a non-existent property.
 
@@ -2563,7 +2563,7 @@ An error will throw when trying to stub a non-existent property.
 cy.stub(obj, 'nonExistingProperty')
 ```
 
-#### <Icon name="exclamation-triangle" color="red" /> Breaking Change: `reset()` replaced by `resetHistory()`
+#### <Icon name="exclamation-triangle" color="red" /> Breaking Change: `reset()` replaced by `resetHistory()` {#Icon-nameexclamation-triangle-colorred--Breaking-Change-reset-replaced-by-resetHistory}
 
 For spies and stubs, the `reset()` method was replaced by `resetHistory()`.
 
@@ -2587,7 +2587,7 @@ spy.resetHistory()
 stub.resetHistory()
 ```
 
-### Plugin Event `before:browser:launch`
+### Plugin Event `before:browser:launch` {#Plugin-Event-beforebrowserlaunch}
 
 Since we now support more advanced browser launch options, during
 `before:browser:launch` we no longer yield the second argument as an array of
@@ -2619,7 +2619,7 @@ on('before:browser:launch', (browser, launchOptions) => {
 })
 ```
 
-### Electron options in `before:browser:launch`
+### Electron options in `before:browser:launch` {#Electron-options-in-beforebrowserlaunch}
 
 Previously, you could pass options to the launched Electron
 [BrowserWindow](https://www.electronjs.org/docs/api/browser-window#new-browserwindowoptions)
@@ -2649,7 +2649,7 @@ on('before:browser:launch', (browser, launchOptions) => {
 })
 ```
 
-### Launching Chrome Canary with `--browser`
+### Launching Chrome Canary with `--browser` {#Launching-Chrome-Canary-with---browser}
 
 Before 4.0, `cypress run --browser canary` would run tests in Chrome Canary.
 
@@ -2671,7 +2671,7 @@ cypress run --browser canary
 cypress run --browser chrome:canary
 ```
 
-### Chromium-based browser `family`
+### Chromium-based browser `family` {#Chromium-based-browser-family}
 
 We updated the [Cypress browser objects](/api/plugins/browser-launch-api) of all
 Chromium-based browsers, including Electron, to have `chromium` set as their
@@ -2696,7 +2696,7 @@ module.exports = (on, config) => {
 }
 ```
 
-#### Example #1 (Finding Electron)
+#### Example #1 (Finding Electron) {#Example-1-Finding-Electron}
 
 <Badge type="danger">Before</Badge> This will no longer find the Electron browser.
 
@@ -2724,7 +2724,7 @@ module.exports = (on, config) => {
 }
 ```
 
-#### Example #2 (Finding Chromium-based browsers)
+#### Example #2 (Finding Chromium-based browsers) {#Example-2-Finding-Chromium-based-browsers}
 
 <Badge type="danger">Before</Badge> This will no longer find any browsers.
 
@@ -2753,7 +2753,7 @@ module.exports = (on, config) => {
 }
 ```
 
-### `cy.writeFile()` yields `null`
+### `cy.writeFile()` yields `null` {#cywriteFile-yields-null}
 
 `cy.writeFile()` now yields `null` instead of the `contents` written to the
 file. This change was made to more closely align with the behavior of Node.js
@@ -2777,7 +2777,7 @@ cy.readFile('path/to/message.txt').then((text) => {
 })
 ```
 
-### cy.contains() ignores invisible whitespaces
+### cy.contains() ignores invisible whitespaces {#cycontains-ignores-invisible-whitespaces}
 
 Browsers ignore leading, trailing, duplicate whitespaces. And Cypress now does
 that, too.
@@ -2791,7 +2791,7 @@ cy.get('p').contains('hello world') // Fail in 3.x. Pass in 4.0.0.
 cy.get('p').contains('hello\nworld') // Pass in 3.x. Fail in 4.0.0.
 ```
 
-### Node.js 8+ support
+### Node.js 8+ support {#Nodejs-8-support}
 
 Cypress comes bundled with its own
 [Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version).
@@ -2804,7 +2804,7 @@ end of life on April 30, 2019.
 versions will no longer be supported when installing Cypress. The minimum
 Node.js version supported to install Cypress is Node.js 8.
 
-### CJSX is no longer supported
+### CJSX is no longer supported {#CJSX-is-no-longer-supported}
 
 Cypress no longer supports CJSX (CoffeeScript + JSX), because the library used
 to transpile it is no longer maintained.

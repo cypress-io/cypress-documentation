@@ -27,7 +27,7 @@ If you are still facing issues after this, please
 
 :::
 
-## GitHub Enterprise
+## GitHub Enterprise {#GitHub-Enterprise}
 
 :::tip
 
@@ -48,14 +48,14 @@ below, then skip to
 and finally
 [enable integration for a project](#Enabling-GitHub-integration-for-a-project).
 
-## Install the Cypress GitHub app
+## Install the Cypress GitHub app {#Install-the-Cypress-GitHub-app}
 
 Before you can enable GitHub integration for your Cypress projects, you must
 first install the Cypress GitHub App. You can start the GitHub App installation
 process via your organization's settings page or a project's settings page in
 the [Cypress Dashboard](https://on.cypress.io/dashboard).
 
-### Install via organization integration settings
+### Install via organization integration settings {#Install-via-organization-integration-settings}
 
 1. Go to the Dashboard
    [Organizations page](https://dashboard.cypress.io/organizations) or open the
@@ -76,7 +76,7 @@ the [Cypress Dashboard](https://on.cypress.io/dashboard).
 4. Click the **Install GitHub Integration** or **Install GitHub Enterprise
    Integration** button.
 
-### Install via project settings
+### Install via project settings {#Install-via-project-settings}
 
 :::caution
 This installation method is not applicable to GitHub Enterprise.
@@ -105,7 +105,7 @@ This installation method is not applicable to GitHub Enterprise.
      alt="Install GitHub Cypress App"
    ></DocsImage>
 
-### Cypress GitHub app installation process
+### Cypress GitHub app installation process {#Cypress-GitHub-app-installation-process}
 
 Once you've started the GitHub App installation process
 [via a Cypress organization's settings](#Install-via-organization-integration-settings)
@@ -139,7 +139,7 @@ you choose <strong>All repositories</strong>.
 
 3. Click the **Install** button to complete the installation.
 
-### Cypress GitHub Enterprise app installation process
+### Cypress GitHub Enterprise app installation process {#Cypress-GitHub-Enterprise-app-installation-process}
 
 To integrate the Dashboard with GitHub Enterprise, you need to create a new
 GitHub App, copy the necessary settings and credentials from the new app, paste
@@ -260,7 +260,7 @@ them into the Dashboard, and complete the activation process.
     installed the Cypress Dashboard GitHub Enterprise integration! You are now
     ready to configure a GitHub Integration for a project.
 
-## Enabling GitHub integration for a project
+## Enabling GitHub integration for a project {#Enabling-GitHub-integration-for-a-project}
 
 After completing the Cypress GitHub App installation for your organization you
 can now enable GitHub Integration for _any_ Cypress project.
@@ -309,7 +309,7 @@ organizations **Integrations** page:
   alt="Integrations page"
 ></DocsImage>
 
-## Status checks
+## Status checks {#Status-checks}
 
 If status checks are enabled within a project's GitHub integration settings, the
 Cypress Dashboard will report Cypress test statuses to GitHub for related
@@ -344,7 +344,7 @@ stack traces, screenshots, and video recordings:
   alt="Cypress Dashboard failure tab"
 ></DocsImage>
 
-### Disable status checks
+### Disable status checks {#Disable-status-checks}
 
 GitHub status checks are optional, and can be disabled within a project's GitHub
 integration settings:
@@ -354,7 +354,7 @@ integration settings:
   alt="Status checks settings"
 ></DocsImage>
 
-## Pull request comments
+## Pull request comments {#Pull-request-comments}
 
 The Cypress GitHub App can provide detailed test information within pull
 requests via comments that include:
@@ -380,7 +380,7 @@ An example of a Cypress pull-request comment can be seen below:
   alt="Cypress GitHub App PR comment"
 ></DocsImage>
 
-### Disable PR comments
+### Disable PR comments {#Disable-PR-comments}
 
 PR comments and failure screenshot thumbnails are optional, and can be disabled
 if not needed within a project's GitHub Integration settings:
@@ -390,7 +390,7 @@ if not needed within a project's GitHub Integration settings:
   alt="Status checks settings"
 ></DocsImage>
 
-## Uninstall the Cypress GitHub app
+## Uninstall the Cypress GitHub app {#Uninstall-the-Cypress-GitHub-app}
 
 You can uninstall the Cypress GitHub app from GitHub by performing the following
 steps:
@@ -400,12 +400,12 @@ steps:
 3. Click **Configure** beside the Cypress app.
 4. Click **Uninstall** below the "Uninstall Cypress" section.
 
-## Troubleshooting
+## Troubleshooting {#Troubleshooting}
 
 See
 [Common GitHub Actions Problems and Solutions](/guides/continuous-integration/github-actions#Common-Problems-and-Solutions).
 
-## See also
+## See also {#See-also}
 
 - [Cypress GitHub Action + Examples](https://github.com/cypress-io/github-action)
 - [Example project that uses both Cypress GitHub Action and Cypress GitHub Integration](https://github.com/cypress-io/gh-action-and-gh-integration)

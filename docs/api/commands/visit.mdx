@@ -17,7 +17,7 @@ here.
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.visit(url)
@@ -25,7 +25,7 @@ cy.visit(url, options)
 cy.visit(options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -39,7 +39,7 @@ cy.visit({
 })
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> url** **_(String)_**
 
@@ -82,7 +82,7 @@ By default, the `cy.visit()` commands' will use the `pageLoadTimeout` and
 You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl`
 globally in the [Cypress configuration](/guides/references/configuration).
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `cy.visit()` yields the `window` object after the page finishes
 loading
@@ -95,11 +95,11 @@ cy.visit('/') // yields the window object
   .should('equal', 'en-US') // asserts the expected value
 ```
 
-## Examples
+## Examples {#Examples}
 
-### URL
+### URL {#URL}
 
-#### Visit a local server running on `http://localhost:8000`
+#### Visit a local server running on `http://localhost:8000` {#Visit-a-local-server-running-on-httplocalhost8000}
 
 `cy.visit()` resolves when the remote page fires its `load` event.
 
@@ -107,9 +107,9 @@ cy.visit('/') // yields the window object
 cy.visit('http://localhost:8000')
 ```
 
-### Options
+### Options {#Options}
 
-#### Change the default timeout
+#### Change the default timeout {#Change-the-default-timeout}
 
 Overrides the `pageLoadTimeout` set globally in your
 [configuration](/guides/references/configuration) for this page load.
@@ -119,7 +119,7 @@ Overrides the `pageLoadTimeout` set globally in your
 cy.visit('/index.html', { timeout: 30000 })
 ```
 
-#### Add basic auth headers
+#### Add basic auth headers {#Add-basic-auth-headers}
 
 Cypress will automatically apply the right authorization headers if you're
 attempting to visit an application that requires
@@ -153,7 +153,7 @@ Tools.
 
 :::
 
-#### Provide an `onBeforeLoad` callback function
+#### Provide an `onBeforeLoad` callback function {#Provide-an-onBeforeLoad-callback-function}
 
 `onBeforeLoad` is called as soon as possible, before your page has loaded all of
 its resources. Your scripts will not be ready at this point, but it's a great
@@ -177,7 +177,7 @@ Check out our example recipes using `cy.visit()`'s `onBeforeLoad` option to:
 
 :::
 
-#### Provide an `onLoad` callback function
+#### Provide an `onLoad` callback function {#Provide-an-onLoad-callback-function}
 
 `onLoad` is called once your page has fired its `load` event. All of the
 scripts, stylesheets, html and other resources are guaranteed to be available at
@@ -194,7 +194,7 @@ cy.visit('http://localhost:3000/#/users', {
 })
 ```
 
-#### Add query parameters
+#### Add query parameters {#Add-query-parameters}
 
 You can provide query parameters as an object to `cy.visit()` by passing `qs` to
 `options`.
@@ -219,7 +219,7 @@ cy.visit('http://example.com/users?page=1', {
 })
 ```
 
-#### Submit a form
+#### Submit a form {#Submit-a-form}
 
 To send a request that looks like a user submitting an HTML form, use a `POST`
 method with a `body` containing the form values:
@@ -235,11 +235,11 @@ cy.visit({
 })
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Prefixes
+### Prefixes {#Prefixes}
 
-#### Visit is automatically prefixed with `baseUrl`
+#### Visit is automatically prefixed with `baseUrl` {#Visit-is-automatically-prefixed-with-baseUrl}
 
 Cypress will prefix the URL with the `baseUrl` if it has been set. Configure
 `baseUrl` in the [Cypress configuration](/guides/references/configuration) to
@@ -268,7 +268,7 @@ provide the fully qualified URL you would like to go to.
 cy.visit('http://google.com')
 ```
 
-#### Visit local files
+#### Visit local files {#Visit-local-files}
 
 Cypress will automatically attempt to serve your files if you don't provide a
 host and `baseUrl` **is not defined**. The path should be relative to your
@@ -283,7 +283,7 @@ server and provide the url to Cypress.
 cy.visit('app/index.html')
 ```
 
-##### Visit local file when `baseUrl` is set
+##### Visit local file when `baseUrl` is set {#Visit-local-file-when-baseUrl-is-set}
 
 If you have `baseUrl` set, but need to visit a local file in a single test or a
 group of tests, disable the `baseUrl` using
@@ -316,9 +316,9 @@ it('visits local file', { baseUrl: null }, () => {
 })
 ```
 
-### Redirects
+### Redirects {#Redirects}
 
-#### Visit will automatically follow redirects
+#### Visit will automatically follow redirects {#Visit-will-automatically-follow-redirects}
 
 ```javascript
 // we aren't logged in, so our web server
@@ -327,9 +327,9 @@ cy.visit('http://localhost:3000/admin')
 cy.url().should('match', /login/)
 ```
 
-### Protocol
+### Protocol {#Protocol}
 
-#### Protocol can be omitted from common hosts
+#### Protocol can be omitted from common hosts {#Protocol-can-be-omitted-from-common-hosts}
 
 Cypress automatically prepends the `http://` protocol to common hosts. If you're
 not using one of these 3 hosts, then make sure to provide the protocol.
@@ -340,9 +340,9 @@ cy.visit('0.0.0.0:3000') // Visits http://0.0.0.0:3000
 cy.visit('127.0.0.1:3000') // Visits http://127.0.0.1:3000
 ```
 
-### Window
+### Window {#Window}
 
-#### Visit will always yield the remote page's `window` object when it resolves
+#### Visit will always yield the remote page's `window` object when it resolves {#Visit-will-always-yield-the-remote-pages-window-object-when-it-resolves}
 
 ```javascript
 cy.visit('index.html').then((contentWindow) => {
@@ -350,15 +350,15 @@ cy.visit('index.html').then((contentWindow) => {
 })
 ```
 
-### User agent
+### User agent {#User-agent}
 
 Trying to change the `User-Agent`? You can set the `userAgent` as a
 [configuration value](/guides/references/configuration#Browser) in your
 configuration file.
 
-### Routing
+### Routing {#Routing}
 
-#### Prevent requests before a remote page initially loads
+#### Prevent requests before a remote page initially loads {#Prevent-requests-before-a-remote-page-initially-loads}
 
 One common scenario Cypress supports is visiting a remote page and also
 preventing any Ajax requests from immediately going out.
@@ -392,26 +392,26 @@ cy.visit('http://localhost:8000/#/app')
 Cypress will automatically apply the routes to the very next `cy.visit()` and
 does so immediately before any of your application code runs.
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.visit()` requires being chained off of `cy`.
 - `cy.visit()` requires the response to be `content-type: text/html`.
 - `cy.visit()` requires the response code to be `2xx` after following redirects.
 - `cy.visit()` requires the load `load` event to eventually fire.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.visit()` will automatically wait for assertions you have chained
 to pass
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.visit()` can time out waiting for the page to fire its `load` event.
 - `cy.visit()` can time out waiting for assertions you've added to pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Visit example application in a `beforeEach`_**
 
@@ -436,7 +436,7 @@ following:
   alt="console Log visit"
 ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                       | Changes                                                                          |
 | --------------------------------------------- | -------------------------------------------------------------------------------- |
@@ -451,7 +451,7 @@ following:
 | [0.4.3](/guides/references/changelog#0-4-3)   | Added option `onBeforeLoad`                                                      |
 | [< 0.3.3](/guides/references/changelog#0-3.3) | `cy.visit()` command added                                                       |
 
-## See also
+## See also {#See-also}
 
 - [`cy.go()`](/api/commands/go)
 - [`cy.reload()`](/api/commands/reload)

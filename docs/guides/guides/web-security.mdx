@@ -18,7 +18,7 @@ the rules_ of same-origin policy. It is our goal to fully automate the
 application under test without you needing to modify your application's code -
 and we are _mostly_ able to do this.
 
-#### Examples of what Cypress does under the hood:
+#### Examples of what Cypress does under the hood: {#Examples-of-what-Cypress-does-under-the-hood}
 
 - Injects
   [`document.domain`](https://developer.mozilla.org/en-US/docs/Web/API/Document/domain)
@@ -60,13 +60,13 @@ will supply it.
 
 :::
 
-## Limitations
+## Limitations {#Limitations}
 
 It's important to note that although we do our **very best** to ensure your
 application works normally inside of Cypress, there _are_ some limitations you
 need to be aware of.
 
-### Same superdomain per test
+### Same superdomain per test {#Same-superdomain-per-test}
 
 <SingleDomainWorkaround />
 
@@ -106,7 +106,7 @@ it('navigates to new origin', () => {
 Although Cypress tries to enforce this limitation, it is possible for your
 application to bypass Cypress's ability to detect this.
 
-#### Examples of test cases that will error due to superdomain limitations
+#### Examples of test cases that will error due to superdomain limitations {#Examples-of-test-cases-that-will-error-due-to-superdomain-limitations}
 
 1. [`.click()`](/api/commands/click) an `<a>` with an `href` to a different
    superdomain.
@@ -124,12 +124,12 @@ or even
 [disabling web security](/guides/guides/web-security#Disabling-Web-Security)
 altogether.
 
-### Cross-origin iframes
+### Cross-origin iframes {#Cross-origin-iframes}
 
 If your site embeds an `<iframe>` that is a cross-origin frame, Cypress will not
 be able to automate or communicate with this `<iframe>`.
 
-#### Examples of uses for cross-origin iframes
+#### Examples of uses for cross-origin iframes {#Examples-of-uses-for-cross-origin-iframes}
 
 - Embedding a Vimeo or YouTube video.
 - Displaying a credit card form from Stripe or Braintree.
@@ -150,14 +150,14 @@ Other than that, you'll have to wait for us to implement APIs to support this
 you can
 [disable web security](/guides/guides/web-security#Disabling-Web-Security).
 
-### Insecure Content
+### Insecure Content {#Insecure-Content}
 
 Because of the way Cypress is designed, if you are testing an HTTPS site,
 Cypress will error anytime you attempt to navigate back to an HTTP site. This
 behavior helps highlight a _pretty serious security problem_ with your
 application.
 
-#### Example of accessing insecure content
+#### Example of accessing insecure content {#Example-of-accessing-insecure-content}
 
 ```javascript
 // Test code
@@ -202,7 +202,7 @@ This security vulnerability exists **even if** your web server forces a
 `301 redirect` back to the HTTPS site. The original HTTP request was still made
 once, exposing insecure session information.
 
-#### The solution
+#### The solution {#The-solution}
 
 Update your HTML or JavaScript code to not navigate to an insecure HTTP page and
 instead only use HTTPS. Additionally make sure that cookies have their `secure`
@@ -212,19 +212,19 @@ If you're in a situation where you don't control the code, or otherwise cannot
 work around this, you can bypass this restriction in Cypress by
 [disabling web security](/guides/guides/web-security#Disabling-Web-Security).
 
-### Same port per test
+### Same port per test {#Same-port-per-test}
 
 Cypress requires that the URLs navigated to have the same port (if specified)
 for the entirety of a single test. This matches the behavior of the browser's
 normal
 [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
 
-## Common Workarounds
+## Common Workarounds {#Common-Workarounds}
 
 Let's investigate how you might encounter cross-origin errors in your test code
 and break down how to work around them in Cypress.
 
-### External Navigation
+### External Navigation {#External-Navigation}
 
 The most common situation where you might encounter this error is when you click
 on an `<a>` that navigates to another superdomain.
@@ -274,7 +274,7 @@ cy.get('a').then(($a) => {
 If you still require visiting a different origin URL then read about
 [disabling web security](/guides/guides/web-security#Disabling-Web-Security).
 
-### Form Submission Redirects
+### Form Submission Redirects {#Form-Submission-Redirects}
 
 When you submit a regular HTML form, the browser will follow the HTTP(s)
 request.
@@ -344,7 +344,7 @@ If you still want to be able to be redirected to your SSO server, you can read
 about
 [disabling web security](/guides/guides/web-security#Disabling-Web-Security).
 
-### JavaScript Redirects
+### JavaScript Redirects {#JavaScript-Redirects}
 
 When we say JavaScript Redirects we are talking about any kind of code that does
 something like this:
@@ -363,7 +363,7 @@ If you want to continue using the code to navigate to a different superdomain,
 then you might want to read about
 [disabling web security](/guides/guides/web-security#Disabling-Web-Security).
 
-## Disabling Web Security
+## Disabling Web Security {#Disabling-Web-Security}
 
 So if you cannot work around any of the issues using the suggested workarounds
 above, you may want to disable web security.
@@ -391,7 +391,7 @@ browsers that do not support this feature.
 
 :::
 
-### Set `chromeWebSecurity` to `false`
+### Set `chromeWebSecurity` to `false` {#Set-chromeWebSecurity-to-false}
 
 Setting `chromeWebSecurity` to `false` in Chrome-based browsers allows you to do
 the following:
@@ -407,7 +407,7 @@ restriction.
 
 Still here? That's cool, let's disable web security!
 
-#### Set `chromeWebSecurity` to `false` in the [Cypress configuration](/guides/references/configuration)
+#### Set `chromeWebSecurity` to `false` in the [Cypress configuration](/guides/references/configuration) {#Set-chromeWebSecurity-to-false-in-the-Cypress-configuration}
 
 :::cypress-config-example
 

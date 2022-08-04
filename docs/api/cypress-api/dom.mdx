@@ -16,15 +16,15 @@ to see all of the methods and what they do.
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 Cypress.dom.isHidden(element)
 ```
 
-## Examples
+## Examples {#Examples}
 
-### Is attached
+### Is attached {#Is-attached}
 
 **Returns a boolean indicating whether an element is attached to the DOM.**
 
@@ -34,7 +34,7 @@ cy.get('button').then(($el) => {
 })
 ```
 
-### Is descendent
+### Is descendent {#Is-descendent}
 
 **Returns a boolean indicating whether an element is a descendent of another
 element.**
@@ -45,7 +45,7 @@ cy.get('div').then(($el) => {
 })
 ```
 
-### Is detached
+### Is detached {#Is-detached}
 
 **Returns a boolean indicating whether an element is detached from the DOM.**
 
@@ -55,7 +55,7 @@ cy.get('button').then(($el) => {
 })
 ```
 
-### Is document
+### Is document {#Is-document}
 
 **Returns a boolean indicating whether a node is of document type.**
 
@@ -65,7 +65,7 @@ cy.get('p').then(($el) => {
 })
 ```
 
-### Is DOM
+### Is DOM {#Is-DOM}
 
 **Returns a boolean indicating whether an object is a DOM object.**
 
@@ -75,7 +75,7 @@ cy.get('body').then(($el) => {
 })
 ```
 
-### Is element
+### Is element {#Is-element}
 
 **Returns a boolean indicating whether an object is a DOM element.**
 
@@ -85,7 +85,7 @@ cy.get('p').then(($el) => {
 })
 ```
 
-### Is focusable
+### Is focusable {#Is-focusable}
 
 **Returns a boolean indicating whether an element can receive focus.**
 
@@ -99,7 +99,7 @@ cy.get('input').then(($el) => {
 })
 ```
 
-### Is focused
+### Is focused {#Is-focused}
 
 **Returns a boolean indicating whether an element currently has focus.**
 
@@ -109,7 +109,7 @@ cy.get('button').then(($el) => {
 })
 ```
 
-### Is hidden
+### Is hidden {#Is-hidden}
 
 **Returns a boolean indicating whether an element is hidden.**
 
@@ -123,7 +123,7 @@ cy.get('p').then(($el) => {
 })
 ```
 
-### Is jQuery
+### Is jQuery {#Is-jQuery}
 
 **Returns a boolean indicating whether an object is a jQuery object.**
 
@@ -133,7 +133,7 @@ cy.get('input').then(($el) => {
 })
 ```
 
-### Is scrollable
+### Is scrollable {#Is-scrollable}
 
 **Returns a boolean indicating whether an element is scrollable.**
 
@@ -147,7 +147,7 @@ cy.get('body').then(($el) => {
 })
 ```
 
-### Is visible
+### Is visible {#Is-visible}
 
 **Returns a boolean indicating whether an element is visible.**
 
@@ -162,7 +162,7 @@ are sure the element should be visible, you can debug the visibility check
 yourself by stepping through the `Cypress.dom.isVisible` code, see
 [Debug the Element Visibility Problems in Cypress](https://glebbahmutov.com/blog/debug-visibility/).
 
-### Is window
+### Is window {#Is-window}
 
 **Returns a boolean indicating whether an object is a window object.**
 
@@ -172,7 +172,7 @@ cy.get(window).then(($el) => {
 })
 ```
 
-### Unwrap
+### Unwrap {#Unwrap}
 
 **Returns an array of raw elements pulled out from a jQuery object.**
 
@@ -182,7 +182,7 @@ cy.get('body').then(($el) => {
 })
 ```
 
-### Wrap
+### Wrap {#Wrap}
 
 **Returns a jQuery object obtained by wrapping an object in jQuery.**
 
@@ -192,7 +192,7 @@ cy.get('p').then(($el) => {
 })
 ```
 
-## See also
+## See also {#See-also}
 
 - Read the blog post
   [Debug the Element Visibility Problems in Cypress](https://glebbahmutov.com/blog/debug-visibility/)

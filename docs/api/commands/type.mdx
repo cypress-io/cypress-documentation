@@ -4,14 +4,14 @@ title: type
 
 Type into a DOM element.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .type(text)
 .type(text, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -26,7 +26,7 @@ cy.type('Welcome') // Errors, cannot be chained off 'cy'
 cy.clock().type('www.cypress.io') // Errors, 'clock' does not yield DOM elements
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> text** **_(String)_**
 
@@ -91,22 +91,22 @@ Pass in an options object to change the default behavior of `.type()`.
 | `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.type()` to resolve before [timing out](#Timeouts)                                                                               |
 | `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.type()` yields the same subject it was given from the previous
 command.
 
-## Examples
+## Examples {#Examples}
 
-### Input/Textarea
+### Input/Textarea {#InputTextarea}
 
-#### Type into a textarea.
+#### Type into a textarea. {#Type-into-a-textarea}
 
 ```javascript
 cy.get('textarea').type('Hello world') // yields <textarea>
 ```
 
-#### Type into a login form
+#### Type into a login form {#Type-into-a-login-form}
 
 :::info
 
@@ -114,7 +114,7 @@ cy.get('textarea').type('Hello world') // yields <textarea>
 
 :::
 
-#### Mimic user typing behavior
+#### Mimic user typing behavior {#Mimic-user-typing-behavior}
 
 Each keypress is delayed 10ms by default in order to simulate how a very fast
 user types!
@@ -123,7 +123,7 @@ user types!
 cy.get('[contenteditable]').type('some text!')
 ```
 
-#### 'Selecting' an option from datalist
+#### 'Selecting' an option from datalist {#Selecting-an-option-from-datalist}
 
 For 'selecting' an option, just type it into the input.
 
@@ -140,9 +140,9 @@ For 'selecting' an option, just type it into the input.
 cy.get('input').type('Apple')
 ```
 
-### Tabindex
+### Tabindex {#Tabindex}
 
-#### Type into a non-input or non-textarea element with `tabindex`
+#### Type into a non-input or non-textarea element with `tabindex` {#Type-into-a-non-input-or-non-textarea-element-with-tabindex}
 
 ```html
 <body>
@@ -154,7 +154,7 @@ cy.get('input').type('Apple')
 cy.get('#el').type('supercalifragilisticexpialidocious')
 ```
 
-### Date Inputs
+### Date Inputs {#Date-Inputs}
 
 Using `.type()` on a date input (`<input type="date">`) requires specifying a
 valid date in the format:
@@ -169,7 +169,7 @@ and is what the input's `value` will be set to regardless of browser or locale.
 
 Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
 
-### Month Inputs
+### Month Inputs {#Month-Inputs}
 
 Using `.type()` on a month input (`<input type="month">`) requires specifying a
 valid month in the format:
@@ -184,7 +184,7 @@ the input's `value` will be set to regardless of browser or locale.
 
 Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
 
-### Week Inputs
+### Week Inputs {#Week-Inputs}
 
 Using `.type()` on a week input (`<input type="week">`) requires specifying a
 valid week in the format:
@@ -202,7 +202,7 @@ and is what the input's `value` will be set to regardless of browser or locale.
 
 Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
 
-### Time Inputs
+### Time Inputs {#Time-Inputs}
 
 Using `.type()` on a time input (`<input type="time">`) requires specifying a
 valid time in the format:
@@ -215,7 +215,7 @@ Where `HH` is 00-23, `mm` is 00-59, `ss` is 00-59, and `SSS` is 000-999.
 
 Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
 
-### Key Combinations
+### Key Combinations {#Key-Combinations}
 
 When using special character sequences, it's possible to activate modifier keys
 and type key combinations, such as `CTRL+R` or `SHIFT+ALT+b`. Single key
@@ -234,7 +234,7 @@ their options. See each doc for more information.
 
 :::
 
-#### Type a key combination
+#### Type a key combination {#Type-a-key-combination}
 
 ```javascript
 // This is the same as a user holding down SHIFT and ALT, then pressing b
@@ -253,7 +253,7 @@ characters are typed. However, [{release: false}](#Options) can be passed as an
 cy.get('input').type('{shift}{alt}hello')
 ```
 
-#### Type literal `{` or `}` characters
+#### Type literal `{` or `}` characters {#Type-literal--or--characters}
 
 To disable parsing special characters sequences, set the
 `parseSpecialCharSequences` option to `false`.
@@ -266,7 +266,7 @@ cy.get('#code-input')
   })
 ```
 
-#### Hold down modifier key and type a word
+#### Hold down modifier key and type a word {#Hold-down-modifier-key-and-type-a-word}
 
 ```javascript
 // all characters after {ctrl} will have 'ctrlKey'
@@ -274,7 +274,7 @@ cy.get('#code-input')
 cy.get('input').type('{ctrl}test')
 ```
 
-#### Release behavior
+#### Release behavior {#Release-behavior}
 
 By default, modifiers are released after each type command.
 
@@ -323,7 +323,7 @@ cy.get('input').type('{alt}')
 cy.get('button').click()
 ```
 
-### Global Shortcuts
+### Global Shortcuts {#Global-Shortcuts}
 
 `.type()` requires a focusable element as the subject, since it's usually
 intended to type into something that's an input or textarea. Although there
@@ -336,7 +336,7 @@ or textarea:
 To support this, the `body` can be used as the DOM element to type into (even
 though it's _not_ a focusable element).
 
-#### Use keyboard shortcuts in body
+#### Use keyboard shortcuts in body {#Use-keyboard-shortcuts-in-body}
 
 ```javascript
 // all of the type events are fired on the body
@@ -345,7 +345,7 @@ cy.get('body').type(
 )
 ```
 
-#### Do a shift + click
+#### Do a shift + click {#Do-a-shift--click}
 
 ```javascript
 // execute a SHIFT + click on the first <li>
@@ -354,9 +354,9 @@ cy.get('body').type(
 cy.get('body').type('{shift}', { release: false }).get('li:first').click()
 ```
 
-### Options
+### Options {#Options}
 
-#### Force typing regardless of its actionable state
+#### Force typing regardless of its actionable state {#Force-typing-regardless-of-its-actionable-state}
 
 Forcing typing overrides the
 [actionable checks](/guides/core-concepts/interacting-with-elements#Forcing)
@@ -366,9 +366,9 @@ Cypress applies and will automatically fire the events.
 cy.get('input[type=text]').type('Test all the things', { force: true })
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Supported Elements
+### Supported Elements {#Supported-Elements}
 
 - ^HTML `<body>` and `<textarea>` elements.
 - Elements with a defined `tabindex` attribute.
@@ -388,20 +388,20 @@ cy.get('input[type=text]').type('Test all the things', { force: true })
   - `url`
   - `tel`
 
-### Actionability
+### Actionability {#Actionability}
 
 `.type()` is an "action command" that follows all the rules of
 [Actionability](/guides/core-concepts/interacting-with-elements).
 
-### Events
+### Events {#Events}
 
-#### When element is not in focus
+#### When element is not in focus {#When-element-is-not-in-focus}
 
 If the element is currently not in focus, before issuing any keystrokes Cypress
 will first issue a [`.click()`](/api/commands/click) to the element to bring it
 into focus.
 
-#### Events that fire
+#### Events that fire {#Events-that-fire}
 
 Once the element is in focus, Cypress will begin firing keyboard events.
 
@@ -423,7 +423,7 @@ Events that should not fire on non input types such as elements with `tabindex`
 do not fire their `textInput` or `input` events. Only typing into elements which
 cause the actual value or text to change will fire those events.
 
-#### Event Firing
+#### Event Firing {#Event-Firing}
 
 The following rules have been implemented that match real browser behavior (and
 the spec):
@@ -436,7 +436,7 @@ the spec):
 4. Cypress will fire `input` _only_ if typing that key modifies or changes the
    value of the element.
 
-#### Event Cancellation
+#### Event Cancellation {#Event-Cancellation}
 
 Cypress respects all default browser behavior when events are canceled.
 
@@ -452,7 +452,7 @@ $('#username').on('keydown', (e) => {
 cy.get('#username').type('bob@gmail.com').should('have.value', '') // true
 ```
 
-#### Preventing `mousedown` does not prevent typing
+#### Preventing `mousedown` does not prevent typing {#Preventing-mousedown-does-not-prevent-typing}
 
 In a real browser, preventing `mousedown` on a form field will prevent it from
 receiving focus and thus prevent it from being able to be typed into. Currently,
@@ -460,7 +460,7 @@ Cypress does not factor this in.
 [open an issue](https://github.com/cypress-io/cypress/issues/new/choose) if you
 need this to be fixed.
 
-#### Key Events Table
+#### Key Events Table {#Key-Events-Table}
 
 Cypress prints out a table of key events that detail the keys that were pressed
 when clicking on type within the [Command Log](#Command-Log). Each character
@@ -479,17 +479,17 @@ Any modifiers activated for the event are also listed in a `modifiers` column.
 
 <DocsImage src="/img/api/type/key-events-table-shown-in-console-for-testing-typing.png" alt="Cypress .type() key events table" ></DocsImage>
 
-### Tabbing
+### Tabbing {#Tabbing}
 
-#### Typing `tab` key does not work
+#### Typing `tab` key does not work {#Typing-tab-key-does-not-work}
 
 In the meantime, you can use the experimental
 [cypress-plugin-tab](https://github.com/Bkucera/cypress-plugin-tab) and can
 thumbs up [this issue](https://github.com/cypress-io/cypress/issues/299).
 
-### Modifiers
+### Modifiers {#Modifiers}
 
-#### Modifier effects
+#### Modifier effects {#Modifier-effects}
 
 In a real browser, if a user holds `SHIFT` and types `a`, a capital `A` will be
 typed into the input. Currently, Cypress does not simulate that behavior.
@@ -522,9 +522,9 @@ Similarly, modifiers will not affect arrow keys or deletion keys. For example
 [open an issue](https://github.com/cypress-io/cypress/issues/new) if you need
 modifier effects to be implemented.
 
-### Form Submission
+### Form Submission {#Form-Submission}
 
-#### Implicit form submission behavior
+#### Implicit form submission behavior {#Implicit-form-submission-behavior}
 
 Cypress automatically matches the spec and browser behavior for pressing the
 `{enter}` key when the input belongs to a `<form>`.
@@ -566,27 +566,27 @@ Additionally Cypress handles these 4 other situations as defined in the spec:
 If the form's `submit` event is `preventedDefault` the form will not actually be
 submitted.
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.type()` requires being chained off a command that yields DOM
 element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.type()` will automatically wait for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.type()`
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.type()` can time out waiting for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.type()`
 can time out waiting for assertions you've added to pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **Type into the input**
 
@@ -603,7 +603,7 @@ following:
 
 <DocsImage src="/img/api/type/console-log-of-typing-with-entire-key-events-table-for-each-character.png" alt="Console Log type" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                       | Changes                                                                                                                   |
 | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
@@ -622,7 +622,7 @@ following:
 | [0.8.0](/guides/references/changelog#0-8-0)   | Added small delay (10ms) between each keystroke during `cy.type()`                                                        |
 | [0.6.12](/guides/references/changelog#0-6-12) | Added option `force`                                                                                                      |
 
-## See also
+## See also {#See-also}
 
 - [`.blur()`](/api/commands/blur)
 - [`.clear()`](/api/commands/clear)

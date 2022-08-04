@@ -12,13 +12,13 @@ function.
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.spy(object, method)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -26,7 +26,7 @@ cy.spy(object, method)
 cy.spy(user, 'addFriend')
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> object** **_(Object)_**
 
@@ -36,7 +36,7 @@ The `object` that has the `method` to be wrapped.
 
 The name of the `method` on the `object` to be wrapped.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 Unlike most Cypress commands, `cy.spy()` is _synchronous_ and returns a value
 (the spy) instead of a Promise-like chain-able object.
@@ -44,11 +44,11 @@ Unlike most Cypress commands, `cy.spy()` is _synchronous_ and returns a value
 `cy.spy()` returns a [Sinon.js spy](https://sinonjs.org/releases/v6.1.5/spies/).
 All methods found on Sinon.JS spies are supported.
 
-## Examples
+## Examples {#Examples}
 
-### Method
+### Method {#Method}
 
-#### Wrap a method with a spy
+#### Wrap a method with a spy {#Wrap-a-method-with-a-spy}
 
 ```javascript
 // assume App.start calls util.addListeners
@@ -57,7 +57,7 @@ App.start()
 expect(util.addListeners).to.be.called
 ```
 
-#### Disable logging to Command Log
+#### Disable logging to Command Log {#Disable-logging-to-Command-Log}
 
 You can chain a `.log(bool)` method to disable `cy.stub()` calls from being
 shown in the Command Log. This may be useful when your stubs are called an
@@ -70,7 +70,7 @@ const obj = {
 const stub = cy.stub(obj, 'foo').log(false)
 ```
 
-#### More `cy.spy()` examples
+#### More `cy.spy()` examples {#More-cyspy-examples}
 
 :::info
 
@@ -78,7 +78,7 @@ const stub = cy.stub(obj, 'foo').log(false)
 
 :::
 
-### Aliases
+### Aliases {#Aliases}
 
 Adding an alias using [`.as()`](/api/commands/as) to spies makes them easier to
 identify in error messages and Cypress' command log.
@@ -99,20 +99,20 @@ You will see the following in the command log:
 
 <DocsImage src="/img/api/spy/using-spy-with-alias.png" alt="spies with aliases" ></DocsImage>
 
-## Notes
+## Notes {#Notes}
 
-### Restores
+### Restores {#Restores}
 
-#### Automatic reset/restore between tests
+#### Automatic reset/restore between tests {#Automatic-resetrestore-between-tests}
 
 `cy.spy()` creates spies in a
 [sandbox](https://sinonjs.org/releases/v6.1.5/sandbox/), so all spies created
 are automatically reset/restored between tests without you having to explicitly
 reset/restore them.
 
-### Differences
+### Differences {#Differences}
 
-#### Difference between cy.spy() and cy.stub()
+#### Difference between cy.spy() and cy.stub() {#Difference-between-cyspy-and-cystub}
 
 The main difference between `cy.spy()` and [`cy.stub()`](/api/commands/stub) is
 that `cy.spy()` does not replace the method, it only wraps it. So, while
@@ -120,30 +120,30 @@ invocations are recorded, the original method is still called. This can be very
 useful when testing methods on native browser objects. You can verify a method
 is being called by your test and still have the original method action invoked.
 
-### Assertions
+### Assertions {#Assertions}
 
-#### Assertion Support
+#### Assertion Support {#Assertion-Support}
 
 Cypress has also built-in
 [Sinon-Chai](/guides/references/bundled-libraries#Sinon-Chai) support, so any
 [assertions supported by `Sinon-Chai`](/guides/references/assertions#Sinon-Chai)
 can be used without any configuration.
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.spy()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.spy()` cannot have any assertions chained.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.spy()` cannot time out.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Create a spy, alias it, and call it_**
 
@@ -166,14 +166,14 @@ the following:
 
 <DocsImage src="/img/api/spy/console-shows-spy-arguments-calls-and-the-object-being-spied.png" alt="Console Log spy" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                       | Changes                   |
 | --------------------------------------------- | ------------------------- |
 | [0.20.0](/guides/references/changelog#0-20.0) | Added `.log(bool)` method |
 | [0.18.8](/guides/references/changelog#0-18-8) | `cy.spy()` command added  |
 
-## See also
+## See also {#See-also}
 
 - [`.as()`](/api/commands/as)
 - [`cy.clock()`](/api/commands/clock)

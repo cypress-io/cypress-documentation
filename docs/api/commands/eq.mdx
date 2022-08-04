@@ -11,7 +11,7 @@ The querying behavior of this command matches exactly how
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .eq(index)
@@ -20,7 +20,7 @@ The querying behavior of this command matches exactly how
 .eq(indexFromEnd, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -36,7 +36,7 @@ cy.eq(0) // Errors, cannot be chained off 'cy'
 cy.getCookies().eq(4) // Errors, 'getCookies' does not yield DOM element
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> index** **_(Number)_**
 
@@ -57,15 +57,15 @@ Pass in an options object to change the default behavior of `.eq()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.eq()` to resolve before [timing out](#Timeouts)                       |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.eq()` yields the new DOM element(s) it found.
 
-## Examples
+## Examples {#Examples}
 
-### Index
+### Index {#Index}
 
-#### Find the 2nd element within the elements
+#### Find the 2nd element within the elements {#Find-the-2nd-element-within-the-elements}
 
 ```html
 <ul>
@@ -81,7 +81,7 @@ Pass in an options object to change the default behavior of `.eq()`.
 cy.get('li').eq(1).should('contain', 'siamese') // true
 ```
 
-#### Make an assertion on the 3rd row of a table
+#### Make an assertion on the 3rd row of a table {#Make-an-assertion-on-the-3rd-row-of-a-table}
 
 ```html
 <table>
@@ -108,9 +108,9 @@ cy.get('li').eq(1).should('contain', 'siamese') // true
 cy.get('tr').eq(2).should('contain', 'Canada') //true
 ```
 
-### Index From End
+### Index From End {#Index-From-End}
 
-#### Find the 2nd from the last element within the elements
+#### Find the 2nd from the last element within the elements {#Find-the-2nd-from-the-last-element-within-the-elements}
 
 ```html
 <ul>
@@ -126,14 +126,14 @@ cy.get('tr').eq(2).should('contain', 'Canada') //true
 cy.get('li').eq(-2).should('contain', 'sphynx') // true
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.eq()` requires being chained off a command that yields DOM
 element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.eq()` will automatically
 [retry](/guides/core-concepts/retry-ability) until the element(s)
@@ -141,13 +141,13 @@ element(s).
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.eq()` can time out waiting for the element(s) to
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.eq()`
 can time out waiting for assertions you've added to pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **Find the 4th `<li>` in the navigation**
 
@@ -164,7 +164,7 @@ the following:
 
 <DocsImage src="/img/api/eq/see-element-and-list-when-using-eq.png" alt="console.log eq" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`.first()`](/api/commands/first)
 - [`.last()`](/api/commands/last)

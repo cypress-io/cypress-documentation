@@ -4,7 +4,7 @@ title: Google Authentication
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - Programmatically authenticate with [Google](https://google.com) via a custom
   Cypress command
@@ -25,7 +25,7 @@ with the third-party authentication API to login a user.
 
 :::
 
-## Google Developer Console Setup
+## Google Developer Console Setup {#Google-Developer-Console-Setup}
 
 :::info
 
@@ -36,7 +36,7 @@ during the testing phase.
 
 :::
 
-### Google Project and Application Setup
+### Google Project and Application Setup {#Google-Project-and-Application-Setup}
 
 First, a [Google](https://google.com) project is required. If you don't already
 have a project, you can create one using the
@@ -62,7 +62,7 @@ Once saved, note the client ID and client secret. You can find these under the
 [Google API Credentials](https://console.developers.google.com/apis/credentials)
 page.
 
-### Using the Google OAuth 2.0 Playground to Create Testing Credentials
+### Using the Google OAuth 2.0 Playground to Create Testing Credentials {#Using-the-Google-OAuth-20-Playground-to-Create-Testing-Credentials}
 
 :::info
 
@@ -98,7 +98,7 @@ under `Step 2 (Exchange authorization code for tokens)`. Click the
 You will be taken to `Step 3 (Configure request to API)`. Note the returned
 refresh token to be used with testing.
 
-## Setting Google app credentials in Cypress
+## Setting Google app credentials in Cypress {#Setting-Google-app-credentials-in-Cypress}
 
 To have access to test user credentials within our tests we need to configure
 Cypress to use the [Google](https://google.com) environment variables set in the
@@ -128,7 +128,7 @@ require("dotenv").config();
 
 :::
 
-## Custom Command for Google Authentication
+## Custom Command for Google Authentication {#Custom-Command-for-Google-Authentication}
 
 Next, we will write a command named `loginByGoogleApi` to perform a programmatic
 login into [Google](https://google.com) and set an item in localStorage with the
@@ -214,7 +214,7 @@ is in the
 
 :::
 
-## Adapting a Google App for Testing
+## Adapting a Google App for Testing {#Adapting-a-Google-App-for-Testing}
 
 :::info
 
@@ -248,7 +248,7 @@ Use the `yarn dev:google` command when starting the
 
 :::
 
-### Adapting the back end
+### Adapting the back end {#Adapting-the-back-end}
 
 In order to validate API requests from the frontend, we install
 [express-jwt](https://github.com/auth0/express-jwt) and
@@ -299,7 +299,7 @@ if (process.env.REACT_APP_GOOGLE) {
 // routes ...
 ```
 
-### Adapting the front end
+### Adapting the front end {#Adapting-the-front-end}
 
 We need to update our front end React app to allow for authentication with
 [Google](https://google.com). As mentioned above, the front end uses the

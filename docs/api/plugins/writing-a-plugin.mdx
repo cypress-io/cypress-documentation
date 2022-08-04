@@ -13,7 +13,7 @@ The Plugins API allows you to hook into and extend Cypress behavior.
 
 <WarningPluginsFile />
 
-## Plugins API
+## Plugins API {#Plugins-API}
 
 The [`setupNodeEvents`](/guides/references/configuration#setupNodeEvents)
 function (or deprecated
@@ -35,7 +35,7 @@ variables.
 
 :::
 
-### on
+### on {#on}
 
 `on` is a function that you will use to register listeners on various **events**
 that Cypress exposes.
@@ -55,7 +55,7 @@ on('<event>', (arg1, arg2) => {
 Each event documents its own argument signature. To understand how to use them,
 please [refer to the docs for each one](#List-of-events).
 
-### config
+### config {#config}
 
 `config` is the resolved
 [Cypress configuration](/guides/references/configuration) of the opened project.
@@ -87,9 +87,9 @@ modified from the plugins file.**
 
 [Please check out our API docs for modifying configuration here.](/api/plugins/configuration-api)
 
-### List of events
+### List of events {#List-of-events}
 
-#### The following events are available:
+#### The following events are available: {#The-following-events-are-available}
 
 | Event                                                      | Description                                                                     |
 | ---------------------------------------------------------- | ------------------------------------------------------------------------------- |
@@ -102,7 +102,7 @@ modified from the plugins file.**
 | [`file:preprocessor`](/api/plugins/preprocessors-api)      | Occurs when a spec or spec-related file needs to be transpiled for the browser. |
 | [`task`](/api/commands/task)                               | Occurs in conjunction with the `cy.task` command.                               |
 
-## Execution context
+## Execution context {#Execution-context}
 
 The [`setupNodeEvents`](/guides/references/configuration#setupNodeEvents)
 function (or deprecated
@@ -115,7 +115,7 @@ This is similar to the way Visual Studio Code or Atom works.
 
 This code will be executed using the the Node version that launched Cypress.
 
-### npm modules
+### npm modules {#npm-modules}
 
 When Cypress executes the
 [`setupNodeEvents`](/guides/references/configuration#setupNodeEvents) function
@@ -154,7 +154,7 @@ console.log(process.cwd()) // /Users/janelane/Dev/my-project
 
 :::
 
-## Error handling
+## Error handling {#Error-handling}
 
 The [Cypress configuration file](/guides/references/configuration) is loaded in
 its own child process so it is isolated away from the context that Cypress
@@ -170,7 +170,7 @@ console and even in the Cypress App itself.
 
 Errors in your `setupNodeEvents` function _will not crash_ Cypress.
 
-## File changes
+## File changes {#File-changes}
 
 Normally when writing code in Node, you typically have to restart the process
 after changing any files.

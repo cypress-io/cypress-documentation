@@ -12,7 +12,7 @@ When it comes to component testing, mounting your component is where we
 **Arrange** our component under test. It is analogous to visiting a page in an
 end-to-end test.
 
-## What is the Mount Function?
+## What is the Mount Function? {#What-is-the-Mount-Function}
 
 We ship a `mount` function for each front-end framework Cypress supports, which
 is imported from the `cypress` package. It is responsible for rendering
@@ -29,7 +29,7 @@ Vue 2 projects will import the `mount` function from `cypress/vue2` like so:
 import { mount } from 'cypress/vue2'
 ```
 
-### Using `cy.mount()` Anywhere
+### Using `cy.mount()` Anywhere {#Using-cymount-Anywhere}
 
 While you can use the `mount` function in your tests, we recommend using
 [`cy.mount()`](/api/commands/mount), which is added as a
@@ -50,7 +50,7 @@ plugins or other global app-level setups in your Vue app, you can configure them
 here. For more info, see the
 [Customizing cy.mount() guide for Vue](/guides/component-testing/custom-mount-vue).
 
-### Your First Component Test
+### Your First Component Test {#Your-First-Component-Test}
 
 Now that you have a component and know how to mount it let's write our first
 test.
@@ -80,7 +80,7 @@ Utils rely on is rarely necessary.
 
 :::
 
-## Running the Test
+## Running the Test {#Running-the-Test}
 
 Now it's time to see the test in action. Open up Cypress if it is not already
 running:
@@ -111,7 +111,7 @@ tools to inspect and debug both your tests and the component's code.
 Feel free to play around with the `Stepper` component by interacting with the
 increment and decrement buttons.
 
-### Optional JSX Support
+### Optional JSX Support {#Optional-JSX-Support}
 
 The mount command supports the Vue Test Utils object syntax, but it can also be
 used with Vue's JSX syntax (provided that you've configured your bundler to
@@ -122,7 +122,7 @@ version you'd use with your application's version of Vue.
 
 The rest of this guide will show tests in Vue Test Utils syntax and JSX.
 
-## Cypress and Testing Library
+## Cypress and Testing Library {#Cypress-and-Testing-Library}
 
 While we don't use [Testing Library](https://testing-library.com/) in this
 guide, many people might wonder if it is possible to do so with Cypress and the
@@ -160,7 +160,7 @@ import '@testing-library/cypress/add-commands'
 For TypeScript users, types are packaged along with the Testing Library package.
 Refer to the latest setup instructions in the Testing Library docs.
 
-## Next Steps
+## Next Steps {#Next-Steps}
 
 Now that we have our component mounted, next we will learn how to write tests
 against it.

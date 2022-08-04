@@ -4,7 +4,7 @@ title: Bitbucket Pipelines
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - How to run Cypress tests with Bitbucket Pipelines as part of CI/CD pipeline
 - How to parallelize Cypress test runs withins Bitbucket Pipelines
@@ -20,7 +20,7 @@ user management to configure."
 Detailed documentation is available in the
 [Bitbucket Pipelines Documentation](https://support.atlassian.com/bitbucket-cloud/docs/get-started-with-bitbucket-pipelines/).
 
-## Basic Setup
+## Basic Setup {#Basic-Setup}
 
 The example below shows a basic setup and job to use
 [Bitbucket Pipelines](https://bitbucket.org/product/features/pipelines) to run
@@ -63,7 +63,7 @@ example project and place the above Bitbucket Pipelines configuration in
   - Start the project web server (`npm start:ci`)
   - Run the Cypress tests within our GitHub/Bitbucket repository within Electron
 
-## Testing in Chrome and Firefox with Cypress Docker Images
+## Testing in Chrome and Firefox with Cypress Docker Images {#Testing-in-Chrome-and-Firefox-with-Cypress-Docker-Images}
 
 The Cypress team maintains the official
 [Docker Images](https://github.com/cypress-io/cypress-docker-images) for running
@@ -86,7 +86,7 @@ pipelines:
           - npx cypress run --browser firefox
 ```
 
-## Caching Dependencies and Build Artifacts
+## Caching Dependencies and Build Artifacts {#Caching-Dependencies-and-Build-Artifacts}
 
 Per the
 [Caches documentation](https://support.atlassian.com/bitbucket-cloud/docs/cache-dependencies/),
@@ -131,7 +131,7 @@ definitions:
     cypress: $HOME/.cache/Cypress
 ```
 
-## Parallelization
+## Parallelization {#Parallelization}
 
 The [Cypress Dashboard](/guides/dashboard/introduction) offers the ability to
 [parallelize and group test runs](/guides/guides/parallelization) along with
@@ -146,7 +146,7 @@ understand the two different types of jobs that we will declare:
 - **Worker Job**: A job that handles execution of Cypress tests and depends on
   the _install job_.
 
-### Install Job
+### Install Job {#Install-Job}
 
 The separation of installation from test running is necessary when running
 parallel jobs. It allows for reuse of various build steps aided by caching.
@@ -173,7 +173,7 @@ e2e: &e2e
     - cypress/videos/**
 ```
 
-### Worker Jobs
+### Worker Jobs {#Worker-Jobs}
 
 Next, the worker jobs under `pipelines` that will run Cypress tests with Chrome
 in parallel.
@@ -264,7 +264,7 @@ recording test results to the
 
 :::
 
-## Using the Cypress Dashboard with Bitbucket Pipelines
+## Using the Cypress Dashboard with Bitbucket Pipelines {#Using-the-Cypress-Dashboard-with-Bitbucket-Pipelines}
 
 In the Bitbucket Pipelines configuration we have defined in the previous
 section, we are leveraging three useful features of the
@@ -298,7 +298,7 @@ section, we are leveraging three useful features of the
    browser into a group labeled "UI - Chrome" in the
    [Cypress Dashboard](https://on.cypress.io/dashboard) report.
 
-## Cypress Real World Example with Bitbucket Pipelines
+## Cypress Real World Example with Bitbucket Pipelines {#Cypress-Real-World-Example-with-Bitbucket-Pipelines}
 
 A complete CI workflow against multiple browsers, viewports and operating
 systems is available in the

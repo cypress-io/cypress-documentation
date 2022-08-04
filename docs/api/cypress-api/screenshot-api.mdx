@@ -15,13 +15,13 @@ during test failures. You can set defaults for the following:
 - Whether to wait for the Command Log to synchronize before taking the
   screenshot.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 Cypress.Screenshot.defaults(options)
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> options** **_(Object)_**
 
@@ -38,9 +38,9 @@ An object containing one or more of the following:
 | `onBeforeScreenshot`         | `null`       | A callback before a (non-failure) screenshot is taken. For an element capture, the argument is the element being captured. For other screenshots, the argument is the `$el`.                                                                                                                                                                                                                                                                                                                                                   |
 | `onAfterScreenshot`          | `null`       | A callback after a (non-failure) screenshot is taken. For an element capture, the first argument is the element being captured. For other screenshots, the first argument is the `$el`. The second argument is properties concerning the screenshot, including the path it was saved to and the dimensions of the saved screenshot.                                                                                                                                                                                            |
 
-## Examples
+## Examples {#Examples}
 
-### Blackout elements before screenshot
+### Blackout elements before screenshot {#Blackout-elements-before-screenshot}
 
 Elements that match the specified selectors will be blacked out from the
 screenshot, but only when the `capture` option is `viewport`. `blackout` is
@@ -52,7 +52,7 @@ Cypress.Screenshot.defaults({
 })
 ```
 
-### Take a screenshot of the entire Cypress App
+### Take a screenshot of the entire Cypress App {#Take-a-screenshot-of-the-entire-Cypress-App}
 
 By default, [`cy.screenshot()`](/api/commands/screenshot) only captures your
 application under test. You may want it to capture the entire Cypress App for
@@ -64,7 +64,7 @@ Cypress.Screenshot.defaults({
 })
 ```
 
-### Allow timers and animations to keep running
+### Allow timers and animations to keep running {#Allow-timers-and-animations-to-keep-running}
 
 By default, JavaScript timers and CSS animations are disabled to try to prevent
 changes to your application under test while the screenshot is taken, but you
@@ -76,7 +76,7 @@ Cypress.Screenshot.defaults({
 })
 ```
 
-### Disable screenshots on run failures
+### Disable screenshots on run failures {#Disable-screenshots-on-run-failures}
 
 By default, Cypress automatically takes a screenshot when there is a failure
 when running `cypress run`, but you can disable this.
@@ -87,7 +87,7 @@ Cypress.Screenshot.defaults({
 })
 ```
 
-### Overwrite existing screenshots
+### Overwrite existing screenshots {#Overwrite-existing-screenshots}
 
 By default, Cypress saves unique screenshot files for every screenshot that is
 taken within the same test. You can choose to overwrite existing screenshots
@@ -99,7 +99,7 @@ Cypress.Screenshot.defaults({
 })
 ```
 
-### Scale `viewport` and `fullPage` captures
+### Scale `viewport` and `fullPage` captures {#Scale-viewport-and-fullPage-captures}
 
 By default, scaling the application under test is turned off during when the
 `capture` option is `viewport` to prevent differences between screenshots on
@@ -113,7 +113,7 @@ Cypress.Screenshot.defaults({
 })
 ```
 
-### Change the DOM using `onBeforeScreenshot` and `onAfterScreenshot`
+### Change the DOM using `onBeforeScreenshot` and `onAfterScreenshot` {#Change-the-DOM-using-onBeforeScreenshot-and-onAfterScreenshot}
 
 The `onBeforeScreenshot` and `onAfterScreenshot` callbacks provide an
 opportunity to synchronously change the DOM to create a more consistent state
@@ -144,7 +144,7 @@ Cypress.Screenshot.defaults({
 })
 ```
 
-### Get properties from the `onAfterScreenshot` callback
+### Get properties from the `onAfterScreenshot` callback {#Get-properties-from-the-onAfterScreenshot-callback}
 
 ```javascript
 Cypress.Screenshot.defaults({
@@ -166,19 +166,19 @@ Cypress.Screenshot.defaults({
 })
 ```
 
-## Notes
+## Notes {#Notes}
 
-#### Where to put screenshot configuration
+#### Where to put screenshot configuration {#Where-to-put-screenshot-configuration}
 
 <SupportFileConfiguration />
 
-## History
+## History {#History}
 
 | Version                                     | Changes                                 |
 | ------------------------------------------- | --------------------------------------- |
 | [8.7.0](/guides/references/changelog#8-7-0) | Added `overwrite` configuration option. |
 
-## See also
+## See also {#See-also}
 
 - [`cy.screenshot()`](/api/commands/screenshot)
 - [Dashboard Service](/guides/dashboard/introduction)

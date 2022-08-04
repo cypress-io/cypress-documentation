@@ -5,7 +5,7 @@ sidebar_position: 50
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - How Cypress calculates visibility
 - How Cypress ensures elements are actionable
@@ -14,7 +14,7 @@ sidebar_position: 50
 
 :::
 
-## Actionability
+## Actionability {#Actionability}
 
 Some commands in Cypress are for interacting with the DOM such as:
 
@@ -58,12 +58,12 @@ Whenever Cypress cannot interact with an element, it could fail at any of the
 above steps. You will usually get an error explaining why the element was not
 found to be actionable.
 
-### Visibility
+### Visibility {#Visibility}
 
 Cypress checks a lot of things to determine an element's visibility. The
 following calculations factor in CSS translations and transforms.
 
-#### An element is considered hidden if:
+#### An element is considered hidden if: {#An-element-is-considered-hidden-if}
 
 - Its `width` or `height` is `0`.
 - Its CSS property (or ancestors) is `visibility: hidden`.
@@ -97,11 +97,11 @@ will perform the action.
 
 :::
 
-### Disability
+### Disability {#Disability}
 
 Cypress checks whether an element's `disabled` property is `true`.
 
-### Detached
+### Detached {#Detached}
 
 When many applications rerender the DOM, they actually remove the DOM element
 and insert a new DOM element in its place with the newly change attributes.
@@ -110,12 +110,12 @@ Cypress checks whether an element you are making assertions is detached from the
 DOM. This checks that the element is still within the `document` of the
 application under test.
 
-### Readonly
+### Readonly {#Readonly}
 
 Cypress checks whether an element's `readonly` property is set during
 [.type()](/api/commands/type).
 
-### Animations
+### Animations {#Animations}
 
 Cypress will automatically determine if an element is animating and wait until
 it stops.
@@ -136,7 +136,7 @@ When coming up with this value, we did a few experiments to find a speed that
 You can also turn off our checks for animations with the configuration option
 [`waitForAnimations`](/guides/references/configuration#Actionability).
 
-### Covering
+### Covering {#Covering}
 
 We also ensure that the element we're attempting to interact with isn't covered
 by a parent element.
@@ -169,7 +169,7 @@ we're attempting to interact with. In those cases, the event fires on the child.
 We even note this for you in the
 [Command Log](/guides/core-concepts/cypress-app#Command-Log).
 
-### Scrolling
+### Scrolling {#Scrolling}
 
 Before interacting with an element, we will _always_ scroll it into view
 (including any of its parent containers). Even if the element was visible
@@ -205,7 +205,7 @@ centered during scrolling of action commands. Accepted values are `'center'`,
 `'top'`, `'bottom'`, `'nearest'`, and `false`, with `false` disabling scrolling
 altogether.
 
-### Coordinates
+### Coordinates {#Coordinates}
 
 After we verify the element is actionable, Cypress will then fire all of the
 appropriate events and corresponding default actions. Usually these events'
@@ -232,7 +232,7 @@ coordinates of the event.
   alt="Hitbox"
 ></DocsImage>
 
-## Debugging
+## Debugging {#Debugging}
 
 It can be difficult to debug problems when elements are not considered
 actionable by Cypress.
@@ -276,7 +276,7 @@ you a much lower level view into how Cypress works.
 cy.get("button").debug().click();
 ```
 
-## Forcing
+## Forcing {#Forcing}
 
 While the above checks are super helpful at finding situations that would
 prevent your users from interacting with elements - sometimes they can get in

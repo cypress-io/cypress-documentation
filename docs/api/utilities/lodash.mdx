@@ -5,13 +5,13 @@ title: Cypress._
 Cypress automatically includes [lodash](https://lodash.com/) and exposes it as
 `Cypress._`. Call any valid Lodash method on `Cypress._`
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 Cypress._.method();
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -25,9 +25,9 @@ Cypress._.keys(obj);
 cy._.keys(obj); // Errors, cannot be chained off 'cy'
 ```
 
-## Examples
+## Examples {#Examples}
 
-### `_.each`
+### `_.each` {#_each}
 
 ```javascript
 // set local reference to lodash and jquery
@@ -43,7 +43,7 @@ cy.get("li").then(($li) => {
 });
 ```
 
-### `_.chain`
+### `_.chain` {#_chain}
 
 ```javascript
 cy
@@ -56,6 +56,6 @@ cy
   });
 ```
 
-## See also
+## See also {#See-also}
 
 - [Bundled Libraries](/guides/references/bundled-libraries)

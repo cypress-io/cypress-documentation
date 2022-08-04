@@ -13,13 +13,13 @@ with an `@` prefix.
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .as(aliasName)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -36,7 +36,7 @@ cy.spy(win, 'fetch').as('winFetch') // Alias spy as @winFetch
 cy.as('foo') // Errors, cannot be chained off 'cy'
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> aliasName** **_(String)_**
 
@@ -44,14 +44,14 @@ The name of the alias to be referenced later within a
 [`cy.get()`](/api/commands/get) or [`cy.wait()`](/api/commands/wait) command
 using an `@` prefix.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.as()` yields the same subject it was given from the previous
 command.
 
-## Examples
+## Examples {#Examples}
 
-### DOM element
+### DOM element {#DOM-element}
 
 Aliasing a DOM element and then using [`cy.get()`](/api/commands/get) to access
 the aliased element.
@@ -63,7 +63,7 @@ it('disables on click', () => {
 })
 ```
 
-### Intercept
+### Intercept {#Intercept}
 
 Aliasing an intercepted route defined with
 [`cy.intercept()`](/api/commands/intercept) and then using
@@ -85,7 +85,7 @@ cy.wait('@editUser').its('url').should('contain', 'users')
 More examples of aliasing routes can be found
 [here](/api/commands/intercept#Aliasing-an-intercepted-route).
 
-### Fixture
+### Fixture {#Fixture}
 
 Aliasing [`cy.fixture()`](/api/commands/fixture) data and then using `this` to
 access it via the alias.
@@ -110,9 +110,9 @@ of `this`.
 
 :::
 
-## Notes
+## Notes {#Notes}
 
-### Aliases are reset
+### Aliases are reset {#Aliases-are-reset}
 
 :::caution
 
@@ -121,15 +121,15 @@ of `this`.
 
 :::
 
-### Reserved words
+### Reserved words {#Reserved-words}
 
-#### Alias names cannot match some reserved words.
+#### Alias names cannot match some reserved words. {#Alias-names-cannot-match-some-reserved-words}
 
 Some strings are not allowed as alias names since they are reserved words in
 Cypress. These words include: `test`, `runnable`, `timeout`, `slow`, `skip`, and
 `inspect`.
 
-### `as` is asynchronous
+### `as` is asynchronous {#as-is-asynchronous}
 
 Remember that **Cypress commands are async**, including `.as()`.
 
@@ -170,22 +170,22 @@ describe('A fixture', () => {
 })
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.as()` requires being chained off a previous command.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.as()` is a utility command.</li><li>`.as()` will not run assertions.
 Assertions will pass through as if this command did not exist.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.as()` cannot time out.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Alias several routes_**
 
@@ -201,7 +201,7 @@ Aliases of routes display in the routes instrument panel:
 
 <DocsImage src="/img/api/as/routes-table-in-command-log.png" alt="Command log for route" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`cy.get()`](/api/commands/get)
 - [`cy.wait()`](/api/commands/wait)

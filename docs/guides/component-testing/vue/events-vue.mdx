@@ -17,7 +17,7 @@ would; however your assertions are focused on the developer's expectations. Does
 that component emit the correct events with the right arguments at the proper
 time when interacting with the component?
 
-## Testing Emitted Events
+## Testing Emitted Events {#Testing-Emitted-Events}
 
 In the Stepper component, we bind native DOM click listeners with callbacks to
 buttons that increment and decrement the internal counter value.
@@ -88,13 +88,13 @@ is emitted to the consuming component.
 
 In Cypress, we use "spies" to accomplish this.
 
-## Using Spies
+## Using Spies {#Using-Spies}
 
 How do we test that the custom `change` event is firing the incremented and
 decremented values for the Stepper? We can use spies when we **Arrange**,
 **Act**, and **Assert** in our test.
 
-### Arrange
+### Arrange {#Arrange}
 
 First, we **Arrange** our test.
 
@@ -140,7 +140,7 @@ As such, JSX may feel more idiomatic.
 
 :::
 
-### Act
+### Act {#Act}
 
 Next, we **Act** by firing a click event for the increment button.
 
@@ -168,7 +168,7 @@ it('clicking + fires a change event with the incremented value', () => {
 
 </VueSyntaxTabs>
 
-### Assert
+### Assert {#Assert}
 
 Finally, we **Assert** that the `change` event was emitted with the correct
 value.
@@ -211,7 +211,7 @@ end-to-end tests because setup and visiting pages are expensive. Longer tests
 are not necessarily a problem for component tests because they are comparatively
 quick.
 
-## Using Vue Test Utils
+## Using Vue Test Utils {#Using-Vue-Test-Utils}
 
 In order to encourage interoperability between your existing component tests and
 Cypress, we support using Vue Test Utils' API.
@@ -301,13 +301,13 @@ create a spy for every event emitted.
 This auto-spying behavior could be useful for components that emit _many_ custom
 events.
 
-## Learn More
+## Learn More {#Learn-More}
 
 Spying is a powerful technique for observing behavior in Cypress. Learn more
 about using Spies in our
 [Stubs, Spies, and Clocks guide](/guides/guides/stubs-spies-and-clocks).
 
-## What's Next?
+## What's Next? {#Whats-Next}
 
 We're going to create a container component and learn how to test slots.
 

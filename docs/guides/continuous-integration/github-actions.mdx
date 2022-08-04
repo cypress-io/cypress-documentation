@@ -4,7 +4,7 @@ title: GitHub Actions
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - How to run Cypress tests with GitHub Actions as part of CI/CD pipeline
 - How to parallelize Cypress test runs within GitHub Actions
@@ -16,7 +16,7 @@ title: GitHub Actions
 
 :::info
 
-## GitHub Actions + Cypress Screencasts
+## GitHub Actions + Cypress Screencasts {#GitHub-Actions--Cypress-Screencasts}
 
 1. [What is Continuous Integration?](https://youtu.be/USX6AntcPyg)
 2. [Actions & Workflows](https://youtu.be/N0TOFWy1Xvg)
@@ -33,7 +33,7 @@ provide a way to **automate, customize, and execute your software development
 workflows** within your GitHub repository. Detailed documentation is available
 in the [GitHub Action Documentation](https://docs.github.com/en/actions).
 
-## Cypress GitHub Action
+## Cypress GitHub Action {#Cypress-GitHub-Action}
 
 <DocsVideo src="https://youtube.com/embed/N0TOFWy1Xvg"></DocsVideo>
 
@@ -49,7 +49,7 @@ running Cypress tests. This action provides npm installation, custom caching,
 additional configuration options and simplifies setup of advanced workflows with
 Cypress in the GitHub Actions platform.
 
-## Basic Setup
+## Basic Setup {#Basic-Setup}
 
 <DocsVideo src="https://youtube.com/embed/vVr7DXDdUks"></DocsVideo>
 
@@ -102,7 +102,7 @@ example project and place the above GitHub Action configuration in
   - Start the project web server (`npm start`)
   - Run the Cypress tests within our GitHub repository within Electron.
 
-## Testing in Chrome and Firefox with Cypress Docker Images
+## Testing in Chrome and Firefox with Cypress Docker Images {#Testing-in-Chrome-and-Firefox-with-Cypress-Docker-Images}
 
 GitHub Actions provides the option to specify a container image for the job.
 Cypress offers various
@@ -137,7 +137,7 @@ jobs:
           browser: firefox
 ```
 
-## Caching Dependencies and Build Artifacts
+## Caching Dependencies and Build Artifacts {#Caching-Dependencies-and-Build-Artifacts}
 
 The Cypress team maintains the official
 [Cypress GitHub Action](https://github.com/marketplace/actions/cypress-io) for
@@ -221,7 +221,7 @@ jobs:
           build: yarn build
 ```
 
-## Parallelization
+## Parallelization {#Parallelization}
 
 <DocsVideo src="https://youtube.com/embed/96Yn_IiQUJI"></DocsVideo>
 
@@ -245,7 +245,7 @@ understand the two different types of GitHub Action jobs that we will declare:
 - **Worker Job**: A job that handles execution of Cypress tests and depends on
   the _install job_.
 
-### Install Job
+### Install Job {#Install-Job}
 
 The separation of installation from test running is necessary when running
 parallel jobs. It allows for reuse of various build steps aided by caching.
@@ -289,7 +289,7 @@ jobs:
           path: build
 ```
 
-### Worker Jobs
+### Worker Jobs {#Worker-Jobs}
 
 Next, we define the worker job named `ui-chrome-tests` that will run Cypress
 tests with Chrome as part of a parallelized matrix strategy.
@@ -366,7 +366,7 @@ requires setting up recording to the
 
 :::
 
-#### Setting up Parallelization
+#### Setting up Parallelization {#Setting-up-Parallelization}
 
 To setup multiple containers to run in parallel, the `matrix` option of the
 `strategy` configuration can be set to `containers: [1, 2, 3, 4, 5]`, which will
@@ -404,7 +404,7 @@ ui-chrome-tests:
       containers: [1, 2, 3, 4, 5]
 ```
 
-## Using the Cypress Dashboard with GitHub Actions
+## Using the Cypress Dashboard with GitHub Actions {#Using-the-Cypress-Dashboard-with-GitHub-Actions}
 
 <DocsVideo src="https://youtube.com/embed/Oqq-_QZWzhg"></DocsVideo>
 
@@ -440,7 +440,7 @@ are leveraging three useful features of the
    browser into a group labeled "UI - Chrome" in the
    [Cypress Dashboard](https://on.cypress.io/dashboard) report.
 
-## Cypress Real World Example with GitHub Actions
+## Cypress Real World Example with GitHub Actions {#Cypress-Real-World-Example-with-GitHub-Actions}
 
 A complete CI workflow against multiple browsers, viewports and operating
 systems is available in the
@@ -451,9 +451,9 @@ file.
 
 <DocsImage src="/img/guides/github-actions/rwa-run-matrix.png" alt="Cypress Real World App GitHub Actions Matrix"></DocsImage>
 
-## Common Problems and Solutions
+## Common Problems and Solutions {#Common-Problems-and-Solutions}
 
-### Re-run jobs passing with empty tests
+### Re-run jobs passing with empty tests {#Re-run-jobs-passing-with-empty-tests}
 
 We recommend passing the `GITHUB_TOKEN` secret (created by the GH Action
 automatically) as an environment variable. This will allow the accurate
@@ -479,7 +479,7 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 ```
 
-### Pull requests commit message is `merge SHA into SHA`
+### Pull requests commit message is `merge SHA into SHA` {#Pull-requests-commit-message-is-merge-SHA-into-SHA}
 
 You can overwrite the commit message sent to the Dashboard by setting an
 environment variable. See
@@ -518,6 +518,6 @@ for more details.
 
 :::
 
-## See also
+## See also {#See-also}
 
 - [Test anything that runs in the browser with Cypress and GitHub Actions](https://www.youtube.com/watch?v=gokM_zEmWLA)

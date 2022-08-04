@@ -4,14 +4,14 @@ title: window
 
 Get the `window` object of the page that is currently active.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.window()
 cy.window(options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -19,7 +19,7 @@ cy.window(options)
 cy.window()
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> options** **_(Object)_**
 
@@ -30,15 +30,15 @@ Pass in an options object to change the default behavior of `cy.window()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.window()` to resolve before [timing out](#Timeouts)                 |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `cy.window()` yields the `window` object
 
-## Examples
+## Examples {#Examples}
 
-### No Args
+### No Args {#No-Args}
 
-#### Yield the remote window object
+#### Yield the remote window object {#Yield-the-remote-window-object}
 
 :::visit-mount-example
 
@@ -51,7 +51,7 @@ cy.window().then((win) => {
 
 :::
 
-#### Check a custom property
+#### Check a custom property {#Check-a-custom-property}
 
 If the application sets a custom property, like:
 
@@ -102,7 +102,7 @@ it('equals bar', () => {
 })
 ```
 
-### Start tests when app is ready
+### Start tests when app is ready {#Start-tests-when-app-is-ready}
 
 If an application takes a while to start, it might "signal" its readiness by
 setting a property that Cypress can wait for.
@@ -142,17 +142,17 @@ for more examples.
 
 :::
 
-### Options
+### Options {#Options}
 
-#### Passes timeout through to [`.should()`](/api/commands/should) assertion
+#### Passes timeout through to [`.should()`](/api/commands/should) assertion {#Passes-timeout-through-to-should-assertion}
 
 ```javascript
 cy.window({ timeout: 10000 }).should('have.property', 'foo')
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Cypress uses 2 different windows.
+### Cypress uses 2 different windows. {#Cypress-uses-2-different-windows}
 
 Let's say you want to check the type of the events. You might write code like
 below:
@@ -199,24 +199,24 @@ it('should trigger KeyboardEvent with .type inside Cypress event listener', (don
 })
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.window()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.window()` will automatically
 [retry](/guides/core-concepts/retry-ability) until all chained assertions have
 passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.window()` can time out waiting for assertions you've added to
 pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Get the window_**
 
@@ -233,14 +233,14 @@ following:
 
 <DocsImage src="/img/api/window/console-shows-the-applications-window-object-being-tested.png" alt="Console Log window" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                       | Changes                                                                                     |
 | --------------------------------------------- | ------------------------------------------------------------------------------------------- |
 | [0.20.0](/guides/references/changelog#0-20-0) | Can call [.focus()](/api/commands/focus) and [.blur()](/api/commands/blur) on `cy.window()` |
 | [0.11.6](/guides/references/changelog#0-11-6) | `cy.window()` logs to Command Log                                                           |
 
-## See also
+## See also {#See-also}
 
 - [`cy.visit()`](/api/commands/visit)
 - [`cy.document()`](/api/commands/document)

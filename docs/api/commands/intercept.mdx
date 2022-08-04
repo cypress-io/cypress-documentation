@@ -24,7 +24,7 @@ All intercepts are automatically cleared before every test.
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```js
 // spying only
@@ -61,7 +61,7 @@ See
 [routeHandler](/api/commands/intercept#routeHandler-lt-code-gtFunctionlt-code-gt)
 argument
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -89,9 +89,9 @@ cy.intercept('/users*', { hostname: 'localhost' }, (req) => {
 })
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
-#### **<Icon name="angle-right" /> method** **_(String)_**
+#### **<Icon name="angle-right" /> method** **_(String)_** {#Icon-nameangle-right--method-_String_}
 
 Match the route to a specific
 [HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) (`GET`,
@@ -103,14 +103,14 @@ If no method is defined Cypress will match all requests by default.
 
 :::
 
-#### **<Icon name="angle-right" /> url** **_(String, Glob, RegExp)_**
+#### **<Icon name="angle-right" /> url** **_(String, Glob, RegExp)_** {#Icon-nameangle-right--url-_String-Glob-RegExp_}
 
 Specify the URL to match. See [Matching `url`][match-url] for examples.
 
 Alternatively, specify the URL via the [`routeMatcher`][arg-routematcher]
 argument (below).
 
-#### **<Icon name="angle-right" /> routeMatcher** **_(`RouteMatcher`)_**
+#### **<Icon name="angle-right" /> routeMatcher** **_(`RouteMatcher`)_** {#Icon-nameangle-right--routeMatcher-_RouteMatcher_}
 
 `routeMatcher` is an object used to match the incoming HTTP requests with this
 intercepted route.
@@ -138,7 +138,7 @@ minimatch option applied.
 
 See [examples](#With-RouteMatcher) below.
 
-#### <Icon name="angle-right" /> staticResponse (<code>[StaticResponse][staticresponse]</code>)
+#### <Icon name="angle-right" /> staticResponse (<code>[StaticResponse][staticresponse]</code>) {#Icon-nameangle-right--staticResponse-codeStaticResponsestaticresponsecode}
 
 By passing in a `StaticResponse` as the last argument, you can
 [statically define (stub) a response](#Stubbing-a-response) for matched
@@ -149,7 +149,7 @@ See
 [Stubbing a response with a `StaticResponse` object](#With-a-StaticResponse-object)
 for an example.
 
-#### <Icon name="angle-right" /> routeHandler (<code>Function</code>)
+#### <Icon name="angle-right" /> routeHandler (<code>Function</code>) {#Icon-nameangle-right--routeHandler-codeFunctioncode}
 
 The `routeHandler` function is called whenever a request is matched, with the
 first argument being the request object. From inside the callback, you have
@@ -159,7 +159,7 @@ send a response, access the real response, and more.
 See ["Intercepted requests"][req] and
 [Request/Response Modification with `routeHandler`](#Request-Response-Modification-with-routeHandler).
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `cy.intercept()` yields `null`.
 - `cy.intercept()` can be aliased, but otherwise cannot be chained further.
@@ -169,7 +169,7 @@ See ["Intercepted requests"][req] and
   [Using the yielded object](#Using-the-yielded-object) for examples of how to
   use this object.
 
-## Examples
+## Examples {#Examples}
 
 :::info
 
@@ -181,7 +181,7 @@ tests.
 
 :::
 
-### Matching `url`
+### Matching `url` {#Matching-url}
 
 You can provide the exact [URL](#Arguments) to match or use pattern-matching to
 match many URLs at once, either with globs or with regex. See
@@ -198,7 +198,7 @@ cy.intercept('/users?_limit=*')
 cy.intercept(/\/users\?_limit=(3|5)$/)
 ```
 
-### Matching `method`
+### Matching `method` {#Matching-method}
 
 :::caution
 
@@ -217,7 +217,7 @@ cy.intercept('GET', '/users')
 // ...but not this: POST http://localhost/users
 ```
 
-### Matching with [RouteMatcher](#routeMatcher-RouteMatcher)
+### Matching with [RouteMatcher](#routeMatcher-RouteMatcher) {#Matching-with-RouteMatcher}
 
 Specifying a `method` and `url` to match can also be acheived by passing the
 `routeMatcher` object into `cy.intercept` instead:
@@ -260,7 +260,7 @@ cy.intercept(
 cy.intercept('/temporary-error', { times: 1 }, { forceNetworkError: true })
 ```
 
-### Pattern Matching
+### Pattern Matching {#Pattern-Matching}
 
 ```js
 // match updates to the `/users` endpoint using glob matching
@@ -282,7 +282,7 @@ cy.intercept({
 })
 ```
 
-### Aliasing an intercepted route
+### Aliasing an intercepted route {#Aliasing-an-intercepted-route}
 
 While `cy.intercept` doesn't yield anything, you can chain
 [`.as`](/api/commands/as) to it to create an
@@ -294,7 +294,7 @@ cy.intercept('GET', '/users').as('getAllUsers')
 cy.intercept('POST', '/users').as('createUser')
 ```
 
-### Aliasing individual requests
+### Aliasing individual requests {#Aliasing-individual-requests}
 
 Aliases can be set on a per-request basis by setting the `alias` property of the
 intercepted request. This is especially useful when intercepting GraphQL
@@ -318,13 +318,13 @@ For more guidance around aliasing requests with GraphQL, see
 
 :::
 
-### Waiting on a request
+### Waiting on a request {#Waiting-on-a-request}
 
 Use [cy.wait()](/api/commands/wait) with
 [aliasing an intercepted route](#aliasing-an-intercepted-route) to wait for the
 request/response cycle to complete.
 
-#### With URL
+#### With URL {#With-URL}
 
 ```js
 cy.intercept('http://example.com/settings').as('getSettings')
@@ -333,7 +333,7 @@ cy.intercept('http://example.com/settings').as('getSettings')
 cy.wait('@getSettings')
 ```
 
-#### With [RouteMatcher](#routeMatcher-RouteMatcher)
+#### With [RouteMatcher](#routeMatcher-RouteMatcher) {#With-RouteMatcher}
 
 ```js
 cy.intercept({
@@ -346,7 +346,7 @@ cy.intercept({
 cy.wait('@search')
 ```
 
-#### Using the yielded object
+#### Using the yielded object {#Using-the-yielded-object}
 
 Using [cy.wait()](/api/commands/wait) on a `cy.intercept()` route alias yields
 an interception object which represents the request/response cycle:
@@ -375,7 +375,7 @@ cy.wait('@someRoute').its('response.statusCode').should('eq', 500)
 cy.wait('@someRoute').its('response.body').should('include', 'id')
 ```
 
-#### Waiting on errors
+#### Waiting on errors {#Waiting-on-errors}
 
 You can use [cy.wait()](/api/commands/wait) to wait on requests that end with
 network errors:
@@ -388,9 +388,9 @@ cy.intercept('GET', '/should-err', { forceNetworkError: true }).as('err')
 cy.wait('@err').should('have.property', 'error')
 ```
 
-### Stubbing a response
+### Stubbing a response {#Stubbing-a-response}
 
-#### With a string
+#### With a string {#With-a-string}
 
 ```js
 // requests to '/update' will be fulfilled
@@ -398,7 +398,7 @@ cy.wait('@err').should('have.property', 'error')
 cy.intercept('/update', 'success')
 ```
 
-#### With a fixture
+#### With a fixture {#With-a-fixture}
 
 ```js
 // requests to '/users.json' will be fulfilled
@@ -406,7 +406,7 @@ cy.intercept('/update', 'success')
 cy.intercept('/users.json', { fixture: 'users.json' })
 ```
 
-#### With a `StaticResponse` object
+#### With a `StaticResponse` object {#With-a-StaticResponse-object}
 
 A [`StaticResponse`][staticresponse] object represents a response to an HTTP
 request, and can be used to stub routes:
@@ -449,7 +449,7 @@ cy.intercept('/not-found', {
 
 See also [`StaticResponse` object][staticresponse].
 
-### Using the **`routeHandler`** function
+### Using the **`routeHandler`** function {#Using-the-routeHandler-function}
 
 By specifying a [`routeHandler`][arg-routehandler] function as the last argument
 to `cy.intercept`, you'll have access to the entire request-response session,
@@ -474,7 +474,7 @@ should be familiar with this syntax.
 
 :::
 
-#### Asserting on a request
+#### Asserting on a request {#Asserting-on-a-request}
 
 ```js
 cy.intercept('POST', '/organization', (req) => {
@@ -482,7 +482,7 @@ cy.intercept('POST', '/organization', (req) => {
 })
 ```
 
-#### Modifying an outgoing request
+#### Modifying an outgoing request {#Modifying-an-outgoing-request}
 
 You can use the request handler callback to modify the [intercepted request
 object][req] before it is sent.
@@ -500,7 +500,7 @@ cy.intercept('POST', '/login', (req) => {
 })
 ```
 
-#### Adding a header to an outgoing request
+#### Adding a header to an outgoing request {#Adding-a-header-to-an-outgoing-request}
 
 You can add a header to an outgoing request, or modify an existing header
 
@@ -514,7 +514,7 @@ cy.intercept('/req-headers', (req) => {
 request has already left the browser. You can still confirm the header was added
 by waiting on the intercept as shown below:
 
-#### Waiting on the intercept
+#### Waiting on the intercept {#Waiting-on-the-intercept}
 
 ```js
 cy.intercept('/req-headers', (req) => {
@@ -528,7 +528,7 @@ cy.wait('@headers')
   .should('have.property', 'x-custom-headers', 'added by cy.intercept')
 ```
 
-#### Add, modify or delete a header to all outgoing requests
+#### Add, modify or delete a header to all outgoing requests {#Add-modify-or-delete-a-header-to-all-outgoing-requests}
 
 You can add, modify or delete a header to all outgoing requests using a
 `beforeEach()` in the
@@ -544,7 +544,7 @@ beforeEach(() => {
 })
 ```
 
-#### Dynamically stubbing a response
+#### Dynamically stubbing a response {#Dynamically-stubbing-a-response}
 
 You can use the [`req.reply()`][req-reply] function to dynamically control the
 response to a request.
@@ -572,7 +572,7 @@ cy.intercept('/billing', (req) => {
 See ["Intercepted requests"][req] for more information on the `req` object and
 its properties and methods.
 
-#### Returning a Promise
+#### Returning a Promise {#Returning-a-Promise}
 
 If a Promise is returned from the route callback, it will be awaited before
 continuing with the request.
@@ -587,7 +587,7 @@ cy.intercept('POST', '/login', (req) => {
 })
 ```
 
-#### Passing a request to the next request handler
+#### Passing a request to the next request handler {#Passing-a-request-to-the-next-request-handler}
 
 If [`req.reply()`][req-reply] or [`req.continue()`][req-continue] is not
 explicitly called inside of a request handler, requests will pass to the next
@@ -614,7 +614,7 @@ cy.intercept('POST', 'http://api.company.com/widgets', (req) => {
 // real destination
 ```
 
-### Intercepting a response
+### Intercepting a response {#Intercepting-a-response}
 
 Inside of a callback passed to `req.continue()`, you can access the destination
 server's real response.
@@ -634,7 +634,7 @@ See ["Intercepted responses"][res] for more information on the `res` object. See
 ["Controlling the outbound request with `req.continue()`"][req-continue] for
 more information about `req.continue()`.
 
-#### Asserting on a response
+#### Asserting on a response {#Asserting-on-a-response}
 
 ```js
 cy.intercept('/projects/2', (req) => {
@@ -644,7 +644,7 @@ cy.intercept('/projects/2', (req) => {
 })
 ```
 
-#### Returning a Promise
+#### Returning a Promise {#Returning-a-Promise-1}
 
 If a Promise is returned from the route callback, it will be awaited before
 sending the response to the browser.
@@ -659,7 +659,7 @@ cy.intercept('/users', (req) => {
 })
 ```
 
-#### Throttle or delay response all incoming responses
+#### Throttle or delay response all incoming responses {#Throttle-or-delay-response-all-incoming-responses}
 
 You can throttle or delay all incoming responses using a `beforeEach()` in the
 [supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file).
@@ -683,7 +683,7 @@ beforeEach(() => {
 })
 ```
 
-### Request/Response Modification with `routeHandler`
+### Request/Response Modification with `routeHandler` {#RequestResponse-Modification-with-routeHandler}
 
 Specify [`routeHandler`][arg-routehandler] as the last argument to modify the
 outgoing request, stub a response, make assertions, etc.
@@ -712,7 +712,7 @@ From here, you can do several things with the intercepted request:
 - attach listeners to various events on the request
   ([example](#Controlling-the-response))
 
-#### Asserting on a request
+#### Asserting on a request {#Asserting-on-a-request-1}
 
 You can use the request handler callback to make an assertion on the
 [intercepted request object][req] before it is sent.
@@ -725,7 +725,7 @@ cy.intercept('POST', '/users', (req) => {
 })
 ```
 
-#### Controlling the outgoing request
+#### Controlling the outgoing request {#Controlling-the-outgoing-request}
 
 The outgoing request, including its body, headers, etc., can be modified before
 it's sent.
@@ -749,7 +749,7 @@ cy.intercept('POST', '/users', (req) => {
 })
 ```
 
-#### Verifying the request modification
+#### Verifying the request modification {#Verifying-the-request-modification}
 
 ```js
 cy.intercept('POST', '/users', (req) => {
@@ -781,7 +781,7 @@ by your front-end application.
 
 :::
 
-#### Controlling the response
+#### Controlling the response {#Controlling-the-response}
 
 The intercepted request passed to the route handler (hereafter referred to as
 `req`, though you can use any name) contains methods to dynamically control the
@@ -917,7 +917,7 @@ See example for
 [throttling a response](#Throttle-or-delay-response-all-incoming-responses) See
 more examples of [events](#Request-events)
 
-#### Returning a Promise
+#### Returning a Promise {#Returning-a-Promise-2}
 
 If a Promise is returned from the route callback, it will be awaited before
 continuing with the request.
@@ -940,7 +940,7 @@ cy.intercept('POST', '/users', (req) => {
 })
 ```
 
-#### Stubbing a response with a string
+#### Stubbing a response with a string {#Stubbing-a-response-with-a-string}
 
 ```js
 // requests to create a user will be fulfilled
@@ -949,7 +949,7 @@ cy.intercept('POST', '/users', 'success')
 // { body: 'sucess' }
 ```
 
-## Intercepted requests
+## Intercepted requests {#Intercepted-requests}
 
 If a function is passed as the handler for a `cy.intercept()`, it will be called
 with the first argument being an object that represents the intercepted HTTP
@@ -970,7 +970,7 @@ From here, you can do several things with the intercepted request:
 - a response can be provided to stub out the request
 - listeners can be attached to various events on the request
 
-### Request object properties
+### Request object properties {#Request-object-properties}
 
 The request object (`req`) has several properties from the HTTP request itself.
 All of the following properties on `req` can be modified except for
@@ -1036,7 +1036,7 @@ Cypress-specific behavior:
 Any modifications to the properties of `req` will be persisted to other request
 handlers, and finally merged into the actual outbound HTTP request.
 
-### Controlling the outbound request with `req.continue()`
+### Controlling the outbound request with `req.continue()` {#Controlling-the-outbound-request-with-reqcontinue}
 
 Calling `req.continue()` without any argument will cause the request to be sent
 outgoing, and the response will be returned to the browser after any other
@@ -1060,7 +1060,7 @@ Note: calling `req.continue()` will stop the request from propagating to the
 next matching request handler in line. See ["Interception lifecycle"][lifecycle]
 for more information.
 
-### Providing a stub response with `req.reply()`
+### Providing a stub response with `req.reply()` {#Providing-a-stub-response-with-reqreply}
 
 The `req.reply()` function can be used to send a stub response for an
 intercepted request. By passing a string, object, or
@@ -1102,7 +1102,7 @@ cy.intercept('/api/users/*', async (req) => {
 See the [`StaticResponse` documentation][staticresponse] for more information on
 stubbing responses in this manner.
 
-#### `req.reply()` shorthand
+#### `req.reply()` shorthand {#reqreply-shorthand}
 
 `req.reply()` also supports shorthand, similar to [`res.send()`][res-send], to
 avoid having to specify a `StaticResponse` object:
@@ -1118,7 +1118,7 @@ req.reply(body, headers)
 req.reply(statusCode, body, headers)
 ```
 
-#### Convenience functions
+#### Convenience functions {#Convenience-functions}
 
 There are also two convenience functions available on `req`:
 
@@ -1143,7 +1143,7 @@ Note: calling `req.reply()` will end the request phase and stop the request from
 propagating to the next matching request handler in line. See ["Interception
 lifecycle"][lifecycle] for more information.
 
-### Request events
+### Request events {#Request-events}
 
 For advanced use, several events are available on `req`, that represent
 different stages of the [Interception lifecycle][lifecycle].
@@ -1186,7 +1186,7 @@ See ["Intercepted responses"][res] for more details on the `res` object yielded
 by `before:response` and `response`. See ["Interception lifecycle"][lifecycle]
 for more details on request ordering.
 
-## Intercepted responses
+## Intercepted responses {#Intercepted-responses}
 
 The response can be intercepted in two ways:
 
@@ -1223,7 +1223,7 @@ cy.intercept('/url', (req) => {
 })
 ```
 
-### Response object properties
+### Response object properties {#Response-object-properties}
 
 The response object (`res`) yielded to response handlers has several properties
 from the HTTP response itself. All of the following properties on `res` can be
@@ -1251,7 +1251,7 @@ Cypress-specific behavior:
 Any modifications to the properties of `res` will be persisted to other response
 handlers, and finally merged into the actual incoming HTTP response.
 
-### Ending the response with `res.send()`
+### Ending the response with `res.send()` {#Ending-the-response-with-ressend}
 
 To end the response phase of the request, call `res.send()`. Optionally, you can
 pass a [`StaticResponse`][staticresponse] to `res.send()`, to be merged with the
@@ -1275,7 +1275,7 @@ cy.intercept('/notification', (req) => {
 See the [`StaticResponse` documentation][staticresponse] for more information on
 the format.
 
-#### `res.send()` shorthand
+#### `res.send()` shorthand {#ressend-shorthand}
 
 `res.send()` also supports shorthand, similar to [`req.reply()`][req-reply], to
 avoid having to specify a `StaticResponse` object:
@@ -1291,7 +1291,7 @@ res.send(body, headers)
 res.send(statusCode, body, headers)
 ```
 
-#### Convenience functions
+#### Convenience functions {#Convenience-functions-1}
 
 There are also two convenience functions available on `res`:
 
@@ -1313,7 +1313,7 @@ Note: calling `res.send()` will end the response phase and stop the response
 from propagating to the next matching response handler in line. See
 ["Interception lifecycle"][lifecycle] for more information.
 
-## `StaticResponse` objects
+## `StaticResponse` objects {#StaticResponse-objects}
 
 A `StaticResponse` represents a
 [statically defined response (stub)](#Stubbing-a-response).
@@ -1346,7 +1346,7 @@ See
 ["Stubbing a response with a `StaticResponse` object"](#With-a-StaticResponse-object)
 for examples of stubbing with `cy.intercept()`.
 
-## Interception lifecycle
+## Interception lifecycle {#Interception-lifecycle}
 
 The lifecycle of a `cy.intercept()` interception begins when an HTTP request is
 sent from your app that matches one or more registered `cy.intercept()` routes.
@@ -1359,7 +1359,7 @@ an overlapping `cy.intercept()`:
 
 <DocsImage src="/img/api/intercept/middleware-algo.png" alt="Middleware Algorithm" ></DocsImage>
 
-### Request phase
+### Request phase {#Request-phase}
 
 The following steps are used to handle the request phase.
 
@@ -1387,7 +1387,7 @@ The following steps are used to handle the request phase.
    phase. The [response phase](#Response-phase) will begin once a response is
    received.
 
-### Response phase
+### Response phase {#Response-phase}
 
 Once the HTTP response is received from the upstream server, the following steps
 are applied:
@@ -1419,7 +1419,7 @@ are applied:
    - If a Promise is returned, await it.
 9. End the response phase.
 
-## Glob Pattern Matching URLs
+## Glob Pattern Matching URLs {#Glob-Pattern-Matching-URLs}
 
 When [matching a URL][match-url], providing an exact URL to match can be too
 restrictive. For example, what if you wanted to run your tests on a different
@@ -1448,7 +1448,7 @@ cy.intercept('/users?_limit=+(3|5)')
 //   http://localhost/users?_limit=5
 ```
 
-### Cypress.minimatch
+### Cypress.minimatch {#Cypressminimatch}
 
 Under the hood, `cy.intercept` uses the [minimatch](/api/utilities/minimatch)
 library with the `{ matchBase: true }` option applied for glob matching and
@@ -1473,7 +1473,7 @@ expect(
 ).to.be.false
 ```
 
-#### minimatch options
+#### minimatch options {#minimatch-options}
 
 You can also pass in options (`object`) as the third argument, one of which is
 `debug` which if set to `true`, will yield verbose output that could help you
@@ -1486,7 +1486,7 @@ Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)', {
 // true (plus debug messages)
 ```
 
-## Comparison to `cy.route()`
+## Comparison to `cy.route()` {#Comparison-to-cyroute}
 
 Unlike [cy.route()](/api/commands/route), `cy.intercept()`:
 
@@ -1496,7 +1496,7 @@ Unlike [cy.route()](/api/commands/route), `cy.intercept()`:
   fact, `cy.server()` does not influence `cy.intercept()` at all.
 - does not have method set to `GET` by default, but intercepts `*` methods.
 
-## `cy.intercept()` and request caching
+## `cy.intercept()` and request caching {#cyintercept-and-request-caching}
 
 `cy.intercept()` intercepts requests at the network layer. This can cause
 confusion when trying to intercept a request that has already been cached by the
@@ -1534,7 +1534,7 @@ are some workarounds:
   entirely. For more information, see
   [this comment on issue #14459](https://github.com/cypress-io/cypress/issues/14459#issuecomment-768616195)
 
-## Command Log
+## Command Log {#Command-Log}
 
 ```javascript
 cy.intercept('/accounts*').as('accountsGet')
@@ -1578,7 +1578,7 @@ information about the request and response to the console:
 
 [Read more about request logging in Cypress.](/guides/guides/network-requests#Command-Log)
 
-## History
+## History {#History}
 
 | Version                                     | Changes                                                                                                                                                                                                                                                                                              |
 | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1590,7 +1590,7 @@ information about the request and response to the console:
 | [6.0.0](/guides/references/changelog#6-0-0) | Removed `experimentalNetworkStubbing` option and made it the default behavior.                                                                                                                                                                                                                       |
 | [5.1.0](/guides/references/changelog#5-1-0) | Added experimental `cy.route2()` command under `experimentalNetworkStubbing` option.                                                                                                                                                                                                                 |
 
-## See also
+## See also {#See-also}
 
 - [`.as()`](/api/commands/as)
 - [`cy.wait()`](/api/commands/wait)

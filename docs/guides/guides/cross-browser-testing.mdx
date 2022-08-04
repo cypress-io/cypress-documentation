@@ -44,7 +44,7 @@ scripts can be used as a shortcut:
 }
 ```
 
-## Continuous Integration Strategies
+## Continuous Integration Strategies {#Continuous-Integration-Strategies}
 
 When incorporating testing of multiple browsers within your QA process, you must
 implement a CI strategy that provides an optimal level of confidence while
@@ -69,7 +69,7 @@ Firefox.
 
 :::
 
-### Periodic Basis
+### Periodic Basis {#Periodic-Basis}
 
 Generally, it is desired to run tests with each pushed commit, but it may not be
 necessary to do so for all browsers. For example, we can choose to run tests
@@ -114,7 +114,7 @@ workflows:
           wait-on: http://localhost:3000
 ```
 
-### Production Deployment
+### Production Deployment {#Production-Deployment}
 
 For projects that exhibit consistently stable behavior across browsers, it may
 be better to run tests against additional browsers only before merging changes
@@ -142,7 +142,7 @@ workflows:
           wait-on: http://localhost:3000
 ```
 
-### Subset of Tests
+### Subset of Tests {#Subset-of-Tests}
 
 We can choose to only run a subset of tests against a given browser. For
 example, we can execute only the happy or critical path related test files, or a
@@ -197,7 +197,7 @@ workflows:
           spec: 'cypress/e2e/signup.cy.js,cypress/e2e/login.cy.js'
 ```
 
-### Parallelize per browser
+### Parallelize per browser {#Parallelize-per-browser}
 
 Execution of test files can be parallelized on a per
 [group](/guides/guides/parallelization#Grouping-test-runs) basis, where test
@@ -250,7 +250,7 @@ workflows:
           spec: 'cypress/e2e/app.cy.js,cypress/e2e/login.cy.js,cypress/e2e/about.cy.js'
 ```
 
-### Running Specific Tests by Browser
+### Running Specific Tests by Browser {#Running-Specific-Tests-by-Browser}
 
 There may be instances where it can be useful to run or ignore one or more tests
 when in specific browsers. For example, test run duration can be reduced by only
@@ -303,7 +303,7 @@ it('Show warning outside Chrome', { browser: '!chrome' }, () => {
 })
 ```
 
-## See also
+## See also {#See-also}
 
 - [Browser Launch API](/api/plugins/browser-launch-api)
 - [Cypress.browser](/api/cypress-api/browser)

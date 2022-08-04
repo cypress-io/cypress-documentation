@@ -11,7 +11,7 @@ Cypress does not have a **cy.hover()** command. See
 
 If `cy.hover()` is used, an error will display and redirect you to this page.
 
-## Workarounds
+## Workarounds {#Workarounds}
 
 Sometimes an element has specific logic on hover and you _do_ need to "hover" in
 Cypress. Maybe the element doesn't even display to be clickable until you hover
@@ -30,7 +30,7 @@ plugin that provides native events like hover and swipe in Chromium browsers.
 
 :::
 
-### Trigger
+### Trigger {#Trigger}
 
 If the hover behavior depends on a JavaScript event like `mouseover`, you can
 trigger the event to achieve that behavior.
@@ -46,39 +46,39 @@ As a workaround, check out the
 [recipe leveraging Chrome remote debugging](/examples/examples/recipes#Fundamentals)
 to set pseudo classes like `hover`.
 
-#### Simulating `mouseover` event to get popover to display
+#### Simulating `mouseover` event to get popover to display {#Simulating-mouseover-event-to-get-popover-to-display}
 
 ```javascript
 cy.get('.menu-item').trigger('mouseover')
 cy.get('.popover').should('be.visible')
 ```
 
-### Invoke
+### Invoke {#Invoke}
 
-#### Example of showing an element in order to perform action
+#### Example of showing an element in order to perform action {#Example-of-showing-an-element-in-order-to-perform-action}
 
 ```javascript
 cy.get('.hidden').invoke('show').click()
 ```
 
-### Force click
+### Force click {#Force-click}
 
 You can also force the action to be performed on the element regardless of
 whether the element is visible or not.
 
-#### Example of clicking on a hidden element
+#### Example of clicking on a hidden element {#Example-of-clicking-on-a-hidden-element}
 
 ```javascript
 cy.get('.hidden').click({ force: true })
 ```
 
-#### Example of checking a hidden element
+#### Example of checking a hidden element {#Example-of-checking-a-hidden-element}
 
 ```javascript
 cy.get('.checkbox').check({ force: true })
 ```
 
-### Add as a custom command
+### Add as a custom command {#Add-as-a-custom-command}
 
 Although Cypress does not have a built-in `cy.hover()` command, you can create
 your own custom command using
@@ -97,7 +97,7 @@ will still work.
 Cypress.Commands.overwrite('hover', (originalFn, ...otherArgs) => {})
 ```
 
-## See also
+## See also {#See-also}
 
 We show how to use the `.trigger` command and the
 [cypress-real-events](https://github.com/dmtrKovalenko/cypress-real-events)

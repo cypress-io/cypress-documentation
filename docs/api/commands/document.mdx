@@ -4,14 +4,14 @@ title: document
 
 Get the `window.document` of the page that is currently active.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.document()
 cy.document(options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -19,7 +19,7 @@ cy.document(options)
 cy.document() // yield the window.document object
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> options** **_(Object)_**
 
@@ -30,15 +30,15 @@ Pass in an options object to change the default behavior of `cy.document()`.
 | `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.document()` to resolve before [timing out](#Timeouts)               |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `cy.document()` 'yields the `window.document` object' 
 
-## Examples
+## Examples {#Examples}
 
-### No Args
+### No Args {#No-Args}
 
-#### Get document and do some work
+#### Get document and do some work {#Get-document-and-do-some-work}
 
 ```javascript
 cy.document().then((doc) => {
@@ -46,30 +46,30 @@ cy.document().then((doc) => {
 })
 ```
 
-#### Make an assertion about the document
+#### Make an assertion about the document {#Make-an-assertion-about-the-document}
 
 ```javascript
 cy.document().its('contentType').should('eq', 'text/html')
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.document()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.document()` will automatically
 [retry](/guides/core-concepts/retry-ability) until all chained assertions have
 passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.document()` can time out waiting for assertions you've added to
 pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Get the document_**
 
@@ -86,7 +86,7 @@ following:
 
 <DocsImage src="/img/api/document/console-yields-the-document-of-aut.png" alt="console.log document" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`cy.window()`](/api/commands/window)
 - [Cypress `should` callback](https://glebbahmutov.com/blog/cypress-should-callback/)

@@ -4,7 +4,7 @@ title: AWS CodeBuild
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - How to run Cypress tests with AWS CodeBuild as part of CI/CD pipeline
 - How to parallelize Cypress test runs within AWS CodeBuild
@@ -19,7 +19,7 @@ allowing teams to "pay only for the build time you use".
 Detailed documentation is available in the
 [AWS CodeBuild Documentation](https://docs.aws.amazon.com/codebuild/).
 
-## Basic Setup
+## Basic Setup {#Basic-Setup}
 
 The example below is basic CI setup and job using the
 [AWS CodeBuild](https://aws.amazon.com/codebuild/) to run Cypress tests within
@@ -80,7 +80,7 @@ example project and place the above
   - Start the project web server (`npm start:ci`)
   - Run the Cypress tests within our GitHub repository within Electron.
 
-## Testing in Chrome and Firefox with Cypress Docker Images
+## Testing in Chrome and Firefox with Cypress Docker Images {#Testing-in-Chrome-and-Firefox-with-Cypress-Docker-Images}
 
 :::info
 
@@ -213,7 +213,7 @@ phases:
       - npx cypress run --record --browser firefox
 ```
 
-## Caching Dependencies and Build Artifacts
+## Caching Dependencies and Build Artifacts {#Caching-Dependencies-and-Build-Artifacts}
 
 Caching with [AWS CodeBuild](https://aws.amazon.com/codebuild/) directly can be
 challenging.
@@ -242,7 +242,7 @@ Reference the
 [AWS CodePipeline integration with CodeBuild and multiple input sources and output artifacts sample](https://docs.aws.amazon.com/codebuild/latest/userguide/sample-pipeline-multi-input-output.html)
 example for details on how to configure a CodePipeline with an output artifact.
 
-## Parallelization
+## Parallelization {#Parallelization}
 
 The [Cypress Dashboard](/guides/dashboard/introduction) offers the ability to
 [parallelize and group test runs](/guides/guides/parallelization) along with
@@ -298,7 +298,7 @@ requires a subscription to the
 
 :::
 
-### Parallelizing the build
+### Parallelizing the build {#Parallelizing-the-build}
 
 To setup multiple containers to run in parallel, the `build-matrix`
 configuration uses a set of variables (`CY_GROUP_SPEC` and `WORKERS`) with a
@@ -411,7 +411,7 @@ phases:
         "$CY_CONFIG"
 ```
 
-## Using the Cypress Dashboard with AWS CodeBuild
+## Using the Cypress Dashboard with AWS CodeBuild {#Using-the-Cypress-Dashboard-with-AWS-CodeBuild}
 
 In the AWS CodeBuild configuration we have defined in the previous section, we
 are leveraging three useful features of the
@@ -445,7 +445,7 @@ are leveraging three useful features of the
    tests for the Chrome browser into a group labeled "UI - Chrome" inside the
    [Cypress Dashboard](https://on.cypress.io/dashboard) report.
 
-## Cypress Real World Example with AWS CodeBuild
+## Cypress Real World Example with AWS CodeBuild {#Cypress-Real-World-Example-with-AWS-CodeBuild}
 
 A complete CI workflow against multiple browsers, viewports and operating
 systems is available in the

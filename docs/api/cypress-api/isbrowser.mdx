@@ -5,7 +5,7 @@ title: Cypress.isBrowser
 `Cypress.isBrowser` checks if the current browser matches the given name or
 filter.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 Cypress.isBrowser(matcher)
@@ -13,7 +13,7 @@ Cypress.isBrowser(matchers)
 Cypress.isBrowser(filter)
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> matcher** **_(String)_**
 
@@ -43,11 +43,11 @@ current browser's properties by using the
 | `isHeadless`   | `boolean` | Whether the browser is running headlessly.                            |
 | `isHeaded`     | `boolean` | Whether the browser displays headed.                                  |
 
-## Examples
+## Examples {#Examples}
 
-### Matcher
+### Matcher {#Matcher}
 
-#### Only run command in Chrome
+#### Only run command in Chrome {#Only-run-command-in-Chrome}
 
 ```javascript
 it('download extension link', () => {
@@ -63,7 +63,7 @@ it('download extension link', () => {
 })
 ```
 
-#### Run command in all browsers except Chrome
+#### Run command in all browsers except Chrome {#Run-command-in-all-browsers-except-Chrome}
 
 ```javascript
 it('warns to view page in Chrome browser', () => {
@@ -77,9 +77,9 @@ it('warns to view page in Chrome browser', () => {
 })
 ```
 
-### Matchers
+### Matchers {#Matchers}
 
-#### Run commands in all specified browsers
+#### Run commands in all specified browsers {#Run-commands-in-all-specified-browsers}
 
 ```javascript
 it('colors rainbow', () => {
@@ -93,7 +93,7 @@ it('colors rainbow', () => {
 })
 ```
 
-#### Run commands in all browsers except specified
+#### Run commands in all browsers except specified {#Run-commands-in-all-browsers-except-specified}
 
 ```javascript
 // true when running in browser other than chrome and electron
@@ -104,9 +104,9 @@ it('does not run in Firefox and Chrome', () => {
 })
 ```
 
-### Filter
+### Filter {#Filter}
 
-#### Only run commands in Chromium-based browser
+#### Only run commands in Chromium-based browser {#Only-run-commands-in-Chromium-based-browser}
 
 ```javascript
 it('has CSS reflections', () => {
@@ -118,7 +118,7 @@ it('has CSS reflections', () => {
 })
 ```
 
-#### Only run on stable release in Chromium-based browser
+#### Only run on stable release in Chromium-based browser {#Only-run-on-stable-release-in-Chromium-based-browser}
 
 ```javascript
 it('test', () => {
@@ -129,7 +129,7 @@ it('test', () => {
 })
 ```
 
-#### Only run on specific release channels of browsers
+#### Only run on specific release channels of browsers {#Only-run-on-specific-release-channels-of-browsers}
 
 ```javascript
 it('test', () => {
@@ -146,9 +146,9 @@ it('test', () => {
 })
 ```
 
-### Notes
+### Notes {#Notes}
 
-#### Test configuration: `browser`
+#### Test configuration: `browser` {#Test-configuration-browser}
 
 If you want to target a test or suite to run or be excluded when run in a
 specific browser, we suggest passing the `browser` within the
@@ -171,14 +171,14 @@ it('Show warning outside Chrome', { browser: '!chrome' }, () => {
 })
 ```
 
-## History
+## History {#History}
 
 | Version                                     | Changes                                                                      |
 | ------------------------------------------- | ---------------------------------------------------------------------------- |
 | [4.8.0](/guides/references/changelog#4-8-0) | Expanded `matcher` and `matchers` arguments to assist in filtering browsers. |
 | [4.0.0](/guides/references/changelog#4-0-0) | Added `isBrowser` command.                                                   |
 
-## See also
+## See also {#See-also}
 
 - [Browser Launch API](/api/plugins/browser-launch-api)
 - [Cross Browser Testing](/guides/guides/cross-browser-testing)

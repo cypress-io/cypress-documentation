@@ -4,7 +4,7 @@ title: writeFile
 
 Write to a file with the specified contents.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.writeFile(filePath, contents)
@@ -13,7 +13,7 @@ cy.writeFile(filePath, contents, options)
 cy.writeFile(filePath, contents, encoding, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -21,7 +21,7 @@ cy.writeFile(filePath, contents, encoding, options)
 cy.writeFile('menu.json')
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> filePath** **_(String)_**
 
@@ -73,15 +73,15 @@ parameter and include encoding there. This is the same behavior as
 
 :::
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `cy.writeFile()` yields `null`.
 
-## Examples
+## Examples {#Examples}
 
-### Text
+### Text {#Text}
 
-#### Write some text to a `txt` file
+#### Write some text to a `txt` file {#Write-some-text-to-a-txt-file}
 
 If the path to the file does not exist, the file and its path will be created.
 If the file already exists, it will be over-written.
@@ -99,9 +99,9 @@ cy.readFile('path/to/message.txt').then((text) => {
  "Hello World"
 ```
 
-### JSON
+### JSON {#JSON}
 
-#### Write JSON to a file
+#### Write JSON to a file {#Write-JSON-to-a-file}
 
 JavaScript arrays and objects are stringified and formatted into text.
 
@@ -121,7 +121,7 @@ cy.readFile('path/to/data.json').then((user) => {
 }
 ```
 
-#### Write response data to a fixture file
+#### Write response data to a fixture file {#Write-response-data-to-a-fixture-file}
 
 ```javascript
 cy.request('https://jsonplaceholder.typicode.com/users').then((response) => {
@@ -134,9 +134,9 @@ cy.fixture('users').then((users) => {
 })
 ```
 
-### Encoding
+### Encoding {#Encoding}
 
-#### Specify the encoding as a String
+#### Specify the encoding as a String {#Specify-the-encoding-as-a-String}
 
 ```javascript
 cy.writeFile('path/to/ascii.txt', 'Hello World', 'ascii'))
@@ -148,7 +148,7 @@ cy.writeFile('path/to/ascii.txt', 'Hello World', 'ascii'))
 Hello World
 ```
 
-#### Specify the encoding as part of the options object
+#### Specify the encoding as part of the options object {#Specify-the-encoding-as-part-of-the-options-object}
 
 ```javascript
 cy.writeFile('path/to/ascii.txt', 'Hello World', {
@@ -157,9 +157,9 @@ cy.writeFile('path/to/ascii.txt', 'Hello World', {
 })
 ```
 
-### Flags
+### Flags {#Flags}
 
-#### Append contents to the end of a file
+#### Append contents to the end of a file {#Append-contents-to-the-end-of-a-file}
 
 ```javascript
 cy.writeFile('path/to/message.txt', 'Hello World', { flag: 'a+' })
@@ -191,9 +191,9 @@ cy.readFile(filename).then((list) => {
 })
 ```
 
-### Buffer
+### Buffer {#Buffer}
 
-#### Write a buffer directly without encoding as a string
+#### Write a buffer directly without encoding as a string {#Write-a-buffer-directly-without-encoding-as-a-string}
 
 ```javascript
 const filename = '/path/to/file.png'
@@ -204,25 +204,25 @@ cy.readFile(filename, null).then((obj) => {
 })
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.writeFile()` requires being chained off of `cy`.
 - `cy.writeFile()` requires the file be successfully written to disk. Anything
   preventing this such as OS permission issues will cause it to fail.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.writeFile()` will only run assertions you have chained once, and will not
   [retry](/guides/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.writeFile()` can time out when the content being written takes a
   significant amount of time to encode.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Write an array to a file_**
 
@@ -239,7 +239,7 @@ outputs the following:
 
 <DocsImage src="/img/api/writefile/console-log-shows-contents-written-to-file.png" alt="Console Log writeFile" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                     | Changes                                                  |
 | ------------------------------------------- | -------------------------------------------------------- |
@@ -248,6 +248,6 @@ outputs the following:
 | [3.1.1](/guides/references/changelog#3-1-1) | Added `flag` option and appending with `a+`              |
 | [1.0.0](/guides/references/changelog#1.0.0) | `cy.writeFile()` command added                           |
 
-## See also
+## See also {#See-also}
 
 - [`cy.readFile()`](/api/commands/readfile)

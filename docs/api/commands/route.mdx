@@ -34,7 +34,7 @@ below:**
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.route(url)
@@ -45,7 +45,7 @@ cy.route(callbackFn)
 cy.route(options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -53,7 +53,7 @@ cy.route(options)
 cy.route('/users/**')
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> url** **_(String, Glob, RegExp)_**
 
@@ -102,19 +102,19 @@ You can also set options for all [`cy.wait()`](/api/commands/wait)'s
 [Cypress configuration](/guides/references/configuration) to control how long to
 wait for the request and response of a supplied route.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `cy.route()` yields `null`.</li><li>`cy.route()` can be aliased, but
 otherwise cannot be chained further.
 
-## Examples
+## Examples {#Examples}
 
-### Without Stubbing
+### Without Stubbing {#Without-Stubbing}
 
 If you do not pass a `response` to a route, Cypress will pass the request
 through without stubbing it. We can still wait for the request to resolve later.
 
-#### Wait on XHR `GET` request matching `url`
+#### Wait on XHR `GET` request matching `url` {#Wait-on-XHR-GET-request-matching-url}
 
 ```javascript
 cy.server()
@@ -123,7 +123,7 @@ cy.visit('/users')
 cy.wait('@getUsers')
 ```
 
-#### Wait on XHR's matching `method` and `url`
+#### Wait on XHR's matching `method` and `url` {#Wait-on-XHRs-matching-method-and-url}
 
 ```javascript
 cy.server()
@@ -133,7 +133,7 @@ cy.get('#first-name').type('Julius{enter}')
 cy.wait('@postUser')
 ```
 
-#### Setup route to `POST` to login
+#### Setup route to `POST` to login {#Setup-route-to-POST-to-login}
 
 :::info
 
@@ -141,7 +141,7 @@ cy.wait('@postUser')
 
 :::
 
-#### Wait on `url` matching glob
+#### Wait on `url` matching glob {#Wait-on-url-matching-glob}
 
 Under the hood Cypress uses [minimatch](https://github.com/isaacs/minimatch) to
 match glob patterns of `url`.
@@ -153,7 +153,7 @@ complex `RegExp`.
 We expose [`Cypress.minimatch`](/api/utilities/minimatch) as a function that you
 can use in your console to test routes.
 
-#### Match route against any UserId
+#### Match route against any UserId {#Match-route-against-any-UserId}
 
 ```javascript
 cy.server()
@@ -163,7 +163,7 @@ cy.route('**/users/*/comments')
 // https://localhost:7777/users/123/comments/465 <-- does not match
 ```
 
-#### Use glob to match all segments
+#### Use glob to match all segments {#Use-glob-to-match-all-segments}
 
 ```javascript
 cy.server()
@@ -174,7 +174,7 @@ cy.route('**/posts/**')
 // https://localhost:7777/posts/quuz?a=b&1=2 <-- matches
 ```
 
-#### Override `url` glob matching options
+#### Override `url` glob matching options {#Override-url-glob-matching-options}
 
 When we check `glob` patterns with
 [minimatch](https://github.com/isaacs/minimatch), by default Cypress uses sets
@@ -191,12 +191,12 @@ cy.server({
 cy.route(...)
 ```
 
-### With Stubbing
+### With Stubbing {#With-Stubbing}
 
 If you pass a `response` to `cy.route()`, Cypress will stub the response in the
 request.
 
-#### `url` as a string
+#### `url` as a string {#url-as-a-string}
 
 When passing a `string` as the `url`, the XHR's URL must match _exactly_ what
 you've written. You'll want to use the decoded string and not include any hash
@@ -212,7 +212,7 @@ cy.route('https://localhost:7777/surveys/customer?email=john@doe.com', [
 ])
 ```
 
-#### `url` as a RegExp
+#### `url` as a RegExp {#url-as-a-RegExp}
 
 When passing a RegExp as the `url`, the XHR's url will be tested against the
 regular expression and will apply if it passes.
@@ -229,7 +229,7 @@ $.get('https://localhost:7777/users/1337', (data) => {
 })
 ```
 
-#### Response functions
+#### Response functions {#Response-functions}
 
 You can also use a function as a response which enables you to add logic
 surrounding the response.
@@ -247,7 +247,7 @@ const commentsResponse = (routeData) => {
 cy.route('POST', '**/comments', commentsResponse)
 ```
 
-#### Matching requests and routes
+#### Matching requests and routes {#Matching-requests-and-routes}
 
 Any request that matches the `method` and `url` of a route will be responded to
 based on the configuration of that route.
@@ -273,7 +273,7 @@ You can [read more about this behavior here.](/api/commands/server#Options)
 
 :::
 
-#### Specify the method
+#### Specify the method {#Specify-the-method}
 
 The below example matches all `DELETE` requests to "/users" and stubs a response
 with an empty JSON object.
@@ -283,7 +283,7 @@ cy.server()
 cy.route('DELETE', '**/users/*', {})
 ```
 
-#### Making multiple requests to the same route
+#### Making multiple requests to the same route {#Making-multiple-requests-to-the-same-route}
 
 You can test a route multiple times with unique response objects by using
 [aliases](/guides/core-concepts/variables-and-aliases#Aliases) and
@@ -316,7 +316,7 @@ cy.wait('@getBeetles')
 cy.get('#beetle-results').should('have.length', 1)
 ```
 
-### Fixtures
+### Fixtures {#Fixtures}
 
 Instead of writing a response inline you can automatically connect a response
 with a [`cy.fixture()`](/api/commands/fixture).
@@ -351,9 +351,9 @@ cy.fixture('user').as('fxUser')
 cy.route('POST', '**/users', '@fxUser')
 ```
 
-### Options
+### Options {#Options}
 
-#### Pass in an options object
+#### Pass in an options object {#Pass-in-an-options-object}
 
 ```javascript
 cy.server()
@@ -381,7 +381,7 @@ cy.route({
 })
 ```
 
-#### Simulate a server redirect
+#### Simulate a server redirect {#Simulate-a-server-redirect}
 
 Below we simulate the server returning `503` with a stubbed empty JSON response
 body.
@@ -397,7 +397,7 @@ cy.route({
 })
 ```
 
-#### Setup route to error on `POST` to login
+#### Setup route to error on `POST` to login {#Setup-route-to-error-on-POST-to-login}
 
 :::info
 
@@ -405,7 +405,7 @@ cy.route({
 
 :::
 
-#### Change `headers`
+#### Change `headers` {#Change-headers}
 
 By default, Cypress will automatically set `Content-Type` and `Content-Length`
 based on what your `response body` looks like.
@@ -424,7 +424,7 @@ cy.route({
 })
 ```
 
-#### Use delays for responses
+#### Use delays for responses {#Use-delays-for-responses}
 
 You can pass in a `delay` option that causes a delay (in ms) to the `response`
 for matched requests. The example below will cause the response to be delayed by
@@ -440,9 +440,9 @@ cy.route({
 })
 ```
 
-### Function
+### Function {#Function}
 
-#### Set the routing options using a callback function
+#### Set the routing options using a callback function {#Set-the-routing-options-using-a-callback-function}
 
 ```javascript
 cy.route(() => {
@@ -457,7 +457,7 @@ cy.route(() => {
 })
 ```
 
-#### Functions that return promises are awaited
+#### Functions that return promises are awaited {#Functions-that-return-promises-are-awaited}
 
 ```javascript
 cy.route(() => {
@@ -475,11 +475,11 @@ cy.route(() => {
 })
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Debugging
+### Debugging {#Debugging}
 
-#### Understanding stubbed vs regular XHRs
+#### Understanding stubbed vs regular XHRs {#Understanding-stubbed-vs-regular-XHRs}
 
 Cypress indicates whether an XHR sent back a stubbed response or actually went
 out to a server in its Command Log
@@ -502,16 +502,16 @@ stubbed, which url it matched or that it did not match any routes.
 Even the `Initiator` is included, which is a stack trace to what caused the XHR
 to be sent.
 
-### `cy.route()` cannot be debugged using [`cy.request()`](/api/commands/request)
+### `cy.route()` cannot be debugged using [`cy.request()`](/api/commands/request) {#cyroute-cannot-be-debugged-using-cyrequest}
 
-#### `cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.route()`
+#### `cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.route()` {#cyrequest-sends-requests-to-actual-endpoints-bypassing-those-defined-using-cyroute}
 
 The intention of `cy.request()` is to be used for checking endpoints on an
 actual, running server without having to start the front end application.
 
-### Matches
+### Matches {#Matches}
 
-#### Matching origins and non origin URL's
+#### Matching origins and non origin URL's {#Matching-origins-and-non-origin-URLs}
 
 When Cypress matches up an outgoing XHR request to a `cy.route()`, it actually
 attempts to match it against both the fully qualified URL and then additionally
@@ -534,9 +534,9 @@ The following XHRs which were `xhr.open(...)` with these URLs would:
 - `/users/4/foo`
 - `http://localhost:2020/users/5/foo`
 
-### No matches
+### No matches {#No-matches}
 
-#### Requests that don't match any routes
+#### Requests that don't match any routes {#Requests-that-dont-match-any-routes}
 
 You can force requests that do _not_ match a route to return a `404` status and
 an empty body by passing an option to the `cy.server()` like so:
@@ -547,21 +547,21 @@ cy.server({ force404: true })
 
 You can [read more about this here.](/api/commands/server#Options)
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.route()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.route()` cannot have any assertions chained.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.route()` cannot time out.
 
-## Command Log
+## Command Log {#Command-Log}
 
 ```javascript
 cy.server()
@@ -611,13 +611,13 @@ but unfilled if the request was stubbed with a response.
 
 [Read more about request logging in Cypress.](/guides/guides/network-requests#Command-Log)
 
-## History
+## History {#History}
 
 | Version                                     | Changes                         |
 | ------------------------------------------- | ------------------------------- |
 | [6.0.0](/guides/references/changelog#6-0-0) | Deprecated `cy.route()` command |
 
-## See also
+## See also {#See-also}
 
 - [Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide#Migrating-cy-route-to-cy-intercept)
 - [`.as()`](/api/commands/as)

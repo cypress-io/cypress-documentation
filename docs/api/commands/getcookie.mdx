@@ -4,14 +4,14 @@ title: getCookie
 
 Get a browser cookie by its name.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.getCookie(name)
 cy.getCookie(name, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -19,7 +19,7 @@ cy.getCookie(name, options)
 cy.getCookie('auth_key') // Get cookie with name 'auth_key'
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> name** **_(String)_**
 
@@ -34,7 +34,7 @@ Pass in an options object to change the default behavior of `cy.getCookie()`.
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.getCookie()` to resolve before [timing out](#Timeouts)              |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 `cy.getCookie()` yields a cookie object with the following properties:
 
@@ -47,15 +47,15 @@ Pass in an options object to change the default behavior of `cy.getCookie()`.
 - `secure`
 - `value`
 
-#### When a cookie matching the name could not be found:
+#### When a cookie matching the name could not be found: {#When-a-cookie-matching-the-name-could-not-be-found}
 
 `cy.getCookie()` yields `null`.
 
-## Examples
+## Examples {#Examples}
 
-### Session id
+### Session id {#Session-id}
 
-#### Get `session_id` cookie after logging in
+#### Get `session_id` cookie after logging in {#Get-session_id-cookie-after-logging-in}
 
 In this example, on first login, our server sends us back a session cookie.
 
@@ -105,7 +105,7 @@ cy.get('#submit')
   })
 ```
 
-#### Using `cy.getCookie()` to test logging in
+#### Using `cy.getCookie()` to test logging in {#Using-cygetCookie-to-test-logging-in}
 
 :::info
 
@@ -116,18 +116,18 @@ Check out our example recipes using `cy.getCookie()` to test
 
 :::
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.getCookie()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.getCookie()` will only run assertions you have chained once, and will not
   [retry](/guides/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.getCookie()` should never time out.
 
@@ -139,7 +139,7 @@ practical purposes it should never happen.
 
 :::
 
-## Command Log
+## Command Log {#Command-Log}
 
 ```javascript
 cy.getCookie('fakeCookie1').should('have.property', 'value', '123ABC')
@@ -154,14 +154,14 @@ following:
 
 <DocsImage src="/img/api/getcookie/inspect-cookie-object-properties-in-console.png" alt="Console Log getcookie" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                     | Changes                                                                                            |
 | ------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | [5.0.0](/guides/references/changelog#5-0-0) | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.            |
 | [4.3.0](/guides/references/changelog#4-3-0) | Added `sameSite` property when the `experimentalGetCookiesSameSite` configuration value is `true`. |
 
-## See also
+## See also {#See-also}
 
 - [Cypress Cookies API](/api/cypress-api/cookies)
 - [`cy.clearCookie()`](/api/commands/clearcookie)

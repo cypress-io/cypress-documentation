@@ -5,7 +5,7 @@ sidebar_position: 60
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - How to deal with async commands
 - What Aliases are and how they simplify your code
@@ -14,7 +14,7 @@ sidebar_position: 60
 
 :::
 
-## Return Values
+## Return Values {#Return-Values}
 
 New users to Cypress may initially find it challenging to work with the
 asynchronous nature of our APIs.
@@ -59,7 +59,7 @@ const form = cy.get("form");
 button.click();
 ```
 
-### Closures
+### Closures {#Closures}
 
 To access what each Cypress command yields you use
 [`.then()`](/api/commands/then).
@@ -112,7 +112,7 @@ commands.
 
 :::
 
-### Debugging
+### Debugging {#Debugging}
 
 Using `.then()` functions is an excellent opportunity to use
 [`debugger`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger).
@@ -141,7 +141,7 @@ cy.get("button").then(($btn) => {
 });
 ```
 
-### Variables
+### Variables {#Variables}
 
 Typically in Cypress you hardly need to ever use `const`, `let`, or `var`. When
 using closures you'll always have access to the objects that were yielded to you
@@ -190,7 +190,7 @@ The reason for using `const` is because the `$span` object is mutable. Whenever
 you have mutable objects and you're trying to compare them, you'll need to store
 their values. Using `const` is a perfect way to do that.
 
-## Aliases
+## Aliases {#Aliases}
 
 Using `.then()` callback functions to access the previous command values is
 great&mdash;but what happens when you're running code in hooks like `before` or
@@ -255,7 +255,7 @@ At first, we'll use them to share objects between your hooks and your tests.
 
 :::
 
-### Sharing Context
+### Sharing Context {#Sharing-Context}
 
 Sharing context is the simplest way to use aliases.
 
@@ -309,7 +309,7 @@ describe("parent", () => {
 });
 ```
 
-#### Accessing Fixtures:
+#### Accessing Fixtures: {#Accessing-Fixtures}
 
 The most common use case for sharing context is when dealing with
 [`cy.fixture()`](/api/commands/fixture).
@@ -372,7 +372,7 @@ cy.fixture("users.json").then((users) => {
 });
 ```
 
-#### Avoiding the use of `this`
+#### Avoiding the use of `this` {#Avoiding-the-use-of-this}
 
 :::caution
 
@@ -423,7 +423,7 @@ When using `this.users` we have access to it synchronously, whereas when using
 You can think of the `cy.get('@users')` as doing the same thing as
 [`cy.wrap(this.users)`](/api/commands/wrap).
 
-### Elements
+### Elements {#Elements}
 
 Aliases have other special characteristics when being used with DOM elements.
 
@@ -449,7 +449,7 @@ Because we've used the `@` character in [`cy.get()`](/api/commands/get), instead
 of querying the DOM for elements, [`cy.get()`](/api/commands/get) looks for an
 existing alias called `rows` and returns the reference (if it finds it).
 
-#### Stale Elements:
+#### Stale Elements: {#Stale-Elements}
 
 In many single-page JavaScript applications the DOM re-renders parts of the
 application constantly. If you alias DOM elements that have been removed from
@@ -506,7 +506,7 @@ to query for the elements again.
 
 :::
 
-### Intercepts
+### Intercepts {#Intercepts}
 
 Aliases can also be used with [cy.intercept()](/api/commands/intercept).
 Aliasing your intercepted routes enables you to:
@@ -543,7 +543,7 @@ cy.contains("Successfully created user: Brian");
 
 :::
 
-### Requests
+### Requests {#Requests}
 
 Aliases can also be used with [requests](/api/commands/request).
 
@@ -564,7 +564,7 @@ cy.get('@comments').should((response) => {
 })
 ```
 
-### Aliases are reset before each test
+### Aliases are reset before each test {#Aliases-are-reset-before-each-test}
 
 **Note:** all aliases are reset before each test. A common user mistake is to
 create aliases using the `before` hook. Such aliases work in the first test
@@ -608,7 +608,7 @@ it("works in the second test", () => {
 });
 ```
 
-## See also
+## See also {#See-also}
 
 - [Blog: Load Fixtures from Cypress Custom Commands](https://glebbahmutov.com/blog/fixtures-in-custom-commands/)
   explains how to load or import fixtures to be used in the Cypress custom

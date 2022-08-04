@@ -8,14 +8,14 @@ exposes APIs that enable you to:
 - Change the default selector strategy
 - Override the selectors that are returned per element
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 Cypress.SelectorPlayground.defaults(options)
 Cypress.SelectorPlayground.getSelector($el)
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> options** **_(Object)_**
 
@@ -33,9 +33,9 @@ An object containing any or all of the following options:
 The [jQuery element](http://api.jquery.com/Types/#jQuery) that you want to get
 the selector value for.
 
-## Examples
+## Examples {#Examples}
 
-### Selector Priority
+### Selector Priority {#Selector-Priority}
 
 Set the selector priority to favor IDs, then classes, then attributes.
 
@@ -45,7 +45,7 @@ Cypress.SelectorPlayground.defaults({
 })
 ```
 
-### onElement Callback
+### onElement Callback {#onElement-Callback}
 
 Set a custom function for determining the selector for an element. Falls back to
 default behavior if returning a falsey value.
@@ -62,7 +62,7 @@ Cypress.SelectorPlayground.defaults({
 })
 ```
 
-### Get Selector
+### Get Selector {#Get-Selector}
 
 Returns you the selector value for a given element as determined by the selector
 strategy.

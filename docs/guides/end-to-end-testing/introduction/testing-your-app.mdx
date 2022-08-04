@@ -5,7 +5,7 @@ sidebar_position: 20
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - The relationship between Cypress and your back end
 - How to configure Cypress to fit your app
@@ -20,7 +20,7 @@ sidebar_position: 20
 
 <!-- textlint-enable -->
 
-## <Icon name="terminal" /> Step 1: Start your server
+## <Icon name="terminal" /> Step 1: Start your server {#Icon-nameterminal--Step-1-Start-your-server}
 
 Assuming you've successfully
 [installed the Cypress App](/guides/getting-started/installing-cypress) and
@@ -86,7 +86,7 @@ only against a deployed production app.
 
 :::
 
-## <Icon name="globe" /> Step 2: Visit your server
+## <Icon name="globe" /> Step 2: Visit your server {#Icon-nameglobe--Step-2-Visit-your-server}
 
 Once your server is running, it's time to visit it.
 
@@ -140,7 +140,7 @@ it('successfully loads', () => {
 If you've started your server, then you should see your application loaded and
 working.
 
-## <Icon name="cogs" /> Step 3: Configure Cypress
+## <Icon name="cogs" /> Step 3: Configure Cypress {#Icon-namecogs--Step-3-Configure-Cypress}
 
 If you think ahead, you'll quickly realize that you're going to be typing this
 URL a lot, since every test is going to need to visit some page of your
@@ -198,7 +198,7 @@ Check them out in [Configuration](/guides/references/configuration)!
 
 :::
 
-## Testing strategies
+## Testing strategies {#Testing-strategies}
 
 You're about to embark on writing tests for your application, and only _you_
 know your application, so we don't have a lot of specific advice to give you.
@@ -210,7 +210,7 @@ team.**
 That said, modern web testing has a few wrinkles that every team experiences, so
 here are some quick tips on common situations you're likely to run into.
 
-### Seeding data
+### Seeding data {#Seeding-data}
 
 Depending on how your application is built - it's likely that your web
 application is going to be affected and controlled by the server.
@@ -300,7 +300,7 @@ tool. That means we're not bound to the same restrictions.
 **With Cypress, there are several other approaches that can offer an arguably
 better and faster experience.**
 
-### Stubbing the server
+### Stubbing the server {#Stubbing-the-server}
 
 Another valid approach opposed to seeding and talking to your server is to
 bypass it altogether.
@@ -327,12 +327,12 @@ While stubbing is great, it means that you don't have the guarantees that these
 response payloads actually match what the server will send. However, there are
 still many valid ways to get around this:
 
-#### Generate the fixture stubs ahead of time
+#### Generate the fixture stubs ahead of time {#Generate-the-fixture-stubs-ahead-of-time}
 
 You could have the server generate all of the fixture stubs for you ahead of
 time. This means their data will reflect what the server will actually send.
 
-#### Write a single e2e test without stubs, and then stub the rest
+#### Write a single e2e test without stubs, and then stub the rest {#Write-a-single-e2e-test-without-stubs-and-then-stub-the-rest}
 
 Another more balanced approach is to integrate both strategies. You likely want
 to have a **single test** that takes a true `e2e` approach and stubs nothing.
@@ -353,7 +353,7 @@ a much more thorough analysis and approach to accomplishing this.
 
 :::
 
-### Logging in
+### Logging in {#Logging-in}
 
 One of the first (and arguably one of the hardest) hurdles you'll have to
 overcome in testing is logging into your application.
@@ -361,7 +361,7 @@ overcome in testing is logging into your application.
 Nothing slows a test suite down like having to log in, but all the good parts of
 your application most likely require an authenticated user! Here are some tips.
 
-#### Fully test the login flow -- but only once!
+#### Fully test the login flow -- but only once! {#Fully-test-the-login-flow----but-only-once}
 
 It's a great idea to get your signup and login flow under test coverage since it
 is very important to all of your users and you never want it to break.
@@ -431,7 +431,7 @@ Do not use **your UI** to login before each test.
 
 Let's investigate and tease apart why.
 
-#### Bypassing your UI
+#### Bypassing your UI {#Bypassing-your-UI}
 
 When you're writing tests for a very **specific feature**, you _should_ use your
 UI to test it.
@@ -537,7 +537,7 @@ recipes.
 
 :::
 
-## Get started
+## Get started {#Get-started}
 
 Ok, we're done talking. Now dive in and get started testing your app!
 

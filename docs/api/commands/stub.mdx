@@ -11,7 +11,7 @@ Replace a function, record its usage and control its behavior.
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 cy.stub()
@@ -19,7 +19,7 @@ cy.stub(object, method)
 cy.stub(object, method, replacerFn)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -27,7 +27,7 @@ cy.stub(object, method, replacerFn)
 cy.stub(user, 'addFriend')
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> object** **_(Object)_**
 
@@ -41,7 +41,7 @@ The name of the `method` on the `object` to be wrapped.
 
 The function used to replace the `method` on the `object`.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 Unlike most Cypress commands, `cy.stub()` is _synchronous_ and returns a value
 (the stub) instead of a Promise-like chain-able object.
@@ -49,11 +49,11 @@ Unlike most Cypress commands, `cy.stub()` is _synchronous_ and returns a value
 `cy.stub()` returns a [Sinon.js stub](http://sinonjs.org). All methods found on
 [Sinon.js](http://sinonjs.org) spies and stubs are supported.
 
-## Examples
+## Examples {#Examples}
 
-### Method
+### Method {#Method}
 
-#### Create a stub and manually replace a function
+#### Create a stub and manually replace a function {#Create-a-stub-and-manually-replace-a-function}
 
 ```javascript
 // assume App.start calls util.addListeners
@@ -63,7 +63,7 @@ App.start()
 expect(util.addListeners).to.be.called
 ```
 
-#### Replace a method with a stub
+#### Replace a method with a stub {#Replace-a-method-with-a-stub}
 
 ```javascript
 // assume App.start calls util.addListeners
@@ -73,7 +73,7 @@ App.start()
 expect(util.addListeners).to.be.called
 ```
 
-#### Replace a method with a function
+#### Replace a method with a function {#Replace-a-method-with-a-function}
 
 ```javascript
 // assume App.start calls util.addListeners
@@ -87,7 +87,7 @@ App.start()
 expect(listenersAdded).to.be.true
 ```
 
-#### Specify the return value of a stubbed method
+#### Specify the return value of a stubbed method {#Specify-the-return-value-of-a-stubbed-method}
 
 ```javascript
 // assume App.start calls util.addListeners, which returns a function
@@ -101,7 +101,7 @@ App.stop()
 expect(removeStub).to.be.called
 ```
 
-#### Replace built-in window methods like prompt
+#### Replace built-in window methods like prompt {#Replace-built-in-window-methods-like-prompt}
 
 In end-to-end tests, replacing built-in `window` methods needs to happen _after_
 the page is visited, but _before_ the application under test is loaded. You can
@@ -140,7 +140,7 @@ cy.get('.name').should('have.value', 'my custom message')
 
 :::
 
-#### Disable logging to Command Log
+#### Disable logging to Command Log {#Disable-logging-to-Command-Log}
 
 You can chain a `.log(bool)` method to disable `cy.stub()` calls from being
 shown in the Command Log. This may be useful when your stubs are called an
@@ -153,7 +153,7 @@ const obj = {
 const stub = cy.stub(obj, 'foo').log(false)
 ```
 
-#### More `cy.stub()` examples
+#### More `cy.stub()` examples {#More-cystub-examples}
 
 :::info
 
@@ -161,7 +161,7 @@ const stub = cy.stub(obj, 'foo').log(false)
 
 :::
 
-### Aliases
+### Aliases {#Aliases}
 
 Adding an alias using [`.as()`](/api/commands/as) to stubs makes them easier to
 identify in error messages and Cypress's command log.
@@ -182,20 +182,20 @@ You will see the following in the command log:
 
 <DocsImage src="/img/api/stub/stubs-with-aliases-and-error-in-command-log.png" alt="stubs with aliases" ></DocsImage>
 
-## Notes
+## Notes {#Notes}
 
-### Restores
+### Restores {#Restores}
 
-#### Automatic reset/restore between tests
+#### Automatic reset/restore between tests {#Automatic-resetrestore-between-tests}
 
 `cy.stub()` creates stubs in a
 [sandbox](http://sinonjs.org/releases/v2.0.0/sandbox/), so all stubs created are
 automatically reset/restored between tests without you having to explicitly
 reset/restore them.
 
-### Differences
+### Differences {#Differences}
 
-#### Difference between cy.spy() and cy.stub()
+#### Difference between cy.spy() and cy.stub() {#Difference-between-cyspy-and-cystub}
 
 The main difference between `cy.spy()` and [`cy.stub()`](/api/commands/stub) is
 that `cy.spy()` does not replace the method, it only wraps it. So, while
@@ -203,21 +203,21 @@ invocations are recorded, the original method is still called. This can be very
 useful when testing methods on native browser objects. You can verify a method
 is being called by your test and still have the original method action invoked.
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `cy.stub()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `cy.stub()` cannot have any assertions chained.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `cy.stub()` cannot time out.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Create a stub, alias it, and call it_**
 
@@ -240,14 +240,14 @@ outputs the following:
 
 <DocsImage src="/img/api/stub/inspect-the-stubbed-object-and-any-calls-or-arguments-made.png" alt="Console Log stub" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                       | Changes                   |
 | --------------------------------------------- | ------------------------- |
 | [0.20.0](/guides/references/changelog#0-20.0) | Added `.log(bool)` method |
 | [0.18.8](/guides/references/changelog#0-18-8) | `cy.stub()` command added |
 
-## See also
+## See also {#See-also}
 
 - [`.as()`](/api/commands/as)
 - [`cy.clock()`](/api/commands/clock)

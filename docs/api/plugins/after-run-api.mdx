@@ -10,7 +10,7 @@ executes. As a result, if running your specs in
 [parallel](/guides/guides/parallelization), the event will fire once for each
 machine on which `cypress run` is called.
 
-## Syntax
+## Syntax {#Syntax}
 
 <WarningSetupNodeEvents />
 
@@ -41,12 +41,12 @@ results object resolved by the [Module API](/guides/guides/module-api#Results).
 Results are only provided when running via `cypress run`. When running via
 `cypress open`, the results will be undefined.
 
-## Usage
+## Usage {#Usage}
 
 You can return a promise from the `after:run` event handler and it will be
 awaited before Cypress proceeds running your specs.
 
-### Log the number of passed tests of a run
+### Log the number of passed tests of a run {#Log-the-number-of-passed-tests-of-a-run}
 
 :::cypress-config-plugin-example
 
@@ -88,7 +88,7 @@ module.exports = (on, config) => {
 
 :::
 
-## See also
+## See also {#See-also}
 
 - [Before Run API](/api/plugins/before-run-api)
 - [Before Spec API](/api/plugins/before-spec-api)

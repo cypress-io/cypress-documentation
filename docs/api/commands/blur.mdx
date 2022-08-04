@@ -12,14 +12,14 @@ focused before blurring, try using [`.focus()`](/api/commands/focus) before
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .blur()
 .blur(options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -35,7 +35,7 @@ cy.blur('input') // Errors, cannot be chained off 'cy'
 cy.window().blur() // Errors, 'window' does not yield DOM element
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> options** **_(Object)_**
 
@@ -47,24 +47,24 @@ Pass in an options object to change the default behavior of `.blur`.
 | `force`   | `false`                                                              | Forces the action, disables checking if [element is focused](#Requirements)              |
 | `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.blur()` to resolve before [timing out](#Timeouts)                     |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.blur()` yields the same subject it was given from the previous
 command.
 
-## Examples
+## Examples {#Examples}
 
-### No Args
+### No Args {#No-Args}
 
-#### Blur the comment input
+#### Blur the comment input {#Blur-the-comment-input}
 
 ```javascript
 cy.get('[name="comment"]').type('Nice Product!').blur()
 ```
 
-### Options
+### Options {#Options}
 
-#### Blur the first input
+#### Blur the first input {#Blur-the-first-input}
 
 Setting `force` to `true` in the options disables checking whether the input is
 focusable or currently has focus.
@@ -73,11 +73,11 @@ focusable or currently has focus.
 cy.get('input:first').blur({ force: true })
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Actionability
+### Actionability {#Actionability}
 
-#### Blur is not an action command
+#### Blur is not an action command {#Blur-is-not-an-action-command}
 
 `.blur()` is not implemented like other action commands, and does not follow the
 same rules of
@@ -91,9 +91,9 @@ separate action like this is very indirect.
 Therefore it's often much more efficient to test the blur behavior directly with
 `.blur()`.
 
-### Timeouts
+### Timeouts {#Timeouts}
 
-#### `.blur()` can time out because your browser did not receive any blur events
+#### `.blur()` can time out because your browser did not receive any blur events {#blur-can-time-out-because-your-browser-did-not-receive-any-blur-events}
 
 If you see this error, you may want to ensure that the main browser window is
 currently focused. This means not being focused in debugger or any other window
@@ -104,26 +104,26 @@ necessary to replicate what the browser does. Unfortunately the browser will
 still behave differently when not in focus - for instance it may throttle async
 events. Your best bet here is to keep Cypress focused when working on a test.
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.blur()` requires being chained off a command that yields DOM
 element(s).</li><li>`.blur()` requires the element to currently have
 focus.</li><li>`.blur()` requires the element to be able to receive
 focus.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.blur()` will automatically wait for assertions you have chained to
 pass
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.blur()` can time out waiting for assertions you've added to
 pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Blur a textarea after typing._**
 
@@ -140,7 +140,7 @@ the following:
 
 <DocsImage src="/img/api/blur/console-showing-blur-command.png" alt="console.log for blur" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`.focus()`](/api/commands/focus)
 - [`cy.focused()`](/api/commands/focused)

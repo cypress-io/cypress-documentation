@@ -4,7 +4,7 @@ title: Screenshots and Videos
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap" /> What you'll learn {#Icon-namegraduation-cap--What-youll-learn}
 
 - How Cypress captures screenshots of test failures automatically
 - How to manually capture your own screenshot
@@ -13,7 +13,7 @@ title: Screenshots and Videos
 
 :::
 
-## Screenshots
+## Screenshots {#Screenshots}
 
 Cypress comes with the ability to take screenshots, whether you are running via
 `cypress open` or `cypress run`, even in CI.
@@ -41,7 +41,7 @@ to clear your screenshots folder before a run, you can set
 [`trashAssetsBeforeRuns`](/guides/references/configuration#Screenshots) to
 `false`.
 
-## Videos
+## Videos {#Videos}
 
 Cypress records a video for each spec file when running tests during
 `cypress run`. Videos are _not_ automatically recorded during `cypress open`.
@@ -71,7 +71,7 @@ Cypress clears any existing videos before a `cypress run`. If you do not want to
 clear your videos folder before a run, you can set
 [`trashAssetsBeforeRuns`](/guides/references/configuration#Videos) to `false`.
 
-### Video encoding
+### Video encoding {#Video-encoding}
 
 If your spec files have a long run duration, you might notice a time gap between
 a finished spec and a new spec starting during `cypress run`. During this time,
@@ -122,7 +122,7 @@ during the encoding, run Cypress with the following environment variable:
 
 :::
 
-### Control which videos to keep and upload to Dashboard
+### Control which videos to keep and upload to Dashboard {#Control-which-videos-to-keep-and-upload-to-Dashboard}
 
 You may want to have more control over which videos you want to keep and upload
 to the Dashboard. Deleting videos after the run can save resource space on the
@@ -137,7 +137,7 @@ For more fine grained control, you can use Cypress's
 [`after:spec`](/api/plugins/after-spec-api) event listener that fires after each
 spec file is run and delete the video when certain conditions are met.
 
-#### Only upload videos for specs with failing or retried tests
+#### Only upload videos for specs with failing or retried tests {#Only-upload-videos-for-specs-with-failing-or-retried-tests}
 
 The example below shows how to delete the recorded video for specs that had no
 retry attempts or failures when using Cypress
@@ -169,12 +169,12 @@ on('after:spec', (spec, results) => {
 
 :::
 
-## Now What?
+## Now What? {#Now-What}
 
 So you are capturing screenshots and recording videos of your test runs, now
 what?
 
-### Share Them With Your Team
+### Share Them With Your Team {#Share-Them-With-Your-Team}
 
 <!-- Line breaks removed to prevent random br elements -->
 
@@ -183,13 +183,13 @@ Something you can take advantage of today is the
 enterprise service that stores your artifacts for you and lets you view them
 from any web browser, as well as share them with your team.
 
-### Visual Regression Test / Screenshot Diffing
+### Visual Regression Test / Screenshot Diffing {#Visual-Regression-Test--Screenshot-Diffing}
 
 Another possibility is visual regression testing: comparing screenshots of past
 runs with the current run to ensure that nothing changed.
 [Read about how to implement visual testing.](/guides/tooling/visual-testing)
 
-## See also
+## See also {#See-also}
 
 - [After Screenshot API](/api/plugins/after-screenshot-api)
 - [Cypress.Screenshot](/api/cypress-api/screenshot-api)

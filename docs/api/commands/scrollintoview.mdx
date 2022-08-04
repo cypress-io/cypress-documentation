@@ -4,14 +4,14 @@ title: scrollIntoView
 
 Scroll an element into view.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .scrollIntoView()
 .scrollIntoView(options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -26,7 +26,7 @@ cy.scrollIntoView('footer') // Errors, cannot be chained off 'cy'
 cy.window().scrollIntoView() // Errors, 'window' does not yield DOM element
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> options** **_(Object)_**
 
@@ -40,44 +40,44 @@ Pass in an options object to change the default behavior of `.scrollIntoView()`.
 | `offset`   | `{top: 0, left: 0}`                                                  | Amount to scroll after the element has been scrolled into view                           |
 | `timeout`  | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.scrollIntoView()` to resolve before [timing out](#Timeouts)           |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.scrollIntoView()` yields the same subject it was given from the
 previous command.
 
-## Examples
+## Examples {#Examples}
 
-### Scrolling
+### Scrolling {#Scrolling}
 
 ```javascript
 cy.get('button#checkout').scrollIntoView().should('be.visible')
 ```
 
-### Options
+### Options {#Options}
 
-#### Use linear easing animation to scroll
+#### Use linear easing animation to scroll {#Use-linear-easing-animation-to-scroll}
 
 ```javascript
 cy.get('.next-page').scrollIntoView({ easing: 'linear' })
 ```
 
-#### Scroll to element over 2000ms
+#### Scroll to element over 2000ms {#Scroll-to-element-over-2000ms}
 
 ```javascript
 cy.get('footer').scrollIntoView({ duration: 2000 })
 ```
 
-#### Scroll 150px below an element
+#### Scroll 150px below an element {#Scroll-150px-below-an-element}
 
 ```js
 cy.get('#nav').scrollIntoView({ offset: { top: 150, left: 0 } })
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Snapshots
+### Snapshots {#Snapshots}
 
-#### Snapshots do not reflect scroll behavior
+#### Snapshots do not reflect scroll behavior {#Snapshots-do-not-reflect-scroll-behavior}
 
 _Cypress does not reflect the accurate scroll positions of any elements within
 snapshots._ If you want to see the actual scrolling behavior in action, we
@@ -85,26 +85,26 @@ recommend using [`.pause()`](/api/commands/pause) to walk through each command
 or
 [watching the video of the test run](/guides/guides/screenshots-and-videos#Videos).
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.scrollIntoView()` requires being chained off a command that yields
 DOM element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.scrollIntoView()` will automatically wait for assertions you have
 chained to pass
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.scrollIntoView()` can time out waiting for assertions you've added
 to pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
-#### Assert element is visible after scrolling it into view
+#### Assert element is visible after scrolling it into view {#Assert-element-is-visible-after-scrolling-it-into-view}
 
 ```javascript
 cy.get('#scroll-horizontal button').scrollIntoView().should('be.visible')
@@ -119,6 +119,6 @@ console outputs the following:
 
 <DocsImage src="/img/api/scrollintoview/console-log-for-scrollintoview.png" alt="console.log scrollintoview" ></DocsImage>
 
-## See also
+## See also {#See-also}
 
 - [`cy.scrollTo()`](/api/commands/scrollto)

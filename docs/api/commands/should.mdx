@@ -18,7 +18,7 @@ as [assertions](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 :::
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .should(chainers)
@@ -27,7 +27,7 @@ as [assertions](/guides/core-concepts/introduction-to-cypress#Assertions)
 .should(callbackFn)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -43,7 +43,7 @@ cy.wrap({ foo: 'bar' }).its('foo').should('eq', 'bar') // Assert the 'foo' prope
 cy.should('eq', '42') // Should not be chained off 'cy'
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> chainers** **_(String)_**
 
@@ -64,7 +64,7 @@ A method to be called on the chainer.
 Pass a function that can have any number of explicit assertions within it.
 Whatever was passed to the function is what is yielded.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - In most cases, `.should()` yields the same subject it was given from
 the previous command.
@@ -85,17 +85,17 @@ cy.get('nav') // yields <nav>
   .and('match', /serif/) // yields 'sans-serif'
 ```
 
-## Examples
+## Examples {#Examples}
 
-### Chainers
+### Chainers {#Chainers}
 
-#### Assert the checkbox is disabled
+#### Assert the checkbox is disabled {#Assert-the-checkbox-is-disabled}
 
 ```javascript
 cy.get(':checkbox').should('be.disabled')
 ```
 
-#### The current DOM element is yielded
+#### The current DOM element is yielded {#The-current-DOM-element-is-yielded}
 
 ```javascript
 cy.get('option:first')
@@ -105,21 +105,21 @@ cy.get('option:first')
   })
 ```
 
-### Value
+### Value {#Value}
 
-#### Assert the class is 'form-horizontal'
+#### Assert the class is 'form-horizontal' {#Assert-the-class-is-form-horizontal}
 
 ```javascript
 cy.get('form').should('have.class', 'form-horizontal')
 ```
 
-#### Assert the value is not 'Jane'
+#### Assert the value is not 'Jane' {#Assert-the-value-is-not-Jane}
 
 ```javascript
 cy.get('input').should('not.have.value', 'Jane')
 ```
 
-#### The current subject is yielded
+#### The current subject is yielded {#The-current-subject-is-yielded}
 
 ```javascript
 cy.get('button')
@@ -129,16 +129,16 @@ cy.get('button')
   })
 ```
 
-### Method and Value
+### Method and Value {#Method-and-Value}
 
-#### Assert the anchor element has href attribute
+#### Assert the anchor element has href attribute {#Assert-the-anchor-element-has-href-attribute}
 
 ```javascript
 // have.attr comes from chai-jquery
 cy.get('#header a').should('have.attr', 'href')
 ```
 
-#### Assert the href attribute is equal to '/users'
+#### Assert the href attribute is equal to '/users' {#Assert-the-href-attribute-is-equal-to-users}
 
 ```javascript
 cy.get('#header a').should('have.attr', 'href', '/users')
@@ -153,16 +153,16 @@ cy.get('#header a') // yields the element
   .and('equal', '/users') // checks the "href" value
 ```
 
-### Focus
+### Focus {#Focus}
 
-#### Assert an input is focused after button click
+#### Assert an input is focused after button click {#Assert-an-input-is-focused-after-button-click}
 
 ```javascript
 cy.get('#btn-focuses-input').click()
 cy.get('#input-receives-focus').should('have.focus') // equivalent to should('be.focused')
 ```
 
-### Function
+### Function {#Function}
 
 Passing a function to `.should()` enables you to make multiple assertions on the
 yielded subject. This also gives you the opportunity to _massage_ what you'd
@@ -172,7 +172,7 @@ Be sure _not_ to include any code that has side effects in your callback
 function. The callback function will be retried over and over again until no
 assertions within it throw.
 
-#### Verify length, content, and classes from multiple `<p>`
+#### Verify length, content, and classes from multiple `<p>` {#Verify-length-content-and-classes-from-multiple-p}
 
 ```html
 <div>
@@ -221,7 +221,7 @@ cy.get('p')
   })
 ```
 
-#### Assert class name contains `heading-`
+#### Assert class name contains `heading-` {#Assert-class-name-contains-heading-}
 
 ```html
 <div class="docs-header">
@@ -266,7 +266,7 @@ cy.get('.docs-header')
   })
 ```
 
-#### Assert text content of 3 elements
+#### Assert text content of 3 elements {#Assert-text-content-of-3-elements}
 
 Example below first asserts that there are 3 elements, and then checks the text
 content of each one.
@@ -313,7 +313,7 @@ more context.
 
 <DocsImage src="/img/api/should/expect-with-message.png" alt="Expect assertions with messages" ></DocsImage>
 
-#### Compare text values of two elements
+#### Compare text values of two elements {#Compare-text-values-of-two-elements}
 
 The example below gets the text contained within one element and saves it in a
 closure variable. Then the test gets the text in another element and asserts
@@ -350,9 +350,9 @@ cy.get('.company-details')
   })
 ```
 
-### Multiple Assertions
+### Multiple Assertions {#Multiple-Assertions}
 
-#### Chaining multiple assertions
+#### Chaining multiple assertions {#Chaining-multiple-assertions}
 
 Cypress makes it easier to chain assertions together.
 
@@ -365,7 +365,7 @@ In this example we use [`.and()`](/api/commands/and) which is identical to
 cy.get('option:first').should('be.selected').and('have.value', 'Metallica')
 ```
 
-### Wait until the assertions pass
+### Wait until the assertions pass {#Wait-until-the-assertions-pass}
 
 Cypress won't resolve your commands until all of its assertions pass.
 
@@ -387,17 +387,17 @@ cy.get('button')
   .and('not.have.class', 'inactive')
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Subjects
+### Subjects {#Subjects}
 
-#### How do I know which assertions change the subject and which keep it the same?
+#### How do I know which assertions change the subject and which keep it the same? {#How-do-I-know-which-assertions-change-the-subject-and-which-keep-it-the-same}
 
 The chainers that come from [Chai](/guides/references/bundled-libraries#Chai) or
 [Chai-jQuery](/guides/references/bundled-libraries#Chai-jQuery) will always
 document what they return.
 
-#### Using a callback function will not change what is yielded
+#### Using a callback function will not change what is yielded {#Using-a-callback-function-will-not-change-what-is-yielded}
 
 Whatever is returned in the function is ignored. Cypress always forces the
 command to yield the value from the previous cy command's yield (which in the
@@ -415,17 +415,17 @@ cy.get('button')
   })
 ```
 
-### Differences
+### Differences {#Differences}
 
 <ThenShouldAndDifference />
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.should()` requires being chained off a previous command.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.should()` will continue to
 [retry](/guides/core-concepts/retry-ability) its specified assertions until it
@@ -448,7 +448,7 @@ cy.get('input', { timeout: 10000 }).should(($input) => {
 })
 ```
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Assert that there should be 8 children in a nav_**
 
@@ -465,14 +465,14 @@ following:
 
 <DocsImage src="/img/api/should/assertion-in-console-log-shows-actual-versus-expected-data.png" alt="Console Log should" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                       | Changes                           |
 | --------------------------------------------- | --------------------------------- |
 | [0.11.4](/guides/references/changelog#0-11-4) | Allows callback function argument |
 | [< 0.3.3](/guides/references/changelog#0-3-3) | `.should()` command added         |
 
-## See also
+## See also {#See-also}
 
 - [`.and()`](/api/commands/and)
 - [Guide: Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Assertions)

@@ -6,7 +6,7 @@ Get the DOM element containing the text. DOM elements can contain _more_ than
 the desired text and still match. Additionally, Cypress
 [prefers some DOM elements](#Notes) over the deepest element found.
 
-## Syntax
+## Syntax {#Syntax}
 
 ```javascript
 .contains(content)
@@ -22,7 +22,7 @@ cy.contains(selector, content)
 cy.contains(selector, content, options)
 ```
 
-### Usage
+### Usage {#Usage}
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
@@ -38,7 +38,7 @@ cy.title().contains('My App') // Errors, 'title' does not yield DOM element
 cy.getCookies().contains('_key') // Errors, 'getCookies' does not yield DOM element
 ```
 
-### Arguments
+### Arguments {#Arguments}
 
 **<Icon name="angle-right" /> content** **_(String, Number, RegExp)_**
 
@@ -62,15 +62,15 @@ Pass in an options object to change the default behavior of `.contains()`.
 | `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)              | Time to wait for `.contains()` to resolve before [timing out](#Timeouts)                                     |
 | `includeShadowDom` | [`includeShadowDom` config option value](/guides/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management) {#Yields-Icon-namequestion-circle}
 
 - `.contains()` yields the new DOM element it found.
 
-## Examples
+## Examples {#Examples}
 
-### Content
+### Content {#Content}
 
-#### Find the first element containing some text
+#### Find the first element containing some text {#Find-the-first-element-containing-some-text}
 
 ```html
 <ul>
@@ -85,7 +85,7 @@ Pass in an options object to change the default behavior of `.contains()`.
 cy.contains('apples')
 ```
 
-#### Find the `input[type='submit']` by value
+#### Find the `input[type='submit']` by value {#Find-the-inputtypesubmit-by-value}
 
 Get the form element and search in its descendants for the content "submit the
 form!"
@@ -111,9 +111,9 @@ form!"
 cy.get('form').contains('submit the form!').click()
 ```
 
-### Number
+### Number {#Number}
 
-#### Find the first element containing a number
+#### Find the first element containing a number {#Find-the-first-element-containing-a-number}
 
 Even though the `<span>` is the deepest element that contains a "4", Cypress
 automatically yields `<button>` elements over spans because of its
@@ -130,9 +130,9 @@ automatically yields `<button>` elements over spans because of its
 cy.contains(4)
 ```
 
-### Regular Expression
+### Regular Expression {#Regular-Expression}
 
-#### Find the first element with text matching the regular expression
+#### Find the first element with text matching the regular expression {#Find-the-first-element-with-text-matching-the-regular-expression}
 
 ```html
 <ul>
@@ -147,9 +147,9 @@ cy.contains(4)
 cy.contains(/^b\w+/)
 ```
 
-### Selector
+### Selector {#Selector}
 
-#### Specify a selector to return a specific element
+#### Specify a selector to return a specific element {#Specify-a-selector-to-return-a-specific-element}
 
 Technically the `<html>`, `<body>`, `<ul>`, and first `<li>` in the example
 below all contain "apples".
@@ -176,7 +176,7 @@ To override the element that is yielded we can pass 'ul' as the selector.
 cy.contains('ul', 'apples')
 ```
 
-#### Keep the form as the subject
+#### Keep the form as the subject {#Keep-the-form-as-the-subject}
 
 Here's an example that uses the selector to ensure that the `<form>` remains the
 [subject](/guides/core-concepts/introduction-to-cypress#Subject-Management) for
@@ -202,7 +202,7 @@ Without the explicit selector the subject would change to be the `<button>`.
 Using the explicit selector ensures that chained commands will have the `<form>`
 as the subject.
 
-### Case Sensitivity
+### Case Sensitivity {#Case-Sensitivity}
 
 Here's an example using the `matchCase` option to ignore case sensitivity.
 
@@ -215,14 +215,14 @@ cy.get('div').contains('capital sentence') // fail
 cy.get('div').contains('capital sentence', { matchCase: false }) // pass
 ```
 
-## Notes
+## Notes {#Notes}
 
-### Scopes
+### Scopes {#Scopes}
 
 `.contains()` acts differently whether it's starting a series of commands or
 being chained off an existing series.
 
-#### When starting a series of commands:
+#### When starting a series of commands: {#When-starting-a-series-of-commands}
 
 This queries the entire `document` for the content.
 
@@ -230,7 +230,7 @@ This queries the entire `document` for the content.
 cy.contains('Log In')
 ```
 
-#### When chained to an existing series of commands
+#### When chained to an existing series of commands {#When-chained-to-an-existing-series-of-commands}
 
 This will query inside of the `<#checkout-container>` element.
 
@@ -238,7 +238,7 @@ This will query inside of the `<#checkout-container>` element.
 cy.get('#checkout-container').contains('Buy Now')
 ```
 
-#### Be wary of chaining multiple contains
+#### Be wary of chaining multiple contains {#Be-wary-of-chaining-multiple-contains}
 
 Let's imagine a scenario where you click a button to delete a user and a dialog
 appears asking you to confirm this deletion.
@@ -262,7 +262,7 @@ cy.contains('Delete User').click()
 cy.contains('Yes, Delete!').click()
 ```
 
-### Leading, trailing, duplicate whitespaces aren't ignored in `<pre>` tag
+### Leading, trailing, duplicate whitespaces aren't ignored in `<pre>` tag {#Leading-trailing-duplicate-whitespaces-arent-ignored-in-pre-tag}
 
 Unlike other tags, `<pre>` doesn't ignore leading, trailing, or duplicate
 whitespaces as shown below:
@@ -292,7 +292,7 @@ cy.get('pre').contains('Hello, World !') // fail
 cy.get('pre').contains('                 Hello,           World      !') // pass
 ```
 
-### Non-breaking space
+### Non-breaking space {#Non-breaking-space}
 
 You can use a space character in `cy.contains()` to match text in the HTML that
 uses a non-breaking space entity `&nbsp;`.
@@ -310,9 +310,9 @@ cy.contains('Hello world')
 in
 [How do I get an element's text contents?](/faq/questions/using-cypress-faq#How-do-I-get-an-element-s-text-contents)
 
-### Single Element
+### Single Element {#Single-Element}
 
-#### Only the _first_ matched element will be returned
+#### Only the _first_ matched element will be returned {#Only-the-_first_-matched-element-will-be-returned}
 
 ```html
 <ul id="header">
@@ -343,9 +343,9 @@ yielded before the `.contains()`.
 cy.get('#main').contains('Jane Lane')
 ```
 
-### Preferences
+### Preferences {#Preferences}
 
-#### Element preference order
+#### Element preference order {#Element-preference-order}
 
 `.contains()` defaults to preferring elements higher in the tree when they are:
 
@@ -357,7 +357,7 @@ cy.get('#main').contains('Jane Lane')
 Cypress will ignore this element preference order if you pass a selector
 argument to `.contains()`.
 
-#### Favor of `<button>` over other deeper elements
+#### Favor of `<button>` over other deeper elements {#Favor-of-button-over-other-deeper-elements}
 
 Even though the `<span>` is the deepest element that contains "Search", Cypress
 yields `<button>` elements over spans.
@@ -376,7 +376,7 @@ yields `<button>` elements over spans.
 cy.contains('Search').children('i').should('have.class', 'fa-search')
 ```
 
-#### Favor of `<a>` over other deeper elements
+#### Favor of `<a>` over other deeper elements {#Favor-of-a-over-other-deeper-elements}
 
 Even though the `<span>` is the deepest element that contains "Sign Out",
 Cypress yields anchor elements over spans.
@@ -397,7 +397,7 @@ Cypress yields anchor elements over spans.
 cy.get('nav').contains('Sign Out').should('have.attr', 'href', '/signout')
 ```
 
-#### Favor of `<label>` over other deeper elements
+#### Favor of `<label>` over other deeper elements {#Favor-of-label-over-other-deeper-elements}
 
 Even though the `<span>` is the deepest element that contains "Age", Cypress
 yields `<label>` elements over `<span>`.
@@ -420,14 +420,14 @@ yields `<label>` elements over `<span>`.
 cy.contains('Age').find('input').type('29')
 ```
 
-## Rules
+## Rules {#Rules}
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) {#Requirements-Icon-namequestion-circle}
 
 - `.contains()` can be chained off of `cy` or off a command that yields
 DOM element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions) {#Assertions-Icon-namequestion-circle}
 
 - `.contains()` will automatically
 [retry](/guides/core-concepts/retry-ability) until the element(s)
@@ -435,13 +435,13 @@ DOM element(s).
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts) {#Timeouts-Icon-namequestion-circle}
 
 - `.contains()` can time out waiting for the element(s) to
 [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.contains()`
 can time out waiting for assertions you've added to pass.
 
-## Command Log
+## Command Log {#Command-Log}
 
 **_Element contains text "New User"_**
 
@@ -458,14 +458,14 @@ outputs the following:
 
 <DocsImage src="/img/api/contains/see-elements-found-from-contains-in-console.png" alt="console.log contains" ></DocsImage>
 
-## History
+## History {#History}
 
 | Version                                     | Changes                               |
 | ------------------------------------------- | ------------------------------------- |
 | [5.2.0](/guides/references/changelog#5-2-0) | Added `includeShadowDom` option.      |
 | [4.0.0](/guides/references/changelog#4-0-0) | Added support for option `matchCase`. |
 
-## See also
+## See also {#See-also}
 
 - [`cy.get()`](/api/commands/get)
 - [`.invoke()`](/api/commands/invoke)
