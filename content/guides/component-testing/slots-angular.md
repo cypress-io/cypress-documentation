@@ -156,11 +156,4 @@ describe('CardComponent', () => {
 </code-block>
 </code-group>
 
-## Conclusion
-
-At this point, you should be able to setup a complex application and mount
-components that use all of Angular's language features.
-
-Congrats! Happy building. 🎉
-
-<NavGuide prev="/guides/component-testing/events-angular" />
+<NavGuide prev="/guides/component-testing/events-angular" next="/guides/component-testing/custom-mount-angular" />

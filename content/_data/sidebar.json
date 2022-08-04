@@ -144,7 +144,6 @@
               "title": "Custom Mount Commands for React",
               "slug": "custom-mount-react"
             },
-
             {
               "title": "Angular Component Testing"
             },
@@ -167,6 +166,10 @@
             {
               "title": "Testing Angular Components with Slots",
               "slug": "slots-angular"
+            },
+            {
+              "title": "Custom Mount Commands for Angular",
+              "slug": "custom-mount-angular"
             },
             {
               "title": "Diving Deeper"
