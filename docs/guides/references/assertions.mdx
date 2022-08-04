@@ -2,10 +2,10 @@
 title: Assertions
 ---
 
-Cypress bundles the popular [Chai](/guides/references/assertions#Chai) assertion
+Cypress bundles the popular [Chai](/guides/references/assertions#chai) assertion
 library, as well as helpful extensions for
-[Sinon](/guides/references/assertions#Sinon-Chai) and
-[jQuery](/guides/references/assertions#Chai-jQuery), bringing you dozens of
+[Sinon](/guides/references/assertions#sinon-chai) and
+[jQuery](/guides/references/assertions#chai-jquery), bringing you dozens of
 powerful assertions for free.
 
 :::info
@@ -16,7 +16,7 @@ This document is only a reference to every assertion Cypress supports.
 
 If you're looking to understand **how** to use these assertions please read
 about assertions in our
-[Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Assertions)
+[Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#assertions)
 guide.
 
 :::
@@ -209,11 +209,11 @@ Cypress will "just work" with new assertions added to `chai`. You can:
 - Write your own `chai` assertions as
   [documented here](http://chaijs.com/api/plugins/).
 - npm install any existing `chai` library and import into your test file or
-  [support file](/guides/core-concepts/writing-and-organizing-tests#Support-file).
+  [support file](/guides/core-concepts/writing-and-organizing-tests#support-file).
 
 :::info
 
-[Check out our example recipe extending chai with new assertions.](/examples/examples/recipes#Fundamentals)
+[Check out our example recipe extending chai with new assertions.](/examples/examples/recipes#fundamentals)
 
 :::
 
@@ -266,7 +266,7 @@ cy.contains('[data-testid="greeting"]', /^Hello/);
 :::info
 
 **Tip:** read about assertions against text with non-breaking space entities in
-[How do I get an element's text contents?](/faq/questions/using-cypress-faq#How-do-I-get-an-element-s-text-contents)
+[How do I get an element's text contents?](/faq/questions/using-cypress-faq#how-do-i-get-an-element-s-text-contents)
 
 :::
 
@@ -441,7 +441,7 @@ If built-in assertions are not enough, you can write your own assertion function
 and pass it as a callback to the `.should()` command. Cypress will automatically
 [retry](/guides/core-concepts/retry-ability) the callback function until it
 passes or the command times out. See the
-[`.should()`](/api/commands/should#Function) documentation.
+[`.should()`](/api/commands/should#function) documentation.
 
 ```html
 <div class="main-abc123 heading-xyz987">Introduction</div>
@@ -500,7 +500,7 @@ cy.get('[data-testid="loading"]').should("not.be.visible");
 
 ## See also
 
-- [Guide: Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Assertions)
+- [Guide: Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#assertions)
 - [cypress-example-kitchensink Assertions](https://example.cypress.io/commands/assertions)
 - [Cypress should callback](https://glebbahmutov.com/blog/cypress-should-callback/)
   blog post

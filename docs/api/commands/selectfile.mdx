@@ -79,14 +79,14 @@ Pass in an options object to change the default behavior of `.selectFile()`.
 
 | Option                       | Default                                                                        | Description                                                                                                                                       |
 | ---------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `action`                     | `'select'`                                                                     | Switches modes. Valid values are `select` and `drag-drop`. See [Actions](#Actions) below for more details.                                        |
-| `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations). |
-| `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions).                                                                             |
-| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log).                                                         |
-| `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.selectFile()` to resolve before [timing out](#Timeouts).                                                                       |
-| `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.      |
+| `action`                     | `'select'`                                                                     | Switches modes. Valid values are `select` and `drag-drop`. See [Actions](#actions) below for more details.                                        |
+| `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#animations). |
+| `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#assertions).                                                                             |
+| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#command-log).                                                         |
+| `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#timeouts)           | Time to wait for `.selectFile()` to resolve before [timing out](#timeouts).                                                                       |
+| `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#animations) before executing the command.      |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 - `.selectFile()` yields the same subject it was given from the previous
   command.
@@ -100,7 +100,7 @@ simulate two different user behaviors:
 
 By default, `.selectFile()` runs in 'select' mode, mimicking a user selecting
 one or more files on an HTML5 input element. In this mode, the
-[subject](/guides/core-concepts/introduction-to-cypress#Subject-Management) must
+[subject](/guides/core-concepts/introduction-to-cypress#subject-management) must
 be a single `input` element with `type="file"`, or a `label` element connected
 to an input (either with its `for` attribute or by containing the input).
 
@@ -257,7 +257,7 @@ cy.get('input[type=file]').selectFile('does-not-exist.yaml')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `.selectFile()` requires being chained off a command that yields DOM
   element(s). With the `input` action (default), it further requires a single
@@ -266,12 +266,12 @@ cy.get('input[type=file]').selectFile('does-not-exist.yaml')
 - If given an alias, `.selectFile()` requires that the subject of the alias must
   not be `null` or `undefined`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `.selectFile()` will automatically wait for the element to reach an
   [actionable state](/guides/core-concepts/interacting-with-elements).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `.selectFile()` can time out waiting for the element to reach an
   [actionable state](/guides/core-concepts/interacting-with-elements).

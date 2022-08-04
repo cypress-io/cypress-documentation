@@ -45,11 +45,11 @@ Pass in an options object to change the default behavior of `.select()`.
 
 | Option    | Default                                                              | Description                                                                              |
 | --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `force`   | `false`                                                              | Forces the action, disables [waiting for actionability](#Assertions)                     |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.select()` to resolve before [timing out](#Timeouts)                   |
+| `force`   | `false`                                                              | Forces the action, disables [waiting for actionability](#assertions)                     |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#command-log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#timeouts) | Time to wait for `.select()` to resolve before [timing out](#timeouts)                   |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 - `.select()` yields the same subject it was given from the previous
 command.
@@ -248,20 +248,20 @@ disabled `<optgroup>`. See
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `.select()` requires being chained off a command that yields DOM
 element(s).</li><li>`.select()` requires the element to be a
 `select`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `.select()` will automatically wait for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.select()`
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `.select()` can time out waiting for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.select()`

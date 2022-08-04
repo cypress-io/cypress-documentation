@@ -49,8 +49,8 @@ Pass in an options object to change the default behavior of `.invoke()`.
 
 | Option    | Default                                                              | Description                                                                              |
 | --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.invoke()` to resolve before [timing out](#Timeouts)                   |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#command-log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#timeouts) | Time to wait for `.invoke()` to resolve before [timing out](#timeouts)                   |
 
 **<Icon name="angle-right" /> args...**
 
@@ -75,7 +75,7 @@ cy.wrap({ foo: fn }).invoke('foo').should('eq', 'bar') // true
 
 :::info
 
-[Check out our example recipe where we use `cy.invoke('text')` to test against HTML content in 'Bootstrapping your App'](/examples/examples/recipes#Server-Communication)
+[Check out our example recipe where we use `cy.invoke('text')` to test against HTML content in 'Bootstrapping your App'](/examples/examples/recipes#server-communication)
 
 :::
 
@@ -97,7 +97,7 @@ cy.get('div.container')
 
 :::info
 
-[Check out our example recipe where we use `cy.invoke('show')` and `cy.invoke('trigger')` to click an element that is only visible on hover](/examples/examples/recipes#Testing-the-DOM)
+[Check out our example recipe where we use `cy.invoke('show')` and `cy.invoke('trigger')` to click an element that is only visible on hover](/examples/examples/recipes#testing-the-dom)
 
 :::
 
@@ -120,7 +120,7 @@ cy.wrap({ sum: fn })
 
 :::info
 
-[Check out our example recipe where we use `cy.invoke('removeAttr', 'target')` to test clicking on a link without opening in a new tab](/examples/examples/recipes#Testing-the-DOM)
+[Check out our example recipe where we use `cy.invoke('removeAttr', 'target')` to test clicking on a link without opening in a new tab](/examples/examples/recipes#testing-the-dom)
 
 :::
 
@@ -269,11 +269,11 @@ cy.wrap(english).invoke('greeting').should('equal', 'bye')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `.invoke()` requires being chained off a previous command.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `.invoke()` will wait for the `function` to exist on the subject
 before running.</li><li>`.invoke()` will wait for the promise to resolve if the
@@ -281,7 +281,7 @@ invoked `function` returns a promise.</li><li>`.invoke()` will automatically
 [retry](/guides/core-concepts/retry-ability) until all chained assertions have
 passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `.invoke()` can time out waiting for assertions you've added to
 pass.</li><li>`.invoke()` can time out waiting for a promise you've returned to

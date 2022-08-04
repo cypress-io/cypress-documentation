@@ -50,7 +50,7 @@ previously aliased DOM element has gone stale.
 
 <strong>Core Concept</strong>
 
-[You can read more about aliasing objects and elements in our Core Concept Guide](/guides/core-concepts/variables-and-aliases#Aliases).
+[You can read more about aliasing objects and elements in our Core Concept Guide](/guides/core-concepts/variables-and-aliases#aliases).
 
 :::
 
@@ -60,12 +60,12 @@ Pass in an options object to change the default behavior of `cy.get()`.
 
 | Option             | Default                                                                           | Description                                                                                                  |
 | ------------------ | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| `log`              | `true`                                                                            | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                     |
-| `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)              | Time to wait for `cy.get()` to resolve before [timing out](#Timeouts)                                        |
+| `log`              | `true`                                                                            | Displays the command in the [Command log](/guides/core-concepts/cypress-app#command-log)                     |
+| `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#timeouts)              | Time to wait for `cy.get()` to resolve before [timing out](#timeouts)                                        |
 | `withinSubject`    | null                                                                              | Element to search for children in. If null, search begins from root-level DOM element                        |
-| `includeShadowDom` | [`includeShadowDom` config option value](/guides/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
+| `includeShadowDom` | [`includeShadowDom` config option value](/guides/references/configuration#global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 - `cy.get()` yields the DOM element(s) it found.
 
@@ -173,7 +173,7 @@ cy.get('#comparison')
 ### Alias
 
 For a detailed explanation of aliasing,
-[read more about aliasing here](/guides/core-concepts/variables-and-aliases#Aliases).
+[read more about aliasing here](/guides/core-concepts/variables-and-aliases#aliases).
 
 #### Get the aliased 'todos' elements
 
@@ -218,23 +218,23 @@ it('disables on click', () => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `cy.get()` requires being chained off a command that yields DOM
 element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `cy.get()` will automatically
 [retry](/guides/core-concepts/retry-ability) until the element(s)
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`cy.get()`
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#default-assertions)</li><li>`cy.get()`
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `cy.get()` can time out waiting for the element(s) to
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`cy.get()`
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#default-assertions).</li><li>`cy.get()`
 can time out waiting for assertions you've added to pass.
 
 ## Command Log

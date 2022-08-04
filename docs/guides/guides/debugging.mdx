@@ -151,7 +151,7 @@ You can see a walk-through of debugging some application code from Cypress
 ### Get console logs for commands
 
 All of Cypress's commands, when clicked on within the
-[Command Log](/guides/core-concepts/cypress-app#Command-Log), print extra
+[Command Log](/guides/core-concepts/cypress-app#command-log), print extra
 information about the command, its subject, and its yielded result. Try clicking
 around the Command Log with your Developer Tools open! You may find some useful
 information here.
@@ -203,7 +203,7 @@ for example, set
 ## Debugging flake
 
 While Cypress is
-[flake-resistant](/guides/overview/key-differences#Flake-resistant), some users
+[flake-resistant](/guides/overview/key-differences#flake-resistant), some users
 do experience flake, particularly when running in CI versus locally. Most often
 in cases of flaky tests, we see that there are not enough assertions surrounding
 test actions or network requests before moving on to the next assertion.
@@ -224,7 +224,7 @@ locally but fail in CI.
 - Remove time-sensitive variability in your tests. For example, ensure a network
   request has finished before looking for the DOM element that relies on the
   data from that network request. You can leverage
-  [aliasing](/guides/core-concepts/variables-and-aliases#Aliases) for this.
+  [aliasing](/guides/core-concepts/variables-and-aliases#aliases) for this.
 
 The Cypress Dashboard also offers [Analytics](/guides/dashboard/analytics) that
 illustrate trends in your tests and can help identify the tests that fail most
@@ -240,7 +240,7 @@ by [Cypress Ambassador](https://www.cypress.io/ambassadors/) Josh Justice.
 ## Log Cypress events
 
 Cypress emits multiple events you can listen to as shown below.
-[Read more about logging events in the browser here](/api/events/catalog-of-events#Logging-All-Events).
+[Read more about logging events in the browser here](/api/events/catalog-of-events#logging-all-events).
 
 <DocsImage src="/img/api/catalog-of-events/console-log-events-debug.png" alt="console log events for debugging" ></DocsImage>
 

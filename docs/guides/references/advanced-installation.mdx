@@ -6,10 +6,10 @@ title: Advanced Installation
 
 | Name                             | Description                                                                                              |
 | -------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `CYPRESS_INSTALL_BINARY`         | [Destination of Cypress binary that's downloaded and installed](#Install-binary)                         |
-| `CYPRESS_DOWNLOAD_MIRROR`        | [Downloads the Cypress binary though a mirror server](#Mirroring)                                        |
-| `CYPRESS_CACHE_FOLDER`           | [Changes the Cypress binary cache location](#Binary-cache)                                               |
-| `CYPRESS_RUN_BINARY`             | [Location of Cypress binary at run-time](#Run-binary)                                                    |
+| `CYPRESS_INSTALL_BINARY`         | [Destination of Cypress binary that's downloaded and installed](#install-binary)                         |
+| `CYPRESS_DOWNLOAD_MIRROR`        | [Downloads the Cypress binary though a mirror server](#mirroring)                                        |
+| `CYPRESS_CACHE_FOLDER`           | [Changes the Cypress binary cache location](#binary-cache)                                               |
+| `CYPRESS_RUN_BINARY`             | [Location of Cypress binary at run-time](#run-binary)                                                    |
 | `CYPRESS_VERIFY_TIMEOUT`         | Overrides the timeout duration for the `verify` command. The default value is 30000.                     |
 | `CYPRESS_DOWNLOAD_PATH_TEMPLATE` | Allows to specify custom download url. Replaces ${endpoint}, ${platform}, ${arch} with respective values |
 | ~~CYPRESS_SKIP_BINARY_INSTALL~~  | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY=0` instead                              |
@@ -77,7 +77,7 @@ environment:
 ```
 
 See also
-[Continuous Integration - Caching](/guides/continuous-integration/introduction#Caching)
+[Continuous Integration - Caching](/guides/continuous-integration/introduction#caching)
 section in the documentation.
 
 :::caution
@@ -258,7 +258,7 @@ rely on these being available past 60 days.
 ## Windows Subsystem for Linux
 
 First, install the prerequisite packages using the command that relates to your
-linux distribution ([Ubuntu/Debian](#Ubuntu-Debian) or [CentOS](#CentOS)).
+linux distribution ([Ubuntu/Debian](#ubuntu-debian) or [CentOS](#centos)).
 
 We need to have an [X-server](https://en.wikipedia.org/wiki/X.Org_Server) to
 display the Cypress UI from the linux subsystem. There are a variety of

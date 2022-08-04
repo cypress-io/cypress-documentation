@@ -32,7 +32,7 @@ A '.cjs' file uses the [CommonJS](https://nodejs.org/api/modules.html) module
 syntax, which is the default for JavaScript files. All JavaScript config
 examples in our docs use the CommonJS format.
 
-If you [configure your tests to record](/guides/dashboard/projects#Setup) the
+If you [configure your tests to record](/guides/dashboard/projects#setup) the
 results to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction)
 the `projectId` will be stored in the config file as well.
 
@@ -74,7 +74,7 @@ default values.
 | `port`                 | `null`                            | Port used to host Cypress. Normally this is a randomly generated port.                                                                                                                       |
 | `redirectionLimit`     | `20`                              | The number of times that the application under test can redirect before erroring.                                                                                                            |
 | `reporter`             | `spec`                            | The [reporter](/guides/tooling/reporters) used during `cypress run`.                                                                                                                         |
-| `reporterOptions`      | `null`                            | The [reporter options](/guides/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                           |
+| `reporterOptions`      | `null`                            | The [reporter options](/guides/tooling/reporters#reporter-options) used. Supported options depend on the reporter.                                                                           |
 | `retries`              | `{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. See [Test Retries](/guides/guides/test-retries) for more information. |
 | `watchForFileChanges`  | `true`                            | Whether Cypress will watch and restart tests on test file changes.                                                                                                                           |
 
@@ -84,7 +84,7 @@ default values.
 
 <strong>Core Concept</strong>
 
-[Timeouts are a core concept](/guides/core-concepts/introduction-to-cypress#Timeouts)
+[Timeouts are a core concept](/guides/core-concepts/introduction-to-cypress#timeouts)
 you should understand well. The default values listed here are meaningful.
 
 :::
@@ -141,9 +141,9 @@ For more options regarding screenshots, view the
 | Option                  | Default                              | Description                                                                                                                                                                                                                                                                                                                                                        |
 | ----------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `chromeWebSecurity`     | `true`                               | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content. [Read more about Web Security](/guides/guides/web-security).                                                                                                                                                                                            |
-| `blockHosts`            | `null`                               | A String or Array of hosts that you wish to block traffic for. [Please read the notes for examples on using this.](#blockHosts)                                                                                                                                                                                                                                    |
-| `firefoxGcInterval`     | `{ "runMode": 1, "openMode": null }` | (Firefox 79 and below only) Controls whether Cypress forces Firefox to run garbage collection (GC) cleanup and how frequently. During [cypress run](/guides/guides/command-line#cypress-run), the default value is `1`. During [cypress open](/guides/guides/command-line#cypress-open), the default value is `null`. See full details [here](#firefoxGcInterval). |
-| `modifyObstructiveCode` | `true`                               | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. [Please read the notes for more information on this setting.](#modifyObstructiveCode)                                                                                                                                                                                   |
+| `blockHosts`            | `null`                               | A String or Array of hosts that you wish to block traffic for. [Please read the notes for examples on using this.](#blockhosts)                                                                                                                                                                                                                                    |
+| `firefoxGcInterval`     | `{ "runMode": 1, "openMode": null }` | (Firefox 79 and below only) Controls whether Cypress forces Firefox to run garbage collection (GC) cleanup and how frequently. During [cypress run](/guides/guides/command-line#cypress-run), the default value is `1`. During [cypress open](/guides/guides/command-line#cypress-open), the default value is `null`. See full details [here](#firefoxgcinterval). |
+| `modifyObstructiveCode` | `true`                               | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. [Please read the notes for more information on this setting.](#modifyobstructivecode)                                                                                                                                                                                   |
 | `userAgent`             | `null`                               | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See [User-Agent MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for example user agent values.              |
 
 ### Viewport
@@ -162,7 +162,7 @@ For more options regarding screenshots, view the
 | `scrollBehavior`             | `top`   | Viewport position to which an element should be scrolled before executing commands. Can be `'center'`, `'top'`, `'bottom'`, `'nearest'`, or `false`. `false` disables scrolling. |
 
 For more information, see the docs on
-[actionability](/guides/core-concepts/interacting-with-elements#Actionability).
+[actionability](/guides/core-concepts/interacting-with-elements#actionability).
 
 ### Node version
 
@@ -181,7 +181,7 @@ file.
 The Node version is used in Cypress to:
 
 - Build files in the
-  [supportFile](#Folders-Files).
+  [supportFile](#folders-files).
 - Execute code in the config file.
 
 <DocsImage src="/img/guides/configuration/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Cypress App"></DocsImage>
@@ -204,10 +204,10 @@ object:
 | Option               | Default                               | Description                                                                                                                                                                                           |
 | -------------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `baseUrl`            | `null`                                | URL used as prefix for [`cy.visit()`](/api/commands/visit) or [`cy.request()`](/api/commands/request) command's URL.                                                                                  |
-| `setupNodeEvents`    | `null`                                | Function in which node events can be registered and config can be modified. Takes the place of the (removed) pluginFile option. [Please read the notes for examples on using this.](#setupNodeEvents) |
+| `setupNodeEvents`    | `null`                                | Function in which node events can be registered and config can be modified. Takes the place of the (removed) pluginFile option. [Please read the notes for examples on using this.](#setupnodeevents) |
 | `supportFile`        | `cypress/support/e2e.{js,jsx,ts,tsx}` | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                             |
 | `specPattern`        | `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` | A String or Array of glob patterns of the test files to load.                                                                                                                                         |
-| `excludeSpecPattern` | `*.hot-update.js`                     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludeSpecPattern)                         |
+| `excludeSpecPattern` | `*.hot-update.js`                     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludespecpattern)                         |
 | `slowTestThreshold`  | `10000`                               | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                               |
 
 :::cypress-config-example
@@ -229,11 +229,11 @@ object:
 
 | Option               | Default                                  | Description                                                                                                                                                                                      |
 | -------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `devServer`          | `null`                                   | Required option used to configure the component testing dev server. [Please read the notes for examples on using this.](#devServer)                                              |
-| `setupNodeEvents`    | `null`                                   | Function in which node events can be registered and config can be modified. Takes the place of the (removed) plugins file. [Please read the notes for examples on using this.](#setupNodeEvents) |
+| `devServer`          | `null`                                   | Required option used to configure the component testing dev server. [Please read the notes for examples on using this.](#devserver)                                              |
+| `setupNodeEvents`    | `null`                                   | Function in which node events can be registered and config can be modified. Takes the place of the (removed) plugins file. [Please read the notes for examples on using this.](#setupnodeevents) |
 | `supportFile`        | `cypress/support/component.js`           | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                        |
 | `specPattern`        | `**/*.cy.{js,jsx,ts,tsx}`                | A glob pattern String or Array of glob pattern Strings of the spec files to load. <br /><br />Note that any files found matching the `e2e.specPattern` value will be automatically **excluded.** |
-| `excludeSpecPattern` | `['/snapshots/*', '/image_snapshots/*']` | A String or Array of glob patterns used to ignore spec files that would otherwise be shown in your list of specs. [Please read the notes on using this.](#excludeSpecPattern)                    |
+| `excludeSpecPattern` | `['/snapshots/*', '/image_snapshots/*']` | A String or Array of glob patterns used to ignore spec files that would otherwise be shown in your list of specs. [Please read the notes on using this.](#excludespecpattern)                    |
 | `slowTestThreshold`  | `250`                                    | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                          |
 
 
@@ -283,10 +283,10 @@ See the [Command Line](/guides/guides/command-line) guide for more examples.
 ### Testing Type-Specific Overrides
 
 In addition to setting
-[Testing Type-Specific options](#Testing-Type-Specific-Options), you can
+[Testing Type-Specific options](#testing-type-specific-options), you can
 override other configuration options for either the
 [E2E Testing](/guides/core-concepts/testing-types#What-is-E2E-Testing) or
-[Component Testing](/guides/core-concepts/testing-types#What-is-Component-Testing).
+[Component Testing](/guides/core-concepts/testing-types#what-is-component-testing).
 
 For example:
 
@@ -461,7 +461,7 @@ highlighted to show where the value has been set via the following ways:
 - System
   [environment variables](/guides/guides/environment-variables#Option-3-CYPRESS)
 - [Command Line arguments](/guides/guides/command-line)
-- [setupNodeEvents](#setupNodeEvents)
+- [setupNodeEvents](#setupnodeevents)
 
 <DocsImage
   src="/img/guides/configuration/v10/see-resolved-configuration.png"
@@ -476,7 +476,7 @@ By passing a string or array of strings you can block requests made to one or
 more hosts.
 
 To see a working example of this please check out our
-[Stubbing Google Analytics Recipe](/examples/examples/recipes#Stubbing-and-spying).
+[Stubbing Google Analytics Recipe](/examples/examples/recipes#stubbing-and-spying).
 
 To block a host:
 
@@ -773,7 +773,7 @@ an [`e2e`](#e2e) or [`component`](#component) testing specific option.
 :::info
 
 This function was added in Cypress version `10.0.0` to replace the deprecated
-[plugins file](/guides/references/legacy-configuration#Plugins).
+[plugins file](/guides/references/legacy-configuration#plugins).
 
 :::
 
@@ -845,7 +845,7 @@ You can also find a few tips on setting the `baseUrl` in this
 
 When using the `--spec <path or mask>` argument, make it relative to the
 project's folder. If the specs are still missing, run Cypress with
-[DEBUG logs](/guides/references/troubleshooting#Print-DEBUG-logs) with the
+[DEBUG logs](/guides/references/troubleshooting#print-debug-logs) with the
 following setting to see how the Cypress App is looking for spec files:
 
 ```shell
@@ -874,7 +874,7 @@ DEBUG=cypress:cli,cypress:server:specs
 - [Cypress.config()](/api/cypress-api/config) and
   [Cypress.env()](/api/cypress-api/env)
 - [Environment variables](/guides/guides/environment-variables)
-- [Environment Variables recipe](/examples/examples/recipes#Fundamentals)
+- [Environment Variables recipe](/examples/examples/recipes#fundamentals)
 - [Extending the Cypress Configuration File](https://www.cypress.io/blog/2020/06/18/extending-the-cypress-config-file/)
   blog post and
   [@bahmutov/cypress-extends](https://github.com/bahmutov/cypress-extends)

@@ -9,7 +9,7 @@ Execute code in [Node](https://nodejs.org) via the `task` plugin event.
 <strong>Anti-Pattern</strong>
 
 We do not recommend starting a web server using `cy.task()`. Read about
-[best practices](/guides/references/best-practices#Web-Servers) here.
+[best practices](/guides/references/best-practices#web-servers) here.
 
 :::
 
@@ -57,7 +57,7 @@ the given event has been handled.
 **<Icon name="angle-right" /> event** **_(String)_**
 
 An event name to be handled via the `task` event in the
-[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function.
+[setupNodeEvents](/guides/tooling/plugins-guide#using-a-plugin) function.
 
 **<Icon name="angle-right" /> arg** **_(Object)_**
 
@@ -95,13 +95,13 @@ Pass in an options object to change the default behavior of `cy.task()`.
 
 | Option    | Default                                                    | Description                                                                              |
 | --------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                     | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`taskTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.task()` to resolve before [timing out](#Timeouts)                   |
+| `log`     | `true`                                                     | Displays the command in the [Command log](/guides/core-concepts/cypress-app#command-log) |
+| `timeout` | [`taskTimeout`](/guides/references/configuration#timeouts) | Time to wait for `cy.task()` to resolve before [timing out](#timeouts)                   |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 `cy.task()` yields the value returned or resolved by the `task` event in
-[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin).
+[setupNodeEvents](/guides/tooling/plugins-guide#using-a-plugin).
 
 ## Examples
 
@@ -374,7 +374,7 @@ Cypress.config('taskTimeout') // => 30000
 
 You can configure the `cy.task()` timeout within a suite or test by passing the
 new configuration value within the
-[test configuration](/guides/references/configuration#Test-Configuration).
+[test configuration](/guides/references/configuration#test-configuration).
 
 This will set the timeout throughout the duration of the tests, then return it
 to the default `taskTimeout` when complete.
@@ -503,24 +503,24 @@ on('task', {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `cy.task()` requires being chained off of `cy`.</li><li>`cy.task()`
 requires the task to eventually end.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `cy.task()` will only run assertions you have chained once, and will
 not [retry](/guides/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `cy.task()` can time out waiting for the task to end.
 
 ## Command Log
 
 This example uses the
-[Return number of files in the folder](#Return-number-of-files-in-the-folder)
+[Return number of files in the folder](#return-number-of-files-in-the-folder)
 task defined above.
 
 ```javascript

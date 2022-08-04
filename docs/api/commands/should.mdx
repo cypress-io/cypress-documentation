@@ -14,7 +14,7 @@ An alias of [`.and()`](/api/commands/and)
 :::info
 
 **Note:** `.should()` assumes you are already familiar with core concepts such
-as [assertions](/guides/core-concepts/introduction-to-cypress#Assertions)
+as [assertions](/guides/core-concepts/introduction-to-cypress#assertions)
 
 :::
 
@@ -47,9 +47,9 @@ cy.should('eq', '42') // Should not be chained off 'cy'
 
 **<Icon name="angle-right" /> chainers** **_(String)_**
 
-Any valid chainer that comes from [Chai](/guides/references/assertions#Chai) or
-[Chai-jQuery](/guides/references/assertions#Chai-jQuery) or
-[Sinon-Chai](/guides/references/assertions#Sinon-Chai).
+Any valid chainer that comes from [Chai](/guides/references/assertions#chai) or
+[Chai-jQuery](/guides/references/assertions#chai-jquery) or
+[Sinon-Chai](/guides/references/assertions#sinon-chai).
 
 **<Icon name="angle-right" /> value** **_(String)_**
 
@@ -64,7 +64,7 @@ A method to be called on the chainer.
 Pass a function that can have any number of explicit assertions within it.
 Whatever was passed to the function is what is yielded.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 - In most cases, `.should()` yields the same subject it was given from
 the previous command.
@@ -393,8 +393,8 @@ cy.get('button')
 
 #### How do I know which assertions change the subject and which keep it the same?
 
-The chainers that come from [Chai](/guides/references/bundled-libraries#Chai) or
-[Chai-jQuery](/guides/references/bundled-libraries#Chai-jQuery) will always
+The chainers that come from [Chai](/guides/references/bundled-libraries#chai) or
+[Chai-jQuery](/guides/references/bundled-libraries#chai-jquery) will always
 document what they return.
 
 #### Using a callback function will not change what is yielded
@@ -421,11 +421,11 @@ cy.get('button')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `.should()` requires being chained off a previous command.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `.should()` will continue to
 [retry](/guides/core-concepts/retry-ability) its specified assertions until it
@@ -475,6 +475,6 @@ following:
 ## See also
 
 - [`.and()`](/api/commands/and)
-- [Guide: Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Assertions)
+- [Guide: Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#assertions)
 - [Reference: List of Assertions](/guides/references/assertions)
 - [cypress-example-kitchensink Assertions](https://example.cypress.io/commands/assertions)

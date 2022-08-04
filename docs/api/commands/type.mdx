@@ -81,17 +81,17 @@ Pass in an options object to change the default behavior of `.type()`.
 
 | Option                       | Default                                                                        | Description                                                                                                                                        |
 | ---------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).  |
+| `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#animations).  |
 | `delay`                      | `10`                                                                           | Delay after each keypress                                                                                                                          |
-| `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions)                                                                               |
-| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                           |
+| `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#assertions)                                                                               |
+| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#command-log)                                                           |
 | `parseSpecialCharSequences`  | `true`                                                                         | Parse special characters for strings surrounded by `{}`, such as `{esc}`. Set to `false` to type the literal characters instead                    |
 | `release`                    | `true`                                                                         | Keep a modifier activated between commands                                                                                                         |
-| `scrollBehavior`             | [`scrollBehavior`](/guides/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#Scrolling) before executing the command |
-| `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.type()` to resolve before [timing out](#Timeouts)                                                                               |
-| `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
+| `scrollBehavior`             | [`scrollBehavior`](/guides/references/configuration#actionability)             | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#scrolling) before executing the command |
+| `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#timeouts)           | Time to wait for `.type()` to resolve before [timing out](#timeouts)                                                                               |
+| `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#animations) before executing the command.       |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 - `.type()` yields the same subject it was given from the previous
 command.
@@ -110,7 +110,7 @@ cy.get('textarea').type('Hello world') // yields <textarea>
 
 :::info
 
-[Check out our example recipe of logging in by typing username and password in HTML web forms](/examples/examples/recipes#Logging-In)
+[Check out our example recipe of logging in by typing username and password in HTML web forms](/examples/examples/recipes#logging-in)
 
 :::
 
@@ -227,9 +227,9 @@ fired when it is released.
 :::info
 
 You can also use key combinations during
-[.click()](/api/commands/click#Click-with-key-combinations),
-[.rightclick()](/api/commands/rightclick#Right-click-with-key-combinations) and
-[.dblclick()](/api/commands/dblclick#Double-click-with-key-combinations) through
+[.click()](/api/commands/click#click-with-key-combinations),
+[.rightclick()](/api/commands/rightclick#right-click-with-key-combinations) and
+[.dblclick()](/api/commands/dblclick#double-click-with-key-combinations) through
 their options. See each doc for more information.
 
 :::
@@ -244,8 +244,8 @@ cy.get('input').type('{shift+alt+b}hello')
 
 When a modifier is specified on its own, it will remain activated for the
 duration of the `.type()` command, and is released when all subsequent
-characters are typed. However, [{release: false}](#Options) can be passed as an
-[option](#Key-Combinations).
+characters are typed. However, [{release: false}](#options) can be passed as an
+[option](#key-combinations).
 
 ```javascript
 // This is the same as a user holding down SHIFT and ALT, then typing 'hello'
@@ -359,7 +359,7 @@ cy.get('body').type('{shift}', { release: false }).get('li:first').click()
 #### Force typing regardless of its actionable state
 
 Forcing typing overrides the
-[actionable checks](/guides/core-concepts/interacting-with-elements#Forcing)
+[actionable checks](/guides/core-concepts/interacting-with-elements#forcing)
 Cypress applies and will automatically fire the events.
 
 ```javascript
@@ -463,7 +463,7 @@ need this to be fixed.
 #### Key Events Table
 
 Cypress prints out a table of key events that detail the keys that were pressed
-when clicking on type within the [Command Log](#Command-Log). Each character
+when clicking on type within the [Command Log](#command-log). Each character
 will contain the `which` character code and the events that happened as a result
 of that key press.
 
@@ -568,19 +568,19 @@ submitted.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `.type()` requires being chained off a command that yields DOM
 element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `.type()` will automatically wait for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.type()`
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `.type()` can time out waiting for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.type()`

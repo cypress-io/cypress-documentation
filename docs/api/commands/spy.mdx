@@ -36,7 +36,7 @@ The `object` that has the `method` to be wrapped.
 
 The name of the `method` on the `object` to be wrapped.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 Unlike most Cypress commands, `cy.spy()` is _synchronous_ and returns a value
 (the spy) instead of a Promise-like chain-able object.
@@ -74,7 +74,7 @@ const stub = cy.stub(obj, 'foo').log(false)
 
 :::info
 
-[Check out our example recipe testing spying, stubbing and time](/examples/examples/recipes#Stubbing-and-spying)
+[Check out our example recipe testing spying, stubbing and time](/examples/examples/recipes#stubbing-and-spying)
 
 :::
 
@@ -125,21 +125,21 @@ is being called by your test and still have the original method action invoked.
 #### Assertion Support
 
 Cypress has also built-in
-[Sinon-Chai](/guides/references/bundled-libraries#Sinon-Chai) support, so any
-[assertions supported by `Sinon-Chai`](/guides/references/assertions#Sinon-Chai)
+[Sinon-Chai](/guides/references/bundled-libraries#sinon-chai) support, so any
+[assertions supported by `Sinon-Chai`](/guides/references/assertions#sinon-chai)
 can be used without any configuration.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `cy.spy()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `cy.spy()` cannot have any assertions chained.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `cy.spy()` cannot time out.
 
@@ -178,5 +178,5 @@ the following:
 - [`.as()`](/api/commands/as)
 - [`cy.clock()`](/api/commands/clock)
 - [Guide: Stubs, Spies and Clocks](/guides/guides/stubs-spies-and-clocks)
-- [Recipe: Stubbing, Spying](/examples/examples/recipes#Stubbing-and-spying)
+- [Recipe: Stubbing, Spying](/examples/examples/recipes#stubbing-and-spying)
 - [`cy.stub()`](/api/commands/stub)

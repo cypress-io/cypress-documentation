@@ -35,16 +35,16 @@ Pass in an options object to change the default behavior of `cy.setCookie()`.
 
 | Option     | Default                                                        | Description                                                                                                                                                                                                           |
 | ---------- | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `log`      | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                                                                                              |
+| `log`      | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#command-log)                                                                                                                              |
 | `domain`   | `window.location.hostname`                                     | The domain the cookie is visible to                                                                                                                                                                                   |
 | `expiry`   | 20 years into the future                                       | When the cookie expires, specified in seconds since [Unix Epoch](https://en.wikipedia.org/wiki/Unix_time).                                                                                                            |
 | `httpOnly` | `false`                                                        | Whether the cookie is an HTTP only cookie                                                                                                                                                                             |
 | `path`     | `/`                                                            | The cookie path                                                                                                                                                                                                       |
 | `secure`   | `false`                                                        | Whether the cookie is a secure cookie                                                                                                                                                                                 |
-| `timeout`  | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.setCookie()` to resolve before [timing out](#Timeouts)                                                                                                                                           |
+| `timeout`  | [`responseTimeout`](/guides/references/configuration#timeouts) | Time to wait for `cy.setCookie()` to resolve before [timing out](#timeouts)                                                                                                                                           |
 | `sameSite` | `undefined`                                                    | Cookie's SameSite value. If set, should be one of `lax`, `strict`, or `no_restriction`. Pass `undefined` to use the browser's default. Note: `no_restriction` can only be used if the `secure` flag is set to `true`. |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 `cy.setCookie()` yields a cookie object with the following properties:
 
@@ -75,16 +75,16 @@ cy.getCookie('session_id').should(
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `cy.setCookie()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `cy.setCookie()` will only run assertions you have chained once, and will not
   [retry](/guides/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `cy.setCookie()` should never time out.
 
@@ -118,7 +118,7 @@ following:
 | Version                                       | Changes                                                                                                                                          |
 | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | [5.0.0](/guides/references/changelog#5-0-0)   | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.                                                          |
-| [4.3.0](/guides/references/changelog#4-3-0)   | Added `sameSite` property when the [experimentalGetCookiesSameSite](/guides/references/configuration#Experiments) configuration value is `true`. |
+| [4.3.0](/guides/references/changelog#4-3-0)   | Added `sameSite` property when the [experimentalGetCookiesSameSite](/guides/references/configuration#experiments) configuration value is `true`. |
 | [0.16.0](/guides/references/changelog#0-16-0) | `cy.setCookie()` command added                                                                                                                   |
 
 ## See also

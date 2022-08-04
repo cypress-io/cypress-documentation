@@ -47,7 +47,7 @@ Related notes:
 - You can't have both `cypress.config.js` _and_ `cypress.config.ts` files. This
   will result in an error when Cypress loads.
 - A
-  [`defineConfig()`](/guides/references/configuration#Intelligent-Code-Completion)
+  [`defineConfig()`](/guides/references/configuration#intelligent-code-completion)
   helper function is now exported by Cypress, which provides automatic code
   completion for configuration in many popular code editors. For TypeScript
   users, the `defineConfig` function will ensure the configuration object passed
@@ -75,22 +75,22 @@ separate "plugins file" (which used to default to `cypress/plugins/index.js`) is
 no longer needed.
 
 Support for the plugins file has been removed, and it has been replaced with the
-new [`setupNodeEvents()`](/guides/references/configuration#setupNodeEvents) and
-[`devServer`](/guides/references/configuration#devServer) config options.
+new [`setupNodeEvents()`](/guides/references/configuration#setupnodeevents) and
+[`devServer`](/guides/references/configuration#devserver) config options.
 
 Related notes:
 
 - The `cypress/plugins/index.js` plugins file is no longer automatically loaded
   by Cypress.
-- The [`setupNodeEvents()`](/guides/references/configuration#setupNodeEvents)
+- The [`setupNodeEvents()`](/guides/references/configuration#setupnodeevents)
   config option is functionally equivalent to the function exported from the
   plugins file; it takes the same `on` and `config` arguments, and should return
-  the same value. See the [Config option changes section](#setupNodeEvents) of
+  the same value. See the [Config option changes section](#setupnodeevents) of
   this migration guide for more details.
-- The [`devServer`](/guides/references/configuration#devServer) config option is
+- The [`devServer`](/guides/references/configuration#devserver) config option is
   specific to component testing, and offers a much more streamlined and
   consistent way to configure a component testing dev server than using the
-  plugins file. See the [Config option changes section](#devServer) of this
+  plugins file. See the [Config option changes section](#devserver) of this
   migration guide for more details.
 - Many pages and examples throughout the documentation have been updated to show
   configuration in `setupNodeEvents` as well as the legacy plugins file. For
@@ -126,7 +126,7 @@ configuration will result in an error when Cypress loads.
 
 The `componentFolder` config option is no longer used, as it has been replaced
 by the `specPattern`
-[testing-type specific option](/guides/references/configuration#Testing-Type-Specific-Options).
+[testing-type specific option](/guides/references/configuration#testing-type-specific-options).
 
 :::caution
 
@@ -326,7 +326,7 @@ when Cypress loads.
 
 The `ignoreTestFiles` option is no longer used, and has been replaced with the
 `excludeSpecPattern`
-[testing-type specific option](/guides/references/configuration#Testing-Type-Specific-Options).
+[testing-type specific option](/guides/references/configuration#testing-type-specific-options).
 
 Default values
 
@@ -372,7 +372,7 @@ of the configuration will result in an error when Cypress loads.
 #### `integrationFolder`
 
 This option is no longer used, as it has been replaced by the `specPattern`
-[testing-type specific option](/guides/references/configuration#Testing-Type-Specific-Options).
+[testing-type specific option](/guides/references/configuration#testing-type-specific-options).
 
 :::caution
 
@@ -384,9 +384,9 @@ when Cypress loads.
 #### `pluginsFile`
 
 This option is no longer used, and all plugin file functionality has moved into
-the [`setupNodeEvents()`](/guides/references/configuration#setupNodeEvents) and
-[`devServer`](/guides/references/configuration#devServer) options. See the
-[Plugins file removed](#Plugins-file-removed) section of this migration guide
+the [`setupNodeEvents()`](/guides/references/configuration#setupnodeevents) and
+[`devServer`](/guides/references/configuration#devserver) options. See the
+[Plugins file removed](#plugins-file-removed) section of this migration guide
 for more details.
 
 :::caution
@@ -402,11 +402,11 @@ All functionality related to setting up events or modifying the config,
 previously done in the plugins file, has moved into the `setupNodeEvents()`
 config options. This option is not valid at the top level of the config, and may
 only be defined inside the `component` or `e2e`
-[configuration objects](/guides/references/configuration#Testing-Type-Specific-Options).
+[configuration objects](/guides/references/configuration#testing-type-specific-options).
 
 More information can be found in the
-[Plugins API documentation](/api/plugins/writing-a-plugin#Plugins-API) and the
-[Configuration API documentation](/api/plugins/configuration-api#Usage).
+[Plugins API documentation](/api/plugins/writing-a-plugin#plugins-api) and the
+[Configuration API documentation](/api/plugins/configuration-api#usage).
 
 <Badge type="danger">Before</Badge> `cypress/plugins/index.js`
 
@@ -447,7 +447,7 @@ module.exports = (on, config) => {
 
 Alternately, you can continue to use an external plugins file, but you will need
 to load that file explicitly, and also update it to move any component testing
-dev server code into the [`devServer`](#devServer) config option.
+dev server code into the [`devServer`](#devserver) config option.
 
 :::cypress-config-example
 
@@ -475,7 +475,7 @@ import setupNodeEvents from './cypress/plugins/index.js'
 
 The `slowTestThreshold` configuration option is no longer valid at the top level
 of the configuration, and is now a
-[testing-type specific option](/guides/references/configuration#Testing-Type-Specific-Options).
+[testing-type specific option](/guides/references/configuration#testing-type-specific-options).
 
 Note that the default values are unchanged (`10000` for `e2e` and `250` for
 `component`).
@@ -491,9 +491,9 @@ configuration will result in an error when Cypress loads.
 
 The `supportFile` configuration option is no longer valid at the top level of
 the configuration, and is now a
-[testing-type specific option](/guides/references/configuration#Testing-Type-Specific-Options).
+[testing-type specific option](/guides/references/configuration#testing-type-specific-options).
 More information can be found in the
-[support file docs](/guides/core-concepts/writing-and-organizing-tests#Support-file).
+[support file docs](/guides/core-concepts/writing-and-organizing-tests#support-file).
 
 <Badge type="danger">Before</Badge>
 
@@ -609,7 +609,7 @@ don't recommend doing it manually if you are a Dashboard user.
 ### Generated Files
 
 Generated screenshots and videos will still be created inside their respective
-[folders](/guides/references/configuration#Folders-Files) (`screenshotsFolder`,
+[folders](/guides/references/configuration#folders-files) (`screenshotsFolder`,
 `videosFolder`). However, the paths of generated files inside those folders will
 be stripped of any common ancestor paths shared between all spec files found by
 the `specPattern` option (or via the `--spec` command line option or `spec`
@@ -998,7 +998,7 @@ cy.intercept(url, (req) => {
 })
 ```
 
-[Read more about the `cy.intercept()` interception lifecycle.](/api/commands/intercept#Interception-lifecycle)
+[Read more about the `cy.intercept()` interception lifecycle.](/api/commands/intercept#interception-lifecycle)
 
 #### URL matching is stricter
 
@@ -1711,7 +1711,7 @@ cy.intercept('GET', '/projects', {
 
 As of 7.0, newer intercepts are called before older intercepts, allowing users
 to override intercepts.
-[See "Handler ordering is reversed" for more details](#Handler-ordering-is-reversed).
+[See "Handler ordering is reversed" for more details](#handler-ordering-is-reversed).
 
 Before 7.0, intercepts could not be overridden. See
 [#9302](https://github.com/cypress-io/cypress/issues/9302) for more details.
@@ -1803,7 +1803,7 @@ element can never have a computed opacity greater than that of an ancestor.
 Elements where the CSS property (or ancestors) is `opacity: 0` are still
 considered [actionable](/guides/core-concepts/interacting-with-elements) however
 and
-[any action commands](/guides/core-concepts/interacting-with-elements#Actionability)
+[any action commands](/guides/core-concepts/interacting-with-elements#actionability)
 used to interact with the element will perform the action. This matches
 browser's implementation on how they regard elements with `opacity: 0`.
 
@@ -2162,7 +2162,7 @@ Cypress.Cookies.defaults({
 ### `blacklistHosts` configuration renamed
 
 The `blacklistHosts` configuration has been renamed to
-[blockHosts](/guides/references/configuration#Notes) to more closely reflect its
+[blockHosts](/guides/references/configuration#notes) to more closely reflect its
 behavior.
 
 This should be updated in all places where Cypress configuration can be set

@@ -41,7 +41,7 @@ The name of the `method` on the `object` to be wrapped.
 
 The function used to replace the `method` on the `object`.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 Unlike most Cypress commands, `cy.stub()` is _synchronous_ and returns a value
 (the stub) instead of a Promise-like chain-able object.
@@ -157,7 +157,7 @@ const stub = cy.stub(obj, 'foo').log(false)
 
 :::info
 
-[Check out our example recipe testing spying, stubbing and time](/examples/examples/recipes#Stubbing-and-spying)
+[Check out our example recipe testing spying, stubbing and time](/examples/examples/recipes#stubbing-and-spying)
 
 :::
 
@@ -205,15 +205,15 @@ is being called by your test and still have the original method action invoked.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `cy.stub()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `cy.stub()` cannot have any assertions chained.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `cy.stub()` cannot time out.
 
@@ -253,6 +253,6 @@ outputs the following:
 - [`cy.clock()`](/api/commands/clock)
 - [`cy.spy()`](/api/commands/spy)
 - [Guide: Stubs, Spies and Clocks](/guides/guides/stubs-spies-and-clocks)
-- [Recipe: Stubbing, Spying](/examples/examples/recipes#Stubbing-and-spying)
+- [Recipe: Stubbing, Spying](/examples/examples/recipes#stubbing-and-spying)
 - [Recipe: Unit Test - Stubbing Dependencies](/examples/examples/recipes)
 - [Stub navigator API in end-to-end tests](https://glebbahmutov.com/blog/stub-navigator-api/)

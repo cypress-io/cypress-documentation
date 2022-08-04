@@ -32,7 +32,7 @@ your local workflow.
 
 The data used by these features is pulled from the Dashboard, so they will only
 reflect test results that were
-[recorded](/guides/dashboard/projects#Set-up-a-project-to-record).
+[recorded](/guides/dashboard/projects#set-up-a-project-to-record).
 
 If you're not sure whether you're logged in, you can always check using the
 profile control in the top right of the window.
@@ -82,7 +82,7 @@ With this intelligence you can monitor, run, and fix tests locally within CI
 workflows, and then further dig into your results by clicking through to the
 Dashboard.
 
-The runs data is sourced from the Dashboard (see [note above](#Overview)) so
+The runs data is sourced from the Dashboard (see [note above](#overview)) so
 should be the same everywhere.
 
 #### Average duration
@@ -99,7 +99,7 @@ Again, this analysis comes from the Dashboard.
 
 This screen shows detailed information about the most recently recorded
 [test runs](/guides/dashboard/runs) across all git branches, latest first. This
-data comes from the Dashboard (see [note above](#Overview)) so should be the
+data comes from the Dashboard (see [note above](#overview)) so should be the
 same everywhere.
 
 The title of each run is taken from the
@@ -129,7 +129,7 @@ any command or assertion executed in relevant `before`, `beforeEach`,
 
 There are some places in the Command Log that display a link to the relevant
 file where the code is located. Clicking on this link will open the file in your
-[preferred file opener](/guides/tooling/IDE-integration#File-Opener-Preference).
+[preferred file opener](/guides/tooling/IDE-integration#file-opener-preference).
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/open-file-in-IDE.gif" alt="Open file in your IDE"></DocsImage>
 
@@ -145,7 +145,7 @@ testing.
 By default, Cypress keeps 50 tests worth of snapshots and command data for time
 traveling. If you are seeing extremely high memory consumption in your browser,
 you may want to lower the `numTestsKeptInMemory` in your
-[Cypress configuration](/guides/references/configuration#Global).
+[Cypress configuration](/guides/references/configuration#global).
 
 :::
 
@@ -259,7 +259,7 @@ Under Test is rendered.
 ### Application Under Test <E2EOnlyBadge />
 
 In
-[E2E Testing](/guides/core-concepts/testing-types#What-is-End-to-end-Testing),
+[E2E Testing](/guides/core-concepts/testing-types#what-is-end-to-end-testing),
 the righthand side of the Cypress app is used to display the Application Under
 Test (AUT): the application that was navigated to using a
 [`cy.visit()`](/api/commands/visit) or any subsequent routing calls made from
@@ -284,7 +284,7 @@ DOM is completely available for debugging.
 The AUT also displays in the size and orientation specified in your tests. You
 can change the size or orientation with the
 [`cy.viewport()`](/api/commands/viewport) command or in your
-[Cypress configuration](/guides/references/configuration#Viewport). If the AUT
+[Cypress configuration](/guides/references/configuration#viewport). If the AUT
 does not fit within the current browser window, it is scaled appropriately to
 fit within the window.
 
@@ -308,7 +308,7 @@ unexpected behaviors
 ### Component Under Test <ComponentOnlyBadge />
 
 In
-[Component testing](/guides/core-concepts/testing-types#What-is-Component-Testing),
+[Component testing](/guides/core-concepts/testing-types#what-is-component-testing),
 the righthand side of the Cypress app is used to display the Component Under
 Test (CUT): the component that was mounted using the
 [`cy.mount()`](/api/commands/mount) command.
@@ -352,7 +352,7 @@ available for debugging.
 The CUT also displays in the size and orientation specified in your tests. You
 can change the size or orientation with the
 [`cy.viewport()`](/api/commands/viewport) command or in your
-[Cypress configuration](/guides/references/configuration#Viewport). If the CUT
+[Cypress configuration](/guides/references/configuration#viewport). If the CUT
 does not fit within the current browser window, it is scaled appropriately to
 fit within the window.
 
@@ -415,7 +415,7 @@ To help with these common challenges, the Selector Playground automatically
 prefers certain `data-*` attributes when determining a unique selector.
 
 Please read our
-[Best Practices guide](/guides/references/best-practices#Selecting-Elements) on
+[Best Practices guide](/guides/references/best-practices#selecting-elements) on
 helping you target elements and prevent tests from breaking on CSS or JS
 changes.
 
@@ -482,9 +482,9 @@ Cypress app.
 In addition to the features already mentioned, Cypress comes with a host of
 debugging tools to help you understand a test. You can:
 
-- See detailed information about [errors](#Errors) that occur.
-- Receive additional [console output](#Console-output) about each command.
-- [Pause commands](#Special-commands) and step through them iteratively.
+- See detailed information about [errors](#errors) that occur.
+- Receive additional [console output](#console-output) about each command.
+- [Pause commands](#special-commands) and step through them iteratively.
 <!-- - Visualize when hidden or multiple elements are found. -->
 
 ### Errors

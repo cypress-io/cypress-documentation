@@ -15,9 +15,9 @@ The Plugins API allows you to hook into and extend Cypress behavior.
 
 ## Plugins API
 
-The [`setupNodeEvents`](/guides/references/configuration#setupNodeEvents)
+The [`setupNodeEvents`](/guides/references/configuration#setupnodeevents)
 function (or deprecated
-[plugins file](/guides/references/legacy-configuration#Plugins) function)
+[plugins file](/guides/references/legacy-configuration#plugins) function)
 receives 2 arguments: [`on`](#on) and [`config`](#config). It can return a
 synchronous value or can also return a Promise, which will be awaited until it
 resolves. This enables you to perform asynchronous actions such as reading files
@@ -53,7 +53,7 @@ on('<event>', (arg1, arg2) => {
 :::
 
 Each event documents its own argument signature. To understand how to use them,
-please [refer to the docs for each one](#List-of-events).
+please [refer to the docs for each one](#list-of-events).
 
 ### config
 
@@ -104,9 +104,9 @@ modified from the plugins file.**
 
 ## Execution context
 
-The [`setupNodeEvents`](/guides/references/configuration#setupNodeEvents)
+The [`setupNodeEvents`](/guides/references/configuration#setupnodeevents)
 function (or deprecated
-[plugins file](/guides/references/legacy-configuration#Plugins) function) is
+[plugins file](/guides/references/legacy-configuration#plugins) function) is
 invoked when Cypress opens a project.
 
 Cypress does this by spawning an independent `child_process` which then
@@ -118,8 +118,8 @@ This code will be executed using the the Node version that launched Cypress.
 ### npm modules
 
 When Cypress executes the
-[`setupNodeEvents`](/guides/references/configuration#setupNodeEvents) function
-(or deprecated [plugins file](/guides/references/legacy-configuration#Plugins)
+[`setupNodeEvents`](/guides/references/configuration#setupnodeevents) function
+(or deprecated [plugins file](/guides/references/legacy-configuration#plugins)
 function) it will execute with `process.cwd()` set to your project's path.
 Additionally - you will be able to `require` **any node module** you have
 installed, including local files inside your project.
@@ -161,9 +161,9 @@ its own child process so it is isolated away from the context that Cypress
 itself runs in. That means you cannot accidentally modify or change Cypress's
 own execution in any way.
 
-If your [`setupNodeEvents`](/guides/references/configuration#setupNodeEvents)
+If your [`setupNodeEvents`](/guides/references/configuration#setupnodeevents)
 function (or deprecated
-[plugins file](/guides/references/legacy-configuration#Plugins) function) has an
+[plugins file](/guides/references/legacy-configuration#plugins) function) has an
 uncaught exception, an unhandled rejection from a promise, or a syntax error -
 Cypress will automatically catch those and display them to you inside of the
 console and even in the Cypress App itself.

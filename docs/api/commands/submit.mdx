@@ -6,7 +6,7 @@ Submit a form.
 
 :::caution
 
-The [subject](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+The [subject](/guides/core-concepts/introduction-to-cypress#subject-management)
 must be a `<form>`.
 
 :::
@@ -41,10 +41,10 @@ Pass in an options object to change the default behavior of `.submit()`.
 
 | Option    | Default                                                              | Description                                                                              |
 | --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.submit()` to resolve before [timing out](#Timeouts)                   |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#command-log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#timeouts) | Time to wait for `.submit()` to resolve before [timing out](#timeouts)                   |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 - `.submit()` yields the same subject it was given from the previous
 command.
@@ -94,17 +94,17 @@ failures.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `.submit()` requires being chained off a command that yields DOM
 element(s).</li><li>`.submit()` requires the element to be a `form`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `.submit()` will automatically wait for assertions you have chained to
 pass
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `.submit()` can time out waiting for assertions you've added to
 pass.

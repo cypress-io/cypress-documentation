@@ -9,13 +9,13 @@ costs:
 
 - [Parallelization](/guides/guides/parallelization): Reduce test duration by
   running multiple test spec files simultaneously across available CI machines.
-- [Load Balancing](/guides/guides/parallelization#Balance-strategy): Optimize CI
+- [Load Balancing](/guides/guides/parallelization#balance-strategy): Optimize CI
   resources and minimize test duration by intelligently prioritizing running of
   test spec files during parallelization.
-- [Run failed specs first](#Run-failed-specs-first): Quickly verify that your
+- [Run failed specs first](#run-failed-specs-first): Quickly verify that your
   latest changes fixed a build by prioritizing the specs that failed in the
   previous Cypress run.
-- [Cancel test run when a test fails](#Cancel-test-run-when-a-test-fails): Save
+- [Cancel test run when a test fails](#cancel-test-run-when-a-test-fails): Save
   on CI resources by automatically canceling a Cypress run upon the first test
   failure.
 
@@ -78,7 +78,7 @@ To enable or disable this feature:
 <strong>CI Tip: Reduce Costs</strong>
 
 In addition to saving time by running failed specs first, also consider
-[canceling test runs on first failure](#Cancel-test-run-when-a-test-fails) to
+[canceling test runs on first failure](#cancel-test-run-when-a-test-fails) to
 also save on CI costs.
 
 :::
@@ -152,7 +152,7 @@ To enable or disable this feature:
 <strong>CI Tip: Save Time</strong>
 
 In addition to reducing CI costs by canceling test runs on first failure, also
-consider [running failed specs first](#Run-failed-specs-first) to reduce the
+consider [running failed specs first](#run-failed-specs-first) to reduce the
 time it takes to fix issues and deploy changes.
 
 :::

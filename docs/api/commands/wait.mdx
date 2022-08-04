@@ -40,7 +40,7 @@ referenced with the `@` character and the name of the alias.
 
 <strong>Core Concept</strong>
 
-[You can read more about aliasing routes in our Core Concept Guide](/guides/guides/network-requests#Waiting).
+[You can read more about aliasing routes in our Core Concept Guide](/guides/guides/network-requests#waiting).
 
 :::
 
@@ -55,12 +55,12 @@ Pass in an options object to change the default behavior of `cy.wait()`.
 
 | Option            | Default                                                                                                                       | Description                                                                              |
 | ----------------- | ----------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`             | `true`                                                                                                                        | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout`         | [`requestTimeout`](/guides/references/configuration#Timeouts), [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.wait()` to resolve before [timing out](#Timeouts)                   |
-| `requestTimeout`  | [`requestTimeout`](/guides/references/configuration#Timeouts)                                                                 | Overrides the global `requestTimeout` for this request. Defaults to `timeout`.           |
-| `responseTimeout` | [`responseTimeout`](/guides/references/configuration#Timeouts)                                                                | Overrides the global `responseTimeout` for this request. Defaults to `timeout`.          |
+| `log`             | `true`                                                                                                                        | Displays the command in the [Command log](/guides/core-concepts/cypress-app#command-log) |
+| `timeout`         | [`requestTimeout`](/guides/references/configuration#timeouts), [`responseTimeout`](/guides/references/configuration#timeouts) | Time to wait for `cy.wait()` to resolve before [timing out](#timeouts)                   |
+| `requestTimeout`  | [`requestTimeout`](/guides/references/configuration#timeouts)                                                                 | Overrides the global `requestTimeout` for this request. Defaults to `timeout`.           |
+| `responseTimeout` | [`responseTimeout`](/guides/references/configuration#timeouts)                                                                | Overrides the global `responseTimeout` for this request. Defaults to `timeout`.          |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 #### When given a `time` argument:
 
@@ -90,7 +90,7 @@ You almost **never** need to wait for an arbitrary period of time. There are
 always better ways to express this in Cypress.
 
 Read about
-[best practices](/guides/references/best-practices#Unnecessary-Waiting) here.
+[best practices](/guides/references/best-practices#unnecessary-waiting) here.
 
 :::
 
@@ -100,7 +100,7 @@ or [`cy.pause()`](/api/commands/pause) when debugging your test code.
 ### Alias
 
 For a detailed explanation of aliasing,
-[read more about waiting on routes here](/guides/guides/network-requests#Waiting).
+[read more about waiting on routes here](/guides/guides/network-requests#waiting).
 
 #### Wait for a specific request to respond
 
@@ -214,7 +214,7 @@ cy.get(...)
 ```
 
 Read
-[Guide: Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#Commands-Run-Serially)
+[Guide: Introduction to Cypress](/guides/core-concepts/introduction-to-cypress#commands-run-serially)
 
 ### Timeouts
 
@@ -225,7 +225,7 @@ periods.
 
 The first period waits for a matching request to leave the browser. This
 duration is configured by the
-[`requestTimeout`](/guides/references/configuration#Timeouts) option - which has
+[`requestTimeout`](/guides/references/configuration#timeouts) option - which has
 a default of `5000` ms.
 
 This means that when you begin waiting for an aliased request, Cypress will wait
@@ -236,7 +236,7 @@ found, you will get an error message that looks like this:
 
 Once Cypress detects that a matching request has begun its request, it then
 switches over to the 2nd waiting period. This duration is configured by the
-[`responseTimeout`](/guides/references/configuration#Timeouts) option - which
+[`responseTimeout`](/guides/references/configuration#timeouts) option - which
 has a default of `30000` ms.
 
 This means Cypress will now wait up to 30 seconds for the external server to
@@ -256,18 +256,18 @@ requests to complete within the given `requestTimeout` and `responseTimeout`.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - When passed a `time` argument `cy.wait()` can be chained off of `cy`
 or off another command..</li><li>When passed an `alias` argument `cy.wait()`
 requires being chained off of `cy`..
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `cy.wait()` will only run assertions you have chained once, and will
 not [retry](/guides/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `cy.wait()` can time out waiting for the request to go
 out.</li><li>`cy.wait()` can time out waiting for the response to

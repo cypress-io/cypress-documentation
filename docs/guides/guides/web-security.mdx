@@ -119,9 +119,9 @@ In each of these situations, Cypress will lose the ability to automate your
 application and will immediately error.
 
 Read on to learn about
-[working around these common problems](/guides/guides/web-security#Common-Workarounds)
+[working around these common problems](/guides/guides/web-security#common-workarounds)
 or even
-[disabling web security](/guides/guides/web-security#Disabling-Web-Security)
+[disabling web security](/guides/guides/web-security#disabling-web-security)
 altogether.
 
 ### Cross-origin iframes
@@ -148,7 +148,7 @@ iframe supports it).
 Other than that, you'll have to wait for us to implement APIs to support this
 (check our [open issue](https://github.com/cypress-io/cypress/issues/136)), or
 you can
-[disable web security](/guides/guides/web-security#Disabling-Web-Security).
+[disable web security](/guides/guides/web-security#disabling-web-security).
 
 ### Insecure Content
 
@@ -210,7 +210,7 @@ flag set to `true`.
 
 If you're in a situation where you don't control the code, or otherwise cannot
 work around this, you can bypass this restriction in Cypress by
-[disabling web security](/guides/guides/web-security#Disabling-Web-Security).
+[disabling web security](/guides/guides/web-security#disabling-web-security).
 
 ### Same port per test
 
@@ -244,7 +244,7 @@ cy.get('a').click() // browser attempts to load google.com, Cypress errors
 
 We do not recommend visiting a superdomain that you don't control in your tests
 which you can read more about
-[here](/guides/references/best-practices#Visiting-external-sites)
+[here](/guides/references/best-practices#visiting-external-sites)
 
 Instead, all you can test is that the `href` property is correct!
 
@@ -272,7 +272,7 @@ cy.get('a').then(($a) => {
 ```
 
 If you still require visiting a different origin URL then read about
-[disabling web security](/guides/guides/web-security#Disabling-Web-Security).
+[disabling web security](/guides/guides/web-security#disabling-web-security).
 
 ### Form Submission Redirects
 
@@ -342,7 +342,7 @@ cy.request('POST', 'https://sso.corp.com/auth', {
 
 If you still want to be able to be redirected to your SSO server, you can read
 about
-[disabling web security](/guides/guides/web-security#Disabling-Web-Security).
+[disabling web security](/guides/guides/web-security#disabling-web-security).
 
 ### JavaScript Redirects
 
@@ -361,7 +361,7 @@ the previous section about working around that.
 
 If you want to continue using the code to navigate to a different superdomain,
 then you might want to read about
-[disabling web security](/guides/guides/web-security#Disabling-Web-Security).
+[disabling web security](/guides/guides/web-security#disabling-web-security).
 
 ## Disabling Web Security
 

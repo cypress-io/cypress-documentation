@@ -132,7 +132,7 @@ by test code.
 
 <strong>Did you know?</strong>
 
-The [Selector Playground](/guides/core-concepts/cypress-app#Selector-Playground)
+The [Selector Playground](/guides/core-concepts/cypress-app#selector-playground)
 automatically follows these best practices.
 
 When determining an unique selector it will automatically prefer elements with:
@@ -247,7 +247,7 @@ them, you will want to do some refactoring.
 :::
 
 If you are new to Cypress and wanting to better understand how Commands work -
-[please read our Introduction to Cypress guide](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands).
+[please read our Introduction to Cypress guide](/guides/core-concepts/introduction-to-cypress#chains-of-commands).
 
 If you're familiar with Cypress commands already, but find yourself using
 `const`, `let`, or `var` then you're typically trying to do one of two things:
@@ -385,7 +385,7 @@ email's functionality and visual style:
    exposes an API to read off emails. You will then need the proper
    authentication credentials, which your server could provide, or you could use
    environment variables. Some email services already provide
-   [Cypress plugins](/plugins/directory#Email) to access emails.
+   [Cypress plugins](/plugins/directory#email) to access emails.
 
 ## Having tests rely on the state of previous tests
 
@@ -772,7 +772,7 @@ _<Icon name="github" /> Source:
 :::
 
 The `db:seed` task is defined within the
-[setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function of the
+[setupNodeEvents](/guides/tooling/plugins-guide#using-a-plugin) function of the
 project, and in this case sends a request to a dedicated back end API of the app
 to appropriately re-seed the database.
 
@@ -811,7 +811,7 @@ script.
 :::danger
 
 ‼️ **Anti-Pattern:** Waiting for
-arbitrary time periods using [`cy.wait(Number)`](/api/commands/wait#Time).
+arbitrary time periods using [`cy.wait(Number)`](/api/commands/wait#time).
 
 :::
 
@@ -928,7 +928,7 @@ Start your web server before running Cypress and kill it after it completes.
 Are you trying to run in CI?
 
 We have
-[examples showing you how to start and stop your web server](/guides/continuous-integration/introduction#Boot-your-server).
+[examples showing you how to start and stop your web server](/guides/continuous-integration/introduction#boot-your-server).
 
 ## Setting a global baseUrl
 
@@ -946,7 +946,7 @@ in your [Cypress configuration](/guides/references/configuration).
 
 :::
 
-By adding a [baseUrl](/guides/references/configuration#Global) in your
+By adding a [baseUrl](/guides/references/configuration#global) in your
 configuration Cypress will attempt to prefix the `baseUrl` any URL provided to
 commands like [cy.visit()](/api/commands/visit) and
 [cy.request()](/api/commands/request) that are not fully qualified domain name

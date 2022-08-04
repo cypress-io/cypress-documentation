@@ -23,7 +23,7 @@ the element before you perform the action.
 
 :::info
 
-[Check out our example recipe on testing hover and working with hidden elements](/examples/examples/recipes#Testing-the-DOM).
+[Check out our example recipe on testing hover and working with hidden elements](/examples/examples/recipes#testing-the-dom).
 Also take a look at the
 [cypress-real-events](https://github.com/dmtrKovalenko/cypress-real-events)
 plugin that provides native events like hover and swipe in Chromium browsers.
@@ -43,7 +43,7 @@ any effects in CSS.
 :::
 
 As a workaround, check out the
-[recipe leveraging Chrome remote debugging](/examples/examples/recipes#Fundamentals)
+[recipe leveraging Chrome remote debugging](/examples/examples/recipes#fundamentals)
 to set pseudo classes like `hover`.
 
 #### Simulating `mouseover` event to get popover to display
@@ -90,7 +90,7 @@ Cypress.Commands.add('hover', (...args) => {})
 
 Note that while `Cypress.Commands.add()` is the recommended way to define a
 custom `cy.hover()` command since Cypress 10.0,
-[`Cypress.Commands.overwrite()`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands)
+[`Cypress.Commands.overwrite()`](/api/cypress-api/custom-commands#overwrite-existing-commands)
 will still work.
 
 ```javascript
@@ -109,7 +109,7 @@ source code available in the
 - [`.invoke()`](/api/commands/invoke)
 - [`.trigger()`](/api/commands/trigger)
 - [`cy.wrap()`](/api/commands/wrap)
-- [`Cypress.Commands.overwrite()`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands)
-- [Recipe: Hover and Hidden Elements](/examples/examples/recipes#Testing-the-DOM)
+- [`Cypress.Commands.overwrite()`](/api/cypress-api/custom-commands#overwrite-existing-commands)
+- [Recipe: Hover and Hidden Elements](/examples/examples/recipes#testing-the-dom)
 - blog post [Hover in Cypress](https://filiphric.com/hover-in-cypress) by Filip
   Hric

@@ -35,7 +35,7 @@ yarn add --dev typescript
 We recommend creating a
 [`tsconfig.json`](http://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
 inside your
-[`cypress` folder](/guides/core-concepts/writing-and-organizing-tests#Folder-Structure)
+[`cypress` folder](/guides/core-concepts/writing-and-organizing-tests#folder-structure)
 with the following configuration:
 
 ```json
@@ -52,8 +52,8 @@ with the following configuration:
 The `"types"` will tell the TypeScript compiler to only include type definitions
 from Cypress. This will address instances where the project also uses
 `@types/chai` or `@types/jquery`. Since
-[Chai](/guides/references/bundled-libraries#Chai) and
-[jQuery](/guides/references/bundled-libraries#Other-Library-Utilities) are
+[Chai](/guides/references/bundled-libraries#chai) and
+[jQuery](/guides/references/bundled-libraries#other-library-utilities) are
 namespaces (globals), incompatible versions will cause the package manager
 (`yarn` or `npm`) to nest and include multiple definitions and cause conflicts.
 
@@ -77,7 +77,7 @@ When adding [custom commands](/api/cypress-api/custom-commands) to the `cy`
 object, you can manually add their types to avoid TypeScript errors.
 
 For example if you add the command `cy.dataCy` into your
-[supportFile](/guides/references/configuration#Folders-Files) like this:
+[supportFile](/guides/references/configuration#folders-files) like this:
 
 ```typescript
 // cypress/support/index.ts
@@ -236,7 +236,7 @@ As you can see there are generic parameters `<'type', 'element'>` are used:
 
 If you extend Cypress assertions, you can extend the assertion types to make the
 TypeScript compiler understand the new methods. See the
-[Recipe: Adding Chai Assertions](/examples/examples/recipes#Fundamentals) for
+[Recipe: Adding Chai Assertions](/examples/examples/recipes#fundamentals) for
 instructions.
 
 ### Types for plugins
@@ -324,7 +324,7 @@ _tsconfig.json_ files in your project for TypeScript to pick up the new types:
 Please refer to your code editor in
 [TypeScript's Editor Support doc](https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support)
 and follow the instructions for your IDE to get TypeScript support and
-[intelligent code completion](/guides/tooling/IDE-integration#Intelligent-Code-Completion)
+[intelligent code completion](/guides/tooling/IDE-integration#intelligent-code-completion)
 configured in your developer environment before continuing. TypeScript support
 is built in for [Visual Studio Code](https://code.visualstudio.com/),
 [Visual Studio](https://www.visualstudio.com/), and

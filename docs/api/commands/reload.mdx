@@ -33,10 +33,10 @@ reload without cache.
 
 | Option    | Default                                                        | Description                                                                                                                                                                                        |
 | --------- | -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                                                                           |
-| `timeout` | [`pageLoadTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.reload()` to resolve before [timing out](#Timeouts) Note: Network requests are limited by the underlying operating system, and may still time out if this value is increased. |
+| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#command-log)                                                                                                           |
+| `timeout` | [`pageLoadTimeout`](/guides/references/configuration#timeouts) | Time to wait for `cy.reload()` to resolve before [timing out](#timeouts) Note: Network requests are limited by the underlying operating system, and may still time out if this value is increased. |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 - `cy.reload()` 'yields the `window` object after the page finishes
 loading'
@@ -65,7 +65,7 @@ cy.reload(true)
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `cy.reload()` requires being chained off of
 `cy`.</li><li>`cy.reload()` requires the response to be
@@ -73,12 +73,12 @@ cy.reload(true)
 be `2xx` after following redirects.</li><li>`cy.reload()` requires the load
 `load` event to eventually fire.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `cy.reload()` will automatically wait for assertions you have chained
 to pass
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `cy.reload()` can time out waiting for the page to fire its `load`
 event.</li><li>`cy.reload()` can time out waiting for assertions you've added to

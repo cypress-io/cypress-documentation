@@ -17,7 +17,7 @@ machine on which `cypress run` is called.
 :::caution
 
 ⚠️ When running via `cypress open`, the `after:run` event only fires if the
-[experimentalInteractiveRunEvents flag](/guides/references/configuration#Experiments)
+[experimentalInteractiveRunEvents flag](/guides/references/configuration#experiments)
 is enabled.
 
 :::
@@ -36,7 +36,7 @@ on('after:run', (results) => {
 
 Results of the run, including the total number of passes/failures/etc, the
 project config, and details about the browser and system. It is the same as the
-results object resolved by the [Module API](/guides/guides/module-api#Results).
+results object resolved by the [Module API](/guides/guides/module-api#results).
 
 Results are only provided when running via `cypress run`. When running via
 `cypress open`, the results will be undefined.

@@ -97,7 +97,7 @@ cy.get(".my-selector");
 ```
 
 In fact, Cypress
-[bundles jQuery](/guides/references/bundled-libraries#Other-Library-Utilities)
+[bundles jQuery](/guides/references/bundled-libraries#other-library-utilities)
 and exposes many of its DOM traversal methods to you so you can work with
 complex HTML structures with ease using APIs you're already familiar with.
 
@@ -117,7 +117,7 @@ Cypress leverages jQuery's powerful selector engine to help make tests familiar
 and readable for modern web developers.
 
 Interested in the best practices for selecting elements?
-[Read here](/guides/references/best-practices#Selecting-Elements).
+[Read here](/guides/references/best-practices#selecting-elements).
 
 :::
 
@@ -200,7 +200,7 @@ DOM element to fail:
 Before, you'd be forced to write custom code to protect against any and all of
 these issues: a nasty mashup of arbitrary waits, conditional retries, and null
 checks littering your tests. Not in Cypress! With built-in retrying and
-[customizable timeouts](/guides/references/configuration#Timeouts), Cypress
+[customizable timeouts](/guides/references/configuration#timeouts), Cypress
 sidesteps all of these flaky issues.
 
 :::tip
@@ -261,7 +261,7 @@ may be doing!
 
 This is known as a `timeout`, and most commands can be customized with specific
 timeout periods
-([the default timeout is 4 seconds](/guides/references/configuration#Timeouts)).
+([the default timeout is 4 seconds](/guides/references/configuration#timeouts)).
 These Commands will list a `timeout` option in their API documentation,
 detailing how to set the number of milliseconds you want to continue to try
 finding the element.
@@ -272,7 +272,7 @@ cy.get(".my-slow-selector", { timeout: 10000 });
 ```
 
 You can also set the timeout globally via the
-[configuration setting: `defaultCommandTimeout`](/guides/references/configuration#Timeouts).
+[configuration setting: `defaultCommandTimeout`](/guides/references/configuration#timeouts).
 
 :::tip
 
@@ -299,7 +299,7 @@ just in case".
 :::
 
 Later in this guide we'll go into much more detail about
-[Default Assertions](#Default-Assertions) and [Timeouts](#Timeouts).
+[Default Assertions](#default-assertions) and [Timeouts](#timeouts).
 
 ## Chains of Commands
 
@@ -383,7 +383,7 @@ automatically _wait_ until these assertions pass. This prevents you from having
 to know or care about the precise moment your elements eventually do reach this
 state.
 
-We will learn more about [assertions](#Assertions) later in this guide.
+We will learn more about [assertions](#assertions) later in this guide.
 
 ### Subject Management
 
@@ -1077,7 +1077,7 @@ assertions, a few lines of Cypress can ensure thousands of lines of code are
 working properly across the client and server!
 
 This is because many commands have a built in
-[Default Assertion](#Default-Assertions) which offer you a high level of
+[Default Assertion](#default-assertions) which offer you a high level of
 guarantee.
 
 :::
@@ -1199,12 +1199,12 @@ cy.wrap(obj).its("foo");
 
 ### List of Assertions
 
-Cypress bundles [Chai](/guides/references/bundled-libraries#Chai),
-[Chai-jQuery](/guides/references/bundled-libraries#Chai-jQuery), and
-[Sinon-Chai](/guides/references/bundled-libraries#Sinon-Chai) to provide
+Cypress bundles [Chai](/guides/references/bundled-libraries#chai),
+[Chai-jQuery](/guides/references/bundled-libraries#chai-jquery), and
+[Sinon-Chai](/guides/references/bundled-libraries#sinon-chai) to provide
 built-in assertions. You can see a comprehensive list of them in
 [the list of assertions reference](/guides/references/assertions). You can also
-[write your own assertions as Chai plugins](/examples/examples/recipes#Fundamentals)
+[write your own assertions as Chai plugins](/examples/examples/recipes#fundamentals)
 and use them in Cypress.
 
 ### Writing Assertions
@@ -1279,7 +1279,7 @@ expect(true).to.be.true;
 </strong>
 
 Check out our example recipes for [unit testing](/examples/examples/recipes) and
-[unit testing React components](/examples/examples/recipes#Unit-Testing).
+[unit testing React components](/examples/examples/recipes#unit-testing).
 
 :::
 
@@ -1456,7 +1456,7 @@ For instance:
   timeout is set to `60000ms`.
 - [`cy.wait()`](/api/commands/wait) actually uses 2 different timeouts. When
   waiting for a
-  [routing alias](/guides/core-concepts/variables-and-aliases#Routes), we wait
+  [routing alias](/guides/core-concepts/variables-and-aliases#routes), we wait
   for a matching request for `5000ms`, and then additionally for the server's
   response for `30000ms`. We expect your application to make a matching request
   quickly, but we expect the server's response to potentially take much longer.

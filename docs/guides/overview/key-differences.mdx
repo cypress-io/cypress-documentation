@@ -75,7 +75,7 @@ artificially like you would in an unit test. For instance you can:
 - Use 3rd party plugins programmatically. Instead of fussing with complex UI
   widgets like multi selects, autocompletes, drop downs, tree views or
   calendars, you can call methods directly from your test code to control them.
-- [Prevent Google Analytics from loading _before_ any of your application code executes](/guides/references/configuration#blockHosts)
+- [Prevent Google Analytics from loading _before_ any of your application code executes](/guides/references/configuration#blockhosts)
   when testing.
 - Get synchronous notifications whenever your application transitions to a new
   page or when it begins to unload.
@@ -113,12 +113,12 @@ Cypress knows and understands everything that happens in your application
 synchronously. It is notified the moment the page loads and the moment the page
 unloads. It is impossible for Cypress to miss elements when it fires events.
 Cypress even knows how fast an element is animating and will
-[wait for it to stop animating](/guides/core-concepts/interacting-with-elements#Animations).
+[wait for it to stop animating](/guides/core-concepts/interacting-with-elements#animations).
 Additionally, it
-[automatically waits for elements to become visible](/guides/core-concepts/interacting-with-elements#Visibility),
-to [become enabled](/guides/core-concepts/interacting-with-elements#Disability),
+[automatically waits for elements to become visible](/guides/core-concepts/interacting-with-elements#visibility),
+to [become enabled](/guides/core-concepts/interacting-with-elements#disability),
 and to
-[stop being covered](/guides/core-concepts/interacting-with-elements#Covering).
+[stop being covered](/guides/core-concepts/interacting-with-elements#covering).
 When pages begin to transition, Cypress will pause command execution until the
 following page is fully loaded. You can even tell Cypress to
 [wait](/api/commands/wait) on specific network requests to finish.

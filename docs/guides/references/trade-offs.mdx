@@ -16,12 +16,12 @@ to have. In a sense they prevent you from writing bad, slow, or flaky tests.
 
 #### Permanent trade-offs:
 
-- Cypress is not a general purpose [automation tool](#Automation-restrictions).
-- Cypress commands run [inside of a browser](#Inside-the-browser).
-- There will never be support for [multiple browser tabs](#Multiple-tabs).
+- Cypress is not a general purpose [automation tool](#automation-restrictions).
+- Cypress commands run [inside of a browser](#inside-the-browser).
+- There will never be support for [multiple browser tabs](#multiple-tabs).
 - You cannot use Cypress to drive
-  [two browsers at the same time](#Multiple-browsers-open-at-the-same-time).
-- Each test is bound to a [single origin](#Same-origin).
+  [two browsers at the same time](#multiple-browsers-open-at-the-same-time).
+- Each test is bound to a [single origin](#same-origin).
 
 #### Temporary trade-offs:
 
@@ -103,7 +103,7 @@ is no reason for us to ever expose them.
 Most of the time this use case is needed when users click an `<a>` that opens a
 new tab. Users then want to switch to that tab to verify that the content
 loaded. But, you shouldn't need to do this. In fact we have
-[recipes of showing you how to test this without multiple tabs](/examples/examples/recipes#Testing-the-DOM).
+[recipes of showing you how to test this without multiple tabs](/examples/examples/recipes#testing-the-dom).
 
 To take this a step further - we don't believe there is any use case for testing
 the browser's native behavior. You should ask yourself why you are testing that
@@ -349,6 +349,6 @@ than your superdomain.
 
 We've written several other guides specifically about handling this situation.
 
-- [Best Practices: Visiting external sites](/guides/references/best-practices#Visiting-external-sites)
-- [Web Security: Common Workarounds](/guides/guides/web-security#Common-Workarounds)
-- [Recipes: Logging In - Single Sign On](/examples/examples/recipes#Logging-In)
+- [Best Practices: Visiting external sites](/guides/references/best-practices#visiting-external-sites)
+- [Web Security: Common Workarounds](/guides/guides/web-security#common-workarounds)
+- [Recipes: Logging In - Single Sign On](/examples/examples/recipes#logging-in)

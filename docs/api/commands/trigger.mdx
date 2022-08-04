@@ -58,21 +58,21 @@ Pass in an options object to change the default behavior of `.trigger()`.
 
 | Option                       | Default                                                                        | Description                                                                                                                                        |
 | ---------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#Animations).  |
+| `animationDistanceThreshold` | [`animationDistanceThreshold`](/guides/references/configuration#actionability) | The distance in pixels an element must exceed over time to be [considered animating](/guides/core-concepts/interacting-with-elements#animations).  |
 | `bubbles`                    | `true`                                                                         | Whether the event bubbles                                                                                                                          |
 | `cancelable`                 | `true`                                                                         | Whether the event is cancelable                                                                                                                    |
 | `eventConstructor`           | `Event`                                                                        | The constructor for creating the event object (e.g. `MouseEvent`, `KeyboardEvent`)                                                                 |
-| `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#Assertions)                                                                               |
-| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                                                           |
-| `scrollBehavior`             | [`scrollBehavior`](/guides/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#Scrolling) before executing the command |
-| `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)           | Time to wait for `.trigger()` to resolve before [timing out](#Timeouts)                                                                            |
-| `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#Animations) before executing the command.       |
+| `force`                      | `false`                                                                        | Forces the action, disables [waiting for actionability](#assertions)                                                                               |
+| `log`                        | `true`                                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#command-log)                                                           |
+| `scrollBehavior`             | [`scrollBehavior`](/guides/references/configuration#actionability)             | Viewport position to where an element [should be scrolled](/guides/core-concepts/interacting-with-elements#scrolling) before executing the command |
+| `timeout`                    | [`defaultCommandTimeout`](/guides/references/configuration#timeouts)           | Time to wait for `.trigger()` to resolve before [timing out](#timeouts)                                                                            |
+| `waitForAnimations`          | [`waitForAnimations`](/guides/references/configuration#actionability)          | Whether to wait for elements to [finish animating](/guides/core-concepts/interacting-with-elements#animations) before executing the command.       |
 
 You can also include arbitrary event properties (e.g. `clientX`, `shiftKey`) and
 they will be attached to the event. Passing in coordinate arguments (`clientX`,
 `pageX`, etc) will override the position coordinates.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 - `.trigger()` yields the same subject it was given from the previous
 command.
@@ -125,7 +125,7 @@ cy.get('[data-cy=draggable]')
 
 :::info
 
-[Check out our example recipe triggering mouse and drag events to test drag and drop](/examples/examples/recipes#Testing-the-DOM)
+[Check out our example recipe triggering mouse and drag events to test drag and drop](/examples/examples/recipes#testing-the-dom)
 
 :::
 
@@ -254,19 +254,19 @@ command / event you're looking for hasn't been implemented yet.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `.trigger()` requires being chained off a command that yields DOM
 element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `.trigger()` will automatically wait for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.trigger()`
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `.trigger()` can time out waiting for the element to reach an
 [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.trigger()`

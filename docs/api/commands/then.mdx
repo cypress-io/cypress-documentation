@@ -7,15 +7,15 @@ Enables you to work with the subject yielded from the previous command.
 :::info
 
 **Note:** `.then()` assumes you are already familiar with core concepts such as
-[closures](/guides/core-concepts/variables-and-aliases#Closures).
+[closures](/guides/core-concepts/variables-and-aliases#closures).
 
 :::
 
 :::info
 
-**Note:** Prefer [`.should()` with callback](/api/commands/should#Function) over
+**Note:** Prefer [`.should()` with callback](/api/commands/should#function) over
 `.then()` for assertions as they are automatically rerun until no assertions
-throw within it but be aware of [differences](/api/commands/should#Differences).
+throw within it but be aware of [differences](/api/commands/should#differences).
 
 :::
 
@@ -43,13 +43,13 @@ Pass in an options object to change the default behavior of `.then()`.
 
 | Option    | Default                                                              | Description                                                          |
 | --------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.then()` to resolve before [timing out](#Timeouts) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#timeouts) | Time to wait for `.then()` to resolve before [timing out](#timeouts) |
 
 **<Icon name="angle-right" /> callbackFn** **_(Function)_**
 
 Pass a function that takes the previously yielded subject as its first argument.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 `.then()` is modeled identically to the way Promises work in JavaScript.
 Whatever is returned from the callback function becomes the new subject and will
@@ -218,16 +218,16 @@ cy.get('button')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `.then()` requires being chained off a previous command.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `.then()` will only run assertions you have chained once, and will not
 [retry](/guides/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `.then()` can time out waiting for a promise you've returned to
 resolve.
@@ -251,5 +251,5 @@ resolve.
 - [`.its()`](/api/commands/its)
 - [`.should()`](/api/commands/should)
 - [`.spread()`](/api/commands/spread)
-- [Guide: Using Closures to compare values](/guides/core-concepts/variables-and-aliases#Closures)
-- [Guide: Chains of Commands](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+- [Guide: Using Closures to compare values](/guides/core-concepts/variables-and-aliases#closures)
+- [Guide: Chains of Commands](/guides/core-concepts/introduction-to-cypress#chains-of-commands)

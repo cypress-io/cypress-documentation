@@ -32,10 +32,10 @@ Pass in an options object to change the default behavior of `cy.wrap()`.
 
 | Option    | Default                                                              | Description                                                                              |
 | --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.wrap()` to resolve before [timing out](#Timeouts)                   |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#command-log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#timeouts) | Time to wait for `cy.wrap()` to resolve before [timing out](#timeouts)                   |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 - `cy.wrap()` 'yields the object it was called with'
 
@@ -85,7 +85,7 @@ cy.get('button').then(($button) => {
 You can wrap promises returned by the application code. Cypress commands will
 automatically wait for the promise to resolve before continuing with the yielded
 value to the next command or assertion. See the
-[Logging in using application code](/examples/examples/recipes#Logging-In)
+[Logging in using application code](/examples/examples/recipes#logging-in)
 recipe for the full example.
 
 #### Simple example
@@ -187,11 +187,11 @@ cy.get('some-submit-button')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `cy.wrap()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `cy.wrap()`, when its argument is a promise, will automatically wait
 until the promise resolves. If the promise is rejected, `cy.wrap()` will fail
@@ -199,7 +199,7 @@ the test.</li><li>`cy.wrap()` will automatically
 [retry](/guides/core-concepts/retry-ability) until all chained assertions have
 passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `cy.wrap()` can time out waiting for assertions you've added to
 pass.
@@ -235,7 +235,7 @@ the following:
 - [`.should()`](/api/commands/should)
 - [`.spread()`](/api/commands/spread)
 - [`.then()`](/api/commands/then)
-- [Logging In: Using application code](/examples/examples/recipes#Logging-In)
+- [Logging In: Using application code](/examples/examples/recipes#logging-in)
   recipe
-- [Unit Testing: Application Code](/examples/examples/recipes#Unit-Testing)
+- [Unit Testing: Application Code](/examples/examples/recipes#unit-testing)
   recipe

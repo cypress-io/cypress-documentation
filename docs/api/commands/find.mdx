@@ -45,11 +45,11 @@ Pass in an options object to change the default behavior of `.find()`.
 
 | Option             | Default                                                                           | Description                                                                                                  |
 | ------------------ | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| `log`              | `true`                                                                            | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)                     |
-| `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts)              | Time to wait for `.find()` to resolve before [timing out](#Timeouts)                                         |
-| `includeShadowDom` | [`includeShadowDom` config option value](/guides/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
+| `log`              | `true`                                                                            | Displays the command in the [Command log](/guides/core-concepts/cypress-app#command-log)                     |
+| `timeout`          | [`defaultCommandTimeout`](/guides/references/configuration#timeouts)              | Time to wait for `.find()` to resolve before [timing out](#timeouts)                                         |
+| `includeShadowDom` | [`includeShadowDom` config option value](/guides/references/configuration#global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 - `.find()` yields the new DOM element(s) it found.
 
@@ -73,23 +73,23 @@ cy.get('#parent').find('li')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `.find()` requires being chained off a command that yields DOM
 element(s).
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `.find()` will automatically
 [retry](/guides/core-concepts/retry-ability) until the element(s)
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)</li><li>`.find()`
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#default-assertions)</li><li>`.find()`
 will automatically [retry](/guides/core-concepts/retry-ability) until all
 chained assertions have passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `.find()` can time out waiting for the element(s) to
-[exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions).</li><li>`.find()`
+[exist in the DOM](/guides/core-concepts/introduction-to-cypress#default-assertions).</li><li>`.find()`
 can time out waiting for assertions you've added to pass.
 
 ## Command Log

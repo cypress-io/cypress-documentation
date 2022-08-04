@@ -41,7 +41,7 @@ When the error is fixed in your test file, your tests will automatically re-run.
 The `supportFolder` option was removed from Cypress in version
 [`0.18.0`](/guides/references/changelog#0-18-0) and was replaced by module
 support and the
-[`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
+[`supportFile`](/guides/references/configuration#testing-type-specific-options)
 configuration option.
 
 Cypress used to automatically include any scripts in the `supportFolder` before
@@ -55,7 +55,7 @@ The `supportFile` configuration option was removed from the root configutation
 object in Cypress version `10.0.0`. Instead, it must be added within each
 testing type's configuration object as a separate property if you would like to
 use a file other than the default
-[supportFile](/guides/references/configuration#Folders-Files) configuration.
+[supportFile](/guides/references/configuration#folders-files) configuration.
 
 #### Use modules for utility functions
 
@@ -77,7 +77,7 @@ it('uses modules', () => {
 It's still useful to load a setup file before your test code. If you are setting
 Cypress defaults or utilizing custom Cypress commands, instead of needing to
 import/require those defaults/commands in every test file, you can use the
-[`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
+[`supportFile`](/guides/references/configuration#testing-type-specific-options)
 configuration option within each testing type's configuration object.
 
 :::danger
@@ -88,7 +88,7 @@ in an error when Cypress loads.
 :::
 
 Just like with your test files, the
-[`supportFile`](/guides/references/configuration#Testing-Type-Specific-Options)
+[`supportFile`](/guides/references/configuration#testing-type-specific-options)
 can use ES2015+, [TypeScript](/guides/tooling/typescript-support) or
 CoffeeScript and modules, so you can import/require other files as needed.
 
@@ -478,7 +478,7 @@ it('does not forget to return a promise', () => {
 
 <SingleDomainWorkaround />
 
-See our [Web Security](/guides/guides/web-security#Limitations) documentation.
+See our [Web Security](/guides/guides/web-security#limitations) documentation.
 
 ### <Icon name="exclamation-triangle" color="red" /> `cy.visit()` failed because you are attempting to visit a different origin domain
 
@@ -494,7 +494,7 @@ You can visit urls that are of different origin across different tests, so you
 may consider splitting your `cy.visit()` of different origin domains into
 separate tests.
 
-See our [Web Security](/guides/guides/web-security#Limitations) documentation
+See our [Web Security](/guides/guides/web-security#limitations) documentation
 for more information and workarounds.
 
 ### <Icon name="exclamation-triangle" color="red" /> `Cypress.addParentCommand()` / `Cypress.addDualCommand()` / `Cypress.addChildCommand()` has been removed and replaced by `Cypress.Commands.add()`
@@ -557,7 +557,7 @@ use of the separate Promise.
 
 The version of Mocha was upgraded with Cypress 4.0. Mocha 3+ no longer allows
 returning a promise and invoking a done callback. Read more about it in the
-[4.0 migration guide](/guides/references/migration-guide#Mocha-upgrade).
+[4.0 migration guide](/guides/references/migration-guide#mocha-upgrade).
 
 ### <Icon name="exclamation-triangle" color="red" /> Passing `cy.route({stub: false})` or `cy.server({stub: false})` is now deprecated.
 
@@ -588,7 +588,7 @@ You can get your project's record key by locating it in your settings tab in the
 Cypress App or in the [Dashboard Service](https://on.cypress.io/dashboard).
 
 You will want to then
-[add the key to your config file or as an environment variable](/guides/continuous-integration/introduction#Record-tests).
+[add the key to your config file or as an environment variable](/guides/continuous-integration/introduction#record-tests).
 
 ### <Icon name="exclamation-triangle" color="red" /> The `cypress ci` command has been deprecated
 
@@ -627,7 +627,7 @@ This error occurs in CI when using `cypress run` without a valid Cypress binary
 cache installed on the system (on linux that's `~/.cache/Cypress`).
 
 To fix this error, follow instructions on
-[caching the cypress binary in CI](/guides/continuous-integration/introduction#Caching),
+[caching the cypress binary in CI](/guides/continuous-integration/introduction#caching),
 then bump the version of your CI cache to ensure a clean build.
 
 ### <Icon name="exclamation-triangle" color="red" /> Incorrect usage of `--ci-build-id` flag
@@ -667,9 +667,9 @@ not automatically determine or generate a `ciBuildId`.
 In order to use either of these parameters a `ciBuildId` must be determined.
 
 The `ciBuildId` is automatically detected if you are running Cypress in most
-[CI providers](/guides/continuous-integration/introduction#Examples). Please
+[CI providers](/guides/continuous-integration/introduction#examples). Please
 review the
-[natively recognized environment variables](/guides/guides/parallelization#CI-Build-ID-environment-variables-by-provider)
+[natively recognized environment variables](/guides/guides/parallelization#ci-build-id-environment-variables-by-provider)
 for your CI provider.
 
 You can avoid this check in the future by passing an ID to the
@@ -690,7 +690,7 @@ If you are trying to parallelize this run, then also pass the
 different group name.
 
 Please review
-[grouping test runs](/guides/guides/parallelization#Grouping-test-runs)
+[grouping test runs](/guides/guides/parallelization#grouping-test-runs)
 documentation to learn more.
 
 ### <Icon name="exclamation-triangle" color="red" /> Cannot parallelize tests across environments
@@ -723,7 +723,7 @@ You cannot use the
 group.
 
 Please review our
-[grouping test runs](/guides/guides/parallelization#Grouping-test-runs)
+[grouping test runs](/guides/guides/parallelization#grouping-test-runs)
 documentation to learn more.
 
 ### <Icon name="exclamation-triangle" color="red" /> Run must pass `--parallel` flag
@@ -745,7 +745,7 @@ that Cypress detected was completed over 24 hours ago.
 
 In order to uniquely identify each run during `cypress run`, Cypress attempts to
 read a unique identifier from your CI provider as described in our
-[parallelization doc](/guides/guides/parallelization#CI-Build-ID-environment-variables-by-provider).
+[parallelization doc](/guides/guides/parallelization#ci-build-id-environment-variables-by-provider).
 
 You may encounter this error if Cypress is detecting the exact same CI Build ID
 matching a previous CI Build ID in a run that was completed over 24 hours ago.
@@ -829,7 +829,7 @@ origin-policy, Cypress is unable to communicate with it, and thus fails.
    _What's the point of clicking and going to another app?_ Likely all you care
    about is that the `href` attribute matches what you expect. So make an
    assertion about that. You can see more strategies on testing anchor links
-   [in our "Tab Handling and Links" example recipe](/examples/examples/recipes#Testing-the-DOM).
+   [in our "Tab Handling and Links" example recipe](/examples/examples/recipes#testing-the-dom).
 
 2. You are testing a page that uses Single sign-on (SSO). In this case your web
    server is likely redirecting you between superdomains, so you receive this
@@ -903,7 +903,7 @@ one of the following:
 **A policy setting blocks the Cypress proxy server or browser extension**
 
 - See
-  [Cypress detected policy settings on your computer that may cause issues](#Cypress-detected-policy-settings-on-your-computer-that-may-cause-issues).
+  [Cypress detected policy settings on your computer that may cause issues](#cypress-detected-policy-settings-on-your-computer-that-may-cause-issues).
 
 **The `--proxy-server` or `--load-extension` arguments have been changed**
 
@@ -912,7 +912,7 @@ one of the following:
   necessary command-line argument to be changed. If you're running into this
   error, you can troubleshoot by inspecting `args` before and after the plugin
   runs, either by using `console.log()` or by
-  [printing DEBUG logs](/guides/references/troubleshooting#Print-DEBUG-logs)
+  [printing DEBUG logs](/guides/references/troubleshooting#print-debug-logs)
   with `DEBUG=cypress:server:plugins,cypress:server:plugins:*`.
 
 **You visit the Cypress proxy URL outside of a Cypress browser.**
@@ -955,7 +955,7 @@ Here are some potential workarounds:
    with Chrome.
 2. Use the built-in Electron browser for tests, since it is not affected by
    these policies.
-   [See the guide to launching browsers for more information.](/guides/guides/launching-browsers#Electron-Browser)
+   [See the guide to launching browsers for more information.](/guides/guides/launching-browsers#electron-browser)
 3. Try using Chromium instead of Google Chrome for your tests, since it may be
    unaffected by GPO. You can
    [download the latest Chromium build here.](https://download-chromium.appspot.com)
@@ -978,7 +978,7 @@ currently running test.
 
 You can turn off this behavior globally or conditionally with the
 `uncaught:exception` event. Please see the
-[Catalog of Events](/api/events/catalog-of-events#Uncaught-Exceptions) for
+[Catalog of Events](/api/events/catalog-of-events#uncaught-exceptions) for
 examples.
 
 On a technical note, Cypress considers uncaught exceptions to be any error that

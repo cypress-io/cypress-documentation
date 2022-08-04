@@ -46,10 +46,10 @@ Pass in an options object to change the default behavior of `.its()`.
 
 | Option    | Default                                                              | Description                                                                              |
 | --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.its()` to resolve before [timing out](#Timeouts)                      |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#command-log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#timeouts) | Time to wait for `.its()` to resolve before [timing out](#timeouts)                      |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 - `.its()` 'yields the value of the property'
 
@@ -151,7 +151,7 @@ cy.window() // yields window object
 
 :::info
 
-[Check out our example recipe on testing `window.fetch` using `.its()`](/examples/examples/recipes#Stubbing-and-spying)
+[Check out our example recipe on testing `window.fetch` using `.its()`](/examples/examples/recipes#stubbing-and-spying)
 
 :::
 
@@ -191,17 +191,17 @@ cy.window().its('evilProp').should('not.exist')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `.its()` requires being chained off a previous command.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `.its()` will automatically
 [retry](/guides/core-concepts/retry-ability) until it has a property that is not
 `null` or `undefined`.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `.its()` can time out waiting for the property to
 exist.</li><li>`.its()` can time out waiting for assertions you've added to

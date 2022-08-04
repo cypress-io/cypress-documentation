@@ -31,10 +31,10 @@ Pass in an options object to change the default behavior of `cy.getCookie()`.
 
 | Option    | Default                                                        | Description                                                                              |
 | --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.getCookie()` to resolve before [timing out](#Timeouts)              |
+| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#command-log) |
+| `timeout` | [`responseTimeout`](/guides/references/configuration#timeouts) | Time to wait for `cy.getCookie()` to resolve before [timing out](#timeouts)              |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 `cy.getCookie()` yields a cookie object with the following properties:
 
@@ -110,24 +110,24 @@ cy.get('#submit')
 :::info
 
 Check out our example recipes using `cy.getCookie()` to test
-[logging in using HTML web forms](/examples/examples/recipes#Logging-In),
-[logging in using XHR web forms](/examples/examples/recipes#Logging-In) and
-[logging in with single sign on](/examples/examples/recipes#Logging-In)
+[logging in using HTML web forms](/examples/examples/recipes#logging-in),
+[logging in using XHR web forms](/examples/examples/recipes#logging-in) and
+[logging in with single sign on](/examples/examples/recipes#logging-in)
 
 :::
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `cy.getCookie()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `cy.getCookie()` will only run assertions you have chained once, and will not
   [retry](/guides/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `cy.getCookie()` should never time out.
 

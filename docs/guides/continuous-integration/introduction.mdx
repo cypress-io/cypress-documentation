@@ -176,7 +176,7 @@ provides you insight into what happened when your tests ran.
 
 #### To record tests:
 
-1. [Set up your project to record](/guides/dashboard/projects#Setup)
+1. [Set up your project to record](/guides/dashboard/projects#setup)
 2. [Pass the `--record` flag to `cypress run`](/guides/guides/command-line#cypress-run)
    within CI.
 
@@ -245,14 +245,14 @@ maintained images and configurations on several CI providers.
 Hardware requirements to run Cypress depend how much memory the browser, the
 application under test, and the server (if running it locally) need to run the
 tests without crashing. Visit our
-[System Requirements](/guides/getting-started/installing-cypress#System-requirements)
+[System Requirements](/guides/getting-started/installing-cypress#system-requirements)
 guide for minimum hardware recommendations.
 
 **Some signs that your machine may not have enough CPU or memory to run
 Cypress:**
 
 - The recorded video artifacts have random pauses or dropped frames.
-- [Debug logs of the CPU and memory](/guides/references/troubleshooting#Log-memory-and-CPU-usage)
+- [Debug logs of the CPU and memory](/guides/references/troubleshooting#log-memory-and-cpu-usage)
   frequently show CPU percent above 100%.
 - The browser crashes.
 
@@ -351,7 +351,7 @@ minutes off install time by preventing a large binary download.
   [`npm ci`](https://docs.npmjs.com/cli/ci) equivalent.
 
 - If you need to override the binary location for some reason, use
-  [CYPRESS_CACHE_FOLDER](/guides/references/advanced-installation#Binary-cache)
+  [CYPRESS_CACHE_FOLDER](/guides/references/advanced-installation#binary-cache)
   environment variable.
 
 - Make sure you are not restoring the previous cache using lax keys; then the
@@ -379,14 +379,14 @@ values in the Cypress configuration.
 - `CYPRESS_INSTALL_BINARY`
 
 Refer to the
-[Environment Variables recipe](/guides/references/configuration#Environment-Variables)
+[Environment Variables recipe](/guides/references/configuration#environment-variables)
 for more examples.
 
 **_Record Key_**
 
-If you are [recording your runs](#Record-tests) on a public project, you'll want
+If you are [recording your runs](#record-tests) on a public project, you'll want
 to protect your Record Key.
-[Learn why.](/guides/dashboard/projects#Identification)
+[Learn why.](/guides/dashboard/projects#identification)
 
 Instead of hard coding it into your run command like this:
 

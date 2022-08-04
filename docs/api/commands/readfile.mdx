@@ -56,10 +56,10 @@ Pass in an options object to change the default behavior of `cy.readFile()`.
 
 | Option    | Default                                                              | Description                                                                              |
 | --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.readFile()` to resolve before [timing out](#Timeouts)               |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#command-log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#timeouts) | Time to wait for `cy.readFile()` to resolve before [timing out](#timeouts)               |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 - `cy.readFile()` yields the contents of the file.
 
@@ -178,7 +178,7 @@ cy.readFile('does-not-exist.yaml').should('not.exist')
 
 #### Read a file that might not exist
 
-[See our example on using `cy.task()` to read a file that _may_ not exist.](/api/commands/task#Read-a-file-that-might-not-exist)
+[See our example on using `cy.task()` to read a file that _may_ not exist.](/api/commands/task#read-a-file-that-might-not-exist)
 
 ### Retries
 
@@ -195,19 +195,19 @@ cy.readFile('some/nested/path/story.txt').should('eq', 'Once upon a time...')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `cy.readFile()` requires being chained off of `cy`.
 - `cy.readFile()` requires the file must exist.
 - `cy.readFile()` requires the file be successfully read from disk.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `cy.readFile()` will automatically
   [retry](/guides/core-concepts/retry-ability) until all chained assertions have
   passed.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `cy.readFile()` can time out waiting for assertions you've added to pass.
 - `cy.readFile()` can time out when the content being read takes a significant

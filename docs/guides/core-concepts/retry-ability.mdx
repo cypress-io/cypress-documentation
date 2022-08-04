@@ -49,7 +49,7 @@ it("creates 2 items", () => {
 });
 ```
 
-The [Command Log](/guides/core-concepts/cypress-app#Command-Log) shows both
+The [Command Log](/guides/core-concepts/cypress-app#command-log) shows both
 commands and assertions with passing assertions showing in green.
 
 <DocsImage
@@ -133,8 +133,8 @@ command will be retried with the first, second, and third assertion, and so on.
 For example, the following test has [`.should()`](/api/commands/should) and
 [`.and()`](/api/commands/and) assertions. `.and()` is an alias of the
 `.should()` command, so the second assertion is really a custom callback
-assertion in the form of the [`.should(cb)`](/api/commands/should#Function)
-function with 2 [`expect`](/guides/references/assertions#BDD-Assertions)
+assertion in the form of the [`.should(cb)`](/api/commands/should#function)
+function with 2 [`expect`](/guides/references/assertions#bdd-assertions)
 assertions inside of it.
 
 ```javascript
@@ -169,7 +169,7 @@ documentation. For example, "Assertions section" of
 [`.first()`](/api/commands/first) tells us that the command is retried until all
 assertions that follow it are passing.
 
-- `.first()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#Default-Assertions)
+- `.first()` will automatically [retry](/guides/core-concepts/retry-ability) until the element(s) [exist in the DOM](/guides/core-concepts/introduction-to-cypress#default-assertions)
 - `.first()` will automatically [retry](/guides/core-concepts/retry-ability) until all chained assertions have passed
 
 ### Why are some commands _NOT_ retried?
@@ -212,7 +212,7 @@ cy.get('[data-testid="todo-list"] li') // command
 Some commands that cannot be retried still have built-in _waiting_. For example,
 as described in the "Assertions" section of [.click()](/api/commands/click), the
 `click()` command waits to click until the element becomes
-[actionable](/guides/core-concepts/interacting-with-elements#Actionability).
+[actionable](/guides/core-concepts/interacting-with-elements#actionability).
 
 Cypress tries to act like a human user would using the browser.
 
@@ -227,12 +227,12 @@ checks like these pass, and then it will attempt to click just once.
 ## Timeouts
 
 By default each command that retries, does so for up to 4 seconds - the
-[`defaultCommandTimeout`](/guides/references/configuration#Timeouts) setting.
+[`defaultCommandTimeout`](/guides/references/configuration#timeouts) setting.
 
 ### Increase time to retry
 
 You can change this timeout for _all commands_. See
-[Configuration: Overriding Options](/guides/references/configuration#Overriding-Options)
+[Configuration: Overriding Options](/guides/references/configuration#overriding-options)
 for examples of overriding this option.
 
 For example, to set the default command timeout to 10 seconds via the command
@@ -255,7 +255,7 @@ cy.get('[data-testid="mobile-nav"]', { timeout: 10000 })
 
 Cypress will retry for up to 10 seconds to find a visible element of class
 `mobile-nav` with text containing "Home". For more examples, read the
-[Timeouts](/guides/core-concepts/introduction-to-cypress#Timeouts) section in
+[Timeouts](/guides/core-concepts/introduction-to-cypress#timeouts) section in
 the "Introduction to Cypress" guide.
 
 ### Disable retry
@@ -521,7 +521,7 @@ correctly queried.
 
 If you have to use commands that cannot be retried, but need to retry the entire
 chain, consider rewriting the commands into a single
-[.should(callbackFn)](/api/commands/should#Function) chained off the very first
+[.should(callbackFn)](/api/commands/should#function) chained off the very first
 retry-able command.
 
 Below is an example where the number value is set after a delay:

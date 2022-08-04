@@ -37,17 +37,17 @@ properties:
 | `dimensions` | `object`  | The width and height of the image in pixels (example: `{ width: 100, height: 50 }`)                                                                                         |
 | `multipart`  | `boolean` | Whether the screenshot was stitched together from multiple screenshot images.                                                                                               |
 | `pixelRatio` | `number`  | _(Optional)_ The ratio of screenshot pixels to the browser's displayed pixels.                                                                                              |
-| `name`       | `string`  | _(Optional)_ The `fileName` argument passed in via [cy.screenshot()](/api/commands/screenshot#Arguments)                                                                    |
+| `name`       | `string`  | _(Optional)_ The `fileName` argument passed in via [cy.screenshot()](/api/commands/screenshot#arguments)                                                                    |
 | `specName`   | `string`  | The name of the specfile where the screenshot was taken.                                                                                                                    |
 | `path`       | `string`  | The absolute path to the image.                                                                                                                                             |
-| `scaled`     | `boolean` | Whether the application under test was scaled to fit into the browser viewport. May be `scale` argument passed in via [cy.screenshot()](/api/commands/screenshot#Arguments) |
-| `blackout`   | `array`   | The `blackout` argument passed in via [cy.screenshot()](/api/commands/screenshot#Arguments)                                                                                 |
+| `scaled`     | `boolean` | Whether the application under test was scaled to fit into the browser viewport. May be `scale` argument passed in via [cy.screenshot()](/api/commands/screenshot#arguments) |
+| `blackout`   | `array`   | The `blackout` argument passed in via [cy.screenshot()](/api/commands/screenshot#arguments)                                                                                 |
 
 ## Usage
 
 ### Modify screenshot details
 
-Using [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) you can
+Using [setupNodeEvents](/guides/tooling/plugins-guide#using-a-plugin) you can
 tap into the `after:screenshot` event.
 
 If you change the `path`, `size` or `dimensions` of the image, you'll want to

@@ -37,10 +37,10 @@ Pass in an options object to change the default behavior of `cy.url()`.
 | Option    | Default                                                              | Description                                                                              |
 | --------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | `decode`  | `false`                                                              | Decode URL                                                                               |
-| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.url()` to resolve before [timing out](#Timeouts)                    |
+| `log`     | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#command-log) |
+| `timeout` | [`defaultCommandTimeout`](/guides/references/configuration#timeouts) | Time to wait for `cy.url()` to resolve before [timing out](#timeouts)                    |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 - `cy.url()` 'yields the current URL as a string' 
 
@@ -108,7 +108,7 @@ return them the full current URL. We almost never refer to the URL as an `href`.
 Instead of hard-coding the URL used in the assertion, we recommend you define a
 `baseUrl` in your [Cypress configuration](/guides/references/configuration). For
 more details on why, see our Best Practices guide on
-[setting a global `baseUrl`](/guides/references/best-practices#Setting-a-global-baseUrl).
+[setting a global `baseUrl`](/guides/references/best-practices#setting-a-global-baseurl).
 
 Given the remote URL, `http://localhost:8000/index.html`, and the baseUrl,
 `http://localhost:8000`, these assertions are the same.
@@ -126,17 +126,17 @@ cy.url().should('contain', '#users/new')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `cy.url()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `cy.url()` will automatically
 [retry](/guides/core-concepts/retry-ability) until all chained assertions have
 passed
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `cy.url()` can time out waiting for assertions you've added to
 pass.

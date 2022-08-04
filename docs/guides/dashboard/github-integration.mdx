@@ -5,8 +5,8 @@ sidebar_position: 70
 
 The [Cypress Dashboard](https://on.cypress.io/dashboard) can integrate your
 Cypress tests with your GitHub workflow via commit
-[status checks](#Status-checks) and
-[pull request comments](#Pull-request-comments). A project first needs to be
+[status checks](#status-checks) and
+[pull request comments](#pull-request-comments). A project first needs to be
 [setup to record](/guides/dashboard/projects) to the Cypress Dashboard to use
 GitHub integration.
 
@@ -21,7 +21,7 @@ GitHub Integration is dependent on your CI environment reliably providing commit
 SHA data (typically via an environment variable). This is not a problem for most
 users, but if you are facing GitHub integration issues with your CI setup,
 please make sure the git information is being sent properly by following
-[these guidelines](/guides/continuous-integration/introduction#Git-information).
+[these guidelines](/guides/continuous-integration/introduction#git-information).
 If you are still facing issues after this, please
 [contact us](mailto:hello@cypress.io).
 
@@ -42,11 +42,11 @@ GitHub Enterprise integration is included in our
 
 To configure the Dashboard integration for your GitHub Enterprise site, first
 follow the instructions to
-[install via organization integration settings](#Install-via-organization-integration-settings)
+[install via organization integration settings](#install-via-organization-integration-settings)
 below, then skip to
-[Cypress GitHub Enterprise app installation](#Cypress-GitHub-Enterprise-app-installation-process),
+[Cypress GitHub Enterprise app installation](#cypress-github-enterprise-app-installation-process),
 and finally
-[enable integration for a project](#Enabling-GitHub-integration-for-a-project).
+[enable integration for a project](#enabling-github-integration-for-a-project).
 
 ## Install the Cypress GitHub app
 
@@ -108,8 +108,8 @@ This installation method is not applicable to GitHub Enterprise.
 ### Cypress GitHub app installation process
 
 Once you've started the GitHub App installation process
-[via a Cypress organization's settings](#Install-via-organization-integration-settings)
-or [a project's settings](#Install-via-project-settings), you will be directed
+[via a Cypress organization's settings](#install-via-organization-integration-settings)
+or [a project's settings](#install-via-project-settings), you will be directed
 to GitHub.com to complete the installation:
 
 1. Select the desired GitHub organization or account to integrate with your
@@ -321,7 +321,7 @@ all your Cypress tests have passed.
 The Cypress GitHub App reports commit status checks in two separate styles:
 
 - **One check per
-  [run group](/guides/guides/parallelization#Grouping-test-runs).**
+  [run group](/guides/guides/parallelization#grouping-test-runs).**
 
   <DocsImage
     src="/img/dashboard/github-integration/status-checks-per-group-failed.png"
@@ -403,7 +403,7 @@ steps:
 ## Troubleshooting
 
 See
-[Common GitHub Actions Problems and Solutions](/guides/continuous-integration/github-actions#Common-Problems-and-Solutions).
+[Common GitHub Actions Problems and Solutions](/guides/continuous-integration/github-actions#common-problems-and-solutions).
 
 ## See also
 

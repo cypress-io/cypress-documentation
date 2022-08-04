@@ -76,9 +76,9 @@ Pass in an options object to change the default behavior of `cy.viewport()`.
 
 | Option | Default | Description                                                                              |
 | ------ | ------- | ---------------------------------------------------------------------------------------- |
-| `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
+| `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#command-log) |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 - `cy.viewport()` yields `null`
 - `cy.viewport()` cannot be chained further
@@ -204,7 +204,7 @@ By default, until you issue a `cy.viewport()` command, Cypress sets the width to
 `1000px` and the height to `660px` by default.
 
 You can
-[change these default dimensions](/guides/references/configuration#Viewport) by
+[change these default dimensions](/guides/references/configuration#viewport) by
 adding the following to your Cypress configuration:
 
 :::cypress-config-example
@@ -251,7 +251,7 @@ Cypress.config('viewportWidth') // => 800
 
 You can configure the size of the viewport height and width within a suite or
 test by passing the new configuration value within the
-[test configuration](/guides/references/configuration#Test-Configuration).
+[test configuration](/guides/references/configuration#test-configuration).
 
 This will set the height and width throughout the duration of the tests, then
 return it to the default `viewportHeight` and `viewportWidth` when complete.
@@ -277,15 +277,15 @@ describe(
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `cy.viewport()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `cy.viewport()` cannot have any assertions chained.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `cy.viewport()` cannot time out.
 

@@ -13,7 +13,7 @@ guide covers legacy configuration for Cypress 9 and below.
 
 The first time you open Cypress, it creates the `cypress.json` configuration
 file. This JSON file is used to store any configuration values you supply. If
-you [configure your tests to record](/guides/dashboard/projects#Setup) the
+you [configure your tests to record](/guides/dashboard/projects#setup) the
 results to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction)
 the `projectId` will be written in this file too.
 
@@ -45,7 +45,7 @@ default values.
 | `port`                 | `null`                            | Port used to host Cypress. Normally this is a randomly generated port                                                                                                                        |
 | `redirectionLimit`     | `20`                              | The number of times that the application under test can redirect before erroring.                                                                                                            |
 | `reporter`             | `spec`                            | The [reporter](/guides/tooling/reporters) used during `cypress run`                                                                                                                          |
-| `reporterOptions`      | `null`                            | The [reporter options](/guides/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                           |
+| `reporterOptions`      | `null`                            | The [reporter options](/guides/tooling/reporters#reporter-options) used. Supported options depend on the reporter.                                                                           |
 | `retries`              | `{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. See [Test Retries](/guides/guides/test-retries) for more information. |
 | `watchForFileChanges`  | `true`                            | Whether Cypress will watch and restart tests on test file changes                                                                                                                            |
 
@@ -55,7 +55,7 @@ default values.
 
 <strong>Core Concept</strong>
 
-[Timeouts are a core concept](/guides/core-concepts/introduction-to-cypress#Timeouts)
+[Timeouts are a core concept](/guides/core-concepts/introduction-to-cypress#timeouts)
 you should understand well. The default values listed here are meaningful.
 
 :::
@@ -118,9 +118,9 @@ For more options regarding screenshots, view the
 | Option                  | Default                              | Description                                                                                                                                                                                                                                                                                                                                                        |
 | ----------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `chromeWebSecurity`     | `true`                               | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content. [Read more about Web Security](/guides/guides/web-security).                                                                                                                                                                                            |
-| `blockHosts`            | `null`                               | A String or Array of hosts that you wish to block traffic for. [Please read the notes for examples on using this.](#blockHosts)                                                                                                                                                                                                                                    |
-| `firefoxGcInterval`     | `{ "runMode": 1, "openMode": null }` | (Firefox 79 and below only) Controls whether Cypress forces Firefox to run garbage collection (GC) cleanup and how frequently. During [cypress run](/guides/guides/command-line#cypress-run), the default value is `1`. During [cypress open](/guides/guides/command-line#cypress-open), the default value is `null`. See full details [here](#firefoxGcInterval). |
-| `modifyObstructiveCode` | `true`                               | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. [Please read the notes for more information on this setting.](#modifyObstructiveCode)                                                                                                                                                                                   |
+| `blockHosts`            | `null`                               | A String or Array of hosts that you wish to block traffic for. [Please read the notes for examples on using this.](#blockhosts)                                                                                                                                                                                                                                    |
+| `firefoxGcInterval`     | `{ "runMode": 1, "openMode": null }` | (Firefox 79 and below only) Controls whether Cypress forces Firefox to run garbage collection (GC) cleanup and how frequently. During [cypress run](/guides/guides/command-line#cypress-run), the default value is `1`. During [cypress open](/guides/guides/command-line#cypress-open), the default value is `null`. See full details [here](#firefoxgcinterval). |
+| `modifyObstructiveCode` | `true`                               | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. [Please read the notes for more information on this setting.](#modifyobstructivecode)                                                                                                                                                                                   |
 | `userAgent`             | `null`                               | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See [User-Agent MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for example user agent values.              |
 
 ### Viewport
@@ -139,7 +139,7 @@ For more options regarding screenshots, view the
 | `scrollBehavior`             | `top`   | Viewport position to which an element should be scrolled before executing commands. Can be `'center'`, `'top'`, `'bottom'`, `'nearest'`, or `false`. `false` disables scrolling. |
 
 For more information, see the docs on
-[actionability](/guides/core-concepts/interacting-with-elements#Actionability).
+[actionability](/guides/core-concepts/interacting-with-elements#actionability).
 
 ### Node version
 
@@ -158,11 +158,11 @@ file.
 The Node version is used in Cypress to:
 
 - Build files in the
-  [integrationFolder](/guides/references/configuration#Folders-Files).
+  [integrationFolder](/guides/references/configuration#folders-files).
 - Build files in the
-  [supportFile](/guides/references/configuration#Folders-Files).
+  [supportFile](/guides/references/configuration#folders-files).
 - Execute code in the
-  [pluginsFile](/guides/references/configuration#Folders-Files).
+  [pluginsFile](/guides/references/configuration#folders-files).
 
 <DocsImage src="/img/guides/configuration/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Test Runner" ></DocsImage>
 
@@ -464,7 +464,7 @@ By passing a string or array of strings you can block requests made to one or
 more hosts.
 
 To see a working example of this please check out our
-[Stubbing Google Analytics Recipe](/examples/examples/recipes#Stubbing-and-spying).
+[Stubbing Google Analytics Recipe](/examples/examples/recipes#stubbing-and-spying).
 
 To block a host:
 
@@ -668,7 +668,7 @@ if (Cypress.config('isInteractive')) {
 ### Intelligent Code Completion
 
 IntelliSense is available for Cypress while editing your configuration file.
-[Learn how to set up Intelligent Code Completion.](/guides/tooling/IDE-integration#Intelligent-Code-Completion)
+[Learn how to set up Intelligent Code Completion.](/guides/tooling/IDE-integration#intelligent-code-completion)
 
 ## Common problems
 
@@ -708,7 +708,7 @@ You can also find a few tips on setting the `baseUrl` in this
 
 When using the `--spec <path or mask>` argument, make it relative to the
 project's folder. If the specs are still missing, run Cypress with
-[DEBUG logs](/guides/references/troubleshooting#Print-DEBUG-logs) with the
+[DEBUG logs](/guides/references/troubleshooting#print-debug-logs) with the
 following setting to see how the Test Runner is looking for spec files:
 
 ```shell
@@ -737,7 +737,7 @@ DEBUG=cypress:cli,cypress:server:specs
 - [Cypress.config()](/api/cypress-api/config) and
   [Cypress.env()](/api/cypress-api/env)
 - [Environment variables](/guides/guides/environment-variables)
-- [Environment Variables recipe](/examples/examples/recipes#Fundamentals)
+- [Environment Variables recipe](/examples/examples/recipes#fundamentals)
 - [Extending the Cypress Config File](https://www.cypress.io/blog/2020/06/18/extending-the-cypress-config-file/)
   blog post and
   [@bahmutov/cypress-extends](https://github.com/bahmutov/cypress-extends)

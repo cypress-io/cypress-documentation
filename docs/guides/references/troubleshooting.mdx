@@ -105,16 +105,16 @@ ways to ensure that Cypress can "see" it.
 
 You can also supply the `--browser` command line argument to launch a browser
 from a known filesystem path to bypass browser auto detection.
-[See 'Launching Browsers' for more information](/guides/guides/launching-browsers#Launching-by-a-path)
+[See 'Launching Browsers' for more information](/guides/guides/launching-browsers#launching-by-a-path)
 
 :::
 
 You can see the full list of found browsers and their properties within the
-[resolved configuration](/guides/references/configuration#Resolved-Configuration)
+[resolved configuration](/guides/references/configuration#resolved-configuration)
 in the **Settings** tab of the Cypress App.
 
 Another way to log what is found by Cypress is to run Cypress with the
-[DEBUG environment variable](#Print-DEBUG-logs) set to `cypress:launcher`. This
+[DEBUG environment variable](#print-debug-logs) set to `cypress:launcher`. This
 will print information about the found browsers and their properties to the
 terminal.
 
@@ -276,7 +276,7 @@ with setting the environment variable in your terminal. You may need to run your
 terminal in administrative mode or review your permission settings.
 
 Read more
-[about the CLI options here](/guides/guides/command-line#Debugging-commands) and
+[about the CLI options here](/guides/guides/command-line#debugging-commands) and
 [Good Logging](https://glebbahmutov.com/blog/good-logging/) blog post.
 
 ### Detailed Logs
@@ -430,7 +430,7 @@ verbose `cypress-verbose:server:util:process_profiler` debug stream.
 
 ## Disable the Command Log
 
-In some cases the [Command Log](/guides/core-concepts/cypress-app#Command-Log),
+In some cases the [Command Log](/guides/core-concepts/cypress-app#command-log),
 responsible for displaying test commands, assertions, and statuses in the
 Cypress App, may cause performance issues resulting in slower tests or the
 browser crashing.

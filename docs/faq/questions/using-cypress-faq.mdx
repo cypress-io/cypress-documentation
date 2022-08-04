@@ -146,7 +146,7 @@ gives you examples of doing exactly that.
 
 Yes, and there are a couple of ways to do this. One way to hold a value or
 reference is with
-[closures](/guides/core-concepts/variables-and-aliases#Closures). Commonly,
+[closures](/guides/core-concepts/variables-and-aliases#closures). Commonly,
 users believe they have a need to store a value in a `const`, `var`, or `let`.
 Cypress recommends doing this only when dealing with mutable objects (that
 change state).
@@ -186,18 +186,18 @@ elements to exist before failing.
 :::
 
 Cypress offers you many robust ways to
-[query the DOM](/guides/core-concepts/introduction-to-cypress#Querying-Elements),
+[query the DOM](/guides/core-concepts/introduction-to-cypress#querying-elements),
 all wrapped with retry-and-timeout logic.
 
 Other ways to wait for an element's presence in the DOM is through `timeouts`.
 Cypress commands have a default timeout of 4 seconds, however, most Cypress
 commands have
-[customizable timeout options](/guides/references/configuration#Timeouts).
+[customizable timeout options](/guides/references/configuration#timeouts).
 Timeouts can be configured globally or on a per-command basis.
 
-In [some cases](/guides/core-concepts/interacting-with-elements#Visibility),
+In [some cases](/guides/core-concepts/interacting-with-elements#visibility),
 your DOM element will not be actionable. Cypress gives you a powerful
-[`{force:true}`](/guides/core-concepts/interacting-with-elements#Forcing) option
+[`{force:true}`](/guides/core-concepts/interacting-with-elements#forcing) option
 you can pass to most action commands.
 
 **Please read** our
@@ -215,12 +215,12 @@ question.
 **_How do I know if my page is done loading?_**
 
 When you load your application using `cy.visit()`, Cypress will wait for the
-`load` event to fire. The [cy.visit()](/api/commands/visit#Usage) command loads
+`load` event to fire. The [cy.visit()](/api/commands/visit#usage) command loads
 a remote page and does not resolve until all of the external resources complete
 their loading phase. Because we expect your applications to observe differing
 load times, this command's default timeout is set to 60000ms. If you visit an
 invalid url or a
-[second unique domain](/guides/guides/web-security#Same-superdomain-per-test),
+[second unique domain](/guides/guides/web-security#same-superdomain-per-test),
 Cypress will log a verbose yet friendly error message.
 
 **_In CI, how do I make sure my server has started?_**
@@ -234,9 +234,9 @@ We recommend these great modules for this use case:
 
 The prescribed way to do this is to define your routes using
 [cy.intercept()](/api/commands/intercept), create
-[aliases](/guides/core-concepts/variables-and-aliases#Aliases) for these routes
+[aliases](/guides/core-concepts/variables-and-aliases#aliases) for these routes
 prior to the visit, and _then_ you can explicitly tell Cypress which routes you
-want to wait on using [cy.wait()](/api/commands/wait#Syntax). **There is no
+want to wait on using [cy.wait()](/api/commands/wait#syntax). **There is no
 magical way to wait for all of your XHRs or Ajax requests.** Because of the
 asynchronous nature of these requests, Cypress cannot intuitively know to wait
 for them. You must define these routes and be able to unambiguously tell Cypress
@@ -368,7 +368,7 @@ both promises and streams.
 If you're curious please read:
 
 - Our
-  [Introduction to Cypress guide](/guides/core-concepts/introduction-to-cypress#Commands-Are-Asynchronous)
+  [Introduction to Cypress guide](/guides/core-concepts/introduction-to-cypress#commands-are-asynchronous)
   which explains how the Commands are designed
 - Our [Variables and Aliases guide](/guides/core-concepts/variables-and-aliases)
   which talks about patterns dealing with async code
@@ -379,7 +379,7 @@ Don't use classes or ID's. You add `data-*` attributes to your elements and
 target them that way.
 
 Read more about the
-[best practices for selecting elements here](/guides/references/best-practices#Selecting-Elements).
+[best practices for selecting elements here](/guides/references/best-practices#selecting-elements).
 
 ## <Icon name="angle-right" /> I want to run tests only within one specific folder. How do I do this?
 
@@ -395,7 +395,7 @@ This feature is only available when using
 ## <Icon name="angle-right" /> Is there a suggested way or best practice for how I should target elements or write element selectors?
 
 Yes. Read more about the
-[best practices for selecting elements here](/guides/references/best-practices#Selecting-Elements).
+[best practices for selecting elements here](/guides/references/best-practices#selecting-elements).
 
 ## <Icon name="angle-right" /> Can I prevent Cypress from failing my test when my application throws an uncaught exception error?
 
@@ -412,14 +412,14 @@ to either:
 
 This is documented in detail on the
 [Catalog Of Events](/api/events/catalog-of-events) page and the recipe
-[Handling errors](/examples/examples/recipes#Fundamentals).
+[Handling errors](/examples/examples/recipes#fundamentals).
 
 ## <Icon name="angle-right" /> Will Cypress fail the test when an application has unhandled rejected promise?
 
 By default no, Cypress does not listen to the unhandled promise rejection event
 in your application, and thus does not fail the test. You can set up your own
 listener though and fail the test, see our recipe
-[Handling errors](/examples/examples/recipes#Fundamentals):
+[Handling errors](/examples/examples/recipes#fundamentals):
 
 ```js
 // register listener during cy.visit
@@ -477,26 +477,26 @@ arguments, JSON files and other means.
 ## <Icon name="angle-right" /> Can I override or change the default user agent the browser uses?
 
 Yes.
-[You can override this with `userAgent` in your Cypress configuration](/guides/references/configuration#Browser).
+[You can override this with `userAgent` in your Cypress configuration](/guides/references/configuration#browser).
 
 ## <Icon name="angle-right" /> Can I block traffic going to specific domains? I want to block Google Analytics or other providers.
 
 Yes.
-[You can set this with `blockHosts` in the Cypress configuration](/guides/references/configuration#Browser).
+[You can set this with `blockHosts` in the Cypress configuration](/guides/references/configuration#browser).
 
 Also, check out our
-[Stubbing Google Analytics Recipe](/examples/examples/recipes#Stubbing-and-spying).
+[Stubbing Google Analytics Recipe](/examples/examples/recipes#stubbing-and-spying).
 
 ## <Icon name="angle-right" /> How can I verify that calls to analytics like Google Analytics are being made correct?
 
 You can stub their functions and then ensure they're being called.
 
 Check out our
-[Stubbing Google Analytics Recipe](/examples/examples/recipes#Stubbing-and-spying).
+[Stubbing Google Analytics Recipe](/examples/examples/recipes#stubbing-and-spying).
 
 ## <Icon name="angle-right" /> I'm trying to test a chat application. Can I run more than one browser at a time with Cypress?
 
-[We've answered this question in detail here.](/guides/references/trade-offs#Multiple-browsers-open-at-the-same-time)
+[We've answered this question in detail here.](/guides/references/trade-offs#multiple-browsers-open-at-the-same-time)
 
 ## <Icon name="angle-right" /> Can I test a chrome extension? How do I load my chrome extension?
 
@@ -511,7 +511,7 @@ event.
 ## <Icon name="angle-right" /> Can I make cy.request() poll until a condition is met?
 
 Yes. You do it the
-[same way as any other recursive loop](/api/commands/request#Request-Polling).
+[same way as any other recursive loop](/api/commands/request#request-polling).
 
 ## <Icon name="angle-right" /> Can I use the Page Object pattern?
 
@@ -531,7 +531,7 @@ use regular ol' JavaScript functions without any of the ceremony typical with
 "Page Objects".
 
 For those wanting to use page objects, we've highlighted the
-[best practices ](/api/cypress-api/custom-commands#Best-Practices) for
+[best practices ](/api/cypress-api/custom-commands#best-practices) for
 replicating the page object pattern.
 
 ## <Icon name="angle-right" /> Why do my Cypress tests pass locally but not in CI?
@@ -560,7 +560,7 @@ these strategies:
 - Remove time-sensitive variability in your tests. For example, ensure a network
   request has finished before looking for the DOM element that relies on the
   data from that network request. You can leverage
-  [aliasing](/guides/core-concepts/variables-and-aliases#Aliases) for this.
+  [aliasing](/guides/core-concepts/variables-and-aliases#aliases) for this.
 - Ensure video recording and/or screenshots are enabled for the CI run and
   compare the recording to the Command Log when running the test locally.
 
@@ -570,7 +570,7 @@ Videos recorded on Continuous Integration may have frozen or dropped frames if
 there are not enough resources available when running the tests in your CI
 container. Like with any application, there needs to be the required CPU to run
 Cypress and record video. You can run your tests with
-[memory and CPU logs enabled](/guides/references/troubleshooting#Log-memory-and-CPU-usage)
+[memory and CPU logs enabled](/guides/references/troubleshooting#log-memory-and-cpu-usage)
 to identify and evaluate the resource utilization within your CI.
 
 If you are experiencing this issue, we recommend switching to a more powerful CI
@@ -599,7 +599,7 @@ You can read more about parallelization [here](/guides/guides/parallelization).
 ## <Icon name="angle-right" /> Can I run a single test or group of tests?
 
 You can run a group of tests or a single test by placing an
-[`.only`](/guides/core-concepts/writing-and-organizing-tests#Excluding-and-Including-Tests)
+[`.only`](/guides/core-concepts/writing-and-organizing-tests#excluding-and-including-tests)
 on a test suite or specific test.
 
 You can run a single test file or group of tests by passing the `--spec` flag to
@@ -637,7 +637,7 @@ Cypress and typically is found in your
 :::
 
 For further detail see the
-[Identification](/guides/dashboard/projects#Identification) section of the
+[Identification](/guides/dashboard/projects#identification) section of the
 [Dashboard Service](/guides/dashboard/introduction) docs.
 
 ## <Icon name="angle-right" /> What is a Record Key?
@@ -655,7 +655,7 @@ Cypress App.
 ></DocsImage>
 
 For further detail see the
-[Identification](/guides/dashboard/projects#Identification) section of the
+[Identification](/guides/dashboard/projects#identification) section of the
 [Dashboard Service](/guides/dashboard/introduction) docs.
 
 ## <Icon name="angle-right" /> How do I check that an email was sent out?
@@ -666,7 +666,7 @@ For further detail see the
 
 Don't try to use your UI to check email. Instead opt to programmatically use 3rd
 party APIs or talk directly to your server. Read about this
-[best practice](/guides/references/best-practices#Visiting-external-sites) here.
+[best practice](/guides/references/best-practices#visiting-external-sites) here.
 
 :::
 
@@ -692,7 +692,7 @@ email's functionality and visual style:
 
 3. You can use a 3rd party email service that provides temporary email addresses
    for testing. Some of these services even offer a
-   [Cypress plugin](/plugins/directory#Email) to access emails.
+   [Cypress plugin](/plugins/directory#email) to access emails.
 
 ## <Icon name="angle-right" /> How do I wait for multiple requests to the same url?
 
@@ -749,7 +749,7 @@ You **cannot** currently preserve localStorage across tests and can read more in
 
 Oftentimes you can usually account for animation by asserting
 [`.should('be.visible')`](/api/commands/should) or
-[another assertion](/guides/core-concepts/introduction-to-cypress#Assertions) on
+[another assertion](/guides/core-concepts/introduction-to-cypress#assertions) on
 one of the elements you expect to be animated in.
 
 ```javascript
@@ -784,11 +784,11 @@ Cypress does not and may never have multi-tab support for various reasons.
 Luckily there are lots of clear and safe workarounds that enable you to test
 this behavior in your application.
 
-[Read through the recipe on tab handling and links to see how to test anchor links.](/examples/examples/recipes#Testing-the-DOM)
+[Read through the recipe on tab handling and links to see how to test anchor links.](/examples/examples/recipes#testing-the-dom)
 
 ## <Icon name="angle-right" /> Can I dynamically test multiple viewports?
 
-Yes, you can. We provide an [example here](/api/commands/viewport#Width-Height).
+Yes, you can. We provide an [example here](/api/commands/viewport#width-height).
 
 ## <Icon name="angle-right" /> Can I run the same tests on multiple subdomains? <E2EOnlyBadge />
 
@@ -825,10 +825,10 @@ We recommend utilizing one of the following to execute code outside of the
 browser.
 
 - [`cy.task()`](/api/commands/task) to run code in Node via the
-  [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function
+  [setupNodeEvents](/guides/tooling/plugins-guide#using-a-plugin) function
 - [`cy.exec()`](/api/commands/exec) to execute a shell command
 
-[Check out the "Node Modules" example recipe.](/examples/examples/recipes#Fundamentals)
+[Check out the "Node Modules" example recipe.](/examples/examples/recipes#fundamentals)
 
 ## <Icon name="angle-right" /> Is there a way to give a proper SSL certificate to your proxy so the page doesn't show up as "not secure"?
 
@@ -859,7 +859,7 @@ you're running in Cypress by looking for `process.env.CYPRESS`.
 ## <Icon name="angle-right" /> Do you allow before, beforeEach, after, or afterEach hooks?
 
 Yes. You can read more
-[here](/guides/core-concepts/writing-and-organizing-tests#Hooks).
+[here](/guides/core-concepts/writing-and-organizing-tests#hooks).
 
 ## <Icon name="angle-right" /> I tried to install Cypress in my CI, but I get the error: `EACCES: permission denied`.
 
@@ -896,7 +896,7 @@ cover everything.
 ## <Icon name="angle-right" /> Is it possible to catch the promise chain in Cypress?
 
 No. You cannot add a `.catch` error handler to a failed command.
-[Read more about how the Cypress commands are not Promises](/guides/core-concepts/introduction-to-cypress#Commands-Are-Not-Promises)
+[Read more about how the Cypress commands are not Promises](/guides/core-concepts/introduction-to-cypress#commands-are-not-promises)
 
 ## <Icon name="angle-right" /> Is there a way to modify the screenshots/video resolution?
 
@@ -904,7 +904,7 @@ There is an [open issue](https://github.com/cypress-io/cypress/issues/587) for
 more easily configuring this.
 
 You can modify the screenshot and video size when running headlessly with
-[this workaround](/api/plugins/browser-launch-api#Set-screen-size-when-running-headless).
+[this workaround](/api/plugins/browser-launch-api#set-screen-size-when-running-headless).
 
 ## <Icon name="angle-right" /> Does Cypress support ES7?
 
@@ -951,14 +951,14 @@ Tools open. Refer to
 this feature.
 
 You may try running the tests locally and
-[select the Electron browser](/guides/guides/launching-browsers#Electron-Browser),
+[select the Electron browser](/guides/guides/launching-browsers#electron-browser),
 that is as close as you will get with Developer Tools open and replicating the
 environment that was run during `cypress run`.
 
 ## <Icon name="angle-right" /> How do I run the server and tests together and then shutdown the server?
 
 To start the server, run the tests and then shutdown the server we recommend
-[these npm tools](/guides/continuous-integration/introduction#Boot-your-server).
+[these npm tools](/guides/continuous-integration/introduction#boot-your-server).
 
 ## <Icon name="angle-right" /> Can I test my Electron app?
 
@@ -997,7 +997,7 @@ live right alongside your front end code. This brings many benefits:
 ## <Icon name="angle-right" /> What is the right balance between custom commands and utility functions?
 
 There is already a great section in
-[Custom Commands](/api/cypress-api/custom-commands#Best-Practices) guide that
+[Custom Commands](/api/cypress-api/custom-commands#best-practices) guide that
 talks about trade-offs between custom commands and utility functions. We feel
 reusable functions in general are a way to go. Plus they do not confuse
 [IntelliSense like custom commands do](https://github.com/cypress-io/cypress/issues/1065).
@@ -1022,10 +1022,10 @@ store, and even drive the application via Redux actions.
 
 - see
   [Testing Redux Store](https://www.cypress.io/blog/2018/11/14/testing-redux-store/)
-  blog post and [Redux Testing](/examples/examples/recipes#Blogs) recipe.
+  blog post and [Redux Testing](/examples/examples/recipes#blogs) recipe.
 - see
   [Testing Vue web applications with Vuex data store & REST back end](https://www.cypress.io/blog/2017/11/28/testing-vue-web-application-with-vuex-data-store-and-rest-backend/)
-  blog post and [Vue + Vuex + REST Testing](/examples/examples/recipes#Blogs)
+  blog post and [Vue + Vuex + REST Testing](/examples/examples/recipes#blogs)
   recipe.
 
 For component testing, you have a bit more control on how you set up your
@@ -1067,7 +1067,7 @@ cy.get("@consoleLog").should("be.calledWith", "Hello World!");
 :::
 
 Also, check out our
-[Stubbing `console` Receipe](/examples/examples/recipes#Stubbing-and-spying).
+[Stubbing `console` Receipe](/examples/examples/recipes#stubbing-and-spying).
 
 ## <Icon name="angle-right" /> How do I use special characters with `cy.get()`?
 
@@ -1101,7 +1101,7 @@ it("test", () => {
 ```
 
 Note that `cy.$$.escapeSelector()` doesn't work. `cy.$$` doesn't refer to
-`jQuery`. It only queries DOM. [Learn more about why](/api/utilities/$#Notes)
+`jQuery`. It only queries DOM. [Learn more about why](/api/utilities/$#notes)
 
 ## <Icon name="angle-right" /> Can I use Cypress to test charts and graphs?
 
@@ -1146,7 +1146,7 @@ set good Cypress tests for a Next.js application in this
 [tutorial](https://getstarted.sh/bulletproof-next/e2e-testing-with-cypress).
 
 For component tests, Next.js support is currently in alpha. See the
-[Framework Configuration Guide on Next.js](/guides/component-testing/component-framework-configuration#Next-js)
+[Framework Configuration Guide on Next.js](/guides/component-testing/component-framework-configuration#next-js)
 for more info.
 
 ## <Icon name="angle-right" /> Can I test Gatsby.js sites using Cypress?
@@ -1160,7 +1160,7 @@ webinar's
 
 For component testing, Gatsby is not currently supported out of the box, but it
 might be possible by
-[configuring a custom devServer](/guides/references/configuration#devServer).
+[configuring a custom devServer](/guides/references/configuration#devserver).
 
 ## <Icon name="angle-right" /> Can I test React applications using Cypress?
 

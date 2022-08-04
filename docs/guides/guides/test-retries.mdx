@@ -34,7 +34,7 @@ to you.
 ## How It Works
 
 By default, tests will not retry when they fail. You will need to
-[enable test retries in your configuration](#Configure-Test-Retries) to use this
+[enable test retries in your configuration](#configure-test-retries) to use this
 feature.
 
 Once test retries are enabled, tests can be configured to have X number of retry
@@ -43,7 +43,7 @@ attempts, Cypress will retry tests up to 2 additional times (for a total of 3
 attempts) before potentially being marked as a failed test.
 
 When each test is run again, the following
-[hooks](/guides/core-concepts/writing-and-organizing-tests#Hooks) will be re-run
+[hooks](/guides/core-concepts/writing-and-organizing-tests#hooks) will be re-run
 also:
 
 - `beforeEach`
@@ -91,7 +91,7 @@ failed test when run via [cypress run](/guides/guides/command-line#cypress-run).
 
 During [cypress open](/guides/guides/command-line#cypress-open) you will be able
 to see the number of attempts made in the
-[Command Log](/guides/core-concepts/cypress-app#Command-Log) and expand each
+[Command Log](/guides/core-concepts/cypress-app#command-log) and expand each
 attempt for review and debugging if desired.
 
 ## Configure Test Retries
@@ -140,7 +140,7 @@ by defining the `retries` property and setting the desired number of retries.
 
 If you want to configure retry attempts on a specific test, you can set this by
 using the
-[test's configuration](/guides/core-concepts/writing-and-organizing-tests#Test-Configuration).
+[test's configuration](/guides/core-concepts/writing-and-organizing-tests#test-configuration).
 
 ```jsx
 // Customize retry attempts for an individual test
@@ -192,7 +192,7 @@ describe('User bank accounts', {
 ```
 
 You can find more information about custom configurations here:
-[Test Configuration](/guides/references/configuration#Test-Configuration)
+[Test Configuration](/guides/references/configuration#test-configuration)
 
 ## Screenshots
 
@@ -297,8 +297,8 @@ You can also see the Flaky Rate for a given test.
 
 For a comprehensive view of how flake is affecting your overall test suite, you
 can review the
-[Flake Detection](/guides/dashboard/flaky-test-management#Flake-Detection) and
-[Flake Alerting](/guides/dashboard/flaky-test-management#Flake-Alerting)
+[Flake Detection](/guides/dashboard/flaky-test-management#flake-detection) and
+[Flake Alerting](/guides/dashboard/flaky-test-management#flake-alerting)
 features highlighted in the Test Flake Management Guide.
 
 ## Frequently Asked Questions (FAQs)

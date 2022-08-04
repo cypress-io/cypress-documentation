@@ -60,10 +60,10 @@ Pass in an options object to change the default behavior of `cy.writeFile()`.
 
 | Option     | Default                                                              | Description                                                                                         |
 | ---------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `log`      | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)            |
+| `log`      | `true`                                                               | Displays the command in the [Command log](/guides/core-concepts/cypress-app#command-log)            |
 | `flag`     | `w`                                                                  | File system flag as used with [`fs.writeFile`](https://nodejs.org/api/fs.html#fs_file_system_flags) |
 | `encoding` | `utf8`                                                               | The encoding to be used when writing to the file                                                    |
-| `timeout`  | [`defaultCommandTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `.writeFile()` to resolve before [timing out](#Timeouts)                           |
+| `timeout`  | [`defaultCommandTimeout`](/guides/references/configuration#timeouts) | Time to wait for `.writeFile()` to resolve before [timing out](#timeouts)                           |
 
 :::info
 
@@ -73,7 +73,7 @@ parameter and include encoding there. This is the same behavior as
 
 :::
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 - `cy.writeFile()` yields `null`.
 
@@ -206,18 +206,18 @@ cy.readFile(filename, null).then((obj) => {
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `cy.writeFile()` requires being chained off of `cy`.
 - `cy.writeFile()` requires the file be successfully written to disk. Anything
   preventing this such as OS permission issues will cause it to fail.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `cy.writeFile()` will only run assertions you have chained once, and will not
   [retry](/guides/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `cy.writeFile()` can time out when the content being written takes a
   significant amount of time to encode.

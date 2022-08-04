@@ -88,7 +88,7 @@ We will work through creating our first real test and implementing the feature
 under test as we go. We will see how to find and interact with elements on the
 page and how to make assertions about their behavior. We will also look into
 some best practices like using `beforeEach` and defining our application's
-[baseUrl](/guides/references/configuration#Global) to remove duplicated code.
+[baseUrl](/guides/references/configuration#global) to remove duplicated code.
 
 <Icon
   name="github"
@@ -120,7 +120,7 @@ properly display an error message.
 We will implement the initial data load for our todo app, leveraging
 [`cy.server()`](/api/commands/server) and [`cy.route()`](/api/commands/route) to
 stub the API call to load our data. We will use
-[fixture data](/api/commands/fixture#Shortcuts) to seed our application state.
+[fixture data](/api/commands/fixture#shortcuts) to seed our application state.
 As we iterate on our test and app code, we will create and use a
 [custom command](/api/cypress-api/custom-commands) to avoid unnecessary code
 duplication and keep our tests clean and readable.
@@ -184,9 +184,9 @@ way to hold onto references to previously queried DOM elements using
 We will create a test for todo item toggling. As we implement the toggle
 feature, we will encounter a problem with our code and look at how Cypress can
 help us debug our code. We will use the
-[Cypress Command Log](/guides/core-concepts/cypress-app#Command-Log) to narrow
+[Cypress Command Log](/guides/core-concepts/cypress-app#command-log) to narrow
 down our problem. Then, we can use the
-[Developer Tools right in the Cypress App](/guides/guides/debugging#Using-the-Developer-Tools)
+[Developer Tools right in the Cypress App](/guides/guides/debugging#using-the-developer-tools)
 to step through the code to dig into the issue. We'll even see how we can update
 application state while debugging and let our test confirm our theory about the
 cause of the bug. Once the debugging is complete, we will refactor our code to

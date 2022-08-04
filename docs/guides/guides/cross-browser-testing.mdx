@@ -4,7 +4,7 @@ title: Cross Browser Testing
 
 Cypress has the capability to run tests across multiple browsers. Currently,
 Cypress has support for
-[Chrome-family browsers](/guides/guides/launching-browsers#Chrome-Browsers)
+[Chrome-family browsers](/guides/guides/launching-browsers#chrome-browsers)
 (including Electron and Chromium-based Microsoft Edge), and Firefox.
 
 :::caution
@@ -12,12 +12,12 @@ Cypress has support for
 <strong>Web Security</strong>
 
 Tests that require the
-[`chromeWebSecurity` configuration option to be disabled](/guides/guides/web-security#Disabling-Web-Security)
+[`chromeWebSecurity` configuration option to be disabled](/guides/guides/web-security#disabling-web-security)
 may experience issues in non-Chromium based browsers.
 
 :::
 
-Excluding [Electron](/guides/guides/launching-browsers#Electron-Browser), any
+Excluding [Electron](/guides/guides/launching-browsers#electron-browser), any
 browser you want to run Cypress tests in needs to be installed on your local
 system or CI environment. A full list of detected browsers is displayed within
 the browser selection menu of the
@@ -26,7 +26,7 @@ the browser selection menu of the
 <DocsImage src="/img/guides/cross-browser-testing/v10/browser-select-FF.png" alt="Cypress App with Firefox selected as the browser"></DocsImage>
 
 The desired browser can also specified via the
-[`--browser`](/guides/guides/command-line#Options) flag when using
+[`--browser`](/guides/guides/command-line#options) flag when using
 [`run`](/guides/guides/command-line#cypress-run) command to launch Cypress. For
 example, to run Cypress tests in Firefox:
 
@@ -152,7 +152,7 @@ both browsers always running _all_ tests.
 In the example below, the Chrome `cypress/run` job runs _all_ tests against
 Chrome and reports results to the
 [Cypress Dashboard](https://on.cypress.io/dashboard) using a
-([group](/guides/guides/parallelization#Grouping-test-runs)) named `chrome`.
+([group](/guides/guides/parallelization#grouping-test-runs)) named `chrome`.
 
 The Firefox `cypress/run` job runs a subset of tests, defined in the `spec`
 parameter, against the Firefox browser, and reports the results to the
@@ -200,7 +200,7 @@ workflows:
 ### Parallelize per browser
 
 Execution of test files can be parallelized on a per
-[group](/guides/guides/parallelization#Grouping-test-runs) basis, where test
+[group](/guides/guides/parallelization#grouping-test-runs) basis, where test
 files can be grouped by the browser under test. This versatility enables the
 ability to allocate the desired amount of CI resources towards a browser to
 either improve test duration or to minimize CI costs.
@@ -269,9 +269,9 @@ assess the true need for the test to run on multiple browsers.
 
 You can specify a browser to run or exclude by passing a matcher to the suite or
 test within the
-[test configuration](/guides/references/configuration#Test-Configuration). The
+[test configuration](/guides/references/configuration#test-configuration). The
 `browser` option accepts the same arguments as
-[Cypress.isBrowser()](/api/cypress-api/isbrowser#Arguments).
+[Cypress.isBrowser()](/api/cypress-api/isbrowser#arguments).
 
 ```js
 // Run the test if Cypress is running
@@ -309,4 +309,4 @@ it('Show warning outside Chrome', { browser: '!chrome' }, () => {
 - [Cypress.browser](/api/cypress-api/browser)
 - [Cypress.isBrowser](/api/cypress-api/isbrowser)
 - [Launching Browsers](/guides/guides/launching-browsers)
-- [Test Configuration](/guides/references/configuration#Test-Configuration)
+- [Test Configuration](/guides/references/configuration#test-configuration)

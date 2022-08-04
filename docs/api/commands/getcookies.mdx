@@ -27,10 +27,10 @@ Pass in an options object to change the default behavior of `cy.getCookies()`.
 
 | Option    | Default                                                        | Description                                                                              |
 | --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
-| `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.getCookies()` to resolve before [timing out](#Timeouts)             |
+| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#command-log) |
+| `timeout` | [`responseTimeout`](/guides/references/configuration#timeouts) | Time to wait for `cy.getCookies()` to resolve before [timing out](#timeouts)             |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 `cy.getCookies()` yields an array of cookie objects. Each cookie object has the
 following properties:
@@ -65,16 +65,16 @@ cy.getCookies()
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `cy.getCookies()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `cy.getCookies()` will only run assertions you have chained once, and will not
   [retry](/guides/core-concepts/retry-ability).
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `cy.getCookies()` should never time out.
 
@@ -115,7 +115,7 @@ following:
 | Version                                     | Changes                                                                                                                                          |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | [5.0.0](/guides/references/changelog#5-0-0) | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.                                                          |
-| [4.3.0](/guides/references/changelog#4-3-0) | Added `sameSite` property when the [experimentalGetCookiesSameSite](/guides/references/configuration#Experiments) configuration value is `true`. |
+| [4.3.0](/guides/references/changelog#4-3-0) | Added `sameSite` property when the [experimentalGetCookiesSameSite](/guides/references/configuration#experiments) configuration value is `true`. |
 
 ## See also
 

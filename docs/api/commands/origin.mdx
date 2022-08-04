@@ -31,10 +31,10 @@ Enabling this flag does the following:
   - All active session data (cookies, `localStorage` and `sessionStorage`)
     across all domains are cleared.
 - It supersedes
-  the [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
-  [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
+  the [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#preserve-once) and
+  [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#defaults) methods.
 - Cross-origin requests will no longer fail immediately, but instead, time out
-  based on [`pageLoadTimeout`](/guides/references/configuration#Timeouts).
+  based on [`pageLoadTimeout`](/guides/references/configuration#timeouts).
 - Tests will no longer wait on page loads before moving on to the next test.
 
 Because the page is cleared before each
@@ -104,7 +104,7 @@ This argument will be used in two ways:
    same-origin policy.
 
 2. It overrides the `baseUrl` configured in your
-   [global configuration](/guides/references/configuration#Global) while inside
+   [global configuration](/guides/references/configuration#global) while inside
    the callback. So `cy.visit()` and `cy.request()` will use this URL as a
    prefix, not the configured `baseUrl`.
 
@@ -134,10 +134,10 @@ origin and evaluated. If the `args` option is specified, the deserialized args
 object will be passed into the function as its first and only argument.
 
 There are a number of limitations placed on commands run inside the callback,
-please see [Callback restrictions](#Callback-restrictions) section below for a
+please see [Callback restrictions](#callback-restrictions) section below for a
 full list.
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 - `cy.origin()` yields the value yielded by the last Cypress command in the
   callback function.
@@ -381,7 +381,7 @@ it('validates the change', () => {
 
 After switching on `experimentalSessionAndOrigin`, this flow would need to be
 contained within a single test. While this practice has always been
-[discouraged](/guides/references/best-practices#Having-tests-rely-on-the-state-of-previous-tests)
+[discouraged](/guides/references/best-practices#having-tests-rely-on-the-state-of-previous-tests)
 we know some users have historically written tests this way, often to get around
 the same-origin restrictions. But with `cy.origin()` you no longer need these
 kind of brittle hacks, as your multi-origin logic can all reside in a single
@@ -412,7 +412,7 @@ it('securely edits content', () => {
 ```
 
 Always remember,
-[Cypress tests are not unit tests](https://docs.cypress.io/guides/references/best-practices#Creating-tiny-tests-with-a-single-assertion).
+[Cypress tests are not unit tests](https://docs.cypress.io/guides/references/best-practices#creating-tiny-tests-with-a-single-assertion).
 
 ### Serialization
 
@@ -507,11 +507,11 @@ There are other testing scenarios which are not currently covered by
 `cy.origin()`:
 
 - It cannot run commands
-  [in a different browser window](/guides/references/trade-offs#Multiple-browsers-open-at-the-same-time)
+  [in a different browser window](/guides/references/trade-offs#multiple-browsers-open-at-the-same-time)
 - It cannot run commands
-  [in a different browser tab](/guides/references/trade-offs#Multiple-tabs)
+  [in a different browser tab](/guides/references/trade-offs#multiple-tabs)
 - It cannot run commands
-  [inside an `<iframe>` element](/faq/questions/using-cypress-faq#How-do-I-test-elements-inside-an-iframe)
+  [inside an `<iframe>` element](/faq/questions/using-cypress-faq#how-do-i-test-elements-inside-an-iframe)
 
 However, `<iframe>` support is on [our roadmap](/guides/references/roadmap) for
 inclusion in a future version of Cypress.

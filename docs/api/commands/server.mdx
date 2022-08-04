@@ -11,7 +11,7 @@ and to change the behavior of network requests.
 future release, support for `cy.server()` and `cy.route()` will be removed.
 Consider using [`cy.intercept()`](/api/commands/intercept) instead. See our
 guide on
-[Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide#Migrating-cy-route-to-cy-intercept)
+[Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide#migrating-cy-route-to-cy-intercept)
 
 :::
 
@@ -85,7 +85,7 @@ options are used for 2 different purposes:
 | `urlMatchingOptions` | `{ matchBase: true }` | The default options passed to `minimatch` when using glob strings to match URLs                                                                                                      |
 | `ignore`             | function              | Callback function that filters requests from ever being logged or stubbed. By default this matches against asset-like requests such as for `.js`, `.jsx`, `.html`, and `.css` files. |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 - `cy.server()` yields `null`.</li><li>`cy.server()` cannot be chained
 further.
@@ -97,7 +97,7 @@ further.
 #### After starting a server:
 
 - Any request that does **NOT** match a [`cy.route()`](/api/commands/route) will
-  [pass through to the server](/guides/guides/network-requests#Use-Server-Responses).
+  [pass through to the server](/guides/guides/network-requests#use-server-responses).
 - Any request that matches the `options.ignore` function will **NOT** be logged
   or stubbed.
 - You will see requests named as `(XHR Stub)` or `(XHR)` in the Command Log.
@@ -258,7 +258,7 @@ cy.server({
 ```
 
 If you would like to change the default option for **ALL** `cy.server()` you
-[can change this option permanently](/api/cypress-api/cypress-server#Options).
+[can change this option permanently](/api/cypress-api/cypress-server#options).
 
 #### Turn off the server after you've started it
 
@@ -318,15 +318,15 @@ front end application.
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `cy.server()` requires being chained off of `cy`.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `cy.server()` cannot have any assertions chained.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `cy.server()` cannot time out.
 

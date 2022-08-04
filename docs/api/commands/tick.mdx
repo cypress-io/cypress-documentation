@@ -39,9 +39,9 @@ Pass in an options object to change the default behavior of `cy.tick()`.
 
 | Option | Default | Description                                                                              |
 | ------ | ------- | ---------------------------------------------------------------------------------------- |
-| `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
+| `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#command-log) |
 
-### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
+### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#subject-management)
 
 `cy.tick()` yields a `clock` object with the following methods:
 
@@ -85,7 +85,7 @@ cy.get('#header').should('have.text', 'Hello, World')
 
 :::info
 
-[Check out our example recipe testing spying, stubbing and time](/examples/examples/recipes#Stubbing-and-spying)
+[Check out our example recipe testing spying, stubbing and time](/examples/examples/recipes#stubbing-and-spying)
 
 :::
 
@@ -118,18 +118,18 @@ cy.clock().invoke('restore')
 
 ## Rules
 
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
+### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#chains-of-commands)
 
 - `cy.tick()` requires being chained off of `cy`.</li><li>`cy.tick()`
 requires that `cy.clock()` be called before it.
 
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
+### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#assertions)
 
 - `cy.tick()` is a utility command.</li><li>`cy.tick()` will not run
 assertions. Assertions will pass through as if this command did not
 exist.
 
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
+### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#timeouts)
 
 - `cy.tick()` cannot time out.
 
@@ -164,4 +164,4 @@ the following:
 - [`cy.spy()`](/api/commands/spy)
 - [`cy.stub()`](/api/commands/stub)
 - [Guide: Stubs, Spies and Clocks](/guides/guides/stubs-spies-and-clocks)
-- [Recipe: Stubbing, Spying](/examples/examples/recipes#Stubbing-and-spying)
+- [Recipe: Stubbing, Spying](/examples/examples/recipes#stubbing-and-spying)

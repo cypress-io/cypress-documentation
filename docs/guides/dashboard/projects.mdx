@@ -78,12 +78,12 @@ Make sure you [install](/guides/getting-started/installing-cypress) and
      no-border
    ></DocsImage>
 9. After setting up your project, Cypress inserts a unique
-   [projectId](#Identification) into your Cypress configuration file. If you're
+   [projectId](#identification) into your Cypress configuration file. If you're
    using source control, we recommend that you check your configuration file,
    including the `projectId`, into source control.
 10. Within [Continuous Integration](/guides/continuous-integration/introduction)
     or from your local computer's terminal pass the displayed
-    [Record Key](#Identification) while running the
+    [Record Key](#identification) while running the
     [cypress run](/guides/guides/command-line#cypress-run) command.
 
 - Provide record key directly:
@@ -116,7 +116,7 @@ the [Cypress App](/guides/core-concepts/cypress-app).
 
 ## Identification
 
-Cypress uses your [projectId](#Project-ID) and [Record Key](#Record-key)
+Cypress uses your [projectId](#project-id) and [Record Key](#record-key)
 together to uniquely identify projects.
 
 ### Project ID
@@ -178,12 +178,12 @@ can record runs to that organization's project in the Dashboard.
    project's original intent. This could including visiting different websites
    and generating videos of visiting those websites, for example.
 
-If a record key is exposed you should [delete it](#Delete-record-key) and
-[create a new record key](#Create-new-record-key). Deleted keys will be invalid;
+If a record key is exposed you should [delete it](#delete-record-key) and
+[create a new record key](#create-new-record-key). Deleted keys will be invalid;
 If a project is run with a deleted key it will not be able to record.
 
 You can set your record key as an environment variable to help protect it. Learn
-more [here](/guides/continuous-integration/introduction#Environment-variables).
+more [here](/guides/continuous-integration/introduction#environment-variables).
 
 :::
 
@@ -214,7 +214,7 @@ App.
 
 ## Record keys
 
-See [Record key](#Record-key) for a full description of how the record keys are
+See [Record key](#record-key) for a full description of how the record keys are
 used.
 
 ### Create new record key
@@ -264,7 +264,7 @@ used.
 
 You can edit the number of seconds that a run will wait for new groups to join
 before transitioning to 'completed'. See our
-[parallelization guide](/guides/guides/parallelization#Run-completion-delay) to
+[parallelization guide](/guides/guides/parallelization#run-completion-delay) to
 learn more.
 
 <DocsImage

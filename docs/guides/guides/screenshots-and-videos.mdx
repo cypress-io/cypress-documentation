@@ -26,19 +26,19 @@ happens during `cypress run`. Screenshots on failure are _not_ automatically
 taken during `cypress open`.
 
 Capturing of screenshots when a test fails can be turned off entirely by setting
-[`screenshotOnRunFailure`](/guides/references/configuration#Screenshots) to
+[`screenshotOnRunFailure`](/guides/references/configuration#screenshots) to
 `false` from within the
 [Cypress configuration](/guides/references/configuration) or by setting
 `screenshotOnRunFailure` to `false` in the
 [Cypress.Screenshot.defaults()](/api/cypress-api/screenshot-api).
 
 Screenshots are stored in the
-[`screenshotsFolder`](/guides/references/configuration#Screenshots) which is set
+[`screenshotsFolder`](/guides/references/configuration#screenshots) which is set
 to `cypress/screenshots` by default.
 
 Cypress clears any existing screenshots before `cypress run`. If you do not want
 to clear your screenshots folder before a run, you can set
-[`trashAssetsBeforeRuns`](/guides/references/configuration#Screenshots) to
+[`trashAssetsBeforeRuns`](/guides/references/configuration#screenshots) to
 `false`.
 
 ## Videos
@@ -47,29 +47,29 @@ Cypress records a video for each spec file when running tests during
 `cypress run`. Videos are _not_ automatically recorded during `cypress open`.
 
 Video recording can be turned off entirely by setting
-[`video`](/guides/references/configuration#Videos) to `false` from within your
+[`video`](/guides/references/configuration#videos) to `false` from within your
 configuration.
 
 Videos are stored in the
-[`videosFolder`](/guides/references/configuration#Videos) which is set to
+[`videosFolder`](/guides/references/configuration#videos) which is set to
 `cypress/videos` by default.
 
 After `cypress run` completes, Cypress automatically compresses the video in
 order to save on file size. By default it compresses to a `32 CRF`, but this is
 configurable with the
-[`videoCompression`](/guides/references/configuration#Videos) property.
+[`videoCompression`](/guides/references/configuration#videos) property.
 
 When using the `--record` flag while running your tests, videos are processed,
 compressed, and uploaded to the
 [Dashboard Service](/guides/dashboard/introduction) after every spec file runs,
 successful or not. To change this behavior to only process videos in the case
 that tests fail, set the
-[`videoUploadOnPasses`](/guides/references/configuration#Videos) configuration
+[`videoUploadOnPasses`](/guides/references/configuration#videos) configuration
 option to `false`.
 
 Cypress clears any existing videos before a `cypress run`. If you do not want to
 clear your videos folder before a run, you can set
-[`trashAssetsBeforeRuns`](/guides/references/configuration#Videos) to `false`.
+[`trashAssetsBeforeRuns`](/guides/references/configuration#videos) to `false`.
 
 ### Video encoding
 
@@ -81,7 +81,7 @@ Dashboard.
 If the machine is encoding the video slowly (which is often the case for virtual
 machines that use less CPU cores), the encoding might take a long time. In this
 case, you can modify the
-[`videoCompression`](/guides/references/configuration#Videos) configuration to
+[`videoCompression`](/guides/references/configuration#videos) configuration to
 make the encoding a little bit faster. Here are some common scenarios:
 
 **Change compression value**
@@ -130,7 +130,7 @@ machine as well as skip the time used to process, compress, and upload the video
 to the [Dashboard Service](/guides/dashboard/introduction).
 
 To only process videos in the case that a test fails, you can set the
-[`videoUploadOnPasses`](/guides/references/configuration#Videos) configuration
+[`videoUploadOnPasses`](/guides/references/configuration#videos) configuration
 option to `false`.
 
 For more fine grained control, you can use Cypress's
