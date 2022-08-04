@@ -32,14 +32,43 @@ const decrementSelector = '[aria-label=decrement]'
 
 it('stepper should default to 0', () => {
   // Arrange
-  cy.mount(Stepper)
+  cy.mount(StepperComponent)
   // Assert
   cy.get(counterSelector).should('have.text', '0')
 })
 
 it('supports an "Input()" count that sets the value', () => {
   // Arrange
-  cy.mount(Stepper, { componentProperties: { count: 100 } })
+  cy.mount(StepperComponent, {
+    componentProperties: { count: 100 },
+  })
+  // Assert
+  cy.get(counterSelector).should('have.text', '100')
+})
+```
+
+</code-block>
+<code-block label="stepper.component.cy.ts (with Template)">
+
+```ts
+// Set up some constants for the selectors
+const counterSelector = '[data-cy=counter]'
+const incrementSelector = '[aria-label=increment]'
+const decrementSelector = '[aria-label=decrement]'
+
+it('stepper should default to 0', () => {
+  // Arrange
+  cy.mount('<app-counter></app-counter>')
+  // Assert
+  cy.get(counterSelector).should('have.text', '0')
+})
+
+it('supports an "Input()" count that sets the value', () => {
+  // Arrange
+  cy.mount('<app-counter [count]="100"></app-counter>', {
+    declarations: [CounterComponent],
+    componentProperties: { count: 100 },
+  })
   // Assert
   cy.get(counterSelector).should('have.text', '100')
 })
@@ -98,6 +127,33 @@ it('when the decrement button is pressed, the counter is decremented', () => {
 ```
 
 </code-block>
+<code-block label="stepper.component.cy.ts (with Template)">
+
+```ts
+it('when the increment button is pressed, the counter is incremented', () => {
+  // Arrange
+  cy.mount('<app-counter></app-counter>', {
+    declarations: [CounterComponent],
+  })
+  // Act
+  cy.get(incrementSelector).click()
+  // Assert
+  cy.get(counterSelector).should('have.text', '1')
+})
+
+it('when the decrement button is pressed, the counter is decremented', () => {
+  // Arrange
+  cy.mount('<app-counter></app-counter>', {
+    declarations: [CounterComponent],
+  })
+  // Act
+  cy.get(decrementSelector).click()
+  // Assert
+  cy.get(counterSelector).should('have.text', '-1')
+})
+```
+
+</code-block>
 </code-group>
 
 2. Next, run through the behavior of the Stepper as a user would. There is
@@ -107,11 +163,31 @@ it('when the decrement button is pressed, the counter is decremented', () => {
    text rendered.
 
 <code-group>
-<code-block label="Stepper.cy.js" active>
+<code-block label="stepper.component.cy.ts" active>
 
-```js
+```ts
 it('when clicking increment and decrement buttons, the counter is changed as expected', () => {
-  cy.mount(StepperComponent, { componentProperties: { count: 100 } })
+  cy.mount(StepperComponent, {
+    componentProperties: { count: 100 },
+  })
+  cy.get(counterSelector).should('have.text', '100')
+  cy.get(incrementSelector).click()
+  cy.get(counterSelector).should('have.text', '101')
+  cy.get(decrementSelector).click().click()
+  cy.get(counterSelector).should('have.text', '99')
+})
+```
+
+</code-block>
+
+<code-block label="stepper.component.cy.ts (with Template)">
+
+```ts
+it('when clicking increment and decrement buttons, the counter is changed as expected', () => {
+  cy.mount('<app-counter [count]="100"></app-counter>', {
+    declarations: [StepperComponent],
+    componentProperties: { count: 100 },
+  })
   cy.get(counterSelector).should('have.text', '100')
   cy.get(incrementSelector).click()
   cy.get(counterSelector).should('have.text', '101')

@@ -99,6 +99,11 @@ tools to inspect and debug both your tests and the component's code.
 Feel free to play around with the `StepperComponent` by interacting with the
 increment and decrement buttons.
 
+### Optional Template Support
+
+The mount command supports for Component Class syntax, but it can also be used
+with angular's template syntax _ie:_ `<app-button></app-button>`
+
 ## Next Steps
 
 Now that we have our component mounted, next we will learn how to write tests

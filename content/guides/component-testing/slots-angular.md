@@ -17,11 +17,7 @@ Single-slot content projection at
 [https://angular.io/guide/content-projection#single-slot](https://angular.io/guide/content-projection#single-slot)
 
 Below is a simple ButtonComponent that is using **single-slot content
-projection** and its corresponding component test. Notice we create a
-**WrapperComponent** in our spec that we use to simulate passing in content to
-the `ButtonComponent` using content projection.
-
-<code-group>
+projection**.
 
 <code-block label="button.component.ts" active>
 
@@ -40,7 +36,13 @@ export class ButtonComponent {...}
 ```
 
 </code-block>
-<code-block label="button.component.cy.ts">
+
+Now we create a **WrapperComponent** in our spec so we use to simulate passing
+in content to the `ButtonComponent` using content projection or we can mount the
+`ButtonComponent` directly using the mount template syntax.
+
+<code-group>
+<code-block label="button.component.cy.ts" active>
 
 ```ts
 import { Component } from '@angular/core'
@@ -56,6 +58,22 @@ class WrapperComponent {}
 describe('ButtonComponent', () => {
   it('can project content using a Wrapper component', () => {
     cy.mount(WrapperComponent, {
+      declarations: [ButtonComponent],
+    })
+    cy.get('button').contains('Click Me')
+  })
+})
+```
+
+</code-block>
+<code-block label="button.component.cy.ts (with Template)">
+
+```ts
+import { ButtonComponent } from './button.component'
+
+describe('ButtonComponent', () => {
+  it('can project content using a ButtonComponent template', () => {
+    cy.mount('app-button>Click Me</app-button>', {
       declarations: [ButtonComponent],
     })
     cy.get('button').contains('Click Me')
