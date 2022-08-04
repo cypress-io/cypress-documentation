@@ -163,4 +163,4 @@ components that use all of Angular's language features.
 
 Congrats! Happy building. 🎉
 
-<NavGuide prev="/guides/component-testing/events-vue" />
+<NavGuide prev="/guides/component-testing/events-angular" />
