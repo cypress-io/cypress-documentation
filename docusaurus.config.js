@@ -97,6 +97,7 @@ const config = {
             to: '/',
             label: 'Guides',
             position: 'left',
+            activeBaseRegex: 'guides',
           },
           {
             to: '/api/commands/and',
