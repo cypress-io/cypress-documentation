@@ -38,6 +38,14 @@
   background-color: rgb(31, 41, 55);
 }
 
+[data-theme="light"] .menu__link--active {
+  --ifm-menu-color-active: #26764a;
+}
+
+[data-theme="light"] .breadcrumbs__item--active .breadcrumbs__link {
+  --ifm-breadcrumb-color-active: #26764a;
+}
+
 [data-theme="light"] .menu__link--active:not(.menu__link--sublist) {
   background: #cff1e6;
 }
