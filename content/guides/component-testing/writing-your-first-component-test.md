@@ -50,4 +50,4 @@ on the web. Therefore, many of your tests will appear framework-agnostic and
 Ready to get started? Check out our quickstart guides for
 [Vue](/guides/component-testing/quickstart-vue),
 [React](/guides/component-testing/quickstart-react) and
-[Angular](/guides/component-testing/quickstart-angular)
+[Angular](/guides/component-testing/quickstart-angular).

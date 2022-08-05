@@ -4,7 +4,11 @@ title: 'Quickstart: Angular'
 
 <CtBetaAlert></CtBetaAlert>
 
+:::caution
+
 To follow along with this guide, you'll need an Angular CLI application.
+
+:::
 
 The quickest way to get started writing component tests for Angular is to use
 the [Angular CLI](https://angular.io/cli).
@@ -54,13 +58,12 @@ as they do in production.
   src="/img/guides/component-testing/project-setup-angular.png" 
   caption=""> </DocsImage>
 
-Next, the Cypress setup will detect your framework and generate all the
-necessary configuration files, and ensure all required dependencies are
-installed.
+Next, Cypress will detect your framework and generate all the necessary
+configuration files, and ensure all required dependencies are installed.
 
 <DocsImage 
   src="/img/guides/component-testing/scaffolded-files-angular.png" 
-  caption="The Cypress launchpad will scaffold all of these files for you">
+  caption="The Cypress launchpad will scaffold all of these files for you.">
 </DocsImage>
 
 After setting up component testing, you will be at the Browser Selection screen.
@@ -84,7 +87,8 @@ buttons.
 
 If your component uses providers, modules, declarations, requests, or other
 environmental setups, you will need additional work to get your component
-mounting. This is covered in a later section.
+mounting. This is covered in a
+[later section](/guides/component-testing/mounting-angular#ConfiguringYourComponent).
 
 </alert>
 

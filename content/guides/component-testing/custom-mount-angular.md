@@ -4,8 +4,9 @@ title: Custom Mount Commands for Angular
 
 In some instances you may find yourself doing repetitive work during mounting.
 In order to reduce boilerplate you may find it useful to create a custom mount
-command. Here is an example of defaulting `autoSpyOutputs` for every mounted
-component:
+command.
+
+Here is an example of defaulting `autoSpyOutputs` for every mounted component:
 
 ### autoSpyOutputs
 

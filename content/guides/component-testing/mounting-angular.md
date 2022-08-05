@@ -99,6 +99,20 @@ tools to inspect and debug both your tests and the component's code.
 Feel free to play around with the `StepperComponent` by interacting with the
 increment and decrement buttons.
 
+### Configuring Your Component
+
+Angular applications are modular by nature. In fact, Angular has its own
+modularity system called `NgModules`. NgModules are containers for a cohesive
+block of code dedicated to an application domain, workflow, or a closely related
+set of capability. They can contain components, service providers, and other
+code files whose scope is defined by the containing NgModule. To summarize, an
+NgModule provides a _compilation context_ for it's components. In order to
+`mount` your component under test with cypress, you will use the
+`MountConfig<T>`, which is an interface that extends
+[TestModuleMetadata](https://angular.io/api/core/testing/TestModuleMetadata).
+You will find mounting your components with Cypress will feel very ergonomically
+angular.
+
 ### Optional Template Support
 
 The mount command supports for Component Class syntax, but it can also be used

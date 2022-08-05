@@ -86,7 +86,7 @@ export class StepperComponent {
 </code-block>
 </code-group>
 
-Above, we added a new `change` `EventEmitter`
+Above, we added a new `change` `EventEmitter`.
 
 As the developer of the StepperComponent, you want to make sure that when the
 end user clicks the increment and decrement buttons, that the **change** event
@@ -263,7 +263,7 @@ properties of our component under test.
 
 Notice that we're using the `'should'` function signature in order to take
 advantage of Cypress's [retryability](/guides/guides/test-retries). If we
-chained using `should` instead of `cy.should`, we may run into the kinds of
+chained using `cy.then` instead of `cy.should`, we may run into the kinds of
 issues you have other framework tests where you have to use `await` frequently
 in order to make sure the DOM has updated or any reactive events have fired.
 
