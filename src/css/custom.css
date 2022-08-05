@@ -66,7 +66,7 @@
   border-bottom: 1px solid var(--ifm-toc-border-color);
 }
 
-[data-theme="dark"] .admonition .admonition-content h2 {
+[data-theme="dark"] .alert.alert--info h2,h3,h4 {
   border-bottom: none;
   padding-bottom: 0;
 }
@@ -135,21 +135,16 @@ header h1 {
   background: var(--ifm-menu-link-sublist-icon) 50%/1.7rem 1.7rem;
 }
 
-.admonition {
-  font-size: 1.125rem;
+.alert.alert--info {
   margin-bottom: 2rem;
 }
 
-.admonition li {
-  margin: 0.9rem 0
-}
-
-.admonition-icon,
-.admonition-heading {
+/* pretty gross TODO:is swizzling better here? */
+.admonitionHeading_node_modules-\@docusaurus-theme-classic-lib-theme-Admonition-styles-module {
   display: none;
 }
 
-.admonition .admonition-content > h2, h3 {
+.alert.alert--info h2, h3 {
   border-bottom: none;
   padding-bottom: 0;
 }
@@ -238,11 +233,8 @@ div.markdown h2 > a {
   opacity: 0.6;
 }
 
-/*
- * footer icons
- * this is gross TODO: explore swizzling this component
-*/
-.iconExternalLink_node_modules-\@docusaurus-theme-classic-lib-theme-IconExternalLink-styles-module {
+/* open new page icon */
+.footer__link-item svg {
   display: none;
 }
 
