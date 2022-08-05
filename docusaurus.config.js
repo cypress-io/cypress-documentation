@@ -154,6 +154,10 @@ const config = {
             title: 'Learn',
             items: [
               {
+                label: 'Real World App',
+                href: 'https://github.com/cypress-io/cypress-realworld-app',
+              },
+              {
                 label: 'Real World Testing',
                 href: 'https://learn.cypress.io',
               },
@@ -170,6 +174,18 @@ const config = {
                 label: 'GitHub Discussions',
                 href: 'https://github.com/cypress-io/cypress/discussions',
               },
+              // {
+              //   label: 'Cypress Blog',
+              //   href: 'https://www.cypress.io/blog',
+              // },
+              // {
+              //   label: 'Cypress Ambassadors',
+              //   href: 'https://www.cypress.io/ambassadors',
+              // },
+              // {
+              //   label: 'Cypress Stack Overflow',
+              //   href: 'https://stackoverflow.com/questions/tagged/cypress',
+              // },
               {
                 label: 'Discord',
                 href: 'https://discord.gg/cMjUZg7',
@@ -178,6 +194,23 @@ const config = {
                 label: 'Twitter',
                 href: 'https://twitter.com/Cypress_io',
               },
+            ],
+          },
+          {
+            title: 'Products',
+            items: [
+              {
+                label: 'Cypress App',
+                href: 'https://www.cypress.io/features',
+              },
+              {
+                label: 'Cypress Dashboard',
+                href: 'https://www.cypress.io/dashboard',
+              },
+              {
+                label: 'Cypress Migrator',
+                href: 'https://migrator.cypress.io',
+              }
             ],
           },
           {
