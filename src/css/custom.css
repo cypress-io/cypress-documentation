@@ -60,7 +60,7 @@
   border-right: 1px solid var(--ifm-toc-border-color);
 }
 
-[data-theme="dark"] div.markdown h2 {
+[data-theme="dark"] div.markdown h2, h3, h4 {
   margin-bottom: 1.5rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--ifm-toc-border-color);
@@ -186,7 +186,7 @@ div.markdown h2, h3, h4 {
   font-weight: 700;
   margin-bottom: 1.5rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
 }
 
 /* courses list */

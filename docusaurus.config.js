@@ -155,7 +155,7 @@ const config = {
       announcementBar: {
         content:
           '🚀 Looking to move to Cypress v10? Check out the <a target="_blank" rel="noopener noreferrer" href="/guides/references/migration-guide">migration guide!</a>',
-        backgroundColor: 'rgba(255, 186, 0, 0.15)',
+        backgroundColor: '#fff3b9',
         textColor: '#091E42',
         isCloseable: false,
       },
