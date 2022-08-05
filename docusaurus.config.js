@@ -137,6 +137,18 @@ const config = {
             className: 'github-logo',
             'aria-label': 'GitHub repository',
           },
+          {
+            href: 'https://twitter.com/Cypress_io',
+            position: 'right',
+            className: 'twitter-logo',
+            'aria-label': 'Cypress Twitter',
+          },
+          {
+            href: 'https://discord.com/invite/cMjUZg7',
+            position: 'right',
+            className: 'discord-logo',
+            'aria-label': 'Cypress Discord',
+          },
         ],
       },
       // optional, can be commented out
