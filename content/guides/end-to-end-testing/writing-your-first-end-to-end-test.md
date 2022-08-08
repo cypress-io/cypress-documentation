@@ -12,8 +12,6 @@ title: Writing Your First E2E Test
 
 </Alert>
 
-<DocsVideo src="https://vimeo.com/237115455"></DocsVideo>
-
 ## Add a test file
 
 Assuming you've successfully
@@ -444,6 +442,9 @@ These various timeouts are defined in the
 
 ## Next steps
 
+- Take our free
+  [Testing your first application](https://learn.cypress.io/testing-your-first-application)
+  course.
 - Learn more about the [Cypress App](/guides/core-concepts/cypress-app) UI.
 - Start [testing your app](/guides/end-to-end-testing/testing-your-app).
 - Set up
