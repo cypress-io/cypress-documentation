@@ -79,6 +79,12 @@
   padding-bottom: 0;
 }
 
+[data-theme="dark"] div.markdown a {
+  color: #29a7ff;
+  text-decoration: none;
+  border-bottom: 1px dotted #29a7ff;
+}
+
 article {
   max-width: 90%;
   margin-left: auto;
@@ -123,10 +129,10 @@ header h1 {
       text-decoration: none;
     }
 
-.toggleButton_node_modules-\@docusaurus-theme-classic-lib-theme-ColorModeToggle-styles-module {
+[class^="toggle_"] button {
   margin-left: 0.15rem;
 }
-  
+
 .theme-doc-sidebar-menu {
   padding: 0.75rem;
   font-weight: 700;
@@ -156,7 +162,8 @@ header h1 {
   margin-bottom: 2rem;
 }
 
-/* TODO:is swizzling better here? */
+/* TODO: using attribute selector for these dynamic classes
+is swizzling better here? */
 [class^="admonitionHeading_"] {
   display: none;
 }
@@ -292,4 +299,5 @@ div.markdown h2 > a {
 /* only target top level section titles in right sode TOC */
 .table-of-contents > li > .table-of-contents__link {
   font-weight: bold;
+  opacity: 0.9;
 }
