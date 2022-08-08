@@ -84,8 +84,7 @@ globally in the [Cypress configuration](/guides/references/configuration).
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `cy.visit()` yields the `window` object after the page finishes
-loading
+- `cy.visit()` yields the `window` object after the page finishes loading
 
 Let's confirm the `window.navigator.language` after visiting the site:
 
@@ -171,9 +170,9 @@ cy.visit('http://localhost:3000/#dashboard', {
 
 Check out our example recipes using `cy.visit()`'s `onBeforeLoad` option to:
 
-- [Bootstrapping your App](/examples/examples/recipes#Server-Communication)
-- [Set a token to `localStorage` for login during Single Sign On](/examples/examples/recipes#Logging-In)
-- [Stub `window.fetch`](/examples/examples/recipes#Stubbing-and-spying)
+- [Bootstrapping your App](/examples/recipes#Server-Communication)
+- [Set a token to `localStorage` for login during Single Sign On](/examples/recipes#Logging-In)
+- [Stub `window.fetch`](/examples/recipes#Stubbing-and-spying)
 
 :::
 
@@ -403,8 +402,7 @@ does so immediately before any of your application code runs.
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
-- `cy.visit()` will automatically wait for assertions you have chained
-to pass
+- `cy.visit()` will automatically wait for assertions you have chained to pass
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
@@ -456,6 +454,6 @@ following:
 - [`cy.go()`](/api/commands/go)
 - [`cy.reload()`](/api/commands/reload)
 - [`cy.request()`](/api/commands/request)
-- [Recipe: Bootstrapping your App](/examples/examples/recipes#Server-Communication)
-- [Recipe: Logging In - Single Sign on](/examples/examples/recipes#Logging-In)
-- [Recipe: Stubbing `window.fetch`](/examples/examples/recipes#Stubbing-and-spying)
+- [Recipe: Bootstrapping your App](/examples/recipes#Server-Communication)
+- [Recipe: Logging In - Single Sign on](/examples/recipes#Logging-In)
+- [Recipe: Stubbing `window.fetch`](/examples/recipes#Stubbing-and-spying)

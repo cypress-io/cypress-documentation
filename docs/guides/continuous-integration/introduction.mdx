@@ -235,7 +235,7 @@ cypress.
 
 #### Docker images & CI examples
 
-See our [examples](/examples/examples/docker) for additional information on our
+See our [examples](/examples/docker) for additional information on our
 maintained images and configurations on several CI providers.
 
 ## Advanced setup
@@ -463,13 +463,13 @@ And then in your tests:
 
 ```javascript
 cy.request({
-  method: "POST",
-  url: Cypress.env("EXTERNAL_API_SERVER") + "/users/1",
+  method: 'POST',
+  url: Cypress.env('EXTERNAL_API_SERVER') + '/users/1',
   body: {
-    foo: "bar",
-    baz: "quux",
+    foo: 'bar',
+    baz: 'quux',
   },
-});
+})
 ```
 
 Refer to the dedicated
@@ -488,17 +488,17 @@ with the results and do other things.
 ```js
 // scripts/run-cypress-tests.js
 
-const cypress = require("cypress");
-const server = require("./lib/my-server");
+const cypress = require('cypress')
+const server = require('./lib/my-server')
 
 // start your server
 return server.start().then(() => {
   // kick off a cypress run
   return cypress.run().then((results) => {
     // stop your server when it's complete
-    return server.stop();
-  });
-});
+    return server.stop()
+  })
+})
 ```
 
 ```shell

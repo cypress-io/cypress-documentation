@@ -42,7 +42,10 @@ The position where the event should be triggered. The `center` position is the
 default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
 `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
-<DocsImage src="/img/api/coordinates-diagram.jpg" alt="cypress-command-positions-diagram" ></DocsImage>
+<DocsImage
+  src="/img/api/coordinates-diagram.jpg"
+  alt="cypress-command-positions-diagram"
+></DocsImage>
 
 **<Icon name="angle-right" /> x** **_(Number)_**
 
@@ -74,8 +77,7 @@ they will be attached to the event. Passing in coordinate arguments (`clientX`,
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.trigger()` yields the same subject it was given from the previous
-command.
+- `.trigger()` yields the same subject it was given from the previous command.
 
 ## Examples
 
@@ -125,7 +127,7 @@ cy.get('[data-cy=draggable]')
 
 :::info
 
-[Check out our example recipe triggering mouse and drag events to test drag and drop](/examples/examples/recipes#Testing-the-DOM)
+[Check out our example recipe triggering mouse and drag events to test drag and drop](/examples/recipes#Testing-the-DOM)
 
 :::
 
@@ -256,21 +258,20 @@ command / event you're looking for hasn't been implemented yet.
 
 ### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
 
-- `.trigger()` requires being chained off a command that yields DOM
-element(s).
+- `.trigger()` requires being chained off a command that yields DOM element(s).
 
 ### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
 
 - `.trigger()` will automatically wait for the element to reach an
-[actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.trigger()`
-will automatically [retry](/guides/core-concepts/retry-ability) until all
-chained assertions have passed
+  [actionable state](/guides/core-concepts/interacting-with-elements)</li><li>`.trigger()`
+  will automatically [retry](/guides/core-concepts/retry-ability) until all
+  chained assertions have passed
 
 ### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
 
 - `.trigger()` can time out waiting for the element to reach an
-[actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.trigger()`
-can time out waiting for assertions you've added to pass.
+  [actionable state](/guides/core-concepts/interacting-with-elements).</li><li>`.trigger()`
+  can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -282,12 +283,18 @@ cy.get('.trigger-input-range').invoke('val', 25).trigger('change')
 
 The commands above will display in the Command Log as:
 
-<DocsImage src="/img/api/trigger/command-log-trigger.png" alt="command log trigger" ></DocsImage>
+<DocsImage
+  src="/img/api/trigger/command-log-trigger.png"
+  alt="command log trigger"
+></DocsImage>
 
 When clicking on `trigger` within the command log, the console outputs the
 following:
 
-<DocsImage src="/img/api/trigger/console-log-trigger.png" alt="console log trigger" ></DocsImage>
+<DocsImage
+  src="/img/api/trigger/console-log-trigger.png"
+  alt="console log trigger"
+></DocsImage>
 
 ## History
 

@@ -3,7 +3,7 @@ title: Best Practices
 hide_table_of_contents: true
 ---
 
-import TOCInline from '@theme/TOCInline';
+import TOCInline from '@theme/TOCInline'
 
 <TOCInline
   // Only show h2 headings
@@ -14,11 +14,14 @@ import TOCInline from '@theme/TOCInline';
 
 ### <Icon name="graduation-cap" /> Real World Practices
 
-The Cypress team maintains the <Icon name="github" inline="true" contentType="rwa" />, a
-full stack example application that demonstrates **best practices and scalable strategies with Cypress in practical and realistic scenarios**.
+The Cypress team maintains the
+<Icon name="github" inline="true" contentType="rwa" />, a full stack example
+application that demonstrates **best practices and scalable strategies with
+Cypress in practical and realistic scenarios**.
 
 The RWA achieves full [code-coverage](/guides/tooling/code-coverage) with
-end-to-end tests [across multiple browsers](/guides/guides/cross-browser-testing) and
+end-to-end tests
+[across multiple browsers](/guides/guides/cross-browser-testing) and
 [device sizes](/api/commands/viewport), but also includes
 [visual regression tests](/guides/tooling/visual-testing), API tests, unit
 tests, and runs them all in an
@@ -34,16 +37,15 @@ and start testing.
 
 :::danger
 
-‼️ **Anti-Pattern:** Sharing page
-objects, using your UI to log in, and not taking shortcuts.
+‼️ **Anti-Pattern:** Sharing page objects, using your UI to log in, and not
+taking shortcuts.
 
 :::
 
 :::tip
 
-✅ **Best Practice:** Test specs in
-isolation, programmatically log into your application, and take control of your application's
-state.
+✅ **Best Practice:** Test specs in isolation, programmatically log into your
+application, and take control of your application's state.
 
 :::
 
@@ -61,15 +63,14 @@ in our examples.
 
 :::danger
 
-‼️ **Anti-Pattern:** Using highly
-brittle selectors that are subject to change.
+‼️ **Anti-Pattern:** Using highly brittle selectors that are subject to change.
 
 :::
 
 :::tip
 
-✅ **Best Practice:** Use `data-*` attributes
-to provide context to your selectors and isolate them from CSS or JS changes.
+✅ **Best Practice:** Use `data-*` attributes to provide context to your
+selectors and isolate them from CSS or JS changes.
 
 :::
 
@@ -105,14 +106,14 @@ Given a button that we want to interact with:
 
 Let's investigate how we could target it:
 
-| Selector                                | Recommended                                                        | Notes                                                           |
-| --------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------------- |
+| Selector                                | Recommended                                                   | Notes                                                           |
+| --------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------- |
 | `cy.get('button').click()`              | <Icon name="exclamation-triangle" color="red" /> Never        | Worst - too generic, no context.                                |
 | `cy.get('.btn.btn-large').click()`      | <Icon name="exclamation-triangle" color="red" /> Never        | Bad. Coupled to styling. Highly subject to change.              |
 | `cy.get('#main').click()`               | <Icon name="exclamation-triangle" color="orange" /> Sparingly | Better. But still coupled to styling or JS event listeners.     |
 | `cy.get('[name="submission"]').click()` | <Icon name="exclamation-triangle" color="orange" /> Sparingly | Coupled to the `name` attribute which has HTML semantics.       |
-| `cy.contains('Submit').click()`         | ✅ Depends            | Much better. But still coupled to text content that may change. |
-| `cy.get('[data-cy="submit"]').click()`  | ✅ Always             | Best. Isolated from all changes.                                |
+| `cy.contains('Submit').click()`         | ✅ Depends                                                    | Much better. But still coupled to text content that may change. |
+| `cy.get('[data-cy="submit"]').click()`  | ✅ Always                                                     | Best. Isolated from all changes.                                |
 
 Targeting the element above by `tag`, `class` or `id` is very volatile and
 highly subject to change. You may swap out the element, you may refactor CSS and
@@ -209,16 +210,16 @@ If the answer is **no** because the text could be changed - then use
 
 :::danger
 
-‼️ **Anti-Pattern:** Trying to
-assign the return value of Commands with `const`, `let`, or `var`.
+‼️ **Anti-Pattern:** Trying to assign the return value of Commands with `const`,
+`let`, or `var`.
 
 :::
 
 :::tip
 
-✅ **Best Practice:** Use [closures
-to access and store](/guides/core-concepts/variables-and-aliases) what Commands yield
-you.
+✅ **Best Practice:** Use
+[closures to access and store](/guides/core-concepts/variables-and-aliases) what
+Commands yield you.
 
 :::
 
@@ -264,16 +265,16 @@ For working with either of these patterns, please read our
 
 :::danger
 
-‼️ **Anti-Pattern:** Trying to
-visit or interact with sites or servers you do not control.
+‼️ **Anti-Pattern:** Trying to visit or interact with sites or servers you do
+not control.
 
 :::
 
 :::tip
 
-✅ **Best Practice:** Only test what
-you control. Try to avoid requiring a 3rd party server. When necessary, always use
-[`cy.request()`](/api/commands/request) to talk to 3rd party servers via their APIs.
+✅ **Best Practice:** Only test what you control. Try to avoid requiring a 3rd
+party server. When necessary, always use [`cy.request()`](/api/commands/request)
+to talk to 3rd party servers via their APIs.
 
 :::
 
@@ -334,7 +335,7 @@ affect other tests downstream.
 
 <strong>Recipes</strong>
 
-[We have several examples of doing this in our logging in recipes.](/examples/examples/recipes)
+[We have several examples of doing this in our logging in recipes.](/examples/recipes)
 
 :::
 
@@ -391,15 +392,14 @@ email's functionality and visual style:
 
 :::danger
 
-‼️ **Anti-Pattern:** Coupling
-multiple tests together.
+‼️ **Anti-Pattern:** Coupling multiple tests together.
 
 :::
 
 :::tip
 
-✅ **Best Practice:** Tests should always
-be able to be run independently from one another **and still pass**.
+✅ **Best Practice:** Tests should always be able to be run independently from
+one another **and still pass**.
 
 :::
 
@@ -521,15 +521,13 @@ can be run independently and pass.
 
 :::danger
 
-‼️ **Anti-Pattern:** Acting like
-you're writing unit tests.
+‼️ **Anti-Pattern:** Acting like you're writing unit tests.
 
 :::
 
 :::tip
 
-✅ **Best Practice:** Add multiple assertions
-and don't worry about it
+✅ **Best Practice:** Add multiple assertions and don't worry about it
 
 :::
 
@@ -607,15 +605,13 @@ describe('my form', () => {
 
 :::danger
 
-‼️ **Anti-Pattern:** Using `after`
-or `afterEach` hooks to clean up state.
+‼️ **Anti-Pattern:** Using `after` or `afterEach` hooks to clean up state.
 
 :::
 
 :::tip
 
-✅ **Best Practice:** Clean up state
-**before** tests run.
+✅ **Best Practice:** Clean up state **before** tests run.
 
 :::
 
@@ -810,15 +806,15 @@ script.
 
 :::danger
 
-‼️ **Anti-Pattern:** Waiting for
-arbitrary time periods using [`cy.wait(Number)`](/api/commands/wait#Time).
+‼️ **Anti-Pattern:** Waiting for arbitrary time periods using
+[`cy.wait(Number)`](/api/commands/wait#Time).
 
 :::
 
 :::tip
 
-✅ **Best Practice:** Use route aliases
-or assertions to guard Cypress from proceeding until an explicit condition is met.
+✅ **Best Practice:** Use route aliases or assertions to guard Cypress from
+proceeding until an explicit condition is met.
 
 :::
 
@@ -884,16 +880,14 @@ cy.get('table tr').should('have.length', 2)
 
 :::danger
 
-‼️ **Anti-Pattern:** Trying to
-start a web server from within Cypress scripts with [`cy.exec()`](/api/commands/exec)
-or [`cy.task()`](/api/commands/task).
+‼️ **Anti-Pattern:** Trying to start a web server from within Cypress scripts
+with [`cy.exec()`](/api/commands/exec) or [`cy.task()`](/api/commands/task).
 
 :::
 
 :::tip
 
-✅ **Best Practice:** Start a web server
-prior to running Cypress.
+✅ **Best Practice:** Start a web server prior to running Cypress.
 
 :::
 
@@ -934,15 +928,15 @@ We have
 
 :::danger
 
-‼️ **Anti-Pattern:** Using [cy.visit()](/api/commands/visit)
-without setting a `baseUrl`.
+‼️ **Anti-Pattern:** Using [cy.visit()](/api/commands/visit) without setting a
+`baseUrl`.
 
 :::
 
 :::tip
 
-✅ **Best Practice:** Set a `baseUrl`
-in your [Cypress configuration](/guides/references/configuration).
+✅ **Best Practice:** Set a `baseUrl` in your
+[Cypress configuration](/guides/references/configuration).
 
 :::
 

@@ -339,9 +339,9 @@ We provide two options to override the configuration while your test are
 running, `Cypress.config()` and suite-specific or test-specific configuration
 overrides.
 
-‼️ **Note:** The configuration
-values below are all writeable and **can be changed** via per test configuration.
-Any other configuration values are readonly and cannot be changed at run time.
+‼️ **Note:** The configuration values below are all writeable and **can be
+changed** via per test configuration. Any other configuration values are
+readonly and cannot be changed at run time.
 
 - `animationDistanceThreshold`
 - `baseUrl`
@@ -476,16 +476,14 @@ By passing a string or array of strings you can block requests made to one or
 more hosts.
 
 To see a working example of this please check out our
-[Stubbing Google Analytics Recipe](/examples/examples/recipes#Stubbing-and-spying).
+[Stubbing Google Analytics Recipe](/examples/recipes#Stubbing-and-spying).
 
 To block a host:
 
 - ✅ Pass only the host
 - ✅ Use wildcard `*` patterns
-- ✅ Include the port other than `80`
-  and `443`
-- ‼️ Do **NOT** include protocol:
-  `http://` or `https://`
+- ✅ Include the port other than `80` and `443`
+- ‼️ Do **NOT** include protocol: `http://` or `https://`
 
 :::info
 
@@ -874,7 +872,7 @@ DEBUG=cypress:cli,cypress:server:specs
 - [Cypress.config()](/api/cypress-api/config) and
   [Cypress.env()](/api/cypress-api/env)
 - [Environment variables](/guides/guides/environment-variables)
-- [Environment Variables recipe](/examples/examples/recipes#Fundamentals)
+- [Environment Variables recipe](/examples/recipes#Fundamentals)
 - [Extending the Cypress Configuration File](https://www.cypress.io/blog/2020/06/18/extending-the-cypress-config-file/)
   blog post and
   [@bahmutov/cypress-extends](https://github.com/bahmutov/cypress-extends)
