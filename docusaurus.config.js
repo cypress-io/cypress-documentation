@@ -89,12 +89,13 @@ const config = {
         title: '',
         style: 'dark',
         logo: {
+          href: '/guides/overview/why-cypress',
           alt: 'My Site Logo',
           src: '/img/logo/cypress-logo-dark.png',
         },
         items: [
           {
-            to: '/',
+            to: '/guides/overview/why-cypress',
             label: 'Guides',
             position: 'left',
           },
@@ -109,7 +110,7 @@ const config = {
             position: 'left',
           },
           {
-            to: '/examples/examples/recipes',
+            to: '/examples/recipes',
             label: 'Examples',
             position: 'left',
           },
