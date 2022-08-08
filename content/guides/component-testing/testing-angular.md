@@ -66,7 +66,7 @@ it('stepper should default to 0', () => {
 it('supports an "Input()" count that sets the value', () => {
   // Arrange
   cy.mount('<app-counter [count]="100"></app-counter>', {
-    declarations: [CounterComponent],
+    declarations: [StepperComponent],
     componentProperties: { count: 100 },
   })
   // Assert
