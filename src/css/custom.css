@@ -209,8 +209,9 @@ div.markdown li p {
   margin-top: 0;
 }
 
-/* test-type pills */
-div.markdown h2 > a {
+/* test-type pills & lists w/ headers as bullets */
+div.markdown h2 > a,
+ul li > h2, h3, h4 {
   border-bottom: none;
 }
 
