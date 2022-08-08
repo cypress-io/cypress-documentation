@@ -357,7 +357,7 @@ it('clicking + fires a change event with the incremented value', () => {
 
 In most cases, you will find yourself repeatedly creating a `cy.spy()` for each
 of your component `@Output()`(s). Because of this, we created an easy mechanism
-to handle this for you. This feature, can be turned on by passing the
+to handle this for you. This feature can be turned on by passing the
 `autoSpyOutputs` flag into your `MountConfig`. After your component has been
 mounted you can then access each of the generated spies using the `@Output()`
 property name + `Spy`. So our `change` property can be accessed via its alias of
