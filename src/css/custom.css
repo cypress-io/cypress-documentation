@@ -156,8 +156,8 @@ header h1 {
   margin-bottom: 2rem;
 }
 
-/* pretty gross TODO:is swizzling better here? */
-.admonitionHeading_node_modules-\@docusaurus-theme-classic-lib-theme-Admonition-styles-module {
+/* TODO:is swizzling better here? */
+[class^="admonitionHeading_"] {
   display: none;
 }
 
