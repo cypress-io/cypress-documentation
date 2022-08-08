@@ -290,7 +290,7 @@ it('clicking + fires a change event with the incremented value', () => {
 ```ts
 it('clicking + fires a change event with the incremented value', () => {
   cy.mount('<app-counter (change)="change.emit($event)"></app-counter>', {
-    declarations: [CounterComponent],
+    declarations: [StepperComponent],
     componentProperties: {
       count: 100,
       change: new EventEmitter(),
