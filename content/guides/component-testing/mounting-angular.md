@@ -15,7 +15,7 @@ end-to-end test.
 
 We ship a `mount` function for each front-end framework Cypress supports, which
 is imported from the `cypress` package. It is responsible for rendering
-components within Cypress's sandboxed iframe and handling and framework-specific
+components within Cypress's sandboxed iframe and handling any framework-specific
 cleanup.
 
 ```ts
