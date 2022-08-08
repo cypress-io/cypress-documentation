@@ -86,7 +86,7 @@ the "increment" and "decrement" buttons that the value of `count` changes.
 I want to pause here, though.
 
 You'll notice that we're talking about how a user would interact with the
-component, and not technical, Angular-specific concepts.
+component and not technical, Angular-specific concepts.
 
 You can do a well-written, comprehensive test for our Stepper component by
 approaching this test as a user would.
