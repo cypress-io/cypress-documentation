@@ -17,10 +17,7 @@ Here is an example of defaulting `autoSpyOutputs` for every mounted component:
 declare global {
   namespace Cypress {
     interface Chainable {
-      mount<T>(
-        component: Type<T> | string,
-        config?: MountConfig<T>
-      ): Chainable<MountResponse<T>>
+      mount: typeof mount
     }
   }
 }
