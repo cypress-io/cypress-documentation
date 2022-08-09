@@ -42,8 +42,6 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/cypress-io/cypress-docs/tree/master/',
           routeBasePath: '/',
           lastVersion: 'current',
@@ -69,17 +67,6 @@ const config = {
 
   plugins: [
     './plugins/fav-icon',
-    // async function myPlugin(context, options) {
-    //   return {
-    //     name: "docusaurus-tailwindcss",
-    //     configurePostCss(postcssOptions) {
-    //       // Appends TailwindCSS and AutoPrefixer.
-    //       postcssOptions.plugins.push(require("tailwindcss"));
-    //       postcssOptions.plugins.push(require("autoprefixer"));
-    //       return postcssOptions;
-    //     },
-    //   };
-    // },
   ],
 
   themeConfig:
@@ -135,7 +122,7 @@ const config = {
             href: 'https://github.com/cypress-io/cypress-docs',
             position: 'right',
             className: 'github-logo',
-            'aria-label': 'GitHub repository',
+            'aria-label': 'Cypress GitHub repository',
           },
           {
             href: 'https://twitter.com/Cypress_io',
@@ -157,7 +144,7 @@ const config = {
           '🚀 Looking to move to Cypress v10? Check out the <a target="_blank" rel="noopener noreferrer" href="/guides/references/migration-guide">migration guide!</a>',
         backgroundColor: '#fff3b9',
         textColor: '#091E42',
-        isCloseable: false,
+        // isCloseable: false,
       },
       footer: {
         style: 'dark',
