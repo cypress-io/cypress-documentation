@@ -81,11 +81,11 @@ foster an ecosystem that thrives on open source. Every line of test code is an
 investment in **your codebase**, it will never be coupled to us as a paid
 service or company. Tests will be able to run and work independently, _always_.
 
-We believe testing needs a lot of ❤️ and we are here to
-build a tool, a service, and a community that everyone can learn and benefit
-from. We're solving the hardest pain points shared by every developer working on
-the web. We believe in this mission and hope that you will join us to make
-Cypress a lasting ecosystem that makes everyone happy.
+We believe testing needs a lot of ❤️ and we are here to build a tool, a service,
+and a community that everyone can learn and benefit from. We're solving the
+hardest pain points shared by every developer working on the web. We believe in
+this mission and hope that you will join us to make Cypress a lasting ecosystem
+that makes everyone happy.
 
 ## Features
 
@@ -168,14 +168,14 @@ runs in a browser. A typical E2E test visits the application in a browser and
 performs actions via the UI just like a real user would.
 
 ```js
-it("adds todos", () => {
-  cy.visit("https://todo.app.com");
+it('adds todos', () => {
+  cy.visit('https://todo.app.com')
   cy.get('[data-testid="new-todo"]')
-    .type("write code{enter}")
-    .type("write tests{enter}");
+    .type('write code{enter}')
+    .type('write tests{enter}')
   // confirm the application is showing two items
-  cy.get('[data-testid="todos"]').should("have.length", 2);
-});
+  cy.get('[data-testid="todos"]').should('have.length', 2)
+})
 ```
 
 ### Component
@@ -187,16 +187,16 @@ execute
 ```js
 import TodoList from './components/TodoList'
 
-it("contains the correct number of todos", () => {
+it('contains the correct number of todos', () => {
   const todos = [
-    { text: "Buy milk", id: 1 },
-    { text: "Learn Component Testing", id: 2 },
-  ];
+    { text: 'Buy milk', id: 1 },
+    { text: 'Learn Component Testing', id: 2 },
+  ]
 
   cy.mount(<TodoList todos={todos} />)
   // the component starts running like a mini web app
-  cy.get('[data-testid="todos"]').should("have.length", todos.length);
-});
+  cy.get('[data-testid="todos"]').should('have.length', todos.length)
+})
 ```
 
 ### API
@@ -204,20 +204,20 @@ it("contains the correct number of todos", () => {
 Cypress can perform arbitrary HTTP calls, thus you can use it for API testing.
 
 ```js
-it("adds a todo", () => {
+it('adds a todo', () => {
   cy.request({
-    url: "/todos",
-    method: "POST",
+    url: '/todos',
+    method: 'POST',
     body: {
-      title: "Write REST API",
+      title: 'Write REST API',
     },
   })
-    .its("body")
-    .should("deep.contain", {
-      title: "Write REST API",
+    .its('body')
+    .should('deep.contain', {
+      title: 'Write REST API',
       completed: false,
-    });
-});
+    })
+})
 ```
 
 ### Other
@@ -240,7 +240,11 @@ Cypress makes it quick and easy to start testing, and as you begin to test your
 app, **you'll often wonder if you're using best practices or scalable
 strategies**.
 
-To guide the way, the Cypress team has created the <Icon name="github" inline="true" contentType="rwa" />, a full stack example application that demonstrates testing with **Cypress in practical and realistic scenarios**.
+To guide the way, the Cypress team has created the
+
+<Icon name="github" inline="true" contentType="rwa" />, a full stack example
+application that demonstrates testing with **Cypress in practical and realistic
+scenarios**.
 
 The RWA achieves full [code-coverage](/guides/tooling/code-coverage) with
 end-to-end tests

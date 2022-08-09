@@ -103,7 +103,7 @@ is no reason for us to ever expose them.
 Most of the time this use case is needed when users click an `<a>` that opens a
 new tab. Users then want to switch to that tab to verify that the content
 loaded. But, you shouldn't need to do this. In fact we have
-[recipes of showing you how to test this without multiple tabs](/examples/examples/recipes#Testing-the-DOM).
+[recipes of showing you how to test this without multiple tabs](/examples/recipes#Testing-the-DOM).
 
 To take this a step further - we don't believe there is any use case for testing
 the browser's native behavior. You should ask yourself why you are testing that
@@ -302,8 +302,10 @@ the `http://localhost:3000` URL is considered to be a different origin from the
 
 The rules are:
 
-- ‼️ You **cannot** [visit](/api/commands/visit) two domains of different origin in the same test.
-- ✅ You **can** [visit](/api/commands/visit) two or more domains of different origin in **different** tests.
+- ‼️ You **cannot** [visit](/api/commands/visit) two domains of different origin
+  in the same test.
+- ✅ You **can** [visit](/api/commands/visit) two or more domains of different
+  origin in **different** tests.
 
 ```javascript
 it('navigates', () => {
@@ -351,4 +353,4 @@ We've written several other guides specifically about handling this situation.
 
 - [Best Practices: Visiting external sites](/guides/references/best-practices#Visiting-external-sites)
 - [Web Security: Common Workarounds](/guides/guides/web-security#Common-Workarounds)
-- [Recipes: Logging In - Single Sign On](/examples/examples/recipes#Logging-In)
+- [Recipes: Logging In - Single Sign On](/examples/recipes#Logging-In)

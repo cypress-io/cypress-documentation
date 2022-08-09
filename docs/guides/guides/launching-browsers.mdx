@@ -39,7 +39,10 @@ application using number of browsers including:
 Cypress automatically detects available browsers on your OS. You can switch the
 browser in the Cypress App by using the drop down near the top right corner:
 
-<DocsImage src="/img/guides/launching-browsers/v10/browser-list-dropdown.png" alt="Select a different browser"></DocsImage>
+<DocsImage
+  src="/img/guides/launching-browsers/v10/browser-list-dropdown.png"
+  alt="Select a different browser"
+></DocsImage>
 
 ### Browser versions supported
 
@@ -90,7 +93,7 @@ cypress run --browser chrome
 ```
 
 To use this command in CI, you need to install the browser you want - or use one
-of our [docker images](/examples/examples/docker).
+of our [docker images](/examples/docker).
 
 By default, we will launch Chrome in headlessly during `cypress run`. To run
 Chrome headed, you can pass the `--headed` argument to `cypress run`.
@@ -143,7 +146,7 @@ cypress run --browser firefox:nightly
 ```
 
 To use this command in CI, you need to install these other browsers - or use one
-of our [docker images](/examples/examples/docker).
+of our [docker images](/examples/docker).
 
 By default, we will launch Firefox headlessly during `cypress run`. To run
 Firefox headed, you can pass the `--headed` argument to `cypress run`.
@@ -258,7 +261,10 @@ return findBrowser().then((browser) => {
 Once selected, the Brave browser is detected using the same approach as any
 other browser of the `chromium` family.
 
-<DocsImage src="/img/guides/launching-browsers/v10/brave-running-tests.png" alt="Brave browser executing end-to-end tests"></DocsImage>
+<DocsImage
+  src="/img/guides/launching-browsers/v10/brave-running-tests.png"
+  alt="Brave browser executing end-to-end tests"
+></DocsImage>
 
 If you modify the list of browsers, you can see the
 [resolved configuration](/guides/references/configuration#Resolved-Configuration)
@@ -332,7 +338,10 @@ You can see all of the default chrome command line switches we send
 You might notice that if you already have the browser open you will see two of
 the same browser icons in your dock.
 
-<DocsImage src="/img/guides/launching-browsers/v10/multiple-chrome-icons.png" alt="Cypress icon with 2 Google Chrome icons"></DocsImage>
+<DocsImage
+  src="/img/guides/launching-browsers/v10/multiple-chrome-icons.png"
+  alt="Cypress icon with 2 Google Chrome icons"
+></DocsImage>
 
 We understand that when Cypress is running in its own profile it can be
 difficult to tell the difference between your normal browser and Cypress.
@@ -346,7 +355,10 @@ Additionally, in Chrome-based browsers, we've made the browser spawned by
 Cypress look different than regular sessions. You'll see a darker theme around
 the chrome of the browser. You'll always be able to visually distinguish these.
 
-<DocsImage src="/img/guides/launching-browsers/v10/cypress-browser-chrome.png" alt="Cypress Browser with darker chrome"></DocsImage>
+<DocsImage
+  src="/img/guides/launching-browsers/v10/cypress-browser-chrome.png"
+  alt="Cypress Browser with darker chrome"
+></DocsImage>
 
 ## Troubleshooting
 

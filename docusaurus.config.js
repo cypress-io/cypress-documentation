@@ -112,7 +112,7 @@ const config = {
             position: 'left',
           },
           {
-            to: '/examples/examples/recipes',
+            to: '/examples/recipes',
             label: 'Examples',
             position: 'left',
           },

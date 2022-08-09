@@ -157,7 +157,7 @@ const stub = cy.stub(obj, 'foo').log(false)
 
 :::info
 
-[Check out our example recipe testing spying, stubbing and time](/examples/examples/recipes#Stubbing-and-spying)
+[Check out our example recipe testing spying, stubbing and time](/examples/recipes#Stubbing-and-spying)
 
 :::
 
@@ -180,7 +180,10 @@ expect(withFoo).to.be.called // purposefully failing assertion
 
 You will see the following in the command log:
 
-<DocsImage src="/img/api/stub/stubs-with-aliases-and-error-in-command-log.png" alt="stubs with aliases" ></DocsImage>
+<DocsImage
+  src="/img/api/stub/stubs-with-aliases-and-error-in-command-log.png"
+  alt="stubs with aliases"
+></DocsImage>
 
 ## Notes
 
@@ -233,12 +236,18 @@ expect(stub).to.be.called
 
 The command above will display in the Command Log as:
 
-<DocsImage src="/img/api/stub/stub-in-command-log.png" alt="Command Log stub" ></DocsImage>
+<DocsImage
+  src="/img/api/stub/stub-in-command-log.png"
+  alt="Command Log stub"
+></DocsImage>
 
 When clicking on the `(stub-1)` event within the command log, the console
 outputs the following:
 
-<DocsImage src="/img/api/stub/inspect-the-stubbed-object-and-any-calls-or-arguments-made.png" alt="Console Log stub" ></DocsImage>
+<DocsImage
+  src="/img/api/stub/inspect-the-stubbed-object-and-any-calls-or-arguments-made.png"
+  alt="Console Log stub"
+></DocsImage>
 
 ## History
 
@@ -253,6 +262,6 @@ outputs the following:
 - [`cy.clock()`](/api/commands/clock)
 - [`cy.spy()`](/api/commands/spy)
 - [Guide: Stubs, Spies and Clocks](/guides/guides/stubs-spies-and-clocks)
-- [Recipe: Stubbing, Spying](/examples/examples/recipes#Stubbing-and-spying)
-- [Recipe: Unit Test - Stubbing Dependencies](/examples/examples/recipes)
+- [Recipe: Stubbing, Spying](/examples/recipes#Stubbing-and-spying)
+- [Recipe: Unit Test - Stubbing Dependencies](/examples/recipes)
 - [Stub navigator API in end-to-end tests](https://glebbahmutov.com/blog/stub-navigator-api/)

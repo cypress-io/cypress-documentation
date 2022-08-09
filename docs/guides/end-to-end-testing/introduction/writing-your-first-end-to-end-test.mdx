@@ -70,11 +70,11 @@ Open up your favorite IDE and replace the contents of your spec with the code
 below.
 
 ```js
-describe("My First Test", () => {
-  it("Does not do much!", () => {
-    expect(true).to.equal(true);
-  });
-});
+describe('My First Test', () => {
+  it('Does not do much!', () => {
+    expect(true).to.equal(true)
+  })
+})
 ```
 
 Once you save this change you should see the browser reload.
@@ -102,11 +102,11 @@ the internet - but it can also work just fine without that.
 Now let's write our first failing test.
 
 ```js
-describe("My First Test", () => {
-  it("Does not do much!", () => {
-    expect(true).to.equal(false);
-  });
-});
+describe('My First Test', () => {
+  it('Does not do much!', () => {
+    expect(true).to.equal(false)
+  })
+})
 ```
 
 Once you save again, you'll see Cypress display the failing test in red since
@@ -185,19 +185,19 @@ commands:
 ### <Icon name="globe" /> Step 1: Visit a page
 
 First, let's visit a web page. We will visit our
-[Kitchen Sink](/examples/examples/applications#Kitchen-Sink) application in this
-example so that you can try Cypress out without needing to worry about finding a
-page to test.
+[Kitchen Sink](/examples/applications#Kitchen-Sink) application in this example
+so that you can try Cypress out without needing to worry about finding a page to
+test.
 
 We can pass the URL we want to visit to [`cy.visit()`](/api/commands/visit).
 Let's replace our previous test with the one below that actually visits a page:
 
 ```js
-describe("My First Test", () => {
-  it("Visits the Kitchen Sink", () => {
-    cy.visit("https://example.cypress.io");
-  });
-});
+describe('My First Test', () => {
+  it('Visits the Kitchen Sink', () => {
+    cy.visit('https://example.cypress.io')
+  })
+})
 ```
 
 Save the file and switch back over to the Cypress App. You might notice a few
@@ -253,13 +253,13 @@ To find this element by its contents, we'll use
 Let's add it to our test and see what happens:
 
 ```js
-describe("My First Test", () => {
+describe('My First Test', () => {
   it('finds the content "type"', () => {
-    cy.visit("https://example.cypress.io");
+    cy.visit('https://example.cypress.io')
 
-    cy.contains("type");
-  });
-});
+    cy.contains('type')
+  })
+})
 ```
 
 Our test should now display `CONTAINS` in the
@@ -319,13 +319,13 @@ Ok, now we want to click on the link we found. How do we do that? Add a
 so:
 
 ```js
-describe("My First Test", () => {
+describe('My First Test', () => {
   it('clicks the link "type"', () => {
-    cy.visit("https://example.cypress.io");
+    cy.visit('https://example.cypress.io')
 
-    cy.contains("type").click();
-  });
-});
+    cy.contains('type').click()
+  })
+})
 ```
 
 You can almost read it like a little story! Cypress calls this "chaining" and we
@@ -355,17 +355,17 @@ looking up the URL and chaining an assertion to it with
 Here's what that looks like:
 
 ```js
-describe("My First Test", () => {
+describe('My First Test', () => {
   it('clicking "type" navigates to a new url', () => {
-    cy.visit("https://example.cypress.io");
+    cy.visit('https://example.cypress.io')
 
-    cy.contains("type").click();
+    cy.contains('type').click()
 
     // Should be on a new URL which
     // includes '/commands/actions'
-    cy.url().should("include", "/commands/actions");
-  });
-});
+    cy.url().should('include', '/commands/actions')
+  })
+})
 ```
 
 #### Adding more commands and assertions
@@ -383,15 +383,15 @@ into the selected input. Finally, we can verify that the value of the input
 reflects the text that was typed with another [.should()](/api/commands/should).
 
 ```js
-describe("My First Test", () => {
-  it("Gets, types and asserts", () => {
-    cy.visit("https://example.cypress.io");
+describe('My First Test', () => {
+  it('Gets, types and asserts', () => {
+    cy.visit('https://example.cypress.io')
 
-    cy.contains("type").click();
+    cy.contains('type').click()
 
     // Should be on a new URL which
     // includes '/commands/actions'
-    cy.url().should("include", "/commands/actions");
+    cy.url().should('include', '/commands/actions')
 
     // Get an input, type into it and verify
     // that the value has been updated
@@ -436,9 +436,11 @@ Or in the _Given_, _When_, _Then_ syntax:
 
 1. _**Given** a user visits `https://example.cypress.io`_
 2. _**When** they click the link labeled `type`_
-3. _And they type "fake@email.com" into the `[data-testid="action-email"]` input_
+3. _And they type "fake@email.com" into the `[data-testid="action-email"]`
+   input_
 4. _**Then** the URL should include `/commands/actions`_
-5. _And the `[data-testid="action-email"]` input has "fake@email.com" as its value_
+5. _And the `[data-testid="action-email"]` input has "fake@email.com" as its
+   value_
 
 :::
 
@@ -491,7 +493,8 @@ These various timeouts are defined in the
 - Set up
   [intelligent code completion](/guides/tooling/IDE-integration#Intelligent-Code-Completion)
   for Cypress commands and assertions.
-- Check out the <Icon name="github" inline="true" contentType="rwa" /> for practical demonstrations of Cypress testing practices, configuration, and
+- Check out the <Icon name="github" inline="true" contentType="rwa" /> for
+  practical demonstrations of Cypress testing practices, configuration, and
   strategies in a real-world project.
 - Search Cypress's documentation to quickly find what you need.
 
