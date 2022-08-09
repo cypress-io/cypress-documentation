@@ -1,6 +1,11 @@
 {
   "redirects": [
     {
+      "source": "/",
+      "destination": "/guides/overview/why-cypress",
+      "permanent": true
+    },
+    {
       "source": "/examples/examples/recipes",
       "destination": "/examples/recipes",
       "permanent": true
