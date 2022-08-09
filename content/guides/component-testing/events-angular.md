@@ -112,29 +112,13 @@ Let's set up the spies and bind them to the component:
 ```ts
 it('clicking + fires a change event with the incremented value', () => {
   // Arrange
-  cy.mount(StepperComponent, {
-    componentProperties: {
-      change: {
-        emit: cy.spy().as('changeSpy'),
-      } as any,
-    },
-  })
-})
-```
-
-</code-block>
-<code-block label="stepper.component.cy.ts (with Template)">
-
-```ts
-it('clicking + fires a change event with the incremented value', () => {
-  // Arrange
   cy.mount('<app-stepper (change)="change.emit($event)"></app-stepper>', {
-    declarations: [StepperComponent],
     componentProperties: {
       change: {
         emit: cy.spy().as('changeSpy'),
-      } as any,
+      },
     },
+    declarations: [StepperComponent],
   })
 })
 ```
@@ -158,34 +142,16 @@ Next, we **Act** by firing a click event for the increment button.
 ```ts
 it('clicking + fires a change event with the incremented value', () => {
   // Arrange
-  cy.mount(StepperComponent, {
-    componentProperties: {
-      change: {
-        emit: cy.spy().as('changeSpy'),
-      } as any,
-    },
-  })
-  // Act
-  cy.get('incrementSelector').click()
-})
-```
-
-</code-block>
-<code-block label="stepper.component.cy.ts (with Template)">
-
-```ts
-it('clicking + fires a change event with the incremented value', () => {
-  // Arrange
   cy.mount('<app-stepper (change)="change.emit($event)"></app-stepper>', {
-    declarations: [StepperComponent],
     componentProperties: {
       change: {
         emit: cy.spy().as('changeSpy'),
-      } as any,
+      },
     },
+    declarations: [StepperComponent],
   })
   // Act
-  cy.get('incrementSelector').click()
+  cy.get(incrementSelector).click()
 })
 ```
 
@@ -203,37 +169,18 @@ value.
 ```ts
 it('clicking + fires a change event with the incremented value', () => {
   // Arrange
-  cy.mount(StepperComponent, {
+  cy.mount('<app-stepper (change)="change.emit($event)"></app-stepper>', {
     componentProperties: {
       change: {
         emit: cy.spy().as('changeSpy'),
-      } as any,
+      },
     },
+    declarations: [StepperComponent],
   })
   // Act
-  cy.get('incrementSelector').click()
+  cy.get(incrementSelector).click()
   // Assert
-  cy.get('@onChangeSpy').should('have.been.calledWith', 1)
-})
-```
-
-</code-block>
-<code-block label="stepper.component.cy.ts (with Template)">
-
-```ts
-it('clicking + fires a change event with the incremented value', () => {
-  // Arrange
-  cy.mount('<app-stepper (change)="change.emit($event)"></app-stepper', {
-    componentProperties: {
-      change: {
-        emit: cy.spy().as('changeSpy'),
-      } as any,
-    },
-  })
-  // Act
-  cy.get('incrementSelector').click()
-  // Assert
-  cy.get('@onChangeSpy').should('have.been.calledWith', 1)
+  cy.get('@changeSpy').should('have.been.calledWith', 1)
 })
 ```
 
@@ -250,56 +197,34 @@ end-to-end tests because setup and visiting pages are expensive. Longer tests
 are not necessarily a problem for component tests because they are comparatively
 quick.
 
-## Using Cypress Promise API
+## Accessing the Component Instance
 
-You can also use `.then()` which enables us to work with the subject that was
-yielded from the `cy.mount()` command. In this case, mount yields an object of
-`fixture`, and the `componentInstance` We can then use the `componentInstance`
-to create our `cy.spy()`
+There might be times when you might want to access the component instance
+directly in your tests. To do so, use `.then()`, which enables us to work with
+the subject that was yielded from the `cy.mount()` command. In this case, mount
+yields an object that contains the rendered component and the fixture.
 
-This means that you are able to get to the resulting `response` returned from
-the `mount` command and use `response.component` in order to gain access to the
-properties of our component under test.
-
-Notice that we're using the `'should'` function signature in order to take
-advantage of Cypress's [retryability](/guides/guides/test-retries). If we
-chained using `cy.then` instead of `cy.should`, we may run into the kinds of
-issues you have other framework tests where you have to use `await` frequently
-in order to make sure the DOM has updated or any reactive events have fired.
+In the below example, we use the component to spy directly on the `change` event
+emitter.
 
 <code-group>
-<code-block label="counter.component.cy.ts" active>
+<code-block label="stepper.component.cy.ts" active>
 
 ```ts
 it('clicking + fires a change event with the incremented value', () => {
-  cy.mount(StepperComponent, {
-    componentProperties: {
-      count: 100,
-    },
-  }).should(({ component }) => {
-    cy.spy(component.change, 'emit').as('onChangeSpy')
-    cy.get(incrementSelector).click()
-    cy.get('@onChangeSpy').should('have.been.calledWith', 101)
+  cy.mount(
+    '<app-stepper count="100" (change)="change.emit($event)"></app-stepper>',
+    {
+      componentProperties: { change: new EventEmitter() },
+      declarations: [StepperComponent],
+    }
+  ).then((wrapper) => {
+    console.log({ wrapper })
+    cy.spy(wrapper.component.change, 'emit').as('changeSpy')
+    return cy.wrap(wrapper).as('angular')
   })
-})
-```
-
-</code-block>
-<code-block label="counter.component.cy.ts (with Template)">
-
-```ts
-it('clicking + fires a change event with the incremented value', () => {
-  cy.mount('<app-counter (change)="change.emit($event)"></app-counter>', {
-    declarations: [StepperComponent],
-    componentProperties: {
-      count: 100,
-      change: new EventEmitter(),
-    },
-  }).should(({ component }) => {
-    cy.spy(component.change, 'emit').as('onChangeSpy')
-    cy.get(incrementSelector).click()
-    cy.get('@onChangeSpy').should('have.been.calledWith', 101)
-  })
+  cy.get(incrementSelector).click()
+  cy.get('@changeSpy').should('have.been.calledWith', 101)
 })
 ```
 
@@ -308,31 +233,12 @@ it('clicking + fires a change event with the incremented value', () => {
 
 ## Using createOutputSpy()
 
-We also created a helpful utility function called `createOutputSpy()` which can
-be used to automatically create an `EventEmitter` and setup the `spy` on it's
-`.emit()` method. It can be used like the following:
+To make spying on event emitters easier, there is a utility function called
+`createOutputSpy()` which can be used to automatically create an `EventEmitter`
+and setup the spy on it's `.emit()` method. It can be used like the following:
 
 <code-group>
 <code-block label="stepper.component.cy.ts" active>
-
-```ts
-import { createOutputSpy } from 'cypress/angular'
-
-it('clicking + fires a change event with the incremented value', () => {
-  // Arrange
-  cy.mount(StepperComponent, {
-    componentProperties: {
-      count: 100,
-      change: createOutputSpy<boolean>('changeSpy'),
-    },
-  })
-  cy.get(incrementSelector).click()
-  cy.get('@changeSpy').should('have.been.calledWith', 101)
-})
-```
-
-</code-block>
-<code-block label="stepper.component.cy.ts (with Template)">
 
 ```ts
 import { createOutputSpy } from 'cypress/angular'
@@ -355,20 +261,18 @@ it('clicking + fires a change event with the incremented value', () => {
 
 ## Using autoSpyOutputs
 
-In most cases, you will find yourself repeatedly creating a `cy.spy()` for each
-of your component `@Output()`(s). Because of this, we created an easy mechanism
-to handle this for you. This feature can be turned on by passing the
-`autoSpyOutputs` flag into your `MountConfig`. After your component has been
-mounted you can then access each of the generated spies using the `@Output()`
-property name + `Spy`. So our `change` property can be accessed via its alias of
-`cy.get('@changeSpy')`
+You might find yourself repeatedly creating a `cy.spy()` for each of your
+component outputs. Because of this, we created an easy mechanism to handle this
+for you. This feature can be turned on by passing the `autoSpyOutputs` flag into
+`MountConfig`. After the component has been mounted you can then access each of
+the generated spies using the `@Output()` property name + `Spy`. So our `change`
+property can be accessed via its alias of `cy.get('@changeSpy')`
 
 <code-group>
 <code-block label="stepper.component.cy.ts" active>
 
 ```ts
 it('clicking + fires a change event with the incremented value', () => {
-  // Arrange
   cy.mount(StepperComponent, {
     autoSpyOutputs: true,
     componentProperties: {
@@ -381,25 +285,14 @@ it('clicking + fires a change event with the incremented value', () => {
 ```
 
 </code-block>
-<code-block label="stepper.component.cy.ts (with Template)">
-
-```ts
-it('clicking + fires a change event with the incremented value', () => {
-  // Arrange
-  cy.mount('<app-stepper (change)="change.emit($event)"></app-stepper>', {
-    autoSpyOutputs: true,
-    declarations: [StepperComponent],
-    componentProperties: {
-      change: new EventEmitter(),
-    },
-  })
-  cy.get(incrementSelector).click()
-  cy.get('@changeSpy').should('have.been.called')
-})
-```
-
-</code-block>
 </code-group>
+
+<Alert type="warning">
+
+The `autoSpyOutput` flag only works when passing in a component to the mount
+function. It currently does not work with the template syntax.
+
+</Alert>
 
 ## Learn More
 

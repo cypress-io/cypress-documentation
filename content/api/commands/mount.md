@@ -130,20 +130,12 @@ example as a starting point for customizing your own command:
 <template #react>
 
 ```ts
-import { MountOptions, MountReturn } from 'cypress/react'
+import { mount } from 'cypress/react'
 
 declare global {
   namespace Cypress {
     interface Chainable {
-      /**
-       * Mounts a React node
-       * @param component React Node to mount
-       * @param options Additional options to pass into mount
-       */
-      mount(
-        component: React.ReactNode,
-        options?: MountOptions
-      ): Cypress.Chainable<MountReturn>
+      mount: typeof mount
     }
   }
 }
@@ -161,12 +153,7 @@ type OptionsParam = MountParams[1]
 declare global {
   namespace Cypress {
     interface Chainable {
-      /**
-       * Helper mount function for Vue Components
-       * @param component Vue Component or JSX Element to mount
-       * @param options Options passed to Vue Test Utils
-       */
-      mount(component: any, options?: OptionsParam): Chainable<any>
+      mount: typeof mount
     }
   }
 }
@@ -200,6 +187,7 @@ include the `cypress.d.ts` file in all your `tsconfig.json` files like so:
 ## Additional Mount Command Examples
 
 Visit the guides for scenarios in
-[React](/guides/component-testing/custom-mount-react) and
-[Vue](/guides/component-testing/custom-mount-vue) for customizing a mount
-command.
+[React](/guides/component-testing/custom-mount-react),
+[Vue](/guides/component-testing/custom-mount-vue), and
+[Angular](/guides/component-testing/custom-mount-angular) for customizing a
+mount command.

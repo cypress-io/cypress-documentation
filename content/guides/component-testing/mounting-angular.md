@@ -44,10 +44,14 @@ Cypress.Commands.add('mount', mount)
 This allows you to use `cy.mount()` in any component test without having to
 import the framework-specific mount command.
 
+You can customize `cy.mount()` to fit your needs. For instance, if you are using
+providers, declarations, or modules your Angular app, you can configure them
+here. For more info, see the
+[Customizing cy.mount() guide for Angular](/guides/component-testing/custom-mount-angular).
+
 ### Your First Component Test
 
-Now that you have a component and know how to mount it let's write our first
-test.
+Now that you have a component let's write a spec that mounts the component.
 
 To get started, create a spec file in the same directory as the
 `stepper.component.ts` component and name it **stepper.component.cy.ts**. Then
@@ -111,12 +115,42 @@ NgModule provides a _compilation context_ for it's components. In order to
 `MountConfig<T>`, which is an interface that extends
 [TestModuleMetadata](https://angular.io/api/core/testing/TestModuleMetadata).
 You will find mounting your components with Cypress will feel very ergonomically
-angular.
+Angular.
 
 ### Optional Template Support
 
-The mount command supports for Component Class syntax, but it can also be used
-with angular's template syntax _ie:_ `<app-button></app-button>`
+The mount command has support for Component Class syntax as well as Angular's
+template syntax. Generally, we find the template syntax easier to work with and
+recommend it for most cases.
+
+For example, we could mount the stepper component from above using the template
+syntax like so:
+
+```ts
+import { StepperComponent } from './stepper.component'
+
+describe('StepperComponent', () => {
+  it('mounts', () => {
+    cy.mount(`<app-stepper></app-stepper>`, {
+      declarations: [StepperComponent],
+    })
+  })
+})
+```
+
+Using the template syntax allows us to write specs in a more succinct way and
+feels more natural in Angular. The rest of this guide will use template syntax
+when mounting Angular components.
+
+<Alert type="info">
+
+When using template syntax, components will need to be passed in the config's
+declarations as shown above. This can be set up globally in a custom
+`cy.mount()` command to avoid having to do it in each test. See the
+[custom mount commands guide](/guides/component-testing/custom-mount-angular)
+for more info.
+
+</Alert>
 
 ## Next Steps
 

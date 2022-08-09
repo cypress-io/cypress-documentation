@@ -554,7 +554,7 @@ export default defineConfig({
 </template>
 </cypress-config-file>
 
-### Sample Angular Apps
+#### Sample Angular Apps
 
 - [Angular 14](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/angular)
 

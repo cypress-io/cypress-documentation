@@ -3,7 +3,7 @@ title: Testing Angular Components with Slots
 ---
 
 Content projection is a pattern in which you insert, or **project**, the content
-you want to use inside another component. In angular there are three types
+you want to use inside another component. In Angular there are three types
 content projection, `single-slot`, `multi-slot`, and `conditional`.
 
 Like props and events, slots are part of the component's public API.
@@ -13,67 +13,43 @@ Like props and events, slots are part of the component's public API.
 The most basic form of content projection is known as **single-slot content
 projection**. This refers to creating a component into which you can project one
 component using `<ng-content></ng-content>`. You can learn more about
-Single-slot content projection at
+single-slot content projection at
 [https://angular.io/guide/content-projection#single-slot](https://angular.io/guide/content-projection#single-slot)
 
 Below is a simple ButtonComponent that is using **single-slot content
 projection**.
 
+<code-group>
 <code-block label="button.component.ts" active>
 
 ```ts
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
-    selector: 'app-button',
-    template: `
-        <button>
-            <ng-content></ng-content>
-        </button>
-    `
+  selector: 'app-button',
+  template: `
+    <button>
+      <ng-content></ng-content>
+    </button>
+  `,
 })
-export class ButtonComponent {...}
+export class ButtonComponent {}
 ```
 
 </code-block>
+</code-group>
 
-Now we create a **WrapperComponent** in our spec so we use to simulate passing
-in content to the `ButtonComponent` using content projection or we can mount the
-`ButtonComponent` directly using the mount template syntax.
+Now we pass in the content to the `ButtonComponent` using content projection:
 
 <code-group>
 <code-block label="button.component.cy.ts" active>
-
-```ts
-import { Component } from '@angular/core'
-import { ButtonComponent } from './button.component'
-
-// We create this WrapperComponent to validate
-// content projection in our tests
-@Component({
-  template: `<app-button>Click Me</app-button>`,
-})
-class WrapperComponent {}
-
-describe('ButtonComponent', () => {
-  it('can project content using a Wrapper component', () => {
-    cy.mount(WrapperComponent, {
-      declarations: [ButtonComponent],
-    })
-    cy.get('button').contains('Click Me')
-  })
-})
-```
-
-</code-block>
-<code-block label="button.component.cy.ts (with Template)">
 
 ```ts
 import { ButtonComponent } from './button.component'
 
 describe('ButtonComponent', () => {
   it('can project content using a ButtonComponent template', () => {
-    cy.mount('app-button>Click Me</app-button>', {
+    cy.mount('<app-button>Click Me</app-button>', {
       declarations: [ButtonComponent],
     })
     cy.get('button').contains('Click Me')
@@ -122,33 +98,29 @@ export class CardComponent {}
 ```
 
 </code-block>
+</code-group>
 
-<code-block label="card.component.cy.ts">
+<code-group>
+<code-block label="card.component.cy.ts" active>
 
 ```ts
-import { Component } from '@angular/core'
-import { ButtonComponent } from '../button/button.component'
 import { CardComponent } from './card.component'
 
-@Component({
-  template: `
+describe('CardComponent', () => {
+  it('can project content', () => {
+    cy.mount(
+      `
     <app-card>
       <h1 cardHeader>My Title</h1>
       <p>My text goes here...</p>
-      <app-button>Save</app-button>
     </app-card>
   `,
-})
-class WrapperComponent {}
-
-describe('CardComponent', () => {
-  it('can project content using a WrapperComponent', () => {
-    cy.mount(WrapperComponent, {
-      declarations: [CardComponent, ButtonComponent],
-    })
+      {
+        declarations: [CardComponent],
+      }
+    )
     cy.get('h1').contains('My Title')
     cy.get('p').contains('My text goes here...')
-    cy.get('button').contains('Save')
   })
 })
 ```

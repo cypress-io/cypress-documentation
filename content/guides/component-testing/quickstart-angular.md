@@ -27,13 +27,21 @@ npm install -g @angular/cli
 ng new my-awesome-app
 ```
 
-3. Add Cypress
+Select all the default options when prompted.
+
+3. Go into the directory:
+
+```bash
+cd my-awesome-app
+```
+
+4. Add Cypress
 
 ```bash
 npm install cypress -D
 ```
 
-4. Open it and follow the Launchpad's prompts!
+5. Open Cypress and follow the Launchpad's prompts!
 
 ```bash
 npx cypress open
@@ -88,16 +96,25 @@ buttons.
 If your component uses providers, modules, declarations, requests, or other
 environmental setups, you will need additional work to get your component
 mounting. This is covered in a
-[later section](/guides/component-testing/mounting-angular#ConfiguringYourComponent).
+[later section](/guides/component-testing/custom-mount-angular).
 
 </alert>
 
-Add the Stepper component to your project:
+Add a Stepper component to your project by first using the Angular CLI to create
+a new component:
+
+```bash
+ng generate component stepper
+```
+
+Next, update the generated **stepper.component.ts** file with the following:
 
 <code-group>
 <code-block label="stepper.component.ts" active>
 
 ```ts
+import { Component, Input } from '@angular/core'
+
 @Component({
   selector: 'app-stepper',
   template: `<div>

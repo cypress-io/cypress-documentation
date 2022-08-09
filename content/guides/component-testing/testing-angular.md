@@ -32,42 +32,17 @@ const decrementSelector = '[aria-label=decrement]'
 
 it('stepper should default to 0', () => {
   // Arrange
-  cy.mount(StepperComponent)
-  // Assert
-  cy.get(counterSelector).should('have.text', '0')
-})
-
-it('supports an "Input()" count that sets the value', () => {
-  // Arrange
-  cy.mount(StepperComponent, {
-    componentProperties: { count: 100 },
+  cy.mount('<app-stepper></app-stepper>', {
+    declarations: [StepperComponent],
   })
   // Assert
-  cy.get(counterSelector).should('have.text', '100')
-})
-```
-
-</code-block>
-<code-block label="stepper.component.cy.ts (with Template)">
-
-```ts
-// Set up some constants for the selectors
-const counterSelector = '[data-cy=counter]'
-const incrementSelector = '[aria-label=increment]'
-const decrementSelector = '[aria-label=decrement]'
-
-it('stepper should default to 0', () => {
-  // Arrange
-  cy.mount('<app-counter></app-counter>')
-  // Assert
   cy.get(counterSelector).should('have.text', '0')
 })
 
 it('supports an "Input()" count that sets the value', () => {
   // Arrange
-  cy.mount('<app-counter [count]="100"></app-counter>', {
+  cy.mount('<app-stepper [count]="100"></app-stepper>', {
     declarations: [StepperComponent],
-    componentProperties: { count: 100 },
   })
   // Assert
   cy.get(counterSelector).should('have.text', '100')
@@ -109,31 +84,8 @@ Now, let's test the Stepper component! Add the following tests:
 ```ts
 it('when the increment button is pressed, the counter is incremented', () => {
   // Arrange
-  cy.mount(StepperComponent)
-  // Act
-  cy.get(incrementSelector).click()
-  // Assert
-  cy.get(counterSelector).should('have.text', '1')
-})
-
-it('when the decrement button is pressed, the counter is decremented', () => {
-  // Arrange
-  cy.mount(StepperComponent)
-  // Act
-  cy.get(decrementSelector).click()
-  // Assert
-  cy.get(counterSelector).should('have.text', '-1')
-})
-```
-
-</code-block>
-<code-block label="stepper.component.cy.ts (with Template)">
-
-```ts
-it('when the increment button is pressed, the counter is incremented', () => {
-  // Arrange
-  cy.mount('<app-counter></app-counter>', {
-    declarations: [CounterComponent],
+  cy.mount('<app-stepper></app-stepper>', {
+    declarations: [StepperComponent],
   })
   // Act
   cy.get(incrementSelector).click()
@@ -143,8 +95,8 @@ it('when the increment button is pressed, the counter is incremented', () => {
 
 it('when the decrement button is pressed, the counter is decremented', () => {
   // Arrange
-  cy.mount('<app-counter></app-counter>', {
-    declarations: [CounterComponent],
+  cy.mount('<app-stepper></app-stepper>', {
+    declarations: [StepperComponent],
   })
   // Act
   cy.get(decrementSelector).click()
@@ -167,26 +119,8 @@ it('when the decrement button is pressed, the counter is decremented', () => {
 
 ```ts
 it('when clicking increment and decrement buttons, the counter is changed as expected', () => {
-  cy.mount(StepperComponent, {
-    componentProperties: { count: 100 },
-  })
-  cy.get(counterSelector).should('have.text', '100')
-  cy.get(incrementSelector).click()
-  cy.get(counterSelector).should('have.text', '101')
-  cy.get(decrementSelector).click().click()
-  cy.get(counterSelector).should('have.text', '99')
-})
-```
-
-</code-block>
-
-<code-block label="stepper.component.cy.ts (with Template)">
-
-```ts
-it('when clicking increment and decrement buttons, the counter is changed as expected', () => {
-  cy.mount('<app-counter [count]="100"></app-counter>', {
+  cy.mount('<app-stepper [count]="100"></app-stepper>', {
     declarations: [StepperComponent],
-    componentProperties: { count: 100 },
   })
   cy.get(counterSelector).should('have.text', '100')
   cy.get(incrementSelector).click()
@@ -206,7 +140,7 @@ guide goes deeper into how to write tests with Cypress.
 
 ## What's Next?
 
-We're going to emit an Event from our Stepper component and learn how to test
+We're going to emit an event from our Stepper component and learn how to test
 that it was called.
 
 <NavGuide prev="/guides/component-testing/mounting-angular" next="/guides/component-testing/events-angular" />
