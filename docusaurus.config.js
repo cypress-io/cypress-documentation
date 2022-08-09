@@ -1,7 +1,7 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/dracula')
+const lightCodeTheme = require('prism-react-renderer/themes/vsDark')
 const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 const fs = require('fs')
 const {
@@ -42,8 +42,6 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/cypress-io/cypress-docs/tree/master/',
           routeBasePath: '/',
           lastVersion: 'current',
@@ -69,17 +67,6 @@ const config = {
 
   plugins: [
     './plugins/fav-icon',
-    // async function myPlugin(context, options) {
-    //   return {
-    //     name: "docusaurus-tailwindcss",
-    //     configurePostCss(postcssOptions) {
-    //       // Appends TailwindCSS and AutoPrefixer.
-    //       postcssOptions.plugins.push(require("tailwindcss"));
-    //       postcssOptions.plugins.push(require("autoprefixer"));
-    //       return postcssOptions;
-    //     },
-    //   };
-    // },
   ],
 
   themeConfig:
@@ -135,17 +122,40 @@ const config = {
             href: 'https://github.com/cypress-io/cypress-docs',
             position: 'right',
             className: 'github-logo',
-            'aria-label': 'GitHub repository',
+            'aria-label': 'Cypress GitHub repository',
+          },
+          {
+            href: 'https://twitter.com/Cypress_io',
+            position: 'right',
+            className: 'twitter-logo',
+            'aria-label': 'Cypress Twitter',
+          },
+          {
+            href: 'https://discord.com/invite/cMjUZg7',
+            position: 'right',
+            className: 'discord-logo',
+            'aria-label': 'Cypress Discord',
           },
         ],
       },
-
+      // optional, can be commented out
+      announcementBar: {
+        content:
+          '🚀 Looking to move to Cypress v10? Check out the <a target="_blank" rel="noopener noreferrer" href="/guides/references/migration-guide">migration guide!</a>',
+        backgroundColor: '#fff3b9',
+        textColor: '#091E42',
+        // isCloseable: false,
+      },
       footer: {
         style: 'dark',
         links: [
           {
             title: 'Learn',
             items: [
+              {
+                label: 'Real World App',
+                href: 'https://github.com/cypress-io/cypress-realworld-app',
+              },
               {
                 label: 'Real World Testing',
                 href: 'https://learn.cypress.io',
@@ -163,6 +173,18 @@ const config = {
                 label: 'GitHub Discussions',
                 href: 'https://github.com/cypress-io/cypress/discussions',
               },
+              // {
+              //   label: 'Cypress Blog',
+              //   href: 'https://www.cypress.io/blog',
+              // },
+              // {
+              //   label: 'Cypress Ambassadors',
+              //   href: 'https://www.cypress.io/ambassadors',
+              // },
+              // {
+              //   label: 'Cypress Stack Overflow',
+              //   href: 'https://stackoverflow.com/questions/tagged/cypress',
+              // },
               {
                 label: 'Discord',
                 href: 'https://discord.gg/cMjUZg7',
@@ -171,6 +193,23 @@ const config = {
                 label: 'Twitter',
                 href: 'https://twitter.com/Cypress_io',
               },
+            ],
+          },
+          {
+            title: 'Products',
+            items: [
+              {
+                label: 'Cypress App',
+                href: 'https://www.cypress.io/features',
+              },
+              {
+                label: 'Cypress Dashboard',
+                href: 'https://www.cypress.io/dashboard',
+              },
+              {
+                label: 'Cypress Migrator',
+                href: 'https://migrator.cypress.io',
+              }
             ],
           },
           {
