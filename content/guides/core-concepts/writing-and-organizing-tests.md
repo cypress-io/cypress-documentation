@@ -554,17 +554,19 @@ state **before** tests run.
 
 </Alert>
 
-Test isolation is the practice of resetting application state _before_ each test.
+Test isolation is the practice of resetting application state _before_ each
+test.
 
 Cleaning up state ensures that the operation of one test does not affect another
-test later on. The goal for each test should be to reliably pass whether
-run in isolation or consecutively with other tests. Having tests that depend on the state of an earlier test can potentially cause nondeterministic test failures.
+test later on. The goal for each test should be to reliably pass whether run in
+isolation or consecutively with other tests. Having tests that depend on the
+state of an earlier test can potentially cause nondeterministic test failures.
 
-Cypress supports two modes of test isolation, `default` and `strict`.
+Cypress supports two modes of test isolation, `lax` and `strict`.
 
-#### Default Mode
+#### Lax Mode
 
-When in `default` mode, Cypress handles resetting the state for:
+When in `lax` mode, Cypress handles resetting the state for:
 
 - [aliases](/api/commands/as)
 - [cookies](/api/commands/clearcookies)
@@ -592,10 +594,15 @@ when using the `experimentalSessionAndOrigin` experiment.
 </Alert>
 
 When in `strict` mode, Cypress handles resetting the state for everything
-outlined above for `default` mode, in addition to clearing the page by visiting
-`about:blank` before each test. This clears the current application state by
-forcing the tester to re-build the application's state for the test to ensure
-the test can reliably pass when ran standalone or in a randomized order.
+outlined above for `lax` mode, in addition to clearing the page by visiting
+`about:blank` before each test. This clears the dom's state and non-persistent
+browser state. This forces you to re-visit your application and performing the
+serious of interactions needed to build the dom state and browser state for the
+tests so it can reliably pass when ran standalone or in a randomized order.
+
+The test isolation mode is a global configuration and can be override at the
+describe level with the
+[`testIsolation`](./guides/references/configuration#global).
 
 ### Test Configuration
 
