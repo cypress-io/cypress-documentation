@@ -32,21 +32,21 @@ Enabling this flag does the following:
 - It overrides the
   [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
   [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
-- Cross-domain navigations will no longer fail immediately, but instead, time
-  out based on [`pageLoadTimeout`](/guides/references/configuration#Timeouts).
+- Cross-origin navigation will no longer fail immediately, but instead, time out
+  based on [`pageLoadTimeout`](/guides/references/configuration#Timeouts).
 - Tests will no longer wait on page loads before moving on to the next test.
 
 Because the page is cleared at the beginning of each test,
-[`cy.mount()`](/api/commands/mount) or [`cy.visit()`](/api/commands/visit) must
-be explicitly called at the beginning of each test.
+[`cy.visit()`](/api/commands/visit) must be explicitly called at the beginning
+of each test.
 
 :::
 
 ## Syntax
 
 ```javascript
-cy.session(id, setup);
-cy.session(id, setup, options);
+cy.session(id, setup)
+cy.session(id, setup, options)
 ```
 
 ### Usage
@@ -55,26 +55,25 @@ cy.session(id, setup, options);
 
 ```javascript
 // Caching session when logging in via API
-// Used in both E2E and Component Testing
-cy.session([username, password], () => {
+cy.session(username, () => {
   cy.request({
-    method: "POST",
-    url: "/login",
+    method: 'POST',
+    url: '/login',
     body: { username, password },
   }).then(({ body }) => {
-    window.localStorage.setItem("authToken", body.token);
-  });
-});
+    window.localStorage.setItem('authToken', body.token)
+  })
+})
 
 // Caching session when logging in via page visit
 // Used in E2E Testing
 cy.session(name, () => {
-  cy.visit("/login");
-  cy.get("[data-test=name]").type(name);
-  cy.get("[data-test=password]").type("s3cr3t");
-  cy.get("form").contains("Log In").click();
-  cy.url().should("contain", "/login-successful");
-});
+  cy.visit('/login')
+  cy.get('[data-test=name]').type(name)
+  cy.get('[data-test=password]').type('s3cr3t')
+  cy.get('form').contains('Log In').click()
+  cy.url().should('contain', '/login-successful')
+})
 ```
 
 **<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
@@ -82,19 +81,19 @@ cy.session(name, () => {
 ```javascript
 // visiting before calling cy.session() is redundant, it needs to
 // be done inside the setup function
-cy.visit("/login");
+cy.visit('/login')
 cy.session(name, () => {
   // need to call cy.visit() here because the page is blank when
   // the setup function runs
-  cy.get("[data-test=name]").type(name);
-  cy.get("[data-test=password]").type("s3cr3t");
-  cy.get("form").contains("Log In").click();
+  cy.get('[data-test=name]').type(name)
+  cy.get('[data-test=password]').type('s3cr3t')
+  cy.get('form').contains('Log In').click()
   // should assert that login was successful here to guarantee the
   // login process completes before it is cached
-});
+})
 // should have asserted this inside the cy.session() setup
 // function because the page is blank here
-cy.url().should("contain", "/login-successful");
+cy.url().should('contain', '/login-successful')
 ```
 
 ### Arguments
@@ -156,55 +155,55 @@ command with a call to `cy.session()`.
 **Before**
 
 ```javascript
-Cypress.Commands.add("login", (username, password) => {
+Cypress.Commands.add('login', (username, password) => {
   cy.request({
-    method: "POST",
-    url: "/login",
+    method: 'POST',
+    url: '/login',
     body: { username, password },
   }).then(({ body }) => {
-    window.localStorage.setItem("authToken", body.token);
-  });
-});
+    window.localStorage.setItem('authToken', body.token)
+  })
+})
 ```
 
 **After**
 
 ```javascript
-Cypress.Commands.add("login", (username, password) => {
+Cypress.Commands.add('login', (username, password) => {
   cy.session([username, password], () => {
     cy.request({
-      method: "POST",
-      url: "/login",
+      method: 'POST',
+      url: '/login',
       body: { username, password },
     }).then(({ body }) => {
-      window.localStorage.setItem("authToken", body.token);
-    });
-  });
-});
+      window.localStorage.setItem('authToken', body.token)
+    })
+  })
+})
 ```
 
 **With session validation**
 
 ```javascript
-Cypress.Commands.add("login", (username, password) => {
+Cypress.Commands.add('login', (username, password) => {
   cy.session(
     [username, password],
     () => {
       cy.request({
-        method: "POST",
-        url: "/login",
+        method: 'POST',
+        url: '/login',
         body: { username, password },
       }).then(({ body }) => {
-        window.localStorage.setItem("authToken", body.token);
-      });
+        window.localStorage.setItem('authToken', body.token)
+      })
     },
     {
       validate() {
-        cy.request("/whoami").its("status").should("eq", 200);
+        cy.request('/whoami').its('status').should('eq', 200)
       },
     }
-  );
-});
+  )
+})
 ```
 
 ### Updating an existing login helper function
@@ -216,12 +215,12 @@ the function with a call to `cy.session()`.
 
 ```javascript
 const login = (name, password) => {
-  cy.visit("/login");
-  cy.get("[data-test=name]").type(name);
-  cy.get("[data-test=password]").type(password);
-  cy.get("#submit").click();
-  cy.url().should("contain", "/home");
-};
+  cy.visit('/login')
+  cy.get('[data-test=name]').type(name)
+  cy.get('[data-test=password]').type(password)
+  cy.get('#submit').click()
+  cy.url().should('contain', '/home')
+}
 ```
 
 **After**
@@ -229,13 +228,13 @@ const login = (name, password) => {
 ```javascript
 const login = (name, password) => {
   cy.session([name, password], () => {
-    cy.visit("/login");
-    cy.get("[data-test=name]").type(name);
-    cy.get("[data-test=password]").type(password);
-    cy.get("#submit").click();
-    cy.url().should("contain", "/home");
-  });
-};
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(name)
+    cy.get('[data-test=password]').type(password)
+    cy.get('#submit').click()
+    cy.url().should('contain', '/home')
+  })
+}
 ```
 
 **With session validation**
@@ -245,19 +244,19 @@ const login = (name, password) => {
   cy.session(
     [name, password],
     () => {
-      cy.visit("/login");
-      cy.get("[data-test=name]").type(name);
-      cy.get("[data-test=password]").type(password);
-      cy.get("#submit").click();
-      cy.url().should("contain", "/home");
+      cy.visit('/login')
+      cy.get('[data-test=name]').type(name)
+      cy.get('[data-test=password]').type(password)
+      cy.get('#submit').click()
+      cy.url().should('contain', '/home')
     },
     {
       validate() {
-        cy.visit("/account-details");
+        cy.visit('/account-details')
       },
     }
-  );
-};
+  )
+}
 ```
 
 ### Asserting the session inside setup
@@ -272,15 +271,15 @@ reduce the need to
 [conditionally cache sessions](#Conditionally-caching-a-session).
 
 ```javascript
-cy.session("user", () => {
-  cy.visit("/login");
-  cy.get("[data-test=name]").type(name);
-  cy.get("[data-test=password]").type("p4ssw0rd123");
-  cy.get("#login").click();
+cy.session('user', () => {
+  cy.visit('/login')
+  cy.get('[data-test=name]').type(name)
+  cy.get('[data-test=password]').type('p4ssw0rd123')
+  cy.get('#login').click()
   // Wait for the post-login redirect to ensure that the
   // session actually exists to be cached
-  cy.url().should("contain", "/login-successful");
-});
+  cy.url().should('contain', '/login-successful')
+})
 ```
 
 ### Conditionally caching a session
@@ -300,36 +299,36 @@ conditionally cache the session. However, wherever possible, it's better to
 [assert the session inside setup](#Asserting-the-session-inside-setup).
 
 ```javascript
-Cypress.Commands.add("login", (name, { cacheSession = true } = {}) => {
+Cypress.Commands.add('login', (name, { cacheSession = true } = {}) => {
   const login = () => {
-    cy.visit("/login");
-    cy.get("[data-test=name]").type(name);
-    cy.get("[data-test=password]").type("p4ssw0rd123");
-    cy.get("#login").click();
-  };
-  if (cacheSession) {
-    cy.session(name, login);
-  } else {
-    login();
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(name)
+    cy.get('[data-test=password]').type('p4ssw0rd123')
+    cy.get('#login').click()
   }
-});
+  if (cacheSession) {
+    cy.session(name, login)
+  } else {
+    login()
+  }
+})
 
 // Testing the login flow itself
-describe("login", () => {
-  it("should redirect to the correct page after logging in", () => {
-    cy.login("user", { cacheSession: false });
-    cy.url().should("contain", "/login-successful");
-  });
-});
+describe('login', () => {
+  it('should redirect to the correct page after logging in', () => {
+    cy.login('user', { cacheSession: false })
+    cy.url().should('contain', '/login-successful')
+  })
+})
 
 // Testing something that simply requires being logged in
-describe("account details", () => {
-  it("should have the correct document title", () => {
-    cy.login("user");
-    cy.visit("/account");
-    cy.title().should("eq", "User Account Details");
-  });
-});
+describe('account details', () => {
+  it('should have the correct document title', () => {
+    cy.login('user')
+    cy.visit('/account')
+    cy.title().should('eq', 'User Account Details')
+  })
+})
 ```
 
 ### Switching sessions inside tests
@@ -343,25 +342,25 @@ represent real-world scenarios and helps keep test run times short.
 const login = (name) => {
   cy.session(name, () => {
     cy.request({
-      method: "POST",
-      url: "/login",
-      body: { name, password: "s3cr3t" },
+      method: 'POST',
+      url: '/login',
+      body: { name, password: 's3cr3t' },
     }).then(({ body }) => {
-      window.localStorage.setItem("authToken", body.token);
-    });
-  });
-};
+      window.localStorage.setItem('authToken', body.token)
+    })
+  })
+}
 
-it("should transfer money between users", () => {
-  login("user");
-  cy.mount(<AccountDetails />);
-  cy.get("#amount").type("100.00");
-  cy.get("#send-money").click();
+it('should transfer money between users', () => {
+  login('user')
+  cy.visit('/transfer')
+  cy.get('#amount').type('100.00')
+  cy.get('#send-money').click()
 
-  login("other-user");
-  cy.mount(<AccountDetails />);
-  cy.get("#balance").should("eq", "100.00");
-});
+  login('other-user')
+  cy.visit('/account_balance')
+  cy.get('#balance').should('eq', '100.00')
+})
 ```
 
 ### Validating the session
@@ -403,20 +402,20 @@ If you want to change which session data is cached, you can modify cookies,
 `localStorage`, `sessionStorage` as-necessary in `setup`.
 
 ```javascript
-cy.session("user", () => {
-  cy.visit("/login");
-  cy.get("name").type("user");
-  cy.get("password").type("p4ssw0rd123");
-  cy.get("#submit").click();
-  cy.url().should("contain", "/home");
+cy.session('user', () => {
+  cy.visit('/login')
+  cy.get('name').type('user')
+  cy.get('password').type('p4ssw0rd123')
+  cy.get('#submit').click()
+  cy.url().should('contain', '/home')
   // Remove session data we don't want to cache
-  cy.clearCookie("authId");
+  cy.clearCookie('authId')
   cy.window().then((win) => {
-    win.localStorage.removeItem("authToken");
-  });
+    win.localStorage.removeItem('authToken')
+  })
   // Add session data we do want to cache
-  cy.setCookie("session_id", "189jd09sufh33aaiidhf99d09");
-});
+  cy.setCookie('session_id', '189jd09sufh33aaiidhf99d09')
+})
 ```
 
 ### Multiple login commands
@@ -436,120 +435,26 @@ be cached uniquely.
 
 ```javascript
 const loginByForm = (name, password) => {
-  cy.session(["loginByForm", name, password], () => {
-    cy.visit("/login");
-    cy.get("[data-test=name]").type(name);
-    cy.get("[data-test=password]").type(password);
-    cy.get("#submit").click();
-    cy.url().should("contain", "/home");
-  });
-};
+  cy.session(['loginByForm', name], () => {
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(name)
+    cy.get('[data-test=password]').type(password)
+    cy.get('#submit').click()
+    cy.url().should('contain', '/home')
+  })
+}
 
 const loginByApi = (name, password) => {
-  cy.session(["loginByApi", name, password], () => {
+  cy.session(['loginByApi', name], () => {
     cy.request({
-      method: "POST",
-      url: "/api/login",
+      method: 'POST',
+      url: '/api/login',
       body: { name, password },
     }).then(({ body }) => {
-      window.localStorage.setItem("authToken", body.token);
-    });
-  });
-};
-```
-
-### Where to call `cy.mount()` <ComponentOnlyBadge />
-
-If you call [`cy.mount()`](/api/commands/mount) immediately after `cy.session()`
-in your login function or custom command, it will always end up mounting the
-specified component.
-
-```javascript
-const login = (name) => {
-  cy.session(name, () => {
-    cy.request({
-      method: "POST",
-      url: "/login",
-      body: { name, password: "s3cr3t" },
-    }).then(({ body }) => {
-      window.localStorage.setItem("authToken", body.token);
-    });
-  });
-  cy.mount(<AccountDetails />);
-};
-
-beforeEach(() => {
-  login("user");
-});
-
-it("should test something in the AccountDetails component", () => {
-  // assertions
-});
-
-it("should test something else in the AccountDetails component", () => {
-  // assertions
-});
-```
-
-However, any time you want to test something in a different component, you will
-need to call `cy.mount()` at the beginning of that test, which will then be
-effectively calling `cy.mount()` twice in a row, which will result in slightly
-slower tests.
-
-```javascript
-// ...continued...
-
-it("should test something in the OtherDetails component", () => {
-  cy.mount(<OtherDetails />);
-  // assertions
-});
-```
-
-Tests will often be faster if you call `cy.mount()` only when necessary. This
-works especially well when
-[organizing tests into suites](/guides/core-concepts/writing-and-organizing-tests#Test-Structure)
-and calling `cy.mount()` after logging in inside a
-[`beforeEach`](/guides/core-concepts/writing-and-organizing-tests#Hooks) hook.
-
-```javascript
-const login = (name) => {
-  cy.session(name, () => {
-    cy.request({
-      method: "POST",
-      url: "/login",
-      body: { name, password: "s3cr3t" },
-    }).then(({ body }) => {
-      window.localStorage.setItem("authToken", body.token);
-    });
-  });
-  // no mount here
-};
-
-describe("home page tests", () => {
-  beforeEach(() => {
-    login("user");
-    cy.mount(<AccountDetails />);
-  });
-
-  it("should test something in the AccountDetails component", () => {
-    // assertions
-  });
-
-  it("should test something else in the AccountDetails component", () => {
-    // assertions
-  });
-});
-
-describe("other page tests", () => {
-  beforeEach(() => {
-    login("user");
-    cy.mount(<OtherDetails />);
-  });
-
-  it("should test something in the OtherDetails component", () => {
-    // assertions
-  });
-});
+      window.localStorage.setItem('authToken', body.token)
+    })
+  })
+}
 ```
 
 ### Where to call `cy.visit()` <E2EOnlyBadge />
@@ -561,26 +466,26 @@ a login function without any session caching.
 ```javascript
 const login = (name) => {
   cy.session(name, () => {
-    cy.visit("/login");
-    cy.get("[data-test=name]").type(name);
-    cy.get("[data-test=password]").type("s3cr3t");
-    cy.get("#submit").click();
-    cy.url().should("contain", "/home");
-  });
-  cy.visit("/home");
-};
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(name)
+    cy.get('[data-test=password]').type('s3cr3t')
+    cy.get('#submit').click()
+    cy.url().should('contain', '/home')
+  })
+  cy.visit('/home')
+}
 
 beforeEach(() => {
-  login("user");
-});
+  login('user')
+})
 
-it("should test something on the /home page", () => {
+it('should test something on the /home page', () => {
   // assertions
-});
+})
 
-it("should test something else on the /home page", () => {
+it('should test something else on the /home page', () => {
   // assertions
-});
+})
 ```
 
 However, any time you want to test something on a different page, you will need
@@ -591,10 +496,10 @@ slower tests.
 ```javascript
 // ...continued...
 
-it("should test something on the /other page", () => {
-  cy.visit("/other");
+it('should test something on the /other page', () => {
+  cy.visit('/other')
   // assertions
-});
+})
 ```
 
 Tests will often be faster if you call `cy.visit()` only when necessary. This
@@ -606,40 +511,40 @@ and calling `cy.visit()` after logging in inside a
 ```javascript
 const login = (name) => {
   cy.session(name, () => {
-    cy.visit("/login");
-    cy.get("[data-test=name]").type(name);
-    cy.get("[data-test=password]").type("s3cr3t");
-    cy.get("#submit").click();
-    cy.url().should("contain", "/home");
-  });
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(name)
+    cy.get('[data-test=password]').type('s3cr3t')
+    cy.get('#submit').click()
+    cy.url().should('contain', '/home')
+  })
   // no visit here
-};
+}
 
-describe("home page tests", () => {
+describe('home page tests', () => {
   beforeEach(() => {
-    login("user");
-    cy.visit("/home");
-  });
+    login('user')
+    cy.visit('/home')
+  })
 
-  it("should test something on the /home page", () => {
+  it('should test something on the /home page', () => {
     // assertions
-  });
+  })
 
-  it("should test something else on the /home page", () => {
+  it('should test something else on the /home page', () => {
     // assertions
-  });
-});
+  })
+})
 
-describe("other page tests", () => {
+describe('other page tests', () => {
   beforeEach(() => {
-    login("user");
-    cy.visit("/other");
-  });
+    login('user')
+    cy.visit('/other')
+  })
 
-  it("should test something on the /other page", () => {
+  it('should test something on the /other page', () => {
     // assertions
-  });
-});
+  })
+})
 ```
 
 ### Updating a login function that returns a value
@@ -651,37 +556,37 @@ to solve this by refactoring the login code to assert directly inside `setup`.
 **Before**
 
 ```javascript
-Cypress.Commands.add("loginByApi", (username, password) => {
-  return cy.request("POST", `/api/login`, {
+Cypress.Commands.add('loginByApi', (username, password) => {
+  return cy.request('POST', `/api/login`, {
     username,
     password,
-  });
-});
+  })
+})
 
-it("should return the correct value", () => {
-  cy.loginByApi("user", "s3cr3t").then((response) => {
-    expect(response.status).to.eq(200);
-  });
-});
+it('should return the correct value', () => {
+  cy.loginByApi('user', 's3cr3t').then((response) => {
+    expect(response.status).to.eq(200)
+  })
+})
 ```
 
 **After**
 
 ```javascript
-Cypress.Commands.add("loginByApi", (username, password) => {
-  cy.session([username, password], () => {
-    cy.request("POST", `/api/login`, {
+Cypress.Commands.add('loginByApi', (username, password) => {
+  cy.session(username, () => {
+    cy.request('POST', `/api/login`, {
       username,
       password,
     }).then((response) => {
-      expect(response.status).to.eq(200);
-    });
-  });
-});
+      expect(response.status).to.eq(200)
+    })
+  })
+})
 
-it("is a redundant test", () => {
+it('is a redundant test', () => {
   /* which you can now delete! */
-});
+})
 ```
 
 ### Cross-domain sessions <E2EOnlyBadge />
@@ -707,17 +612,17 @@ const login = (name) => {
   })
 }
 
-it('t1', ()=>{
+it('t1', () => {
   login('bob')
   // do things on example.com
 })
 
-it('t2', ()=>{
+it('t2', () => {
   cy.visit('anotherexample.com')
   // do things on anotherexample.com
 })
 
-it('t3', ()=>{
+it('t3', () => {
   login('bob')
   // do things on example.com
 })
@@ -733,16 +638,15 @@ The page is cleared and all active session data (cookies, `localStorage`, and
 being created or restored and allows you to switch sessions without first having
 to explicitly log out.
 
-|                      |              Current page cleared               |           Active session data cleared           |
-| -------------------- | :---------------------------------------------: | :---------------------------------------------: |
+|                      |            Current page cleared            |        Active session data cleared         |
+| -------------------- | :----------------------------------------: | :----------------------------------------: |
 | Before `setup`       | <Icon name="check-circle" color="green" /> | <Icon name="check-circle" color="green" /> |
-| Before `validate`    | <Icon name="check-circle" color="green" /> |                                                 |
-| After `cy.session()` | <Icon name="check-circle" color="green" /> |                                                 |
+| Before `validate`    | <Icon name="check-circle" color="green" /> |                                            |
+| After `cy.session()` | <Icon name="check-circle" color="green" /> |                                            |
 
 Because calling `cy.session()` clears the current page in addition to restoring
-cached session data, [`cy.mount()`](/api/commands/mount) or
-[`cy.visit()`](/api/commands/visit) must always be explicitly called afterwards
-to ensure a page is visited or a component is mounted.
+cached session data, [`cy.visit()`](/api/commands/visit) must always be
+explicitly called afterwards to ensure a page is visited.
 
 ### Session caching
 
@@ -751,8 +655,7 @@ file. You can't modify a stored session after it has been cached, but you can
 always create a new session with a different `id`.
 
 In order to reduce development time, when running the Cypress App in "open"
-mode, sessions will be cached _between spec file runs_ as long as the `setup`
-function hasn't changed.
+mode, sessions will be cached _for spec file reruns_.
 
 ### Explicitly clearing sessions
 
@@ -782,42 +685,44 @@ examples for more details.
 ### Choosing the correct id to cache a session
 
 In order for sessions to be cached uniquely, the [`id` argument](#Arguments)
-must be unique for each new session created.
+must be unique for each new session created. The `id` provided to `cy.session()`
+will display in the reporter, thus we do not recommend using sensitive data like
+passwords or tokens as unique identifiers.
 
 ```javascript
 // If your session setup code uses a string variable, pass in the
 // string as the id
 const login = (name) => {
   cy.session(name, () => {
-    loginWith(name);
-  });
-};
+    loginWith(name)
+  })
+}
 
 // If your session setup code uses a single object, pass in the
 // object as the id and it will be serialized into an identifier
 const login = (params = {}) => {
   cy.session(params, () => {
-    loginWith(params);
-  });
-};
+    loginWith(params)
+  })
+}
 
 // If your session setup code uses multiple variables, pass in an
 // array of those variables and it will be serialized into an
 // identifier
 const login = (name, email, params = {}) => {
   cy.session([name, email, params], () => {
-    loginWith(name, email, params);
-  });
-};
+    loginWith(name, email, params)
+  })
+}
 
 // If your session setup code uses external constants, they don't
 // need to be included in the id, since they will never change
-const API_KEY = "I_AM_AN_API_KEY";
+const API_KEY = 'I_AM_AN_API_KEY'
 const login = (name, email) => {
   cy.session([name, email], () => {
-    loginWith(name, email, API_KEY);
-  });
-};
+    loginWith(name, email, API_KEY)
+  })
+}
 ```
 
 **<Icon name="exclamation-triangle" color="red" /> Incorrect Usage**
@@ -829,20 +734,20 @@ users, but the `id` only included one of them (in this example, `name`):
 ```js
 const login = (name, token, password) => {
   cy.session(name, () => {
-    cy.visit("/login");
-    cy.get("[data-test=name]").type(name);
-    cy.get("[data-test=token]").type(token);
-    cy.get("[data-test=password]").type(password);
-    cy.get("#submit").click();
-  });
-};
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(name)
+    cy.get('[data-test=token]').type(token)
+    cy.get('[data-test=password]').type(password)
+    cy.get('#submit').click()
+  })
+}
 ```
 
 If you ran this, `user1` would be logged in with `token1` and `p4ssw0rd`, and a
 session would be created and cached using `"user1"` as the `id`.
 
 ```js
-login("user1", "token1", "p4ssw0rd");
+login('user1', 'token1', 'p4ssw0rd')
 ```
 
 Now let's say you wanted to try to log in the same user, but with a different
@@ -852,38 +757,40 @@ You run this, but because `cy.session()` is only being passed `name` as its
 `"user1"`.
 
 ```js
-login("user1", "different-token", "p4ssw0rd");
+login('user1', 'different-token', 'p4ssw0rd')
 ```
 
-In summary, you need to ensure that the `id` is created from all the parameters
-that are used inside the `setup` function that may change, otherwise `id` values
-may collide and create unexpected results.
+In summary, you need to ensure that the `id` is unique. Create it from all the
+parameters used inside the `setup` function that may change, otherwise `id`
+values may collide and create unexpected results.
 
 **<Icon name="check-circle" color="green" /> Correct Usage**
 
-In this example, setting the `id` to `[name, token, password]` guarantees that
-calling `login()` with different `name`, `token` and `password` values will
-create and cache unique sessions.
+In this example, setting the `id` to `[name, uniqueKey]` guarantees that calling
+`login()` with different `name`, `token` and `password` values will create and
+cache unique sessions.
 
 ```js
-const login = (name, token, password) => {
-  cy.session([name, token, password], () => {
-    cy.visit("/login");
-    cy.get("[data-test=name]").type(name);
-    cy.get("[data-test=token]").type(token);
-    cy.get("[data-test=password]").type(password);
-    cy.get("#submit").click();
-  });
-};
+const login = (name, token, password, uniqueKey) => {
+  cy.session([name, uniqueKey], () => {
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(name)
+    cy.get('[data-test=token]').type(token)
+    cy.get('[data-test=password]').type(password)
+    cy.get('#submit').click()
+  })
+}
 ```
+
+The [`uuid`](https://www.npmjs.com/package/uuid) npm package can be used to
+generate random unique ids if an arbitrary name-space does not meet your needs.
 
 ### Common Questions
 
 #### Why are all my Cypress commands failing after calling `cy.session()`?
 
-Ensure that you're calling [`cy.mount()`](/api/commands/mount) or
-[`cy.visit()`](/api/commands/visit) after calling `cy.session()`, otherwise your
-tests will be running on a blank page.
+Ensure that you're calling [`cy.visit()`](/api/commands/visit) after calling
+`cy.session()`, otherwise your tests will be running on a blank page.
 
 #### Why am I seeing `401` errors after calling `cy.session()`?
 
@@ -925,11 +832,7 @@ session `id` value:
   ></DocsImage>
 
 - A saved session was found, and used:
-
-  <DocsImage
-    src="/img/api/session/session-collapsed-saved.png"
-    alt="Saved session (collapsed)"
-  ></DocsImage>
+  <DocsImage src="/img/api/session/session-collapsed-restored.png" alt="Saved session (collapsed)"></DocsImage>
 
 - A saved session was found, but the `validate` function failed, so the session
   was recreated and saved:
@@ -972,5 +875,4 @@ data, including cookies, `localStorage` and `sessionStorage`.
 - [Authenticate faster in tests with the cy.session command](https://cypress.io/blog/2021/08/04/authenticate-faster-in-tests-cy-session-command/)
 - [Custom Commands](/api/cypress-api/custom-commands)
 - [`Cypress.session`](/api/cypress-api/session)
-- [`cy.mount()`](/api/commands/mount)
 - [`cy.visit()`](/api/commands/visit)
