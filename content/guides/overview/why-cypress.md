@@ -123,9 +123,8 @@ do that no other testing framework can:
   [parallelize](/guides/guides/parallelization) your test suite and
   [fail-fast](/guides/dashboard/smart-orchestration#Run-failed-specs-first) for
   tight feedback loops.
-- **Flake Detection:** Sometimes tests pass, sometimes they fail? Discover and
-  diagnose unreliable tests with the Dashboard's
-  [Flaky tests](/guides/dashboard/flaky-test-management) feature.
+- **Flake Detection:** Discover and diagnose unreliable tests with the
+  Dashboard's [Flaky test management](/guides/dashboard/flaky-test-management).
 
 ### <Icon name="cog"></Icon> Setting up tests
 
