@@ -19,7 +19,7 @@ title: Testing Your App
 
 <!-- textlint-enable -->
 
-## <Icon name="terminal"></Icon> Step 1: Start your server
+## <Icon name="terminal"></Icon> Step 1: Start your server.
 
 Assuming you've successfully
 [installed the Cypress App](/guides/getting-started/installing-cypress) and
