@@ -299,13 +299,14 @@ Then add the code below to the
 
 ```js
 // cypress/support/e2e.js
-import '@cypress/code-coverage/support'
+import codeCoverageTask from '@cypress/code-coverage/task';
 ```
 
 :::cypress-plugin-example
 
 ```js
-require('@cypress/code-coverage/task')(on, config)
+
+codeCoverageTask(on, config);
 // include any other plugin code...
 
 // It's IMPORTANT to return the config object
