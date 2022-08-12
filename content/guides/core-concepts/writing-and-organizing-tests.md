@@ -596,9 +596,8 @@ when using the `experimentalSessionAndOrigin` experiment.
 When in `strict` mode, Cypress handles resetting the state for everything
 outlined above for `legacy` mode, in addition to clearing the page by visiting
 `about:blank` before each test. This clears the dom's state and non-persistent
-browser state. This forces you to re-visit your application and performing the
-series of interactions needed to build the dom state and browser state for the
-tests so it can reliably pass when ran standalone or in a randomized order.
+browser state. This forces you to re-visit your application and perform the
+series of interactions needed to build the dom and browser state so the tests can reliably pass when run standalone or in a randomized order.
 
 The test isolation mode is a global configuration and can be overridden at the
 `describe` level with the
