@@ -22,6 +22,7 @@ Thanks for taking the time to contribute! :smile:
     - [Adding Pages](#adding-pages)
       - [A Worked Example](#a-worked-example)
     - [Deleting Pages](#deleting-pages)
+    - [Patches](#patches)
     - [Writing the Changelog](#writing-the-changelog)
       - [Categories](#categories)
   - [Committing Code](#committing-code)
