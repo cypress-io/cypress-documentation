@@ -600,9 +600,9 @@ browser state. This forces you to re-visit your application and performing the
 series of interactions needed to build the dom state and browser state for the
 tests so it can reliably pass when ran standalone or in a randomized order.
 
-The test isolation mode is a global configuration and can be override at the
-describe level with the
-[`testIsolation`](./guides/references/configuration#global).
+The test isolation mode is a global configuration and can be overridden at the
+`describe` level with the
+[`testIsolation`](./guides/references/configuration#global) option.
 
 ### Test Configuration
 
