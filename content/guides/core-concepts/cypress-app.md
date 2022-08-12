@@ -104,16 +104,16 @@ it can pass and fail across multiple retry attempts without any code changes.
 </Alert>
 
 Specs with flaky tests are flagged with an indicator beside the spec name. This
-allows you to focus your efforts on unreliable and problematic areas of your
-test suite.
+means you can easily discern which areas of your application might result in an
+unreliable user experience.
 
 The flake indicator will display if any tests in the given spec have been flaky
 in your latest runs (limited to 4). Hovering over the indicator will show a
 tooltip with the following analytics, based off the last 50 runs:
 
-- **Rate** (flaky runs divided by total runs)
-- **Severity** (flaky rate at a glance)
-- **Last flaky** (how many runs ago)
+- Rate (flaky runs divided by total runs)
+- Severity (flaky rate at a glance)
+- Last flaky (how many runs ago)
 
 Clicking on the flake indicator will take you to the spec’s
 [Flaky Test Analytics in the Dashboard](https://dashboard.cypress.io/projects/7s5okt/analytics/flaky-tests).
