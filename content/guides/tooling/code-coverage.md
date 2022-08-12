@@ -162,8 +162,7 @@ repository.
 Cypress does not instrument your code - you need to do it yourself. The golden
 standard for JavaScript code instrumentation is the battle-hardened
 [Istanbul](https://istanbul.js.org) and, luckily, it plays very nicely with the
-the Cypress App. You can instrument the code as a build step through one of two
-ways:
+Cypress. You can instrument the code as a build step through one of two ways:
 
 - Using the [nyc](https://github.com/istanbuljs/nyc) module - a command-line
   interface for the [Istanbul](https://istanbul.js.org) library
@@ -428,7 +427,7 @@ application the user is expected to use.
 
 We can write more E2E tests.
 
-<DocsImage src="/img/guides/code-coverage/more-tests.png" alt="Cypress App passed more tests" ></DocsImage>
+<DocsImage src="/img/guides/code-coverage/more-tests.png" alt="Cypress passed more tests" ></DocsImage>
 
 The produced HTML report shows 99% code coverage
 
@@ -469,8 +468,8 @@ reachable from the UI. Yet this switch case is definitely worth testing - at
 least to avoid accidentally changing its behavior during future refactoring.
 
 We can directly test this piece of code by importing the `getVisibleTodos`
-function from the Cypress spec file. In essense we are using the Cypress App as
-a unit testing tool (find more unit testing recipes
+function from the Cypress spec file. In essence we are using Cypress as a unit
+testing tool (find more unit testing recipes
 [here](https://github.com/cypress-io/cypress-example-recipes#unit-testing)).
 
 Here is our test to confirm that the error is thrown.

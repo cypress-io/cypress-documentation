@@ -52,7 +52,7 @@ If the `baseUrl` has not been set, you will need to specify a fully qualified
 URL or Cypress will attempt to act as your web server. See the
 [prefixes notes](#Prefixes) for more details.
 
-**Note:** visiting a new domain requires the Cypress App window to reload. You
+**Note:** visiting a new domain requires the Cypress window to reload. You
 cannot visit different super domains in a single test.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**

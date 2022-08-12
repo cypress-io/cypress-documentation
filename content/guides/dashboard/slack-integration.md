@@ -5,7 +5,7 @@ title: Slack Integration
 Slack Integration allows you to see your Cypress test results directly in your
 teams' Slack channels.
 
-<DocsImage src="/img/dashboard/cypress-slack-integration-channel-feed.png" alt="Cypress App notification feed in Slack channel" ></DocsImage>
+<DocsImage src="/img/dashboard/cypress-slack-integration-channel-feed.png" alt="Cypress notification feed in Slack channel" ></DocsImage>
 
 ## Install the Cypress Slack app
 
