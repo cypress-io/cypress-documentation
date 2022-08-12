@@ -365,6 +365,23 @@ To delete a page:
 - Build the documentation site locally so that you can visually inspect and make
   sure it was properly deleted.
 
+### Patches
+
+From time to time, we find we need to patch a library using the
+[patch-package](https://www.npmjs.com/package/patch-package) for various
+reasons. Each of the patches should be explained below for future understanding.
+
+#### @docusaurus/mdx-loader patch
+
+Docusaurus lower cases header anchor ids, and to maintain consistency with past
+docs implementations, we need to preserve the casing of our header ids. This
+patch passes in the `maintainCase` option as true to the github slugger to
+achieve this.
+
+We also opened an [issue](https://github.com/facebook/docusaurus/issues/7946) to
+add this as a feature to Docusaurus, so if this gets implemented this patch can
+go away.
+
 ### Writing the Changelog
 
 When adding to the Changelog, create a new file in
