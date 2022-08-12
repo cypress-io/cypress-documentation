@@ -562,11 +562,11 @@ test later on. The goal for each test should be to reliably pass whether run in
 isolation or consecutively with other tests. Having tests that depend on the
 state of an earlier test can potentially cause nondeterministic test failures.
 
-Cypress supports two modes of test isolation, `lax` and `strict`.
+Cypress supports two modes of test isolation, `legacy` and `strict`.
 
-#### Lax Mode
+#### Legacy Mode
 
-When in `lax` mode, Cypress handles resetting the state for:
+When in `legacy` mode, Cypress handles resetting the state for:
 
 - [aliases](/api/commands/as)
 - [cookies](/api/commands/clearcookies)
@@ -594,7 +594,7 @@ when using the `experimentalSessionAndOrigin` experiment.
 </Alert>
 
 When in `strict` mode, Cypress handles resetting the state for everything
-outlined above for `lax` mode, in addition to clearing the page by visiting
+outlined above for `legacy` mode, in addition to clearing the page by visiting
 `about:blank` before each test. This clears the dom's state and non-persistent
 browser state. This forces you to re-visit your application and performing the
 serious of interactions needed to build the dom state and browser state for the

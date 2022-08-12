@@ -76,7 +76,7 @@ default values.
 | `reporter`             | `spec`                            | The [reporter](/guides/tooling/reporters) used during `cypress run`.                                                                                                                         |
 | `reporterOptions`      | `null`                            | The [reporter options](/guides/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                           |
 | `retries`              | `{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. See [Test Retries](/guides/guides/test-retries) for more information. |
-| `testIsolation`        | `lax`                         | The [test isolation level](/guides/core-concepts/test-isolation) applied to ensure a clean slate between tests. |
+| `testIsolation`        | `legacy`                         | The [test isolation level](/guides/core-concepts/test-isolation) applied to ensure a clean slate between tests. |
 | `watchForFileChanges`  | `true`                            | Whether Cypress will watch and restart tests on test file changes.                                                                                                                           |
 
 ### Timeouts
