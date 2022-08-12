@@ -361,7 +361,7 @@ at run time.
 - `screenshotOnRunFailure`
 - `scrollBehavior`
 - `slowTestThreshold`
-- `testIsolation` - this option can only be override at the suite-specific
+- `testIsolation` - this option can only be overridden at the suite-specific
   override level
 - `viewportHeight`
 - `viewportWidth`
