@@ -586,7 +586,7 @@ When in `legacy` mode, Cypress handles resetting the state for:
 <strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
 Experimental</strong>
 
-Strict mode is currently experimental and can be enabled by setting
+`strict` mode is currently experimental and can be enabled by setting
 the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
 to `true` in the Cypress config. This is the default test isolation behavior
 when using the `experimentalSessionAndOrigin` experiment.
