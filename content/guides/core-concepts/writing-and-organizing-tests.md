@@ -597,7 +597,7 @@ When in `strict` mode, Cypress handles resetting the state for everything
 outlined above for `legacy` mode, in addition to clearing the page by visiting
 `about:blank` before each test. This clears the dom's state and non-persistent
 browser state. This forces you to re-visit your application and performing the
-serious of interactions needed to build the dom state and browser state for the
+series of interactions needed to build the dom state and browser state for the
 tests so it can reliably pass when ran standalone or in a randomized order.
 
 The test isolation mode is a global configuration and can be override at the
