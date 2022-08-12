@@ -1,0 +1,13 @@
+diff --git a/node_modules/@docusaurus/mdx-loader/lib/remark/headings/index.js b/node_modules/@docusaurus/mdx-loader/lib/remark/headings/index.js
+index 53ad336..83e5a1f 100644
+--- a/node_modules/@docusaurus/mdx-loader/lib/remark/headings/index.js
++++ b/node_modules/@docusaurus/mdx-loader/lib/remark/headings/index.js
+@@ -26,7 +26,7 @@ function plugin() {
+                 const heading = (0, mdast_util_to_string_1.default)(headingTextNodes.length > 0 ? headingTextNodes : headingNode);
+                 // Support explicit heading IDs
+                 const parsedHeading = (0, utils_1.parseMarkdownHeadingId)(heading);
+-                id = parsedHeading.id ?? slugs.slug(heading);
++                id = parsedHeading.id ?? slugs.slug(heading, { maintainCase: true });
+                 if (parsedHeading.id) {
+                     // When there's an id, it is always in the last child node
+                     // Sometimes heading is in multiple "parts" (** syntax creates a child

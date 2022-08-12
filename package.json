@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
+    "postinstall": "patch-package",
     "prestart": "node ./scripts/checkRemarkPluginsBuild.js",
     "start": "docusaurus start",
     "prebuild": "rm -rf dist && yarn build:plugins",
@@ -39,6 +40,7 @@
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^2.0.1",
     "@tsconfig/docusaurus": "^1.0.5",
+    "patch-package": "^6.4.7",
     "prettier": "^2.7.1",
     "typescript": "^4.6.4"
   },
