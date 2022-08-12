@@ -368,7 +368,7 @@ To delete a page:
 
 ### Patches
 
-From time to time, we find we need to patch a library using the
+From time to time, we find we need to patch a library using
 [patch-package](https://www.npmjs.com/package/patch-package) for various
 reasons. Each of the patches should be explained below for future understanding.
 
