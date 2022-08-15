@@ -79,6 +79,13 @@
           "link": "https://github.com/sod/cypress-esbuild-preprocessor",
           "keywords": ["esbuild"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-vite",
+          "description": "Cypress preproccessor for running specs using vite",
+          "link": "https://github.com/mammadataei/cypress-vite",
+          "keywords": ["vite"],
+          "badge": "community"
         }
       ]
     },
