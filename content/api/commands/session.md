@@ -652,14 +652,14 @@ Once created, a session for a given `id` is cached for the duration of the spec
 file. You can't modify a stored session after it has been cached, but you can
 always create a new session with a different `id`.
 
-In order to reduce development time, when running the Cypress App in "open"
-mode, sessions will be cached _for spec file reruns_.
+In order to reduce development time, when running Cypress in "open" mode,
+sessions will be cached _for spec file reruns_.
 
 ### Explicitly clearing sessions
 
-When running the Cypress App in "open" mode, you can explicitly clear all
-sessions and re-run the spec file by clicking the "Clear All Sessions" button in
-the [Instrument Panel](#The-Instrument-Panel).
+When running Cypress in "open" mode, you can explicitly clear all sessions and
+re-run the spec file by clicking the "Clear All Sessions" button in the
+[Instrument Panel](#The-Instrument-Panel).
 
 <DocsImage src="/img/api/session/sessions-panel.png" alt="Sessions Instrument Panel" ></DocsImage>
 

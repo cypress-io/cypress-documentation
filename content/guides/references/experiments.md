@@ -2,9 +2,9 @@
 title: Experiments
 ---
 
-If you'd like to try out what we're working on in the
-[Cypress App](/guides/core-concepts/cypress-app), you can enable beta features
-for your project by turning on the experimental features you'd like to try.
+If you'd like to try out what we're working on in Cypress, you can enable beta
+features for your project by turning on the experimental features you'd like to
+try.
 
 <Alert type="warning">
 
