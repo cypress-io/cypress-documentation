@@ -545,6 +545,65 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 })
 ```
 
+### Test Isolation
+
+<Alert type="success">
+
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Clean up
+state **before** tests run.
+
+</Alert>
+
+Test isolation is the practice of resetting application state _before_ each
+test.
+
+Cleaning up state ensures that the operation of one test does not affect another
+test later on. The goal for each test should be to reliably pass whether run in
+isolation or consecutively with other tests. Having tests that depend on the
+state of an earlier test can potentially cause nondeterministic test failures.
+
+Cypress supports two modes of test isolation, `legacy` and `strict`.
+
+#### Legacy Mode
+
+When in `legacy` mode, Cypress handles resetting the state for:
+
+- [aliases](/api/commands/as)
+- [cookies](/api/commands/clearcookies)
+- [clock](/api/commands/clock)
+- [intercepts](/api/commands/intercepts)
+- [localStorage](/api/commands/clearlocalstorage)
+- [routes](/api/commands/route)
+- [sessions](/api/commands/session)
+- [spies](/api/commands/spy)
+- [stubs](/api/commands/stub)
+- [viewport](/api/commands/viewport)
+
+#### Strict Mode
+
+<Alert type="warning">
+
+<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
+Experimental</strong>
+
+`strict` mode is currently experimental and can be enabled by setting
+the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
+to `true` in the Cypress config. This is the default test isolation behavior
+when using the `experimentalSessionAndOrigin` experiment.
+
+</Alert>
+
+When in `strict` mode, Cypress handles resetting the state for everything
+outlined above for `legacy` mode, in addition to clearing the page by visiting
+`about:blank` before each test. This clears the dom's state and non-persistent
+browser state. This forces you to re-visit your application and perform the
+series of interactions needed to build the dom and browser state so the tests
+can reliably pass when run standalone or in a randomized order.
+
+The test isolation mode is a global configuration and can be overridden at the
+`describe` level with the
+[`testIsolation`](./guides/references/configuration#global) option.
+
 ### Test Configuration
 
 It is possible to apply
