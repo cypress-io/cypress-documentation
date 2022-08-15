@@ -59,7 +59,7 @@ The Launchpad's setup wizard will do the following things:
 <!-- TODO: pic of all the files we make, collapsed -->
 
 Once you click through all of the prompts, you'll be asked to choose a browser
-and launch the Cypress App.
+to continue.
 
 <!-- TODO: start cypress, take a pic of Choose a Browser -->
 
