@@ -290,8 +290,8 @@ in an error when Cypress loads.
 
 ::testing-type-specific-option{option=supportFile}
 
-The Cypress App automatically creates an example support file for each
-configured testing type, which has several commented out examples.
+Cypress automatically creates an example support file for each configured
+testing type, which has several commented out examples.
 
 This file runs **before** every single spec file. We do this purely as a
 convenience mechanism so you don't have to import this file.
@@ -545,6 +545,65 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 })
 ```
 
+### Test Isolation
+
+<Alert type="success">
+
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Clean up
+state **before** tests run.
+
+</Alert>
+
+Test isolation is the practice of resetting application state _before_ each
+test.
+
+Cleaning up state ensures that the operation of one test does not affect another
+test later on. The goal for each test should be to reliably pass whether run in
+isolation or consecutively with other tests. Having tests that depend on the
+state of an earlier test can potentially cause nondeterministic test failures.
+
+Cypress supports two modes of test isolation, `legacy` and `strict`.
+
+#### Legacy Mode
+
+When in `legacy` mode, Cypress handles resetting the state for:
+
+- [aliases](/api/commands/as)
+- [cookies](/api/commands/clearcookies)
+- [clock](/api/commands/clock)
+- [intercepts](/api/commands/intercepts)
+- [localStorage](/api/commands/clearlocalstorage)
+- [routes](/api/commands/route)
+- [sessions](/api/commands/session)
+- [spies](/api/commands/spy)
+- [stubs](/api/commands/stub)
+- [viewport](/api/commands/viewport)
+
+#### Strict Mode
+
+<Alert type="warning">
+
+<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
+Experimental</strong>
+
+`strict` mode is currently experimental and can be enabled by setting
+the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
+to `true` in the Cypress config. This is the default test isolation behavior
+when using the `experimentalSessionAndOrigin` experiment.
+
+</Alert>
+
+When in `strict` mode, Cypress handles resetting the state for everything
+outlined above for `legacy` mode, in addition to clearing the page by visiting
+`about:blank` before each test. This clears the dom's state and non-persistent
+browser state. This forces you to re-visit your application and perform the
+series of interactions needed to build the dom and browser state so the tests
+can reliably pass when run standalone or in a randomized order.
+
+The test isolation mode is a global configuration and can be overridden at the
+`describe` level with the
+[`testIsolation`](./guides/references/configuration#global) option.
+
 ### Test Configuration
 
 It is possible to apply
@@ -729,7 +788,7 @@ After the Cypress spec completes every test has one of 4 statuses: **passed**,
 Passed tests have successfully completed all their commands without failing any
 assertions. The test screenshot below shows a passed test:
 
-<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-passing-test.png" alt="Cypress App with a single passed test"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-passing-test.png" alt="Cypress with a single passed test"></DocsImage>
 
 Note that a test can pass after several
 [test retries](/guides/guides/test-retries). In that case the Command Log shows
@@ -740,7 +799,7 @@ some failed attempts, but ultimately the entire test finishes successfully.
 Good news - the failed test has found a problem. Could be much worse - it could
 be a user hitting this bug!
 
-<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-failing-test.png" alt="Cypress App with a single failed test"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-failing-test.png" alt="Cypress with a single failed test"></DocsImage>
 
 After a test fails, the screenshots and videos can help find the problem so it
 can be fixed.
@@ -771,7 +830,7 @@ describe('TodoMVC', () => {
 All 3 tests above are marked _pending_ when Cypress finishes running the spec
 file.
 
-<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-pending-tests.png" alt="Cypress App with three pending test"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-pending-tests.png" alt="Cypress with three pending test"></DocsImage>
 
 So remember - if you (the test writer) knowingly skip a test using one of the
 above three ways, Cypress counts it as a _pending_ test.
@@ -806,7 +865,7 @@ describe('TodoMVC', () => {
 
 If the `beforeEach` hook completes and both tests finish, two tests are passing.
 
-<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-2-tests-passing.png" alt="Cypress App showing two passing tests"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-2-tests-passing.png" alt="Cypress showing two passing tests"></DocsImage>
 
 But what happens if a command inside the `beforeEach` hook fails? For example,
 let's pretend we want to visit a non-existent page `/does-not-exist` instead of
@@ -824,12 +883,12 @@ once, why would we execute it _again_ before the second test? It would just fail
 the same way! So Cypress _skips_ the remaining tests in that block, because they
 would also fail due to the `beforeEach` hook failure.
 
-<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-failed-and-skipped-tests.png" alt="Cypress App showing one failed and one skipped test"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-failed-and-skipped-tests.png" alt="Cypress showing one failed and one skipped test"></DocsImage>
 
 If we collapse the test commands, we can see the empty box marking the skipped
 test "adds 2 todos".
 
-<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-skipped-test.png" alt="Cypress App showing one skipped test"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/v10/todo-mvc-skipped-test.png" alt="Cypress showing one skipped test"></DocsImage>
 
 The tests that were meant to be executed but were skipped due to some run-time
 problem are marked "skipped" by Cypress.
