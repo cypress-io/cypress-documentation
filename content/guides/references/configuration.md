@@ -16,8 +16,8 @@ For more info on upgrading configuration to Cypress 10, see the
 
 ## Configuration File
 
-Launching the Cypress App for the first time, you will be guided through a
-wizard that will create a Cypress configuration file for you. This file will be
+Launching Cypress for the first time, you will be guided through a wizard that
+will create a Cypress configuration file for you. This file will be
 `cypress.config.js` for JavaScript apps or `cypress.config.ts` for
 [TypeScript](/guides/tooling/typescript-support) apps. This file is used to
 store any configuration specific to Cypress.
@@ -184,7 +184,7 @@ The Node version is used in Cypress to:
   [supportFile](#Folders-Files).
 - Execute code in the config file.
 
-<DocsImage src="/img/guides/configuration/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Cypress App"></DocsImage>
+<DocsImage src="/img/guides/configuration/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Cypress"></DocsImage>
 
 ### Experiments
 
@@ -633,7 +633,7 @@ We've disabled running GC during
 interact with the browser.
 
 Because GC adds additional time to the overall run, we've added the amount of
-time this routine has taken to the bottom of the Command Log in the Cypress App.
+time this routine has taken to the bottom of the Cypress Command Log.
 
 <DocsImage src="/img/guides/configuration/firefox-gc-interval-in-command-log.jpg" alt="GC duration shown"></DocsImage>
 
@@ -839,7 +839,7 @@ You can also find a few tips on setting the `baseUrl` in this
 When using the `--spec <path or mask>` argument, make it relative to the
 project's folder. If the specs are still missing, run Cypress with
 [DEBUG logs](/guides/references/troubleshooting#Print-DEBUG-logs) with the
-following setting to see how the Cypress App is looking for spec files:
+following setting to see how Cypress is looking for spec files:
 
 ```shell
 DEBUG=cypress:cli,cypress:server:specs
