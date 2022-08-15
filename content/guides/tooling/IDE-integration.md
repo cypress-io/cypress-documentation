@@ -30,10 +30,10 @@ file, _but it is not guaranteed to work with every application_.
 
 After setting your file opener preference, any files will automatically open in
 your selected application without prompting you to choose. If you want to change
-your selection, you can do so in the **Settings** tab of the Cypress App by
-clicking under **File Opener Preference**.
+your selection, you can do so in the **Settings** tab of Cypress by clicking
+under **File Opener Preference**.
 
-<DocsImage src="/img/guides/IDE-integration/file-opener-preference-settings-tab.png" alt="screenshot of Cypress App settings tab with file opener preference panel"></DocsImage>
+<DocsImage src="/img/guides/IDE-integration/file-opener-preference-settings-tab.png" alt="screenshot of Cypress test-runner settings tab with file opener preference panel"></DocsImage>
 
 ## Extensions & Plugins
 
