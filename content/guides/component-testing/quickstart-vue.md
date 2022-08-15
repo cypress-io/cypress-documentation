@@ -26,7 +26,7 @@ you would like to install Cypress. You can do so now or in the next step.
 npm install cypress -D
 ```
 
-3. Open it and follow the Launchpad's prompts!
+3. Open Cypress and follow the Launchpad's prompts!
 
 ```bash
 npx cypress open
@@ -84,7 +84,7 @@ two buttons.
 
 If your component uses plugins, network requests, or other environmental setups,
 you will need additional work to get your component mounting. This is covered in
-a later section.
+a [later section](/guides/component-testing/custom-mount-vue).
 
 </alert>
 

@@ -76,6 +76,7 @@ default values.
 | `reporter`             | `spec`                            | The [reporter](/guides/tooling/reporters) used during `cypress run`.                                                                                                                         |
 | `reporterOptions`      | `null`                            | The [reporter options](/guides/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                           |
 | `retries`              | `{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. See [Test Retries](/guides/guides/test-retries) for more information. |
+| `testIsolation`        | `legacy`                         | The [test isolation level](/guides/core-concepts/test-isolation) applied to ensure a clean slate between tests. |
 | `watchForFileChanges`  | `true`                            | Whether Cypress will watch and restart tests on test file changes.                                                                                                                           |
 
 ### Timeouts
@@ -142,7 +143,6 @@ For more options regarding screenshots, view the
 | ----------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `chromeWebSecurity`     | `true`                               | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content. [Read more about Web Security](/guides/guides/web-security).                                                                                                                                                                                            |
 | `blockHosts`            | `null`                               | A String or Array of hosts that you wish to block traffic for. [Please read the notes for examples on using this.](#blockHosts)                                                                                                                                                                                                                                    |
-| `firefoxGcInterval`     | `{ "runMode": 1, "openMode": null }` | (Firefox 79 and below only) Controls whether Cypress forces Firefox to run garbage collection (GC) cleanup and how frequently. During [cypress run](/guides/guides/command-line#cypress-run), the default value is `1`. During [cypress open](/guides/guides/command-line#cypress-open), the default value is `null`. See full details [here](#firefoxGcInterval). |
 | `modifyObstructiveCode` | `true`                               | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. [Please read the notes for more information on this setting.](#modifyObstructiveCode)                                                                                                                                                                                   |
 | `userAgent`             | `null`                               | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See [User-Agent MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for example user agent values.              |
 
@@ -361,6 +361,8 @@ at run time.
 - `screenshotOnRunFailure`
 - `scrollBehavior`
 - `slowTestThreshold`
+- `testIsolation` - this option can only be overridden at the suite-specific
+  override level
 - `viewportHeight`
 - `viewportWidth`
 - `waitForAnimations`
