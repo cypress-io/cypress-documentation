@@ -617,6 +617,13 @@
           "link": "https://github.com/elaichenkov/cy-verify-downloads",
           "keywords": ["commands", "assertions", "wait", "verify", "download"],
           "badge": "community"
+        },
+        {
+          "name": "mocks-server-cypress-commands",
+          "description": "Custom commands allowing to change Mocks Server responses and settings",
+          "link": "https://www.mocks-server.org/docs/integrations/cypress",
+          "keywords": ["commands", "mock", "server"],
+          "badge": "community"
         }
       ]
     },
