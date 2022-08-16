@@ -294,6 +294,13 @@ function. It currently does not work with the template syntax.
 
 </Alert>
 
+<Alert type="warning">
+
+`autoSpyOutput` is an **experimental feature** and could be removed or changed
+in the future
+
+</Alert>
+
 ## Learn More
 
 Spying is a powerful technique for observing behavior in Cypress. Learn more
