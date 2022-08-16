@@ -76,7 +76,6 @@ default values.
 | `reporter`             | `spec`                            | The [reporter](/guides/tooling/reporters) used during `cypress run`.                                                                                                                         |
 | `reporterOptions`      | `null`                            | The [reporter options](/guides/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                           |
 | `retries`              | `{ "runMode": 0, "openMode": 0 }` | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. See [Test Retries](/guides/guides/test-retries) for more information. |
-| `testIsolation`        | `legacy`                         | The [test isolation level](/guides/core-concepts/test-isolation) applied to ensure a clean slate between tests. |
 | `watchForFileChanges`  | `true`                            | Whether Cypress will watch and restart tests on test file changes.                                                                                                                           |
 
 ### Timeouts
@@ -208,7 +207,9 @@ object:
 | `supportFile`        | `cypress/support/e2e.{js,jsx,ts,tsx}` | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                             |
 | `specPattern`        | `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` | A String or Array of glob patterns of the test files to load.                                                                                                                                         |
 | `excludeSpecPattern` | `*.hot-update.js`                     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludeSpecPattern)                         |
+| `experimentalSessionAndOrigin` | `false` | Enables cross-origin and improved session support, including the [`cy.origin()`](/api/commands/origin) and [`cy.session()`](/api/commands/session) commands. This enables `testIsolation=strict` by default. Only available in end-to-end testing. |    
 | `slowTestThreshold`  | `10000`                               | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                               |
+| `testIsolation`        | `legacy`                         | The [test isolation level](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation) applied to ensure a clean slate between tests. |
 
 :::cypress-config-example{noJson}
 
@@ -850,10 +851,10 @@ DEBUG=cypress:cli,cypress:server:specs
 
 | Version                                       | Changes                                                                               |
 | --------------------------------------------- | ------------------------------------------------------------------------------------- |
-| [10.6.0](/guides/references/changelog#10-0-0) | Added `component.experimentalSingleTabRunMode` option.                                |
+| [10.4.0](/guides/references/changelog#10-4-0) | Added `e2e.testIsolation` option.                                                     |
 | [10.0.0](/guides/references/changelog#10-0-0) | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files. |
 | [8.7.0](/guides/references/changelog#8-7-0)   | Added `slowTestThreshold` option.                                                     |
-| [8.0.0](/guides/references/changelog#8-0-0)   | Added `clientCertificates` option.                                                    |
+| [8.0.0](/guides/references/changelog#8-0-0)   | Added `clientCertificates` option.                                                   |
 | [7.0.0](/guides/references/changelog#7-0-0)   | Added `e2e` and `component` options.                                                  |
 | [7.0.0](/guides/references/changelog#7-0-0)   | Added `redirectionLimit` option.                                                      |
 | [6.1.0](/guides/references/changelog#6-1-0)   | Added `scrollBehavior` option.                                                        |
