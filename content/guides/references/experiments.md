@@ -34,7 +34,7 @@ configuration to Cypress.
 
 | Version                                       | Changes                                                                                                                      |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| [10.5.0](/guides/references/changelog#10-5-0) | Added support for `experimentalSingleTabRunMode`.                                                                            |
+| [10.6.0](/guides/references/changelog#10-6-0) | Added support for `experimentalSingleTabRunMode`.                                                                            |
 | [10.4.0](/guides/references/changelog#10-4-0) | Added support for `experimentalModifyObstructiveThirdPartyCode`.                                                             |
 | [9.6.0](/guides/references/changelog#9-6-0)   | Added support for `experimentalSessionAndOrigin` and removed `experimentalSessionSupport`.                                   |
 | [8.2.0](/guides/references/changelog#8-2-0)   | Added support for `experimentalSessionSupport`.                                                                              |
