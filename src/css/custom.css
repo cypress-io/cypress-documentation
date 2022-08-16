@@ -176,6 +176,7 @@ is swizzling better here? */
 div[class^=announcementBar] {
   font-size: 1rem;
   font-weight: 500;
+  border-bottom: none;
 }
 
 div.markdown {
