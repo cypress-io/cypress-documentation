@@ -11,7 +11,7 @@ title: Advanced Installation
 | `CYPRESS_CACHE_FOLDER`           | [Changes the Cypress binary cache location](#Binary-cache)                                               |
 | `CYPRESS_RUN_BINARY`             | [Location of Cypress binary at run-time](#Run-binary)                                                    |
 | `CYPRESS_VERIFY_TIMEOUT`         | Overrides the timeout duration for the `verify` command. The default value is 30000.                     |
-| `CYPRESS_DOWNLOAD_PATH_TEMPLATE` | Allows to specify custom download url. Replaces ${endpoint}, ${platform}, ${arch} with respective values |
+| `CYPRESS_DOWNLOAD_PATH_TEMPLATE` | Allows to specify custom download url. Replaces ${endpoint}, ${version}, ${platform}, ${arch} with respective values |
 | ~~CYPRESS_SKIP_BINARY_INSTALL~~  | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY=0` instead                              |
 | ~~CYPRESS_BINARY_VERSION~~       | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY` instead                                |
 
