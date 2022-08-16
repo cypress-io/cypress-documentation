@@ -854,7 +854,7 @@ DEBUG=cypress:cli,cypress:server:specs
 | [10.4.0](/guides/references/changelog#10-4-0) | Added `e2e.testIsolation` option.                                                     |
 | [10.0.0](/guides/references/changelog#10-0-0) | Reworked page to support new `cypress.config.js` and deprecated `cypress.json` files. |
 | [8.7.0](/guides/references/changelog#8-7-0)   | Added `slowTestThreshold` option.                                                     |
-| [8.0.0](/guides/references/changelog#8-0-0)   | Added `clientCertificates` option.                                                   |
+| [8.0.0](/guides/references/changelog#8-0-0)   | Added `clientCertificates` option.                                                    |
 | [7.0.0](/guides/references/changelog#7-0-0)   | Added `e2e` and `component` options.                                                  |
 | [7.0.0](/guides/references/changelog#7-0-0)   | Added `redirectionLimit` option.                                                      |
 | [6.1.0](/guides/references/changelog#6-1-0)   | Added `scrollBehavior` option.                                                        |
