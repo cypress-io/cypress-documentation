@@ -115,14 +115,15 @@ do that no other testing framework can:
   Say hello to fast, consistent and reliable tests that are flake-free.
 - **Screenshots and Videos:** View screenshots taken automatically on failure,
   or videos of your entire test suite when run from the CLI. Record to the
-  Dashboard to store them with your test results for easy online browsing.
+  Dashboard to store them with your test results for zero-configuration
+  debugging.
 - **Cross browser Testing:** Run tests within Firefox and Chrome-family browsers
   (including Edge and Electron) locally and
   [optimally in a Continuous Integration pipeline](/guides/guides/cross-browser-testing).
-- **Test Orchestration:** Once you're set up to record to the Dashboard, easily
+- **Smart Orchestration:** Once you're set up to record to the Dashboard, easily
   [parallelize](/guides/guides/parallelization) your test suite and
-  [fail-fast](/guides/dashboard/smart-orchestration#Run-failed-specs-first) for
-  tight feedback loops.
+  [rerun failed specs first](/guides/dashboard/smart-orchestration#Run-failed-specs-first)
+  for tight feedback loops.
 - **Flake Detection:** Discover and diagnose unreliable tests with the
   Dashboard's [Flaky test management](/guides/dashboard/flaky-test-management).
 
