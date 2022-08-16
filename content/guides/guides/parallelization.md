@@ -97,7 +97,7 @@ following process:
    considering the test run as fully complete. This is done to better support
    [grouping of runs](#Grouping-test-runs).
 
-In short: each Cypress App sends a list of the spec files to the Dashboard
+In short: each Cypress instance sends a list of the spec files to the Dashboard
 Service, and the service sends back one spec at a time to each application to
 run.
 
