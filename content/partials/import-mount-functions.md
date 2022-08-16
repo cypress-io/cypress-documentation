@@ -1,7 +1,7 @@
 Different frameworks render their components differently, so we provide
 framework-specific `mount()` functions, which can be imported like so:
 
-<code-group-react-vue>
+<code-group-react-vue-angular>
 <template #react-alert>
 <Alert type="info">
 
@@ -49,4 +49,27 @@ import { mount } from 'cypress/vue-2'
 ```
 
 </template>
-</code-group-react-vue>
+<template #angular-alert>
+<Alert type="info">
+
+<strong class="alert-header">A note for Angular users</strong>
+
+The `mount()` command exported from the
+[cypress/angular](https://github.com/cypress-io/cypress/tree/develop/npm/angular)
+library uses [Angular TestBed](https://angular.io/api/core/testing/TestBed)
+internally, but instead of mounting your components in a virtual browser in
+node, it mounts them in your actual browser. If you have any questions about
+mount options that aren't covered in this guide, be sure to check out the
+library
+[documentation](https://github.com/cypress-io/cypress/tree/develop/npm/angular#readme).
+
+</Alert>
+</template>
+<template #angular>
+
+```ts
+import { mount } from 'cypress/angular'
+```
+
+</template>
+</code-group-react-vue-angular>

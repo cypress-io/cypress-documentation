@@ -289,8 +289,8 @@ describe('User page', () => {
 ### Loaded just once
 
 Please keep in mind that fixture files are assumed to be unchanged during the
-test, and thus the Cypress App loads them just once. Even if you overwrite the
-fixture file itself, the already loaded fixture data remains the same.
+test, and thus Cypress loads them just once. Even if you overwrite the fixture
+file itself, the already loaded fixture data remains the same.
 
 If you wish to dynamically change the contents of a file during your tests,
 consider [`cy.readFile()`](/api/commands/readFile) instead.

@@ -239,8 +239,8 @@ setx CYPRESS_CRASH_REPORTS 0
 
 ## Install pre-release version
 
-If you would like to install a pre-release version of the Cypress App to test
-out functionality that has not yet been released, here is how:
+If you would like to install a pre-release version of Cypress to test out
+functionality that has not yet been released, here is how:
 
 1. Open up the list of commits to `develop` on the Cypress repo:
    [https://github.com/cypress-io/cypress/commits/develop](https://github.com/cypress-io/cypress/commits/develop)
