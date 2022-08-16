@@ -171,7 +171,7 @@ feature, we will encounter a problem with our code and look at how Cypress can
 help us debug our code. We will use the
 [Cypress Command Log](/guides/core-concepts/cypress-app#Command-Log) to narrow
 down our problem. Then, we can use the
-[Developer Tools right in the Cypress App](/guides/guides/debugging#Using-the-Developer-Tools)
+[Developer Tools right in Cypress](/guides/guides/debugging#Using-the-Developer-Tools)
 to step through the code to dig into the issue. We'll even see how we can update
 application state while debugging and let our test confirm our theory about the
 cause of the bug. Once the debugging is complete, we will refactor our code to

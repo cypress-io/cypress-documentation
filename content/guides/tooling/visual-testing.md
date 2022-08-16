@@ -112,9 +112,9 @@ it('completes todo', () => {
 ```
 
 This open source plugin compares the baseline and the current images side by
-side within the Cypress App if pixel difference is above the threshold; notice
-how the baseline image (_Expected result_) has the label text with the line
-through, while the new image (_Actual result_) does not have it.
+side if pixel difference is above the threshold; notice how the baseline image
+(_Expected result_) has the label text with the line through, while the new
+image (_Actual result_) does not have it.
 
 <DocsImage src="/img/guides/visual-testing/diff.png" alt="Baseline vs current image" ></DocsImage>
 
@@ -127,8 +127,8 @@ mouse hover:
 
 There are several published, open source plugins, listed in the
 [Visual Testing plugins](/plugins/directory#visual-testing) section, and several
-commercial companies have developed visual testing solutions on top of the
-Cypress App listed below.
+commercial companies have developed visual testing solutions on top of Cypress
+listed below.
 
 ### Open source
 

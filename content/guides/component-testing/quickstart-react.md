@@ -27,15 +27,13 @@ cd my-react-app
 npm install
 ```
 
-<!-- TODO: Show video of terminal running this command -->
-
 3. Add Cypress
 
 ```bash
 npm install cypress -D
 ```
 
-4. Launch Cypress
+4. Open Cypress and follow the Launchpad's prompts!
 
 ```bash
 npx cypress open
@@ -90,7 +88,7 @@ two buttons.
 
 If your component uses providers, network requests, or other environmental
 setups, you will need additional work to get your component mounting. This is
-covered in a later section.
+covered in a [later section](/guides/component-testing/custom-mount-react).
 
 </alert>
 
