@@ -799,7 +799,7 @@ beforeEach(() => {
 
 One final question you should ask yourself is - is resetting the state even
 necessary? Remember, Cypress already automatically enforces
-[test isolation](//guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+[test isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
 by clearing state before each test. Make sure you are not trying to clean up
 state that is already cleaned up by Cypress automatically.
 
