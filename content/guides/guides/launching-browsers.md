@@ -20,8 +20,8 @@ strategies demonstrated in the
 
 ## Browsers
 
-When the Cypress App is initially launched, you can choose to test your
-application using number of browsers including:
+When Cypress is initially launched, you can choose to test your application
+using number of browsers including:
 
 - [Chrome](https://www.google.com/chrome/)
 - [Chrome Beta](https://www.google.com/chrome/beta/)
@@ -37,7 +37,7 @@ application using number of browsers including:
 - [Firefox Nightly](https://www.mozilla.org/firefox/nightly/)
 
 Cypress automatically detects available browsers on your OS. You can switch the
-browser in the Cypress App by using the drop down near the top right corner:
+browser by using the drop down near the top right corner:
 
 <DocsImage src="/img/guides/launching-browsers/v10/browser-list-dropdown.png" alt="Select a different browser"></DocsImage>
 
@@ -202,8 +202,8 @@ return {
 
 :::
 
-When you open the Cypress App in a project that uses the above modifications to
-the `setupNodeEvents` function, Electron will no longer display in the list of
+When you open Cypress in a project that uses the above modifications to the
+`setupNodeEvents` function, Electron will no longer display in the list of
 available browsers.
 
 <Alert type="info">
@@ -262,7 +262,7 @@ other browser of the `chromium` family.
 
 If you modify the list of browsers, you can see the
 [resolved configuration](/guides/references/configuration#Resolved-Configuration)
-in the **Settings** tab of the Cypress App.
+in the **Settings** tab.
 
 ### Unsupported Browsers
 

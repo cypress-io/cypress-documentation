@@ -25,18 +25,18 @@ on('before:browser:launch', (browser = {}, launchOptions) => {
 
 An object describing the browser being launched, with the following properties:
 
-| Property       | Type      | Description                                                                                                    |
-| -------------- | --------- | -------------------------------------------------------------------------------------------------------------- |
-| `name`         | `string`  | Machine-friendly name, like `chrome`, `electron`, `edge`, or `firefox`.                                        |
-| `family`       | `string`  | Rendering engine being used. `chromium` or `firefox`.                                                          |
-| `channel`      | `string`  | Release channel of the browser, such as `stable`, `dev`, or `canary`.                                          |
-| `displayName`  | `string`  | Human-readable display name for the browser.                                                                   |
-| `version`      | `string`  | Full version.                                                                                                  |
-| `path`         | `string`  | Path to the browser on disk. Blank for Electron.                                                               |
-| `info`         | `string`  | _(Optional)_ Extra information about the browser (used for display in the browser selector of the Cypress App) |
-| `majorVersion` | `number`  | The major version number of the browser.                                                                       |
-| `isHeadless`   | `boolean` | Whether the browser is running headlessly.                                                                     |
-| `isHeaded`     | `boolean` | Whether the browser displays headed.                                                                           |
+| Property       | Type      | Description                                                                                 |
+| -------------- | --------- | ------------------------------------------------------------------------------------------- |
+| `name`         | `string`  | Machine-friendly name, like `chrome`, `electron`, `edge`, or `firefox`.                     |
+| `family`       | `string`  | Rendering engine being used. `chromium` or `firefox`.                                       |
+| `channel`      | `string`  | Release channel of the browser, such as `stable`, `dev`, or `canary`.                       |
+| `displayName`  | `string`  | Human-readable display name for the browser.                                                |
+| `version`      | `string`  | Full version.                                                                               |
+| `path`         | `string`  | Path to the browser on disk. Blank for Electron.                                            |
+| `info`         | `string`  | _(Optional)_ Extra information about the browser (used for display in the browser selector) |
+| `majorVersion` | `number`  | The major version number of the browser.                                                    |
+| `isHeadless`   | `boolean` | Whether the browser is running headlessly.                                                  |
+| `isHeaded`     | `boolean` | Whether the browser displays headed.                                                        |
 
 **<Icon name="angle-right"></Icon> launchOptions** **_(object)_**
 
@@ -163,9 +163,9 @@ on('before:browser:launch', (browser, launchOptions) => {
 
 ### Modify Electron app switches
 
-The Cypress App is an Electron application, and its behavior (and the behavior
-of the bundled-in Electron browser) can be customized using command line
-switches. The supported switches depend on the Electron version, see
+The Cypress Launchpad is an Electron application, and its behavior (and the
+behavior of the bundled-in Electron browser) can be customized using command
+line switches. The supported switches depend on the Electron version, see
 [Electron documentation](https://www.electronjs.org/docs/api/command-line-switches).
 
 You can pass Electron-specific launch arguments using the
@@ -212,7 +212,7 @@ This setting changes the display size of the screen and does not affect the
 `viewportWidth` and `viewportHeight` set in the
 [Cypress configuration](/guides/references/configuration). The `viewportWidth`
 and `viewportHeight` only affect the size of the application under test
-displayed inside the Cypress App. Read the blog post
+displayed inside the Cypress Test Runner. Read the blog post
 [Generate High-Resolution Videos and Screenshots](https://www.cypress.io/blog/2021/03/01/generate-high-resolution-videos-and-screenshots/)
 for details.
 

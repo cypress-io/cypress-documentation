@@ -6,7 +6,7 @@ title: Opening the App
 
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
-- How to start the Cypress app from the command line
+- How to start Cypress from the command line
 - How to start your testing journey with the Launchpad
 - How to choose a testing type
 - How to launch a browser
@@ -44,7 +44,7 @@ yarn run cypress open
 $(npm bin)/cypress open
 ```
 
-After a moment, the Cypress App will launch.
+After a moment, the Cypress Launchpad will open.
 
 ### Adding npm Scripts
 

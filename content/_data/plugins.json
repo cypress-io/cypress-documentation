@@ -79,6 +79,13 @@
           "link": "https://github.com/sod/cypress-esbuild-preprocessor",
           "keywords": ["esbuild"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-vite",
+          "description": "Cypress preproccessor for running specs using vite",
+          "link": "https://github.com/mammadataei/cypress-vite",
+          "keywords": ["vite"],
+          "badge": "community"
         }
       ]
     },
@@ -540,6 +547,13 @@
           "description": "Custom commands for localStorage. Allows preserving localStorage between tests",
           "link": "https://github.com/javierbrea/cypress-localstorage-commands",
           "keywords": ["commands", "localstorage", "persistence"],
+          "badge": "community"
+        },
+        {
+          "name": "@this-dot/cypress-indexeddb",
+          "description": "Custom commands for indexedDb. Allows populating, modifying and asserting data stored in indexedDb.",
+          "link": "https://github.com/thisdot/open-source/tree/main/libs/cypress-indexeddb",
+          "keywords": ["commands", "indexedDb"],
           "badge": "community"
         },
         {

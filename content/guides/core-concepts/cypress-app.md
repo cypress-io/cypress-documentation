@@ -6,9 +6,9 @@ title: Cypress App
 
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
-- The names and purposes of the visual parts of the Cypress app
+- The names and purposes of the visual parts of Cypress
 - How to use the Selector Playground for targeting your page elements
-- How to debug tests using the built-in features of the Cypress app
+- How to debug tests using the built-in features of Cypress
 
 </Alert>
 
@@ -21,11 +21,11 @@ Cypress testing experience.
 
 <Alert type="info">
 
-<strong class="alert-header">Dashboard Integration</strong>
+<strong class="alert-header">Dashboard integration</strong>
 
 When you configure Cypress to record tests to the
 [Dashboard](/guides/dashboard/introduction), you'll see data from your latest
-recorded runs in the Cypress app. This increased visibility into your test
+recorded runs directly in Cypress. This increased visibility into your test
 history allows you to debug your tests faster and more effectively, all within
 your local workflow.
 
@@ -92,6 +92,32 @@ the performance of your long-running tests.
 
 Again, this analysis comes from the Dashboard.
 
+#### Flake annotation
+
+<Alert type="info">
+
+<strong class="alert-header">What is a flaky test?</strong>
+
+A test is considered to be [flaky](/guides/dashboard/flaky-test-management) when
+it can pass and fail across multiple retry attempts without any code changes.
+
+</Alert>
+
+Specs with flaky tests are flagged with an indicator beside the spec name. This
+means you can easily discern which areas of your application might result in an
+unreliable user experience.
+
+The flake indicator will display if any tests in the given spec have been flaky
+in your latest runs (limited to 4). Hovering over the indicator will show a
+tooltip with the following analytics, based off the last 50 runs:
+
+- Rate (flaky runs divided by total runs)
+- Severity (flaky rate at a glance)
+- Last flaky (how many runs ago)
+
+Clicking on the flake indicator will take you to the spec’s
+[Flaky Test Analytics in the Dashboard](https://dashboard.cypress.io/projects/7s5okt/analytics/flaky-tests).
+
 ### Project Runs
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/recorded-runs.png" alt="Recorded Runs"></DocsImage>
@@ -116,7 +142,7 @@ the Application or Component Under Test, and exploring its DOM.
 
 ## Command Log
 
-The lefthand side of the Cypress app is a visual representation of your test
+The left-hand side of the Test Runner is a visual representation of your test
 suite. Each test block is properly nested and each test, when clicked, displays
 every Cypress command and assertion executed within the test's block as well as
 any command or assertion executed in relevant `before`, `beforeEach`,
@@ -132,10 +158,10 @@ file where the code is located. Clicking on this link will open the file in your
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/open-file-in-IDE.gif" alt="Open file in your IDE"></DocsImage>
 
-### Time Traveling
+### Time traveling
 
 Each command and assertion, when hovered over, restores the Application or
-Component Under Test (righthand side) to the state it was in when that command
+Component Under Test (right-hand side) to the state it was in when that command
 executed. This allows you to **time travel** back to previous states when
 testing.
 
@@ -149,7 +175,7 @@ you may want to lower the `numTestsKeptInMemory` in your
 </Alert>
 
 In the following example, hovering over the `CONTAINS` command in the Command
-Log changes the state of the Cypress app:
+Log changes the state of the [AUT](#Application-Under-Test) preview:
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/first-test-hover-contains.png" alt="Hovering over the contains tab highlights the dom element in the App in the Cypress app"></DocsImage>
 
@@ -163,11 +189,11 @@ the URL that was present when the snapshot was taken.
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/first-test-url-revert.png" alt="The url address bar shows https://example.cypress.io/"></DocsImage>
 
-### Pinning Snapshots
+### Pinning snapshots
 
 Each command, assertion, or error, when clicked on, displays extra information
 in the dev tools console. Clicking also **pins** the Application or Component
-Under Test (righthand side) to its previous state, or **snapshot**, when the
+Under Test (right-hand side) to its previous state, or **snapshot**, when the
 command executed.
 
 In the following example, clicking on the `CLICK` command highlights it in
@@ -219,7 +245,7 @@ Notice these look different (they are gray and without a number).
 - Page Loads
 - Form Submissions
 
-### Instrument Panel
+### Instrument panel
 
 For certain commands like [`cy.intercept()`](/api/commands/intercept),
 [`cy.stub()`](/api/commands/stub), and [`cy.spy()`](/api/commands/spy), an extra
@@ -250,16 +276,16 @@ it('intercept command log', () => {
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/instrument-panel-spies.png" alt="Spies Instrument Panel"></DocsImage>
 
-## Preview Pane
+## Preview pane
 
-The righthand side of the Cypress app is where the Application or Component
+The right-hand side of the Test Runner is where the Application or Component
 Under Test is rendered.
 
 ### Application Under Test <E2EOnlyBadge />
 
 In
 [E2E Testing](/guides/core-concepts/testing-types#What-is-End-to-end-Testing),
-the righthand side of the Cypress app is used to display the Application Under
+the right-hand side of the Test Runner is used to display the Application Under
 Test (AUT): the application that was navigated to using a
 [`cy.visit()`](/api/commands/visit) or any subsequent routing calls made from
 the visited application.
@@ -272,9 +298,9 @@ cy.visit('https://example.cypress.io')
 cy.title().should('include', 'Kitchen Sink')
 ```
 
-In the corresponding Application Preview below, you can see
-`https://example.cypress.io` is being displayed in the righthand side. Not only
-is the application visible, but it is fully interactable. You can open your
+In the corresponding application preview below, you can see
+`https://example.cypress.io` is being displayed in the right-hand side. Not only
+is the application visible, but it is fully interactive. You can open your
 developer tools to inspect elements as you would in your normal application. The
 DOM is completely available for debugging.
 
@@ -295,8 +321,8 @@ The image below shows that our application is displaying at `1000px` width,
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/viewport-scaling.png" alt="Viewport Scaling"></DocsImage>
 
-_Note: The righthand side may also be used to display syntax errors in your test
-file that prevent the tests from running._
+_Note: The right-hand side may also be used to display syntax errors in your
+test file that prevent the tests from running._
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/aut-error-e2e.png" alt="Errors"></DocsImage>
 
@@ -308,7 +334,7 @@ unexpected behaviors
 
 In
 [Component testing](/guides/core-concepts/testing-types#What-is-Component-Testing),
-the righthand side of the Cypress app is used to display the Component Under
+the right-hand side of the Test Runner is used to display the Component Under
 Test (CUT): the component that was mounted using the
 [`cy.mount()`](/api/commands/mount) command.
 
@@ -338,7 +364,7 @@ it('should have password input of type password', () => {
 </code-group-react-vue>
 
 In the corresponding Component Preview below, you can see the the `LoginForm`
-component is being displayed in the righthand side. Not only is the component
+component is being displayed in the right-hand side. Not only is the component
 visible, but it is fully interactable. You can open your developer tools to
 inspect elements as you would in your normal application. The DOM is completely
 available for debugging.
@@ -360,8 +386,8 @@ The image below shows that our application is displaying at `500px` width,
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/viewport-scaling-ct.png" alt="Cypress app showing mounted component test viewport scale"></DocsImage>
 
-_Note: The righthand side may also be used to display syntax errors in your spec
-file that prevent the tests from running._
+_Note: The right-hand side may also be used to display syntax errors in your
+spec file that prevent the tests from running._
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/aut-error-ct.png" alt="Cypress app showing error as application under test"></DocsImage>
 
@@ -397,7 +423,7 @@ API to control the selectors you want returned.
 
 </Alert>
 
-### Best Practices
+### Best practices
 
 You may find yourself struggling to write good selectors because:
 
@@ -412,10 +438,10 @@ Please read our
 helping you target elements and prevent tests from breaking on CSS or JS
 changes.
 
-### Finding Selectors
+### Finding selectors
 
 To open the Selector Playground, click the <Icon name="crosshairs"></Icon>
-button next to the URL at the top of the Cypress app. Hover over elements in
+button next to the URL at the top of the Test Runner. Hover over elements in
 your app to preview a unique selector for that element in the tooltip.
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/open-selector-playground.gif" alt="Opening selector playground and hovering over elements"></DocsImage>
@@ -426,18 +452,18 @@ console ( <Icon name="terminal"></Icon> ).
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/copy-selector-in-selector-playground.gif" alt="Clicking an element, copying its selector to clipboard, printing it to the console"></DocsImage>
 
-### Running Experiments
+### Running experiments
 
 The box at the top that displays the selector is also a text input.
 
-#### Editing a Selector
+#### Editing a selector
 
 When you edit the selector, it will show you how many elements match and
 highlight those elements in your app.
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/typing-a-selector-to-find-in-playground.gif" alt="Type a selector to see what elements it matches"></DocsImage>
 
-#### Switching to Contains
+#### Switching to contains
 
 You can also experiment with what [`cy.contains()`](/api/commands/contains)
 would yield given a string of text. Click on `cy.get` and switch to
@@ -449,7 +475,7 @@ matches the text, even if multiple elements on the page contain the text.
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/cy-contains-in-selector-playground.gif" alt="Experiment with cy.contains"></DocsImage>
 
-#### Disabling Highlights
+#### Disabling highlights
 
 If you would like to interact with your app while the Selector Playground is
 open, the element highlighting might get in the way. Toggling the highlighting
@@ -457,10 +483,10 @@ off will allow you to interact with your app more easily.
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/turn-off-highlight-in-selector-playground.gif" alt="Turn off highlighting"></DocsImage>
 
-## Keyboard Shortcuts
+## Keyboard shortcuts
 
-There are keyboard shortcuts to quickly perform common actions from within the
-Cypress app.
+There are keyboard shortcuts to quickly perform common actions from within
+Cypress.
 
 | Key | Action                        |
 | --- | ----------------------------- |
@@ -546,7 +572,7 @@ In action:
 
 ## History
 
-| Version                                     | Changes                                 |
-| ------------------------------------------- | --------------------------------------- |
-| [3.5.0](/guides/references/changelog#3-5-0) | Added keyboard shortcuts to Cypress app |
-| [1.3.0](/guides/references/changelog#1-3-0) | Added Selector Playground               |
+| Version                                     | Changes                             |
+| ------------------------------------------- | ----------------------------------- |
+| [3.5.0](/guides/references/changelog#3-5-0) | Added keyboard shortcuts to Cypress |
+| [1.3.0](/guides/references/changelog#1-3-0) | Added Selector Playground           |

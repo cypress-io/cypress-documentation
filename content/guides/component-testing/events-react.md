@@ -25,11 +25,11 @@ Because the component manages all of the state internally, it is opaque to the
 developer or parent component consuming the Stepper.
 
 ```jsx
-<div data-testid="stepper">
+<div>
   <button aria-label="decrement" onClick={setCount(count - 1)}>
     -
   </button>
-  {count}
+  <span data-cy="counter">{count}</span>
   <button aria-label="increment" onClick={setCount(count + 1)}>
     +
   </button>
@@ -57,7 +57,6 @@ You would use the `<Stepper>` from a parent component like so:
 Here is what the implementation would look like:
 
 <code-group>
-
 <code-block label="Stepper.jsx" active>
 
 ```jsx
@@ -77,11 +76,11 @@ export default function Stepper({ initial = 0, onChange = () => {} }) {
   }
 
   return (
-    <div data-testid="stepper">
+    <div>
       <button aria-label="decrement" onClick={decrement}>
         -
       </button>
-      {count}
+      <span data-cy="counter">{count}</span>
       <button aria-label="increment" onClick={increment}>
         +
       </button>
@@ -100,7 +99,7 @@ As the developer of the Stepper component, you want to make sure that when the
 end-user clicks the increment and decrement buttons, that the **onChange** prop
 is called to the consuming component.
 
-In tests, we use "spies" to accomplish this.
+In Cypress, we use "spies" to accomplish this.
 
 ## Using Spies
 
@@ -121,20 +120,18 @@ Let's set up the spies and bind them to the component:
 it('clicking + fires a change event with the incremented value', () => {
   // Arrange
   const onChangeSpy = cy.spy().as('onChangeSpy')
-  cy.mount(Stepper, { props: { onChange: onChangeSpy } })
+  cy.mount(<Stepper onClick={onChangeSpy})
 })
 ```
 
 </code-block>
 </code-group>
 
-<alert type="info">
-
-We're aliasing the spy with `cy.as('aliasName')` so that the Cypress Reporter
-prints out the spy's name any time it is invoked. Doing so lets you visually
-inspect the arguments of the emitted event in your browser.
-
-</alert>
+> We're [aliasing](/guides/core-concepts/variables-and-aliases) the spy with
+> `cy.as('onChangeSpy')` so that the Cypress Reporter prints out the name of the
+> spy any time it is invoked. This lets you visually inspect the arguments of
+> the emitted event in your browser. We are also able to acesss the spy by name
+> later.
 
 ### Act
 
@@ -172,7 +169,7 @@ it('clicking + fires a change event with the incremented value', () => {
   // Act
   cy.get(incrementSelector).click()
   // Assert
-  cy.get('@onChangeSpy').should('have.been.called.with', 1)
+  cy.get('@onChangeSpy').should('have.been.calledWith', 1)
 })
 ```
 
@@ -193,7 +190,7 @@ quick.
 
 Spying is a powerful technique for observing behavior in Cypress. Learn more
 about using Spies in our
-[Stubs, Spies, and Clocks guide](/guides/guides/stubs-spies-and-clocks)
+[Stubs, Spies, and Clocks guide](/guides/guides/stubs-spies-and-clocks).
 
 ## What's Next?
 
