@@ -8,18 +8,6 @@
   border-radius: 9999px;
 }
 
-.success {
-  background-color: #28a745;
-}
-
-.danger {
-  background-color: #dc3545;
-}
-
-.info {
-  background-color: #007bff;
-}
-
 /* large green badge in page/content titles */
 .hint {
   background-color: #cff1e6;
