@@ -1,4 +1,6 @@
 {
   "label": "React Component Testing",
-  "position": 40
+  "position": 40,
+  "collapsible": false,
+  "collapsed": false
 }

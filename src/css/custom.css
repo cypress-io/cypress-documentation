@@ -139,6 +139,12 @@ header h1 {
   font-size: 1.125rem;
 }
 
+/* sidebar subcategories */
+.theme-doc-sidebar-item-category.theme-doc-sidebar-item-category-level-2>.menu__list-item-collapsible a {
+  font-size: 1rem;
+}
+
+/* sidebar children */
 .theme-doc-sidebar-item-link-level-2,.theme-doc-sidebar-item-link-level-3>.menu__link {
   font-weight: 500;
   font-size: 1rem;
