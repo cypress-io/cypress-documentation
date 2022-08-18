@@ -19,7 +19,6 @@ import s from "./style.module.css";
  - the markdown content does not already contain a top-level h1 heading
 */
 
-
 function useSyntheticTitle() {
   const {metadata, frontMatter, contentTitle} = useDoc();
   const shouldRender =
