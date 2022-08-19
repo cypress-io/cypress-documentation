@@ -1,4 +1,6 @@
 {
   "label": "Diving Deeper",
-  "position": 20
+  "position": 20,
+  "collapsible": false,
+  "collapsed": false
 }

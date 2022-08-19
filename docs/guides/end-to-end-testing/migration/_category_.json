@@ -1,4 +1,6 @@
 {
   "label": "Migrating from Other Frameworks",
-  "position": 30
+  "position": 30,
+  "collapsible": false,
+  "collapsed": false
 }
