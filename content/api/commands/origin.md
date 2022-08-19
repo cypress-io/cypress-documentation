@@ -493,8 +493,8 @@ cy.origin('somesite.com', () => {
 })
 ```
 
-This can be used to share custom commands between tests run in primary and
-secondary origins. We recommend this pattern for setting up your
+`Cypress.require()` can be used to share custom commands between tests run in
+primary and secondary origins. We recommend this pattern for setting up your
 [support file](/guides/core-concepts/writing-and-organizing-tests#Support-file)
 and setting up custom commands to run within the `cy.origin()` callback:
 
@@ -523,13 +523,15 @@ beforeEach(() => {
 `cypress/e2e/spec.cy.js`:
 
 ```js
-cy.origin('somesite.com', () => {
-  // makes custom commands available to all subsequent
-  // cy.origin('somesite.com') calls
-  Cypress.require('../support/commands')
+it('tests somesite.com', () => {
+  cy.origin('somesite.com', () => {
+    // makes custom commands available to all subsequent
+    // cy.origin('somesite.com') calls
+    Cypress.require('../support/commands')
 
-  cy.visit('/page')
-  cy.clickLink('Click Me')
+    cy.visit('/page')
+    cy.clickLink('Click Me')
+  })
 })
 ```
 
