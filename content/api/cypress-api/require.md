@@ -42,6 +42,14 @@ cy.origin('somesite.com', () => {
   // Use `Cypress.require()` instead
   const _ = require('lodash')
 })
+
+// the callback must be inline and cannot be assigned to a variable for
+// `Cypress.require()` to work
+const callback = () => {
+  const _ = Cypress.require('lodash')
+})
+
+cy.origin('somesite.com', callback)
 ```
 
 ## Examples
@@ -58,6 +66,8 @@ See [`cy.origin()` Dependencies / Sharing Code]() for example usages.
   which is the default preprocessor for Cypress. If you have manually installed
   and configured the webpack preprocessor, ensure you are using version `5.13.0`
   or greater.
+- For `Cypress.require` to work, the callback function must be written inline
+  with the `cy.origin()` call. The callback cannot be assigned to a variable.
 
 ## History
 
