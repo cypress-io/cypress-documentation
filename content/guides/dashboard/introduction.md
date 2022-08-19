@@ -2,11 +2,11 @@
 title: Dashboard
 ---
 
-The [Cypress Dashboard Service](https://on.cypress.io/dashboard) is our
-Enterprise-Ready web-based companion to the Cypress app. It gives you online
+The [Cypress Dashboard](https://on.cypress.io/dashboard) is our
+enterprise-ready, web-based companion to the Cypress app. It gives you online
 access to your recorded test results, orchestrates test runs across multiple
 machines, provides rich analytics and diagnostics, and integrates those insights
-with your favorite SaaS products.
+with your favorite tools.
 
 <!-- textlint-disable -->
 
@@ -35,18 +35,18 @@ Check out the <Icon name="github"></Icon>
 ### Analyze and diagnose
 
 Store the full history of your test results, with
-[video clips, screenshots and full stack traces](/guides/dashboard/runs#Test-failures).
+[video clips, screenshots, and full stack traces](/guides/dashboard/runs#Test-failures).
 Quickly see the current state of your app on the
 [Latest Runs](/guides/dashboard/runs) page, identify problematic trends with
 rich [Analytics](/guides/dashboard/analytics), and diagnose unreliable tests
-with our [Flaky Test Management](/guides/dashboard/flaky-test-management)
-feature. Associate related tests with
+with [Flaky Test Management](/guides/dashboard/flaky-test-management). Associate
+related tests with
 [grouping](/guides/guides/parallelization#Grouping-by-browser) to see results
 broken down by browser and OS.
 
 <DocsImage src="/img/dashboard/dashboard-runs-list.png" alt="Dashboard Screenshot" ></DocsImage>
 
-For users of the [Cypress App](/guides/core-concepts/cypress-app), we've
+For users of the [Cypress app](/guides/core-concepts/cypress-app), we've
 integrated test run information from the Dashboard with our interactive
 test-runner so developers can see the latest results across the team, and
 identify areas of concern.
@@ -89,7 +89,7 @@ instances too.
 
 ### Collaborate and organize
 
-We also integrate with two of the world's most popular collaboration tools,
+We also integrate with two of the world's most popular collaboration tools:
 [Slack](https://slack.com/) and [Jira](https://www.atlassian.com/software/jira).
 Deliver test results with valuable additional context, directly into a dedicated
 Slack channel. Or for those on the
