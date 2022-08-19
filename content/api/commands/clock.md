@@ -244,7 +244,7 @@ cy.visit('http://localhost:3333')
 cy.clock().then((clock) => {
   clock.setSystemTime(60 * 60 * 1000 - 60);
   // setSystemTime doesn't trigger any timers, so we run the last frame
-  // with tick.
+  // with tick to trigger a callback to update the timer.
   clock.tick(60);
 })
 cy.get('#timer').should(...) // assert that it fits within the screen etc.
