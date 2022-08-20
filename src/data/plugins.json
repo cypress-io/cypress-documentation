@@ -1032,6 +1032,13 @@
       "name": "Reporting",
       "plugins": [
         {
+          "name": "cypress-terminal-report",
+          "description": "Logs to terminal and files mimicking cypress UI. Logs all cypress commands, request/response data and browser console logs.",
+          "link": "https://github.com/archfz/cypress-terminal-report",
+          "keywords": ["reporter", "logger", "terminal", "files", "CI", "CLI"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-failed-log",
           "description": "Saves the Cypress test command log as a JSON file if a test fails.",
           "link": "https://github.com/bahmutov/cypress-failed-log",
@@ -1085,13 +1092,6 @@
           "description": "Slack reporting tool. Uses mochawesome json reports, provides links to VCS Provider (github/bitbucket) and CircleCI logs",
           "link": "https://github.com/you54f/cypress-slack-reporter",
           "keywords": ["reporter", "mochawesome", "slack"],
-          "badge": "community"
-        },
-        {
-          "name": "cypress-terminal-report",
-          "description": "Logs cypress commands, route request data and browser console errors and warnings to terminal when tests fail on CI.",
-          "link": "https://github.com/archfz/cypress-terminal-report",
-          "keywords": ["reporter", "logs", "terminal", "CI", "CLI"],
           "badge": "community"
         },
         {
