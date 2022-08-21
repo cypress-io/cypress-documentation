@@ -462,7 +462,7 @@ highlighted to show where the value has been set via the following ways:
 - The
   [Cypress environment file](/guides/guides/environment-variables#Option-2-cypress-env-json)
 - System
-  [environment variables](/guides/guides/environment-variables#Option-3-CYPRESS)
+  [environment variables](/guides/guides/environment-variables#Option-3-CYPRESS_)
 - [Command Line arguments](/guides/guides/command-line)
 - [setupNodeEvents](#setupNodeEvents)
 
