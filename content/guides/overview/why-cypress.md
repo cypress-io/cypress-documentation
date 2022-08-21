@@ -47,6 +47,7 @@ Cypress enables you to write all types of tests:
 
 - End-to-end tests
 - Integration tests
+- Component tests
 - Unit tests
 
 Cypress can test anything that runs in a browser.
