@@ -602,7 +602,7 @@ can reliably pass when run standalone or in a randomized order.
 
 The test isolation mode is a global configuration and can be overridden at the
 `describe` level with the
-[`testIsolation`](./guides/references/configuration#global) option.
+[`testIsolation`](.guides/references/configuration#Global) option.
 
 ### Test Configuration
 
