@@ -34,6 +34,7 @@
     "/api/cypress-api/iscy": "Cypress.isCy",
     "/api/cypress-api/cypress-log": "Cypress.log",
     "/api/cypress-api/platform": "Cypress.platform",
+    "/api/cypress-api/require": "Cypress.require",
     "/api/cypress-api/spec": "Cypress.spec",
     "/api/cypress-api/session": "Cypress.session",
     "/api/cypress-api/testing-type": "Cypress.testingType",
