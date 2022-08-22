@@ -144,7 +144,7 @@ const config = {
           '🚀 Looking to move to Cypress v10? Check out the <a target="_blank" rel="noopener noreferrer" href="/guides/references/migration-guide">migration guide!</a>',
         backgroundColor: '#fff3b9',
         textColor: '#091E42',
-        // isCloseable: false,
+        isCloseable: true,
       },
       footer: {
         style: 'dark',

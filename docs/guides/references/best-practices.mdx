@@ -14,10 +14,7 @@ import TOCInline from '@theme/TOCInline'
 
 ### <Icon name="graduation-cap" /> Real World Practices
 
-The Cypress team maintains the
-<Icon name="github" inline="true" contentType="rwa" />, a full stack example
-application that demonstrates **best practices and scalable strategies with
-Cypress in practical and realistic scenarios**.
+The Cypress team maintains the <Icon name="github" inline="true" contentType="rwa" />, a full stack example application that demonstrates **best practices and scalable strategies with Cypress in practical and realistic scenarios**.
 
 The RWA achieves full [code-coverage](/guides/tooling/code-coverage) with
 end-to-end tests
@@ -49,10 +46,15 @@ application, and take control of your application's state.
 
 :::
 
-In February 2018 we gave a "Best Practices" conference talk at AssertJS. This
-video demonstrates how to approach writing fast, scalable tests.
+:::tip
 
-<Icon name="play-circle" url="https://www.youtube.com/watch?v=5XQOK0v_YRE" />
+We gave a "Best Practices" conference talk at AssertJS (February 2018).
+This video demonstrates how to approach breaking down your application and
+organizing your tests.
+
+<Icon name="play-circle" url="https://www.youtube.com/watch?v=5XQOK0v_YRE" callout="AssertJS - Cypress Best Practices"/>
+
+:::
 
 We have several
 [Logging in recipes](https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes)
@@ -145,7 +147,7 @@ When determining an unique selector it will automatically prefer elements with:
 
 #### <Icon name="graduation-cap" /> Real World Example
 
-The [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
+The <Icon name="github" inline="true" contentType="rwa" />
 uses two useful custom commands for selecting elements for testing:
 
 - `getBySel` yields elements with a `data-test` attribute that **match** a
@@ -745,7 +747,7 @@ state cleanup.
 
 #### <Icon name="graduation-cap" /> Real World Example
 
-The [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
+The <Icon name="github" inline="true" contentType="rwa" />
 resets and re-seeds its database via a custom [Cypress task](/api/commands/task)
 called `db:seed` in a `beforeEach` hook. This allows each test to start from a
 clean slate and a deterministic state. For example:

@@ -62,7 +62,6 @@
   --ifm-toc-border-color: var(--ifm-color-gray-700)
 }
 
-/* CUSTOMIZATIONS */
 [data-theme="dark"] .menu {
   background-color: #1b1b1d;
   border-right: 1px solid var(--ifm-toc-border-color);
@@ -91,9 +90,8 @@ article {
   margin-right: auto;
 }
 
-header h1 {
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--ifm-toc-border-color);
+.markdown.markdown h1:first-child {
+  margin-bottom: 0;
 }
 
 .navbar {
@@ -179,20 +177,21 @@ is swizzling better here? */
   padding-bottom: 0;
 }
 
+.markdown a {
+  color: #1079c3;
+  text-decoration: none;
+  border-bottom: 1px dotted #1079c3;
+}
+
 div[class^=announcementBar] {
   font-size: 1rem;
   font-weight: 500;
+  border-bottom: none;
 }
 
 div.markdown {
   font-size: 1.125rem;
   word-spacing: 1px;
-}
-
-div.markdown a {
-  color: #1079c3;
-  text-decoration: none;
-  border-bottom: 1px dotted #1079c3;
 }
 
 div.markdown a:hover {
@@ -215,9 +214,39 @@ div.markdown li p {
   margin-top: 0;
 }
 
-/* test-type pills & lists w/ headers as bullets */
-div.markdown h2 > a,
+/* lists w/ headers as bullets */
 ul li > h2, h3, h4 {
+  border-bottom: none;
+}
+
+/* test-type pills */
+div.markdown h2 a {
+  border-bottom: none;
+  margin-bottom: 6px;
+}
+div.markdown h2 a:hover {
+  border-bottom: none;
+}
+
+div.markdown h3 a {
+  border-bottom: none;
+}
+div.markdown h3 a:hover {
+  border-bottom: none;
+}
+
+[data-theme="dark"] div.markdown h2 a {
+  border-bottom: none;
+  margin-bottom: 6px;
+}
+[data-theme="dark"] div.markdown h2 a:hover {
+  border-bottom: none;
+}
+
+[data-theme="dark"] div.markdown h3 a {
+  border-bottom: none;
+}
+[data-theme="dark"] div.markdown h3 a:hover {
   border-bottom: none;
 }
 
