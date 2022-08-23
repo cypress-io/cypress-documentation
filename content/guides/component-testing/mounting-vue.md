@@ -80,9 +80,8 @@ describe('<Stepper>', () => {
 
 Here, we have a single test that ensures that our component mounts.
 
-If you already have a component that you want to create a test for and you don't
-have a spec pattern configured for your project, we can scaffold the test for
-you via the Cypress App.
+If you already have a component that you want to create a spec for, we can
+scaffold the spec for you via the Cypress App.
 
 Click on "+ New Spec", select "Create from component", and choose your component
 from the list.
