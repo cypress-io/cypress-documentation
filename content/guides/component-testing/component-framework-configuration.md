@@ -11,17 +11,19 @@ setup configuration.
 Cypress currently supports the following frameworks and versions for component
 testing:
 
-| Framework                                                | UI Library  | Bundler    |
-| -------------------------------------------------------- | ----------- | ---------- |
-| [Create React App 4+](#Create-React-App-CRA)             | React 16+   | Webpack 4+ |
-| [Next.js 11+](#Next-js) <Badge type="info">Alpha</Badge> | React 16+   | Webpack 5  |
-| [React with Vite](#React-with-Vite)                      | React 16+   | Vite 2     |
-| [React with Webpack](#React-with-Webpack)                | React 16+   | Webpack 4+ |
-| [Vue CLI](#Vue-CLI)                                      | Vue 2+      | Webpack 4+ |
-| [Nuxt 2](#Nuxt) <Badge type="info">Alpha</Badge>         | Vue 2+      | Webpack 4+ |
-| [Vue with Vite](#Vue-with-Vite)                          | Vue 2+      | Vite 2     |
-| [Vue with Webpack](#Vue-with-Webpack)                    | Vue 2+      | Webpack 4+ |
-| [Angular](#Angular) <Badge type="info">Alpha</Badge>     | Angular 13+ | Webpack 5  |
+| Framework                                                                    | UI Library  | Bundler    |
+| ---------------------------------------------------------------------------- | ----------- | ---------- |
+| [Create React App 4+](#Create-React-App-CRA)                                 | React 16+   | Webpack 4+ |
+| [Next.js 11+](#Next-js) <Badge type="info">Alpha</Badge>                     | React 16+   | Webpack 5  |
+| [React with Vite](#React-with-Vite)                                          | React 16+   | Vite 2+    |
+| [React with Webpack](#React-with-Webpack)                                    | React 16+   | Webpack 4+ |
+| [Vue CLI](#Vue-CLI)                                                          | Vue 2+      | Webpack 4+ |
+| [Nuxt 2](#Nuxt) <Badge type="info">Alpha</Badge>                             | Vue 2+      | Webpack 4+ |
+| [Vue with Vite](#Vue-with-Vite)                                              | Vue 2+      | Vite 2+    |
+| [Vue with Webpack](#Vue-with-Webpack)                                        | Vue 2+      | Webpack 4+ |
+| [Angular](#Angular) <Badge type="info">Alpha</Badge>                         | Angular 13+ | Webpack 5  |
+| [Svelte with Vite](#Svelte-with-Vite) <Badge type="info">Alpha</Badge>       | Svelte 3+   | Vite 2+    |
+| [Svelte with Webpack](#Svelte-with-Webpack) <Badge type="info">Alpha</Badge> | Svelte 3+   | Webpack 4+ |
 
 ## Automatic Configuration (Recommended)
 
@@ -557,6 +559,19 @@ export default defineConfig({
 #### Sample Angular Apps
 
 - [Angular 14](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/angular)
+
+## Svelte
+
+For Vue apps, we have built-in support for Vue CLI, Nuxt, Vite, and a custom
+webpack config.
+
+### Svelte with Vite
+
+#### Svelte Vite Sample Apps
+
+### Svelte with Webpack
+
+#### Svelte Webpack Sample Apps
 
 ## Component Testing Config
 

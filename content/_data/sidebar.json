@@ -172,6 +172,13 @@
               "slug": "custom-mount-angular"
             },
             {
+              "title": "Svelte Component Testing"
+            },
+            {
+              "title": "Quickstart: Svelte",
+              "slug": "quickstart-svelte"
+            },
+            {
               "title": "Diving Deeper"
             },
             {
