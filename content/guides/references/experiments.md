@@ -33,7 +33,7 @@ configuration to Cypress.
 You can provide configuration options for either E2E or Component Testing by
 creating `e2e` and `component` objects inside your Cypress configuration.
 
-### e2e
+### End-to-End Testing
 
 These experiments are available to be specified inside the `e2e` configuration
 object:
@@ -42,7 +42,7 @@ object:
 | ------------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `experimentalSessionAndOrigin` | `false` | Enables cross-origin and improved session support, including the [`cy.origin()`](/api/commands/origin) and [`cy.session()`](/api/commands/session) commands. This enables `testIsolation=strict` by default. |
 
-### component
+### Component Testing
 
 These experiments are available to be specified inside the `component`
 configuration object:
