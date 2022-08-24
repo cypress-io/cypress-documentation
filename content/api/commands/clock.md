@@ -319,6 +319,12 @@ the following:
 
 <DocsImage src="/img/api/clock/clock-displays-methods-replaced-in-console.png" alt="console.log clock command" ></DocsImage>
 
+## History
+
+| Version                                       | Changes                                   |
+| --------------------------------------------- | ----------------------------------------- |
+| [10.7.0](/guides/references/changelog#10-7-0) | Added `setSystemTime` to clock object     |
+
 ## See also
 
 - [`cy.spy()`](/api/commands/spy)
