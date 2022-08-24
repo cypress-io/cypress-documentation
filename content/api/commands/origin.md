@@ -481,8 +481,9 @@ or
 [dynamic ES module `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#dynamic_imports)
 within the callback. However, [`Cypress.require()`](/api/cypress-api/require)
 can be utilized to include [npm](https://www.npmjs.com/) packages and other
-files. It works exactly the same as
-[CommonJS `require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/).
+files. It is functionally the same as using
+[CommonJS `require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
+in browser-targeted code.
 
 ```js
 cy.origin('somesite.com', () => {

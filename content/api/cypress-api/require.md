@@ -3,12 +3,12 @@ title: Cypress.require
 ---
 
 `Cypress.require` enables utilizing dependencies within the
-[`cy.origin()`](/api/commands/ callback function. It is used to require modules
-such as [npm](https://www.npmjs.com/) packages and other local files.
+[`cy.origin()`](/api/commands/origin) callback function. It is used to require
+modules such as [npm](https://www.npmjs.com/) packages and other local files.
 
-It is functionally the same as the
+It is functionally the same as using
 [CommonJS `require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
-used in NodeJs.
+in browser-targeted code.
 
 ## Syntax
 
