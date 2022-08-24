@@ -651,6 +651,13 @@
           "link": "https://github.com/bahmutov/cypress-if",
           "keywords": ["commands"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-html-validate",
+          "description": "Cypress HTML-Validate plugin for validating HTML document",
+          "link": "https://gitlab.com/html-validate/cypress-html-validate",
+          "keywords": ["commands", "html", "html-validate", "markup", "lint", "validation"],
+          "badge": "community"
         }
       ]
     },
