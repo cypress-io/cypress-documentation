@@ -109,9 +109,9 @@ directory called `Stepper.svelte`
   }
 </script>
 
-<button on:click={decrement}>-</button>
-{count}
-<button on:click={increment}>+</button>
+<button on:click={decrement} aria-label="decrement">-</button>
+<span data-cy="count">{count}</span>
+<button on:click={increment} aria-label="increment">+</button>
 
 ```
 
