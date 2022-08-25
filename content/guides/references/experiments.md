@@ -26,9 +26,30 @@ configuration to Cypress.
 | `experimentalFetchPolyfill`                   | `false` | Automatically replaces `window.fetch` with a polyfill that Cypress can spy on and stub. Note: `experimentalFetchPolyfill` has been deprecated in Cypress 6.0.0 and will be removed in a future release. Consider using [cy.intercept()](/api/commands/intercept) to intercept `fetch` requests instead.                        |
 | `experimentalInteractiveRunEvents`            | `false` | Allows listening to the [`before:run`](/api/plugins/before-run-api), [`after:run`](/api/plugins/after-run-api), [`before:spec`](/api/plugins/before-spec-api), and [`after:spec`](/api/plugins/after-spec-api) events in the [setupNodeEvents](/guides/tooling/plugins-guide#Using-a-plugin) function during interactive mode. |
 | `experimentalModifyObstructiveThirdPartyCode` | `false` | Whether Cypress will search for and replace obstructive code in third party `.js` or `.html` files. NOTE: Setting this flag removes [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity).                                                                                |
-| `experimentalSessionAndOrigin`                | `false` | Enables cross-origin and improved session support, including the [`cy.origin()`](/api/commands/origin) and [`cy.session()`](/api/commands/session) commands. This enables `testIsolation=strict` by default. Only available in end-to-end testing.                                                                             |
-| `experimentalSingleTabRunMode`                | `false` | Run all specs in a single tab, instead of creating a new tab per spec. This can improve run mode performance, but can impact spec isolation and reliability on large test suites. This experiment currently only applies to Component Testing.                                                                                 |
 | `experimentalSourceRewriting`                 | `false` | Enables AST-based JS/HTML rewriting. This may fix issues caused by the existing regex-based JS/HTML replacement algorithm. See [#5273](https://github.com/cypress-io/cypress/issues/5273) for details.                                                                                                                         |
+
+## Testing Type-Specific Experiments
+
+You can provide configuration options for either E2E or Component Testing by
+creating `e2e` and `component` objects inside your Cypress configuration.
+
+### End-to-End Testing
+
+These experiments are available to be specified inside the `e2e` configuration
+object:
+
+| Option                         | Default | Description                                                                                                                                                                                                  |
+| ------------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `experimentalSessionAndOrigin` | `false` | Enables cross-origin and improved session support, including the [`cy.origin()`](/api/commands/origin) and [`cy.session()`](/api/commands/session) commands. This enables `testIsolation=strict` by default. |
+
+### Component Testing
+
+These experiments are available to be specified inside the `component`
+configuration object:
+
+| Option                         | Default | Description                                                                                                                                                                       |
+| ------------------------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `experimentalSingleTabRunMode` | `false` | Run all specs in a single tab, instead of creating a new tab per spec. This can improve run mode performance, but can impact spec isolation and reliability on large test suites. |
 
 ## History
 
