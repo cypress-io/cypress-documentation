@@ -53,14 +53,14 @@ here. For more info, see the
 
 Now that you have a component let's write a spec that mounts the component.
 
-To get started, create a spec file in the same directory as the `stepper.svelte`
+To get started, create a spec file in the same directory as the `Stepper.svelte`
 component and name it **stepper.cy.ts**. Then paste the following into it:
 
 <code-group>
-<code-block label="stepper.component.cy.ts" active>
+<code-block label="Stepper.cy.js" active>
 
 ```js
-import Stepper from './stepper.svelte'
+import Stepper from './Stepper.svelte'
 
 describe('Stepper', () => {
   it('mounts', () => {
@@ -86,7 +86,7 @@ npx cypress open --component
 > The `--component` flag will launch us directly into component testing
 
 And launch the browser of your choice. In the spec list, click on
-**stepper.cy.ts** and you will see the stepper component mounted in the test
+**stepper.cy.js** and you will see the stepper component mounted in the test
 area.
 
 <DocsImage 

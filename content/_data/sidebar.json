@@ -183,6 +183,14 @@
               "slug": "mounting-svelte"
             },
             {
+              "title": "Testing Svelte Components",
+              "slug": "testing-svelte"
+            },
+            {
+              "title": "Testing Svelte Components with Emitted Events",
+              "slug": "events-svelte"
+            },
+            {
               "title": "Diving Deeper"
             },
             {

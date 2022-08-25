@@ -1,5 +1,5 @@
 ---
-title: Testing Vue Components
+title: Testing Svelte Components
 ---
 
 Now that the component is mounted, the next step is to start selecting and
@@ -46,43 +46,7 @@ it('supports an "initial" prop to set the value', () => {
 ```
 
 </code-block>
-<code-block label="Stepper.cy.jsx (With JSX)">
-
-```jsx
-// Set up some constants for the selectors
-const counterSelector = '[data-cy=counter]'
-const incrementSelector = '[aria-label=increment]'
-const decrementSelector = '[aria-label=decrement]'
-
-it('stepper should default to 0', () => {
-  // Arrange
-  cy.mount(<Stepper />)
-  // Assert
-  cy.get(counterSelector).should('have.text', 0)
-})
-
-it('supports an "initial" prop to set the value', () => {
-  // Arrange
-  cy.mount(<Stepper initial={100} />)
-  // Assert
-  cy.get(counterSelector).should('have.text', 100)
-})
-```
-
-</code-block>
 </code-group>
-
-<Alert type="info">
-
-Depending on your Vue version, the syntax for how to mount your component will
-change slightly. Please refer to the
-[Vue Test Utils documentation](https://test-utils.vuejs.org/) for the latest
-syntax when using the mount function's Object API.
-
-The main difference is that "props" should be "propsData" for Vue 2
-applications.
-
-</Alert>
 
 ### What Else Should You Test in This Component?
 
@@ -94,13 +58,13 @@ changes.
 I want to pause here, though.
 
 You'll notice that we're talking about how a user would interact with the
-component, and not technical, Vue-specific concepts.
+component, and not technical, Svelte-specific concepts.
 
 You can do a well-written, comprehensive test for our Stepper component by
 approaching this test as a user would.
 
-Don't think about `data`, `methods`, or `props`. Think solely about the UI and
-use your test to automate what you would naturally do as a user.
+Don't think about `props`, or `events`. Think solely about the UI and use your
+test to automate what you would naturally do as a user.
 
 You'll test the component thoroughly without getting bogged down in details. All
 that matters is that if the developer uses the component with a given API, the
@@ -134,29 +98,6 @@ it('when the decrement button is pressed, the counter is decremented', () => {
 ```
 
 </code-block>
-<code-block label="Stepper.cy.jsx (With JSX)">
-
-```js
-it('when the increment button is pressed, the counter is incremented', () => {
-  // Arrange
-  cy.mount(<Stepper />)
-  // Act
-  cy.get(incrementSelector).click()
-  // Assert
-  cy.get(counterSelector).should('have.text', '1')
-})
-
-it('when the decrement button is pressed, the counter is decremented', () => {
-  // Arrange
-  cy.mount(<Stepper />)
-  // Act
-  cy.get(decrementSelector).click()
-  // Assert
-  cy.get(counterSelector).should('have.text', '-1')
-})
-```
-
-</code-block>
 </code-group>
 
 2. Next, run through the behavior of the Stepper as a user would. There is
@@ -180,20 +121,6 @@ it('when clicking increment and decrement buttons, the counter is changed as exp
 ```
 
 </code-block>
-<code-block label="Stepper.cy.jsx (With JSX)">
-
-```jsx
-it('when clicking increment and decrement buttons, the counter is changed as expected', () => {
-  cy.mount(<Stepper initial={100} />)
-  cy.get(counterSelector).should('have.text', '100')
-  cy.get(incrementSelector).click()
-  cy.get(counterSelector).should('have.text', '101')
-  cy.get(decrementSelector).click().click()
-  cy.get(counterSelector).should('have.text', '99')
-})
-```
-
-</code-block>
 </code-group>
 
 ## Learn More
@@ -206,4 +133,4 @@ guide goes deeper into how to write tests with Cypress.
 We're going to emit a custom event from our Stepper component and learn how to
 test that it was called.
 
-<NavGuide prev="/guides/component-testing/mounting-vue" next="/guides/component-testing/events-vue" />
+<NavGuide prev="/guides/component-testing/mounting-svelte" next="/guides/component-testing/events-svelte" />
