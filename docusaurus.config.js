@@ -131,7 +131,7 @@ const config = {
             'aria-label': 'Cypress Twitter',
           },
           {
-            href: 'https://discord.com/invite/cypress',
+            href: 'https://discord.gg/cypress',
             position: 'right',
             className: 'discord-logo',
             'aria-label': 'Cypress Discord',
