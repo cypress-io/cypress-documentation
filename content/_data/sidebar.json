@@ -179,6 +179,10 @@
               "slug": "quickstart-svelte"
             },
             {
+              "title": "Mounting Components",
+              "slug": "mounting-svelte"
+            },
+            {
               "title": "Diving Deeper"
             },
             {
