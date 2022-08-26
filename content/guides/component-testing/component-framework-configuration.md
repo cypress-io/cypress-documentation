@@ -562,8 +562,13 @@ export default defineConfig({
 
 ## Svelte
 
-For Vue apps, we have built-in support for Vue CLI, Nuxt, Vite, and a custom
-webpack config.
+<Alert type="warning">
+
+Svelte is currently in alpha support for component testing.
+
+</Alert>
+
+For Svelte apps, we have built-in support for Vite and Webpack.
 
 ### Svelte with Vite
 

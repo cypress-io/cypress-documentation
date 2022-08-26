@@ -26,7 +26,7 @@ developer or parent component consuming the Stepper.
 
 ```jsx
 <button aria-label="decrement" on:click={() => count--}>-</button>
-<span data-cy="counter">{{ count }}</span>
+<span data-cy="count">{{ count }}</span>
 <button aria-label="increment" on:click={() => count++}>+</button>
 ```
 
