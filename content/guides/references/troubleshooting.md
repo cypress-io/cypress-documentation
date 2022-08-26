@@ -447,8 +447,8 @@ With this variable set, Cypress will skip rendering the Command Log entirely,
 and perform none of the usual DOM updates to display information about commands
 and statuses as the test runs.
 
-**Note:** With this variable set, screenshots and videos will not include the Command
-Log.
+**Note:** With this variable set, screenshots and videos will not include the
+Command Log.
 
 ## Additional information
 
