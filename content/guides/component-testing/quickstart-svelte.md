@@ -6,28 +6,22 @@ title: 'Quickstart: Svelte'
 
 :::caution
 
-To follow along with this guide, you'll need an Angular CLI application.
+To follow along with this guide, you'll need a Svelte application.
 
 :::
 
-The quickest way to get started writing component tests for Angular is to use
-the [Angular CLI](https://angular.io/cli).
+The quickest way to get started writing component tests for Svelte is to
+scaffold a new project using Vite
 
-To create an Angular project:
+To create a new Svelte project use the Vite scaffold command:
 
-1. Install the Angular CLI
-
-```bash
-npm install -g @angular/cli
-```
-
-2. Create a new Angular application:
+1. Run Vite scaffold command
 
 ```bash
-ng new my-awesome-app
+npm create vite@latest my-awesome-app
 ```
 
-Select all the default options when prompted.
+2. Follow the prompts and select `svelte` for the `framework` and `variant`
 
 3. Go into the directory:
 
@@ -57,20 +51,25 @@ prompt you to set up either **E2E Testing** or **Component Testing**. Choose
   src="/img/guides/component-testing/select-test-type.png" 
   caption="Choose Component Testing"> </DocsImage>
 
-The Project Setup screen automatically detects your framework, which is Angular.
+The Project Setup screen automatically detects your framework, which is Svelte.
 Cypress Component Testing uses your existing development server config to render
 components, helping ensure your components act and display in testing the same
 as they do in production.
 
 <DocsImage 
-  src="/img/guides/component-testing/project-setup-angular.png" 
-  caption=""> </DocsImage>
+  src="/img/guides/component-testing/project-setup-svelte.png" 
+  caption="Framework Detection"> </DocsImage>
 
-Next, Cypress will detect your framework and generate all the necessary
-configuration files, and ensure all required dependencies are installed.
+Next, Cypress will verify your project has the required dependencies.
+
+<DocsImage
+src="/img/guides/component-testing/dependency-detection-svelte.png"
+caption="Dependency Verification"> </DocsImage>
+
+Finally, Cypress will generate all the necessary configuration files.
 
 <DocsImage 
-  src="/img/guides/component-testing/scaffolded-files-angular.png" 
+  src="/img/guides/component-testing/scaffolded-files-svelte.png" 
   caption="The Cypress launchpad will scaffold all of these files for you.">
 </DocsImage>
 
@@ -85,55 +84,26 @@ to open the Cypress app.
 
 ## Creating a Component
 
-At this point, your project is set up but has no components to test yet.
+At this point, your project is set up.
 
-In this guide, we'll use a `StepperComponent` with zero dependencies and one bit
-of internal state, a "counter" that can be incremented and decremented by two
-buttons.
+In this guide, we'll create a `Stepper` component with zero dependencies and one
+bit of internal state, a "counter" that can be incremented and decremented by
+two buttons.
 
-<alert type="info">
-
-If your component uses providers, modules, declarations, requests, or other
-environmental setups, you will need additional work to get your component
-mounting. This is covered in a
-[later section](/guides/component-testing/custom-mount-angular).
-
-</alert>
-
-Add a Stepper component to your project by first using the Angular CLI to create
-a new component:
-
-```bash
-ng generate component stepper
-```
-
-Next, update the generated **stepper.component.ts** file with the following:
+Add a Stepper component to your project by creating a new file in the `src/lib`
+directory called `Stepper.svelte`
 
 <code-group>
-<code-block label="stepper.component.ts" active>
+<code-block label="Stepper.svelte" active>
 
-```ts
-import { Component, Input } from '@angular/core'
+```jsx
+<script>
+  export let count = 0;
+</script>
 
-@Component({
-  selector: 'app-stepper',
-  template: `<div>
-    <button aria-label="decrement" (click)="decrement()">-</button>
-    <span data-cy="counter">{{ count }}</span>
-    <button aria-label="increment" (click)="increment()">+</button>
-  </div>`,
-})
-export class StepperComponent {
-  @Input() count = 0
-
-  decrement(): void {
-    this.count--
-  }
-
-  increment(): void {
-    this.count++
-  }
-}
+<button aria-label="decrement" on:click={() => count--}>-</button>
+<span data-cy="count">{count}</span>
+<button aria-label="increment" on:click={() => count++}>+</button>
 ```
 
 </code-block>
@@ -141,6 +111,6 @@ export class StepperComponent {
 
 ## Next Steps
 
-Next, we will learn to mount the `StepperComponent` with the mount command!
+Next, we will learn to mount the `Stepper` component with the mount command!
 
-<NavGuide next="/guides/component-testing/mounting-angular" />
+<NavGuide next="/guides/component-testing/mounting-svelte" />

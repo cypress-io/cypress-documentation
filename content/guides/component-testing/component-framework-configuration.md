@@ -567,11 +567,100 @@ webpack config.
 
 ### Svelte with Vite
 
+To configure component testing for a Svelte app that uses
+[Vite](https://vitejs.dev/), you will need to configure a `devServer` with a
+`framework` of "svelte" and a `bundler` of "vite" like so:
+
+<cypress-config-file>
+<template #js>
+
+```js
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  component: {
+    devServer: {
+      framework: 'svelte',
+      bundler: 'vite',
+    },
+  },
+})
+```
+
+</template>
+<template #ts>
+
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  component: {
+    devServer: {
+      framework: 'svelte',
+      bundler: 'vite',
+    },
+  },
+})
+```
+
+</template>
+</cypress-config-file>
+
 #### Svelte Vite Sample Apps
+
+- [Svelte 3 Vite 3 with Typescript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/svelte-vite-ts)
 
 ### Svelte with Webpack
 
+To configure component testing for a Svelte app that uses a custom
+[Webpack](https://webpack.js.org/) config, you will need to configure a
+`devServer` with a `framework` of "svelte" and a `bundler` of "webpack" like so:
+
+<cypress-config-file>
+<template #js>
+
+```js
+module.exports = {
+  component: {
+    devServer: {
+      framework: 'svelte',
+      bundler: 'webpack',
+      // optionally pass in webpack config
+      webpackConfig: require('./webpack.config'),
+    },
+  },
+}
+```
+
+</template>
+<template #ts>
+
+```ts
+import { defineConfig } from 'cypress'
+import webpackConfig from './webpack.config'
+
+export default defineConfig({
+  component: {
+    devServer: {
+      framework: 'svelte',
+      bundler: 'webpack',
+      // optionally pass in webpack config
+      webpackConfig,
+    },
+  },
+})
+```
+
+</template>
+</cypress-config-file>
+
+If you don't provide one, Cypress will try to infer your webpack config. If
+Cypress cannot or you want to make modifications to your config, you can pass it
+in manually via the `webpackConfig` option.
+
 #### Svelte Webpack Sample Apps
+
+- [Svelte 3 Webpack 5 with Typescript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/svelte-webpack-ts)
 
 ## Component Testing Config
 
