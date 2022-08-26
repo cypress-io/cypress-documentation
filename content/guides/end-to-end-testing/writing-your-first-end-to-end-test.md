@@ -17,12 +17,12 @@ title: Writing Your First E2E Test
 ## Add a test file
 
 Assuming you've successfully
-[installed the Cypress App](/guides/getting-started/installing-cypress) and
-[opened the Cypress app](/guides/getting-started/opening-the-app), now it's time
-to add your first test. We're going to do this with the <strong>Create new empty
-spec</strong> button in the Cypress App.
+[installed Cypress](/guides/getting-started/installing-cypress) and
+[opened Cypress](/guides/getting-started/opening-the-app), now it's time to add
+your first test. We're going to do this with the <strong>Create new empty
+spec</strong> button.
 
-<DocsImage src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/create-new-empty-spec.png" alt="The Cypress App with the Create new empty spec button highlighted"></DocsImage>
+<DocsImage src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/create-new-empty-spec.png" alt="Cypress with the Create new empty spec button highlighted"></DocsImage>
 
 On clicking it, you should see a dialog where you can enter the name of your new
 spec. Just accept the default name for now.
@@ -34,11 +34,11 @@ and close it with the ✕ button.
 
 <DocsImage src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/new-spec-added-confirmation.png" alt="The new spec confirmation dialog"></DocsImage>
 
-Once we've created that file, you should see the Cypress App immediately display
-it in the list of end-to-end specs. Cypress monitors your spec files for any
-changes and automatically displays any changes.
+Once we've created that file, you should see it immediately displayed in the
+list of end-to-end specs. Cypress monitors your spec files for any changes and
+automatically displays any changes.
 
-<DocsImage src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/spec-list-with-new-spec.png" alt="The Cypress App showing the spec list with the newly created spec"></DocsImage>
+<DocsImage src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/spec-list-with-new-spec.png" alt="Cypress showing the spec list with the newly created spec"></DocsImage>
 
 Even though we haven't written any code yet - that's okay - let's click on your
 new spec and watch Cypress launch it. Spoiler alert: it's probably going to
@@ -72,7 +72,7 @@ Over in the [Command Log](/guides/core-concepts/cypress-app#Command-Log) you'll
 see Cypress display the suite, the test and your first assertion (which should
 be passing in green).
 
-<DocsImage src="/img/guides/getting-started/e2e/v10/first-test.png" alt="My first test shown passing in the Cypress App"></DocsImage>
+<DocsImage src="/img/guides/getting-started/e2e/v10/first-test.png" alt="My first test shown passing in Cypress"></DocsImage>
 
 <Alert type="info">
 
@@ -114,9 +114,9 @@ describe('My First Test', () => {
 
 <DocsImage src="/img/guides/getting-started/e2e/v10/first-test-failing.png" alt="Failing test"></DocsImage>
 
-The [Cypress App](/guides/core-concepts/cypress-app) gives you a visual
-structure of suites, tests, and assertions. Soon you'll also see commands, page
-events, network requests, and more.
+[Cypress](/guides/core-concepts/cypress-app) gives you a visual structure of
+suites, tests, and assertions. Soon you'll also see commands, page events,
+network requests, and more.
 
 <Alert type="info">
 
@@ -181,8 +181,8 @@ describe('My First Test', () => {
 })
 ```
 
-Save the file and switch back over to the Cypress App. You might notice a few
-things:
+Save the file and switch back over to the Cypress Test Runner. You might notice
+a few things:
 
 1. The [Command Log](/guides/core-concepts/cypress-app#Command-Log) now shows
    the new `VISIT` action.
@@ -444,11 +444,13 @@ These various timeouts are defined in the
 
 ## Next steps
 
-- Learn more about the [Cypress App](/guides/core-concepts/cypress-app) UI.
+- Learn more about the [Cypress](/guides/core-concepts/cypress-app) UI.
 - Start [testing your app](/guides/end-to-end-testing/testing-your-app).
 - Set up
   [intelligent code completion](/guides/tooling/IDE-integration#Intelligent-Code-Completion)
   for Cypress commands and assertions.
+- Record your test results to [the Dashboard](/guides/dashboard/introduction)
+  for advanced features like parallelization, flake detection, and more.
 - Check out the <Icon name="github"></Icon>
   [Cypress Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
   for practical demonstrations of Cypress testing practices, configuration, and

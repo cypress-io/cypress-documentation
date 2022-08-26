@@ -12,18 +12,18 @@ Cypress.browser // returns browser object
 
 The object has the following properties:
 
-| Property       | Type      | Description                                                                 |
-| -------------- | --------- | --------------------------------------------------------------------------- |
-| `channel`      | `string`  | Release channel of the browser, such as `stable`, `dev`, or `canary`.       |
-| `displayName`  | `string`  | Human-readable display name for the browser.                                |
-| `family`       | `string`  | Rendering engine being used. `chromium` or `firefox`.                       |
-| `isChosen`     | `boolean` | Whether the browser is selected in the browser selector of the Cypress App. |
-| `majorVersion` | `number`  | The major version number of the browser.                                    |
-| `name`         | `string`  | Machine-friendly name, like `chrome`, `electron`, or `firefox`.             |
-| `path`         | `string`  | Path to the browser on disk. Blank for Electron.                            |
-| `version`      | `string`  | Full version.                                                               |
-| `isHeadless`   | `boolean` | Whether the browser is running headlessly.                                  |
-| `isHeaded`     | `boolean` | Whether the browser displays headed.                                        |
+| Property       | Type      | Description                                                           |
+| -------------- | --------- | --------------------------------------------------------------------- |
+| `channel`      | `string`  | Release channel of the browser, such as `stable`, `dev`, or `canary`. |
+| `displayName`  | `string`  | Human-readable display name for the browser.                          |
+| `family`       | `string`  | Rendering engine being used. `chromium` or `firefox`.                 |
+| `isChosen`     | `boolean` | Whether the browser is selected in the browser selector of Cypress.   |
+| `majorVersion` | `number`  | The major version number of the browser.                              |
+| `name`         | `string`  | Machine-friendly name, like `chrome`, `electron`, or `firefox`.       |
+| `path`         | `string`  | Path to the browser on disk. Blank for Electron.                      |
+| `version`      | `string`  | Full version.                                                         |
+| `isHeadless`   | `boolean` | Whether the browser is running headlessly.                            |
+| `isHeaded`     | `boolean` | Whether the browser displays headed.                                  |
 
 ## Examples
 

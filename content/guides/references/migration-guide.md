@@ -10,7 +10,7 @@ This guide details the changes and how to change your code to migrate to Cypress
 version 10.0.
 [See the full changelog for version 10.0](/guides/references/changelog#10-0-0).
 
-### Cypress App Changes
+### Cypress Changes
 
 - The “Run all specs” and “Run filtered specs” functionality have been removed.
 - The experimental "Cypress Studio" has been removed and will be
@@ -35,9 +35,9 @@ Because of this, support for `cypress.json` has been removed. Documentation for
 
 Related notes:
 
-- If no config file exists when you open the Cypress App, the automatic set up
-  process will begin and either a JavaScript or TypeScript config file will be
-  created depending on what your project uses.
+- If no config file exists when you open Cypress, the automatic set up process
+  will begin and either a JavaScript or TypeScript config file will be created
+  depending on what your project uses.
 - You may use the `--config-file` command line flag or the `configFile`
   [module API](/guides/guides/module-api) option to specify a `.js` or `.ts`
   file. JSON config files are no longer supported.
