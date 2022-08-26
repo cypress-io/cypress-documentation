@@ -24,7 +24,7 @@ buttons that increment and decrement the internal counter value.
 Because the component manages all of the state internally, it is opaque to the
 developer or parent component consuming the Stepper.
 
-```html
+```jsx
 <button aria-label="decrement" on:click={() => count--}>-</button>
 <span data-cy="counter">{{ count }}</span>
 <button aria-label="increment" on:click={() => count++}>+</button>
@@ -40,12 +40,10 @@ component with the new internal state of the `Stepper`.
 
 You would use the `<Stepper>` from a parent component like so:
 
-```html
+```jsx
 <div>
   What's your age?
-  <!-- prettier-ignore -->
   <Stepper on:change={handleAgeChange} />
-  <!-- handleAgeChange is a method the parent component defines -->
 </div>
 ```
 
@@ -54,7 +52,7 @@ Here is what the implementation would look like:
 <code-group>
 <code-block label="Stepper.svelte" active>
 
-```html
+```jsx
 <script>
   import { createEventDispatcher } from 'svelte'
 
@@ -62,21 +60,19 @@ Here is what the implementation would look like:
 
   export let count = 0
 
-  const increment = () => {
-    count++
-    dispatch('change', { count })
-  }
-
   const decrement = () => {
     count--
     dispatch('change', { count })
   }
+
+  const increment = () => {
+    count++
+    dispatch('change', { count })
+  }
 </script>
 
-<!-- prettier-ignore -->
 <button aria-label="decrement" on:click={decrement}>-</button>
-<span data-cy="counter">{ count }</span>
-<!-- prettier-ignore -->
+<span data-cy="count">{ count }</span>
 <button aria-label="increment" on:click={increment}>+</button>
 ```
 
@@ -192,6 +188,9 @@ about using Spies in our
 
 ## What's Next?
 
-We're going to create a container component and learn how to test slots.
+Check out our example Svelte applications:
 
-<NavGuide prev="/guides/component-testing/testing-svelte" next="/guides/component-testing/slots-svelte" />
+- [Svelte 3 Vite 3 with Typescript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/svelte-vite-ts)
+- [Svelte 3 Webpack 5 with Typescript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/svelte-webpack-ts)
+
+<NavGuide prev="/guides/component-testing/testing-svelte"/>

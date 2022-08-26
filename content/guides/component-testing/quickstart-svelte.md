@@ -11,11 +11,11 @@ To follow along with this guide, you'll need a Svelte application.
 :::
 
 The quickest way to get started writing component tests for Svelte is to
-scaffold a new project using vite
+scaffold a new project using Vite
 
-To create a new Svelte project use the vite scaffold command:
+To create a new Svelte project use the Vite scaffold command:
 
-1. Run Vite Scaffold Command
+1. Run Vite scaffold command
 
 ```bash
 npm create vite@latest my-awesome-app
@@ -96,23 +96,14 @@ directory called `Stepper.svelte`
 <code-group>
 <code-block label="Stepper.svelte" active>
 
-```js
+```jsx
 <script>
-  let count = 0;
-
-  const increment = () => {
-    count++;
-  }
-
-  const decrement = () => {
-    count--;
-  }
+  export let count = 0;
 </script>
 
-<button on:click={decrement} aria-label="decrement">-</button>
+<button aria-label="decrement" on:click={() => count--}>-</button>
 <span data-cy="count">{count}</span>
-<button on:click={increment} aria-label="increment">+</button>
-
+<button aria-label="increment" on:click={() => count++}>+</button>
 ```
 
 </code-block>
@@ -122,4 +113,4 @@ directory called `Stepper.svelte`
 
 Next, we will learn to mount the `Stepper` component with the mount command!
 
-<NavGuide next="/guides/component-testing/mounting-angular" />
+<NavGuide next="/guides/component-testing/mounting-svelte" />

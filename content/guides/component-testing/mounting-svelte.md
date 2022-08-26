@@ -27,7 +27,7 @@ import { mount } from 'cypress/svelte'
 While you can use the `mount` function in your tests, we recommend using
 [`cy.mount()`](/api/commands/mount), which is added as a
 [custom command](/api/cypress-api/custom-commands) in the
-**cypress/support/component.ts** file:
+**cypress/support/component.js** file:
 
 <code-group>
 <code-block label="cypress/support/component.js" active>
@@ -44,17 +44,12 @@ Cypress.Commands.add('mount', mount)
 This allows you to use `cy.mount()` in any component test without having to
 import the framework-specific mount command.
 
-You can customize `cy.mount()` to fit your needs. For instance, if you are using
-providers, declarations, or modules your Svelte app, you can configure them
-here. For more info, see the
-[Customizing cy.mount() guide for Svelte](/guides/component-testing/custom-mount-Svelte).
-
 ### Your First Component Test
 
 Now that you have a component let's write a spec that mounts the component.
 
 To get started, create a spec file in the same directory as the `Stepper.svelte`
-component and name it **stepper.cy.ts**. Then paste the following into it:
+component and name it **Stepper.cy.js**. Then paste the following into it:
 
 <code-group>
 <code-block label="Stepper.cy.js" active>
@@ -86,7 +81,7 @@ npx cypress open --component
 > The `--component` flag will launch us directly into component testing
 
 And launch the browser of your choice. In the spec list, click on
-**stepper.cy.js** and you will see the stepper component mounted in the test
+**Stepper.cy.js** and you will see the stepper component mounted in the test
 area.
 
 <DocsImage 
@@ -107,4 +102,4 @@ increment and decrement buttons.
 Now that we have our component mounted, next we will learn how to write tests
 against it.
 
-<NavGuide prev="/guides/component-testing/quickstart-Svelte" next="/guides/component-testing/testing-Svelte" />
+<NavGuide prev="/guides/component-testing/quickstart-Svelte" next="/guides/component-testing/testing-svelte" />

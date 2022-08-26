@@ -11,11 +11,11 @@ of the component is what we think it should be. This is the **Assert** step.
 
 ## Selecting the Stepper Component
 
-By default, the Stepper component's counter is initialized to "0". It also has a
+By default, the Stepper component's counter is initialized to `0`. It also has a
 prop that can specify an initial count.
 
 Let's test that mounting the component (Arrange) in its default state has a
-count of "0" (Assert).
+count of `0` (Assert).
 
 Then, we will test that setting the initial count also works.
 
@@ -26,7 +26,7 @@ In your spec file, add the following inside the existing `describe` block:
 
 ```js
 // Set up some constants for the selectors
-const counterSelector = '[data-cy=counter]'
+const counterSelector = '[data-cy=count]'
 const incrementSelector = '[aria-label=increment]'
 const decrementSelector = '[aria-label=decrement]'
 
@@ -49,28 +49,6 @@ it('supports an "initial" prop to set the value', () => {
 </code-group>
 
 ### What Else Should You Test in This Component?
-
-In the above tests, we arranged and asserted, but didn't act on the component.
-We should should also test that when a user interacts with the component by
-clicking the "increment" and "decrement" buttons that the value of `count`
-changes.
-
-I want to pause here, though.
-
-You'll notice that we're talking about how a user would interact with the
-component, and not technical, Svelte-specific concepts.
-
-You can do a well-written, comprehensive test for our Stepper component by
-approaching this test as a user would.
-
-Don't think about `props`, or `events`. Think solely about the UI and use your
-test to automate what you would naturally do as a user.
-
-You'll test the component thoroughly without getting bogged down in details. All
-that matters is that if the developer uses the component with a given API, the
-end-user will be able to use it as expected.
-
-Now, let's test the Stepper component! Add the following tests:
 
 1. You can increment and decrement the stepper
 
@@ -111,7 +89,7 @@ it('when the decrement button is pressed, the counter is decremented', () => {
 
 ```js
 it('when clicking increment and decrement buttons, the counter is changed as expected', () => {
-  cy.mount(Stepper, { props: { initial: 100 } })
+  cy.mount(Stepper, { props: { count: 100 } })
   cy.get(counterSelector).should('have.text', '100')
   cy.get(incrementSelector).click()
   cy.get(counterSelector).should('have.text', '101')
