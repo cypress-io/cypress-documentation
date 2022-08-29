@@ -260,7 +260,7 @@ module.exports = {
       webpackConfig: require('./webpack.config'),
     },
   },
-})
+}
 ```
 
 </template>
@@ -292,9 +292,6 @@ it via the `webpackConfig` option.
 #### Sample React Webpack Apps
 
 - [React Webpack 5 with JavaScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-webpack5-js)
-
-You can find an example React project that uses Webpack
-[here](https://github.com/cypress-io/cypress-component-examples/tree/main/setup-webpack-react-app).
 
 <!-- Couldn't simply call this next section "Vue" because using "## Vue" by itself killed the tabs in the code examples -->
 
