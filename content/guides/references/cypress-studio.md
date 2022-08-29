@@ -98,7 +98,7 @@ file.
 #### Step 1 - Run the spec
 
 We will use Cypress Studio to perform a "New Transaction" user journey. First,
-launch Cypress and select E2E testing, then choose a browser to run specs in.
+launch Cypress and select End To End testing, then choose a browser to run specs in.
 
 <DocsImage src="/img/guides/cypress-studio/run-spec-1.png" alt="Cypress Studio"></DocsImage>
 
