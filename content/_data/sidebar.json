@@ -205,6 +205,10 @@
               "slug": "cypress-app"
             },
             {
+              "title": "Cypress Studio",
+              "slug": "cypress-studio"
+            },
+            {
               "title": "Writing and Organizing Tests",
               "slug": "writing-and-organizing-tests"
             },
@@ -421,10 +425,6 @@
             {
               "title": "Legacy Configuration",
               "slug": "legacy-configuration"
-            },
-            {
-              "title": "Cypress Studio",
-              "slug": "cypress-studio"
             },
             {
               "title": "Client Certificates",
