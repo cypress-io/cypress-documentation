@@ -51,8 +51,7 @@ them here. For more info, see the
 
 ### Your First Component Test
 
-Now that you have a component and know how to mount it, let's write our first
-test.
+Now that you have a component let's write a spec that mounts the component.
 
 To get started, create a spec file in the same directory as the `Stepper.jsx`
 component and name it **Stepper.cy.jsx**. Then paste the following into it:
