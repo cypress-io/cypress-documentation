@@ -25,7 +25,8 @@ Enabling this flag does the following:
 - It adds the following new behaviors (that will be the default in a future
   major update of Cypress) at the beginning of each test:
   - The page is cleared (by setting it to `about:blank`). Disable this by
-    setting `testIsolation=legacy`.
+    setting
+    [`testIsolation=legacy`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation).
   - All active session data (cookies, `localStorage` and `sessionStorage`)
     across all domains are cleared.
 - It overrides the
