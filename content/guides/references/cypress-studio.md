@@ -35,6 +35,12 @@ attribute to your Cypress configuration.
 
 </Alert>
 
+## Limitations
+
+- Studio is currently only available for writing E2E tests, and doesn't yet work
+  with component testing.
+- Studio does not support writing tests that use domains of multiple origins.
+
 ## Overview
 
 Cypress Studio provides a visual way to generate tests within Cypress, by
