@@ -323,7 +323,7 @@ the following:
 
 | Version                                       | Changes                                   |
 | --------------------------------------------- | ----------------------------------------- |
-| [10.7.0](/guides/references/changelog#10-7-0) | Added `setSystemTime` to clock object     |
+| [10.7.0](/guides/references/changelog#10-7-0) | Added `setSystemTime` to yielded clock object     |
 
 ## See also
 
