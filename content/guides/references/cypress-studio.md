@@ -37,9 +37,10 @@ attribute to your Cypress configuration.
 
 ## Limitations
 
-- Studio is currently only available for writing E2E tests, and doesn't yet work
-  with component testing.
-- Studio does not support writing tests that use domains of multiple origins.
+- Cypress Studio is currently only available for writing E2E tests, and doesn't
+  yet work with component testing.
+- Cypress Studio does not support writing tests that use domains of multiple
+  origins.
 
 ## Overview
 
@@ -98,7 +99,8 @@ file.
 #### Step 1 - Run the spec
 
 We will use Cypress Studio to perform a "New Transaction" user journey. First,
-launch Cypress and select End To End testing, then choose a browser to run specs in.
+launch Cypress and select End To End testing, then choose a browser to run specs
+in.
 
 <DocsImage src="/img/guides/cypress-studio/run-spec-1.png" alt="Cypress Studio"></DocsImage>
 
