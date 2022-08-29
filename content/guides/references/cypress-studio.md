@@ -1,10 +1,32 @@
 ---
 title: Cypress Studio
+e2eSpecific: true
 ---
 
-<E2EOnlyBadge class="my-10"></E2EOnlyBadge>
+<Alert type="warning">
 
-<Alert class="mt-5" type="info">
+<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
+Experimental</strong>
+
+Cypress Studio is an experimental feature and can be enabled by adding the
+[experimentalStudio](/guides/references/experiments#End-to-End-Testing)
+attribute to your Cypress configuration.
+
+:::cypress-config-example
+
+```js
+{
+  e2e: {
+    experimentalStudio: true
+  }
+}
+```
+
+:::
+
+</Alert>
+
+<Alert type="info">
 
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
@@ -24,28 +46,6 @@ The [`.click()`](/api/commands/click), [`.type()`](/api/commands/type),
 generate test code when interacting with the DOM inside of the Cypress Studio.
 You can also generate assertions by right clicking on an element that you would
 like to assert on.
-
-## Using Cypress Studio
-
-<Alert type="info">
-
-Cypress Studio is an experimental feature and can be enabled by adding the
-[experimentalStudio](/guides/references/experiments) attribute to your Cypress
-configuration.
-
-</Alert>
-
-:::cypress-config-example
-
-```js
-{
-  e2e: {
-    experimentalStudio: true
-  }
-}
-```
-
-:::
 
 The Cypress <Icon name="github"></Icon>
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) is
