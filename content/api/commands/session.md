@@ -368,8 +368,8 @@ If the `validate` function return `false`, throws an exception, returns a
 Promise that resolves to `false` or rejects, or contains any failing Cypress
 command, the session will be considered invalid, and `setup` will be re-run.
 
-The page does not cleared after the `validate` is executed. If you use
-`cy.visit()` in your validation, your test will continue on this page once
+The page is not cleared after the `validate` function is executed. If you use
+`cy.visit()` in your validation, your test will continue on the visited page once
 `cy.session()` succeeds.
 
 Here are a few `validate` examples:
