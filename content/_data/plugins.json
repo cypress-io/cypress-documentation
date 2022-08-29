@@ -79,6 +79,13 @@
           "link": "https://github.com/sod/cypress-esbuild-preprocessor",
           "keywords": ["esbuild"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-vite",
+          "description": "Cypress preproccessor for running specs using vite",
+          "link": "https://github.com/mammadataei/cypress-vite",
+          "keywords": ["vite"],
+          "badge": "community"
         }
       ]
     },
@@ -933,6 +940,20 @@
             "visual testing",
             "screenshots comparison",
             "testing service"
+          ],
+          "badge": "community"
+        },
+        {
+          "name": "Visual Regression Diff",
+          "description": "Perform visual regression test with a nice GUI as help. 💅 Supports both E2E and Component Testing",
+          "link": "https://github.com/FRSOURCE/cypress-plugin-visual-regression-diff",
+          "keywords": [
+            "screenshots",
+            "visual regression",
+            "visual testing",
+            "image-diff",
+            "image comparison",
+            "image snapshot"
           ],
           "badge": "community"
         },
