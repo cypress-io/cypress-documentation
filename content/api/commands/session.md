@@ -1,5 +1,6 @@
 ---
 title: session
+e2eSpecific: true
 ---
 
 Cache and restore [cookies](/api/cypress-api/cookies),
@@ -14,14 +15,13 @@ in order to reduce test setup times.
 Experimental</strong>
 
 The `session` API is currently experimental, and can be enabled by setting the
-[`experimentalSessionSupport`](/guides/references/experiments) flag to `true` in
-the Cypress config or by using [`Cypress.config()`](/api/cypress-api/config) at
-the top of a spec file.
+[`experimentalSessionAndOrigin`](/guides/references/experiments) option to
+`true` in the Cypress config.
 
 Enabling this flag does the following:
 
-- It adds the [`cy.session()`](/api/commands/session) command for use in tests.
-- It adds the [`Cypress.session`](/api/cypress-api/session) API.
+- It adds the `cy.session()` and [`cy.origin()`](/api/commands/origin) commands,
+  and [`Cypress.session`](/api/cypress-api/session) API.
 - It adds the following new behaviors (that will be the default in a future
   major update of Cypress) at the beginning of each test:
   - The page is cleared (by setting it to `about:blank`).
@@ -30,10 +30,13 @@ Enabling this flag does the following:
 - It overrides the
   [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
   [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
+- Cross-origin navigation will no longer fail immediately, but instead, time out
+  based on [`pageLoadTimeout`](/guides/references/configuration#Timeouts).
+- Tests will no longer wait on page loads before moving on to the next test.
 
-Because the page is cleared before each test,
-[`cy.visit()`](/api/commands/visit) must be explicitly called in each test to
-visit a page in your application.
+Because the page is cleared at the beginning of each test,
+[`cy.visit()`](/api/commands/visit) must be explicitly called at the beginning
+of each test.
 
 </Alert>
 
@@ -49,17 +52,8 @@ cy.session(id, setup, options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-// Caching session when logging in via page visit
-cy.session(name, () => {
-  cy.visit('/login')
-  cy.get('[data-test=name]').type(name)
-  cy.get('[data-test=password]').type('s3cr3t')
-  cy.get('form').contains('Log In').click()
-  cy.url().should('contain', '/login-successful')
-})
-
 // Caching session when logging in via API
-cy.session([username, password], () => {
+cy.session(username, () => {
   cy.request({
     method: 'POST',
     url: '/login',
@@ -67,6 +61,16 @@ cy.session([username, password], () => {
   }).then(({ body }) => {
     window.localStorage.setItem('authToken', body.token)
   })
+})
+
+// Caching session when logging in via page visit
+// Used in E2E Testing
+cy.session(name, () => {
+  cy.visit('/login')
+  cy.get('[data-test=name]').type(name)
+  cy.get('[data-test=password]').type('s3cr3t')
+  cy.get('form').contains('Log In').click()
+  cy.url().should('contain', '/login-successful')
 })
 ```
 
@@ -335,22 +339,24 @@ represent real-world scenarios and helps keep test run times short.
 ```jsx
 const login = (name) => {
   cy.session(name, () => {
-    cy.visit('/login')
-    cy.get('[data-test=name]').type(name)
-    cy.get('[data-test=password]').type('s3cr3t')
-    cy.get('#submit').click()
-    cy.url().should('contain', '/home')
+    cy.request({
+      method: 'POST',
+      url: '/login',
+      body: { name, password: 's3cr3t' },
+    }).then(({ body }) => {
+      window.localStorage.setItem('authToken', body.token)
+    })
   })
 }
 
 it('should transfer money between users', () => {
   login('user')
-  cy.visit('/account')
+  cy.visit('/transfer')
   cy.get('#amount').type('100.00')
   cy.get('#send-money').click()
 
   login('other-user')
-  cy.visit('/account')
+  cy.visit('/account_balance')
   cy.get('#balance').should('eq', '100.00')
 })
 ```
@@ -427,7 +433,7 @@ be cached uniquely.
 
 ```javascript
 const loginByForm = (name, password) => {
-  cy.session(['loginByForm', name, password], () => {
+  cy.session(['loginByForm', name], () => {
     cy.visit('/login')
     cy.get('[data-test=name]').type(name)
     cy.get('[data-test=password]').type(password)
@@ -437,7 +443,7 @@ const loginByForm = (name, password) => {
 }
 
 const loginByApi = (name, password) => {
-  cy.session(['loginByApi', name, password], () => {
+  cy.session(['loginByApi', name], () => {
     cy.request({
       method: 'POST',
       url: '/api/login',
@@ -449,11 +455,11 @@ const loginByApi = (name, password) => {
 }
 ```
 
-### Where to call `cy.visit()`
+### Where to call `cy.visit()` <E2EOnlyBadge />
 
-If you call `cy.visit()` immediately after `cy.setup()` in your login function
-or custom command, it will effectively behave the same as a login function
-without any session caching.
+If you call [`cy.visit()`](/api/commands/visit) immediately after `cy.session()`
+in your login function or custom command, it will effectively behave the same as
+a login function without any session caching.
 
 ```javascript
 const login = (name) => {
@@ -480,7 +486,8 @@ it('should test something else on the /home page', () => {
 })
 ```
 
-But the moment you want to test something on another page, your test will be
+However, any time you want to test something on a different page, you will need
+to call `cy.visit()` at the beginning of that test, which will then be
 effectively calling `cy.visit()` twice in a row, which will result in slightly
 slower tests.
 
@@ -565,7 +572,7 @@ it('should return the correct value', () => {
 
 ```javascript
 Cypress.Commands.add('loginByApi', (username, password) => {
-  cy.session([username, password], () => {
+  cy.session(username, () => {
     cy.request('POST', `/api/login`, {
       username,
       password,
@@ -580,7 +587,7 @@ it('is a redundant test', () => {
 })
 ```
 
-### Cross-domain sessions
+### Cross-domain sessions <E2EOnlyBadge />
 
 It's possible to switch domains while caching sessions, just be sure to
 explicitly visit the domain in your login command before calling `cy.session()`.
@@ -603,17 +610,17 @@ const login = (name) => {
   })
 }
 
-it('t1', ()=>{
+it('t1', () => {
   login('bob')
   // do things on example.com
 })
 
-it('t2', ()=>{
+it('t2', () => {
   cy.visit('anotherexample.com')
   // do things on anotherexample.com
 })
 
-it('t3', ()=>{
+it('t3', () => {
   login('bob')
   // do things on example.com
 })
@@ -645,15 +652,14 @@ Once created, a session for a given `id` is cached for the duration of the spec
 file. You can't modify a stored session after it has been cached, but you can
 always create a new session with a different `id`.
 
-In order to reduce development time, when running the Test Runner in "open"
-mode, sessions will be cached _between spec file runs_ as long as the `setup`
-function hasn't changed.
+In order to reduce development time, when running Cypress in "open" mode,
+sessions will be cached _for spec file reruns_.
 
 ### Explicitly clearing sessions
 
-When running the Test Runner in "open" mode, you can explicitly clear all
-sessions and re-run the spec file by clicking the "Clear All Sessions" button in
-the [Instrument Panel](#The-Instrument-Panel).
+When running Cypress in "open" mode, you can explicitly clear all sessions and
+re-run the spec file by clicking the "Clear All Sessions" button in the
+[Instrument Panel](#The-Instrument-Panel).
 
 <DocsImage src="/img/api/session/sessions-panel.png" alt="Sessions Instrument Panel" ></DocsImage>
 
@@ -674,7 +680,9 @@ examples for more details.
 ### Choosing the correct id to cache a session
 
 In order for sessions to be cached uniquely, the [`id` argument](#Arguments)
-must be unique for each new session created.
+must be unique for each new session created. The `id` provided to `cy.session()`
+will display in the reporter, thus we do not recommend using sensitive data like
+passwords or tokens as unique identifiers.
 
 ```javascript
 // If your session setup code uses a string variable, pass in the
@@ -747,19 +755,19 @@ You run this, but because `cy.session()` is only being passed `name` as its
 login('user1', 'different-token', 'p4ssw0rd')
 ```
 
-In summary, you need to ensure that the `id` is created from all the parameters
-that are used inside the `setup` function that may change, otherwise `id` values
-may collide and create unexpected results.
+In summary, you need to ensure that the `id` is unique. Create it from all the
+parameters used inside the `setup` function that may change, otherwise `id`
+values may collide and create unexpected results.
 
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
-In this example, setting the `id` to `[name, token, password]` guarantees that
-calling `login()` with different `name`, `token` and `password` values will
-create and cache unique sessions.
+In this example, setting the `id` to `[name, uniqueKey]` guarantees that calling
+`login()` with different `name`, `token` and `password` values will create and
+cache unique sessions.
 
-```js
-const login = (name, token, password) => {
-  cy.session([name, token, password], () => {
+```diff
+const login = (name, token, password, uniqueKey) => {
+  cy.session([name, uniqueKey], () => {
     cy.visit('/login')
     cy.get('[data-test=name]').type(name)
     cy.get('[data-test=token]').type(token)
@@ -769,12 +777,15 @@ const login = (name, token, password) => {
 }
 ```
 
+The [`uuid`](https://www.npmjs.com/package/uuid) npm package can be used to
+generate random unique ids if an arbitrary name-space does not meet your needs.
+
 ### Common Questions
 
 #### Why are all my Cypress commands failing after calling `cy.session()`?
 
-Ensure that you're calling `cy.visit()` after calling `cy.session()`, otherwise
-your tests will be running on a blank page.
+Ensure that you're calling [`cy.visit()`](/api/commands/visit) after calling
+`cy.session()`, otherwise your tests will be running on a blank page.
 
 #### Why am I seeing `401` errors after calling `cy.session()`?
 
@@ -786,7 +797,7 @@ if necessary.
 
 ### The Instrument Panel
 
-<!-- GA TODO: update /guides/core-concepts/test-runner#Instrument-Panel -->
+<!-- GA TODO: update /guides/core-concepts/cypress-app#Instrument-Panel -->
 
 Whenever a session is created or restored inside a test, an extra instrument
 panel is displayed at the top of the test to give more information about the
@@ -809,7 +820,7 @@ session `id` value:
   <DocsImage src="/img/api/session/session-collapsed-new.png" alt="New session (collapsed)"></DocsImage>
 
 - A saved session was found, and used:
-  <DocsImage src="/img/api/session/session-collapsed-saved.png" alt="Saved session (collapsed)"></DocsImage>
+  <DocsImage src="/img/api/session/session-collapsed-restored.png" alt="Saved session (collapsed)"></DocsImage>
 
 - A saved session was found, but the `validate` function failed, so the session
   was recreated and saved:

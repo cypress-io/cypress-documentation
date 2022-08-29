@@ -20,9 +20,9 @@ Cypress.spec // returns spec object
 it('log spec info', () => {
   console.log(Cypress.spec)
   // {
-  //   name: 'filter.spec.js',
-  //   relative: 'cypress/integration/filter.spec.js',
-  //   absolute: '/Users/janelane/Dev/web-app/cypress/integration/filter.spec.js',
+  //   name: 'filter.cy.js',
+  //   relative: 'cypress/e2e/filter.cy.js',
+  //   absolute: '/Users/janelane/Dev/web-app/cypress/e2e/filter.cy.js',
   // }
 })
 ```

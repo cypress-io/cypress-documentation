@@ -21,3 +21,7 @@ themes/cypress/source/fonts/vendor/
 
 cypress/screenshots
 cypress/videos
+
+# Generated files
+.docusaurus
+.cache-loader

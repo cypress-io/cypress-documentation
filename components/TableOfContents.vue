@@ -3,7 +3,7 @@
     <nav
       v-if="toc.length"
       :class="hasBanner ? $style.bannerMargin : ''"
-      class="fixed w-sidebar top-16 bottom-0 right-0 pl-4 pr-8 pb-8 overflow-y-auto space-y-4 hide-scroll"
+      class="fixed w-sidebar top-16 bottom-0 right-0 pl-4 pr-8 pb-8 overflow-y-auto space-y-4 hide-scroll toc-content"
     >
       <h3 :class="$style.tocHeading">ON THIS PAGE</h3>
       <scrollactive

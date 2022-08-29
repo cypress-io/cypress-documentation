@@ -31,7 +31,7 @@ export default {
     <main class="">
       <div class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
-          <h1 class="main-content-title text-center">404 Page Not Found</h1>
+          <h1 class="main-content-header text-center">404 Page Not Found</h1>
           <div class="nuxt-content">
             <div class="mb-8">
               <p class="text-center">

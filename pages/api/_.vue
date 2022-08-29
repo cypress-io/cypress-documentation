@@ -1,10 +1,11 @@
 <script>
-import AppSidebar from '../../components/AppSidebar'
-import TableOfContents from '../../components/TableOfContents'
-import Footer from '../../components/Footer'
-import ApiTableOfContents from '../../components/ApiTableOfContents.vue'
-import { getMetaData, getMetaDescription, getTitle } from '../../utils'
-import { fetchBanner } from '../../utils/sanity'
+import AppSidebar from '@/components/AppSidebar'
+import TableOfContents from '@/components/TableOfContents'
+import Footer from '@/components/Footer'
+import ApiTableOfContents from '@/components/ApiTableOfContents'
+import MainContentHeader from '@/components/MainContentHeader'
+import { getMetaData, getMetaDescription, getTitle } from '@/utils'
+import { fetchBanner } from '@/utils/sanity'
 
 export default {
   components: {
@@ -12,6 +13,7 @@ export default {
     TableOfContents,
     ApiTableOfContents,
     Footer,
+    MainContentHeader
   },
   async asyncData({ $content, app, params, redirect, error }) {
     const path = `/api/${params.pathMatch || 'index'}`
@@ -106,7 +108,11 @@ export default {
       />
       <div class="main-content-article-wrapper">
         <article class="main-content-article hide-scroll">
-          <h1 class="main-content-title">{{ apiPageContent.title }}</h1>
+          <MainContentHeader
+            :title="apiPageContent.title"
+            :e2e-specific="apiPageContent.e2eSpecific"
+            :component-specific="apiPageContent.componentSpecific"
+          />
           <nuxt-content v-if="!isApiToc" :document="apiPageContent" />
           <ApiTableOfContents v-if="isApiToc" />
           <Footer />

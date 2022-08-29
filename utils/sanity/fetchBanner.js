@@ -30,16 +30,21 @@ const once = (fn) => {
 }
 
 export const fetchBanner = once(async () => {
-  const client = getClient()
-  const results = await client.fetch(query)
+  try {
+    const client = getClient()
+    const results = await client.fetch(query)
 
-  if (!results.length) {
-    return undefined
+    if (!results.length) {
+      return undefined
+    }
+
+    const mostRecentBanner = findMostRecentlyPublished(results)
+
+    return mostRecentBanner
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(`Error fetching from Sanity:`, err)
   }
-
-  const mostRecentBanner = findMostRecentlyPublished(results)
-
-  return mostRecentBanner
 })
 
 const findMostRecentlyPublished = (banners) => {

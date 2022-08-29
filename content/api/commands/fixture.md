@@ -117,7 +117,7 @@ If you are loading a JSON fixture, you can simply use the `import` statement and
 let the bundler load it:
 
 ```js
-// cypress/integration/spec.js
+// cypress/e2e/spec.cy.js
 import user from '../fixtures/user.json'
 it('loads the same object', () => {
   cy.fixture('user').then((userFixture) => {
@@ -180,9 +180,13 @@ cy.fixture('users').then((json) => {
 
 #### Modifying fixture data before using it
 
-You can modify fixture data directly before passing it along to a route.
+You can modify fixture data directly before visiting a URL or mounting a
+component that makes a network request to that URL.
 
-```javascript
+<e2e-or-ct>
+<template #e2e>
+
+```js
 cy.fixture('user').then((user) => {
   user.firstName = 'Jane'
   cy.intercept('GET', '/users/1', user).as('getUser')
@@ -193,6 +197,24 @@ cy.wait('@getUser').then(({ request }) => {
   expect(request.body.firstName).to.eq('Jane')
 })
 ```
+
+</template>
+<template #ct>
+
+```js
+cy.fixture('user').then((user) => {
+  user.firstName = 'Jane'
+  cy.intercept('GET', '/users/1', user).as('getUser')
+})
+
+cy.mount(<Users />)
+cy.wait('@getUser').then(({ request }) => {
+  expect(request.body.firstName).to.eq('Jane')
+})
+```
+
+</template>
+</e2e-or-ct>
 
 ## Notes
 
@@ -267,8 +289,8 @@ describe('User page', () => {
 ### Loaded just once
 
 Please keep in mind that fixture files are assumed to be unchanged during the
-test, and thus the Test Runner loads them just once. Even if you overwrite the
-fixture file itself, the already loaded fixture data remains the same.
+test, and thus Cypress loads them just once. Even if you overwrite the fixture
+file itself, the already loaded fixture data remains the same.
 
 If you wish to dynamically change the contents of a file during your tests,
 consider [`cy.readFile()`](/api/commands/readFile) instead.

@@ -7,7 +7,8 @@ Control the size and orientation of the screen for your application.
 <Alert type="info">
 
 You can set the viewport's width and height globally by defining `viewportWidth`
-and `viewportHeight` in the [configuration](/guides/references/configuration).
+and `viewportHeight` in the
+[Cypress configuration](/guides/references/configuration).
 
 </Alert>
 
@@ -75,7 +76,7 @@ Pass in an options object to change the default behavior of `cy.viewport()`.
 
 | Option | Default | Description                                                                              |
 | ------ | ------- | ---------------------------------------------------------------------------------------- |
-| `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/test-runner#Command-Log) |
+| `log`  | `true`  | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
@@ -131,7 +132,10 @@ describe('Nav Menus', () => {
 
 #### Dynamically test multiple viewports
 
-```javascript
+<e2e-or-ct>
+<template #e2e>
+
+```js
 const sizes = ['iphone-6', 'ipad-2', [1024, 768]]
 
 describe('Logo', () => {
@@ -151,6 +155,33 @@ describe('Logo', () => {
   })
 })
 ```
+
+</template>
+<template #ct>
+
+```js
+const sizes = ['iphone-6', 'ipad-2', [1024, 768]]
+
+describe('Logo', () => {
+  sizes.forEach((size) => {
+    // make assertions on the logo using
+    // an array of different viewports
+    it(`Should display logo on ${size} screen`, () => {
+      if (Cypress._.isArray(size)) {
+        cy.viewport(size[0], size[1])
+      } else {
+        cy.viewport(size)
+      }
+
+      cy.mount(<MyComponent />)
+      cy.get('#logo').should('be.visible')
+    })
+  })
+})
+```
+
+</template>
+</e2e-or-ct>
 
 <DocsImage src="/img/api/viewport/loop-through-an-array-of-multiple-viewports.png" alt="Command Log of multiple viewports" ></DocsImage>
 
@@ -197,14 +228,19 @@ By default, until you issue a `cy.viewport()` command, Cypress sets the width to
 
 You can
 [change these default dimensions](/guides/references/configuration#Viewport) by
-adding the following to your configuration file (`cypress.json` by default):
+adding the following to your Cypress configuration:
 
-```json
+:::cypress-config-example
+
+```js
 {
-  "viewportWidth": 1000,
-  "viewportHeight": 660
+  viewportWidth: 1000,
+  viewportHeight: 660
 }
+
 ```
+
+:::
 
 Additionally, Cypress automatically sets the viewport to its default size
 between each test.
@@ -215,7 +251,7 @@ between each test.
 
 By default, if your screen is not large enough to display all of the current
 dimension's pixels, Cypress will scale and center your application within the
-Cypress runner to accommodate.
+preview pane to accommodate.
 
 Scaling the app should not affect any calculations or behavior of your
 application (in fact it won't even know it's being scaled).

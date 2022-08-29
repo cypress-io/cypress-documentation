@@ -35,7 +35,7 @@ export default {
 <template>
   <EmbedVimeo v-if="isVimeo" :src="src" :title="title" />
   <EmbedYouTube v-else-if="isYouTube" :src="src" :title="title" />
-  <video v-else :class="$style.docsVideo" controls>
+  <video v-else :class="$style.docsVideo" :title="title" controls>
     <source :src="filePath" />
   </video>
 </template>

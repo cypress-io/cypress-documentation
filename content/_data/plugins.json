@@ -4,17 +4,17 @@
       "name": "Preprocessors",
       "plugins": [
         {
-          "name": "Browserify",
-          "description": "Watches and bundles your spec files via browserify. This is the default preprocessor that's built into Cypress.",
-          "link": "https://github.com/cypress-io/cypress-browserify-preprocessor",
-          "keywords": ["browserify"],
-          "badge": "official"
-        },
-        {
           "name": "Cucumber",
           "description": "Run cucumber/gherkin-syntaxed specs with cypress.io",
-          "link": "https://github.com/TheBrainFamily/cypress-cucumber-preprocessor",
+          "link": "https://github.com/badeball/cypress-cucumber-preprocessor",
           "keywords": ["file-watcher", "cucumber"],
+          "badge": "community"
+        },
+        {
+          "name": "Cytorus",
+          "description": "Run cucumber/gherkin-syntaxed specs with cypress.io",
+          "link": "https://github.com/NaturalIntelligence/cytorus",
+          "keywords": ["gherkin", "cucumber"],
           "badge": "community"
         },
         {
@@ -78,6 +78,13 @@
           "description": "Uses evanw/esbuild to bundle your specs.",
           "link": "https://github.com/sod/cypress-esbuild-preprocessor",
           "keywords": ["esbuild"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-vite",
+          "description": "Cypress preproccessor for running specs using vite",
+          "link": "https://github.com/mammadataei/cypress-vite",
+          "keywords": ["vite"],
           "badge": "community"
         }
       ]
@@ -199,10 +206,10 @@
         },
         {
           "name": "@cypress/fiddle",
-          "description": "Quickly generates Cypress tests from HTML and JS code",
+          "description": "Quickly generates Cypress E2E tests from HTML and JS code",
           "link": "https://github.com/cypress-io/cypress-fiddle",
           "keywords": ["prototype"],
-          "badge": "official"
+          "badge": "community"
         },
         {
           "name": "npm-cy",
@@ -512,7 +519,7 @@
           "description": "Simple commands to skip a test based on platform, browser or a url",
           "link": "https://github.com/cypress-io/cypress-skip-test",
           "keywords": ["commands"],
-          "badge": "official"
+          "badge": "community"
         },
         {
           "name": "cypress-websocket-testing",
@@ -540,6 +547,13 @@
           "description": "Custom commands for localStorage. Allows preserving localStorage between tests",
           "link": "https://github.com/javierbrea/cypress-localstorage-commands",
           "keywords": ["commands", "localstorage", "persistence"],
+          "badge": "community"
+        },
+        {
+          "name": "@this-dot/cypress-indexeddb",
+          "description": "Custom commands for indexedDb. Allows populating, modifying and asserting data stored in indexedDb.",
+          "link": "https://github.com/thisdot/open-source/tree/main/libs/cypress-indexeddb",
+          "keywords": ["commands", "indexedDb"],
           "badge": "community"
         },
         {
@@ -589,6 +603,20 @@
           "link": "https://github.com/BrandedEntertainmentNetwork/cypress-rest-graphql",
           "keywords": ["api", "rest", "graphQL"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-forced-colors",
+          "description": "Cypress commands to enable and disable browser forced colors mode",
+          "link": "https://github.com/ling1726/cypress-forced-colors",
+          "keywords": ["forced colors", "high contrast", "high contrast mode", "contrast", "testing"],
+          "badge": "community"
+        },
+        {
+          "name": "cy-verify-downloads",
+          "description": "Cypress custom command to wait and verify that file was downloaded",
+          "link": "https://github.com/elaichenkov/cy-verify-downloads",
+          "keywords": ["commands", "assertions", "wait", "verify", "download"],
+          "badge": "community"
         }
       ]
     },
@@ -621,6 +649,13 @@
           "description": "An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: \"I click on an <Element>\", \"I should see an <Element>\")",
           "link": "https://picklejs.com",
           "keywords": ["cucumber", "collection", "actions", "commands"],
+          "badge": "community"
+        }, 
+        {
+          "name": "Pact Cypress Adapter",
+          "description": "Simple commands to generate Pact contracts from your existing Cypress tests, maintained by the Pactflow team",
+          "link": "https://github.com/pactflow/pact-cypress-adapter",
+          "keywords": ["pact","pactflow", "contract testing", "commands"],
           "badge": "community"
         }
       ]
@@ -907,6 +942,30 @@
             "testing service"
           ],
           "badge": "community"
+        },
+        {
+          "name": "Visual Regression Diff",
+          "description": "Perform visual regression test with a nice GUI as help. 💅 Supports both E2E and Component Testing",
+          "link": "https://github.com/FRSOURCE/cypress-plugin-visual-regression-diff",
+          "keywords": [
+            "screenshots",
+            "visual regression",
+            "visual testing",
+            "image-diff",
+            "image comparison",
+            "image snapshot"
+          ],
+          "badge": "community"
+        },
+        {
+          "name": "Cypress Chrome Recorder",
+          "description": "Tool for exporting Cypress Tests from Google Chrome DevTools' Recordings",
+          "link": "https://github.com/cypress-io/cypress-chrome-recorder",
+          "keywords": [
+            "visual testing",
+            "recorder"
+          ],
+          "badge": "experimental"
         }
       ]
     },
@@ -1022,6 +1081,18 @@
           "link": "https://github.com/mailslurp/cypress-mailslurp",
           "keywords": ["email", "mailslurp", "test", "commands"],
           "badge": "community"
+        }
+      ]
+    },
+    {
+      "name": "Legacy",
+      "plugins": [
+        {
+          "name": "Browserify",
+          "description": "Watches and bundles your spec files via browserify.",
+          "link": "https://github.com/cypress-io/cypress-browserify-preprocessor",
+          "keywords": ["browserify"],
+          "badge": "official"
         }
       ]
     }
