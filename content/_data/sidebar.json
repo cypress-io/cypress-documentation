@@ -145,6 +145,33 @@
               "slug": "custom-mount-react"
             },
             {
+              "title": "Angular Component Testing"
+            },
+            {
+              "title": "Quickstart: Angular",
+              "slug": "quickstart-angular"
+            },
+            {
+              "title": "Mounting Components",
+              "slug": "mounting-angular"
+            },
+            {
+              "title": "Testing Angular Components",
+              "slug": "testing-angular"
+            },
+            {
+              "title": "Testing Angular Components with Emitted Events",
+              "slug": "events-angular"
+            },
+            {
+              "title": "Testing Angular Components with Slots",
+              "slug": "slots-angular"
+            },
+            {
+              "title": "Custom Mount Commands for Angular",
+              "slug": "custom-mount-angular"
+            },
+            {
               "title": "Diving Deeper"
             },
             {
@@ -216,16 +243,16 @@
               "slug": "runs"
             },
             {
-              "title": "Organizations",
-              "slug": "organizations"
+              "title": "Smart Orchestration",
+              "slug": "smart-orchestration"
             },
             {
-              "title": "Users",
-              "slug": "users"
+              "title": "Flaky Test Management",
+              "slug": "flaky-test-management"
             },
             {
-              "title": "Bitbucket Integration",
-              "slug": "bitbucket-integration"
+              "title": "Analytics",
+              "slug": "analytics"
             },
             {
               "title": "GitHub Integration",
@@ -236,6 +263,10 @@
               "slug": "gitlab-integration"
             },
             {
+              "title": "Bitbucket Integration",
+              "slug": "bitbucket-integration"
+            },
+            {
               "title": "Jira Integration",
               "slug": "jira-integration"
             },
@@ -244,16 +275,12 @@
               "slug": "slack-integration"
             },
             {
-              "title": "Analytics",
-              "slug": "analytics"
+              "title": "Organizations",
+              "slug": "organizations"
             },
             {
-              "title": "Flaky Test Management",
-              "slug": "flaky-test-management"
-            },
-            {
-              "title": "Smart Orchestration",
-              "slug": "smart-orchestration"
+              "title": "Users",
+              "slug": "users"
             }
           ]
         },

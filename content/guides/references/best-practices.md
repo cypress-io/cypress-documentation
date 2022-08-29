@@ -353,7 +353,7 @@ passwords, your server schedules an email to be delivered.
 
 1. If your application is running locally and is sending the emails directly
    through an SMTP server, you can use a temporary local test SMTP server
-   running inside the Cypress App. Read the blog post
+   running inside Cypress. Read the blog post
    ["Testing HTML Emails using Cypress"](https://www.cypress.io/blog/2021/05/11/testing-html-emails-using-cypress/)
    for details.
 2. If your application is using a 3rd party email service, or you cannot stub
@@ -681,10 +681,8 @@ describe('my form', () => {
 </Alert>
 
 <Alert type="success">
-
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Clean up
 state **before** tests run.
-
 </Alert>
 
 We see many of our users adding code to an `after` or `afterEach` hook in order
@@ -800,11 +798,10 @@ beforeEach(() => {
 ### Is resetting the state necessary?
 
 One final question you should ask yourself is - is resetting the state even
-necessary? Remember, Cypress already automatically clears
-[localStorage](/api/commands/clearlocalstorage),
-[cookies](/api/commands/clearcookies), sessions, etc before each test. Make sure
-you are not trying to clean up state that is already cleaned up by Cypress
-automatically.
+necessary? Remember, Cypress already automatically enforces
+[test isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+by clearing state before each test. Make sure you are not trying to clean up
+state that is already cleaned up by Cypress automatically.
 
 If the state you are trying to clean lives on the server - by all means, clean
 that state. You will need to run these types of routines! But if the state is
@@ -978,8 +975,8 @@ Trying to start a web server from [cy.exec()](/api/commands/exec) or
 
 Because there is no guarantee that code running in an `after` will always run.
 
-While working in the Cypress App you can always restart / refresh while in the
-middle of a test. When that happens, code in an `after` won't execute.
+While working in the Cypress Test Runner you can always restart / refresh while
+in the middle of a test. When that happens, code in an `after` won't execute.
 
 **What should I do then?**
 
@@ -1066,7 +1063,7 @@ load the main window in the `baseUrl` you specified as soon as your tests start.
 Having a `baseUrl` set gives you the added bonus of seeing an error if your
 server is not running during `cypress open` at the specified `baseUrl`.
 
-<DocsImage src="/img/guides/references/cypress-ensures-baseUrl-server-is-running.png" alt="Cypress App with warning about how Cypress could not verify server set as the baseUrl is running"></DocsImage>
+<DocsImage src="/img/guides/references/cypress-ensures-baseUrl-server-is-running.png" alt="Cypress Launchpad with warning about how Cypress could not verify server set as the baseUrl is running"></DocsImage>
 
 We also display an error if your server is not running at the specified
 `baseUrl` during `cypress run` after several retries.
