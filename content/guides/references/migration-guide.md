@@ -718,11 +718,12 @@ enabled.
 
 Configuring your app with separate `tsconfig.json` to solve
 [clashing types with jest](/guides/tooling/typescript-support#Clashing-types-with-Jest).
-You will need to exclude `cypress.config.ts` in your root `tsconfig.json` file.
+You will need to exclude `cypress.config.ts`, `cypress`, `node_modules` in your
+root `tsconfig.json` file.
 
 ```json
 {
-  "exclude": ["cypress.config.ts"]
+  "exclude": ["cypress.config.ts", "cypress", "node_modules"]
 }
 ```
 
