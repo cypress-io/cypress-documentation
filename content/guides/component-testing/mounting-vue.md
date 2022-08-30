@@ -80,6 +80,20 @@ describe('<Stepper>', () => {
 
 Here, we have a single test that ensures that our component mounts.
 
+If you already have a component that you want to create a spec for, we can
+scaffold the spec for you via the Cypress App.
+
+Click on "+ New Spec", select "Create from component", and choose your component
+from the list.
+
+<DocsImage 
+  src="/img/guides/component-testing/create-from-vue-component-card.png"
+  caption="Create from component card"> </DocsImage>
+
+<DocsImage 
+  src="/img/guides/component-testing/create-from-vue-component-list.png"
+  caption="Create from component list"> </DocsImage>
+
 > If you're coming from Vue Test Utils, please note that the return value of
 > `mount` is not used. Cypress Component tests can and should be agnostic to the
 > framework internals and accessing the
