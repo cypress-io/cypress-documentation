@@ -13,7 +13,7 @@ migrating to Cypress v10.0, visit the
 
 ## Common Issues
 
-### Spec File Doesn't Appear in the Cypress App
+### Spec File Doesn't Appear in the Spec Explorer
 
 If something appears missing from the spec list, make sure the files have the
 [proper extension and the `specPattern` is correctly defined](/guides/component-testing/component-framework-configuration#Spec-Pattern-for-Component-Tests).

@@ -11,27 +11,17 @@ setup configuration.
 Cypress currently supports the following frameworks and versions for component
 testing:
 
-| Framework                                                | UI Library | Bundler    |
-| -------------------------------------------------------- | ---------- | ---------- |
-| [Create React App 4+](#Create-React-App-CRA)             | React 16+  | Webpack 4+ |
-| [Next.js 11+](#Next-js) <Badge type="info">Alpha</Badge> | React 16+  | Webpack 5  |
-| [React with Vite](#React-with-Vite)                      | React 16+  | Vite 2     |
-| [React with Webpack](#React-with-Webpack)                | React 16+  | Webpack 4+ |
-| [Vue CLI](#Vue-CLI)                                      | Vue 2+     | Webpack 4+ |
-| [Nuxt 2](#Nuxt) <Badge type="info">Alpha</Badge>         | Vue 2+     | Webpack 4+ |
-| [Vue with Vite](#Vue-with-Vite)                          | Vue 2+     | Vite 2     |
-| [Vue with Webpack](#Vue-with-Webpack)                    | Vue 2+     | Webpack 4+ |
-
-<Alert type="info">
-
-Currently Cypress does not officially support Component Testing with Angular,
-but this is planned for a future release. Until then, users may roll their own
-solution with a
-[custom `cy.mount()` command](/api/commands/mount#Creating-a-New-cy-mount-Command),
-or take as a starting point
-[this unofficial solution from one of our own developers](https://github.com/jordanpowell88/angular-ct).
-
-</Alert>
+| Framework                                                | UI Library  | Bundler    |
+| -------------------------------------------------------- | ----------- | ---------- |
+| [Create React App 4+](#Create-React-App-CRA)             | React 16+   | Webpack 4+ |
+| [Next.js 11+](#Next-js) <Badge type="info">Alpha</Badge> | React 16+   | Webpack 5  |
+| [React with Vite](#React-with-Vite)                      | React 16+   | Vite 2     |
+| [React with Webpack](#React-with-Webpack)                | React 16+   | Webpack 4+ |
+| [Vue CLI](#Vue-CLI)                                      | Vue 2+      | Webpack 4+ |
+| [Nuxt 2](#Nuxt) <Badge type="info">Alpha</Badge>         | Vue 2+      | Webpack 4+ |
+| [Vue with Vite](#Vue-with-Vite)                          | Vue 2+      | Vite 2     |
+| [Vue with Webpack](#Vue-with-Webpack)                    | Vue 2+      | Webpack 4+ |
+| [Angular](#Angular) <Badge type="info">Alpha</Badge>     | Angular 13+ | Webpack 5  |
 
 ## Automatic Configuration (Recommended)
 
@@ -69,7 +59,7 @@ The Launchpad's setup wizard will do the following things:
 <!-- TODO: pic of all the files we make, collapsed -->
 
 Once you click through all of the prompts, you'll be asked to choose a browser
-and launch the Cypress App.
+to continue.
 
 <!-- TODO: start cypress, take a pic of Choose a Browser -->
 
@@ -270,7 +260,7 @@ module.exports = {
       webpackConfig: require('./webpack.config'),
     },
   },
-})
+}
 ```
 
 </template>
@@ -302,9 +292,6 @@ it via the `webpackConfig` option.
 #### Sample React Webpack Apps
 
 - [React Webpack 5 with JavaScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-webpack5-js)
-
-You can find an example React project that uses Webpack
-[here](https://github.com/cypress-io/cypress-component-examples/tree/main/setup-webpack-react-app).
 
 <!-- Couldn't simply call this next section "Vue" because using "## Vue" by itself killed the tabs in the code examples -->
 
@@ -517,6 +504,56 @@ in manually via the `webpackConfig` option.
 #### Vue Webpack Sample Apps
 
 - [Vue 3 Webpack 5 with TypeScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue3-webpack-ts)
+
+## Angular
+
+For Angular apps, we have built-in support for `@angular/cli` projects.
+
+### Angular CLI
+
+To configure component testing for an Angular application that uses the
+[Angular CLI](https://angular.io/cli), you will need to configure a `devServer`
+with a `framework` of "angular", a `bundler` of "webpack" and a `specPattern`
+like so:
+
+<cypress-config-file>
+<template #js>
+
+```js
+module.exports = {
+  component: {
+    devServer: {
+      framework: 'angular',
+      bundler: 'webpack',
+    },
+    specPattern: '**/*.cy.ts',
+  },
+}
+```
+
+</template>
+<template #ts>
+
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  component: {
+    devServer: {
+      framework: 'angular',
+      bundler: 'webpack',
+    },
+    specPattern: '**/*.cy.ts',
+  },
+})
+```
+
+</template>
+</cypress-config-file>
+
+#### Sample Angular Apps
+
+- [Angular 14](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/angular)
 
 ## Component Testing Config
 

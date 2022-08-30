@@ -23,8 +23,8 @@ in a later release. This page is for reference only.
 
 ## Overview
 
-Cypress Studio provides a visual way to generate tests within the Cypress App,
-by _recording interactions_ against the application under test.
+Cypress Studio provides a visual way to generate tests within Cypress, by
+_recording interactions_ against the application under test.
 
 The [`.click()`](/api/commands/click), [`.type()`](/api/commands/type),
 [`.check()`](/api/commands/check), [`.uncheck()`](/api/commands/uncheck), and
@@ -98,7 +98,7 @@ file.
 #### Step 1 - Run the spec
 
 We will use Cypress Studio to perform a "New Transaction" user journey. First,
-launch the Cypress App and run the spec created in the previous step.
+launch Cypress and run the spec created in the previous step.
 
 <DocsImage src="/img/guides/cypress-studio/run-spec-1.png" alt="Cypress Studio" no-border></DocsImage>
 
@@ -126,8 +126,8 @@ the application inside the `beforeEach` block).
 
 </Alert>
 
-Next, the Cypress App will execute the test in isolation and pause after the
-last command in the test.
+Next, Cypress will execute the test in isolation and pause after the last
+command in the test.
 
 <DocsImage src="/img/guides/cypress-studio/extend-ready.png" alt="Cypress Studio Ready" no-border></DocsImage>
 

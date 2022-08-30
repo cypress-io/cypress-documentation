@@ -79,6 +79,13 @@
           "link": "https://github.com/sod/cypress-esbuild-preprocessor",
           "keywords": ["esbuild"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-vite",
+          "description": "Cypress preproccessor for running specs using vite",
+          "link": "https://github.com/mammadataei/cypress-vite",
+          "keywords": ["vite"],
+          "badge": "community"
         }
       ]
     },
@@ -543,6 +550,13 @@
           "badge": "community"
         },
         {
+          "name": "@this-dot/cypress-indexeddb",
+          "description": "Custom commands for indexedDb. Allows populating, modifying and asserting data stored in indexedDb.",
+          "link": "https://github.com/thisdot/open-source/tree/main/libs/cypress-indexeddb",
+          "keywords": ["commands", "indexedDb"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-iframe",
           "description": "Custom commands for interacting with iframes",
           "link": "https://gitlab.com/kgroat/cypress-iframe",
@@ -926,6 +940,20 @@
             "visual testing",
             "screenshots comparison",
             "testing service"
+          ],
+          "badge": "community"
+        },
+        {
+          "name": "Visual Regression Diff",
+          "description": "Perform visual regression test with a nice GUI as help. 💅 Supports both E2E and Component Testing",
+          "link": "https://github.com/FRSOURCE/cypress-plugin-visual-regression-diff",
+          "keywords": [
+            "screenshots",
+            "visual regression",
+            "visual testing",
+            "image-diff",
+            "image comparison",
+            "image snapshot"
           ],
           "badge": "community"
         },

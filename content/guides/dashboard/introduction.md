@@ -2,10 +2,11 @@
 title: Dashboard
 ---
 
-The [Cypress Dashboard](https://on.cypress.io/dashboard) is a service that gives
-you access to recorded test results - typically when running Cypress tests from
-your [CI provider](/guides/continuous-integration/introduction). The Dashboard
-provides you insight into what happened when your tests ran.
+The [Cypress Dashboard](https://on.cypress.io/dashboard) is our
+enterprise-ready, web-based companion to the Cypress app. It gives you online
+access to your recorded test results, orchestrates test runs across multiple
+machines, provides rich analytics and diagnostics, and integrates those insights
+with your favorite tools.
 
 <!-- textlint-disable -->
 
@@ -29,79 +30,82 @@ Check out the <Icon name="github"></Icon>
 
 </Alert>
 
-## Features
+## Benefits
 
-### Organize projects
+### Analyze and diagnose
 
-From the Dashboard you can:
-
-- Set up a project to record in the Dashboard
-- Reset or add more record keys
-- Change who can access your Cypress project
-- Transfer ownership of projects
-- Delete projects
-
-### See test run results
-
-From the Dashboard you can:
-
-- See the number of failed, passing, pending and skipped tests.
-- Get the entire stack trace of failed tests.
-- View screenshots taken when tests fail or when using
-  [`cy.screenshot()`](/api/commands/screenshot).
-- Watch a video of your entire test run or a video clip at the point of test
-  failure.
-- See how fast your spec files ran within CI including whether they were run in
-  parallel.
-- See related groupings of tests.
+Store the full history of your test results, with
+[video clips, screenshots, and full stack traces](/guides/dashboard/runs#Test-failures).
+Quickly see the current state of your app on the
+[Latest Runs](/guides/dashboard/runs) page, identify problematic trends with
+rich [Analytics](/guides/dashboard/analytics), and diagnose unreliable tests
+with [Flaky Test Management](/guides/dashboard/flaky-test-management). Associate
+related tests with
+[grouping](/guides/guides/parallelization#Grouping-by-browser) to see results
+broken down by browser and OS.
 
 <DocsImage src="/img/dashboard/dashboard-runs-list.png" alt="Dashboard Screenshot" ></DocsImage>
 
-### Manage runs
-
-From the Dashboard you can:
-
-- [Cancel runs](/guides/dashboard/runs#Cancel-run) currently in progress
-- [Archive runs](/guides/dashboard/runs#Archive-run) in a canceled or errored
-  state
-
-### Manage organizations
-
-From the Dashboard you can:
-
-- Create, edit and delete organizations
-- See usage details for each organization.
-- Pay for your selected billing plan.
-
-### Manage users
-
-From the Dashboard you can:
-
-- Invite and edit user's roles for organizations
-- Accept or reject requests to join your organization.
-
-### Integrate with GitHub
-
-From the Dashboard you can:
-
-- Integrate your Cypress tests with your GitHub workflow via commit
-  [status checks](/guides/dashboard/github-integration#Status-checks)
-- Integrate Cypress into GitHub via
-  [pull requests](/guides/dashboard/github-integration#Pull-request-comments)
-
-### Integrate with Slack
-
-From the Dashboard you can:
-
-- Integrate Cypress into Slack on every recorded test run.
-
-#### See test runs in the Cypress App
-
-Additionally we've integrated the latest test run info into the
-[Cypress app](/guides/core-concepts/cypress-app). This means you can see the
-status of your tests in the _Runs_ tab from within each project.
+For users of the [Cypress app](/guides/core-concepts/cypress-app), we've
+integrated test run information from the Dashboard with our interactive
+test-runner so developers can see the latest results across the team, and
+identify areas of concern.
 
 <DocsImage src="/img/dashboard/v10/runs-list-in-cypress-app.png" alt="Runs List" ></DocsImage>
+
+### Run tests in parallel, in priority order, or not at all
+
+With our [Smart Orchestration](/guides/dashboard/smart-orchestration) features,
+you can run tests across a swarm of machines simultaneously while the Dashboard
+coordinates runners and
+[balances test loads](/guides/guides/parallelization#Balance-strategy) - no
+setup required! You can
+[prioritize recently failed specs](/guides/dashboard/smart-orchestration#Run-failed-specs-first)
+to surface problems earlier, and
+[cancel whole test runs on failure](/guides/dashboard/smart-orchestration#Cancel-test-run-when-a-test-fails)
+to save on resource usage. You can also
+[Cancel in-progress runs](/guides/dashboard/runs#Cancel-run) manually from the
+Dashboard if you need to.
+
+<DocsImage src="/img/dashboard/introduction/orchestration-diagram.png" alt="Diagram comparing serial and parallel test configurations" ></DocsImage>
+
+### Integrate with source control providers
+
+Ensure rock-solid reliability by keeping failing code out of your
+[GitHub](https://github.com), [GitLab](https://gitlab.com) and
+[Bitbucket](https://bitbucket.org) repositories, with
+[status checks](/guides/dashboard/github-integration#Status-checks) that block
+commits from being merged until your Cypress tests are green. Surface test
+results directly in your PRs with
+[pull request comments](/guides/dashboard/github-integration#Pull-request-comments)
+that include test run statistics, specific failure details, and deep links to
+results in Dashboard for fast debugging. Dashboard users with
+[Business or Enterprise plans](https://www.cypress.io/pricing/) can integrate
+securely with
+[Self-managed GitLab](https://docs.gitlab.com/ee/subscriptions/self_managed/)
+instances too.
+
+<DocsImage src="/img/dashboard/github-integration/status-checks-per-spec.png" alt="Status checks per spec"></DocsImage>
+
+### Collaborate and organize
+
+We also integrate with two of the world's most popular collaboration tools:
+[Slack](https://slack.com/) and [Jira](https://www.atlassian.com/software/jira).
+Deliver test results with valuable additional context, directly into a dedicated
+Slack channel. Or for those on the
+[Team, Business or Enterprise plans](https://www.cypress.io/pricing/),
+[create bidirectionally linked Jira tickets](/guides/dashboard/jira-integration#Creating-a-Jira-issue-for-a-test-case)
+directly from specific test failures.
+
+<DocsImage src="/img/dashboard/cypress-slack-integration-channel-feed.png" alt="Cypress notification feed in Slack channel" ></DocsImage>
+
+Lastly you can use our flexible adminstrative functions to configure the
+Dashboard however you want, grouping [projects](/guides/dashboard/projects) into
+multiple [organizations](/guides/dashboard/organizations) if you have a lot,
+checking [usage](/guides/dashboard/organizations#Billing-Usage), and
+administering [users and permissions](/guides/dashboard/users#User-roles). We
+also provide [SSO integration](/guides/dashboard/organizations#Enterprise-SSO)
+for teams on our [Enterprise plan](https://www.cypress.io/pricing/).
 
 <Alert type="info">
 

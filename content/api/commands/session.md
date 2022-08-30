@@ -30,13 +30,13 @@ Enabling this flag does the following:
 - It overrides the
   [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
   [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
-- Cross-domain navigations will no longer fail immediately, but instead, time
-  out based on [`pageLoadTimeout`](/guides/references/configuration#Timeouts).
+- Cross-origin navigation will no longer fail immediately, but instead, time out
+  based on [`pageLoadTimeout`](/guides/references/configuration#Timeouts).
 - Tests will no longer wait on page loads before moving on to the next test.
 
 Because the page is cleared at the beginning of each test,
-[`cy.mount()`](/api/commands/mount) or [`cy.visit()`](/api/commands/visit) must
-be explicitly called at the beginning of each test.
+[`cy.visit()`](/api/commands/visit) must be explicitly called at the beginning
+of each test.
 
 </Alert>
 
@@ -53,8 +53,7 @@ cy.session(id, setup, options)
 
 ```javascript
 // Caching session when logging in via API
-// Used in both E2E and Component Testing
-cy.session([username, password], () => {
+cy.session(username, () => {
   cy.request({
     method: 'POST',
     url: '/login',
@@ -352,12 +351,12 @@ const login = (name) => {
 
 it('should transfer money between users', () => {
   login('user')
-  cy.mount(<AccountDetails />)
+  cy.visit('/transfer')
   cy.get('#amount').type('100.00')
   cy.get('#send-money').click()
 
   login('other-user')
-  cy.mount(<AccountDetails />)
+  cy.visit('/account_balance')
   cy.get('#balance').should('eq', '100.00')
 })
 ```
@@ -434,7 +433,7 @@ be cached uniquely.
 
 ```javascript
 const loginByForm = (name, password) => {
-  cy.session(['loginByForm', name, password], () => {
+  cy.session(['loginByForm', name], () => {
     cy.visit('/login')
     cy.get('[data-test=name]').type(name)
     cy.get('[data-test=password]').type(password)
@@ -444,7 +443,7 @@ const loginByForm = (name, password) => {
 }
 
 const loginByApi = (name, password) => {
-  cy.session(['loginByApi', name, password], () => {
+  cy.session(['loginByApi', name], () => {
     cy.request({
       method: 'POST',
       url: '/api/login',
@@ -454,100 +453,6 @@ const loginByApi = (name, password) => {
     })
   })
 }
-```
-
-### Where to call `cy.mount()` <ComponentOnlyBadge />
-
-If you call [`cy.mount()`](/api/commands/mount) immediately after `cy.session()`
-in your login function or custom command, it will always end up mounting the
-specified component.
-
-```javascript
-const login = (name) => {
-  cy.session(name, () => {
-    cy.request({
-      method: 'POST',
-      url: '/login',
-      body: { name, password: 's3cr3t' },
-    }).then(({ body }) => {
-      window.localStorage.setItem('authToken', body.token)
-    })
-  })
-  cy.mount(<AccountDetails />)
-}
-
-beforeEach(() => {
-  login('user')
-})
-
-it('should test something in the AccountDetails component', () => {
-  // assertions
-})
-
-it('should test something else in the AccountDetails component', () => {
-  // assertions
-})
-```
-
-However, any time you want to test something in a different component, you will
-need to call `cy.mount()` at the beginning of that test, which will then be
-effectively calling `cy.mount()` twice in a row, which will result in slightly
-slower tests.
-
-```javascript
-// ...continued...
-
-it('should test something in the OtherDetails component', () => {
-  cy.mount(<OtherDetails />)
-  // assertions
-})
-```
-
-Tests will often be faster if you call `cy.mount()` only when necessary. This
-works especially well when
-[organizing tests into suites](/guides/core-concepts/writing-and-organizing-tests#Test-Structure)
-and calling `cy.mount()` after logging in inside a
-[`beforeEach`](/guides/core-concepts/writing-and-organizing-tests#Hooks) hook.
-
-```javascript
-const login = (name) => {
-  cy.session(name, () => {
-    cy.request({
-      method: 'POST',
-      url: '/login',
-      body: { name, password: 's3cr3t' },
-    }).then(({ body }) => {
-      window.localStorage.setItem('authToken', body.token)
-    })
-  })
-  // no mount here
-}
-
-describe('home page tests', () => {
-  beforeEach(() => {
-    login('user')
-    cy.mount(<AccountDetails />)
-  })
-
-  it('should test something in the AccountDetails component', () => {
-    // assertions
-  })
-
-  it('should test something else in the AccountDetails component', () => {
-    // assertions
-  })
-})
-
-describe('other page tests', () => {
-  beforeEach(() => {
-    login('user')
-    cy.mount(<OtherDetails />)
-  })
-
-  it('should test something in the OtherDetails component', () => {
-    // assertions
-  })
-})
 ```
 
 ### Where to call `cy.visit()` <E2EOnlyBadge />
@@ -667,7 +572,7 @@ it('should return the correct value', () => {
 
 ```javascript
 Cypress.Commands.add('loginByApi', (username, password) => {
-  cy.session([username, password], () => {
+  cy.session(username, () => {
     cy.request('POST', `/api/login`, {
       username,
       password,
@@ -705,17 +610,17 @@ const login = (name) => {
   })
 }
 
-it('t1', ()=>{
+it('t1', () => {
   login('bob')
   // do things on example.com
 })
 
-it('t2', ()=>{
+it('t2', () => {
   cy.visit('anotherexample.com')
   // do things on anotherexample.com
 })
 
-it('t3', ()=>{
+it('t3', () => {
   login('bob')
   // do things on example.com
 })
@@ -738,9 +643,8 @@ to explicitly log out.
 | After `cy.session()` | <Icon name="check-circle" color="green"></Icon> |                                                 |
 
 Because calling `cy.session()` clears the current page in addition to restoring
-cached session data, [`cy.mount()`](/api/commands/mount) or
-[`cy.visit()`](/api/commands/visit) must always be explicitly called afterwards
-to ensure a page is visited or a component is mounted.
+cached session data, [`cy.visit()`](/api/commands/visit) must always be
+explicitly called afterwards to ensure a page is visited.
 
 ### Session caching
 
@@ -748,15 +652,14 @@ Once created, a session for a given `id` is cached for the duration of the spec
 file. You can't modify a stored session after it has been cached, but you can
 always create a new session with a different `id`.
 
-In order to reduce development time, when running the Cypress App in "open"
-mode, sessions will be cached _between spec file runs_ as long as the `setup`
-function hasn't changed.
+In order to reduce development time, when running Cypress in "open" mode,
+sessions will be cached _for spec file reruns_.
 
 ### Explicitly clearing sessions
 
-When running the Cypress App in "open" mode, you can explicitly clear all
-sessions and re-run the spec file by clicking the "Clear All Sessions" button in
-the [Instrument Panel](#The-Instrument-Panel).
+When running Cypress in "open" mode, you can explicitly clear all sessions and
+re-run the spec file by clicking the "Clear All Sessions" button in the
+[Instrument Panel](#The-Instrument-Panel).
 
 <DocsImage src="/img/api/session/sessions-panel.png" alt="Sessions Instrument Panel" ></DocsImage>
 
@@ -777,7 +680,9 @@ examples for more details.
 ### Choosing the correct id to cache a session
 
 In order for sessions to be cached uniquely, the [`id` argument](#Arguments)
-must be unique for each new session created.
+must be unique for each new session created. The `id` provided to `cy.session()`
+will display in the reporter, thus we do not recommend using sensitive data like
+passwords or tokens as unique identifiers.
 
 ```javascript
 // If your session setup code uses a string variable, pass in the
@@ -850,19 +755,19 @@ You run this, but because `cy.session()` is only being passed `name` as its
 login('user1', 'different-token', 'p4ssw0rd')
 ```
 
-In summary, you need to ensure that the `id` is created from all the parameters
-that are used inside the `setup` function that may change, otherwise `id` values
-may collide and create unexpected results.
+In summary, you need to ensure that the `id` is unique. Create it from all the
+parameters used inside the `setup` function that may change, otherwise `id`
+values may collide and create unexpected results.
 
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
-In this example, setting the `id` to `[name, token, password]` guarantees that
-calling `login()` with different `name`, `token` and `password` values will
-create and cache unique sessions.
+In this example, setting the `id` to `[name, uniqueKey]` guarantees that calling
+`login()` with different `name`, `token` and `password` values will create and
+cache unique sessions.
 
-```js
-const login = (name, token, password) => {
-  cy.session([name, token, password], () => {
+```diff
+const login = (name, token, password, uniqueKey) => {
+  cy.session([name, uniqueKey], () => {
     cy.visit('/login')
     cy.get('[data-test=name]').type(name)
     cy.get('[data-test=token]').type(token)
@@ -872,13 +777,15 @@ const login = (name, token, password) => {
 }
 ```
 
+The [`uuid`](https://www.npmjs.com/package/uuid) npm package can be used to
+generate random unique ids if an arbitrary name-space does not meet your needs.
+
 ### Common Questions
 
 #### Why are all my Cypress commands failing after calling `cy.session()`?
 
-Ensure that you're calling [`cy.mount()`](/api/commands/mount) or
-[`cy.visit()`](/api/commands/visit) after calling `cy.session()`, otherwise your
-tests will be running on a blank page.
+Ensure that you're calling [`cy.visit()`](/api/commands/visit) after calling
+`cy.session()`, otherwise your tests will be running on a blank page.
 
 #### Why am I seeing `401` errors after calling `cy.session()`?
 
@@ -913,7 +820,7 @@ session `id` value:
   <DocsImage src="/img/api/session/session-collapsed-new.png" alt="New session (collapsed)"></DocsImage>
 
 - A saved session was found, and used:
-  <DocsImage src="/img/api/session/session-collapsed-saved.png" alt="Saved session (collapsed)"></DocsImage>
+  <DocsImage src="/img/api/session/session-collapsed-restored.png" alt="Saved session (collapsed)"></DocsImage>
 
 - A saved session was found, but the `validate` function failed, so the session
   was recreated and saved:
@@ -947,5 +854,4 @@ data, including cookies, `localStorage` and `sessionStorage`.
 - [Authenticate faster in tests with the cy.session command](https://cypress.io/blog/2021/08/04/authenticate-faster-in-tests-cy-session-command/)
 - [Custom Commands](/api/cypress-api/custom-commands)
 - [`Cypress.session`](/api/cypress-api/session)
-- [`cy.mount()`](/api/commands/mount)
 - [`cy.visit()`](/api/commands/visit)

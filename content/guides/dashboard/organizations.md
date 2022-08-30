@@ -162,6 +162,15 @@ Organization to set up SSO.
 
 Follow the instructions below for your specific SSO provider.
 
+<Alert type="warning">
+
+<strong class="alert-header">Smart Card Authentication</strong>
+
+For Smart Card implementation, please reach out to
+[Support](mailto:support@cypress.io) for assistance.
+
+</Alert>
+
 - [Okta](#Okta)
 - [SAML](#SAML)
 - [Azure AD](#Azure-AD)
@@ -196,7 +205,7 @@ documentation below, refer to
 
 1. Navigate to the **Assignments** tab and grant your users access to the
    Cypress Dashboard.
-1. [Save and test the configuration](#Save-and-Test).
+1. [Save Configuration](#Save-Configuration).
 
 ##### **SAML**
 
@@ -220,7 +229,7 @@ documentation for configuring a SAML integration.
 
 1. Collect the sign-on URL and certificate from your identity provider. Supply
    that to the Cypress Dashboard.
-1. [Save and test the configuration](#Save-and-Test).
+1. [Save Configuration](#Save-Configuration).
 
 ##### **Azure AD**
 
@@ -246,12 +255,12 @@ addition to the documentation below, refer to the Microsoft Guides for
 1. Enter the domain used for your Active Directory, as well as the list of SSO
    domains you wish to allow user to authenticate with, in the Cypress
    Dashboard. This is used for SSO discovery from the login screen.
-1. [Save and test the configuration](#Save-and-Test).
+1. [Save Configuration](#Save-Configuration).
 
-#### Save and Test
+#### Save Configuration
 
-1. Return to the Cypress Dashboard and click **Save and test configuration**.
-   The Cypress Dashboard will attempt to authenticate.
+1. Return to the Cypress Dashboard and click **Save Configuration**. The Cypress
+   Dashboard will attempt to authenticate.
 
 🎉 Your integration is now complete! You can invite all of the users in your
 organization to sign in through your SSO provider.
