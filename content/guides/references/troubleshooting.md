@@ -112,7 +112,7 @@ from a known filesystem path to bypass browser auto detection.
 
 You can see the full list of found browsers and their properties within the
 [resolved configuration](/guides/references/configuration#Resolved-Configuration)
-in the **Settings** tab of the Cypress App.
+in the **Settings** tab of Cypress.
 
 Another way to log what is found by Cypress is to run Cypress with the
 [DEBUG environment variable](#Print-DEBUG-logs) set to `cypress:launcher`. This
@@ -191,10 +191,10 @@ cypress open --browser C:/User/Application/browser.exe:chrome
 
 ## Allow the Cypress Chrome extension
 
-Cypress utilizes a Chrome extension within the Cypress App in order to run
-properly. If you or your company block specific Chrome extensions, this may
-cause problems with running Cypress. You will want to ask your administrator to
-allow the Cypress extension ID below:
+Cypress utilizes a Chrome extension in order to run properly. If you or your
+company block specific Chrome extensions, this may cause problems with running
+Cypress. You will want to ask your administrator to allow the Cypress extension
+ID below:
 
 ```sh
 caljajdfkjjjdehjdoimjkkakekklcck
@@ -433,8 +433,8 @@ verbose `cypress-verbose:server:util:process_profiler` debug stream.
 
 In some cases the [Command Log](/guides/core-concepts/cypress-app#Command-Log),
 responsible for displaying test commands, assertions, and statuses in the
-Cypress App, may cause performance issues resulting in slower tests or the
-browser crashing.
+Cypress Test Runner, may cause performance issues resulting in slower tests or
+the browser crashing.
 
 In order to isolate these issues, you can hide the Command Log by passing the
 environment variable below during `cypress open` or `cypress run`.
@@ -442,6 +442,13 @@ environment variable below during `cypress open` or `cypress run`.
 ```shell
 CYPRESS_NO_COMMAND_LOG=1 cypress run
 ```
+
+With this variable set, Cypress will skip rendering the Command Log entirely,
+and perform none of the usual DOM updates to display information about commands
+and statuses as the test runs.
+
+**Note:** With this variable set, screenshots and videos will not include the
+Command Log.
 
 ## Additional information
 
@@ -468,21 +475,19 @@ help! Please check out our
 [contributing guide](https://github.com/cypress-io/cypress/blob/develop/CONTRIBUTING.md)
 to learn about the many ways you can contribute.
 
-### Run the Cypress app by itself
+### Run Cypress by itself
 
 Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb
-server (if necessary), and then opens the Cypress App built on top of
-[Electron](https://electronjs.org/).
+server (if necessary), and then opens Cypress.
 
-Some common situations on why you would want to run the Cypress app by itself
-are to:
+Some common situations on why you would want to run Cypress by itself are to:
 
 - debug Cypress not starting or hanging
 - debug problems related to the way CLI arguments are parsed by the npm CLI
   module
 
-Here is how you can launch Cypress application directly without the npm CLI
-module. First, find where the binary is installed using the
+Here is how you can launch Cypress directly without the npm CLI module. First,
+find where the binary is installed using the
 [cypress cache path](/guides/guides/command-line#cypress-cache-path) command.
 
 For example, on a Linux machine:
@@ -528,8 +533,8 @@ ldd /home/person/.cache/Cypress/3.3.1/Cypress/Cypress
 dependencies by copying them from one of our official Docker images.
 
 **Note:** verbose Electron logging might show warnings that still allow Cypress
-to work normally. For example, the Cypress App opens normally despite the scary
-output below:
+to work normally. For example, Cypress opens normally despite the scary output
+below:
 
 ```shell
 ELECTRON_ENABLE_LOGGING=true DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress
@@ -540,7 +545,7 @@ ELECTRON_ENABLE_LOGGING=true DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/C
 You might need to use a local HTTP server (instead of file://): https://fb.me/react-devtools-faq", source: file:///root/.cache/Cypress/3.3.1/Cypress/resources/app/packages/desktop-gui/dist/app.js (73292)
 ```
 
-You can also see verbose Cypress logs when running the Cypress App binary
+You can also see verbose Cypress logs when running the Cypress binary
 
 ```shell
 DEBUG=cypress* DISPLAY=10.130.4.201:0 /root/.cache/Cypress/3.3.1/Cypress/Cypress --smoke-test --ping=101
@@ -577,8 +582,7 @@ Calling _exit(1). Core file will not be generated.
 ### Patch Cypress
 
 Cypress comes with an npm CLI module that parses the arguments, starts the Xvfb
-server (if necessary), and then opens the Cypress App built on top of
-[Electron](https://electronjs.org/).
+server (if necessary), and then opens Cypress.
 
 If you're encountering a bug in the current version of Cypress, you can
 implementing a temporary fix by patching Cypress in your own project. Here is an
@@ -648,8 +652,7 @@ npx cypress cache path
 ```
 
 Second, open the source code at the following path in any code editor. Make sure
-to substitute `3.3.1` for the desired version of the Cypress App you want to
-edit.
+to substitute `3.3.1` for the desired version of Cypress you want to edit.
 
 ```text
 /Users/jane/Library/Caches/Cypress/3.3.1/Cypress.app/Contents/Resources/app/packages/
@@ -657,10 +660,10 @@ edit.
 
 You can change anything in the JavaScript code:
 
-<DocsImage src="/img/guides/troubleshooting/source-code.png" alt="Source code of the Cypress App in a text editor" ></DocsImage>
+<DocsImage src="/img/guides/troubleshooting/source-code.png" alt="Source code of Cypress in a text editor" ></DocsImage>
 
-When finished, if necessary, remove the edited Cypress App version and reinstall
-the Cypress official version to get back to the official released code.
+When finished, if necessary, remove the edited Cypress version and reinstall the
+Cypress official version to get back to the official released code.
 
 ```shell
 rm -rf /Users/jane/Library/Caches/Cypress/3.3.1

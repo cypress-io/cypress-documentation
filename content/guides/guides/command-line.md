@@ -77,7 +77,7 @@ your `package.json`
 Dashboard, the command should be:
 
 ```shell
-npm run cy:run -- --record --spec "cypress/e2e/my-spec.cy.js"
+npm run cy:run --record --spec "cypress/e2e/my-spec.cy.js"
 ```
 
 If you are using the [npx](https://github.com/zkat/npx) tool, you can invoke the
@@ -121,7 +121,7 @@ cypress run [options]
 | `--headless`               | [Hide the browser instead of running headed (default during `cypress run`)](#cypress-run-headless)                                                                                         |
 | `--help`, `-h`             | Output usage information                                                                                                                                                                   |
 | `--key`, `-k`              | [Specify your secret record key](#cypress-run-record-key-lt-record-key-gt)                                                                                                                 |
-| `--no-exit`                | [Keep the Cypress App open after tests in a spec file run](#cypress-run-no-exit)                                                                                                           |
+| `--no-exit`                | [Keep Cypress open after tests in a spec file run](#cypress-run-no-exit)                                                                                                                   |
 | `--parallel`               | [Run recorded specs in parallel across multiple machines](#cypress-run-parallel)                                                                                                           |
 | `--port`,`-p`              | [Override default port](#cypress-run-port-lt-port-gt)                                                                                                                                      |
 | `--project`, `-P`          | [Path to a specific project](#cypress-run-project-lt-project-path-gt)                                                                                                                      |
@@ -273,7 +273,7 @@ cypress run --headed
 
 #### `cypress run --no-exit`
 
-To prevent the Cypress App from exiting after running tests in a spec file, use
+To prevent Cypress from exiting after running tests in a spec file, use
 `--no-exit`.
 
 You can pass `--headed --no-exit` in order to view the **command log** or have
@@ -476,7 +476,7 @@ $ echo $?
 
 ### `cypress open`
 
-Opens the Cypress App.
+Opens Cypress.
 
 ```shell
 cypress open [options]
@@ -485,12 +485,12 @@ cypress open [options]
 #### Options:
 
 Options passed to `cypress open` will automatically be applied to the project
-you open. These persist on all projects until you quit the Cypress App. These
-options will also override values in the Cypress configuration file.
+you open. These persist on all projects until you quit Cypress. These options
+will also override values in the Cypress configuration file.
 
 By passing `--browser` and `--e2e` or `--component` when launching a project,
-you can open the Cypress App and launch the browser at the same time. Otherwise,
-you will be guided through selecting a browser, project, and/or testing type.
+you can open Cypress and launch the browser at the same time. Otherwise, you
+will be guided through selecting a browser, project, and/or testing type.
 
 | Option                | Description                                                                                                                   |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
@@ -518,8 +518,7 @@ with Cypress:
 cypress open --browser /usr/bin/chromium
 ```
 
-If found, the specified browser will be added to the list of available browsers
-in the Cypress App.
+If found, the specified browser will be added to the list of available browsers.
 
 Currently, only browsers in the Chrome family (including the new Chromium-based
 Microsoft Edge and Brave) and Firefox are supported.

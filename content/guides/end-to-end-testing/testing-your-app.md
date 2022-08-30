@@ -22,10 +22,10 @@ title: Testing Your App
 ## <Icon name="terminal"></Icon> Step 1: Start your server
 
 Assuming you've successfully
-[installed the Cypress App](/guides/getting-started/installing-cypress) and
-[opened the Cypress App](/guides/getting-started/opening-the-app) in your
-project, the first thing you'll want to do is start your local development
-server that hosts the application.
+[installed Cypress](/guides/getting-started/installing-cypress) and
+[opened Cypress](/guides/getting-started/opening-the-app) in your project, the
+first thing you'll want to do is start your local development server that hosts
+the application.
 
 It should look something like **http://localhost:8080**.
 
@@ -128,7 +128,7 @@ it('successfully loads', () => {
 })
 -->
 
-<DocsImage src="/img/guides/getting-started/e2e/v10/testing-your-app-visit-fail.png" alt="Error in Cypress App showing cy.visit failed"></DocsImage>
+<DocsImage src="/img/guides/getting-started/e2e/v10/testing-your-app-visit-fail.png" alt="Error in Cypress showing cy.visit failed"></DocsImage>
 
 If you've started your server, then you should see your application loaded and
 working.

@@ -166,7 +166,7 @@ function (or deprecated
 [plugins file](/guides/references/legacy-configuration#Plugins) function) has an
 uncaught exception, an unhandled rejection from a promise, or a syntax error -
 Cypress will automatically catch those and display them to you inside of the
-console and even in the Cypress App itself.
+console and even in Cypress itself.
 
 Errors in your `setupNodeEvents` function _will not crash_ Cypress.
 
