@@ -215,7 +215,7 @@ module API option, if specified)
 
 - Spec file found
   - `cypress/e2e/path/to/file/one.cy.js`
-- Common ancester paths (calculated at runtime)
+- Common ancestor paths (calculated at runtime)
   - `cypress/e2e/path/to/file`
 - Generated screenshot file
   - `cypress/screenshots/one.cy.js/your-screenshot.png`
@@ -227,7 +227,7 @@ module API option, if specified)
 - Spec files found
   - `cypress/e2e/path/to/file/one.cy.js`
   - `cypress/e2e/path/to/two.cy.js`
-- Common ancester paths (calculated at runtime)
+- Common ancestor paths (calculated at runtime)
   - `cypress/e2e/path/to/`
 - Generated screenshot files
   - `cypress/screenshots/file/one.cy.js/your-screenshot.png`
