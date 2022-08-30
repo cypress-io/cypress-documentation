@@ -66,10 +66,12 @@ Pass in an options object to change the default behavior of `cy.clock()`.
 
   Restore all overridden native functions. This is automatically called between
   tests, so should not generally be needed.
- 
+
 - **`clock.setSystemTime(now)`**
 
-  Change the system time to the new `now`. Now can be a timestamp, date object, or not passed in which defaults to 0. No timers will be called, nor will the time left before they trigger change.
+  Change the system time to the new `now`. Now can be a timestamp, date object,
+  or not passed in which defaults to 0. No timers will be called, nor will the
+  time left before they trigger change.
 
 You can also access the `clock` object via `this.clock` in a
 [`.then()`](/api/commands/then) callback.
@@ -236,7 +238,9 @@ cy.clock().invoke('restore')
 
 ### Change current system time
 
-Here we test that a timer still looks good if it has run for an hour, without triggering an hours worth of setInterval or requestAnimationFrame timers and overloading our CPU.
+Here we test that a timer still looks good if it has run for an hour, without
+triggering an hours worth of setInterval or requestAnimationFrame timers and
+overloading our CPU.
 
 ```javascript
 cy.clock(0)
@@ -251,8 +255,8 @@ cy.get('#timer').should(...) // assert that it fits within the screen etc.
 // more test code here
 ```
 
-You could also change the system time by using [.invoke()](/api/commands/invoke) to invoke the
-`setSystemTime` function.
+You could also change the system time by using [.invoke()](/api/commands/invoke)
+to invoke the `setSystemTime` function.
 
 ```js
 cy.clock().invoke('setSystemTime', 60 * 60 * 1000)
@@ -321,9 +325,9 @@ the following:
 
 ## History
 
-| Version                                       | Changes                                   |
-| --------------------------------------------- | ----------------------------------------- |
-| [10.7.0](/guides/references/changelog#10-7-0) | Added `setSystemTime` to yielded clock object     |
+| Version                                       | Changes                                       |
+| --------------------------------------------- | --------------------------------------------- |
+| [10.7.0](/guides/references/changelog#10-7-0) | Added `setSystemTime` to yielded clock object |
 
 ## See also
 
