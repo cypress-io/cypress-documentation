@@ -148,6 +148,43 @@ of our [docker images](/examples/examples/docker).
 By default, we will launch Firefox headlessly during `cypress run`. To run
 Firefox headed, you can pass the `--headed` argument to `cypress run`.
 
+### WebKit (Experimental)
+
+Cypress has [experimental](/guides/references/experiments) support for WebKit,
+Safari's browser engine. Testing your app with WebKit is representative of how
+your app would run in Safari. To opt-in to `experimentalWebKitSupport`, follow
+these steps:
+
+1. Add `experimentalWebKitSupport: true` to your
+   [configuration](/guides/references/configuration) to enable the experiment.
+2. Install the `playwright-webkit` NPM package in your repo to acquire WebKit
+   itself: `npm install --save-dev playwright-webkit`.
+3. Now, you should be able to use WebKit like any other browser. For example, to
+   record with WebKit in CI:
+   ```shell
+   cypress run --browser webkit --record # ...
+   ```
+
+WebKit support is _experimental_, so you may encounter issues. If you encounter
+an issue not on the "Known Issues" list, please
+[open an issue](https://github.com/cypress-io/cypress/issues/new/choose) on the
+GitHub repository.
+
+#### Known Issues with `experimentalWebKitSupport`
+
+- `cy.origin()` and `cy.session()` are not yet supported with WebKit.
+- `cy.intercept()`'s `forceNetworkError` option is disabled.
+- When using `experimentalSingleTabRunMode` with video recording in WebKit, only
+  the video for the first spec is recorded.
+- Some differences in `cy.type()` behavior:
+  - `textInput` events are missing the `data` property
+  - `beforeinput` events are missing the `inputType` property
+  - `cy.type('{uparrow}')` and `cy.type('{downarrow}')` on an
+    `input[type=number]` do not round to the nearest `step` specified
+- See issues labeled
+  [`experiment: webkit`](https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22experiment%3A+webkit%22)
+  for a complete list.
+
 ### Launching by a path
 
 You can launch any supported browser by specifying a path to the binary:
