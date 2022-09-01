@@ -103,7 +103,7 @@ The Cypress
 [Cypress Dashboard recording](https://dashboard.cypress.io/projects/woih1m).
 
 Check out the full <Icon name="github"></Icon>
-[RWA GitLab CI configuration](https://github.com/cypress-io/cypress-realworld-app/blob/develop/gitlab-ci.yml).
+[RWA GitLab CI configuration](https://github.com/cypress-io/cypress-realworld-app/blob/develop/.gitlab-ci.yml).
 
 </Alert>
 
