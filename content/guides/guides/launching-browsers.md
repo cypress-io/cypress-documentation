@@ -185,6 +185,15 @@ GitHub repository.
   [`experiment: webkit`](https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22experiment%3A+webkit%22)
   for a complete list.
 
+#### Linux Dependencies
+
+WebKit requires additional dependencies to run on Linux. To install the required
+dependencies, run this:
+
+```shell
+npx playwright install-deps webkit
+```
+
 ### Launching by a path
 
 You can launch any supported browser by specifying a path to the binary:
