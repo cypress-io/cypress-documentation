@@ -869,6 +869,13 @@
       "description": "Visual testing is a great complement to functional testing",
       "plugins": [
         {
+          "name": "Argos",
+          "description": "Automate visual testing in your CI",
+          "link": "https://docs.argos-ci.com/cypress",
+          "keywords": ["devX", "screenshots"],
+          "badge": "verified"
+        },
+        {
           "name": "Applitools",
           "description": "Fast, easy and reliable visual UI testing with Cypress",
           "link": "https://applitools.com/tutorials/cypress.html",
