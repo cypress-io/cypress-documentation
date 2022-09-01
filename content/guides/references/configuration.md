@@ -847,6 +847,20 @@ following setting to see how Cypress is looking for spec files:
 DEBUG=cypress:cli,cypress:server:specs
 ```
 
+#### <Icon name="angle-right"></Icon> `{videoUploadOnPasses : false}` throwing error
+
+When using the `{videoUploadOnPasses : false}` option, Cypress will not upload a
+video for successful tests, however, the video icon is still available and
+throws the error
+`The media could not be loaded, either because the server or network failed or because the format is not supported`
+
+Solution: remove `{videoUploadOnPasses : false}` option and instead
+[delete recorded the video if the spec passed](../../api/plugins/after-spec-api#Delete-the-recorded-video-if-the-spec-passed)
+or
+[delete the recorded video if no tests retried](../../api/plugins/after-spec-api#Delete-the-recorded-video-if-no-tests-retried).
+For more details, see this
+[open GitHub issue](https://github.com/cypress-io/cypress/issues/2939).
+
 ## History
 
 | Version                                       | Changes                                                                               |
