@@ -77,7 +77,7 @@ your `package.json`
 Dashboard, the command should be:
 
 ```shell
-npm run cy:run --record --spec "cypress/e2e/my-spec.cy.js"
+npm run cy:run -- --record --spec "cypress/e2e/my-spec.cy.js"
 ```
 
 If you are using the [npx](https://github.com/zkat/npx) tool, you can invoke the
