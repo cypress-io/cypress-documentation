@@ -3,7 +3,7 @@ title: Cypress.testingType
 ---
 
 `Cypress.testingType` returns the current testing type, determined by your
-selection in the Cypress App. The `Cypress.testingType` returns `e2e` for
+selection in the Cypress Launchpad. The `Cypress.testingType` returns `e2e` for
 [E2E Testing](/guides/core-concepts/testing-types#What-is-E2E-Testing) or
 `component` for
 [Component Testing](/guides/core-concepts/testing-types#What-is-Component-Testing).

@@ -21,8 +21,7 @@ You can read more [here](/guides/dashboard/introduction).
 2. Then [record your runs](/guides/dashboard/runs).
 
 After recording your tests, you will see them in the
-[Dashboard](https://on.cypress.io/dashboard) and in the "Runs" tab of the
-Cypress App.
+[Dashboard](https://on.cypress.io/dashboard) and in the "Runs" tab.
 
 ## <Icon name="angle-right"></Icon> How much does it cost?
 
@@ -97,7 +96,7 @@ use in private clouds.
 
 ## <Icon name="angle-right"></Icon> Can I choose not to use the Dashboard?
 
-Of course. The Dashboard Service is a separate service from the Cypress App and
+Of course. The Dashboard Service is a separate service from the Cypress app and
 will always remain optional. We hope you'll find a tremendous amount of value in
 it, but it is not coupled to being able to run your tests.
 
@@ -133,10 +132,10 @@ These will be added in subsequent releases.
 ## <Icon name="angle-right"></Icon> Why is test parallelization based on spec files and not on the individual functions?
 
 Cypress [test parallelization](/guides/guides/parallelization) is indeed based
-on specs. For each spec the Cypress App scaffolds the new running context, in a
-sense isolating each spec file from any previous spec files, and ensuring a
-clean slate for the next spec. Doing this for each _individual_ test would be
-very very expensive and would slow down the test runs significantly.
+on specs. For each spec Cypress scaffolds the new running context, in a sense
+isolating each spec file from any previous spec files, and ensuring a clean
+slate for the next spec. Doing this for each _individual_ test would be very
+very expensive and would slow down the test runs significantly.
 
 Spec file durations are also more meaningful and consistent than timings of
 individual tests, we can order specs by the moving average of the previously
