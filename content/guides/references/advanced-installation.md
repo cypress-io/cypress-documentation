@@ -131,9 +131,13 @@ The download server URL is `https://download.cypress.io`.
 
 We currently have the following downloads available:
 
-- Windows 64-bit (`?platform=win32&arch=x64`)
-- Linux 64-bit (`?platform=linux`)
-- macOS 64-bit (`?platform=darwin`)
+| Platform | Architecture | URL Params |
+| -------- | ------------ | ---------- |
+| `darwin` | `x64` | `?platform=darwin&arch=x64` |
+| `darwin` | `arm64` | `?platform=darwin&arch=arm64` |
+| `linux` | `x64` | `?platform=linux&arch=x64` |
+| `linux` | `arm64` | `?platform=linux&arch=arm64` |
+| `win32` | `x64` | `?platform=win32&arch=x64` |
 
 Here are the available download URLs:
 
