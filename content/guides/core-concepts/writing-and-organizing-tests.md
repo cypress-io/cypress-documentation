@@ -571,7 +571,7 @@ When in `legacy` mode, Cypress handles resetting the state for:
 - [aliases](/api/commands/as)
 - [cookies](/api/commands/clearcookies)
 - [clock](/api/commands/clock)
-- [intercepts](/api/commands/intercepts)
+- [intercept](/api/commands/intercept)
 - [localStorage](/api/commands/clearlocalstorage)
 - [routes](/api/commands/route)
 - [sessions](/api/commands/session)
