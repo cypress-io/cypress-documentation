@@ -51,19 +51,12 @@ Cypress in the GitHub Actions platform.
 
 ### Explicit Version Number
 
-```yaml
-jobs:
-  cypress-run:
-    steps:
-      uses: cypress-io/github-action@v4.2.0
-```
-
 <Alert type="info">
 
 <strong class="alert-header">GitHub Action Version Number</strong>
 
 We recommend using the explicit version number of the Cypress GitHub Action to
-prevent accidnetally running tests with a new version of the action that may
+prevent accidentally running tests with a new version of the action that may
 have breaking changes.
 
 Read the
@@ -71,6 +64,15 @@ Read the
 for more information
 
 </Alert>
+
+For Example:
+
+```yaml
+jobs:
+  cypress-run:
+    steps:
+      uses: cypress-io/github-action@v4.2.0
+```
 
 ## Basic Setup
 
