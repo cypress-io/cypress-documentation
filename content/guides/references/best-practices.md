@@ -939,6 +939,24 @@ cy.wait('@getUsers') // <--- wait explicitly for this route to finish
 cy.get('table tr').should('have.length', 2)
 ```
 
+## Running Tests Intelligently
+
+As your test suite grows & takes longer to run, you may find yourself hitting
+performance bottlenecks on your CI system. We recommend integrating your source
+control system with your test suite such that merges are blocked until all your
+Cypress tests have passed, but the downside of this is that longer test
+execution times slow the velocity at which branches may be merged, and features
+may be shipped. This issue is compounded further if you have dependent chains of
+branches waiting to be merged.
+
+One solution to this problem is
+[Smart Orchestration with the Cypress Dashboard](/guides/dashboard/smart-orchestration).
+Using a combination of [parallelization](/guides/guides/parallelization),
+[load balancing](/guides/guides/parallelization#Balance-strategy) &
+[test run cancellation](/guides/dashboard/smart-orchestration#Cancel-test-run-when-a-test-fails),
+Smart Orchestration maximizes your available compute resources & minimizes
+waste.
+
 ## Web Servers
 
 <Alert type="danger">
