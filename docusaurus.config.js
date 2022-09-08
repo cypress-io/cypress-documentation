@@ -68,7 +68,6 @@ const config = {
   plugins: [
     './plugins/fav-icon',
   ],
-
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     {
