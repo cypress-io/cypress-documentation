@@ -6,7 +6,7 @@
     "/guides/references/assertions": "references"
   },
   "PAGE_TITLE": {
-    "/guides/dashboard/introduction": "Dashboard",
+    "/guides/cloud/introduction": "Cypress Cloud",
     "/guides/end-to-end-testing/protractor-to-cypress": "Migrating from Protractor to Cypress",
     "/guides/end-to-end-testing/writing-your-first-end-to-end-test": "Writing Your First E2E Test",
     "/guides/references/assertions": "Assertions",

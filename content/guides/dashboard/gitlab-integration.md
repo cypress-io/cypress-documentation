@@ -2,10 +2,10 @@
 title: GitLab Integration
 ---
 
-The [Cypress Dashboard](https://on.cypress.io/dashboard) can integrate your
+[Cypress Cloud](https://on.cypress.io/cloud) can integrate your
 Cypress tests with your GitLab workflow via [commit statuses](#Commit-statuses)
 and [merge request comments](#Merge-Request-comments). A project first needs to
-be [setup to record](/guides/dashboard/projects) to the Cypress Dashboard to use
+be [setup to record](/guides/cloud/projects) to Cypress Cloud to use
 GitLab integration.
 
 <Alert type="warning">
@@ -26,7 +26,7 @@ If you are still facing issues after this, please
 Self-managed</strong>
 
 GitLab Self-managed Integration is dependent on your GitLab instance being able
-to reach our Dashboard API on the open internet. If your instance is running
+to reach our Cypress Cloud API on the open internet. If your instance is running
 behind a firewall, you may need to reconfigure your security infrastructure to
 allow communication with our servers.
 
@@ -36,7 +36,7 @@ allow communication with our servers.
 
 <Alert type="warning">
 
-GitLab OAuth2 applications will allow the Cypress Dashboard to authenticate as
+GitLab OAuth2 applications will allow Cypress Cloud to authenticate as
 the user that registered the application. That means that Cypress will have
 visibility into every GitLab repo the registered user can access. If you want
 tighter control of the repos that Cypress will see, consider creating a service
@@ -48,13 +48,13 @@ account in GitLab with more limited access permissions.
    [GitLab SaaS](https://docs.gitlab.com/ee/subscriptions/gitlab_com/)) or
    **GitLab Self-managed** (if you are running
    [your own GitLab instance](https://docs.gitlab.com/ee/subscriptions/self_managed/))
-   in the Cypress Dashboard.
+   in Cypress Cloud.
 2. Follow the instructions to create a new OAuth2 application in GitLab. See the
    [GitLab docs](https://docs.gitlab.com/ee/integration/oauth_provider.html#adding-an-application-through-the-profile)
    for more details.
-3. Copy the Application ID and Secret back to the Cypress Dashboard.
+3. Copy the Application ID and Secret back to Cypress Cloud.
 4. (GitLab Self-managed only) Copy the base URL of your GitLab instance to the
-   GitLab URL field in Cypress Dashboard.
+   GitLab URL field in Cypress Cloud.
 5. Connect your projects to a GitLab repo in **Project Settings → GitLab
    Integration** or **GitLab Self-managed**.
 6. (Optional) Configure the behavior for each project.

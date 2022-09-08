@@ -1,27 +1,25 @@
 ---
 layout: toc-top
-title: Dashboard
+title: Cypress Cloud
 containerClass: faq
 ---
 
-## <Icon name="angle-right"></Icon> What is the Dashboard?
+## <Icon name="angle-right"></Icon> What is Cypress Cloud?
 
-<DocsImage src="/img/dashboard/dashboard-runs-list.png" alt="Dashboard Screenshot" ></DocsImage>
+<DocsImage src="/img/dashboard/dashboard-runs-list.png" alt="Cloud Screenshot" ></DocsImage>
 
-The [Dashboard](https://on.cypress.io/dashboard) is a Cypress service that gives
-you access to tests you've recorded - typically when running Cypress tests from
-your [CI provider](/guides/continuous-integration/introduction). The Dashboard
-provides you insight into what happened during your tests run.
+[Cypress Cloud](https://on.cypress.io/cloud) gives you access to tests you've recorded - typically when running Cypress tests from
+your [CI provider](/guides/continuous-integration/introduction) - and provides you insight into what happened during your tests run.
 
-You can read more [here](/guides/dashboard/introduction).
+You can read more [here](/guides/cloud/introduction).
 
 ## <Icon name="angle-right"></Icon> How do I record my tests?
 
-1. First [set up the project to record](/guides/dashboard/projects#Setup).
-2. Then [record your runs](/guides/dashboard/runs).
+1. First [set up the project to record](/guides/cloud/projects#Setup).
+2. Then [record your runs](/guides/cloud/runs).
 
-After recording your tests, you will see them in the
-[Dashboard](https://on.cypress.io/dashboard) and in the "Runs" tab.
+After recording your tests, you will see them in 
+[Cypress Cloud](https://on.cypress.io/cloud) and in the "Runs" tab.
 
 ## <Icon name="angle-right"></Icon> How much does it cost?
 
@@ -34,8 +32,7 @@ the number of test you record each month in your organization.
 
 Tests are recorded when [cypress run](/guides/guides/command-line#cypress-run)
 is called with the `--record` flag while supplying the record `--key`. This
-means your [test run data](/guides/dashboard/runs) is being "recorded" to the
-Dashboard.
+means your [test run data](/guides/cloud/runs) is being "recorded" to Cypress Cloud.
 
 We consider each time the `it()` function is called to be a single test. So you
 will generally have several tests recorded within each spec file and likely
@@ -44,13 +41,11 @@ several spec files within a single run. Only the
 are counted. The pending and skipped tests are NOT counted.
 
 You can always see how many tests you've recorded from your organization's
-[Billing & Usage](/guides/dashboard/organizations#Billing-Usage) page within the
-Dashboard.
+[Billing & Usage](/guides/cloud/organizations#Billing-Usage) page within Cypress Cloud.
 
 ## <Icon name="angle-right"></Icon> What counts as a user?
 
-A [user](/guides/dashboard/users) is anyone with a login to our Dashboard
-Service that has been invited to see and review the test results of your
+A [user](/guides/cloud/users) is anyone with a login to Cypress Cloud who has been invited to see and review the test results of your
 organization.
 
 ## <Icon name="angle-right"></Icon> What is the difference between public and private projects?
@@ -60,8 +55,8 @@ similar to how public projects on Github, Travis, or Circle are handled. Anyone
 who knows your `projectId` will be able to see the recorded runs, screenshots,
 and videos for public projects.
 
-**A private project** means that only [users](/guides/dashboard/users) you
-explicitly invite to your [organization](/guides/dashboard/organizations) can
+**A private project** means that only [users](/guides/cloud/users) you
+explicitly invite to your [organization](/guides/cloud/organizations) can
 see its recorded runs. Even if someone knows your `projectId`, they will not
 have access to your runs unless you have invited them.
 
@@ -74,29 +69,27 @@ completely different role.
 It doesn't replace or change anything related to CI. You will run Cypress tests
 in your CI provider.
 
-The difference between our [Dashboard Service](/guides/dashboard/introduction)
+The difference between [Cypress Cloud](/guides/cloud/introduction)
 and your CI provider is that your CI provider has no idea what is going on
 inside of the Cypress process. It's programmed to know whether or not a process
 failed - based on whether it had an exit code greater than `0`.
 
-Our [Dashboard Service](/guides/dashboard/introduction) provides you with the
+[Cypress Cloud](/guides/cloud/introduction) provides you with the
 low level details of _what_ happened during your run. Using both your CI
 provider + Cypress together gives the insight required to debug your test runs.
 
 When a run happens and a test fails - instead of going and inspecting your CI
-provider's `stdout` output, you can log into the
-[Dashboard](https://on.cypress.io/dashboard), see the `stdout` as well as
+provider's `stdout` output, you can log into [Cypress Cloud](https://on.cypress.io/cloud), see the `stdout` as well as
 screenshots and video of the tests running. It should be instantly clear what
 the problem was.
 
-## <Icon name="angle-right"></Icon> Can I host the Dashboard data myself?
+## <Icon name="angle-right"></Icon> Can I host Cypress Cloud data myself?
 
-No, although we are looking to build an on-premise version of the Dashboard for
-use in private clouds.
+No. A self-hosted version of Cypress Cloud is not available at this time.
 
-## <Icon name="angle-right"></Icon> Can I choose not to use the Dashboard?
+## <Icon name="angle-right"></Icon> Can I choose not to use Cypress Cloud?
 
-Of course. The Dashboard Service is a separate service from the Cypress app and
+Of course. Cypress Cloud is a separate service from the Cypress app and
 will always remain optional. We hope you'll find a tremendous amount of value in
 it, but it is not coupled to being able to run your tests.
 
@@ -109,7 +102,7 @@ any test results.
 
 Your Organization ID is a unique identifier that is linked to your organization.
 Instructions on how to find your ID are in the
-[Dashboard Guide.](/guides/dashboard/organizations#Organization-ID)
+[Cypress Cloud Guide.](/guides/cloud/organizations#Organization-ID)
 
 ## <Icon name="angle-right"></Icon> What does Cypress record?
 
@@ -155,7 +148,7 @@ savings.
 Even if your CI setup is very different from the
 [CI examples we have](/guides/continuous-integration/introduction#Examples) and
 [run with our sample projects](https://github.com/cypress-io/cypress-example-kitchensink#ci-status),
-you can still take advantage of the test load balancing using the Dashboard.
+you can still take advantage of the test load balancing using Cypress Cloud.
 Find a variable across your containers that is the same for all of them, but is
 different from run to run. For example it could be an environment variable
 called `CI_RUN_ID` that you set when creating the containers to run Cypress. You
@@ -175,9 +168,9 @@ parallel. If there is NO common variable, try using the commit SHA string.
 Assuming you do not run the same tests more than once against the same commit,
 it might be good enough for the job.
 
-## <Icon name="angle-right"></Icon> Can I delete a run from the Dashboard?
+## <Icon name="angle-right"></Icon> Can I delete a run from Cypress Cloud?
 
-You can [archive a run](guides/dashboard/runs#Archive-run) so that it does not
+You can [archive a run](guides/cloud/runs#Archive-run) so that it does not
 display in the runs list or in analytics.
 
 **Note:** Archiving the recorded runs has no effect on the amount of tests
@@ -186,16 +179,15 @@ recorded and counted as your usage billed for the month.
 ## <Icon name="angle-right"></Icon> Can I delete my Cypress account?
 
 You can delete your Cypress account from
-[your Dashboard profile](https://dashboard.cypress.io/profile). Deleting your
+[your Cypress Cloud profile](https://cloud.cypress.io/profile). Deleting your
 account cannot be undone! By deleting your Cypress account, all associated data
 in your account will be permanently deleted.
 
-## <Icon name="angle-right"></Icon> What happens to my Dashboard if I downgrade my account?
+## <Icon name="angle-right"></Icon> What happens if I downgrade my account?
 
-Downgrading your account will **not** result in loss of access to your
-Dashboard.
+Downgrading your account will **not** result in loss of access to Cypress Cloud.
 
-However, it will make your Dashboard subject to the limitations of your new
+However, it will make your Cypress Cloud account subject to the limitations of your new
 plan. For example, downgrading to the _Seed_ plan will limit data retention to
 30 days and test results to 500 per billing period.
 
@@ -210,21 +202,20 @@ In order to avoid any interruption in service, we recommend that you review your
 usage and select a plan that satisfies your usage requirements. You can do this
 by:
 
-1. Logging into the [Dashboard](https://dashboard.cypress.io)
+1. Logging into [Cypress Cloud](https://cloud.cypress.io)
 2. Select your organization
 3. Navigate to the **Billing and Usage** tab
 4. Review your organization's usage
 5. Scroll down and select **Upgrade** under your plan of choice
 
-## <Icon name="angle-right"></Icon> I'm working at a restrictive VPN. Which subdomains do I have to allow on my VPN for the Dashboard to work properly?
+## <Icon name="angle-right"></Icon> I'm working at a restrictive VPN. Which subdomains do I have to allow on my VPN for Cypress Cloud to work properly?
 
-To send the data and results of your tests to the
-[Dashboard](https://on.cypress.io/dashboard-introduction), Cypress needs free
+To send the data and results of your tests to
+[Cypress Cloud](https://on.cypress.io/cloud-introduction), Cypress needs free
 access to some URLs.
 
 If you are running the tests from within a restrictive VPN you will need to
-allow some URLs so that Cypress can have effective communication with the
-Dashboard.
+allow some URLs so that Cypress can have effective communication with Cypress Cloud.
 
 **The URLs are the following:**
 
@@ -232,7 +223,7 @@ Dashboard.
 - `https://assets.cypress.io` - **Asset CDN** (Org logos, icons, videos,
   screenshots, etc.)
 - `https://authenticate.cypress.io` - **Authentication API**
-- `https://dashboard.cypress.io` - **Dashboard app**
+- `https://cloud.cypress.io` - **Cypress Cloud**
 - `https://docs.cypress.io` - **Cypress documentation**
 - `https://download.cypress.io` - **CDN download of Cypress binary**
 - `https://on.cypress.io` - **URL shortener for link redirects**

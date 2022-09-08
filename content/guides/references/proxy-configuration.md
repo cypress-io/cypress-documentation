@@ -10,8 +10,8 @@ proxy:
 - Cypress won't be able to load web pages besides `localhost`.
 - Cypress won't be able to warn you if your
   [baseUrl](/guides/references/configuration#Global) isn't available.
-- Cypress won't be able to connect to the
-  [Dashboard Service](/guides/dashboard/introduction) to log in or record test
+- Cypress won't be able to connect to
+  [Cypress Cloud](/guides/cloud/introduction) to log in or record test
   runs.
 - `npm install cypress` may fail while downloading the Cypress binary.
 
@@ -126,8 +126,7 @@ _not_ [Cypress environment variables](/guides/guides/environment-variables)
 
 </Alert>
 
-Cypress needs to be able to authenticate properly when communicating to the
-[Dashboard Service](/guides/dashboard/introduction). When connecting through a
+Cypress needs to be able to authenticate properly when communicating to [Cypress Cloud](/guides/cloud/introduction). When connecting through a
 proxy, oftentimes a self signed certificate is used as a CA. In order to handle
 this configuration, Cypress automatically reads from npm config's
 [`cafile`](https://docs.npmjs.com/cli/v8/using-npm/config#cafile) and

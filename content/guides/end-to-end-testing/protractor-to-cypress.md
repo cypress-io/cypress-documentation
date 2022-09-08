@@ -156,8 +156,8 @@ will fail in a CI environment when they otherwise would pass on a developer's
 machine. Enabling test retries in the Cypress configuration can help you to get
 unblocked when unpredictable, flaky tests are occasionally failing.
 
-The Cypress Dashboard goes a step further and helps you and your team to
-[detect flaky tests](/guides/dashboard/flaky-test-management) that run in your
+Cypress Cloud goes a step further and helps you and your team to
+[detect flaky tests](/guides/cloud/flaky-test-management) that run in your
 CI/CD pipeline.
 
 ## Getting Started
@@ -203,8 +203,8 @@ Check out the
 [Cypress Angular Schematic Configuration section](#Angular-Schematic-Configuration)
 documentation for more details like how to
 [configure your tests to run in a specific browser](#Running-the-builder-with-a-specific-browser)
-or [record test results](#Recording-test-results-to-the-Cypress-Dashboard) to
-the [Cypress Dashboard](https://docs.cypress.io/guides/dashboard/introduction).
+or [record test results](#Recording-test-results-to-Cypress-Cloud) to
+[Cypress Cloud](https://docs.cypress.io/guides/cloud/introduction).
 
 </Alert>
 
@@ -1083,7 +1083,7 @@ environment.
 
 ## Parallelization
 
-The [Cypress Dashboard Service](/guides/dashboard/introduction) allows you to
+[Cypress Cloud](/guides/cloud/introduction) allows you to
 run your test files in parallel across multiple CI machines.
 
 With Cypress, your tests can be
@@ -1141,10 +1141,10 @@ to learn more.
 
 </Alert>
 
-### Recording test results to the Cypress Dashboard
+### Recording test results to Cypress Cloud
 
 We recommend setting your
-[Cypress Dashboard](https://docs.cypress.io/guides/dashboard/introduction)
+[Cypress Cloud](https://docs.cypress.io/guides/cloud/introduction)
 recording key as an environment variable and _NOT_ as a builder option when
 running it in CI.
 
@@ -1165,8 +1165,7 @@ running it in CI.
 ```
 
 Read the docs on
-[recording test results](http://on.cypress.io/recording-project-runs) to the
-[Cypress Dashboard](/guides/dashboard/introduction) to learn more.
+[recording test results](http://on.cypress.io/recording-project-runs) to [Cypress Cloud](/guides/cloud/introduction) to learn more.
 
 ### Specifying a custom Cypress configuration file
 

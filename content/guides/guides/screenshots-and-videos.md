@@ -60,8 +60,7 @@ configurable with the
 [`videoCompression`](/guides/references/configuration#Videos) property.
 
 When using the `--record` flag while running your tests, videos are processed,
-compressed, and uploaded to the
-[Dashboard Service](/guides/dashboard/introduction) after every spec file runs,
+compressed, and uploaded to [Cypress Cloud](/guides/cloud/introduction) after every spec file runs,
 successful or not. To change this behavior to only process videos in the case
 that tests fail, set the
 [`videoUploadOnPasses`](/guides/references/configuration#Videos) configuration
@@ -75,8 +74,7 @@ clear your videos folder before a run, you can set
 
 If your spec files have a long run duration, you might notice a time gap between
 a finished spec and a new spec starting during `cypress run`. During this time,
-Cypress is encoding the captured video and possibly uploading it to the
-Dashboard.
+Cypress is encoding the captured video and possibly uploading it to Cypress Cloud.
 
 If the machine is encoding the video slowly (which is often the case for virtual
 machines that use less CPU cores), the encoding might take a long time. In this
@@ -122,12 +120,12 @@ during the encoding, run Cypress with the following environment variable:
 
 </Alert>
 
-### Control which videos to keep and upload to Dashboard
+### Control which videos to keep and upload to Cypress Cloud
 
 You may want to have more control over which videos you want to keep and upload
-to the Dashboard. Deleting videos after the run can save resource space on the
+to Cypress Cloud. Deleting videos after the run can save resource space on the
 machine as well as skip the time used to process, compress, and upload the video
-to the [Dashboard Service](/guides/dashboard/introduction).
+to [Cypress Cloud](/guides/cloud/introduction).
 
 To only process videos in the case that a test fails, you can set the
 [`videoUploadOnPasses`](/guides/references/configuration#Videos) configuration
@@ -178,8 +176,7 @@ what?
 
 <!-- Line breaks removed to prevent random br elements -->
 
-Something you can take advantage of today is the
-[Cypress Dashboard Service](/guides/dashboard/introduction): our companion
+Something you can take advantage of today is [Cypress Cloud](/guides/cloud/introduction): our companion
 enterprise service that stores your artifacts for you and lets you view them
 from any web browser, as well as share them with your team.
 
@@ -193,6 +190,6 @@ runs with the current run to ensure that nothing changed.
 
 - [After Screenshot API](/api/plugins/after-screenshot-api)
 - [Cypress.Screenshot](/api/cypress-api/screenshot-api)
-- [Dashboard Service](/guides/dashboard/introduction)
+- [Cypress Cloud](/guides/cloud/introduction)
 - [`cy.screenshot()`](/api/commands/screenshot)
 - [Visual Testing](/guides/tooling/visual-testing)

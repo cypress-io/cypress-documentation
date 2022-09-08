@@ -17,7 +17,7 @@ Organizations are used to group projects and manage access to those projects.
 
 An Organization's ID is a unique identifier in
 [UUID](https://tools.ietf.org/html/rfc4122) format that can be found under the
-"Organization settings" section of the Dashboard. This ID is used frequently by
+"Organization settings" section of Cypress Cloud. This ID is used frequently by
 the Support, Success, and Sales teams to reference an Organization.
 
 To locate your Organization's ID, go to "Organization settings" then
@@ -30,8 +30,7 @@ with Cypress teams.
 
 ### Create Org
 
-You can create an organization from within the
-[Dashboard Service](https://on.cypress.io/dashboard) by opening the organization
+You can create an organization from within [Cypress Cloud](https://on.cypress.io/cloud) by opening the organization
 switcher and clicking **<Icon name="plus"></Icon> Create new organization**.
 
 <DocsImage src="/img/dashboard/create-org.png" alt="Create new organization" width-600 ></DocsImage>
@@ -79,26 +78,25 @@ to another organization before you can delete the organization.
 ### Open Source Plan
 
 To support the community, we provide the Open Source (OSS) plan to take
-advantage of our Dashboard Service with unlimited test runs. To qualify, all
+advantage of Cypress Cloud with unlimited test runs. To qualify, all
 Projects in your Organization must meet the following criteria:
 
 - Be a non-commercial entity
-- Be [Public](https://on.cypress.io/projects#Change-project-access) in the
-  Dashboard
+- Be [Public](https://on.cypress.io/projects#Change-project-access) in Cypress Cloud
 - Your Project source code is available in a public location with an
   [OSI-approved license](https://opensource.org/licenses)
 - Record minimum of 500
-  [tests](https://on.cypress.io/dashboard-faq#What-counts-as-a-test-result)
+  [tests](https://on.cypress.io/cloud-faq#What-counts-as-a-test-result)
   included with the [Free Plan](https://www.cypress.io/pricing)
 
 ### Requesting OSS plan for an Org
 
 Follow the following process to request an OSS plan:
 
-1. [Login](https://on.cypress.io/dashboard) to the Cypress Dashboard, or
-   [create an account](https://on.cypress.io/dashboard) if you are a new user.
+1. [Login](https://on.cypress.io/cloud) to Cypress Cloud, or
+   [create an account](https://on.cypress.io/cloud) if you are a new user.
    <DocsImage src="/img/dashboard/oss-plan-1-login.png" alt="Login or Create Account"></DocsImage>
-2. Go the [Organizations page](https://on.cypress.io/dashboard/organizations) to
+2. Go the [Organizations page](https://on.cypress.io/cloud/organizations) to
    select the Organization you want to associate with an OSS plan. If you have
    no Organizations, you can create one by clicking the **+ Add Organization**
    button.
@@ -119,18 +117,17 @@ If you have any questions regarding the OSS plan, please feel free
 
 ## Integrations
 
-- [BitBucket](/guides/dashboard/bitbucket-integration)
-- [GitHub](/guides/dashboard/github-integration)
-- [GitLab](/guides/dashboard/gitlab-integration)
-- [Jira](/guides/dashboard/jira-integration)
-- [Slack](/guides/dashboard/slack-integration)
+- [BitBucket](/guides/cloud/bitbucket-integration)
+- [GitHub](/guides/cloud/github-integration)
+- [GitLab](/guides/cloud/gitlab-integration)
+- [Jira](/guides/cloud/jira-integration)
+- [Slack](/guides/cloud/slack-integration)
 
 ### Enterprise SSO
 
 <Alert type="success">
 
-<strong class="alert-header"><Icon name="star"></Icon> Premium Dashboard
-Feature</strong>
+<strong class="alert-header"><Icon name="star"></Icon> Premium Cypress Cloud Feature</strong>
 
 Enterprise SSO is included in our
 [Business and Enterprise paid pricing plans](https://www.cypress.io/pricing).
@@ -149,7 +146,7 @@ Organization to set up SSO.
 
 #### Enable SSO
 
-1. Log in to the Cypress Dashboard and navigate to the **Integrations** page for
+1. Log in to Cypress Cloud and navigate to the **Integrations** page for
    your organization.
    <DocsImage src="/img/dashboard/organizations/integrations-nenu-screenshot.png" alt="Enable SSO" width-600 ></DocsImage>
 2. Scroll down to the **Enterprise SSO** section. Select your SSO provider and
@@ -177,7 +174,7 @@ For Smart Card implementation, please reach out to
 
 ##### **Okta**
 
-The Cypress Dashboard can integrate with Okta via SAML. In addition to the
+Cypress Cloud can integrate with Okta via SAML. In addition to the
 documentation below, refer to
 [Okta's official documentation for setting up a new SAML application.](https://developer.okta.com/docs/guides/saml-application-setup/overview/)
 
@@ -188,28 +185,25 @@ documentation below, refer to
    <DocsImage src="/img/dashboard/organizations/okta-add-application-step3-cypress-sso.png" alt="Create Okta SAML App" width-600 ></DocsImage>
 1. Supply the following information requested in the Okta setup wizard:
 
-- **App name:** `Cypress Dashboard`
+- **App name:** `Cypress Cloud`
 - **App logo:** [Cypress logo download](https://on.cypress.io/logo)
-- **Single sign on URL:** The URL provided in the Cypress Dashboard
-- **Audience URI:** The URI provided in the Cypress Dashboard
-- **Attribute statements:** Add the attribute statements described in the
-  Cypress Dashboard
+- **Single sign on URL:** The URL provided in Cypress Cloud
+- **Audience URI:** The URI provided in Cypress Cloud
+- **Attribute statements:** Add the attribute statements described in Cypress Cloud
 
 1. Click **Next** then select **I'm an Okta customer** and click **Finish**.
-1. Click the **View Setup Instructions** button in the middle of the page. The
-   Cypress Dashboard needs the information provided here:
+1. Click the **View Setup Instructions** button in the middle of the page. Cypress Cloud needs the information provided here:
 
-- Copy the Identity Provider Single sign-on URL to the Cypress Dashboard.
-- Download the certificate and upload that to the Cypress Dashboard.
+- Copy the Identity Provider Single sign-on URL to Cypress Cloud.
+- Download the certificate and upload that to Cypress Cloud.
   <DocsImage src="/img/dashboard/organizations/okta-download-certificate-for-cypress-dashboard.png" alt="Download Certificate" ></DocsImage>
 
-1. Navigate to the **Assignments** tab and grant your users access to the
-   Cypress Dashboard.
+1. Navigate to the **Assignments** tab and grant your users access to Cypress Cloud.
 1. [Save Configuration](#Save-Configuration).
 
 ##### **SAML**
 
-The Cypress Dashboard can integrate with your identity provider via SAML. In
+Cypress Cloud can integrate with your identity provider via SAML. In
 addition to the documentation below, refer to your provider's official
 documentation for configuring a SAML integration.
 
@@ -218,22 +212,22 @@ documentation for configuring a SAML integration.
 1. Log into the admin interface for your identity provider.
 1. Work through the setup wizard supplying the information requested:
 
-- **App name:** `Cypress Dashboard`
+- **App name:** `Cypress Cloud`
 - **App logo:** [Cypress logo download](https://on.cypress.io/logo)
-- **Single sign on URL:** Collect the URL provided by the Cypress Dashboard
-- **Audience URI:** Collect the URI provided by the Cypress Dashboard
+- **Single sign on URL:** Collect the URL provided by Cypress Cloud
+- **Audience URI:** Collect the URI provided by Cypress Cloud
 - Add a custom mapping of **AttributeStatements** with the following:
   - `User.Email`: User's email
   - `User.FirstName`: User's first name
   - `User.LastName`: User's last name
 
 1. Collect the sign-on URL and certificate from your identity provider. Supply
-   that to the Cypress Dashboard.
+   that to Cypress Cloud.
 1. [Save Configuration](#Save-Configuration).
 
 ##### **Azure AD**
 
-The Cypress Dashboard can integrate with your identity provider via Azure AD. In
+Cypress Cloud can integrate with your identity provider via Azure AD. In
 addition to the documentation below, refer to the Microsoft Guides for
 [configuring an application](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app).
 
@@ -241,35 +235,34 @@ addition to the documentation below, refer to the Microsoft Guides for
 1. Work through the application setup, supplying the following information when
    requested:
 
-- **App name:** `Cypress Dashboard`
+- **App name:** `Cypress Cloud`
 - **App logo:** [Cypress logo download](https://on.cypress.io/logo)
-- **Login URL:** Collect the URL provided by the Cypress Dashboard
+- **Login URL:** Collect the URL provided by Cypress Cloud
 
 1. Collect the `Client ID` for your application provided in the Application
    overview page.
 1. Go to **Certificates and Secrets** in your Azure Application and create a new
    secret that does not expire. Copy this newly-created secret and paste it in
-   the `Azure Client Secret` field in the Cypress Dashboard.
+   the `Azure Client Secret` field in Cypress Cloud.
 1. Under **API Permissions** in Azure AD, ensure the application has access to
    **User.Read** permissions
 1. Enter the domain used for your Active Directory, as well as the list of SSO
-   domains you wish to allow user to authenticate with, in the Cypress
-   Dashboard. This is used for SSO discovery from the login screen.
+   domains you wish to allow user to authenticate with, in Cypress Cloud. This is used for SSO discovery from the login screen.
 1. [Save Configuration](#Save-Configuration).
 
 #### Save Configuration
 
-1. Return to the Cypress Dashboard and click **Save Configuration**. The Cypress
-   Dashboard will attempt to authenticate.
+1. Return to Cypress Cloud and click **Save Configuration**. Cypress
+   Cloud will attempt to authenticate.
 
 🎉 Your integration is now complete! You can invite all of the users in your
 organization to sign in through your SSO provider.
 
 #### **Notes**
 
-- Once SSO is set up in the Dashboard, Users should be invited via your SSO
-  provider, not the Dashboard.
+- Once SSO is set up in Cypress Cloud, Users should be invited via your SSO
+  provider, not Cypress Cloud.
 - All SSO Users are initially added with the
   [User Role](https://on.cypress.io/users#User-roles) of Member. If a User needs
-  different User Role permissions, this can be changed via the Cypress Dashboard
+  different User Role permissions, this can be changed via Cypress Cloud
   by a current member with the role of Owner or Admin.

@@ -65,7 +65,7 @@ Cypress Component Testing is built around the same tools and APIs that
 end-to-end testing uses. Anyone familiar with Cypress can immediately hop in and
 feel productive writing component tests without a large learning curve.
 Component tests can also use the vast Cypress ecosystem, plugins, and services
-(like [Cypress Dashboard](https://www.cypress.io/dashboard) already available to
+(like [Cypress Cloud](https://www.cypress.io/cloud) already available to
 complement your component tests.
 
 ## Technical Questions

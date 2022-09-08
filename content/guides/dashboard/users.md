@@ -2,17 +2,16 @@
 title: Users
 ---
 
-A user is anyone who logs in to the Dashboard Service.
+A user is anyone who logs in to Cypress Cloud Service.
 
 ## Invite users
 
-You can invite users to Cypress from the
-[Dashboard Service](https://on.cypress.io/dashboard). Invited users will see all
+You can invite users from [Cypress Cloud](https://on.cypress.io/cloud). Invited users will see all
 projects and tests run for the organization.
 
 ### Invite a user to an organization:
 
-1. Go the [Organizations page](https://on.cypress.io/dashboard/organizations) to
+1. Go the [Organizations page](https://on.cypress.io/cloud/organizations) to
    select the organization you want to invite a user to.
 2. Click **Users**, then **Invite User**. _Note: you must have the
    [role of 'owner' or 'admin'](#User-roles) to invite users._
@@ -25,8 +24,7 @@ projects and tests run for the organization.
 
 ### Sign Up with an Invitation:
 
-Upon receiving the email, click **"Accept Invitation"** to be redirected to the
-Cypress Dashboard. From there, you will have the choice of authenitication type:
+Upon receiving the email, click **"Accept Invitation"** to be redirected to Cypress Cloud. From there, you will have the choice of authenitication type:
 
 - **Basic** (Google or GitHub)
 - **Social** (Email and Password)
@@ -53,15 +51,14 @@ Refer to our
 
 ## User roles
 
-Users can be assigned roles that affect their access to certain features of the
-[Dashboard Service](https://on.cypress.io/dashboard).
+Users can be assigned roles that affect their access to certain features of [Cypress Cloud](https://on.cypress.io/cloud).
 
 - **Member:** Can see the projects, runs, and keys.
 - **Admin:** Can also invite, edit and delete users.
 - **Owner:** Can also transfer or delete projects. Can delete and edit the
   organization.
 
-The permissions for each user role for the Dashboard Service.
+The permissions for each user role for Cypress Cloud.
 
 | Permission                                      |               |              |              |
 | ----------------------------------------------- | ------------- | ------------ | ------------ |
@@ -107,13 +104,13 @@ deny them access.
 ## User updates
 
 Changes can be made to both the primary email address associated with your
-Dashboard account and the email address for billing notifications.
+Cypress Cloud account and the email address for billing notifications.
 
-For updating the primary email address associated with your Dashboard, click
+For updating the primary email address associated with Cypress Cloud, click
 your Profile picture in the upper left corner of the Organizations page. Select
 **Manage Profile**. Go to the **Email** field and select your preferred email
 address. _Note: The email list is limited to emails provided by login provider._
 
 If you would like to update the billing email address, that can be done via the
-**Billing & Usage** page within the [Dashboard](https://on.cypress.io/dashboard)
+**Billing & Usage** page within [Cypress Cloud](https://on.cypress.io/cloud)
 or you contact them directly at [billing@cypress.io](mailto:billing@cypress.io).

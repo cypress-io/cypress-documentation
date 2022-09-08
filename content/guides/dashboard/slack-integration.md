@@ -14,14 +14,14 @@ teams' Slack channels.
 <strong class="alert-header">Ownership Requirements</strong>
 
 In order to install the Slack Integration, you must be an admin or owner of both
-your Cypress Dashboard organization and your Slack workspace.
+your Cypress Cloud organization and your Slack workspace.
 
 </Alert>
 
 **To install the Slack Integration:**
 
-1. Go to the Dashboard
-   [Organizations page](https://dashboard.cypress.io/organizations) or open the
+1. Go to Cypress Cloud
+   [Organizations page](https://cloud.cypress.io/organizations) or open the
    organization switcher.
 1. Select the organization you wish to integrate with Slack.
    <DocsImage src="/img/dashboard/select-cypress-organization.png" alt="Select an organization" width-600 ></DocsImage>
@@ -32,14 +32,14 @@ your Cypress Dashboard organization and your Slack workspace.
 1. You'll see a popup window that requests permission for Cypress to access the
    workspace and allows you to choose your Slack workspace and channel to
    associate with the installation. Once you've selected a channel and allowed
-   access, the installation is complete! The Cypress Dashboard will post run
+   access, the installation is complete! Cypress Cloud will post run
    results for all projects in your organization to the specified Slack channel.
 
 ## Per-organization configuration
 
 ### Add additional Slack channels
 
-You can have the Cypress Dashboard post run results to an additional channels.
+You can have Cypress Cloud post run results to an additional channels.
 To add a channel:
 
 1. Navigate to the **Integrations** page for the organization with the installed
@@ -47,12 +47,12 @@ To add a channel:
 1. Within the Slack integration, click **Configure**.
 1. Click **Add Slack Channel**.
 1. You'll see a popup window that allows you to choose the channel to associate
-   with the organization. The Cypress Dashboard will post run results for all
+   with the organization. Cypress Cloud will post run results for all
    projects in your organization to the new Slack channel.
 
 ### Set notification preferences
 
-By default, the Cypress Dashboard will post a Slack message to each configured
+By default, Cypress Cloud will post a Slack message to each configured
 channel only for failing runs. If you'd like to change these preferences:
 
 1. Navigate to the **Integrations** page for the organization with the installed
@@ -65,7 +65,7 @@ channel only for failing runs. If you'd like to change these preferences:
 
 ### Mute a channel
 
-If you want the Cypress Dashboard to temporarily stop posting Slack messages to
+If you want Cypress Cloud to temporarily stop posting Slack messages to
 a certain channel, you can **Mute** that channel. This allows you to easily
 pause and resume notifications for a specific channel without losing the
 configuration you’ve put in place.
@@ -78,7 +78,7 @@ configuration you’ve put in place.
 
 ### Remove a Slack channel
 
-You can have the Cypress Dashboard stop posting notifications to a channel. You
+You can have Cypress Cloud stop posting notifications to a channel. You
 can remove all Slack channels if you’d prefer to disable global notifications
 altogether in favor of per-project notifications.
 
@@ -95,7 +95,7 @@ tailor the Slack notifications of each project to match your teams' needs.
 
 ### Add a new Slack channel
 
-You can have the Cypress Dashboard post run results for a specific project to an
+You can have Cypress Cloud post run results for a specific project to an
 additional channel.
 
 1. Select your organization in the organization switcher.
@@ -111,7 +111,7 @@ additional channel.
 
 ### Set notification preferences
 
-By default, the Cypress Dashboard will post a Slack message to each configured
+By default, Cypress Cloud will post a Slack message to each configured
 channel only for failing runs. You cannot override the notification preferences
 for the global organization channels. If you'd like to change these preferences:
 
@@ -125,7 +125,7 @@ for the global organization channels. If you'd like to change these preferences:
 
 ### Mute a channel
 
-If you want the Cypress Dashboard to temporarily stop posting Slack messages to
+If you want Cypress Cloud to temporarily stop posting Slack messages to
 a certain channel, you can **Mute** that channel. This allows you to easily
 pause and resume notifications for a specific channel without losing the
 configuration you’ve put in place. You can even mute the messages for the global
@@ -139,7 +139,7 @@ organization channels!
 
 ### Remove a channel
 
-You can have the Cypress Dashboard stop posting notifications to a channel. You
+You can have Cypress Cloud stop posting notifications to a channel. You
 cannot delete the global notification channels from a project.
 
 1. Navigate to the **Integrations** page for the project with the installed
@@ -152,7 +152,7 @@ cannot delete the global notification channels from a project.
 
 You can completely remove the Slack Integration from your workspace. This will
 remove the @cypress bot from your workspace and will delete all of the Slack
-configurations you’ve set in the Cypress Dashboard. You cannot undo this, but
+configurations you’ve set in Cypress Cloud. You cannot undo this, but
 you will be able to install the Slack Integration again in the future.
 
 1. Navigate to the **Integrations** page for the organization with the installed

@@ -32,8 +32,8 @@ A '.cjs' file uses the [CommonJS](https://nodejs.org/api/modules.html) module
 syntax, which is the default for JavaScript files. All JavaScript config
 examples in our docs use the CommonJS format.
 
-If you [configure your tests to record](/guides/dashboard/projects#Setup) the
-results to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction)
+If you [configure your tests to record](/guides/cloud/projects#Setup) the
+results to [Cypress Cloud](https://on.cypress.io/cloud-introduction)
 the `projectId` will be stored in the config file as well.
 
 ## Intelligent Code Completion
@@ -127,7 +127,7 @@ For more options regarding screenshots, view the
 | `videoCompression`      | `32`             | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` to disable compression or a value between `0` and `51`, where a lower value results in better quality (at the expense of a higher file size).                                                                     |
 | `videosFolder`          | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.                                                                                                                                                                                                                       |
 | `video`                 | `true`           | Whether Cypress will capture a video of the tests run with `cypress run`.                                                                                                                                                                                                                                                |
-| `videoUploadOnPasses`   | `true`           | Whether Cypress will process, compress, and upload videos to the [Dashboard](/guides/dashboard/introduction) even when all tests in a spec file are passing. This only applies when recording your runs to the Dashboard. Turn this off if you'd like to only upload the spec file's video when there are failing tests. |
+| `videoUploadOnPasses`   | `true`           | Whether Cypress will process, compress, and upload videos to [Cypress Cloud](/guides/cloud/introduction) even when all tests in a spec file are passing. This only applies when recording your runs to Cypress Cloud. Turn this off if you'd like to only upload the spec file's video when there are failing tests. |
 
 ### Downloads
 

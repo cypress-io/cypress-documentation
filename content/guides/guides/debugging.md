@@ -271,7 +271,7 @@ locally but fail in CI.
   data from that network request. You can leverage
   [aliasing](/guides/core-concepts/variables-and-aliases#Aliases) for this.
 
-The Cypress Dashboard also offers [Analytics](/guides/dashboard/analytics) that
+Cypress Cloud also offers [Analytics](/guides/cloud/analytics) that
 illustrate trends in your tests and can help identify the tests that fail most
 often. This could help narrow down what is causing the flake -- for example,
 seeing increased failures after a change to the test environment could indicate

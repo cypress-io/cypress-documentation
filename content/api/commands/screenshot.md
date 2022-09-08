@@ -248,8 +248,8 @@ off by setting `screenshotOnRunFailure` to `false` within your
 
 #### Screenshots in CI
 
-You can see screenshots taken during a CI run in the
-[Dashboard Service](https://on.cypress.io/dashboard) without any extra work.
+You can see screenshots taken during a CI run in 
+[Cypress Cloud](https://on.cypress.io/cloud) without any extra work.
 
 Alternatively, to see screenshots in your Continuous Integration UI, most CI
 providers document a way to export the screenshots as artifacts and to make them
@@ -351,7 +351,7 @@ following:
 - [After Screenshot API](/api/plugins/after-screenshot-api)
 - [`cy.debug()`](/api/commands/debug)
 - [`Cypress.Screenshot`](/api/cypress-api/screenshot-api)
-- [Dashboard Service](/guides/dashboard/introduction)
+- [Cypress Cloud](/guides/cloud/introduction)
 - [`.pause()`](/api/commands/pause)
 - [Screenshots and Videos](/guides/guides/screenshots-and-videos)
 - [Visual Testing](/guides/tooling/visual-testing)

@@ -9,7 +9,7 @@ title: Introduction
 - An overview of Continuous Integration
 - How to run Cypress tests in Continuous Integration
 - How to configure Cypress in various CI Providers
-- How to record tests to the Cypress Dashboard
+- How to record tests to Cypress Cloud
 - How to run tests in parallel on CI
 
 </Alert>
@@ -157,11 +157,7 @@ local certificate:
 
 ### Record tests
 
-Cypress can record your tests and make the results available in the
-[Cypress Dashboard](/guides/dashboard/introduction), which is a service that
-gives you access to recorded tests - typically when running Cypress tests from
-your [CI provider](/guides/continuous-integration/introduction). The Dashboard
-provides you insight into what happened when your tests ran.
+Cypress can record your tests and make the results available in [Cypress Cloud](/guides/cloud/introduction). Cloud gives you access to recorded tests - typically when running Cypress tests from your [CI provider](/guides/continuous-integration/introduction) - and provides you insight into what happened when your tests ran.
 
 #### Recording tests allow you to:
 
@@ -175,7 +171,7 @@ provides you insight into what happened when your tests ran.
 
 #### To record tests:
 
-1. [Set up your project to record](/guides/dashboard/projects#Setup)
+1. [Set up your project to record](/guides/cloud/projects#Setup)
 2. [Pass the `--record` flag to `cypress run`](/guides/guides/command-line#cypress-run)
    within CI.
 
@@ -183,7 +179,7 @@ provides you insight into what happened when your tests ran.
 cypress run --record --key=abc123
 ```
 
-[Read the full guide on the Dashboard Service.](/guides/dashboard/introduction)
+[Read the full guide on the Cypress Cloud.](/guides/cloud/introduction)
 
 ### Run tests in parallel
 
@@ -385,7 +381,7 @@ for more examples.
 
 If you are [recording your runs](#Record-tests) on a public project, you'll want
 to protect your Record Key.
-[Learn why.](/guides/dashboard/projects#Identification)
+[Learn why.](/guides/cloud/projects#Identification)
 
 Instead of hard coding it into your run command like this:
 
@@ -433,8 +429,8 @@ under custom environment variables.
 - SHA: `COMMIT_INFO_SHA`
 - Remote: `COMMIT_INFO_REMOTE`
 
-If the commit information is missing in the Dashboard run then
-[GitHub Integration](/guides/dashboard/github-integration) or other tasks might
+If the commit information is missing in the Cypress Cloud run then
+[GitHub Integration](/guides/cloud/github-integration) or other tasks might
 not work correctly. To see the relevant Cypress debug logs, set the environment
 variable `DEBUG` on your CI machine and inspect the terminal output to see why
 the commit information is unavailable.

@@ -254,10 +254,10 @@ To add a page, such as a new guide or API documentation:
 > has a different layout from the other guide pages, you would create a
 > component file within `/guides` matching the route name that you want to use.
 > For example, if I wanted to create a unique guide page without the sidebar
-> about using the Dashboard, I would create a file called
-> `/pages/guides/my-dashboard-guide.vue` and create a Vue component for the
+> about using Cypress Cloud, I would create a file called
+> `/pages/guides/my-cloud-guide.vue` and create a Vue component for the
 > specific layout I want to create. The page will then be accessible at the
-> route `/guides/my-dashboard-guide`.
+> route `/guides/my-cloud-guide`.
 
 #### A Worked Example
 

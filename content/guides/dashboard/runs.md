@@ -7,7 +7,7 @@ Recorded runs capture the results from your test runs.
 <Alert type="info">
 
 If you haven't set up your project to record
-[read here](/guides/dashboard/projects#Setup).
+[read here](/guides/cloud/projects#Setup).
 
 </Alert>
 
@@ -105,7 +105,7 @@ tab. Each failure is listed under its test title.
 
 ## Cancel run
 
-You can cancel a run currently in progress from the Dashboard. Runs can only be
+You can cancel a run currently in progress from Cypress Cloud. Runs can only be
 canceled by members of the project.
 
 ### To cancel a run
@@ -115,7 +115,7 @@ canceled by members of the project.
   the run details page
 - Click **Yes, cancel this run** to confirm. **Note: this cannot be undone**
 
-<DocsVideo src="/img/snippets/cancelling-run.mp4" title="Dashboard cancel runs"></DocsVideo>
+<DocsVideo src="/img/snippets/cancelling-run.mp4" title="Cloud cancel runs"></DocsVideo>
 
 ### What happens when a run is canceled?
 
@@ -123,13 +123,13 @@ canceled by members of the project.
 - A message will appear on the run details page showing the time of cancellation
   and the user that canceled the run.
 - The run will display as **Canceled** in the associated GitHub pull request if
-  [GitHub Integration](/guides/dashboard/github-integration) is enabled.
+  [GitHub Integration](/guides/cloud/github-integration) is enabled.
 - Any tests recorded to completion will be available to view in the run details
   page.
 - Any tests recorded to completion will still count towards your monthly test
   results limit.
 - If you have Analytics enabled, canceled runs will appear in the
-  [Runs over time](/guides/dashboard/analytics#Run-status) chart.
+  [Runs over time](/guides/cloud/analytics#Run-status) chart.
 - Any incomplete calls to
   [cypress run --record](/guides/guides/command-line#cypress-run) for the run
   will be marked as canceled and not run.
@@ -141,8 +141,7 @@ canceled by members of the project.
 
 ## Archive run
 
-Runs that have been canceled or are in an errored state can be archived from the
-Dashboard.
+Runs that have been canceled or are in an errored state can be archived from Cypress Cloud.
 
 ### To archive a run
 
@@ -152,17 +151,17 @@ Dashboard.
 ### What happens when a run is archived?
 
 - The archived run will no longer display in the runs list or
-  [Analytics](/guides/dashboard/analytics) reporting.
+  [Analytics](/guides/cloud/analytics) reporting.
 - Archived runs can be accessed by the URL to that run. The format is:
-  `https://dashboard.cypress.io/projects/{project ID}/runs/{run number}`
-- Any tests recorded to the Dashboard will still count towards your monthly test
+  `https://cloud.cypress.io/projects/{project ID}/runs/{run number}`
+- Any tests recorded to Cypress Cloud will still count towards your monthly test
   results limit, even when it has been archived.
 
 ### To restore an archived run
 
 - Visit the archived run. The archived run can be accessed by the URL of the
   run. The format is:
-  `https://dashboard.cypress.io/projects/{project ID}/runs/{run number}`
+  `https://cloud.cypress.io/projects/{project ID}/runs/{run number}`
 - Click **<Icon name="history"></Icon> Restore from archive**
   <DocsImage src="/img/dashboard/restore-from-archive.png" alt="restore-from-archive" ></DocsImage>
 

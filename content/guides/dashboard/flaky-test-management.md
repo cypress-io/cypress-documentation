@@ -2,7 +2,7 @@
 title: Flaky Test Management
 ---
 
-By enabling [test retries](/guides/guides/test-retries), the Cypress Dashboard
+By enabling [test retries](/guides/guides/test-retries), Cypress Cloud
 can detect, flag, and track flaky tests from your recorded Cypress test runs in
 your CI/CD pipeline.
 
@@ -34,11 +34,11 @@ Test retries is **disabled by default**, and you can
 
 <Alert type="success">
 
-<strong class="alert-header"><Icon name="star"></Icon> Premium Dashboard
+<strong class="alert-header"><Icon name="star"></Icon> Premium Cypress Cloud
 Feature</strong>
 
 **Test flake detection** is available to users with a
-[Team Dashboard plan](https://cypress.io/pricing).
+[Team Cypress Cloud plan](https://cypress.io/pricing).
 
 </Alert>
 
@@ -51,20 +51,19 @@ assist with prioritizing their fix.
 <strong class="alert-header">Test Retries & Flake Detection</strong>
 
 Test retries is the _fundamental mechanism_ that enables the detection of flaky
-tests by the Cypress Dashboard. Therefore, **enabling
+tests by Cypress Cloud. Therefore, **enabling
 [test retries](/guides/guides/test-retries#Configure-Test-Retries) is required**
-to take advantage of any flaky test management feature provided by the Cypress
-Dashboard.
+to take advantage of any flaky test management feature.
 
 </Alert>
 
 ### Flagging Flaky Tests
 
 Test runs with flaky tests will be flagged with the number of flaky of tests
-within the Dashboard "Latest runs" page. Flaky tests runs can also be filtered
+within Cypress Cloud "Latest runs" page. Flaky tests runs can also be filtered
 in and out via the "Flaky" filter within this page.
 
-<DocsImage src="/img/dashboard/flaky-test-management/flaky-runs-view.png" alt="Flagging flaky tests runs in Cypress Dashboard" ></DocsImage>
+<DocsImage src="/img/dashboard/flaky-test-management/flaky-runs-view.png" alt="Flagging flaky tests runs in Cypress Cloud" ></DocsImage>
 
 Any failure across multiple test run attempts triggered by test retrying will
 result in a given test case to be flagged as flaky.
@@ -73,11 +72,11 @@ result in a given test case to be flagged as flaky.
 
 <Alert type="success">
 
-<strong class="alert-header"><Icon name="star"></Icon> Premium Dashboard
+<strong class="alert-header"><Icon name="star"></Icon> Premium Cypress Cloud
 Feature</strong>
 
 **Test flake analytics** are available to users with a
-[Team Dashboard plan](https://cypress.io/pricing).
+[Team Cypress Cloud plan](https://cypress.io/pricing).
 
 </Alert>
 
@@ -139,17 +138,16 @@ while exhibiting flake as demonstrated below:
 
 <Alert type="success">
 
-<strong class="alert-header"><Icon name="star"></Icon> Premium Dashboard
-Feature</strong>
+<strong class="alert-header"><Icon name="star"></Icon> Premium Cypress Cloud Feature</strong>
 
 **Test flake alerting** is available to users with a
-[Team Dashboard plan](https://cypress.io/pricing).
+[Team Cypress Cloud plan](https://cypress.io/pricing).
 
 </Alert>
 
-The Dashboard can provide alerts via
-[GitHub](/guides/dashboard/github-integration) and
-[Slack integrations](/guides/dashboard/slack-integration), to further assist
+Cypress Cloud can provide alerts via
+[GitHub](/guides/cloud/github-integration) and
+[Slack integrations](/guides/cloud/slack-integration), to further assist
 with staying on top of flake occurrences.
 
 ### GitHub
@@ -171,7 +169,7 @@ Flake alerting via Slack can be enabled within Slack integration settings:
 
 <DocsImage src="/img/dashboard/flaky-test-management/slack-flake.png" alt="Slack flake alert settings" ></DocsImage>
 
-After enabling Slack alerts, the Dashboard will send Slack messages whenever
+After enabling Slack alerts, Cypress Cloud will send Slack messages whenever
 flaky tests are detected:
 
 <DocsImage src="/img/dashboard/flaky-test-management/flake-slack-alert.png" alt="Slack flake alert" ></DocsImage>

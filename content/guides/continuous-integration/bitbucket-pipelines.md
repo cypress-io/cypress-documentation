@@ -133,9 +133,9 @@ definitions:
 
 ## Parallelization
 
-The [Cypress Dashboard](/guides/dashboard/introduction) offers the ability to
+[Cypress Cloud](/guides/cloud/introduction) offers the ability to
 [parallelize and group test runs](/guides/guides/parallelization) along with
-additional insights and [analytics](/guides/dashboard/analytics) for Cypress
+additional insights and [analytics](/guides/cloud/analytics) for Cypress
 tests.
 
 Before diving into an example of a parallelization setup, it is important to
@@ -259,32 +259,30 @@ definitions:
 
 The above configuration using the `--parallel` and `--record` flags to
 [cypress run](/guides/guides/command-line#cypress-run) requires setting up
-recording test results to the
-[Cypress Dashboard](https://on.cypress.io/dashboard).
+recording test results to [Cypress Cloud](https://on.cypress.io/cloud).
 
 </Alert>
 
-## Using the Cypress Dashboard with Bitbucket Pipelines
+## Using Cypress Cloud with Bitbucket Pipelines
 
 In the Bitbucket Pipelines configuration we have defined in the previous
-section, we are leveraging three useful features of the
-[Cypress Dashboard](https://on.cypress.io/dashboard):
+section, we are leveraging three useful features of [Cypress Cloud](https://on.cypress.io/cloud):
 
 1. [Recording test results with the `--record` flag](https://on.cypress.io/how-do-i-record-runs)
-   to the [Cypress Dashboard](https://on.cypress.io/dashboard):
+   to [Cypress Cloud](https://on.cypress.io/cloud):
 
-   - In-depth and shareable [test reports](/guides/dashboard/runs).
+   - In-depth and shareable [test reports](/guides/cloud/runs).
    - Visibility into test failures via quick access to error messages, stack
      traces, screenshots, videos, and contextual details.
-   - [Integrating testing with the pull-request process](/guides/dashboard/bitbucket-integration)
+   - [Integrating testing with the pull-request process](/guides/cloud/bitbucket-integration)
      via
-     [commit status check guards](/guides/dashboard/bitbucket-integration#Status-checks)
+     [commit status check guards](/guides/cloud/bitbucket-integration#Status-checks)
      and convenient
-     [pull request comments](/guides/dashboard/bitbucket-integration#Pull-Request-comments).
-   - [Detecting flaky tests](/guides/dashboard/flaky-test-management) and
+     [pull request comments](/guides/cloud/bitbucket-integration#Pull-Request-comments).
+   - [Detecting flaky tests](/guides/cloud/flaky-test-management) and
      surfacing them via
-     [Slack alerts](/guides/dashboard/flaky-test-management#Slack) or
-     [Bitbucket PR status checks](/guides/dashboard/bitbucket-integration).
+     [Slack alerts](/guides/cloud/flaky-test-management#Slack) or
+     [Bitbucket PR status checks](/guides/cloud/bitbucket-integration).
 
 2. [Parallelizing test runs](/guides/guides/parallelization) and optimizing
    their execution via
@@ -292,11 +290,10 @@ section, we are leveraging three useful features of the
    of test specs across CI machines with the `--parallel` flag.
 
 3. Organizing and consolidating multiple `cypress run` calls by labeled groups
-   into a single report within the.
-   [Cypress Dashboard](https://on.cypress.io/dashboard). In the example above we
+   into a single report within [Cypress Cloud](https://on.cypress.io/cloud). In the example above we
    use the `--group "UI - Chrome"` flag to organize all UI tests for the Chrome
    browser into a group labeled "UI - Chrome" in the
-   [Cypress Dashboard](https://on.cypress.io/dashboard) report.
+   [Cypress Cloud](https://on.cypress.io/cloud) report.
 
 ## Cypress Real World Example with Bitbucket Pipelines
 

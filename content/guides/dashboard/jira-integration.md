@@ -4,27 +4,26 @@ title: Jira Integration
 
 <Alert type="success">
 
-<strong class="alert-header"><Icon name="star"></Icon> Premium Dashboard
-Feature</strong>
+<strong class="alert-header"><Icon name="star"></Icon> Premium Cypress Cloud Feature</strong>
 
 **Jira integration** is available to users with a
-[Team Dashboard plan](https://cypress.io/pricing).
+[Team Cypress Cloud plan](https://cypress.io/pricing).
 
 </Alert>
 
-The [Cypress Dashboard](https://on.cypress.io/dashboard) can integrate with your
+[Cypress Cloud](https://on.cypress.io/cloud) can integrate with your
 Jira workflow to enable:
 
 - Creating one or more Jira issues for a given a test case directly from the
-  Cypress Dashboard.
+  Cypress Cloud.
 - Viewing of historical log of Jira issues created for or associated for a given
   test case across test runs.
 
 ## Installing the Jira integration
 
-1. Visit **Integrations → Jira** in the Cypress Dashboard and click "Install
+1. Visit **Integrations → Jira** in Cypress Cloud and click "Install
    Jira"
-   <DocsImage src="/img/dashboard/jira-integration/dashboard-jira-integration-install.png" alt="Cypress Dashboard Integrations" ></DocsImage>
+   <DocsImage src="/img/dashboard/jira-integration/dashboard-jira-integration-install.png" alt="Cypress Cloud Integrations" ></DocsImage>
 2. Click the "Get it Now" button on the
    [Atlassian Marketplace Cypress for Jira page](https://marketplace.atlassian.com/apps/1224341/cypress-for-jira?hosting=cloud&tab=overview)
    <DocsImage src="/img/dashboard/jira-integration/dashboard-jira-atlassian-get-it-now.png" alt="Atlassian Marketplace Cypress for Jira" ></DocsImage>
@@ -35,17 +34,16 @@ Jira workflow to enable:
 5. Once installed, click the `Get Started` link in the notification.
    <DocsImage src="/img/dashboard/jira-integration/dashboard-jira-atlassian-success.png" alt="Atlassian Marketplace Cypress for Jira Installation Success" ></DocsImage>
 6. On the next page, click the `Click to Finish Installation` button to be
-   redirected to the [Cypress Dashboard](https://www.cypress.io/dashboard/) and
+   redirected to [Cypress Cloud](https://cloud.cypress.io/) and
    choose the Cypress Organization for integration.
    <DocsImage src="/img/dashboard/jira-integration/dashboard-jira-atlassian-finish-install-step.png" alt="Atlassian Marketplace Cypress for Jira Installation Finish Installation" ></DocsImage>
-7. Once redirected to the
-   [Cypress Dashboard](https://www.cypress.io/dashboard/), select the
+7. Once redirected to [Cypress Cloud](https://cloud.cypress.io/), select the
    organization to integrate with
    [Atlassian Marketplace Cypress for Jira](https://marketplace.atlassian.com/apps/1224341/cypress-for-jira?hosting=cloud&tab=overview).
-   <DocsImage src="/img/dashboard/jira-integration/dashboard-jira-integration-choose-cypress-org.png" alt="Cypress Dashboard Select Organization for Jira Integration" ></DocsImage>
+   <DocsImage src="/img/dashboard/jira-integration/dashboard-jira-integration-choose-cypress-org.png" alt="Cypress Cloud Select Organization for Jira Integration" ></DocsImage>
 8. The Jira Integration is complete. A list of projects permitted is provided on
    the Jira Integration page.
-   <DocsImage src="/img/dashboard/jira-integration/dashboard-jira-integration-completed.png" alt="Cypress Dashboard Jira Integration" ></DocsImage>
+   <DocsImage src="/img/dashboard/jira-integration/dashboard-jira-integration-completed.png" alt="Cypress Cloud Jira Integration" ></DocsImage>
 
 ## Creating a Jira issue for a test case
 
@@ -81,7 +79,7 @@ Let's walk through creating a Jira issue for a failing test:
 
 <strong class="alert-header">Note</strong>
 
-The create issue within Jira will include a link back the Cypress Dashboard for
+The create issue within Jira will include a link back Cypress Cloud for
 the associated test.
 <DocsImage src="/img/dashboard/jira-integration/dashboard-jira-integration-jira-issue.png" alt="Jira Issue of Cypress Failure" ></DocsImage>
 

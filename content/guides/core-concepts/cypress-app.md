@@ -21,17 +21,16 @@ Cypress testing experience.
 
 <Alert type="info">
 
-<strong class="alert-header">Dashboard integration</strong>
+<strong class="alert-header">Cypress Cloud integration</strong>
 
-When you configure Cypress to record tests to the
-[Dashboard](/guides/dashboard/introduction), you'll see data from your latest
-recorded runs directly in Cypress. This increased visibility into your test
+When you configure the open-source Cypress app to record tests to [Cypress Cloud](/guides/cloud/introduction), you'll see data from your latest
+recorded runs directly in the Cypress app. This increased visibility into your test
 history allows you to debug your tests faster and more effectively, all within
 your local workflow.
 
-The data used by these features is pulled from the Dashboard, so they will only
+The data used by these features is pulled from Cypress Cloud, so they will only
 reflect test results that were
-[recorded](/guides/dashboard/projects#Set-up-a-project-to-record).
+[recorded](/guides/cloud/projects#Set-up-a-project-to-record).
 
 If you're not sure whether you're logged in, you can always check using the
 profile control in the top right of the window.
@@ -78,11 +77,10 @@ statuses. Results are scoped to your current git branch if available, falling
 back to the default branch if not, then finally all branches.
 
 With this intelligence you can monitor, run, and fix tests locally within CI
-workflows, and then further dig into your results by clicking through to the
-Dashboard.
+workflows, and then further dig into your results by clicking through to Cypress Cloud.
 
-The runs data is sourced from the Dashboard (see [note above](#Overview)) so
-should be the same everywhere.
+The runs data is sourced from Cypress Cloud (see [note above](#Overview)) so it
+will be the same everywhere.
 
 #### Average duration
 
@@ -90,7 +88,7 @@ This column indicates the time taken to run the entire spec file, averaged over
 the last four runs, so that you can quickly identify and take action to improve
 the performance of your long-running tests.
 
-Again, this analysis comes from the Dashboard.
+Again, this analysis comes from Cypress Cloud.
 
 #### Flake annotation
 
@@ -98,7 +96,7 @@ Again, this analysis comes from the Dashboard.
 
 <strong class="alert-header">What is a flaky test?</strong>
 
-A test is considered to be [flaky](/guides/dashboard/flaky-test-management) when
+A test is considered to be [flaky](/guides/cloud/flaky-test-management) when
 it can pass and fail across multiple retry attempts without any code changes.
 
 </Alert>
@@ -116,21 +114,21 @@ tooltip with the following analytics, based off the last 50 runs:
 - Last flaky (how many runs ago)
 
 Clicking on the flake indicator will take you to the spec’s
-[Flaky Test Analytics in the Dashboard](https://dashboard.cypress.io/projects/7s5okt/analytics/flaky-tests).
+[Flaky Test Analytics in Cypress Cloud](https://cloud.cypress.io/projects/7s5okt/analytics/flaky-tests).
 
 ### Project Runs
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/recorded-runs.png" alt="Recorded Runs"></DocsImage>
 
 This screen shows detailed information about the most recently recorded
-[test runs](/guides/dashboard/runs) across all git branches, latest first. This
-data comes from the Dashboard (see [note above](#Overview)) so should be the
+[test runs](/guides/cloud/runs) across all git branches, latest first. This
+data comes from Cypress Cloud (see [note above](#Overview)) so should be the
 same everywhere.
 
 The title of each run is taken from the
 [git commit message](https://www.educative.io/edpresso/git-commit-message-simply-explained)
 for that change, and clicking on it will take you to the corresponding run page
-in the Dashboard.
+in Cypress Cloud.
 
 ## The Test Runner
 
