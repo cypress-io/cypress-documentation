@@ -236,6 +236,15 @@ module API option, if specified)
   - `cypress/videos/file/one.cy.js.mp4`
   - `cypress/videos/two.cy.js.mp4`
 
+#### Assets in Cypress Dashboard
+
+<DocsImage src="/img/dashboard/videos-of-recorded-test-run.png" alt="Video of test runs"></DocsImage>
+
+Instead of administering assets yourself, you can
+[save them to the cloud with Cypress Dashboard](/guides/dashboard/runs#Run-details).
+Screenshots and videos are stored permanently, attached to their respective test
+results, and easily shared or browsed through our web interface.
+
 To learn more about videos and settings available, see
 [Screenshots and Videos](/guides/guides/screenshots-and-videos#Screenshots)
 
