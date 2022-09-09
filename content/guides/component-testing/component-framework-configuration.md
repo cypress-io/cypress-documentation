@@ -567,28 +567,30 @@ import { defineConfig } from 'cypress'
 
 export default {
   component: {
-    framework: 'angular',
-    bundler: 'webpack',
-    options: {
-      projectConfig: {
-        root: '',
-        sourceRoot: 'apps/my-app',
-        buildOptions: {
-          outputPath: 'dist/my-app',
-          index: 'apps/my-app/src/index.html',
-          main: 'apps/my-app/src/main.ts',
-          polyfills: 'apps/my-app/src/polyfills.ts',
-          tsConfig: 'apps/my-app/tsconfig.app.json',
-          inlineStyleLanguage: 'scss',
-          assets: ['apps/my-app/src/favicon.ico', 'apps/my-app/src/assets'],
-          styles: ['apps/my-app/src/styles.scss'],
-          scripts: [],
-          buildOptimizer: false,
-          optimization: false,
-          vendorChunk: true,
-          extractLicenses: false,
-          sourceMap: true,
-          namedChunks: true,
+    devServer: {
+      framework: 'angular',
+      bundler: 'webpack',
+      options: {
+        projectConfig: {
+          root: '',
+          sourceRoot: 'apps/my-app',
+          buildOptions: {
+            outputPath: 'dist/my-app',
+            index: 'apps/my-app/src/index.html',
+            main: 'apps/my-app/src/main.ts',
+            polyfills: 'apps/my-app/src/polyfills.ts',
+            tsConfig: 'apps/my-app/tsconfig.app.json',
+            inlineStyleLanguage: 'scss',
+            assets: ['apps/my-app/src/favicon.ico', 'apps/my-app/src/assets'],
+            styles: ['apps/my-app/src/styles.scss'],
+            scripts: [],
+            buildOptimizer: false,
+            optimization: false,
+            vendorChunk: true,
+            extractLicenses: false,
+            sourceMap: true,
+            namedChunks: true,
+          },
         },
       },
     },
