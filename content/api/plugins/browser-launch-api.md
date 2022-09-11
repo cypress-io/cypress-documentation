@@ -48,7 +48,7 @@ following properties:
 | `preferences` | `object`   | An object describing browser preferences. Differs between browsers. See [Changing browser preferences](#Changing-browser-preferences) for details.                                                                                           |
 | `args`        | `string[]` | An array of strings that will be passed as command-line args when the browser is launched. Has no effect on Electron. See [Modify browser launch arguments](#Modify-browser-launch-arguments) for details.                                   |
 | `extensions`  | `string[]` | An array of paths to folders containing unpacked WebExtensions to be loaded before the browser starts. Note: Electron currently only supports Chrome DevTools extensions. See [Add browser extensions](#Add-browser-extensions) for details. |
-| `env`         | `object`   | An object of environment variables set before launching the browser. See [Configure browser environment](#Configure-browser-environment) for details.                                                                                        |
+| `env`         | `object`   | An object of environment variables to pass to the launched browser. See [Configure browser environment](#Configure-browser-environment) for details.                                                                                        |
 
 ## Usage
 
