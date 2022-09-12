@@ -160,6 +160,9 @@ these steps:
    [configuration](/guides/references/configuration) to enable the experiment.
 2. Install the `playwright-webkit` NPM package in your repo to acquire WebKit
    itself: `npm install --save-dev playwright-webkit`.
+   - We built this experiment on top of the Playwright simulated browser as a
+     stepping stone towards creating a better UX with Cypress-provided browsers
+     in the future. Thank you, Playwright contributors.
 3. Now, you should be able to use WebKit like any other browser. For example, to
    record with WebKit in CI:
    ```shell
