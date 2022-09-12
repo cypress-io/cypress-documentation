@@ -2,7 +2,7 @@
 title: Users
 ---
 
-A user is anyone who logs in to Cypress Cloud Service.
+A user is anyone who logs in to Cypress Cloud.
 
 ## Invite users
 

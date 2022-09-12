@@ -95,8 +95,7 @@ following process:
    considering the test run as fully complete. This is done to better support
    [grouping of runs](#Grouping-test-runs).
 
-In short: each Cypress instance sends a list of the spec files to Cypress Cloud
-Service, and the service sends back one spec at a time to each application to
+In short: each Cypress instance sends a list of the spec files to Cypress Cloud, which sends back one spec at a time to each application to
 run.
 
 ### Parallelization process

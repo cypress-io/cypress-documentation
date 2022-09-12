@@ -126,7 +126,7 @@ export CYPRESS_PROJECT_ID={projectId}
 ### Record key
 
 The record key is used to authenticate that your project is _allowed_ to record
-tests to Cypress Cloud Service. As long as your record key stays _private_,
+tests to Cypress Cloud. As long as your record key stays _private_,
 nobody will be able to record test runs for your project - even if they have
 your `projectId`.
 
