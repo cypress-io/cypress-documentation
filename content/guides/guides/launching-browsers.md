@@ -173,7 +173,7 @@ GitHub repository.
 
 #### Known Issues with `experimentalWebKitSupport`
 
-- `cy.origin()` and `cy.session()` are not yet supported with WebKit.
+- `cy.origin()` and `cy.session()` are not yet supported.
 - `cy.intercept()`'s `forceNetworkError` option is disabled.
 - When using `experimentalSingleTabRunMode` with video recording in WebKit, only
   the video for the first spec is recorded.
@@ -182,6 +182,7 @@ GitHub repository.
   - `beforeinput` events are missing the `inputType` property
   - `cy.type('{uparrow}')` and `cy.type('{downarrow}')` on an
     `input[type=number]` do not round to the nearest `step` specified
+- Stack traces may be missing some function names and location information.
 - See issues labeled
   [`experiment: webkit`](https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22experiment%3A+webkit%22)
   for a complete list.
