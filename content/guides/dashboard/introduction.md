@@ -117,7 +117,7 @@ for teams on our [Enterprise plan](https://www.cypress.io/pricing/).
 <strong class="alert-header">Have a question you don't see answered
 here?</strong>
 
-[We have answered some common questions about Cypress Cloud in our FAQ](/faq/questions/dashboard-faq).
+[We have answered some common questions about Cypress Cloud in our FAQ](/faq/questions/cloud-faq).
 
 </Alert>
 
