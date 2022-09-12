@@ -35,6 +35,7 @@ using number of browsers including:
 - [Firefox](https://www.mozilla.org/firefox/)
 - [Firefox Developer Edition](https://www.mozilla.org/firefox/developer/)
 - [Firefox Nightly](https://www.mozilla.org/firefox/nightly/)
+- [WebKit (Experimental)](#WebKit-Experimental)
 
 Cypress automatically detects available browsers on your OS. You can switch the
 browser by using the drop down near the top right corner:

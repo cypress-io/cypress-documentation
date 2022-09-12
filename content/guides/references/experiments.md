@@ -57,7 +57,7 @@ configuration object:
 
 | Version                                       | Changes                                                                                                                      |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| [10.x.y](/guides/references/changelog#10-x-y) | Added `experimentalWebKitSupport`.                                                                                           |
+| [10.8.0](/guides/references/changelog#10-x-y) | Added `experimentalWebKitSupport`.                                                                                           |
 | [10.6.0](/guides/references/changelog#10-6-0) | Added support for `experimentalSingleTabRunMode`.                                                                            |
 | [10.4.0](/guides/references/changelog#10-4-0) | Added support for `experimentalModifyObstructiveThirdPartyCode`.                                                             |
 | [9.6.0](/guides/references/changelog#9-6-0)   | Added support for `experimentalSessionAndOrigin` and removed `experimentalSessionSupport`.                                   |
