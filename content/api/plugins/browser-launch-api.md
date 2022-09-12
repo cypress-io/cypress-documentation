@@ -124,7 +124,7 @@ on('before:browser:launch', (browser, launchOptions) => {
 #### Configure browser environment:
 
 <Alert type="warning">
-This option is not supported when targeting electron
+This option is not supported when targeting Electron.
 </Alert>
 
 :::cypress-plugin-example
