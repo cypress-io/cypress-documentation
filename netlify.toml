@@ -54,8 +54,8 @@
   force = true
 
 [[redirects]]
-  from = "/guides/cloud/dashboard-introduction"
-  to = "/guides/cloud/introduction/"
+  from = "/guides/dashboard/dashboard-introduction"
+  to = "/guides/dashboard/introduction/"
   status = 301
   force = true
 
