@@ -5,7 +5,9 @@ title: Cross Browser Testing
 Cypress has the capability to run tests across multiple browsers. Currently,
 Cypress has support for
 [Chrome-family browsers](/guides/guides/launching-browsers#Chrome-Browsers)
-(including Electron and Chromium-based Microsoft Edge), and Firefox.
+(including Electron and Chromium-based Microsoft Edge),
+[WebKit](/guides/guides/launching-browsers#WebKit-Experimental) (Safari's
+browser engine), and Firefox.
 
 <Alert type="warning">
 
