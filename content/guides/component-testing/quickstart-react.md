@@ -23,7 +23,7 @@ npm create vite@latest my-awesome-app -- --template react
 2. Go into the directory and run `npm install`
 
 ```bash
-cd my-react-app
+cd my-awesome-app
 npm install
 ```
 
