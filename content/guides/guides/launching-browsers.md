@@ -35,6 +35,7 @@ using number of browsers including:
 - [Firefox](https://www.mozilla.org/firefox/)
 - [Firefox Developer Edition](https://www.mozilla.org/firefox/developer/)
 - [Firefox Nightly](https://www.mozilla.org/firefox/nightly/)
+- [WebKit (Experimental)](#WebKit-Experimental)
 
 Cypress automatically detects available browsers on your OS. You can switch the
 browser by using the drop down near the top right corner:
@@ -147,6 +148,56 @@ of our [docker images](/examples/examples/docker).
 
 By default, we will launch Firefox headlessly during `cypress run`. To run
 Firefox headed, you can pass the `--headed` argument to `cypress run`.
+
+### WebKit (Experimental)
+
+Cypress has [experimental](/guides/references/experiments) support for WebKit,
+Safari's browser engine. Testing your app with WebKit is representative of how
+your app would run in Safari. To opt-in to `experimentalWebKitSupport`, follow
+these steps:
+
+1. Add `experimentalWebKitSupport: true` to your
+   [configuration](/guides/references/configuration) to enable the experiment.
+2. Install the `playwright-webkit` NPM package in your repo to acquire WebKit
+   itself: `npm install --save-dev playwright-webkit`.
+   - We built this experiment on top of the Playwright WebKit browser as a
+     stepping stone towards creating a better UX with Cypress-provided browsers
+     in the future. Thank you, Playwright contributors.
+3. Now, you should be able to use WebKit like any other browser. For example, to
+   record with WebKit in CI:
+   ```shell
+   cypress run --browser webkit --record # ...
+   ```
+
+WebKit support is _experimental_, so you may encounter issues. If you encounter
+an issue not on the "Known Issues" list, please
+[open an issue](https://github.com/cypress-io/cypress/issues/new/choose) on the
+GitHub repository.
+
+#### Known Issues with `experimentalWebKitSupport`
+
+- `cy.origin()` and `cy.session()` are not yet supported.
+- `cy.intercept()`'s `forceNetworkError` option is disabled.
+- When using `experimentalSingleTabRunMode` with video recording in WebKit, only
+  the video for the first spec is recorded.
+- Some differences in `cy.type()` behavior:
+  - `textInput` events are missing the `data` property
+  - `beforeinput` events are missing the `inputType` property
+  - `cy.type('{uparrow}')` and `cy.type('{downarrow}')` on an
+    `input[type=number]` do not round to the nearest `step` specified
+- Stack traces may be missing some function names and location information.
+- See issues labeled
+  [`experiment: webkit`](https://github.com/cypress-io/cypress/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22experiment%3A+webkit%22)
+  for a complete list.
+
+#### Linux Dependencies
+
+WebKit requires additional dependencies to run on Linux. To install the required
+dependencies, run this:
+
+```shell
+npx playwright install-deps webkit
+```
 
 ### Launching by a path
 
