@@ -31,7 +31,7 @@ export default {
 
         <div class="px-5 py-2">
           <a
-            href="https://discord.gg/cMjUZg7"
+            href="https://discord.com/invite/cypress"
             class="text-base text-gray-500 hover:text-gray-900"
           >
             Discord
