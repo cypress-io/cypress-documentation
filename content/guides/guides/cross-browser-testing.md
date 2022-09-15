@@ -14,7 +14,7 @@ browser engine), and Firefox.
 <strong class="alert-header">Web Security</strong>
 
 Tests that require the
-[`chromeWebSecurity` configuration option to be disabled](/guides/guides/web-security#Disabling-Web-Security)
+[`chromeWebSecurity` configuration option to be disabled](/guides/references/configuration#Browser)
 may experience issues in non-Chromium based browsers.
 
 </Alert>

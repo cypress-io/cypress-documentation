@@ -11,13 +11,6 @@ Spy and stub network requests and responses.
 
 </Alert>
 
-<Alert type="bolt">
-
-`cy.intercept()` is the successor to `cy.route()` as of Cypress 6.0.0. See
-[Comparison to `cy.route`](#Comparison-to-cy-route).
-
-</Alert>
-
 <Alert type="warning">
 
 All intercepts are automatically cleared before every test.
@@ -1486,16 +1479,6 @@ Cypress.minimatch('http://localhost/users?_limit=3', '**/users?_limit=+(3|5)', {
 // true (plus debug messages)
 ```
 
-## Comparison to `cy.route()`
-
-Unlike [cy.route()](/api/commands/route), `cy.intercept()`:
-
-- can intercept all types of network requests including Fetch API, page loads,
-  XMLHttpRequests, resource loads, etc.
-- does not require calling [cy.server()](/api/commands/server) before use - in
-  fact, `cy.server()` does not influence `cy.intercept()` at all.
-- does not have method set to `GET` by default, but intercepts `*` methods.
-
 ## `cy.intercept()` and request caching
 
 `cy.intercept()` intercepts requests at the network layer. This can cause
@@ -1597,7 +1580,6 @@ information about the request and response to the console:
 - [Network Requests Guide](/guides/guides/network-requests)
 - [Cypress Example Recipes](https://github.com/cypress-io/cypress-example-recipes#stubbing-and-spying)
 - [Kitchen Sink Examples](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/cypress/integration/2-advanced-examples/network_requests.spec.js)
-- [Migrating `cy.route()` to `cy.intercept()`](/guides/references/migration-guide#Migrating-cy-route-to-cy-intercept)
 <!-- TODO add examples from the resources below to `cypress-example-recipes` repo -->
 - [Smart GraphQL Stubbing in Cypress](https://glebbahmutov.com/blog/smart-graphql-stubbing/)
   blog post
