@@ -54,24 +54,17 @@ fork) of this repository under your personal account.
 git clone git@github.com:<your username>/cypress-documentation.git
 cd cypress-documentation
 ```
-
-### Using Vue Components
-
-This project uses [`@nuxt/content`](https://content.nuxtjs.org/) which enables
-you to write Vue components within markdown. Any component files placed within
-the `/components/global` directory will be available for use within the markdown
-files. There are a
-[few limitations](https://content.nuxtjs.org/writing#vue-components) with using
-Vue components in markdown.
-
 #### Alerts
 
-Use [`<Alert>`](/components/global/Alert.vue) to grab the reader's attention
-with a blurb. You can change the look of the `<Alert>` by setting the `type`
-prop to `info`, `tip`, `warning`, or `danger`.
+Use [Docusaurus Admonitions](https://docusaurus.io/docs/markdown-features/admonitions) to grab the reader's attention
+with a blurb. 
 
 ```jsx
-<Alert type="info">This is an important message.</Alert>
+:::info
+
+This is an important message.
+
+:::
 ```
 
 #### Images
@@ -136,11 +129,11 @@ write in other markdown files.
 ```md
 ## My First Partial
 
-<Alert type="info">
+:::info
 
 This is my reusable partial.
 
-</Alert>
+:::
 ```
 
 #### Using Partials

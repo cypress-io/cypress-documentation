@@ -553,12 +553,12 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 
 ### Test Isolation
 
-<Alert type="success">
+:::success
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Clean up state
 **before** tests run.
 
-</Alert>
+:::
 
 Test isolation is the practice of resetting application state _before_ each
 test.
@@ -587,7 +587,7 @@ When in `legacy` mode, Cypress handles resetting the state for:
 
 #### Strict Mode
 
-<Alert type="warning">
+:::caution
 
 <strong class="alert-header">
   <Icon name="exclamation-triangle"></Icon>
@@ -599,7 +599,7 @@ the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
 to `true` in the Cypress config. This is the default test isolation behavior
 when using the `experimentalSessionAndOrigin` experiment.
 
-</Alert>
+:::
 
 When in `strict` mode, Cypress handles resetting the state for everything
 outlined above for `legacy` mode, in addition to clearing the page by visiting

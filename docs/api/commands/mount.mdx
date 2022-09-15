@@ -29,8 +29,6 @@ Let's take a look at how to implement the command.
 
 <ImportMountFunctions />
 
-<ImportMountFunctions />
-
 To use `cy.mount()`, add a [custom command](/api/cypress-api/custom-commands) to
 the commands file using
 [`Cypress.Commands.add()`](/api/cypress-api/custom-commands). Below are examples
@@ -129,7 +127,7 @@ recommend creating a `cypress.d.ts` file in the root directory, and use this
 example as a starting point for customizing your own command:
 
 <Tabs>
-<TabItem value='React'>
+<TabItem value="React">
 
 ```ts
 import { mount } from 'cypress/react'
@@ -144,10 +142,13 @@ declare global {
 ```
 
 </TabItem>
-<TabItem value='Vue'>
+<TabItem value="Vue">
 
 ```ts
 import { mount } from 'cypress/vue'
+
+type MountParams = Parameters<typeof mount>
+type OptionsParam = MountParams[1]
 
 declare global {
   namespace Cypress {
@@ -159,7 +160,7 @@ declare global {
 ```
 
 </TabItem>
-<TabItem value='Angular'>
+<TabItem value="Angular">
 
 ```ts
 import { mount } from 'cypress/angular'

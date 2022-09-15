@@ -192,19 +192,6 @@ To configure component testing for a React app that uses a custom
 
 :::cypress-config-example
 
-```js
-module.exports = {
-  component: {
-    devServer: {
-      framework: 'react',
-      bundler: 'webpack',
-      // optionally pass in webpack config
-      webpackConfig: require('./webpack.config'),
-    },
-  },
-}
-```
-
 ```ts
 import webpackConfig from './webpack.config'
 ```
@@ -378,11 +365,10 @@ To configure component testing for an Angular application that uses the
 with a `framework` of "angular", a `bundler` of "webpack" and a `specPattern`
 like so:
 
-<cypress-config-file>
-<template #js>
+:::cypress-config-example
 
-```js
-module.exports = {
+```ts
+{
   component: {
     devServer: {
       framework: 'angular',
@@ -393,25 +379,7 @@ module.exports = {
 }
 ```
 
-</template>
-<template #ts>
-
-```ts
-import { defineConfig } from 'cypress'
-
-export default defineConfig({
-  component: {
-    devServer: {
-      framework: 'angular',
-      bundler: 'webpack',
-    },
-    specPattern: '**/*.cy.ts',
-  },
-})
-```
-
-</template>
-</cypress-config-file>
+:::
 
 #### Options API
 
@@ -419,13 +387,10 @@ You can also use the `options` API to provide your own project specific
 configuration to your `devServer`. The `devServer` configuration receives an
 `options` property:
 
-<code-group>
-<code-block label="cypress.config.ts" active>
+:::cypress-config-example
 
 ```ts
-import { defineConfig } from 'cypress'
-
-export default {
+{
   component: {
     framework: 'angular',
     bundler: 'webpack',
@@ -456,8 +421,7 @@ export default {
 }
 ```
 
-</code-block>
-</code-group>
+:::
 
 #### Sample Angular Apps
 
@@ -465,11 +429,11 @@ export default {
 
 ## Svelte
 
-<Alert type="warning">
+:::caution
 
 Svelte is currently in alpha support for component testing.
 
-</Alert>
+:::
 
 For Svelte apps, we have built-in support for Vite and Webpack.
 
@@ -479,40 +443,20 @@ To configure component testing for a Svelte app that uses
 [Vite](https://vitejs.dev/), you will need to configure a `devServer` with a
 `framework` of "svelte" and a `bundler` of "vite" like so:
 
-<cypress-config-file>
-<template #js>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  component: {
-    devServer: {
-      framework: 'svelte',
-      bundler: 'vite',
-    },
-  },
-})
-```
-
-</template>
-<template #ts>
+:::cypress-config-example
 
 ```ts
-import { defineConfig } from 'cypress'
-
-export default defineConfig({
+{
   component: {
     devServer: {
       framework: 'svelte',
       bundler: 'vite',
     },
   },
-})
+}
 ```
 
-</template>
-</cypress-config-file>
+:::
 
 #### Svelte Vite Sample Apps
 
@@ -524,30 +468,14 @@ To configure component testing for a Svelte app that uses a custom
 [Webpack](https://webpack.js.org/) config, you will need to configure a
 `devServer` with a `framework` of "svelte" and a `bundler` of "webpack" like so:
 
-<cypress-config-file>
-<template #js>
-
-```js
-module.exports = {
-  component: {
-    devServer: {
-      framework: 'svelte',
-      bundler: 'webpack',
-      // optionally pass in webpack config
-      webpackConfig: require('./webpack.config'),
-    },
-  },
-}
-```
-
-</template>
-<template #ts>
+:::cypress-config-example
 
 ```ts
-import { defineConfig } from 'cypress'
 import webpackConfig from './webpack.config'
+```
 
-export default defineConfig({
+```ts
+{
   component: {
     devServer: {
       framework: 'svelte',
@@ -556,11 +484,10 @@ export default defineConfig({
       webpackConfig,
     },
   },
-})
+}
 ```
 
-</template>
-</cypress-config-file>
+:::
 
 If you don't provide one, Cypress will try to infer your webpack config. If
 Cypress cannot or you want to make modifications to your config, you can pass it
@@ -622,7 +549,7 @@ in the [component config](/guides/references/configuration#component) options:
 ```ts
 {
   component: {
-    devServer,
+    //highlight-next-line
     indexHtmlFile: '/custom/path/to/component-index.html'
   }
 }
@@ -644,6 +571,7 @@ subdirectories.
 ```ts
 {
   component: {
+    //highlight-next-line
     specPattern: 'src/**/*.cy.{js,jsx,ts,tsx}'
   }
 }

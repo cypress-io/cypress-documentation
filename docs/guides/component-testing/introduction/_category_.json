@@ -1,6 +1,6 @@
 {
   "label": "Introduction to Component Testing",
   "position": 10,
-  "collapsible": false,
+  "collapsible": true,
   "collapsed": false
 }

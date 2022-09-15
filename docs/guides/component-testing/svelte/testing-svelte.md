@@ -1,5 +1,5 @@
 ---
-title: Testing React Components
+title: Testing Svelte Components
 sidebar_position: 30
 ---
 
@@ -12,76 +12,45 @@ of the component is what we think it should be. This is the **Assert** step.
 
 ## Selecting the Stepper Component
 
-By default, the Stepper component's counter is initialized to "0". It also has a
+By default, the Stepper component's counter is initialized to `0`. It also has a
 prop that can specify an initial count.
 
 Let's test that mounting the component (Arrange) in its default state has a
-count of "0" (Assert).
+count of `0` (Assert).
 
 Then, we will test that setting the initial count also works.
 
 In your spec file, add the following inside the existing `describe` block:
 
-```jsx title=Stepper.cy.jsx
+```js title=Stepper.cy.js
 // Set up some constants for the selectors
-const counterSelector = '[data-cy=counter]'
+const counterSelector = '[data-cy=count]'
 const incrementSelector = '[aria-label=increment]'
 const decrementSelector = '[aria-label=decrement]'
 
 it('stepper should default to 0', () => {
   // Arrange
-  cy.mount(<Stepper />)
+  cy.mount(Stepper)
   // Assert
   cy.get(counterSelector).should('have.text', '0')
 })
 
 it('supports an "initial" prop to set the value', () => {
   // Arrange
-  cy.mount(<Stepper initial={100} />)
+  cy.mount(Stepper, { props: { count: 100 } })
   // Assert
   cy.get(counterSelector).should('have.text', '100')
 })
 ```
 
-:::note
-
-In the above example, we set up some variables to hold selector patterns so we
-don't have to type them again and again. See our guide on
-[selector best practices](/guides/references/best-practices#Selecting-Elements)
-for more info on how to write selectors.
-
-:::
-
 ### What Else Should You Test in This Component?
-
-In the above tests, we arranged and asserted, but didn't act on the component.
-We should should also test that when a user interacts with the component by
-clicking the "increment" and "decrement" buttons that the value of `count`
-changes.
-
-I want to pause here, though.
-
-You'll notice that we're talking about how a user would interact with the
-component, and not technical, React-specific concepts.
-
-You can do a well-written, comprehensive test for our Stepper component by
-approaching this test as a user would.
-
-Don't think about `data`, `methods`, or `props`. Think solely about the UI and
-use your test to automate what you would naturally do as a user.
-
-You'll test the component thoroughly without getting bogged down in details. All
-that matters is that if the developer uses the component with a given API, the
-end-user will be able to use it as expected.
-
-Now, let's test the Stepper component! Add the following tests:
 
 1. You can increment and decrement the stepper
 
-```js title=Stepper.cy.jsx
+```js title=Stepper.cy.js
 it('when the increment button is pressed, the counter is incremented', () => {
   // Arrange
-  cy.mount(<Stepper />)
+  cy.mount(Stepper)
   // Act
   cy.get(incrementSelector).click()
   // Assert
@@ -90,7 +59,7 @@ it('when the increment button is pressed, the counter is incremented', () => {
 
 it('when the decrement button is pressed, the counter is decremented', () => {
   // Arrange
-  cy.mount(<Stepper />)
+  cy.mount(Stepper)
   // Act
   cy.get(decrementSelector).click()
   // Assert
@@ -104,9 +73,9 @@ it('when the decrement button is pressed, the counter is decremented', () => {
    there are _any_ issues in the component, not just with specific buttons or
    text rendered.
 
-```jsx title=Stepper.cy.jsx
+```js title=Stepper.cy.js
 it('when clicking increment and decrement buttons, the counter is changed as expected', () => {
-  cy.mount(<Stepper initial={100} />)
+  cy.mount(Stepper, { props: { count: 100 } })
   cy.get(counterSelector).should('have.text', '100')
   cy.get(incrementSelector).click()
   cy.get(counterSelector).should('have.text', '101')

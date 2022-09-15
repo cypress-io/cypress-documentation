@@ -1,6 +1,6 @@
 {
   "label": "Vue Component Testing",
   "position": 30,
-  "collapsible": false,
-  "collapsed": false
+  "collapsible": true,
+  "collapsed": true
 }
