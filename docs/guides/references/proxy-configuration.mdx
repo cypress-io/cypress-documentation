@@ -212,8 +212,8 @@ Get-ChildItem Env:
 
 ## View proxy settings in Cypress
 
-Your current proxy settings can be viewed from within the Cypress App. Follow
-these steps:
+Your current proxy settings can be viewed from within Cypress. Follow these
+steps:
 
 1. Open up your project in Cypress via `cypress open`.
 2. Click the "Settings" tab.

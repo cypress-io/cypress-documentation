@@ -6,7 +6,7 @@ componentSpecific: true
 <CtBetaAlert></CtBetaAlert>
 
 Cypress does not have a built-in `cy.mount()` command. The command must be set
-up in your support file. By default, when you use the Cypress app to
+up in your support file. By default, when you use Cypress to
 [configure](guides/component-testing/component-framework-configuration#Automatic-Configuration-Recommended)
 your project, one will be automatically scaffolded for you.
 
@@ -40,26 +40,26 @@ to start with for your commands:
 <TabItem value='React'>
 
 ```js
-import { mount } from "cypress/react";
+import { mount } from 'cypress/react'
 
-Cypress.Commands.add("mount", (component, options) => {
+Cypress.Commands.add('mount', (component, options) => {
   // Wrap any parent components needed
   // ie: return mount(<MyProvider>{component}</MyProvider>, options)
-  return mount(component, options);
-});
+  return mount(component, options)
+})
 ```
 
 </TabItem>
 <TabItem value='Vue 2'>
 
 ```js
-import { mount } from "cypress/vue-2";
+import { mount } from 'cypress/vue-2'
 
-Cypress.Commands.add("mount", (component, options = {}) => {
+Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
-  options.extensions = options.extensions || {};
-  options.extensions.plugins = options.extensions.plugins || [];
-  options.extensions.components = options.extensions.components || {};
+  options.extensions = options.extensions || {}
+  options.extensions.plugins = options.extensions.plugins || []
+  options.extensions.components = options.extensions.components || {}
 
   /* Add any global plugins */
   // options.global.plugins.push({
@@ -71,23 +71,23 @@ Cypress.Commands.add("mount", (component, options = {}) => {
   /* Add any global components */
   // options.global.components['Button'] = Button;
 
-  return mount(component, options);
-});
+  return mount(component, options)
+})
 ```
 
 </TabItem>
 <TabItem value='Vue 3'>
 
 ```js
-import { mount } from "cypress/vue";
+import { mount } from 'cypress/vue'
 
-Cypress.Commands.add("mount", (component, options = {}) => {
+Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
-  options.global = options.global || {};
-  options.global.stubs = options.global.stubs || {};
-  options.global.stubs["transition"] = false;
-  options.global.components = options.global.components || {};
-  options.global.plugins = options.global.plugins || [];
+  options.global = options.global || {}
+  options.global.stubs = options.global.stubs || {}
+  options.global.stubs['transition'] = false
+  options.global.components = options.global.components || {}
+  options.global.plugins = options.global.plugins || []
 
   /* Add any global plugins */
   // options.global.plugins.push({
@@ -99,8 +99,19 @@ Cypress.Commands.add("mount", (component, options = {}) => {
   /* Add any global components */
   // options.global.components['Button'] = Button;
 
-  return mount(component, options);
-});
+  return mount(component, options)
+})
+```
+
+</TabItem>
+<TabItem value='Angular'>
+
+```js
+import { mount } from 'cypress/angular'
+
+Cypress.Commands.add('mount', (component, config) => {
+  return mount(component, config)
+})
 ```
 
 </TabItem>
@@ -121,20 +132,12 @@ example as a starting point for customizing your own command:
 <TabItem value='React'>
 
 ```ts
-import { MountOptions, MountReturn } from "cypress/react";
+import { mount } from 'cypress/react'
 
 declare global {
   namespace Cypress {
     interface Chainable {
-      /**
-       * Mounts a React node
-       * @param component React Node to mount
-       * @param options Additional options to pass into mount
-       */
-      mount(
-        component: React.ReactNode,
-        options?: MountOptions
-      ): Cypress.Chainable<MountReturn>;
+      mount: typeof mount
     }
   }
 }
@@ -144,20 +147,27 @@ declare global {
 <TabItem value='Vue'>
 
 ```ts
-import { mount } from "cypress/vue";
-
-type MountParams = Parameters<typeof mount>;
-type OptionsParam = MountParams[1];
+import { mount } from 'cypress/vue'
 
 declare global {
   namespace Cypress {
     interface Chainable {
-      /**
-       * Helper mount function for Vue Components
-       * @param component Vue Component or JSX Element to mount
-       * @param options Options passed to Vue Test Utils
-       */
-      mount(component: any, options?: OptionsParam): Chainable<any>;
+      mount: typeof mount
+    }
+  }
+}
+```
+
+</TabItem>
+<TabItem value='Angular'>
+
+```ts
+import { mount } from 'cypress/angular'
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      mount: typeof mount
     }
   }
 }
@@ -176,6 +186,7 @@ include the `cypress.d.ts` file in all your `tsconfig.json` files like so:
 ## Additional Mount Command Examples
 
 Visit the guides for scenarios in
-[React](/guides/component-testing/custom-mount-react) and
-[Vue](/guides/component-testing/custom-mount-vue) for customizing a mount
-command.
+[React](/guides/component-testing/custom-mount-react),
+[Vue](/guides/component-testing/custom-mount-vue), and
+[Angular](/guides/component-testing/custom-mount-angular) for customizing a
+mount command.

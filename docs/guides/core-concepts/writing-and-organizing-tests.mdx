@@ -18,11 +18,15 @@ sidebar_position: 30
 
 <strong>Best Practices</strong>
 
-We gave a "Best Practices" conference talk at AssertJS (February 2018).
-This video demonstrates how to approach breaking down your application and
-organizing your tests.
+We gave a "Best Practices" conference talk at AssertJS (February 2018). This
+video demonstrates how to approach breaking down your application and organizing
+your tests.
 
-<Icon name="play-circle" url="https://www.youtube.com/watch?v=5XQOK0v_YRE" callout="AssertJS - Cypress Best Practices"/>
+<Icon
+  name="play-circle"
+  url="https://www.youtube.com/watch?v=5XQOK0v_YRE"
+  callout="AssertJS - Cypress Best Practices"
+/>
 
 :::
 
@@ -214,7 +218,7 @@ module API option, if specified)
 
 - Spec file found
   - `cypress/e2e/path/to/file/one.cy.js`
-- Common ancester paths (calculated at runtime)
+- Common ancestor paths (calculated at runtime)
   - `cypress/e2e/path/to/file`
 - Generated screenshot file
   - `cypress/screenshots/one.cy.js/your-screenshot.png`
@@ -226,7 +230,7 @@ module API option, if specified)
 - Spec files found
   - `cypress/e2e/path/to/file/one.cy.js`
   - `cypress/e2e/path/to/two.cy.js`
-- Common ancester paths (calculated at runtime)
+- Common ancestor paths (calculated at runtime)
   - `cypress/e2e/path/to/`
 - Generated screenshot files
   - `cypress/screenshots/file/one.cy.js/your-screenshot.png`
@@ -290,8 +294,8 @@ is set to look for one of the following files:
 
 ::testing-type-specific-option{option=supportFile}
 
-The Cypress App automatically creates an example support file for each
-configured testing type, which has several commented out examples.
+Cypress automatically creates an example support file for each configured
+testing type, which has several commented out examples.
 
 This file runs **before** every single spec file. We do this purely as a
 convenience mechanism so you don't have to import this file.
@@ -547,6 +551,67 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 })
 ```
 
+### Test Isolation
+
+<Alert type="success">
+
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Clean up state
+**before** tests run.
+
+</Alert>
+
+Test isolation is the practice of resetting application state _before_ each
+test.
+
+Cleaning up state ensures that the operation of one test does not affect another
+test later on. The goal for each test should be to reliably pass whether run in
+isolation or consecutively with other tests. Having tests that depend on the
+state of an earlier test can potentially cause nondeterministic test failures.
+
+Cypress supports two modes of test isolation, `legacy` and `strict`.
+
+#### Legacy Mode
+
+When in `legacy` mode, Cypress handles resetting the state for:
+
+- [aliases](/api/commands/as)
+- [cookies](/api/commands/clearcookies)
+- [clock](/api/commands/clock)
+- [intercept](/api/commands/intercept)
+- [localStorage](/api/commands/clearlocalstorage)
+- [routes](/api/commands/route)
+- [sessions](/api/commands/session)
+- [spies](/api/commands/spy)
+- [stubs](/api/commands/stub)
+- [viewport](/api/commands/viewport)
+
+#### Strict Mode
+
+<Alert type="warning">
+
+<strong class="alert-header">
+  <Icon name="exclamation-triangle"></Icon>
+  Experimental
+</strong>
+
+`strict` mode is currently experimental and can be enabled by setting
+the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
+to `true` in the Cypress config. This is the default test isolation behavior
+when using the `experimentalSessionAndOrigin` experiment.
+
+</Alert>
+
+When in `strict` mode, Cypress handles resetting the state for everything
+outlined above for `legacy` mode, in addition to clearing the page by visiting
+`about:blank` before each test. This clears the dom's state and non-persistent
+browser state. This forces you to re-visit your application and perform the
+series of interactions needed to build the dom and browser state so the tests
+can reliably pass when run standalone or in a randomized order.
+
+The test isolation mode is a global configuration and can be overridden at the
+`describe` level with the
+[`testIsolation`](/guides/references/configuration#Global) option.
+
 ### Test Configuration
 
 It is possible to apply
@@ -739,7 +804,7 @@ assertions. The test screenshot below shows a passed test:
 
 <DocsImage
   src="/img/guides/core-concepts/v10/todo-mvc-passing-test.png"
-  alt="Cypress App with a single passed test"
+  alt="Cypress with a single passed test"
 ></DocsImage>
 
 Note that a test can pass after several
@@ -753,7 +818,7 @@ be a user hitting this bug!
 
 <DocsImage
   src="/img/guides/core-concepts/v10/todo-mvc-failing-test.png"
-  alt="Cypress App with a single failed test"
+  alt="Cypress with a single failed test"
 ></DocsImage>
 
 After a test fails, the screenshots and videos can help find the problem so it
@@ -787,7 +852,7 @@ file.
 
 <DocsImage
   src="/img/guides/core-concepts/v10/todo-mvc-pending-tests.png"
-  alt="Cypress App with three pending test"
+  alt="Cypress with three pending test"
 ></DocsImage>
 
 So remember - if you (the test writer) knowingly skip a test using one of the
@@ -825,7 +890,7 @@ If the `beforeEach` hook completes and both tests finish, two tests are passing.
 
 <DocsImage
   src="/img/guides/core-concepts/v10/todo-mvc-2-tests-passing.png"
-  alt="Cypress App showing two passing tests"
+  alt="Cypress showing two passing tests"
 ></DocsImage>
 
 But what happens if a command inside the `beforeEach` hook fails? For example,
@@ -846,7 +911,7 @@ would also fail due to the `beforeEach` hook failure.
 
 <DocsImage
   src="/img/guides/core-concepts/v10/todo-mvc-failed-and-skipped-tests.png"
-  alt="Cypress App showing one failed and one skipped test"
+  alt="Cypress showing one failed and one skipped test"
 ></DocsImage>
 
 If we collapse the test commands, we can see the empty box marking the skipped
@@ -854,7 +919,7 @@ test "adds 2 todos".
 
 <DocsImage
   src="/img/guides/core-concepts/v10/todo-mvc-skipped-test.png"
-  alt="Cypress App showing one skipped test"
+  alt="Cypress showing one skipped test"
 ></DocsImage>
 
 The tests that were meant to be executed but were skipped due to some run-time

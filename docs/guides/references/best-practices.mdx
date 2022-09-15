@@ -14,7 +14,10 @@ import TOCInline from '@theme/TOCInline'
 
 ### <Icon name="graduation-cap" /> Real World Practices
 
-The Cypress team maintains the <Icon name="github" inline="true" contentType="rwa" />, a full stack example application that demonstrates **best practices and scalable strategies with Cypress in practical and realistic scenarios**.
+The Cypress team maintains the
+<Icon name="github" inline="true" contentType="rwa" />, a full stack example
+application that demonstrates **best practices and scalable strategies with
+Cypress in practical and realistic scenarios**.
 
 The RWA achieves full [code-coverage](/guides/tooling/code-coverage) with
 end-to-end tests
@@ -48,11 +51,15 @@ application, and take control of your application's state.
 
 :::tip
 
-We gave a "Best Practices" conference talk at AssertJS (February 2018).
-This video demonstrates how to approach breaking down your application and
-organizing your tests.
+We gave a "Best Practices" conference talk at AssertJS (February 2018). This
+video demonstrates how to approach breaking down your application and organizing
+your tests.
 
-<Icon name="play-circle" url="https://www.youtube.com/watch?v=5XQOK0v_YRE" callout="AssertJS - Cypress Best Practices"/>
+<Icon
+  name="play-circle"
+  url="https://www.youtube.com/watch?v=5XQOK0v_YRE"
+  callout="AssertJS - Cypress Best Practices"
+/>
 
 :::
 
@@ -147,8 +154,8 @@ When determining an unique selector it will automatically prefer elements with:
 
 #### <Icon name="graduation-cap" /> Real World Example
 
-The <Icon name="github" inline="true" contentType="rwa" />
-uses two useful custom commands for selecting elements for testing:
+The <Icon name="github" inline="true" contentType="rwa" /> uses two useful
+custom commands for selecting elements for testing:
 
 - `getBySel` yields elements with a `data-test` attribute that **match** a
   specified selector.
@@ -361,7 +368,7 @@ passwords, your server schedules an email to be delivered.
 
 1. If your application is running locally and is sending the emails directly
    through an SMTP server, you can use a temporary local test SMTP server
-   running inside the Cypress App. Read the blog post
+   running inside Cypress. Read the blog post
    ["Testing HTML Emails using Cypress"](https://www.cypress.io/blog/2021/05/11/testing-html-emails-using-cypress/)
    for details.
 2. If your application is using a 3rd party email service, or you cannot stub
@@ -730,11 +737,10 @@ beforeEach(() => {
 ### Is resetting the state necessary?
 
 One final question you should ask yourself is - is resetting the state even
-necessary? Remember, Cypress already automatically clears
-[localStorage](/api/commands/clearlocalstorage),
-[cookies](/api/commands/clearcookies), sessions, etc before each test. Make sure
-you are not trying to clean up state that is already cleaned up by Cypress
-automatically.
+necessary? Remember, Cypress already automatically enforces
+[test isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+by clearing state before each test. Make sure you are not trying to clean up
+state that is already cleaned up by Cypress automatically.
 
 If the state you are trying to clean lives on the server - by all means, clean
 that state. You will need to run these types of routines! But if the state is
@@ -747,10 +753,10 @@ state cleanup.
 
 #### <Icon name="graduation-cap" /> Real World Example
 
-The <Icon name="github" inline="true" contentType="rwa" />
-resets and re-seeds its database via a custom [Cypress task](/api/commands/task)
-called `db:seed` in a `beforeEach` hook. This allows each test to start from a
-clean slate and a deterministic state. For example:
+The <Icon name="github" inline="true" contentType="rwa" /> resets and re-seeds
+its database via a custom [Cypress task](/api/commands/task) called `db:seed` in
+a `beforeEach` hook. This allows each test to start from a clean slate and a
+deterministic state. For example:
 
 ```ts
 // cypress/tests/ui/auth.cy.ts
@@ -913,8 +919,8 @@ Trying to start a web server from [cy.exec()](/api/commands/exec) or
 
 Because there is no guarantee that code running in an `after` will always run.
 
-While working in the Cypress App you can always restart / refresh while in the
-middle of a test. When that happens, code in an `after` won't execute.
+While working in the Cypress Test Runner you can always restart / refresh while
+in the middle of a test. When that happens, code in an `after` won't execute.
 
 **What should I do then?**
 
@@ -1009,7 +1015,7 @@ server is not running during `cypress open` at the specified `baseUrl`.
 
 <DocsImage
   src="/img/guides/references/cypress-ensures-baseUrl-server-is-running.png"
-  alt="Cypress App with warning about how Cypress could not verify server set as the baseUrl is running"
+  alt="Cypress Launchpad with warning about how Cypress could not verify server set as the baseUrl is running"
 ></DocsImage>
 
 We also display an error if your server is not running at the specified

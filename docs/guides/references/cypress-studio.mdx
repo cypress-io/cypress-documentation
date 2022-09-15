@@ -1,15 +1,30 @@
 ---
 title: Cypress Studio
+e2eSpecific: true
 ---
 
 :::caution
 
 <strong>
- <Icon name="exclamation-triangle" /> Removed 
+  <Icon name="exclamation-triangle"></Icon>
+  Experimental
 </strong>
 
-Cypress Studio has been removed in Cypress 10 and will be rethought/revisited in
-a later release. This page is for reference only.
+Cypress Studio is an experimental feature and can be enabled by adding the
+[experimentalStudio](/guides/references/experiments#End-to-End-Testing)
+attribute to your Cypress configuration.
+
+:::cypress-config-example
+
+```js
+{
+  e2e: {
+    experimentalStudio: true
+  }
+}
+```
+
+:::
 
 :::
 
@@ -22,10 +37,17 @@ a later release. This page is for reference only.
 
 :::
 
+## Limitations
+
+- Cypress Studio is currently only available for writing E2E tests, and doesn't
+  yet work with Component Testing.
+- Cypress Studio does not support writing tests that use domains of multiple
+  origins.
+
 ## Overview
 
-Cypress Studio provides a visual way to generate tests within the Cypress App,
-by _recording interactions_ against the application under test.
+Cypress Studio provides a visual way to generate tests within Cypress, by
+_recording interactions_ against the application under test.
 
 The [`.click()`](/api/commands/click), [`.type()`](/api/commands/type),
 [`.check()`](/api/commands/check), [`.uncheck()`](/api/commands/uncheck), and
@@ -34,29 +56,11 @@ generate test code when interacting with the DOM inside of the Cypress Studio.
 You can also generate assertions by right clicking on an element that you would
 like to assert on.
 
-## Using Cypress Studio
-
-:::info
-
-Cypress Studio is an experimental feature and can be enabled by adding the
-[experimentalStudio](/guides/references/experiments) attribute to your Cypress
-configuration.
-
-:::
-
-:::cypress-config-example
-
-```ts
-{
-  experimentalStudio: true,
-}
-```
-
-:::
-
-The Cypress <Icon name="github" inline="true" contentType="rwa" /> is
+The Cypress <Icon name="github"></Icon>
+[Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) is
 an open source project implementing a payment application to demonstrate
-real-world usage of Cypress testing methods, patterns, and workflows. It will be used to demonstrate the functionality of Cypress Studio below.
+real-world usage of Cypress testing methods, patterns, and workflows. It will be
+used to demonstrate the functionality of Cypress Studio below.
 
 ### Extending a Test
 
@@ -86,21 +90,25 @@ describe('Cypress Studio Demo', () => {
 
 ### <Icon name="graduation-cap" /> Real World Example
 
-Clone the <Icon name="github" inline="true" contentType="rwa" /> and refer to the
-[cypress/tests/demo/cypress-studio.cy.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts) file.
+Clone the <Icon name="github" inline="true" contentType="rwa" /> and refer to
+the
+[cypress/tests/demo/cypress-studio.cy.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts)
+file.
 
 :::
 
 #### Step 1 - Run the spec
 
 We will use Cypress Studio to perform a "New Transaction" user journey. First,
-launch the Cypress App and run the spec created in the previous step.
+launch Cypress and select End To End testing, then choose a browser to run specs
+in.
 
 <DocsImage
   src="/img/guides/cypress-studio/run-spec-1.png"
   alt="Cypress Studio"
-  no-border
 ></DocsImage>
+
+Once the browser is open, run the spec created in the previous step.
 
 #### Step 2 - Launch Cypress Studio
 
@@ -119,7 +127,6 @@ Cypress Studio is directly integrated with the
 <DocsImage
   src="/img/guides/cypress-studio/extend-activate-studio.png"
   alt="Activate Cypress Studio"
-  no-border
 ></DocsImage>
 
 :::tip
@@ -130,13 +137,12 @@ the application inside the `beforeEach` block).
 
 :::
 
-Next, the Cypress App will execute the test in isolation and pause after the
-last command in the test.
+Next, Cypress will execute the test in isolation and pause after the last
+command in the test.
 
 <DocsImage
   src="/img/guides/cypress-studio/extend-ready.png"
   alt="Cypress Studio Ready"
-  no-border
 ></DocsImage>
 
 Now, we can begin updating the test to create a new transaction between users.
@@ -150,7 +156,6 @@ click recorded in the Command Log.
 <DocsImage
   src="/img/guides/cypress-studio/extend-click-new-transaction.png"
   alt="Cypress Studio Recording Click"
-  no-border
 ></DocsImage>
 
 Next, we can start typing in the name of a user that we want to pay.
@@ -158,7 +163,6 @@ Next, we can start typing in the name of a user that we want to pay.
 <DocsImage
   src="/img/guides/cypress-studio/extend-type-user-name.png"
   alt="Cypress Studio Recording Type"
-  no-border
 ></DocsImage>
 
 Once we see the name come up in the results, we want to add an assertion to
@@ -169,7 +173,6 @@ element contains the correct text (the user's name).
 <DocsImage
   src="/img/guides/cypress-studio/extend-assert-user-name.png"
   alt="Cypress Studio Add Assertion"
-  no-border
 ></DocsImage>
 
 We can then click on that user in order to progress to the next screen. We will
@@ -179,7 +182,6 @@ description inputs.
 <DocsImage
   src="/img/guides/cypress-studio/extend-type-transaction-form.png"
   alt="Cypress Studio Recording Type"
-  no-border
 ></DocsImage>
 
 :::tip
@@ -196,7 +198,6 @@ is enabled.
 <DocsImage
   src="/img/guides/cypress-studio/extend-assert-button-enabled.png"
   alt="Cypress Studio Add Assertion"
-  no-border
 ></DocsImage>
 
 Finally, we will click the "Pay" button and get presented with a confirmation
@@ -205,7 +206,6 @@ page of our new transaction.
 <DocsImage
   src="/img/guides/cypress-studio/extend-save-test.png"
   alt="Cypress Studio Save Commands"
-  no-border
 ></DocsImage>
 
 To discard the interactions, click the "Cancel" button to exit Cypress Studio.
@@ -259,7 +259,6 @@ clicking "Add New Test" on our defined `describe` block.
 <DocsImage
   src="/img/guides/cypress-studio/add-test-1.png"
   alt="Cypress Studio Add Test"
-  no-border
 ></DocsImage>
 
 We are launched into Cypress Studio and can begin interacting with our
@@ -267,7 +266,9 @@ application to generate the test.
 
 For this test, we will add a new bank account. Our interactions are as follows:
 
-1. Click "Bank Accounts" in left hand navigation
+1. Click "Bank Accounts" in left hand navigation <<<<<<<
+   HEAD:docs/guides/references/cypress-studio.mdx
+   {' '}
    <DocsImage
      src="/img/guides/cypress-studio/add-test-2.png"
      alt="Cypress Studio Begin Add Test"
@@ -286,11 +287,34 @@ For this test, we will add a new bank account. Our interactions are as follows:
      no-border
    ></DocsImage>
 4. Click the "Save" button
+   {' '}
    <DocsImage
      src="/img/guides/cypress-studio/add-test-form-saving.png"
      alt="Cypress Studio Add Test Saving Bank Account"
      no-border
    ></DocsImage>
+   =======
+   <DocsImage
+     src="/img/guides/cypress-studio/add-test-2.png"
+     alt="Cypress Studio Begin Add Test"
+   ></DocsImage>
+5. Click the "Create" button on Bank Accounts page
+   <DocsImage
+     src="/img/guides/cypress-studio/add-test-create.png"
+     alt="Cypress Studio Add Test Create Bank Account"
+   ></DocsImage>
+6. Fill out the bank account information
+   <DocsImage
+     src="/img/guides/cypress-studio/add-test-form-complete.png"
+     alt="Cypress Studio Add Test Complete Bank Account Form"
+   ></DocsImage>
+7. Click the "Save" button
+   {' '}
+   <DocsImage
+     src="/img/guides/cypress-studio/add-test-form-save.png"
+     alt="Cypress Studio Add Test Save Bank Account"
+   ></DocsImage>
+   >>>>>>> @{-1}:content/guides/references/cypress-studio.md
 
 To discard the interactions, click the "Cancel" button to exit Cypress Studio.
 
@@ -301,7 +325,6 @@ will be saved to the file.
 <DocsImage
   src="/img/guides/cypress-studio/add-test-save-test.png"
   alt="Cypress Studio Add Test Completed Run"
-  no-border
 ></DocsImage>
 
 Once saved, the file will be run again in Cypress.
@@ -309,7 +332,6 @@ Once saved, the file will be run again in Cypress.
 <DocsImage
   src="/img/guides/cypress-studio/add-test-final.png"
   alt="Cypress Studio Add Test Completed Run"
-  no-border
 ></DocsImage>
 
 Finally, viewing our test code, we can see that the test is updated after
@@ -353,14 +375,17 @@ describe('Cypress Studio Demo', () => {
 
 ### <Icon name="graduation-cap" /> Real World Example
 
-Clone the <Icon name="github" inline="true" contentType="rwa" /> and refer to the
-[cypress/tests/demo/cypress-studio.cy.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts) file.
+Clone the <Icon name="github" inline="true" contentType="rwa" /> and refer to
+the
+[cypress/tests/demo/cypress-studio.cy.ts](https://github.com/cypress-io/cypress-realworld-app/blob/develop/cypress/tests/demo/cypress-studio.spec.ts)
+file.
 
 :::
 
 ## History
 
-| Version                                     | Changes                              |
-| ------------------------------------------- | ------------------------------------ |
-| [8.1.0](/guides/references/changelog#8-1-0) | Added ability to generate assertions |
-| [6.3.0](/guides/references/changelog#6-3-0) | Added Cypress Studio as experimental |
+| Version                                       | Changes                                      |
+| --------------------------------------------- | -------------------------------------------- |
+| [8.1.0](/guides/references/changelog#8-1-0)   | Added ability to generate assertions         |
+| [6.3.0](/guides/references/changelog#6-3-0)   | Added Cypress Studio as experimental         |
+| [10.7.0](/guides/references/changelog#10-7-0) | Re-introduced Cypress Studio into version 10 |

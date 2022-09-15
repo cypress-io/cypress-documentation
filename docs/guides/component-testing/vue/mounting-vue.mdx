@@ -52,8 +52,7 @@ here. For more info, see the
 
 ### Your First Component Test
 
-Now that you have a component and know how to mount it let's write our first
-test.
+Now that you have a component let's write a spec that mounts the component.
 
 To get started, create a spec file in the same directory as the `Stepper.vue`
 component and name it **Stepper.cy.js**. Then paste the following into it:
@@ -69,6 +68,20 @@ describe('<Stepper>', () => {
 ```
 
 Here, we have a single test that ensures that our component mounts.
+
+If you already have a component that you want to create a spec for, we can
+scaffold the spec for you via the Cypress App.
+
+Click on "+ New Spec", select "Create from component", and choose your component
+from the list.
+
+<DocsImage 
+  src="/img/guides/component-testing/create-from-vue-component-card.png"
+  caption="Create from component card"> </DocsImage>
+
+<DocsImage 
+  src="/img/guides/component-testing/create-from-vue-component-list.png"
+  caption="Create from component list"> </DocsImage>
 
 :::note
 

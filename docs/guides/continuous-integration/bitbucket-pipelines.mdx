@@ -36,7 +36,7 @@ pipelines:
           # install dependencies
           - npm ci
           # start the server in the background
-          - npm run start:ci &
+          - npm run start &
           # run Cypress tests
           - npm run e2e
 ```
@@ -60,7 +60,7 @@ example project and place the above Bitbucket Pipelines configuration in
 - The code is checked out from our GitHub/Bitbucket repository.
 - Finally, our scripts will:
   - Install npm dependencies
-  - Start the project web server (`npm start:ci`)
+  - Start the project web server (`npm start`)
   - Run the Cypress tests within our GitHub/Bitbucket repository within Electron
 
 ## Testing in Chrome and Firefox with Cypress Docker Images
@@ -81,7 +81,7 @@ pipelines:
           # install dependencies
           - npm ci
           # start the server in the background
-          - npm run start:ci &
+          - npm run start &
           # run Cypress tests in Firefox
           - npx cypress run --browser firefox
 ```
@@ -111,7 +111,7 @@ pipelines:
           # install dependencies
           - npm ci
           # start the server in the background
-          - npm run start:ci &
+          - npm run start &
           # run Cypress tests in Firefox
           - npx cypress run --browser firefox
         artifacts:
@@ -165,7 +165,7 @@ e2e: &e2e
     - node
     - cypress
   script:
-    - npm run start:ci &
+    - npm run start &
     - npm run e2e:record -- --parallel --ci-build-id $BITBUCKET_BUILD_NUMBER
   artifacts:
     # store any generates images and videos as artifacts
@@ -224,7 +224,7 @@ e2e: &e2e
     - node
     - cypress
   script:
-    - npm run start:ci &
+    - npm run start &
     - npm run e2e:record -- --parallel --ci-build-id $BITBUCKET_BUILD_NUMBER
   artifacts:
     # store any generates images and videos as artifacts
