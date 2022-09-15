@@ -217,8 +217,9 @@ module.exports = defineConfig({
       bundler: 'vite',
       // optionally pass in vite config
       viteConfig: require('./webpack.config'),
-      // or a function - the result is merged with the base config
-      viteConfig: async (baseConfig) => {
+      // or a function - the result is merged with
+      // any `vite.config` file that is detected
+      viteConfig: async () => {
         // ... do things ...
         const modifiedConfig = await injectCustomConfig(baseConfig)
         return modifiedConfig
@@ -242,8 +243,9 @@ export default defineConfig({
       bundler: 'vite',
       // optionally pass in vite config
       viteConfig: customViteConfig,
-      // or a function - the result is merged with the base config
-      viteConfig: async (baseConfig) => {
+      // or a function - the result is merged with
+      // any `vite.config` file that is detected
+      viteConfig: async () => {
         // ... do things ...
         const modifiedConfig = await injectCustomConfig(baseConfig)
         return modifiedConfig
@@ -277,8 +279,9 @@ module.exports = {
       bundler: 'webpack',
       // optionally pass in webpack config
       webpackConfig: require('./webpack.config'),
-      // or a function - the result is merged with the base config
-      webpackConfig: async (baseConfig) => {
+      // or a function - the result is merged with any
+      // webpack.config that is found
+      webpackConfig: async () => {
         // ... do things ...
         const modifiedConfig = await injectCustomConfig(baseConfig)
         return modifiedConfig
@@ -302,8 +305,9 @@ export default defineConfig({
       bundler: 'webpack',
       // optionally pass in webpack config
       webpackConfig,
-      // or a function - the result is merged with the base config
-      webpackConfig: async (baseConfig) => {
+      // or a function - the result is merged with any
+      // webpack.config that is found
+      webpackConfig: async () => {
         // ... do things ...
         const modifiedConfig = await injectCustomConfig(baseConfig)
         return modifiedConfig
@@ -501,8 +505,9 @@ module.exports = {
       bundler: 'webpack',
       // optionally pass in webpack config
       webpackConfig: require('./webpack.config'),
-      // or a function - the result is merged with the base config
-      webpackConfig: async (baseConfig) => {
+      // or a function - the result is merged with any
+      // webpack.config that is found
+      webpackConfig: async () => {
         // ... do things ...
         const modifiedConfig = await injectCustomConfig(baseConfig)
         return modifiedConfig
@@ -526,7 +531,7 @@ export default defineConfig({
       bundler: 'webpack',
       // optionally pass in webpack config
       webpackConfig,
-      webpackConfig: async (baseConfig) => {
+      webpackConfig: async () => {
         // ... do things ...
         const modifiedConfig = await injectCustomConfig(baseConfig)
         return modifiedConfig
@@ -716,7 +721,7 @@ module.exports = {
       // optionally pass in webpack config
       webpackConfig: require('./webpack.config'),
       // or a function - the result is merged with the base config
-      webpackConfig: async (baseConfig) => {
+      webpackConfig: async () => {
         // ... do things ...
         const modifiedConfig = await injectCustomConfig(baseConfig)
         return modifiedConfig
