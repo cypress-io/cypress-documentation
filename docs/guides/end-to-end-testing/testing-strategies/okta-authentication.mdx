@@ -50,19 +50,21 @@ To have access to test user credentials within our tests we need to configure
 Cypress to use the [Okta](https://okta.com) environment variables set in the
 `.env` file.
 
-:::cypress-env-example
+:::cypress-config-example
 
 ```js
 // Populate process.env with values from .env file
-require("dotenv").config();
+require('dotenv').config()
 ```
 
-```json
+```js
 {
-  "auth_username": "AUTH_USERNAME",
-  "auth_password": "AUTH_PASSWORD",
-  "okta_domain": "REACT_APP_OKTA_DOMAIN",
-  "okta_client_id": "REACT_APP_OKTA_CLIENTID"
+  env: {
+    auth_username: process.env.AUTH_USERNAME,
+    auth_password: process.env.AUTH_PASSWORD,
+    okta_domain: process.env.REACT_APP_OKTA_DOMAIN,
+    okta_client_id: process.env.REACT_APP_OKTA_CLIENTID,
+  },
 }
 ```
 
@@ -88,27 +90,27 @@ The `loginByOktaApi` command will execute the following steps:
 
 ```jsx
 // cypress/support/commands.js
-import { OktaAuth } from "@okta/okta-auth-js";
+import { OktaAuth } from '@okta/okta-auth-js'
 
 // Okta
-Cypress.Commands.add("loginByOktaApi", (username, password) => {
+Cypress.Commands.add('loginByOktaApi', (username, password) => {
   cy.request({
-    method: "POST",
-    url: `https://${Cypress.env("okta_domain")}/api/v1/authn`,
+    method: 'POST',
+    url: `https://${Cypress.env('okta_domain')}/api/v1/authn`,
     body: {
       username,
       password,
     },
   }).then(({ body }) => {
-    const user = body._embedded.user;
+    const user = body._embedded.user
     const config = {
-      issuer: `https://${Cypress.env("okta_domain")}/oauth2/default`,
-      clientId: Cypress.env("okta_client_id"),
-      redirectUri: "http://localhost:3000/implicit/callback",
-      scope: ["openid", "email", "profile"],
-    };
+      issuer: `https://${Cypress.env('okta_domain')}/oauth2/default`,
+      clientId: Cypress.env('okta_client_id'),
+      redirectUri: 'http://localhost:3000/implicit/callback',
+      scope: ['openid', 'email', 'profile'],
+    }
 
-    const authClient = new OktaAuth(config);
+    const authClient = new OktaAuth(config)
 
     return authClient.token
       .getWithoutPrompt({ sessionToken: body.sessionToken })
@@ -122,15 +124,15 @@ Cypress.Commands.add("loginByOktaApi", (username, password) => {
             family_name: user.profile.lastName,
             preferred_username: user.profile.login,
           },
-        };
+        }
 
-        window.localStorage.setItem("oktaCypress", JSON.stringify(userItem));
+        window.localStorage.setItem('oktaCypress', JSON.stringify(userItem))
 
-        log.snapshot("after");
-        log.end();
-      });
-  });
-});
+        log.snapshot('after')
+        log.end()
+      })
+  })
+})
 ```
 
 With our Okta app setup properly in Okta Developer console, necessary
@@ -140,19 +142,19 @@ test to login as a user via [Okta](https://okta.com), complete the onboarding
 process and logout.
 
 ```jsx
-describe("Okta", function () {
+describe('Okta', function () {
   beforeEach(function () {
-    cy.task("db:seed");
+    cy.task('db:seed')
     cy.loginByOktaApi(
-      Cypress.env("auth_username"),
-      Cypress.env("auth_password")
-    );
-  });
+      Cypress.env('auth_username'),
+      Cypress.env('auth_password')
+    )
+  })
 
-  it("shows onboarding", function () {
-    cy.contains("Get Started").should("be.visible");
-  });
-});
+  it('shows onboarding', function () {
+    cy.contains('Get Started').should('be.visible')
+  })
+})
 ```
 
 :::tip
@@ -211,19 +213,19 @@ and configure it using the Okta Domain and Client ID provided after
 
 ```jsx
 // backend/helpers.ts
-import OktaJwtVerifier from "@okta/jwt-verifier";
+import OktaJwtVerifier from '@okta/jwt-verifier'
 
-dotenv.config();
+dotenv.config()
 
 // Okta Validate the JWT Signature
 const oktaJwtVerifier = new OktaJwtVerifier({
   issuer: `https://${process.env.REACT_APP_OKTA_DOMAIN}/oauth2/default`,
   clientId: process.env.REACT_APP_OKTA_CLIENTID,
   assertClaims: {
-    aud: "api://default",
+    aud: 'api://default',
     cid: process.env.REACT_APP_OKTA_CLIENTID,
   },
-});
+})
 ```
 
 Next, we'll define an Express middleware function to be use in our routes to
@@ -236,33 +238,33 @@ the `Bearer` token.
 // ...
 
 export const verifyOktaToken = (req, res, next) => {
-  const bearerHeader = req.headers["authorization"];
+  const bearerHeader = req.headers['authorization']
 
   if (bearerHeader) {
-    const bearer = bearerHeader.split(" ");
-    const bearerToken = bearer[1];
+    const bearer = bearerHeader.split(' ')
+    const bearerToken = bearer[1]
 
     oktaJwtVerifier
-      .verifyAccessToken(bearerToken, "api://default")
+      .verifyAccessToken(bearerToken, 'api://default')
       .then((jwt) => {
         // the token is valid
         req.user = {
           // @ts-ignore
           sub: jwt.sub,
-        };
+        }
 
-        return next();
+        return next()
       })
       .catch((err) => {
         // a validation failed, inspect the error
-        console.log("error", err);
-      });
+        console.log('error', err)
+      })
   } else {
     res.status(401).send({
-      error: "Unauthorized",
-    });
+      error: 'Unauthorized',
+    })
   }
-};
+}
 ```
 
 Once this helper is defined, we can use it globally to apply to all routes:
@@ -270,12 +272,12 @@ Once this helper is defined, we can use it globally to apply to all routes:
 ```jsx
 // backend/app.ts
 // initial imports ...
-import { verifyOktaToken } from "./helpers";
+import { verifyOktaToken } from './helpers'
 
 // ...
 
 if (process.env.REACT_APP_OKTA) {
-  app.use(verifyOktaToken);
+  app.use(verifyOktaToken)
 }
 
 // routes ...
@@ -308,29 +310,29 @@ import {
   SecureRoute,
   useOktaAuth,
   withOktaAuth,
-} from "@okta/okta-react";
+} from '@okta/okta-react'
 
 // ...
 
 const AppOkta: React.FC = () => {
-  const { authState, oktaAuth } = useOktaAuth();
+  const { authState, oktaAuth } = useOktaAuth()
 
   // ...
 
   useEffect(() => {
     if (authState.isAuthenticated) {
       oktaAuth.getUser().then((user) => {
-        authService.send("OKTA", { user, token: oktaAuthState.accessToken });
-      });
+        authService.send('OKTA', { user, token: oktaAuthState.accessToken })
+      })
     }
-  }, [authState, oktaAuth]);
+  }, [authState, oktaAuth])
 
   // ...
 
   return (
     <div className={classes.root}>
       // ...
-      {authState.matches("unauthorized") && (
+      {authState.matches('unauthorized') && (
         <>
           <Route path="/implicit/callback" component={LoginCallback} />
           <SecureRoute exact path="/" />
@@ -338,10 +340,10 @@ const AppOkta: React.FC = () => {
       )}
       // ...
     </div>
-  );
-};
+  )
+}
 
-export default withOktaAuth(AppOkta);
+export default withOktaAuth(AppOkta)
 ```
 
 :::tip
@@ -363,17 +365,17 @@ the `REACT_APP_OKTA` variables are defined in our `.env`.
 // src/index.tsx
 
 // initial imports ...
-import { OktaAuth } from "@okta/okta-auth-js";
-import { Security } from "@okta/okta-react";
-import AppOkta from "./containers/AppOkta";
+import { OktaAuth } from '@okta/okta-auth-js'
+import { Security } from '@okta/okta-react'
+import AppOkta from './containers/AppOkta'
 
 // ...
 
 const oktaAuth = new OktaAuth({
   issuer: `https://${process.env.REACT_APP_OKTA_DOMAIN}/oauth2/default`,
   clientId: process.env.REACT_APP_OKTA_CLIENTID,
-  redirectUri: window.location.origin + "/implicit/callback",
-});
+  redirectUri: window.location.origin + '/implicit/callback',
+})
 
 ReactDOM.render(
   <Router history={history}>
@@ -387,8 +389,8 @@ ReactDOM.render(
       )}
     </ThemeProvider>
   </Router>,
-  document.getElementById("root")
-);
+  document.getElementById('root')
+)
 ```
 
 An update to our

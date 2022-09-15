@@ -107,23 +107,25 @@ Cypress to use the [Google](https://google.com) environment variables set in the
 
 ```jsx
 // .env
-REACT_APP_GOOGLE_CLIENTID = "your-client-id";
-REACT_APP_GOOGLE_CLIENT_SECRET = "your-client-secret";
-GOOGLE_REFRESH_TOKEN = "your-refresh-token";
+REACT_APP_GOOGLE_CLIENTID = 'your-client-id'
+REACT_APP_GOOGLE_CLIENT_SECRET = 'your-client-secret'
+GOOGLE_REFRESH_TOKEN = 'your-refresh-token'
 ```
 
-:::cypress-env-example
+:::cypress-config-example
 
 ```js
 // Populate process.env with values from .env file
-require("dotenv").config();
+require('dotenv').config()
 ```
 
-```json
+```js
 {
-  "googleRefreshToken": "GOOGLE_REFRESH_TOKEN",
-  "googleClientId": "REACT_APP_GOOGLE_CLIENTID",
-  "googleClientSecret": "REACT_APP_GOOGLE_CLIENT_SECRET"
+  env: {
+    googleRefreshToken: process.env.GOOGLE_REFRESH_TOKEN,
+    googleClientId: process.env.REACT_APP_GOOGLE_CLIENTID,
+    googleClientSecret: process.env.REACT_APP_GOOGLE_CLIENT_SECRET,
+  },
 }
 ```
 
@@ -148,26 +150,26 @@ The `loginByGoogleApi` command will execute the following steps:
 
 ```jsx
 // cypress/support/commands.js
-Cypress.Commands.add("loginByGoogleApi", () => {
-  cy.log("Logging in to Google");
+Cypress.Commands.add('loginByGoogleApi', () => {
+  cy.log('Logging in to Google')
   cy.request({
-    method: "POST",
-    url: "https://www.googleapis.com/oauth2/v4/token",
+    method: 'POST',
+    url: 'https://www.googleapis.com/oauth2/v4/token',
     body: {
-      grant_type: "refresh_token",
-      client_id: Cypress.env("googleClientId"),
-      client_secret: Cypress.env("googleClientSecret"),
-      refresh_token: Cypress.env("googleRefreshToken"),
+      grant_type: 'refresh_token',
+      client_id: Cypress.env('googleClientId'),
+      client_secret: Cypress.env('googleClientSecret'),
+      refresh_token: Cypress.env('googleRefreshToken'),
     },
   }).then(({ body }) => {
-    const { access_token, id_token } = body;
+    const { access_token, id_token } = body
 
     cy.request({
-      method: "GET",
-      url: "https://www.googleapis.com/oauth2/v3/userinfo",
+      method: 'GET',
+      url: 'https://www.googleapis.com/oauth2/v3/userinfo',
       headers: { Authorization: `Bearer ${access_token}` },
     }).then(({ body }) => {
-      cy.log(body);
+      cy.log(body)
       const userItem = {
         token: id_token,
         user: {
@@ -177,13 +179,13 @@ Cypress.Commands.add("loginByGoogleApi", () => {
           familyName: body.family_name,
           imageUrl: body.picture,
         },
-      };
+      }
 
-      window.localStorage.setItem("googleCypress", JSON.stringify(userItem));
-      cy.visit("/");
-    });
-  });
-});
+      window.localStorage.setItem('googleCypress', JSON.stringify(userItem))
+      cy.visit('/')
+    })
+  })
+})
 ```
 
 With our Google app setup properly, necessary environment variables in place,
@@ -192,16 +194,16 @@ with Google while our app is under test. Below is a test to login as a user via
 [Google](https://google.com), complete the onboarding process and logout.
 
 ```jsx
-describe("Google", function () {
+describe('Google', function () {
   beforeEach(function () {
-    cy.task("db:seed");
-    cy.loginByGoogleApi();
-  });
+    cy.task('db:seed')
+    cy.loginByGoogleApi()
+  })
 
-  it("shows onboarding", function () {
-    cy.contains("Get Started").should("be.visible");
-  });
-});
+  it('shows onboarding', function () {
+    cy.contains('Get Started').should('be.visible')
+  })
+})
 ```
 
 :::tip
@@ -258,22 +260,22 @@ JWT's from [Google](https://google.com).
 
 ```jsx
 // backend/helpers.ts
-import jwt from "express-jwt";
-import jwksRsa from "jwks-rsa";
+import jwt from 'express-jwt'
+import jwksRsa from 'jwks-rsa'
 
-dotenv.config();
+dotenv.config()
 const googleJwtConfig = {
   secret: jwksRsa.expressJwtSecret({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
-    jwksUri: "https://www.googleapis.com/oauth2/v3/certs",
+    jwksUri: 'https://www.googleapis.com/oauth2/v3/certs',
   }),
   // Validate the audience and the issuer.
   audience: process.env.REACT_APP_GOOGLE_CLIENTID,
-  issuer: "accounts.google.com",
-  algorithms: ["RS256"],
-};
+  issuer: 'accounts.google.com',
+  algorithms: ['RS256'],
+}
 ```
 
 Next, we'll define an Express middleware function to be use in our routes to
@@ -283,7 +285,7 @@ as the `Bearer` token.
 ```jsx
 // backend/helpers.ts
 // ...
-export const checkJwt = jwt(googleJwtConfig).unless({ path: ["/testData/*"] });
+export const checkJwt = jwt(googleJwtConfig).unless({ path: ['/testData/*'] })
 ```
 
 Once this helper is defined, we can use globally to apply to all routes:
@@ -291,11 +293,11 @@ Once this helper is defined, we can use globally to apply to all routes:
 ```jsx
 // backend/app.ts
 // initial imports ...
-import { checkJwt } from "./helpers";
+import { checkJwt } from './helpers'
 
 // ...
 if (process.env.REACT_APP_GOOGLE) {
-  app.use(checkJwt);
+  app.use(checkJwt)
 }
 // routes ...
 ```
@@ -373,26 +375,26 @@ environment variable set to `true`.
 
 ```jsx
 // src/index.tsx
-import React from "react";
-import ReactDOM from "react-dom";
-import { Router } from "react-router-dom";
-import { history } from "./utils/historyUtils";
-import App from "./containers/App";
-import AppGoogle from "./containers/AppGoogle";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Router } from 'react-router-dom'
+import { history } from './utils/historyUtils'
+import App from './containers/App'
+import AppGoogle from './containers/AppGoogle'
+import { createMuiTheme, ThemeProvider } from '@material-ui/core'
 const theme = createMuiTheme({
   palette: {
     secondary: {
-      main: "#fff",
+      main: '#fff',
     },
   },
-});
+})
 ReactDOM.render(
   <Router history={history}>
     <ThemeProvider theme={theme}>
       {process.env.REACT_APP_GOOGLE ? <AppGoogle /> : <App />}
     </ThemeProvider>
   </Router>,
-  document.getElementById("root")
-);
+  document.getElementById('root')
+)
 ```
