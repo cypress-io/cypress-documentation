@@ -930,8 +930,6 @@ application under test runs in any way, so you can safely ignore this warning.
 The network traffic between Cypress and the backend server still happens via
 HTTPS.
 
-See also the [Web Security](/guides/guides/web-security) guide.
-
 ## <Icon name="angle-right"></Icon> Is there an option to run Cypress in CI with Developer Tools open? We want to track network and console issues.
 
 No. There is not currently a way to run Cypress in `cypress run` with Developer

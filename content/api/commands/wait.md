@@ -351,6 +351,4 @@ following:
 
 - [`.as()`](/api/commands/as)
 - [`cy.intercept()`](/api/commands/intercept)
-- [`cy.route()`](/api/commands/route)
-- [`cy.server()`](/api/commands/server)
 - [`.spread()`](/api/commands/spread)
