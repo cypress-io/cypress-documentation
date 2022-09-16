@@ -60,15 +60,15 @@ programmatically log an existing a user into an application.
 // Configure Auth category with your Amazon Cognito credentials
 Amplify.configure({
   Auth: {
-    identityPoolId: "XX-XXXX-X:XXXXXXXX-XXXX", // Amazon Cognito Identity Pool ID
-    region: "XX-XXXX-X", // Amazon Cognito Region
+    identityPoolId: 'XX-XXXX-X:XXXXXXXX-XXXX', // Amazon Cognito Identity Pool ID
+    region: 'XX-XXXX-X', // Amazon Cognito Region
   },
-});
+})
 
 // Call Auth.signIn with user credentials
 Auth.signIn(username, password)
   .then((user) => console.log(user))
-  .catch((err) => console.log(err));
+  .catch((err) => console.log(err))
 ```
 
 ## Amazon Cognito Setup
@@ -136,20 +136,22 @@ First, we need to configure Cypress to use the
 `.env` file. In addition, we are using the `aws-exports.js` supplied during the
 [AWS Amplify CLI](https://docs.amplify.aws/CLI) build process.
 
-:::cypress-env-example{noPrefixKeys=awsConfig}
+:::cypress-config-example
 
-```js
+```ts
 // Populate process.env with values from .env file
-require("dotenv").config();
+require('dotenv').config()
 // AWS exports
-const awsConfig = require("./aws-exports-es5.js");
+const awsConfig = require('./aws-exports-es5.js')
 ```
 
-```json
+```js
 {
-  "cognito_username": "AWS_COGNITO_USERNAME",
-  "cognito_password": "AWS_COGNITO_PASSWORD",
-  "awsConfig": "awsConfig.default"
+  env: {
+    cognito_username: process.env.AWS_COGNITO_USERNAME,
+    cognito_password: process.env.AWS_COGNITO_PASSWORD,
+    awsConfig: awsConfig.default
+  }
 }
 ```
 
@@ -169,58 +171,58 @@ user is logged into the application.
 ```jsx
 // cypress/support/auth-provider-commands/cognito.ts
 
-import Amplify, { Auth } from "aws-amplify";
+import Amplify, { Auth } from 'aws-amplify'
 
-Amplify.configure(Cypress.env("awsConfig"));
+Amplify.configure(Cypress.env('awsConfig'))
 
 // Amazon Cognito
-Cypress.Commands.add("loginByCognitoApi", (username, password) => {
+Cypress.Commands.add('loginByCognitoApi', (username, password) => {
   const log = Cypress.log({
-    displayName: "COGNITO LOGIN",
+    displayName: 'COGNITO LOGIN',
     message: [`🔐 Authenticating | ${username}`],
     // @ts-ignore
     autoEnd: false,
-  });
+  })
 
-  log.snapshot("before");
+  log.snapshot('before')
 
-  const signIn = Auth.signIn({ username, password });
+  const signIn = Auth.signIn({ username, password })
 
   cy.wrap(signIn, { log: false }).then((cognitoResponse) => {
-    const keyPrefixWithUsername = `${cognitoResponse.keyPrefix}.${cognitoResponse.username}`;
+    const keyPrefixWithUsername = `${cognitoResponse.keyPrefix}.${cognitoResponse.username}`
 
     window.localStorage.setItem(
       `${keyPrefixWithUsername}.idToken`,
       cognitoResponse.signInUserSession.idToken.jwtToken
-    );
+    )
 
     window.localStorage.setItem(
       `${keyPrefixWithUsername}.accessToken`,
       cognitoResponse.signInUserSession.accessToken.jwtToken
-    );
+    )
 
     window.localStorage.setItem(
       `${keyPrefixWithUsername}.refreshToken`,
       cognitoResponse.signInUserSession.refreshToken.token
-    );
+    )
 
     window.localStorage.setItem(
       `${keyPrefixWithUsername}.clockDrift`,
       cognitoResponse.signInUserSession.clockDrift
-    );
+    )
 
     window.localStorage.setItem(
       `${cognitoResponse.keyPrefix}.LastAuthUser`,
       cognitoResponse.username
-    );
+    )
 
-    window.localStorage.setItem("amplify-authenticator-authState", "signedIn");
-    log.snapshot("after");
-    log.end();
-  });
+    window.localStorage.setItem('amplify-authenticator-authState', 'signedIn')
+    log.snapshot('after')
+    log.end()
+  })
 
-  cy.visit("/");
-});
+  cy.visit('/')
+})
 ```
 
 Finally, we can use our `loginByCognitoApi` command in at test. Below is our
@@ -237,22 +239,22 @@ is in the
 :::
 
 ```jsx
-describe("Cognito", function () {
+describe('Cognito', function () {
   beforeEach(function () {
     // Seed database with test data
-    cy.task("db:seed");
+    cy.task('db:seed')
 
     // Programmatically login via Amazon Cognito API
     cy.loginByCognitoApi(
-      Cypress.env("cognito_username"),
-      Cypress.env("cognito_password")
-    );
-  });
+      Cypress.env('cognito_username'),
+      Cypress.env('cognito_password')
+    )
+  })
 
-  it("shows onboarding", function () {
-    cy.contains("Get Started").should("be.visible");
-  });
-});
+  it('shows onboarding', function () {
+    cy.contains('Get Started').should('be.visible')
+  })
+})
 ```
 
 ## Adapting an Amazon Cognito App for Testing
@@ -277,8 +279,8 @@ JWT's from [Amazon Cognito](https://aws.amazon.com/cognito).
 ```jsx
 // backend/helpers.ts
 // ... initial imports
-import jwt from "express-jwt";
-import jwksRsa from "jwks-rsa";
+import jwt from 'express-jwt'
+import jwksRsa from 'jwks-rsa'
 
 // ...
 
@@ -288,12 +290,12 @@ const awsCognitoJwtConfig = {
   }),
 
   issuer: `https://cognito-idp.${awsConfig.aws_cognito_region}.amazonaws.com/${awsConfig.aws_user_pools_id}`,
-  algorithms: ["RS256"],
-};
+  algorithms: ['RS256'],
+}
 
 export const checkCognitoJwt = jwt(awsCognitoJwtConfig).unless({
-  path: ["/testData/*"],
-});
+  path: ['/testData/*'],
+})
 ```
 
 Once this helper is defined, we can use globally to apply to all routes:
@@ -301,12 +303,12 @@ Once this helper is defined, we can use globally to apply to all routes:
 ```jsx
 // backend/app.ts
 // initial imports ...
-import { checkCognitoJwt } from "./helpers";
+import { checkCognitoJwt } from './helpers'
 
 // ...
 
 if (process.env.REACT_APP_AWS_COGNITO) {
-  app.use(checkCognitoJwt);
+  app.use(checkCognitoJwt)
 }
 
 // routes ...
@@ -387,7 +389,7 @@ component.
 ```jsx
 // src/index.tsx
 // ... initial imports
-import AppCognito from "./containers/AppCognito";
+import AppCognito from './containers/AppCognito'
 
 // ...
 
@@ -398,7 +400,7 @@ if (process.env.REACT_APP_AWS_COGNITO) {
         <AppCognito />
       </ThemeProvider>
     </Router>,
-    document.getElementById("root")
-  );
+    document.getElementById('root')
+  )
 }
 ```

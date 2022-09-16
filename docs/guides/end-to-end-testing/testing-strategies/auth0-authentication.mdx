@@ -91,22 +91,24 @@ To have access to test user credentials within our tests we need to configure
 Cypress to use the [Auth0](https://auth0.com) environment variables set in the
 `.env` file.
 
-:::cypress-env-example
+:::cypress-config-example
 
 ```js
 // Populate process.env with values from .env file
-require("dotenv").config();
+require('dotenv').config()
 ```
 
-```json
+```js
 {
-  "auth0_username": "AUTH0_USERNAME",
-  "auth0_password": "AUTH0_PASSWORD",
-  "auth0_domain": "REACT_APP_AUTH0_DOMAIN",
-  "auth0_audience": "REACT_APP_AUTH0_AUDIENCE",
-  "auth0_scope": "REACT_APP_AUTH0_SCOPE",
-  "auth0_client_id": "REACT_APP_AUTH0_CLIENTID",
-  "auth0_client_secret": "AUTH0_CLIENT_SECRET"
+  env: {
+    auth0_username: process.env.AUTH0_USERNAME,
+    auth0_password: process.env.AUTH0_PASSWORD,
+    auth0_domain: process.env.REACT_APP_AUTH0_DOMAIN,
+    auth0_audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+    auth0_scope: process.env.REACT_APP_AUTH0_SCOPE,
+    auth0_client_id: process.env.REACT_APP_AUTH0_CLIENTID,
+    auth0_client_secret: process.env.AUTH0_CLIENT_SECRET,
+  },
 }
 ```
 
@@ -131,19 +133,19 @@ The `loginByAuth0Api` command will execute the following steps:
 ```jsx
 // cypress/support/commands.js
 Cypress.Commands.add(
-  "loginByAuth0Api",
+  'loginByAuth0Api',
   (username: string, password: string) => {
-    cy.log(`Logging in as ${username}`);
-    const client_id = Cypress.env("auth0_client_id");
-    const client_secret = Cypress.env("auth0_client_secret");
-    const audience = Cypress.env("auth0_audience");
-    const scope = Cypress.env("auth0_scope");
+    cy.log(`Logging in as ${username}`)
+    const client_id = Cypress.env('auth0_client_id')
+    const client_secret = Cypress.env('auth0_client_secret')
+    const audience = Cypress.env('auth0_audience')
+    const scope = Cypress.env('auth0_scope')
 
     cy.request({
-      method: "POST",
-      url: `https://${Cypress.env("auth0_domain")}/oauth/token`,
+      method: 'POST',
+      url: `https://${Cypress.env('auth0_domain')}/oauth/token`,
       body: {
-        grant_type: "password",
+        grant_type: 'password',
         username,
         password,
         audience,
@@ -152,7 +154,7 @@ Cypress.Commands.add(
         client_secret,
       },
     }).then(({ body }) => {
-      const claims = jwt.decode(body.id_token);
+      const claims = jwt.decode(body.id_token)
       const {
         nickname,
         name,
@@ -162,7 +164,7 @@ Cypress.Commands.add(
         email_verified,
         sub,
         exp,
-      } = claims;
+      } = claims
 
       const item = {
         body: {
@@ -183,14 +185,14 @@ Cypress.Commands.add(
           },
         },
         expiresAt: exp,
-      };
+      }
 
-      window.localStorage.setItem("auth0Cypress", JSON.stringify(item));
+      window.localStorage.setItem('auth0Cypress', JSON.stringify(item))
 
-      cy.visit("/");
-    });
+      cy.visit('/')
+    })
   }
-);
+)
 ```
 
 With our Auth0 app setup properly in the Auth0 Developer console, necessary
