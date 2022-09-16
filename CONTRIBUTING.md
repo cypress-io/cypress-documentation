@@ -53,17 +53,17 @@ grab the reader's attention with a blurb.
 #### Images
 
 If you are starting a new page and want to add images, add a new folder to
-[`assets/img`](/assets/img). For example when adding a new "Code Coverage" page
+[`static/img`](/static/img). For example when adding a new "Code Coverage" page
 to `guides/tooling`, I have created new folder `assets/img/guides/tooling` and
 copied an image there called `coverage-object.png`. Within the markdown, I can
 include the image using the
-[`<DocsImage />` component](/components/global/DocsImage.vue).
+[`<DocsImage />` component](/src/components/docs-image).
 
 ```jsx
 <DocsImage
   src="/img/guides/tooling/coverage-object.png"
   alt="code coverage object"
-></DocsImage>
+/>
 ```
 
 Typically you should include the `alt` and `title` attributes to give the user
@@ -72,7 +72,7 @@ more information about the image.
 #### Videos
 
 You can embed videos within the markdown with the
-[`<DocsVideo>`](/components/global/DocsVideo.vue) component. Currently, it
+[`<DocsVideo />`](src/components/docs-video) component. Currently, it
 supports local files, YouTube, and Vimeo embeds. Set the `src` prop to a
 relative path for a local video file or the embed link for YouTube or Vimeo
 videos. You should also set a `title` prop describing the video for
@@ -82,19 +82,19 @@ accessibility reasons.
 <DocsVideo
   src="https://www.youtube.com/embed/dQw4w9WgXcQ"
   title="Cypress Tips and Tricks"
->
+/>
 ```
 
 #### Icons
 
 [Font Awesome](https://fontawesome.com/) icons can be used within markdown by
-using the [`<Icon>`](/components/global/Icon.vue) component. Set the `name` prop
+using the [`<Icon />`](src/components/icon) component. Set the `name` prop
 to the name of the Font Awesome icon you want to use. Make sure that the icon
-appears in the list of imported icons within the `nuxt.config.js` file under the
+appears in the list of imported icons within the [MDXComponents.js](src/theme/MDXComponents.js) file under the
 `fontawesome` key.
 
 ```jsx
-<Icon name="question-circle"></Icon>
+<Icon name="question-circle" />
 ```
 
 ### Partials
@@ -104,12 +104,12 @@ markdown files. You may want to use a partial when you are writing the same
 content across multiple markdown files.
 
 You can learn about how to import markdown & partials
-[here](https://docusaurus.io/docs/markdown-features/react#importing-markdown)
+[here](https://docusaurus.io/docs/markdown-features/react#importing-markdown).
 
 ### Adding Plugins
 
 To add a plugin, submit a [pull request](#Pull-Requests) with the corresponding
-data added to the [`plugins.json`](/content/_data/plugins.json) file. Your
+data added to the [`plugins.json`](/src/data/plugins.json) file. Your
 plugin should have a name, description, link to the plugin's code, as well as
 any keywords.
 
@@ -135,7 +135,7 @@ Each plugin submitted to the plugins list should have the following:
 ### Adding Pages
 
 To add a page, such as a new guide or API documentation check out how to do so
-[here](https://docusaurus.io/docs/create-doc)
+[here](https://docusaurus.io/docs/create-doc).
 
 ### Patches
 
@@ -156,10 +156,8 @@ go away.
 
 ### Writing the Changelog
 
-<!-- TODO: this needs to be updated once we determine how to handle the new changlog -->
-
 When adding to the Changelog, create a new file in
-[`content/_changelogs`](/content/_changelogs) named as the version number. Be
+[`/_changelogs`](/docs/guides/references/_changelogs) named as the version number. Be
 sure to follow the category structure defined below (in this order). Each bullet
 point in the list should _always_ be associated to an issue on the
 [`cypress`](https://github.com/cypress-io/cypress) repo and link to that issue
@@ -249,6 +247,3 @@ To trigger production rebuild and redeploy, use personal GitHub token and run:
 ```shell
 GITHUB_TOKEN=<your token> npm run make-empty-commit -- --message "trigger deploy" --branch master
 ```
-
-As always, using [as-a](https://github.com/bahmutov/as-a) is recommended for
-storing and using sensitive environment variables.
