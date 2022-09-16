@@ -3,7 +3,7 @@
 The code for Cypress Documentation including Guides, API, Examples, Dashboard &
 FAQ found at https://docs.cypress.io.
 
-![Cypress Documentation Preview](https://user-images.githubusercontent.com/11802078/112329249-09547100-8c85-11eb-97fe-8a52e4245874.png)
+![Cypress Documentation Preview](/static/img/cypress-docs.png)
 
 ## CI status
 
@@ -35,7 +35,7 @@ Most changes are reflected live without having to restart the server.
 $ yarn build
 ```
 
-This command generates static content into the `build` directory and can be
+This command generates static content into the `dist` directory and can be
 served using any static contents hosting service.
 
 ## Contributing
