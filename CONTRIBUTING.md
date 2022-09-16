@@ -7,22 +7,13 @@ Thanks for taking the time to contribute! :smile:
 - [Contributing to Cypress Documentation](#contributing-to-cypress-documentation)
   - [Code of Conduct](#code-of-conduct)
   - [Writing Documentation](#writing-documentation)
-    - [Using Vue Components](#using-vue-components)
-      - [Alerts](#alerts)
-      - [Images](#images)
-      - [Videos](#videos)
-      - [Icons](#icons)
+    - [Admonitions](#admonitions)
+    - [Images](#images)
+    - [Videos](#videos)
+    - [Icons](#icons)
     - [Partials](#partials)
-      - [Writing a Partial](#writing-a-partial)
-      - [Using Partials](#using-partials)
-      - [Limitations](#limitations)
-    - [When to use Partials instead of Vue components](#when-to-use-partials-instead-of-vue-components)
-    - [Adding Examples](#adding-examples)
     - [Adding Plugins](#adding-plugins)
     - [Adding Pages](#adding-pages)
-      - [A Worked Example](#a-worked-example)
-    - [Deleting Pages](#deleting-pages)
-    - [Patches](#patches)
     - [Writing the Changelog](#writing-the-changelog)
       - [Categories](#categories)
   - [Committing Code](#committing-code)
@@ -38,10 +29,9 @@ All contributors are expected to abide by our
 
 ## Writing Documentation
 
-The documentation uses [Nuxt.js](https://nuxtjs.org/) to generate a static
-website. Refer to the
-[Nuxt.js](https://nuxtjs.org/docs/2.x/get-started/installation) documentation
-for specifics about the Nuxt.js framework.
+The documentation uses [Docusaurus](https://docusaurus.io) to generate a static
+website. Refer to the [Docusaurus](https://docusaurus.io/docs) documentation for
+specifics about the framework.
 
 **Fork this repository**
 
@@ -54,33 +44,26 @@ fork) of this repository under your personal account.
 git clone git@github.com:<your username>/cypress-documentation.git
 cd cypress-documentation
 ```
-#### Alerts
 
-Use [Docusaurus Admonitions](https://docusaurus.io/docs/markdown-features/admonitions) to grab the reader's attention
-with a blurb. 
+#### Admonitions
 
-```jsx
-:::info
-
-This is an important message.
-
-:::
-```
+Use [Admonitions](https://docusaurus.io/docs/markdown-features/admonitions) to
+grab the reader's attention with a blurb.
 
 #### Images
 
 If you are starting a new page and want to add images, add a new folder to
-[`assets/img`](/assets/img). For example when adding a new "Code Coverage" page
+[`static/img`](/static/img). For example when adding a new "Code Coverage" page
 to `guides/tooling`, I have created new folder `assets/img/guides/tooling` and
 copied an image there called `coverage-object.png`. Within the markdown, I can
 include the image using the
-[`<DocsImage />` component](/components/global/DocsImage.vue).
+[`<DocsImage />` component](/src/components/docs-image).
 
 ```jsx
 <DocsImage
   src="/img/guides/tooling/coverage-object.png"
   alt="code coverage object"
-></DocsImage>
+/>
 ```
 
 Typically you should include the `alt` and `title` attributes to give the user
@@ -89,7 +72,7 @@ more information about the image.
 #### Videos
 
 You can embed videos within the markdown with the
-[`<DocsVideo>`](/components/global/DocsVideo.vue) component. Currently, it
+[`<DocsVideo />`](src/components/docs-video) component. Currently, it
 supports local files, YouTube, and Vimeo embeds. Set the `src` prop to a
 relative path for a local video file or the embed link for YouTube or Vimeo
 videos. You should also set a `title` prop describing the video for
@@ -99,19 +82,19 @@ accessibility reasons.
 <DocsVideo
   src="https://www.youtube.com/embed/dQw4w9WgXcQ"
   title="Cypress Tips and Tricks"
->
+/>
 ```
 
 #### Icons
 
 [Font Awesome](https://fontawesome.com/) icons can be used within markdown by
-using the [`<Icon>`](/components/global/Icon.vue) component. Set the `name` prop
+using the [`<Icon />`](src/components/icon) component. Set the `name` prop
 to the name of the Font Awesome icon you want to use. Make sure that the icon
-appears in the list of imported icons within the `nuxt.config.js` file under the
+appears in the list of imported icons within the [MDXComponents.js](src/theme/MDXComponents.js) file under the
 `fontawesome` key.
 
 ```jsx
-<Icon name="question-circle"></Icon>
+<Icon name="question-circle" />
 ```
 
 ### Partials
@@ -120,95 +103,13 @@ Partials are snippets of reusable markdown that can be inserted into other
 markdown files. You may want to use a partial when you are writing the same
 content across multiple markdown files.
 
-#### Writing a Partial
-
-A partial is a markdown file that you want to import and inject into another
-markdown file. They can contain any content that you would otherwise want to
-write in other markdown files.
-
-```md
-## My First Partial
-
-:::info
-
-This is my reusable partial.
-
-:::
-```
-
-#### Using Partials
-
-Partials can be imported into other markdown files with the
-`::include{file=FILE_NAME}` directive.
-
-```md
-## My Favorite Food
-
-### Pizza
-
-::include{file=path/to/pizza-recipe.md}
-```
-
-When the page is generated, the content of `path/to/pizza-recipe.md` will be
-injected into the markdown file.
-
-The `::include{file=FILE_NAME}` directive assumes that the `FILE_NAME` exists
-within the `content` directory. You must provide the path relative to the
-`content` directory as the `file` property. For example, if the partial
-`pizza-recipe.md` was located at `/content/recipes/pizza-recipe.md`, the
-`::include` directive would be `::include{file=recipes/pizza-recipe.md}`.
-
-#### Limitations
-
-When including the `::include{file=FILE_NAME}` directive in another markdown
-file, Nuxt's hot module reloading will automatically trigger the partial's
-content to be inserted into the markdown file. However, if you wish to make
-changes to the partial file itself, you will need to stop and restart the
-development server with `yarn start` to see the changes. This is because the
-custom remark plugin that is enabling this partial system is only ran when the
-server is started and not on each hot module reload.
-
-### When to use Partials instead of Vue components
-
-It is possible to create partials using Vue components in the markdown instead
-of using the `::include{file=FILE_NAME}` directive. However, there are downsides
-to this approach.
-
-Assume you have a `<Partial>` Vue component. If you wanted to introduce a
-`<Partial>` to a markdown file and let that partial add a new header to the
-page, you would need to add a header element to the `<Partial>` component. Due
-to how each page's table of contents is generated, this new header would not
-appear in the "On This Page" section that appears on the right-hand side of most
-documentation pages. The header would also be missing the anchor tag that is
-otherwise automatically inserted into all headers.
-
-For most use cases, you should use the `::include{file=FILE_NAME}` directive
-when you want to inject reusable markdown into multiple files. A `<Partial>` Vue
-component may be a better fit if you wish to add custom interactivity to
-reusable strings of text.
-
-### Adding Examples
-
-To add a course, blog, talk, podcast, or screencast to our docs, submit a
-[pull request](#Pull-Requests) with your data added to the corresponding
-[courses.json](/content/_data/courses.json),
-[blogs.json](/content/_data/blogs.json),
-[talks.json](/content/_data/talks.json),
-[podcasts.json](/content/_data/podcasts.json) or
-[screencasts.json](/content/_data/screencasts.json) file.
-
-Add an associated image with the example within the [`assets/img`](/assets/img)
-directory. Each image should have a resolution of **715×480**. Reference the
-image in the markdown document as follows:
-
-```jsx
-<DocsImage src="/img/examples/name-of-file.jpg" alt="alt text describing img" />
-```
+You can learn about how to import markdown & partials
+[here](https://docusaurus.io/docs/markdown-features/react#importing-markdown).
 
 ### Adding Plugins
 
 To add a plugin, submit a [pull request](#Pull-Requests) with the corresponding
-data added to the [`plugins.json`](/content/_data/plugins.json) file. Your
+data added to the [`plugins.json`](/src/data/plugins.json) file. Your
 plugin should have a name, description, link to the plugin's code, as well as
 any keywords.
 
@@ -233,131 +134,8 @@ Each plugin submitted to the plugins list should have the following:
 
 ### Adding Pages
 
-To add a page, such as a new guide or API documentation:
-
-- Add the new page to the relevant directory under [`content`](/content).
-- Link to your new page in the [`sidebar.json`](/content/_data/sidebar.json).
-- Build the documentation site locally so that you can visually inspect your new
-  page and the links to it.
-- Submit a [pull request](#Pull-Requests) for your change.
-
-> Note: If you need to change the overall layout of a page, you should create a
-> Vue component within the `/pages` directory. The `/pages` directory contains
-> the `_.vue` components responsible for generating the views for the routes
-> `/guides`, `/api/`, `/plugins`, etc. If you wanted to create a guide page that
-> has a different layout from the other guide pages, you would create a
-> component file within `/guides` matching the route name that you want to use.
-> For example, if I wanted to create a unique guide page without the sidebar
-> about using the Dashboard, I would create a file called
-> `/pages/guides/my-dashboard-guide.vue` and create a Vue component for the
-> specific layout I want to create. The page will then be accessible at the
-> route `/guides/my-dashboard-guide`.
-
-#### A Worked Example
-
-Let's imagine that the Cypress team has just added a new command called
-`privateState` and you've picked up the task to document it.
-
-API documentation for commands is in the
-[`content/api/commands`](/content/api/commands) directory.
-
-1. Add a file called `privatestate.md` to that directory.
-2. Write the document. Look to the existing documentation to see how to
-   structure the content.
-3. Open the [`content/_data/sidebar.json`](/content/_data/sidebar.json) file and
-   add a link the new `privatestate` page. In this example, we're adding a
-   command, so we'll add a link underneath the `api` section.
-
-```diff
-"api": [
-  {
-    "title": "API",
-    "slug": "api",
-    "children": [
-      {
-        "title": "Commands",
-        "slug": "commands",
-        "children": [
-          {
-            "title": "and",
-            "slug": "and"
-          },
-          {
-            "title": "as",
-            "slug": "as"
-          },
-          // ...
-+         {
-+           "title": "privateState",
-+           "slug": "privatestate"
-+         }
-        ]
-      }
-    ]
-  }
-]
-```
-
-The `sidebar.json` file contains a tree-like structure of nodes. Each node
-contains a `title`, `slug`, and optionally a `redirect` property. The URLs for
-each node in the `sidebar.json` are determined by the placement of each node in
-the hierarchy. For example, the `privateState` node that we added in the
-previous example would have a generated URL of `/api/commands/privatestate`
-since `privateState` is a child of the `commands` node, which is a child of the
-`api` node. If the `privateState` node were to contain a `redirect` instead of a
-`slug` property, it would link to the path used as the `redirect`:
-
-```json
-{
-  "title": "privateState",
-  "redirect": "/guides/overview/why-cypress"
-  // creates a link to the `/guides/overview/why-cypress` page
-}
-```
-
-> Note: If a node contains a `redirect` property, there is no need to add a
-> `slug` property. The `redirect` property will always take precedence over the
-> `slug`.
-
-The ability to nest nodes inside of other nodes gives you the ability to create
-a menu structure up to three (3) levels deep:
-
-```json
-"api": [
-  {
-    "title": "API",
-    "slug": "api",
-    "children": [
-      {
-        "title": "Commands",
-        "slug": "commands",
-        "children": [
-          {
-            "title": "Custom Commands",
-            "slug": "custom-commands",
-            "children": [
-              {
-                "title": "Writing a Custom Command",
-                "slug": "writing-a-custom-command"
-                // this node should not contain any children
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-]
-```
-
-### Deleting Pages
-
-To delete a page:
-
-- Delete the page from the relevant directory under [`content`](/content).
-- Remove the link from the the [`sidebar.json`](/content/_data/sidebar.json).
-- Build the documentation site locally so that you can visually inspect and make
-  sure it was properly deleted.
+To add a page, such as a new guide or API documentation check out how to do so
+[here](https://docusaurus.io/docs/create-doc).
 
 ### Patches
 
@@ -379,7 +157,7 @@ go away.
 ### Writing the Changelog
 
 When adding to the Changelog, create a new file in
-[`content/_changelogs`](/content/_changelogs) named as the version number. Be
+[`/_changelogs`](/docs/guides/references/_changelogs) named as the version number. Be
 sure to follow the category structure defined below (in this order). Each bullet
 point in the list should _always_ be associated to an issue on the
 [`cypress`](https://github.com/cypress-io/cypress) repo and link to that issue
@@ -469,6 +247,3 @@ To trigger production rebuild and redeploy, use personal GitHub token and run:
 ```shell
 GITHUB_TOKEN=<your token> npm run make-empty-commit -- --message "trigger deploy" --branch master
 ```
-
-As always, using [as-a](https://github.com/bahmutov/as-a) is recommended for
-storing and using sensitive environment variables.
