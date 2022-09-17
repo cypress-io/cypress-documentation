@@ -67,6 +67,7 @@ const config = {
 
   plugins: [
     './plugins/fav-icon',
+    './plugins/devserver-redirect',
   ],
 
   themeConfig:
