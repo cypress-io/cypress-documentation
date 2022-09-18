@@ -5,7 +5,9 @@ title: Cross Browser Testing
 Cypress has the capability to run tests across multiple browsers. Currently,
 Cypress has support for
 [Chrome-family browsers](/guides/guides/launching-browsers#Chrome-Browsers)
-(including Electron and Chromium-based Microsoft Edge), and Firefox.
+(including Electron and Chromium-based Microsoft Edge),
+[WebKit](/guides/guides/launching-browsers#WebKit-Experimental) (Safari's
+browser engine), and Firefox.
 
 <Alert type="warning">
 
@@ -20,10 +22,9 @@ may experience issues in non-Chromium based browsers.
 Excluding [Electron](/guides/guides/launching-browsers#Electron-Browser), any
 browser you want to run Cypress tests in needs to be installed on your local
 system or CI environment. A full list of detected browsers is displayed within
-the browser selection menu of the
-[Cypress App](/guides/core-concepts/cypress-app).
+the browser selection menu of [Cypress](/guides/core-concepts/cypress-app).
 
-<DocsImage src="/img/guides/cross-browser-testing/v10/browser-select-FF.png" alt="Cypress App with Firefox selected as the browser"></DocsImage>
+<DocsImage src="/img/guides/cross-browser-testing/v10/browser-select-FF.png" alt="Cypress with Firefox selected as the browser"></DocsImage>
 
 The desired browser can also specified via the
 [`--browser`](/guides/guides/command-line#Options) flag when using

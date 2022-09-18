@@ -2,7 +2,7 @@
 title: Mounting Components
 ---
 
-Many tests, regardless of framework or type follow a similar format: **Arrange,
+Many tests, regardless of framework or type, follow a similar format: **Arrange,
 Act, and Assert**. This pattern "Arrange, Act, Assert" was first coined in 2001
 by Bill Wilke and is explained thoroughly in his blog post
 ["3A - Arrange, Act, Assert"](https://xp123.com/articles/3a-arrange-act-assert/).
@@ -14,70 +14,61 @@ end-to-end test.
 ## What is the Mount Function?
 
 We ship a `mount` function for each front-end framework Cypress supports, which
-can be imported from the `cypress` package. It is responsible for rendering
-components within Cypress's sandboxed iframe as well as handling and
-framework-specific cleanup.
+is imported from the `cypress` package. It is responsible for rendering
+components within Cypress's sandboxed iframe and handling and framework-specific
+cleanup.
 
 ```js
+// React 16, 17
 import { mount } from 'cypress/react'
+
+// React 18
+import { mount } from 'cypress/react18'
 ```
 
-### The Simplest Usage of Mount
+### Using `cy.mount()` Anywhere
 
-You'll import the component you want to test and then mount it:
+While you can use the `mount` function in your tests, we recommend using
+[`cy.mount()`](/api/commands/mount), which is added as a
+[custom command](/api/cypress-api/custom-commands) in the
+**cypress/support/component.js** file:
 
-```jsx
-import { mount } from 'cypress/react'
-import Stepper from './Stepper'
-
-describe('<Stepper>', () => {
-  it('mounts', () => {
-    mount(<Stepper />)
-  })
-})
-```
-
-### Making cy.mount Available Anywhere
-
-While you can import the `mount` function at the top of any file, you'll be
-using it in every single component test, so we recommend adding it as a
-[Cypress Custom Command](/api/cypress-api/custom-commands), where it will be
-available on the global `cy` API wherever you need it.
-
-Automatic configuration should have done this for you if you followed the wizard
-in the Launchpad.
-
-Your component support file should look something like the code block below. It
-will have registered the `mount` method as a Cypress Command, and it will be
-available in any Cypress test under `cy.mount`.
-
-If you're using providers or other global app-level setups in your React app,
-you'll want to follow the
-"[Customizing cy.mount guide for React](/api/commands/mount)".
-
-<!-- TODO: link to customizing cy.mount command -->
+<code-group>
+<code-block label="cypress/support/component.js" active>
 
 ```js
-// cypress/support/component.js
 import { mount } from 'cypress/react'
 
 Cypress.Commands.add('mount', mount)
 ```
 
-Now we can update our `<Stepper />` component by removing the `mount` import and
-using the `cy.mount` command. Go ahead and create a spec in your project named
-`Stepper.spec.jsx` in the same directory as `Stepper.jsx` and copy the following
-into it:
+</code-block>
+</code-group>
+
+This allows you to use `cy.mount()` in any component test without having to
+import the framework-specific mount command.
+
+You can customize `cy.mount()` to fit your needs. For instance, if you are using
+providers or other global app-level setups in your React app, you can configure
+them here. For more info, see the
+[Customizing cy.mount() guide for React](/guides/component-testing/custom-mount-react).
+
+### Your First Component Test
+
+Now that you have a component let's write a spec that mounts the component.
+
+To get started, create a spec file in the same directory as the `Stepper.jsx`
+component and name it **Stepper.cy.jsx**. Then paste the following into it:
 
 <code-group>
 <code-block label="Stepper.cy.jsx" active>
 
-```jsx
+```js
 import Stepper from './Stepper'
 
 describe('<Stepper>', () => {
   it('mounts', () => {
-    cy.mount(<Stepper />) // this command now works in any test!
+    cy.mount(<Stepper />)
   })
 })
 ```
@@ -85,34 +76,44 @@ describe('<Stepper>', () => {
 </code-block>
 </code-group>
 
+Here, we have a single test that ensures that our component mounts.
+
 ## Running the Test
 
-Now it's time to see the test in action. Open up Cypress if not already:
+Now it's time to see the test in action. Open up Cypress if it is not already
+running:
 
 ```bash
-npx cypress open
+npx cypress open --component
 ```
 
+> The `--component` flag will launch us directly into component testing
+
 And launch the browser of your choice. In the spec list, click on
-**Stepper.cy.jsx** and you will see the stepper component mounted in the test
+**Stepper.cy.js** and you will see the stepper component mounted in the test
 area.
 
-Having a basic test that mounts a component in its default state is a good way
-to get started testing. Since Cypress renders your component in a real browser,
-you can visually see if it is rendering how it should, and you can also play
-around with it manually in the test runner.
+<DocsImage 
+  src="/img/guides/component-testing/first-test-run-react.png" 
+  caption="Stepper Mount Test"> </DocsImage>
 
-<!-- TODO - picture of mounted stepper component -->
+A basic test that mounts a component in its default state is an excellent way to
+start testing. Since Cypress renders your component in a real browser, you have
+a lot of advantages, such as seeing that the component renders as it should,
+interacting with the component in the test runner, and using the browser dev
+tools to inspect and debug both your tests and the component's code.
 
-<alert type="info">
+Feel free to play around with the `Stepper` component by interacting with the
+increment and decrement buttons.
 
 ## Cypress and Testing Library
 
-While we don't use Testing Library in this guide, many people might wonder if it
-is possible to do so with Cypress, and the answer is yes!
+While we don't use [Testing Library](https://testing-library.com/) in this
+guide, many people might wonder if it is possible to do so with Cypress, and the
+answer is yes!
 
-Cypress loves the Testing Library project. We use Testing Library internally and
-our philosophy aligns closely with Testing Library's ethos and approach to
+Cypress loves the Testing Library project. We use Testing Library internally,
+and our philosophy aligns closely with Testing Library's ethos and approach to
 writing tests. We strongly endorse their best practices.
 
 In particular, if you're looking for more resources to understand how we
@@ -142,8 +143,6 @@ import '@testing-library/cypress/add-commands'
 
 For TypeScript users, types are packaged along with the Testing Library package.
 Refer to the latest setup instructions in the Testing Library docs.
-
-</alert>
 
 ## Next Steps
 

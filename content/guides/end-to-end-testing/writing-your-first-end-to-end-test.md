@@ -12,17 +12,15 @@ title: Writing Your First E2E Test
 
 </Alert>
 
-<DocsVideo src="https://vimeo.com/237115455"></DocsVideo>
-
 ## Add a test file
 
 Assuming you've successfully
-[installed the Cypress App](/guides/getting-started/installing-cypress) and
-[opened the Cypress app](/guides/getting-started/opening-the-app), now it's time
-to add your first test. We're going to do this with the <strong>Create new empty
-spec</strong> button in the Cypress App.
+[installed Cypress](/guides/getting-started/installing-cypress) and
+[opened Cypress](/guides/getting-started/opening-the-app), now it's time to add
+your first test. We're going to do this with the <strong>Create new empty
+spec</strong> button.
 
-<DocsImage src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/create-new-empty-spec.png" alt="The Cypress App with the Create new empty spec button highlighted"></DocsImage>
+<DocsImage src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/create-new-empty-spec.png" alt="Cypress with the Create new empty spec button highlighted"></DocsImage>
 
 On clicking it, you should see a dialog where you can enter the name of your new
 spec. Just accept the default name for now.
@@ -34,11 +32,11 @@ and close it with the ✕ button.
 
 <DocsImage src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/new-spec-added-confirmation.png" alt="The new spec confirmation dialog"></DocsImage>
 
-Once we've created that file, you should see the Cypress App immediately display
-it in the list of end-to-end specs. Cypress monitors your spec files for any
-changes and automatically displays any changes.
+Once we've created that file, you should see it immediately displayed in the
+list of end-to-end specs. Cypress monitors your spec files for any changes and
+automatically displays any changes.
 
-<DocsImage src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/spec-list-with-new-spec.png" alt="The Cypress App showing the spec list with the newly created spec"></DocsImage>
+<DocsImage src="/img/guides/end-to-end-testing/writing-your-first-end-to-end-test/spec-list-with-new-spec.png" alt="Cypress showing the spec list with the newly created spec"></DocsImage>
 
 Even though we haven't written any code yet - that's okay - let's click on your
 new spec and watch Cypress launch it. Spoiler alert: it's probably going to
@@ -72,7 +70,7 @@ Over in the [Command Log](/guides/core-concepts/cypress-app#Command-Log) you'll
 see Cypress display the suite, the test and your first assertion (which should
 be passing in green).
 
-<DocsImage src="/img/guides/getting-started/e2e/v10/first-test.png" alt="My first test shown passing in the Cypress App"></DocsImage>
+<DocsImage src="/img/guides/getting-started/e2e/v10/first-test.png" alt="My first test shown passing in Cypress"></DocsImage>
 
 <Alert type="info">
 
@@ -114,9 +112,9 @@ describe('My First Test', () => {
 
 <DocsImage src="/img/guides/getting-started/e2e/v10/first-test-failing.png" alt="Failing test"></DocsImage>
 
-The [Cypress App](/guides/core-concepts/cypress-app) gives you a visual
-structure of suites, tests, and assertions. Soon you'll also see commands, page
-events, network requests, and more.
+[Cypress](/guides/core-concepts/cypress-app) gives you a visual structure of
+suites, tests, and assertions. Soon you'll also see commands, page events,
+network requests, and more.
 
 <Alert type="info">
 
@@ -181,8 +179,8 @@ describe('My First Test', () => {
 })
 ```
 
-Save the file and switch back over to the Cypress App. You might notice a few
-things:
+Save the file and switch back over to the Cypress Test Runner. You might notice
+a few things:
 
 1. The [Command Log](/guides/core-concepts/cypress-app#Command-Log) now shows
    the new `VISIT` action.
@@ -346,11 +344,10 @@ likely to change your application state in more than one way.
 We can continue the interactions and assertions in this test by adding another
 chain to interact with and verify the behavior of elements on this new page.
 
-We can use [cy.get()](/api/commands/get) to select an element based on a
-`data-*` attribute. Then we can use the [.type()](/api/commands/type) command to
-enter text into the selected input. Finally, we can verify that the value of the
-input reflects the text that was typed with another
-[.should()](/api/commands/should).
+We can use [cy.get()](/api/commands/get) to select an element based on its
+class. Then we can use the [.type()](/api/commands/type) command to enter text
+into the selected input. Finally, we can verify that the value of the input
+reflects the text that was typed with another [.should()](/api/commands/should).
 
 ```js
 describe('My First Test', () => {
@@ -365,12 +362,23 @@ describe('My First Test', () => {
 
     // Get an input, type into it and verify
     // that the value has been updated
-    cy.get('[data-testid="action-email"]')
+    cy.get('.action-email')
       .type('fake@email.com')
       .should('have.value', 'fake@email.com')
   })
 })
 ```
+
+<Alert type="warning">
+
+We normally don't suggest selecting and finding elements by their class names,
+but we do so here since we are querying an external site, and sometimes that is
+all we have to work with.
+
+For more information on our guidance on selector best practices, see our guide
+on it [here](/guides/references/best-practices#Selecting-Elements).
+
+</Alert>
 
 And there you have it: a short test in Cypress that visits a page, finds and
 clicks a link, verifies the URL and then verifies the behavior of an element on
@@ -381,7 +389,7 @@ the new page. If we read it out loud, it might sound like:
 > 3. Click on it
 > 4. Get the URL
 > 5. Assert it includes: `/commands/actions`
-> 6. Get the input with the `action-email` data-testid
+> 6. Get the input with the `action-email` class
 > 7. Type `fake@email.com` into the input
 > 8. Assert the input reflects the new value
 
@@ -389,11 +397,9 @@ Or in the Given, When, Then syntax:
 
 > 1. Given a user visits `https://example.cypress.io`
 > 2. When they click the link labeled `type`
-> 3. And they type "fake@email.com" into the `[data-testid="action-email"]`
->    input
+> 3. And they type "fake@email.com" into the `.action-email` input
 > 4. Then the URL should include `/commands/actions`
-> 5. And the `[data-testid="action-email"]` input has "fake@email.com" as its
->    value
+> 5. And the `.action-email` input has "fake@email.com" as its value
 
 And hey, this is a very clean test! We didn't have to say anything about _how_
 things work, just that we'd like to verify a particular series of events and
@@ -436,11 +442,16 @@ These various timeouts are defined in the
 
 ## Next steps
 
+- Take our free
+  [Testing your first application](https://learn.cypress.io/testing-your-first-application)
+  course.
 - Learn more about the [Cypress App](/guides/core-concepts/cypress-app) UI.
 - Start [testing your app](/guides/end-to-end-testing/testing-your-app).
 - Set up
   [intelligent code completion](/guides/tooling/IDE-integration#Intelligent-Code-Completion)
   for Cypress commands and assertions.
+- Record your test results to [the Dashboard](/guides/dashboard/introduction)
+  for advanced features like parallelization, flake detection, and more.
 - Check out the <Icon name="github"></Icon>
   [Cypress Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
   for practical demonstrations of Cypress testing practices, configuration, and

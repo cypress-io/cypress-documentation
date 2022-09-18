@@ -97,7 +97,7 @@ following process:
    considering the test run as fully complete. This is done to better support
    [grouping of runs](#Grouping-test-runs).
 
-In short: each Cypress App sends a list of the spec files to the Dashboard
+In short: each Cypress instance sends a list of the spec files to the Dashboard
 Service, and the service sends back one spec at a time to each application to
 run.
 
@@ -356,21 +356,22 @@ the CI build ID via the
 Cypress currently uses the following CI environment variables to determine a CI
 build ID for a test run:
 
-| Provider       | Environment Variable                     |
-| -------------- | ---------------------------------------- |
-| AppVeyor       | `APPVEYOR_BUILD_NUMBER`                  |
-| AWS CodeBuild  | `CODEBUILD_INITIATOR`                    |
-| Bamboo         | `bamboo_buildNumber`                     |
-| Bitbucket      | `BITBUCKET_BUILD_NUMBER`                 |
-| Circle         | `CIRCLE_WORKFLOW_ID`, `CIRCLE_BUILD_NUM` |
-| Codeship       | `CI_BUILD_NUMBER`                        |
-| Codeship Basic | `CI_BUILD_NUMBER`                        |
-| Codeship Pro   | `CI_BUILD_ID`                            |
-| Drone          | `DRONE_BUILD_NUMBER`                     |
-| GitLab         | `CI_PIPELINE_ID`                         |
-| Jenkins        | `BUILD_NUMBER`                           |
-| Semaphore      | `SEMAPHORE_EXECUTABLE_UUID`              |
-| Travis         | `TRAVIS_BUILD_ID`                        |
+| Provider        | Environment Variable                     |
+| --------------- | ---------------------------------------- |
+| AppVeyor        | `APPVEYOR_BUILD_NUMBER`                  |
+| AWS CodeBuild   | `CODEBUILD_INITIATOR`                    |
+| Azure Pipelines | `BUILD_BUILDNUMBER`                      |
+| Bamboo          | `bamboo_buildNumber`                     |
+| Bitbucket       | `BITBUCKET_BUILD_NUMBER`                 |
+| Circle          | `CIRCLE_WORKFLOW_ID`, `CIRCLE_BUILD_NUM` |
+| Codeship        | `CI_BUILD_NUMBER`                        |
+| Codeship Basic  | `CI_BUILD_NUMBER`                        |
+| Codeship Pro    | `CI_BUILD_ID`                            |
+| Drone           | `DRONE_BUILD_NUMBER`                     |
+| GitLab          | `CI_PIPELINE_ID`                         |
+| Jenkins         | `BUILD_NUMBER`                           |
+| Semaphore       | `SEMAPHORE_EXECUTABLE_UUID`              |
+| Travis          | `TRAVIS_BUILD_ID`                        |
 
 You can pass a different value to link agents to the same run. For example, if
 you are using Jenkins and think the environment variable `BUILD_TAG` is more

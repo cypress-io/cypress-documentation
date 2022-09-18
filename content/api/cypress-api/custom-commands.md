@@ -94,7 +94,7 @@ Examples of parent commands:
 - [`cy.get()`](/api/commands/get)
 - [`cy.request()`](/api/commands/request)
 - [`cy.exec()`](/api/commands/exec)
-- [`cy.route()`](/api/commands/route)
+- [`cy.intercept()`](/api/commands/intercept)
 
 #### Click link containing text
 
@@ -453,7 +453,7 @@ For more complex use cases feel free to overwrite existing commands.
 
 If you are typing into a password field, the password input is masked
 automatically within your application. But [.type()](/api/commands/type)
-automatically logs any typed content into the Cypress App's Command Log.
+automatically logs any typed content into the Cypress Command Log.
 
 ```js
 cy.get('#username').type('username@email.com')
@@ -465,7 +465,7 @@ cy.get('#password').type('superSecret123')
 You may want to mask some values passed to the [.type()](/api/commands/type)
 command so that sensitive data does not display in screenshots or videos of your
 test run. This example overwrites the [.type()](/api/commands/type) command to
-allow you to mask sensitive data in the Cypress App's Command Log.
+allow you to mask sensitive data in the Cypress Command Log.
 
 ```js
 Cypress.Commands.overwrite('type', (originalFn, element, text, options) => {
@@ -489,7 +489,7 @@ cy.get('#username').type('username@email.com')
 cy.get('#password').type('superSecret123', { sensitive: true })
 ```
 
-Now our sensitive password is not printed to the Cypress App's Command Log when
+Now our sensitive password is not printed to the Cypress Command Log when
 `sensitive: true` is passed as an option to [.type()](/api/commands/type).
 
 <DocsImage src="/img/api/custom-commands/custom-command-type-masked-password.png"></DocsImage>
@@ -738,10 +738,12 @@ const search = (term, options = {}) => {
   // chain off this function below
   return cy
     .log(`Searching for: ${term} `)
-    .route({
-      url: '/search/**',
-      response: `fixture:${fixture}`,
-      headers: headers,
+    .intercept('GET', '/search/**', (req) => {
+      req.reply({
+        statusCode: 200,
+        body: `fixture:${fixture}`,
+        headers: headers,
+      })
     })
     .as('getSearchResults')
     .get('#search')
