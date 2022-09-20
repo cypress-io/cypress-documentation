@@ -1,7 +1,7 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/vsDark')
+const lightCodeTheme = require('prism-react-renderer/themes/dracula')
 const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 const fs = require('fs')
 const {
@@ -196,7 +196,7 @@ const config = {
             ],
           },
           {
-            title: 'Products',
+            title: 'Solutions',
             items: [
               {
                 label: 'Cypress App',
