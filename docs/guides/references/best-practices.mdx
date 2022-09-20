@@ -15,9 +15,7 @@ import TOCInline from '@theme/TOCInline'
 ### <Icon name="graduation-cap" /> Real World Practices
 
 The Cypress team maintains the
-<Icon name="github" inline="true" contentType="rwa" />, a full stack example
-application that demonstrates **best practices and scalable strategies with
-Cypress in practical and realistic scenarios**.
+<Icon name="github" inline="true" contentType="rwa" />, a full stack example application that demonstrates <strong>best practices and scalable strategies with Cypress in practical and realistic scenarios</strong>.
 
 The RWA achieves full [code-coverage](/guides/tooling/code-coverage) with
 end-to-end tests
@@ -120,8 +118,8 @@ Let's investigate how we could target it:
 | `cy.get('.btn.btn-large').click()`      | <Icon name="exclamation-triangle" color="red" /> Never        | Bad. Coupled to styling. Highly subject to change.              |
 | `cy.get('#main').click()`               | <Icon name="exclamation-triangle" color="orange" /> Sparingly | Better. But still coupled to styling or JS event listeners.     |
 | `cy.get('[name="submission"]').click()` | <Icon name="exclamation-triangle" color="orange" /> Sparingly | Coupled to the `name` attribute which has HTML semantics.       |
-| `cy.contains('Submit').click()`         | ✅ Depends                                                    | Much better. But still coupled to text content that may change. |
-| `cy.get('[data-cy="submit"]').click()`  | ✅ Always                                                     | Best. Isolated from all changes.                                |
+| `cy.contains('Submit').click()`         | <Icon name="check-circle" color="green" /> Depends                                                    | Much better. But still coupled to text content that may change. |
+| `cy.get('[data-cy="submit"]').click()`  | <Icon name="check-circle" color="green" /> Always                                                     | Best. Isolated from all changes.                                |
 
 Targeting the element above by `tag`, `class` or `id` is very volatile and
 highly subject to change. You may swap out the element, you may refactor CSS and
