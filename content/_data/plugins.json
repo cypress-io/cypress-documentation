@@ -345,7 +345,7 @@
         },
         {
           "name": "Cypress Chrome Recorder Extension",
-          "description": "Official Cypress extension for Chrome DevTools that allows you to export tests directly from the Recorder panel.",
+          "description": "Official Cypress extension for Chrome DevTools that allows you to export Cypress tests directly from the Recorder panel.",
           "link": "https://chrome.google.com/webstore/detail/cypress-chrome-recorder/fellcphjglholofndfmmjmheedhomgin",
           "keywords": ["recording", "chrome", "extension", "devtools"],
           "badge": "official"
