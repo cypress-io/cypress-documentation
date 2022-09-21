@@ -49,6 +49,31 @@ running Cypress tests. This action provides npm installation, custom caching,
 additional configuration options and simplifies setup of advanced workflows with
 Cypress in the GitHub Actions platform.
 
+### Explicit Version Number
+
+<Alert type="info">
+
+<strong class="alert-header">GitHub Action Version Number</strong>
+
+We recommend using the explicit version number of the Cypress GitHub Action to
+prevent accidentally running tests with a new version of the action that may
+have breaking changes.
+
+Read the
+[GitHub Action documentation](https://github.com/cypress-io/github-action#explicit-version)
+for more information
+
+</Alert>
+
+For Example:
+
+```yaml
+jobs:
+  cypress-run:
+    steps:
+      uses: cypress-io/github-action@v4.2.0
+```
+
 ## Basic Setup
 
 <DocsVideo src="https://youtube.com/embed/vVr7DXDdUks"></DocsVideo>
@@ -72,7 +97,7 @@ jobs:
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v4.x.x # use the explicit version number
         with:
           build: npm run build
           start: npm start
@@ -131,7 +156,7 @@ jobs:
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v4.x.x # use the explicit version number
         with:
           # Specify Browser since container image is compile with Firefox
           browser: firefox
@@ -178,7 +203,7 @@ jobs:
           path: build
 
       - name: Cypress install
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v4.x.x # use the explicit version number
         with:
           # Disable running of tests within install job
           runTests: false
@@ -214,7 +239,7 @@ jobs:
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v4.x.x # use the explicit version number
         with:
           # Specify Browser since container image is compile with Firefox
           browser: firefox
@@ -275,7 +300,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Cypress install
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v4.x.x # use the explicit version number
         with:
           # Disable running of tests within install job
           runTests: false
@@ -338,7 +363,7 @@ jobs:
           path: build
 
       - name: 'UI Tests - Chrome'
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v4.x.x # use the explicit version number
         with:
           # we have already installed all dependencies above
           install: false
@@ -474,7 +499,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Cypress run
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v4.x.x # use the explicit version number
         with:
           record: true
         env:
@@ -501,7 +526,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Cypress run
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v4.x.x # use the explicit version number
         with:
           record: true
         env:

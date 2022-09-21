@@ -24,7 +24,9 @@ Enabling this flag does the following:
   and [`Cypress.session`](/api/cypress-api/session) API.
 - It adds the following new behaviors (that will be the default in a future
   major update of Cypress) at the beginning of each test:
-  - The page is cleared (by setting it to `about:blank`).
+  - The page is cleared (by setting it to `about:blank`). Disable this by
+    setting
+    [`testIsolation=legacy`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation).
   - All active session data (cookies, `localStorage` and `sessionStorage`)
     across all domains are cleared.
 - It overrides the
@@ -367,6 +369,10 @@ If the `validate` function return `false`, throws an exception, returns a
 Promise that resolves to `false` or rejects, or contains any failing Cypress
 command, the session will be considered invalid, and `setup` will be re-run.
 
+The page is not cleared after the `validate` function is executed. If you use
+`cy.visit()` in your validation, your test will continue on the visited page
+once `cy.session()` succeeds.
+
 Here are a few `validate` examples:
 
 ```javascript
@@ -642,9 +648,10 @@ to explicitly log out.
 | Before `validate`    | <Icon name="check-circle" color="green"></Icon> |                                                 |
 | After `cy.session()` | <Icon name="check-circle" color="green"></Icon> |                                                 |
 
-Because calling `cy.session()` clears the current page in addition to restoring
-cached session data, [`cy.visit()`](/api/commands/visit) must always be
-explicitly called afterwards to ensure a page is visited.
+Calling `cy.session()` clears the current page in addition to restoring the
+cached session data. [`cy.visit()`](/api/commands/visit) must be explicitly
+called afterwards to ensure a page is visited if you did not provide a
+`validate` function that called `cy.visit()`.
 
 ### Session caching
 

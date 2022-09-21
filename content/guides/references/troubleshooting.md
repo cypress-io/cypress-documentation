@@ -443,6 +443,13 @@ environment variable below during `cypress open` or `cypress run`.
 CYPRESS_NO_COMMAND_LOG=1 cypress run
 ```
 
+With this variable set, Cypress will skip rendering the Command Log entirely,
+and perform none of the usual DOM updates to display information about commands
+and statuses as the test runs.
+
+**Note:** With this variable set, screenshots and videos will not include the
+Command Log.
+
 ## Additional information
 
 ### Write command log to the terminal

@@ -215,7 +215,7 @@ module API option, if specified)
 
 - Spec file found
   - `cypress/e2e/path/to/file/one.cy.js`
-- Common ancester paths (calculated at runtime)
+- Common ancestor paths (calculated at runtime)
   - `cypress/e2e/path/to/file`
 - Generated screenshot file
   - `cypress/screenshots/one.cy.js/your-screenshot.png`
@@ -227,7 +227,7 @@ module API option, if specified)
 - Spec files found
   - `cypress/e2e/path/to/file/one.cy.js`
   - `cypress/e2e/path/to/two.cy.js`
-- Common ancester paths (calculated at runtime)
+- Common ancestor paths (calculated at runtime)
   - `cypress/e2e/path/to/`
 - Generated screenshot files
   - `cypress/screenshots/file/one.cy.js/your-screenshot.png`
@@ -571,7 +571,7 @@ When in `legacy` mode, Cypress handles resetting the state for:
 - [aliases](/api/commands/as)
 - [cookies](/api/commands/clearcookies)
 - [clock](/api/commands/clock)
-- [intercepts](/api/commands/intercepts)
+- [intercept](/api/commands/intercept)
 - [localStorage](/api/commands/clearlocalstorage)
 - [routes](/api/commands/route)
 - [sessions](/api/commands/session)
@@ -602,7 +602,7 @@ can reliably pass when run standalone or in a randomized order.
 
 The test isolation mode is a global configuration and can be overridden at the
 `describe` level with the
-[`testIsolation`](./guides/references/configuration#global) option.
+[`testIsolation`](/guides/references/configuration#Global) option.
 
 ### Test Configuration
 
