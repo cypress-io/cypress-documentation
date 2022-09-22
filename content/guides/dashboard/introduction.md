@@ -64,7 +64,7 @@ setup required! You can
 to surface problems earlier, and
 [cancel whole test runs on failure](/guides/dashboard/smart-orchestration#Cancel-test-run-when-a-test-fails)
 to save on resource usage. You can also
-[Cancel in-progress runs](/guides/dashboard/runs#Cancel-run) manually from the
+[cancel in-progress runs](/guides/dashboard/runs#Cancel-run) manually from the
 Dashboard if you need to.
 
 <DocsImage src="/img/dashboard/introduction/orchestration-diagram.png" alt="Diagram comparing serial and parallel test configurations" ></DocsImage>
