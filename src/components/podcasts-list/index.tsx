@@ -7,14 +7,20 @@ import podcastsJSON from "@site/src/data/podcasts.json";
 export default function TalksList(): PodcastProps {
   return (
     <>
-      <div className="main-content-article-wrapper">
-        <article className="main-content-article hide-scroll nuxt-content">
-          <div className="mb-14">
+      <div>
+        <article>
+          <div>
             <ul>
               {podcastsJSON.small &&
-                podcastsJSON.small.map((talk, index) => (
+                podcastsJSON.small.map((podcast, index) => (
                   <li key={index}>
-                    <a href={`${talk.sourceUrl}`}>{talk.title}</a>
+                    <a
+                       href={`${podcast.sourceUrl}`}
+                       target="_blank"
+                       rel="noopener noreferer"
+                    >
+                      {podcast.title}
+                    </a>
                   </li>
                 ))}
             </ul>
@@ -22,44 +28,54 @@ export default function TalksList(): PodcastProps {
 
           <div className="container">
             <div className="row">
-              {podcastsJSON.large.map((talk, index) => (
+              {podcastsJSON.large.map((podcast, index) => (
                 <div key={index} className="col col--6 margin-bottom--xl">
-                  <div className="relative mb-4 h-20">
+                  <div>
                     <a
                       href={
-                        talk.youtubeId
-                          ? `https://www.youtube.com/watch?v=${talk.youtubeId}`
-                          : talk.url
+                        podcast.youtubeId
+                          ? `https://www.youtube.com/watch?v=${podcast.youtubeId}`
+                          : podcast.url
                       }
-                      className="text-xl font-bold no-underline border-none absolute"
+                      target="_blank"
+                      rel="noopener noreferer"
                     >
-                      <h3>{talk.title}</h3>
+                      <h3>{podcast.title}</h3>
                     </a>
                   </div>
 
-                  <div className="mt-4">
-                    {talk.youtubeId && (
+                  <div>
+                    {podcast.youtubeId && (
                       <iframe
-                        src={`https://www.youtube.com/embed/${talk.youtubeId}`}
+                        src={`https://www.youtube.com/embed/${podcast.youtubeId}`}
                         frameBorder="0"
                         allow="autoplay; encrypted-media"
                         allowFullScreen
                       ></iframe>
                     )}
 
-                    {talk.img && (
-                      <a href={talk.sourceUrl}>
-                        <img src={talk.img} alt={`${talk.title}`} />
+                    {podcast.img && (
+                      <a href={podcast.sourceUrl}
+                         target="_blank"
+                         rel="noopener noreferer"
+                      >
+                        <img src={podcast.img} alt={`${podcast.title}`} />
                       </a>
                     )}
                   </div>
 
-                  <p className="mt-8 mb-8">
-                    Published on <a href={talk.sourceUrl}>{talk.sourceName}</a>{" "}
-                    by {talk.author} <em>({talk.date})</em>.
-                    {talk.slides && (
+                  <p>
+                    Published on <a
+                      href={podcast.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferer"
+                      >
+                        {podcast.sourceName}
+                      </a>{" "}
+                    by {podcast.author} <em>({podcast.date})</em>.
+                    {podcast.slides && (
                       <a
-                        href={talk.slides}
+                        href={podcast.slides}
                         target="_blank"
                         rel="noopener noreferrer"
                       >

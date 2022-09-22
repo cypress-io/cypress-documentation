@@ -7,54 +7,72 @@ import screencastsJSON from "@site/src/data/screencasts.json";
 export default function ScreencastsList(): ScreencastProps {
   return (
     <>
-      <div className="main-content-article-wrapper">
+      <div>
         <article>
           <div className={s.container}>
             <ul>
               {screencastsJSON.small &&
-                screencastsJSON.small.map((talk, index) => (
+                screencastsJSON.small.map((screencast, index) => (
                   <li key={index}>
-                    <a href={`${talk.sourceUrl}`}>{talk.title}</a>
+                    <a
+                       href={`${screencast.sourceUrl}`}
+                       target="_blank"
+                       rel="noopener noreferer"
+                    >
+                      {screencast.title}
+                  </a>
                   </li>
                 ))}
             </ul>
           </div>
           <div className={s.container}>
-            {screencastsJSON.large.map((talk, index) => (
+            {screencastsJSON.large.map((screencast, index) => (
             <div className={s.column} key={index}>
               <div>
                 <a
                   href={
-                    talk.youtubeId
-                      ? `https://www.youtube.com/watch?v=${talk.youtubeId}`
-                      : talk.url
+                    screencast.youtubeId
+                      ? `https://www.youtube.com/watch?v=${screencast.youtubeId}`
+                      : screencast.url
                   }
+                  target="_blank"
+                  rel="noopener noreferer"
                 >
-                  <h3 className={s.contentHeader}>{talk.title}</h3>
+                  <h3 className={s.contentHeader}>{screencast.title}</h3>
                 </a>
               </div>
               <div>
-                {talk.youtubeId && (
+                {screencast.youtubeId && (
                   <iframe
-                    src={`https://www.youtube.com/embed/${talk.youtubeId}`}
+                    src={`https://www.youtube.com/embed/${screencast.youtubeId}`}
                     frameBorder="0"
                     allow="autoplay; encrypted-media"
                     allowFullScreen
                   ></iframe>
                 )}
 
-                {talk.img && (
-                  <a href={talk.sourceUrl}>
-                    <img src={talk.img} alt={`${talk.title}`} />
+                {screencast.img && (
+                  <a
+                     href={screencast.sourceUrl}
+                     target="_blank"
+                     rel="noopener noreferer"
+                  >
+                    <img src={screencast.img} alt={`${screencast.title}`} />
                   </a>
                 )}
               </div>
               <p>
-                Published on <a href={talk.sourceUrl}>{talk.sourceName}</a>{" "}
-                by {talk.author} <em>({talk.date})</em>.
-                {talk.slides && (
+                Published on <a
+                  href={screencast.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferer"
+                >
+                  {screencast.sourceName}
+                </a>{" "}
+                by {screencast.author} <em>({screencast.date})</em>.
+                {screencast.slides && (
                   <a
-                    href={talk.slides}
+                    href={screencast.slides}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
