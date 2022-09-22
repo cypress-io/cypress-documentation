@@ -1,5 +1,4 @@
 import React from "react";
-import s from "./style.module.css";
 import { TalksProps } from "./types";
 // @ts-ignore
 import talksJSON from "@site/src/data/talks.json";
@@ -7,37 +6,42 @@ import talksJSON from "@site/src/data/talks.json";
 export default function TalksList(): TalksProps {
   return (
     <>
-      <div className="main-content-article-wrapper">
-        <article className="main-content-article hide-scroll nuxt-content">
-          <div className="mb-14">
+      <div>
+        <article>
+          {talksJSON.small &&
+          <div>
             <ul>
-              {talksJSON.small &&
-                talksJSON.small.map((talk, index) => (
+              {talksJSON.small.map((talk, index) => (
                   <li key={index}>
-                    <a href={`${talk.sourceUrl}`}>{talk.title}</a>
+                    <a
+                       href={`${talk.sourceUrl}`}
+                       target="_blank"
+                       rel="noopener noreferer"
+                    >
+                      {talk.title}
+                    </a>
                   </li>
                 ))}
             </ul>
-          </div>
-
-          <div className="container">
-            <div className="row">
+          </div>}
+          <div className="mediaGridContainer">
               {talksJSON.large.map((talk, index) => (
-                <div key={index} className="col col--6 margin-bottom--xl">
-                  <div className="relative mb-4 h-20">
+                <div className="mediaColumn" key={index}>
+                  <div className="mediaTitleContainer">
                     <a
                       href={
                         talk.youtubeId
                           ? `https://www.youtube.com/watch?v=${talk.youtubeId}`
                           : talk.url
                       }
-                      className="text-xl font-bold no-underline border-none absolute"
+                      target="_blank"
+                      rel="noopener noreferer"
                     >
                       <h3>{talk.title}</h3>
                     </a>
                   </div>
 
-                  <div className="mt-4">
+                  <div>
                     {talk.youtubeId && (
                       <iframe
                         src={`https://www.youtube.com/embed/${talk.youtubeId}`}
@@ -48,14 +52,24 @@ export default function TalksList(): TalksProps {
                     )}
 
                     {talk.img && (
-                      <a href={talk.sourceUrl}>
+                      <a
+                         href={talk.sourceUrl}
+                         target="_blank"
+                         rel="noopener noreferer"
+                      >
                         <img src={talk.img} alt={`${talk.title}`} />
                       </a>
                     )}
                   </div>
 
-                  <p className="mt-8 mb-8">
-                    Published on <a href={talk.sourceUrl}>{talk.sourceName}</a>{" "}
+                  <p>
+                    Published on <a
+                      href={talk.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferer"
+                    >
+                      {talk.sourceName}
+                    </a>{" "}
                     by {talk.author} <em>({talk.date})</em>.
                     {talk.slides && (
                       <a
@@ -70,7 +84,6 @@ export default function TalksList(): TalksProps {
                   </p>
                 </div>
               ))}
-            </div>
           </div>
         </article>
       </div>

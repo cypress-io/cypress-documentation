@@ -337,3 +337,22 @@ div.markdown h3 a:hover {
   font-weight: bold;
   opacity: 0.9;
 }
+
+.mediaGridContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px 40px;
+}
+
+.mediaColumn {
+  max-width: 300px;
+}
+
+.mediaTitleContainer {
+  height: 80px;
+}
+
+.mediaImage {
+  width: 100%;
+  height: auto
+}

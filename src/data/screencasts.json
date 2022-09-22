@@ -28,7 +28,7 @@
       "youtubeId": "UFErY92HeyM"
     },
     {
-      "title": "GitHub Actions Cypress.io E2E testing parallel jobs with matrix feature",
+      "title": "GitHub Actions Cypress.io E2E testing parallel jobs",
       "url": "https://www.youtube.com/watch?v=06Ghp1-coVo",
       "sourceName": "Youtube",
       "sourceUrl": "https://www.youtube.com/watch?v=06Ghp1-coVo",
@@ -128,7 +128,7 @@
       "youtubeId": "Eprov0EKRfQ"
     },
     {
-      "title": "GeeCON 2019: Dmitry Vinnik - Modern Web Testing: Going Beyond Selenium",
+      "title": "GeeCON 2019: Modern Web Testing: Going Beyond Selenium",
       "sourceName": "YouTube",
       "sourceUrl": "https://www.youtube.com/watch?v=1m2AcmiEdpI",
       "date": "Jul 24, 2019",
@@ -152,7 +152,7 @@
       "youtubeId": "JNYia3gHCc4"
     },
     {
-      "title": "Preparing Angular Cypress End to End Tests for Continuous Integration (CI)",
+      "title": "Preparing Angular Cypress E2E Tests for Continuous Integration",
       "sourceName": "YouTube",
       "sourceUrl": "https://angular-university.io/course/angular-testing-course",
       "date": "Jun 13, 2019",
@@ -168,7 +168,7 @@
       "youtubeId": "rA_1fPa38Tg"
     },
     {
-      "title": "TP Vlog 12 - Cypress io, instalacja, konfiguracja, pierwsze testy",
+      "title": "TP Vlog 12- Cypress io, instalacja, konfiguracja, pierwsze testy",
       "sourceName": "YouTube",
       "sourceUrl": "https://www.youtube.com/watch?v=WvmGRZNw6j8&t=1s",
       "date": "May 26, 2019",
@@ -202,7 +202,7 @@
       "slides": "https://github.com/kriscfoster/end-to-end-testing-todo-app"
     },
     {
-      "title": "Working with XHR in Web app automation testing with Cypress.io",
+      "title": "Working with XHR in Web app automation testing",
       "sourceName": "YouTube",
       "sourceUrl": "https://www.udemy.com/e2e-cypress/",
       "date": "Apr 23, 2019",

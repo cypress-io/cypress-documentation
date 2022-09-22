@@ -1,5 +1,4 @@
 import React from "react";
-import s from "./style.module.css";
 import { WebinarProps } from "./types";
 // @ts-ignore
 import webinarsJSON from "@site/src/data/webinars.json";
@@ -7,32 +6,38 @@ import webinarsJSON from "@site/src/data/webinars.json";
 export default function WebinarsList(): WebinarProps {
   return (
     <>
-      <div className="main-content-article-wrapper">
-        <article className="main-content-article hide-scroll nuxt-content">
-          <div className="mb-14">
+      <div>
+        <article>
+          {webinarsJSON.small &&
+          <div>
             <ul>
               {webinarsJSON.small.map((webinar, index) => (
                 <li key={index}>
-                  <a href={`${webinar.sourceUrl}`}>{webinar.title}</a>
+                  <a
+                      href={`${webinar.sourceUrl}`}
+                      target="_blank"
+                      rel="noopener noreferer"
+                  >
+                    {webinar.title}
+                  </a>
                 </li>
               ))}
             </ul>
-          </div>
-
-          <div className="container">
-            <div className="row">
+          </div>}
+          <div className="mediaGridContainer">
               {webinarsJSON.large.map((webinar, index) => (
-                <div key={index} className="col col--6 margin-bottom--xl">
-                  <div className="relative mb-4 h-20">
+                <div className="mediaColumn" key={index}>
+                  <div className="mediaTitleContainer">
                     <a
                       href={`https://youtube.com/watch?v=${webinar.youtubeId}`}
-                      className="text-xl font-bold no-underline border-none absolute"
+                      target="_blank"
+                      rel="noopener noreferer"
                     >
                       <h3>{webinar.title}</h3>
                     </a>
                   </div>
 
-                  <div className="mt-4">
+                  <div>
                     <iframe
                       src={`https://www.youtube.com/embed/${webinar.youtubeId}`}
                       frameBorder="0"
@@ -41,14 +46,19 @@ export default function WebinarsList(): WebinarProps {
                     ></iframe>
                   </div>
 
-                  <p className="mt-8 mb-8">
+                  <p>
                     Published on <em>{webinar.date}</em>
-                    <a href={webinar.sourceUrl}>{webinar.sourceName}</a> by{" "}
+                    <a
+                       href={webinar.sourceUrl}
+                       target="_blank"
+                       rel="noopener noreferer"
+                    >
+                      {webinar.sourceName}
+                    </a> by{" "}
                     {webinar.author}
                   </p>
                 </div>
               ))}
-            </div>
           </div>
         </article>
       </div>

@@ -1,5 +1,4 @@
 import React from "react";
-import s from "./style.module.css";
 import { ScreencastProps } from "./types";
 // @ts-ignore
 import screencastsJSON from "@site/src/data/screencasts.json";
@@ -7,70 +6,82 @@ import screencastsJSON from "@site/src/data/screencasts.json";
 export default function ScreencastsList(): ScreencastProps {
   return (
     <>
-      <div className="main-content-article-wrapper">
-        <article className="main-content-article hide-scroll nuxt-content">
-          <div className="mb-14">
+      <div>
+        <article>
+          {screencastsJSON.small &&
+          <div>
             <ul>
-              {screencastsJSON.small &&
-                screencastsJSON.small.map((talk, index) => (
+              {screencastsJSON.small.map((screencast, index) => (
                   <li key={index}>
-                    <a href={`${talk.sourceUrl}`}>{talk.title}</a>
+                    <a
+                       href={`${screencast.sourceUrl}`}
+                       target="_blank"
+                       rel="noopener noreferer"
+                    >
+                      {screencast.title}
+                    </a>
                   </li>
                 ))}
             </ul>
-          </div>
+          </div>}
+          <div className="mediaGridContainer">
+            {screencastsJSON.large.map((screencast, index) => (
+            <div className="mediaColumn" key={index}>
+              <div className="mediaTitleContainer">
+                <a
+                  href={
+                    screencast.youtubeId
+                      ? `https://www.youtube.com/watch?v=${screencast.youtubeId}`
+                      : screencast.url
+                  }
+                  target="_blank"
+                  rel="noopener noreferer"
+                >
+                  <h3>{screencast.title}</h3>
+                </a>
+              </div>
+              <div>
+                {screencast.youtubeId && (
+                  <iframe
+                    src={`https://www.youtube.com/embed/${screencast.youtubeId}`}
+                    frameBorder="0"
+                    allow="autoplay; encrypted-media"
+                    allowFullScreen
+                  ></iframe>
+                )}
 
-          <div className="container">
-            <div className="row">
-              {screencastsJSON.large.map((talk, index) => (
-                <div key={index} className="col col--6 margin-bottom--xl">
-                  <div className="relative mb-4 h-20">
-                    <a
-                      href={
-                        talk.youtubeId
-                          ? `https://www.youtube.com/watch?v=${talk.youtubeId}`
-                          : talk.url
-                      }
-                      className="text-xl font-bold no-underline border-none absolute"
-                    >
-                      <h3>{talk.title}</h3>
-                    </a>
-                  </div>
-
-                  <div className="mt-4">
-                    {talk.youtubeId && (
-                      <iframe
-                        src={`https://www.youtube.com/embed/${talk.youtubeId}`}
-                        frameBorder="0"
-                        allow="autoplay; encrypted-media"
-                        allowFullScreen
-                      ></iframe>
-                    )}
-
-                    {talk.img && (
-                      <a href={talk.sourceUrl}>
-                        <img src={talk.img} alt={`${talk.title}`} />
-                      </a>
-                    )}
-                  </div>
-
-                  <p className="mt-8 mb-8">
-                    Published on <a href={talk.sourceUrl}>{talk.sourceName}</a>{" "}
-                    by {talk.author} <em>({talk.date})</em>.
-                    {talk.slides && (
-                      <a
-                        href={talk.slides}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {" "}
-                        Slides.
-                      </a>
-                    )}
-                  </p>
-                </div>
-              ))}
+                {screencast.img && (
+                  <a
+                     href={screencast.sourceUrl}
+                     target="_blank"
+                     rel="noopener noreferer"
+                  >
+                    <img src={screencast.img} alt={`${screencast.title}`} />
+                  </a>
+                )}
+              </div>
+              <p>
+                Published on <a
+                  href={screencast.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferer"
+                >
+                  {screencast.sourceName}
+                </a>{" "}
+                by {screencast.author} <em>({screencast.date})</em>.
+                {screencast.slides && (
+                  <a
+                    href={screencast.slides}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {" "}
+                    Slides.
+                  </a>
+                )}
+              </p>
             </div>
+            ))}
           </div>
         </article>
       </div>
