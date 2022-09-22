@@ -9,10 +9,10 @@ export default function TalksList(): TalksProps {
     <>
       <div>
         <article>
-          <div>
+          {talksJSON.small &&
+          <div className={s.container}>
             <ul>
-              {talksJSON.small &&
-                talksJSON.small.map((talk, index) => (
+              {talksJSON.small.map((talk, index) => (
                   <li key={index}>
                     <a
                        href={`${talk.sourceUrl}`}
@@ -24,8 +24,7 @@ export default function TalksList(): TalksProps {
                   </li>
                 ))}
             </ul>
-          </div>
-
+          </div>}
           <div className="container">
             <div className="row">
               {talksJSON.large.map((talk, index) => (

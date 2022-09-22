@@ -9,22 +9,22 @@ export default function WebinarsList(): WebinarProps {
     <>
       <div>
         <article>
-          <div>
+          {webinarsJSON.small &&
+          <div className={s.container}>
             <ul>
               {webinarsJSON.small.map((webinar, index) => (
                 <li key={index}>
                   <a
-                     href={`${webinar.sourceUrl}`}
-                     target="_blank"
-                     rel="noopener noreferer"
+                      href={`${webinar.sourceUrl}`}
+                      target="_blank"
+                      rel="noopener noreferer"
                   >
                     {webinar.title}
                   </a>
                 </li>
               ))}
             </ul>
-          </div>
-
+          </div>}
           <div className="container">
             <div className="row">
               {webinarsJSON.large.map((webinar, index) => (

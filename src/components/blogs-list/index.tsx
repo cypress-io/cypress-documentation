@@ -9,6 +9,7 @@ export default function blogsList(): BlogsProps {
     <>
       <div>
         <article>
+          {blogsJSON.small &&
           <div className={s.container}>
             <ul>
               {blogsJSON.small.map((blog, index) => (
@@ -23,8 +24,7 @@ export default function blogsList(): BlogsProps {
                 </li>
               ))}
             </ul>
-          </div>
-
+          </div>}
           <div className="container">
             <div className="row">
               {blogsJSON.large.map((blog, index) => (

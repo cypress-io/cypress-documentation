@@ -9,10 +9,10 @@ export default function ScreencastsList(): ScreencastProps {
     <>
       <div>
         <article>
+          {screencastsJSON.small &&
           <div className={s.container}>
             <ul>
-              {screencastsJSON.small &&
-                screencastsJSON.small.map((screencast, index) => (
+              {screencastsJSON.small.map((screencast, index) => (
                   <li key={index}>
                     <a
                        href={`${screencast.sourceUrl}`}
@@ -20,11 +20,11 @@ export default function ScreencastsList(): ScreencastProps {
                        rel="noopener noreferer"
                     >
                       {screencast.title}
-                  </a>
+                   </a>
                   </li>
                 ))}
             </ul>
-          </div>
+          </div>}
           <div className={s.container}>
             {screencastsJSON.large.map((screencast, index) => (
             <div className={s.column} key={index}>
