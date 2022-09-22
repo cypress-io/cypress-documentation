@@ -1,5 +1,4 @@
 import React from "react";
-import s from "./style.module.css";
 import { ScreencastProps } from "./types";
 // @ts-ignore
 import screencastsJSON from "@site/src/data/screencasts.json";
@@ -10,7 +9,7 @@ export default function ScreencastsList(): ScreencastProps {
       <div>
         <article>
           {screencastsJSON.small &&
-          <div className={s.container}>
+          <div>
             <ul>
               {screencastsJSON.small.map((screencast, index) => (
                   <li key={index}>
@@ -20,15 +19,15 @@ export default function ScreencastsList(): ScreencastProps {
                        rel="noopener noreferer"
                     >
                       {screencast.title}
-                   </a>
+                    </a>
                   </li>
                 ))}
             </ul>
           </div>}
-          <div className={s.container}>
+          <div className="mediaGridContainer">
             {screencastsJSON.large.map((screencast, index) => (
-            <div className={s.column} key={index}>
-              <div>
+            <div className="mediaColumn" key={index}>
+              <div className="mediaTitleContainer">
                 <a
                   href={
                     screencast.youtubeId
@@ -38,7 +37,7 @@ export default function ScreencastsList(): ScreencastProps {
                   target="_blank"
                   rel="noopener noreferer"
                 >
-                  <h3 className={s.contentHeader}>{screencast.title}</h3>
+                  <h3>{screencast.title}</h3>
                 </a>
               </div>
               <div>

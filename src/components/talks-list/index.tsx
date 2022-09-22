@@ -1,5 +1,4 @@
 import React from "react";
-import s from "./style.module.css";
 import { TalksProps } from "./types";
 // @ts-ignore
 import talksJSON from "@site/src/data/talks.json";
@@ -10,7 +9,7 @@ export default function TalksList(): TalksProps {
       <div>
         <article>
           {talksJSON.small &&
-          <div className={s.container}>
+          <div>
             <ul>
               {talksJSON.small.map((talk, index) => (
                   <li key={index}>
@@ -25,11 +24,10 @@ export default function TalksList(): TalksProps {
                 ))}
             </ul>
           </div>}
-          <div className="container">
-            <div className="row">
+          <div className="mediaGridContainer">
               {talksJSON.large.map((talk, index) => (
-                <div key={index} className="col col--6 margin-bottom--xl">
-                  <div>
+                <div className="mediaColumn" key={index}>
+                  <div className="mediaTitleContainer">
                     <a
                       href={
                         talk.youtubeId
@@ -86,7 +84,6 @@ export default function TalksList(): TalksProps {
                   </p>
                 </div>
               ))}
-            </div>
           </div>
         </article>
       </div>

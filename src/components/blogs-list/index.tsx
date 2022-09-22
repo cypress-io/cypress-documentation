@@ -1,5 +1,4 @@
 import React from "react";
-import s from "./style.module.css";
 import { BlogsProps } from "./types";
 // @ts-ignore
 import blogsJSON from "@site/src/data/blogs.json";
@@ -10,7 +9,7 @@ export default function blogsList(): BlogsProps {
       <div>
         <article>
           {blogsJSON.small &&
-          <div className={s.container}>
+          <div>
             <ul>
               {blogsJSON.small.map((blog, index) => (
                 <li key={index}>
@@ -25,17 +24,16 @@ export default function blogsList(): BlogsProps {
               ))}
             </ul>
           </div>}
-          <div className="container">
-            <div className="row">
+          <div className="mediaGridContainer">
               {blogsJSON.large.map((blog, index) => (
-                <div key={index} className="col col--6 margin-bottom--xl">
-                  <div>
+                <div key={index} className="mediaColumn">
+                  <div className="mediaTitleContainer">
                     <a
                        href={blog.sourceUrl}
                        target="_blank"
                        rel="noopener noreferer"
                     >
-                      <h3 className={s.contentHeader}>{blog.title}</h3>
+                      <h3>{blog.title}</h3>
                     </a>
                   </div>
                   <a
@@ -43,7 +41,7 @@ export default function blogsList(): BlogsProps {
                      target="_blank"
                      rel="noopener noreferer"
                   >
-                  {blog.img ? <img src={blog.img} alt={`${blog.title}`} /> : null}
+                  {blog.img ? <img className="mediaImage" src={blog.img} alt={`${blog.title}`} /> : null}
                   </a>
                   <p>
                     Published on <a
@@ -57,7 +55,6 @@ export default function blogsList(): BlogsProps {
                   </p>
                 </div>
               ))}
-            </div>
           </div>
         </article>
       </div>

@@ -1,5 +1,4 @@
 import React from "react";
-import s from "./style.module.css";
 import { PodcastProps } from "./types";
 // @ts-ignore
 import podcastsJSON from "@site/src/data/podcasts.json";
@@ -10,7 +9,7 @@ export default function TalksList(): PodcastProps {
       <div>
         <article>
           {podcastsJSON.small &&
-          <div className={s.container}>
+          <div>
             <ul>
               {podcastsJSON.small.map((podcast, index) => (
                   <li key={index}>
@@ -25,11 +24,10 @@ export default function TalksList(): PodcastProps {
                 ))}
             </ul>
           </div>}
-          <div className="container">
-            <div className="row">
+          <div className="mediaGridContainer">
               {podcastsJSON.large.map((podcast, index) => (
-                <div key={index} className="col col--6 margin-bottom--xl">
-                  <div>
+                <div className="mediaColumn" key={index}>
+                  <div className="mediaTitleContainer">
                     <a
                       href={
                         podcast.youtubeId
@@ -50,6 +48,7 @@ export default function TalksList(): PodcastProps {
                         frameBorder="0"
                         allow="autoplay; encrypted-media"
                         allowFullScreen
+                        className="mediaImage"
                       ></iframe>
                     )}
 
@@ -58,7 +57,7 @@ export default function TalksList(): PodcastProps {
                          target="_blank"
                          rel="noopener noreferer"
                       >
-                        <img src={podcast.img} alt={`${podcast.title}`} />
+                        <img className="mediaImage" src={podcast.img} alt={`${podcast.title}`} />
                       </a>
                     )}
                   </div>
@@ -85,7 +84,6 @@ export default function TalksList(): PodcastProps {
                   </p>
                 </div>
               ))}
-            </div>
           </div>
         </article>
       </div>

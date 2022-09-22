@@ -1,5 +1,4 @@
 import React from "react";
-import s from "./style.module.css";
 import { WebinarProps } from "./types";
 // @ts-ignore
 import webinarsJSON from "@site/src/data/webinars.json";
@@ -10,7 +9,7 @@ export default function WebinarsList(): WebinarProps {
       <div>
         <article>
           {webinarsJSON.small &&
-          <div className={s.container}>
+          <div>
             <ul>
               {webinarsJSON.small.map((webinar, index) => (
                 <li key={index}>
@@ -25,11 +24,10 @@ export default function WebinarsList(): WebinarProps {
               ))}
             </ul>
           </div>}
-          <div className="container">
-            <div className="row">
+          <div className="mediaGridContainer">
               {webinarsJSON.large.map((webinar, index) => (
-                <div key={index} className="col col--6 margin-bottom--xl">
-                  <div>
+                <div className="mediaColumn" key={index}>
+                  <div className="mediaTitleContainer">
                     <a
                       href={`https://youtube.com/watch?v=${webinar.youtubeId}`}
                       target="_blank"
@@ -61,7 +59,6 @@ export default function WebinarsList(): WebinarProps {
                   </p>
                 </div>
               ))}
-            </div>
           </div>
         </article>
       </div>
