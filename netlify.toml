@@ -148,6 +148,12 @@
   to = "/guides/references/bundled-libraries"
   status = 301
   force = true
+  
+[[redirects]]
+  from = "/guides/references/bundled-tools.html"
+  to = "/guides/references/bundled-libraries"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "/guides/component-testing/props-vue"
