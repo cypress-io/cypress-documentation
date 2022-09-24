@@ -56,7 +56,7 @@ it('supports an "initial" prop to set the value', () => {
 ### What Else Should You Test in This Component?
 
 In the above tests, we arranged and asserted, but didn't act on the component.
-We should should also test that when a user interacts with the component by
+We should also test that when a user interacts with the component by
 clicking the "increment" and "decrement" buttons that the value of `count`
 changes.
 
