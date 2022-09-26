@@ -375,6 +375,14 @@ test.
 
 </Alert>
 
+<Alert type="info">
+
+Needing a low code approach to create tests? Use
+[Cypress Studio](/guides/references/cypress-studio) to record your browser
+interactions.
+
+</Alert>
+
 ### Test Structure
 
 The test interface, borrowed from
