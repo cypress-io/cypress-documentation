@@ -344,6 +344,13 @@
           "badge": "community"
         },
         {
+          "name": "Cypress Chrome Recorder Extension",
+          "description": "Official Cypress extension for Chrome DevTools that allows you to export Cypress tests directly from the Recorder panel.",
+          "link": "https://chrome.google.com/webstore/detail/cypress-chrome-recorder/fellcphjglholofndfmmjmheedhomgin",
+          "keywords": ["recording", "chrome", "extension", "devtools"],
+          "badge": "official"
+        },
+        {
           "name": "cypress-codegen",
           "description": "A Cypress plugin which automatically adds and enables IntelliSense for custom commands",
           "link": "https://github.com/ExpediaGroup/cypress-codegen",
@@ -615,7 +622,13 @@
           "name": "cypress-forced-colors",
           "description": "Cypress commands to enable and disable browser forced colors mode",
           "link": "https://github.com/ling1726/cypress-forced-colors",
-          "keywords": ["forced colors", "high contrast", "high contrast mode", "contrast", "testing"],
+          "keywords": [
+            "forced colors",
+            "high contrast",
+            "high contrast mode",
+            "contrast",
+            "testing"
+          ],
           "badge": "community"
         },
         {
@@ -657,12 +670,12 @@
           "link": "https://picklejs.com",
           "keywords": ["cucumber", "collection", "actions", "commands"],
           "badge": "community"
-        }, 
+        },
         {
           "name": "Pact Cypress Adapter",
           "description": "Simple commands to generate Pact contracts from your existing Cypress tests, maintained by the Pactflow team",
           "link": "https://github.com/pactflow/pact-cypress-adapter",
-          "keywords": ["pact","pactflow", "contract testing", "commands"],
+          "keywords": ["pact", "pactflow", "contract testing", "commands"],
           "badge": "community"
         }
       ]
@@ -968,10 +981,7 @@
           "name": "Cypress Chrome Recorder",
           "description": "Tool for exporting Cypress Tests from Google Chrome DevTools' Recordings",
           "link": "https://github.com/cypress-io/cypress-chrome-recorder",
-          "keywords": [
-            "visual testing",
-            "recorder"
-          ],
+          "keywords": ["visual testing", "recorder"],
           "badge": "experimental"
         }
       ]

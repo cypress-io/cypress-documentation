@@ -681,8 +681,10 @@ describe('my form', () => {
 </Alert>
 
 <Alert type="success">
+
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Clean up
 state **before** tests run.
+
 </Alert>
 
 We see many of our users adding code to an `after` or `afterEach` hook in order
