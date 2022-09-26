@@ -33,9 +33,8 @@ Enabling this flag does the following:
 - It supersedes
   the [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
   [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
-- Cross-origin requests will no longer fail immediately, but instead, time out
-  based on [`pageLoadTimeout`](/guides/references/configuration#Timeouts).
-- Tests will no longer wait on page loads before moving on to the next test.
+- Cross-origin requests will now succeed, however, to interact with a
+  cross-origin page you must use a `cy.origin` block.
 
 Because the page is cleared before each
 test, [`cy.visit()`](/api/commands/visit) must be explicitly called in each test
@@ -91,10 +90,11 @@ cy.get('h1').contains('My cool site under test')
 
 ```js
 const hits = getHits()
-// cy.visit() should be inside cy.origin() callback
 cy.visit('https://www.acme.com/history/founder')
+// to interact with cross-origin content, move this inside cy.origin() callback
+cy.get('h1').contains('About our Founder, Marvin Acme')
 cy.origin('https://www.acme.com', () => {
-  // Fails because origin was visited before cy.origin() block
+  cy.visit('/history/founder')
   cy.get('h1').contains('About our Founder, Marvin Acme')
   // Fails because hits is not passed in via args
   cy.get('#hitcounter').contains(hits)
@@ -214,9 +214,10 @@ cy.origin('https://www.acme.com', () => {
 
 ### Navigating to secondary origin with cy.visit
 
-When navigating to a secondary origin using `cy.visit()`, it is essential to
-trigger the navigation **after** entering the origin callback, otherwise a
-cross-origin error will be thrown.
+When navigating to a secondary origin using `cy.visit()`, you can either
+navigate prior to or after the `cy.origin` block. Errors are no longer thrown on
+cross-origin navigation, but instead when commands interact with a cross-origin
+page.
 
 ```js
 // Do things in primary origin...
@@ -233,11 +234,42 @@ and the protocol defaults to `https`. When `cy.visit()` is called with the path
 `/history/founder`, the three are concatenated to make
 `https://www.acme.com/history/founder`.
 
+#### Alternative navigation
+
+```js
+// Do things in primary origin...
+
+cy.visit('https://www.acme.com/history/founder')
+
+// The cy.origin block is required to interact with the cross-origin page.
+cy.origin('www.acme.com', () => {
+  cy.get('h1').contains('About our Founder, Marvin Acme')
+})
+```
+
+Here the cross-origin page is visited prior to the `cy.origin` block, but any
+interactions with the window are performed within the block which can
+communicate with the cross-origin page
+
+#### Incorrect usage
+
+```js
+// Do things in primary origin...
+
+cy.visit('https://www.acme.com/history/founder')
+
+// This command will fail, it's executed on localhost but the application is at acme.com
+cy.get('h1').contains('About our Founder, Marvin Acme')
+```
+
+Here `cy.get('h1')` fails because we are trying to interact with a cross-origin
+page outside of the cy.origin block, due to 'same-origin' restrictions, the
+'localhost' javascript context can't communicate with 'acme.com'.
+
 ### Navigating to secondary origin with UI
 
-When navigating to a secondary origin by clicking a link or button in the
-primary origin, it is essential to trigger the navigation _before_ entering the
-origin callback, otherwise a cross-origin error will be thrown.
+Navigating to a secondary origin by clicking a link or button in the primary
+origin is supported.
 
 ```js
 // Button in primary origin goes to https://www.acme.com
