@@ -290,7 +290,7 @@ do this with `cy.origin()`.
 
 ```js
 Cypress.Commands.add('login', (username, password) => {
-  // Remember to pass in dependencies via `args`
+  // Remember to pass in arguments via `args`
   const args = { username, password }
   cy.origin('my-auth.com', { args }, ({ username, password }) => {
     // Go to https://auth-provider.com/login
@@ -473,6 +473,102 @@ of
 [restrictions on the data which may be passed](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#things_that_dont_work_with_structured_clone)
 into the callback.
 
+### Dependencies / Sharing Code
+
+It is not possible to use
+[CommonJS `require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
+or
+[dynamic ES module `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#dynamic_imports)
+within the callback. However, [`Cypress.require()`](/api/cypress-api/require)
+can be utilized to include [npm](https://www.npmjs.com/) packages and other
+files. It is functionally the same as using
+[CommonJS `require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
+in browser-targeted code.
+
+```js
+cy.origin('somesite.com', () => {
+  const _ = Cypress.require('lodash')
+  const utils = Cypress.require('../support/utils')
+
+  // ... use lodash and utils ...
+})
+```
+
+`Cypress.require()` can be used to share custom commands between tests run in
+primary and secondary origins. We recommend this pattern for setting up your
+[support file](/guides/core-concepts/writing-and-organizing-tests#Support-file)
+and setting up custom commands to run within the `cy.origin()` callback:
+
+`cypress/support/commands.js`:
+
+```js
+Cypress.Commands.add('clickLink', (label) => {
+  cy.get('a').contains(label).click()
+})
+```
+
+`cypress/support/e2e.js`:
+
+```js
+// makes custom commands available to all Cypress tests, outside of
+// cy.origin() callbacks
+import './commands'
+
+// code we only want run per test, so it shouldn't be run as part of
+// the execution of cy.origin() as well
+beforeEach(() => {
+  // ... code to run before each test ...
+})
+```
+
+`cypress/e2e/spec.cy.js`:
+
+```js
+it('tests somesite.com', () => {
+  cy.origin('somesite.com', () => {
+    // makes custom commands available to all subsequent
+    // cy.origin('somesite.com') calls
+    Cypress.require('../support/commands')
+
+    cy.visit('/page')
+    cy.clickLink('Click Me')
+  })
+})
+```
+
+The JavaScript execution context is persisted between `cy.origin()` callbacks
+that share the same origin. This can be utilized to share code between
+successive `cy.origin()` calls.
+
+```js
+before(() => {
+  cy.origin('somesite.com', () => {
+    // makes commands defined in this file available to all callbacks
+    // for somesite.com
+    Cypress.require('../support/commands')
+  })
+})
+
+it('uses cy.origin() + custom command', () => {
+  cy.origin('somesite.com', () => {
+    cy.visit('/page')
+    cy.clickLink('Click Me')
+  })
+})
+
+it('also uses cy.origin() + custom command', () => {
+  cy.origin('somesite.com', () => {
+    cy.visit('/page')
+    cy.clickLink('Click Me')
+  })
+
+  cy.origin('differentsite.com', () => {
+    // WARNING: cy.clickLink() will not be available because it is a
+    // different origin
+  })
+})
+```
+
 ### Callback restrictions
 
 Because of the way in which the callback is transmitted and executed, there are
@@ -485,36 +581,6 @@ following Cypress commands will throw errors if used in the callback:
 - [`cy.server()`](/api/commands/server)
 - [`cy.route()`](/api/commands/route)
 - [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies)
-
-It is also currently not possible to use
-[`require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
-or
-[dynamic `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#dynamic_imports)
-within the callback. Because of this limitation, it cannot use
-[npm](https://www.npmjs.com/) packages or other third-party libraries inside the
-callback, as there is no mechanism to reference them. This functionality will be
-provided in a future version of Cypress.
-
-While third-party packages are strictly unavailable, it is possible to reuse
-your **own** code between `cy.origin()` callbacks. The workaround is to create a
-custom Cypress command within the secondary origin in a `before` block:
-
-```js
-before(() => {
-  cy.origin('somesite.com', () => {
-    Cypress.Commands.add('clickLink', (label) => {
-      cy.get('a').contains(label).click()
-    })
-  })
-})
-
-it('clicks the secondary origin link', () => {
-  cy.origin('somesite.com', () => {
-    cy.visit('/page')
-    cy.clickLink('Click Me')
-  })
-})
-```
 
 ### Other limitations
 
