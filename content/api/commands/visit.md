@@ -424,8 +424,8 @@ Visiting cross-origin sites will currently throw an error. It can be enabled by
 setting
 the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
 to `true` in the Cypress config. This will allow you to visit the cross-origin
-site without errors. However, to interact with the content on the cross-origin site, you must use a
-[`cy.origin()`](/api/commands/origin) block.
+site without errors. However, to interact with the content on the cross-origin
+site, you must use a [`cy.origin()`](/api/commands/origin) block.
 
 When visiting a cross-origin site, the `onBeforeLoad` and `onLoad` options are
 not supported.
