@@ -241,15 +241,15 @@ and the protocol defaults to `https`. When `cy.visit()` is called with the path
 
 cy.visit('https://www.acme.com/history/founder')
 
-// The cy.origin block is required to interact with the cross origin page.
+// The cy.origin block is required to interact with the cross-origin page.
 cy.origin('www.acme.com', () => {
   cy.get('h1').contains('About our Founder, Marvin Acme')
 })
 ```
 
-Here the cross origin page is visited prior to the `cy.origin` block, but any
+Here the cross-origin page is visited prior to the `cy.origin` block, but any
 interactions with the window are performed within the block which can
-communicate with the cross origin page
+communicate with the cross-origin page
 
 #### Incorrect usage
 
