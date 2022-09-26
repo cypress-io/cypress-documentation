@@ -420,15 +420,15 @@ pass.</li></List>
 <strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
 Experimental</strong>
 
-Visiting cross origin sites will currently throw an error, it can be enabled by
+Visiting cross origin sites will currently throw an error. It can be enabled by
 setting
 the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
 to `true` in the Cypress config. This will allow you to visit the cross origin
-site but to interact with the cross origin site you must use a
+site without errors, however, to interact with the content on the cross origin site you must use a
 [`cy.origin()`](/api/commands/origin) block.
 
 When visiting a cross origin site, the `onBeforeLoad` and `onLoad` options are
-disallowed.
+not supported.
 
 </Alert>
 

@@ -90,6 +90,9 @@ cy.get('h1').contains('My cool site under test')
 
 ```js
 const hits = getHits()
+cy.visit('https://www.acme.com/history/founder')
+// to interact with cross-origin content, move this inside cy.origin() callback
+cy.get('h1').contains('About our Founder, Marvin Acme')
 cy.origin('https://www.acme.com', () => {
   cy.visit('/history/founder')
   cy.get('h1').contains('About our Founder, Marvin Acme')
@@ -259,13 +262,13 @@ cy.visit('https://www.acme.com/history/founder')
 cy.get('h1').contains('About our Founder, Marvin Acme')
 ```
 
-Here this command fails because we are interacting with a cross-origin window
+Here `cy.get('h1')` fails because we are trying to interact with a cross-origin page
 outside of the cy.origin block, 'localhost' can't communicate with 'acme.com'.
 
 ### Navigating to secondary origin with UI
 
 Navigating to a secondary origin by clicking a link or button in the primary
-origin is also supported.
+origin is supported.
 
 ```js
 // Button in primary origin goes to https://www.acme.com
