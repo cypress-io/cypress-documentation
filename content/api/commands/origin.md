@@ -263,7 +263,7 @@ cy.get('h1').contains('About our Founder, Marvin Acme')
 ```
 
 Here `cy.get('h1')` fails because we are trying to interact with a cross-origin page
-outside of the cy.origin block, 'localhost' can't communicate with 'acme.com'.
+outside of the cy.origin block, due to 'same-origin' restrictions, the 'localhost' javascript context can't communicate with 'acme.com'.
 
 ### Navigating to secondary origin with UI
 
