@@ -349,6 +349,13 @@
           "link": "https://chrome.google.com/webstore/detail/cypress-chrome-recorder/fellcphjglholofndfmmjmheedhomgin",
           "keywords": ["recording", "chrome", "extension", "devtools"],
           "badge": "official"
+        },
+        {
+          "name": "cypress-codegen",
+          "description": "A Cypress plugin which automatically adds and enables IntelliSense for custom commands",
+          "link": "https://github.com/ExpediaGroup/cypress-codegen",
+          "keywords": ["commands", "development", "codegen"],
+          "badge": "community"
         }
       ]
     },
