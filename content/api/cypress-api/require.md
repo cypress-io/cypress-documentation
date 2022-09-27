@@ -53,7 +53,9 @@ cy.origin('somesite.com', callback)
 
 ## Examples
 
-See [`cy.origin()` Dependencies / Sharing Code]() for example usages.
+See
+[`cy.origin()` Dependencies / Sharing Code](/api/commands/origin#Dependencies-Sharing-Code)
+for example usages.
 
 ## Limitations
 
