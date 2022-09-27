@@ -413,6 +413,25 @@ to pass</li></List>
 event.</li><li>`cy.visit()` can time out waiting for assertions you've added to
 pass.</li></List>
 
+## Visiting cross-origin sites
+
+<Alert type="warning">
+
+<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
+Experimental</strong>
+
+Visiting cross-origin sites will currently throw an error. It can be enabled by
+setting
+the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
+to `true` in the Cypress config. This will allow you to visit the cross-origin
+site without errors. However, to interact with the content on the cross-origin
+site, you must use a [`cy.origin()`](/api/commands/origin) block.
+
+When visiting a cross-origin site, the `onBeforeLoad` and `onLoad` options are
+not supported.
+
+</Alert>
+
 ## Command Log
 
 **_Visit example application in a `beforeEach`_**
