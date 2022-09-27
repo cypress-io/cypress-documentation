@@ -251,7 +251,7 @@ Here the cross-origin page is visited prior to the `cy.origin` block, but any
 interactions with the window are performed within the block which can
 communicate with the cross-origin page
 
-#### **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+#### <Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage
 
 ```js
 // Do things in primary origin...
