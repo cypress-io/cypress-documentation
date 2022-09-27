@@ -251,7 +251,7 @@ Here the cross-origin page is visited prior to the `cy.origin` block, but any
 interactions with the window are performed within the block which can
 communicate with the cross-origin page
 
-#### Incorrect usage
+#### **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```js
 // Do things in primary origin...
@@ -542,8 +542,8 @@ Cypress.Commands.add('clickLink', (label) => {
 `cypress/support/e2e.js`:
 
 ```js
-// makes custom commands available to all Cypress tests, outside of
-// cy.origin() callbacks
+// makes custom commands available to all Cypress tests in this spec,
+// outside of cy.origin() callbacks
 import './commands'
 
 // code we only want run per test, so it shouldn't be run as part of
@@ -556,12 +556,17 @@ beforeEach(() => {
 `cypress/e2e/spec.cy.js`:
 
 ```js
+before(() => {
+  // makes custom commands available to all subsequent cy.origin('somesite.com')
+  // calls in this spec. put it in your support file to make them available to
+  // all specs
+  cy.origin('somesite.com', () => {
+    Cypress.require('../support/commands')
+  })
+})
+
 it('tests somesite.com', () => {
   cy.origin('somesite.com', () => {
-    // makes custom commands available to all subsequent
-    // cy.origin('somesite.com') calls
-    Cypress.require('../support/commands')
-
     cy.visit('/page')
     cy.clickLink('Click Me')
   })
