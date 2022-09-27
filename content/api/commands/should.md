@@ -172,6 +172,24 @@ Be sure _not_ to include any code that has side effects in your callback
 function. The callback function will be retried over and over again until no
 assertions within it throw.
 
+You cannot invoke Cypress commands inside of a `.should()` callback function.
+Use cypress commands before or after `.should()` instead.
+
+**<Icon name="check-circle" color="green"></Icon> Correct Usage**
+
+```javascript
+cy.get('p').should(($p) => { ... }).log()
+```
+
+**<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
+
+```javascript
+cy.get('p').should(($p) => {
+  cy.log($p)
+  ...
+})
+```
+
 #### Verify length, content, and classes from multiple `<p>`
 
 ```html
@@ -467,10 +485,11 @@ following:
 
 ## History
 
-| Version                                       | Changes                           |
-| --------------------------------------------- | --------------------------------- |
-| [0.11.4](/guides/references/changelog#0-11-4) | Allows callback function argument |
-| [< 0.3.3](/guides/references/changelog#0-3-3) | `.should()` command added         |
+| Version                                       | Changes                                         |
+| --------------------------------------------- | ----------------------------------------------- |
+| [11.0.0](/guides/references/changelog#11-0-0) | Throw error if Cypress command used in callback |
+| [0.11.4](/guides/references/changelog#0-11-4) | Allows callback function argument               |
+| [< 0.3.3](/guides/references/changelog#0-3-3) | `.should()` command added                       |
 
 ## See also
 
