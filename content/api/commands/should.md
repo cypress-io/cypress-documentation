@@ -173,7 +173,7 @@ function. The callback function will be retried over and over again until no
 assertions within it throw.
 
 You cannot invoke Cypress commands inside of a `.should()` callback function.
-Use cypress commands before or after `.should()` instead.
+Use Cypress commands before or after `.should()` instead.
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
