@@ -1,6 +1,51 @@
 ---
-title: Custom Mount Commands for React
+title: Mounting React Components
 ---
+
+## What is the Mount Function?
+
+Cypress ships with a library that can be used to mount your React component in
+the [cypress npm package](https://www.npmjs.com/package/cypress). It is
+responsible for rendering components within Cypress's sandboxed iframe and
+handling and framework-specific cleanup.
+
+```js
+// React 16, 17
+import { mount } from 'cypress/react'
+
+// React 18
+import { mount } from 'cypress/react18'
+```
+
+### Using `cy.mount()` Anywhere
+
+While you can use the `mount` function in your tests, we recommend setting up a
+[custom command](/api/cypress-api/custom-commands) to encapsulate the mounting
+logic to a central place. When you use Cypress to configure your project, a
+custom [`cy.mount()`](/api/commands/mount) command is created on your behalf in
+the **cypress/support/component.js** file:
+
+<code-group>
+<code-block label="cypress/support/component.js" active>
+
+```js
+import { mount } from 'cypress/react'
+
+Cypress.Commands.add('mount', mount)
+```
+
+</code-block>
+</code-group>
+
+This allows you to use `cy.mount()` in any component test without having to
+import the framework-specific mount command.
+
+You can customize `cy.mount()` to fit your needs. For instance, if you are using
+providers or other global app-level setups in your React app, you can configure
+them here. For more info, see the
+[Customizing cy.mount() guide for React](/guides/component-testing/custom-mount-react).
+
+## Customizing `cy.mount()` Commands
 
 If your React component relies on context to work properly, you need to wrap
 your component in a provider in your component tests. This is a good use case to
@@ -176,5 +221,3 @@ is important that the store be initialized with each new test to ensure changes
 to the store don't affect other tests.
 
 </Alert>
-
-<NavGuide prev="/guides/component-testing/events-react" />

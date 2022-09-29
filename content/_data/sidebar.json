@@ -95,6 +95,17 @@
               "slug": "devs-vs-users"
             },
             {
+              "title": "React Component Testing"
+            },
+            {
+              "title": "Quickstart: React",
+              "slug": "quickstart-react"
+            },
+            {
+              "title": "Mounting React Components",
+              "slug": "mounting-react-components"
+            },
+            {
               "title": "Vue Component Testing"
             },
             {
@@ -120,29 +131,6 @@
             {
               "title": "Custom Mount Commands and Styles",
               "slug": "custom-mount-vue"
-            },
-            {
-              "title": "React Component Testing"
-            },
-            {
-              "title": "Quickstart: React",
-              "slug": "quickstart-react"
-            },
-            {
-              "title": "Mounting Components",
-              "slug": "mounting-react"
-            },
-            {
-              "title": "Testing React Components",
-              "slug": "testing-react"
-            },
-            {
-              "title": "Testing React Components with Events",
-              "slug": "events-react"
-            },
-            {
-              "title": "Custom Mount Commands for React",
-              "slug": "custom-mount-react"
             },
             {
               "title": "Angular Component Testing"
