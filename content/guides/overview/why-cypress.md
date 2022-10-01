@@ -119,6 +119,8 @@ do that no other testing framework can:
   (including Edge and Electron) locally and
   [optimally in a Continuous Integration pipeline](/guides/guides/cross-browser-testing).
 
+## Cypress in action
+
 ### <Icon name="cog"></Icon> Setting up tests
 
 There are no servers, drivers, or any other dependencies to install or
