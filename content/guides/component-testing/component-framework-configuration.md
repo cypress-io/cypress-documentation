@@ -11,17 +11,19 @@ setup configuration.
 Cypress currently supports the following frameworks and versions for component
 testing:
 
-| Framework                                                | UI Library  | Bundler    |
-| -------------------------------------------------------- | ----------- | ---------- |
-| [Create React App 4+](#Create-React-App-CRA)             | React 16+   | Webpack 4+ |
-| [Next.js 11+](#Next-js) <Badge type="info">Alpha</Badge> | React 16+   | Webpack 5  |
-| [React with Vite](#React-with-Vite)                      | React 16+   | Vite 2     |
-| [React with Webpack](#React-with-Webpack)                | React 16+   | Webpack 4+ |
-| [Vue CLI](#Vue-CLI)                                      | Vue 2+      | Webpack 4+ |
-| [Nuxt 2](#Nuxt) <Badge type="info">Alpha</Badge>         | Vue 2+      | Webpack 4+ |
-| [Vue with Vite](#Vue-with-Vite)                          | Vue 2+      | Vite 2     |
-| [Vue with Webpack](#Vue-with-Webpack)                    | Vue 2+      | Webpack 4+ |
-| [Angular](#Angular) <Badge type="info">Alpha</Badge>     | Angular 13+ | Webpack 5  |
+| Framework                                                                    | UI Library  | Bundler    |
+| ---------------------------------------------------------------------------- | ----------- | ---------- |
+| [Create React App 4+](#Create-React-App-CRA)                                 | React 16+   | Webpack 4+ |
+| [Next.js 11+](#Next-js) <Badge type="info">Alpha</Badge>                     | React 16+   | Webpack 5  |
+| [React with Vite](#React-with-Vite)                                          | React 16+   | Vite 2+    |
+| [React with Webpack](#React-with-Webpack)                                    | React 16+   | Webpack 4+ |
+| [Vue CLI](#Vue-CLI)                                                          | Vue 2+      | Webpack 4+ |
+| [Nuxt 2](#Nuxt) <Badge type="info">Alpha</Badge>                             | Vue 2+      | Webpack 4+ |
+| [Vue with Vite](#Vue-with-Vite)                                              | Vue 2+      | Vite 2+    |
+| [Vue with Webpack](#Vue-with-Webpack)                                        | Vue 2+      | Webpack 4+ |
+| [Angular](#Angular) <Badge type="info">Alpha</Badge>                         | Angular 13+ | Webpack 5  |
+| [Svelte with Vite](#Svelte-with-Vite) <Badge type="info">Alpha</Badge>       | Svelte 3+   | Vite 2+    |
+| [Svelte with Webpack](#Svelte-with-Webpack) <Badge type="info">Alpha</Badge> | Svelte 3+   | Webpack 4+ |
 
 ## Automatic Configuration (Recommended)
 
@@ -213,6 +215,15 @@ module.exports = defineConfig({
     devServer: {
       framework: 'react',
       bundler: 'vite',
+      // optionally pass in vite config
+      viteConfig: require('./webpack.config'),
+      // or a function - the result is merged with
+      // any `vite.config` file that is detected
+      viteConfig: async () => {
+        // ... do things ...
+        const modifiedConfig = await injectCustomConfig(baseConfig)
+        return modifiedConfig
+      },
     },
   },
 })
@@ -223,12 +234,22 @@ module.exports = defineConfig({
 
 ```ts
 import { defineConfig } from 'cypress'
+import customViteConfig from './customConfig'
 
 export default defineConfig({
   component: {
     devServer: {
       framework: 'react',
       bundler: 'vite',
+      // optionally pass in vite config
+      viteConfig: customViteConfig,
+      // or a function - the result is merged with
+      // any `vite.config` file that is detected
+      viteConfig: async () => {
+        // ... do things ...
+        const modifiedConfig = await injectCustomConfig(baseConfig)
+        return modifiedConfig
+      },
     },
   },
 })
@@ -258,6 +279,13 @@ module.exports = {
       bundler: 'webpack',
       // optionally pass in webpack config
       webpackConfig: require('./webpack.config'),
+      // or a function - the result is merged with any
+      // webpack.config that is found
+      webpackConfig: async () => {
+        // ... do things ...
+        const modifiedConfig = await injectCustomConfig(baseConfig)
+        return modifiedConfig
+      },
     },
   },
 }
@@ -277,6 +305,13 @@ export default defineConfig({
       bundler: 'webpack',
       // optionally pass in webpack config
       webpackConfig,
+      // or a function - the result is merged with any
+      // webpack.config that is found
+      webpackConfig: async () => {
+        // ... do things ...
+        const modifiedConfig = await injectCustomConfig(baseConfig)
+        return modifiedConfig
+      },
     },
   },
 })
@@ -470,6 +505,13 @@ module.exports = {
       bundler: 'webpack',
       // optionally pass in webpack config
       webpackConfig: require('./webpack.config'),
+      // or a function - the result is merged with any
+      // webpack.config that is found
+      webpackConfig: async () => {
+        // ... do things ...
+        const modifiedConfig = await injectCustomConfig(baseConfig)
+        return modifiedConfig
+      },
     },
   },
 }
@@ -489,6 +531,11 @@ export default defineConfig({
       bundler: 'webpack',
       // optionally pass in webpack config
       webpackConfig,
+      webpackConfig: async () => {
+        // ... do things ...
+        const modifiedConfig = await injectCustomConfig(baseConfig)
+        return modifiedConfig
+      },
     },
   },
 })
@@ -551,9 +598,168 @@ export default defineConfig({
 </template>
 </cypress-config-file>
 
+#### Options API
+
+You can also use the `options` API to provide your own project specific
+configuration to your `devServer`. The `devServer` configuration receives an
+`options` property:
+
+<code-group>
+<code-block label="cypress.config.ts" active>
+
+```ts
+import { defineConfig } from 'cypress'
+
+export default {
+  component: {
+    framework: 'angular',
+    bundler: 'webpack',
+    options: {
+      projectConfig: {
+        root: '',
+        sourceRoot: 'apps/my-app',
+        buildOptions: {
+          outputPath: 'dist/my-app',
+          index: 'apps/my-app/src/index.html',
+          main: 'apps/my-app/src/main.ts',
+          polyfills: 'apps/my-app/src/polyfills.ts',
+          tsConfig: 'apps/my-app/tsconfig.app.json',
+          inlineStyleLanguage: 'scss',
+          assets: ['apps/my-app/src/favicon.ico', 'apps/my-app/src/assets'],
+          styles: ['apps/my-app/src/styles.scss'],
+          scripts: [],
+          buildOptimizer: false,
+          optimization: false,
+          vendorChunk: true,
+          extractLicenses: false,
+          sourceMap: true,
+          namedChunks: true,
+        },
+      },
+    },
+  },
+}
+```
+
+</code-block>
+</code-group>
+
 #### Sample Angular Apps
 
 - [Angular 14](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/angular)
+
+## Svelte
+
+<Alert type="warning">
+
+Svelte is currently in alpha support for component testing.
+
+</Alert>
+
+For Svelte apps, we have built-in support for Vite and Webpack.
+
+### Svelte with Vite
+
+To configure component testing for a Svelte app that uses
+[Vite](https://vitejs.dev/), you will need to configure a `devServer` with a
+`framework` of "svelte" and a `bundler` of "vite" like so:
+
+<cypress-config-file>
+<template #js>
+
+```js
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  component: {
+    devServer: {
+      framework: 'svelte',
+      bundler: 'vite',
+    },
+  },
+})
+```
+
+</template>
+<template #ts>
+
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  component: {
+    devServer: {
+      framework: 'svelte',
+      bundler: 'vite',
+    },
+  },
+})
+```
+
+</template>
+</cypress-config-file>
+
+#### Svelte Vite Sample Apps
+
+- [Svelte 3 Vite 3 with Typescript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/svelte-vite-ts)
+
+### Svelte with Webpack
+
+To configure component testing for a Svelte app that uses a custom
+[Webpack](https://webpack.js.org/) config, you will need to configure a
+`devServer` with a `framework` of "svelte" and a `bundler` of "webpack" like so:
+
+<cypress-config-file>
+<template #js>
+
+```js
+module.exports = {
+  component: {
+    devServer: {
+      framework: 'svelte',
+      bundler: 'webpack',
+      // optionally pass in webpack config
+      webpackConfig: require('./webpack.config'),
+      // or a function - the result is merged with the base config
+      webpackConfig: async () => {
+        // ... do things ...
+        const modifiedConfig = await injectCustomConfig(baseConfig)
+        return modifiedConfig
+      },
+    },
+  },
+}
+```
+
+</template>
+<template #ts>
+
+```ts
+import { defineConfig } from 'cypress'
+import webpackConfig from './webpack.config'
+
+export default defineConfig({
+  component: {
+    devServer: {
+      framework: 'svelte',
+      bundler: 'webpack',
+      // optionally pass in webpack config
+      webpackConfig,
+    },
+  },
+})
+```
+
+</template>
+</cypress-config-file>
+
+If you don't provide one, Cypress will try to infer your webpack config. If
+Cypress cannot or you want to make modifications to your config, you can pass it
+in manually via the `webpackConfig` option.
+
+#### Svelte Webpack Sample Apps
+
+- [Svelte 3 Webpack 5 with Typescript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/svelte-webpack-ts)
 
 ## Component Testing Config
 

@@ -236,6 +236,15 @@ module API option, if specified)
   - `cypress/videos/file/one.cy.js.mp4`
   - `cypress/videos/two.cy.js.mp4`
 
+#### Assets in Cypress Dashboard
+
+<DocsImage src="/img/dashboard/videos-of-recorded-test-run.png" alt="Video of test runs"></DocsImage>
+
+Instead of administering assets yourself, you can
+[save them to the cloud with Cypress Dashboard](/guides/dashboard/runs#Run-details).
+Screenshots and videos are stored permanently, attached to their respective test
+results, and easily shared or browsed through our web interface.
+
 To learn more about videos and settings available, see
 [Screenshots and Videos](/guides/guides/screenshots-and-videos#Screenshots)
 
@@ -372,6 +381,14 @@ To start writing tests for your app, follow our guides for writing your first
 [Component](/guides/component-testing/writing-your-first-component-test) or
 [End-to-End](/guides/end-to-end-testing/writing-your-first-end-to-end-test)
 test.
+
+</Alert>
+
+<Alert type="info">
+
+Needing a low code approach to create tests? Use
+[Cypress Studio](/guides/references/cypress-studio) to record your browser
+interactions.
 
 </Alert>
 
@@ -571,7 +588,7 @@ When in `legacy` mode, Cypress handles resetting the state for:
 - [aliases](/api/commands/as)
 - [cookies](/api/commands/clearcookies)
 - [clock](/api/commands/clock)
-- [intercepts](/api/commands/intercepts)
+- [intercept](/api/commands/intercept)
 - [localStorage](/api/commands/clearlocalstorage)
 - [routes](/api/commands/route)
 - [sessions](/api/commands/session)

@@ -12,8 +12,6 @@ title: Writing Your First E2E Test
 
 </Alert>
 
-<DocsVideo src="https://vimeo.com/237115455"></DocsVideo>
-
 ## Add a test file
 
 Assuming you've successfully
@@ -442,9 +440,19 @@ These various timeouts are defined in the
 
 </Alert>
 
+## Record Tests with Cypress Studio
+
+If you want a minimal code approach to creating tests, you can use
+[Cypress Studio](/guides/references/cypress-studio) to record your browser
+interactions and generate tests. Visit our
+[guide](/guides/references/cypress-studio) for more information.
+
 ## Next steps
 
-- Learn more about the [Cypress](/guides/core-concepts/cypress-app) UI.
+- Take our free
+  [Testing your first application](https://learn.cypress.io/testing-your-first-application)
+  course.
+- Learn more about the [Cypress App](/guides/core-concepts/cypress-app) UI.
 - Start [testing your app](/guides/end-to-end-testing/testing-your-app).
 - Set up
   [intelligent code completion](/guides/tooling/IDE-integration#Intelligent-Code-Completion)

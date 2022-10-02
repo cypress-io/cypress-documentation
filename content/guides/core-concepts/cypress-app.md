@@ -405,6 +405,14 @@ The Selector Playground is an interactive feature that helps you:
 
 <DocsVideo src="/img/snippets/selector-playground.mp4" title="Selector Playground demo"></DocsVideo>
 
+<Alert type="info">
+
+Needing a low code approach to create tests? Use
+[Cypress Studio](/guides/references/cypress-studio) to record your browser
+interactions.
+
+</Alert>
+
 ### Uniqueness
 
 Cypress will automatically calculate a **unique selector** to use targeted
