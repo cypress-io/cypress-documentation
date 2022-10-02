@@ -1,19 +1,30 @@
 ---
-title: Configuration
+title: Configuration (Legacy)
 ---
-
-## cypress.json
-
-The first time you open Cypress Test Runner, it creates the `cypress.json`
-configuration file. This JSON file is used to store any configuration values you
-supply. If you
-[configure your tests to record](/guides/dashboard/projects#Setup) the results
-to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction) the
-`projectId` will be written in this file too.
 
 <Alert type="warning">
 
-<strong class="alert-header">Change Configuration File</strong>
+If you are on a newer version of Cypress that uses `cypress.config.js` or
+`cypress.config.ts`, please see the
+[v10 configuration](https://docs.cypress.io/guides/references/configuration)
+guide.
+
+For more info on upgrading configuration to Cypress v10, see the
+[migration guide](https://docs.cypress.io/guides/references/migration-guide).
+
+</Alert>
+
+## cypress.json
+
+The first time you open Cypress, it creates the `cypress.json` configuration
+file. This JSON file is used to store any configuration values you supply. If
+you [configure your tests to record](/guides/dashboard/projects#Setup) the
+results to the [Cypress Dashboard](https://on.cypress.io/dashboard-introduction)
+the `projectId` will be written in this file too.
+
+<Alert type="warning">
+
+<strong>Change Configuration File</strong>
 
 You can change the configuration file or turn off the use of a configuration
 file by using the
@@ -158,7 +169,7 @@ The Node version is used in Cypress to:
 - Execute code in the
   [pluginsFile](/guides/references/configuration#Folders-Files).
 
-<DocsImage src="/img/guides/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Test Runner" ></DocsImage>
+<DocsImage src="/img/guides/configuration/test-runner-settings-nodejs-version.jpg" alt="Node version in Settings in Cypress"></DocsImage>
 
 ### Experiments
 
@@ -335,7 +346,6 @@ at run time.
 - `env` **note:** Provided environment variables will be merged with current
   environment variables.
 - `execTimeout`
-- `experimentalSessionSupport`
 - `includeShadowDom`
 - `keystrokeDelay`
 - `numTestsKeptInMemory`
@@ -448,7 +458,7 @@ value has been set via the following ways:
 - [Command Line arguments](/guides/guides/command-line)
 - [Plugins file](/api/plugins/configuration-api)
 
-<DocsImage src="/img/guides/configuration/see-resolved-configuration.jpg" alt="See resolved configuration" ></DocsImage>
+<DocsImage src="/img/guides/configuration/see-resolved-configuration.jpg" alt="See resolved configuration"></DocsImage>
 
 ## Notes
 
@@ -458,7 +468,7 @@ By passing a string or array of strings you can block requests made to one or
 more hosts.
 
 To see a working example of this please check out our
-[Stubbing Google Analytics Recipe](/examples/examples/recipes#Stubbing-and-spying).
+[Stubbing Google Analytics Recipe](/examples/recipes#Stubbing-and-spying).
 
 To block a host:
 
@@ -519,7 +529,7 @@ When Cypress blocks a request made to a matching host, it will automatically
 send a `503` status code. As a convenience it also sets a
 `x-cypress-matched-blocked-host` header so you can see which rule it matched.
 
-<DocsImage src="/img/guides/blocked-host.png" alt="Network tab of dev tools with analytics.js request selected and the response header highlighted " ></DocsImage>
+<DocsImage src="/img/guides/references/blocked-host.png" alt="Network tab of dev tools with analytics.js request selected and the response header highlighted"></DocsImage>
 
 ### modifyObstructiveCode
 
@@ -576,7 +586,7 @@ interact with the browser.
 Because GC adds additional time to the overall run, we've added the amount of
 time this routine has taken to the bottom of the Command Log in the Test Runner.
 
-<DocsImage src="/img/guides/firefox-gc-interval-in-command-log.jpg" alt="GC duration shown"></DocsImage>
+<DocsImage src="/img/guides/configuration/firefox-gc-interval-in-command-log.jpg" alt="GC duration shown"></DocsImage>
 
 #### Configuration
 
@@ -711,19 +721,20 @@ DEBUG=cypress:cli,cypress:server:specs
 
 ## History
 
-| Version                                      | Changes                                                 |
-| -------------------------------------------- | ------------------------------------------------------- |
-| [8.7.0](/guides/references/changelog#8-7-0)  | Added `slowTestThreshold` option                        |
-| [8.0.0](/guides/references/changelog#8-0-0)  | Added `clientCertificates` option                       |
-| [7.0.0](/guides/references/changelog#7-0-0)  | Added `e2e` and `component` options.                    |
-| [7.0.0](/guides/references/changelog#7-0-0)  | Added `redirectionLimit` option.                        |
-| [6.1.0](/guides/references/changelog#6-1-0)  | Added `scrollBehavior` option.                          |
-| [5.2.0](/guides/references/changelog#5-2-0)  | Added `includeShadowDom` option.                        |
-| [5.0.0](/guides/references/changelog#5-0-0)  | Added `retries` configuration.                          |
-| [5.0.0](/guides/references/changelog#5-0-0)  | Renamed `blacklistHosts` configuration to `blockHosts`. |
-| [4.1.0](/guides/references/changelog#4-12-0) | Added `screenshotOnRunFailure` configuration.           |
-| [4.0.0](/guides/references/changelog#4-0-0)  | Added `firefoxGcInterval` configuration.                |
-| [3.5.0](/guides/references/changelog#3-5-0)  | Added `nodeVersion` configuration.                      |
+| Version                                       | Changes                                                 |
+| --------------------------------------------- | ------------------------------------------------------- |
+| [10.0.0](/guides/references/changelog#10-0-0) | Added page due to deprecation of `cypress.json` file    |
+| [8.7.0](/guides/references/changelog#8-7-0)   | Added `slowTestThreshold` option                        |
+| [8.0.0](/guides/references/changelog#8-0-0)   | Added `clientCertificates` option                       |
+| [7.0.0](/guides/references/changelog#7-0-0)   | Added `e2e` and `component` options.                    |
+| [7.0.0](/guides/references/changelog#7-0-0)   | Added `redirectionLimit` option.                        |
+| [6.1.0](/guides/references/changelog#6-1-0)   | Added `scrollBehavior` option.                          |
+| [5.2.0](/guides/references/changelog#5-2-0)   | Added `includeShadowDom` option.                        |
+| [5.0.0](/guides/references/changelog#5-0-0)   | Added `retries` configuration.                          |
+| [5.0.0](/guides/references/changelog#5-0-0)   | Renamed `blacklistHosts` configuration to `blockHosts`. |
+| [4.1.0](/guides/references/changelog#4-12-0)  | Added `screenshotOnRunFailure` configuration.           |
+| [4.0.0](/guides/references/changelog#4-0-0)   | Added `firefoxGcInterval` configuration.                |
+| [3.5.0](/guides/references/changelog#3-5-0)   | Added `nodeVersion` configuration.                      |
 
 ## See also
 
