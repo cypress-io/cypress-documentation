@@ -1,22 +1,16 @@
 ---
-title: Mounting Components
+title: React Mount Guide
 ---
 
-Many tests, regardless of framework or type, follow a similar format: **Arrange,
-Act, and Assert**. This pattern "Arrange, Act, Assert" was first coined in 2001
-by Bill Wilke and is explained thoroughly in his blog post
-["3A - Arrange, Act, Assert"](https://xp123.com/articles/3a-arrange-act-assert/).
+## Mounting Components in React
 
-When it comes to component testing, mounting your component is where we
-**Arrange** our component under test. It is analogous to visiting a page in an
-end-to-end test.
+### What is the Mount Function?
 
-## What is the Mount Function?
+We ship a `mount()` function for mounting React components in isolation. It is
+responsible for rendering the component within Cypress's sandboxed iframe and
+handling any framework-specific cleanup.
 
-We ship a `mount` function for each front-end framework Cypress supports, which
-is imported from the `cypress` package. It is responsible for rendering
-components within Cypress's sandboxed iframe and handling and framework-specific
-cleanup.
+The `mount()` function is imported directly from the `cypress` module:
 
 ```js
 // React 16, 17
@@ -29,8 +23,8 @@ import { mount } from 'cypress/react18'
 ### Using `cy.mount()` Anywhere
 
 While you can use the `mount` function in your tests, we recommend using
-[`cy.mount()`](/api/commands/mount), which is added as a
-[custom command](/api/cypress-api/custom-commands) in the
+[`cy.mount()`](/api/commands/mount), which is a
+[custom command](/api/cypress-api/custom-commands) that is defined in the
 **cypress/support/component.js** file:
 
 <code-group>
@@ -45,108 +39,190 @@ Cypress.Commands.add('mount', mount)
 </code-block>
 </code-group>
 
-This allows you to use `cy.mount()` in any component test without having to
-import the framework-specific mount command.
+This allows you to use `cy.mount()` in any test without having to import the
+`mount()` function in each and every spec file.
 
 You can customize `cy.mount()` to fit your needs. For instance, if you are using
 providers or other global app-level setups in your React app, you can configure
-them here. For more info, see the
-[Customizing cy.mount() guide for React](/guides/component-testing/custom-mount-react).
+them here.
 
-### Your First Component Test
+We will go over some common scenarios for customizing the command.
 
-Now that you have a component let's write a spec that mounts the component.
+## Customizing cy.mount()
 
-To get started, create a spec file in the same directory as the `Stepper.jsx`
-component and name it **Stepper.cy.jsx**. Then paste the following into it:
+If you need to wrap your component in a parent component in order to work
+properly (like providing a context), you might consider creating a custom mount
+command that does so.
+
+Below are a few examples that demonstrate this technique. These examples can be
+adjusted for most other providers that you will need to support.
+
+### React Router
+
+If you have a component that consumes a hook or component from
+[React Router](https://reactrouter.com/), make sure the component has access to
+a React Router provider. Below is a sample mount command that uses
+`MemoryRouter` to wrap the component.
 
 <code-group>
-<code-block label="Stepper.cy.jsx" active>
+<code-block label="Component Support File" active>
 
-```js
-import Stepper from './Stepper'
+```jsx
+import { mount } from 'cypress/react'
+import { MemoryRouter } from 'react-router-dom'
 
-describe('<Stepper>', () => {
-  it('mounts', () => {
-    cy.mount(<Stepper />)
-  })
+Cypress.Commands.add('mount', (component, options = {}) => {
+  const { routerProps = { initialEntries: ['/'] }, ...mountOptions } = options
+
+  const wrapped = <MemoryRouter {...routerProps}>{component}</MemoryRouter>
+
+  return mount(wrapped, mountOptions)
 })
 ```
 
-</code-block>
 </code-group>
+</code-block>
 
-Here, we have a single test that ensures that our component mounts.
+Typings:
 
-## Running the Test
+<code-group>
+<code-block label="cypress.d.ts (or other typings file)" active>
 
-Now it's time to see the test in action. Open up Cypress if it is not already
-running:
+```ts
+import { MountOptions, MountReturn } from 'cypress/react'
+import { MemoryRouterProps } from 'react-router-dom'
 
-```bash
-npx cypress open --component
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Mounts a React node
+       * @param component React Node to mount
+       * @param options Additional options to pass into mount
+       */
+      mount(
+        component: React.ReactNode,
+        options?: MountOptions & { routerProps?: MemoryRouterProps }
+      ): Cypress.Chainable<MountReturn>
+    }
+  }
+}
 ```
 
-> The `--component` flag will launch us directly into component testing
+</code-group>
+</code-block>
 
-And launch the browser of your choice. In the spec list, click on
-**Stepper.cy.js** and you will see the stepper component mounted in the test
-area.
+To set up certain scenarios, pass in props that will get passed to
+`MemoryRouter` in the options. Below is an example test that ensures an active
+link has the correct class applied to it by initializing the router with
+`initialEntries` pointed to a particular route:
 
-<DocsImage 
-  src="/img/guides/component-testing/first-test-run-react.png" 
-  caption="Stepper Mount Test"> </DocsImage>
+```jsx
+import { Navigation } from './Navigation'
 
-A basic test that mounts a component in its default state is an excellent way to
-start testing. Since Cypress renders your component in a real browser, you have
-a lot of advantages, such as seeing that the component renders as it should,
-interacting with the component in the test runner, and using the browser dev
-tools to inspect and debug both your tests and the component's code.
+it('home link should be active when url is "/"', () => {
+  // No need to pass in custom initialEntries as default url is '/'
+  cy.mount(<Navigation />)
 
-Feel free to play around with the `Stepper` component by interacting with the
-increment and decrement buttons.
+  cy.get('a').contains('Home').should('have.class', 'active')
+})
 
-## Cypress and Testing Library
+it('login link should be active when url is "/login"', () => {
+  cy.mount(<Navigation />, {
+    routerProps: {
+      initialEntries: ['/login'],
+    },
+  })
 
-While we don't use [Testing Library](https://testing-library.com/) in this
-guide, many people might wonder if it is possible to do so with Cypress, and the
-answer is yes!
-
-Cypress loves the Testing Library project. We use Testing Library internally,
-and our philosophy aligns closely with Testing Library's ethos and approach to
-writing tests. We strongly endorse their best practices.
-
-In particular, if you're looking for more resources to understand how we
-recommend you approach testing your components, look to:
-
-- [Guiding Principles - Testing Library](https://testing-library.com/docs/guiding-principles)
-- [Priority of Queries - Testing Library](https://testing-library.com/docs/queries/about#priority)
-
-For fans of
-[Testing Library](https://testing-library.com/docs/cypress-testing-library/intro/),
-you'll want to install `@testing-library/cypress` _instead_ of the
-`@testing-library/react` package.
-
-```shell
-npm i -D @testing-library/cypress
+  cy.get('a').contains('Login').should('have.class', 'active')
+})
 ```
 
-The setup instructions are the same for E2E and Component Testing. Within your
-**component support file**, import the custom commands.
+### Redux
 
-```js
-// cypress/support/component.js
-// cy.findBy* commands will now be available.
-// This calls Cypress.Commands.add under the hood
-import '@testing-library/cypress/add-commands'
+To use a component that consumes state or actions from a
+[Redux](https://react-redux.js.org/) store, create a `mount` command that will
+wrap your component in a Redux Provider:
+
+<code-group>
+<code-block label="Component Support File" active>
+
+```jsx
+import { mount } from 'cypress/react'
+import { Provider } from 'react-redux'
+import { getStore } from '../../src/store'
+
+Cypress.Commands.add('mount', (component, options = {}) => {
+  // Use the default store if one is not provided
+  const { reduxStore = getStore(), ...mountOptions } = options
+
+  const wrapped = <Provider store={reduxStore}>{component}</Provider>
+
+  return mount(wrapped, mountOptions)
+})
 ```
 
-For TypeScript users, types are packaged along with the Testing Library package.
-Refer to the latest setup instructions in the Testing Library docs.
+</code-group>
+</code-block>
 
-## Next Steps
+Typings:
 
-Now that we have our component mounted, next we will learn how to write tests
-against it.
+<code-group>
+<code-block label="cypress.d.ts (or other typings file)" active>
 
-<NavGuide prev="/guides/component-testing/quickstart-react" next="/guides/component-testing/testing-react" />
+```ts
+import { MountOptions, MountReturn } from 'cypress/react'
+import { EnhancedStore } from '@reduxjs/toolkit'
+import { RootState } from './src/StoreState'
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Mounts a React node
+       * @param component React Node to mount
+       * @param options Additional options to pass into mount
+       */
+      mount(
+        component: React.ReactNode,
+        options?: MountOptions & { reduxStore?: EnhancedStore<RootState> }
+      ): Cypress.Chainable<MountReturn>
+    }
+  }
+}
+```
+
+</code-group>
+</code-block>
+
+The options param can have a store that is already initialized with data:
+
+```jsx
+import { getStore } from '../redux/store'
+import { setUser } from '../redux/userSlice'
+import { UserProfile } from './UserProfile'
+
+it('User profile should display user name', () => {
+  const user = { name: 'test person' }
+
+  // getStore is a factory method that creates a new store
+  const store = getStore()
+
+  // setUser is an action exported from the user slice
+  store.dispatch(setUser(user))
+
+  cy.mount(<UserProfile />, { reduxStore: store })
+
+  cy.get('div.name').should('have.text', user.name)
+})
+```
+
+<Alert type="info">
+
+The `getStore` method is a factory method that initializes a new Redux store. It
+is important that the store be initialized with each new test to ensure changes
+to the store don't affect other tests.
+
+</Alert>
+
+<NavGuide prev="/guides/component-testing/events-react" />

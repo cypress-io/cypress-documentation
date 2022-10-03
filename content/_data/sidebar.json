@@ -98,12 +98,12 @@
               "title": "React Component Testing"
             },
             {
-              "title": "Quickstart: React",
+              "title": "React Quickstart",
               "slug": "quickstart-react"
             },
             {
-              "title": "Mounting React Components",
-              "slug": "mounting-react-components"
+              "title": "React Mount Guide",
+              "slug": "mounting-react"
             },
             {
               "title": "Vue Component Testing"

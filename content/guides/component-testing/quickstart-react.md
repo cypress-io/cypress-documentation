@@ -33,7 +33,7 @@ npm install
 
 ### Install Cypress
 
-Add Cypress to the app:
+Next, let's add Cypress to the app:
 
 ```bash
 npm install cypress -D
@@ -45,50 +45,57 @@ Open Cypress:
 npx cypress open
 ```
 
-The Cypress Launchpad will now open and guide you through the configuration.
+The Cypress Launchpad will now open and guide you through the configuring your
+project.
 
 ### Configuring Component Testing
 
+Whenever you run Cypress for the first time, the app will prompt you to set up
+either E2E Testing or Component Testing. Click on "Component Testing" to start
+the configuration wizard.
+
 <DocsImage 
-  src="/img/guides/component-testing/select-test-type.png" 
+  src="/img/guides/component-testing/select-test-type.jpg" 
   caption="Choose Component Testing"> </DocsImage>
-
-Whenever you run Cypress for the first time in a project, the app will prompt
-you to set up either E2E Testing or Component Testing. Click on "Component
-Testing" to start the configuration wizard.
-
-<DocsImage 
-  src="/img/guides/component-testing/project-setup-react.png" 
-  caption=""> </DocsImage>
 
 The Project Setup screen automatically detects your framework and bundler,
 which, in our case, is React and Vite. Click "Next Step" to continue.
 
-<!-- todo: add deps screenshot -->
+<DocsImage 
+  src="/img/guides/component-testing/project-setup-react.jpg" 
+  caption="React and Vite are automatically detected"> </DocsImage>
 
 The next screen checks that all the required dependencies are installed. All the
 items should have green checkboxes on them, indicating everything is good, so
 click "Continue".
 
 <DocsImage 
-  src="/img/guides/component-testing/scaffolded-files.png" 
-  caption="The Cypress launchpad will scaffold all of these files for you">
-</DocsImage>
+  src="/img/guides/component-testing/dependency-detection-react.jpg" 
+  caption="All necessary dependencies are installed"> </DocsImage>
 
 Next, Cypress generates all the necessary configuration files and gives you a
 list of all the changes it made to your project.
 
 <DocsImage 
-  src="/img/guides/component-testing/select-browser.png" 
-  caption="Choose your browser"> </DocsImage>
+  src="/img/guides/component-testing/scaffolded-files.jpg" 
+  caption="The Cypress launchpad will scaffold all of these files for you">
+</DocsImage>
 
 After setting up component testing, you will be at the browser selection screen.
 
 Pick the browser of your choice and click the "Start Component Testing" button
 to open the Cypress test runner.
 
-We don't have any specs yet, so the app will give us a button to create one.
-However, we don't have any components to test yet! Let us change that.
+<DocsImage 
+  src="/img/guides/component-testing/select-browser.jpg" 
+  caption="Choose your browser"> </DocsImage>
+
+When the test runner appears, it won't find any specs because we haven't created
+any yet. However, we don't currently have a component, either. Let's change
+that!
+
+<DocsImage 
+  src="/img/guides/component-testing/create-your-first-spec.jpg"> </DocsImage>
 
 ### Creating a Component
 
@@ -96,11 +103,10 @@ At this point, your project is set up, and Cypress is ready to go, but we have
 no components to test yet.
 
 We will create a `<Stepper/>` component with zero dependencies and one bit of
-internal state: a "counter" that can be incremented and decremented by two
-buttons.
+internal state: a "counter" that can be incremented and decremented by the user.
 
-Create a file at `src/components/Stepper.jsx` and paste the following code into
-it:
+Create a file at **src/components/Stepper.jsx** and paste the following code
+into it:
 
 <code-group>
 <code-block label="src/components/Stepper.jsx" active>
@@ -151,7 +157,7 @@ mount without any issues.
 
 ### Your First Component Test
 
-To get started, create a spec file in the same directory as the `Stepper.jsx`
+To get started, create a spec file in the same directory as the **Stepper.jsx**
 component and name it **Stepper.cy.jsx**. Then paste the following into it:
 
 <code-group>
@@ -193,8 +199,7 @@ Switch back to the browser you opened for testing, and you should now see the
 `Stepper.cy.jsx` file in the spec list. Click it to see the spec execute.
 
 <DocsImage 
-  src="/img/guides/component-testing/first-test-run-react.png" 
-  caption="Stepper Mount Test"> </DocsImage>
+  src="/img/guides/component-testing/first-test-run-react.jpg"> </DocsImage>
 
 Our first test verifies the component can mount in it's default state without
 any errors. If there is a runtime error during test execution, the test will
@@ -380,7 +385,7 @@ with Cypress!
 
 Dive into more advanced topics for React component testing:
 
-- [Mounting React Components](/guides/mounting-react-components)
+- [React Mount Guide](/guides/component-testing/mounting-react)
 
 To learn more about testing with Cypress, check out the
 [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress) guide.
