@@ -224,5 +224,3 @@ is important that the store be initialized with each new test to ensure changes
 to the store don't affect other tests.
 
 </Alert>
-
-<NavGuide prev="/guides/component-testing/events-react" />
