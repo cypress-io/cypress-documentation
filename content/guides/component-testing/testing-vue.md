@@ -58,14 +58,14 @@ it('stepper should default to 0', () => {
   // Arrange
   cy.mount(<Stepper />)
   // Assert
-  cy.get(counterSelector).should('have.text', 0)
+  cy.get(counterSelector).should('have.text', '0')
 })
 
 it('supports an "initial" prop to set the value', () => {
   // Arrange
   cy.mount(<Stepper initial={100} />)
   // Assert
-  cy.get(counterSelector).should('have.text', 100)
+  cy.get(counterSelector).should('have.text', '100')
 })
 ```
 
