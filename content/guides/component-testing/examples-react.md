@@ -42,7 +42,7 @@ a React Router provider. Below is a sample mount command that uses
 `MemoryRouter` to wrap the component.
 
 <code-group>
-<code-block label="Component Support File" active>
+<code-block label="cypress/support/component.js" active>
 
 ```jsx
 import { mount } from 'cypress/react'
@@ -57,13 +57,8 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 })
 ```
 
-</code-group>
 </code-block>
-
-Typings:
-
-<code-group>
-<code-block label="cypress.d.ts (or other typings file)" active>
+<code-block label="Typings">
 
 ```ts
 import { MountOptions, MountReturn } from 'cypress/react'
@@ -86,8 +81,8 @@ declare global {
 }
 ```
 
-</code-group>
 </code-block>
+</code-group>
 
 To set up certain scenarios, pass in props that will get passed to
 `MemoryRouter` in the options. Below is an example test that ensures an active
@@ -122,7 +117,7 @@ To use a component that consumes state or actions from a
 wrap your component in a Redux Provider:
 
 <code-group>
-<code-block label="Component Support File" active>
+<code-block label="cypress/support/component.js" active>
 
 ```jsx
 import { mount } from 'cypress/react'
@@ -139,13 +134,8 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 })
 ```
 
-</code-group>
 </code-block>
-
-Typings:
-
-<code-group>
-<code-block label="cypress.d.ts (or other typings file)" active>
+<code-block label="Typings">
 
 ```ts
 import { MountOptions, MountReturn } from 'cypress/react'
@@ -169,8 +159,8 @@ declare global {
 }
 ```
 
-</code-group>
 </code-block>
+</code-group>
 
 The options param can have a store that is already initialized with data:
 
