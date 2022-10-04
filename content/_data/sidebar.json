@@ -95,42 +95,42 @@
               "slug": "devs-vs-users"
             },
             {
-              "title": "React Component Testing"
+              "title": "React"
+            },
+            {
+              "title": "Introduction",
+              "slug": "react"
             },
             {
               "title": "React Quickstart",
               "slug": "quickstart-react"
             },
             {
-              "title": "React Mount Guide",
-              "slug": "mounting-react"
+              "title": "React API",
+              "slug": "api-react"
+            },
+            {
+              "title": "React Examples",
+              "slug": "examples-react"
             },
             {
               "title": "Vue Component Testing"
             },
             {
-              "title": "Quickstart: Vue",
+              "title": "Introduction",
+              "slug": "vue"
+            },
+            {
+              "title": "Vue Quickstart",
               "slug": "quickstart-vue"
             },
             {
-              "title": "Mounting Components",
-              "slug": "mounting-vue"
+              "title": "Vue API",
+              "slug": "api-vue"
             },
             {
-              "title": "Testing Vue Components",
-              "slug": "testing-vue"
-            },
-            {
-              "title": "Testing Vue Components with Emitted Events",
-              "slug": "events-vue"
-            },
-            {
-              "title": "Testing Vue Components with Slots",
-              "slug": "slots-vue"
-            },
-            {
-              "title": "Custom Mount Commands and Styles",
-              "slug": "custom-mount-vue"
+              "title": "Vue Examples",
+              "slug": "examples-vue"
             },
             {
               "title": "Angular Component Testing"

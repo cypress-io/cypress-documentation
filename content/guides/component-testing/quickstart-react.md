@@ -177,19 +177,24 @@ describe('<Stepper>', () => {
 </code-group>
 
 Let's break down the spec. First, we import the `Stepper` component. Next, we
-set up a `describe` block which acts as a container for a suite of tests. The
-`describe` block takes in two parameters, the first of which is the name of the
-test suite, and the second is a function that will execute the tests.
+organize our tests using special blocks. We use two of these blocks in this
+spec, `describe`, and `it`. These are global functions provided by Cypress,
+which means you don't have to import them directly to use them. We use them to
+group similar tests together. The top-level `describe` block will be the
+container for all our tests in a file, and each `it` represents an individual
+test. The `describe` block takes in two parameters, the first of which is the
+name of the test suite, and the second is a function that will execute the
+tests.
 
-Inside the `describe` function, we defined a test using the `it` function,
-representing a single test. We briefly describe what the test does as the first
-param and a function that contains the test code as the second param. In our
-example above, we only have one test, but soon we'll see how we can add multiple
-`it` blocks inside of a `describe` for a series of tests.
+We defined a test using the `it` function inside `describe`. The first parameter
+to `describe` is a brief description of the spec, and the second parameter is a
+function that contains the test code. In our example above, we only have one
+test, but soon we'll see how we can add multiple `it` blocks inside of a
+`describe` for a series of tests.
 
-The test executes one command: `cy.mount(<Stepper />)`. The `cy` object is a
-global that is used to interact with the Cypress API, and the `mount` method off
-of it mounts a component and prepares it for testing.
+The test executes one command: `cy.mount(<Stepper />)`. The `cy` object is
+another global that is used to interact with the Cypress API, and the `mount`
+method off of it mounts a component and prepares it for testing.
 
 Now it's time to see the test in action.
 
@@ -224,7 +229,7 @@ prop that can specify an initial count.
 
 Let's test that mounting the component in its default state has a count of "0".
 
-To do so, we will use a selector to select the `span` element that contains the
+To do so, we will use a selector to access the `span` element that contains the
 counter of the component, and then assert that the text value of the element is
 what we expect it to be.
 
@@ -239,7 +244,7 @@ Add the following test inside the `describe` block:
 <code-group>
 <code-block label="src/components/Stepper.cy.jsx" active>
 
-```jsx
+```js
 it('stepper should default to 0', () => {
   cy.mount(<Stepper />)
   cy.get('span').should('have.text', '0')
@@ -263,9 +268,8 @@ In the `Stepper` component, the `span` tag has a `data-cy` attribute on it:
 <span data-cy="counter">{count}</span>
 ```
 
-We can use this data attribute to assign a unique id that we can use for testing
-purposes. We can then use an attribute selector in our test to select the
-element instead:
+We can use data attributes to assign a unique id that can be used for testing
+purposes. Update the test to pass in an attribute selector to `cy.get()`:
 
 <code-group>
 <code-block label="src/components/Stepper.cy.jsx" active>
@@ -284,6 +288,8 @@ Our selector is now future-proof. For more info on writing good selectors, see
 our guide
 [Selector Best Practices](/guides/references/best-practices#Selecting-Elements).
 
+### Passing Props to Components
+
 We should also have a test to ensure the `initial` prop sets the test to
 something else besides its default value of "0". We can pass in props to the
 `Stepper` component in the `mount` method:
@@ -291,7 +297,7 @@ something else besides its default value of "0". We can pass in props to the
 <code-group>
 <code-block label="src/components/Stepper.cy.jsx" active>
 
-```jsx
+```js
 it('supports an "initial" prop to set the value', () => {
   cy.mount(<Stepper initial={100} />)
   cy.get('[data-cy=counter]').should('have.text', '100')
@@ -336,8 +342,8 @@ component. Consumers are alerted to changes to the state by passing in a
 callback to the `onChange` prop.
 
 As the developer of the Stepper component, you want to make sure that when the
-end-user clicks the increment and decrement buttons, that the **onChange** prop
-is called in the consuming component.
+end-user clicks the increment and decrement buttons, that the `onChange` prop is
+called with the proper values in the consuming component.
 
 ### Using Spies
 
@@ -366,9 +372,10 @@ it('clicking + fires a change event with the incremented value', () => {
 </code-group>
 
 First, we create a new spy by calling the `cy.spy()` method. We pass in a string
-that gives the spy an [alias](/guides/core-concepts/variables-and-aliases) (a
-name by which we can reference it later). In `cy.mount()`, we initialize the
-component and pass the spy into it. After that, we click the increment button.
+that gives the spy an [alias](/guides/core-concepts/variables-and-aliases),
+which give the spy a name by which we can reference it later. In `cy.mount()`,
+we initialize the component and pass the spy into it. After that, we click the
+increment button.
 
 The next line is a bit different. We've seen how we can use the `cy.get()`
 method to select elements, but we can also use it to grab any aliases we've set
