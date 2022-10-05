@@ -77,6 +77,17 @@ spec. You can also download the video.
 
 <DocsImage src="/img/dashboard/videos-of-recorded-test-run.png" alt="Video of test runs" ></DocsImage>
 
+### Cypress App
+
+For even more visibility into your test results, information about recent runs
+is surfaced in the [Cypress App](/guides/core-concepts/cypress-app). Aggregate
+results of your latest runs are shown in
+[The Spec Explorer](/guides/core-concepts/cypress-app#The-Spec-Explorer) while
+more detailed information about specific runs can be found on the
+[Project Runs](/guides/core-concepts/cypress-app#Project-Runs) screen.
+
+<DocsImage src="/img/guides/core-concepts/cypress-app/spec-explorer.png" alt="The Spec Explorer"></DocsImage>
+
 ## <Icon name="exclamation-triangle" className="fa-fw"></Icon> Test failures
 
 Any tests that fail during a test run can be found under the **Test Results**
