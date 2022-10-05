@@ -277,7 +277,7 @@ cy.intercept({
 
 // same as above, but using regex
 cy.intercept({
-  method: '/PUT|PATCH/',
+  method: /PUT|PATCH/,
   url: '**/users/*',
 })
 ```
