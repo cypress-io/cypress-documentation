@@ -87,12 +87,8 @@
               "title": "Introduction to Component Testing"
             },
             {
-              "title": "Writing Your First Component Test",
-              "slug": "writing-your-first-component-test"
-            },
-            {
-              "title": "Who Are You Testing For?",
-              "slug": "devs-vs-users"
+              "title": "Overview",
+              "slug": "overview"
             },
             {
               "title": "React"

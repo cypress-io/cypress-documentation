@@ -1,14 +1,12 @@
 ---
-title: Writing Your First Component Test
+title: Cypress Component Testing
 ---
 
 <CtBetaAlert></CtBetaAlert>
 
 Cypress Component Testing provides a **testable component workbench** for you to
-quickly build and test any component — no matter how simple or complex.
-
-<!-- TODO: Simple example of icons and percy -->
-<!-- TODO: Complex, heavy with business domain -->
+quickly build and test components from multiple front-end UI libraries — no
+matter how simple or complex.
 
 Our Test Runner is browser-based, which allows you to test-drive your
 component's **styles and API** and **isolate your component away from the page
@@ -19,8 +17,16 @@ results in components built mindfully.
 <video loop="true" controls autoplay="true" style="border-radius: 8px; border: 1px solid #eaeaea;">
   <source src="/img/vuetify-color-picker-example.webm" type="video/webm">
 </video>
-
 <p style="font-size: 0.85rem; text-align: center;"><a href="https://vuetifyjs.com/en/components/color-pickers/">Vuetify's</a> VColorPicker tests, after being moved to Cypress from Jest.</p>
+
+### Supported Frameworks
+
+We support the following frameworks for component testing:
+
+- [React](/guides/component-testing/react)
+- [Angular](/guides/component-testing/angular)
+- [Vue](/guides/component-testing/vue)
+- [Svelte](/guides/component-testing/svelte)
 
 For additional reading, we encourage folks to check out the
 [Component Driven](https://componentdriven.org) organization, which talks about
@@ -44,11 +50,3 @@ tests covering the same code paths.
 Lastly, Cypress's API is user-centric and built for testing things that render
 on the web. Therefore, many of your tests will appear framework-agnostic and
 **approachable for developers coming from any background**.
-
-### Getting Started
-
-Ready to get started? Check out our quickstart guides for
-[Vue](/guides/component-testing/quickstart-vue),
-[React](/guides/component-testing/quickstart-react),
-[Angular](/guides/component-testing/quickstart-angular) and
-[Svelte](/guides/component-testing/quickstart-svelte).

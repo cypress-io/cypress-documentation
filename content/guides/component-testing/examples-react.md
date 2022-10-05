@@ -4,7 +4,7 @@ title: React Examples
 
 ## Custom Mount Commands
 
-### Using `cy.mount()` Anywhere
+### Customizing `cy.mount()`
 
 While you can use the [mount()](/guides/component-testing/api-react#mount)
 function in your tests, we recommend using [`cy.mount()`](/api/commands/mount),

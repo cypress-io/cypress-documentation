@@ -185,7 +185,7 @@ describe('<Stepper />', () => {
 </code-group>
 
 > It is also possible to write Vue tests using JSX syntax. For more info, see
-> the [Vue Mount guide](guides/component-testing/mounting-vue#using-jsx).
+> the [Using JSX](/guides/component-testing/examples-vue#Using-JSX) in examples.
 
 Let's break down the spec. First, we import the `Stepper` component. Next, we
 organize our tests using special blocks. We use two of these blocks in this
