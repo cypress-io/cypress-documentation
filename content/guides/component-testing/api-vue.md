@@ -39,7 +39,7 @@ import { mount } from 'cypress/vue2'
   </tr>
   <tr>
     <td>Type</td>
-    <td>React.ReactNode</td>
+    <td>Vue Component</td>
   </tr>
 </table>
 

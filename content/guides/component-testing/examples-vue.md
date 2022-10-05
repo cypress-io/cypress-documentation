@@ -6,7 +6,7 @@ title: Vue Examples
 
 ### Customizing `cy.mount()`
 
-While you can use the [mount()](/guides/component-testing/api-react#mount)
+While you can use the [mount()](/guides/component-testing/api-vue#mount)
 function in your tests, we recommend using [`cy.mount()`](/api/commands/mount),
 which is a [custom command](/api/cypress-api/custom-commands) that is defined in
 the **cypress/support/component.js** file:
