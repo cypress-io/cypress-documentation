@@ -45,8 +45,7 @@ Open Cypress:
 npx cypress open
 ```
 
-The Cypress Launchpad will now open and guide you through the configuring your
-project.
+The Cypress Launchpad will guide you through configuring your project.
 
 ### Configuring Component Testing
 
@@ -185,7 +184,7 @@ describe('<Stepper />', () => {
 </code-group>
 
 > It is also possible to write Vue tests using JSX syntax. For more info, see
-> the [Using JSX](/guides/component-testing/examples-vue#Using-JSX) in examples.
+> [Using JSX](/guides/component-testing/vue#Using-JSX).
 
 Let's break down the spec. First, we import the `Stepper` component. Next, we
 organize our tests using special blocks. We use two of these blocks in this
@@ -198,14 +197,14 @@ name of the test suite, and the second is a function that will execute the
 tests.
 
 We defined a test using the `it` function inside `describe`. The first parameter
-to `describe` is a brief description of the spec, and the second parameter is a
+to `it` is a brief description of the spec, and the second parameter is a
 function that contains the test code. In our example above, we only have one
 test, but soon we'll see how we can add multiple `it` blocks inside of a
 `describe` for a series of tests.
 
-The test executes one command: `cy.mount(Stepper)`. The `cy` object is another
-global that is used to interact with the Cypress API, and the `mount` method off
-of it mounts a component and prepares it for testing.
+The test executes one command: `cy.mount(Stepper)`. The
+[cy.mount()](/api/commands/mount) method will mount our component into the test
+app so we can begin running tests against it.
 
 Now it's time to see the test in action.
 
@@ -241,8 +240,8 @@ prop that can specify an initial count.
 Let's test that mounting the component in its default state has a count of "0".
 
 To do so, we will use a selector to access the `span` element that contains the
-counter of the component, and then assert that the text value of the element is
-what we expect it to be.
+counter, and then assert that the text value of the element is what we expect it
+to be.
 
 There are various ways to select items from the DOM using Cypress. We will use
 [cy.get()](/api/commands/get), which allows us to pass in a CSS like selector.
@@ -350,6 +349,11 @@ it('when the decrement button is pressed, the counter is decremented', () => {
 })
 ```
 
+Above, we select the buttons using their `data-cy` attributes and call the
+[click()](/api/commands/click) method, which simulates a user click event. View
+the [Interacting with Elements](/guides/core-concepts/interacting-with-elements)
+guide to learn more about other commands you can use to interact with the DOM.
+
 </code-block>
 </code-group>
 
@@ -391,15 +395,15 @@ it('clicking + fires a change event with the incremented value', () => {
 
 First, we create a new spy by calling the `cy.spy()` method. We pass in a string
 that gives the spy an [alias](/guides/core-concepts/variables-and-aliases),
-which give the spy a name by which we can reference it later. In `cy.mount()`,
-we initialize the component and pass the spy into it. After that, we click the
-increment button.
+which assigns the spy a name by which we can reference it later. In
+`cy.mount()`, we initialize the component and pass the spy into it. After that,
+we click the increment button.
 
 The next line is a bit different. We've seen how we can use the `cy.get()`
 method to select elements, but we can also use it to grab any aliases we've set
-up previously. In the test, we use `cy.get()` to grab the alias to the spy (by
-prepending an ampersand to the alias name). We assert that the method was called
-with the expected value.
+up previously. We use `cy.get()` to grab the alias to the spy (by prepending an
+ampersand to the alias name). We assert that the method was called with the
+expected value.
 
 With that, the `Stepper` component is well tested. Nice job!
 
@@ -408,12 +412,5 @@ With that, the `Stepper` component is well tested. Nice job!
 Congratulations, you covered the basics for component testing a Vue component
 with Cypress!
 
-Dive into more advanced topics for Vue component testing:
-
-- [Vue Mount Guide](/guides/component-testing/mounting-vue)
-
 To learn more about testing with Cypress, check out the
 [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress) guide.
-
-Next, we will dive into more advanced topics such as how to customize our mount
-command.

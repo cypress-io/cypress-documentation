@@ -6,26 +6,6 @@ title: React Examples
 
 ### Customizing `cy.mount()`
 
-While you can use the [mount()](/guides/component-testing/api-react#mount)
-function in your tests, we recommend using [`cy.mount()`](/api/commands/mount),
-which is a [custom command](/api/cypress-api/custom-commands) that is defined in
-the **cypress/support/component.js** file:
-
-<code-group>
-<code-block label="cypress/support/component.js" active>
-
-```js
-import { mount } from 'cypress/react'
-
-Cypress.Commands.add('mount', mount)
-```
-
-</code-block>
-</code-group>
-
-This allows you to use `cy.mount()` in any test without having to import the
-`mount()` function in each and every spec file.
-
 By default, `cy.mount()` is a simple passthrough to `mount()`, however, you can
 customize `cy.mount()` to fit your needs. For instance, if you are using
 providers or other global app-level setups in your React app, you can configure

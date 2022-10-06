@@ -7,11 +7,11 @@ title: 'React API'
 ### mount
 
 ```js
-// React 16, 17
-import { mount } from 'cypress/react'
-
 // React 18
 import { mount } from 'cypress/react18'
+
+// React 16, 17
+import { mount } from 'cypress/react'
 ```
 
 <table class="api-table">
@@ -25,7 +25,12 @@ import { mount } from 'cypress/react18'
   </tr>
   <tr>
     <td>Signature</td>
-    <td>mount(jsx: React.ReactNode, options?: MountOptions, rerenderKey?: string): Cypress.Chainable&lt;MountReturn&gt;</td>
+    <td>mount(jsx: React.ReactNode, options?: <a href="#MountOptions">MountOptions</a>, rerenderKey?: string): Cypress.Chainable&lt;<a href="#MountReturn">MountReturn</a>&gt;</td>
+  </tr>
+  <tr>
+    <td>Returns</td>
+    <td><a href="/guides/core-concepts/introduction-to-cypress#Chains-of-Commands"
+    >Cypress.Chainable</a>&lt;<a href="#MountReturn">MountReturn</a>&gt;</td>
   </tr>
 </table>
 
@@ -75,12 +80,6 @@ import { mount } from 'cypress/react18'
   </tr>
 </table>
 
-#### Returns
-
-A Cypress
-[chainable](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) of
-[MountReturn](#MountReturn).
-
 ### unmount
 
 <table class="api-table">
@@ -93,6 +92,11 @@ A Cypress
   <tr>
     <td>Signature</td>
     <td>unmount(options?: UnmountArgs): Cypress.Chainable&lt;undefined&gt;;</td>
+  </tr>
+  <tr>
+    <td>Returns</td>
+    <td><a href="/guides/core-concepts/introduction-to-cypress#Chains-of-Commands"
+    >Cypress.Chainable</a>&lt;undefined&gt;</td>
   </tr>
 </table>
 
@@ -113,12 +117,6 @@ A Cypress
     <td>undefined</td>
   </tr>
 </table>
-
-#### Returns
-
-A Cypress
-[chainable](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands) of
-undefined.
 
 ## Interfaces
 

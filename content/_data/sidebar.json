@@ -132,28 +132,20 @@
               "title": "Angular Component Testing"
             },
             {
-              "title": "Quickstart: Angular",
+              "title": "Introduction",
+              "slug": "angular"
+            },
+            {
+              "title": "Angular Quickstart",
               "slug": "quickstart-angular"
             },
             {
-              "title": "Mounting Components",
-              "slug": "mounting-angular"
+              "title": "Angular API",
+              "slug": "api-angular"
             },
             {
-              "title": "Testing Angular Components",
-              "slug": "testing-angular"
-            },
-            {
-              "title": "Testing Angular Components with Emitted Events",
-              "slug": "events-angular"
-            },
-            {
-              "title": "Testing Angular Components with Slots",
-              "slug": "slots-angular"
-            },
-            {
-              "title": "Custom Mount Commands for Angular",
-              "slug": "custom-mount-angular"
+              "title": "Angular Examples",
+              "slug": "examples-angular"
             },
             {
               "title": "Svelte Component Testing"
