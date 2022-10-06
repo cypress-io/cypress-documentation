@@ -952,7 +952,7 @@ branches waiting to be merged.
 One solution to this problem is
 [Smart Orchestration with the Cypress Dashboard](/guides/dashboard/smart-orchestration).
 Using a combination of [parallelization](/guides/guides/parallelization),
-[load balancing](/guides/guides/parallelization#Balance-strategy), and
+[load balancing](/guides/guides/parallelization#Balance-strategy),
 [test run cancellation](/guides/dashboard/smart-orchestration#Cancel-test-run-when-a-test-fails),
 and
 [running failed specs first](/guides/dashboard/smart-orchestration#Run-failed-specs-first),
