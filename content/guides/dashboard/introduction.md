@@ -30,6 +30,13 @@ Check out the <Icon name="github"></Icon>
 
 </Alert>
 
+## Getting Started
+
+Whenever you're ready you can
+[sign up here](https://dashboard.cypress.io/signup) for our
+[free plan](https://www.cypress.io/pricing) which gives you up to 3 users and
+500 monthly test results.
+
 ## Benefits
 
 ### Analyze and diagnose
