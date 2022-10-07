@@ -96,21 +96,3 @@ files inside that folder should use.
 Don't forget to update your
 [`specPattern`](https://docs.cypress.io/guides/references/configuration#component)
 to include the new file location.
-
-### Next.js Global Style Error
-
-If you import the Next `styles/globals.css` in `cypress/support/component.js` to
-style your components, you'll get an error from Next about not allowing
-importing global css from files other than your main app file.
-
-To solve this, install the
-[`next-global-css`](https://www.npmjs.com/package/next-global-css) package and
-update the Next Webpack configuration.
-
-<Alert type="info">
-
-See our <Icon name="github"></Icon>
-[example Next.js application](https://github.com/cypress-io/cypress-component-testing-apps/blob/v10-complete/react-next12-ts/next.config.js)
-for a demonstration of this configuration.
-
-</Alert>

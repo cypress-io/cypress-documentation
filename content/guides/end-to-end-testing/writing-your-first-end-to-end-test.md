@@ -448,6 +448,13 @@ These various timeouts are defined in the
 
 </Alert>
 
+## Record Tests with Cypress Studio
+
+If you want a minimal code approach to creating tests, you can use
+[Cypress Studio](/guides/references/cypress-studio) to record your browser
+interactions and generate tests. Visit our
+[guide](/guides/references/cypress-studio) for more information.
+
 ## Next steps
 
 - Take our free
