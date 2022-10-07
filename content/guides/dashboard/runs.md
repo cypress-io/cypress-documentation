@@ -80,7 +80,7 @@ spec. You can also download the video.
 ### Cypress App
 
 For even more visibility into your test results, information about recent runs
-is surfaced in the [Cypress App](/guides/core-concepts/cypress-app). Aggregate
+is surfaced in the [Cypress app](/guides/core-concepts/cypress-app). Aggregate
 results of your latest runs are shown in
 [The Spec Explorer](/guides/core-concepts/cypress-app#The-Spec-Explorer) while
 more detailed information about specific runs can be found on the
