@@ -119,7 +119,7 @@ do that no other testing framework can:
   (including Edge and Electron) locally and
   [optimally in a Continuous Integration pipeline](/guides/guides/cross-browser-testing).
 
-## Cypress in action
+## Cypress' quick start
 
 ### <Icon name="cog"></Icon> Setting up tests
 
