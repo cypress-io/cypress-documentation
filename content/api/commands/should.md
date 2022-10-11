@@ -187,9 +187,11 @@ cy.get('p').should(($p) => {
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('p').should(($p) => {
-  // ...
-}).log()
+cy.get('p')
+  .should(($p) => {
+    // ...
+  })
+  .log()
 
 // or
 
