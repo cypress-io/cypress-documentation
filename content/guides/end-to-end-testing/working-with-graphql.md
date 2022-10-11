@@ -140,8 +140,9 @@ context('Tests', () => {
         req.reply((res) => {
           // Modify the response body directly
           res.body.data.launches.hasMore = false
-          res.body.data.launches.launches =
-            res.body.data.launches.launches.slice(5)
+          res.body.data.launches.launches = res.body.data.launches.launches.slice(
+            5
+          )
         })
       }
     })
