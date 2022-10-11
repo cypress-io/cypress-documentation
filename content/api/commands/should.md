@@ -173,28 +173,30 @@ function. The callback function will be retried over and over again until no
 assertions within it throw.
 
 You cannot invoke Cypress commands inside of a `.should()` callback function.
-Use cypress commands before or after `.should()` instead.
+Use Cypress commands before or after `.should()` instead.
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
 cy.get('p').should(($p) => {
   cy.log($p)
-  ...
+  // ...
 })
 ```
 
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('p').should(($p) => { ... }).log()
+cy.get('p').should(($p) => {
+  // ...
+}).log()
 
 // or
 
 cy.get('p').then(($p) => {
-  ...
+  // ...
   cy.log($p)
-  })
+})
 ```
 
 #### Verify length, content, and classes from multiple `<p>`
