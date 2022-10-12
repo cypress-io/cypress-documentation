@@ -108,10 +108,9 @@ plugins.
 <code-block label="JavaScript" active>
 
 ```js
-import { createPinia } from 'pinia' // or Vuex
+import { createPinia } from 'pinia'
 import { createI18n } from 'vue-i18n'
 import { mount } from 'cypress/vue'
-import { h } from 'vue'
 
 // We recommend that you pull this out
 // into a constants file that you share with
@@ -126,17 +125,27 @@ const i18nOptions = {
       hello: 'こんにちは！',
     },
   },
-}
+};
 
-Cypress.Commands.add('mount', (component, ...args) => {
-  args.global = args.global || {}
-  args.global.plugins = args.global.plugins || []
-  args.global.plugins.push(createPinia())
-  args.global.plugins.push(createI18n())
+Cypress.Commands.add('mount', (component, options = {}) => {
+  // Setup options object
+  options.global = options.global || {}
+  options.global.plugins = options.global.plugins || []
 
-  return mount(() => {
-    return h(VApp, {}, component)
-  }, ...args)
+  // create i18n if one is not provided
+  if (!options.i18n) {
+    options.i18n = createI18n(i18nOptions)
+  }
+
+  // Add i18n plugin
+  options.global.plugins.push({
+    install(app) {
+      app.use(createPinia())
+      app.use(options.i18n)
+    },
+  });
+
+  return mount(component, options)
 })
 ```
 
