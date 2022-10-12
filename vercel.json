@@ -29,6 +29,11 @@
       "source": "/examples/examples/projects-media",
       "destination": "/examples/projects-media",
       "permanent": true
+    },
+    {
+      "source": "/guides/references/bundled-tools.html",
+      "destination": "/guides/references/bundled-libraries",
+      "permanent": true
     }
   ]
 }

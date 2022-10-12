@@ -168,11 +168,24 @@ To configure component testing for a React app that uses
 :::cypress-config-example
 
 ```ts
+import customViteConfig from './customConfig'
+```
+
+```ts
 {
   component: {
     devServer: {
       framework: 'react',
       bundler: 'vite',
+      // optionally pass in vite config
+      viteConfig: customViteConfig,
+      // or a function - the result is merged with
+      // any `vite.config` file that is detected
+      viteConfig: async () => {
+        // ... do things ...
+        const modifiedConfig = await injectCustomConfig(baseConfig)
+        return modifiedConfig
+      },
     },
   },
 }
@@ -204,6 +217,13 @@ import webpackConfig from './webpack.config'
       bundler: 'webpack',
       // optionally pass in webpack config
       webpackConfig,
+      // or a function - the result is merged with any
+      // webpack.config that is found
+      webpackConfig: async () => {
+        // ... do things ...
+        const modifiedConfig = await injectCustomConfig(baseConfig)
+        return modifiedConfig
+      },
     },
   },
 }
@@ -339,6 +359,11 @@ import webpackConfig from './webpack.config'
       bundler: 'webpack',
       // optionally pass in webpack config
       webpackConfig,
+      webpackConfig: async () => {
+        // ... do things ...
+        const modifiedConfig = await injectCustomConfig(baseConfig)
+        return modifiedConfig
+      },
     },
   },
 }
