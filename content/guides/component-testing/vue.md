@@ -9,7 +9,7 @@ Cypress Component Testing supports Vue 2+ in a variety of different frameworks:
 - Vue CLI
 - Nuxt
 - Vue with Vite
-- Custom Webpack Config
+- Vue with Webpack
 
 ## Tutorial
 
@@ -81,7 +81,7 @@ section in the Vue examples.
 
 ### Using `cy.mount()`
 
-To mount a component, import the component and pass it to the `cy.mount()`
+To mount a component with `cy.mount()`, import the component and pass it to the
 method:
 
 ```ts

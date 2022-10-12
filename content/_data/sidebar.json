@@ -91,7 +91,7 @@
               "slug": "overview"
             },
             {
-              "title": "React"
+              "title": "React Component Testing"
             },
             {
               "title": "Introduction",
@@ -108,25 +108,6 @@
             {
               "title": "React Examples",
               "slug": "examples-react"
-            },
-            {
-              "title": "Vue Component Testing"
-            },
-            {
-              "title": "Introduction",
-              "slug": "vue"
-            },
-            {
-              "title": "Vue Quickstart",
-              "slug": "quickstart-vue"
-            },
-            {
-              "title": "Vue API",
-              "slug": "api-vue"
-            },
-            {
-              "title": "Vue Examples",
-              "slug": "examples-vue"
             },
             {
               "title": "Angular Component Testing"
@@ -148,23 +129,42 @@
               "slug": "examples-angular"
             },
             {
+              "title": "Vue Component Testing"
+            },
+            {
+              "title": "Introduction",
+              "slug": "vue"
+            },
+            {
+              "title": "Vue Quickstart",
+              "slug": "quickstart-vue"
+            },
+            {
+              "title": "Vue API",
+              "slug": "api-vue"
+            },
+            {
+              "title": "Vue Examples",
+              "slug": "examples-vue"
+            },
+            {
               "title": "Svelte Component Testing"
             },
             {
-              "title": "Quickstart: Svelte",
+              "title": "Introduction",
+              "slug": "svelte"
+            },
+            {
+              "title": "Svelte Quickstart",
               "slug": "quickstart-svelte"
             },
             {
-              "title": "Mounting Components",
-              "slug": "mounting-svelte"
+              "title": "Svelte API",
+              "slug": "api-svelte"
             },
             {
-              "title": "Testing Svelte Components",
-              "slug": "testing-svelte"
-            },
-            {
-              "title": "Testing Svelte Components with Emitted Events",
-              "slug": "events-svelte"
+              "title": "Svelte Examples",
+              "slug": "examples-svelte"
             },
             {
               "title": "Diving Deeper"

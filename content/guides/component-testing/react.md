@@ -10,7 +10,7 @@ frameworks:
 - Create React App
 - Next.js
 - React with Vite
-- Custom Webpack Config
+- React with Webpack
 
 ## Tutorial
 
@@ -83,7 +83,7 @@ section in the React examples.
 
 ### Using `cy.mount()`
 
-To mount a component, import the component and pass it to the `cy.mount()`
+To mount a component with `cy.mount()`, import the component and pass it to the
 method:
 
 ```ts

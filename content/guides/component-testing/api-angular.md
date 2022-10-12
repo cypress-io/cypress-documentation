@@ -55,7 +55,7 @@ import { mount } from 'cypress/angular'
   </tr>
   <tr>
     <td>Type</td>
-    <td> <a href="#MountConfig">MountConfig<T></a> (optional)</td>
+    <td> <a href="#MountConfig">MountConfig&lt;T&gt;</a> (optional)</td>
   </tr>
   <tr>
     <td>Default</td>

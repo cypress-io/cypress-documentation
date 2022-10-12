@@ -74,7 +74,7 @@ section in the Angular examples.
 
 ### Using `cy.mount()`
 
-To mount a component, import the component and pass it to the `cy.mount()`
+To mount a component with `cy.mount()`, import the component and pass it to the
 method:
 
 ```ts

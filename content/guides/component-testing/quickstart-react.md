@@ -1,13 +1,11 @@
 ---
-title: 'Quickstart: React'
+title: 'React Quickstart'
 ---
 
 Welcome! This tutorial will walk you through creating a React app and using
 Cypress Component Testing to test it. We assume you are already familiar with
 React, but if this is your first time with Cypress, that's okay; we'll walk you
 through all you need to know.
-
-<CtBetaAlert></CtBetaAlert>
 
 ## Getting Started
 
@@ -267,8 +265,8 @@ In the `Stepper` component, the `span` tag has a `data-cy` attribute on it:
 <span data-cy="counter">{count}</span>
 ```
 
-We can use data attributes to assign a unique id that can be used for testing
-purposes. Update the test to pass in an attribute selector to `cy.get()`:
+We assign a unique id to the `data-cy` attribute that we can use for testing
+purposes. Update the test to use a CSS attribute selector to `cy.get()`:
 
 <code-group>
 <code-block label="src/components/Stepper.cy.jsx" active>
@@ -283,8 +281,8 @@ it('stepper should default to 0', () => {
 </code-block>
 </code-group>
 
-Our selector is now future-proof. For more info on writing good selectors, see
-our guide
+The test will still pass as expected, and our selector is now future-proof. For
+more info on writing good selectors, see our guide
 [Selector Best Practices](/guides/references/best-practices#Selecting-Elements).
 
 ### Passing Props to Components
@@ -312,6 +310,9 @@ We mounted and selected the element in the above tests but didn't interact with
 it. We should also test that the value of the counter changes when a user clicks
 the "increment" and "decrement" buttons.
 
+To do so, we will interact with the component like a real user would by clicking
+the buttons in a test.
+
 Add the following tests:
 
 <code-group>
@@ -337,7 +338,8 @@ it('when the decrement button is pressed, the counter is decremented', () => {
 Above, we select the buttons using their `data-cy` attributes and call the
 [click()](/api/commands/click) method, which simulates a user click event. View
 the [Interacting with Elements](/guides/core-concepts/interacting-with-elements)
-guide to learn more about other commands you can use to interact with the DOM.
+guide to learn more about other commands you can use to interact with the DOM
+just like a real user would.
 
 ## Testing React Components with Events
 
