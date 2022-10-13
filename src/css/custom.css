@@ -356,3 +356,8 @@ div.markdown h3 a:hover {
   width: 100%;
   height: auto
 }
+
+/* remove extra vertical space from tabs when it contains a code block */
+.tabs-container .theme-code-block {
+  margin-top: -1.4rem;
+}
