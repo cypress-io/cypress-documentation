@@ -45,8 +45,8 @@ This allows you to use `cy.mount()` in any component test without having to
 import the framework-specific mount command.
 
 You can customize `cy.mount()` to fit your needs. For instance, if you are using
-providers, declarations, or modules your Angular app, you can configure them
-here. For more info, see the
+providers, declarations, or modules within your Angular app, you can configure
+them here. For more info, see the
 [Customizing cy.mount() guide for Angular](/guides/component-testing/custom-mount-angular).
 
 ### Your First Component Test

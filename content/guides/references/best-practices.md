@@ -681,8 +681,10 @@ describe('my form', () => {
 </Alert>
 
 <Alert type="success">
+
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Clean up
 state **before** tests run.
+
 </Alert>
 
 We see many of our users adding code to an `after` or `afterEach` hook in order
@@ -799,9 +801,9 @@ beforeEach(() => {
 
 One final question you should ask yourself is - is resetting the state even
 necessary? Remember, Cypress already automatically enforces
-[test isolation](/guides/core-concepts/test-isolation) by clearing state before
-each test. Make sure you are not trying to clean up state that is already
-cleaned up by Cypress automatically.
+[test isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+by clearing state before each test. Make sure you are not trying to clean up
+state that is already cleaned up by Cypress automatically.
 
 If the state you are trying to clean lives on the server - by all means, clean
 that state. You will need to run these types of routines! But if the state is
@@ -936,6 +938,26 @@ cy.get('[data-testid="fetch-users"]').click()
 cy.wait('@getUsers') // <--- wait explicitly for this route to finish
 cy.get('table tr').should('have.length', 2)
 ```
+
+## Running Tests Intelligently
+
+As your test suite grows and takes longer to run, you may find yourself hitting
+performance bottlenecks on your CI system. We recommend integrating your source
+control system with your test suite such that merges are blocked until all your
+Cypress tests have passed. The downside of this is that longer test execution
+times slow the velocity at which branches may be merged and features may be
+shipped. This issue is compounded further if you have dependent chains of
+branches waiting to be merged.
+
+One solution to this problem is
+[Smart Orchestration with the Cypress Dashboard](/guides/dashboard/smart-orchestration).
+Using a combination of [parallelization](/guides/guides/parallelization),
+[load balancing](/guides/guides/parallelization#Balance-strategy),
+[test run cancellation](/guides/dashboard/smart-orchestration#Cancel-test-run-when-a-test-fails),
+and
+[running failed specs first](/guides/dashboard/smart-orchestration#Run-failed-specs-first),
+Smart Orchestration maximizes your available compute resources & minimizes
+waste.
 
 ## Web Servers
 

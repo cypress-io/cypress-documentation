@@ -33,9 +33,8 @@ Enabling this flag does the following:
 - It supersedes
   the [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
   [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
-- Cross-origin requests will no longer fail immediately, but instead, time out
-  based on [`pageLoadTimeout`](/guides/references/configuration#Timeouts).
-- Tests will no longer wait on page loads before moving on to the next test.
+- Cross-origin requests will now succeed, however, to interact with a
+  cross-origin page you must use a `cy.origin` block.
 
 Because the page is cleared before each
 test, [`cy.visit()`](/api/commands/visit) must be explicitly called in each test
@@ -91,10 +90,11 @@ cy.get('h1').contains('My cool site under test')
 
 ```js
 const hits = getHits()
-// cy.visit() should be inside cy.origin() callback
 cy.visit('https://www.acme.com/history/founder')
+// to interact with cross-origin content, move this inside cy.origin() callback
+cy.get('h1').contains('About our Founder, Marvin Acme')
 cy.origin('https://www.acme.com', () => {
-  // Fails because origin was visited before cy.origin() block
+  cy.visit('/history/founder')
   cy.get('h1').contains('About our Founder, Marvin Acme')
   // Fails because hits is not passed in via args
   cy.get('#hitcounter').contains(hits)
@@ -214,9 +214,10 @@ cy.origin('https://www.acme.com', () => {
 
 ### Navigating to secondary origin with cy.visit
 
-When navigating to a secondary origin using `cy.visit()`, it is essential to
-trigger the navigation **after** entering the origin callback, otherwise a
-cross-origin error will be thrown.
+When navigating to a secondary origin using `cy.visit()`, you can either
+navigate prior to or after the `cy.origin` block. Errors are no longer thrown on
+cross-origin navigation, but instead when commands interact with a cross-origin
+page.
 
 ```js
 // Do things in primary origin...
@@ -233,11 +234,42 @@ and the protocol defaults to `https`. When `cy.visit()` is called with the path
 `/history/founder`, the three are concatenated to make
 `https://www.acme.com/history/founder`.
 
+#### Alternative navigation
+
+```js
+// Do things in primary origin...
+
+cy.visit('https://www.acme.com/history/founder')
+
+// The cy.origin block is required to interact with the cross-origin page.
+cy.origin('www.acme.com', () => {
+  cy.get('h1').contains('About our Founder, Marvin Acme')
+})
+```
+
+Here the cross-origin page is visited prior to the `cy.origin` block, but any
+interactions with the window are performed within the block which can
+communicate with the cross-origin page
+
+#### <Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage
+
+```js
+// Do things in primary origin...
+
+cy.visit('https://www.acme.com/history/founder')
+
+// This command will fail, it's executed on localhost but the application is at acme.com
+cy.get('h1').contains('About our Founder, Marvin Acme')
+```
+
+Here `cy.get('h1')` fails because we are trying to interact with a cross-origin
+page outside of the cy.origin block, due to 'same-origin' restrictions, the
+'localhost' javascript context can't communicate with 'acme.com'.
+
 ### Navigating to secondary origin with UI
 
-When navigating to a secondary origin by clicking a link or button in the
-primary origin, it is essential to trigger the navigation _before_ entering the
-origin callback, otherwise a cross-origin error will be thrown.
+Navigating to a secondary origin by clicking a link or button in the primary
+origin is supported.
 
 ```js
 // Button in primary origin goes to https://www.acme.com
@@ -290,7 +322,7 @@ do this with `cy.origin()`.
 
 ```js
 Cypress.Commands.add('login', (username, password) => {
-  // Remember to pass in dependencies via `args`
+  // Remember to pass in arguments via `args`
   const args = { username, password }
   cy.origin('my-auth.com', { args }, ({ username, password }) => {
     // Go to https://auth-provider.com/login
@@ -473,6 +505,107 @@ of
 [restrictions on the data which may be passed](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#things_that_dont_work_with_structured_clone)
 into the callback.
 
+### Dependencies / Sharing Code
+
+It is not possible to use
+[CommonJS `require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
+or
+[dynamic ES module `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#dynamic_imports)
+within the callback. However, [`Cypress.require()`](/api/cypress-api/require)
+can be utilized to include [npm](https://www.npmjs.com/) packages and other
+files. It is functionally the same as using
+[CommonJS `require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
+in browser-targeted code.
+
+```js
+cy.origin('somesite.com', () => {
+  const _ = Cypress.require('lodash')
+  const utils = Cypress.require('../support/utils')
+
+  // ... use lodash and utils ...
+})
+```
+
+`Cypress.require()` can be used to share custom commands between tests run in
+primary and secondary origins. We recommend this pattern for setting up your
+[support file](/guides/core-concepts/writing-and-organizing-tests#Support-file)
+and setting up custom commands to run within the `cy.origin()` callback:
+
+`cypress/support/commands.js`:
+
+```js
+Cypress.Commands.add('clickLink', (label) => {
+  cy.get('a').contains(label).click()
+})
+```
+
+`cypress/support/e2e.js`:
+
+```js
+// makes custom commands available to all Cypress tests in this spec,
+// outside of cy.origin() callbacks
+import './commands'
+
+// code we only want run per test, so it shouldn't be run as part of
+// the execution of cy.origin() as well
+beforeEach(() => {
+  // ... code to run before each test ...
+})
+```
+
+`cypress/e2e/spec.cy.js`:
+
+```js
+before(() => {
+  // makes custom commands available to all subsequent cy.origin('somesite.com')
+  // calls in this spec. put it in your support file to make them available to
+  // all specs
+  cy.origin('somesite.com', () => {
+    Cypress.require('../support/commands')
+  })
+})
+
+it('tests somesite.com', () => {
+  cy.origin('somesite.com', () => {
+    cy.visit('/page')
+    cy.clickLink('Click Me')
+  })
+})
+```
+
+The JavaScript execution context is persisted between `cy.origin()` callbacks
+that share the same origin. This can be utilized to share code between
+successive `cy.origin()` calls.
+
+```js
+before(() => {
+  cy.origin('somesite.com', () => {
+    // makes commands defined in this file available to all callbacks
+    // for somesite.com
+    Cypress.require('../support/commands')
+  })
+})
+
+it('uses cy.origin() + custom command', () => {
+  cy.origin('somesite.com', () => {
+    cy.visit('/page')
+    cy.clickLink('Click Me')
+  })
+})
+
+it('also uses cy.origin() + custom command', () => {
+  cy.origin('somesite.com', () => {
+    cy.visit('/page')
+    cy.clickLink('Click Me')
+  })
+
+  cy.origin('differentsite.com', () => {
+    // WARNING: cy.clickLink() will not be available because it is a
+    // different origin
+  })
+})
+```
+
 ### Callback restrictions
 
 Because of the way in which the callback is transmitted and executed, there are
@@ -485,36 +618,6 @@ following Cypress commands will throw errors if used in the callback:
 - [`cy.server()`](/api/commands/server)
 - [`cy.route()`](/api/commands/route)
 - [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies)
-
-It is also currently not possible to use
-[`require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
-or
-[dynamic `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#dynamic_imports)
-within the callback. Because of this limitation, it cannot use
-[npm](https://www.npmjs.com/) packages or other third-party libraries inside the
-callback, as there is no mechanism to reference them. This functionality will be
-provided in a future version of Cypress.
-
-While third-party packages are strictly unavailable, it is possible to reuse
-your **own** code between `cy.origin()` callbacks. The workaround is to create a
-custom Cypress command within the secondary origin in a `before` block:
-
-```js
-before(() => {
-  cy.origin('somesite.com', () => {
-    Cypress.Commands.add('clickLink', (label) => {
-      cy.get('a').contains(label).click()
-    })
-  })
-})
-
-it('clicks the secondary origin link', () => {
-  cy.origin('somesite.com', () => {
-    cy.visit('/page')
-    cy.clickLink('Click Me')
-  })
-})
-```
 
 ### Other limitations
 
