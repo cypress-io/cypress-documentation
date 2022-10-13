@@ -2,6 +2,17 @@
 title: Dashboard
 ---
 
+<Alert type="success">
+
+<strong class="alert-header"><Icon name="star"></Icon> Get Started</strong>
+
+Whenever you're ready you can
+[sign up here](https://dashboard.cypress.io/signup) for our
+[free plan](https://www.cypress.io/pricing) which gives you up to 3 users and
+500 monthly test results.
+
+</Alert>
+
 The [Cypress Dashboard](https://on.cypress.io/dashboard) is our
 enterprise-ready, web-based companion to the Cypress app. It gives you online
 access to your recorded test results, orchestrates test runs across multiple
@@ -29,13 +40,6 @@ Check out the <Icon name="github"></Icon>
 [Real World App Dashboard](https://dashboard.cypress.io/projects/7s5okt).
 
 </Alert>
-
-## Getting Started
-
-Whenever you're ready you can
-[sign up here](https://dashboard.cypress.io/signup) for our
-[free plan](https://www.cypress.io/pricing) which gives you up to 3 users and
-500 monthly test results.
 
 ## Benefits
 
