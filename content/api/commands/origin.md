@@ -30,9 +30,6 @@ Enabling this flag does the following:
   - The page is cleared (by setting it to `about:blank`).
   - All active session data (cookies, `localStorage` and `sessionStorage`)
     across all domains are cleared.
-- It supersedes
-  the [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
-  [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
 - Cross-origin requests will now succeed, however, to interact with a
   cross-origin page you must use a `cy.origin` block.
 
@@ -617,7 +614,6 @@ following Cypress commands will throw errors if used in the callback:
 - [`cy.session()`](/api/commands/session)
 - [`cy.server()`](/api/commands/server)
 - [`cy.route()`](/api/commands/route)
-- [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies)
 
 ### Other limitations
 

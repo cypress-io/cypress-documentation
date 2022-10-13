@@ -29,9 +29,6 @@ Enabling this flag does the following:
     [`testIsolation=legacy`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation).
   - All active session data (cookies, `localStorage` and `sessionStorage`)
     across all domains are cleared.
-- It overrides the
-  [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
-  [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
 - Cross-origin navigation will no longer fail immediately, but instead, time out
   based on [`pageLoadTimeout`](/guides/references/configuration#Timeouts).
 - Tests will no longer wait on page loads before moving on to the next test.

@@ -24,9 +24,6 @@ Enabling this flag does the following:
   - The page is cleared (by setting it to `about:blank`).
   - All active session data (cookies, `localStorage` and `sessionStorage`)
     across all domains are cleared.
-- It overrides the
-  [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
-  [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
 
 Because the page is cleared before each test,
 [`cy.visit()`](/api/commands/visit) must be explicitly called in each test to
