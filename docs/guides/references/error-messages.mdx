@@ -1,6 +1,7 @@
 ---
 title: Error Messages
 hide_table_of_contents: true
+inlineErrorsTable: true
 ---
 
 import TOCInline from '@theme/TOCInline'
@@ -18,7 +19,7 @@ written any tests.
 <DocsImage
   src="/img/guides/references/no-tests-found.png"
   alt="No tests found"
-></DocsImage>
+/>
 
 ### <Icon name="exclamation-triangle" color="red" /> We found an error preparing your test file
 
@@ -99,7 +100,7 @@ CoffeeScript and modules, so you can import/require other files as needed.
 <DocsImage
   src="/img/guides/references/cypress-cannot-execute.png"
   alt="Cannot execute commands"
-></DocsImage>
+/>
 
 This message means you tried to execute one or more Cypress commands outside of
 a currently running test. Cypress has to be able to associate commands to a
@@ -180,7 +181,7 @@ describe('detachment example', () => {
 <DocsImage
   src="/img/guides/references/cy-method-failed-element-is-detached.png"
   alt="cy.method() failed because element is detached"
-></DocsImage>
+/>
 
 Cypress errors because it can't interact with "dead" elements - much like a real
 user could not do this either. Understanding how this happens is very
@@ -258,7 +259,7 @@ for another example of this error, and how to solve it.
 
 :::
 
-### <Icon name="exclamation-triangle" color="red" /> `cy....()` failed because the element cannot be interacted with
+### <Icon name="exclamation-triangle" color="red" /> `cy...()` failed because the element cannot be interacted with
 
 You may see a variation of this message for 4 different reasons:
 
@@ -288,7 +289,7 @@ cy.get('[disabled]').click({force: true}).
 _Be careful with this option. It's possible to force your tests to pass when the
 element is actually not interactable in your application._
 
-### <Icon name="exclamation-triangle" color="red" /> `cy....()` failed because the element is currently animating
+### <Icon name="exclamation-triangle" color="red" /> `cy...()` failed because the element is currently animating
 
 <!--
 To reproduce the following screenshot:
@@ -309,7 +310,7 @@ describe('animating example', () => {
 <DocsImage
   src="/img/guides/references/cy-method-failed-element-is-animating.png"
   alt="cy.method() failed because element is animating"
-></DocsImage>
+/>
 
 By default Cypress detects if an element you're trying to interact with is
 animating. This check ensures that an element is not animating too quickly for a
@@ -357,7 +358,7 @@ error.
 <DocsImage
   src="/img/guides/references/the-test-has-finished.png"
   alt="The test has finished but Cypress still has commands"
-></DocsImage>
+/>
 
 :::caution
 
