@@ -128,4 +128,4 @@ START BUTTON!</strong>
 Time to get testing! If you chose
 [to start with E2E Testing, go here](/guides/end-to-end-testing/writing-your-first-end-to-end-test).
 Alternatively, if you decided
-[to try Component Testing, go here](/guides/component-testing/writing-your-first-component-test).
+[to try Component Testing, go here](/guides/component-testing/overview).

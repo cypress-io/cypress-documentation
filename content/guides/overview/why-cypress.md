@@ -172,8 +172,7 @@ it('adds todos', () => {
 ### Component
 
 You can also use Cypress to mount components from supported web frameworks and
-execute
-[component tests](/guides/component-testing/writing-your-first-component-test).
+execute [component tests](/guides/component-testing/overview).
 
 ```js
 import TodoList from './components/TodoList'

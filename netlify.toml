@@ -58,16 +58,22 @@
   to = "/guides/dashboard/introduction/"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/guides/component-testing"
+  to = "/guides/component-testing/overview"
+  status = 301
+  force = true
 	
 [[redirects]]
   from = "/guides/component-testing/introduction"
-  to = "/guides/component-testing/writing-your-first-component-test"
+  to = "/guides/component-testing/overview"
   status = 301
   force = true
 
 [[redirects]]
-  from = "/guides/component-testing"
-  to = "/guides/component-testing/writing-your-first-component-test"
+  from = "/guides/component-testing/writing-your-first-component-test"
+  to = "/guides/component-testing/overview"
   status = 301
   force = true
 
