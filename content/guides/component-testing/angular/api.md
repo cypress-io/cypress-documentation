@@ -4,7 +4,7 @@ title: 'Angular API'
 
 ## Methods
 
-### mount&lt;T&gt;
+### mount
 
 ```js
 import { mount } from 'cypress/angular'
@@ -128,7 +128,7 @@ import { createOutputSpy } from 'cypress/angular'
 
 ## Interfaces
 
-### MountConfig&lt;T&gt;
+### MountConfig
 
 ```js
 import { MountConfig } from 'cypress/angular'
@@ -234,7 +234,7 @@ it('renders a button with a cy.spy() replacing EventEmitter', () => {
 })
 ```
 
-### MountResponse&lt;T&gt;
+### MountResponse
 
 ```js
 import { MountResponse } from 'cypress/angular'

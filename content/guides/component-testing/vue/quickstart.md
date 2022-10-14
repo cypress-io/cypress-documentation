@@ -1,39 +1,32 @@
 ---
-title: 'Angular Quickstart'
+title: 'Vue Quickstart'
 ---
 
-Welcome! This tutorial will walk you through creating an Angular app and using
+Welcome! This tutorial will walk you through creating a Vue app and using
 Cypress Component Testing to test it. We assume you are already familiar with
-Angular, but if this is your first time with Cypress, that's okay; we'll walk
-you through all you need to know.
+Vue, but if this is your first time with Cypress, that's okay; we'll walk you
+through all you need to know.
 
 ## Getting Started
 
-### Create an Angular App
+### Create a Vue App
 
-To start off, we are going to create a new Angular app.
+To start off, we are going to create a new Vue app.
 
-We will use the [Angular CLI](https://angular.io/cli) to create the app as it's
-quick to get up and running.
+We will use [Vite](https://vitejs.dev/) to create the app as it's quick to get
+up and running.
 
-First, install the Angular CLI (if you have not already):
-
-```bash
-npm install -g @angular/cli
-```
-
-Next, create a new app using the CLI:
+To create a Vue project with Vite, run the following from your command prompt:
 
 ```bash
-ng new my-awesome-app
+npm create vite@latest my-awesome-app -- --template vue
 ```
 
-Select all the default options when prompted.
-
-Go into the directory:
+Go into the directory and run `npm install`:
 
 ```bash
 cd my-awesome-app
+npm install
 ```
 
 ### Install Cypress
@@ -62,19 +55,19 @@ the configuration wizard.
   src="/img/guides/component-testing/select-test-type.jpg" 
   caption="Choose Component Testing"> </DocsImage>
 
-The Project Setup screen automatically detects your framework, which, in our
-case, is Angular. Click "Next Step" to continue.
+The Project Setup screen automatically detects your framework and bundler,
+which, in our case, is Vue and Vite. Click "Next Step" to continue.
 
 <DocsImage 
-  src="/img/guides/component-testing/project-setup-angular.jpg" 
-  caption="Angular is automatically detected"> </DocsImage>
+  src="/img/guides/component-testing/project-setup-vue.jpg" 
+  caption="Vue and Vite are automatically detected"> </DocsImage>
 
 The next screen checks that all the required dependencies are installed. All the
 items should have green checkboxes on them, indicating everything is good, so
 click "Continue".
 
 <DocsImage 
-  src="/img/guides/component-testing/dependency-detection-angular.jpg" 
+  src="/img/guides/component-testing/dependency-detection-vue.jpg" 
   caption="All necessary dependencies are installed"> </DocsImage>
 
 Next, Cypress generates all the necessary configuration files and gives you a
@@ -99,55 +92,50 @@ any yet. However, we don't currently have a component, either. Let's change
 that!
 
 <DocsImage 
-  src="/img/guides/component-testing/create-your-first-spec.jpg"> </DocsImage>
+  src="/img/guides/component-testing/create-your-first-spec-vue.jpg">
+</DocsImage>
 
 ### Creating a Component
 
 At this point, your project is set up, and Cypress is ready to go, but we have
 no components to test yet.
 
-We will create a `StepperComponent` with zero dependencies and one bit of
+We will create a `<Stepper/>` component with zero dependencies and one bit of
 internal state: a "counter" that can be incremented and decremented by the user.
 
-Add a Stepper component to your project by first using the Angular CLI to create
-a new component:
-
-```bash
-ng generate component stepper
-```
-
-Next, update the generated **stepper.component.ts** file with the following:
+Create a file at **src/components/Stepper.vue** and paste the following code
+into it:
 
 <code-group>
-<code-block label="src/app/stepper/stepper.component.ts" active>
+<code-block label="src/components/Stepper.vue" active>
 
-```ts
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+```html
+<template>
+  <div>
+    <button data-cy="decrement" @click="decrement">-</button>
+    <span data-cy="counter">{{ count }}</span>
+    <button data-cy="increment" @click="increment">+</button>
+  </div>
+</template>
 
-@Component({
-  selector: 'app-stepper',
-  template: `
-    <div>
-      <button data-cy="decrement" (click)="decrement()">-</button>
-      <span data-cy="counter">{{ count }}</span>
-      <button data-cy="increment" (click)="increment()">+</button>
-    </div>
-  `,
-})
-export class StepperComponent {
-  @Input() count = 0
-  @Output() change = new EventEmitter()
+<script setup>
+  import { ref } from 'vue'
+  const props = defineProps(['initial'])
 
-  increment(): void {
-    this.count++
-    this.change.emit(this.count)
+  const emit = defineEmits(['change'])
+
+  const count = ref(props.initial || 0)
+
+  const increment = () => {
+    count.value++
+    emit('change', count.value)
   }
 
-  decrement(): void {
-    this.count--
-    this.change.emit(this.count)
+  const decrement = () => {
+    count.value--
+    emit('change', count.value)
   }
-}
+</script>
 ```
 
 </code-block>
@@ -157,26 +145,35 @@ Our component consists of two buttons, one used to decrement the counter and one
 to increment it. A `span` tag sits in the middle of the buttons to show the
 current value of the counter.
 
-## Testing Angular Components
+## Testing Vue Components
 
 Now that you have a component, let's write a test to verify the component can
 mount without any issues.
 
 ### Your First Component Test
 
-To get started, create a spec file in the same directory as the
-**stepper.component.ts** component and name it **stepper.component.cy.ts**. Then
-paste the following into it:
+To get started, go back to the Cypress test app and, in the "Create your first
+spec" screen, click "Create from Vue component".
+
+A modal will pop up listing all the components that is found in your app. Select
+the **Stepper.vue** component:
+
+<DocsImage 
+  src="/img/guides/component-testing/create-from-component-vue.jpg">
+</DocsImage>
+
+A spec file was created at **src/component/Stepper.cy.js**:
 
 <code-group>
-<code-block label="src/app/stepper/stepper.component.cy.ts" active>
+<code-block label="src/components/Stepper.cy.js" active>
 
 ```js
-import { StepperComponent } from './stepper.component'
+import Stepper from './Stepper.vue'
 
-describe('StepperComponent', () => {
-  it('mounts', () => {
-    cy.mount(StepperComponent)
+describe('<Stepper />', () => {
+  it('renders', () => {
+    // see: https://test-utils.vuejs.org/guide/
+    cy.mount(Stepper)
   })
 })
 ```
@@ -184,11 +181,10 @@ describe('StepperComponent', () => {
 </code-block>
 </code-group>
 
-> It is also possible to write Angular tests using template syntax. For more
-> info, see the
-> [Using Angular Template Syntax](/guides/component-testing/angular#Using-Angular-Template-Syntax).
+> It is also possible to write Vue tests using JSX syntax. For more info, see
+> [Using JSX](/guides/component-testing/vue/introduction#Using-JSX).
 
-Let's break down the spec. First, we import `StepperComponent`. Next, we
+Let's break down the spec. First, we import the `Stepper` component. Next, we
 organize our tests using special blocks. We use two of these blocks in this
 spec, `describe`, and `it`. These are global functions provided by Cypress,
 which means you don't have to import them directly to use them. We use them to
@@ -204,7 +200,7 @@ function that contains the test code. In our example above, we only have one
 test, but soon we'll see how we can add multiple `it` blocks inside of a
 `describe` for a series of tests.
 
-The test executes one command: `cy.mount(StepperComponent)`. The
+The test executes one command: `cy.mount(Stepper)`. The
 [cy.mount()](/api/commands/mount) method will mount our component into the test
 app so we can begin running tests against it.
 
@@ -212,12 +208,11 @@ Now it's time to see the test in action.
 
 ### Running the Test
 
-Switch back to the browser you opened for testing, and you should now see the
-**stepper.component.cy.ts** file in the spec list. Click it to see the spec
-execute.
+Switch back to the browser you opened for testing, on click on the "Okay, run
+the spec" button to execute it.
 
 <DocsImage 
-  src="/img/guides/component-testing/first-test-run-angular.jpg"> </DocsImage>
+  src="/img/guides/component-testing/first-test-run-vue.jpg"> </DocsImage>
 
 Our first test verifies the component can mount in it's default state without
 any errors. If there is a runtime error during test execution, the test will
@@ -229,7 +224,7 @@ the techniques/tools you would normally during development, such as interacting
 with the component in the test runner, and using the browser dev tools to
 inspect and debug both your tests and the component's code.
 
-Feel free to play around with the `StepperComponent` by interacting with the
+Feel free to play around with the `Stepper` component by interacting with the
 increment and decrement buttons.
 
 Now that the component is mounted, our next step is to test that the behavior of
@@ -238,7 +233,7 @@ the component is correct.
 ### Selectors & Assertions
 
 The Stepper component's counter is initialized to "0" by default. It also has a
-input property that can specify an initial count.
+prop that can specify an initial count.
 
 Let's test that mounting the component in its default state has a count of "0".
 
@@ -255,11 +250,11 @@ method to verify it has the correct text value.
 Add the following test inside the `describe` block:
 
 <code-group>
-<code-block label="src/app/stepper/stepper.component.cy.ts" active>
+<code-block label="src/components/Stepper.cy.js" active>
 
 ```js
 it('stepper should default to 0', () => {
-  cy.mount(StepperComponent)
+  cy.mount(Stepper)
   cy.get('span').should('have.text', '0')
 })
 ```
@@ -285,11 +280,11 @@ We assign a unique id to the `data-cy` attribute that we can use for testing
 purposes. Update the test to use a CSS attribute selector to `cy.get()`:
 
 <code-group>
-<code-block label="src/app/stepper/stepper.component.cy.ts" active>
+<code-block label="src/components/Stepper.cy.js" active>
 
-```ts
+```js
 it('stepper should default to 0', () => {
-  cy.mount(StepperComponent)
+  cy.mount(Stepper)
   cy.get('[data-cy=counter]').should('have.text', '0')
 })
 ```
@@ -301,22 +296,18 @@ The test will still pass as expected, and our selector is now future-proof. For
 more info on writing good selectors, see our guide
 [Selector Best Practices](/guides/references/best-practices#Selecting-Elements).
 
-### Passing Inputs to Components
+### Passing Props to Components
 
-We should also have a test to ensure the `count` input sets the test to
-something else besides its default value of "0". We can pass in the input to
-`StepperComponent` in the `mount` method:
+We should also have a test to ensure the `initial` prop sets the test to
+something else besides its default value of "0". We can pass in props to the
+`Stepper` component in the `mount` method:
 
 <code-group>
-<code-block label="src/app/stepper/stepper.component.cy.ts" active>
+<code-block label="src/components/Stepper.cy.js" active>
 
 ```js
 it('supports an "initial" prop to set the value', () => {
-  cy.mount(StepperComponent, {
-    componentProperties: {
-      count: 100,
-    },
-  })
+  cy.mount(Stepper, { props: { initial: 100 } })
   cy.get('[data-cy=counter]').should('have.text', '100')
 })
 ```
@@ -324,10 +315,12 @@ it('supports an "initial" prop to set the value', () => {
 </code-block>
 </code-group>
 
-We pass in inputs and outputs using the `componentProperties` property in the
-options. See the
-[MountOptions API](/guides/component-testing/api-angular#MountOptions) for
-Angular for more info.
+The second parameter of `mount()` takes an options object, which we can pass in
+a `props` value, which will set any props on the mounted component.
+
+> The mount method uses Vue Test Utils under the covers. For more info around
+> specific APIs, visit the
+> [Vue Test Utils docs](https://test-utils.vuejs.org/guide/) for more info.
 
 ### Testing Interactions
 
@@ -341,24 +334,21 @@ the buttons in a test.
 Add the following tests:
 
 <code-group>
-<code-block label="src/app/stepper/stepper.component.cy.ts" active>
+<code-block label="src/components/Stepper.cy.js" active>
 
 ```js
 it('when the increment button is pressed, the counter is incremented', () => {
-  cy.mount(StepperComponent)
+  cy.mount(Stepper)
   cy.get('[data-cy=increment]').click()
   cy.get('[data-cy=counter]').should('have.text', '1')
 })
 
 it('when the decrement button is pressed, the counter is decremented', () => {
-  cy.mount(StepperComponent)
+  cy.mount(Stepper)
   cy.get('[data-cy=decrement]').click()
   cy.get('[data-cy=counter]').should('have.text', '-1')
 })
 ```
-
-</code-block>
-</code-group>
 
 Above, we select the buttons using their `data-cy` attributes and call the
 [click()](/api/commands/click) method, which simulates a user click event. View
@@ -366,59 +356,50 @@ the [Interacting with Elements](/guides/core-concepts/interacting-with-elements)
 guide to learn more about other commands you can use to interact with the DOM
 just like a real user would.
 
-## Testing Angular Components with Events
+</code-block>
+</code-group>
 
-All the state of `StepperComponent` (ie: the count) is handled internally in the
-component. Consumers are alerted to changes to the state by binding to the
-`change` event on the component.
+## Testing Vue Components with Events
+
+All the state of `<Stepper />` (ie: the count) is handled internally in the
+component. Consumers are alerted to changes to the state by listening for a
+`change` event.
 
 As the developer of the Stepper component, you want to make sure that when the
 end-user clicks the increment and decrement buttons, that the `change` event is
-emitted with the proper values in the consuming component.
+emitted with the proper values.
 
 ### Using Spies
 
 We can use [Cypress Spies](/guides/guides/stubs-spies-and-clocks#Spies) to
 validate that the `change` event is being emitted. A spy is a special function
 that keeps track of how many times it was called and any parameters that it was
-called with. We can pass a spy into the `change` output, interact with the
+called with. We can pass a spy into the `change` event, interact with the
 component, and then query the spy to validate it was called with the parameters
 we expect.
 
 Let's set up the spies and bind them to the component:
 
 <code-group>
-<code-block label="src/app/stepper/stepper.component.cy.ts" active>
+<code-block label="src/components/Stepper.cy.js" active>
 
-```ts
+```js
 it('clicking + fires a change event with the incremented value', () => {
-  cy.mount(StepperComponent, {
-    componentProperties: {
-      change: createOutputSpy('changeSpy'),
-    },
-  })
+  const onChangeSpy = cy.spy().as('onChangeSpy')
+  cy.mount(Stepper, { props: { onChange: onChangeSpy } })
   cy.get('[data-cy=increment]').click()
-  cy.get('@changeSpy').should('have.been.calledWith', 1)
+  cy.get('@onChangeSpy').should('have.been.calledWith', 1)
 })
 ```
 
 </code-block>
 </code-group>
 
-Above, we use the
-[createOutputSpy()](/guides/component-testing/api-angular#createOutputSpy)
-helper method to create an `EventEmitter` that has a spy set up on its `emit`
-method. You will need to import `createOutputSpy` at the top of the test:
-
-```ts
-import { createOutputSpy } from 'cypress/angular'
-```
-
-The string we pass into the helper method give the spy an
-[alias](/guides/core-concepts/variables-and-aliases), which assigns a name by
-which we can reference the spy later. In `cy.mount()`, we initialize the
-component and pass the spied upon event emitter into it. After that, we click
-the increment button.
+First, we create a new spy by calling the `cy.spy()` method. We pass in a string
+that gives the spy an [alias](/guides/core-concepts/variables-and-aliases),
+which assigns the spy a name by which we can reference it later. In
+`cy.mount()`, we initialize the component and pass the spy into it. After that,
+we click the increment button.
 
 The next line is a bit different. We've seen how we can use the `cy.get()`
 method to select elements, but we can also use it to grab any aliases we've set
@@ -426,12 +407,12 @@ up previously. We use `cy.get()` to grab the alias to the spy (by prepending an
 ampersand to the alias name). We assert that the method was called with the
 expected value.
 
-With that, `StepperComponent` is well tested. Nice job!
+With that, the `Stepper` component is well tested. Nice job!
 
 ## What's Next?
 
-Congratulations, you covered the basics for component testing an Angular
-component with Cypress!
+Congratulations, you covered the basics for component testing a Vue component
+with Cypress!
 
 To learn more about testing with Cypress, check out the
 [Introduction to Cypress](/guides/core-concepts/introduction-to-cypress) guide.

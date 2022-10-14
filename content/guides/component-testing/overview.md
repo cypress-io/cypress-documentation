@@ -1,5 +1,5 @@
 ---
-title: Cypress Component Testing
+title: Component Testing Overview
 ---
 
 <CtBetaAlert></CtBetaAlert>
@@ -23,10 +23,10 @@ results in components built mindfully.
 
 We support the following frameworks for component testing:
 
-- [React](/guides/component-testing/react)
-- [Angular](/guides/component-testing/angular)
-- [Vue](/guides/component-testing/vue)
-- [Svelte](/guides/component-testing/svelte)
+- [React](/guides/component-testing/react/introduction)
+- [Angular](/guides/component-testing/angular/introduction)
+- [Vue](/guides/component-testing/vue/introduction)
+- [Svelte](/guides/component-testing/svelte/introduction)
 
 For additional reading, we encourage folks to check out the
 [Component Driven](https://componentdriven.org) organization, which talks about

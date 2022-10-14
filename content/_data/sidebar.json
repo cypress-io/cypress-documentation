@@ -95,76 +95,76 @@
             },
             {
               "title": "Introduction",
-              "slug": "react"
+              "slug": "react/introduction"
             },
             {
               "title": "React Quickstart",
-              "slug": "quickstart-react"
+              "slug": "react/quickstart"
             },
             {
               "title": "React API",
-              "slug": "api-react"
+              "slug": "react/api"
             },
             {
               "title": "React Examples",
-              "slug": "examples-react"
+              "slug": "react/examples"
             },
             {
               "title": "Angular Component Testing"
             },
             {
               "title": "Introduction",
-              "slug": "angular"
+              "slug": "angular/introduction"
             },
             {
               "title": "Angular Quickstart",
-              "slug": "quickstart-angular"
+              "slug": "angular/quickstart"
             },
             {
               "title": "Angular API",
-              "slug": "api-angular"
+              "slug": "angular/api"
             },
             {
               "title": "Angular Examples",
-              "slug": "examples-angular"
+              "slug": "angular/examples"
             },
             {
               "title": "Vue Component Testing"
             },
             {
               "title": "Introduction",
-              "slug": "vue"
+              "slug": "vue/introduction"
             },
             {
               "title": "Vue Quickstart",
-              "slug": "quickstart-vue"
+              "slug": "vue/quickstart"
             },
             {
               "title": "Vue API",
-              "slug": "api-vue"
+              "slug": "vue/api"
             },
             {
               "title": "Vue Examples",
-              "slug": "examples-vue"
+              "slug": "vue/examples"
             },
             {
               "title": "Svelte Component Testing"
             },
             {
               "title": "Introduction",
-              "slug": "svelte"
+              "slug": "svelte/introduction"
             },
             {
               "title": "Svelte Quickstart",
-              "slug": "quickstart-svelte"
+              "slug": "svelte/quickstart"
             },
             {
               "title": "Svelte API",
-              "slug": "api-svelte"
+              "slug": "svelte/api"
             },
             {
               "title": "Svelte Examples",
-              "slug": "examples-svelte"
+              "slug": "svelte/examples"
             },
             {
               "title": "Diving Deeper"

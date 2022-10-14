@@ -13,7 +13,7 @@ Cypress Component Testing supports Vue 2+ in a variety of different frameworks:
 
 ## Tutorial
 
-Visit the [Vue Quickstart Guide](/guides/component-testing/quickstart-vue) for a
+Visit the [Vue Quickstart Guide](/guides/component-testing/vue/quickstart) for a
 step-by-step tutorial.
 
 ## Installation
@@ -38,7 +38,7 @@ npx cypress open
 The Cypress Launchpad will guide you through configuring your project.
 
 For a step-by-step guide through the installation wizard, refer to the
-[Configure Component Testing](/guides/component-testing/quickstart-vue#Configuring-Component-Testing)
+[Configure Component Testing](/guides/component-testing/vue/quickstart#Configuring-Component-Testing)
 section of the Vue quickstart guide.
 
 ## Usage
@@ -76,7 +76,7 @@ Cypress.Commands.add('mount', mount)
 This allows you to use `cy.mount()` in any component test without having to
 import the framework-specific mount command, as well as customizing it to fit
 your needs. For more info, visit the
-[Custom Mount Commands](/guides/component-testing/examples-vue#Custom-Mount-Commands)
+[Custom Mount Commands](/guides/component-testing/vue/examples#Custom-Mount-Commands)
 section in the Vue examples.
 
 ### Using `cy.mount()`

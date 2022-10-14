@@ -14,7 +14,7 @@ frameworks:
 
 ## Tutorial
 
-Visit the [React Quickstart Guide](/guides/component-testing/quickstart-react)
+Visit the [React Quickstart Guide](/guides/component-testing/react/quickstart)
 for a step-by-step tutorial.
 
 ## Installation
@@ -39,7 +39,7 @@ npx cypress open
 The Cypress Launchpad will guide you through configuring your project.
 
 For a step-by-step guide through the installation wizard, refer to the
-[Configure Component Testing](/guides/component-testing/quickstart-react#Configuring-Component-Testing)
+[Configure Component Testing](/guides/component-testing/react/quickstart#Configuring-Component-Testing)
 section of the React quickstart guide.
 
 ## Usage
@@ -78,7 +78,7 @@ Cypress.Commands.add('mount', mount)
 This allows you to use `cy.mount()` in any component test without having to
 import the framework-specific mount command, as well as customizing it to fit
 your needs. For more info, visit the
-[Custom Mount Commands](/guides/component-testing/examples-react#Custom-Mount-Commands)
+[Custom Mount Commands](/guides/component-testing/react/examples#Custom-Mount-Commands)
 section in the React examples.
 
 ### Using `cy.mount()`
