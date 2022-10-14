@@ -13,7 +13,7 @@ frameworks:
 ## Tutorial
 
 Visit the
-[Svelte Quickstart Guide](/guides/component-testing/svelte/quickstart)for a
+[Svelte Quickstart Guide](/guides/component-testing/svelte/quickstart) for a
 step-by-step tutorial.
 
 ## Installation
