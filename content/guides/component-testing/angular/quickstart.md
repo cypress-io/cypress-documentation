@@ -78,7 +78,7 @@ click "Continue".
   caption="All necessary dependencies are installed"> </DocsImage>
 
 Next, Cypress generates all the necessary configuration files and gives you a
-list of all the changes it made to your project.
+list of all the changes it made to your project. Click "Continue".
 
 <DocsImage 
   src="/img/guides/component-testing/scaffolded-files.jpg" 
@@ -116,7 +116,8 @@ a new component:
 ng generate component stepper
 ```
 
-Next, update the generated **stepper.component.ts** file with the following:
+Next, open the project in your favorite code editor and update the generated
+**stepper.component.ts** file with the following:
 
 <code-group>
 <code-block label="src/app/stepper/stepper.component.ts" active>
@@ -165,7 +166,7 @@ mount without any issues.
 ### Your First Component Test
 
 To get started, create a spec file in the same directory as the
-**stepper.component.ts** component and name it **stepper.component.cy.ts**. Then
+**stepper.component.ts** file and name it **stepper.component.cy.ts**. Then
 paste the following into it:
 
 <code-group>
@@ -188,15 +189,14 @@ describe('StepperComponent', () => {
 > info, see the
 > [Using Angular Template Syntax](/guides/component-testing/angular/introduction#Using-Angular-Template-Syntax).
 
-Let's break down the spec. First, we import `StepperComponent`. Next, we
-organize our tests using special blocks. We use two of these blocks in this
-spec, `describe`, and `it`. These are global functions provided by Cypress,
-which means you don't have to import them directly to use them. We use them to
-group similar tests together. The top-level `describe` block will be the
-container for all our tests in a file, and each `it` represents an individual
-test. The `describe` block takes in two parameters, the first of which is the
-name of the test suite, and the second is a function that will execute the
-tests.
+Let's break down the spec. First, we import the `Stepper` component. Then, we
+organize our tests using the functions `describe` and `it`, which we allow us to
+group tests into sections by using method blocks. These are global functions
+provided by Cypress, which means you don't have to import them directly to use
+them. The top-level `describe` block will be the container for all our tests in
+a file, and each `it` represents an individual test. The `describe` function
+takes two parameters, the first of which is the name of the test suite, and the
+second is a function that will execute the tests.
 
 We defined a test using the `it` function inside `describe`. The first parameter
 to `it` is a brief description of the spec, and the second parameter is a
@@ -240,7 +240,8 @@ the component is correct.
 The Stepper component's counter is initialized to "0" by default. It also has a
 input property that can specify an initial count.
 
-Let's test that mounting the component in its default state has a count of "0".
+Let's write a test that verifies mounting the component in its default state has
+a count of "0".
 
 To do so, we will use a selector to access the `span` element that contains the
 counter, and then assert that the text value of the element is what we expect it
@@ -252,7 +253,7 @@ There are various ways to select items from the DOM using Cypress. We will use
 After we "get" the element, we use the [should](/api/commands/should) assertion
 method to verify it has the correct text value.
 
-Add the following test inside the `describe` block:
+Add the following test inside the `describe` block, right below the first test:
 
 <code-group>
 <code-block label="src/app/stepper/stepper.component.cy.ts" active>
@@ -326,8 +327,8 @@ it('supports an "initial" prop to set the value', () => {
 
 We pass in inputs and outputs using the `componentProperties` property in the
 options. See the
-[MountOptions API](/guides/component-testing/angular/api#MountOptions) for
-Angular for more info.
+[MountOptions API](/guides/component-testing/angular/api#MountOptions) for more
+info.
 
 ### Testing Interactions
 
@@ -335,8 +336,9 @@ We mounted and selected the element in the above tests but didn't interact with
 it. We should also test that the value of the counter changes when a user clicks
 the "increment" and "decrement" buttons.
 
-To do so, we will interact with the component like a real user would by clicking
-the buttons in a test.
+To do so, we will interact with the component by using the
+[click()](/api/commands/click) command, which clicks a DOM element just like a
+real user would.
 
 Add the following tests:
 
@@ -360,11 +362,15 @@ it('when the decrement button is pressed, the counter is decremented', () => {
 </code-block>
 </code-group>
 
-Above, we select the buttons using their `data-cy` attributes and call the
-[click()](/api/commands/click) method, which simulates a user click event. View
-the [Interacting with Elements](/guides/core-concepts/interacting-with-elements)
-guide to learn more about other commands you can use to interact with the DOM
-just like a real user would.
+When you view the results of each of the tests, you will see that the counter is
+now "1" in the increment test, and "-1" in the decrement test. Not only did our
+tests pass, but we can visually see the results in a browser!
+
+<!-- Todo: add screenshot for above tests -->
+
+View the
+[Interacting with Elements](/guides/core-concepts/interacting-with-elements)
+guide to learn more about other commands you can use to interact with the DOM.
 
 ## Testing Angular Components with Events
 

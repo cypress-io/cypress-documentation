@@ -169,22 +169,6 @@ import { MountOptions } from 'cypress/svelte'
   <caption>props</caption>
   <tr>
     <td>Description</td>
-    <td>Log the mounting command into Cypress Command Log, true by default</td>
-  </tr>
-  <tr>
-    <td>Type</td>
-    <td>boolean (optional)</td>
-  </tr>
-  <tr>
-    <td>Default</td>
-    <td>true</td>
-  </tr>
-</table>
-
-<table class="api-table">
-  <caption>props</caption>
-  <tr>
-    <td>Description</td>
     <td>props to pass into the component</td>
   </tr>
   <tr>
