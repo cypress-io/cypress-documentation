@@ -19,7 +19,7 @@ up and running.
 To create a React project with Vite, run the following from your command prompt:
 
 ```bash
-npm create vite@latest my-awesome-app -- --template react
+npm create vite@latest my-awesome-app --template react
 ```
 
 Go into the directory and run `npm install`:
