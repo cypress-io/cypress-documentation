@@ -102,4 +102,4 @@ increment and decrement buttons.
 Now that we have our component mounted, next we will learn how to write tests
 against it.
 
-<NavGuide prev="/guides/component-testing/quickstart-Svelte" next="/guides/component-testing/testing-svelte" />
+<NavGuide prev="/guides/component-testing/quickstart-svelte" next="/guides/component-testing/testing-svelte" />

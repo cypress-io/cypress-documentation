@@ -1,6 +1,15 @@
 {
   "courses": [
     {
+      "title": "Cypress 10 Fundamentals",
+      "url": "https://university.blazemeter.com/users/sign_in?next=%2Fenrollments%2F130677466%2Fdetails",
+      "author": "Gleb Bahmutov",
+      "authorTwitter": "bahmutov",
+      "sourceName": "Blazemeter University",
+      "sourceUrl": "https://www.blazemeter.com/university",
+      "free":true
+    },
+    {
       "title": "Cypress 9 Fundamentals",
       "url": "https://app.pluralsight.com/library/courses/cypress-9-fundamentals/",
       "author": "Adhithi Ravichandran",

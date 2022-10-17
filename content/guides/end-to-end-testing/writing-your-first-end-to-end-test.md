@@ -196,24 +196,32 @@ have failed.
 
 <DocsVideo src="/img/snippets/first-test-visit-30fps.mp4" title="First test with cy.visit()"></DocsVideo>
 
-<Alert type="danger">
+<Alert type="info">
 
-<strong class="alert-header">Only Test Apps You Control</strong>
+<strong class="alert-header">Testing Apps You Don't Control</strong>
 
-Although in this guide we are testing our example application:
-[`https://example.cypress.io`](https://example.cypress.io) - you **shouldn't**
-test applications you **don't control**. Why?
+In this guide we are testing our example application:
+[`https://example.cypress.io`](https://example.cypress.io). However you should
+think carefully about testing applications you **don't control**. Why?
 
-- They are liable to change at any moment which will break tests.
+- They have the potential to change at any moment which will break tests.
 - They may do A/B testing which makes it impossible to get consistent results.
-- They may detect you are a script and block your access (Google does this).
+- They may detect you are a script and block your access.
 - They may have security features enabled which prevent Cypress from working.
 
-The point of Cypress is to be a tool you use every day to build and test **your
-own applications**.
+Generally speaking, the point of Cypress is to be a tool you use every day to
+build and test your own applications, not a general purpose web automation tool.
+However, this is a guideline rather than a hard-and-fast rule and there are a
+number of good reasons to make exceptions for certain kinds of application:
 
-Cypress is not a **general purpose** web automation tool. It is poorly suited
-for scripting live, production websites not under your control.
+- They are specifically designed to integrate with third parties, e.g. SSO
+  providers.
+- They provide you with a complementary service, e.g. SaaS control panels or
+  analytics.
+- They reuse your content or provide plugins for an app you control.
+
+The key here is to carefully weigh the benefits of the tests in question against
+the possible disruption and flake these sorts of tests can introduce.
 
 </Alert>
 
@@ -439,6 +447,13 @@ These various timeouts are defined in the
 [Configuration](/guides/references/configuration#Timeouts) document.
 
 </Alert>
+
+## Record Tests with Cypress Studio
+
+If you want a minimal code approach to creating tests, you can use
+[Cypress Studio](/guides/references/cypress-studio) to record your browser
+interactions and generate tests. Visit our
+[guide](/guides/references/cypress-studio) for more information.
 
 ## Next steps
 
