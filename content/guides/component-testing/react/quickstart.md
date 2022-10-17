@@ -220,11 +220,9 @@ the component is correct.
 
 ### Selectors & Assertions
 
-The Stepper component's counter is initialized to "0" by default. It also has a
-prop that can specify an initial count.
-
-Let's write a test that verifies mounting the component in its default state has
-a count of "0".
+By default, the Stepper's counter is initialized to "0". We can override that
+value by specifying an initial count. Let's write a couple of tests that will
+verify both these states.
 
 To do so, we will use a selector to access the `span` element that contains the
 counter, and then assert that the text value of the element is what we expect it
