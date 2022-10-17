@@ -143,53 +143,6 @@ const double = (n) => n * n
 cy.wrap([reverse, double]).invoke(1, 4).should('eq', 16)
 ```
 
-### Invoking an async function
-
-In this example we have a little text input field and we invoke an async action
-which will disable this input field. `.invoke()` will then wait until the
-Promise resolves and only then will continue executing to check if it really has
-been disabled.
-
-Our input field
-
-```html
-<input type="text" name="text" data-cy="my-text-input" />
-```
-
-The Cypress test with `cy.invoke()` awaiting the promise:
-
-```javascript
-function disableElementAsync(element) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      element.disabled = true
-      resolve()
-    }, 3000)
-  })
-}
-
-cy.get('[data-cy=my-text-input]').then((textElements) => {
-  cy.wrap({ disableElementAsync }).invoke(
-    'disableElementAsync',
-    textElements[0]
-  )
-})
-
-// log message appears after 3 seconds
-cy.log('after invoke')
-
-// assert UI
-cy.get('[data-cy=my-text-input]').should('be.disabled')
-```
-
-<Alert type="info">
-
-For a full example where invoke is used to await async Vuex store actions, visit
-the recipe:
-[Vue + Vuex + REST](https://github.com/cypress-io/cypress-example-recipes)
-
-</Alert>
-
 ### jQuery method
 
 If the parent command yields a jQuery element, we can invoke a jQuery method,
@@ -244,8 +197,10 @@ cy.get('input')
 ### Retries
 
 `.invoke()` automatically retries invoking the specified method until the
-returned value satisfies the attached assertions. The example below passes after
-1 second.
+returned value satisfies the attached assertions. If the returned value is a
+promise, Cypress does _not_ wait for it to resolve or reject.
+
+The example below passes after 1 second.
 
 ```javascript
 let message = 'hello'
@@ -309,10 +264,11 @@ following:
 
 ## History
 
-| Version                                     | Changes                                                       |
-| ------------------------------------------- | ------------------------------------------------------------- |
-| [3.8.0](/guides/references/changelog#3-8-0) | Added support for `options` argument                          |
-| [3.7.0](/guides/references/changelog#3-7-0) | Added support for arguments of type Number for `functionName` |
+| Version                                       | Changes                                                          |
+| --------------------------------------------- | ---------------------------------------------------------------- |
+| [11.0.0](/guides/references/changelog#11-0-0) | `.invoke()` no longer awaits promises or retries async functions |
+| [3.8.0](/guides/references/changelog#3-8-0)   | Added support for `options` argument                             |
+| [3.7.0](/guides/references/changelog#3-7-0)   | Added support for arguments of type Number for `functionName`    |
 
 ## See also
 
