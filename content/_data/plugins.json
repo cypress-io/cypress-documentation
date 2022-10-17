@@ -644,6 +644,13 @@
           "link": "https://github.com/elaichenkov/cy-verify-downloads",
           "keywords": ["commands", "assertions", "wait", "verify", "download"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-if",
+          "description": "Easy conditional if-else logic for your Cypress tests",
+          "link": "https://github.com/bahmutov/cypress-if",
+          "keywords": ["commands"],
+          "badge": "community"
         }
       ]
     },
