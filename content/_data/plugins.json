@@ -362,6 +362,13 @@
     {
       "name": "Custom Commands",
       "plugins": [
+         {
+          "name": "cypress-plugin-api",
+          "description": "Cypress plugin for effective API testing. Imagine Postman, but in Cypress.",
+          "link": "https://github.com/filiphric/cypress-plugin-api",
+          "keywords": ["api"],
+          "badge": "community"
+        },
         {
           "name": "cy-view",
           "description": "Run tests on multiple URLs at various viewport sizes.",
