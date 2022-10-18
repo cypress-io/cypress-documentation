@@ -134,18 +134,18 @@ article {
 .theme-doc-sidebar-menu {
   padding: 0.75rem;
   font-weight: 700;
-  font-size: 1.125rem;
+  font-size: 1.2rem;
 }
 
 /* sidebar subcategories */
 .theme-doc-sidebar-item-category.theme-doc-sidebar-item-category-level-2>.menu__list-item-collapsible a {
-  font-size: 1rem;
+  font-size: 1.02rem;
 }
 
 /* sidebar children */
 .theme-doc-sidebar-item-link-level-2,.theme-doc-sidebar-item-link-level-3>.menu__link {
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 1.05rem;
 }
 
 .theme-doc-sidebar-item-category {
@@ -326,6 +326,9 @@ div.markdown h3 a:hover {
 /* give list breathing room */
 .table-of-contents {
   line-height: 2;
+}
+.table-of-contents {
+  font-size: .88rem;
 }
 /* but not as much on the children */
 .table-of-contents li ul li {
