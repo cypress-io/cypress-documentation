@@ -115,8 +115,8 @@ do that no other testing framework can:
   Say hello to fast, consistent and reliable tests that are flake-free.
 - **Screenshots and Videos:** View screenshots taken automatically on failure,
   or videos of your entire test suite when run from the CLI. Record to the
-  Dashboard to store them with your test results for zero-configuration
-  debugging.
+  [Dashboard](/guides/dashboard/introduction) to store them with your test
+  results for zero-configuration debugging.
 - **Cross browser Testing:** Run tests within Firefox and Chrome-family browsers
   (including Edge and Electron) locally and
   [optimally in a Continuous Integration pipeline](/guides/guides/cross-browser-testing).
