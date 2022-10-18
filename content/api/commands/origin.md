@@ -516,7 +516,13 @@ packages and other files.
 If you utilize a custom preprocessor, note that this feature requires the latest
 version of
 [`@cypress/webpack-preprocessor`](https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor)
-to work.
+to work. If using a custom preprocessor or an older version of the webpack
+preprocessor, you'll see an error that includes the following text:
+
+```
+Using require() or import() to include dependencies requires using the
+latest version of @cypress/webpack-preprocessor.
+```
 
 ```js
 // ES modules
