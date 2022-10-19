@@ -1,6 +1,6 @@
 import React from "react";
 import { DocsVideoProps } from "./types";
-import Video from "@site/src/components/video";
+import LocalVideo from "@site/src/components/video-local";
 import VideoYouTube from "@site/src/components/video-youtube";
 import VideoVimeo from "@site/src/components/video-vimeo";
 
@@ -13,7 +13,7 @@ export default function DocsVideo({ src, title }: DocsVideoProps) {
     <>
       {isYouTube && <VideoYouTube src={src} title={title} />}
       {isVimeo && <VideoVimeo src={src} title={title} />}
-      {isLocalVideo && <Video src={src} title={title} />}
+      {isLocalVideo && <LocalVideo src={src} title={title} />}
     </>
   );
 }
