@@ -513,16 +513,24 @@ and/or
 can be used within the callback to include [npm](https://www.npmjs.com/)
 packages and other files.
 
-If you utilize a custom preprocessor, note that this feature requires the latest
-version of
-[`@cypress/webpack-preprocessor`](https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor)
-to work. If using a custom preprocessor or an older version of the webpack
-preprocessor, you'll see an error that includes the following text:
+<Alert type="warning">
 
-```
-Using require() or import() to include dependencies requires using the
-latest version of @cypress/webpack-preprocessor.
-```
+Using `import()` and `require()` within the callback requires version 5.15.0 or
+greater of the
+[`@cypress/webpack-preprocessor`](https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor).
+This is included in Cypress by default, but if your project installs its own
+version of `@cypress/webpack-preprocessor` that is set up in your Cypress
+config, make sure it is version 5.15.0 or greater.
+
+If using an older version of the webpack or a different preprocessor, you'll see
+an error that includes the following text:
+
+_Using require() or import() to include dependencies requires using the latest
+version of @cypress/webpack-preprocessor._
+
+</Alert>
+
+#### Example
 
 ```js
 // ES modules
@@ -541,6 +549,8 @@ cy.origin('somesite.com', () => {
   // ... use lodash and utils ...
 })
 ```
+
+#### Custom commands
 
 This makes it possible to share custom commands between tests run in primary and
 secondary origins. We recommend this pattern for setting up your
@@ -588,6 +598,8 @@ it('tests somesite.com', () => {
   })
 })
 ```
+
+#### Shared execution context
 
 The JavaScript execution context is persisted between `cy.origin()` callbacks
 that share the same origin. This can be utilized to share code between
