@@ -507,27 +507,53 @@ into the callback.
 
 ### Dependencies / Sharing Code
 
-It is not possible to use
+[ES module dynamic `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#dynamic_imports)
+and/or
 [CommonJS `require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
-or
-[dynamic ES module `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#dynamic_imports)
-within the callback. However, [`Cypress.require()`](/api/cypress-api/require)
-can be utilized to include [npm](https://www.npmjs.com/) packages and other
-files. It is functionally the same as using
-[CommonJS `require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
-in browser-targeted code.
+can be used within the callback to include [npm](https://www.npmjs.com/)
+packages and other files.
+
+<Alert type="warning">
+
+Using `import()` and `require()` within the callback requires version 5.15.0 or
+greater of the
+[`@cypress/webpack-preprocessor`](https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor).
+This is included in Cypress by default, but if your project installs its own
+version of `@cypress/webpack-preprocessor` that is set up in your Cypress
+config, make sure it is version 5.15.0 or greater.
+
+If using an older version of the webpack or a different preprocessor, you'll see
+an error that includes the following text:
+
+_Using require() or import() to include dependencies requires using the latest
+version of @cypress/webpack-preprocessor._
+
+</Alert>
+
+#### Example
 
 ```js
+// ES modules
+cy.origin('somesite.com', async () => {
+  const _ = await import('lodash')
+  const utils = await import('../support/utils')
+
+  // ... use lodash and utils ...
+})
+
+// CommonJS
 cy.origin('somesite.com', () => {
-  const _ = Cypress.require('lodash')
-  const utils = Cypress.require('../support/utils')
+  const _ = require('lodash')
+  const utils = require('../support/utils')
 
   // ... use lodash and utils ...
 })
 ```
 
-`Cypress.require()` can be used to share custom commands between tests run in
-primary and secondary origins. We recommend this pattern for setting up your
+#### Custom commands
+
+This makes it possible to share custom commands between tests run in primary and
+secondary origins. We recommend this pattern for setting up your
 [support file](/guides/core-concepts/writing-and-organizing-tests#Support-file)
 and setting up custom commands to run within the `cy.origin()` callback:
 
@@ -561,7 +587,7 @@ before(() => {
   // calls in this spec. put it in your support file to make them available to
   // all specs
   cy.origin('somesite.com', () => {
-    Cypress.require('../support/commands')
+    require('../support/commands')
   })
 })
 
@@ -573,6 +599,8 @@ it('tests somesite.com', () => {
 })
 ```
 
+#### Shared execution context
+
 The JavaScript execution context is persisted between `cy.origin()` callbacks
 that share the same origin. This can be utilized to share code between
 successive `cy.origin()` calls.
@@ -582,7 +610,7 @@ before(() => {
   cy.origin('somesite.com', () => {
     // makes commands defined in this file available to all callbacks
     // for somesite.com
-    Cypress.require('../support/commands')
+    require('../support/commands')
   })
 })
 
