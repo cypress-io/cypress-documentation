@@ -7,7 +7,12 @@ Cache and restore [cookies](/api/cypress-api/cookies),
 [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage),
 and
 [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
-in order to reduce test setup times.
+in order to recreate a consistent browser context between tests.
+
+The `cy.session()` command will inherent the
+[`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+mode` value to determine where or not the page is cleared when cacheing and
+restoring the browser context.
 
 <Alert type="warning">
 
@@ -24,11 +29,12 @@ Enabling this flag does the following:
   and [`Cypress.session`](/api/cypress-api/session) API.
 - It adds the following new behaviors (that will be the default in a future
   major update of Cypress) at the beginning of each test:
-  - The page is cleared (by setting it to `about:blank`). Disable this by
-    setting
-    [`testIsolation=legacy`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation).
-  - All active session data (cookies, `localStorage` and `sessionStorage`)
-    across all domains are cleared.
+  - The
+    [`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+    mode is enhanced from `legacy` mode to `on` mode such that
+    - The page is cleared (by setting it to `about:blank`).
+    - All active session data (cookies, `localStorage` and `sessionStorage`)
+      across all domains are cleared.
 - It overrides the
   [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
   [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
@@ -36,7 +42,7 @@ Enabling this flag does the following:
   based on [`pageLoadTimeout`](/guides/references/configuration#Timeouts).
 - Tests will no longer wait on page loads before moving on to the next test.
 
-Because the page is cleared at the beginning of each test,
+Because the page is cleared at the beginning of each test by default,
 [`cy.visit()`](/api/commands/visit) must be explicitly called at the beginning
 of each test.
 
@@ -82,7 +88,7 @@ cy.session(name, () => {
 // be done inside the setup function
 cy.visit('/login')
 cy.session(name, () => {
-  // need to call cy.visit() here because the page is blank when
+  // need to call cy.visit() here because the page is blank  when
   // the setup function runs
   cy.get('[data-test=name]').type(name)
   cy.get('[data-test=password]').type('s3cr3t')
@@ -134,7 +140,7 @@ The page and all active session data (cookies, `localStorage` and
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
-| Option             | Default     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| Option             | Default     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | ------------------ | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `validate`         | `undefined` | Validates the newly-created or restored session.<br><br>Function to run immediately after the session is created and `setup` function runs or after a session is restored and the page is cleared. If this returns `false`, throws an exception, contains any failing Cypress command, or returns a Promise which rejects or resolves to `false`, the session is considered invalid.<br><br>- If validation fails immediately after `setup`, the test will fail.<br>- If validation fails after restoring a session, `setup` will re-run. |
 | `cacheAcrossSpecs` | `false`     | When enabled, the newly created session is considered "global" and can be restored in any spec during the test execution in the same Cypress run on the same machine. Use this option for a session that will be used multiple times, across many specs.                                                                                                                                                                                                                                                                                  |
@@ -674,9 +680,9 @@ it('t3', () => {
 
 The page is cleared and all active session data (cookies, `localStorage`, and
 `sessionStorage`) across all domains are cleared automatically when
-`cy.session()` runs. This guarantees consistent behavior whether a session is
-being created or restored and allows you to switch sessions without first having
-to explicitly log out.
+`cy.session()` runs and `testIsolation` is `on`. This guarantees consistent
+behavior whether a session is being created or restored and allows you to switch
+sessions without first having to explicitly log out.
 
 |                      |              Current page cleared               |           Active session data cleared           |
 | -------------------- | :---------------------------------------------: | :---------------------------------------------: |

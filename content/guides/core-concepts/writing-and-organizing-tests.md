@@ -566,60 +566,142 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 
 <Alert type="success">
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Clean up
-state **before** tests run.
+<Icon name="check-circle" color="green"></Icon> **Best Practice:** Tests should
+always be able to be run independently from one another **and still pass**.
 
 </Alert>
 
-Test isolation is the practice of resetting application state _before_ each
-test.
+As stated in our mission, we hold ourselves accountable to champion a testing
+process that actually works, and have built Cypress to guide developer towards
+write independent tests from the start.
 
-Cleaning up state ensures that the operation of one test does not affect another
-test later on. The goal for each test should be to reliably pass whether run in
-isolation or consecutively with other tests. Having tests that depend on the
-state of an earlier test can potentially cause nondeterministic test failures.
+We do this by cleaning up state _before_ each test to ensure that the operation
+of one test does not affect another test later on. The goal for each test should
+be to **reliably pass** whether run in isolation or consecutively with other
+tests. Having tests that depend on the state of an earlier test can potentially
+cause nondeterministic test failures which makes debugging challenging.
 
-Cypress supports two modes of test isolation, `legacy` and `strict`.
-
-#### Legacy Mode
-
-When in `legacy` mode, Cypress handles resetting the state for:
+Cypress will start each test with a clean test slate by restoring and clearing
+all:
 
 - [aliases](/api/commands/as)
-- [cookies](/api/commands/clearcookies)
-- [clock](/api/commands/clock)
-- [intercept](/api/commands/intercept)
-- [localStorage](/api/commands/clearlocalstorage)
+- [clock mocks](/api/commands/clock)
+- [intercepts](/api/commands/intercept)
 - [routes](/api/commands/route)
-- [sessions](/api/commands/session)
 - [spies](/api/commands/spy)
 - [stubs](/api/commands/stub)
-- [viewport](/api/commands/viewport)
+- [viewport changes](/api/commands/viewport)
 
-#### Strict Mode
+In additional to a clean test slate, Cypress also believes in run tests in a
+clean browser context such that the application or component under test behaves
+consistently when ran. This concept is described as `testIsolation`.
+
+The test isolation mode is a global configuration and can be overridden at the
+`describe` level with the
+[`testIsolation`](/guides/references/configuration#Global) option.
+
+#### End-to-end testing
+
+Cypress supports the following modes of test isolation in end-to-end testing to
+describe if a suite of tests should run in a clean browser context or not:
+`legacy` (deprecated), `on` (experimental) and `off` (experimental).
+
+###### Legacy Mode
+
+Cypress supports the `legacy` mode by default to ensure tests run in a
+semi-clean browser context. When enabled Cypress will:
+
+- [clears cookies](/api/commands/clearCookies) in current the domain
+- [clears local storage](/api/commands/clearLocalStorage) in current the domain
+
+The current test isolation implementation is named `legacy` because it has some
+gaps which have led to leaked browser state between tests due to the page not
+clearing, cookies and local storage from other domains unintentionally
+"bleeding" over and session storage persisting between tests.
+
+This mode will be replaced with `testIsolation` modes `on` and `off`, which are
+currently experimental. These modes can be enabled by setting
+the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
+to `true` in the Cypress config, however, `legacy` mode will no longer be an
+options.
+
+###### On Mode
 
 <Alert type="warning">
 
 <strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
 Experimental</strong>
 
-`strict` mode is currently experimental and can be enabled by setting
+`on` mode is currently experimental and can be enabled by setting
 the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
 to `true` in the Cypress config. This is the default test isolation behavior
 when using the `experimentalSessionAndOrigin` experiment.
 
 </Alert>
 
-When in `strict` mode, Cypress handles resetting the state for everything
-outlined above for `legacy` mode, in addition to clearing the page by visiting
-`about:blank` before each test. This clears the dom's state and non-persistent
-browser state. This forces you to re-visit your application and perform the
-series of interactions needed to build the dom and browser state so the tests
-can reliably pass when run standalone or in a randomized order.
+When in `on` mode, Cypress resets the browser context _before_ each test by:
 
-The test isolation mode is a global configuration and can be overridden at the
-`describe` level with the
-[`testIsolation`](/guides/references/configuration#Global) option.
+- clearing the dom state by visiting `about:blank`
+- clearing [cookies](/api/cypress-api/cookies) in all domains
+- clearing
+  [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+  in all domains
+- clearing
+  [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
+  in all domains
+
+Because the test starts in a fresh browser context, you must re-visit your
+application and perform the series of interactions needed to build the dom and
+browser state for each test.
+
+Additionally, the `cy.session()` command will inherent this mode and will clear
+the page and current browser context when establishing a browser session. so the
+tests can reliably pass when run standalone or in a randomized order.
+
+###### Off Mode
+
+<Alert type="warning">
+
+<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
+Experimental</strong>
+
+`off` mode is currently experimental and can be enabled by setting
+the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
+to `true` in the Cypress config.
+
+</Alert>
+
+When in `off` mode, Cypress will not later the browser context before the test
+starts. The page does not clear and cookies, local storage and session storage
+will be available across tests in that suite. Additionally, the `cy.session()`
+command will only clear the current browser context when establishing the
+browser session - the current page will not clear.
+
+It is important to note that turning test isolation `off` may improve the
+overall performance of end-to-end tests, however, previous tests could be impact
+the browser state. It is important to be extremely mindful of how test are
+written when using this mode and ensure tests continue to run independent from
+one other.
+
+###### Mode Comparison
+
+| testIsolation         | beforeEach test                                                                                                                                  | cy.session()                                                                                                                                     |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `legacy` (deprecated) | <br>- clears cookies in current domains<br>- local storage in current domains                                                                    | not available                                                                                                                                    |
+| `on` (experimental)   | - clears page by visiting `about:blank`<br>- clears cookies in all domains<br>- local storage in all domains<br>- session storage in all domains | - clears page by visiting `about:blank`<br>- clears cookies in all domains<br>- local storage in all domains<br>- session storage in all domains |
+| `off` (experimental)  | does not alter the current browser context                                                                                                       | <br>- clears cookies in all domains<br>- local storage in all domains<br>- session storage in all domains                                        |
+
+##### Component testing
+
+Cypress only support testIsolation `on` in component testing.
+
+When running component tests, the browser context will allow start in a clean
+slate because Cypress will
+
+- clear the page
+- clears [cookies](/api/cypress-api/cookies)
+- clears
+  [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
 
 ### Test Configuration
 
