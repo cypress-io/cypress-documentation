@@ -134,18 +134,18 @@ article {
 .theme-doc-sidebar-menu {
   padding: 0.75rem;
   font-weight: 700;
-  font-size: 1.125rem;
+  font-size: 1.2rem;
 }
 
 /* sidebar subcategories */
 .theme-doc-sidebar-item-category.theme-doc-sidebar-item-category-level-2>.menu__list-item-collapsible a {
-  font-size: 1rem;
+  font-size: 1.02rem;
 }
 
 /* sidebar children */
 .theme-doc-sidebar-item-link-level-2,.theme-doc-sidebar-item-link-level-3>.menu__link {
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 1.05rem;
 }
 
 .theme-doc-sidebar-item-category {
@@ -313,7 +313,7 @@ div.markdown h3 a:hover {
   opacity: 0.6;
 }
 
-/* open new page icon */
+/* open external page icon */
 .footer__link-item svg {
   display: none;
 }
@@ -322,21 +322,75 @@ div.markdown h3 a:hover {
   margin-bottom: 2rem;
 }
 
+/* format right-side TOC */
 /* give list breathing room */
 .table-of-contents {
   line-height: 2;
 }
-
+.table-of-contents {
+  font-size: .88rem;
+}
 /* but not as much on the children */
 .table-of-contents li ul li {
   line-height: 1.2;
 }
-
-/* only target top level section titles in right sode TOC */
+/* only target top level section titles in right side TOC */
 .table-of-contents > li > .table-of-contents__link {
   font-weight: bold;
   opacity: 0.9;
 }
+
+/* format inline TOC above content */
+.inlineTOC li {
+  list-style-type: none;
+}
+.inlineTOC > div > ul > li {
+  font-size: 1.15rem;
+}
+/* section child elements */
+.inlineTOC ul > li {
+  font-size: 1.1rem;
+  padding-left: 1rem;
+}
+.inlineTOC ul li a {
+  border-bottom: none;
+  line-height: 1.75rem;
+  padding-left: .75rem;
+}
+.inlineTOC ul li a:hover {
+  border-bottom: none;
+}
+[data-theme="dark"] .inlineTOC ul li a {
+  border-bottom: none;
+}
+/* add chevrons */
+.inlineTOC ul > li:before {
+  content: ' ';
+  display: inline-block;
+  border-bottom: 2px solid #1079c3;
+  border-right: 2px solid #1079c3;
+  height: 6px;
+  width: 6px;
+  transform: rotate(-45deg);
+  margin-bottom: 2px;
+}
+/* inline TOC errors page */
+/* section headers */
+.errorsInlineTOC div > ul > li > a {
+  font-size: 1.25rem;
+  color: #6b7280;
+  /* !important to keep the hoizontal rule under the section titles from acting janky on hover */
+  border-bottom: 1px solid var(--ifm-toc-border-color) !important;
+  display: block;
+  padding-top: 1rem;
+  padding-bottom: .25rem;
+  padding-left: 0rem;
+}
+/* remove chevron on section header */
+.errorsInlineTOC div > ul > li:before {
+  all: unset;
+}
+/* format inline TOC end */
 
 .mediaGridContainer {
   display: grid;

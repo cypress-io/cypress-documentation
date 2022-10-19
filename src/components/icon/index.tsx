@@ -1,8 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { IconProps } from "./types";
 
-// Note: Docusaurus has a parsing issues and some markdown renders statically when beside a component or HTML tag while NOT in a section header or table, etc. https://github.com/facebook/docusaurus/discussions/6886#discussioncomment-2328085 For these we wrap the anchor in this component for reusability.
+// Note: Docusaurus/MDX has parsing issues and some markdown renders statically when beside a component or HTML tag while NOT in a section header or table, etc. https://github.com/facebook/docusaurus/discussions/6886#discussioncomment-2328085 For now, we we wrap the anchor in this component for reusability.
 
 export default function Icon({ name, color, inline, url, callout, contentType }) {
   const iconName = name === "github" ? ["fab", "github"] : name;
