@@ -363,7 +363,7 @@
           "link": "https://github.com/nils-hoyer/cypress-fail-on-network-request",
           "keywords": ["network-request", "request", "fail"],
           "badge": "community"
-        },
+        }
       ]
     },
     {
