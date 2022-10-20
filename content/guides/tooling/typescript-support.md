@@ -95,6 +95,10 @@ Then you can add the `dataCy` command to the global Cypress Chainable interface
 // load type definitions that come with Cypress module
 /// <reference types="cypress" />
 
+// Add one export statement so that TypeScript sees this file as a module rather than script.
+// This is necessary otherwise TypeScript will complain about `declare global`.
+export {}
+
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -163,6 +167,10 @@ type automatically based on the specified `prevSubject`.
 // in cypress/support/index.ts
 // load type definitions that come with Cypress module
 /// <reference types="cypress" />
+
+// Add one export statement so that TypeScript sees this file as a module rather than script.
+// This is necessary otherwise TypeScript will complain about `declare global`.
+export {}
 
 declare global {
   namespace Cypress {
