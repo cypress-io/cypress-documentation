@@ -22,6 +22,7 @@
   --ifm-line-height-base: 1.6;
   --ifm-global-spacing: 1.3rem;
   --ifm-table-stripe-background: rgb(243, 244, 246);
+  --docusaurus-highlighted-code-line-bg: rgba(71, 128, 220, 0.4);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -414,4 +415,8 @@ div.markdown h3 a:hover {
 /* remove extra vertical space from tabs when it contains a code block */
 .tabs-container .theme-code-block {
   margin-top: -1.4rem;
+}
+
+code span::selection {
+  background: var(--docusaurus-highlighted-code-line-bg);
 }
