@@ -268,6 +268,80 @@ export default defineConfig({
 Vite 3+ users could make use of the
 [`mergeConfig`](https://vitejs.dev/guide/api-javascript.html#mergeconfig) API.
 
+## Migrating to Cypress version 11.0
+
+This guide details the changes and how to change your code to migrate to Cypress
+version 11.0.
+[See the full changelog for version 11.0](/guides/references/changelog#11-0-0).
+
+### Test Isolation
+
+The `testIsolation` config option defaults to `strict`. This means that after
+every test, the current page is reset to `about:blank` and all active session
+data (cookies, `localStorage` and `sessionStorage`) across all domains are
+cleared. Some test suites that rely on the previous behavior may have to be
+updated.
+
+Before this change, it was possible to write tests such that you could, for
+example, log in to a CMS in the first test, change some content in the second
+test, verify the new version is displayed on a different URL in the third, and
+log out in the fourth. Here's a simplified example of such a test strategy.
+
+<Badge type="danger">Before</Badge> Multiple small tests against different
+origins
+
+```js
+it('logs in', () => {
+  cy.visit('https://supersecurelogons.com')
+  cy.get('input#password').type('Password123!')
+  cy.get('button#submit').click()
+})
+it('updates the content', () => {
+  cy.get('#current-user').contains('logged in')
+  cy.get('button#edit-1').click()
+  cy.get('input#title').type('Updated title')
+  cy.get('button#submit').click()
+  cy.get('.toast').type('Changes saved!')
+})
+it('validates the change', () => {
+  cy.visit('/items/1')
+  cy.get('h1').contains('Updated title')
+})
+```
+
+After migrating, this flow would need to be contained within a single test.
+While the above practice has always been
+[discouraged](/guides/references/best-practices#Having-tests-rely-on-the-state-of-previous-tests)
+we know some users have historically written tests this way, often to get around
+the same-origin restrictions. But with `cy.origin()` you no longer need these
+kind of brittle hacks, as your multi-origin logic can all reside in a single
+test, like the following.
+
+<Badge type="success">After</Badge> One big test using `cy.origin()`
+
+```js
+it('securely edits content', () => {
+  cy.origin('supersecurelogons.com', () => {
+    cy.visit('https://supersecurelogons.com')
+    cy.get('input#password').type('Password123!')
+    cy.get('button#submit').click()
+  })
+  cy.origin('mycms.com', () => {
+    cy.url().should('contain', 'cms')
+    cy.get('#current-user').contains('logged in')
+    cy.get('button#edit-1').click()
+    cy.get('input#title').type('Updated title')
+    cy.get('button#submit').click()
+    cy.get('.toast').type('Changes saved!')
+  })
+  cy.visit('/items/1')
+  cy.get('h1').contains('Updated title')
+})
+```
+
+Always remember,
+[Cypress tests are not unit tests](https://docs.cypress.io/guides/references/best-practices#Creating-tiny-tests-with-a-single-assertion).
+
 ## Migrating to Cypress version 10.0
 
 This guide details the changes and how to change your code to migrate to Cypress

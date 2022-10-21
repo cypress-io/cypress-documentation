@@ -14,36 +14,6 @@ limitation determined by standard web security features of the browser. The
 <Alert type="warning">
 
 <strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
-Experimental</strong>
-
-The `session` API is currently experimental, and can be enabled by setting the
-[`experimentalSessionAndOrigin`](/guides/references/experiments) option to
-`true` in the Cypress config.
-
-Enabling this flag does the following:
-
-- It adds the `cy.session()` and [`cy.origin()`](/api/commands/origin) commands,
-  and [`Cypress.session`](/api/cypress-api/session) API.
-- It adds the concept of
-  [`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
-  which defaults to `on`, such that:
-  - The page is cleared (by setting it to `about:blank`).
-  - Cookies, local storage and session storage in all domains are cleared.
-- It supersedes the
-  [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
-  [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
-- Cross-origin requests will now succeed, however, to interact with a
-  cross-origin page you must use a `cy.origin` block.
-
-Because the page is cleared at the beginning of each test by default,
-[`cy.visit()`](/api/commands/visit) must be explicitly called at the beginning
-of each test.
-
-</Alert>
-
-<Alert type="warning">
-
-<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
 Obstructive Third Party Code</strong>
 
 By default Cypress will search through the response streams coming from your
@@ -340,9 +310,8 @@ performant. Up until now you could get around this problem by putting login code
 in the first test of your file, then performing subsequent tests reusing the
 same session.
 
-However, once the `experimentalSessionAndOrigin` flag is activated, this is no
-longer possible, since all session state is now cleared between tests. So to
-avoid this overhead we recommend you leverage the
+However, this is no longer possible, since all session state is now cleared
+between tests. So to avoid this overhead we recommend you leverage the
 [`cy.session()`](/api/commands/session) command, which allows you to easily
 cache session information and reuse it across tests. So now let's enhance our
 custom login command with `cy.session()` for a complete syndicated login flow
@@ -384,81 +353,6 @@ also look at how to use the `cy.session()` command to cache session information
 and reuse it across tests.
 
 ## Notes
-
-### Migrating existing tests
-
-Enabling the `experimentalSessionAndOrigin` flag makes the test-runner work
-slightly differently, and some test suites that rely on the existing behaviour
-may have to be updated. The most important of these changes is
-[**test isolation**]() which defaults to `on`. This means that after every test,
-the current page is reset to `about:blank` and cookies, local storage and
-session storage in all domains are cleared before each test. This change is
-opt-in for now, but will be standardized in a future major release of Cypress,
-so eventually all tests will need to be isolated.
-
-Before this change, it was possible to write tests such that you could, for
-example, log in to a CMS in the first test, change some content in the second
-test, verify the new version is displayed on a different URL in the third, and
-log out in the fourth. Here's a simplified example of such a test strategy.
-
-<Badge type="danger">Before</Badge> Multiple small tests against different
-origins
-
-```js
-it('logs in', () => {
-  cy.visit('https://supersecurelogons.com')
-  cy.get('input#password').type('Password123!')
-  cy.get('button#submit').click()
-})
-
-it('updates the content', () => {
-  cy.get('#current-user').contains('logged in')
-  cy.get('button#edit-1').click()
-  cy.get('input#title').type('Updated title')
-  cy.get('button#submit').click()
-  cy.get('.toast').type('Changes saved!')
-})
-
-it('validates the change', () => {
-  cy.visit('/items/1')
-  cy.get('h1').contains('Updated title')
-})
-```
-
-After switching on `experimentalSessionAndOrigin`, this flow would need to be
-contained within a single test. While this practice has always been
-[discouraged](/guides/references/best-practices#Having-tests-rely-on-the-state-of-previous-tests)
-we know some users have historically written tests this way, often to get around
-the same-origin restrictions. But with `cy.origin()` you no longer need these
-kind of brittle hacks, as your multi-origin logic can all reside in a single
-test, like the following.
-
-<Badge type="success">After</Badge> One big test using `cy.origin()`
-
-```js
-it('securely edits content', () => {
-  cy.origin('supersecurelogons.com', () => {
-    cy.visit('https://supersecurelogons.com')
-    cy.get('input#password').type('Password123!')
-    cy.get('button#submit').click()
-  })
-
-  cy.origin('mycms.com', () => {
-    cy.url().should('contain', 'cms')
-    cy.get('#current-user').contains('logged in')
-    cy.get('button#edit-1').click()
-    cy.get('input#title').type('Updated title')
-    cy.get('button#submit').click()
-    cy.get('.toast').type('Changes saved!')
-  })
-
-  cy.visit('/items/1')
-  cy.get('h1').contains('Updated title')
-})
-```
-
-Always remember,
-[Cypress tests are not unit tests](https://docs.cypress.io/guides/references/best-practices#Creating-tiny-tests-with-a-single-assertion).
 
 ### Serialization
 

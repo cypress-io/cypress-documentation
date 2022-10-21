@@ -39,11 +39,10 @@ creating `e2e` and `component` objects inside your Cypress configuration.
 These experiments are available to be specified inside the `e2e` configuration
 object:
 
-| Option                         | Default | Description                                                                                                                                                                                                                                                                                                  |
-| ------------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `experimentalSessionAndOrigin` | `false` | Enables cross-origin and improved session support, by adding the [`cy.origin()`](/api/commands/origin) and [`cy.session()`](/api/commands/session) commands. This also enables the concept of [Test Isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation), which is `on` by default. |
-| `experimentalStudio`           | `false` | Generate and save commands directly to your test suite by interacting with your app as an end user would.                                                                                                                                                                                                    |
-| `experimentalRunAllSpecs`      | `false` | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.                                                                                                                                                                                                               |
+| Option                    | Default | Description                                                                                               |
+| ------------------------- | ------- | --------------------------------------------------------------------------------------------------------- |
+| `experimentalStudio`      | `false` | Generate and save commands directly to your test suite by interacting with your app as an end user would. |
+| `experimentalRunAllSpecs` | `false` | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.            |
 
 ### Component Testing
 
