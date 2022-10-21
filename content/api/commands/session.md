@@ -9,36 +9,6 @@ and
 [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
 in order to reduce test setup times.
 
-<Alert type="warning">
-
-<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
-Experimental</strong>
-
-The `session` API is currently experimental, and can be enabled by setting the
-[`experimentalSessionAndOrigin`](/guides/references/experiments) option to
-`true` in the Cypress config.
-
-Enabling this flag does the following:
-
-- It adds the `cy.session()` and [`cy.origin()`](/api/commands/origin) commands,
-  and [`Cypress.session`](/api/cypress-api/session) API.
-- It adds the following new behaviors (that will be the default in a future
-  major update of Cypress) at the beginning of each test:
-  - The page is cleared (by setting it to `about:blank`). Disable this by
-    setting
-    [`testIsolation=legacy`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation).
-  - All active session data (cookies, `localStorage` and `sessionStorage`)
-    across all domains are cleared.
-- Cross-origin navigation will no longer fail immediately, but instead, time out
-  based on [`pageLoadTimeout`](/guides/references/configuration#Timeouts).
-- Tests will no longer wait on page loads before moving on to the next test.
-
-Because the page is cleared at the beginning of each test,
-[`cy.visit()`](/api/commands/visit) must be explicitly called at the beginning
-of each test.
-
-</Alert>
-
 ## Syntax
 
 ```javascript

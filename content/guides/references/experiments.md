@@ -39,10 +39,9 @@ creating `e2e` and `component` objects inside your Cypress configuration.
 These experiments are available to be specified inside the `e2e` configuration
 object:
 
-| Option                         | Default | Description                                                                                                                                                                                                  |
-| ------------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `experimentalSessionAndOrigin` | `false` | Enables cross-origin and improved session support, including the [`cy.origin()`](/api/commands/origin) and [`cy.session()`](/api/commands/session) commands. This enables `testIsolation=strict` by default. |
-| `experimentalStudio`           | `false` | Generate and save commands directly to your test suite by interacting with your app as an end user would.                                                                                                    |
+| Option               | Default | Description                                                                                               |
+| -------------------- | ------- | --------------------------------------------------------------------------------------------------------- |
+| `experimentalStudio` | `false` | Generate and save commands directly to your test suite by interacting with your app as an end user would. |
 
 ### Component Testing
 
@@ -57,7 +56,8 @@ configuration object:
 
 | Version                                       | Changes                                                                                                                      |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| [10.8.0](/guides/references/changelog#10-x-y) | Added `experimentalWebKitSupport`.                                                                                           |
+| [11.0.0](/guides/references/changelog#11-0-0) | Removed `experimentalSessionAndOrigin`.                                                                                      |
+| [10.8.0](/guides/references/changelog#10-8-0) | Added `experimentalWebKitSupport`.                                                                                           |
 | [10.6.0](/guides/references/changelog#10-6-0) | Added support for `experimentalSingleTabRunMode`.                                                                            |
 | [10.4.0](/guides/references/changelog#10-4-0) | Added support for `experimentalModifyObstructiveThirdPartyCode`.                                                             |
 | [9.6.0](/guides/references/changelog#9-6-0)   | Added support for `experimentalSessionAndOrigin` and removed `experimentalSessionSupport`.                                   |
