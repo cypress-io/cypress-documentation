@@ -12,7 +12,7 @@ version 11.0.
 
 ### Test Isolation
 
-The `testIsolation` config options defaults to `strict`. This means that after
+The `testIsolation` config option defaults to `strict`. This means that after
 every test, the current page is reset to `about:blank` and all active session
 data (cookies, `localStorage` and `sessionStorage`) across all domains are
 cleared. Some test suites that rely on the previous behavior may have to be
