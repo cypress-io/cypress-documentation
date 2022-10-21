@@ -6,10 +6,10 @@ title: Dashboard
 
 <strong class="alert-header"><Icon name="star"></Icon> Get Started</strong>
 
-Whenever you're ready you can
+To get started with the Cypress Dashboard,
 [sign up here](https://dashboard.cypress.io/signup) for our
-[free plan](https://www.cypress.io/pricing) which gives you up to 3 users and
-500 monthly test results.
+[free plan](https://www.cypress.io/pricing) which comes with 3 users and 500
+monthly test results.
 
 </Alert>
 
