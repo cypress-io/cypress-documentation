@@ -229,13 +229,15 @@ counter, and then assert that the text value of the element is what we expect it
 to be.
 
 There are various ways to select items from the DOM using Cypress. We will use
-[cy.get()](/api/commands/get), which allows us to pass in a CSS like selector.
+[cy.get()](/api/commands/get), which allows us to pass in a CSS-like selector.
 
 After we "get" the element, we use the [should](/api/commands/should) assertion
 method to verify it has the correct text value.
 
 Add the following test inside the `describe` block, right below the first test:
-` <code-group> <code-block label="src/components/Stepper.cy.jsx" active>
+
+<code-group> 
+<code-block label="src/components/Stepper.cy.jsx" active>
 
 ```js
 it('stepper should default to 0', () => {
@@ -283,7 +285,7 @@ more info on writing good selectors, see our guide
 
 ### Passing Props to Components
 
-We should also have a test to ensure the `initial` prop sets the test to
+We should also have a test to ensure the `initial` prop sets the count to
 something else besides its default value of "0". We can pass in props to the
 `Stepper` component via JSX in the `mount` method:
 
@@ -348,15 +350,15 @@ All the state of `<Stepper />` (ie: the count) is handled internally in the
 component. Consumers are alerted to changes to the state by passing in a
 callback to the `onChange` prop.
 
-As the developer of the Stepper component, you want to make sure that when the
+As the developer of the Stepper component, you want to make sure when the
 end-user clicks the increment and decrement buttons, that the `onChange` prop is
 called with the proper values in the consuming component.
 
 ### Using Spies
 
 We can use [Cypress Spies](/guides/guides/stubs-spies-and-clocks#Spies) to
-validate that the `onChange` method is being called. A spy is a special function
-that keeps track of how many times it was called and any parameters that it was
+validate the `onChange` method is being called. A spy is a special function that
+keeps track of how many times it was called and any parameters that it was
 called with. We can pass a spy into the `onChange` event, interact with the
 component, and then query the spy to validate it was called with the parameters
 we expect.

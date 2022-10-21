@@ -240,7 +240,7 @@ counter, and then assert that the text value of the element is what we expect it
 to be.
 
 There are various ways to select items from the DOM using Cypress. We will use
-[cy.get()](/api/commands/get), which allows us to pass in a CSS like selector.
+[cy.get()](/api/commands/get), which allows us to pass in a CSS-like selector.
 
 After we "get" the element, we use the [should](/api/commands/should) assertion
 method to verify it has the correct text value.
@@ -296,7 +296,7 @@ more info on writing good selectors, see our guide
 
 ### Passing Props to Components
 
-We should also have a test to ensure the `initial` prop sets the test to
+We should also have a test to ensure the `initial` prop sets the count to
 something else besides its default value of "0". We can pass in props to the
 `Stepper` component in the `mount` method:
 
@@ -365,15 +365,15 @@ All the state of `<Stepper />` (ie: the count) is handled internally in the
 component. Consumers are alerted to changes to the state by listening for a
 `change` event.
 
-As the developer of the Stepper component, you want to make sure that when the
+As the developer of the Stepper component, you want to make sure when the
 end-user clicks the increment and decrement buttons, that the `change` event is
 emitted with the proper values.
 
 ### Using Spies
 
 We can use [Cypress Spies](/guides/guides/stubs-spies-and-clocks#Spies) to
-validate that the `change` event is being emitted. A spy is a special function
-that keeps track of how many times it was called and any parameters that it was
+validate the `change` event is being emitted. A spy is a special function that
+keeps track of how many times it was called and any parameters that it was
 called with. We can pass a spy into the `change` event, interact with the
 component, and then query the spy to validate it was called with the parameters
 we expect.
