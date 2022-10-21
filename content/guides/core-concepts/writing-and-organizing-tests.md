@@ -598,18 +598,6 @@ When in `legacy` mode, Cypress handles resetting the state for:
 
 #### Strict Mode
 
-<Alert type="warning">
-
-<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
-Experimental</strong>
-
-`strict` mode is currently experimental and can be enabled by setting
-the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
-to `true` in the Cypress config. This is the default test isolation behavior
-when using the `experimentalSessionAndOrigin` experiment.
-
-</Alert>
-
 When in `strict` mode, Cypress handles resetting the state for everything
 outlined above for `legacy` mode, in addition to clearing the page by visiting
 `about:blank` before each test. This clears the dom's state and non-persistent
