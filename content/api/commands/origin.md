@@ -108,8 +108,9 @@ cy.get('h1').contains('My cool site under test')
 **<Icon name="angle-right"></Icon> url** **_(String)_**
 
 A URL specifying the secondary origin in which the callback is to be executed.
-This should at the very least contain a hostname, and may also include the
-protocol, port number & path. Query params are not supported.
+This should contain the full hostname, which includes the subdomain (if
+applicable), domain, and top-level domain. This may also include the protocol,
+port number & path. Query params are not supported.
 
 This argument will be used in two ways:
 
