@@ -31,7 +31,7 @@ Enabling this flag does the following:
   major update of Cypress) at the beginning of each test:
   - The
     [`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
-    mode is enhanced from `legacy` mode to `on` mode such that
+    mode is enhanced from `legacy` mode to `on` mode such that:
     - The page is cleared (by setting it to `about:blank`).
     - All active session data (cookies, `localStorage` and `sessionStorage`)
       across all domains are cleared.
