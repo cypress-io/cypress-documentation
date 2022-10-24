@@ -57,7 +57,7 @@ export default function TalksList(): TalksProps {
                          target="_blank"
                          rel="noopener noreferer"
                       >
-                        <img src={talk.img} alt={`${talk.title}`} />
+                        <img className="mediaImage" src={talk.img} alt={`${talk.title}`} />
                       </a>
                     )}
                   </div>

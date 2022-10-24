@@ -56,7 +56,7 @@ export default function ScreencastsList(): ScreencastProps {
                      target="_blank"
                      rel="noopener noreferer"
                   >
-                    <img src={screencast.img} alt={`${screencast.title}`} />
+                    <img className="mediaImage" src={screencast.img} alt={`${screencast.title}`} />
                   </a>
                 )}
               </div>

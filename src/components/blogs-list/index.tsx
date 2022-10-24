@@ -36,13 +36,14 @@ export default function blogsList(): BlogsProps {
                       <h3>{blog.title}</h3>
                     </a>
                   </div>
-                  <a
-                     href={blog.sourceUrl}
-                     target="_blank"
-                     rel="noopener noreferer"
-                  >
-                  {blog.img ? <img className="mediaImage" src={blog.img} alt={`${blog.title}`} /> : null}
-                  </a>
+                  {blog.img && (
+                      <a href={blog.sourceUrl}
+                         target="_blank"
+                         rel="noopener noreferer"
+                      >
+                        <img className="mediaImage" src={blog.img} alt={`${blog.title}`} />
+                      </a>
+                    )}
                   <p>
                     Published on <a
                       href={blog.sourceUrl}
