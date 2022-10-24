@@ -695,7 +695,7 @@ having to explicitly log out.
 [`cy.visit()`](/api/commands/visit) must be explicitly called afterwards to
 ensure the page to test is loaded.
 
-### Test Isolation `iff`
+### Test Isolation `off`
 
 When `testIsolation` is `off`, the page will not clear, however, the session
 data will clear when `cy.session()` runs.
