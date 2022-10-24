@@ -67,6 +67,7 @@ const config = {
 
   plugins: [
     './plugins/fav-icon',
+    require.resolve('docusaurus-plugin-image-zoom')
   ],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -259,6 +260,14 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
+      zoom: {
+        background: {
+          light: 'rgb(255, 255, 255)',
+          dark: 'rgb(50, 50, 50)'
+        },
+        // options you can specify via https://github.com/francoischalifour/medium-zoom#usage
+        config: {}
+      }
     },
 }
 
