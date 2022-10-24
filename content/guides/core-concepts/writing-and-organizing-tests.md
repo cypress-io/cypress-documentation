@@ -690,8 +690,8 @@ When running component tests, the browser context will allow start in a clean
 slate because Cypress will
 
 - clear the page
-- clears [cookies](/api/cypress-api/cookies)
-- clears
+- clear [cookies](/api/cypress-api/cookies)
+- clear
   [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
 
 ### Test Configuration

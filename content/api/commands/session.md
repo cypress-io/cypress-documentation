@@ -10,7 +10,7 @@ and
 (i.e. session data) in order to recreate a consistent browser context between
 tests.
 
-The `cy.session()` command will inherent the
+The `cy.session()` command will inherit the
 [`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
 mode` value to determine whether or not the page is cleared when cacheing and
 restoring the browser context.
@@ -85,7 +85,7 @@ cy.session(name, () => {
 // be done inside the setup function
 cy.visit('/login')
 cy.session(name, () => {
-  // need to call cy.visit() here because the page is blank  when
+  // need to call cy.visit() here because the page is blank when
   // the setup function runs
   cy.get('[data-test=name]').type(name)
   cy.get('[data-test=password]').type('s3cr3t')
