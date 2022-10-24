@@ -572,8 +572,8 @@ always be able to be run independently from one another **and still pass**.
 </Alert>
 
 As stated in our mission, we hold ourselves accountable to champion a testing
-process that actually works, and have built Cypress to guide developer towards
-write independent tests from the start.
+process that actually works, and have built Cypress to guide developers towards
+writing independent tests from the start.
 
 We do this by cleaning up state _before_ each test to ensure that the operation
 of one test does not affect another test later on. The goal for each test should
