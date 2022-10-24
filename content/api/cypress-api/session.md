@@ -24,8 +24,7 @@ Enabling this flag does the following:
     [`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
     mode is enhanced from `legacy` mode to `on` mode such that
     - The page is cleared (by setting it to `about:blank`).
-    - All active session data (cookies, `localStorage` and `sessionStorage`)
-      across all domains are cleared.
+    - Cookies, local storage and session storage in all domains are cleared.
 - It overrides the
   [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
   [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.

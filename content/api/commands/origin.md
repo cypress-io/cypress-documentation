@@ -30,8 +30,7 @@ Enabling this flag does the following:
     [`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
     mode is enhanced from `legacy` mode to `on` mode such that
     - The page is cleared (by setting it to `about:blank`).
-    - All active session data (cookies, `localStorage` and `sessionStorage`)
-      across all domains are cleared.
+    - Cookies, local storage and session storage in all domains are cleared.
 - It overrides the
   [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
   [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
@@ -393,12 +392,12 @@ and reuse it across tests.
 
 Enabling the `experimentalSessionAndOrigin` flag makes the test-runner work
 slightly differently, and some test suites that rely on the existing behaviour
-may have to be updated. The most important of these changes is **test
-isolation**. This means that after every test, the current page is reset to
-`about:blank` and all active session data
-(cookies, `localStorage` and `sessionStorage`) across all domains are cleared.
-This change is opt-in for now, but will be standardized in a future major
-release of Cypress, so eventually all tests will need to be isolated.
+may have to be updated. The most important of these changes is
+[**test isolation**]() which defaults to `on`. This means that after every test,
+the current page is reset to `about:blank` and cookies, local storage and
+session storage in all domains are cleared before each test. This change is
+opt-in for now, but will be standardized in a future major release of Cypress,
+so eventually all tests will need to be isolated.
 
 Before this change, it was possible to write tests such that you could, for
 example, log in to a CMS in the first test, change some content in the second

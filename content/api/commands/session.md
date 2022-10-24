@@ -7,7 +7,8 @@ Cache and restore [cookies](/api/cypress-api/cookies),
 [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage),
 and
 [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
-in order to recreate a consistent browser context between tests.
+(i.e. session data) in order to recreate a consistent browser context between
+tests.
 
 The `cy.session()` command will inherent the
 [`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
@@ -33,8 +34,7 @@ Enabling this flag does the following:
     [`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
     mode is enhanced from `legacy` mode to `on` mode such that:
     - The page is cleared (by setting it to `about:blank`).
-    - The cookies, `localStorage` and `sessionStorage`
-      across all domains are cleared.
+    - Cookies, local storage and session storage in all domains are cleared.
 - It overrides the
   [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
   [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
@@ -135,12 +135,15 @@ runs, Cypress will preserve all cookies, `sessionStorage`, and `localStorage`,
 so that subsequent calls to `cy.session()` with the same `id` will bypass
 `setup` and just restore the cached session data.
 
-The page and all active session data (cookies, `localStorage` and
-`sessionStorage`) across all domains are always cleared before `setup` runs.
+The page is cleared before `setup` when `testIsolation='on'` and is not cleared
+when `testIsolation='off'`.
+
+Cookies, local storage and session storage in all domains are always cleared
+before `setup` runs, regardless of the testIsolation configuration.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
-| Option             | Default     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| Option             | Default     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | ------------------ | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `validate`         | `undefined` | Validates the newly-created or restored session.<br><br>Function to run immediately after the session is created and `setup` function runs or after a session is restored and the page is cleared. If this returns `false`, throws an exception, contains any failing Cypress command, or returns a Promise which rejects or resolves to `false`, the session is considered invalid.<br><br>- If validation fails immediately after `setup`, the test will fail.<br>- If validation fails after restoring a session, `setup` will re-run. |
 | `cacheAcrossSpecs` | `false`     | When enabled, the newly created session is considered "global" and can be restored in any spec during the test execution in the same Cypress run on the same machine. Use this option for a session that will be used multiple times, across many specs.                                                                                                                                                                                                                                                                                  |
@@ -338,10 +341,10 @@ describe('account details', () => {
 
 ### Switching sessions inside tests
 
-Because `cy.session()` clears the page and all active session data before
-running `setup`, you can use it to easily switch between sessions without first
-needing to log the previous user out. This allows tests to more accurately
-represent real-world scenarios and helps keep test run times short.
+Because `cy.session()` clears the page and all session data before running
+`setup`, you can use it to easily switch between sessions without first needing
+to log the previous user out. This allows tests to more accurately represent
+real-world scenarios and helps keep test run times short.
 
 ```jsx
 const login = (name) => {
@@ -676,24 +679,46 @@ it('t3', () => {
 
 ## Notes
 
-### When the page and active session data are cleared
+### When the page and session data are cleared
 
-The page is cleared and all active session data (cookies, `localStorage`, and
-`sessionStorage`) across all domains are cleared automatically when
-`cy.session()` runs and `testIsolation` is `on`. This guarantees consistent
-behavior whether a session is being created or restored and allows you to switch
-sessions without first having to explicitly log out.
+### Test Isolation `on`
 
-|                      |              Current page cleared               |           Active session data cleared           |
-| -------------------- | :---------------------------------------------: | :---------------------------------------------: |
-| Before `setup`       | <Icon name="check-circle" color="green"></Icon> | <Icon name="check-circle" color="green"></Icon> |
-| Before `validate`    | <Icon name="check-circle" color="green"></Icon> |                                                 |
-| After `cy.session()` | <Icon name="check-circle" color="green"></Icon> |                                                 |
+The page is cleared and cookies, local storage and session storage (session
+data) in all domains are cleared automatically when `cy.session()` runs and
+`testIsolation` is `on`. This guarantees consistent behavior whether a session
+is being created or restored and allows you to switch sessions without first
+having to explicitly log out.
 
-Calling `cy.session()` clears the current page in addition to restoring the
-cached session data. [`cy.visit()`](/api/commands/visit) must be explicitly
-called afterwards to ensure a page is visited if you did not provide a
-`validate` function that called `cy.visit()`.
+|                            |               Page cleared (test)               |              Session data cleared               |
+| -------------------------- | :---------------------------------------------: | :---------------------------------------------: |
+| Before `setup`             | <Icon name="check-circle" color="green"></Icon> | <Icon name="check-circle" color="green"></Icon> |
+| Before `validate`          | <Icon name="check-circle" color="green"></Icon> |                                                 |
+| Before `cy.session()` ends | <Icon name="check-circle" color="green"></Icon> |                                                 |
+
+[`cy.visit()`](/api/commands/visit) must be explicitly called afterwards to
+ensure the page to test is loaded.
+
+### Test Isolation `iff`
+
+When `testIsolation` is `off`, the page will not clear, however, the session
+data will clear when `cy.session()` runs.
+
+|                            | Page cleared (test) |              Session data cleared               |
+| -------------------------- | :-----------------: | :---------------------------------------------: |
+| Before `setup`             |                     | <Icon name="check-circle" color="green"></Icon> |
+| Before `validate`          |                     |                                                 |
+| Before `cy.session()` ends |                     |                                                 |
+
+[`cy.visit()`](/api/commands/visit) does not need to be called afterwards to
+ensure the page to test is loaded.
+
+NOTE: Turning test isolation off may improve performance of end-to-end tests,
+however, previous tests could impact the browser state of the next test and
+cause inconsistency when using .only(). Be mindful to write isolated tests when
+test isolation is off.
+
+When test isolation is `off`, it is encouraged to setup your session in a before
+hook or in the first test to ensure a clean setup.
 
 ### Session caching
 
@@ -887,7 +912,7 @@ that were run when creating and/or validating the session.
 In this image, a saved session is restored, but when `/personal` is visited in
 the `validate` function, the app redirects to `/signin`, which invalidates the
 session. A new session is created by visiting `/signin` where the user is logged
-in, after which, validation succeeds, and the session is made active for the
+in, after which, validation succeeds, and the session is available for the
 remainder of the test.
 
 <DocsImage src="/img/api/session/session-expanded.png" alt="Recreated session (expanded)"></DocsImage>
