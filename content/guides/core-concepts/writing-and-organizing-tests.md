@@ -572,8 +572,8 @@ always be able to be run independently from one another **and still pass**.
 </Alert>
 
 As stated in our mission, we hold ourselves accountable to champion a testing
-process that actually works, and have built Cypress to guide developer towards
-write independent tests from the start.
+process that actually works, and have built Cypress to guide developers towards
+writing independent tests from the start.
 
 We do this by cleaning up state _before_ each test to ensure that the operation
 of one test does not affect another test later on. The goal for each test should
@@ -592,7 +592,7 @@ all:
 - [stubs](/api/commands/stub)
 - [viewport changes](/api/commands/viewport)
 
-In additional to a clean test slate, Cypress also believes in run tests in a
+In additional to a clean test slate, Cypress also believes in running tests in a
 clean browser context such that the application or component under test behaves
 consistently when ran. This concept is described as `testIsolation`.
 
@@ -616,7 +616,7 @@ semi-clean browser context. When enabled Cypress will:
 
 The current test isolation implementation is named `legacy` because it has some
 gaps which have led to leaked browser state between tests due to the page not
-clearing, cookies and local storage from other domains unintentionally
+clearing, resulting in cookies and local storage from other domains unintentionally
 "bleeding" over and session storage persisting between tests.
 
 This mode will be replaced with `testIsolation` modes `on` and `off`, which are
@@ -655,7 +655,7 @@ application and perform the series of interactions needed to build the dom and
 browser state for each test.
 
 Additionally, the `cy.session()` command will inherent this mode and will clear
-the page and current browser context when establishing a browser session. so the
+the page and current browser context when establishing a browser session. This is so
 tests can reliably pass when run standalone or in a randomized order.
 
 ###### Off Mode
@@ -671,8 +671,8 @@ to `true` in the Cypress config.
 
 </Alert>
 
-When in `off` mode, Cypress will not later the browser context before the test
-starts. The page does not clear and cookies, local storage and session storage
+When in `off` mode, Cypress will not alter the browser context before the test
+starts. The page does not clear between tests and cookies, local storage and session storage
 will be available across tests in that suite. Additionally, the `cy.session()`
 command will only clear the current browser context when establishing the
 browser session - the current page will not clear.
