@@ -616,8 +616,8 @@ semi-clean browser context. When enabled Cypress will:
 
 The current test isolation implementation is named `legacy` because it has some
 gaps which have led to leaked browser state between tests due to the page not
-clearing, resulting in cookies and local storage from other domains unintentionally
-"bleeding" over and session storage persisting between tests.
+clearing, resulting in cookies and local storage from other domains
+unintentionally "bleeding" over and session storage persisting between tests.
 
 This mode will be replaced with `testIsolation` modes `on` and `off`, which are
 currently experimental. These modes can be enabled by setting
@@ -655,8 +655,8 @@ application and perform the series of interactions needed to build the dom and
 browser state for each test.
 
 Additionally, the `cy.session()` command will inherent this mode and will clear
-the page and current browser context when establishing a browser session. This is so
-tests can reliably pass when run standalone or in a randomized order.
+the page and current browser context when establishing a browser session. This
+is so tests can reliably pass when run standalone or in a randomized order.
 
 ###### Off Mode
 
@@ -672,10 +672,10 @@ to `true` in the Cypress config.
 </Alert>
 
 When in `off` mode, Cypress will not alter the browser context before the test
-starts. The page does not clear between tests and cookies, local storage and session storage
-will be available across tests in that suite. Additionally, the `cy.session()`
-command will only clear the current browser context when establishing the
-browser session - the current page will not clear.
+starts. The page does not clear between tests and cookies, local storage and
+session storage will be available across tests in that suite. Additionally, the
+`cy.session()` command will only clear the current browser context when
+establishing the browser session - the current page will not clear.
 
 It is important to note that turning test isolation `off` may improve the
 overall performance of end-to-end tests, however, previous tests could be impact
