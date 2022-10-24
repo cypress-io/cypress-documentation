@@ -209,7 +209,7 @@ object:
 | `excludeSpecPattern` | `*.hot-update.js`                     | A String or Array of glob patterns used to ignore test files that would otherwise be shown in your list of tests. [Please read the notes on using this.](#excludeSpecPattern)                         |
 | `experimentalSessionAndOrigin` | `false` | Enables cross-origin and improved session support, including the [`cy.origin()`](/api/commands/origin) and [`cy.session()`](/api/commands/session) commands. This enables `testIsolation=strict` by default. Only available in end-to-end testing. |    
 | `slowTestThreshold`  | `10000`                               | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                               |
-| `testIsolation`        | `legacy`                         | The [test isolation level](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation) applied to ensure a clean slate between tests. |
+| `testIsolation`        | `legacy`                         | The [test isolation level](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation) applied to ensure a clean state between tests. |
 
 :::cypress-config-example{noJson}
 
