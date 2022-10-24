@@ -564,6 +564,17 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 
 ### Test Isolation
 
+<Alert type="warning">
+
+<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
+Experimental</strong>
+
+The concept of test isolation is currently experimental, and can be enabled by
+setting the [`experimentalSessionAndOrigin`](/guides/references/experiments)
+option to `true` in the Cypress config.
+
+</Alert>
+
 <Alert type="success">
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Tests should
@@ -603,27 +614,8 @@ The test isolation mode is a global configuration and can be overridden at the
 #### End-to-end testing
 
 Cypress supports the following modes of test isolation in end-to-end testing to
-describe if a suite of tests should run in a clean browser context or not:
-`legacy` (deprecated), `on` (experimental) and `off` (experimental).
-
-###### Legacy Mode
-
-Cypress supports the `legacy` mode by default to ensure tests run in a
-semi-clean browser context. When enabled Cypress will:
-
-- [clears cookies](/api/commands/clearCookies) in current the domain
-- [clears local storage](/api/commands/clearLocalStorage) in current the domain
-
-The current test isolation implementation is named `legacy` because it has some
-gaps which have led to leaked browser state between tests due to the page not
-clearing, resulting in cookies and local storage from other domains
-unintentionally "bleeding" over and session storage persisting between tests.
-
-This mode will be replaced with `testIsolation` modes `on` and `off`, which are
-currently experimental. These modes can be enabled by setting
-the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
-to `true` in the Cypress config, however, `legacy` mode will no longer be an
-options.
+describe if a suite of tests should run in a clean browser context or not: `on`
+and `off`.
 
 ###### On Mode
 
@@ -685,11 +677,10 @@ one other.
 
 ###### Mode Comparison
 
-| testIsolation         | beforeEach test                                                                                                                                  | cy.session()                                                                                                                                     |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `legacy` (deprecated) | <br>- clears cookies in current domains<br>- local storage in current domains                                                                    | not available                                                                                                                                    |
-| `on` (experimental)   | - clears page by visiting `about:blank`<br>- clears cookies in all domains<br>- local storage in all domains<br>- session storage in all domains | - clears page by visiting `about:blank`<br>- clears cookies in all domains<br>- local storage in all domains<br>- session storage in all domains |
-| `off` (experimental)  | does not alter the current browser context                                                                                                       | <br>- clears cookies in all domains<br>- local storage in all domains<br>- session storage in all domains                                        |
+| testIsolation | beforeEach test                                                                                                                                  | cy.session()                                                                                                                                     |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `on`          | - clears page by visiting `about:blank`<br>- clears cookies in all domains<br>- local storage in all domains<br>- session storage in all domains | - clears page by visiting `about:blank`<br>- clears cookies in all domains<br>- local storage in all domains<br>- session storage in all domains |
+| `off`         | does not alter the current browser context                                                                                                       | <br>- clears cookies in all domains<br>- local storage in all domains<br>- session storage in all domains                                        |
 
 ##### Component testing
 

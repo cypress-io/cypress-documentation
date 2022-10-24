@@ -18,13 +18,11 @@ Enabling this flag does the following:
 
 - It adds the `cy.session()` and [`cy.origin()`](/api/commands/origin) commands,
   and [`Cypress.session`](/api/cypress-api/session) API.
-- It adds the following new behaviors (that will be the default in a future
-  major update of Cypress) at the beginning of each test:
-  - The
-    [`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
-    mode is enhanced from `legacy` mode to `on` mode such that
-    - The page is cleared (by setting it to `about:blank`).
-    - Cookies, local storage and session storage in all domains are cleared.
+- It adds the concept of
+  [`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+  which default to `on`, such that:
+  - The page is cleared (by setting it to `about:blank`).
+  - Cookies, local storage and session storage in all domains are cleared.
 - It supersedes the
   [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
   [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
