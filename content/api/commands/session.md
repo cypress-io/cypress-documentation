@@ -35,8 +35,8 @@ Enabling this flag does the following:
     mode is enhanced from `legacy` mode to `on` mode such that:
     - The page is cleared (by setting it to `about:blank`).
     - Cookies, local storage and session storage in all domains are cleared.
-- It supersedes the
-  [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
+- It supersedes
+  the [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
   [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
 - Cross-origin requests will now succeed, however, to interact with a
   cross-origin page you must use a `cy.origin` block.
