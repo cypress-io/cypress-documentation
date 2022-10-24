@@ -36,6 +36,9 @@ Go into the directory:
 cd my-awesome-app
 ```
 
+> You can also download a Git repo with a fully working copy of this tutorial
+> [here](https://github.com/cypress-io/component-testing-quickstart-apps/tree/main/angular).
+
 ### Install Cypress
 
 Next, let's add Cypress to the app:

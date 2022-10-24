@@ -30,6 +30,9 @@ cd my-awesome-app
 npm install
 ```
 
+> You can also download a Git repo with a fully working copy of this tutorial
+> [here](https://github.com/cypress-io/component-testing-quickstart-apps/tree/main/react).
+
 ### Install Cypress
 
 Next, let's add Cypress to the app:
