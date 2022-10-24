@@ -12,7 +12,7 @@ tests.
 
 The `cy.session()` command will inherit the
 [`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
-mode` value to determine whether or not the page is cleared when cacheing and
+mode value to determine whether or not the page is cleared when caching and
 restoring the browser context.
 
 <Alert type="warning">
