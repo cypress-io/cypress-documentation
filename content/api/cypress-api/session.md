@@ -20,7 +20,7 @@ Enabling this flag does the following:
   and [`Cypress.session`](/api/cypress-api/session) API.
 - It adds the concept of
   [`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
-  which default to `on`, such that:
+  which defaults to `on`, such that:
   - The page is cleared (by setting it to `about:blank`).
   - Cookies, local storage and session storage in all domains are cleared.
 - It supersedes the
