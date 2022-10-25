@@ -18,7 +18,9 @@ export default function Badge({ type, path, children }: BadgeProps) {
       )}
 
       {!path && (
-        <div className={classNames(`${s.badge}`, `${s[type]}`)}>{children}</div>
+        // simple inline badge (no anchor link) is a span to avoid "<div> cannot 
+        // appear as a descendant of <p>" console error
+        <span className={classNames(`${s.badge}`, `${s[type]}`)}>{children}</span>
       )}
     </>
   );

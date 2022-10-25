@@ -22,11 +22,6 @@ const config = {
   onBrokenMarkdownLinks: 'warn',
   favicon: undefined,
 
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'cypress-io', // Usually your GitHub org/user name.
-  projectName: 'cypress-docs', // Usually your repo name.
-
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
   // to replace "en" with "zh-Hans".
@@ -44,18 +39,12 @@ const config = {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl: 'https://github.com/cypress-io/cypress-docs/tree/master/',
           routeBasePath: '/',
-          lastVersion: 'current',
           remarkPlugins: [
             cypressConfigExample,
             cypressConfigPluginExample,
             visitMountExample,
             [copyTsToJs, { prettierOptions: prettierConfig }],
           ],
-          // versions: {
-          //   current: {
-          //     label: "10",
-          //   },
-          // },
         },
         blog: false,
         theme: {
@@ -73,11 +62,10 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     {
       navbar: {
-        title: '',
         style: 'dark',
         logo: {
           href: '/guides/overview/why-cypress',
-          alt: 'My Site Logo',
+          alt: 'Cypress Logo',
           src: '/img/logo/cypress-logo-dark.png',
         },
         items: [
@@ -118,11 +106,6 @@ const config = {
             label: 'v9 Docs',
             position: 'right',
           },
-          // {
-          //   type: "docsVersionDropdown",
-          //   position: "right",
-          //   dropdownActiveClassDisabled: true,
-          // },
           {
             href: 'https://github.com/cypress-io/cypress-docs',
             position: 'right',

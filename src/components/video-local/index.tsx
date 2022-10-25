@@ -2,7 +2,7 @@ import React from "react";
 import s from "./style.module.css";
 import { VideoProps } from "./types";
 
-export default function Video({ src }: VideoProps) {
+export default function LocalVideo({ src }: VideoProps) {
   return (
     <div className={s.docsVideo}>
       <video controls>
