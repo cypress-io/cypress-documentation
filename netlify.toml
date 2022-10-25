@@ -109,7 +109,7 @@
 
 [[redirects]]
   from = "/guides/getting-started/component-testing"
-  to = "/guides/component-testing/writing-your-first-component-test"
+  to = "/guides/component-testing/overview"
   status = 301
   force = true
 
@@ -162,8 +162,134 @@
   force = true
 
 [[redirects]]
-  from = "/guides/component-testing/props-vue"
-  to = "/guides/component-testing/testing-vue"
+  from = "/guides/component-testing/quickstart-react"
+  to = "/guides/component-testing/react/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/mounting-react"
+  to = "/guides/component-testing/react/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/testing-react"
+  to = "/guides/component-testing/react/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/events-react"
+  to = "/guides/component-testing/react/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/custom-mount-react"
+  to = "/guides/component-testing/react/examples"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/quickstart-angular"
+  to = "/guides/component-testing/angular/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/mounting-angular"
+  to = "/guides/component-testing/angular/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/testing-angular"
+  to = "/guides/component-testing/angular/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/events-angular"
+  to = "/guides/component-testing/angular/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/custom-mount-angular"
+  to = "/guides/component-testing/angular/examples"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/slots-angular"
+  to = "/guides/component-testing/angular/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/quickstart-vue"
+  to = "/guides/component-testing/vue/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/mounting-vue"
+  to = "/guides/component-testing/vue/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/testing-vue"
+  to = "/guides/component-testing/vue/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/events-vue"
+  to = "/guides/component-testing/vue/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/custom-mount-vue"
+  to = "/guides/component-testing/vue/examples"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/slots-vue"
+  to = "/guides/component-testing/vue/overview"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/quickstart-svelte"
+  to = "/guides/component-testing/svelte/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/mounting-svelte"
+  to = "/guides/component-testing/svelte/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/testing-svelte"
+  to = "/guides/component-testing/svelte/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/events-svelte"
+  to = "/guides/component-testing/svelte/quickstart"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/component-testing/custom-mount-svelte"
+  to = "/guides/component-testing/svelte/examples"
   status = 301
   force = true
 

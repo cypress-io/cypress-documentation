@@ -186,7 +186,8 @@ include the `cypress.d.ts` file in all your `tsconfig.json` files like so:
 ## Additional Mount Command Examples
 
 Visit the guides for scenarios in
-[React](/guides/component-testing/custom-mount-react),
-[Vue](/guides/component-testing/custom-mount-vue), and
-[Angular](/guides/component-testing/custom-mount-angular) for customizing a
-mount command.
+[React](/guides/component-testing/react/examples),
+[Vue](/guides/component-testing/vue/examples),
+[Angular](/guides/component-testing/angular/examples), and
+[Svelte](/guides/component-testing/svelte/examples) for customizing a mount
+command.
