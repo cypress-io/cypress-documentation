@@ -14,7 +14,9 @@ through all you need to know.
 To start off, we are going to create a new React app.
 
 We will use [Vite](https://vitejs.dev/) to create the app as it's quick to get
-up and running.
+up and running. If you use any of the other
+[supported frameworks](/guides/component-testing/react/overview#Framework-Support)
+in your project, the setup is the same.
 
 To create a React project with Vite, run the following from your command prompt:
 

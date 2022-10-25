@@ -14,7 +14,9 @@ through all you need to know.
 To start off, we are going to create a new Svelte app.
 
 We will use [Vite](https://vitejs.dev/) to create the app as it's quick to get
-up and running.
+up and running. If you use any of the other
+[supported frameworks](/guides/component-testing/svelte/overview#Framework-Support)
+in your project, the setup is the same.
 
 To create a Svelte project with Vite, run the following from your command
 prompt:
