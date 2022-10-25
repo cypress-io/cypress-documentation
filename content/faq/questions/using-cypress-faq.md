@@ -1135,7 +1135,7 @@ set good Cypress tests for a Next.js application in this
 [tutorial](https://getstarted.sh/bulletproof-next/e2e-testing-with-cypress).
 
 For component tests, Next.js support is currently in alpha. See the
-[Framework Configuration Guide on Next.js](/guides/component-testing/component-framework-configuration#Next-js)
+[Framework Configuration Guide on Next.js](/guides/component-testing/react/overview#Next-js)
 for more info.
 
 ## <Icon name="angle-right"></Icon> Can I test Gatsby.js sites using Cypress?

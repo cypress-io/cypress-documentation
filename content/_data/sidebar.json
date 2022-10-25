@@ -91,11 +91,23 @@
               "slug": "overview"
             },
             {
+              "title": "Styling Components",
+              "slug": "styling-components"
+            },
+            {
+              "title": "Configuration",
+              "slug": "component-framework-configuration"
+            },
+            {
+              "title": "Component Troubleshooting",
+              "slug": "component-test-troubleshooting"
+            },
+            {
               "title": "React Component Testing"
             },
             {
-              "title": "Introduction",
-              "slug": "react/introduction"
+              "title": "React Overview",
+              "slug": "react/overview"
             },
             {
               "title": "React Quickstart",
@@ -113,8 +125,8 @@
               "title": "Angular Component Testing"
             },
             {
-              "title": "Introduction",
-              "slug": "angular/introduction"
+              "title": "Angular Overview",
+              "slug": "angular/overview"
             },
             {
               "title": "Angular Quickstart",
@@ -132,8 +144,8 @@
               "title": "Vue Component Testing"
             },
             {
-              "title": "Introduction",
-              "slug": "vue/introduction"
+              "title": "Vue Overview",
+              "slug": "vue/overview"
             },
             {
               "title": "Vue Quickstart",
@@ -151,8 +163,8 @@
               "title": "Svelte Component Testing"
             },
             {
-              "title": "Introduction",
-              "slug": "svelte/introduction"
+              "title": "Svelte Overview",
+              "slug": "svelte/overview"
             },
             {
               "title": "Svelte Quickstart",
@@ -165,21 +177,6 @@
             {
               "title": "Svelte Examples",
               "slug": "svelte/examples"
-            },
-            {
-              "title": "Diving Deeper"
-            },
-            {
-              "title": "Framework Configuration",
-              "slug": "component-framework-configuration"
-            },
-            {
-              "title": "Styling Components",
-              "slug": "styling-components"
-            },
-            {
-              "title": "Component Troubleshooting",
-              "slug": "component-test-troubleshooting"
             }
           ]
         },

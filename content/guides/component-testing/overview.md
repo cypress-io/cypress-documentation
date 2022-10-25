@@ -1,5 +1,5 @@
 ---
-title: Component Testing Overview
+title: Cypress Component Testing
 ---
 
 <CtBetaAlert></CtBetaAlert>
@@ -21,18 +21,28 @@ results in components built mindfully.
 
 ### Supported Frameworks
 
-We support the following frameworks for component testing:
+Cypress currently has official support
+[React](/guides/component-testing/react/overview),
+[Angular](/guides/component-testing/angular/overview),
+[Vue](/guides/component-testing/vue/overview), and
+[Svelte](/guides/component-testing/svelte/overview) for component testing.
 
-- [React](/guides/component-testing/react/introduction)
-- [Angular](/guides/component-testing/angular/introduction)
-- [Vue](/guides/component-testing/vue/introduction)
-- [Svelte](/guides/component-testing/svelte/introduction)
+Cypress Component Testing runs in your existing development server. Below are
+all the development frameworks supported for each UI framework:
 
-For additional reading, we encourage folks to check out the
-[Component Driven](https://componentdriven.org) organization, which talks about
-the pros of component-driven development and may aid you when trying to figure
-out if you should be taking a page-based or component-based approach to building
-and testing a given feature.
+| Framework                                                                                                             | UI Library  | Bundler    |
+| --------------------------------------------------------------------------------------------------------------------- | ----------- | ---------- |
+| [Create React App 4+](/guides/component-testing/react/overview#Create-React-App-CRA)                                  | React 16+   | Webpack 4+ |
+| [Next.js 11+](/guides/component-testing/react/overview#Next-js) <Badge type="info">Alpha</Badge>                      | React 16+   | Webpack 5  |
+| [React with Vite](/guides/component-testing/react/overview#React-with-Vite)                                           | React 16+   | Vite 2+    |
+| [React with Webpack](/guides/component-testing/react/overview#React-with-Webpack)                                     | React 16+   | Webpack 4+ |
+| [Vue CLI](/guides/component-testing/vue/overview#Vue-CLI)                                                             | Vue 2+      | Webpack 4+ |
+| [Nuxt 2](/guides/component-testing/vue/overview#Nuxt) <Badge type="info">Alpha</Badge>                                | Vue 2+      | Webpack 4+ |
+| [Vue with Vite](/guides/component-testing/vue/overview#Vue-with-Vite)                                                 | Vue 2+      | Vite 2+    |
+| [Vue with Webpack](/guides/component-testing/vue/overview#Vue-with-Webpack)                                           | Vue 2+      | Webpack 4+ |
+| [Angular](/guides/component-testing/angular/overview#Framework-Configuration) <Badge type="info">Alpha</Badge>        | Angular 13+ | Webpack 5  |
+| [Svelte with Vite](/guides/component-testing/svelte/overview#Svelte-with-Vite) <Badge type="info">Alpha</Badge>       | Svelte 3+   | Vite 2+    |
+| [Svelte with Webpack](/guides/component-testing/svelte/overview#Svelte-with-Webpack) <Badge type="info">Alpha</Badge> | Svelte 3+   | Webpack 4+ |
 
 ### Component Testing vs. End-to-End Testing
 
@@ -47,6 +57,12 @@ using a development server instead of rendering within a complete website, which
 results in faster tests and fewer dependencies on infrastructure than end-to-end
 tests covering the same code paths.
 
-Lastly, Cypress's API is user-centric and built for testing anything that
-renders on the web. Therefore, many of your tests will appear framework-agnostic
-and **approachable for developers coming from any background**.
+Cypress's API is user-centric and built for testing anything that renders on the
+web. Therefore, many of your tests will appear framework-agnostic and
+**approachable for developers coming from any background**.
+
+For additional reading, we encourage folks to check out the
+[Component Driven](https://componentdriven.org) organization, which talks about
+the pros of component-driven development and may aid you when trying to figure
+out if you should be taking a page-based or component-based approach to building
+and testing a given feature.
