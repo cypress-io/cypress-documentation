@@ -413,6 +413,21 @@ phases:
 
 ## Using the Cypress Dashboard with AWS CodeBuild
 
+<Alert type="warning">
+
+Dashboard analytics are dependent on your CI environment reliably providing
+commit SHA data (typically via an environment variable) which is not always
+present by default. This is not a problem for most users, but if you are facing
+integration issues with your CodeBuild setup, please make sure the git
+information is being sent properly by following
+[these guidelines](/guides/continuous-integration/introduction#Git-information),
+or just see
+[the example `codebuild.yml` file at the top of this page](#Basic-Setup). If you
+are still facing issues after this, please
+[contact us](mailto:hello@cypress.io).
+
+</Alert>
+
 In the AWS CodeBuild configuration we have defined in the previous section, we
 are leveraging three useful features of the
 [Cypress Dashboard](https://on.cypress.io/dashboard):
