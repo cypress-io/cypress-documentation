@@ -198,6 +198,20 @@ If the answer is **no** because the text could be changed - then use
 [`cy.get()`](/api/commands/get) with data attributes. Changing the text to
 `Save` would then not cause a test failure.
 
+### Cypress and Testing Library
+
+Cypress loves the Testing Library project. We use Testing Library internally,
+and our philosophy aligns closely with Testing Library's ethos and approach to
+writing tests. We strongly endorse their best practices.
+
+You can use the
+[Cypress Testing Library](https://testing-library.com/docs/cypress-testing-library/intro/)
+package to use the familiar testing library methods (like `findByRole`,
+`findByLabelText`, etc...) to select elements in Cypress specs.
+
+In particular, if you're looking for more resources to understand how we
+recommend you approach testing your components, look to:
+
 ## Assigning Return Values
 
 <Alert type="danger">
