@@ -56,8 +56,8 @@ configuration object:
 
 | Version                                       | Changes                                                                                                                      |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| [10.9.0](/guides/references/changelog#10-9-0) | Removed `experimentalSessionAndOrigin` and made it the default behavior.                                                     |
-| [10.8.0](/guides/references/changelog#10-x-y) | Added `experimentalWebKitSupport`.                                                                                           |
+| [12.0.0](/guides/references/changelog#12-0-0) | Removed `experimentalSessionAndOrigin` and made it the default behavior.                                                     |
+| [10.8.0](/guides/references/changelog#10-8-0) | Added `experimentalWebKitSupport`.                                                                                           |
 | [10.6.0](/guides/references/changelog#10-6-0) | Added support for `experimentalSingleTabRunMode`.                                                                            |
 | [10.4.0](/guides/references/changelog#10-4-0) | Added support for `experimentalModifyObstructiveThirdPartyCode`.                                                             |
 | [9.6.0](/guides/references/changelog#9-6-0)   | Added support for `experimentalSessionAndOrigin` and removed `experimentalSessionSupport`.                                   |

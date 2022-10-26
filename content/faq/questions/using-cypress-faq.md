@@ -723,19 +723,8 @@ By default, Cypress automatically
 [clears all cookies **before** each test](/api/commands/clearcookies) to prevent
 state from building up.
 
-You can preserve specific cookies across tests using the
-[Cypress.Cookies api](/api/cypress-api/cookies):
-
-```javascript
-// now any cookie with the name 'session_id' will
-// not be cleared before each test runs
-Cypress.Cookies.defaults({
-  preserve: 'session_id',
-})
-```
-
-You **cannot** currently preserve localStorage across tests and can read more in
-[this issue](https://github.com/cypress-io/cypress/issues/461#issuecomment-325402086).
+You can preserve session details across tests using the
+[`cy.session()`](/api/commands/session) command.
 
 ## <Icon name="angle-right"></Icon> Some of my elements animate in; how do I work around that?
 
