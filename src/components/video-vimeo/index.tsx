@@ -2,7 +2,7 @@ import React from "react";
 import s from "./style.module.css";
 import { VideoVimeoProps } from "./types";
 
-export default function VideoYouTube({ src, title }: VideoVimeoProps) {
+export default function VideoVimeo({ src, title }: VideoVimeoProps) {
   const videoId = () => {
     const idStartIndex = src.lastIndexOf("/") + 1;
 
