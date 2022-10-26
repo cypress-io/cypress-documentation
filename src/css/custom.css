@@ -110,6 +110,10 @@ article {
   height: 2.3rem;
 }
 
+.navbar__toggle {
+  margin-right: 1rem;
+}
+
 .navbar__item {
   font-weight: 700;
   font-size: 1.00rem;
@@ -159,7 +163,8 @@ article {
   padding-bottom: 0.3rem;
 }
 
-.menu {
+/* only style the desktop menu background - mobile will remain dark theme */
+.theme-doc-sidebar-container .menu {
   background-color: #f9fcfb;
   border-right: 1px solid #f0f3f2;
 }
