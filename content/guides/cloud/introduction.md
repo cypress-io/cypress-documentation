@@ -21,7 +21,7 @@ with your favorite tools.
 
 <!-- textlint-disable -->
 
-<DocsVideo src="https://youtube.com/embed/ezp60FUnjGg"></DocsVideo>
+<DocsVideo src="https://vimeo.com/736212167"></DocsVideo>
 
 <!-- textlint-enable -->
 
