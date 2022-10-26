@@ -23,7 +23,6 @@
     "/api/cypress-api/screenshot-api": "Cypress.Screenshot",
     "/api/cypress-api/keyboard-api": "Cypress.Keyboard",
     "/api/cypress-api/selector-playground-api": "Cypress.SelectorPlayground",
-    "/api/cypress-api/cypress-server": "Cypress.Server",
     "/api/cypress-api/arch": "Cypress.arch",
     "/api/cypress-api/browser": "Cypress.browser",
     "/api/cypress-api/config": "Cypress.config",

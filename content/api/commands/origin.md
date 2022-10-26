@@ -508,8 +508,6 @@ following Cypress commands will throw errors if used in the callback:
 - `cy.origin()`
 - [`cy.intercept()`](/api/commands/intercept)
 - [`cy.session()`](/api/commands/session)
-- [`cy.server()`](/api/commands/server)
-- [`cy.route()`](/api/commands/route)
 
 ### Other limitations
 

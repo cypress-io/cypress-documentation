@@ -350,10 +350,6 @@
             {
               "title": "Cross Browser Testing",
               "slug": "cross-browser-testing"
-            },
-            {
-              "title": "Web Security",
-              "slug": "web-security"
             }
           ]
         },
@@ -758,10 +754,6 @@
               "slug": "root"
             },
             {
-              "title": "route",
-              "slug": "route"
-            },
-            {
               "title": "screenshot",
               "slug": "screenshot"
             },
@@ -780,10 +772,6 @@
             {
               "title": "selectFile",
               "slug": "selectfile"
-            },
-            {
-              "title": "server",
-              "slug": "server"
             },
             {
               "title": "session",
@@ -940,10 +928,6 @@
             {
               "title": "SelectorPlayground",
               "slug": "selector-playground-api"
-            },
-            {
-              "title": "Server",
-              "slug": "cypress-server"
             },
             {
               "title": "arch",
