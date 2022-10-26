@@ -10,7 +10,7 @@ export default function VideoVimeo({ src, title }: VideoVimeoProps) {
   };
 
   return (
-    <div className={s.embedContainer}>
+    <div className="embedContainer">
       <iframe
         src={`https://player.vimeo.com/video/${videoId()}`}
         title={title}
