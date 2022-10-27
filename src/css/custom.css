@@ -57,6 +57,12 @@ body {
   background: #cff1e6;
 }
 
+/* only style the light mode sidebar background on desktop - mobile will remain dark theme */
+[data-theme="light"] .theme-doc-sidebar-container .menu {
+  background-color: #f9fcfb;
+  border-right: 1px solid #f0f3f2;
+}
+
 [data-theme="dark"] {
   --ifm-color-primary: #25c2a0;
   --ifm-color-primary-dark: #21af90;
@@ -110,6 +116,10 @@ article {
   height: 2.3rem;
 }
 
+.navbar__toggle {
+  margin-right: 1rem;
+}
+
 .navbar__item {
   font-weight: 700;
   font-size: 1.00rem;
@@ -157,11 +167,6 @@ article {
 
 .theme-doc-sidebar-item-category {
   padding-bottom: 0.3rem;
-}
-
-.menu {
-  background-color: #f9fcfb;
-  border-right: 1px solid #f0f3f2;
 }
 
 /* sidebar link chevrons */
