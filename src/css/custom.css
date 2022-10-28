@@ -271,17 +271,32 @@ div.markdown h3 a:hover {
 
 /* YouTube Embeded Videos*/
 .embedContainer {
-  position: relative;
+  /* position: relative;
   padding-bottom: 56.25%;
   overflow: hidden;
   max-width: 100%;
   height: auto;
   margin-bottom: 1rem;
   box-shadow: 0 0 3px rgb(0 0 0 / 30%);
-  border: 1px solid #ddd;
+  border: 1px solid #ddd; */
+
+  height: auto;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  width: inherit;
+  margin: 0 auto;
 }
 
-.embedContainer iframe,
+.yt-lite {
+}
+.yt-lite > .lty-playbtn {
+  cursor: pointer;
+  border: 0;
+}
+
+/* .embedContainer iframe,
 .embedContainer object,
 .embedContainer embed {
   position: absolute;
@@ -289,7 +304,7 @@ div.markdown h3 a:hover {
   left: 0;
   width: 100%;
   height: 100%;
-}
+} */
 
 /* main nav icons - applied in docusaurus.config.js */
 .github-logo::before {

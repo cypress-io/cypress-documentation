@@ -6709,6 +6709,11 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-lite-youtube-embed@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/react-lite-youtube-embed/-/react-lite-youtube-embed-2.3.1.tgz#f5ecb8e178b67e4b38670fccb32f05ccc80f0939"
+  integrity sha512-14YlE6iZPHwqaQqSmwfI614qumdVAICU9PFmk34vcGnOfiixFjaATGkOfUd2TA6pFpVMP8DT2/l9ebu5/aKeag==
+
 react-loadable-ssr-addon-v5-slorber@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/react-loadable-ssr-addon-v5-slorber/-/react-loadable-ssr-addon-v5-slorber-1.0.1.tgz"
