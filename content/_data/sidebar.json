@@ -84,9 +84,6 @@
           "slug": "component-testing",
           "children": [
             {
-              "title": "Introduction to Component Testing"
-            },
-            {
               "title": "Overview",
               "slug": "overview"
             },
@@ -99,8 +96,8 @@
               "slug": "component-framework-configuration"
             },
             {
-              "title": "Component Troubleshooting",
-              "slug": "component-test-troubleshooting"
+              "title": "FAQ",
+              "slug": "faq"
             },
             {
               "title": "React Component Testing"

@@ -51,7 +51,6 @@
     "/guides/component-testing/devs-vs-users": "Who Are You Testing For?",
     "/guides/component-testing/overview": "Cypress Component Testing",
     "/guides/component-testing/component-framework-configuration": "Component Testing Config",
-    "/guides/component-testing/component-test-troubleshooting": "Component Troubleshooting",
     "/guides/component-testing/react/overview": "React Component Testing",
     "/guides/component-testing/angular/overview": "Angular Component Testing",
     "/guides/component-testing/vue/overview": "Vue Component Testing",
