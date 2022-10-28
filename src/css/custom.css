@@ -285,11 +285,11 @@ div.markdown h3 a:hover {
   overflow: hidden;
   width: 100%;
   max-width: 100%;
-  width: inherit;
   margin: 0 auto;
 }
 
 .yt-lite {
+  width: inherit;
 }
 .yt-lite > .lty-playbtn {
   cursor: pointer;
