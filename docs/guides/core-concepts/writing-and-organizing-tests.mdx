@@ -405,13 +405,13 @@ test.
 
 :::
 
-<Alert type="info">
+:::info
 
 Needing a low code approach to create tests? Use
 [Cypress Studio](/guides/references/cypress-studio) to record your browser
 interactions.
 
-</Alert>
+:::
 
 ### Test Structure
 
@@ -592,12 +592,12 @@ option to `true` in the Cypress config.
 
 :::
 
-<Alert type="success">
+:::tip
 
-<Icon name="check-circle" color="green"></Icon> **Best Practice:** Tests should always
+&nbsp;<Icon name="check-circle" color="green" /> **Best Practice:** Tests should always
 be able to be run independently from one another **and still pass**.
 
-</Alert>
+:::
 
 As stated in our mission, we hold ourselves accountable to champion a testing
 process that actually works, and have built Cypress to guide developers towards
@@ -671,7 +671,7 @@ is so tests can reliably pass when run standalone or in a randomized order.
 
 ###### Off Mode
 
-<Alert type="warning">
+:::caution
 
 <strong class="alert-header">
   <Icon name="exclamation-triangle"></Icon>
@@ -682,7 +682,7 @@ is so tests can reliably pass when run standalone or in a randomized order.
 the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
 to `true` in the Cypress config.
 
-</Alert>
+:::
 
 When in `off` mode, Cypress will not alter the browser context before the test
 starts. The page does not clear between tests and cookies, local storage and
