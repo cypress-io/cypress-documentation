@@ -15,17 +15,17 @@
   --ifm-color-primary-light: #33925d;
   --ifm-color-primary-lighter: #359962;
   --ifm-color-primary-lightest: #3cad6e;
-  --ifm-code-font-size: 85%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
-  --ifm-font-family-base: 'Source Sans Pro';
   --ifm-toc-border-color: #eee;
+  --ifm-table-stripe-background: #f3f4f6;
+  --ifm-font-family-base: 'Source Sans Pro';
+  --ifm-code-font-size: 85%;
   --ifm-line-height-base: 1.6;
   --ifm-global-spacing: 1.3rem;
-  --ifm-table-stripe-background: rgb(243, 244, 246);
   --docusaurus-highlighted-code-line-bg: rgba(71, 128, 220, 0.4);
+  --link-blue: #1079c3;
 }
 
-/* prevent fonts from looking so chunky, esp in FF */
+/* prevent fonts from looking chunky, esp in Firefox */
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -33,7 +33,7 @@ body {
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme="light"] {
-  --ifm-font-color-base: #2e3138
+  --ifm-font-color-base: #2e3138;
 }
 
 /* acessibility contrast */
@@ -46,11 +46,11 @@ body {
 }
 
 [data-theme="light"] .menu__link--active {
-  --ifm-menu-color-active: #26764a;
+  --ifm-menu-color-active: var(--ifm-color-primary-darker);
 }
 
 [data-theme="light"] .breadcrumbs__item--active .breadcrumbs__link {
-  --ifm-breadcrumb-color-active: #26764a;
+  --ifm-breadcrumb-color-active: var(--ifm-color-primary-darker);
 }
 
 [data-theme="light"] .menu__link--active:not(.menu__link--sublist) {
@@ -71,8 +71,8 @@ body {
   --ifm-color-primary-light: #29d5b0;
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
-  --ifm-toc-border-color: var(--ifm-color-gray-700)
+  --ifm-toc-border-color: var(--ifm-color-gray-700);
+  --link-blue-dark-mode: #29a7ff;
 }
 
 [data-theme="dark"] .menu {
@@ -92,9 +92,9 @@ body {
 }
 
 [data-theme="dark"] div.markdown a {
-  color: #29a7ff;
   text-decoration: none;
-  border-bottom: 1px dotted #29a7ff;
+  color: var(--link-blue-dark-mode);
+  border-bottom: 1px dotted var(--link-blue-dark-mode);
 }
 
 article {
@@ -123,7 +123,7 @@ article {
 .navbar__item {
   font-weight: 700;
   font-size: 1.00rem;
-  color: rgb(209 213 219 / 1);
+  color: #d1d5db;
   margin-left: 1rem;
 }
 
@@ -134,8 +134,8 @@ article {
 
 .navbar__link:hover,
     .navbar__link--active {
-      color: rgb(255 255 255 / 1);
-      background-color: rgb(55 65 81 / 1);
+      color: #ffffff;
+      background-color: #374151;
       border-radius: 0.375rem;
       padding-top: 0.45rem;
       padding-bottom: 0.45rem;
@@ -178,8 +178,7 @@ article {
   margin-bottom: 2rem;
 }
 
-/* TODO: using attribute selector for these dynamic classes
-is swizzling better here? */
+/* using attribute selector for these dynamic classes */
 [class^="admonitionHeading_"] {
   display: none;
 }
@@ -190,9 +189,9 @@ is swizzling better here? */
 }
 
 .markdown a {
-  color: #1079c3;
+  color: var(--link-blue);
   text-decoration: none;
-  border-bottom: 1px dotted #1079c3;
+  border-bottom: 1px dotted var(--link-blue);
 }
 
 div[class^=announcementBar] {
@@ -278,7 +277,7 @@ div.markdown h3 a:hover {
   height: auto;
   margin-bottom: 1rem;
   box-shadow: 0 0 3px rgb(0 0 0 / 30%);
-  border: 1px solid #ddd;
+  border: 1px solid var(--ifm-toc-border-color);
 }
 
 .embedContainer iframe,
@@ -379,8 +378,8 @@ div.markdown h3 a:hover {
 .inlineTOC ul > li:before {
   content: ' ';
   display: inline-block;
-  border-bottom: 2px solid #1079c3;
-  border-right: 2px solid #1079c3;
+  border-bottom: 2px solid var(--link-blue);
+  border-right: 2px solid var(--link-blue);
   height: 6px;
   width: 6px;
   transform: rotate(-45deg);
@@ -390,8 +389,8 @@ div.markdown h3 a:hover {
 /* section headers */
 .errorsInlineTOC div > ul > li > a {
   font-size: 1.25rem;
-  color: #6b7280;
-  /* !important to keep the hoizontal rule under the section titles from acting janky on hover */
+  color: var(--ifm-color-gray-700);
+  /* !important for specificity to keep hoizontal rule under section titles from acting janky on hover */
   border-bottom: 1px solid var(--ifm-toc-border-color) !important;
   display: block;
   padding-top: 1rem;
