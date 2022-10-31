@@ -986,10 +986,6 @@
               "slug": "platform"
             },
             {
-              "title": "require",
-              "slug": "require"
-            },
-            {
               "title": "session",
               "slug": "session"
             },

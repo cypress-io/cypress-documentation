@@ -16,29 +16,28 @@ limitation determined by standard web security features of the browser. The
 <strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
 Experimental</strong>
 
-The `cy.origin()` command is currently experimental and can be enabled by
-setting
-the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
-to `true` in the Cypress config.
+The `session` API is currently experimental, and can be enabled by setting the
+[`experimentalSessionAndOrigin`](/guides/references/experiments) option to
+`true` in the Cypress config.
 
 Enabling this flag does the following:
 
-- It adds the [`cy.session()`](/api/commands/session) and `cy.origin()`
-  commands, and [`Cypress.session`](/api/cypress-api/session) API.
-- It adds the following new behaviors (that will be the default in a future
-  major version release of Cypress) at the beginning of each test:
-  - The page is cleared (by setting it to `about:blank`).
-  - All active session data (cookies, `localStorage` and `sessionStorage`)
-    across all domains are cleared.
-- It supersedes
-  the [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
-  [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
+- It adds the `cy.session()` and [`cy.origin()`](/api/commands/origin) commands,
+  and [`Cypress.session`](/api/cypress-api/session) API.
+- It adds the concept of
+  [`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+  which defaults to `on`, such that:
+  - The page is cleared (by setting it to `about:blank`).
+  - Cookies, local storage and session storage in all domains are cleared.
+- It supersedes the
+  [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
+  [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
 - Cross-origin requests will now succeed, however, to interact with a
   cross-origin page you must use a `cy.origin` block.
 
-Because the page is cleared before each
-test, [`cy.visit()`](/api/commands/visit) must be explicitly called in each test
-to visit a page in your application.
+Because the page is cleared at the beginning of each test by default,
+[`cy.visit()`](/api/commands/visit) must be explicitly called at the beginning
+of each test.
 
 </Alert>
 
@@ -390,12 +389,12 @@ and reuse it across tests.
 
 Enabling the `experimentalSessionAndOrigin` flag makes the test-runner work
 slightly differently, and some test suites that rely on the existing behaviour
-may have to be updated. The most important of these changes is **test
-isolation**. This means that after every test, the current page is reset to
-`about:blank` and all active session data
-(cookies, `localStorage` and `sessionStorage`) across all domains are cleared.
-This change is opt-in for now, but will be standardized in a future major
-release of Cypress, so eventually all tests will need to be isolated.
+may have to be updated. The most important of these changes is
+[**test isolation**]() which defaults to `on`. This means that after every test,
+the current page is reset to `about:blank` and cookies, local storage and
+session storage in all domains are cleared before each test. This change is
+opt-in for now, but will be standardized in a future major release of Cypress,
+so eventually all tests will need to be isolated.
 
 Before this change, it was possible to write tests such that you could, for
 example, log in to a CMS in the first test, change some content in the second
@@ -507,27 +506,53 @@ into the callback.
 
 ### Dependencies / Sharing Code
 
-It is not possible to use
+[ES module dynamic `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#dynamic_imports)
+and/or
 [CommonJS `require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
-or
-[dynamic ES module `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#dynamic_imports)
-within the callback. However, [`Cypress.require()`](/api/cypress-api/require)
-can be utilized to include [npm](https://www.npmjs.com/) packages and other
-files. It is functionally the same as using
-[CommonJS `require()`](https://nodejs.org/en/knowledge/getting-started/what-is-require/)
-in browser-targeted code.
+can be used within the callback to include [npm](https://www.npmjs.com/)
+packages and other files.
+
+<Alert type="warning">
+
+Using `import()` and `require()` within the callback requires version 5.15.0 or
+greater of the
+[`@cypress/webpack-preprocessor`](https://github.com/cypress-io/cypress/tree/master/npm/webpack-preprocessor).
+This is included in Cypress by default, but if your project installs its own
+version of `@cypress/webpack-preprocessor` that is set up in your Cypress
+config, make sure it is version 5.15.0 or greater.
+
+If using an older version of the webpack or a different preprocessor, you'll see
+an error that includes the following text:
+
+_Using require() or import() to include dependencies requires using the latest
+version of @cypress/webpack-preprocessor._
+
+</Alert>
+
+#### Example
 
 ```js
+// ES modules
+cy.origin('somesite.com', async () => {
+  const _ = await import('lodash')
+  const utils = await import('../support/utils')
+
+  // ... use lodash and utils ...
+})
+
+// CommonJS
 cy.origin('somesite.com', () => {
-  const _ = Cypress.require('lodash')
-  const utils = Cypress.require('../support/utils')
+  const _ = require('lodash')
+  const utils = require('../support/utils')
 
   // ... use lodash and utils ...
 })
 ```
 
-`Cypress.require()` can be used to share custom commands between tests run in
-primary and secondary origins. We recommend this pattern for setting up your
+#### Custom commands
+
+This makes it possible to share custom commands between tests run in primary and
+secondary origins. We recommend this pattern for setting up your
 [support file](/guides/core-concepts/writing-and-organizing-tests#Support-file)
 and setting up custom commands to run within the `cy.origin()` callback:
 
@@ -561,7 +586,7 @@ before(() => {
   // calls in this spec. put it in your support file to make them available to
   // all specs
   cy.origin('somesite.com', () => {
-    Cypress.require('../support/commands')
+    require('../support/commands')
   })
 })
 
@@ -573,6 +598,8 @@ it('tests somesite.com', () => {
 })
 ```
 
+#### Shared execution context
+
 The JavaScript execution context is persisted between `cy.origin()` callbacks
 that share the same origin. This can be utilized to share code between
 successive `cy.origin()` calls.
@@ -582,7 +609,7 @@ before(() => {
   cy.origin('somesite.com', () => {
     // makes commands defined in this file available to all callbacks
     // for somesite.com
-    Cypress.require('../support/commands')
+    require('../support/commands')
   })
 })
 

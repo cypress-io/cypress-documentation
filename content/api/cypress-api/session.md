@@ -11,26 +11,27 @@ be used alongside the [`cy.session()`](/api/commands/session) command.
 Experimental</strong>
 
 The `session` API is currently experimental, and can be enabled by setting the
-[`experimentalSessionSupport`](/guides/references/experiments) flag to `true` in
-the Cypress config or by using [`Cypress.config()`](/api/cypress-api/config) at
-the top of a spec file.
+[`experimentalSessionAndOrigin`](/guides/references/experiments) option to
+`true` in the Cypress config.
 
 Enabling this flag does the following:
 
-- It adds the [`cy.session()`](/api/commands/session) command for use in tests.
-- It adds the [`Cypress.session`](/api/cypress-api/session) API.
-- It adds the following new behaviors (that will be the default in a future
-  major update of Cypress) at the beginning of each test:
+- It adds the `cy.session()` and [`cy.origin()`](/api/commands/origin) commands,
+  and [`Cypress.session`](/api/cypress-api/session) API.
+- It adds the concept of
+  [`testIsolation`](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+  which defaults to `on`, such that:
   - The page is cleared (by setting it to `about:blank`).
-  - All active session data (cookies, `localStorage` and `sessionStorage`)
-    across all domains are cleared.
-- It overrides the
+  - Cookies, local storage and session storage in all domains are cleared.
+- It supersedes the
   [`Cypress.Cookies.preserveOnce()`](/api/cypress-api/cookies#Preserve-Once) and
   [`Cypress.Cookies.defaults()`](/api/cypress-api/cookies#Defaults) methods.
+- Cross-origin requests will now succeed, however, to interact with a
+  cross-origin page you must use a `cy.origin` block.
 
-Because the page is cleared before each test,
-[`cy.visit()`](/api/commands/visit) must be explicitly called in each test to
-visit a page in your application.
+Because the page is cleared at the beginning of each test by default,
+[`cy.visit()`](/api/commands/visit) must be explicitly called at the beginning
+of each test.
 
 </Alert>
 

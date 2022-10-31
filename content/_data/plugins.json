@@ -362,6 +362,13 @@
     {
       "name": "Custom Commands",
       "plugins": [
+         {
+          "name": "cypress-plugin-api",
+          "description": "Cypress plugin for effective API testing. Imagine Postman, but in Cypress.",
+          "link": "https://github.com/filiphric/cypress-plugin-api",
+          "keywords": ["api"],
+          "badge": "community"
+        },
         {
           "name": "cy-view",
           "description": "Run tests on multiple URLs at various viewport sizes.",
@@ -636,6 +643,13 @@
           "description": "Cypress custom command to wait and verify that file was downloaded",
           "link": "https://github.com/elaichenkov/cy-verify-downloads",
           "keywords": ["commands", "assertions", "wait", "verify", "download"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-if",
+          "description": "Easy conditional if-else logic for your Cypress tests",
+          "link": "https://github.com/bahmutov/cypress-if",
+          "keywords": ["commands"],
           "badge": "community"
         },
         {
