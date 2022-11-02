@@ -203,6 +203,9 @@ If neither `cafile` nor `ca` are set, Cypress looks at the system environment va
 `NODE_EXTRA_CA_CERTS` and uses the corresponding certificate(s) as an extension 
 for the trusted certificate authority when downloading the Cypress binary. 
 
+Note that the npm config is used as a replacement, and the node environment
+variable is used as an extension.
+
 ## Opt out of sending exception data to Cypress
 
 When an exception is thrown regarding Cypress, we send along the exception data
