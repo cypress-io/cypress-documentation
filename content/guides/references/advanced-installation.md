@@ -199,9 +199,10 @@ Cypress, add the following to your `.npmrc`:
 cafile=/home/person/certs/ca.crt
 ```
 
-If neither `cafile` nor `ca` are set, Cypress looks at the system environment variable
-`NODE_EXTRA_CA_CERTS` and uses the corresponding certificate(s) as an extension 
-for the trusted certificate authority when downloading the Cypress binary. 
+If neither `cafile` nor `ca` are set, Cypress looks at the system environment
+variable `NODE_EXTRA_CA_CERTS` and uses the corresponding certificate(s) as an
+extension for the trusted certificate authority when downloading the Cypress
+binary.
 
 Note that the npm config is used as a replacement, and the node environment
 variable is used as an extension.
