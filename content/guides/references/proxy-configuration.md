@@ -126,7 +126,10 @@ This section refers to npm config variables and node environment variables, _not
 
 </Alert>
 
-Cypress automatically reads from npm config's 
+Cypress needs to be able to authenticate properly when communicating to
+the [Dashboard Service](/guides/dashboard/introduction). When connecting through a proxy,
+oftentimes a self signed certificate is used as a certificate authority. In order to handle
+this configuration, Cypress automatically reads from npm config's 
 [`cafile`](https://docs.npmjs.com/cli/v8/using-npm/config#cafile) and 
 [`ca`](https://docs.npmjs.com/cli/v8/using-npm/config#ca) options and the
 [`NODE_EXTRA_CA_CERTS`](https://nodejs.org/api/cli.html#node_extra_ca_certsfile) 
