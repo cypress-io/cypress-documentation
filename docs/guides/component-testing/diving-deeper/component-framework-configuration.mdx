@@ -1,31 +1,25 @@
 ---
+<<<<<<< HEAD:docs/guides/component-testing/diving-deeper/component-framework-configuration.mdx
 title: Framework Configuration
 sidebar_position: 10
+=======
+title: Component Testing Config
+>>>>>>> react-ct-guide-rework:content/guides/component-testing/component-framework-configuration.md
 ---
 
 <CtBetaAlert></CtBetaAlert>
 
-Writing tests in Cypress is the same regardless of whichever UI library you
-choose (React or Vue, currently). However, each framework requires a different
-setup configuration.
+When you launch Cypress for the first time in a project, the app will
+automatically guide you through setup and configuration. You don't need to do
+anything additional to get started.
 
-Cypress currently supports the following frameworks and versions for component
-testing:
+Refer to the "Framework Configuration" guide in each UI framework's overview
+guide for a list of supported development servers and how they are configured.
 
-| Framework                                                                    | UI Library  | Bundler    |
-| ---------------------------------------------------------------------------- | ----------- | ---------- |
-| [Create React App 4+](#Create-React-App-CRA)                                 | React 16+   | Webpack 4+ |
-| [Next.js 11+](#Next-js) <Badge type="info">Alpha</Badge>                     | React 16+   | Webpack 5  |
-| [React with Vite](#React-with-Vite)                                          | React 16+   | Vite 2+    |
-| [React with Webpack](#React-with-Webpack)                                    | React 16+   | Webpack 4+ |
-| [Vue CLI](#Vue-CLI)                                                          | Vue 2+      | Webpack 4+ |
-| [Nuxt 2](#Nuxt) <Badge type="info">Alpha</Badge>                             | Vue 2+      | Webpack 4+ |
-| [Vue with Vite](#Vue-with-Vite)                                              | Vue 2+      | Vite 2+    |
-| [Vue with Webpack](#Vue-with-Webpack)                                        | Vue 2+      | Webpack 4+ |
-| [Angular](#Angular) <Badge type="info">Alpha</Badge>                         | Angular 13+ | Webpack 5  |
-| [Svelte with Vite](#Svelte-with-Vite) <Badge type="info">Alpha</Badge>       | Svelte 3+   | Vite 2+    |
-| [Svelte with Webpack](#Svelte-with-Webpack) <Badge type="info">Alpha</Badge> | Svelte 3+   | Webpack 4+ |
+Below are more advanced configuration options you can customize to fit your
+project.
 
+<<<<<<< HEAD:docs/guides/component-testing/diving-deeper/component-framework-configuration.mdx
 ## Automatic Configuration (Recommended)
 
 When you launch Cypress for the first time in a project and select Component
@@ -528,6 +522,9 @@ Below are a few additional configuration values that are specific to component
 testing.
 
 ### Custom Dev Server
+=======
+## Custom Dev Server
+>>>>>>> react-ct-guide-rework:content/guides/component-testing/component-framework-configuration.md
 
 A custom function can be passed into the `devServer` option, which allows the
 use of other dev servers not provided by Cypress out of the box. These can be
@@ -558,7 +555,7 @@ resolves to a `devServer` instance.
 
 :::
 
-### Custom Index File
+## Custom Index File
 
 By default, Cypress renders your components into an HTML file located at
 `cypress/support/component-index.html`.
@@ -580,9 +577,13 @@ in the [component config](/guides/references/configuration#component) options:
 }
 ```
 
+<<<<<<< HEAD:docs/guides/component-testing/diving-deeper/component-framework-configuration.mdx
 :::
 
 ### Spec Pattern for Component Tests
+=======
+## Spec Pattern for Component Tests
+>>>>>>> react-ct-guide-rework:content/guides/component-testing/component-framework-configuration.md
 
 By default, Cypress looks for spec files anywhere in your project with an
 extension of `.cy.js`, `.cy.jsx`, `.cy.ts`, or `.cy.tsx`. However, you can
@@ -602,9 +603,13 @@ subdirectories.
 }
 ```
 
+<<<<<<< HEAD:docs/guides/component-testing/diving-deeper/component-framework-configuration.mdx
 :::
 
 ### Additional Config
+=======
+## Additional Config
+>>>>>>> react-ct-guide-rework:content/guides/component-testing/component-framework-configuration.md
 
 For more information on all the available configuration options, see the
 [configuration reference](/guides/references/configuration).
