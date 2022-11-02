@@ -635,7 +635,7 @@ official fix faster.
 
 <Alert type="warning">
 
-In Cypress 11.0, Cypress started using [v8 snapshots](https://v8.dev/blog/custom-startup-snapshots)
+In Cypress 11.0, Cypress uses [v8 snapshots](https://v8.dev/blog/custom-startup-snapshots)
 to improve startup time. As a result, much of the Cypress code is contained in a single unmodifiable 
 snapshot file. Thus, editing the Cypress code in the binary directly as described below may or may not 
 work depending on where and how that code is executed.
