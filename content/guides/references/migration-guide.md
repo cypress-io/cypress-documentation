@@ -128,7 +128,7 @@ it('increments the count', () => {
 
 ### React - `unmount` Removed
 
-`unmount` from `cypress/react` has been removed. we recommend using the API
+`unmount` from `cypress/react` has been removed. We recommend using the API
 React provides for unmount components.
 
 #### Before - Cypress 10 and `unmount`
@@ -168,7 +168,7 @@ it('calls the prop', () => {
 
 ### Vue - `mountCallback` Removed
 
-`mountCallback` from `cypress/vue` has been removed. we recommend using `mount`.
+`mountCallback` from `cypress/vue` has been removed. We recommend using `mount`.
 
 #### Before - Cypress 10 and `mountCallback`
 
