@@ -216,7 +216,7 @@ module.exports = defineConfig({
       framework: 'react',
       bundler: 'vite',
       // optionally pass in vite config
-      viteConfig: require('./webpack.config'),
+      viteConfig: require('./vite.config'),
       // or a function - the result is merged with
       // any `vite.config` file that is detected
       viteConfig: async () => {
