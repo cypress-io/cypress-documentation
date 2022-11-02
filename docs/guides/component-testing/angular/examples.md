@@ -1,10 +1,5 @@
 ---
-<<<<<<<< HEAD:docs/guides/component-testing/angular/custom-mount-angular.md
-title: Custom Mount Commands for Angular
-sidebar_position: 60
-========
 title: Angular Examples
->>>>>>>> react-ct-guide-rework:content/guides/component-testing/angular/examples.md
 ---
 
 ## Custom Mount Commands
