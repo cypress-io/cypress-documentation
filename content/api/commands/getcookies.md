@@ -25,11 +25,11 @@ cy.getCookies() // Get all cookies
 
 Pass in an options object to change the default behavior of `cy.getCookies()`.
 
-| Option    | Default                                                        | Description                                                                                       |
-| --------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| `domain`  | Superdomain of the current URL                                 | Retrieves the cookies from the specified domain. Pass `null` to retrieve cookies from any domain. |
-| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log)          |
-| `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.getCookies()` to resolve before [timing out](#Timeouts)                      |
+| Option    | Default                                                        | Description                                                                              |
+| --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `domain`  | Superdomain of the current URL                                 | Retrieves the cookies from the specified domain                                          |
+| `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
+| `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.getCookies()` to resolve before [timing out](#Timeouts)             |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
