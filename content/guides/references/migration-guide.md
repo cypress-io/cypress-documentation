@@ -2,13 +2,255 @@
 title: Migration Guide
 ---
 
-<DocsVideo src="https://youtube.com/embed/mIqKNhLlPcU"></DocsVideo>
+## Migrating to Cypress version 11.0
+
+This guide details the changes and how to change your code to migrate to Cypress
+version 11.0.
+[See the full changelog for version 10.0](/guides/references/changelog#11-0-0).
+
+### Component Testing Changes
+
+As of Cypress 11, Component Testing is now generally available. Learn more about
+what generally available implies [here](link_to_post) and the improvements
+[here](annoucement_blog_post).
+
+There are some minor breaking changes. Most projects should be able to migrate
+without any code modifications.
+
+#### Changes to Mounting Options
+
+Each major libary we support has a `mount` function with two arguments:
+
+1. The component
+2. Mounting Options
+
+Mounting options previously had several properties that are now removed:
+
+- cssFile, cssFiles
+- style, styles
+- stylesheet, stylesheets
+
+Read more about the rationale [here](link_to_explainer). We recommend writing
+test-specific styles in a separate `css` file you import in your test, or in
+your `supportFile`.
+
+#### Before (Cypress 10)
+
+```jsx
+import { mount } from ‘cypress/react’
+import { Card } from ‘./Card’
+
+it(‘renders some content’, () => {
+  cy.mount(<Card title=”title” />, {
+    styles: `
+      .card { width: 100px; }
+    `,
+    stylesheets: ['https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css']
+  })
+})
+```
+
+#### After (Cypress 11)
+
+```js
+/** style.css */
+@import "https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css";
+.card { width: 100px }
+
+/** Card.cy.jsx */
+import { mount } from ‘cypress/react’
+import { Card } from ‘./Card’
+import ‘./styles.css’ // contains CDN link and custom styling.
+
+it('renders some content', () => {
+  cy.mount(<Card title=”title” />)
+})
+```
+
+### React - `mountHook` Removed
+
+`mountHook` from `cypress/react` has been removed. Replace it with `mount` and a
+component.
+
+Consider the following `useCounter` hook:
+
+```js
+import { useState, useCallback } from 'react'
+
+function useCounter() {
+  const [count, setCount] = useState(0)
+  const increment = useCallback(() => setCount((x) => x + 1), [])
+
+  return { count, increment }
+}
+```
+
+#### Before - Cypress 10 and `mountHook`
+
+```js
+import { mountHook } from 'cypress/react'
+import { useCounter } from ‘./useCounter’
+
+it('increments the count', () => {
+  mountHook(() => useCounter()).then((result) => {
+    expect(result.current.count).to.equal(0)
+    result.current.increment()
+    expect(result.current.count).to.equal(1)
+    result.current.increment()
+    expect(result.current.count).to.equal(2)
+  })
+})
+```
+
+#### After - Cypress 10 and `mount`
+
+```js
+import { useCounter } from ‘./useCounter’
+
+it('increments the count', () => {
+  function Counter () {
+    const { count, increment } = useCounter()
+    return (
+      <>
+        <h1 name="count">Count is {{ count }}</h1>
+        <button onClick={increment}>Increment</button>
+      </>
+    )
+  }
+
+  cy.mount(<Counter />).then(() => {
+    cy.get('[name="count"]').should('contain', 0)
+      .get('button').click()
+      .get('[name="count"]').should('contain', 1)
+  })
+})
+```
+
+### React - `unmount` Removed
+
+`unmount` from `cypress/react` has been removed. we recommend using the API
+React provides for unmount components.
+
+#### Before - Cypress 10 and `unmount`
+
+```js
+import { unmount } from ‘cypress/react’
+
+it('calls the prop', () => {
+  cy.mount(<Comp onUnmount={cy.stub().as('onUnmount')} />)
+  cy.contains('My component')
+
+  unmount()
+
+  // the component is gone from the DOM
+  cy.contains('My component').should('not.exist')
+  cy.get('@onUnmount').should('have.been.calledOnce')
+})
+```
+
+#### After - Cypress 11 and `unmountComponentAtNode`
+
+```js
+import { getContainerEl } from 'cypress/react'
+import ReactDom from 'react-dom'
+
+it('calls the prop', () => {
+  cy.mount(<Comp onUnmount={cy.stub().as('onUnmount')} />)
+  cy.contains('My component')
+
+  cy.then(() => ReactDom.unmountComponentAtNode(getContainerEl()))
+
+  // the component is gone from the DOM
+  cy.contains('My component').should('not.exist')
+  cy.get('@onUnmount').should('have.been.calledOnce')
+})
+```
+
+### Vue - `mountCallback` Removed
+
+`mountCallback` from `cypress/vue` has been removed. we recommend using `mount`.
+
+#### Before - Cypress 10 and `mountCallback`
+
+```js
+import { mountCallback } from ‘cypress/vue’
+
+beforeEach(mountCallback(MessageList))
+
+it('shows no messages', () => {
+  getItems().should('not.exist')
+})
+```
+
+#### After - Cypress 11 and `mount`
+
+```js
+beforeEach(() => cy.mount(MessageList))
+
+it('shows no messages', () => {
+  getItems().should('not.exist')
+})
+```
+
+### Angular - Providers Mounting Options Change
+
+Not really sure about this one yet but the PR is here
+https://github.com/cypress-io/cypress/pull/24394
+
+### Vite Dev Server (`cypress/vite-dev-server`)
+
+When providing an inline `viteConfig` inside of `cypress.config`, any
+`vite.config.js` file is not automatically merged.
+
+#### After - Cypress 10 and `viteConfig`
+
+```js
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  component: {
+    devServer: {
+      framework: 'react',
+      bundler: 'vite',
+      viteConfig: {
+        // ... custom vite config ...
+        // result merged with `vite.config` file if present
+      },
+    },
+  },
+})
+```
+
+#### After - Cypress 11 and `viteConfig`
+
+```js
+import { defineConfig } from 'cypress'
+import viteConfig from './vite.config'
+
+export default defineConfig({
+  component: {
+    devServer: {
+      framework: 'react',
+      bundler: 'vite',
+      viteConfig: {
+        ...viteConfig,
+        // ... other overrides ...
+      },
+    },
+  },
+})
+```
+
+Vite 3+ users could make use of the
+[`mergeConfig`](https://vitejs.dev/guide/api-javascript.html#mergeconfig) API.
 
 ## Migrating to Cypress version 10.0
 
 This guide details the changes and how to change your code to migrate to Cypress
 version 10.0.
 [See the full changelog for version 10.0](/guides/references/changelog#10-0-0).
+
+<DocsVideo src="https://youtube.com/embed/mIqKNhLlPcU"></DocsVideo>
 
 ### Cypress Changes
 
