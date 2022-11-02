@@ -133,7 +133,7 @@ this configuration, Cypress automatically reads from npm config's
 [`cafile`](https://docs.npmjs.com/cli/v8/using-npm/config#cafile) and 
 [`ca`](https://docs.npmjs.com/cli/v8/using-npm/config#ca) options and the
 [`NODE_EXTRA_CA_CERTS`](https://nodejs.org/api/cli.html#node_extra_ca_certsfile) 
-node environment variable to configure certificate authority signing certificates.
+node environment variable.
 
 To mimic the behavior of npm and node, Cypress looks at `cafile` first and then `ca`
 and uses the corresponding certificate(s) as a replacement for the trusted certificate

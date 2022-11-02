@@ -182,6 +182,13 @@ Cypress will then attempt to download a binary with this format:
 
 ## Using a custom CA
 
+<Alert type="warning">
+
+Note that in versions prior to 11.0, the `CYPRESS_DOWNLOAD_USE_CA` environment
+variable needed to be set to honor the `ca` and `cafile` options
+
+</Alert>
+
 Cypress can be configured to use the `ca` and `cafile` options from your NPM
 config file to download the Cypress binary.
 
@@ -191,18 +198,6 @@ Cypress, add the following to your `.npmrc`:
 ```shell
 cafile=/home/person/certs/ca.crt
 ```
-
-<Alert type="warning">
-
-Note that in versions prior to 11.0, the `CYPRESS_DOWNLOAD_USE_CA` environment
-variable needed to be set to honor the `ca` and `cafile` options
-
-```shell
-CYPRESS_DOWNLOAD_USE_CA=1
-cafile=/home/person/certs/ca.crt
-```
-
-</Alert>
 
 If neither `cafile` nor `ca` are set, Cypress looks at the system environment variable
 `NODE_EXTRA_CA_CERTS` and uses the corresponding certificate(s) as an extension 
