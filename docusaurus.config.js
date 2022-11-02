@@ -129,7 +129,7 @@ const config = {
       // optional, can be commented out
       announcementBar: {
         content:
-          '🚀 Looking to move to Cypress v10? Check out the <a target="_blank" rel="noopener noreferrer" href="/guides/references/migration-guide">migration guide!</a>',
+          '🚀 &nbsp;Looking to move to Cypress v10? Check out the <a target="_blank" rel="noopener noreferrer" href="/guides/references/migration-guide">migration guide!</a>',
         backgroundColor: '#fff3b9',
         textColor: '#091E42',
         isCloseable: true,
