@@ -189,9 +189,24 @@ For example, to use the CA at `/home/person/certs/ca.crt` when downloading
 Cypress, add the following to your `.npmrc`:
 
 ```shell
-CYPRESS_DOWNLOAD_USE_CA=1
-ca=/home/person/certs/ca.crt
+cafile=/home/person/certs/ca.crt
 ```
+
+<Alert type="warning">
+
+Note that in versions prior to 11.0, the `CYPRESS_DOWNLOAD_USE_CA` environment
+variable needed to be set to honor the `ca` and `cafile` options
+
+```shell
+CYPRESS_DOWNLOAD_USE_CA=1
+cafile=/home/person/certs/ca.crt
+```
+
+</Alert>
+
+If neither `cafile` nor `ca` are set, Cypress looks at the system environment variable
+`NODE_EXTRA_CA_CERTS` and uses the corresponding certificate(s) as an extension 
+for the trusted certificate authority when downloading the Cypress binary. 
 
 ## Opt out of sending exception data to Cypress
 
