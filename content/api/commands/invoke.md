@@ -309,10 +309,11 @@ following:
 
 ## History
 
-| Version                                     | Changes                                                       |
-| ------------------------------------------- | ------------------------------------------------------------- |
-| [3.8.0](/guides/references/changelog#3-8-0) | Added support for `options` argument                          |
-| [3.7.0](/guides/references/changelog#3-7-0) | Added support for arguments of type Number for `functionName` |
+| Version                                       | Changes                                                          |
+| --------------------------------------------- | ---------------------------------------------------------------- |
+| [12.0.0](/guides/references/changelog#12-0-0) | `.invoke()` no longer awaits promises or retries async functions |
+| [3.8.0](/guides/references/changelog#3-8-0)   | Added support for `options` argument                             |
+| [3.7.0](/guides/references/changelog#3-7-0)   | Added support for arguments of type Number for `functionName`    |
 
 ## See also
 
