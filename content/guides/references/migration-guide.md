@@ -8,7 +8,7 @@ This guide details the changes and how to change your code to migrate to Cypress
 version 11.0.
 [See the full changelog for version 10.0](/guides/references/changelog#11-0-0).
 
-### Component Testing Changes
+### Component Testing Updates
 
 As of Cypress 11, Component Testing is now generally available. Learn more about
 what generally available implies [here](link_to_post) and the improvements
