@@ -182,13 +182,6 @@ Cypress will then attempt to download a binary with this format:
 
 ## Using a custom CA
 
-<Alert type="warning">
-
-Note that in versions prior to 11.0, the `CYPRESS_DOWNLOAD_USE_CA` environment
-variable needed to be set to honor the `ca` and `cafile` options
-
-</Alert>
-
 Cypress can be configured to use the `ca` and `cafile` options from your NPM
 config file to download the Cypress binary.
 
