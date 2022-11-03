@@ -461,11 +461,10 @@ code span::selection {
 
 .tabs-container {
   background-color: var(--ifm-code-background-color);
+  border-radius: var(--ifm-code-border-radius);
 }
 
 .tabs-container .tabs {
-  border-top-left-radius: var(--ifm-code-border-radius);
-  border-top-right-radius: var(--ifm-code-border-radius);
   box-shadow: inset 0px -6px 0px -3px var(--ifm-code-background-color-light);
 }
 
