@@ -466,7 +466,9 @@ code span::selection {
 }
 
 .tabs-container .tabs {
-  box-shadow: inset 0px -6px 0px -3px var(--ifm-code-background-color-light);
+  background-color: #1f2937;
+  border-radius: 0.4rem 0.4rem 0 0;
+  box-shadow: inset 0px -6px 0px -4px var(--ifm-code-background-color-light);
 }
 
 .tabs-container .tabs__item {
