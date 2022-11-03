@@ -2,8 +2,6 @@
 title: Component Testing Config
 ---
 
-<CtBetaAlert></CtBetaAlert>
-
 When you launch Cypress for the first time in a project, the app will
 automatically guide you through setup and configuration. You don't need to do
 anything additional to get started.

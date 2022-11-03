@@ -2,8 +2,6 @@
 title: Cypress Component Testing
 ---
 
-<CtBetaAlert></CtBetaAlert>
-
 Cypress Component Testing provides a **testable component workbench** for you to
 quickly build and test components from multiple front-end UI libraries — no
 matter how simple or complex.
@@ -30,19 +28,19 @@ Cypress currently has official support
 Cypress Component Testing runs in your existing development server. Below are
 all the development frameworks supported for each UI framework:
 
-| Framework                                                                                                             | UI Library  | Bundler    |
-| --------------------------------------------------------------------------------------------------------------------- | ----------- | ---------- |
-| [Create React App 4+](/guides/component-testing/react/overview#Create-React-App-CRA)                                  | React 16+   | Webpack 4+ |
-| [Next.js 11+](/guides/component-testing/react/overview#Next-js) <Badge type="info">Alpha</Badge>                      | React 16+   | Webpack 5  |
-| [React with Vite](/guides/component-testing/react/overview#React-with-Vite)                                           | React 16+   | Vite 2+    |
-| [React with Webpack](/guides/component-testing/react/overview#React-with-Webpack)                                     | React 16+   | Webpack 4+ |
-| [Vue CLI](/guides/component-testing/vue/overview#Vue-CLI)                                                             | Vue 2+      | Webpack 4+ |
-| [Nuxt 2](/guides/component-testing/vue/overview#Nuxt) <Badge type="info">Alpha</Badge>                                | Vue 2+      | Webpack 4+ |
-| [Vue with Vite](/guides/component-testing/vue/overview#Vue-with-Vite)                                                 | Vue 2+      | Vite 2+    |
-| [Vue with Webpack](/guides/component-testing/vue/overview#Vue-with-Webpack)                                           | Vue 2+      | Webpack 4+ |
-| [Angular](/guides/component-testing/angular/overview#Framework-Configuration) <Badge type="info">Alpha</Badge>        | Angular 13+ | Webpack 5  |
-| [Svelte with Vite](/guides/component-testing/svelte/overview#Svelte-with-Vite) <Badge type="info">Alpha</Badge>       | Svelte 3+   | Vite 2+    |
-| [Svelte with Webpack](/guides/component-testing/svelte/overview#Svelte-with-Webpack) <Badge type="info">Alpha</Badge> | Svelte 3+   | Webpack 4+ |
+| Framework                                                                                                            | UI Library  | Bundler    |
+| -------------------------------------------------------------------------------------------------------------------- | ----------- | ---------- |
+| [Create React App 4+](/guides/component-testing/react/overview#Create-React-App-CRA)                                 | React 16+   | Webpack 4+ |
+| [Next.js 11+](/guides/component-testing/react/overview#Next-js)                                                      | React 16+   | Webpack 5  |
+| [React with Vite](/guides/component-testing/react/overview#React-with-Vite)                                          | React 16+   | Vite 2+    |
+| [React with Webpack](/guides/component-testing/react/overview#React-with-Webpack)                                    | React 16+   | Webpack 4+ |
+| [Vue CLI](/guides/component-testing/vue/overview#Vue-CLI)                                                            | Vue 2+      | Webpack 4+ |
+| [Nuxt 2](/guides/component-testing/vue/overview#Nuxt)                                                                | Vue 2+      | Webpack 4+ |
+| [Vue with Vite](/guides/component-testing/vue/overview#Vue-with-Vite)                                                | Vue 2+      | Vite 2+    |
+| [Vue with Webpack](/guides/component-testing/vue/overview#Vue-with-Webpack)                                          | Vue 2+      | Webpack 4+ |
+| [Angular](/guides/component-testing/angular/overview#Framework-Configuration)                                        | Angular 13+ | Webpack 5  |
+| [Svelte with Vite](/guides/component-testing/svelte/overview#Svelte-with-Vite) <Badge type="info">Beta</Badge>       | Svelte 3+   | Vite 2+    |
+| [Svelte with Webpack](/guides/component-testing/svelte/overview#Svelte-with-Webpack) <Badge type="info">Beta</Badge> | Svelte 3+   | Webpack 4+ |
 
 ### Component Testing vs. End-to-End Testing
 

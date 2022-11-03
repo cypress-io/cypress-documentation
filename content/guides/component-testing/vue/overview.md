@@ -417,12 +417,6 @@ for more information.
 
 ### Nuxt
 
-<Alert type="warning">
-
-Nuxt is currently in alpha support for component testing.
-
-</Alert>
-
 Cypress Component Testing works with Nuxt 2. Nuxt 3 is not yet supported.
 
 #### Nuxt Configuration

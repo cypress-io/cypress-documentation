@@ -194,7 +194,7 @@ describe('StepperComponent', () => {
 
 > It is also possible to write Angular tests using template syntax. For more
 > info, see the
-> [Using Angular Template Syntax](/guides/component-testing/angular/introduction#Using-Angular-Template-Syntax).
+> [Using Angular Template Syntax](/guides/component-testing/angular/overview#Using-Angular-Template-Syntax).
 
 Let's break down the spec. First, we import the `Stepper` component. Then, we
 organize our tests using the functions `describe` and `it`, which we allow us to

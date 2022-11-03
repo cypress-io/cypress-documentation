@@ -164,13 +164,6 @@ export default defineConfig({
 
 Cypress Component Testing works with Next.js 11+.
 
-<Alert type="warning">
-
-Next.js is currently in alpha support for component testing. See
-[Next.js Caveats](#Next-js-Caveats) for more info on current limitations.
-
-</Alert>
-
 #### Next.js Configuration
 
 <cypress-config-file>

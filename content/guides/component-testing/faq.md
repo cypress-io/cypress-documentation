@@ -1,5 +1,5 @@
 ---
-title: FAQ
+title: Component Testing FAQ
 ---
 
 ## General Questions
@@ -22,9 +22,9 @@ We support [Angular](/guides/component-testing/angular/overview),
 [Svelte](/guides/component-testing/svelte/overview), and
 [Vue](/guides/component-testing/vue/overview) currently for component testing.
 
-We also support several meta-frameworks like Next.js, CRA, and Nuxt, as well as
-Webpack and Vite for bundling. Check each framework's overview guide for more
-info.
+We also support several meta-frameworks like Next.js, Create React App, and
+Nuxt, as well as Webpack and Vite for bundling. Check each framework's overview
+guide for more info.
 
 ### How does Cypress do component testing?
 

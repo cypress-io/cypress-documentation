@@ -33,7 +33,7 @@ npm install
 ```
 
 > You can also download a Git repo with a fully working copy of this tutorial
-> [here](https://github.com/cypress-io/component-testing-quickstart-apps/tree/main/react).
+> [here](https://github.com/cypress-io/component-testing-quickstart-apps/tree/main/svelte).
 
 ### Install Cypress
 

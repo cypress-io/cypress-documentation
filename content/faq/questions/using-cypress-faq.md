@@ -1134,7 +1134,7 @@ repository where we show how to instrument the application's source code to get
 set good Cypress tests for a Next.js application in this
 [tutorial](https://getstarted.sh/bulletproof-next/e2e-testing-with-cypress).
 
-For component tests, Next.js support is currently in alpha. See the
+You can also test Next.js apps in component testing. See the
 [Framework Configuration Guide on Next.js](/guides/component-testing/react/overview#Next-js)
 for more info.
 

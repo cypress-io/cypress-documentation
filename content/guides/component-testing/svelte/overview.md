@@ -10,6 +10,12 @@ frameworks:
 - [Svelte with Vite](#Svelte-with-Vite)
 - [Svelte with Webpack](#Svelte-with-Webpack)
 
+<Alert type="warning">
+
+Svelte is currently in beta support for component testing.
+
+</Alert>
+
 ## Tutorial
 
 Visit the [Svelte Quickstart Guide](/guides/component-testing/svelte/quickstart)
