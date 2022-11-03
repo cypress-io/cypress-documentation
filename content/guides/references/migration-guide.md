@@ -6,7 +6,7 @@ title: Migration Guide
 
 This guide details the changes and how to change your code to migrate to Cypress
 version 11.0.
-[See the full changelog for version 10.0](/guides/references/changelog#11-0-0).
+[See the full changelog for version 11.0](/guides/references/changelog#11-0-0).
 
 ### Component Testing Updates
 
@@ -202,7 +202,7 @@ https://github.com/cypress-io/cypress/pull/24394
 When providing an inline `viteConfig` inside of `cypress.config`, any
 `vite.config.js` file is not automatically merged.
 
-#### After - Cypress 10 and `viteConfig`
+#### Before - Cypress 10 and `viteConfig`
 
 ```js
 import { defineConfig } from 'cypress'
