@@ -1,5 +1,7 @@
 ---
 title: 'Vue Component Testing'
+sidebar_label: 'Vue Overview'
+sidebar_position: 10
 ---
 
 ## Framework Support
@@ -31,9 +33,10 @@ Open Cypress:
 npx cypress open
 ```
 
-<DocsImage 
-  src="/img/guides/component-testing/select-test-type.jpg" 
-  caption="Choose Component Testing"> </DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/select-test-type.jpg"
+  caption="Choose Component Testing"
+/>
 
 The Cypress Launchpad will guide you through configuring your project.
 
@@ -61,17 +64,11 @@ While you can use the `mount` function in your tests, we recommend using
 [custom command](/api/cypress-api/custom-commands) in the
 **cypress/support/component.js** file:
 
-<code-group>
-<code-block label="cypress/support/component.js" active>
-
-```ts
+```ts title=cypress/support/component.js
 import { mount } from 'cypress/vue'
 
 Cypress.Commands.add('mount', mount)
 ```
-
-</code-block>
-</code-group>
 
 This allows you to use `cy.mount()` in any component test without having to
 import the framework-specific mount command, as well as customizing it to fit
@@ -113,9 +110,8 @@ it('clicking + fires a change event with the incremented value', () => {
 
 You can pass props and events to a component by setting `props` in the options:
 
-<code-group>
-
-<code-block label="Vue 3" active>
+<Tabs>
+<TabItem value="Vue 3">
 
 ```js
 cy.mount(Stepper, {
@@ -126,8 +122,8 @@ cy.mount(Stepper, {
 })
 ```
 
-</code-block>
-<code-block label="Vue 2" active>
+</TabItem>
+<TabItem value="Vue 2">
 
 ```js
 cy.mount(Stepper, {
@@ -138,15 +134,15 @@ cy.mount(Stepper, {
 })
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 ## Using Slots
 
 ### Default Slot
 
-<code-group>
-<code-block label="DefaultSlot.cy.js" active>
+<Tabs>
+<TabItem value="DefaultSlot.cy.js">
 
 ```js
 import DefaultSlot from './DefaultSlot.vue'
@@ -163,8 +159,8 @@ describe('<DefaultSlot />', () => {
 })
 ```
 
-</code-block>
-<code-block label="DefaultSlot.cy.jsx (JSX)">
+</TabItem>
+<TabItem value="DefaultSlot.cy.jsx (JSX)">
 
 ```jsx
 import DefaultSlot from './DefaultSlot.vue'
@@ -177,8 +173,8 @@ describe('<DefaultSlot />', () => {
 })
 ```
 
-</code-block>
-<code-block label="DefaultSlot.vue">
+</TabItem>
+<TabItem value="DefaultSlot.vue">
 
 ```html
 <template>
@@ -192,14 +188,13 @@ describe('<DefaultSlot />', () => {
 <script setup></script>
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 ### Named Slot
 
-<code-group>
-
-<code-block label="NamedSlot.cy.js" active>
+<Tabs>
+<TabItem value="NamedSlot.cy.js">
 
 ```js
 import NamedSlot from './NamedSlot.vue'
@@ -219,8 +214,8 @@ describe('<NamedSlot />', () => {
 })
 ```
 
-</code-block>
-<code-block label="NamedSlot.cy.jsx (JSX)">
+</TabItem>
+<TabItem value="NamedSlot.cy.jsx (JSX)">
 
 ```jsx
 import NamedSlot from './NamedSlot.vue'
@@ -238,9 +233,8 @@ describe('<NamedSlot />', () => {
 })
 ```
 
-</code-block>
-
-<code-block label="NamedSlot.vue">
+</TabItem>
+<TabItem value="NamedSlot.vue">
 
 ```html
 <template>
@@ -257,8 +251,8 @@ describe('<NamedSlot />', () => {
 <script setup></script>
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 For more info on testing Vue components with slots, refer to the
 [Vue Test Utils Slots guide](https://test-utils.vuejs.org/guide/advanced/slots.html).
@@ -315,8 +309,8 @@ chained using `cy.then` instead of `cy.should`, we may run into the kinds of
 issues you have in Vue Test Utils tests where you have to use `await` frequently
 in order to make sure the DOM has updated or any reactive events have fired.
 
-<code-group>
-<code-block label="With emitted" active>
+<Tabs>
+<TabItem value="With emitted">
 
 ```js
 cy.mount(Stepper, { props: { initial: 100 } })
@@ -327,8 +321,8 @@ cy.get('@vue').should((wrapper) => {
 })
 ```
 
-</code-block>
-<code-block label="With spies">
+</TabItem>
+<TabItem value="With spies">
 
 ```js
 const onChangeSpy = cy.spy().as('onChangeSpy')
@@ -339,8 +333,8 @@ cy.get(incrementSelector).click()
 cy.get('@onChangeSpy').should('have.been.calledWith', '101')
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 Regardless of our recommendation to use spies instead of the internal Vue Test
 Utils API, you may decide to continue using `emitted` as it _automatically_
@@ -364,42 +358,22 @@ Cypress Component Testing works with Vue CLI.
 
 #### Vue CLI Configuration
 
-<cypress-config-file>
-<template #js>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  component: {
-    devServer: {
-      framework: 'vue-cli',
-      bundler: 'webpack',
-    },
-  },
-})
-```
-
-</template>
-<template #ts>
+:::cypress-config-example
 
 ```ts
-import { defineConfig } from 'cypress'
-
-export default defineConfig({
+{
   component: {
     devServer: {
       framework: 'vue-cli',
       bundler: 'webpack',
     },
   },
-})
+}
 ```
 
-</template>
-</cypress-config-file>
+:::
 
-<Alert type="warning">
+:::caution
 
 <strong class="alert-header">PWA Caveat</strong>
 
@@ -408,7 +382,7 @@ configuration. See
 [here](https://github.com/cypress-io/cypress/issues/15968#issuecomment-819170918)
 for more information.
 
-</Alert>
+:::
 
 #### Sample Vue CLI Apps
 
@@ -417,50 +391,30 @@ for more information.
 
 ### Nuxt
 
-<Alert type="warning">
+:::caution
 
 Nuxt is currently in alpha support for component testing.
 
-</Alert>
+:::
 
 Cypress Component Testing works with Nuxt 2. Nuxt 3 is not yet supported.
 
 #### Nuxt Configuration
 
-<cypress-config-file>
-<template #js>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  component: {
-    devServer: {
-      framework: 'nuxt',
-      bundler: 'webpack',
-    },
-  },
-})
-```
-
-</template>
-<template #ts>
+:::cypress-config-example
 
 ```ts
-import { defineConfig } from 'cypress'
-
-export default defineConfig({
+{
   component: {
     devServer: {
       framework: 'nuxt',
       bundler: 'webpack',
     },
   },
-})
+}
 ```
 
-</template>
-</cypress-config-file>
+:::
 
 #### Nuxt Sample Apps
 
@@ -472,40 +426,20 @@ Cypress Component Testing works with Vue apps that use Vite 2+ as the bundler.
 
 #### Vite Configuration
 
-<cypress-config-file>
-<template #js>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  component: {
-    devServer: {
-      framework: 'vue',
-      bundler: 'vite',
-    },
-  },
-})
-```
-
-</template>
-<template #ts>
+:::cypress-config-example
 
 ```ts
-import { defineConfig } from 'cypress'
-
-export default defineConfig({
+{
   component: {
     devServer: {
       framework: 'vue',
       bundler: 'vite',
     },
   },
-})
+}
 ```
 
-</template>
-</cypress-config-file>
+:::
 
 #### Vue Vite Sample Apps
 
@@ -518,37 +452,14 @@ bundler.
 
 #### Webpack Configuration
 
-<cypress-config-file>
-<template #js>
-
-```js
-module.exports = {
-  component: {
-    devServer: {
-      framework: 'vue',
-      bundler: 'webpack',
-      // optionally pass in webpack config
-      webpackConfig: require('./webpack.config'),
-      // or a function - the result is merged with any
-      // webpack.config that is found
-      webpackConfig: async () => {
-        // ... do things ...
-        const modifiedConfig = await injectCustomConfig(baseConfig)
-        return modifiedConfig
-      },
-    },
-  },
-}
-```
-
-</template>
-<template #ts>
+:::cypress-config-example
 
 ```ts
-import { defineConfig } from 'cypress'
 import webpackConfig from './webpack.config'
+```
 
-export default defineConfig({
+```ts
+{
   component: {
     devServer: {
       framework: 'vue',
@@ -562,11 +473,10 @@ export default defineConfig({
       },
     },
   },
-})
+}
 ```
 
-</template>
-</cypress-config-file>
+:::
 
 If you don't provide one, Cypress will try to infer your webpack config. If
 Cypress cannot or you want to make modifications to your config, you can pass it

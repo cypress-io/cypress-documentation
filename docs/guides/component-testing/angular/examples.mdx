@@ -1,5 +1,6 @@
 ---
 title: Angular Examples
+sidebar_position: 40
 ---
 
 ## Custom Mount Commands
@@ -62,7 +63,6 @@ Here is an example of defaulting `autoSpyOutputs` for every mounted component:
 declare global {
   namespace Cypress {
     interface Chainable {
-      //highlight-next-line
       mount: typeof mount
     }
   }
@@ -84,15 +84,4 @@ Cypress.Commands.add(
 The `autoSpyOutput` flag only works when passing in a component to the mount
 function. It currently does not work with the template syntax.
 
-<<<<<<<< HEAD:docs/guides/component-testing/angular/custom-mount-angular.md
 :::
-
-## Conclusion
-
-At this point, you should be able to setup a complex application and mount
-components that use all of Angular's language features.
-
-Congrats! Happy building. 🎉
-========
-</Alert>
->>>>>>>> react-ct-guide-rework:content/guides/component-testing/angular/examples.md

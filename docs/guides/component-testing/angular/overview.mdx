@@ -1,5 +1,7 @@
 ---
 title: 'Angular Component Testing'
+sidebar_label: Angular Overview
+sidebar_position: 10
 ---
 
 ## Framework Support
@@ -27,9 +29,12 @@ Open Cypress:
 npx cypress open
 ```
 
-<DocsImage 
-  src="/img/guides/component-testing/select-test-type.jpg" 
-  caption="Choose Component Testing"> </DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/select-test-type.jpg"
+  caption="Choose Component Testing"
+>
+  {' '}
+</DocsImage>
 
 The Cypress Launchpad will guide you through configuring your project.
 
@@ -54,17 +59,11 @@ While you can use the `mount` function in your tests, we recommend using
 [custom command](/api/cypress-api/custom-commands) in the
 **cypress/support/component.ts** file:
 
-<code-group>
-<code-block label="cypress/support/component.ts" active>
-
-```ts
+```ts title=cypress/support/component.ts
 import { mount } from 'cypress/angular'
 
 Cypress.Commands.add('mount', mount)
 ```
-
-</code-block>
-</code-group>
 
 This allows you to use `cy.mount()` in any component test without having to
 import the framework-specific mount command, as well as customizing it to fit
@@ -219,19 +218,19 @@ it('clicking + fires a change event with the incremented value', () => {
 })
 ```
 
-<Alert type="warning">
+:::caution
 
 The `autoSpyOutput` flag only works when passing in a component to the mount
 function. It currently does not work with the template syntax.
 
-</Alert>
+:::
 
-<Alert type="warning">
+:::caution
 
 `autoSpyOutput` is an **experimental feature** and could be removed or changed
-in the future
+in the future.
 
-</Alert>
+:::
 
 ## Framework Configuration
 
@@ -241,11 +240,10 @@ configure it properly. The examples below are for reference purposes.
 
 ### Angular CLI Configuration
 
-<cypress-config-file>
-<template #js>
+:::cypress-config-example
 
-```js
-module.exports = {
+```ts
+{
   component: {
     devServer: {
       framework: 'angular',
@@ -256,25 +254,7 @@ module.exports = {
 }
 ```
 
-</template>
-<template #ts>
-
-```ts
-import { defineConfig } from 'cypress'
-
-export default defineConfig({
-  component: {
-    devServer: {
-      framework: 'angular',
-      bundler: 'webpack',
-    },
-    specPattern: '**/*.cy.ts',
-  },
-})
-```
-
-</template>
-</cypress-config-file>
+:::
 
 #### Options API
 
@@ -282,13 +262,10 @@ You can also use the `options` API to provide your own project specific
 configuration to your `devServer`. The `devServer` configuration receives an
 `options` property:
 
-<code-group>
-<code-block label="cypress.config.ts" active>
+:::cypress-config-example
 
-```ts
-import { defineConfig } from 'cypress'
-
-export default {
+```ts title=cypress.config.ts
+{
   component: {
     framework: 'angular',
     bundler: 'webpack',
@@ -319,8 +296,7 @@ export default {
 }
 ```
 
-</code-block>
-</code-group>
+:::
 
 #### Sample Angular Apps
 

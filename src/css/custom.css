@@ -464,7 +464,7 @@ code span::selection {
   border-radius: var(--ifm-code-border-radius);
 }
 
-.tabs-container .tabs {
+.tabs-container .tabs {  
   box-shadow: inset 0px -6px 0px -3px var(--ifm-code-background-color-light);
 }
 

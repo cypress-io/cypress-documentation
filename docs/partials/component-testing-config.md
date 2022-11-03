@@ -16,7 +16,7 @@ parameter and returns either an instance of a `devServer` or a promise that
 resolves to a `devServer` instance.
 
 <cypress-config-file>
-<template #js>
+<template js>
 
 ```js
 const { defineConfig } = require('cypress')
@@ -36,7 +36,7 @@ module.exports = defineConfig({
 ```
 
 </template>
-<template #ts>
+<template ts>
 
 ```ts
 import { defineConfig } from 'cypress'

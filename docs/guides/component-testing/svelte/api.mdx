@@ -1,5 +1,6 @@
 ---
 title: 'Svelte API'
+sidebar_position: 30
 ---
 
 ## Methods
@@ -44,7 +45,7 @@ import { mount } from 'cypress/svelte'
   </tr>
   <tr>
     <td>Type</td>
-    <td>SvelteConstructor<T></td>
+    <td>SvelteConstructor&lt;T&gt;</td>
   </tr>
 </table>
 

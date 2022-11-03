@@ -1,5 +1,6 @@
 ---
 title: 'Vue Quickstart'
+sidebar_position: 20
 ---
 
 Welcome! This tutorial will walk you through creating a Vue app and using
@@ -31,8 +32,12 @@ cd my-awesome-app
 npm install
 ```
 
-> You can also download a Git repo with a fully working copy of this tutorial
-> [here](https://github.com/cypress-io/component-testing-quickstart-apps/tree/main/vue).
+:::info
+
+You can also download a Git repo with a fully working copy of this tutorial
+[here](https://github.com/cypress-io/component-testing-quickstart-apps/tree/main/vue).
+
+:::
 
 ### Install Cypress
 
@@ -56,49 +61,51 @@ Whenever you run Cypress for the first time, the app will prompt you to set up
 either E2E Testing or Component Testing. Click on "Component Testing" to start
 the configuration wizard.
 
-<DocsImage 
-  src="/img/guides/component-testing/select-test-type.jpg" 
-  caption="Choose Component Testing"> </DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/select-test-type.jpg"
+  caption="Choose Component Testing"
+/>
 
 The Project Setup screen automatically detects your framework and bundler,
 which, in our case, is Vue and Vite. Click "Next Step" to continue.
 
-<DocsImage 
-  src="/img/guides/component-testing/project-setup-vue.jpg" 
-  caption="Vue and Vite are automatically detected"> </DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/project-setup-vue.jpg"
+  caption="Vue and Vite are automatically detected"
+/>
 
 The next screen checks that all the required dependencies are installed. All the
 items should have green checkboxes on them, indicating everything is good, so
 click "Continue".
 
-<DocsImage 
-  src="/img/guides/component-testing/dependency-detection-vue.jpg" 
-  caption="All necessary dependencies are installed"> </DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/dependency-detection-vue.jpg"
+  caption="All necessary dependencies are installed"
+/>
 
 Next, Cypress generates all the necessary configuration files and gives you a
 list of all the changes it made to your project. Click "Continue".
 
-<DocsImage 
-  src="/img/guides/component-testing/scaffolded-files.jpg" 
-  caption="The Cypress launchpad will scaffold all of these files for you">
-</DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/scaffolded-files.jpg"
+  caption="The Cypress launchpad will scaffold all of these files for you"
+/>
 
 After setting up component testing, you will be at the browser selection screen.
 
 Pick the browser of your choice and click the "Start Component Testing" button
 to open the Cypress test runner.
 
-<DocsImage 
-  src="/img/guides/component-testing/select-browser.jpg" 
-  caption="Choose your browser"> </DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/select-browser.jpg"
+  caption="Choose your browser"
+/>
 
 When the test runner appears, it won't find any specs because we haven't created
 any yet. However, we don't currently have a component, either. Let's change
 that!
 
-<DocsImage 
-  src="/img/guides/component-testing/create-your-first-spec-vue.jpg">
-</DocsImage>
+<DocsImage src="/img/guides/component-testing/create-your-first-spec-vue.jpg" />
 
 ### Creating a Component
 
@@ -111,10 +118,7 @@ internal state: a "counter" that can be incremented and decremented by the user.
 Open the project with your favorite code editor and create a file at
 **src/components/Stepper.vue**, then paste the following code into it:
 
-<code-group>
-<code-block label="src/components/Stepper.vue" active>
-
-```html
+```html title=src/components/Stepper.vue
 <template>
   <div>
     <button data-cy="decrement" @click="decrement">-</button>
@@ -143,9 +147,6 @@ Open the project with your favorite code editor and create a file at
 </script>
 ```
 
-</code-block>
-</code-group>
-
 Our component consists of two buttons, one used to decrement the counter and one
 to increment it. A `span` tag sits in the middle of the buttons to show the
 current value of the counter.
@@ -163,16 +164,11 @@ spec" screen, click "Create from Vue component".
 A modal will pop up listing all the components that is found in your app. Select
 the **Stepper.vue** component:
 
-<DocsImage 
-  src="/img/guides/component-testing/create-from-component-vue.jpg">
-</DocsImage>
+<DocsImage src="/img/guides/component-testing/create-from-component-vue.jpg" />
 
 A spec file was created at **src/component/Stepper.cy.js**:
 
-<code-group>
-<code-block label="src/components/Stepper.cy.js" active>
-
-```js
+```js title=src/components/Stepper.cy.js
 import Stepper from './Stepper.vue'
 
 describe('<Stepper />', () => {
@@ -183,11 +179,12 @@ describe('<Stepper />', () => {
 })
 ```
 
-</code-block>
-</code-group>
+:::info
 
-> It is also possible to write Vue tests using JSX syntax. For more info, see
-> [Using JSX](/guides/component-testing/vue/introduction#Using-JSX).
+It is also possible to write Vue tests using JSX syntax. For more info, see
+[Using JSX](/guides/component-testing/vue/overview#Using-JSX).
+
+:::
 
 Let's break down the spec. First, we import the `Stepper` component. Then, we
 organize our tests using the functions `describe` and `it`, which we allow us to
@@ -215,8 +212,7 @@ Now it's time to see the test in action.
 Switch back to the browser you opened for testing, on click on the "Okay, run
 the spec" button to execute it.
 
-<DocsImage 
-  src="/img/guides/component-testing/first-test-run-vue.jpg"> </DocsImage>
+<DocsImage src="/img/guides/component-testing/first-test-run-vue.jpg" />
 
 Our first test verifies the component can mount in it's default state without
 any errors. If there is a runtime error during test execution, the test will
@@ -252,18 +248,12 @@ method to verify it has the correct text value.
 
 Add the following test inside the `describe` block, right below the first test:
 
-<code-group>
-<code-block label="src/components/Stepper.cy.js" active>
-
-```js
+```js title=src/components/Stepper.cy.js
 it('stepper should default to 0', () => {
   cy.mount(Stepper)
   cy.get('span').should('have.text', '0')
 })
 ```
-
-</code-block>
-</code-group>
 
 When you go back to the test runner, you should see the test pass.
 
@@ -282,18 +272,12 @@ In the `Stepper` component, the `span` tag has a `data-cy` attribute on it:
 We assign a unique id to the `data-cy` attribute that we can use for testing
 purposes. Update the test to use a CSS attribute selector to `cy.get()`:
 
-<code-group>
-<code-block label="src/components/Stepper.cy.js" active>
-
-```js
+```js title=src/components/Stepper.cy.js
 it('stepper should default to 0', () => {
   cy.mount(Stepper)
   cy.get('[data-cy=counter]').should('have.text', '0')
 })
 ```
-
-</code-block>
-</code-group>
 
 The test will still pass as expected, and our selector is now future-proof. For
 more info on writing good selectors, see our guide
@@ -305,18 +289,12 @@ We should also have a test to ensure the `initial` prop sets the count to
 something else besides its default value of "0". We can pass in props to the
 `Stepper` component in the `mount` method:
 
-<code-group>
-<code-block label="src/components/Stepper.cy.js" active>
-
-```js
+```js title=src/components/Stepper.cy.js
 it('supports an "initial" prop to set the value', () => {
   cy.mount(Stepper, { props: { initial: 100 } })
   cy.get('[data-cy=counter]').should('have.text', '100')
 })
 ```
-
-</code-block>
-</code-group>
 
 We pass in props using the `props` property in the options. See the
 [MountOptions API](/guides/component-testing/vue/api#MountOptions) for more
@@ -334,10 +312,7 @@ real user would.
 
 Add the following tests:
 
-<code-group>
-<code-block label="src/components/Stepper.cy.js" active>
-
-```js
+```js title=src/components/Stepper.cy.js
 it('when the increment button is pressed, the counter is incremented', () => {
   cy.mount(Stepper)
   cy.get('[data-cy=increment]').click()
@@ -350,9 +325,6 @@ it('when the decrement button is pressed, the counter is decremented', () => {
   cy.get('[data-cy=counter]').should('have.text', '-1')
 })
 ```
-
-</code-block>
-</code-group>
 
 When you view the results of each of the tests, you will see that the counter is
 now "1" in the increment test, and "-1" in the decrement test. Not only did our
@@ -385,10 +357,7 @@ we expect.
 
 Let's set up the spies and bind them to the component:
 
-<code-group>
-<code-block label="src/components/Stepper.cy.js" active>
-
-```js
+```js title=src/components/Stepper.cy.js
 it('clicking + fires a change event with the incremented value', () => {
   const onChangeSpy = cy.spy().as('onChangeSpy')
   cy.mount(Stepper, { props: { onChange: onChangeSpy } })
@@ -396,9 +365,6 @@ it('clicking + fires a change event with the incremented value', () => {
   cy.get('@onChangeSpy').should('have.been.calledWith', 1)
 })
 ```
-
-</code-block>
-</code-group>
 
 First, we create a new spy by calling the `cy.spy()` method. We pass in a string
 that gives the spy an [alias](/guides/core-concepts/variables-and-aliases),

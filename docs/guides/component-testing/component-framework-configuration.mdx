@@ -1,5 +1,7 @@
 ---
 title: Component Testing Config
+sidebar_label: Configuration
+sidebar_position: 30
 ---
 
 <CtBetaAlert></CtBetaAlert>
@@ -26,33 +28,9 @@ The function's signature takes in a
 parameter and returns either an instance of a `devServer` or a promise that
 resolves to a `devServer` instance.
 
-<cypress-config-file>
-<template #js>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  component: {
-    devServer(cypressConfig) {
-      // return devServer instance or a promise that resolves to
-      // a dev server here
-      return {
-        port: 1234,
-        close: () => {},
-      }
-    },
-  },
-})
-```
-
-</template>
-<template #ts>
-
+:::cypress-config-example
 ```ts
-import { defineConfig } from 'cypress'
-
-export default defineConfig({
+{
   component: {
     devServer(cypressConfig: CypressConfiguration) {
       // return devServer instance or a promise that resolves to
@@ -62,12 +40,10 @@ export default defineConfig({
         close: () => {},
       }
     },
-  },
-})
+  }
+}
 ```
-
-</template>
-</cypress-config-file>
+:::
 
 ## Custom Index File
 
