@@ -512,7 +512,7 @@ and/or
 can be used within the callback to include [npm](https://www.npmjs.com/)
 packages and other files.
 
-<Alert type="warning">
+:::caution
 
 Using `import()` and `require()` within the callback requires version 5.15.0 or
 greater of the
@@ -527,7 +527,7 @@ an error that includes the following text:
 _Using require() or import() to include dependencies requires using the latest
 version of @cypress/webpack-preprocessor._
 
-</Alert>
+:::
 
 #### Example
 

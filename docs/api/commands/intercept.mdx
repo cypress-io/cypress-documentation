@@ -314,7 +314,7 @@ cy.wait('@gqlMutation')
 :::info
 
 For more guidance around aliasing requests with GraphQL, see
-[Working with GraphQL](/guides/end-to-end-testing/working-with-graphql)
+[Working with GraphQL](/guides/end-to-end-testing/testing-strategies/working-with-graphql).
 
 :::
 
@@ -869,7 +869,7 @@ cy.intercept('POST', '/users', (req) => {
 ```
 
 See also
-[Controlling the outbound request with `req.continue()`](#Controlling-the-outbound-request-with-req-continue)
+[Controlling the outbound request with `req.continue()`][req-continue]
 
 Responding with a network error (`destroy`):
 
@@ -1190,7 +1190,7 @@ for more details on request ordering.
 
 The response can be intercepted in two ways:
 
-- by passing a callback to [`req.continue()`](req-continue) within a request
+- by passing a callback to [`req.continue()`][req-continue] within a request
   handler
 - by listening for the `before:response` or `response` request events (see
   ["Request events"](#Request-events))
@@ -1604,11 +1604,12 @@ information about the request and response to the console:
 - [How cy.intercept works](https://slides.com/bahmutov/how-cy-intercept-works)
 - [Cypress `cy.intercept()` Problems](https://glebbahmutov.com/blog/cypress-intercept-problems/)
 
+<!-- map often used refs to deeplinks within page !-->
 [staticresponse]: #StaticResponse-objects
 [lifecycle]: #Interception-lifecycle
 [req]: #Intercepted-requests
-[req-continue]: #Controlling-the-outbound-request-with-req-continue
-[req-reply]: #Providing-a-stub-response-with-req-reply
+[req-continue]: #Controlling-the-outbound-request-with-reqcontinue
+[req-reply]: #Providing-a-stub-response-with-reqreply
 [res]: #Intercepted-responses
 [res-send]: #Ending-the-response-with-res-send
 [match-url]: #Matching-url
