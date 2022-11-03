@@ -448,11 +448,11 @@ div.markdown h3 a:hover {
 }
 
 /* code title styling */
-div.codeBlockTitle_node_modules-\@docusaurus-theme-classic-lib-theme-CodeBlock-Content-styles-module {
+div[class^='codeBlockTitle'] {
   font-size: 1.05rem;
   font-weight: 700;
   color: var(--ifm-color-gray-300);
-  border-bottom: 3px solid var(--ifm-code-background-color-light);
+  border-bottom: 2px solid var(--ifm-code-background-color-light);
 }
 
 code span::selection {
@@ -464,8 +464,10 @@ code span::selection {
   border-radius: var(--ifm-code-border-radius);
 }
 
-.tabs-container .tabs {  
-  box-shadow: inset 0px -6px 0px -3px var(--ifm-code-background-color-light);
+.tabs-container .tabs {
+  background-color: #1f2937;
+  border-radius: 0.4rem 0.4rem 0 0;
+  box-shadow: inset 0px -6px 0px -4px var(--ifm-code-background-color-light);
 }
 
 .tabs-container .tabs__item {
