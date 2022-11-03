@@ -3,7 +3,6 @@ const replace = require("replace-in-file");
 
 const options = {
   files: "./docs/**/*.mdx",
-  // files: "./docs/getting-started/installing-cypress.mdx",
   from: [
     /<Alert type="info">/g,
     /<Alert type="success">/g,

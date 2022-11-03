@@ -195,9 +195,12 @@ article {
 }
 
 div[class^=announcementBar] {
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 16px;
   border-bottom: none;
+}
+
+div[class^=announcementBar] .close {
+  margin-right: .5rem;
 }
 
 div.markdown {
