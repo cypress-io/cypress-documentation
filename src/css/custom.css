@@ -454,7 +454,6 @@ div[class^='codeBlockTitle'] {
   color: var(--ifm-color-gray-300);
   border-bottom: 2px solid var(--ifm-code-background-color-light);
 }
-}
 
 code span::selection {
   background: var(--docusaurus-highlighted-code-line-bg);
