@@ -3,8 +3,6 @@ title: mount
 componentSpecific: true
 ---
 
-<CtBetaAlert></CtBetaAlert>
-
 Cypress does not have a built-in `cy.mount()` command. The command must be set
 up in your support file. By default, when you use Cypress to configure your
 project, one will be automatically scaffolded for you.
