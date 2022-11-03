@@ -129,7 +129,8 @@ it('increments the count', () => {
 ### React - `unmount` Removed
 
 `unmount` from `cypress/react` has been removed. We recommend using the API
-React provides for unmount components.
+React provides for unmount components,
+[unmountComponentAtNode](https://reactjs.org/docs/react-dom.html#unmountcomponentatnode).
 
 #### Before - Cypress 10 and `unmount`
 
