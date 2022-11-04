@@ -8,6 +8,73 @@ For a pre-v10 release archive, visit our [v9 Docs Changelog](https://v9.docs.cyp
 
 :::
 
+## 10.11.0
+
+_Released 10/25/2022_
+
+**Features:**
+
+- [`cy.session()`](/api/commands/session) is now supported when using
+  [WebKit (Experimental)](https://docs.cypress.io/guides/guides/launching-browsers#WebKit-Experimental)
+  and `experimentalSessionAndOrigin` is enabled. Addresses
+  [#24116](https://github.com/cypress-io/cypress/issues/24116),
+  [#23832](https://github.com/cypress-io/cypress/issues/23832).
+- Improves user experience when connecting a project to the Dashboard. Addresses
+  [#23379](https://github.com/cypress-io/cypress/issues/23379),
+  [#23766](https://github.com/cypress-io/cypress/issues/23766),
+  [#23767](https://github.com/cypress-io/cypress/issues/23767).
+  - Users will be prompted to connect a project to the Dashboard when logging in
+    from the Cypress Launchpad after a testing type has been selected.
+  - Users will be prompted to record runs to the Dashboard from both the Cypress
+    App and Cypress Launchpad if a project is connected to the Dashboard and has
+    no recorded runs.
+
+**Bugfixes:**
+
+- When a chromium based browser tab or process crashes, Cypress will no longer
+  hang indefinitely but will fail the current test and move on to the next.
+  [#6170](https://github.com/cypress-io/cypress/issues/6170).
+- Fixed as issue where browser-skipped tests were incorrectly recorded to the
+  Dashboard which resulted in the Dashboard marking the test as "new" or
+  "modified" when it already existed. Fixes
+  [#23517](https://github.com/cypress-io/cypress/issues/23517).
+- Fixed issue connecting to the cloud when a self-signed cert was in the cert
+  chain. Fixes [#24298](https://github.com/cypress-io/cypress/issues/24298).
+- [`cy.origin()`](/api/commands/origin) now supports more than 30 unique origin
+  spec bridges per test. Fixes
+  [#22874](https://github.com/cypress-io/cypress/issues/22874),
+  [#23967](https://github.com/cypress-io/cypress/issues/23967).
+- Fixed an issue where `document.cookie` would not reflect the correct value in
+  cross-origin tests. Fixes
+  [#23531](https://github.com/cypress-io/cypress/issues/23531).
+- Cypress will now restart on changes to the `blockHosts` configuration entry.
+  Fixes [#22634](https://github.com/cypress-io/cypress/issues/22634).
+- When shown the command to record runs to the cloud, the user can select and
+  copy parts of the command (like the record key), instead of only being able to
+  use the "Copy" button to copy the entire command. Fixes
+  [#22091](https://github.com/cypress-io/cypress/issues/22091).
+- Cleaned up inconsistencies in the UI between sentence case and title case.
+  Fixes [#21854](https://github.com/cypress-io/cypress/issues/21854).
+- Fixed an issue where there is a visible "Project ID" section (with no
+  `projectId`) when user has not connected to the Dashboard.
+  [#21806](https://github.com/cypress-io/cypress/issues/21806).
+
+**Experimental Breaking Changes:**
+
+- [`cy.origin()`](/api/commands/origin) now supports using `require()` and
+  dynamic `import()` to include dependencies. `Cypress.require()` has been
+  removed. Addresses
+  [#24293](https://github.com/cypress-io/cypress/issues/24293).
+- The way that Cypress handles
+  [test isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+  has changed. The previous modes of `legacy` and `strict` have been replaced
+  with `on` and `off`. Fixes
+  [#24206](https://github.com/cypress-io/cypress/issues/24206).
+  - The default mode is `on` when
+    [`experimentalSessionAndOrigin`](/guides/references/experiments) is enabled.
+  - The [cy.session()](/api/commands/session) command now inherits the test
+    isolation behavior for the suite it runs in.
+
 ## 10.10.0
 
 _Released 10/11/2022_
