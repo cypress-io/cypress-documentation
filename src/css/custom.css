@@ -195,7 +195,7 @@ article {
 }
 
 /* using attribute selector for these dynamic classes */
-[class^='admonitionHeading_'] {
+[class^='admonitionHeading'] {
   display: none;
 }
 
@@ -298,7 +298,7 @@ div.markdown h3 a:hover {
   width: 1em;
 }
 
-/* YouTube Embeded Videos*/
+/* Embeded Videos*/
 .embedContainer {
   position: relative;
   padding-bottom: 56.25%;
@@ -500,4 +500,12 @@ code span::selection {
 
 .api-table td:first-child {
   font-weight: bold;
+}
+
+/* adding this back after original Docusaurus
+   rules overwritten by .embedContainer
+   TODO: fix what casues this */
+[class^='mainContentHeader'] {
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+  margin-bottom: 20px;
 }
