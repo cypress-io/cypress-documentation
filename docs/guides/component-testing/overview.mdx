@@ -17,8 +17,8 @@ supported frameworks ([React](/guides/component-testing/react/overview),
 [Svelte](/guides/component-testing/svelte/overview)). For more in-depth tutorial
 and examples, view each guides section.
 
-<code-group>
-<code-block label="React" active>
+<Tabs>
+<TabItem value="React">
 
 ```ts
 import Button from './Button'
@@ -29,8 +29,8 @@ it('uses custom text for the button label', () => {
 })
 ```
 
-</code-block>
-<code-block label="Angular">
+</TabItem>
+<TabItem value="Angular">
 
 ```ts
 import ButtonComponent from './button.component'
@@ -43,8 +43,8 @@ it('uses custom text for the button label', () => {
 })
 ```
 
-</code-block>
-<code-block label="Vue">
+</TabItem>
+<TabItem value="Vue">
 
 ```ts
 import Button from './Button.vue'
@@ -59,8 +59,8 @@ it('uses custom text for the button label', () => {
 })
 ```
 
-</code-block>
-<code-block label="Svelte">
+</TabItem>
+<TabItem value="Svelte">
 
 ```ts
 import Button from './Button.svelte'
@@ -71,8 +71,8 @@ it('uses custom text for the button label', () => {
 })
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 Our Test Runner is browser-based, which allows you to test-drive your
 component's **styles and API** and **isolate your component away from the page
