@@ -413,7 +413,7 @@ phases:
 
 ## Using the Cypress Dashboard with AWS CodeBuild
 
-<Alert type="warning">
+:::caution
 
 Dashboard analytics are dependent on your CI environment reliably providing
 commit SHA data (typically via an environment variable) which is not always
@@ -426,7 +426,7 @@ or just see
 are still facing issues after this, please
 [contact us](mailto:hello@cypress.io).
 
-</Alert>
+:::
 
 In the AWS CodeBuild configuration we have defined in the previous section, we
 are leveraging three useful features of the
