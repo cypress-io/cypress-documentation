@@ -113,12 +113,6 @@ const config = {
             'aria-label': 'Cypress GitHub repository',
           },
           {
-            href: 'https://twitter.com/Cypress_io',
-            position: 'right',
-            className: 'twitter-logo',
-            'aria-label': 'Cypress Twitter',
-          },
-          {
             href: 'https://discord.gg/cypress',
             position: 'right',
             className: 'discord-logo',
