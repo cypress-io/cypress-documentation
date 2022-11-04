@@ -9,8 +9,11 @@ matter how simple or complex.
 ## Quick Example
 
 This is a minimal test to assert a button has the correct text in each of our
-supported frameworks. For more in-depth tutorial and examples, view each guides
-section.
+supported frameworks ([React](/guides/component-testing/react/overview),
+[Angular](/guides/component-testing/angular/overview),
+[Vue](/guides/component-testing/vue/overview), and
+[Svelte](/guides/component-testing/svelte/overview)). For more in-depth tutorial
+and examples, view each guides section.
 
 <code-group>
 <code-block label="React" active>
@@ -82,14 +85,13 @@ results in components built mindfully.
 
 ## Supported Frameworks
 
-Cypress currently has official support
+Cypress currently has official mounting libraries for
 [React](/guides/component-testing/react/overview),
 [Angular](/guides/component-testing/angular/overview),
 [Vue](/guides/component-testing/vue/overview), and
-[Svelte](/guides/component-testing/svelte/overview) for component testing.
+[Svelte](/guides/component-testing/svelte/overview).
 
-Cypress Component Testing runs in your existing development server. Below are
-all the development frameworks supported for each UI framework:
+We currently have support for the following development servers and frameworks:
 
 | Framework                                                                                                            | UI Library  | Bundler    |
 | -------------------------------------------------------------------------------------------------------------------- | ----------- | ---------- |
