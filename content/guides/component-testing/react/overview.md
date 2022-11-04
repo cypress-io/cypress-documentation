@@ -352,3 +352,8 @@ it via the `webpackConfig` option.
 #### Sample React Webpack Apps
 
 - [React Webpack 5 with JavaScript](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/react-webpack5-js)
+
+## Community Resources
+
+- [Cypress Component Test Driven Design](https://muratkerem.gitbook.io/cctdd/)
+- [Cypress React Component Test Examples](https://github.com/muratkeremozcan/cypress-react-component-test-examples)

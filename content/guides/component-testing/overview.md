@@ -6,6 +6,69 @@ Cypress Component Testing provides a **testable component workbench** for you to
 quickly build and test components from multiple front-end UI libraries — no
 matter how simple or complex.
 
+## Quick Example
+
+This is a minimal test to assert a button has the correct text in each of our
+supported frameworks. For more in-depth tutorial and examples, view each guides
+section.
+
+<code-group>
+<code-block label="React" active>
+
+```ts
+import Button from './Button'
+
+it('uses custom text for the button label', () => {
+  cy.mount(<Button>Click me!</Button>)
+  cy.get('button').should('contains.text', 'Click me!')
+})
+```
+
+</code-block>
+<code-block label="Angular">
+
+```ts
+import ButtonComponent from './button.component'
+
+it('uses custom text for the button label', () => {
+  cy.mount('<app-button>Click me!</app-button>', {
+    declarations: [ButtonComponent],
+  })
+  cy.get('button').should('contains.text', 'Click me!')
+})
+```
+
+</code-block>
+<code-block label="Vue">
+
+```ts
+import Button from './Button.vue'
+
+it('uses custom text for the button label', () => {
+  cy.mount(Button, {
+    slots: {
+      default: 'Click me!',
+    },
+  })
+  cy.get('button').should('contains.text', 'Click me!')
+})
+```
+
+</code-block>
+<code-block label="Svelte">
+
+```ts
+import Button from './Button.svelte'
+
+it('uses custom text for the button label', () => {
+  cy.mount(Button, { props: { msg: 'Click me!' } })
+  cy.get('button').should('contains.text', 'Click me!')
+})
+```
+
+</code-block>
+</code-group>
+
 Our Test Runner is browser-based, which allows you to test-drive your
 component's **styles and API** and **isolate your component away from the page
 Cypress will render it in**. Separating the components of your website enables
@@ -17,7 +80,7 @@ results in components built mindfully.
 </video>
 <p style="font-size: 0.85rem; text-align: center;"><a href="https://vuetifyjs.com/en/components/color-pickers/">Vuetify's</a> VColorPicker tests, after being moved to Cypress from Jest.</p>
 
-### Supported Frameworks
+## Supported Frameworks
 
 Cypress currently has official support
 [React](/guides/component-testing/react/overview),
@@ -35,14 +98,14 @@ all the development frameworks supported for each UI framework:
 | [React with Vite](/guides/component-testing/react/overview#React-with-Vite)                                          | React 16+   | Vite 2+    |
 | [React with Webpack](/guides/component-testing/react/overview#React-with-Webpack)                                    | React 16+   | Webpack 4+ |
 | [Vue CLI](/guides/component-testing/vue/overview#Vue-CLI)                                                            | Vue 2+      | Webpack 4+ |
-| [Nuxt 2](/guides/component-testing/vue/overview#Nuxt)                                                                | Vue 2+      | Webpack 4+ |
+| [Nuxt 2](/guides/component-testing/vue/overview#Nuxt) <Badge type="info">Beta</Badge>                                | Vue 2+      | Webpack 4+ |
 | [Vue with Vite](/guides/component-testing/vue/overview#Vue-with-Vite)                                                | Vue 2+      | Vite 2+    |
 | [Vue with Webpack](/guides/component-testing/vue/overview#Vue-with-Webpack)                                          | Vue 2+      | Webpack 4+ |
 | [Angular](/guides/component-testing/angular/overview#Framework-Configuration)                                        | Angular 13+ | Webpack 5  |
 | [Svelte with Vite](/guides/component-testing/svelte/overview#Svelte-with-Vite) <Badge type="info">Beta</Badge>       | Svelte 3+   | Vite 2+    |
 | [Svelte with Webpack](/guides/component-testing/svelte/overview#Svelte-with-Webpack) <Badge type="info">Beta</Badge> | Svelte 3+   | Webpack 4+ |
 
-### Component Testing vs. End-to-End Testing
+## Component Testing vs. End-to-End Testing
 
 We cover the differences between component and end-to-end testing in-depth in
 the [Choosing a Testing Type](/guides/core-concepts/testing-types) guide.
