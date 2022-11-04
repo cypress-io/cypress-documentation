@@ -10,12 +10,9 @@ version 11.0.
 
 ### Component Testing Updates
 
-As of Cypress 11, Component Testing is now generally available. Learn more about
-what generally available implies [here](link_to_post) and the improvements
-[here](annoucement_blog_post).
-
-There are some minor breaking changes. Most projects should be able to migrate
-without any code modifications.
+As of Cypress 11, Component Testing is now generally available. There are some
+minor breaking changes. Most projects should be able to migrate without any code
+modifications.
 
 #### Changes to Mounting Options
 
@@ -30,9 +27,10 @@ Mounting options previously had several properties that are now removed:
 - style, styles
 - stylesheet, stylesheets
 
-Read more about the rationale [here](link_to_explainer). We recommend writing
-test-specific styles in a separate `css` file you import in your test, or in
-your `supportFile`.
+Read more about the rationale
+[here](https://www.cypress.io/blog/2022/11/04/upcoming-changes-to-component-testing/).
+We recommend writing test-specific styles in a separate `css` file you import in
+your test, or in your `supportFile`.
 
 #### Before (Cypress 10)
 
@@ -69,8 +67,10 @@ it('renders some content', () => {
 
 ### React - `mountHook` Removed
 
-`mountHook` from `cypress/react` has been removed. Replace it with `mount` and a
-component.
+`mountHook` from `cypress/react` has been removed. Read more about the rationale
+[here](https://www.cypress.io/blog/2022/11/04/upcoming-changes-to-component-testing/).
+
+We recommend simply replacing it with `mount` and a component.
 
 Consider the following `useCounter` hook:
 
@@ -128,8 +128,9 @@ it('increments the count', () => {
 
 ### React - `unmount` Removed
 
-`unmount` from `cypress/react` has been removed. We recommend using the API
-React provides for unmount components,
+`unmount` from `cypress/react` has been removed. Read more about the rationale
+[here](https://www.cypress.io/blog/2022/11/04/upcoming-changes-to-component-testing/).
+We recommend using the API React provides for unmount components,
 [unmountComponentAtNode](https://reactjs.org/docs/react-dom.html#unmountcomponentatnode).
 
 #### Before - Cypress 10 and `unmount`
@@ -169,7 +170,10 @@ it('calls the prop', () => {
 
 ### Vue - `mountCallback` Removed
 
-`mountCallback` from `cypress/vue` has been removed. We recommend using `mount`.
+`mountCallback` from `cypress/vue` has been removed. Read more about the
+rationale
+[here](https://www.cypress.io/blog/2022/11/04/upcoming-changes-to-component-testing/).
+We recommend using `mount`.
 
 #### Before - Cypress 10 and `mountCallback`
 
@@ -195,8 +199,22 @@ it('shows no messages', () => {
 
 ### Angular - Providers Mounting Options Change
 
-Not really sure about this one yet but the PR is here
-https://github.com/cypress-io/cypress/pull/24394
+There is one breaking change for Angular users in regards to providers. In
+Cypress 10 we took any providers passed as part of the Mounting Options and
+overrode the component providers via the `TestBed.overrideComponent` API.
+
+In Cypress 11, providers passed as part of the Mounting Options will be assigned
+at the module level using the `TestBed.configureTestingModule` API.
+
+This means that module-level providers (resolved from imports or
+`@Injectable({providedIn: 'root' })` can be overridden but providers specified
+in `@Component({ providers: [...] })` will not be overridden when using
+`cy.mount(MyComponent, { providers: [...] })`.
+
+To override component-level providers, use the TestBed.overrideComponent API.
+
+See a concrete example
+[here](https://www.cypress.io/blog/2022/11/04/upcoming-changes-to-component-testing/#angularproviders-priority).
 
 ### Vite Dev Server (`cypress/vite-dev-server`)
 
