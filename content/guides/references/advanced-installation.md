@@ -7,11 +7,11 @@ title: Advanced Installation
 | Name                             | Description                                                                                                          |
 | -------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | `CYPRESS_INSTALL_BINARY`         | [Destination of Cypress binary that's downloaded and installed](#Install-binary)                                     |
-| `CYPRESS_DOWNLOAD_MIRROR`        | [Downloads the Cypress binary though a mirror server](#Mirroring)                                                    |
+| `CYPRESS_DOWNLOAD_MIRROR`        | [Downloads the Cypress binary through a mirror server](#Mirroring)                                                   |
+| `CYPRESS_DOWNLOAD_PATH_TEMPLATE` | [Allows generating a custom URL to download the Cypress binary from](#Download-path-template)                        |
 | `CYPRESS_CACHE_FOLDER`           | [Changes the Cypress binary cache location](#Binary-cache)                                                           |
 | `CYPRESS_RUN_BINARY`             | [Location of Cypress binary at run-time](#Run-binary)                                                                |
 | `CYPRESS_VERIFY_TIMEOUT`         | Overrides the timeout duration for the `verify` command. The default value is 30000.                                 |
-| `CYPRESS_DOWNLOAD_PATH_TEMPLATE` | Allows to specify custom download url. Replaces ${endpoint}, ${version}, ${platform}, ${arch} with respective values |
 | ~~CYPRESS_SKIP_BINARY_INSTALL~~  | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY=0` instead                                          |
 | ~~CYPRESS_BINARY_VERSION~~       | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY` instead                                            |
 
@@ -155,16 +155,6 @@ for all available platforms.
 https://download.cypress.io/desktop/3.0.0?platform=win32&arch=x64
 ```
 
-When setting
-`CYPRESS_DOWNLOAD_PATH_TEMPLATE='${endpoint}/${platform}-${arch}/cypress.zip'`
-environment variable, then a custom download url is used, where
-${endpoint},
-${platform}, ${arch} are replaced with respective values.
-
-```text
-https://download.cypress.io/desktop/3.0.0/win32-x64/cypress.zip
-```
-
 ## Mirroring
 
 If you choose to mirror the entire Cypress download site, you can specify
@@ -179,6 +169,50 @@ CYPRESS_DOWNLOAD_MIRROR="https://www.example.com" cypress install
 
 Cypress will then attempt to download a binary with this format:
 `https://www.example.com/desktop/:version?platform=p`
+
+## Download path template
+
+Starting with Cypress 9.3.0, you can use the `CYPRESS_DOWNLOAD_PATH_TEMPLATE`
+environment variable to make Cypress download the binary from a custom URL
+that's generated based on version, platform and architecture.
+
+**The following replacements are supported:**
+
+- `${endpoint}` is replaced with `https://download.cypress.io/desktop/:version`.
+  If `CYPRESS_DOWNLOAD_MIRROR` is set, its value is used instead of
+  `https://download.cypress.io` (note that the `/desktop` remains!)
+- `${platform}` is replaced with the platform the installation is running on
+  (e.g. `win32`, `linux`, `darwin`)
+- `${arch}` is replaced with the architecture the installation is running on
+  (e.g. `x64`, `arm64`)
+- Starting with Cypress 10.6.0, `${version}` is replaced with the version
+  number that's being installed (e.g. `10.11.0`)
+
+**Examples:**
+
+To install the binary from a download mirror that matches the exact file
+structure of `https://cdn.cypress.io` (works for Cypress 9.3.0 or newer):
+
+```shell
+export CYPRESS_DOWNLOAD_MIRROR=https://cypress-download.local
+export CYPRESS_DOWNLOAD_PATH_TEMPLATE='${endpoint}/${platform}-${arch}/cypress.zip'
+# Example of a resulting URL: https://cypress-download.local/desktop/10.11.0/linux-x64/cypress.zip
+```
+
+To install the binary from a download server with a custom file structure
+(works for Cypress 10.6.0 or newer):
+
+```shell
+export CYPRESS_DOWNLOAD_PATH_TEMPLATE='https://software.local/cypress/${platform}/${arch}/${version}/cypress.zip'
+# Example of a resulting URL: https://software.local/cypress/linux/x64/10.11.0/cypress.zip
+```
+
+To define `CYPRESS_DOWNLOAD_PATH_TEMPLATE` in `.npmrc`, put a backslash before
+every `$` (works for Cypress 9.5.3 or newer):
+
+```ini
+CYPRESS_DOWNLOAD_PATH_TEMPLATE=\${endpoint}/\${platform}-\${arch}/cypress.zip
+```
 
 ## Using a custom CA
 
