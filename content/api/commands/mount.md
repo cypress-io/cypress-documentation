@@ -51,7 +51,7 @@ Cypress.Commands.add('mount', (component, options) => {
 <template #vue2>
 
 ```js
-import { mount } from 'cypress/vue-2'
+import { mount } from 'cypress/vue2'
 
 Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
