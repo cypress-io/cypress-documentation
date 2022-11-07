@@ -180,7 +180,7 @@ CYPRESS_DOWNLOAD_MIRROR="https://www.example.com" cypress install
 Cypress will then attempt to download a binary with this format:
 `https://www.example.com/desktop/:version?platform=p`
 
-## Using a custom CA
+## Using a custom certificate authority (CA)
 
 Cypress can be configured to use the `ca` and `cafile` options from your NPM
 config file to download the Cypress binary.
