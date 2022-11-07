@@ -39,8 +39,9 @@ Pass in an options object to change the default behavior of `.focus()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.focus()` yields the same subject it was given from the previous
-command.</li></List>
+- `.focus()` yields the same subject it was given.
+- `.focus()` is a command, and it is **unsafe** to chain further methods that
+  rely on the subject.
 
 ## Examples
 

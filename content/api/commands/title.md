@@ -32,8 +32,8 @@ Pass in an options object to change the default behavior of `cy.title()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.title()` 'yields the `document.title` property of the current
-page' </li></List>
+- `cy.title()` 'yields the `document.title` property of the current page.
+- `cy.title()` is a query, and it is _safe_ to chain further methods.
 
 ## Examples
 

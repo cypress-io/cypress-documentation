@@ -69,8 +69,9 @@ Pass in an options object to change the default behavior of `cy.scrollTo()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.scrollTo()` yields the same subject it was given from the previous
-command.</li></List>
+- `cy.scrollTo()` yields the same subject it was given.
+- `cy.scrollTo()` is a command, and it is **unsafe** to chain further methods
+  that rely on the subject.
 
 ## Examples
 

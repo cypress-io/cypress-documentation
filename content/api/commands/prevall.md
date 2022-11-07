@@ -52,7 +52,8 @@ Pass in an options object to change the default behavior of `.prevAll()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.prevAll()` yields the new DOM element(s) it found.</li></List>
+- `.prevAll()` yields the new DOM element(s) it found.
+- `.prevAll()` is a query, and it is _safe_ to chain further methods.
 
 ## Examples
 

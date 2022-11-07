@@ -46,7 +46,8 @@ Pass in an options object to change the default behavior of `.first()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.first()` yields the new DOM element(s) it found.</li></List>
+- `.first()` yields the new DOM element it found.
+- `.first()` is a query, and it is _safe_ to chain further methods.
 
 ## Examples
 

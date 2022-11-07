@@ -4,6 +4,8 @@ title: click
 
 Click a DOM element.
 
+`.click()` is a command, and is **unsafe** to chain off of.
+
 ## Syntax
 
 ```javascript
@@ -70,8 +72,9 @@ Pass in an options object to change the default behavior of `.click()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.click()` yields the same subject it was given from the previous
-command.</li></List>
+- `.click()` yields the same subject it was given.
+- `.click()` is a command, and it is **unsafe** to chain further methods that
+  rely on the subject.
 
 ## Examples
 

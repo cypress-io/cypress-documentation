@@ -39,21 +39,23 @@ previous sections, we'll start simple.
 ```js
 it('renders the modal content', () => {
   cy.mount(Modal, { slots: { default: () => 'Content' } })
-    .get(modalSelector)
-    .should('have.text', 'Content')
+
+  cy.get(modalSelector).should('have.text', 'Content')
 })
 
 it('can be closed', () => {
   cy.mount(Modal, { slots: { default: () => 'Content' } })
-    .get(modalSelector)
-    .should('have.text', 'Content')
+
+  cy.get(modalSelector).should('have.text', 'Content')
+
+  cy.get(modalSelector)
     .get(closeButtonSelector)
     .should('have.text', 'Close')
     .click()
-    // Repeat the assertion to make sure the text
-    // is no longer visible
-    .get(modalSelector)
-    .should('not.have.text', 'Content')
+
+  // Repeat the assertion to make sure the text
+  // is no longer visible
+  cy.get(modalSelector).should('not.have.text', 'Content')
 })
 ```
 
@@ -64,21 +66,22 @@ it('can be closed', () => {
 ```js
 it('renders the modal content', () => {
   cy.mount(() => <Modal>Content</Modal>)
-    .get(modalSelector)
-    .should('have.text', 'Content')
+
+  cy.get(modalSelector).should('have.text', 'Content')
 })
 
 it('can be closed', () => {
   cy.mount(() => <Modal>Content</Modal>)
-    .get(modalSelector)
+
+  cy.get(modalSelector)
     .should('have.text', 'Content')
     .get(closeButtonSelector)
     .should('have.text', 'Close')
     .click()
-    // Repeat the assertion to make sure the text
-    // is no longer visible
-    .get(modalSelector)
-    .should('not.have.text', 'Content')
+
+  // Repeat the assertion to make sure the text
+  // is no longer visible
+  cy.get(modalSelector).should('not.have.text', 'Content')
 })
 ```
 
@@ -215,30 +218,37 @@ const slots = {
 
 it('renders the default modal content', () => {
   cy.mount(Modal, { slots })
-    .get(modalSelector).should('have.text', 'Content')
+
+  cy.get(modalSelector).should('have.text', 'Content')
 })
 
 it('renders a custom footer', () => {
   const footerText = 'My Custom Footer'
   cy.mount(Modal, { slots })
-    .get(modalSelector).should('have.text', 'Content')
+
+  cy.get(modalSelector)
+    .should('have.text', 'Content')
     .and('have.text' footerText)
 })
 
 it('renders a custom header', () => {
   const headerText = 'My Custom Header'
   cy.mount(Modal, { slots })
-    .get(modalSelector).should('have.text', 'Content')
+
+  cy.get(modalSelector)
+    .should('have.text', 'Content')
     .and('have.text' headerText)
 })
 
 it('renders the fallback "Close" button when no footer is provided', () => {
   cy.mount(Modal, { slots })
-    .get(modalSelector).should('have.text', 'Content')
+
+  cy.get(modalSelector).should('have.text', 'Content')
     .get(closeButtonSelector).should('have.text', 'Close').click()
-    // Repeat the assertion to make sure the text
-    // is no longer visible
-    .get(modalSelector).should('not.have.text', 'Content')
+
+  // Repeat the assertion to make sure the text
+  // is no longer visible
+  cy.get(modalSelector).should('not.have.text', 'Content')
 })
 ```
 
@@ -257,30 +267,38 @@ const slots = {
 
 it('renders the default modal content', () => {
   cy.mount(() => <Modal {...slots}>Content</Modal>)
-    .get(modalSelector).should('have.text', 'Content')
+
+  cy.get(modalSelector).should('have.text', 'Content')
 })
 
 it('renders a custom footer', () => {
   const footerText = 'My Custom Footer'
   cy.mount(() => <Modal {...slots}>Content</Modal>)
-    .get(modalSelector).should('have.text', 'Content')
+
+  cy.get(modalSelector)
+    .should('have.text', 'Content')
     .and('have.text' footerText)
 })
 
 it('renders a custom header', () => {
   const headerText = 'My Custom Header'
   cy.mount(() => <Modal {...slots}>Content</Modal>)
-    .get(modalSelector).should('have.text', 'Content')
+
+  cy.get(modalSelector)
+    .should('have.text', 'Content')
     .and('have.text' headerText)
 })
 
 it('renders the fallback "Close" button when no footer is provided', () => {
   cy.mount(() => <Modal>Content</Modal>)
-    .get(modalSelector).should('have.text', 'Content')
-    .get(closeButtonSelector).should('have.text', 'Close').click()
-    // Repeat the assertion to make sure the text
-    // is no longer visible
-    .get(modalSelector).should('not.have.text', 'Content')
+
+  cy.get(modalSelector).should('have.text', 'Content')
+
+  cy.get(closeButtonSelector).should('have.text', 'Close').click()
+
+  // Repeat the assertion to make sure the text
+  // is no longer visible
+  cy.get(modalSelector).should('not.have.text', 'Content')
 })
 ```
 
@@ -428,23 +446,29 @@ const slots = {
 
 it('The footer slot binds the close method', () => {
   cy.mount(Modal, { slots })
-    .get(footerSelector).should('have.text', text)
+
+  cy.get(footerSelector).should('have.text', text)
     .click()
-    .get(modalSelector).should('not.exist')
+
+  cy.get(modalSelector).should('not.exist')
 })
 
 it('The header slot binds the close method', () => {
   cy.mount(Modal, { slots })
-    .get(headerSelector).should('have.text', text)
+
+  cy.get(headerSelector).should('have.text', text)
     .click()
-    .get(modalSelector).should('not.exist')
+
+  cy.get(modalSelector).should('not.exist')
 })
 
 it('The default slot binds the close method', () => {
   cy.mount(Modal, { slots })
-    .get(contentSelector).should('have.text', text)
+
+  cy.get(contentSelector).should('have.text', text)
     .click()
-    .get(modalSelector).should('not.exist')
+
+  cy.get(modalSelector).should('not.exist')
 })
 ```
 
@@ -466,23 +490,29 @@ const slots = {
 
 it('The footer slot binds the close method', () => {
   cy.mount(() => <Modal {...slots}/>)
-    .get(footerSelector).should('have.text', text)
+
+  cy.get(footerSelector).should('have.text', text)
     .click()
-    .get(modalSelector).should('not.exist')
+
+  cy.get(modalSelector).should('not.exist')
 })
 
 it('The header slot binds the close method', () => {
   cy.mount(() => <Modal {...slots}/>)
-    .get(headerSelector).should('have.text', text)
+
+  cy.get(headerSelector).should('have.text', text)
     .click()
-    .get(modalSelector).should('not.exist')
+
+  cy.get(modalSelector).should('not.exist')
 })
 
 it('The default slot binds the close method', () => {
   cy.mount(() => <Modal {...slots}/>)
-    .get(contentSelector).should('have.text', text)
+
+  cy.get(contentSelector).should('have.text', text)
     .click()
-    .get(modalSelector).should('not.exist')
+
+  cy.get(modalSelector).should('not.exist')
 })
 ```
 

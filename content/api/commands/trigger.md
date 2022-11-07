@@ -74,8 +74,9 @@ they will be attached to the event. Passing in coordinate arguments (`clientX`,
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.trigger()` yields the same subject it was given from the previous
-command.</li></List>
+- `.trigger()` yields the same subject it was given.
+- `.trigger()` is a command, and it is **unsafe** to chain further methods that
+  rely on the subject.
 
 ## Examples
 

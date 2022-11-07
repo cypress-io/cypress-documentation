@@ -41,6 +41,8 @@ The root element yielded is `<html>` by default. However, when calling `.root()`
 from a [`.within()`](/api/commands/within) command, the root element will point
 to the element you are "within".
 
+`.root()` is a query, and it is _safe_ to chain further methods.
+
 ## Examples
 
 ### HTML

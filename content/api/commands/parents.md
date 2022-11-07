@@ -56,7 +56,8 @@ Pass in an options object to change the default behavior of `.parents()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.parents()` yields the new DOM element(s) it found.</li></List>
+- `.parents()` yields the new DOM element(s) it found.
+- `.parents()` is a query, and it is _safe_ to chain further methods.
 
 ## Examples
 

@@ -51,20 +51,23 @@ Pass a function that takes the previously yielded subject as its first argument.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-`.then()` is modeled identically to the way Promises work in JavaScript.
 Whatever is returned from the callback function becomes the new subject and will
-flow into the next command (with the exception of `undefined`).
+flow into the next command (with the exception of `undefined` or `null`). If the
+return value is a Promise or other "thenable" (anything with a `.then()`
+interface), Cypress will wait for it to resolve before continuing forward
+through the chain of commands.
 
-Additionally, the result of the last Cypress command in the callback function
-will be yielded as the new subject and flow into the next command if there is no
-`return`.
+If `undefined` or `null` are returned (or there is no `return`), the result of
+the last Cypress command in the callback function will be yielded as the new
+subject instead, and flow into the next command.
 
-When `undefined` is returned by the callback function, the subject will not be
-modified and will instead carry over to the next command.
+If `undefined` or `null` are returned (or there is no `return`) and the callback
+does not call any Cypress commands, the subject will not be modified and the
+previous subject will carry over to the next command.
 
-Just like Promises, you can return any compatible "thenable" (anything that has
-a `.then()` interface) and Cypress will wait for that to resolve before
-continuing forward through the chain of commands.
+`.then()` is a command, and will not be retried. It is **unsafe** to return DOM
+elements from the callback and then use further assertions, queries of commands
+on them.
 
 ## Examples
 

@@ -37,7 +37,6 @@ Many of these issues are currently being worked on or are on our
 - [Workarounds for the lack of a `cy.hover()` command.](/api/commands/hover)
 - [`cy.tab()` command.](https://github.com/cypress-io/cypress/issues/299)
 - [There is not any native or mobile events support.](https://github.com/cypress-io/cypress/issues/311#issuecomment-339824191)
-- [Testing file uploads is application specific.](https://github.com/cypress-io/cypress/issues/170#issuecomment-340012621)
 - [iframe support is somewhat limited, but does work.](https://github.com/cypress-io/cypress/issues/136)
 
 ## Permanent trade-offs

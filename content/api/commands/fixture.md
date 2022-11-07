@@ -71,8 +71,10 @@ Pass in an options object to change the default behavior of `cy.fixture()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-`cy.fixture()` yields the contents of the file. Formatting is determined by its
-file extension.
+- `cy.fixture()` yields the contents of the file. Formatting is determined by
+  its file extension.
+- `cy.fixture()` is a command. The yielded subject is **not** updated if the
+  contents change on disk.
 
 ## Examples
 

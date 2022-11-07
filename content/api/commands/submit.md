@@ -46,8 +46,9 @@ Pass in an options object to change the default behavior of `.submit()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.submit()` yields the same subject it was given from the previous
-command.</li></List>
+- `.sumbit()` yields the same subject it was given.
+- `.submit()` is a command, and it is **unsafe** to chain further methods that
+  rely on the subject.
 
 ## Example
 

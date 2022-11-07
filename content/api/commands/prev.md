@@ -52,7 +52,8 @@ Pass in an options object to change the default behavior of `.prev()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.prev()` yields the new DOM element(s) it found.</li></List>
+- `.prev()` yields the new DOM element(s) it found.
+- `.prev()` is a query, and it is _safe_ to chain further methods.
 
 ## Examples
 

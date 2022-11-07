@@ -42,7 +42,8 @@ Pass in an options object to change the default behavior of `cy.url()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.url()` 'yields the current URL as a string' </li></List>
+- `cy.url()` yields the current URL as a string.
+- `cy.url()` is a query, and it is _safe_ to chain further methods.
 
 ## Examples
 

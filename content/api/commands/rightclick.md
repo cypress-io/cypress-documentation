@@ -78,8 +78,9 @@ Pass in an options object to change the default behavior of `.rightclick()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.rightclick()` yields the same subject it was given from the previous
-command.</li></List>
+- `.rightclick()` yields the same subject it was given.
+- `.rightclick()` is a command, and it is **unsafe** to chain further methods
+  that rely on the subject.
 
 ## Examples
 

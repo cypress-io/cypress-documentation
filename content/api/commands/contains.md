@@ -64,7 +64,8 @@ Pass in an options object to change the default behavior of `.contains()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.contains()` yields the new DOM element it found.</li></List>
+- `.contains()` yields the new DOM element it found.
+- `.contains()` is a query, and it is _safe_ to chain further methods.
 
 ## Examples
 

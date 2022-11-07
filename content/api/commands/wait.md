@@ -64,8 +64,9 @@ Pass in an options object to change the default behavior of `cy.wait()`.
 
 #### When given a `time` argument:
 
-<List><li>`cy.wait()` yields the same subject it was given from the previous
-command.</li></List>
+- `cy.wait()` yields the same subject it was given.
+- `.screenshot()` is a command, and it is **unsafe** to chain further methods
+  that rely on the subject.
 
 #### When given an `alias` argument:
 

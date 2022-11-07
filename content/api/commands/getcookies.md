@@ -44,6 +44,9 @@ following properties:
 - `secure`
 - `value`
 
+`cy.getCookies()` is a command, not a query. It will not update the returned
+list if further cookies are added after it initially executes.
+
 ## Examples
 
 ### Get Cookies

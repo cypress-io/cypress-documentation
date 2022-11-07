@@ -64,8 +64,9 @@ For more details on these options and to set some as defaults across all uses of
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.screenshot()` yields the same subject it was given from the previous
-command.</li></List>
+- `.screenshot()` yields the same subject it was given.
+- `.screenshot()` is a command, and it is **unsafe** to chain further methods
+  that rely on the subject.
 
 ## Examples
 

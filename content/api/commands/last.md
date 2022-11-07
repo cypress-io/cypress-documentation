@@ -46,7 +46,8 @@ Pass in an options object to change the default behavior of `.last()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.last()` yields the new DOM element(s) it found.</li></List>
+- `.last()` yields the new DOM element it found.
+- `.last()` is a query, and it is _safe_ to chain further methods.
 
 ## Examples
 

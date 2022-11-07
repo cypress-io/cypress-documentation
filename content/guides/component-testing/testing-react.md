@@ -120,7 +120,8 @@ it('when clicking increment and decrement buttons, the counter is changed as exp
   cy.get(counterSelector).should('have.text', '100')
   cy.get(incrementSelector).click()
   cy.get(counterSelector).should('have.text', '101')
-  cy.get(decrementSelector).click().click()
+  cy.get(decrementSelector).click()
+  cy.get(decrementSelector).click()
   cy.get(counterSelector).should('have.text', '99')
 })
 ```

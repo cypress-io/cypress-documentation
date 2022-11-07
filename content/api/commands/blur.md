@@ -49,8 +49,9 @@ Pass in an options object to change the default behavior of `.blur`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.blur()` yields the same subject it was given from the previous
-command.</li></List>
+- `.blur()` yields the same subject it was given.
+- `.blur()` is a command, and it is **unsafe** to chain further methods that
+  rely on the subject.
 
 ## Examples
 

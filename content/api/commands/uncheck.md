@@ -55,8 +55,9 @@ Pass in an options object to change the default behavior of `.uncheck()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.uncheck()` yields the same subject it was given from the previous
-command.</li></List>
+- `.uncheck()` yields the same subject it was given.
+- `.uncheck()` is a command, and it is **unsafe** to chain further methods that
+  rely on the subject.
 
 ## Examples
 

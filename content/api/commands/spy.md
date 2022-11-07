@@ -38,11 +38,12 @@ The name of the `method` on the `object` to be wrapped.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-Unlike most Cypress commands, `cy.spy()` is _synchronous_ and returns a value
-(the spy) instead of a Promise-like chain-able object.
-
-`cy.spy()` returns a [Sinon.js spy](https://sinonjs.org/releases/v6.1.5/spies/).
-All methods found on Sinon.JS spies are supported.
+- `cy.spy()` is a _utility function_, and is neither a command nor a query.
+- `cy.spy()` is _synchronous_ and returns a value (the spy) instead of a
+  Promise-like chain-able object. It can be aliased.
+- `cy.spy()` returns a
+  [Sinon.js spy](https://sinonjs.org/releases/v6.1.5/spies/). All methods found
+  on Sinon.JS spies are supported.
 
 ## Examples
 

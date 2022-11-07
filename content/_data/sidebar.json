@@ -517,11 +517,166 @@
         },
         {
           "title": "Assertions",
-          "slug": "assertions",
+          "slug": "commands",
           "children": [
             {
               "title": "All Assertions",
               "redirect": "/guides/references/assertions"
+            },
+            {
+              "title": "and",
+              "slug": "and"
+            },
+            {
+              "title": "should",
+              "slug": "should"
+            }
+          ]
+        },
+        {
+          "title": "Queries",
+          "slug": "commands",
+          "children": [
+            {
+              "title": "as",
+              "slug": "as"
+            },
+            {
+              "title": "children",
+              "slug": "children"
+            },
+            {
+              "title": "closest",
+              "slug": "closest"
+            },
+            {
+              "title": "contains",
+              "slug": "contains"
+            },
+            {
+              "title": "debug",
+              "slug": "debug"
+            },
+            {
+              "title": "document",
+              "slug": "document"
+            },
+            {
+              "title": "eq",
+              "slug": "eq"
+            },
+            {
+              "title": "filter",
+              "slug": "filter"
+            },
+            {
+              "title": "find",
+              "slug": "find"
+            },
+            {
+              "title": "first",
+              "slug": "first"
+            },
+            {
+              "title": "focused",
+              "slug": "focused"
+            },
+            {
+              "title": "get",
+              "slug": "get"
+            },
+            {
+              "title": "hash",
+              "slug": "hash"
+            },
+            {
+              "title": "invoke",
+              "slug": "invoke"
+            },
+            {
+              "title": "its",
+              "slug": "its"
+            },
+            {
+              "title": "last",
+              "slug": "last"
+            },
+            {
+              "title": "location",
+              "slug": "location"
+            },
+            {
+              "title": "next",
+              "slug": "next"
+            },
+            {
+              "title": "nextAll",
+              "slug": "nextall"
+            },
+            {
+              "title": "nextUntil",
+              "slug": "nextuntil"
+            },
+            {
+              "title": "not",
+              "slug": "not"
+            },
+
+            {
+              "title": "parent",
+              "slug": "parent"
+            },
+            {
+              "title": "parents",
+              "slug": "parents"
+            },
+            {
+              "title": "parentsUntil",
+              "slug": "parentsuntil"
+            },
+            {
+              "title": "prev",
+              "slug": "prev"
+            },
+            {
+              "title": "prevAll",
+              "slug": "prevall"
+            },
+            {
+              "title": "prevUntil",
+              "slug": "prevuntil"
+            },
+            {
+              "title": "root",
+              "slug": "root"
+            },
+            {
+              "title": "screenshot",
+              "slug": "screenshot"
+            },
+            {
+              "title": "shadow",
+              "slug": "shadow"
+            },
+            {
+              "title": "siblings",
+              "slug": "siblings"
+            },
+            {
+              "title": "title",
+              "slug": "title"
+            },
+            {
+              "title": "url",
+              "slug": "url"
+            },
+            {
+              "title": "window",
+              "slug": "window"
+            },
+            {
+              "title": "within",
+              "slug": "within"
             }
           ]
         },
@@ -530,24 +685,12 @@
           "slug": "commands",
           "children": [
             {
-              "title": "and",
-              "slug": "and"
-            },
-            {
-              "title": "as",
-              "slug": "as"
-            },
-            {
               "title": "blur",
               "slug": "blur"
             },
             {
               "title": "check",
               "slug": "check"
-            },
-            {
-              "title": "children",
-              "slug": "children"
             },
             {
               "title": "clear",
@@ -574,24 +717,8 @@
               "slug": "clock"
             },
             {
-              "title": "closest",
-              "slug": "closest"
-            },
-            {
-              "title": "contains",
-              "slug": "contains"
-            },
-            {
               "title": "dblclick",
               "slug": "dblclick"
-            },
-            {
-              "title": "debug",
-              "slug": "debug"
-            },
-            {
-              "title": "document",
-              "slug": "document"
             },
             {
               "title": "each",
@@ -602,24 +729,8 @@
               "slug": "end"
             },
             {
-              "title": "eq",
-              "slug": "eq"
-            },
-            {
               "title": "exec",
               "slug": "exec"
-            },
-            {
-              "title": "filter",
-              "slug": "filter"
-            },
-            {
-              "title": "find",
-              "slug": "find"
-            },
-            {
-              "title": "first",
-              "slug": "first"
             },
             {
               "title": "fixture",
@@ -628,14 +739,6 @@
             {
               "title": "focus",
               "slug": "focus"
-            },
-            {
-              "title": "focused",
-              "slug": "focused"
-            },
-            {
-              "title": "get",
-              "slug": "get"
             },
             {
               "title": "getCookie",
@@ -650,32 +753,12 @@
               "slug": "go"
             },
             {
-              "title": "hash",
-              "slug": "hash"
-            },
-            {
               "title": "hover",
               "slug": "hover"
             },
             {
               "title": "intercept",
               "slug": "intercept"
-            },
-            {
-              "title": "invoke",
-              "slug": "invoke"
-            },
-            {
-              "title": "its",
-              "slug": "its"
-            },
-            {
-              "title": "last",
-              "slug": "last"
-            },
-            {
-              "title": "location",
-              "slug": "location"
             },
             {
               "title": "log",
@@ -686,52 +769,12 @@
               "slug": "mount"
             },
             {
-              "title": "next",
-              "slug": "next"
-            },
-            {
-              "title": "nextAll",
-              "slug": "nextall"
-            },
-            {
-              "title": "nextUntil",
-              "slug": "nextuntil"
-            },
-            {
-              "title": "not",
-              "slug": "not"
-            },
-            {
               "title": "origin",
               "slug": "origin"
             },
             {
-              "title": "parent",
-              "slug": "parent"
-            },
-            {
-              "title": "parents",
-              "slug": "parents"
-            },
-            {
-              "title": "parentsUntil",
-              "slug": "parentsuntil"
-            },
-            {
               "title": "pause",
               "slug": "pause"
-            },
-            {
-              "title": "prev",
-              "slug": "prev"
-            },
-            {
-              "title": "prevAll",
-              "slug": "prevall"
-            },
-            {
-              "title": "prevUntil",
-              "slug": "prevuntil"
             },
             {
               "title": "readFile",
@@ -748,14 +791,6 @@
             {
               "title": "rightclick",
               "slug": "rightclick"
-            },
-            {
-              "title": "root",
-              "slug": "root"
-            },
-            {
-              "title": "screenshot",
-              "slug": "screenshot"
             },
             {
               "title": "scrollIntoView",
@@ -780,18 +815,6 @@
             {
               "title": "setCookie",
               "slug": "setcookie"
-            },
-            {
-              "title": "shadow",
-              "slug": "shadow"
-            },
-            {
-              "title": "should",
-              "slug": "should"
-            },
-            {
-              "title": "siblings",
-              "slug": "siblings"
             },
             {
               "title": "spread",
@@ -822,10 +845,6 @@
               "slug": "tick"
             },
             {
-              "title": "title",
-              "slug": "title"
-            },
-            {
               "title": "trigger",
               "slug": "trigger"
             },
@@ -838,10 +857,6 @@
               "slug": "uncheck"
             },
             {
-              "title": "url",
-              "slug": "url"
-            },
-            {
               "title": "viewport",
               "slug": "viewport"
             },
@@ -852,14 +867,6 @@
             {
               "title": "wait",
               "slug": "wait"
-            },
-            {
-              "title": "window",
-              "slug": "window"
-            },
-            {
-              "title": "within",
-              "slug": "within"
             },
             {
               "title": "wrap",

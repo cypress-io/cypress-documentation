@@ -41,14 +41,11 @@ Pass in an options object to change the default behavior of `cy.hash()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-#### When the current URL contains a hash:
-
-<List><li>`cy.hash()` "yields the current URL's hash (including the `#`
-character)" </li></List>
-
-#### When the current URL does not contain a hash:
-
-<List><li>`cy.hash()` "yields an empty string" </li></List>
+- When the current URL contains a hash, `cy.hash()` yields the current URL's
+  hash (including the `#` character).
+- When the current URL does not contain a hash, `cy.hash()` yields an empty
+  string.
+- `cy.hash()` is a query, and it is _safe_ to chain further methods.
 
 ## Examples
 

@@ -820,9 +820,10 @@ describe('TodoMVC', () => {
 
   it.skip('adds 2 todos', function () {
     cy.visit('/')
-    cy.get('[data-testid="new-todo"]')
-      .type('learn testing{enter}')
-      .type('be cool{enter}')
+    cy.get('[data-testid="new-todo"]').as('new').type('learn testing{enter}')
+
+    cy.get('@new').type('be cool{enter}')
+
     cy.get('[data-testid="todo-list"] li').should('have.length', 100)
   })
 
@@ -860,9 +861,10 @@ describe('TodoMVC', () => {
   })
 
   it('adds 2 todos', () => {
-    cy.get('[data-testid="new-todo"]')
-      .type('learn testing{enter}')
-      .type('be cool{enter}')
+    cy.get('[data-testid="new-todo"]').as('new').type('learn testing{enter}')
+
+    cy.get('@new').type('be cool{enter}')
+
     cy.get('[data-testid="todo-list"] li').should('have.length', 2)
   })
 })

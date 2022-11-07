@@ -43,8 +43,8 @@ Pass in an options object to change the default behavior of `.within()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.within()` yields the same subject it was given from the previous
-command.</li></List>
+- `.within()` yields the same subject it was given.
+- `.within()` is a query, and it is _safe_ to chain further methods.
 
 Trying to return a different element the `.within` callback have no effect:
 
