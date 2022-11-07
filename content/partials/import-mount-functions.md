@@ -45,7 +45,7 @@ aren't covered in this guide, be sure to check out the library
 import { mount } from 'cypress/vue'
 
 // For Vue 2
-import { mount } from 'cypress/vue-2'
+import { mount } from 'cypress/vue2'
 ```
 
 </template>
