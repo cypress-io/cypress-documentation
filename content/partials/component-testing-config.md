@@ -1,18 +1,9 @@
----
-title: Component Testing Config
----
+## Component Testing Config
 
-When you launch Cypress for the first time in a project, the app will
-automatically guide you through setup and configuration. You don't need to do
-anything additional to get started.
+Below are a few additional configuration values that are specific to component
+testing.
 
-Refer to the "Framework Configuration" guide in each UI framework's overview
-guide for a list of supported development servers and how they are configured.
-
-Below are more advanced configuration options you can customize to fit your
-project.
-
-## Custom Dev Server
+### Custom Dev Server
 
 A custom function can be passed into the `devServer` option, which allows the
 use of other dev servers not provided by Cypress out of the box. These can be
@@ -67,7 +58,7 @@ export default defineConfig({
 </template>
 </cypress-config-file>
 
-## Custom Index File
+### Custom Index File
 
 By default, Cypress renders your components into an HTML file located at
 `cypress/support/component-index.html`.
@@ -87,7 +78,7 @@ in the [component config](/guides/references/configuration#component) options:
 }
 ```
 
-## Spec Pattern for Component Tests
+### Spec Pattern for Component Tests
 
 By default, Cypress looks for spec files anywhere in your project with an
 extension of `.cy.js`, `.cy.jsx`, `.cy.ts`, or `.cy.tsx`. However, you can
@@ -104,7 +95,7 @@ subdirectories.
 }
 ```
 
-## Additional Config
+### Additional Config
 
 For more information on all the available configuration options, see the
 [configuration reference](/guides/references/configuration).

@@ -48,16 +48,12 @@
     "/api/plugins/after-screenshot-api": "After Screenshot API",
     "/examples/examples/tutorials": "Tutorial Videos",
     "/guides/component-testing/devs-vs-users": "Who Are You Testing For?",
-    "/guides/component-testing/component-framework-configuration": "Framework Configuration",
-    "/guides/component-testing/component-test-troubleshooting": "Component Troubleshooting",
-    "/guides/component-testing/quickstart-vue": "Quickstart: Vue",
-    "/guides/component-testing/props-vue": "Vue Components with Props",
-    "/guides/component-testing/events-vue": "Testing Vue Components with Emitted Events",
-    "/guides/component-testing/slots-vue": "Testing Vue Components with Slots",
-    "/guides/component-testing/custom-mount-vue": "Custom Mount Commands and Styles",
-    "/guides/component-testing/quickstart-react": "Quickstart: React",
-    "/guides/component-testing/testing-react": "Testing React Components",
-    "/guides/component-testing/events-react": "Testing React Components with Events",
-    "/guides/component-testing/custom-mount-react": "Custom Mount Commands for React"
+    "/guides/component-testing/overview": "Cypress Component Testing",
+    "/guides/component-testing/faq": "Component Testing FAQ",
+    "/guides/component-testing/component-framework-configuration": "Component Testing Config",
+    "/guides/component-testing/react/overview": "React Component Testing",
+    "/guides/component-testing/angular/overview": "Angular Component Testing",
+    "/guides/component-testing/vue/overview": "Vue Component Testing",
+    "/guides/component-testing/svelte/overview": "Svelte Component Testing"
   }
 }

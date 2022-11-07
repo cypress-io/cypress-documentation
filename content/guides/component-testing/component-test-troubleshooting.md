@@ -2,8 +2,6 @@
 title: Component Troubleshooting
 ---
 
-<CtBetaAlert></CtBetaAlert>
-
 This guide covers some common issues specific to Cypress Component Testing.
 
 For more general troubleshooting of Cypress, visit the main
