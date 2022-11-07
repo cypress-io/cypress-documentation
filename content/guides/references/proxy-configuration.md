@@ -117,7 +117,7 @@ If an uppercase and a lowercase version of the proxy settings are supplied (for
 example, `HTTP_PROXY` and `http_proxy` are both set), the lowercase variable
 will be preferred.
 
-## Using a custom CA
+## Using a custom certificate authority (CA)
 
 <Alert type="warning">
 
