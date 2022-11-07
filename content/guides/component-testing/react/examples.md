@@ -2,6 +2,54 @@
 title: React Examples
 ---
 
+## Mounting Components
+
+### Mounting a Component
+
+The first step in testing a component is to mount it. This renders the component
+into a testbed and enable's the use of the Cypress API to select elements,
+interact with them, and run assertions.
+
+To mount a React component, import the component into your spec and pass the
+component to the `cy.mount` command:
+
+```js
+import { Stepper } from './stepper'
+
+it('mounts', () => {
+  cy.mount(<Stepper />)
+  //Stepper should have initial count of 0 (default)
+  cy.get('[data-cy=counter]').should('have.text', '0')
+})
+```
+
+### Passing Data to a Component
+
+You can pass props to a component by setting them on the JSX passed into
+`cy.mount()`:
+
+```ts
+it('mounts', () => {
+  cy.mount(<Stepper initial={100} />)
+  //Stepper should have initial count of 100
+  cy.get('[data-cy=counter]').should('have.text', '100')
+})
+```
+
+### Testing Event Handlers
+
+Pass a Cypress [spy](/guides/guides/stubs-spies-and-clocks#Spies) to an event
+prop and validate it was called:
+
+```ts
+it('clicking + fires a change event with the incremented value', () => {
+  const onChangeSpy = cy.spy().as('onChangeSpy')
+  cy.mount(<Stepper onChange={onChangeSpy} />)
+  cy.get('[data-cy=increment]').click()
+  cy.get('@onChangeSpy').should('have.been.calledWith', 1)
+})
+```
+
 ## Custom Mount Commands
 
 ### Customizing `cy.mount()`

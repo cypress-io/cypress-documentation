@@ -111,12 +111,12 @@
               "slug": "react/quickstart"
             },
             {
-              "title": "React API",
-              "slug": "react/api"
-            },
-            {
               "title": "React Examples",
               "slug": "react/examples"
+            },
+            {
+              "title": "React API",
+              "slug": "react/api"
             },
             {
               "title": "Angular Component Testing"
@@ -130,12 +130,12 @@
               "slug": "angular/quickstart"
             },
             {
-              "title": "Angular API",
-              "slug": "angular/api"
-            },
-            {
               "title": "Angular Examples",
               "slug": "angular/examples"
+            },
+            {
+              "title": "Angular API",
+              "slug": "angular/api"
             },
             {
               "title": "Vue Component Testing"
@@ -149,12 +149,12 @@
               "slug": "vue/quickstart"
             },
             {
-              "title": "Vue API",
-              "slug": "vue/api"
-            },
-            {
               "title": "Vue Examples",
               "slug": "vue/examples"
+            },
+            {
+              "title": "Vue API",
+              "slug": "vue/api"
             },
             {
               "title": "Svelte Component Testing"
@@ -168,13 +168,13 @@
               "slug": "svelte/quickstart"
             },
             {
-              "title": "Svelte API",
-              "slug": "svelte/api"
-            },
-            {
               "title": "Svelte Examples",
               "slug": "svelte/examples"
-            }
+            },
+            {
+              "title": "Svelte API",
+              "slug": "svelte/api"
+            }            
           ]
         },
         {

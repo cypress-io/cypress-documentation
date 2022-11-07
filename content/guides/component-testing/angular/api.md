@@ -19,72 +19,54 @@ import { mount } from 'cypress/angular'
   </tr>
   <tr>
     <td>Signature</td>
-    <td>mount&lt;T&gt;(component: Type&lt;T&gt; | string, config?: <a href="#MountConfig">MountConfig</a>&lt;T&gt;): <a href="/guides/core-concepts/introduction-to-cypress#Chains-of-Commands">Cypress.Chainable</a>&lt;<a href="#MountResponse">MountResponse</a>&lt;T&gt;&gt;</td>
-  </tr>
-  <tr>
-    <td>Generic Param T</td>
-    <td>
-      The component type
-    </td>  
+    <td>mount&lt;T&gt;(component: Type&lt;T&gt; | string, config?: MountConfig&lt;T&gt;): Cypress.Chainable&lt;MountResponse&lt;T&gt;&gt;</td>
   </tr>
   <tr>
     <td>Returns</td>
-    <td><a href="/guides/core-concepts/introduction-to-cypress#Chains-of-Commands">Cypress.Chainable</a>&lt;<a href="#MountResponse">MountResponse</a>&gt;</td>
+    <td>Cypress.Chainable&lt;MountResponse&gt;</td>
   </tr>
 </table>
 
-#### Parameters
-
 <table class="api-table">
-  <caption>component</caption>
-  <tr>
+  <caption>mount Parameters</caption>
+    <thead>
+    <td>Name</td>
+    <td>Type</td>
     <td>Description</td>
+  </thead>
+  <tr>
+    <td>component</td>
+    <td>Type<T> | string</td>
     <td>Angular component being mounted or its template</td>
   </tr>
   <tr>
-    <td>Type</td>
-    <td>Type<T> | string</td>
-  </tr>
-</table>
-
-<table class="api-table">  
-  <caption>config</caption>
-  <tr>
-    <td>Description</td>
-    <td>configuration used to configure the TestBed</td>
-  </tr>
-  <tr>
-    <td>Type</td>
-    <td> <a href="#MountConfig">MountConfig&lt;T&gt;</a> (optional)</td>
-  </tr>
-  <tr>
-    <td>Default</td>
-    <td>undefined</td>
+    <td>config</td>
+    <td></td>
+    <td>MountConfig&lt;T&gt; (optional)</td>
   </tr>
 </table>
 
 #### Example
 
 ```ts
-import { HelloWorldComponent } from 'hello-world/hello-world.component'
+import { mount } from '@cypress/angular'
+import { StepperComponent } from './stepper.component'
 import { MyService } from 'services/my.service'
 import { SharedModule } from 'shared/shared.module'
-import { mount } from '@cypress/angular'
-it('can mount', () => {
-  mount(HelloWorldComponent, {
+it('mounts', () => {
+  mount(StepperComponent, {
     providers: [MyService],
     imports: [SharedModule],
   })
-  cy.get('h1').contains('Hello World')
+  cy.get('[data-cy=increment]').click()
+  cy.get('[data-cy=counter]').should('have.text', '1')
 })
 
-or
+// or
 
-it('can mount with template', () => {
-  mount('<app-hello-world></app-hello-world>', {
-    declarations: [HelloWorldComponent],
-    providers: [MyService],
-    imports: [SharedModule],
+it('mounts with template', () => {
+  mount('<app-stepper></app-stepper>', {
+    declarations: [StepperComponent],
   })
 })
 ```
@@ -112,172 +94,84 @@ import { createOutputSpy } from 'cypress/angular'
   </tr>
 </table>
 
-#### Parameters
-
 <table class="api-table">
-  <caption>alias</caption>
-  <tr>
-    <td>Description</td>
-    <td>name you want to use for your cy.spy() alias</td>
-  </tr>
-  <tr>
+  <caption>createOutputSpy parameters</caption>
+    <thead>
+    <td>Name</td>
     <td>Type</td>
+    <td>Description</td>
+  </thead>
+  <tr>
+    <td>alias</td>
     <td>string</td>
+    <td>alias name you want to use for your cy.spy() alias</td>
   </tr>
 </table>
+
+#### Example
+
+```ts
+import { StepperComponent } from './stepper.component'
+import { mount, createOutputSpy } from '@cypress/angular'
+
+it('Has spy', () => {
+  mount(StepperComponent, { change: createOutputSpy('changeSpy') })
+  cy.get('[data-cy=increment]').click()
+  cy.get('@changeSpy').should('have.been.called')
+})
+```
 
 ## Interfaces
 
 ### MountConfig
 
-```js
-import { MountConfig } from 'cypress/angular'
-```
+Additional module configurations needed while mounting the component, like
+providers, declarations, imports and even component @Inputs()
 
 <table class="api-table">
-  <tr>
+  <caption>members</caption>
+    <thead>
+    <td>Name</td>
+    <td>Type</td>
     <td>Description</td>
-    <td>
-      Additional module configurations needed while mounting the component, like providers, declarations, imports and even component @Inputs()
-    </td>  
-  </tr>
+  </thead>
   <tr>
-    <td>Generic Param T</td>
-    <td>
-      The component type
-    </td>  
-  </tr>
-  <tr>
-    <td>Extends</td>
-    <td><a href="https://angular.io/api/core/testing/TestModuleMetadata" target="_blank">TestModuleMetadata</a></td>
-  </tr>
-</table>
-
-#### Properties
-
-<table class="api-table">
-  <caption>autoSpyOutputs</caption>
-  <tr>
-    <td>Description</td>
+    <td>autoSpyOutputs</td>
+    <td>boolean (optional)</td>
     <td>flag to automatically create a cy.spy() for every component @Output() property</td>
   </tr>
   <tr>
-    <td>Type</td>
+    <td>autoDetectChanges</td>
     <td>boolean (optional)</td>
-  </tr>
-  <tr>
-    <td>Default</td>
-    <td>undefined</td>
-  </tr>  
-</table>
-
-Example:
-
-```ts
-export class ButtonComponent {
-  @Output clicked = new EventEmitter()
-}
-
-cy.mount(ButtonComponent, { autoSpyOutputs: true })
-cy.get('@clickedSpy).should('have.been.called')
-```
-
-<table class="api-table">
-  <caption>autoDetectChanges</caption>
-  <tr>
-    <td>Description</td>
     <td>flag defaulted to true to automatically detect changes in your components</td>
   </tr>
   <tr>
-    <td>Type</td>
-    <td>boolean (optional)</td>
-  </tr>
-  <tr>
-    <td>Default</td>
-    <td>true</td>
-  </tr>  
-</table>
-
-<table class="api-table">
-  <caption>componentProperties</caption>
-  <tr>
-    <td>Description</td>
-    <td>Inputs and Outputs to pass into the component</td>
-  </tr>
-  <tr>
-    <td>Type</td>
+    <td>componentProperties</td>
     <td>Partial&lt;{[P in keyof T]: T[P];}&gt; (optional)</td>
+    <td></td>
   </tr>
-  <tr>
-    <td>Default</td>
-    <td>undefined</td>
-  </tr>  
 </table>
-
-Example:
-
-```ts
-import { ButtonComponent } from 'button/button.component'
-it('renders a button with Save text', () => {
-  cy.mount(ButtonComponent, { componentProperties: { text: 'Save' }})
-  cy.get('button').contains('Save')
-})
-
-it('renders a button with a cy.spy() replacing EventEmitter', () => {
-  cy.mount(ButtonComponent, {
-    componentProperties: {
-      clicked: cy.spy().as('mySpy)
-    }
-  })
-  cy.get('button').click()
-  cy.get('@mySpy').should('have.been.called')
-})
-```
 
 ### MountResponse
 
-```js
-import { MountResponse } from 'cypress/angular'
-```
+Type that the `mount` function returns
 
 <table class="api-table">
-  <tr>
+  <caption>members</caption>
+    <thead>
+    <td>Name</td>
+    <td>Type</td>
     <td>Description</td>
-    <td>
-      Type that the `mount` function returns
-    </td>  
-  </tr>
+  </thead>
   <tr>
-    <td>Generic Param T</td>
-    <td>
-      The component type
-    </td>  
-  </tr>
-</table>
-
-#### Properties
-
-<table class="api-table">
-  <caption>fixture</caption>
-  <tr>
-    <td>Description</td>
+    <td>fixture</td>
+    <td>ComponentFixture&lt;T&gt;</td>
     <td>Fixture for debugging and testing a component.</td>
   </tr>
   <tr>
-    <td>Type</td>
-    <td>ComponentFixture&lt;T&gt;</td>
-  </tr>
-</table>
-
-<table class="api-table">
-  <caption>component</caption>
-  <tr>
-    <td>Description</td>
-    <td>The instance of the root component class</td>
-  </tr>
-  <tr>
-    <td>Type</td>
+    <td>component</td>
     <td>T</td>
+    <td>The instance of the root component class</td>
   </tr>
 </table>
 

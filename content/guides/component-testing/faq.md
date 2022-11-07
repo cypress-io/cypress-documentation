@@ -70,6 +70,39 @@ complement your component tests.
 
 ## Technical Questions
 
+### What is the Mount Function?
+
+We ship a `mount` function for each UI library that is imported from the
+`cypress` package. It is responsible for rendering components within Cypress's
+sandboxed iframe and handling any framework-specific cleanup.
+
+```js
+//example showing importing mount command in react
+import { mount } from 'cypress/react'
+```
+
+While you can use the `mount` function in your tests, we recommend using
+[`cy.mount()`](/api/commands/mount), which is added as a
+[custom command](/api/cypress-api/custom-commands) in the
+**cypress/support/component.js** file:
+
+<code-group>
+<code-block label="cypress/support/component.js" active>
+
+```ts
+import { mount } from 'cypress/react'
+
+Cypress.Commands.add('mount', mount)
+```
+
+</code-block>
+</code-group>
+
+This allows you to use `cy.mount()` in any component test without having to
+import the framework-specific mount command, as well as customizing it to fit
+your needs. See the examples guide for each framework for info on creating a
+custom `cy.mount()` command.
+
 ### Why isn't my component rendering as it should?
 
 Any global styles and fonts must be imported and made available to your

@@ -2,18 +2,13 @@
 title: Cypress Component Testing
 ---
 
-Cypress Component Testing provides a **testable component workbench** for you to
-quickly build and test components from multiple front-end UI libraries — no
-matter how simple or complex.
+Cypress Component Testing provides a component workbench for you to quickly
+build and test components from multiple front-end UI libraries — no matter how
+simple or complex.
 
 ## Quick Example
 
-This is a minimal test to assert a button has the correct text in each of our
-supported frameworks ([React](/guides/component-testing/react/overview),
-[Angular](/guides/component-testing/angular/overview),
-[Vue](/guides/component-testing/vue/overview), and
-[Svelte](/guides/component-testing/svelte/overview)). For more in-depth tutorial
-and examples, view each guides section.
+Below is a minimal test to assert that a button component has the correct text:
 
 <code-group>
 <code-block label="React" active>
@@ -72,16 +67,28 @@ it('uses custom text for the button label', () => {
 </code-block>
 </code-group>
 
-Our Test Runner is browser-based, which allows you to test-drive your
-component's **styles and API** and **isolate your component away from the page
-Cypress will render it in**. Separating the components of your website enables
-you to further break down work into more manageable chunks and ultimately
-results in components built mindfully.
+Learn more about how to test components for
+[React](/guides/component-testing/react/overview),
+[Angular](/guides/component-testing/angular/overview),
+[Vue](/guides/component-testing/vue/overview), and
+[Svelte](/guides/component-testing/svelte/overview).
+
+## Why Cypress Component Testing?
+
+Our Test Runner is browser-based, allowing you to test not only your component's
+functionality but also styles and appearance. You can visually see your
+component in action and interact with it in the test runner:
 
 <video loop="true" controls autoplay="true" style="border-radius: 8px; border: 1px solid #eaeaea;">
   <source src="/img/vuetify-color-picker-example.webm" type="video/webm">
 </video>
 <p style="font-size: 0.85rem; text-align: center;"><a href="https://vuetifyjs.com/en/components/color-pickers/">Vuetify's</a> VColorPicker tests, after being moved to Cypress from Jest.</p>
+
+You can use the browser developer tools to inspect the DOM, play around with
+styles, and use the debugger to step through your code.
+
+And since this is Cypress, you get the same APIs, plugins, and ecosystem you are
+used to with end-to-end testing to create component tests.
 
 ## Supported Frameworks
 
@@ -89,9 +96,8 @@ Cypress currently has official mounting libraries for
 [React](/guides/component-testing/react/overview),
 [Angular](/guides/component-testing/angular/overview),
 [Vue](/guides/component-testing/vue/overview), and
-[Svelte](/guides/component-testing/svelte/overview).
-
-We currently have support for the following development servers and frameworks:
+[Svelte](/guides/component-testing/svelte/overview) and support for the
+following development servers and frameworks:
 
 | Framework                                                                                                            | UI Library  | Bundler    |
 | -------------------------------------------------------------------------------------------------------------------- | ----------- | ---------- |

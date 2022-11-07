@@ -417,6 +417,10 @@ span.token.keyword.control-flow {
   font-size: 18px;
 }
 
-.api-table td:first-child {
+.api-table thead td {
+  font-weight: bold;
+}
+
+.api-table.table-list td:first-child {
   font-weight: bold;
 }
