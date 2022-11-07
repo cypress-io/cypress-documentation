@@ -77,7 +77,7 @@ We ship a `mount` function for each UI library that is imported from the
 sandboxed iframe and handling any framework-specific cleanup.
 
 ```js
-//example showing importing mount command in react
+// example showing importing mount command in react
 import { mount } from 'cypress/react'
 ```
 
@@ -128,8 +128,8 @@ In some instances, TypeScript might not recognize the custom `cy.mount()`
 command in Cypress spec files not located in the **cypress** directory. You will
 get a compiler error specifying that the type is not found in this case.
 
-A quick way to fix this is to include the **\_**cypress**\_** directory in your
-**\_**tsconfig.json**\_** options like so:
+A quick way to fix this is to include the **cypress** directory in your
+**tsconfig.json** options like so:
 
 ```json
 "include": [
