@@ -126,7 +126,7 @@ mouse hover:
 ## Tooling
 
 There are several published, open source plugins, listed in the
-[Visual Testing plugins](/plugins/directory#visual-testing) section, and several
+[Visual Testing plugins](/plugins/directory#Visual%20testing) section, and several
 commercial companies have developed visual testing solutions on top of Cypress
 listed below.
 
