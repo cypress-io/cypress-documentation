@@ -200,14 +200,14 @@ it('shows no messages', () => {
 ### Angular - Providers Mounting Options Change
 
 There is one breaking change for Angular users in regards to providers. In
-Cypress 10 we took any providers passed as part of the Mounting Options and
+Cypress 10, we took any providers passed as part of the Mounting Options and
 overrode the component providers via the `TestBed.overrideComponent` API.
 
 In Cypress 11, providers passed as part of the Mounting Options will be assigned
 at the module level using the `TestBed.configureTestingModule` API.
 
 This means that module-level providers (resolved from imports or
-`@Injectable({ providedIn: 'root' })` can be overridden but providers specified
+`@Injectable({ providedIn: 'root' })` can be overridden, but providers specified
 in `@Component({ providers: [...] })` will not be overridden when using
 `cy.mount(MyComponent, { providers: [...] })`.
 
