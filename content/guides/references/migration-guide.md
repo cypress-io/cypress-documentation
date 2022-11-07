@@ -102,7 +102,7 @@ it('increments the count', () => {
 })
 ```
 
-#### After - Cypress 10 and `mount`
+#### After - Cypress 11 and `mount`
 
 ```js
 import { useCounter } from ‘./useCounter’
@@ -130,7 +130,7 @@ it('increments the count', () => {
 
 `unmount` from `cypress/react` has been removed. Read more about the rationale
 [here](https://www.cypress.io/blog/2022/11/04/upcoming-changes-to-component-testing/).
-We recommend using the API React provides for unmount components,
+We recommend using the API React provides for unmounting components,
 [unmountComponentAtNode](https://reactjs.org/docs/react-dom.html#unmountcomponentatnode).
 
 #### Before - Cypress 10 and `unmount`
@@ -207,11 +207,11 @@ In Cypress 11, providers passed as part of the Mounting Options will be assigned
 at the module level using the `TestBed.configureTestingModule` API.
 
 This means that module-level providers (resolved from imports or
-`@Injectable({providedIn: 'root' })` can be overridden but providers specified
+`@Injectable({ providedIn: 'root' })` can be overridden but providers specified
 in `@Component({ providers: [...] })` will not be overridden when using
 `cy.mount(MyComponent, { providers: [...] })`.
 
-To override component-level providers, use the TestBed.overrideComponent API.
+To override component-level providers, use the `TestBed.overrideComponent` API.
 
 See a concrete example
 [here](https://www.cypress.io/blog/2022/11/04/upcoming-changes-to-component-testing/#angularproviders-priority).
