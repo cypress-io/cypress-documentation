@@ -99,19 +99,19 @@ Cypress currently has official mounting libraries for
 [Svelte](/guides/component-testing/svelte/overview) and support for the
 following development servers and frameworks:
 
-| Framework                                                                                                            | UI Library  | Bundler    |
-| -------------------------------------------------------------------------------------------------------------------- | ----------- | ---------- |
-| [Create React App 4+](/guides/component-testing/react/overview#Create-React-App-CRA)                                 | React 16+   | Webpack 4+ |
-| [Next.js 11+](/guides/component-testing/react/overview#Next-js)                                                      | React 16+   | Webpack 5  |
-| [React with Vite](/guides/component-testing/react/overview#React-with-Vite)                                          | React 16+   | Vite 2+    |
-| [React with Webpack](/guides/component-testing/react/overview#React-with-Webpack)                                    | React 16+   | Webpack 4+ |
-| [Vue CLI](/guides/component-testing/vue/overview#Vue-CLI)                                                            | Vue 2+      | Webpack 4+ |
-| [Nuxt 2](/guides/component-testing/vue/overview#Nuxt) <Badge type="info">Beta</Badge>                                | Vue 2+      | Webpack 4+ |
-| [Vue with Vite](/guides/component-testing/vue/overview#Vue-with-Vite)                                                | Vue 2+      | Vite 2+    |
-| [Vue with Webpack](/guides/component-testing/vue/overview#Vue-with-Webpack)                                          | Vue 2+      | Webpack 4+ |
-| [Angular](/guides/component-testing/angular/overview#Framework-Configuration)                                        | Angular 13+ | Webpack 5  |
-| [Svelte with Vite](/guides/component-testing/svelte/overview#Svelte-with-Vite) <Badge type="info">Beta</Badge>       | Svelte 3+   | Vite 2+    |
-| [Svelte with Webpack](/guides/component-testing/svelte/overview#Svelte-with-Webpack) <Badge type="info">Beta</Badge> | Svelte 3+   | Webpack 4+ |
+| Framework                                                                                                             | UI Library  | Bundler    |
+| --------------------------------------------------------------------------------------------------------------------- | ----------- | ---------- |
+| [Create React App 4+](/guides/component-testing/react/overview#Create-React-App-CRA)                                  | React 16+   | Webpack 4+ |
+| [Next.js 11+](/guides/component-testing/react/overview#Next-js)                                                       | React 16+   | Webpack 5  |
+| [React with Vite](/guides/component-testing/react/overview#React-with-Vite)                                           | React 16+   | Vite 2+    |
+| [React with Webpack](/guides/component-testing/react/overview#React-with-Webpack)                                     | React 16+   | Webpack 4+ |
+| [Vue CLI](/guides/component-testing/vue/overview#Vue-CLI)                                                             | Vue 2+      | Webpack 4+ |
+| [Nuxt 2](/guides/component-testing/vue/overview#Nuxt) <Badge type="info">Alpha</Badge>                                | Vue 2+      | Webpack 4+ |
+| [Vue with Vite](/guides/component-testing/vue/overview#Vue-with-Vite)                                                 | Vue 2+      | Vite 2+    |
+| [Vue with Webpack](/guides/component-testing/vue/overview#Vue-with-Webpack)                                           | Vue 2+      | Webpack 4+ |
+| [Angular](/guides/component-testing/angular/overview#Framework-Configuration)                                         | Angular 13+ | Webpack 5  |
+| [Svelte with Vite](/guides/component-testing/svelte/overview#Svelte-with-Vite) <Badge type="info">Alpha</Badge>       | Svelte 3+   | Vite 2+    |
+| [Svelte with Webpack](/guides/component-testing/svelte/overview#Svelte-with-Webpack) <Badge type="info">Alpha</Badge> | Svelte 3+   | Webpack 4+ |
 
 ## Component Testing vs. End-to-End Testing
 

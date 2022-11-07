@@ -12,7 +12,7 @@ frameworks:
 
 <Alert type="warning">
 
-Svelte is currently in beta support for component testing.
+Svelte is currently in alpha support for component testing.
 
 </Alert>
 

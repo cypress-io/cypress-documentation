@@ -7,7 +7,7 @@ title: 'Vue Component Testing'
 Cypress Component Testing supports Vue 2+ with the following frameworks:
 
 - [Vue CLI](#Vue-CLI)
-- [Nuxt](#Nuxt) <Badge type="info">Beta</Badge>
+- [Nuxt](#Nuxt) <Badge type="info">Alpha</Badge>
 - [Vue with Vite](#Vue-with-Vite)
 - [Vue with Webpack](#Vue-with-Webpack)
 
@@ -118,7 +118,7 @@ Cypress Component Testing works with Nuxt 2. Nuxt 3 is not yet supported.
 
 <Alert type="warning">
 
-Nuxt is currently in beta support for component testing.
+Nuxt is currently in alpha support for component testing.
 
 </Alert>
 
