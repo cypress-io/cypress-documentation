@@ -41,7 +41,7 @@ const config = {
           routeBasePath: '/',
           versions: {
             current: {
-              label: 'current',
+              label: 'Current Docs',
             },
           },
           lastVersion: 'current',
@@ -115,7 +115,6 @@ const config = {
           {
             type: 'docsVersionDropdown',
             position: 'right',
-            to: 'https://v9.docs.cypress.io',
           },
           {
             href: 'https://github.com/cypress-io/cypress-docs',

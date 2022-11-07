@@ -502,6 +502,12 @@ code span::selection {
   font-weight: bold;
 }
 
+/* hide the docs version badge, not useful until we
+  use the Docusaurus versioning */
+.theme-doc-version-badge {
+  display: none;
+}
+
 /* adding this back after original Docusaurus
    rules overwritten by .embedContainer
    TODO: fix what casues this */
