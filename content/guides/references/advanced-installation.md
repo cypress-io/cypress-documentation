@@ -4,16 +4,16 @@ title: Advanced Installation
 
 ## Environment variables
 
-| Name                             | Description                                                                                                          |
-| -------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `CYPRESS_INSTALL_BINARY`         | [Destination of Cypress binary that's downloaded and installed](#Install-binary)                                     |
-| `CYPRESS_DOWNLOAD_MIRROR`        | [Downloads the Cypress binary through a mirror server](#Mirroring)                                                   |
-| `CYPRESS_DOWNLOAD_PATH_TEMPLATE` | [Allows generating a custom URL to download the Cypress binary from](#Download-path-template)                        |
-| `CYPRESS_CACHE_FOLDER`           | [Changes the Cypress binary cache location](#Binary-cache)                                                           |
-| `CYPRESS_RUN_BINARY`             | [Location of Cypress binary at run-time](#Run-binary)                                                                |
-| `CYPRESS_VERIFY_TIMEOUT`         | Overrides the timeout duration for the `verify` command. The default value is 30000.                                 |
-| ~~CYPRESS_SKIP_BINARY_INSTALL~~  | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY=0` instead                                          |
-| ~~CYPRESS_BINARY_VERSION~~       | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY` instead                                            |
+| Name                             | Description                                                                                   |
+| -------------------------------- | --------------------------------------------------------------------------------------------- |
+| `CYPRESS_INSTALL_BINARY`         | [Destination of Cypress binary that's downloaded and installed](#Install-binary)              |
+| `CYPRESS_DOWNLOAD_MIRROR`        | [Downloads the Cypress binary through a mirror server](#Mirroring)                            |
+| `CYPRESS_DOWNLOAD_PATH_TEMPLATE` | [Allows generating a custom URL to download the Cypress binary from](#Download-path-template) |
+| `CYPRESS_CACHE_FOLDER`           | [Changes the Cypress binary cache location](#Binary-cache)                                    |
+| `CYPRESS_RUN_BINARY`             | [Location of Cypress binary at run-time](#Run-binary)                                         |
+| `CYPRESS_VERIFY_TIMEOUT`         | Overrides the timeout duration for the `verify` command. The default value is 30000.          |
+| ~~CYPRESS_SKIP_BINARY_INSTALL~~  | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY=0` instead                   |
+| ~~CYPRESS_BINARY_VERSION~~       | <Badge type="danger">removed</Badge> use `CYPRESS_INSTALL_BINARY` instead                     |
 
 ## Install binary
 
@@ -185,8 +185,8 @@ that's generated based on version, platform and architecture.
   (e.g. `win32`, `linux`, `darwin`)
 - `${arch}` is replaced with the architecture the installation is running on
   (e.g. `x64`, `arm64`)
-- Starting with Cypress 10.6.0, `${version}` is replaced with the version
-  number that's being installed (e.g. `10.11.0`)
+- Starting with Cypress 10.6.0, `${version}` is replaced with the version number
+  that's being installed (e.g. `10.11.0`)
 
 **Examples:**
 
@@ -199,8 +199,8 @@ export CYPRESS_DOWNLOAD_PATH_TEMPLATE='${endpoint}/${platform}-${arch}/cypress.z
 # Example of a resulting URL: https://cypress-download.local/desktop/10.11.0/linux-x64/cypress.zip
 ```
 
-To install the binary from a download server with a custom file structure
-(works for Cypress 10.6.0 or newer):
+To install the binary from a download server with a custom file structure (works
+for Cypress 10.6.0 or newer):
 
 ```shell
 export CYPRESS_DOWNLOAD_PATH_TEMPLATE='https://software.local/cypress/${platform}/${arch}/${version}/cypress.zip'
