@@ -357,8 +357,6 @@ div.markdown h3 a:hover {
 /* give list breathing room */
 .table-of-contents {
   line-height: 2;
-}
-.table-of-contents {
   font-size: 0.88rem;
 }
 /* but not as much on the children */
@@ -505,6 +503,16 @@ code span::selection {
 /* hide the docs version badge, not useful until we
   use the Docusaurus versioning */
 .theme-doc-version-badge {
+  display: none;
+}
+
+/* tweaks/hiding content after version banner
+  for internal review */
+.theme-doc-version-banner {
+  font-size: 1.1rem;
+  margin-top: 4rem;
+}
+.theme-doc-version-banner + div {
   display: none;
 }
 
