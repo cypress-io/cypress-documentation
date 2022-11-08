@@ -16,7 +16,7 @@ modifications.
 
 #### Changes to Mounting Options
 
-Each major libary we support has a `mount` function with two arguments:
+Each major library we support has a `mount` function with two arguments:
 
 1. The component
 2. Mounting Options
@@ -35,15 +35,17 @@ your test, or in your `supportFile`.
 #### Before (Cypress 10)
 
 ```jsx
-import { mount } from ‘cypress/react’
-import { Card } from ‘./Card’
+import { mount } from 'cypress/react'
+import { Card } from './Card'
 
-it(‘renders some content’, () => {
-  cy.mount(<Card title=”title” />, {
+it('renders some content', () => {
+  cy.mount(<Card title="title" />, {
     styles: `
       .card { width: 100px; }
     `,
-    stylesheets: ['https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css']
+    stylesheets: [
+      'https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css',
+    ],
   })
 })
 ```
@@ -56,12 +58,12 @@ it(‘renders some content’, () => {
 .card { width: 100px }
 
 /** Card.cy.jsx */
-import { mount } from ‘cypress/react’
-import { Card } from ‘./Card’
-import ‘./styles.css’ // contains CDN link and custom styling.
+import { mount } from 'cypress/react'
+import { Card } from './Card'
+import './styles.css' // contains CDN link and custom styling.
 
 it('renders some content', () => {
-  cy.mount(<Card title=”title” />)
+  cy.mount(<Card title="title" />)
 })
 ```
 
@@ -89,7 +91,7 @@ function useCounter() {
 
 ```js
 import { mountHook } from 'cypress/react'
-import { useCounter } from ‘./useCounter’
+import { useCounter } from './useCounter'
 
 it('increments the count', () => {
   mountHook(() => useCounter()).then((result) => {
@@ -105,10 +107,10 @@ it('increments the count', () => {
 #### After - Cypress 11 and `mount`
 
 ```js
-import { useCounter } from ‘./useCounter’
+import { useCounter } from './useCounter'
 
 it('increments the count', () => {
-  function Counter () {
+  function Counter() {
     const { count, increment } = useCounter()
     return (
       <>
@@ -119,9 +121,12 @@ it('increments the count', () => {
   }
 
   cy.mount(<Counter />).then(() => {
-    cy.get('[name="count"]').should('contain', 0)
-      .get('button').click()
-      .get('[name="count"]').should('contain', 1)
+    cy.get('[name="count"]')
+      .should('contain', 0)
+      .get('button')
+      .click()
+      .get('[name="count"]')
+      .should('contain', 1)
   })
 })
 ```
@@ -136,7 +141,7 @@ We recommend using the API React provides for unmounting components,
 #### Before - Cypress 10 and `unmount`
 
 ```js
-import { unmount } from ‘cypress/react’
+import { unmount } from 'cypress/react'
 
 it('calls the prop', () => {
   cy.mount(<Comp onUnmount={cy.stub().as('onUnmount')} />)
@@ -178,7 +183,7 @@ We recommend using `mount`.
 #### Before - Cypress 10 and `mountCallback`
 
 ```js
-import { mountCallback } from ‘cypress/vue’
+import { mountCallback } from 'cypress/vue'
 
 beforeEach(mountCallback(MessageList))
 
@@ -273,7 +278,7 @@ version 10.0.
 
 ### Cypress Changes
 
-- The “Run all specs” and “Run filtered specs” functionality have been removed.
+- The "Run all specs" and "Run filtered specs" functionality have been removed.
 - The experimental "Cypress Studio" has been removed and will be
   rethought/revisited in a later release.
 - Unsupported browser versions can no longer be run via `cypress run` or
@@ -410,7 +415,7 @@ Related notes:
 
 <Alert type="info">
 
-See the dev server documentation for the UI framework you’re using for more
+See the dev server documentation for the UI framework you're using for more
 specific instructions on what the `devServer` should be for that framework. Some
 examples can be found in our
 [framework documentation](/guides/component-testing/component-framework-configuration).
@@ -601,7 +606,7 @@ Default values
   ignore value)
 - `component.excludeSpecPattern` default value is
   `['/snapshots/*', '/image_snapshots/*']` updated from `*.hot-update.js`
-- The `**/node_modules/**` pattern is automatically added to both
+- The `**/node_modules/**` pattern is automatically added to both
   `e2e.specExcludePattern` and `component.specExcludePattern`, and does not need
   to be specified (and can't be overridden).
 
@@ -900,7 +905,7 @@ Generated screenshots and videos will still be created inside their respective
 [folders](/guides/references/configuration#Folders-Files) (`screenshotsFolder`,
 `videosFolder`). However, the paths of generated files inside those folders will
 be stripped of any common ancestor paths shared between all spec files found by
-the `specPattern` option (or via the `--spec` command line option or `spec`
+the `specPattern` option (or via the `--spec` command line option or `spec`
 module API option, if specified).
 
 Here are a few examples, assuming the value of `videosFolder` is
@@ -943,7 +948,7 @@ support file from one our supported frameworks.
 #### `Cypress.Commands.add()`
 
 [`Cypress.Commands.add()`](/api/cypress-api/custom-commands) has been updated to
-allow the built-in “placeholder” custom `mount` and `hover` commands to be
+allow the built-in "placeholder" custom `mount` and `hover` commands to be
 overwritten without needing to use `Cypress.Commands.overwrite()`.
 
 ### Component Testing Changes
