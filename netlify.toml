@@ -299,6 +299,12 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/guides/component-testing/overview"
+  to = "/guides/component-testing/writing-your-first-component-test"
+  status = 301
+  force = true
+
 [[plugins]]
 package = "@netlify/plugin-sitemap"
 
