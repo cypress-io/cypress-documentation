@@ -106,8 +106,6 @@ Commands.addQuery('focused', function focused(options = {}) {
 })
 ```
 
-Let's go over this piece by piece.
-
 #### The outer function
 
 The outer function is called once each time test uses the query. It performs
@@ -172,9 +170,9 @@ or `undefined`, your query will use the
   return () => { ... }
 ```
 
-The outer function's return value is the inner function.
-
 #### The inner function
+
+The outer function's return value is the inner function.
 
 The inner function is called any number of times. It's first invoked repeatedly
 until it passes or the query times out; it can then be invoked again later to
@@ -294,7 +292,7 @@ pass through whatever `options` the user provided us.
 In our own inner function, we can then call `getFn`, and do whatever we want
 with the return value.
 
-## Validations
+## Validation
 
 As noted in the examples above, Cypress performs very little validation around
 queries - it is the repsonsibility of each implementation to ensure that its
