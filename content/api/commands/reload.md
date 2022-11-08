@@ -38,8 +38,8 @@ reload without cache.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `cy.reload()` 'yields the `window` object after the page finishes loading.
-- `cy.go()` is a command, and it is **unsafe** to chain further methods that
+- `cy.reload()` yields the `window` object after the page finishes loading.
+- `cy.reload()` is a command, and it is **unsafe** to chain further methods that
   rely on the yielded `window`.
 
 ## Examples

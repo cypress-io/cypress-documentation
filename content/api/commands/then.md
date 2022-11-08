@@ -52,21 +52,22 @@ Pass a function that takes the previously yielded subject as its first argument.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 Whatever is returned from the callback function becomes the new subject and will
-flow into the next command (with the exception of `undefined` or `null`). If the
-return value is a Promise or other "thenable" (anything with a `.then()`
-interface), Cypress will wait for it to resolve before continuing forward
-through the chain of commands.
+flow into the next command (with the exception of `undefined` or `null`).
 
-If `undefined` or `null` are returned (or there is no `return`), the result of
-the last Cypress command in the callback function will be yielded as the new
-subject instead, and flow into the next command.
-
-If `undefined` or `null` are returned (or there is no `return`) and the callback
-does not call any Cypress commands, the subject will not be modified and the
-previous subject will carry over to the next command.
+- If the return value is a chain of Cypress commands (eg
+  `return cy.get('button')`), Cypress will wait for them to resolve and use
+  their return value as the new subject.
+- If the return value is a Promise, Cypress will wait for it to resolve, and use
+  the resolved value as the new subject to continue the chain of commands.
+- If the callback returns `undefined` or `null` (or there is no return value),
+  the result of the last Cypress command in the callback function will be
+  yielded as the new subject instead, and flow into the next command.
+- If the callback returns `undefined` or `null` (or there is no return value)
+  and the callback does not call any Cypress commands, the subject will not be
+  modified, and the previous subject will carry over to the next command.
 
 `.then()` is a command, and will not be retried. It is **unsafe** to return DOM
-elements from the callback and then use further assertions, queries of commands
+elements from the callback and then use further assertions, queries or commands
 on them.
 
 ## Examples

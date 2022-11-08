@@ -4,6 +4,9 @@ title: stub
 
 Replace a function, record its usage and control its behavior.
 
+`cy.stub()` is a utility function, and is not a Cypress command, query or
+assertion. It is not retryable, chainable, or timeout-able.
+
 <Alert type="info">
 
 **Note:** `.stub()` assumes you are already familiar with our guide:
@@ -25,6 +28,7 @@ cy.stub(object, method, replacerFn)
 
 ```javascript
 cy.stub(user, 'addFriend')
+cy.stub(user, 'addFriend').as('addFriend')
 ```
 
 ### Arguments
@@ -44,6 +48,7 @@ The function used to replace the `method` on the `object`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `cy.stub()` is a _utility function_, and is neither a command nor a query.
+  Cypress concepts like retries and timeouts do not apply.
 - `cy.stub()` is _synchronous_ and returns a value (the stub) instead of a
   Promise-like chain-able object. It can be aliased.
 - `cy.stub()` returns a [Sinon.js stub](http://sinonjs.org). All methods found
@@ -163,8 +168,8 @@ const stub = cy.stub(obj, 'foo').log(false)
 
 ### Aliases
 
-Adding an alias using [`.as()`](/api/commands/as) to stubs makes them easier to
-identify in error messages and Cypress's command log.
+You can alias stubs, similar to how [`.as()`](/api/commands/as) works. This can
+make your stubs easier to identify in error messages and Cypress's command log.
 
 ```javascript
 const obj = {
@@ -202,20 +207,6 @@ that `cy.spy()` does not replace the method, it only wraps it. So, while
 invocations are recorded, the original method is still called. This can be very
 useful when testing methods on native browser objects. You can verify a method
 is being called by your test and still have the original method action invoked.
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-<List><li>`cy.stub()` requires being chained off of `cy`.</li></List>
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-<List><li>`cy.stub()` cannot have any assertions chained.</li></List>
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-<List><li>`cy.stub()` cannot time out.</li></List>
 
 ## Command Log
 

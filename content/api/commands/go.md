@@ -41,7 +41,7 @@ Pass in an options object to change the default behavior of `cy.go()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `cy.go()` 'yields the `window` object after the page finishes loading.
+- `cy.go()` yields the `window` object after the page finishes loading.
 - `cy.go()` is a command, and it is **unsafe** to chain further methods that
   rely on the yielded `window`.
 

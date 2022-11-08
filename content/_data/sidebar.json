@@ -562,6 +562,10 @@
               "slug": "document"
             },
             {
+              "title": "end",
+              "slug": "end"
+            },
+            {
               "title": "eq",
               "slug": "eq"
             },
@@ -723,10 +727,6 @@
             {
               "title": "each",
               "slug": "each"
-            },
-            {
-              "title": "end",
-              "slug": "end"
             },
             {
               "title": "exec",

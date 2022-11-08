@@ -5,6 +5,9 @@ title: spy
 Wrap a method in a spy in order to record calls to and arguments of the
 function.
 
+`cy.spy()` is a utility function, and is not a Cypress command, query or
+assertion. It is not retryable, chainable, or timeout-able.
+
 <Alert type="info">
 
 **Note:** `.spy()` assumes you are already familiar with our guide:
@@ -24,6 +27,7 @@ cy.spy(object, method)
 
 ```javascript
 cy.spy(user, 'addFriend')
+cy.spy(user, 'addFriend').as('addFriend')
 ```
 
 ### Arguments
@@ -39,6 +43,7 @@ The name of the `method` on the `object` to be wrapped.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `cy.spy()` is a _utility function_, and is neither a command nor a query.
+  Cypress concepts like retries and timeouts do not apply.
 - `cy.spy()` is _synchronous_ and returns a value (the spy) instead of a
   Promise-like chain-able object. It can be aliased.
 - `cy.spy()` returns a
@@ -81,8 +86,8 @@ const stub = cy.stub(obj, 'foo').log(false)
 
 ### Aliases
 
-Adding an alias using [`.as()`](/api/commands/as) to spies makes them easier to
-identify in error messages and Cypress' command log.
+You can alias spies, similar to how [`.as()`](/api/commands/as) works. This can
+make your spies easier to identify in error messages and Cypress's command log.
 
 ```javascript
 const obj = {
@@ -129,20 +134,6 @@ Cypress has also built-in
 [Sinon-Chai](/guides/references/bundled-libraries#Sinon-Chai) support, so any
 [assertions supported by `Sinon-Chai`](/guides/references/assertions#Sinon-Chai)
 can be used without any configuration.
-
-## Rules
-
-### Requirements [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Chains-of-Commands)
-
-<List><li>`cy.spy()` requires being chained off of `cy`.</li></List>
-
-### Assertions [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Assertions)
-
-<List><li>`cy.spy()` cannot have any assertions chained.</li></List>
-
-### Timeouts [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Timeouts)
-
-<List><li>`cy.spy()` cannot time out.</li></List>
 
 ## Command Log
 
