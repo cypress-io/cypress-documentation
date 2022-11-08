@@ -35,6 +35,10 @@ to start with for your commands:
 <template #react>
 
 ```js
+// React 18
+import { mount } from 'cypress/react18'
+
+// React 16, 17
 import { mount } from 'cypress/react'
 
 Cypress.Commands.add('mount', (component, options) => {
