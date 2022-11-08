@@ -378,7 +378,7 @@ Cypress will be a breeze.
 <Alert type="info">
 
 To start writing tests for your app, follow our guides for writing your first
-[Component](/guides/component-testing/writing-your-first-component-test) or
+[Component](/guides/component-testing/overview) or
 [End-to-End](/guides/end-to-end-testing/writing-your-first-end-to-end-test)
 test.
 

@@ -45,7 +45,8 @@ using modern JavaScript frameworks.
 
 Cypress enables you to write all types of tests:
 
-- End-to-end tests
+- [End-to-end tests](/guides/end-to-end-testing/writing-your-first-end-to-end-test)
+- [Component tests](/guides/component-testing/overview)
 - Integration tests
 - Unit tests
 
@@ -183,8 +184,7 @@ it('adds todos', () => {
 ### Component
 
 You can also use Cypress to mount components from supported web frameworks and
-execute
-[component tests](/guides/component-testing/writing-your-first-component-test).
+execute [component tests](/guides/component-testing/overview).
 
 ```js
 import TodoList from './components/TodoList'
