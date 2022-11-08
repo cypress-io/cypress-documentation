@@ -917,8 +917,12 @@
           "slug": "cypress-api",
           "children": [
             {
-              "title": "Commands",
+              "title": "Custom Commands",
               "slug": "custom-commands"
+            },
+            {
+              "title": "Custom Queries",
+              "slug": "custom-queries"
             },
             {
               "title": "Cookies",

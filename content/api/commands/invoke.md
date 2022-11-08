@@ -161,53 +161,6 @@ const double = (n) => n * n
 cy.wrap([reverse, double]).invoke(1, 4).should('eq', 16)
 ```
 
-### Invoking an async function
-
-In this example we have a little text input field and we invoke an async action
-which will disable this input field. `.invoke()` will then wait until the
-Promise resolves and only then will continue executing to check if it really has
-been disabled.
-
-Our input field
-
-```html
-<input type="text" name="text" data-cy="my-text-input" />
-```
-
-The Cypress test with `cy.invoke()` awaiting the promise:
-
-```javascript
-function disableElementAsync(element) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      element.disabled = true
-      resolve()
-    }, 3000)
-  })
-}
-
-cy.get('[data-cy=my-text-input]').then((textElements) => {
-  cy.wrap({ disableElementAsync }).invoke(
-    'disableElementAsync',
-    textElements[0]
-  )
-})
-
-// log message appears after 3 seconds
-cy.log('after invoke')
-
-// assert UI
-cy.get('[data-cy=my-text-input]').should('be.disabled')
-```
-
-<Alert type="info">
-
-For a full example where invoke is used to await async Vuex store actions, visit
-the recipe:
-[Vue + Vuex + REST](https://github.com/cypress-io/cypress-example-recipes)
-
-</Alert>
-
 ### jQuery method
 
 If the parent command yields a jQuery element, we can invoke a jQuery method,
