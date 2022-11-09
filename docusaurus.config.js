@@ -1,8 +1,8 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/dracula')
-const darkCodeTheme = require('prism-react-renderer/themes/dracula')
+const darkCodeTheme = require('./src/theme/prism-material-oceanic')
+
 const fs = require('fs')
 const {
   copyTsToJs,
@@ -244,7 +244,7 @@ const config = {
         //... other Algolia params
       },
       prism: {
-        theme: lightCodeTheme,
+        theme: darkCodeTheme,
         darkTheme: darkCodeTheme,
       },
       zoom: {
