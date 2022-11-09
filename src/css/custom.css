@@ -25,6 +25,7 @@
   --ifm-tabs-color: var(--ifm-color-gray-300);
   --ifm-tabs-hover-color: rgba(255, 255, 255, 0.08);
   --ifm-h4-font-size: 1.2rem;
+  --ifm-pre-line-height: 1.5em;
   --ifm-code-background-color: #282a36;
   --ifm-code-background-color-light: #3b3e51;
   --docusaurus-highlighted-code-line-bg: rgba(71, 128, 220, 0.4);
@@ -114,6 +115,11 @@ article {
   max-width: 90%;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* code size in code blocks, but not <code> or ` ` */
+pre {
+  font-size: 0.9em;
 }
 
 .markdown.markdown h1:first-child {
@@ -461,10 +467,6 @@ div[class^='codeBlockTitle'] {
   font-weight: 700;
   color: var(--ifm-color-gray-300);
   border-bottom: 2px solid var(--ifm-code-background-color-light);
-}
-
-code span::selection {
-  background: var(--docusaurus-highlighted-code-line-bg);
 }
 
 .tabs-container {
