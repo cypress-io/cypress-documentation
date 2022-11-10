@@ -45,7 +45,8 @@ using modern JavaScript frameworks.
 
 Cypress enables you to write all types of tests:
 
-- End-to-end tests
+- [End-to-end tests](/guides/end-to-end-testing/writing-your-first-end-to-end-test)
+- [Component tests](/guides/component-testing/overview)
 - Integration tests
 - Unit tests
 
@@ -77,7 +78,10 @@ We believe our documentation should be approachable. This means enabling our
 readers to understand fully not just the **what** but the **why** as well.
 
 We want to help developers build a new generation of modern applications faster,
-better, and without the stress and anxiety associated with managing tests.
+better, and without the stress and anxiety associated with managing tests. We
+aim to elevate the art of software development by leveraging test results to
+generate actionable insights for long-term stability by proactively identifying
+areas for improvement.
 
 We know that in order for us to be successful we must enable, nurture, and
 foster an ecosystem that thrives on open source. Every line of test code is an
@@ -114,10 +118,18 @@ do that no other testing framework can:
 - **Consistent Results:** Our architecture doesn’t use Selenium or WebDriver.
   Say hello to fast, consistent and reliable tests that are flake-free.
 - **Screenshots and Videos:** View screenshots taken automatically on failure,
-  or videos of your entire test suite when run from the CLI.
+  or videos of your entire test suite when run from the CLI. Record to the
+  [Dashboard](/guides/dashboard/introduction) to store them with your test
+  results for zero-configuration debugging.
 - **Cross browser Testing:** Run tests within Firefox and Chrome-family browsers
   (including Edge and Electron) locally and
   [optimally in a Continuous Integration pipeline](/guides/guides/cross-browser-testing).
+- **Smart Orchestration:** Once you're set up to record to the Dashboard, easily
+  [parallelize](/guides/guides/parallelization) your test suite and
+  [rerun failed specs first](/guides/dashboard/smart-orchestration#Run-failed-specs-first)
+  for tight feedback loops.
+- **Flake Detection:** Discover and diagnose unreliable tests with the
+  Dashboard's [Flaky test management](/guides/dashboard/flaky-test-management).
 
 ### <Icon name="cog"></Icon> Setting up tests
 
@@ -172,8 +184,7 @@ it('adds todos', () => {
 ### Component
 
 You can also use Cypress to mount components from supported web frameworks and
-execute
-[component tests](/guides/component-testing/writing-your-first-component-test).
+execute [component tests](/guides/component-testing/overview).
 
 ```js
 import TodoList from './components/TodoList'

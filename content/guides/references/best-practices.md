@@ -198,6 +198,20 @@ If the answer is **no** because the text could be changed - then use
 [`cy.get()`](/api/commands/get) with data attributes. Changing the text to
 `Save` would then not cause a test failure.
 
+### Cypress and Testing Library
+
+Cypress loves the Testing Library project. We use Testing Library internally,
+and our philosophy aligns closely with Testing Library's ethos and approach to
+writing tests. We strongly endorse their best practices.
+
+You can use the
+[Cypress Testing Library](https://testing-library.com/docs/cypress-testing-library/intro/)
+package to use the familiar testing library methods (like `findByRole`,
+`findByLabelText`, etc...) to select elements in Cypress specs.
+
+In particular, if you're looking for more resources to understand how we
+recommend you approach testing your components, look to:
+
 ## Assigning Return Values
 
 <Alert type="danger">
@@ -938,6 +952,26 @@ cy.get('[data-testid="fetch-users"]').click()
 cy.wait('@getUsers') // <--- wait explicitly for this route to finish
 cy.get('table tr').should('have.length', 2)
 ```
+
+## Running Tests Intelligently
+
+As your test suite grows and takes longer to run, you may find yourself hitting
+performance bottlenecks on your CI system. We recommend integrating your source
+control system with your test suite such that merges are blocked until all your
+Cypress tests have passed. The downside of this is that longer test execution
+times slow the velocity at which branches may be merged and features may be
+shipped. This issue is compounded further if you have dependent chains of
+branches waiting to be merged.
+
+One solution to this problem is
+[Smart Orchestration with the Cypress Dashboard](/guides/dashboard/smart-orchestration).
+Using a combination of [parallelization](/guides/guides/parallelization),
+[load balancing](/guides/guides/parallelization#Balance-strategy),
+[test run cancellation](/guides/dashboard/smart-orchestration#Cancel-test-run-when-a-test-fails),
+and
+[running failed specs first](/guides/dashboard/smart-orchestration#Run-failed-specs-first),
+Smart Orchestration maximizes your available compute resources & minimizes
+waste.
 
 ## Web Servers
 

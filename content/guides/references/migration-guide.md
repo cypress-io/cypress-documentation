@@ -2,7 +2,271 @@
 title: Migration Guide
 ---
 
-<DocsVideo src="https://youtube.com/embed/mIqKNhLlPcU"></DocsVideo>
+## Migrating to Cypress version 11.0
+
+This guide details the changes and how to change your code to migrate to Cypress
+version 11.0.
+[See the full changelog for version 11.0](/guides/references/changelog#11-0-0).
+
+### Component Testing Updates
+
+As of Cypress 11, Component Testing is now generally available. There are some
+minor breaking changes. Most projects should be able to migrate without any code
+modifications.
+
+#### Changes to Mounting Options
+
+Each major library we support has a `mount` function with two arguments:
+
+1. The component
+2. Mounting Options
+
+Mounting options previously had several properties that are now removed:
+
+- cssFile, cssFiles
+- style, styles
+- stylesheet, stylesheets
+
+Read more about the rationale
+[here](https://www.cypress.io/blog/2022/11/04/upcoming-changes-to-component-testing/).
+We recommend writing test-specific styles in a separate `css` file you import in
+your test, or in your `supportFile`.
+
+#### Before (Cypress 10)
+
+```jsx
+import { mount } from 'cypress/react'
+import { Card } from './Card'
+
+it('renders some content', () => {
+  cy.mount(<Card title="title" />, {
+    styles: `
+      .card { width: 100px; }
+    `,
+    stylesheets: [
+      'https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css',
+    ],
+  })
+})
+```
+
+#### After (Cypress 11)
+
+```js
+/** style.css */
+@import "https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css";
+.card { width: 100px }
+
+/** Card.cy.jsx */
+import { mount } from 'cypress/react'
+import { Card } from './Card'
+import './styles.css' // contains CDN link and custom styling.
+
+it('renders some content', () => {
+  cy.mount(<Card title="title" />)
+})
+```
+
+### React - `mountHook` Removed
+
+`mountHook` from `cypress/react` has been removed. Read more about the rationale
+[here](https://www.cypress.io/blog/2022/11/04/upcoming-changes-to-component-testing/).
+
+We recommend simply replacing it with `mount` and a component.
+
+Consider the following `useCounter` hook:
+
+```js
+import { useState, useCallback } from 'react'
+
+function useCounter() {
+  const [count, setCount] = useState(0)
+  const increment = useCallback(() => setCount((x) => x + 1), [])
+
+  return { count, increment }
+}
+```
+
+#### Before - Cypress 10 and `mountHook`
+
+```js
+import { mountHook } from 'cypress/react'
+import { useCounter } from './useCounter'
+
+it('increments the count', () => {
+  mountHook(() => useCounter()).then((result) => {
+    expect(result.current.count).to.equal(0)
+    result.current.increment()
+    expect(result.current.count).to.equal(1)
+    result.current.increment()
+    expect(result.current.count).to.equal(2)
+  })
+})
+```
+
+#### After - Cypress 11 and `mount`
+
+```js
+import { useCounter } from './useCounter'
+
+it('increments the count', () => {
+  function Counter() {
+    const { count, increment } = useCounter()
+    return (
+      <>
+        <h1 name="count">Count is {{ count }}</h1>
+        <button onClick={increment}>Increment</button>
+      </>
+    )
+  }
+
+  cy.mount(<Counter />).then(() => {
+    cy.get('[name="count"]')
+      .should('contain', 0)
+      .get('button')
+      .click()
+      .get('[name="count"]')
+      .should('contain', 1)
+  })
+})
+```
+
+### React - `unmount` Removed
+
+`unmount` from `cypress/react` has been removed. Read more about the rationale
+[here](https://www.cypress.io/blog/2022/11/04/upcoming-changes-to-component-testing/).
+We recommend using the API React provides for unmounting components,
+[unmountComponentAtNode](https://reactjs.org/docs/react-dom.html#unmountcomponentatnode).
+
+#### Before - Cypress 10 and `unmount`
+
+```js
+import { unmount } from 'cypress/react'
+
+it('calls the prop', () => {
+  cy.mount(<Comp onUnmount={cy.stub().as('onUnmount')} />)
+  cy.contains('My component')
+
+  unmount()
+
+  // the component is gone from the DOM
+  cy.contains('My component').should('not.exist')
+  cy.get('@onUnmount').should('have.been.calledOnce')
+})
+```
+
+#### After - Cypress 11 and `unmountComponentAtNode`
+
+```js
+import { getContainerEl } from 'cypress/react'
+import ReactDom from 'react-dom'
+
+it('calls the prop', () => {
+  cy.mount(<Comp onUnmount={cy.stub().as('onUnmount')} />)
+  cy.contains('My component')
+
+  cy.then(() => ReactDom.unmountComponentAtNode(getContainerEl()))
+
+  // the component is gone from the DOM
+  cy.contains('My component').should('not.exist')
+  cy.get('@onUnmount').should('have.been.calledOnce')
+})
+```
+
+### Vue - `mountCallback` Removed
+
+`mountCallback` from `cypress/vue` has been removed. Read more about the
+rationale
+[here](https://www.cypress.io/blog/2022/11/04/upcoming-changes-to-component-testing/).
+We recommend using `mount`.
+
+#### Before - Cypress 10 and `mountCallback`
+
+```js
+import { mountCallback } from 'cypress/vue'
+
+beforeEach(mountCallback(MessageList))
+
+it('shows no messages', () => {
+  getItems().should('not.exist')
+})
+```
+
+#### After - Cypress 11 and `mount`
+
+```js
+beforeEach(() => cy.mount(MessageList))
+
+it('shows no messages', () => {
+  getItems().should('not.exist')
+})
+```
+
+### Angular - Providers Mounting Options Change
+
+There is one breaking change for Angular users in regards to providers. In
+Cypress 10, we took any providers passed as part of the Mounting Options and
+overrode the component providers via the `TestBed.overrideComponent` API.
+
+In Cypress 11, providers passed as part of the Mounting Options will be assigned
+at the module level using the `TestBed.configureTestingModule` API.
+
+This means that module-level providers (resolved from imports or
+`@Injectable({ providedIn: 'root' })` can be overridden, but providers specified
+in `@Component({ providers: [...] })` will not be overridden when using
+`cy.mount(MyComponent, { providers: [...] })`.
+
+To override component-level providers, use the `TestBed.overrideComponent` API.
+
+See a concrete example
+[here](https://www.cypress.io/blog/2022/11/04/upcoming-changes-to-component-testing/#angularproviders-priority).
+
+### Vite Dev Server (`cypress/vite-dev-server`)
+
+When providing an inline `viteConfig` inside of `cypress.config`, any
+`vite.config.js` file is not automatically merged.
+
+#### Before - Cypress 10 and `viteConfig`
+
+```js
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  component: {
+    devServer: {
+      framework: 'react',
+      bundler: 'vite',
+      viteConfig: {
+        // ... custom vite config ...
+        // result merged with `vite.config` file if present
+      },
+    },
+  },
+})
+```
+
+#### After - Cypress 11 and `viteConfig`
+
+```js
+import { defineConfig } from 'cypress'
+import viteConfig from './vite.config'
+
+export default defineConfig({
+  component: {
+    devServer: {
+      framework: 'react',
+      bundler: 'vite',
+      viteConfig: {
+        ...viteConfig,
+        // ... other overrides ...
+      },
+    },
+  },
+})
+```
+
+Vite 3+ users could make use of the
+[`mergeConfig`](https://vitejs.dev/guide/api-javascript.html#mergeconfig) API.
 
 ## Migrating to Cypress version 11.0
 
@@ -84,9 +348,11 @@ This guide details the changes and how to change your code to migrate to Cypress
 version 10.0.
 [See the full changelog for version 10.0](/guides/references/changelog#10-0-0).
 
+<DocsVideo src="https://youtube.com/embed/mIqKNhLlPcU"></DocsVideo>
+
 ### Cypress Changes
 
-- The “Run all specs” and “Run filtered specs” functionality have been removed.
+- The "Run all specs" and "Run filtered specs" functionality have been removed.
 - The experimental "Cypress Studio" has been removed and will be
   rethought/revisited in a later release.
 - Unsupported browser versions can no longer be run via `cypress run` or
@@ -223,7 +489,7 @@ Related notes:
 
 <Alert type="info">
 
-See the dev server documentation for the UI framework you’re using for more
+See the dev server documentation for the UI framework you're using for more
 specific instructions on what the `devServer` should be for that framework. Some
 examples can be found in our
 [framework documentation](/guides/component-testing/component-framework-configuration).
@@ -414,7 +680,7 @@ Default values
   ignore value)
 - `component.excludeSpecPattern` default value is
   `['/snapshots/*', '/image_snapshots/*']` updated from `*.hot-update.js`
-- The `**/node_modules/**` pattern is automatically added to both
+- The `**/node_modules/**` pattern is automatically added to both
   `e2e.specExcludePattern` and `component.specExcludePattern`, and does not need
   to be specified (and can't be overridden).
 
@@ -713,7 +979,7 @@ Generated screenshots and videos will still be created inside their respective
 [folders](/guides/references/configuration#Folders-Files) (`screenshotsFolder`,
 `videosFolder`). However, the paths of generated files inside those folders will
 be stripped of any common ancestor paths shared between all spec files found by
-the `specPattern` option (or via the `--spec` command line option or `spec`
+the `specPattern` option (or via the `--spec` command line option or `spec`
 module API option, if specified).
 
 Here are a few examples, assuming the value of `videosFolder` is
@@ -756,7 +1022,7 @@ support file from one our supported frameworks.
 #### `Cypress.Commands.add()`
 
 [`Cypress.Commands.add()`](/api/cypress-api/custom-commands) has been updated to
-allow the built-in “placeholder” custom `mount` and `hover` commands to be
+allow the built-in "placeholder" custom `mount` and `hover` commands to be
 overwritten without needing to use `Cypress.Commands.overwrite()`.
 
 ### Component Testing Changes
