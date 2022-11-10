@@ -2,10 +2,6 @@ import React from 'react'
 import s from './style.module.css'
 import { DocsImageProps } from './types'
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
-
 export default function DocsImage({
   alt,
   caption,

@@ -107,11 +107,6 @@ const config = {
             label: 'Learn',
             position: 'left',
           },
-          // {
-          //   to: 'https://v9.docs.cypress.io',
-          //   label: 'v9 Docs',
-          //   position: 'right',
-          // },
           {
             type: 'docsVersionDropdown',
             position: 'right',
