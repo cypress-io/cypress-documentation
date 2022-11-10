@@ -634,7 +634,7 @@ Cypress supports the following modes of test isolation in end-to-end testing to
 describe if a suite of tests should run in a clean browser context or not: `on`
 and `off`.
 
-###### On Mode
+##### On Mode
 
 :::caution
 
@@ -644,8 +644,8 @@ and `off`.
 </strong>
 
 `on` mode is currently experimental and can be enabled by setting
-the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
-to `true` in the Cypress config. This is the default test isolation behavior
+the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
+to `true` in the Cypress config. This is the default test isolation behavior
 when using the `experimentalSessionAndOrigin` experiment.
 
 :::
@@ -669,7 +669,7 @@ Additionally, the `cy.session()` command will inherent this mode and will clear
 the page and current browser context when establishing a browser session. This
 is so tests can reliably pass when run standalone or in a randomized order.
 
-###### Off Mode
+##### Off Mode
 
 :::caution
 
@@ -679,8 +679,8 @@ is so tests can reliably pass when run standalone or in a randomized order.
 </strong>
 
 `off` mode is currently experimental and can be enabled by setting
-the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
-to `true` in the Cypress config.
+the [`experimentalSessionAndOrigin`](/guides/references/experiments) flag
+to `true` in the Cypress config.
 
 :::
 
@@ -696,7 +696,7 @@ the browser state. It is important to be extremely mindful of how test are
 written when using this mode and ensure tests continue to run independent from
 one other.
 
-###### Mode Comparison
+##### Mode Comparison
 
 | testIsolation | beforeEach test                                                                                                                                        | cy.session()                                                                                                                                           |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
