@@ -35,6 +35,7 @@ Pass in an options object to change the default behavior of `cy.clearCookies()`.
 
 | Option    | Default                                                        | Description                                                                              |
 | --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `domain`  | Superdomain of the current URL                                 | Clears the cookies from the specified domain                                             |
 | `log`     | `true`                                                         | Displays the command in the [Command log](/guides/core-concepts/cypress-app#Command-Log) |
 | `timeout` | [`responseTimeout`](/guides/references/configuration#Timeouts) | Time to wait for `cy.clearCookies()` to resolve before [timing out](#Timeouts)           |
 

@@ -117,6 +117,40 @@ If an uppercase and a lowercase version of the proxy settings are supplied (for
 example, `HTTP_PROXY` and `http_proxy` are both set), the lowercase variable
 will be preferred.
 
+## Using a custom certificate authority (CA)
+
+<Alert type="warning">
+
+This section refers to npm config variables and node environment variables,
+_not_ [Cypress environment variables](/guides/guides/environment-variables)
+
+</Alert>
+
+Cypress needs to be able to authenticate properly when communicating to the
+[Dashboard Service](/guides/dashboard/introduction). When connecting through a
+proxy, oftentimes a self signed certificate is used as a CA. In order to handle
+this configuration, Cypress automatically reads from npm config's
+[`cafile`](https://docs.npmjs.com/cli/v8/using-npm/config#cafile) and
+[`ca`](https://docs.npmjs.com/cli/v8/using-npm/config#ca) options and the
+[`NODE_EXTRA_CA_CERTS`](https://nodejs.org/api/cli.html#node_extra_ca_certsfile)
+node environment variable.
+
+To mimic the behavior of npm and node, Cypress looks at `cafile` first and then
+`ca` and uses the corresponding certificate(s) as a replacement for the CA. For
+example, to use the CA at `/home/person/certs/ca.crt`, add the following to your
+`.npmrc`:
+
+```shell
+cafile=/home/person/certs/ca.crt
+```
+
+If neither `cafile` nor `ca` are set, Cypress looks at the system environment
+variable `NODE_EXTRA_CA_CERTS` and uses the corresponding certificate(s) as an
+extension for the trusted CA.
+
+Note that the npm config is used as a replacement, and the node environment
+variable is used as an extension.
+
 ## View, unset, and set environment variables
 
 In order to properly configure your proxy configuration, it can be helpful to

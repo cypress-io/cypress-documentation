@@ -3,12 +3,9 @@ title: mount
 componentSpecific: true
 ---
 
-<CtBetaAlert></CtBetaAlert>
-
 Cypress does not have a built-in `cy.mount()` command. The command must be set
-up in your support file. By default, when you use Cypress to
-[configure](guides/component-testing/component-framework-configuration#Automatic-Configuration-Recommended)
-your project, one will be automatically scaffolded for you.
+up in your support file. By default, when you use Cypress to configure your
+project, one will be automatically scaffolded for you.
 
 This guide covers how to customize the `cy.mount()` command to fit the needs of
 your app.
@@ -38,6 +35,10 @@ to start with for your commands:
 <TabItem value='React'>
 
 ```js
+// React 18
+import { mount } from 'cypress/react18'
+
+// React 16, 17
 import { mount } from 'cypress/react'
 
 Cypress.Commands.add('mount', (component, options) => {
@@ -51,7 +52,7 @@ Cypress.Commands.add('mount', (component, options) => {
 <TabItem value='Vue 2'>
 
 ```js
-import { mount } from 'cypress/vue-2'
+import { mount } from 'cypress/vue2'
 
 Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
@@ -187,7 +188,8 @@ include the `cypress.d.ts` file in all your `tsconfig.json` files like so:
 ## Additional Mount Command Examples
 
 Visit the guides for scenarios in
-[React](/guides/component-testing/custom-mount-react),
-[Vue](/guides/component-testing/custom-mount-vue), and
-[Angular](/guides/component-testing/custom-mount-angular) for customizing a
-mount command.
+[React](/guides/component-testing/react/examples),
+[Vue](/guides/component-testing/vue/examples),
+[Angular](/guides/component-testing/angular/examples), and
+[Svelte](/guides/component-testing/svelte/examples) for customizing a mount
+command.
