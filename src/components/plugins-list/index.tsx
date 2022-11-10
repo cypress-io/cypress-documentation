@@ -4,10 +4,6 @@ import { PluginProps } from "./types";
 // @ts-ignore
 import pluginsJSON from "@site/src/data/plugins.json";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
 function createMarkup(html) {
   return { __html: html };
 }

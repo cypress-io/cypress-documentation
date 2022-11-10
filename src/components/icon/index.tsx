@@ -33,9 +33,7 @@ export default function Icon({ name, color, inline, url, callout, contentType })
   return (
     <>
       <FontAwesomeIcon icon={iconName} color={color} />
-      <a href={url} style={{ marginLeft: space }}>
-        { content }
-      </a>
+      { url ? <a href={url} style={{ marginLeft: space }}>{ content }</a> : null}
     </>
   )
 }

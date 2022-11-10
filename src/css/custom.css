@@ -33,10 +33,25 @@
   --toc-highlight: #25c2a0
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* prevent fonts from looking chunky, esp in Firefox */
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+article {
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* code size in code blocks, but not <code> or ` ` */
+pre {
+  font-size: 0.9em;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -109,17 +124,6 @@ h4 {
   text-decoration: none;
   color: var(--link-blue-dark-mode);
   border-bottom: 1px dotted var(--link-blue-dark-mode);
-}
-
-article {
-  max-width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* code size in code blocks, but not <code> or ` ` */
-pre {
-  font-size: 0.9em;
 }
 
 .markdown.markdown h1:first-child {
