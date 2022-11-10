@@ -40,7 +40,7 @@ var theme = {
   }, {
     types: ["comment", "doctype", "prolog"],
     style: {
-      color: "#546e7a"
+      color: "#7499AB"
     }
   }, {
     types: ["deleted", "entity", "selector", "tag", "unit", "variable"],
