@@ -27,6 +27,15 @@ cy.session(id, setup, options)
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
+// Caching session when logging in via page visit
+cy.session(name, () => {
+  cy.visit('/login')
+  cy.get('[data-test=name]').type(name)
+  cy.get('[data-test=password]').type('s3cr3t')
+  cy.get('form').contains('Log In').click()
+  cy.url().should('contain', '/login-successful')
+})
+
 // Caching session when logging in via API
 cy.session(username, () => {
   cy.request({
@@ -36,15 +45,6 @@ cy.session(username, () => {
   }).then(({ body }) => {
     window.localStorage.setItem('authToken', body.token)
   })
-})
-
-// Caching session when logging in via page visit
-cy.session(name, () => {
-  cy.visit('/login')
-  cy.get('[data-test=name]').type(name)
-  cy.get('[data-test=password]').type('s3cr3t')
-  cy.get('form').contains('Log In').click()
-  cy.url().should('contain', '/login-successful')
 })
 ```
 
@@ -98,9 +98,10 @@ serialize into an identifier, so exercise care with the data you specify.
 
 This function is called whenever a session for the given `id` hasn't yet been
 cached, or if it's no longer valid (see the `validate` option). After `setup`
-runs, Cypress will preserve all cookies, `sessionStorage`, and `localStorage`,
-so that subsequent calls to `cy.session()` with the same `id` will bypass
-`setup` and just restore the cached session data.
+and `validate` runs for the first time, Cypress will preserve all cookies,
+`sessionStorage`, and `localStorage`, so that subsequent calls to `cy.session()`
+with the same `id` will bypass setup and just restore and validate the cached
+session data.
 
 The page is cleared before `setup` when `testIsolation='on'` and is not cleared
 when `testIsolation='off'`.
@@ -110,10 +111,10 @@ before `setup` runs, regardless of the testIsolation configuration.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
-| Option             | Default     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| ------------------ | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `validate`         | `undefined` | Validates the newly-created or restored session.<br><br>Function to run immediately after the session is created and `setup` function runs or after a session is restored and the page is cleared. If this returns `false`, throws an exception, contains any failing Cypress command, or returns a Promise which rejects or resolves to `false`, the session is considered invalid.<br><br>- If validation fails immediately after `setup`, the test will fail.<br>- If validation fails after restoring a session, `setup` will re-run. |
-| `cacheAcrossSpecs` | `false`     | When enabled, the newly created session is considered "global" and can be restored in any spec during the test execution in the same Cypress run on the same machine. Use this option for a session that will be used multiple times, across many specs.                                                                                                                                                                                                                                                                                  |
+| Option             | Default     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| ------------------ | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `validate`         | `undefined` | Validates the newly-created or restored session.<br><br>Function that runs immediately after the `setup` function is run **and** after a cached session is restored. If this returns `false`, throws an exception, contains any failing Cypress command, or returns a Promise which rejects or resolves to `false`, the session is considered invalid.<br><br>- If validation fails immediately after setup, the test will fail.<br>- If validation succeeds immediatedly after setup, the session will not be saved until `validate` is finished.<br>- If validation fails after restoring a session, `setup` will re-run. |
+| `cacheAcrossSpecs` | `false`     | When enabled, the newly created session is considered "global" and can be restored in any spec during the test execution in the same Cypress run on the same machine. Use this option for a session that will be used multiple times, across many specs.                                                                                                                                                                                                                                                                                                                                                                    |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
@@ -131,13 +132,11 @@ command with a call to `cy.session()`.
 
 ```javascript
 Cypress.Commands.add('login', (username, password) => {
-  cy.request({
-    method: 'POST',
-    url: '/login',
-    body: { username, password },
-  }).then(({ body }) => {
-    window.localStorage.setItem('authToken', body.token)
-  })
+  cy.visit('/login')
+  cy.get('[data-test=name]').type(username)
+  cy.get('[data-test=password]').type(password)
+  cy.get('form').contains('Log In').click()
+  cy.url().should('contain', '/login-successful')
 })
 ```
 
@@ -146,13 +145,11 @@ Cypress.Commands.add('login', (username, password) => {
 ```javascript
 Cypress.Commands.add('login', (username, password) => {
   cy.session([username, password], () => {
-    cy.request({
-      method: 'POST',
-      url: '/login',
-      body: { username, password },
-    }).then(({ body }) => {
-      window.localStorage.setItem('authToken', body.token)
-    })
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(username)
+    cy.get('[data-test=password]').type(password)
+    cy.get('form').contains('Log In').click()
+    cy.url().should('contain', '/login-successful')
   })
 })
 ```
@@ -164,13 +161,11 @@ Cypress.Commands.add('login', (username, password) => {
   cy.session(
     [username, password],
     () => {
-      cy.request({
-        method: 'POST',
-        url: '/login',
-        body: { username, password },
-      }).then(({ body }) => {
-        window.localStorage.setItem('authToken', body.token)
-      })
+      cy.visit('/login')
+      cy.get('[data-test=name]').type(username)
+      cy.get('[data-test=password]').type(password)
+      cy.get('form').contains('Log In').click()
+      cy.url().should('contain', '/login-successful')
     },
     {
       validate() {
@@ -227,83 +222,13 @@ const login = (name, password) => {
     },
     {
       validate() {
+        // Protected URLs should return a 40x http code if user is unauthorized,
+        // and by default this will call cy.visit to fail
         cy.visit('/account-details')
       },
     }
   )
 }
-```
-
-### Asserting the session inside setup
-
-Because `cy.session()` caches session data immediately after the `setup`
-function completes, it's a best practice to assert that the login process has
-completed at the end of session setup, to ensure that `setup` doesn't return
-before the session data is available to be cached.
-
-Asserting sessions in this way can help simplify your login custom command, and
-reduce the need to
-[conditionally cache sessions](#Conditionally-caching-a-session).
-
-```javascript
-cy.session('user', () => {
-  cy.visit('/login')
-  cy.get('[data-test=name]').type(name)
-  cy.get('[data-test=password]').type('p4ssw0rd123')
-  cy.get('#login').click()
-  // Wait for the post-login redirect to ensure that the
-  // session actually exists to be cached
-  cy.url().should('contain', '/login-successful')
-})
-```
-
-### Conditionally caching a session
-
-Specs usually contain two types of tests where logins are necessary:
-
-1. Testing functionality that only exists for logged-in users
-2. Testing the act of logging in
-
-For the first, caching sessions can be incredibly useful for reducing the amount
-of time it takes to run tests. However, for the second, it may be necessary to
-_not_ cache the session, so that other things can be asserted about the login
-process.
-
-In this case, it can be helpful to create a custom login command that will
-conditionally cache the session. However, wherever possible, it's better to
-[assert the session inside setup](#Asserting-the-session-inside-setup).
-
-```javascript
-Cypress.Commands.add('login', (name, { cacheSession = true } = {}) => {
-  const login = () => {
-    cy.visit('/login')
-    cy.get('[data-test=name]').type(name)
-    cy.get('[data-test=password]').type('p4ssw0rd123')
-    cy.get('#login').click()
-  }
-  if (cacheSession) {
-    cy.session(name, login)
-  } else {
-    login()
-  }
-})
-
-// Testing the login flow itself
-describe('login', () => {
-  it('should redirect to the correct page after logging in', () => {
-    cy.login('user', { cacheSession: false })
-    cy.url().should('contain', '/login-successful')
-  })
-})
-
-// Testing something that simply requires being logged in
-describe('account details', () => {
-  it('should have the correct document title', () => {
-    cy.login('user')
-    cy.visit('/account')
-    cy.title().should('eq', 'User Account Details')
-  })
-})
 ```
 
 ### Switching sessions inside tests
@@ -340,13 +265,27 @@ it('should transfer money between users', () => {
 
 ### Validating the session
 
-If the `validate` function return `false`, throws an exception, returns a
-Promise that resolves to `false` or rejects, or contains any failing Cypress
-command, the session will be considered invalid, and `setup` will be re-run.
+The `validate` function has a slightly different function depending on whether
+it is being run immediately after `setup`, or after restoring the saved session.
 
-The page is not cleared after the `validate` function is executed. If you use
-`cy.visit()` in your validation, your test will continue on the visited page
-once `cy.session()` succeeds.
+After `setup`, the session is not saved until `validate` has returned or
+resolved. This allows you to use `validate` to ensure that the login flow is
+fully complete by, for example, repeatedly checking that the user's session
+token has been set. This must be done with a
+[retry-able command](/guides/core-concepts/retry-ability), or your assertion may
+fail the test simply because the page is running a little slow. Once your
+assertion passes, the session is cached.
+
+When restoring a saved session, if the `validate` function return `false`,
+throws an exception, returns a Promise that resolves to `false` or rejects, or
+contains any failing Cypress command, the session will be considered invalid,
+and `setup` will be re-run. So your `validate` function serves a dual purpose,
+it ensures that the initial setup has worked correctly **and** it checks that
+the session remains valid before re-use.
+
+Note that the page is not cleared after the `validate` function is executed. If
+you use `cy.visit()` in your validation, your test will continue on the visited
+page once `cy.session()` succeeds.
 
 Here are a few `validate` examples:
 
@@ -368,6 +307,7 @@ function validate() {
 }
 
 // Or just return false if the session is invalid
+// TODO: How do they check this repeatedly? Maybe we need a `cy.retry` method?
 function validate() {
   if (!MyApp.isSessionValid()) {
     return false
