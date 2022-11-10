@@ -21,7 +21,7 @@ cy.contains('ul').end() // Yield 'null' instead of 'ul' element
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
 
 ```javascript
-cy.end() // Does not make sense to chain off 'cy'
+cy.end()
 ```
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)

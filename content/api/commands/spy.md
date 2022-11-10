@@ -87,7 +87,8 @@ const stub = cy.stub(obj, 'foo').log(false)
 ### Aliases
 
 You can alias spies, similar to how [`.as()`](/api/commands/as) works. This can
-make your spies easier to identify in error messages and Cypress's command log.
+make your spies easier to identify in error messages and Cypress's command log,
+and allows you to assert against them later using `cy.get()`.
 
 ```javascript
 const obj = {
@@ -97,8 +98,9 @@ const spy = cy.spy(obj, 'foo').as('anyArgs')
 const withFoo = spy.withArgs('foo').as('withFoo')
 
 obj.foo()
+
 expect(spy).to.be.called
-expect(withFoo).to.be.called // purposefully failing assertion
+cy.get('@withFoo').should('be.called') // purposefully failing assertion
 ```
 
 You will see the following in the command log:

@@ -14,9 +14,8 @@ subject, use [`.its()`](/api/commands/its).
 <Alert type="warn">
 
 If you chain further methods off of `.invoke()`, it will be called multiple
-times. If the method is not idempotent, treat `.invoke()` like a command, and
-consider it unsafe to chain further methods. You can use
-[`.end()`](/api/commands/end) to make this extra clear in your test.
+times. If you only want the method to be called once, treat `.invoke()` like a
+command, and consider it unsafe to chain further methods.
 
 </Alert>
 
