@@ -15,7 +15,7 @@ const prettierConfig = JSON.parse(fs.readFileSync('./.prettierrc', 'utf-8'))
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Cypress Documentation',
-  tagline: '',
+  tagline: 'Fast, easy and reliable testing for anything that runs in a browser.',
   url: 'https://docs.cypress.io',
   baseUrl: '/',
   onBrokenLinks: 'warn', // TODO: update this to throw when we go live to production
