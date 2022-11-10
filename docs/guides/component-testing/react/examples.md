@@ -1,10 +1,5 @@
 ---
-<<<<<<<< HEAD:docs/guides/component-testing/react/custom-mount-react.mdx
-title: Custom Mount Commands for React
-sidebar_position: 50
-========
 title: React Examples
->>>>>>>> @{-1}:content/guides/component-testing/react/examples.md
 ---
 
 ## Mounting Components
@@ -74,14 +69,10 @@ If you have a component that consumes a hook or component from
 a React Router provider. Below is a sample mount command that uses
 `MemoryRouter` to wrap the component.
 
-<<<<<<<< HEAD:docs/guides/component-testing/react/custom-mount-react.mdx
-```jsx title="Component Support File"
-========
 <code-group>
 <code-block label="cypress/support/component.js" active>
 
 ```jsx
->>>>>>>> @{-1}:content/guides/component-testing/react/examples.md
 import { mount } from 'cypress/react'
 import { MemoryRouter } from 'react-router-dom'
 
@@ -94,16 +85,10 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 })
 ```
 
-<<<<<<<< HEAD:docs/guides/component-testing/react/custom-mount-react.mdx
-Typings:
-
-```ts title="cypress.d.ts (or other typings file)"
-========
 </code-block>
 <code-block label="Typings">
 
 ```ts
->>>>>>>> @{-1}:content/guides/component-testing/react/examples.md
 import { MountOptions, MountReturn } from 'cypress/react'
 import { MemoryRouterProps } from 'react-router-dom'
 
@@ -124,12 +109,9 @@ declare global {
 }
 ```
 
-<<<<<<<< HEAD:docs/guides/component-testing/react/custom-mount-react.mdx
-========
 </code-block>
 </code-group>
 
->>>>>>>> @{-1}:content/guides/component-testing/react/examples.md
 To set up certain scenarios, pass in props that will get passed to
 `MemoryRouter` in the options. Below is an example test that ensures an active
 link has the correct class applied to it by initializing the router with
@@ -162,14 +144,10 @@ To use a component that consumes state or actions from a
 [Redux](https://react-redux.js.org/) store, create a `mount` command that will
 wrap your component in a Redux Provider:
 
-<<<<<<<< HEAD:docs/guides/component-testing/react/custom-mount-react.mdx
-```jsx title="Component Support File"
-========
 <code-group>
 <code-block label="cypress/support/component.js" active>
 
 ```jsx
->>>>>>>> @{-1}:content/guides/component-testing/react/examples.md
 import { mount } from 'cypress/react'
 import { Provider } from 'react-redux'
 import { getStore } from '../../src/store'
@@ -184,16 +162,10 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 })
 ```
 
-<<<<<<<< HEAD:docs/guides/component-testing/react/custom-mount-react.mdx
-Typings:
-
-```ts title="cypress.d.ts (or other typings file)"
-========
 </code-block>
 <code-block label="Typings">
 
 ```ts
->>>>>>>> @{-1}:content/guides/component-testing/react/examples.md
 import { MountOptions, MountReturn } from 'cypress/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { RootState } from './src/StoreState'
@@ -215,12 +187,9 @@ declare global {
 }
 ```
 
-<<<<<<<< HEAD:docs/guides/component-testing/react/custom-mount-react.mdx
-========
 </code-block>
 </code-group>
 
->>>>>>>> @{-1}:content/guides/component-testing/react/examples.md
 The options param can have a store that is already initialized with data:
 
 ```jsx
@@ -243,14 +212,10 @@ it('User profile should display user name', () => {
 })
 ```
 
-:::info
+<Alert type="info">
 
 The `getStore` method is a factory method that initializes a new Redux store. It
 is important that the store be initialized with each new test to ensure changes
 to the store don't affect other tests.
 
-<<<<<<<< HEAD:docs/guides/component-testing/react/custom-mount-react.mdx
-:::
-========
 </Alert>
->>>>>>>> @{-1}:content/guides/component-testing/react/examples.md

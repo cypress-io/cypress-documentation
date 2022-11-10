@@ -499,10 +499,14 @@ div[class^='codeBlockTitle'] {
   text-align: left;
   margin: 4px;
   font-weight: bold;
-  font-size: 1.25rem;
+  font-size: 18px;
 }
 
-.api-table td:first-child {
+.api-table thead td {
+  font-weight: bold;
+}
+
+.api-table.table-list td:first-child {
   font-weight: bold;
 }
 

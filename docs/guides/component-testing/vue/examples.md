@@ -1,54 +1,26 @@
 ---
-<<<<<<<< HEAD:docs/guides/component-testing/vue/custom-mount-vue.mdx
-title: Custom Mount Commands and Styles
-sidebar_position: 60
-========
 title: Vue Examples
->>>>>>>> @{-1}:content/guides/component-testing/vue/examples.md
 ---
 
 ## Mounting Components
 
 ### Using `cy.mount()`
 
-<<<<<<<< HEAD:docs/guides/component-testing/vue/custom-mount-vue.mdx
-:::danger
-========
 To mount a component with `cy.mount()`, import the component and pass it to the
 method:
->>>>>>>> @{-1}:content/guides/component-testing/vue/examples.md
 
 ```ts
 import { Stepper } from './Stepper.vue'
 
-<<<<<<<< HEAD:docs/guides/component-testing/vue/custom-mount-vue.mdx
-1. Your component not compiling at all.
-1. Partially broken functionality.
-1. Broken styles. (Icon fonts, etc)
-1. Error logs in the console.
-
-:::
-========
 it('mounts', () => {
   cy.mount(Stepper)
 })
 ```
 
 ### Passing Data to a Component
->>>>>>>> @{-1}:content/guides/component-testing/vue/examples.md
 
 You can pass props and events to a component by setting `props` in the options:
 
-<<<<<<<< HEAD:docs/guides/component-testing/vue/custom-mount-vue.mdx
-```js title=cypress/support/component.js
-// Should import normalize.css, etc
-// The top of this supportfile should look very similar
-// to your main.js
-import '../../src/main.css'
-```
-
-## Replicating the HTML fixtures
-========
 <code-group>
 
 <code-block label="Vue 3" active>
@@ -78,7 +50,6 @@ cy.mount(Stepper, {
 </code-group>
 
 ### Testing Event Handlers
->>>>>>>> @{-1}:content/guides/component-testing/vue/examples.md
 
 Pass a Cypress [spy](/guides/guides/stubs-spies-and-clocks#Spies) to an event
 prop and validate it was called:
@@ -320,12 +291,7 @@ events.
 
 ## Custom Mount Commands
 
-<<<<<<<< HEAD:docs/guides/component-testing/vue/custom-mount-vue.mdx
-If you used the automatic configuration option to setup your app, you'll have
-the global `cy.mount()` Cypress Command available throughout your tests.
-========
 ### Customizing `cy.mount()`
->>>>>>>> @{-1}:content/guides/component-testing/vue/examples.md
 
 While you can use the [mount()](/guides/component-testing/vue/api#mount)
 function in your tests, we recommend using [`cy.mount()`](/api/commands/mount),
@@ -359,14 +325,9 @@ examples can be adjusted for most other providers that you will need to support.
 Most applications will have state management or routing. Both of these are Vue
 plugins.
 
-<<<<<<<< HEAD:docs/guides/component-testing/vue/custom-mount-vue.mdx
-<Tabs>
-<TabItem value="JavaScript" active>
-========
 <code-group>
 
 <code-block label="cypress/support/component.js " active>
->>>>>>>> @{-1}:content/guides/component-testing/vue/examples.md
 
 ```js
 import { createPinia } from 'pinia' // or Vuex
@@ -401,9 +362,9 @@ Cypress.Commands.add('mount', (component, ...args) => {
 })
 ```
 
-</TabItem>
+</code-block>
 
-<TabItem value="With JSX">
+<code-block label="With JSX">
 
 ```jsx
 import { createPinia } from 'pinia' // or Vuex
@@ -443,8 +404,9 @@ Cypress.Commands.add('mount', (component, ...args) => {
 })
 ```
 
-</TabItem>
-</Tabs>
+</code-block>
+
+</code-group>
 
 ### Replicating the expected Component Hierarchy
 
@@ -458,20 +420,15 @@ compilation errors and quickly find out that **they need to replicate that
 component hierarchy any time they need to mount a component that uses a Vuetify
 component**!
 
-Custom `cy.mount()` commands to the rescue! You may find the JSX syntax to be more
+Custom `cy.mount` commands to the rescue! You may find the JSX syntax to be more
 straightforward.
 
 You'll also need to replicate the plugin setup steps from the Vuetify docs for
 everything to compile.
 
-<<<<<<<< HEAD:docs/guides/component-testing/vue/custom-mount-vue.mdx
-<Tabs>
-<TabItem value="JavaScript" active>
-========
 <code-group>
 
 <code-block label="cypress/support/component.js" active>
->>>>>>>> @{-1}:content/guides/component-testing/vue/examples.md
 
 ```js
 import Vuetify from 'vuetify/lib'
@@ -495,9 +452,9 @@ Cypress.Commands.add('mount', (component, ...args) => {
 })
 ```
 
-</TabItem>
+</code-block>
 
-<TabItem value="With JSX">
+<code-block label="With JSX">
 
 ```jsx
 import Vuetify from 'vuetify/lib'
@@ -526,8 +483,9 @@ Cypress.Commands.add('mount', (component, ...args) => {
 })
 ```
 
-</TabItem>
-</Tabs>
+</code-block>
+
+</code-group>
 
 At this point, you should be able to setup a complex application and mount
 components that use all of Vue's language features.
@@ -539,10 +497,87 @@ Congrats! Happy building. 🎉
 To use Vue Router, create a command to register the plugin and pass in a custom
 implementation of the router via the options param:
 
-<!-- Vue 2 & 3 -->
+<code-group-vue2-vue3>
+<template #vue2>
 
-<Tabs>
-<TabItem value='Vue 3'>
+```js
+import { mount } from 'cypress/vue'
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import { router } from '../../src/router'
+
+Cypress.Commands.add('mount', (component, options = {}) => {
+  // Add the VueRouter plugin
+  Vue.use(VueRouter)
+
+  // Use the router passed in via options,
+  // or the default one if not provided
+  options.router = options.router || router
+
+  return mount(component, options)
+})
+```
+
+<code-group>
+<code-block label="TypeScript Typings" active>
+
+```ts
+import { mount } from 'cypress/vue'
+import VueRouter from 'vue-router'
+
+type MountParams = Parameters<typeof mount>
+type OptionsParam = MountParams[1] & { router?: VueRouter }
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Helper mount function for Vue Components
+       * @param component Vue Component or JSX Element to mount
+       * @param options Options passed to Vue Test Utils
+       */
+      mount(component: any, options?: OptionsParam): Chainable<any>
+    }
+  }
+}
+```
+
+</code-group>
+</code-block>
+
+Usage:
+
+```js
+import VueRouter from 'vue-router'
+import Navigation from './Navigation.vue'
+import { routes } from '../router'
+
+it('home link should be active when url is "/"', () => {
+  // No need to pass in custom router as default url is '/'
+  cy.mount(Navigation)
+
+  cy.get('a').contains('Home').should('have.class', 'router-link-active')
+})
+
+it('login link should be active when url is "/login"', () => {
+  // Create a new router instance for each test
+  const router = new VueRouter({
+    mode: 'history',
+    routes,
+  })
+
+  // Change location to `/login`
+  router.push('/login')
+
+  // Pass the already initialized router for use
+  cy.mount(Navigation, { router })
+
+  cy.get('a').contains('Login').should('have.class', 'router-link-active')
+})
+```
+
+</template>
+<template #vue3>
 
 ```js
 import { mount } from 'cypress/vue'
@@ -573,35 +608,8 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 })
 ```
 
-</TabItem>
-
-<TabItem value='Vue 2'>
-
-```js
-import { mount } from 'cypress/vue'
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import { router } from '../../src/router'
-
-Cypress.Commands.add('mount', (component, options = {}) => {
-  // Add the VueRouter plugin
-  Vue.use(VueRouter)
-
-  // Use the router passed in via options,
-  // or the default one if not provided
-  options.router = options.router || router
-
-  return mount(component, options)
-})
-```
-
-</TabItem>
-</Tabs>
-
-<!-- TypeScript Typings -->
-
-<Tabs>
-<TabItem value="Vue 3 - TypeScript Typings" active>
+<code-group>
+<code-block label="TypeScript Typings" active>
 
 ```ts
 import { mount } from 'cypress/vue'
@@ -624,38 +632,10 @@ declare global {
 }
 ```
 
-</TabItem>
-
-<TabItem value="Vue 2 - TypeScript Typings" active>
-
-```ts
-import { mount } from 'cypress/vue'
-import VueRouter from 'vue-router'
-
-type MountParams = Parameters<typeof mount>
-type OptionsParam = MountParams[1] & { router?: VueRouter }
-
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      /**
-       * Helper mount function for Vue Components
-       * @param component Vue Component or JSX Element to mount
-       * @param options Options passed to Vue Test Utils
-       */
-      mount(component: any, options?: OptionsParam): Chainable<any>
-    }
-  }
-}
-```
-
-</TabItem>
-</Tabs>
+</code-group>
+</code-block>
 
 Usage:
-
-<Tabs>
-  <TabItem value="Vue 3 - Usage">
 
 Calling `router.push()` in the router for Vue 3 is an asynchronous operation.
 Use the [cy.wrap](/api/commands/wrap) command to have Cypress await the
@@ -691,51 +671,100 @@ it('login link should be active when url is "/login"', () => {
 })
 ```
 
-</TabItem>
-
-  <TabItem value="Vue 2 - Usage">
-
-```js
-import VueRouter from 'vue-router'
-import Navigation from './Navigation.vue'
-import { routes } from '../router'
-
-it('home link should be active when url is "/"', () => {
-  // No need to pass in custom router as default url is '/'
-  cy.mount(Navigation)
-
-  cy.get('a').contains('Home').should('have.class', 'router-link-active')
-})
-
-it('login link should be active when url is "/login"', () => {
-  // Create a new router instance for each test
-  const router = new VueRouter({
-    mode: 'history',
-    routes,
-  })
-
-  // Change location to `/login`
-  router.push('/login')
-
-  // Pass the already initialized router for use
-  cy.mount(Navigation, { router })
-
-  cy.get('a').contains('Login').should('have.class', 'router-link-active')
-})
-```
-
-</TabItem>
-</Tabs>
+</template>
+</code-group-vue2-vue3>
 
 ### Vuex
 
 To use a component that uses [Vuex](https://vuex.vuejs.org/), create a `mount`
 command that configures a Vuex store for your component:
 
-<!-- Vue 2 & 3 -->
+<code-group-vue2-vue3>
+<template #vue2>
 
-<Tabs>
-<TabItem value='Vue 3'>
+```js
+import { mount } from 'cypress/vue'
+import Vuex from 'vuex'
+import { getStore } from '../../src/plugins/store'
+
+Cypress.Commands.add('mount', (component, options = {}) => {
+  // Setup options object
+  options.extensions = options.extensions || {}
+  options.extensions.plugins = options.extensions.plugins || []
+
+  // Use store passed in from options, or initialize a new one
+  options.store = options.store || getStore()
+
+  // Add Vuex plugin
+  options.extensions.plugins.push(Vuex)
+
+  return mount(component, options)
+})
+```
+
+<Alert type="info">
+
+The `getStore` method is a factory method that initializes Vuex and creates a
+new store. It is important that the store be initialized with each new test to
+ensure changes to the store don't affect other tests.
+
+</Alert>
+
+<code-group>
+<code-block label="TypeScript Typings" active>
+
+```ts
+import { mount } from 'cypress/vue'
+import { Store } from 'vuex'
+
+type MountParams = Parameters<typeof mount>
+type OptionsParam = MountParams[1]
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Helper mount function for Vue Components
+       * @param component Vue Component or JSX Element to mount
+       * @param options Options passed to Vue Test Utils
+       */
+      mount(
+        component: any,
+        options?: OptionsParam & { store?: Store }
+      ): Chainable<any>
+    }
+  }
+}
+```
+
+</code-group>
+</code-block>
+
+Usage:
+
+```js
+import { getStore } from '@/plugins/store'
+import UserProfile from './UserProfile.vue'
+
+it.only('User profile should display user name', () => {
+  const user = { name: 'test person' }
+
+  // getStore is a factory method that creates a new store
+  const store = getStore()
+
+  // mutate the store with user
+  store.commit('setUser', user)
+
+  cy.mount(UserProfile, {
+    store,
+  })
+
+  cy.get('div.name').should('have.text', user.name)
+})
+```
+
+</template>
+<template #vue3>
 
 ```js
 import { mount } from 'cypress/vue'
@@ -763,44 +792,18 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 })
 ```
 
-</TabItem>
-
-<TabItem value='Vue 2'>
-
-```js
-import { mount } from 'cypress/vue'
-import Vuex from 'vuex'
-import { getStore } from '../../src/plugins/store'
-
-Cypress.Commands.add('mount', (component, options = {}) => {
-  // Setup options object
-  options.extensions = options.extensions || {}
-  options.extensions.plugins = options.extensions.plugins || []
-
-  // Use store passed in from options, or initialize a new one
-  options.store = options.store || getStore()
-
-  // Add Vuex plugin
-  options.extensions.plugins.push(Vuex)
-
-  return mount(component, options)
-})
-```
-
-</TabItem>
-</Tabs>
-
-:::info
+<Alert type="info">
 
 The `getStore` method is a factory method that initializes Vuex and creates a
 new store. It is important that the store be initialized with each new test to
 ensure changes to the store don't affect other tests.
 
-:::
+</Alert>
 
-<!-- TypeScript Typings -->
+<code-group>
+<code-block label="TypeScript Typings" active>
 
-```ts title="TypeScript Typings"
+```ts
 import { mount } from 'cypress/vue'
 import { Store } from 'vuex'
 
@@ -824,7 +827,9 @@ declare global {
 }
 ```
 
-```js title="Usage"
+Usage:
+
+```js
 import { getStore } from '@/plugins/store'
 import UserProfile from './UserProfile.vue'
 
@@ -845,14 +850,17 @@ it.only('User profile should display user name', () => {
 })
 ```
 
+</template>
+</code-group-vue2-vue3>
+
 ### Global Components
 
 If you have components that are registered globally in the main application
 file, set them up in your mount command so your component will render them
 properly:
 
-<Tabs>
-<TabItem value='Vue 2'>
+<code-group-vue2-vue3>
+<template #vue2>
 
 ```js
 import { mount } from 'cypress/vue'
@@ -871,8 +879,8 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 })
 ```
 
-</TabItem>
-<TabItem value='Vue 3'>
+</template>
+<template #vue3>
 
 ```js
 import { mount } from 'cypress/vue'
@@ -890,10 +898,6 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 })
 ```
 
-<<<<<<<< HEAD:docs/guides/component-testing/vue/custom-mount-vue.mdx
-</TabItem>
-</Tabs>
-========
 </template>
 </code-group-vue2-vue3>
->>>>>>>> @{-1}:content/guides/component-testing/vue/examples.md
+ß
