@@ -59,6 +59,9 @@ const config = {
         // un-comment for launch
         // googleAnalytics: { 
         //   trackingID: 'UA-59606812-1',
+        // },
+        // gtag: {
+        //   trackingID: 'GTM-KNKBWLD',
         // }
       },
     ],
