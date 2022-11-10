@@ -1,6 +1,14 @@
 {
   "courses": [
     {
+      "title": "Cypress Plugins",
+      "url": "https://cypress.tips/courses",
+      "author": "Gleb Bahmutov",
+      "authorTwitter": "bahmutov",
+      "sourceName": "Cypress.Tips",
+      "sourceUrl": "https://cypress.tips/"
+    },
+    {
       "title": "Cypress 10 Fundamentals",
       "url": "https://university.blazemeter.com/users/sign_in?next=%2Fenrollments%2F130677466%2Fdetails",
       "author": "Gleb Bahmutov",
