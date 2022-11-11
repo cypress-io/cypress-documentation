@@ -8,8 +8,8 @@ const options = {
     /<code-group-react-vue2-vue3>/g,
     /<\/code-group-react-vue2-vue3>/g,
     /<template #react>/g,
-    /<template #vue2>/g,
-    /<template #vue3>/g,
+    /<template vue2>/g,
+    /<template vue3>/g,
     /<\/template>/g,
   ],
   to: [

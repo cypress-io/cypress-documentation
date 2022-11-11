@@ -1,5 +1,7 @@
 ---
 title: Cypress Component Testing
+sidebar_position: 10
+sidebar_label: Overview
 ---
 
 Cypress Component Testing provides a component workbench for you to quickly
@@ -10,8 +12,8 @@ simple or complex.
 
 Below is a minimal test to assert that a button component has the correct text:
 
-<code-group>
-<code-block label="React" active>
+<Tabs>
+<TabItem value="React">
 
 ```ts
 import Button from './Button'
@@ -22,8 +24,8 @@ it('uses custom text for the button label', () => {
 })
 ```
 
-</code-block>
-<code-block label="Angular">
+</TabItem>
+<TabItem value="Angular">
 
 ```ts
 import ButtonComponent from './button.component'
@@ -36,8 +38,8 @@ it('uses custom text for the button label', () => {
 })
 ```
 
-</code-block>
-<code-block label="Vue">
+</TabItem>
+<TabItem value="Vue">
 
 ```ts
 import Button from './Button.vue'
@@ -52,8 +54,8 @@ it('uses custom text for the button label', () => {
 })
 ```
 
-</code-block>
-<code-block label="Svelte">
+</TabItem>
+<TabItem value="Svelte">
 
 ```ts
 import Button from './Button.svelte'
@@ -64,8 +66,8 @@ it('uses custom text for the button label', () => {
 })
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 Learn more about how to test components for
 [React](/guides/component-testing/react/overview),
@@ -79,10 +81,10 @@ Our Test Runner is browser-based, allowing you to test not only your component's
 functionality but also styles and appearance. You can visually see your
 component in action and interact with it in the test runner:
 
-<video loop="true" controls autoplay="true" style="border-radius: 8px; border: 1px solid #eaeaea;">
-  <source src="/img/vuetify-color-picker-example.webm" type="video/webm">
-</video>
-<p style="font-size: 0.85rem; text-align: center;"><a href="https://vuetifyjs.com/en/components/color-pickers/">Vuetify's</a> VColorPicker tests, after being moved to Cypress from Jest.</p>
+<DocsVideo
+  src="/img/vuetify-color-picker-example.webm"
+  caption="Vuetify's</a> VColorPicker tests, after being moved to Cypress from Jest."
+></DocsVideo>
 
 You can use the browser developer tools to inspect the DOM, play around with
 styles, and use the debugger to step through your code.

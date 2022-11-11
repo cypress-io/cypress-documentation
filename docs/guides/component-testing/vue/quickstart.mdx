@@ -1,5 +1,7 @@
 ---
-title: 'Vue Quickstart'
+title: Vue Quickstart
+sidebar_position: 20
+sidebar_label: Vue Quickstart
 ---
 
 Welcome! This tutorial will walk you through creating a Vue app and using
@@ -111,10 +113,7 @@ internal state: a "counter" that can be incremented and decremented by the user.
 Open the project with your favorite code editor and create a file at
 **src/components/Stepper.vue**, then paste the following code into it:
 
-<code-group>
-<code-block label="src/components/Stepper.vue" active>
-
-```html
+```html title=src/components/Stepper.vue
 <template>
   <div>
     <button data-cy="decrement" @click="decrement">-</button>
@@ -143,8 +142,6 @@ Open the project with your favorite code editor and create a file at
 </script>
 ```
 
-</code-block>
-</code-group>
 
 Our component consists of two buttons, one used to decrement the counter and one
 to increment it. A `span` tag sits in the middle of the buttons to show the
@@ -169,10 +166,7 @@ the **Stepper.vue** component:
 
 A spec file was created at **src/component/Stepper.cy.js**:
 
-<code-group>
-<code-block label="src/components/Stepper.cy.js" active>
-
-```js
+```js title=src/components/Stepper.cy.js
 import Stepper from './Stepper.vue'
 
 describe('<Stepper />', () => {
@@ -182,9 +176,6 @@ describe('<Stepper />', () => {
   })
 })
 ```
-
-</code-block>
-</code-group>
 
 > It is also possible to write Vue tests using JSX syntax. For more info, see
 > [Using JSX](/guides/component-testing/vue/examples#Using-JSX).
@@ -252,18 +243,12 @@ method to verify it has the correct text value.
 
 Add the following test inside the `describe` block, right below the first test:
 
-<code-group>
-<code-block label="src/components/Stepper.cy.js" active>
-
-```js
+```js title=src/components/Stepper.cy.js
 it('stepper should default to 0', () => {
   cy.mount(Stepper)
   cy.get('span').should('have.text', '0')
 })
 ```
-
-</code-block>
-</code-group>
 
 When you go back to the test runner, you should see the test pass.
 
@@ -282,18 +267,12 @@ In the `Stepper` component, the `span` tag has a `data-cy` attribute on it:
 We assign a unique id to the `data-cy` attribute that we can use for testing
 purposes. Update the test to use a CSS attribute selector to `cy.get()`:
 
-<code-group>
-<code-block label="src/components/Stepper.cy.js" active>
-
-```js
+```js title=src/components/Stepper.cy.js
 it('stepper should default to 0', () => {
   cy.mount(Stepper)
   cy.get('[data-cy=counter]').should('have.text', '0')
 })
 ```
-
-</code-block>
-</code-group>
 
 The test will still pass as expected, and our selector is now future-proof. For
 more info on writing good selectors, see our guide
@@ -305,18 +284,12 @@ We should also have a test to ensure the `initial` prop sets the count to
 something else besides its default value of "0". We can pass in props to the
 `Stepper` component in the `mount` method:
 
-<code-group>
-<code-block label="src/components/Stepper.cy.js" active>
-
-```js
+```js title=src/components/Stepper.cy.js
 it('supports an "initial" prop to set the value', () => {
   cy.mount(Stepper, { props: { initial: 100 } })
   cy.get('[data-cy=counter]').should('have.text', '100')
 })
 ```
-
-</code-block>
-</code-group>
 
 We pass in props using the `props` property in the options. See the
 [MountOptions API](/guides/component-testing/vue/api#MountOptions) for more
@@ -334,10 +307,7 @@ real user would.
 
 Add the following tests:
 
-<code-group>
-<code-block label="src/components/Stepper.cy.js" active>
-
-```js
+```js title=src/components/Stepper.cy.js
 it('when the increment button is pressed, the counter is incremented', () => {
   cy.mount(Stepper)
   cy.get('[data-cy=increment]').click()
@@ -350,9 +320,6 @@ it('when the decrement button is pressed, the counter is decremented', () => {
   cy.get('[data-cy=counter]').should('have.text', '-1')
 })
 ```
-
-</code-block>
-</code-group>
 
 When you view the results of each of the tests, you will see that the counter is
 now "1" in the increment test, and "-1" in the decrement test. Not only did our
@@ -385,10 +352,7 @@ we expect.
 
 Let's set up the spies and bind them to the component:
 
-<code-group>
-<code-block label="src/components/Stepper.cy.js" active>
-
-```js
+```js title=src/components/Stepper.cy.js
 it('clicking + fires a change event with the incremented value', () => {
   const onChangeSpy = cy.spy().as('onChangeSpy')
   cy.mount(Stepper, { props: { onChange: onChangeSpy } })
@@ -396,9 +360,6 @@ it('clicking + fires a change event with the incremented value', () => {
   cy.get('@onChangeSpy').should('have.been.calledWith', 1)
 })
 ```
-
-</code-block>
-</code-group>
 
 First, we create a new spy by calling the `cy.spy()` method. We pass in a string
 that gives the spy an [alias](/guides/core-concepts/variables-and-aliases),

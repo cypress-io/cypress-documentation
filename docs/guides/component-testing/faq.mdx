@@ -1,5 +1,7 @@
 ---
 title: Component Testing FAQ
+sidebar_position: 40
+sidebar_label: FAQ
 ---
 
 ## General Questions
@@ -86,17 +88,11 @@ While you can use the `mount` function in your tests, we recommend using
 [custom command](/api/cypress-api/custom-commands) in the
 **cypress/support/component.js** file:
 
-<code-group>
-<code-block label="cypress/support/component.js" active>
-
-```ts
+```ts title=cypress/support/component.js
 import { mount } from 'cypress/react'
 
 Cypress.Commands.add('mount', mount)
 ```
-
-</code-block>
-</code-group>
 
 This allows you to use `cy.mount()` in any component test without having to
 import the framework-specific mount command, as well as customizing it to fit
@@ -169,14 +165,14 @@ configuration. For example, Create React App assumes the root level
 `tsconfig.json` is the source of truth for compiling your application. CRA comes
 with Jest integrated but does not support additional tsconfig files.
 
-<Alert type="info">
+:::info
 
 **⚠️ There is currently an open CRA issue about this:**
 
 - [Multiple TS compiler settings in CRA](https://github.com/facebook/create-react-app/issues/6023)
 - [How this affects users of Cypress, Storybook, etc](https://github.com/facebook/create-react-app/issues/6023#issuecomment-1121363489)
 
-</Alert>
+:::
 -->
 
 **Alternatively, Relocate Component Specs**

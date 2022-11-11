@@ -1,5 +1,6 @@
 ---
-title: 'Angular API'
+title: Angular API
+sidebar_position: 40
 ---
 
 ## Methods
@@ -36,7 +37,7 @@ import { mount } from 'cypress/angular'
   </thead>
   <tr>
     <td>component</td>
-    <td>Type<T> | string</td>
+    <td>Type&lt;T&gt; | string</td>
     <td>Angular component being mounted or its template</td>
   </tr>
   <tr>
@@ -147,7 +148,7 @@ providers, declarations, imports and even component @Inputs()
   </tr>
   <tr>
     <td>componentProperties</td>
-    <td>Partial&lt;{[P in keyof T]: T[P];}&gt; (optional)</td>
+    <td>Partial&lt;&lbrace;[P in keyof T]: T[P];&rbrace;&gt; (optional)</td>
     <td></td>
   </tr>
 </table>

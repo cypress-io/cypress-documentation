@@ -9,8 +9,8 @@ const options = {
     /<\/code-group-react-vue>/g,
     /<template #react>/g,
     /<template #react-alert>/g,
-    /<template #vue>/g,
-    /<template #vue-alert>/g,
+    /<template vue>/g,
+    /<template vue-alert>/g,
     /<\/template>/g,
   ],
   to: [

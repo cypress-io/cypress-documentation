@@ -1,5 +1,7 @@
 ---
-title: 'Angular Component Testing'
+title: Angular Component Testing
+sidebar_position: 10
+sidebar_label: Angular Overview
 ---
 
 ## Framework Support
@@ -33,7 +35,7 @@ npx cypress open
 
 The Cypress Launchpad will guide you through configuring your project.
 
-<Alert type="info">
+:::info
 
 For a step-by-step guide on how to create a component test, refer to the
 [Angular Quickstart](/guides/component-testing/angular/quickstart) guide.
@@ -41,7 +43,7 @@ For a step-by-step guide on how to create a component test, refer to the
 For usage and examples, visit the
 [Angular Examples](/guides/component-testing/angular/examples) guide.
 
-</Alert>
+:::
 
 ## Framework Configuration
 
@@ -51,11 +53,10 @@ configure it properly. The examples below are for reference purposes.
 
 ### Angular CLI Configuration
 
-<cypress-config-file>
-<template #js>
+:::cypress-config-example
 
-```js
-module.exports = {
+```ts
+{
   component: {
     devServer: {
       framework: 'angular',
@@ -66,25 +67,7 @@ module.exports = {
 }
 ```
 
-</template>
-<template #ts>
-
-```ts
-import { defineConfig } from 'cypress'
-
-export default defineConfig({
-  component: {
-    devServer: {
-      framework: 'angular',
-      bundler: 'webpack',
-    },
-    specPattern: '**/*.cy.ts',
-  },
-})
-```
-
-</template>
-</cypress-config-file>
+:::
 
 #### Options API
 
@@ -92,10 +75,7 @@ You can also use the `options` API to provide your own project specific
 configuration to your `devServer`. The `devServer` configuration receives an
 `options` property:
 
-<code-group>
-<code-block label="cypress.config.ts" active>
-
-```ts
+```ts title=cypress.config.ts
 import { defineConfig } from 'cypress'
 
 export default {
@@ -128,9 +108,6 @@ export default {
   },
 }
 ```
-
-</code-block>
-</code-group>
 
 #### Sample Angular Apps
 

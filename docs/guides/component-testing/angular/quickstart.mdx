@@ -1,5 +1,7 @@
 ---
-title: 'Angular Quickstart'
+title: Angular Quickstart
+sidebar_position: 20
+sidebar_label: Angular Quickstart
 ---
 
 Welcome! This tutorial will walk you through creating an Angular app and using
@@ -61,48 +63,61 @@ Whenever you run Cypress for the first time, the app will prompt you to set up
 either E2E Testing or Component Testing. Click on "Component Testing" to start
 the configuration wizard.
 
-<DocsImage 
-  src="/img/guides/component-testing/select-test-type.jpg" 
-  caption="Choose Component Testing"> </DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/select-test-type.jpg"
+  caption="Choose Component Testing"
+>
+  {' '}
+</DocsImage>
 
 The Project Setup screen automatically detects your framework, which, in our
 case, is Angular. Click "Next Step" to continue.
 
-<DocsImage 
-  src="/img/guides/component-testing/project-setup-angular.jpg" 
-  caption="Angular is automatically detected"> </DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/project-setup-angular.jpg"
+  caption="Angular is automatically detected"
+>
+  {' '}
+</DocsImage>
 
 The next screen checks that all the required dependencies are installed. All the
 items should have green checkboxes on them, indicating everything is good, so
 click "Continue".
 
-<DocsImage 
-  src="/img/guides/component-testing/dependency-detection-angular.jpg" 
-  caption="All necessary dependencies are installed"> </DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/dependency-detection-angular.jpg"
+  caption="All necessary dependencies are installed"
+>
+  {' '}
+</DocsImage>
 
 Next, Cypress generates all the necessary configuration files and gives you a
 list of all the changes it made to your project. Click "Continue".
 
-<DocsImage 
-  src="/img/guides/component-testing/scaffolded-files.jpg" 
-  caption="The Cypress launchpad will scaffold all of these files for you">
-</DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/scaffolded-files.jpg"
+  caption="The Cypress launchpad will scaffold all of these files for you"
+></DocsImage>
 
 After setting up component testing, you will be at the browser selection screen.
 
 Pick the browser of your choice and click the "Start Component Testing" button
 to open the Cypress test runner.
 
-<DocsImage 
-  src="/img/guides/component-testing/select-browser.jpg" 
-  caption="Choose your browser"> </DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/select-browser.jpg"
+  caption="Choose your browser"
+>
+  {' '}
+</DocsImage>
 
 When the test runner appears, it won't find any specs because we haven't created
 any yet. However, we don't currently have a component, either. Let's change
 that!
 
-<DocsImage 
-  src="/img/guides/component-testing/create-your-first-spec.jpg"> </DocsImage>
+<DocsImage src="/img/guides/component-testing/create-your-first-spec.jpg">
+  {' '}
+</DocsImage>
 
 ### Creating a Component
 
@@ -122,10 +137,7 @@ ng generate component stepper
 Next, open the project in your favorite code editor and update the generated
 **stepper.component.ts** file with the following:
 
-<code-group>
-<code-block label="src/app/stepper/stepper.component.ts" active>
-
-```ts
+```ts title=src/app/stepper/stepper.component.ts
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 
 @Component({
@@ -158,9 +170,6 @@ export class StepperComponent {
 }
 ```
 
-</code-block>
-</code-group>
-
 Our component consists of two buttons, one used to decrement the counter and one
 to increment it. A `span` tag sits in the middle of the buttons to show the
 current value of the counter.
@@ -176,10 +185,7 @@ To get started, create a spec file in the same directory as the
 **stepper.component.ts** file and name it **stepper.component.cy.ts**. Then
 paste the following into it:
 
-<code-group>
-<code-block label="src/app/stepper/stepper.component.cy.ts" active>
-
-```js
+```js title=src/app/stepper/stepper.component.cy.ts
 import { StepperComponent } from './stepper.component'
 
 describe('StepperComponent', () => {
@@ -188,9 +194,6 @@ describe('StepperComponent', () => {
   })
 })
 ```
-
-</code-block>
-</code-group>
 
 > It is also possible to write Angular tests using template syntax. For more
 > info, see the
@@ -223,8 +226,9 @@ Switch back to the browser you opened for testing, and you should now see the
 **stepper.component.cy.ts** file in the spec list. Click it to see the spec
 execute.
 
-<DocsImage 
-  src="/img/guides/component-testing/first-test-run-angular.jpg"> </DocsImage>
+<DocsImage src="/img/guides/component-testing/first-test-run-angular.jpg">
+  {' '}
+</DocsImage>
 
 Our first test verifies the component can mount in it's default state without
 any errors. If there is a runtime error during test execution, the test will
@@ -260,18 +264,12 @@ method to verify it has the correct text value.
 
 Add the following test inside the `describe` block, right below the first test:
 
-<code-group>
-<code-block label="src/app/stepper/stepper.component.cy.ts" active>
-
-```js
+```js title=src/app/stepper/stepper.component.cy.ts
 it('stepper should default to 0', () => {
   cy.mount(StepperComponent)
   cy.get('span').should('have.text', '0')
 })
 ```
-
-</code-block>
-</code-group>
 
 When you go back to the test runner, you should see the test pass.
 
@@ -290,18 +288,12 @@ In the `Stepper` component, the `span` tag has a `data-cy` attribute on it:
 We assign a unique id to the `data-cy` attribute that we can use for testing
 purposes. Update the test to use a CSS attribute selector to `cy.get()`:
 
-<code-group>
-<code-block label="src/app/stepper/stepper.component.cy.ts" active>
-
-```ts
+```ts title=src/app/stepper/stepper.component.cy.ts
 it('stepper should default to 0', () => {
   cy.mount(StepperComponent)
   cy.get('[data-cy=counter]').should('have.text', '0')
 })
 ```
-
-</code-block>
-</code-group>
 
 The test will still pass as expected, and our selector is now future-proof. For
 more info on writing good selectors, see our guide
@@ -313,10 +305,7 @@ We should also have a test to ensure the `count` input sets the count to
 something else besides its default value of "0". We can pass in the input to
 `StepperComponent` in the `mount` method:
 
-<code-group>
-<code-block label="src/app/stepper/stepper.component.cy.ts" active>
-
-```js
+```js title=src/app/stepper/stepper.component.cy.ts
 it('supports an "initial" prop to set the value', () => {
   cy.mount(StepperComponent, {
     componentProperties: {
@@ -326,9 +315,6 @@ it('supports an "initial" prop to set the value', () => {
   cy.get('[data-cy=counter]').should('have.text', '100')
 })
 ```
-
-</code-block>
-</code-group>
 
 We pass in inputs and outputs using the `componentProperties` property in the
 options. See the
@@ -347,10 +333,7 @@ real user would.
 
 Add the following tests:
 
-<code-group>
-<code-block label="src/app/stepper/stepper.component.cy.ts" active>
-
-```js
+```js title=src/app/stepper/stepper.component.cy.ts
 it('when the increment button is pressed, the counter is incremented', () => {
   cy.mount(StepperComponent)
   cy.get('[data-cy=increment]').click()
@@ -363,9 +346,6 @@ it('when the decrement button is pressed, the counter is decremented', () => {
   cy.get('[data-cy=counter]').should('have.text', '-1')
 })
 ```
-
-</code-block>
-</code-group>
 
 When you view the results of each of the tests, you will see that the counter is
 now "1" in the increment test, and "-1" in the decrement test. Not only did our
@@ -398,10 +378,7 @@ we expect.
 
 Let's set up the spies and bind them to the component:
 
-<code-group>
-<code-block label="src/app/stepper/stepper.component.cy.ts" active>
-
-```ts
+```ts title=src/app/stepper/stepper.component.cy.ts
 it('clicking + fires a change event with the incremented value', () => {
   cy.mount(StepperComponent, {
     componentProperties: {
@@ -412,9 +389,6 @@ it('clicking + fires a change event with the incremented value', () => {
   cy.get('@changeSpy').should('have.been.calledWith', 1)
 })
 ```
-
-</code-block>
-</code-group>
 
 Above, we use the
 [createOutputSpy()](/guides/component-testing/angular/api#createOutputSpy)

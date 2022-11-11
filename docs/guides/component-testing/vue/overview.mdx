@@ -1,7 +1,8 @@
 ---
-title: 'Vue Component Testing'
+title: Vue Component Testing
+sidebar_position: 10
+sidebar_label: Vue Overview
 ---
-
 ## Framework Support
 
 Cypress Component Testing supports Vue 2+ with the following frameworks:
@@ -37,7 +38,7 @@ npx cypress open
 
 The Cypress Launchpad will guide you through configuring your project.
 
-<Alert type="info">
+:::info
 
 For a step-by-step guide on how to create a component test, refer to the
 [Vue Quickstart](/guides/component-testing/vue/quickstart) guide.
@@ -45,7 +46,7 @@ For a step-by-step guide on how to create a component test, refer to the
 For usage and examples, visit the
 [Vue Examples](/guides/component-testing/vue/examples) guide.
 
-</Alert>
+:::
 
 ## Framework Configuration
 
@@ -61,42 +62,22 @@ Cypress Component Testing works with Vue CLI.
 
 #### Vue CLI Configuration
 
-<cypress-config-file>
-<template #js>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  component: {
-    devServer: {
-      framework: 'vue-cli',
-      bundler: 'webpack',
-    },
-  },
-})
-```
-
-</template>
-<template #ts>
+:::cypress-config-example
 
 ```ts
-import { defineConfig } from 'cypress'
-
-export default defineConfig({
+{
   component: {
     devServer: {
       framework: 'vue-cli',
       bundler: 'webpack',
     },
   },
-})
+}
 ```
 
-</template>
-</cypress-config-file>
+:::
 
-<Alert type="warning">
+:::caution
 
 <strong class="alert-header">PWA Caveat</strong>
 
@@ -105,7 +86,7 @@ configuration. See
 [here](https://github.com/cypress-io/cypress/issues/15968#issuecomment-819170918)
 for more information.
 
-</Alert>
+:::
 
 #### Sample Vue CLI Apps
 
@@ -116,48 +97,27 @@ for more information.
 
 Cypress Component Testing works with Nuxt 2. Nuxt 3 is not yet supported.
 
-<Alert type="warning">
+:::caution
 
 Nuxt is currently in alpha support for component testing.
 
-</Alert>
+:::
 
 #### Nuxt Configuration
 
-<cypress-config-file>
-<template #js>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  component: {
-    devServer: {
-      framework: 'nuxt',
-      bundler: 'webpack',
-    },
-  },
-})
-```
-
-</template>
-<template #ts>
+:::cypress-config-example
 
 ```ts
-import { defineConfig } from 'cypress'
-
-export default defineConfig({
+{
   component: {
     devServer: {
       framework: 'nuxt',
       bundler: 'webpack',
     },
   },
-})
+}
 ```
-
-</template>
-</cypress-config-file>
+:::
 
 #### Nuxt Sample Apps
 
@@ -169,40 +129,20 @@ Cypress Component Testing works with Vue apps that use Vite 2+ as the bundler.
 
 #### Vite Configuration
 
-<cypress-config-file>
-<template #js>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  component: {
-    devServer: {
-      framework: 'vue',
-      bundler: 'vite',
-    },
-  },
-})
-```
-
-</template>
-<template #ts>
+:::cypress-config-example
 
 ```ts
-import { defineConfig } from 'cypress'
-
-export default defineConfig({
+{
   component: {
     devServer: {
       framework: 'vue',
       bundler: 'vite',
     },
   },
-})
+}
 ```
 
-</template>
-</cypress-config-file>
+:::
 
 #### Vue Vite Sample Apps
 
@@ -215,37 +155,14 @@ bundler.
 
 #### Webpack Configuration
 
-<cypress-config-file>
-<template #js>
-
-```js
-module.exports = {
-  component: {
-    devServer: {
-      framework: 'vue',
-      bundler: 'webpack',
-      // optionally pass in webpack config
-      webpackConfig: require('./webpack.config'),
-      // or a function - the result is merged with any
-      // webpack.config that is found
-      webpackConfig: async () => {
-        // ... do things ...
-        const modifiedConfig = await injectCustomConfig(baseConfig)
-        return modifiedConfig
-      },
-    },
-  },
-}
-```
-
-</template>
-<template #ts>
+:::cypress-config-example
 
 ```ts
-import { defineConfig } from 'cypress'
 import webpackConfig from './webpack.config'
+```
 
-export default defineConfig({
+```ts
+{
   component: {
     devServer: {
       framework: 'vue',
@@ -259,11 +176,10 @@ export default defineConfig({
       },
     },
   },
-})
+}
 ```
 
-</template>
-</cypress-config-file>
+:::
 
 If you don't provide one, Cypress will try to infer your webpack config. If
 Cypress cannot or you want to make modifications to your config, you can pass it

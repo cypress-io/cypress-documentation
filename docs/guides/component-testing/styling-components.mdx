@@ -5,7 +5,7 @@ sidebar_position: 20
 
 :::info
 
-## <Icon name="graduation-cap" /> What you'll learn
+## <Icon name="graduation-cap"></Icon> What you'll learn
 
 - How to load CSS libraries like Tailwind or Bootstrap
 - How to render icon fonts like Font Awesome
@@ -80,7 +80,7 @@ Overlays + Modals are usually really good.
   <div>
     Page content
   </div>
-</TabItem>
+</template>
 -->
 
 1. Tailwind
@@ -176,36 +176,36 @@ example project structure would look like so:
 The contents of **setup.js** may look like so:
 
 ```js
-import "~normalize/normalize.css";
-import "font-awesome";
-import "./main.css";
+import '~normalize/normalize.css'
+import 'font-awesome'
+import './main.css'
 
 export const createStore = () => {
-  return; /* store */
-};
+  return /* store */
+}
 
 export const createRouter = () => {
-  return; /* router */
-};
+  return /* router */
+}
 
 export const createApp = () => {
-  return <App router={createRouter()} store={createStore()}></App>;
-};
+  return <App router={createRouter()} store={createStore()}></App>
+}
 ```
 
 and its usage in `main.js` could look like so:
 
 ```js
-import { createApp } from "./setup.js";
+import { createApp } from './setup.js'
 
-ReactDOM.render(createApp());
+ReactDOM.render(createApp())
 ```
 
 and Cypress would re-use it in its support file
 
 ```js
 /* And that's it! */
-import "../../src/setup.js";
+import '../../src/setup.js'
 ```
 
 The rest of this section is dedicated to discussing specific style problems you
@@ -229,7 +229,7 @@ application expects to be rendered _within_ those components, and so any
 assumptions you made when writing those components must be replicated in your
 test environment or else your components won't look right.
 
-```vue
+```html
 <style>
 /* In certain scaffolds, the App.vue file does not have a separate styles file */
 
@@ -241,14 +241,14 @@ test environment or else your components won't look right.
 
 Should become
 
-```vue
+```html
 /* App.vue */
 <style src="./app.css" />
 ```
 
 and
 
-```vue
+```html
 /* cypress/support/component.js */ import '../../src/app.css'
 ```
 
@@ -259,7 +259,7 @@ Re-using stylesheets that are imported in the beginning of your application was
 covered in the last section.
 
 ```js
-import "./main.css";
+import './main.css'
 ```
 
 4. Within a configuration file like `next.config.js` or `nuxt.config.js`.
@@ -294,7 +294,7 @@ Or via an `@import` statement
 ```html
 <head>
   <style>
-    @import url("https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200;300;400;500;600;700&family=Roboto&display=swap");
+    @import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200;300;400;500;600;700&family=Roboto&display=swap');
   </style>
 </head>
 ```
@@ -304,12 +304,12 @@ Or via an `@import` statement
 ```css
 /* main.css */
 @font-face {
-  font-family: "Fira Sans";
-  src: url("fonts/fira/eot/FiraSans-Regular.eot");
-  src: url("fonts/fira/eot/FiraSans-Regular.eot") format("embedded-opentype"), url("fonts/fira/woff2/FiraSans-Regular.woff2")
-      format("woff2"),
-    url("fonts/fira/woff/FiraSans-Regular.woff") format("woff"), url("fonts/fira/woff2/FiraSans-Regular.ttf")
-      format("truetype");
+  font-family: 'Fira Sans';
+  src: url('fonts/fira/eot/FiraSans-Regular.eot');
+  src: url('fonts/fira/eot/FiraSans-Regular.eot') format('embedded-opentype'), url('fonts/fira/woff2/FiraSans-Regular.woff2')
+      format('woff2'),
+    url('fonts/fira/woff/FiraSans-Regular.woff') format('woff'), url('fonts/fira/woff2/FiraSans-Regular.ttf')
+      format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -324,8 +324,6 @@ by injecting themselves around your application. When you're component testing,
 you haven't rendered the component hierarchy surrounding your component.
 
 TO solve issues like these, people review the Custom Commands and Wrappers
-
----
 
 To first explain why it's not right, you first have to explain what
 production-like even means.

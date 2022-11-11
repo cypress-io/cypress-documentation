@@ -1,5 +1,7 @@
 ---
-title: 'Svelte Quickstart'
+title: Svelte Quickstart
+sidebar_position: 20
+sidebar_label: Svelte Quickstart
 ---
 
 Welcome! This tutorial will walk you through creating a Svelte app and using
@@ -111,10 +113,7 @@ internal state: a "counter" that can be incremented and decremented by the user.
 Open the project with your favorite code editor and create a file at
 **src/lib/Stepper.svelte**, then paste the following code into it:
 
-<code-group>
-<code-block label="src/lib/Stepper.svelte" active>
-
-```html
+```html title=src/lib/Stepper.svelte
 <script>
   import { createEventDispatcher } from 'svelte'
 
@@ -138,9 +137,6 @@ Open the project with your favorite code editor and create a file at
 <button data-cy="increment" on:click="{increment}">+</button>
 ```
 
-</code-block>
-</code-group>
-
 Our component consists of two buttons, one used to decrement the counter and one
 to increment it. A `span` tag sits in the middle of the buttons to show the
 current value of the counter.
@@ -156,10 +152,7 @@ To get started, create a spec file in the same directory as the
 **Stepper.svelte** file and name it **Stepper.cy.js**. Then paste the following
 into it:
 
-<code-group>
-<code-block label="src/lib/Stepper.cy.js" active>
-
-```js
+```js title=src/lib/Stepper.cy.js
 import Stepper from './Stepper.svelte'
 
 describe('Stepper', () => {
@@ -168,9 +161,6 @@ describe('Stepper', () => {
   })
 })
 ```
-
-</code-block>
-</code-group>
 
 Let's break down the spec. First, we import the `Stepper` component. Then, we
 organize our tests using the functions `describe` and `it`, which we allow us to
@@ -235,18 +225,12 @@ method to verify it has the correct text value.
 
 Add the following test inside the `describe` block, right below the first test:
 
-<code-group>
-<code-block label="src/lib/Stepper.cy.js" active>
-
-```js
+```js title=src/lib/Stepper.cy.js
 it('stepper should default to 0', () => {
   cy.mount(Stepper)
   cy.get('span').should('have.text', '0')
 })
 ```
-
-</code-block>
-</code-group>
 
 When you go back to the test runner, you should see the test pass.
 
@@ -265,18 +249,12 @@ In the `Stepper` component, the `span` tag has a `data-cy` attribute on it:
 We assign a unique id to the `data-cy` attribute that we can use for testing
 purposes. Update the test to use a CSS attribute selector to `cy.get()`:
 
-<code-group>
-<code-block label="src/lib/Stepper.cy.js" active>
-
-```js
+```js title=src/lib/Stepper.cy.js
 it('stepper should default to 0', () => {
   cy.mount(Stepper)
   cy.get('[data-cy=counter]').should('have.text', '0')
 })
 ```
-
-</code-block>
-</code-group>
 
 The test will still pass as expected, and our selector is now future-proof. For
 more info on writing good selectors, see our guide
@@ -288,18 +266,12 @@ We should also have a test to ensure the `initial` prop sets the count to
 something else besides its default value of "0". We can pass in props to the
 `Stepper` component in the `mount` method:
 
-<code-group>
-<code-block label="src/lib/Stepper.cy.js" active>
-
-```js
+```js title=src/lib/Stepper.cy.js
 it('supports an "initial" prop to set the value', () => {
   cy.mount(Stepper, { props: { count: 100 } })
   cy.get('[data-cy=counter]').should('have.text', '100')
 })
 ```
-
-</code-block>
-</code-group>
 
 We pass in props using the `props` property in the options. See the
 [MountOptions API](/guides/component-testing/svelte/api#MountOptions) for more
@@ -317,10 +289,7 @@ real user would.
 
 Add the following tests:
 
-<code-group>
-<code-block label="src/lib/Stepper.cy.js" active>
-
-```js
+```js title=src/lib/Stepper.cy.js
 it('when the increment button is pressed, the counter is incremented', () => {
   cy.mount(Stepper)
   cy.get('[data-cy=increment]').click()
@@ -333,9 +302,6 @@ it('when the decrement button is pressed, the counter is decremented', () => {
   cy.get('[data-cy=counter]').should('have.text', '-1')
 })
 ```
-
-</code-block>
-</code-group>
 
 When you view the results of each of the tests, you will see that the counter is
 now "1" in the increment test, and "-1" in the decrement test. Not only did our
@@ -368,10 +334,7 @@ we expect.
 
 Let's set up the spies and bind them to the component:
 
-<code-group>
-<code-block label="src/lib/Stepper.cy.js" active>
-
-```js
+```js title=src/lib/Stepper.cy.js
 it('clicking + fires a change event with the incremented value', () => {
   const changeSpy = cy.spy().as('changeSpy')
   cy.mount(Stepper).then(({ component }) => {
@@ -383,9 +346,6 @@ it('clicking + fires a change event with the incremented value', () => {
   })
 })
 ```
-
-</code-block>
-</code-group>
 
 First, we create a new spy by calling the `cy.spy()` method. We pass in a string
 that gives the spy an [alias](/guides/core-concepts/variables-and-aliases),

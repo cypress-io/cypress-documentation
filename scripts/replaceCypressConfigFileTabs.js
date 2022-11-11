@@ -7,8 +7,8 @@ const options = {
   from: [
     /<cypress-config-file>/g,
     /<\/cypress-config-file>/g,
-    /<template #js>/g,
-    /<template #ts>/g,
+    /<template js>/g,
+    /<template ts>/g,
     /<\/template>/g,
   ],
   to: [

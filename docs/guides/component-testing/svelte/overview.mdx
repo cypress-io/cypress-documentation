@@ -1,5 +1,7 @@
 ---
-title: 'Svelte Component Testing'
+title: Svelte Component Testing
+sidebar_position: 10
+sidebar_label: Svelte Overview
 ---
 
 ## Framework Support
@@ -10,11 +12,11 @@ frameworks:
 - [Svelte with Vite](#Svelte-with-Vite)
 - [Svelte with Webpack](#Svelte-with-Webpack)
 
-<Alert type="warning">
+:::caution
 
 Svelte is currently in alpha support for component testing.
 
-</Alert>
+:::
 
 ## Tutorial
 
@@ -37,13 +39,16 @@ Open Cypress:
 npx cypress open
 ```
 
-<DocsImage 
-  src="/img/guides/component-testing/select-test-type.jpg" 
-  caption="Choose Component Testing"> </DocsImage>
+<DocsImage
+  src="/img/guides/component-testing/select-test-type.jpg"
+  caption="Choose Component Testing"
+>
+  {' '}
+</DocsImage>
 
 The Cypress Launchpad will guide you through configuring your project.
 
-<Alert type="info">
+:::info
 
 For a step-by-step guide on how to create a component test, refer to the
 [Svelte Quickstart](/guides/component-testing/svelte/quickstart) guide.
@@ -51,7 +56,7 @@ For a step-by-step guide on how to create a component test, refer to the
 For usage and examples, visit the
 [Svelte Examples](/guides/component-testing/svelte/examples) guide.
 
-</Alert>
+:::
 
 ## Framework Configuration
 
@@ -67,40 +72,20 @@ bundler.
 
 #### Vite Configuration
 
-<cypress-config-file>
-<template #js>
-
-```js
-const { defineConfig } = require('cypress')
-
-module.exports = defineConfig({
-  component: {
-    devServer: {
-      framework: 'svelte',
-      bundler: 'vite',
-    },
-  },
-})
-```
-
-</template>
-<template #ts>
+:::cypress-config-example
 
 ```ts
-import { defineConfig } from 'cypress'
-
-export default defineConfig({
+{
   component: {
     devServer: {
       framework: 'svelte',
       bundler: 'vite',
     },
   },
-})
+}
 ```
 
-</template>
-</cypress-config-file>
+:::
 
 #### Svelte Vite Sample Apps
 
@@ -113,36 +98,14 @@ bundler.
 
 #### Webpack Configuration
 
-<cypress-config-file>
-<template #js>
-
-```js
-module.exports = {
-  component: {
-    devServer: {
-      framework: 'svelte',
-      bundler: 'webpack',
-      // optionally pass in webpack config
-      webpackConfig: require('./webpack.config'),
-      // or a function - the result is merged with the base config
-      webpackConfig: async () => {
-        // ... do things ...
-        const modifiedConfig = await injectCustomConfig(baseConfig)
-        return modifiedConfig
-      },
-    },
-  },
-}
-```
-
-</template>
-<template #ts>
+:::cypress-config-example
 
 ```ts
-import { defineConfig } from 'cypress'
 import webpackConfig from './webpack.config'
+```
 
-export default defineConfig({
+```ts
+{
   component: {
     devServer: {
       framework: 'svelte',
@@ -151,11 +114,10 @@ export default defineConfig({
       webpackConfig,
     },
   },
-})
+}
 ```
 
-</template>
-</cypress-config-file>
+:::
 
 If you don't provide one, Cypress will try to infer your webpack config. If
 Cypress cannot or you want to make modifications to your config, you can pass it

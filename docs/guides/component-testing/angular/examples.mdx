@@ -1,5 +1,6 @@
 ---
 title: Angular Examples
+sidebar_position: 30
 ---
 
 ## Mounting Components
@@ -168,19 +169,19 @@ it('clicking + fires a change event with the incremented value', () => {
 })
 ```
 
-<Alert type="warning">
+:::caution
 
 The `autoSpyOutput` flag only works when passing in a component to the mount
 function. It currently does not work with the template syntax.
 
-</Alert>
+:::
 
-<Alert type="warning">
+:::caution
 
 `autoSpyOutput` is an **experimental feature** and could be removed or changed
 in the future
 
-</Alert>
+:::
 
 ## Custom Mount Commands
 
@@ -202,10 +203,7 @@ Below is a sample that registers several default component declarations while
 still allowing additional ones to be passed in via the config param. The same
 pattern can also be applied to providers and module imports.
 
-<code-group>
-<code-block label="support/component.ts" active>
-
-```ts
+```ts title=support/component.ts
 import { Type } from '@angular/core'
 import { mount, MountConfig } from 'cypress/angular'
 import { ButtonComponent } from 'src/app/button/button.component'
@@ -233,9 +231,6 @@ function customMount<T>(component: string | Type<T>, config?: MountConfig<T>) {
 Cypress.Commands.add('mount', customMount)
 ```
 
-</code-block>
-</code-group>
-
 This custom mount command will allow you to skip manually passing in the
 `ButtonComponent` and `CardComponent` as declarations into each `cy.mount()`
 call.
@@ -244,10 +239,7 @@ call.
 
 Here is an example of defaulting `autoSpyOutputs` for every mounted component:
 
-<code-group>
-<code-block label="support/component.ts" active>
-
-```ts
+```ts title=support/component.ts
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -267,12 +259,9 @@ Cypress.Commands.add(
 )
 ```
 
-</code-block>
-</code-group>
-
-<Alert type="warning">
+:::caution
 
 The `autoSpyOutput` flag only works when passing in a component to the mount
 function. It currently does not work with the template syntax.
 
-</Alert>
+:::
