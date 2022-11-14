@@ -245,7 +245,7 @@ const config = {
       zoom: {
         selector: ':not(.mediaImage, .navbar__logo img)', // don't zoom these images
         background: {
-          light: 'rgb(255, 255, 255)',
+          light: 'rgb(50, 50, 50)',
           dark: 'rgb(50, 50, 50)'
         },
         // options you can specify via https://github.com/francoischalifour/medium-zoom#usage
