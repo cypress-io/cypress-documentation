@@ -84,127 +84,97 @@
           "slug": "component-testing",
           "children": [
             {
-              "title": "Introduction to Component Testing"
-            },
-            {
-              "title": "Writing Your First Component Test",
-              "slug": "writing-your-first-component-test"
-            },
-            {
-              "title": "Who Are You Testing For?",
-              "slug": "devs-vs-users"
-            },
-            {
-              "title": "Vue Component Testing"
-            },
-            {
-              "title": "Quickstart: Vue",
-              "slug": "quickstart-vue"
-            },
-            {
-              "title": "Mounting Components",
-              "slug": "mounting-vue"
-            },
-            {
-              "title": "Testing Vue Components",
-              "slug": "testing-vue"
-            },
-            {
-              "title": "Testing Vue Components with Emitted Events",
-              "slug": "events-vue"
-            },
-            {
-              "title": "Testing Vue Components with Slots",
-              "slug": "slots-vue"
-            },
-            {
-              "title": "Custom Mount Commands and Styles",
-              "slug": "custom-mount-vue"
-            },
-            {
-              "title": "React Component Testing"
-            },
-            {
-              "title": "Quickstart: React",
-              "slug": "quickstart-react"
-            },
-            {
-              "title": "Mounting Components",
-              "slug": "mounting-react"
-            },
-            {
-              "title": "Testing React Components",
-              "slug": "testing-react"
-            },
-            {
-              "title": "Testing React Components with Events",
-              "slug": "events-react"
-            },
-            {
-              "title": "Custom Mount Commands for React",
-              "slug": "custom-mount-react"
-            },
-            {
-              "title": "Angular Component Testing"
-            },
-            {
-              "title": "Quickstart: Angular",
-              "slug": "quickstart-angular"
-            },
-            {
-              "title": "Mounting Components",
-              "slug": "mounting-angular"
-            },
-            {
-              "title": "Testing Angular Components",
-              "slug": "testing-angular"
-            },
-            {
-              "title": "Testing Angular Components with Emitted Events",
-              "slug": "events-angular"
-            },
-            {
-              "title": "Testing Angular Components with Slots",
-              "slug": "slots-angular"
-            },
-            {
-              "title": "Custom Mount Commands for Angular",
-              "slug": "custom-mount-angular"
-            },
-            {
-              "title": "Svelte Component Testing"
-            },
-            {
-              "title": "Quickstart: Svelte",
-              "slug": "quickstart-svelte"
-            },
-            {
-              "title": "Mounting Components",
-              "slug": "mounting-svelte"
-            },
-            {
-              "title": "Testing Svelte Components",
-              "slug": "testing-svelte"
-            },
-            {
-              "title": "Testing Svelte Components with Emitted Events",
-              "slug": "events-svelte"
-            },
-            {
-              "title": "Diving Deeper"
-            },
-            {
-              "title": "Framework Configuration",
-              "slug": "component-framework-configuration"
+              "title": "Overview",
+              "slug": "overview"
             },
             {
               "title": "Styling Components",
               "slug": "styling-components"
             },
             {
-              "title": "Component Troubleshooting",
-              "slug": "component-test-troubleshooting"
-            }
+              "title": "Configuration",
+              "slug": "component-framework-configuration"
+            },
+            {
+              "title": "FAQ",
+              "slug": "faq"
+            },
+            {
+              "title": "React Component Testing"
+            },
+            {
+              "title": "React Overview",
+              "slug": "react/overview"
+            },
+            {
+              "title": "React Quickstart",
+              "slug": "react/quickstart"
+            },
+            {
+              "title": "React Examples",
+              "slug": "react/examples"
+            },
+            {
+              "title": "React API",
+              "slug": "react/api"
+            },
+            {
+              "title": "Angular Component Testing"
+            },
+            {
+              "title": "Angular Overview",
+              "slug": "angular/overview"
+            },
+            {
+              "title": "Angular Quickstart",
+              "slug": "angular/quickstart"
+            },
+            {
+              "title": "Angular Examples",
+              "slug": "angular/examples"
+            },
+            {
+              "title": "Angular API",
+              "slug": "angular/api"
+            },
+            {
+              "title": "Vue Component Testing"
+            },
+            {
+              "title": "Vue Overview",
+              "slug": "vue/overview"
+            },
+            {
+              "title": "Vue Quickstart",
+              "slug": "vue/quickstart"
+            },
+            {
+              "title": "Vue Examples",
+              "slug": "vue/examples"
+            },
+            {
+              "title": "Vue API",
+              "slug": "vue/api"
+            },
+            {
+              "title": "Svelte Component Testing"
+            },
+            {
+              "title": "Svelte Overview",
+              "slug": "svelte/overview"
+            },
+            {
+              "title": "Svelte Quickstart",
+              "slug": "svelte/quickstart"
+            },
+            {
+              "title": "Svelte Examples",
+              "slug": "svelte/examples"
+            },
+            {
+              "title": "Svelte API",
+              "slug": "svelte/api"
+            }            
           ]
         },
         {
@@ -979,10 +949,6 @@
             {
               "title": "platform",
               "slug": "platform"
-            },
-            {
-              "title": "require",
-              "slug": "require"
             },
             {
               "title": "session",
