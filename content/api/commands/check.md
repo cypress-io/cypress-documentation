@@ -4,6 +4,9 @@ title: check
 
 Check checkbox(es) or radio(s).
 
+It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain further
+commands that rely on the subject after `.check()`.
+
 <Alert type="warning">
 
 This element must be an `<input>` with type `checkbox` or `radio`.
@@ -63,8 +66,8 @@ Pass in an options object to change the default behavior of `.check()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.check()` yields the same subject it was given.
-- `.check()` is a command, and it is **unsafe** to chain further methods that
-  rely on the subject.
+- It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain
+  further commands that rely on the subject after `.check()`.
 
 ## Examples
 

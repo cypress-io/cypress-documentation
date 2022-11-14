@@ -47,7 +47,7 @@ using an `@` prefix.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.as()` yields the same subject it was given.
-- `.as()` is a query, and it _safe_ to chain further methods.
+- It is _safe_ to chain further commands after `.as()`.
 
 ## Examples
 

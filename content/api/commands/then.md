@@ -66,9 +66,11 @@ flow into the next command (with the exception of `undefined` or `null`).
   and the callback does not call any Cypress commands, the subject will not be
   modified, and the previous subject will carry over to the next command.
 
-`.then()` is a command, and will not be retried. It is **unsafe** to return DOM
-elements from the callback and then use further assertions, queries or commands
-on them.
+The callback function of `.then()` is not retried. It is
+[unsafe](/guides/retry-ability#Only-Queries-are-retried) to return DOM elements
+directly from the callback and then use further commands on them. Instead, use
+Cypress queries to locate the elements you're interested in acting or asserting
+on.
 
 ## Examples
 

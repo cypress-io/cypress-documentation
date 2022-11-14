@@ -47,7 +47,7 @@ Pass in an options object to change the default behavior of `.siblings()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.siblings()` yields the new DOM element(s) it found.
-- `.siblings()` is a query, and it is _safe_ to chain further methods.
+- `.siblings()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 

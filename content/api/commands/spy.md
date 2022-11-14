@@ -42,8 +42,6 @@ The name of the `method` on the `object` to be wrapped.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `cy.spy()` is a _utility function_, and is neither a command nor a query.
-  Cypress concepts like retries and timeouts do not apply.
 - `cy.spy()` is _synchronous_ and returns a value (the spy) instead of a
   Promise-like chain-able object. It can be aliased.
 - `cy.spy()` returns a

@@ -54,7 +54,7 @@ Pass in an options object to change the default behavior of `.next()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.next()` yields the new DOM element(s) it found.
-- `.next()` is a query, and it is _safe_ to chain further methods.
+- `.next()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 

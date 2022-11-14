@@ -4,6 +4,9 @@ title: rightclick
 
 Right click a DOM element.
 
+It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain further
+commands that rely on the subject after `.rightclick()`.
+
 <Alert type="warning">
 
 `.rightclick()` will not open context menus native to the browser.
@@ -79,8 +82,8 @@ Pass in an options object to change the default behavior of `.rightclick()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.rightclick()` yields the same subject it was given.
-- `.rightclick()` is a command, and it is **unsafe** to chain further methods
-  that rely on the subject.
+- It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain
+  further commands that rely on the subject after `.rightclick()`.
 
 ## Examples
 

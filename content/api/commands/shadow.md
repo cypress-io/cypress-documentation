@@ -30,7 +30,7 @@ cy.get('.not-a-shadow-host').shadow() // Errors, subject must host a shadow root
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.shadow()` yields the new DOM element(s) it found.
-- `.shadow()` is a query, and it is _safe_ to chain further methods.
+- `.shadow()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 

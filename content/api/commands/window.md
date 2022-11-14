@@ -33,7 +33,7 @@ Pass in an options object to change the default behavior of `cy.window()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `cy.window()` yields the `window` object.
-- `cy.window()` is a query, and it is _safe_ to chain further methods.
+- `cy.window()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 

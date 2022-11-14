@@ -50,9 +50,10 @@ Pass in an options object to change the default behavior of `.spread()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.spread()` yields the return value of your callback function.
-- `.spread()` wll not change the subject if `null` or `undefined` is returned.
-- `.spread()` is a command, and if the returned values are DOM elements, it is
-  **unsafe** to chain further methods that rely on the subject.
+- `.spread()` wlll not change the subject if `null` or `undefined` is returned.
+- If the returned values are DOM elements, it is
+  [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain further
+  commands that rely on the subject after `.spread()`.
 
 ## Examples
 

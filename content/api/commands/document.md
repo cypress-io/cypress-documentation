@@ -33,7 +33,7 @@ Pass in an options object to change the default behavior of `cy.document()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `cy.document()` 'yields the `window.document` object.
-- `cy.document()` is a query, and it is _safe_ to chain further methods.
+- `cy.document()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 

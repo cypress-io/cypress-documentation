@@ -42,7 +42,7 @@ Pass in an options object to change the default behavior of `cy.location()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-`cy.location()` is a query, and it is _safe_ to chain further methods.
+`cy.location()` is a query, and it is _safe_ to chain further commands.
 
 #### When not given a `key` argument:
 

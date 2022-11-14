@@ -4,6 +4,9 @@ title: focus
 
 Focus on a DOM element.
 
+It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain further
+commands that rely on the subject after `.focus()`.
+
 ## Syntax
 
 ```javascript
@@ -40,8 +43,8 @@ Pass in an options object to change the default behavior of `.focus()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.focus()` yields the same subject it was given.
-- `.focus()` is a command, and it is **unsafe** to chain further methods that
-  rely on the subject.
+- It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain
+  further commands that rely on the subject after `.focus()`.
 
 ## Examples
 

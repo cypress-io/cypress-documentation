@@ -357,9 +357,9 @@ class. Then we can use the [.type()](/api/commands/type) command to enter text
 into the selected input. Finally, we can verify that the value of the input
 reflects the text that was typed with another [.should()](/api/commands/should).
 
-In general, the structure of your test should flow query -> command or query ->
-assertion(s). It's best practice not to chain anything after a command; for more
-details or why this is, see our guide on
+In general, the structure of your test should flow query -> query -> command or
+assertion(s). It's best practice not to chain anything after an action command;
+for more details on why this is, see our guide on
 [retry-ability](/guides/core-concepts/retry-ability).
 
 ```js

@@ -57,7 +57,7 @@ Pass in an options object to change the default behavior of `.filter()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.filter()` yields the new DOM element(s) it found.
-- `.filter()` is a query, and it is _safe_ to chain further methods.
+- `.filter()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 

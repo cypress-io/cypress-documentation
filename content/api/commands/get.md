@@ -69,7 +69,7 @@ Pass in an options object to change the default behavior of `cy.get()`.
 
 - `cy.get()` yields the DOM element(s) it found, or the results of the alias
   lookup.
-- `cy.get()` is a query, and it is _safe_ to chain further methods.
+- `cy.get()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 

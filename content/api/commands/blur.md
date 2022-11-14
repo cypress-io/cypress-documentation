@@ -4,6 +4,9 @@ title: blur
 
 Blur a focused element.
 
+It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain further
+commands that rely on the subject after `.blur()`.
+
 <Alert type="warning">
 
 This element must currently be in focus. If you want to ensure an element is
@@ -24,8 +27,8 @@ focused before blurring, try using [`.focus()`](/api/commands/focus) before
 **<Icon name="check-circle" color="green"></Icon> Correct Usage**
 
 ```javascript
-cy.get('[type="email"]').type('me@email.com').blur() // Blur email input
-cy.get('[tabindex="1"]').focus().blur() // Blur el with tabindex
+cy.get('[type="email"]').blur() // Blur email input
+cy.get('[tabindex="1"]').blur() // Blur el with tabindex
 ```
 
 **<Icon name="exclamation-triangle" color="red"></Icon> Incorrect Usage**
@@ -50,8 +53,8 @@ Pass in an options object to change the default behavior of `.blur`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.blur()` yields the same subject it was given.
-- `.blur()` is a command, and it is **unsafe** to chain further methods that
-  rely on the subject.
+- It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain
+  further commands that rely on the subject after `.blur()`.
 
 ## Examples
 

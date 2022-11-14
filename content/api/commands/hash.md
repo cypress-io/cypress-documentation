@@ -45,7 +45,7 @@ Pass in an options object to change the default behavior of `cy.hash()`.
   hash (including the `#` character).
 - When the current URL does not contain a hash, `cy.hash()` yields an empty
   string.
-- `cy.hash()` is a query, and it is _safe_ to chain further methods.
+- `cy.hash()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 

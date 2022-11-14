@@ -3,7 +3,7 @@ title: and
 ---
 
 Create an assertion. Assertions are automatically retried as part of the
-previous query until they pass or time out.
+previous command until they pass or time out.
 
 <Alert type="info">
 
@@ -74,7 +74,8 @@ Whatever was passed to the function is what is yielded.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - In most cases, `.and()` yields the same subject it was given.
-- `.and()` is an assertion, and it is _safe_ to chain further methods.
+- `.and()` is an assertion, and it is _safe_ to chain further commands that use
+  the subject.
 
 ```javascript
 cy.get('nav') // yields <nav>

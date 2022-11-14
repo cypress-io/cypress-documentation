@@ -4,6 +4,9 @@ title: scrollIntoView
 
 Scroll an element into view.
 
+It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain further
+commands that rely on the subject after `.scrollIntoView()`.
+
 ## Syntax
 
 ```javascript
@@ -43,8 +46,8 @@ Pass in an options object to change the default behavior of `.scrollIntoView()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.scrollIntoView()` yields the same subject it was given.
-- `.scrollIntoView()` is a command, and it is **unsafe** to chain further
-  methods that rely on the subject.
+- It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain
+  further commands that rely on the subject after `.scrollIntoView()`.
 
 ## Examples
 

@@ -144,9 +144,8 @@ the Application or Component Under Test, and exploring its DOM.
 
 The left-hand side of the Test Runner is a visual representation of your test
 suite. Each test block is properly nested and each test, when clicked, displays
-every Cypress query, command and assertion executed within the test's block as
-well as any methods executed in relevant `before`, `beforeEach`, `afterEach`,
-and `after` hooks.
+every Cypress command executed within the test's block as well as any commands
+executed in relevant `before`, `beforeEach`, `afterEach`, and `after` hooks.
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/command-log.png" alt="Cypress app" width-600></DocsImage>
 
@@ -160,10 +159,9 @@ file where the code is located. Clicking on this link will open the file in your
 
 ### Time traveling
 
-Each query, command and assertion, when hovered over, restores the Application
-or Component Under Test (right-hand side) to the state it was in when that
-command executed. This allows you to **time travel** back to previous states
-when testing.
+Each command, when hovered over, restores the Application or Component Under
+Test (right-hand side) to the state it was in when that command executed. This
+allows you to **time travel** back to previous states when testing.
 
 <Alert type="info">
 
@@ -174,38 +172,38 @@ you may want to lower the `numTestsKeptInMemory` in your
 
 </Alert>
 
-In the following example, hovering over the `CONTAINS` query in the Command Log
-changes the state of the [AUT](#Application-Under-Test) preview:
+In the following example, hovering over the `CONTAINS` command in the Command
+Log changes the state of the [AUT](#Application-Under-Test) preview:
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/first-test-hover-contains.png" alt="Hovering over the contains tab highlights the dom element in the App in the Cypress app"></DocsImage>
 
 Cypress automatically travels back in time to a snapshot of when a hovered-over
-method resolved. Additionally, since [`cy.contains()`](/api/commands/contains)
+command resolved. Additionally, since [`cy.contains()`](/api/commands/contains)
 finds DOM elements on the page, Cypress also highlights the element and scrolls
 it into view (to the top of the page).
 
-Also note that as we hover over the `CONTAINS` query, Cypress reverts back to
+Also note that as we hover over the `CONTAINS` command, Cypress reverts back to
 the URL that was present when the snapshot was taken.
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/first-test-url-revert.png" alt="The url address bar shows https://example.cypress.io/"></DocsImage>
 
 ### Pinning snapshots
 
-Each command, query, assertion, or error, when clicked on, displays extra
-information in the dev tools console. Clicking also **pins** the Application or
-Component Under Test (right-hand side) to its previous state, or **snapshot**,
-when the method executed.
+Each command, when clicked on, displays extra information in the dev tools
+console. Clicking also **pins** the Application or Component Under Test
+(right-hand side) to its previous state, or **snapshot**, when the command
+executed.
 
-In the following example, clicking on the `CLICK` query highlights it in purple,
-and does three other things worth noting:
+In the following example, clicking on the `CLICK` command highlights it in
+purple, and does three other things worth noting:
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/first-test-click-revert.png" alt="A click on the click command in the Command Log with Cypress app labeled as 1, 2, 3"></DocsImage>
 
 #### 1. Pinned snapshots
 
-We have now **pinned** this snapshot. Hovering over other items will not revert
-to them. This gives us a chance to manually inspect the DOM of our application
-under test at the time the snapshot was taken.
+We have now **pinned** this snapshot. Hovering over other commands will not
+revert to them. This gives us a chance to manually inspect the DOM of our
+application under test at the time the snapshot was taken.
 
 #### 2. Event hitbox
 
@@ -214,7 +212,7 @@ see a red hitbox at the coordinates the event took place.
 
 #### 3. Snapshot menu panel
 
-There is also a new menu panel. Some methods (like action commands) will take
+There is also a new menu panel. Some commands (like action commands) will take
 multiple snapshots: **before** and **after**. We can now cycle through these.
 
 The **before** snapshot is taken prior to the click event firing. The **after**
@@ -232,7 +230,7 @@ completed.
 
 ### Page events
 
-In addition to showing all the methods that were called, the command log also
+In addition to showing all the commands that were called, the command log also
 shows important events from your application or component when they occur.
 Notice these look different (they are gray and without a number).
 
@@ -510,7 +508,7 @@ In addition to the features already mentioned, Cypress comes with a host of
 debugging tools to help you understand a test. You can:
 
 - See detailed information about [errors](#Errors) that occur.
-- Receive additional [console output](#Console-output) about each method.
+- Receive additional [console output](#Console-output) about each command.
 - [Pause commands](#Special-commands) and step through them iteratively.
 <!-- - Visualize when hidden or multiple elements are found. -->
 
@@ -520,8 +518,8 @@ debugging tools to help you understand a test. You can:
 
 ### Console output
 
-Besides commands and queries being interactive, they also output additional
-debugging information to your console.
+Besides commands being interactive, they also output additional debugging
+information to your console.
 
 Open up your Dev Tools and click on the `GET` for the `.action-email` class
 selector.

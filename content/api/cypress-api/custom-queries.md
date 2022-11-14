@@ -2,8 +2,9 @@
 title: Custom Queries
 ---
 
-Cypress comes with its own API for creating custom queries. The built in Cypress
-queries use the very same API that's defined below.
+Starting in Cypress 12, Cypress comes with its own API for creating custom
+queries. The built in Cypress queries use the very same API that's explained
+below.
 
 <Alert type="info">
 
@@ -15,9 +16,8 @@ instead.
 
 <Alert type="info">
 
-A great place to define queries is in your `cypress/support/commands.js` file,
-since it is loaded before any test files are evaluated via an import statement
-in the
+We recommend defining in your `cypress/support/commands.js` file, since it is
+loaded before any test files are evaluated via an import statement in the
 [supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file).
 
 </Alert>
@@ -25,10 +25,11 @@ in the
 Queries follow three main rules.
 
 1. Queries are _synchronous._ They do not return or await promises.
-2. Queries are _retrieable._ Once you return the inner function, Cypress takes
+2. Queries are _retriable._ Once you return the inner function, Cypress takes
    control, handling retries on your behalf.
 3. Queries are _idempotent._ Once you return the inner function, Cypress will
-   invoke it repeatedly.
+   invoke it repeatedly. Invoking the inner function multiple times must not
+   change the state of your application.
 
 With these rules, queries are simple to write and extremely powerful. They are
 the building blocks on which Cypress' API is built.
@@ -60,7 +61,7 @@ The name of the query you're adding.
 Pass a function that receives the arguments passed to the query.
 
 This outer function is invoked once. It should return a function that takes a
-subject and returns a new subject; this inner function will be called multple
+subject and returns a new subject; this inner function might be called multiple
 times.
 
 ## Examples
@@ -69,11 +70,11 @@ times.
 
 The callback function can be thought of as two separate parts. The _outer
 function_, which is invoked once, where you perform setup and state management,
-and the _query function_, which is called repeatedly.
+and the _query function_, which might be called repeatedly.
 
 Let's look at an example. This is actual Cypress code - how `.focused()` is
 implemented internally. The only thing omitted here for simplicity is the
-typescript definitions.
+TypeScript definitions.
 
 ```javascript
 Commands.addQuery('focused', function focused(options = {}) {
@@ -291,6 +292,12 @@ pass through whatever `options` the user provided us.
 
 In our own inner function, we can then call `getFn`, and do whatever we want
 with the return value.
+
+Remember that commands - including queries - don't have a meaningful return
+value. Calling `cy.get()` directly would just add it to the queue of commands to
+be executed later (which is not idempotent!). `cy.now()` lets us directly call
+the original `get` query function, without Cypress' chaining and command queue
+logic wrapped around it.
 
 ## Validation
 

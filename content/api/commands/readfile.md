@@ -62,8 +62,8 @@ Pass in an options object to change the default behavior of `cy.readFile()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `cy.readFile()` yields the contents of the file.
-- `cy.readFile()` is a command, and the file will not be read from disk again if
-  the results are stored in an alias.
+- The file will not be read from disk again if the results are stored in an
+  alias.
 
 ## Examples
 

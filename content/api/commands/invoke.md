@@ -13,9 +13,9 @@ subject, use [`.its()`](/api/commands/its).
 
 <Alert type="warn">
 
-If you chain further methods off of `.invoke()`, it will be called multiple
-times. If you only want the method to be called once, treat `.invoke()` like a
-command, and consider it unsafe to chain further methods.
+If you chain further commands off of `.invoke()`, it will be called multiple
+times. If you only want the method to be called once, end your chain with
+`.invoke()` and start fresh with `cy` afterwards.
 
 </Alert>
 
@@ -72,7 +72,9 @@ number of arguments.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.invoke()` yields the return value of the method.
-- `.invoke()` is a query, and it is _safe_ to chain further methods.
+- `.invoke()` is a query, and it is _safe_ to chain further commands.
+- If you chain additional commands off of `.invoke()`, the function will be
+  called multiple times!
 
 ## Examples
 

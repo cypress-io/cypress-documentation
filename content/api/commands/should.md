@@ -85,7 +85,8 @@ cy.get('nav') // yields <nav>
   .and('match', /serif/) // yields 'sans-serif'
 ```
 
-`.should()` is an assertion, and it is _safe_ to chain further methods.
+`.should()` is an assertion, and it is _safe_ to chain further commands that use
+the subject.
 
 ## Examples
 

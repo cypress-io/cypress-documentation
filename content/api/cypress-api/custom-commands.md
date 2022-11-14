@@ -17,9 +17,9 @@ return a DOM element for further commands to act on, consider writing a
 
 <Alert type="info">
 
-A great place to define or overwrite commands is in your
-`cypress/support/commands.js` file, since it is loaded before any test files are
-evaluated via an import statement in the
+We recommend defining queries is in your `cypress/support/commands.js` file,
+since it is loaded before any test files are evaluated via an import statement
+in the
 [supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file).
 
 </Alert>
@@ -419,9 +419,9 @@ the original.
 <Alert type="warning">
 
 `Cypress.Commands.overwrite` can only overwrite commands, not queries. If you
-want to modify the behavior of a query, you'll need to use
-[`Cypress.Commands.overwriteQuery`](/api/cypress-api/custom-queries#overwriting-existing-queries)
-instead.
+want to modify the behavior of a query, you'll need to add your updated version
+under a new name using
+[`Cypress.Commands.addQuery`](/api/cypress-api/custom-queries) instead.
 
 </Alert>
 
@@ -648,7 +648,7 @@ Validations always work as "or" not "and".
 You can also mix optional commands **with** validations.
 
 ```javascript
-// this is how .contains() is implemented
+// this is how .scrollTo() is implemented
 Cypress.Commands.add(
   'scrollTo',
   {

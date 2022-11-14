@@ -47,8 +47,6 @@ The function used to replace the `method` on the `object`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `cy.stub()` is a _utility function_, and is neither a command nor a query.
-  Cypress concepts like retries and timeouts do not apply.
 - `cy.stub()` is _synchronous_ and returns a value (the stub) instead of a
   Promise-like chain-able object. It can be aliased.
 - `cy.stub()` returns a [Sinon.js stub](http://sinonjs.org). All methods found

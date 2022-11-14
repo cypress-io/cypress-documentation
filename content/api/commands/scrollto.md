@@ -4,6 +4,9 @@ title: scrollTo
 
 Scroll to a specific position.
 
+It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain further
+commands that rely on the subject after `.scrollTo()`.
+
 ## Syntax
 
 ```javascript
@@ -69,9 +72,9 @@ Pass in an options object to change the default behavior of `cy.scrollTo()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `cy.scrollTo()` yields the same subject it was given.
-- `cy.scrollTo()` is a command, and it is **unsafe** to chain further methods
-  that rely on the subject.
+- `.scrollTo()` yields the same subject it was given.
+- It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain
+  further commands that rely on the subject after `.scrollTo()`.
 
 ## Examples
 

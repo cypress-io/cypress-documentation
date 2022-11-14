@@ -5,6 +5,9 @@ title: selectFile
 Selects a file or files in an HTML5 input element or simulates dragging a file
 or files into the browser.
 
+It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain further
+commands that rely on the subject after `.selectFile()`.
+
 ## Syntax
 
 ```javascript
@@ -89,8 +92,8 @@ Pass in an options object to change the default behavior of `.selectFile()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.selectFile()` yields the same subject it was given.
-- `.selectFile()` is a command, and it is **unsafe** to chain further methods
-  that rely on the subject.
+- It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain
+  further commands that rely on the subject after `.selectFile()`.
 
 ### Action
 

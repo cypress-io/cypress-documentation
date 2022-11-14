@@ -53,7 +53,7 @@ Pass in an options object to change the default behavior of `.nextAll()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.nextAll()` yields the new DOM element(s) it found.
-- `.nextAll()` is a query, and it is _safe_ to chain further methods.
+- `.nextAll()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 

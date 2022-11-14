@@ -56,7 +56,7 @@ Pass in an options object to change the default behavior of `.parent()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.parent()` yields the new DOM element(s) it found.
-- `.parent()` is a query, and it is _safe_ to chain further methods.
+- `.parent()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 

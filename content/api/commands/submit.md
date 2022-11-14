@@ -4,6 +4,9 @@ title: submit
 
 Submit a form.
 
+It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain further
+commands that rely on the subject after `.submit()`.
+
 <Alert type="warning">
 
 The [subject](/guides/core-concepts/introduction-to-cypress#Subject-Management)
@@ -46,9 +49,9 @@ Pass in an options object to change the default behavior of `.submit()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `.sumbit()` yields the same subject it was given.
-- `.submit()` is a command, and it is **unsafe** to chain further methods that
-  rely on the subject.
+- `.submit()` yields the same subject it was given.
+- It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain
+  further commands that rely on the subject after `.submit()`.
 
 ## Example
 

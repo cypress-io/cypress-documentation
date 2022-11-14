@@ -52,7 +52,7 @@ Pass in an options object to change the default behavior of `.its()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.its()` 'yields the value of the property.
-- `.its()` is a query, and it is _safe_ to chain further methods.
+- `.its()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 

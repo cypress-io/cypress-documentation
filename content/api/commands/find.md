@@ -52,7 +52,7 @@ Pass in an options object to change the default behavior of `.find()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.find()` yields the new DOM element(s) it found.
-- `.find()` is a query, and it is _safe_ to chain further methods.
+- `.find()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 

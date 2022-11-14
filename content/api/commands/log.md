@@ -34,7 +34,6 @@ to the number of arguments.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `cy.log()` yields `null`.
-- `cy.log()` cannot be chained further.
 
 ## Examples
 
