@@ -4,8 +4,8 @@ title: type
 
 Type into a DOM element.
 
-It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain further
-commands that rely on the subject after `.type()`.
+It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+chain further commands that rely on the subject after `.type()`.
 
 ## Syntax
 
@@ -97,8 +97,8 @@ Pass in an options object to change the default behavior of `.type()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.type()` yields the same subject it was given.
-- It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain
-  further commands that rely on the subject after `.type()`.
+- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  to chain further commands that rely on the subject after `.type()`.
 
 ## Examples
 

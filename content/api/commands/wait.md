@@ -65,8 +65,8 @@ Pass in an options object to change the default behavior of `cy.wait()`.
 #### When given a `time` argument:
 
 - `cy.wait()` yields the same subject it was given.
-- It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain
-  further commands that rely on the subject after `.wait()`.
+- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  to chain further commands that rely on the subject after `.wait()`.
 
 #### When given an `alias` argument:
 

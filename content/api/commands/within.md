@@ -5,8 +5,8 @@ title: within
 Scopes all subsequent cy commands to within this element. Useful when working
 within a particular group of elements such as a `<form>`.
 
-It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain further
-commands that rely on the subject after `.within()`.
+It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+chain further commands that rely on the subject after `.within()`.
 
 ## Syntax
 
@@ -47,8 +47,8 @@ Pass in an options object to change the default behavior of `.within()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.within()` yields the same subject it was given.
-- It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain
-  further commands that rely on the subject after `.within()`.
+- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  to chain further commands that rely on the subject after `.within()`.
 
 Trying to return a different element the `.within` callback have no effect:
 

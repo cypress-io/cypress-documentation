@@ -52,8 +52,8 @@ Pass in an options object to change the default behavior of `.spread()`.
 - `.spread()` yields the return value of your callback function.
 - `.spread()` wlll not change the subject if `null` or `undefined` is returned.
 - If the returned values are DOM elements, it is
-  [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain further
-  commands that rely on the subject after `.spread()`.
+  [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+  chain further commands that rely on the subject after `.spread()`.
 
 ## Examples
 

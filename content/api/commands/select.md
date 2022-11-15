@@ -4,8 +4,8 @@ title: select
 
 Select an `<option>` within a `<select>`.
 
-It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain further
-commands that rely on the subject after `.select()`.
+It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+chain further commands that rely on the subject after `.select()`.
 
 ## Syntax
 
@@ -55,8 +55,8 @@ Pass in an options object to change the default behavior of `.select()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.select()` yields the same subject it was given.
-- It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain
-  further commands that rely on the subject after `.select()`.
+- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  to chain further commands that rely on the subject after `.select()`.
 
 ## Examples
 

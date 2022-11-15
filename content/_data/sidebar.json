@@ -476,227 +476,219 @@
           ]
         },
         {
-          "title": "Events",
-          "slug": "events",
+          "title": "Assertions",
+          "slug": "commands",
           "children": [
             {
-              "title": "Catalog of Events",
-              "slug": "catalog-of-events"
+              "title": "Assertions Reference",
+              "redirect": "/guides/references/assertions"
+            },
+            {
+              "title": "and",
+              "slug": "and"
+            },
+            {
+              "title": "should",
+              "slug": "should"
             }
           ]
         },
         {
-          "title": "Commands",
+          "title": "Actions",
           "slug": "commands",
           "children": [
             {
-              "title": "Assertions",
-              "children": [
-                {
-                  "title": "Assertions Reference",
-                  "redirect": "/guides/references/assertions"
-                },
-                {
-                  "title": "and",
-                  "slug": "and"
-                },
-                {
-                  "title": "should",
-                  "slug": "should"
-                }
-              ]
+              "title": "Actionability Guide",
+              "redirect": "/guides/core-concepts/interacting-with-elements#Actionability"
             },
             {
-              "title": "Queries",
-              "children": [
-                {
-                  "title": "Retryability Guide",
-                  "redirect": "/guides/core-concepts/retry-ability"
-                },
-                {
-                  "title": "as",
-                  "slug": "as"
-                },
-                {
-                  "title": "children",
-                  "slug": "children"
-                },
-                {
-                  "title": "closest",
-                  "slug": "closest"
-                },
-                {
-                  "title": "contains",
-                  "slug": "contains"
-                },
-                {
-                  "title": "debug",
-                  "slug": "debug"
-                },
-                {
-                  "title": "document",
-                  "slug": "document"
-                },
-                {
-                  "title": "eq",
-                  "slug": "eq"
-                },
-                {
-                  "title": "filter",
-                  "slug": "filter"
-                },
-                {
-                  "title": "find",
-                  "slug": "find"
-                },
-                {
-                  "title": "first",
-                  "slug": "first"
-                },
-                {
-                  "title": "focused",
-                  "slug": "focused"
-                },
-                {
-                  "title": "get",
-                  "slug": "get"
-                },
-                {
-                  "title": "hash",
-                  "slug": "hash"
-                },
-                {
-                  "title": "invoke",
-                  "slug": "invoke"
-                },
-                {
-                  "title": "its",
-                  "slug": "its"
-                },
-                {
-                  "title": "last",
-                  "slug": "last"
-                },
-                {
-                  "title": "location",
-                  "slug": "location"
-                },
-                {
-                  "title": "next",
-                  "slug": "next"
-                },
-                {
-                  "title": "nextAll",
-                  "slug": "nextall"
-                },
-                {
-                  "title": "nextUntil",
-                  "slug": "nextuntil"
-                },
-                {
-                  "title": "not",
-                  "slug": "not"
-                },
-
-                {
-                  "title": "parent",
-                  "slug": "parent"
-                },
-                {
-                  "title": "parents",
-                  "slug": "parents"
-                },
-                {
-                  "title": "parentsUntil",
-                  "slug": "parentsuntil"
-                },
-                {
-                  "title": "prev",
-                  "slug": "prev"
-                },
-                {
-                  "title": "prevAll",
-                  "slug": "prevall"
-                },
-                {
-                  "title": "prevUntil",
-                  "slug": "prevuntil"
-                },
-                {
-                  "title": "root",
-                  "slug": "root"
-                },
-                {
-                  "title": "shadow",
-                  "slug": "shadow"
-                },
-                {
-                  "title": "siblings",
-                  "slug": "siblings"
-                },
-                {
-                  "title": "title",
-                  "slug": "title"
-                },
-                {
-                  "title": "url",
-                  "slug": "url"
-                },
-                {
-                  "title": "window",
-                  "slug": "window"
-                }
-              ]
+              "title": "clear",
+              "slug": "clear"
             },
             {
-              "title": "Actions",
-              "children": [
-                {
-                  "title": "Actionability Guide",
-                  "redirect": "/guides/core-concepts/interacting-with-elements#Actionability"
-                },
-                {
-                  "title": "clear",
-                  "slug": "clear"
-                },
-                {
-                  "title": "click",
-                  "slug": "click"
-                },
-                {
-                  "title": "check",
-                  "slug": "check"
-                },
-                {
-                  "title": "dblclick",
-                  "slug": "dblclick"
-                },
-                {
-                  "title": "rightclick",
-                  "slug": "rightclick"
-                },
-                {
-                  "title": "select",
-                  "slug": "select"
-                },
-                {
-                  "title": "selectFile",
-                  "slug": "selectfile"
-                },
-                {
-                  "title": "trigger",
-                  "slug": "trigger"
-                },
-                {
-                  "title": "type",
-                  "slug": "type"
-                },
-                {
-                  "title": "uncheck",
-                  "slug": "uncheck"
-                }
-              ]
+              "title": "click",
+              "slug": "click"
             },
+            {
+              "title": "check",
+              "slug": "check"
+            },
+            {
+              "title": "dblclick",
+              "slug": "dblclick"
+            },
+            {
+              "title": "rightclick",
+              "slug": "rightclick"
+            },
+            {
+              "title": "select",
+              "slug": "select"
+            },
+            {
+              "title": "selectFile",
+              "slug": "selectfile"
+            },
+            {
+              "title": "trigger",
+              "slug": "trigger"
+            },
+            {
+              "title": "type",
+              "slug": "type"
+            },
+            {
+              "title": "uncheck",
+              "slug": "uncheck"
+            }
+          ]
+        },
+        {
+          "title": "Queries",
+          "slug": "commands",
+          "children": [
+            {
+              "title": "Retryability Guide",
+              "redirect": "/guides/core-concepts/retry-ability"
+            },
+            {
+              "title": "as",
+              "slug": "as"
+            },
+            {
+              "title": "children",
+              "slug": "children"
+            },
+            {
+              "title": "closest",
+              "slug": "closest"
+            },
+            {
+              "title": "contains",
+              "slug": "contains"
+            },
+            {
+              "title": "debug",
+              "slug": "debug"
+            },
+            {
+              "title": "document",
+              "slug": "document"
+            },
+            {
+              "title": "eq",
+              "slug": "eq"
+            },
+            {
+              "title": "filter",
+              "slug": "filter"
+            },
+            {
+              "title": "find",
+              "slug": "find"
+            },
+            {
+              "title": "first",
+              "slug": "first"
+            },
+            {
+              "title": "focused",
+              "slug": "focused"
+            },
+            {
+              "title": "get",
+              "slug": "get"
+            },
+            {
+              "title": "hash",
+              "slug": "hash"
+            },
+            {
+              "title": "invoke",
+              "slug": "invoke"
+            },
+            {
+              "title": "its",
+              "slug": "its"
+            },
+            {
+              "title": "last",
+              "slug": "last"
+            },
+            {
+              "title": "location",
+              "slug": "location"
+            },
+            {
+              "title": "next",
+              "slug": "next"
+            },
+            {
+              "title": "nextAll",
+              "slug": "nextall"
+            },
+            {
+              "title": "nextUntil",
+              "slug": "nextuntil"
+            },
+            {
+              "title": "not",
+              "slug": "not"
+            },
+            {
+              "title": "parent",
+              "slug": "parent"
+            },
+            {
+              "title": "parents",
+              "slug": "parents"
+            },
+            {
+              "title": "parentsUntil",
+              "slug": "parentsuntil"
+            },
+            {
+              "title": "prev",
+              "slug": "prev"
+            },
+            {
+              "title": "prevAll",
+              "slug": "prevall"
+            },
+            {
+              "title": "prevUntil",
+              "slug": "prevuntil"
+            },
+            {
+              "title": "root",
+              "slug": "root"
+            },
+            {
+              "title": "shadow",
+              "slug": "shadow"
+            },
+            {
+              "title": "siblings",
+              "slug": "siblings"
+            },
+            {
+              "title": "title",
+              "slug": "title"
+            },
+            {
+              "title": "url",
+              "slug": "url"
+            },
+            {
+              "title": "window",
+              "slug": "window"
+            }
+          ]
+        },
+        {
+          "title": "Other Commands",
+          "slug": "commands",
+          "children": [
             {
               "title": "blur",
               "slug": "blur"
@@ -856,6 +848,16 @@
             {
               "title": "writeFile",
               "slug": "writefile"
+            }
+          ]
+        },
+        {
+          "title": "Events",
+          "slug": "events",
+          "children": [
+            {
+              "title": "Catalog of Events",
+              "slug": "catalog-of-events"
             }
           ]
         },

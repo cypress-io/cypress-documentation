@@ -6,23 +6,9 @@ Starting in Cypress 12, Cypress comes with its own API for creating custom
 queries. The built in Cypress queries use the very same API that's explained
 below.
 
-<Alert type="info">
-
-If your method needs to be asynchronous, or it shouldn't be called more than
-once, consider writing a [custom command](/api/cypress-api/custom-command)
-instead.
-
-</Alert>
-
-<Alert type="info">
-
-We recommend defining in your `cypress/support/commands.js` file, since it is
-loaded before any test files are evaluated via an import statement in the
-[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file).
-
-</Alert>
-
-Queries follow three main rules.
+Queries are a type of command, used for _querying_ the state of your
+application. They are different from other commands in that they follow three
+important rules:
 
 1. Queries are _synchronous._ They do not return or await promises.
 2. Queries are _retriable._ Once you return the inner function, Cypress takes
@@ -32,7 +18,28 @@ Queries follow three main rules.
    change the state of your application.
 
 With these rules, queries are simple to write and extremely powerful. They are
-the building blocks on which Cypress' API is built.
+the building blocks on which Cypress' API is built. To learn more about the
+differences between commands and queries, see our
+[guide on Retry-ability](/guides/core-concepts/retry-ability#Only-queries-are-retried).
+
+<Alert type="info">
+
+If you want to chain together existing Cypress commands as a shortcut, you
+probably want to write a [custom command](/api/cypress-api/custom-command)
+instead.
+
+You'll also want to write a command instead of a query if your method needs to
+be asynchronous, or it shouldn't be called more than once.
+
+</Alert>
+
+<Alert type="info">
+
+We recommend defining queries in your `cypress/support/commands.js` file, since
+it is loaded before any test files are evaluated via an import statement in the
+[supportFile](/guides/core-concepts/writing-and-organizing-tests#Support-file).
+
+</Alert>
 
 ## Syntax
 
@@ -118,22 +125,21 @@ function focused(options = {}) {
 
   this.set('timeout', options.timeout)
 
-  return () => {} // Inner function
+  return () => { ... } // Inner function
 }
 ```
 
-Piece by piece, then.
+Let's look at this piece by piece.
 
 ```javascript
-function focused(options = {}) {}
+function focused(options = {}) { ... }
 ```
 
 Cypress passes the outer function whatever arguments the user calls it with; no
 processing or validation is done on the user's arguments. In our case,
 `.focused()` accepts one optional argument, `options`.
 
-If you wanted to validate the incoming arguments, you might write something
-like:
+If you wanted to validate the incoming arguments, you might add something like:
 
 ```javascript
 if (options === null || !_.isPlainObject(options)) {
@@ -143,7 +149,7 @@ if (options === null || !_.isPlainObject(options)) {
 ```
 
 This is a general pattern: when something goes wrong, queries just throw an
-error. Cypress will handle displaying this in the Command Log nicely.
+error. Cypress will handle displaying the error in the Command Log.
 
 ```javascript
 const log = options.log !== false && Cypress.log({ timeout: options.timeout })
@@ -153,9 +159,10 @@ If the user has not set `{ log: false }`, we create a new `Cypress.log()`
 instance. See [`Cypress.log()`](/api/cypress-api/cypress-log) for more
 information.
 
-This is setup code - we only want it to run once, creating the log message when
-Cypress first begins executing this query. We hold onto a reference to `Log`
-instance - we'll update it later with additional details.
+This line is setup code, so it lives in the outer function - we only want it to
+run once, creating the log message when Cypress first begins executing this
+query. We hold onto a reference to `Log` instance. We'll update it later with
+additional details when the inner function executes.
 
 ```javascript
 this.set('timeout', options.timeout)

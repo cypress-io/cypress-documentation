@@ -67,10 +67,10 @@ flow into the next command (with the exception of `undefined` or `null`).
   modified, and the previous subject will carry over to the next command.
 
 The callback function of `.then()` is not retried. It is
-[unsafe](/guides/retry-ability#Only-Queries-are-retried) to return DOM elements
-directly from the callback and then use further commands on them. Instead, use
-Cypress queries to locate the elements you're interested in acting or asserting
-on.
+[unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to return
+DOM elements directly from the callback and then use further commands on them.
+Instead, use Cypress queries to locate the elements you're interested in acting
+or asserting on.
 
 ## Examples
 

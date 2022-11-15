@@ -236,7 +236,7 @@ waiting on an other, since it will spend 0 milliseconds retrying.
 cy.get('[data-testid="ssr-error"]', { timeout: 0 }).should('not.exist')
 ```
 
-## Only Queries are retried
+## Only queries are retried
 
 Any command that isn't a query, such as `cy.click()`, follows different rules
 than queries do. Cypress will retry any queries _leading up to_ a command, and

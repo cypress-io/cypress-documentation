@@ -4,8 +4,8 @@ title: rightclick
 
 Right click a DOM element.
 
-It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain further
-commands that rely on the subject after `.rightclick()`.
+It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+chain further commands that rely on the subject after `.rightclick()`.
 
 <Alert type="warning">
 
@@ -82,8 +82,8 @@ Pass in an options object to change the default behavior of `.rightclick()`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.rightclick()` yields the same subject it was given.
-- It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain
-  further commands that rely on the subject after `.rightclick()`.
+- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  to chain further commands that rely on the subject after `.rightclick()`.
 
 ## Examples
 

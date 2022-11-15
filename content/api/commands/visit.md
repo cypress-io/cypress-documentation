@@ -85,8 +85,9 @@ globally in the [Cypress configuration](/guides/references/configuration).
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `cy.visit()` yields the `window` object after the page finishes loading.
-- It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain
-  further commands that rely on the yielded `window` after `cy.visit()`.
+- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  to chain further commands that rely on the yielded `window` after
+  `cy.visit()`.
 
 Let's confirm the `window.navigator.language` after visiting the site:
 

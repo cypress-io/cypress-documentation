@@ -4,14 +4,19 @@ title: blur
 
 Blur a focused element.
 
-It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain further
-commands that rely on the subject after `.blur()`.
+It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried) to
+chain further commands that rely on the subject after `.blur()`.
 
 <Alert type="warning">
 
 This element must currently be in focus. If you want to ensure an element is
 focused before blurring, try using [`.focus()`](/api/commands/focus) before
 `.blur()`.
+
+```javascript
+cy.get('button').as('btn').focus()
+cy.get('@btn').blur()
+```
 
 </Alert>
 
@@ -53,8 +58,8 @@ Pass in an options object to change the default behavior of `.blur`.
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `.blur()` yields the same subject it was given.
-- It is [unsafe](/guides/retry-ability#Only-Queries-are-retried) to chain
-  further commands that rely on the subject after `.blur()`.
+- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  to chain further commands that rely on the subject after `.blur()`.
 
 ## Examples
 
