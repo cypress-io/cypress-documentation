@@ -499,7 +499,7 @@
           "children": [
             {
               "title": "Actionability Guide",
-              "redirect": "/guides/core-concepts/interacting-with-elements#Actionability"
+              "redirect": "/guides/core-concepts/interacting-with-elements"
             },
             {
               "title": "clear",
@@ -548,7 +548,7 @@
           "slug": "commands",
           "children": [
             {
-              "title": "Retryability Guide",
+              "title": "Retry-ability Guide",
               "redirect": "/guides/core-concepts/retry-ability"
             },
             {
