@@ -564,17 +564,6 @@ it.skip('returns "fizz" when number is multiple of 3', () => {
 
 ### Test Isolation
 
-<Alert type="warning">
-
-<strong class="alert-header"><Icon name="exclamation-triangle"></Icon>
-Experimental</strong>
-
-The concept of test isolation is currently experimental, and can be enabled by
-setting the [`experimentalSessionAndOrigin`](/guides/references/experiments)
-option to `true` in the Cypress config.
-
-</Alert>
-
 <Alert type="success">
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Tests should
