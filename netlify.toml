@@ -384,8 +384,8 @@
   force = true
 
 [[redirects]]
-  from = "/faq/dashboard-faq"
-  to = "/faq/cloud-faq"
+  from = "/faq/questions/dashboard-faq"
+  to = "/faq/questions/cloud-faq"
   status = 301
   force = true
 
