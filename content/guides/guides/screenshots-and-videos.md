@@ -60,9 +60,9 @@ configurable with the
 [`videoCompression`](/guides/references/configuration#Videos) property.
 
 When using the `--record` flag while running your tests, videos are processed,
-compressed, and uploaded to [Cypress Cloud](/guides/cloud/introduction) after every spec file runs,
-successful or not. To change this behavior to only process videos in the case
-that tests fail, set the
+compressed, and uploaded to [Cypress Cloud](/guides/cloud/introduction) after
+every spec file runs, successful or not. To change this behavior to only process
+videos in the case that tests fail, set the
 [`videoUploadOnPasses`](/guides/references/configuration#Videos) configuration
 option to `false`.
 
@@ -74,7 +74,8 @@ clear your videos folder before a run, you can set
 
 If your spec files have a long run duration, you might notice a time gap between
 a finished spec and a new spec starting during `cypress run`. During this time,
-Cypress is encoding the captured video and possibly uploading it to Cypress Cloud.
+Cypress is encoding the captured video and possibly uploading it to Cypress
+Cloud.
 
 If the machine is encoding the video slowly (which is often the case for virtual
 machines that use less CPU cores), the encoding might take a long time. In this
@@ -176,9 +177,10 @@ what?
 
 <!-- Line breaks removed to prevent random br elements -->
 
-Something you can take advantage of today is [Cypress Cloud](/guides/cloud/introduction): our companion
-enterprise service that stores your artifacts for you and lets you view them
-from any web browser, as well as share them with your team.
+Something you can take advantage of today is
+[Cypress Cloud](/guides/cloud/introduction): our companion enterprise service
+that stores your artifacts for you and lets you view them from any web browser,
+as well as share them with your team.
 
 ### Visual Regression Test / Screenshot Diffing
 

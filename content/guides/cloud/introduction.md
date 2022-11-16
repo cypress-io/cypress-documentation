@@ -13,11 +13,11 @@ monthly test results.
 
 </Alert>
 
-[Cypress Cloud](https://on.cypress.io/cloud) is our
-enterprise-ready, web-based companion to the Cypress app. It gives you online
-access to your recorded test results, orchestrates test runs across multiple
-machines, provides rich analytics and diagnostics, and integrates those insights
-with your favorite tools.
+[Cypress Cloud](https://on.cypress.io/cloud) is our enterprise-ready, web-based
+companion to the Cypress app. It gives you online access to your recorded test
+results, orchestrates test runs across multiple machines, provides rich
+analytics and diagnostics, and integrates those insights with your favorite
+tools.
 
 <!-- textlint-disable -->
 
@@ -31,9 +31,9 @@ with your favorite tools.
 
 The Cypress
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app)
-leverages [Cypress Cloud in CI](https://cloud.cypress.io/projects/7s5okt) to test
-over 300 test cases in parallel across 25 machines, multiple browsers, multiple
-device sizes, and multiple operating systems.
+leverages [Cypress Cloud in CI](https://cloud.cypress.io/projects/7s5okt) to
+test over 300 test cases in parallel across 25 machines, multiple browsers,
+multiple device sizes, and multiple operating systems.
 
 Check out the <Icon name="github"></Icon>
 [Real World App in Cypress Cloud](https://cloud.cypress.io/projects/7s5okt).
@@ -47,23 +47,24 @@ Check out the <Icon name="github"></Icon>
 Store the full history of your test results, with
 [video clips, screenshots, and full stack traces](/guides/cloud/runs#Test-failures).
 Quickly see the current state of your app on the
-[Latest Runs](/guides/cloud/runs) page, identify problematic trends with
-rich [Analytics](/guides/cloud/analytics), and diagnose unreliable tests
-with [Flaky Test Management](/guides/cloud/flaky-test-management). Associate
-related tests with
-[grouping](/guides/guides/parallelization#Grouping-by-browser) to see results
-broken down by browser and OS.
+[Latest Runs](/guides/cloud/runs) page, identify problematic trends with rich
+[Analytics](/guides/cloud/analytics), and diagnose unreliable tests with
+[Flaky Test Management](/guides/cloud/flaky-test-management). Associate related
+tests with [grouping](/guides/guides/parallelization#Grouping-by-browser) to see
+results broken down by browser and OS.
 
 <DocsImage src="/img/dashboard/dashboard-runs-list.png" alt="Cloud Screenshot" ></DocsImage>
 
-For users of the open-source [Cypress app](/guides/core-concepts/cypress-app), we've integrated test run information from Cypress Cloud so developers can see the latest results across the team, and identify areas of concern.
+For users of the open-source [Cypress app](/guides/core-concepts/cypress-app),
+we've integrated test run information from Cypress Cloud so developers can see
+the latest results across the team, and identify areas of concern.
 
 <DocsImage src="/img/dashboard/v10/runs-list-in-cypress-app.png" alt="Runs List" ></DocsImage>
 
 ### Run tests in parallel, in priority order, or not at all
 
-With our [Smart Orchestration](/guides/cloud/smart-orchestration) features,
-you can run tests across a swarm of machines simultaneously while Cypress Cloud
+With our [Smart Orchestration](/guides/cloud/smart-orchestration) features, you
+can run tests across a swarm of machines simultaneously while Cypress Cloud
 coordinates runners and
 [balances test loads](/guides/guides/parallelization#Balance-strategy) - no
 setup required! You can
@@ -71,7 +72,8 @@ setup required! You can
 to surface problems earlier, and
 [cancel whole test runs on failure](/guides/cloud/smart-orchestration#Cancel-test-run-when-a-test-fails)
 to save on resource usage. You can also
-[cancel in-progress runs](/guides/cloud/runs#Cancel-run) manually from Cypress Cloud if you need to.
+[cancel in-progress runs](/guides/cloud/runs#Cancel-run) manually from Cypress
+Cloud if you need to.
 
 <DocsImage src="/img/dashboard/introduction/orchestration-diagram.png" alt="Diagram comparing serial and parallel test configurations" ></DocsImage>
 
@@ -105,12 +107,13 @@ directly from specific test failures.
 
 <DocsImage src="/img/dashboard/cypress-slack-integration-channel-feed.png" alt="Cypress notification feed in Slack channel" ></DocsImage>
 
-Lastly you can use our flexible adminstrative functions to configure Cypress Cloud however you want, grouping [projects](/guides/cloud/projects) into
+Lastly you can use our flexible adminstrative functions to configure Cypress
+Cloud however you want, grouping [projects](/guides/cloud/projects) into
 multiple [organizations](/guides/cloud/organizations) if you have a lot,
-checking [usage](/guides/cloud/organizations#Billing-Usage), and
-administering [users and permissions](/guides/cloud/users#User-roles). We
-also provide [SSO integration](/guides/cloud/organizations#Enterprise-SSO)
-for teams on our [Enterprise plan](https://www.cypress.io/pricing/).
+checking [usage](/guides/cloud/organizations#Billing-Usage), and administering
+[users and permissions](/guides/cloud/users#User-roles). We also provide
+[SSO integration](/guides/cloud/organizations#Enterprise-SSO) for teams on our
+[Enterprise plan](https://www.cypress.io/pricing/).
 
 <Alert type="info">
 
@@ -123,8 +126,8 @@ here?</strong>
 
 ## Example projects
 
-Once you log in to [Cypress Cloud](https://on.cypress.io/cloud) you
-can view any [public project](/guides/cloud/projects#Public-vs-Private).
+Once you log in to [Cypress Cloud](https://on.cypress.io/cloud) you can view any
+[public project](/guides/cloud/projects#Public-vs-Private).
 
 **Here are some of our own public projects you can view:**
 

@@ -32,28 +32,28 @@ your Cypress Cloud organization and your Slack workspace.
 1. You'll see a popup window that requests permission for Cypress to access the
    workspace and allows you to choose your Slack workspace and channel to
    associate with the installation. Once you've selected a channel and allowed
-   access, the installation is complete! Cypress Cloud will post run
-   results for all projects in your organization to the specified Slack channel.
+   access, the installation is complete! Cypress Cloud will post run results for
+   all projects in your organization to the specified Slack channel.
 
 ## Per-organization configuration
 
 ### Add additional Slack channels
 
-You can have Cypress Cloud post run results to an additional channels.
-To add a channel:
+You can have Cypress Cloud post run results to an additional channels. To add a
+channel:
 
 1. Navigate to the **Integrations** page for the organization with the installed
    Slack integration.
 1. Within the Slack integration, click **Configure**.
 1. Click **Add Slack Channel**.
 1. You'll see a popup window that allows you to choose the channel to associate
-   with the organization. Cypress Cloud will post run results for all
-   projects in your organization to the new Slack channel.
+   with the organization. Cypress Cloud will post run results for all projects
+   in your organization to the new Slack channel.
 
 ### Set notification preferences
 
-By default, Cypress Cloud will post a Slack message to each configured
-channel only for failing runs. If you'd like to change these preferences:
+By default, Cypress Cloud will post a Slack message to each configured channel
+only for failing runs. If you'd like to change these preferences:
 
 1. Navigate to the **Integrations** page for the organization with the installed
    Slack integration.
@@ -65,10 +65,10 @@ channel only for failing runs. If you'd like to change these preferences:
 
 ### Mute a channel
 
-If you want Cypress Cloud to temporarily stop posting Slack messages to
-a certain channel, you can **Mute** that channel. This allows you to easily
-pause and resume notifications for a specific channel without losing the
-configuration you’ve put in place.
+If you want Cypress Cloud to temporarily stop posting Slack messages to a
+certain channel, you can **Mute** that channel. This allows you to easily pause
+and resume notifications for a specific channel without losing the configuration
+you’ve put in place.
 
 1. Navigate to the **Integrations** page for the organization with the installed
    Slack integration.
@@ -78,8 +78,8 @@ configuration you’ve put in place.
 
 ### Remove a Slack channel
 
-You can have Cypress Cloud stop posting notifications to a channel. You
-can remove all Slack channels if you’d prefer to disable global notifications
+You can have Cypress Cloud stop posting notifications to a channel. You can
+remove all Slack channels if you’d prefer to disable global notifications
 altogether in favor of per-project notifications.
 
 1. Navigate to the **Integrations** page for the organization with the installed
@@ -111,9 +111,9 @@ additional channel.
 
 ### Set notification preferences
 
-By default, Cypress Cloud will post a Slack message to each configured
-channel only for failing runs. You cannot override the notification preferences
-for the global organization channels. If you'd like to change these preferences:
+By default, Cypress Cloud will post a Slack message to each configured channel
+only for failing runs. You cannot override the notification preferences for the
+global organization channels. If you'd like to change these preferences:
 
 1. Navigate to the **Integrations** page for the project with the installed
    Slack integration.
@@ -125,11 +125,11 @@ for the global organization channels. If you'd like to change these preferences:
 
 ### Mute a channel
 
-If you want Cypress Cloud to temporarily stop posting Slack messages to
-a certain channel, you can **Mute** that channel. This allows you to easily
-pause and resume notifications for a specific channel without losing the
-configuration you’ve put in place. You can even mute the messages for the global
-organization channels!
+If you want Cypress Cloud to temporarily stop posting Slack messages to a
+certain channel, you can **Mute** that channel. This allows you to easily pause
+and resume notifications for a specific channel without losing the configuration
+you’ve put in place. You can even mute the messages for the global organization
+channels!
 
 1. Navigate to the **Integrations** page for the project with the installed
    Slack integration.
@@ -139,8 +139,8 @@ organization channels!
 
 ### Remove a channel
 
-You can have Cypress Cloud stop posting notifications to a channel. You
-cannot delete the global notification channels from a project.
+You can have Cypress Cloud stop posting notifications to a channel. You cannot
+delete the global notification channels from a project.
 
 1. Navigate to the **Integrations** page for the project with the installed
    Slack integration.
@@ -152,8 +152,8 @@ cannot delete the global notification channels from a project.
 
 You can completely remove the Slack Integration from your workspace. This will
 remove the @cypress bot from your workspace and will delete all of the Slack
-configurations you’ve set in Cypress Cloud. You cannot undo this, but
-you will be able to install the Slack Integration again in the future.
+configurations you’ve set in Cypress Cloud. You cannot undo this, but you will
+be able to install the Slack Integration again in the future.
 
 1. Navigate to the **Integrations** page for the organization with the installed
    Slack Integration.

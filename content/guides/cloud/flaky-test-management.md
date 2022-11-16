@@ -2,9 +2,9 @@
 title: Flaky Test Management
 ---
 
-By enabling [test retries](/guides/guides/test-retries), Cypress Cloud
-can detect, flag, and track flaky tests from your recorded Cypress test runs in
-your CI/CD pipeline.
+By enabling [test retries](/guides/guides/test-retries), Cypress Cloud can
+detect, flag, and track flaky tests from your recorded Cypress test runs in your
+CI/CD pipeline.
 
 <Alert type="info">
 
@@ -138,16 +138,16 @@ while exhibiting flake as demonstrated below:
 
 <Alert type="success">
 
-<strong class="alert-header"><Icon name="star"></Icon> Premium Cypress Cloud Feature</strong>
+<strong class="alert-header"><Icon name="star"></Icon> Premium Cypress Cloud
+Feature</strong>
 
 **Test flake alerting** is available to users with a
 [Team Cypress Cloud plan](https://cypress.io/pricing).
 
 </Alert>
 
-Cypress Cloud can provide alerts via
-[GitHub](/guides/cloud/github-integration) and
-[Slack integrations](/guides/cloud/slack-integration), to further assist
+Cypress Cloud can provide alerts via [GitHub](/guides/cloud/github-integration)
+and [Slack integrations](/guides/cloud/slack-integration), to further assist
 with staying on top of flake occurrences.
 
 ### GitHub

@@ -151,11 +151,12 @@ directory of specific "smoke" test files. It is not always necessary to have
 both browsers always running _all_ tests.
 
 In the example below, the Chrome `cypress/run` job runs _all_ tests against
-Chrome and reports results to [Cypress Cloud](https://on.cypress.io/cloud) using a
-([group](/guides/guides/parallelization#Grouping-test-runs)) named `chrome`.
+Chrome and reports results to [Cypress Cloud](https://on.cypress.io/cloud) using
+a ([group](/guides/guides/parallelization#Grouping-test-runs)) named `chrome`.
 
 The Firefox `cypress/run` job runs a subset of tests, defined in the `spec`
-parameter, against the Firefox browser, and reports the results to [Cypress Cloud](https://on.cypress.io/cloud) under the group
+parameter, against the Firefox browser, and reports the results to
+[Cypress Cloud](https://on.cypress.io/cloud) under the group
 `firefox-critical-path`.
 
 <Alert type="info">
@@ -206,11 +207,12 @@ either improve test duration or to minimize CI costs.
 
 **You do not have to run all browsers at the same parallelization level.** In
 the example below, the Chrome dedicated `cypress/run` job runs _all_ tests in
-parallel, across **4 machines**, against Chrome and reports results to [Cypress Cloud](https://on.cypress.io/cloud) under the group name
-`chrome`. The Firefox dedicated `cypress/run` job runs a _subset_ of tests in
-parallel, across **2 machines**, defined by the `spec` parameter, against the
-Firefox browser and reports results to [Cypress Cloud](https://on.cypress.io/cloud) under the group named
-`firefox`.
+parallel, across **4 machines**, against Chrome and reports results to
+[Cypress Cloud](https://on.cypress.io/cloud) under the group name `chrome`. The
+Firefox dedicated `cypress/run` job runs a _subset_ of tests in parallel, across
+**2 machines**, defined by the `spec` parameter, against the Firefox browser and
+reports results to [Cypress Cloud](https://on.cypress.io/cloud) under the group
+named `firefox`.
 
 ```yaml
 version: 2.1

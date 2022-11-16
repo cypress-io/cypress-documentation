@@ -202,11 +202,13 @@ caljajdfkjjjdehjdoimjkkakekklcck
 
 ## Allow Cypress URLs on VPNs
 
-To send the data and results of your tests to [Cypress Cloud](https://on.cypress.io/cloud-introduction), Cypress needs free
+To send the data and results of your tests to
+[Cypress Cloud](https://on.cypress.io/cloud-introduction), Cypress needs free
 access to some URLs.
 
 If you are running the tests from within a restrictive VPN you will need to
-allow some URLs so that Cypress can have effective communication with Cypress Cloud.
+allow some URLs so that Cypress can have effective communication with Cypress
+Cloud.
 
 **The URLs are the following:**
 
@@ -300,24 +302,24 @@ server, reporter, driver, command line, etc. Each package writes debug logs
 under a different source. Here are a few common log sources and when you might
 want to enable them
 
-| Set `DEBUG` to value            | To enable debugging                                                   |
-| ------------------------------- | --------------------------------------------------------------------- |
-| `cypress:cli`                   | The top-level command line parsing problems                           |
-| `cypress:server:args`           | Incorrect parsed command line arguments                               |
-| `cypress:server:specs`          | Not finding the expected specs                                        |
-| `cypress:server:project`        | Opening the project                                                   |
-| `cypress:server:browsers`       | Finding installed browsers                                            |
-| `cypress:launcher`              | Launching the found browser                                           |
-| `cypress:server:video`          | Video recording                                                       |
-| `cypress:network:*`             | Adding network interceptors                                           |
-| `cypress:net-stubbing*`         | Network interception in the proxy layer                               |
-| `cypress:server:reporter`       | Problems with test reporters                                          |
-| `cypress:server:preprocessor`   | Processing specs                                                      |
-| `cypress:server:socket-e2e`     | Watching spec files                                                   |
-| `cypress:server:task`           | Invoking the `cy.task()` command                                      |
-| `cypress:server:socket-base`    | Debugging `cy.request()` command                                      |
-| `cypress:webpack`               | Bundling specs using webpack                                          |
-| `cypress:server:fixture`        | Loading fixture files                                                 |
+| Set `DEBUG` to value            | To enable debugging                                           |
+| ------------------------------- | ------------------------------------------------------------- |
+| `cypress:cli`                   | The top-level command line parsing problems                   |
+| `cypress:server:args`           | Incorrect parsed command line arguments                       |
+| `cypress:server:specs`          | Not finding the expected specs                                |
+| `cypress:server:project`        | Opening the project                                           |
+| `cypress:server:browsers`       | Finding installed browsers                                    |
+| `cypress:launcher`              | Launching the found browser                                   |
+| `cypress:server:video`          | Video recording                                               |
+| `cypress:network:*`             | Adding network interceptors                                   |
+| `cypress:net-stubbing*`         | Network interception in the proxy layer                       |
+| `cypress:server:reporter`       | Problems with test reporters                                  |
+| `cypress:server:preprocessor`   | Processing specs                                              |
+| `cypress:server:socket-e2e`     | Watching spec files                                           |
+| `cypress:server:task`           | Invoking the `cy.task()` command                              |
+| `cypress:server:socket-base`    | Debugging `cy.request()` command                              |
+| `cypress:webpack`               | Bundling specs using webpack                                  |
+| `cypress:server:fixture`        | Loading fixture files                                         |
 | `cypress:server:record:ci-info` | Git commit and CI information when recording to Cypress Cloud |
 
 You can combine several areas together using the comma character. For example,

@@ -141,7 +141,8 @@ canceled by members of the project.
 
 ## Archive run
 
-Runs that have been canceled or are in an errored state can be archived from Cypress Cloud.
+Runs that have been canceled or are in an errored state can be archived from
+Cypress Cloud.
 
 ### To archive a run
 

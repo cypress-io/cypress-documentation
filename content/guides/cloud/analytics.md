@@ -2,8 +2,8 @@
 title: Analytics
 ---
 
-Cypress Cloud provides Analytics to offer insight into metrics like runs
-over time, run duration and visibility into tests suite size over time.
+Cypress Cloud provides Analytics to offer insight into metrics like runs over
+time, run duration and visibility into tests suite size over time.
 
 <DocsImage src="/img/dashboard/analytics/dashboard-analytics-overview.png" alt="Cloud Analytics Screenshot" ></DocsImage>
 
@@ -11,9 +11,10 @@ over time, run duration and visibility into tests suite size over time.
 
 <DocsImage src="/img/dashboard/analytics/dashboard-analytics-runs-over-time.png" alt="Cloud Analytics Runs Over Time Screenshot" ></DocsImage>
 
-This report shows the number of runs your organization has recorded to Cypress Cloud, broken down by the final status of the run. Each run
-represents a single invocation of `cypress run --record` for this project,
-whether in CI or on a local machine.
+This report shows the number of runs your organization has recorded to Cypress
+Cloud, broken down by the final status of the run. Each run represents a single
+invocation of `cypress run --record` for this project, whether in CI or on a
+local machine.
 
 ### Filters
 

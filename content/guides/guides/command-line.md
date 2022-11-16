@@ -73,7 +73,8 @@ your `package.json`
 }
 ```
 
-...and want to run tests from a single spec file and record the results with Cypress Cloud, the command should be:
+...and want to run tests from a single spec file and record the results with
+Cypress Cloud, the command should be:
 
 ```shell
 npm run cy:run --record --spec "cypress/e2e/my-spec.cy.js"
@@ -319,8 +320,8 @@ cypress run --project ./some/nested/folder
 #### `cypress run --record --key <record-key>`
 
 Record video of tests running after
-[setting up your project to record](/guides/cloud/projects#Setup). After
-setting up your project you will be given a **Record Key**.
+[setting up your project to record](/guides/cloud/projects#Setup). After setting
+up your project you will be given a **Record Key**.
 
 ```shell
 cypress run --record --key <record_key>

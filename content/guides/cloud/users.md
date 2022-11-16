@@ -6,8 +6,8 @@ A user is anyone who logs in to Cypress Cloud.
 
 ## Invite users
 
-You can invite users from [Cypress Cloud](https://on.cypress.io/cloud). Invited users will see all
-projects and tests run for the organization.
+You can invite users from [Cypress Cloud](https://on.cypress.io/cloud). Invited
+users will see all projects and tests run for the organization.
 
 ### Invite a user to an organization:
 
@@ -24,7 +24,8 @@ projects and tests run for the organization.
 
 ### Sign Up with an Invitation:
 
-Upon receiving the email, click **"Accept Invitation"** to be redirected to Cypress Cloud. From there, you will have the choice of authenitication type:
+Upon receiving the email, click **"Accept Invitation"** to be redirected to
+Cypress Cloud. From there, you will have the choice of authenitication type:
 
 - **Basic** (Google or GitHub)
 - **Social** (Email and Password)
@@ -51,7 +52,8 @@ Refer to our
 
 ## User roles
 
-Users can be assigned roles that affect their access to certain features of [Cypress Cloud](https://on.cypress.io/cloud).
+Users can be assigned roles that affect their access to certain features of
+[Cypress Cloud](https://on.cypress.io/cloud).
 
 - **Member:** Can see the projects, runs, and keys.
 - **Admin:** Can also invite, edit and delete users.
@@ -106,11 +108,11 @@ deny them access.
 Changes can be made to both the primary email address associated with your
 Cypress Cloud account and the email address for billing notifications.
 
-For updating the primary email address associated with Cypress Cloud, click
-your Profile picture in the upper left corner of the Organizations page. Select
+For updating the primary email address associated with Cypress Cloud, click your
+Profile picture in the upper left corner of the Organizations page. Select
 **Manage Profile**. Go to the **Email** field and select your preferred email
 address. _Note: The email list is limited to emails provided by login provider._
 
 If you would like to update the billing email address, that can be done via the
-**Billing & Usage** page within [Cypress Cloud](https://on.cypress.io/cloud)
-or you contact them directly at [billing@cypress.io](mailto:billing@cypress.io).
+**Billing & Usage** page within [Cypress Cloud](https://on.cypress.io/cloud) or
+you contact them directly at [billing@cypress.io](mailto:billing@cypress.io).

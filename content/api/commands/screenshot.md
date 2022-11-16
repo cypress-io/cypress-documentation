@@ -248,7 +248,7 @@ off by setting `screenshotOnRunFailure` to `false` within your
 
 #### Screenshots in CI
 
-You can see screenshots taken during a CI run in 
+You can see screenshots taken during a CI run in
 [Cypress Cloud](https://on.cypress.io/cloud) without any extra work.
 
 Alternatively, to see screenshots in your Continuous Integration UI, most CI

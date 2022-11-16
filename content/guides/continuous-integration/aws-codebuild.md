@@ -246,8 +246,7 @@ example for details on how to configure a CodePipeline with an output artifact.
 
 [Cypress Cloud](/guides/cloud/introduction) offers the ability to
 [parallelize and group test runs](/guides/guides/parallelization) along with
-additional insights and [analytics](/guides/cloud/analytics) for Cypress
-tests.
+additional insights and [analytics](/guides/cloud/analytics) for Cypress tests.
 
 AWS CodeBuild offers a
 [batch build-matrix strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix)
@@ -293,8 +292,7 @@ attribute to `cypress run`.
 <Alert type="bolt">
 
 The following configuration with `--parallel` and `--record` options to Cypress
-requires a subscription to 
-[Cypress Cloud](https://on.cypress.io/cloud).
+requires a subscription to [Cypress Cloud](https://on.cypress.io/cloud).
 
 </Alert>
 
@@ -429,7 +427,8 @@ are still facing issues after this, please
 </Alert>
 
 In the AWS CodeBuild configuration we have defined in the previous section, we
-are leveraging three useful features of [Cypress Cloud](https://on.cypress.io/cloud):
+are leveraging three useful features of
+[Cypress Cloud](https://on.cypress.io/cloud):
 
 1. [Recording test results with the `--record` flag](https://on.cypress.io/how-do-i-record-runs)
    to [Cypress Cloud](https://on.cypress.io/cloud):
@@ -442,9 +441,8 @@ are leveraging three useful features of [Cypress Cloud](https://on.cypress.io/cl
      [commit status check guards](/guides/cloud/github-integration#Status-checks)
      and convenient
      [test report comments](/guides/cloud/github-integration#Pull-request-comments).
-   - [Detecting flaky tests](/guides/cloud/flaky-test-management) and
-     surfacing them via
-     [Slack alerts](/guides/cloud/flaky-test-management#Slack) or
+   - [Detecting flaky tests](/guides/cloud/flaky-test-management) and surfacing
+     them via [Slack alerts](/guides/cloud/flaky-test-management#Slack) or
      [GitHub PR status checks](/guides/cloud/flaky-test-management#GitHub).
 
 2. [Parallelizing test runs](/guides/guides/parallelization) and optimizing
@@ -453,10 +451,10 @@ are leveraging three useful features of [Cypress Cloud](https://on.cypress.io/cl
    of test specs across CI machines with the `--parallel` flag.
 
 3. Organizing and consolidating multiple `cypress run` calls by labeled groups
-   into a single report within [Cypress Cloud](https://on.cypress.io/cloud). In the example above we
-   use the `--group "UI - Chrome"` flag (for the first group) to organize all UI
-   tests for the Chrome browser into a group labeled "UI - Chrome" inside the
-   [Cypress Cloud](https://on.cypress.io/cloud) report.
+   into a single report within [Cypress Cloud](https://on.cypress.io/cloud). In
+   the example above we use the `--group "UI - Chrome"` flag (for the first
+   group) to organize all UI tests for the Chrome browser into a group labeled
+   "UI - Chrome" inside the [Cypress Cloud](https://on.cypress.io/cloud) report.
 
 ## Cypress Real World Example with AWS CodeBuild
 

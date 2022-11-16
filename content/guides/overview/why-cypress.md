@@ -57,15 +57,14 @@ Cypress can test anything that runs in a browser.
 Cypress consists of a free,
 [open source](https://github.com/cypress-io/cypress),
 [locally installed](/guides/getting-started/installing-cypress) application
-**and** Cypress Cloud for
-[recording your tests](/guides/cloud/introduction).
+**and** Cypress Cloud for [recording your tests](/guides/cloud/introduction).
 
 - **_First:_** Cypress helps you set up and start writing tests every day while
   you build your application locally. _TDD at its best!_
 - **_Later:_** After building up a suite of tests and
   [integrating Cypress](/guides/continuous-integration/introduction) with your
-  CI Provider, [Cypress Cloud](/guides/cloud/introduction) can
-  record your test runs. You'll never have to wonder: _Why did this fail?_
+  CI Provider, [Cypress Cloud](/guides/cloud/introduction) can record your test
+  runs. You'll never have to wonder: _Why did this fail?_
 
 ## Our mission
 
@@ -118,7 +117,8 @@ do that no other testing framework can:
 - **Consistent Results:** Our architecture doesn’t use Selenium or WebDriver.
   Say hello to fast, consistent and reliable tests that are flake-free.
 - **Screenshots and Videos:** View screenshots taken automatically on failure,
-  or videos of your entire test suite when run from the CLI. Record to [Cypress Cloud](/guides/cloud/introduction) to store them with your test
+  or videos of your entire test suite when run from the CLI. Record to
+  [Cypress Cloud](/guides/cloud/introduction) to store them with your test
   results for zero-configuration debugging.
 - **Cross browser Testing:** Run tests within Firefox and Chrome-family browsers
   (including Edge and Electron) locally and
@@ -127,7 +127,8 @@ do that no other testing framework can:
   [parallelize](/guides/guides/parallelization) your test suite and
   [rerun failed specs first](/guides/cloud/smart-orchestration#Run-failed-specs-first)
   for tight feedback loops.
-- **Flake Detection:** Discover and diagnose unreliable tests with Cypress Cloud's [Flaky test management](/guides/cloud/flaky-test-management).
+- **Flake Detection:** Discover and diagnose unreliable tests with Cypress
+  Cloud's [Flaky test management](/guides/cloud/flaky-test-management).
 
 ### <Icon name="cog"></Icon> Setting up tests
 
@@ -248,8 +249,8 @@ end-to-end tests
 [device sizes](/api/commands/viewport), but also includes
 [visual regression tests](/guides/tooling/visual-testing), API tests, unit
 tests, and runs them all in an
-[efficient CI pipeline](https://cloud.cypress.io/projects/7s5okt). Use the
-RWA to **learn, experiment, tinker, and practice** web application testing with
+[efficient CI pipeline](https://cloud.cypress.io/projects/7s5okt). Use the RWA
+to **learn, experiment, tinker, and practice** web application testing with
 Cypress.
 
 The app is bundled with everything you need,

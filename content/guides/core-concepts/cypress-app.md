@@ -23,10 +23,11 @@ Cypress testing experience.
 
 <strong class="alert-header">Cypress Cloud integration</strong>
 
-When you configure the open-source Cypress app to record tests to [Cypress Cloud](/guides/cloud/introduction), you'll see data from your latest
-recorded runs directly in the Cypress app. This increased visibility into your test
-history allows you to debug your tests faster and more effectively, all within
-your local workflow.
+When you configure the open-source Cypress app to record tests to
+[Cypress Cloud](/guides/cloud/introduction), you'll see data from your latest
+recorded runs directly in the Cypress app. This increased visibility into your
+test history allows you to debug your tests faster and more effectively, all
+within your local workflow.
 
 The data used by these features is pulled from Cypress Cloud, so they will only
 reflect test results that were
@@ -77,7 +78,8 @@ statuses. Results are scoped to your current git branch if available, falling
 back to the default branch if not, then finally all branches.
 
 With this intelligence you can monitor, run, and fix tests locally within CI
-workflows, and then further dig into your results by clicking through to Cypress Cloud.
+workflows, and then further dig into your results by clicking through to Cypress
+Cloud.
 
 The runs data is sourced from Cypress Cloud (see [note above](#Overview)) so it
 will be the same everywhere.
@@ -96,8 +98,8 @@ Again, this analysis comes from Cypress Cloud.
 
 <strong class="alert-header">What is a flaky test?</strong>
 
-A test is considered to be [flaky](/guides/cloud/flaky-test-management) when
-it can pass and fail across multiple retry attempts without any code changes.
+A test is considered to be [flaky](/guides/cloud/flaky-test-management) when it
+can pass and fail across multiple retry attempts without any code changes.
 
 </Alert>
 
@@ -121,9 +123,9 @@ Clicking on the flake indicator will take you to the spec’s
 <DocsImage src="/img/guides/core-concepts/cypress-app/recorded-runs.png" alt="Recorded Runs"></DocsImage>
 
 This screen shows detailed information about the most recently recorded
-[test runs](/guides/cloud/runs) across all git branches, latest first. This
-data comes from Cypress Cloud (see [note above](#Overview)) so should be the
-same everywhere.
+[test runs](/guides/cloud/runs) across all git branches, latest first. This data
+comes from Cypress Cloud (see [note above](#Overview)) so should be the same
+everywhere.
 
 The title of each run is taken from the
 [git commit message](https://www.educative.io/edpresso/git-commit-message-simply-explained)

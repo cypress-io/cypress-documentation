@@ -157,8 +157,8 @@ machine. Enabling test retries in the Cypress configuration can help you to get
 unblocked when unpredictable, flaky tests are occasionally failing.
 
 Cypress Cloud goes a step further and helps you and your team to
-[detect flaky tests](/guides/cloud/flaky-test-management) that run in your
-CI/CD pipeline.
+[detect flaky tests](/guides/cloud/flaky-test-management) that run in your CI/CD
+pipeline.
 
 ## Getting Started
 
@@ -1083,8 +1083,8 @@ environment.
 
 ## Parallelization
 
-[Cypress Cloud](/guides/cloud/introduction) allows you to
-run your test files in parallel across multiple CI machines.
+[Cypress Cloud](/guides/cloud/introduction) allows you to run your test files in
+parallel across multiple CI machines.
 
 With Cypress, your tests can be
 [parallelized on a per spec file basis](https://docs.cypress.io/guides/guides/parallelization).
@@ -1144,9 +1144,8 @@ to learn more.
 ### Recording test results to Cypress Cloud
 
 We recommend setting your
-[Cypress Cloud](https://docs.cypress.io/guides/cloud/introduction)
-recording key as an environment variable and _NOT_ as a builder option when
-running it in CI.
+[Cypress Cloud](https://docs.cypress.io/guides/cloud/introduction) recording key
+as an environment variable and _NOT_ as a builder option when running it in CI.
 
 ```json
 "cypress-run": {
@@ -1165,7 +1164,8 @@ running it in CI.
 ```
 
 Read the docs on
-[recording test results](http://on.cypress.io/recording-project-runs) to [Cypress Cloud](/guides/cloud/introduction) to learn more.
+[recording test results](http://on.cypress.io/recording-project-runs) to
+[Cypress Cloud](/guides/cloud/introduction) to learn more.
 
 ### Specifying a custom Cypress configuration file
 

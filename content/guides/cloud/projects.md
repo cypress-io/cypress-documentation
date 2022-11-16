@@ -126,9 +126,9 @@ export CYPRESS_PROJECT_ID={projectId}
 ### Record key
 
 The record key is used to authenticate that your project is _allowed_ to record
-tests to Cypress Cloud. As long as your record key stays _private_,
-nobody will be able to record test runs for your project - even if they have
-your `projectId`.
+tests to Cypress Cloud. As long as your record key stays _private_, nobody will
+be able to record test runs for your project - even if they have your
+`projectId`.
 
 Think of your record key as the key that enables you to _write and create_ runs.
 However, it has nothing to do with being able to _read or see_ runs once they
@@ -146,8 +146,8 @@ can record runs to that organization's project in Cypress Cloud.
 1. **This could drive up the number of tests you've run.** Since Cypress bills
    based on the number of recorded tests - this means they can use up all
    allotted tests and there would be consequences to that.
-2. **They can write any data they want to your Cypress Cloud.** They could
-   edit the test suite so that recorded tests record different things than the
+2. **They can write any data they want to your Cypress Cloud.** They could edit
+   the test suite so that recorded tests record different things than the
    project's original intent. This could including visiting different websites
    and generating videos of visiting those websites, for example.
 
@@ -169,7 +169,8 @@ for the project.
 f4466038-70c2-4688-9ed9-106bf013cd73
 ```
 
-You can create multiple Record Keys for a project, or delete existing ones from [Cypress Cloud](https://on.cypress.io/cloud).
+You can create multiple Record Keys for a project, or delete existing ones from
+[Cypress Cloud](https://on.cypress.io/cloud).
 
 <DocsImage src="/img/dashboard/record-keys-in-project-settings-dashboard.png" alt="Record key in project settings" ></DocsImage>
 
@@ -224,8 +225,8 @@ project settings page.
 
 <DocsImage src="/img/dashboard/visit-project-settings.png" alt="Visit project settings" ></DocsImage>
 
-See our [GitHub Integration guide](/guides/cloud/github-integration) to
-learn more.
+See our [GitHub Integration guide](/guides/cloud/github-integration) to learn
+more.
 
 ## Slack Integration
 
@@ -287,10 +288,10 @@ Visit your project settings to see who has access to your project's runs.
   handled. Anyone who knows your `projectId` will be able to see the recorded
   runs for public projects.
 
-- **Private** means that only [users](/guides/cloud/users) you invite to
-  your [organization](/guides/cloud/organizations) can see its recorded
-  runs. Even if someone knows your `projectId`, they will not have access to
-  your runs unless you have invited them.
+- **Private** means that only [users](/guides/cloud/users) you invite to your
+  [organization](/guides/cloud/organizations) can see its recorded runs. Even if
+  someone knows your `projectId`, they will not have access to your runs unless
+  you have invited them.
 
 ### Change project access
 
@@ -308,8 +309,9 @@ Visit your project settings to see who has access to your project's runs.
 ### Transfer project to other user or organization
 
 You can transfer projects that you own to another
-[organization](/guides/cloud/organizations) you are a part of or to another
-user in the organization. Projects can only be transferred from [Cypress Cloud](https://on.cypress.io/cloud).
+[organization](/guides/cloud/organizations) you are a part of or to another user
+in the organization. Projects can only be transferred from
+[Cypress Cloud](https://on.cypress.io/cloud).
 
 1. Select your organization in the organization switcher.
 2. Select the project you wish to transfer.
@@ -342,7 +344,8 @@ notification in the sidebar and clicking 'Accept' or 'Reject'.
 ## Delete Project
 
 You can delete projects you own. This will also delete all of their recorded
-test runs. Deleting projects can only be done from [Cypress Cloud](https://on.cypress.io/cloud).
+test runs. Deleting projects can only be done from
+[Cypress Cloud](https://on.cypress.io/cloud).
 
 1. Select your organization in the organization switcher.
 2. Select the project you want to remove.

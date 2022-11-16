@@ -130,8 +130,7 @@ test:
 
 [Cypress Cloud](/guides/cloud/introduction) offers the ability to
 [parallelize and group test runs](/guides/guides/parallelization) along with
-additional insights and [analytics](/guides/cloud/analytics) for Cypress
-tests.
+additional insights and [analytics](/guides/cloud/analytics) for Cypress tests.
 
 The addition of the
 [`parallel` attribute](https://docs.gitlab.com/ee/ci/yaml/#parallel) to the
@@ -240,7 +239,8 @@ recording test results to [Cypress Cloud](https://on.cypress.io/cloud).
 ## Using Cypress Cloud with GitLab CI/CD
 
 In the GitLab CI configuration we have defined in the previous section, we are
-leveraging three useful features of [Cypress Cloud](https://on.cypress.io/cloud):
+leveraging three useful features of
+[Cypress Cloud](https://on.cypress.io/cloud):
 
 1. [Recording test results with the `--record` flag](https://on.cypress.io/how-do-i-record-runs)
    to [Cypress Cloud](https://on.cypress.io/cloud):
@@ -253,9 +253,8 @@ leveraging three useful features of [Cypress Cloud](https://on.cypress.io/cloud)
      [commit status guards](/guides/cloud/gitlab-integration#Commit-statuses)
      and convenient
      [test report comments](/guides/cloud/gitlab-integration#Merge-Request-comments).
-   - [Detecting flaky tests](/guides/cloud/flaky-test-management) and
-     surfacing them via
-     [Slack alerts](/guides/cloud/flaky-test-management#Slack) or
+   - [Detecting flaky tests](/guides/cloud/flaky-test-management) and surfacing
+     them via [Slack alerts](/guides/cloud/flaky-test-management#Slack) or
      [GitLab PR status checks](/guides/cloud/gitlab-integration).
 
 2. [Parallelizing test runs](/guides/guides/parallelization) and optimizing
@@ -264,9 +263,9 @@ leveraging three useful features of [Cypress Cloud](https://on.cypress.io/cloud)
    of test specs across CI machines with the `--parallel` flag.
 
 3. Organizing and consolidating multiple `cypress run` calls by labeled groups
-   into a single report within [Cypress Cloud](https://on.cypress.io/cloud). In the example above we
-   use the `--group "UI - Chrome"` flag to organize all UI tests for the Chrome
-   browser into a group labeled "UI - Chrome" in the
+   into a single report within [Cypress Cloud](https://on.cypress.io/cloud). In
+   the example above we use the `--group "UI - Chrome"` flag to organize all UI
+   tests for the Chrome browser into a group labeled "UI - Chrome" in the
    [Cypress Cloud](https://on.cypress.io/cloud) report.
 
 ## Cypress Real World Example with GitLab CI/CD

@@ -33,8 +33,8 @@ syntax, which is the default for JavaScript files. All JavaScript config
 examples in our docs use the CommonJS format.
 
 If you [configure your tests to record](/guides/cloud/projects#Setup) the
-results to [Cypress Cloud](https://on.cypress.io/cloud-introduction)
-the `projectId` will be stored in the config file as well.
+results to [Cypress Cloud](https://on.cypress.io/cloud-introduction) the
+`projectId` will be stored in the config file as well.
 
 ## Intelligent Code Completion
 

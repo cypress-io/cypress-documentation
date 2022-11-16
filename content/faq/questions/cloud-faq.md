@@ -8,8 +8,10 @@ containerClass: faq
 
 <DocsImage src="/img/dashboard/dashboard-runs-list.png" alt="Cloud Screenshot" ></DocsImage>
 
-[Cypress Cloud](https://on.cypress.io/cloud) gives you access to tests you've recorded - typically when running Cypress tests from
-your [CI provider](/guides/continuous-integration/introduction) - and provides you insight into what happened during your tests run.
+[Cypress Cloud](https://on.cypress.io/cloud) gives you access to tests you've
+recorded - typically when running Cypress tests from your
+[CI provider](/guides/continuous-integration/introduction) - and provides you
+insight into what happened during your tests run.
 
 You can read more [here](/guides/cloud/introduction).
 
@@ -18,7 +20,7 @@ You can read more [here](/guides/cloud/introduction).
 1. First [set up the project to record](/guides/cloud/projects#Setup).
 2. Then [record your runs](/guides/cloud/runs).
 
-After recording your tests, you will see them in 
+After recording your tests, you will see them in
 [Cypress Cloud](https://on.cypress.io/cloud) and in the "Runs" tab.
 
 ## <Icon name="angle-right"></Icon> How much does it cost?
@@ -32,7 +34,8 @@ the number of test you record each month in your organization.
 
 Tests are recorded when [cypress run](/guides/guides/command-line#cypress-run)
 is called with the `--record` flag while supplying the record `--key`. This
-means your [test run data](/guides/cloud/runs) is being "recorded" to Cypress Cloud.
+means your [test run data](/guides/cloud/runs) is being "recorded" to Cypress
+Cloud.
 
 We consider each time the `it()` function is called to be a single test. So you
 will generally have several tests recorded within each spec file and likely
@@ -41,12 +44,13 @@ several spec files within a single run. Only the
 are counted. The pending and skipped tests are NOT counted.
 
 You can always see how many tests you've recorded from your organization's
-[Billing & Usage](/guides/cloud/organizations#Billing-Usage) page within Cypress Cloud.
+[Billing & Usage](/guides/cloud/organizations#Billing-Usage) page within Cypress
+Cloud.
 
 ## <Icon name="angle-right"></Icon> What counts as a user?
 
-A [user](/guides/cloud/users) is anyone with a login to Cypress Cloud who has been invited to see and review the test results of your
-organization.
+A [user](/guides/cloud/users) is anyone with a login to Cypress Cloud who has
+been invited to see and review the test results of your organization.
 
 ## <Icon name="angle-right"></Icon> What is the difference between public and private projects?
 
@@ -56,9 +60,9 @@ who knows your `projectId` will be able to see the recorded runs, screenshots,
 and videos for public projects.
 
 **A private project** means that only [users](/guides/cloud/users) you
-explicitly invite to your [organization](/guides/cloud/organizations) can
-see its recorded runs. Even if someone knows your `projectId`, they will not
-have access to your runs unless you have invited them.
+explicitly invite to your [organization](/guides/cloud/organizations) can see
+its recorded runs. Even if someone knows your `projectId`, they will not have
+access to your runs unless you have invited them.
 
 ## <Icon name="angle-right"></Icon> How is this different than CI?
 
@@ -69,17 +73,18 @@ completely different role.
 It doesn't replace or change anything related to CI. You will run Cypress tests
 in your CI provider.
 
-The difference between [Cypress Cloud](/guides/cloud/introduction)
-and your CI provider is that your CI provider has no idea what is going on
-inside of the Cypress process. It's programmed to know whether or not a process
-failed - based on whether it had an exit code greater than `0`.
+The difference between [Cypress Cloud](/guides/cloud/introduction) and your CI
+provider is that your CI provider has no idea what is going on inside of the
+Cypress process. It's programmed to know whether or not a process failed - based
+on whether it had an exit code greater than `0`.
 
-[Cypress Cloud](/guides/cloud/introduction) provides you with the
-low level details of _what_ happened during your run. Using both your CI
-provider + Cypress together gives the insight required to debug your test runs.
+[Cypress Cloud](/guides/cloud/introduction) provides you with the low level
+details of _what_ happened during your run. Using both your CI provider +
+Cypress together gives the insight required to debug your test runs.
 
 When a run happens and a test fails - instead of going and inspecting your CI
-provider's `stdout` output, you can log into [Cypress Cloud](https://on.cypress.io/cloud), see the `stdout` as well as
+provider's `stdout` output, you can log into
+[Cypress Cloud](https://on.cypress.io/cloud), see the `stdout` as well as
 screenshots and video of the tests running. It should be instantly clear what
 the problem was.
 
@@ -89,9 +94,9 @@ No. A self-hosted version of Cypress Cloud is not available at this time.
 
 ## <Icon name="angle-right"></Icon> Can I choose not to use Cypress Cloud?
 
-Of course. Cypress Cloud is a separate service from the Cypress app and
-will always remain optional. We hope you'll find a tremendous amount of value in
-it, but it is not coupled to being able to run your tests.
+Of course. Cypress Cloud is a separate service from the Cypress app and will
+always remain optional. We hope you'll find a tremendous amount of value in it,
+but it is not coupled to being able to run your tests.
 
 You can always run your tests in CI using
 [cypress run](/guides/guides/command-line#cypress-run) without the `--record`
@@ -187,9 +192,9 @@ in your account will be permanently deleted.
 
 Downgrading your account will **not** result in loss of access to Cypress Cloud.
 
-However, it will make your Cypress Cloud account subject to the limitations of your new
-plan. For example, downgrading to the _Seed_ plan will limit data retention to
-30 days and test results to 500 per billing period.
+However, it will make your Cypress Cloud account subject to the limitations of
+your new plan. For example, downgrading to the _Seed_ plan will limit data
+retention to 30 days and test results to 500 per billing period.
 
 ## <Icon name="angle-right"></Icon> What happens once I reach the test results limit?
 
@@ -215,7 +220,8 @@ To send the data and results of your tests to
 access to some URLs.
 
 If you are running the tests from within a restrictive VPN you will need to
-allow some URLs so that Cypress can have effective communication with Cypress Cloud.
+allow some URLs so that Cypress can have effective communication with Cypress
+Cloud.
 
 **The URLs are the following:**
 

@@ -157,7 +157,11 @@ local certificate:
 
 ### Record tests
 
-Cypress can record your tests and make the results available in [Cypress Cloud](/guides/cloud/introduction). Cloud gives you access to recorded tests - typically when running Cypress tests from your [CI provider](/guides/continuous-integration/introduction) - and provides you insight into what happened when your tests ran.
+Cypress can record your tests and make the results available in
+[Cypress Cloud](/guides/cloud/introduction). Cloud gives you access to recorded
+tests - typically when running Cypress tests from your
+[CI provider](/guides/continuous-integration/introduction) - and provides you
+insight into what happened when your tests ran.
 
 #### Recording tests allow you to:
 
@@ -380,8 +384,7 @@ for more examples.
 **_Record Key_**
 
 If you are [recording your runs](#Record-tests) on a public project, you'll want
-to protect your Record Key.
-[Learn why.](/guides/cloud/projects#Identification)
+to protect your Record Key. [Learn why.](/guides/cloud/projects#Identification)
 
 Instead of hard coding it into your run command like this:
 
@@ -430,8 +433,8 @@ under custom environment variables.
 - Remote: `COMMIT_INFO_REMOTE`
 
 If the commit information is missing in the Cypress Cloud run then
-[GitHub Integration](/guides/cloud/github-integration) or other tasks might
-not work correctly. To see the relevant Cypress debug logs, set the environment
+[GitHub Integration](/guides/cloud/github-integration) or other tasks might not
+work correctly. To see the relevant Cypress debug logs, set the environment
 variable `DEBUG` on your CI machine and inspect the terminal output to see why
 the commit information is unavailable.
 

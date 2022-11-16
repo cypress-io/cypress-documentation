@@ -892,9 +892,10 @@ config will result in an error when Cypress loads.
 <Alert type="danger">
 
 For Cypress Cloud users, changing your `specPattern` and files names or
-extensions of your spec files will result in a loss of data in Cypress Cloud. Because of this, if we detect your project is using Cypress Cloud
-during automatic migration, we won't suggest changing your spec files. We also
-don't recommend doing it manually if you are a Cypress Cloud user.
+extensions of your spec files will result in a loss of data in Cypress Cloud.
+Because of this, if we detect your project is using Cypress Cloud during
+automatic migration, we won't suggest changing your spec files. We also don't
+recommend doing it manually if you are a Cypress Cloud user.
 
 </Alert>
 

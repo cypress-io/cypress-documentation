@@ -255,9 +255,9 @@ To add a page, such as a new guide or API documentation:
 > component file within `/guides` matching the route name that you want to use.
 > For example, if I wanted to create a unique guide page without the sidebar
 > about using Cypress Cloud, I would create a file called
-> `/pages/guides/my-cloud-guide.vue` and create a Vue component for the
-> specific layout I want to create. The page will then be accessible at the
-> route `/guides/my-cloud-guide`.
+> `/pages/guides/my-cloud-guide.vue` and create a Vue component for the specific
+> layout I want to create. The page will then be accessible at the route
+> `/guides/my-cloud-guide`.
 
 #### A Worked Example
 
@@ -461,4 +461,3 @@ GITHUB_TOKEN=<your token> npm run make-empty-commit -- --message "trigger deploy
 
 As always, using [as-a](https://github.com/bahmutov/as-a) is recommended for
 storing and using sensitive environment variables.
-

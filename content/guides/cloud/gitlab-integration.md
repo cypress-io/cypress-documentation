@@ -2,11 +2,11 @@
 title: GitLab Integration
 ---
 
-[Cypress Cloud](https://on.cypress.io/cloud) can integrate your
-Cypress tests with your GitLab workflow via [commit statuses](#Commit-statuses)
-and [merge request comments](#Merge-Request-comments). A project first needs to
-be [setup to record](/guides/cloud/projects) to Cypress Cloud to use
-GitLab integration.
+[Cypress Cloud](https://on.cypress.io/cloud) can integrate your Cypress tests
+with your GitLab workflow via [commit statuses](#Commit-statuses) and
+[merge request comments](#Merge-Request-comments). A project first needs to be
+[setup to record](/guides/cloud/projects) to Cypress Cloud to use GitLab
+integration.
 
 <Alert type="warning">
 
@@ -36,11 +36,11 @@ allow communication with our servers.
 
 <Alert type="warning">
 
-GitLab OAuth2 applications will allow Cypress Cloud to authenticate as
-the user that registered the application. That means that Cypress will have
-visibility into every GitLab repo the registered user can access. If you want
-tighter control of the repos that Cypress will see, consider creating a service
-account in GitLab with more limited access permissions.
+GitLab OAuth2 applications will allow Cypress Cloud to authenticate as the user
+that registered the application. That means that Cypress will have visibility
+into every GitLab repo the registered user can access. If you want tighter
+control of the repos that Cypress will see, consider creating a service account
+in GitLab with more limited access permissions.
 
 </Alert>
 

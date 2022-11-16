@@ -254,7 +254,8 @@ You can use Cypress's [`after:spec`](/api/plugins/after-spec-api) event listener
 that fires after each spec file is run to delete the recorded video for specs
 that had no retry attempts or failures. Deleting passing and non-retried videos
 after the run can save resource space on the machine as well as skip the time
-used to process, compress, and upload the video to [Cypress Cloud](/guides/cloud/introduction).
+used to process, compress, and upload the video to
+[Cypress Cloud](/guides/cloud/introduction).
 
 ### Only upload videos for specs with failing or retried tests
 
@@ -289,10 +290,10 @@ on('after:spec', (spec, results) => {
 
 ## Cypress Cloud
 
-If you are using [Cypress Cloud](/guides/cloud/introduction),
-information related to test retries is displayed on the Test Results tab for a
-run. Selecting the Flaky filter will show tests that retried and then passed
-during the run.
+If you are using [Cypress Cloud](/guides/cloud/introduction), information
+related to test retries is displayed on the Test Results tab for a run.
+Selecting the Flaky filter will show tests that retried and then passed during
+the run.
 
 These tests are also indicated with a "Flaky" badge on the Latest Runs page and
 Test Results tab on the Run Details page.
@@ -312,8 +313,8 @@ You can also see the Flaky Rate for a given test.
 For a comprehensive view of how flake is affecting your overall test suite, you
 can review the
 [Flake Detection](/guides/cloud/flaky-test-management#Flake-Detection) and
-[Flake Alerting](/guides/cloud/flaky-test-management#Flake-Alerting)
-features highlighted in the Test Flake Management Guide.
+[Flake Alerting](/guides/cloud/flaky-test-management#Flake-Alerting) features
+highlighted in the Test Flake Management Guide.
 
 ## Frequently Asked Questions (FAQs)
 

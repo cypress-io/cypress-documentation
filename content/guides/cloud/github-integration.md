@@ -2,12 +2,11 @@
 title: GitHub Integration
 ---
 
-[Cypress Cloud](https://on.cypress.io/cloud) can integrate your
-Cypress tests with your GitHub workflow via commit
-[status checks](#Status-checks) and
+[Cypress Cloud](https://on.cypress.io/cloud) can integrate your Cypress tests
+with your GitHub workflow via commit [status checks](#Status-checks) and
 [pull request comments](#Pull-request-comments). A project first needs to be
-[setup to record](/guides/cloud/projects) to Cypress Cloud to use
-GitHub integration.
+[setup to record](/guides/cloud/projects) to Cypress Cloud to use GitHub
+integration.
 
 <DocsImage src="/img/dashboard/github-integration/pull-request-cypress-integration-comments-github-checks.jpg" alt="Cypress GitHub App PR" ></DocsImage>
 
@@ -27,7 +26,8 @@ If you are still facing issues after this, please
 
 <Alert type="success">
 
-<strong class="alert-header"><Icon name="star"></Icon> Premium Cypress Cloud Feature</strong>
+<strong class="alert-header"><Icon name="star"></Icon> Premium Cypress Cloud
+Feature</strong>
 
 GitHub Enterprise integration is included in our
 [Business and Enterprise paid pricing plans](https://www.cypress.io/pricing).
@@ -109,10 +109,11 @@ To integrate Cypress Cloud with GitHub Enterprise, you need to create a new
 GitHub App, copy the necessary settings and credentials from the new app, paste
 them into Cypress Cloud, and complete the activation process.
 
-1. With your Cypress Cloud organization's GitHub Enterprise page open, open a new
-   tab or browser window and browse to your GitHub Enterprise site. Navigate to
-   your GitHub organization → **Settings** → **Developer settings** → **GitHub
-   Apps**. Do **NOT** go to **OAuth Apps**. Click the **New GitHub App** button.
+1. With your Cypress Cloud organization's GitHub Enterprise page open, open a
+   new tab or browser window and browse to your GitHub Enterprise site. Navigate
+   to your GitHub organization → **Settings** → **Developer settings** →
+   **GitHub Apps**. Do **NOT** go to **OAuth Apps**. Click the **New GitHub
+   App** button.
 
 <DocsImage src="/img/dashboard/github-integration/ghe/ghe-01.png" alt="Create new GitHub App" id="cypress-github-enterprise-app-installation-process-1"></DocsImage>
 
@@ -127,8 +128,8 @@ them into Cypress Cloud, and complete the activation process.
 
 3. Complete the **Webhook** section.
    - Enter the **Webhook URL**, https://cloud.cypress.io/webhooks/github-app
-   - Copy and paste the provided **Webhook secret** from Cypress Cloud
-     to **Webhook secret (optional)**.
+   - Copy and paste the provided **Webhook secret** from Cypress Cloud to
+     **Webhook secret (optional)**.
 
 <DocsImage src="/img/dashboard/github-integration/ghe/ghe-03.png" alt="Configure app webhook" id="cypress-github-enterprise-app-installation-process-3"></DocsImage>
 
@@ -142,8 +143,8 @@ them into Cypress Cloud, and complete the activation process.
 5. Skip to the bottom of the form and click the **Create GitHub App** button.
    Your new GitHub App is now created, and you'll be taken to the settings page.
 
-6. Returning to Cypress Cloud GitHub Enterprise Integration
-   configuration screen, populate the following values from your new GitHub App.
+6. Returning to Cypress Cloud GitHub Enterprise Integration configuration
+   screen, populate the following values from your new GitHub App.
    - Copy the root URL of your GitHub Enterprise site to the Cypress **GitHub
      Enterprise Server URL** field.
    - Copy the **App ID** to the Cypress **GitHub Enterprise App ID** field.
@@ -164,9 +165,9 @@ them into Cypress Cloud, and complete the activation process.
 
 <DocsImage src="/img/dashboard/github-integration/ghe/ghe-07.png" alt="Generate private key" id="cypress-github-enterprise-app-installation-process-7"></DocsImage>
 
-7. In Cypress Cloud, click the **Next Step** button and you will be
-   taken to the GitHub Enterprise app authorization page. Click the **Authorize
-   \[your app name\]** button.
+7. In Cypress Cloud, click the **Next Step** button and you will be taken to the
+   GitHub Enterprise app authorization page. Click the **Authorize \[your app
+   name\]** button.
 
 <DocsImage src="/img/dashboard/github-integration/ghe/ghe-08.png" alt="Authorize GitHub App" id="cypress-github-enterprise-app-installation-process-8"></DocsImage>
 
@@ -181,8 +182,8 @@ them into Cypress Cloud, and complete the activation process.
 <DocsImage src="/img/dashboard/github-integration/ghe/ghe-10.png" alt="Confirm installation of GitHub App" id="cypress-github-enterprise-app-installation-process-10"></DocsImage>
 
 10. Finally you will be returned to Cypress Cloud. Congratulations, you have
-    installed Cypress Cloud GitHub Enterprise integration! You are now
-    ready to configure a GitHub Integration for a project.
+    installed Cypress Cloud GitHub Enterprise integration! You are now ready to
+    configure a GitHub Integration for a project.
 
 ## Enabling GitHub integration for a project
 
@@ -217,8 +218,8 @@ organizations **Integrations** page:
 
 ## Status checks
 
-If status checks are enabled within a project's GitHub integration settings, Cypress Cloud will report Cypress test statuses to GitHub for related
-commits.
+If status checks are enabled within a project's GitHub integration settings,
+Cypress Cloud will report Cypress test statuses to GitHub for related commits.
 [Status checks](https://help.github.com/en/articles/about-status-checks) help
 prevent merging a commit or pull-request into the rest of your codebase until
 all your Cypress tests have passed.
@@ -233,8 +234,9 @@ The Cypress GitHub App reports commit status checks in two separate styles:
   <DocsImage src="/img/dashboard/github-integration/status-checks-per-spec.png" alt="Status checks per spec"></DocsImage>
 
 Each status check will report the number of test failures or passes, and the
-associated **Details** link will direct you to the test run's page within Cypress Cloud to help you dig deeper into the problem via error messages,
-stack traces, screenshots, and video recordings:
+associated **Details** link will direct you to the test run's page within
+Cypress Cloud to help you dig deeper into the problem via error messages, stack
+traces, screenshots, and video recordings:
 <DocsImage src="/img/dashboard/dashboard-fail-tab.png" alt="Cypress Cloud failure tab" ></DocsImage>
 
 ### Disable status checks

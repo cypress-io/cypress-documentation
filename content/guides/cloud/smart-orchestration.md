@@ -2,9 +2,8 @@
 title: Smart Orchestration
 ---
 
-Cypress Cloud provides four distinct Smart Orchestration features for
-use in CI to speed up test runs, accelerate debugging workflows, and reduce
-costs:
+Cypress Cloud provides four distinct Smart Orchestration features for use in CI
+to speed up test runs, accelerate debugging workflows, and reduce costs:
 
 - [Parallelization](/guides/guides/parallelization): Reduce test duration by
   running multiple test spec files simultaneously across available CI machines.
@@ -47,7 +46,8 @@ time.**
 
 <Alert type="success">
 
-<strong class="alert-header"><Icon name="star"></Icon> Premium Cypress Cloud Feature</strong>
+<strong class="alert-header"><Icon name="star"></Icon> Premium Cypress Cloud
+Feature</strong>
 
 **Running failed specs first** is a _Smart Orchestration_ feature available to
 users with a [Business Cypress Cloud plan](https://cypress.io/pricing).
@@ -103,10 +103,12 @@ failure will:
 
 <Alert type="success">
 
-<strong class="alert-header"><Icon name="star"></Icon> Premium Cypress Cloud Feature</strong>
+<strong class="alert-header"><Icon name="star"></Icon> Premium Cypress Cloud
+Feature</strong>
 
 **Canceling test runs when a test fails** is a _Smart Orchestration_ feature
-available to users with a [Business Cypress Cloud plan](https://cypress.io/pricing).
+available to users with a
+[Business Cypress Cloud plan](https://cypress.io/pricing).
 
 </Alert>
 
