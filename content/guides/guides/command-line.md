@@ -9,7 +9,7 @@ title: Command Line
 - How to run Cypress from the command line
 - How to specify which spec files to run
 - How to launch other browsers
-- How to record your tests to the Dashboard
+- How to record your tests to Cypress Cloud
 
 </Alert>
 
@@ -73,8 +73,8 @@ your `package.json`
 }
 ```
 
-...and want to run tests from a single spec file and record the results on the
-Dashboard, the command should be:
+...and want to run tests from a single spec file and record the results with
+Cypress Cloud, the command should be:
 
 ```shell
 npm run cy:run --record --spec "cypress/e2e/my-spec.cy.js"
@@ -320,8 +320,8 @@ cypress run --project ./some/nested/folder
 #### `cypress run --record --key <record-key>`
 
 Record video of tests running after
-[setting up your project to record](/guides/dashboard/projects#Setup). After
-setting up your project you will be given a **Record Key**.
+[setting up your project to record](/guides/cloud/projects#Setup). After setting
+up your project you will be given a **Record Key**.
 
 ```shell
 cypress run --record --key <record_key>
@@ -343,7 +343,7 @@ Now you can omit the `--key` flag.
 cypress run --record
 ```
 
-You can [read more about recording runs here](/guides/dashboard/projects#Setup).
+You can [read more about recording runs here](/guides/cloud/projects#Setup).
 
 #### `cypress run --reporter <reporter>`
 
@@ -408,7 +408,7 @@ cypress run --project tests/e2e --spec ./tests/e2e/cypress/e2e/spec.js
 #### `cypress run --tag <tag>`
 
 Add a tag or tags to the recorded run. This can be used to help identify
-separate run when displayed in the Dashboard.
+separate run when displayed in Cypress Cloud.
 
 ```shell
 cypress run  --record --tag "staging"
@@ -420,9 +420,9 @@ Give a run multiple tags.
 cypress run --record --tag "production,nightly"
 ```
 
-The Dashboard will display any tags sent with the appropriate run.
+Cypress Cloud will display any tags sent with the appropriate run.
 
-<DocsImage src="/img/dashboard/dashboard-run-with-tags.png" alt="Cypress run in the Dashboard displaying flags" ></DocsImage>
+<DocsImage src="/img/dashboard/dashboard-run-with-tags.png" alt="Cypress run in Cypress Cloud displaying flags" ></DocsImage>
 
 #### Exit code
 
@@ -609,7 +609,7 @@ Prints information about Cypress and the current environment such as:
 - Any environment variables that control
   [proxy configuration](/guides/references/proxy-configuration).
 - Any environment variables that start with the `CYPRESS` prefix (with sensitive
-  variables like [record key](/guides/dashboard/projects#Record-keys) masked for
+  variables like [record key](/guides/cloud/projects#Record-keys) masked for
   security).
 - The location where run-time data is stored.
 - The location where the Cypress binary is cached.

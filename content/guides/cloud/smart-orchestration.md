@@ -2,9 +2,8 @@
 title: Smart Orchestration
 ---
 
-The Cypress Dashboard provides four distinct Smart Orchestration features for
-use in CI to speed up test runs, accelerate debugging workflows, and reduce
-costs:
+Cypress Cloud provides four distinct Smart Orchestration features for use in CI
+to speed up test runs, accelerate debugging workflows, and reduce costs:
 
 - [Parallelization](/guides/guides/parallelization): Reduce test duration by
   running multiple test spec files simultaneously across available CI machines.
@@ -47,11 +46,11 @@ time.**
 
 <Alert type="success">
 
-<strong class="alert-header"><Icon name="star"></Icon> Premium Dashboard
+<strong class="alert-header"><Icon name="star"></Icon> Premium Cypress Cloud
 Feature</strong>
 
 **Running failed specs first** is a _Smart Orchestration_ feature available to
-users with a [Business Dashboard plan](https://cypress.io/pricing).
+users with a [Business Cypress Cloud plan](https://cypress.io/pricing).
 
 </Alert>
 
@@ -60,7 +59,7 @@ that is managed within a project's settings.
 
 To enable or disable this feature:
 
-1. Select the desired project within Projects view to visit its Dashboard.
+1. Select the desired project within Projects view to visit Cypress Cloud.
 2. Click "Project Settings" with the right-hand sidebar.
 3. Scroll to the Smart Orchestration section within Project Settings page.
 4. Toggle "Run failed specs first."
@@ -104,11 +103,12 @@ failure will:
 
 <Alert type="success">
 
-<strong class="alert-header"><Icon name="star"></Icon> Premium Dashboard
+<strong class="alert-header"><Icon name="star"></Icon> Premium Cypress Cloud
 Feature</strong>
 
 **Canceling test runs when a test fails** is a _Smart Orchestration_ feature
-available to users with a [Business Dashboard plan](https://cypress.io/pricing).
+available to users with a
+[Business Cypress Cloud plan](https://cypress.io/pricing).
 
 </Alert>
 
@@ -128,7 +128,7 @@ failing tests can be surfaced for each test run**.
 
 To enable or disable this feature:
 
-1. Select the desired project within Projects view to visit its Dashboard.
+1. Select the desired project within Projects view to visit Cypress Cloud.
 2. Click "Project Settings" with the right-hand sidebar.
 3. Scroll to the Smart Orchestration section within Project Settings page
 4. Toggle "Cancel run when a test fails."

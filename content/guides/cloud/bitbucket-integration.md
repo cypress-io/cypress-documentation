@@ -8,11 +8,11 @@ Bitbucket integration is currently in beta.
 
 </Alert>
 
-The [Cypress Dashboard](https://on.cypress.io/dashboard) can integrate your
-Cypress tests with your Bitbucket workflow via [status checks](#Status-checks)
-and [pull request comments](#Pull-Request-comments). A project first needs to be
-[setup to record](/guides/dashboard/projects) to the Cypress Dashboard to use
-Bitbucket integration.
+[Cypress Cloud](https://on.cypress.io/cloud) can integrate your Cypress tests
+with your Bitbucket workflow via [status checks](#Status-checks) and
+[pull request comments](#Pull-Request-comments). A project first needs to be
+[setup to record](/guides/cloud/projects) to Cypress Cloud to use Bitbucket
+integration.
 
 <Alert type="warning">
 
@@ -30,15 +30,15 @@ If you are still facing issues after this, please
 
 <Alert type="warning">
 
-Bitbucket OAuth2 applications will allow the Cypress Dashboard to authenticate
-as the user that registered the application. That means the Cypress will have
+Bitbucket OAuth2 applications will allow Cypress Cloud to authenticate as the
+user that registered the application. That means the Cypress will have
 visibility to every Bitbucket repo you can access. If you want tighter control
 on the repos that the Cypress will see, consider creating a service account with
 more limited access in Bitbucket.
 
 </Alert>
 
-1. Visit **Integrations** in the Cypress Dashboard.
+1. Visit **Integrations** in Cypress Cloud.
 1. Click **Install Bitbucket Integration**.
 1. (For beta only) You need to enable Bitbucket's
    [development mode](https://support.atlassian.com/bitbucket-cloud/docs/enable-bitbucket-cloud-development-mode/)
