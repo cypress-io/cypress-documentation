@@ -174,7 +174,7 @@
             {
               "title": "Svelte API",
               "slug": "svelte/api"
-            }            
+            }
           ]
         },
         {
@@ -406,6 +406,10 @@
             {
               "title": "Configuration",
               "slug": "configuration"
+            },
+            {
+              "title": "Release Stages",
+              "slug": "release-stages"
             },
             {
               "title": "Legacy Configuration",
