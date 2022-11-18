@@ -114,6 +114,13 @@
           "badge": "community"
         },
         {
+          "name": "cypress-replay",
+          "description": "Records requests made to your services in Cypress tests and stores them in fixture files for replay on CI.",
+          "link": "https://github.com/Sam152/cypress-replay",
+          "keywords": ["replay", "intercept", "record"],
+          "badge": "community"
+        },
+        {
           "name": "Docker",
           "description": "Docker images providing all the dependencies to run Cypress in CI including browsers.",
           "link": "https://github.com/cypress-io/cypress-docker-images",
