@@ -8,9 +8,10 @@ may be affected when upgrading to a newer version of Cypress. If there is a
 minor version increment, `11.0.0` → `11.1.0` for example, you should not
 experience disruption in your usage of Cypress. If there is a major version
 increment, `11.1.0 → 12.0.0` for example, you may need to make changes to
-continue using Cypress. For most scenarios this is a valid way to consider
-complexity when upgrading Cypress. In some cases, however, a feature of Cypress
-may be in a stage of development in which it does not adhere to these rules.
+continue using Cypress. For most scenarios this is a valid way to consider how
+disruptive upgrading to the next version of Cypress may be. In some cases,
+however, a feature of Cypress may be in a stage of development in which it does
+not adhere to these rules.
 
 In order to help our users be aware of when this might be the case, we have
 consolidated definitions of the different release stages: General Availability,
