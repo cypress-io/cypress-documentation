@@ -249,7 +249,7 @@ instead.
   })
 ```
 
-### cy.invoke()
+### `.invoke()`
 
 `.invoke()` now throws an error if the function returns a promise. If you wish
 to call a method that returns a promise and wait for it to resolve, use
@@ -272,6 +272,36 @@ their own chain. For example, rewrite
 
 ```diff
 - cy.get('input').invoke('val', 'text').type('newText')
++ cy.get('input').invoke('val', 'text')
++ cy.get('input').type('newText')
+```
+
+### `.should()`
+
+`.should()` now throws an error if Cypress commands are invoked from inside a
+`.should()` callback. This previously resulted in unusual and undefined
+behavior. If you wish to execute series of commands on the yield value,
+use`.then()` instead.
+
+```diff
+cy.get('button')
+-  .should(($button) => {
+
+    })
++  .then(api => api.makeARequest('http://example.com'))
+   .then(res => { ...handle response... })
+```
+
+If `.invoke()` is followed by additional commands or assertions, it will call
+the named function multiple times. This has the benefit that the chained
+assertions can more reliably use the function's return value.
+
+If this behavior is undesirable because you expect the function to invoked only
+once, break the command chain and move the chains commands and/or assertions to
+their own chain. For example, rewrite
+
+```diff
+- .invoke('val', 'text').type('newText')
 + cy.get('input').invoke('val', 'text')
 + cy.get('input').type('newText')
 ```
