@@ -2,13 +2,13 @@
 title: Release Stages
 ---
 
-Cypress follows Semantic Versioning so that it is clear how you may be affected
+Cypress follows Semantic Versioning ([see summary here](https://semver.org/#summary)) so that it is clear how you may be affected
 when upgrading to a newer version of Cypress. If there is a minor version
-increment, 11.0.0 → 11.1.0 for example, you should not experience disruption in
+increment,` 11.0.0` → `11.1.0` for example, you should not experience disruption in
 your usage of Cypress. If there is a major version increment, 11.1.0 → 12.0.0
 for example, you may need to make changes to continue using Cypress. For most
 scenarios this is a valid way to consider complexity when upgrading Cypress. In
-some cases, however, a feature of cypress may be in a stage of development in
+some cases, however, a feature of Cypress may be in a stage of development in
 which it does not adhere to these rules. In order to better provided
 transparency of when this might be the case, we have consolidated definitions of
 different release stages and how we approach changes and communication in those
@@ -21,7 +21,7 @@ feedback on before we commit fully to the initial implementation or the feature
 entirely. These type of features require you to opt-in to via a configuration
 value before the feature is activated. These types of features may be unstable
 and contain issues. You should expect to see frequent changes and improvements
-during the feature’s experimental lifetime.
+during the feature’s experimental lifetime. The current experimental features can be found [here](guides/references/experiments).
 
 **Strategies for releasing and communicating changes to experimental features**
 
