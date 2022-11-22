@@ -136,8 +136,10 @@ It is also possible to run multiple specs sequentially using the
 
 `experimentalRunAllSpecs` currently works with End to End Testing.
 
-Running multiple specs sequentially is currently an [experimental feature] and
-it may change in the future.
+Running multiple specs sequentially is currently an
+[experimental feature](/guides/references/configuration#Experiments) and it may
+change in the future. There are some known limitations outlined in this
+[GitHub Discussion](https://github.com/cypress-io/cypress/discussions/21628).
 
 Running a large number of specs sequentially can consume more resources.
 
