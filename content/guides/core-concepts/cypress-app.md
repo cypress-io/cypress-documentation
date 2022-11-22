@@ -118,6 +118,31 @@ tooltip with the following analytics, based off the last 50 runs:
 Clicking on the flake indicator will take you to the spec’s
 [Flaky Test Analytics in Cypress Cloud](https://cloud.cypress.io/projects/7s5okt/analytics/flaky-tests).
 
+#### Running Specs
+
+<DocsImage src="/img/guides/core-concepts/cypress-app/spec-page.png" alt="Spec Explorer"></DocsImage>
+
+To run a spec, simply click the row with the spec you would like to run. You
+will be taken to the [Test Runner](#The-Test-Runner) and the spec will execute.
+You can narrow down the list of specs by typing into the search bar (1).
+
+It is also possible to run multiple specs sequentially using the
+[`experimentalRunAllSpecs`](guides/references/experiments#End-to-End-Testing)
+(2).
+
+<Alert type="warning">
+
+<strong class="alert-header">Experimental Run All Specs</strong>
+
+`experimentalRunAllSpecs` currently works with End to End Testing.
+
+Running multiple specs sequentially is currently an [experimental feature] and
+it may change in the future.
+
+Running a large number of specs sequentially can consume more resources.
+
+</Alert>
+
 ### Project Runs
 
 <DocsImage src="/img/guides/core-concepts/cypress-app/recorded-runs.png" alt="Recorded Runs"></DocsImage>
