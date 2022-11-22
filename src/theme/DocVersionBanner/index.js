@@ -34,7 +34,7 @@ function UnmaintainedVersionLabel({siteTitle, versionMetadata}) {
       description="The label used to tell the user that he's browsing an unmaintained doc version"
       values={{
         siteTitle,
-        versionLabel: <a href="https://v9.docs.cypress.io/guides/overview/why-cypress"><b>Legacy Cypress Documentation</b></a>,
+        versionLabel: <a href="https://v9.docs.cypress.io/guides/overview/why-cypress"><b>Cypress v9 Documentation</b></a>,
       }}>
       {
         'Follow the link for {versionLabel}, which is no longer actively maintained.'

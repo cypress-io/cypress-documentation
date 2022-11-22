@@ -41,7 +41,7 @@ const config = {
           routeBasePath: '/',
           versions: {
             current: {
-              label: 'Current Docs',
+              label: 'Latest Docs',
             },
           },
           lastVersion: 'current',
