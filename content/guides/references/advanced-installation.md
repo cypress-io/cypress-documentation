@@ -244,6 +244,15 @@ To save the `CYPRESS_CRASH_REPORTS` variable for use in all new shells, use
 setx CYPRESS_CRASH_REPORTS 0
 ```
 
+## Opt out of Cypress commercial messaging
+
+Cypress may occasionally display messages in your CI logs related to our
+commercial offerings and how they could benefit you during your workflows.
+
+If you would like to opt out of all commercial messaging, you can do so by
+setting `CYPRESS_COMMERCIAL_RECOMMENDATIONS=0` in your system environment
+variables.
+
 ## Install pre-release version
 
 If you would like to install a pre-release version of Cypress to test out
