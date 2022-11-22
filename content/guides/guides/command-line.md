@@ -319,18 +319,20 @@ cypress run --project ./some/nested/folder
 
 #### `cypress run --record --key <record-key>`
 
-Record video of tests running after
-[setting up your project to record](/guides/cloud/projects#Setup). After setting
-up your project you will be given a **Record Key**.
+Record your test results to [Cypress Cloud](/guides/cloud/introduction). For
+this option to work you must first
+[set up your project to record](/guides/cloud/projects#Setup), make sure your
+`projectId` is set in your
+[Cypress configuration file](/guides/references/configuration#Configuration-File),
+and append your **Record Key** to the command.
 
 ```shell
 cypress run --record --key <record_key>
 ```
 
 If you set the **Record Key** as the environment variable `CYPRESS_RECORD_KEY`,
-you can omit the `--key` flag.
-
-You'd typically set this environment variable when running in
+you can omit the `--key` flag. You'd typically set this environment variable
+when running in
 [Continuous Integration](/guides/continuous-integration/introduction).
 
 ```shell
@@ -343,7 +345,11 @@ Now you can omit the `--key` flag.
 cypress run --record
 ```
 
-You can [read more about recording runs here](/guides/cloud/projects#Setup).
+For more information on recording runs, see the
+[Cypress Cloud setup instructions](/guides/cloud/projects#Setup). For an
+in-depth explanation of how Cypress uses your record key and `projectId` to save
+your test results to Cypress Cloud, see the
+[Identification section](/guides/cloud/projects#Identification).
 
 #### `cypress run --reporter <reporter>`
 
