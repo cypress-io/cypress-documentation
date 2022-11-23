@@ -58,7 +58,10 @@ import { mount } from 'cypress/vue2'
 
 ### MountReturn
 
+Type that the `mount` function returns
+
 <table class="api-table">
+  <caption>members</caption>
   <thead>
     <td>Name</td>
     <td>Type</td>
