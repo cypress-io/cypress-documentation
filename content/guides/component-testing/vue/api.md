@@ -70,11 +70,11 @@ Type that the `mount` function returns
   <tr>
     <td>wrapper</td>
     <td>VueWrapper</td>
-    <td></td>
+    <td>The Vue Test Utils wrapper</td>
   </tr>
   <tr>
     <td>component</td>
-    <td>VueWrapper</td>
-    <td></td>
+    <td>VueComponent</td>
+    <td>The component instance</td>
   </tr>
 </table>
