@@ -70,7 +70,7 @@ Type that the `mount` function returns
   <tr>
     <td>wrapper</td>
     <td>VueWrapper</td>
-    <td>The Vue Test Utils wrapper</td>
+    <td>The Vue Test Utils `wrapper`</td>
   </tr>
   <tr>
     <td>component</td>
