@@ -320,6 +320,10 @@
             {
               "title": "Cross Browser Testing",
               "slug": "cross-browser-testing"
+            },
+            {
+              "title": "Web Security",
+              "slug": "web-security"
             }
           ]
         },

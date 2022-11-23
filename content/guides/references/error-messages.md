@@ -459,6 +459,8 @@ it('does not forget to return a promise', () => {
 
 ::include{file=partials/single-domain-workaround.md}
 
+See our [Web Security](/guides/guides/web-security#Limitations) documentation.
+
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` failed because you are attempting to visit a different origin domain
 
 ::include{file=partials/single-domain-workaround.md}
@@ -472,6 +474,9 @@ general
 You can visit urls that are of different origin across different tests, so you
 may consider splitting your `cy.visit()` of different origin domains into
 separate tests.
+
+See our [Web Security](/guides/guides/web-security#Limitations) documentation
+for more information and workarounds.
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `Cypress.addParentCommand()` / `Cypress.addDualCommand()` / `Cypress.addChildCommand()` has been removed and replaced by `Cypress.Commands.add()`
 
