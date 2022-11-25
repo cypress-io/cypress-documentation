@@ -192,7 +192,7 @@ tests results. A typical run could return something like this:
     }],
     "video": "User/janelane/my-app/cypress/videos/abc123.mp4"
   }],
-  "runUrl": "https://dashboard.cypress.io/projects/def456/runs/12",
+  "runUrl": "https://cloud.cypress.io/projects/def456/runs/12",
   "startedTestsAt": "2018-07-11T17:53:35.463Z",
   "totalDuration": 212,
   "totalFailed": 1,

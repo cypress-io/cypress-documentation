@@ -19,7 +19,7 @@ For the following CI Providers we have in depth guides.
 
 <Icon name="book" color="gray"></Icon> [CircleCI Guide](circleci) <br />
 <Icon name="external-link-alt" color="gray"></Icon>
-[See CircleCI + Cypress Dashboard in action](https://dashboard.cypress.io/projects/7s5okt)
+[See CircleCI + Cypress Cloud in action](https://cloud.cypress.io/projects/7s5okt)
 <br /> <br />
 
 <Alert type="info">
@@ -31,7 +31,7 @@ The Cypress
 [CircleCI](https://circleci.com) to test over 300 test cases in parallel across
 25 machines, multiple browsers, multiple device sizes, and multiple operating
 systems with full code-coverage reporting and
-[Cypress Dashboard recording](https://dashboard.cypress.io/projects/7s5okt).
+[Cypress Cloud recording](https://cloud.cypress.io/projects/7s5okt).
 
 Check out the full <Icon name="github"></Icon>
 [RWA CircleCI configuration](https://github.com/cypress-io/cypress-realworld-app/blob/develop/.circleci/config.yml).
@@ -42,7 +42,7 @@ Check out the full <Icon name="github"></Icon>
 
 <Icon name="book" color="gray"></Icon> [GitHub Actions Guide](github-actions)
 <br /> <Icon name="external-link-alt" color="gray"></Icon>
-[See GitHub Actions + Cypress Dashboard in action](https://dashboard.cypress.io/projects/tpys4j)
+[See GitHub Actions + Cypress Cloud in action](https://cloud.cypress.io/projects/tpys4j)
 <br /> <br />
 
 <Alert type="info">
@@ -54,7 +54,7 @@ The Cypress
 [GitHub Actions](https://github.com) to test over 300 test cases in parallel
 across 25 machines, multiple browsers, multiple device sizes, and multiple
 operating systems with
-[Cypress Dashboard recording](https://dashboard.cypress.io/projects/tpys4j).
+[Cypress Cloud recording](https://cloud.cypress.io/projects/tpys4j).
 
 Check out the full <Icon name="github"></Icon>
 [RWA GitHub Actions configuration](https://github.com/cypress-io/cypress-realworld-app/blob/develop/.github/workflows/main.yml).
@@ -66,7 +66,7 @@ Check out the full <Icon name="github"></Icon>
 <Icon name="book" color="gray"></Icon>
 [BitBucket Pipelines Guide](bitbucket-pipelines) <br />
 <Icon name="external-link-alt" color="gray"></Icon>
-[See BitBucket Pipelines + Cypress Dashboard in action](https://dashboard.cypress.io/projects/q1ovwz)
+[See BitBucket Pipelines + Cypress Cloud in action](https://cloud.cypress.io/projects/q1ovwz)
 <br /> <br />
 
 <Alert type="info">
@@ -78,7 +78,7 @@ The Cypress
 [BitBucket Pipelines](https://bitbucket.org/product/features/pipelines) to test
 over 300 test cases in parallel across 25 machines, multiple browsers and
 multiple device sizes with
-[Cypress Dashboard recording](https://dashboard.cypress.io/projects/q1ovwz).
+[Cypress Cloud recording](https://cloud.cypress.io/projects/q1ovwz).
 
 Check out the full <Icon name="github"></Icon>
 [RWA BitBucket Pipelines configuration](https://github.com/cypress-io/cypress-realworld-app/blob/develop/bitbucket-pipelines.yml).
@@ -89,7 +89,7 @@ Check out the full <Icon name="github"></Icon>
 
 <Icon name="book" color="gray"></Icon> [GitLab CI Guide](gitlab-ci) <br />
 <Icon name="external-link-alt" color="gray"></Icon>
-[See GitLab CI + Cypress Dashboard in action](https://dashboard.cypress.io/projects/woih1m)
+[See GitLab CI + Cypress Cloud in action](https://cloud.cypress.io/projects/woih1m)
 <br /> <br />
 
 <Alert type="info">
@@ -100,10 +100,10 @@ The Cypress
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses
 [GitLab CI](https://gitlab.com) to test over 300 test cases in parallel across
 25 machines, multiple browsers and multiple device sizes with
-[Cypress Dashboard recording](https://dashboard.cypress.io/projects/woih1m).
+[Cypress Cloud recording](https://cloud.cypress.io/projects/woih1m).
 
 Check out the full <Icon name="github"></Icon>
-[RWA GitLab CI configuration](https://github.com/cypress-io/cypress-realworld-app/blob/develop/gitlab-ci.yml).
+[RWA GitLab CI configuration](https://github.com/cypress-io/cypress-realworld-app/blob/develop/.gitlab-ci.yml).
 
 </Alert>
 
@@ -111,7 +111,7 @@ Check out the full <Icon name="github"></Icon>
 
 <Icon name="book" color="gray"></Icon> [AWS CodeBuild Guide](aws-codebuild)
 <br /> <Icon name="external-link-alt" color="gray"></Icon>
-[See AWS CodeBuild + Cypress Dashboard in action](https://dashboard.cypress.io/projects/zx15dm)
+[See AWS CodeBuild + Cypress Cloud in action](https://cloud.cypress.io/projects/zx15dm)
 <br /> <br />
 
 <Alert type="info">
@@ -122,7 +122,7 @@ The Cypress
 [Real World App (RWA)](https://github.com/cypress-io/cypress-realworld-app) uses
 [AWS CodeBuild](https://aws.amazon.com/codebuild) to test over 300 test cases in
 parallel across 25 machines, multiple browsers and multiple device sizes with
-[Cypress Dashboard recording](https://dashboard.cypress.io/projects/zx15dm).
+[Cypress Cloud recording](https://cloud.cypress.io/projects/zx15dm).
 
 Check out the full <Icon name="github"></Icon>
 [RWA AWS CodeBuild configuration](https://github.com/cypress-io/cypress-realworld-app/blob/develop/buildspec.yml).

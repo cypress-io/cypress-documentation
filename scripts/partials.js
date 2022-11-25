@@ -69,16 +69,16 @@ module.exports.THEN_SHOULD_DIFFERENCE = [
   'When using a callback function with `.should()` or `.and()`, on the other hand, there is special logic to rerun the callback function until no assertions throw within it. You should be careful of side affects in a `.should()` or `.and()` callback function that you would not want performed multiple times.',
 ].join('\n')
 
-module.exports.VPN_ALLOWED_LIST = `To send the data and results of your tests to the [Dashboard](https://on.cypress.io/dashboard-introduction), Cypress needs free access to some URLs.
+module.exports.VPN_ALLOWED_LIST = `To send the data and results of your tests to [Cypress Cloud](https://on.cypress.io/cloud-introduction), Cypress needs free access to some URLs.
 
-If you are running the tests from within a restrictive VPN you will need to allow some URLs so that Cypress can have effective communication with the Dashboard.
+If you are running the tests from within a restrictive VPN you will need to allow some URLs so that Cypress can have effective communication with Cypress Cloud.
 
 **The URLs are the following:**
 
 - \`https://api.cypress.io\` - **Cypress API**
 - \`https://assets.cypress.io\` - **Asset CDN** (Org logos, icons, videos, screenshots, etc.)
 - \`https://authenticate.cypress.io\` - **Authentication API**
-- \`https://dashboard.cypress.io\` - **Dashboard app**
+- \`https://cloud.cypress.io\` - **Cypress Cloud**
 - \`https://docs.cypress.io\` - **Cypress documentation**
 - \`https://download.cypress.io\` - **CDN download of Cypress binary**
 - \`https://on.cypress.io\` - **URL shortener for link redirects**
