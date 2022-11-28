@@ -39,12 +39,12 @@ const config = {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl: 'https://github.com/cypress-io/cypress-docs/tree/master/',
           routeBasePath: '/',
-          versions: {
-            current: {
-              label: 'Latest Docs',
-            },
-          },
-          lastVersion: 'current',
+          // versions: {
+          //   current: {
+          //     label: 'Latest Docs',
+          //   },
+          // },
+          // lastVersion: 'current',
           remarkPlugins: [
             cypressConfigExample,
             cypressConfigPluginExample,
@@ -107,10 +107,10 @@ const config = {
             label: 'Learn',
             position: 'left',
           },
-          {
-            type: 'docsVersionDropdown',
-            position: 'right',
-          },
+          // {
+          //   type: 'docsVersionDropdown',
+          //   position: 'right',
+          // },
           {
             href: 'https://github.com/cypress-io/cypress-docs',
             position: 'right',
