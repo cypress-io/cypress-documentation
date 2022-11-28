@@ -7,10 +7,10 @@ containerClass: faq
 ## <Icon name="angle-right"></Icon> Is Cypress free and open source?
 
 [Cypress](/guides/core-concepts/cypress-app) is a free, downloadable and open
-source (MIT license) application. This is always free to use. Our
-[Dashboard Service](/guides/dashboard/introduction) is a web application that
-offers a variety of billing plans (including a free, open source plan) for when
-you want to record your test runs in CI.
+source (MIT license) application. This is always free to use.
+[Cypress Cloud](/guides/cloud/introduction) is a web application that offers a
+variety of billing plans (including a free, open source plan) for when you want
+to record your test runs in CI.
 
 Please see our [Pricing Page](https://www.cypress.io/pricing) for more details.
 
