@@ -127,7 +127,7 @@ will run only the next command and pause again.
 
 ## See also
 
-- [Dashboard](https://on.cypress.io/dashboard)
+- [Cypress Cloud](https://on.cypress.io/cloud)
 - [`cy.debug()`](/api/commands/debug)
 - [`cy.log()`](/api/commands/log)
 - [`cy.screenshot()`](/api/commands/screenshot)

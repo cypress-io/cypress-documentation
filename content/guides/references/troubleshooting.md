@@ -202,13 +202,13 @@ caljajdfkjjjdehjdoimjkkakekklcck
 
 ## Allow Cypress URLs on VPNs
 
-To send the data and results of your tests to the
-[Dashboard](https://on.cypress.io/dashboard-introduction), Cypress needs free
+To send the data and results of your tests to
+[Cypress Cloud](https://on.cypress.io/cloud-introduction), Cypress needs free
 access to some URLs.
 
 If you are running the tests from within a restrictive VPN you will need to
-allow some URLs so that Cypress can have effective communication with the
-Dashboard.
+allow some URLs so that Cypress can have effective communication with Cypress
+Cloud.
 
 **The URLs are the following:**
 
@@ -216,7 +216,7 @@ Dashboard.
 - `https://assets.cypress.io` - **Asset CDN** (Org logos, icons, videos,
   screenshots, etc.)
 - `https://authenticate.cypress.io` - **Authentication API**
-- `https://dashboard.cypress.io` - **Dashboard app**
+- `https://cloud.cypress.io` - **Cypress Cloud**
 - `https://docs.cypress.io` - **Cypress documentation**
 - `https://download.cypress.io` - **CDN download of Cypress binary**
 - `https://on.cypress.io` - **URL shortener for link redirects**
@@ -230,7 +230,7 @@ an issue you have by clearing this app data.
 ### To clear App Data
 
 1. Open Cypress via `cypress open`
-2. Go to `File` -> `View App Data`
+2. Go to `Developer Tools` -> `View App Data`
 3. This will take you to the directory in your file system where your App Data
    is stored. If you cannot open Cypress, search your file system for a
    directory named `cy` whose content should look something like this:
@@ -302,25 +302,25 @@ server, reporter, driver, command line, etc. Each package writes debug logs
 under a different source. Here are a few common log sources and when you might
 want to enable them
 
-| Set `DEBUG` to value            | To enable debugging                                                   |
-| ------------------------------- | --------------------------------------------------------------------- |
-| `cypress:cli`                   | The top-level command line parsing problems                           |
-| `cypress:server:args`           | Incorrect parsed command line arguments                               |
-| `cypress:server:specs`          | Not finding the expected specs                                        |
-| `cypress:server:project`        | Opening the project                                                   |
-| `cypress:server:browsers`       | Finding installed browsers                                            |
-| `cypress:launcher`              | Launching the found browser                                           |
-| `cypress:server:video`          | Video recording                                                       |
-| `cypress:network:*`             | Adding network interceptors                                           |
-| `cypress:net-stubbing*`         | Network interception in the proxy layer                               |
-| `cypress:server:reporter`       | Problems with test reporters                                          |
-| `cypress:server:preprocessor`   | Processing specs                                                      |
-| `cypress:server:socket-e2e`     | Watching spec files                                                   |
-| `cypress:server:task`           | Invoking the `cy.task()` command                                      |
-| `cypress:server:socket-base`    | Debugging `cy.request()` command                                      |
-| `cypress:webpack`               | Bundling specs using webpack                                          |
-| `cypress:server:fixture`        | Loading fixture files                                                 |
-| `cypress:server:record:ci-info` | Git commit and CI information when recording to the Cypress Dashboard |
+| Set `DEBUG` to value            | To enable debugging                                           |
+| ------------------------------- | ------------------------------------------------------------- |
+| `cypress:cli`                   | The top-level command line parsing problems                   |
+| `cypress:server:args`           | Incorrect parsed command line arguments                       |
+| `cypress:server:specs`          | Not finding the expected specs                                |
+| `cypress:server:project`        | Opening the project                                           |
+| `cypress:server:browsers`       | Finding installed browsers                                    |
+| `cypress:launcher`              | Launching the found browser                                   |
+| `cypress:server:video`          | Video recording                                               |
+| `cypress:network:*`             | Adding network interceptors                                   |
+| `cypress:net-stubbing*`         | Network interception in the proxy layer                       |
+| `cypress:server:reporter`       | Problems with test reporters                                  |
+| `cypress:server:preprocessor`   | Processing specs                                              |
+| `cypress:server:socket-e2e`     | Watching spec files                                           |
+| `cypress:server:task`           | Invoking the `cy.task()` command                              |
+| `cypress:server:socket-base`    | Debugging `cy.request()` command                              |
+| `cypress:webpack`               | Bundling specs using webpack                                  |
+| `cypress:server:fixture`        | Loading fixture files                                         |
+| `cypress:server:record:ci-info` | Git commit and CI information when recording to Cypress Cloud |
 
 You can combine several areas together using the comma character. For example,
 to debug specs not being found, use:
@@ -630,42 +630,3 @@ workaround to the relevant Cypress GitHub issue. It will help us release an
 official fix faster.
 
 </Alert>
-
-### Edit the installed Cypress code
-
-The installed application comes with the fully transpiled, unobfuscated
-JavaScript source code that you can hack on. You might want to directly modify
-the installed app code to:
-
-- investigate a hard to recreate bug that happens on your machine
-- change the run-time behavior of Cypress before opening a pull request
-- have fun 🎉
-
-First, print where the binary is installed using the
-[cypress cache path](/guides/guides/command-line#cypress-cache-path) command.
-
-For example, on a Mac:
-
-```shell
-npx cypress cache path
-/Users/jane/Library/Caches/Cypress
-```
-
-Second, open the source code at the following path in any code editor. Make sure
-to substitute `3.3.1` for the desired version of Cypress you want to edit.
-
-```text
-/Users/jane/Library/Caches/Cypress/3.3.1/Cypress.app/Contents/Resources/app/packages/
-```
-
-You can change anything in the JavaScript code:
-
-<DocsImage src="/img/guides/troubleshooting/source-code.png" alt="Source code of Cypress in a text editor" ></DocsImage>
-
-When finished, if necessary, remove the edited Cypress version and reinstall the
-Cypress official version to get back to the official released code.
-
-```shell
-rm -rf /Users/jane/Library/Caches/Cypress/3.3.1
-npm install cypress@3.3.1
-```

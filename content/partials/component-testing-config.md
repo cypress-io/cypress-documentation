@@ -1,0 +1,101 @@
+## Component Testing Config
+
+Below are a few additional configuration values that are specific to component
+testing.
+
+### Custom Dev Server
+
+A custom function can be passed into the `devServer` option, which allows the
+use of other dev servers not provided by Cypress out of the box. These can be
+from the Cypress community, preview builds not included with the app, or a
+custom one you create.
+
+The function's signature takes in a
+[Cypress Configuration](/guides/references/configuration) object as its only
+parameter and returns either an instance of a `devServer` or a promise that
+resolves to a `devServer` instance.
+
+<cypress-config-file>
+<template #js>
+
+```js
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  component: {
+    devServer(cypressConfig) {
+      // return devServer instance or a promise that resolves to
+      // a dev server here
+      return {
+        port: 1234,
+        close: () => {},
+      }
+    },
+  },
+})
+```
+
+</template>
+<template #ts>
+
+```ts
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  component: {
+    devServer(cypressConfig: CypressConfiguration) {
+      // return devServer instance or a promise that resolves to
+      // a dev server here
+      return {
+        port: 1234,
+        close: () => {},
+      }
+    },
+  },
+})
+```
+
+</template>
+</cypress-config-file>
+
+### Custom Index File
+
+By default, Cypress renders your components into an HTML file located at
+`cypress/support/component-index.html`.
+
+The index file allows you to add in global assets, such as styles, fonts, and
+external scripts.
+
+You can provide an alternative path to the file using the `indexHtmlFile` option
+in the [component config](/guides/references/configuration#component) options:
+
+```js
+{
+  component: {
+    devServer,
+    indexHtmlFile: '/custom/path/to/component-index.html'
+  }
+}
+```
+
+### Spec Pattern for Component Tests
+
+By default, Cypress looks for spec files anywhere in your project with an
+extension of `.cy.js`, `.cy.jsx`, `.cy.ts`, or `.cy.tsx`. However, you can
+change this behavior for component tests with a custom `specPattern` value. In
+the following example, we've configured Cypress to look for spec files with
+those same extensions, but only in the `src` folder or any of its
+subdirectories.
+
+```js
+{
+  component: {
+    specPattern: 'src/**/*.cy.{js,jsx,ts,tsx}'
+  }
+}
+```
+
+### Additional Config
+
+For more information on all the available configuration options, see the
+[configuration reference](/guides/references/configuration).
