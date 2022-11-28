@@ -757,6 +757,9 @@ not** implement these security measures. Additionally it's possible that the
 patterns we search for may accidentally rewrite valid JS code. If that's the
 case, please disable this option.
 
+Details for `experimentalModifyObstructiveThirdPartyCode` can be found
+[here](/guides/guides/web-security#Modifying-Obstructive-Third-Party-Code).
+
 ### setupNodeEvents
 
 The `setupNodeEvents` function allows you to tap into, modify, or extend the
