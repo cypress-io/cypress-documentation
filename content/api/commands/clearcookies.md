@@ -41,8 +41,7 @@ Pass in an options object to change the default behavior of `cy.clearCookies()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.clearCookies()` yields `null`.</li><li>`cy.clearCookies()` cannot
-be chained further.</li></List>
+- `cy.clearCookies()` yields `null`.
 
 ## Examples
 

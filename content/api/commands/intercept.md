@@ -154,8 +154,7 @@ See ["Intercepted requests"][req] and
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-- `cy.intercept()` yields `null`.
-- `cy.intercept()` can be aliased, but otherwise cannot be chained further.
+- `cy.intercept()` yields `null`, but can be aliased.
 - Waiting on an aliased `cy.intercept()` route using
   [cy.wait()](/api/commands/wait) will yield an object that contains information
   about the matching request/response cycle. See

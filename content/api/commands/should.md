@@ -66,8 +66,8 @@ Whatever was passed to the function is what is yielded.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>In most cases, `.should()` yields the same subject it was given from
-the previous command.</li></List>
+In most cases, `.should()` yields the same subject it was given from the
+previous command.
 
 ```javascript
 cy.get('nav') // yields <nav>
@@ -84,6 +84,9 @@ cy.get('nav') // yields <nav>
   .should('have.css', 'font-family') // yields 'sans-serif'
   .and('match', /serif/) // yields 'sans-serif'
 ```
+
+`.should()` is an assertion, and it is _safe_ to chain further commands that use
+the subject.
 
 ## Examples
 

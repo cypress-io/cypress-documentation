@@ -46,8 +46,7 @@ Pass in an options object to change the default behavior of
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.clearLocalStorage()` yields
-`null`.</li><li>`cy.clearLocalStorage()` cannot be chained further.</li></List>
+- `cy.clearLocalStorage()` yields `null`.
 
 ## Examples
 
