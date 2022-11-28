@@ -48,6 +48,9 @@ Pass in an options object to change the default behavior of `cy.getCookie()`.
 - `secure`
 - `value`
 
+`cy.getCookie()` is not a query. It will not retry, or wait for the requested
+cookie to exist.
+
 #### When a cookie matching the name could not be found:
 
 `cy.getCookie()` yields `null`.

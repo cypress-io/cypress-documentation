@@ -224,8 +224,8 @@ to assign the return value of Commands with `const`, `let`, or `var`.
 <Alert type="success">
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Use
-[closures to access and store](/guides/core-concepts/variables-and-aliases) what
-Commands yield you.
+[aliases and closures to access and store](/guides/core-concepts/variables-and-aliases)
+what Commands yield you.
 
 </Alert>
 
@@ -242,6 +242,10 @@ cy.visit('https://example.cypress.io')
 
 // nope, fails
 a.first().click()
+
+// Instead, do this.
+cy.get('a').as('links')
+cy.get('@links').first().click()
 ```
 
 <Alert type="info">

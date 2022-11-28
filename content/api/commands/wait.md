@@ -64,13 +64,14 @@ Pass in an options object to change the default behavior of `cy.wait()`.
 
 #### When given a `time` argument:
 
-<List><li>`cy.wait()` yields the same subject it was given from the previous
-command.</li></List>
+- `cy.wait()` yields the same subject it was given.
+- It is [unsafe](/guides/core-concepts/retry-ability#Only-queries-are-retried)
+  to chain further commands that rely on the subject after `.wait()`.
 
 #### When given an `alias` argument:
 
-<List><li>`cy.wait()` 'yields an object containing the HTTP request and response
-properties of the request' </li></List>
+- `cy.wait()` 'yields an object containing the HTTP request and response
+  properties of the request.
 
 ## Examples
 

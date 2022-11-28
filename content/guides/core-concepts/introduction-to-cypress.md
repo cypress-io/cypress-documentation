@@ -122,7 +122,7 @@ and exposes many of its DOM traversal methods to you so you can work with
 complex HTML structures with ease using APIs you're already familiar with.
 
 ```js
-// Each method is equivalent to its jQuery counterpart. Use what you know!
+// Each Cypress query is equivalent to its jQuery counterpart.
 cy.get('#main-content').find('.article').children('img[src^="/static"]').first()
 ```
 
@@ -330,17 +330,18 @@ understanding how they work is helpful!
 
 As we saw in the initial example, Cypress allows you to click on and type into
 elements on the page by using [`.click()`](/api/commands/click) and
-[`.type()`](/api/commands/type) commands with a [`cy.get()`](/api/commands/get)
-or [`cy.contains()`](/api/commands/contains) command. This is a great example of
-chaining in action. Let's see it again:
+[`.type()`](/api/commands/type) action commands with a
+[`cy.get()`](/api/commands/get) or [`cy.contains()`](/api/commands/contains)
+query command. This is a great example of chaining in action. Let's see it
+again:
 
 ```js
 cy.get('textarea.post-body').type('This is an excellent post.')
 ```
 
-We're chaining the [`.type()`](/api/commands/type) onto the
+We're chaining [`.type()`](/api/commands/type) onto
 [`cy.get()`](/api/commands/get), telling it to type into the subject yielded
-from the [`cy.get()`](/api/commands/get) command, which will be a DOM element.
+from the [`cy.get()`](/api/commands/get) query, which will be a DOM element.
 
 Here are even more action commands Cypress provides to interact with your app:
 
@@ -407,42 +408,44 @@ We will learn more about [assertions](#Assertions) later in this guide.
 A new Cypress chain always starts with `cy.[command]`, where what is yielded by
 the `command` establishes what other commands can be called next (chained).
 
-Some methods yield `null` and thus cannot be chained, such as
-[`cy.clearCookies()`](/api/commands/clearcookies).
+#### All commands yield a value.
 
-Some methods, such as [`cy.get()`](/api/commands/get) or
-[`cy.contains()`](/api/commands/contains), yield a DOM element, allowing further
-commands to be chained onto them (assuming they expect a DOM subject) like
-[`.click()`](/api/commands/click) or even
-[`cy.contains()`](/api/commands/contains) again.
+Each command specifies what value it yields. For example,
 
-#### Some commands can be chained from...
+- [`cy.clearCookies()`](/api/commands/clearcookies) yields `null`. You can chain
+  off commands that yield `null`, as long as the next command doesn't expect to
+  receive a subject.
+- [`cy.contains()`](/api/commands/contains) yields a DOM element, allowing
+  further commands to be chained (assuming they expect a DOM subject) like
+  [`.click()`](/api/commands/click) or even
+  [`cy.contains()`](/api/commands/contains) again.
+- [`.click()`](/api/commands/click) yields the same subject it was originally
+  given.
 
-- `cy` only, meaning they do not operate on a subject:
-  [`cy.clearCookies()`](/api/commands/clearcookies).
-- commands yielding particular kinds of subjects (like DOM elements):
-  [`.type()`](/api/commands/type).
-- both `cy` _and_ from a subject-yielding command:
-  [`cy.contains()`](/api/commands/contains).
+#### Some commands require a previous subject.
 
-#### Some commands yield...
-
-- `null`, meaning no command can be chained after the command:
-  [`cy.clearCookie()`](/api/commands/clearcookie).
-- the same subject they were originally yielded:
-  [`.click()`](/api/commands/click).
-- a new subject, as appropriate for the command [`.wait()`](/api/commands/wait).
-
-This is actually much more intuitive than it sounds.
+- [.click()](/api/commands/click) requires a DOM element from the previous
+  command.
+- [.its()](/api/commands/its) requires a subject, but it can be of any type.
+- [`cy.contains()`](/api/commands/contains) behaves differently depending on the
+  previous subject. If chained directly off of `cy`, or if the previous command
+  yielded `null`, it will look at the entire document. But if the subject is a
+  DOM element, it will only look inside that container.
+- [`cy.clearCookies()`](/api/commands/clearcookies) does not require a previous
+  subject - it can be chained off of anything, even
+  [`.end()`](/api/commands/end).
 
 #### Examples:
 
+This is actually much more intuitive than it sounds.
+
 ```js
-cy.clearCookies() // Done: 'null' was yielded, no chaining possible
+cy.clearCookies() // Yields null
+  .visit('/fixtures/dom.html') // Does not care about the previous subject.
 
 cy.get('.main-container') // Yields an array of matching DOM elements
   .contains('Headlines') // Yields the first DOM element containing content
-  .click() // Yields same DOM element from previous command
+  .click() // Yields same DOM element from previous command.
 ```
 
 <Alert type="success">
@@ -457,11 +460,26 @@ is in order.
 
 </Alert>
 
+<Alert type="warning">
+
+<strong class="alert-header">Don't continue a chain after acting on the
+DOM</strong>
+
+While it's possible in Cypress to act on the DOM and then continue chaining,
+this is usually unsafe, and can lead to stale elements. See the
+[Retry-ability Guide](/guides/core-concepts/retry-ability) for more details.
+
+But the rule of thumb is simple: If you perform an action, like navigating the
+page, clicking a button or scrolling the viewport, end the chain of commands
+there and start fresh from `cy`.
+
+</Alert>
+
 <Alert type="info">
 
 To work around the need to reference elements, Cypress has a feature
 [known as aliasing](/guides/core-concepts/variables-and-aliases). Aliasing helps
-you to **store** and **save** element references for future use.
+you to **store** and **save** references for future use.
 
 </Alert>
 
@@ -523,14 +541,13 @@ cy.get('.my-selector')
 
 /* many more actions */
 
-cy.get('@myElement') // re-queries the DOM as before (only if necessary)
+cy.get('@myElement') // re-queries the DOM as before
   .click()
 ```
 
-This lets us reuse our DOM queries for faster tests when the element is still in
-the DOM, and it automatically handles re-querying the DOM for us when it is not
-immediately found in the DOM. This is particularly helpful when dealing with
-front end frameworks that do a lot of re-rendering!
+This lets us reuse our queries for more readable tests, and it automatically
+handles re-querying the DOM for us as it updates. This is particularly helpful
+when dealing with front end frameworks that do a lot of re-rendering!
 
 ### Commands Are Asynchronous
 
@@ -550,6 +567,8 @@ it('hides the thing when it is clicked', () => {
   cy.get('.hides-when-clicked') // Still nothing happening
     .should('be.visible') // Still absolutely nothing
     .click() // Nope, nothing
+
+  cy.get('.hides-when-clicked') // Still nothing happening
     .should('not.be.visible') // Definitely nothing happening yet
 })
 
@@ -568,6 +587,8 @@ it('hides the thing when it is clicked', () => {
   cy.get('.hides-when-clicked') // Still nothing happening
     .should('be.visible') // Still absolutely nothing
     .click() // Nope, nothing
+
+  cy.get('.hides-when-clicked') // Still nothing happening
     .should('not.be.visible') // Definitely nothing happening yet
 })
 
@@ -579,8 +600,7 @@ it('hides the thing when it is clicked', () => {
 </template>
 </e2e-or-ct>
 
-Cypress doesn't kick off the browser automation magic until the test function
-exits.
+Cypress doesn't kick off the browser automation until the test function exits.
 
 #### Mixing Async and Sync code
 
@@ -723,7 +743,7 @@ it('test', () => {
 <strong class="alert-header">Core Concept</strong>
 
 Each Cypress command (and chain of commands) returns immediately, having only
-been appended to a queue of commands to be executed at a later time.
+been appended to a queue to be executed at a later time.
 
 You purposefully **cannot** do anything useful with the return value from a
 command. Commands are enqueued and managed entirely behind the scenes.
@@ -752,7 +772,7 @@ later in this guide.
 Using JavaScript loop commands like `while` can have unexpected effects. Let's
 say our application shows a random number on load.
 
-<DocsImage src="/img/guides/core-concepts/v10/reload-page.gif" alt="Manually reloading the browser page until the number 7 appears"></DocsImage>
+<DocsImage src="/img/guides/core-concepts/reload-page.gif" alt="Manually reloading the browser page until the number 7 appears"></DocsImage>
 
 We want the test to stop when it finds the number 7. If any other number is
 displayed the test reloads the page and checks again.
@@ -844,12 +864,14 @@ commands that were enqueued using the `cy.*` command chains.
 
 ```js
 it('hides the thing when it is clicked', () => {
-  cy.visit('/my/resource/path') // 1.
+  cy.visit('/my/resource/path') // 1
 
-  cy.get('.hides-when-clicked') // 2.
-    .should('be.visible') // 3.
-    .click() // 4.
-    .should('not.be.visible') // 5.
+  cy.get('.hides-when-clicked') // 2
+    .should('be.visible') // 3
+    .click() // 4
+
+  cy.get('.hides-when-clicked') // 5
+    .should('not.be.visible') // 6
 })
 ```
 
@@ -858,12 +880,14 @@ it('hides the thing when it is clicked', () => {
 
 ```js
 it('hides the thing when it is clicked', () => {
-  cy.mount(<MyComponent />) // 1.
+  cy.mount(<MyComponent />) // 1
 
-  cy.get('.hides-when-clicked') // 2.
-    .should('be.visible') // 3.
-    .click() // 4.
-    .should('not.be.visible') // 5.
+  cy.get('.hides-when-clicked') // 2
+    .should('be.visible') // 3
+    .click() // 4
+
+  cy.get('.hides-when-clicked') // 5
+    .should('not.be.visible') // 6
 })
 ```
 
@@ -876,7 +900,8 @@ The test above would cause an execution in this order:
 2. Find an element by its selector.
 3. Assert that the element is visible.
 4. Perform a click action on that element.
-5. Assert that the element is no longer visible.
+5. Find an element by its selector.
+6. Assert that the element is no longer visible.
 
 These actions will always happen serially (one after the other), never in
 parallel (at the same time). Why?
@@ -893,7 +918,9 @@ hidden **✨ magic ✨** Cypress does for us at each step:
    passes** ✨
 4. Perform a click action on that element ✨ **after we wait for the element to
    reach an actionable state** ✨
-5. Assert that the element is no longer visible ✨ **and retry until the
+5. Find an element by its selector ✨ **and retry until it is found in the DOM**
+   ✨
+6. Assert that the element is no longer visible ✨ **and retry until the
    assertion passes** ✨
 
 As you can see, Cypress does a lot of extra work to ensure the state of the
@@ -922,8 +949,8 @@ the timeout is reached, the test will fail.
 ### The Cypress Command Queue
 
 While the API may look similar to Promises, with it's `then()` syntax, Cypress
-commands are not promises - they are serial commands passed into a central
-queue, to be executed asynchronously at a later date. These commands are
+commands and queries are not promises - they are serial commands passed into a
+central queue, to be executed asynchronously at a later date. These commands are
 designed to deliver deterministic, repeatable and consistent tests.
 
 Almost all commands come with built-in
@@ -958,8 +985,8 @@ Let's take a look at each trade-off in depth:
 
 #### You cannot race or run multiple commands at the same time
 
-Cypress guarantees that it will execute all of its commands _deterministically_
-and identically every time they are run.
+Cypress guarantees that it will execute all of its commands and queries
+_deterministically_ and identically every time they are run.
 
 A lot of Cypress commands _mutate_ the state of the browser in some way.
 
@@ -980,7 +1007,7 @@ model after a real user working step by step.
 
 In Cypress there is no built in error recovery from a failed command. A command
 and its assertions all _eventually_ pass, or if one fails, all remaining
-commands are not run, and the test fails.
+commands are not executed, and the test fails.
 
 You might be wondering:
 
@@ -1021,8 +1048,8 @@ state.
 
 <strong class="alert-header">Core Concept</strong>
 
-Each API Command documents its behavior with assertions - such as how it retries
-or waits for assertions to pass.
+Each command documents its behavior with assertions - such as how it retries or
+waits for assertions to pass.
 
 </Alert>
 
@@ -1036,7 +1063,8 @@ Let's look at how you'd describe an assertion in English:
 To express this in Cypress you'd write:
 
 ```js
-cy.get('button').click().should('have.class', 'active')
+cy.get('button').click()
+cy.get('button').should('have.class', 'active')
 ```
 
 This above test will pass even if the `.active` class is applied to the button
@@ -1107,7 +1135,7 @@ fail! Here's a few:
 - The initial [`cy.mount()`](/api/commands/mount) or
   [`cy.visit()`](/api/commands/visit) could respond with something other than
   success.
-- Any of the [`cy.get()`](/api/commands/get) commands could fail to find their
+- Any of the [`cy.get()`](/api/commands/get) queries could fail to find their
   elements in the DOM.
 - The element we want to [`.click()`](/api/commands/click) on could be covered
   by another element.
@@ -1115,8 +1143,6 @@ fail! Here's a few:
 - Form submission could result in a non-success status code.
 - The in-page JS (the application under test) or the component could throw an
   error.
-
-Can you think of any more?
 
 <Alert type="success">
 
@@ -1134,7 +1160,7 @@ guarantee.
 
 ### Default Assertions
 
-Many commands have a default, built-in assertion, or rather have requirements
+Many commands have default, built-in assertions, or rather have requirements
 that may cause it to fail without needing an explicit assertion you've added.
 
 #### For instance:
@@ -1157,25 +1183,24 @@ that may cause it to fail without needing an explicit assertion you've added.
   current subject.
 
 Certain commands may have a specific requirement that causes them to immediately
-fail without retrying: such as [`cy.request()`](/api/commands/request).
+fail without retrying, such as [`cy.request()`](/api/commands/request).
 
-Others, such as DOM based commands will automatically
+Others, such as DOM queries automatically
 [retry](/guides/core-concepts/retry-ability) and wait for their corresponding
 elements to exist before failing.
 
-Even more - action commands will automatically wait for their element to reach
-an [actionable state](/guides/core-concepts/interacting-with-elements) before
+Action commands automatically wait for their element to reach an
+[actionable state](/guides/core-concepts/interacting-with-elements) before
 failing.
 
 <Alert type="success">
 
 <strong class="alert-header">Core Concept</strong>
 
-All DOM based commands automatically wait for their elements to exist in the
-DOM.
+All DOM commands automatically wait for their elements to exist in the DOM.
 
-You **never** need to write [`.should('exist')`](/api/commands/should) after a
-DOM based command.
+You **never** need to write [`.should('exist')`](/api/commands/should) after
+querying the DOM.
 
 </Alert>
 
@@ -1208,9 +1233,11 @@ All you have to do is add that assertion and Cypress will **reverse** its rules
 waiting for elements to exist.
 
 ```js
+cy.get('button.close').click()
+
 // now Cypress will wait until this
-// <button> is not in the DOM after the click
-cy.get('button.close').click().should('not.exist')
+// <button> is not in the DOM
+cy.get('button.close').should('not.exist')
 
 // and now make sure this #modal does not exist in the DOM
 // and automatically wait until it's gone!
@@ -1337,7 +1364,7 @@ Explicit assertions are great when you want to:
 - Perform custom logic prior to making the assertion.
 - Make multiple assertions against the same subject.
 
-The [`.should()`](/api/commands/should) command allows us to pass a callback
+The [`.should()`](/api/commands/should) assertion allows us to pass a callback
 function that takes the yielded subject as its first argument. This works like
 [`.then()`](/api/commands/then), except Cypress automatically **waits and
 retries** for everything inside of the callback function to pass.
@@ -1403,7 +1430,7 @@ by you all share the same timeout values.
 
 ### Applying Timeouts
 
-You can modify a command's timeout. This timeout affects both its default
+You can modify a commands's timeout. This timeout affects both its default
 assertions (if any) and any specific assertions you've added.
 
 Remember because assertions are used to describe a condition of the previous
@@ -1435,11 +1462,8 @@ Under the hood Cypress:
 
 - Queries for the element `.mobile-nav`
 
-  ✨**and waits up to 4 seconds for it to exist in the DOM**✨
-
-  ✨**and waits up to 4 seconds for it to be visible**✨
-
-  ✨**and waits up to 4 seconds for it to contain the text: Home**✨
+  ✨**and waits up to 4 seconds for it to exist in the DOM**✨ ✨**and be
+  visible**✨ ✨**and contain the text: Home**✨
 
 The _total_ amount of time Cypress will wait for _all_ of the assertions to pass
 is for the duration of the [cy.get()](/api/commands/get) `timeout` (which is 4
@@ -1462,11 +1486,8 @@ Under the hood Cypress:
 
 - Gets the element `.mobile-nav`
 
-  ✨**and waits up to 10 seconds for it to exist in the DOM**✨
-
-  ✨**and waits up to 10 seconds for it to be visible**✨
-
-  ✨**and waits up to 10 seconds for it to contain the text: Home**✨
+  ✨**and waits up to 10 seconds for it to exist in the DOM**✨ ✨**and be
+  visible**✨ ✨**and contain the text: Home**✨
 
 Notice that this timeout has flowed down to all assertions and Cypress will now
 wait _up to 10 seconds total_ for all of them to pass.
@@ -1510,5 +1531,5 @@ For instance:
   response for `30000ms`. We expect your application to make a matching request
   quickly, but we expect the server's response to potentially take much longer.
 
-That leaves most other commands including all DOM based commands to time out by
-default after 4000ms.
+That leaves most other commands including all DOM queries to time out by default
+after 4000ms.
