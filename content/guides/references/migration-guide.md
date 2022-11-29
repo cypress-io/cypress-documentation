@@ -13,6 +13,18 @@ associated with the Session and Origin experiments are now available. The
 `cy.origin()` and `cy.session()` commands are generally available and the
 concept of Test Isolation has been introduced.
 
+### Node.js 14+ support
+
+Cypress comes bundled with its own
+[Node.js version](https://github.com/cypress-io/cypress/blob/develop/.node-version).
+However, installing the `cypress` npm package uses the Node.js version installed
+on your system.
+
+Node.js 12 reached its end of life on April 30, 2022.
+[See Node's release schedule](https://github.com/nodejs/Release). This Node.js
+version will no longer be supported when installing Cypress. The minimum Node.js
+version supported to install Cypress is Node.js 14+.
+
 ### Test Isolation
 
 The
@@ -192,7 +204,7 @@ cy.findByTestId('popover').findAllByRole('button').first().as('button')
 
 ### Command / Cypress API Changes
 
-### `Cypress.Cookies.defaults` and `Cypress.Cookies.preserveOnce`
+#### `Cypress.Cookies.defaults` and `Cypress.Cookies.preserveOnce`
 
 The `Cypress.Cookies.defaults` and `CypressCookies.preserveOnce` APIs been
 removed. Use the [`cy.session()`](/api/commands/session) command to preserve
