@@ -45,7 +45,6 @@ Pass in an options object to change the default behavior of
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 - `cy.clearAllSessionStorage()` yields `null`.
-- `cy.clearAllSessionStorage()` cannot be chained further.
 
 ## Rules
 
