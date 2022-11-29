@@ -2,7 +2,9 @@
 title: getAllSessionStorage
 ---
 
-Get data in sessionStorage for all origins with which the test has interacted.
+Get
+[`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
+data for all origins with which the test has interacted.
 
 ## Syntax
 
@@ -33,7 +35,7 @@ Pass in an options object to change the default behavior of
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 `cy.getAllSessionStorage()` yields an object where the keys are origins and the
-values are key-value pairs of sessionStorage data.
+values are key-value pairs of `sessionStorage` data.
 
 For example, if `key1` is set to `value1` on `https://example.com` and `key2` is
 set to `value2` on `https://other.com`, `cy.getAllSessionStorage()` will yield:

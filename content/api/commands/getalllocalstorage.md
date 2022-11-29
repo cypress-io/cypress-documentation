@@ -2,7 +2,9 @@
 title: getAllLocalStorage
 ---
 
-Get data in localStorage for all origins with which the test has interacted.
+Get
+[`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+data for all origins with which the test has interacted.
 
 ## Syntax
 
@@ -33,7 +35,7 @@ Pass in an options object to change the default behavior of
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
 `cy.getAllLocalStorage()` yields an object where the keys are origins and the
-values are key-value pairs of localStorage data.
+values are key-value pairs of `localStorage` data.
 
 For example, if `key1` is set to `value1` on `https://example.com` and `key2` is
 set to `value2` on `https://other.com`, `cy.getAllLocalStorage()` will yield:

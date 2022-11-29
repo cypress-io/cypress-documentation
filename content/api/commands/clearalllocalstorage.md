@@ -2,13 +2,17 @@
 title: clearAllLocalStorage
 ---
 
-Clear localStorage data for all origins with which the test has interacted.
+Clear
+[`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+data for all origins with which the test has interacted.
 
 <Alert type="warning">
 
 Cypress automatically runs this command _before_ each test to prevent state from
-being shared across tests. You shouldn't need to use this command unless you're
-using it to clear localStorage inside a single test.
+being shared across tests when
+[test isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+is `on`. You shouldn't need to use this command unless you're using it to clear
+localStorage inside a single test or test isolation is `off`.
 
 </Alert>
 
@@ -42,14 +46,6 @@ Pass in an options object to change the default behavior of
 
 - `cy.clearAllLocalStorage()` yields `null`.
 - `cy.clearAllLocalStorage()` cannot be chained further.
-
-## Examples
-
-### Clear all localStorage
-
-```javascript
-cy.clearAllLocalStorage()
-```
 
 ## Rules
 
