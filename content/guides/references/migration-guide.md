@@ -5,7 +5,7 @@ title: Migration Guide
 ## Migrating to Cypress version 12.0
 
 This guide details the changes and how to change your code to migrate to Cypress
-version 11.0.
+version 12.0.
 [See the full changelog for version 12.0](/guides/references/changelog#12-0-0).
 
 The `experimentalSessionAndOrigin` flag has been removed and all functionality
