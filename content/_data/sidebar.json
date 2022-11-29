@@ -174,7 +174,7 @@
             {
               "title": "Svelte API",
               "slug": "svelte/api"
-            }            
+            }
           ]
         },
         {
@@ -506,6 +506,26 @@
               "slug": "clear"
             },
             {
+              "title": "clearCookie",
+              "slug": "clearcookie"
+            },
+            {
+              "title": "clearCookies",
+              "slug": "clearcookies"
+            },
+            {
+              "title": "clearAllLocalStorage",
+              "slug": "clearalllocalstorage"
+            },
+            {
+              "title": "clearAllSessionStorage",
+              "slug": "clearallsessionstorage"
+            },
+            {
+              "title": "clearLocalStorage",
+              "slug": "clearlocalstorage"
+            },
+            {
               "title": "click",
               "slug": "click"
             },
@@ -598,6 +618,26 @@
             {
               "title": "get",
               "slug": "get"
+            },
+            {
+              "title": "getAllLocalStorage",
+              "slug": "getalllocalstorage"
+            },
+            {
+              "title": "getAllSessionStorage",
+              "slug": "getallsessionstorage"
+            },
+            {
+              "title": "getCookie",
+              "slug": "getcookie"
+            },
+            {
+              "title": "getCookies",
+              "slug": "getcookies"
+            },
+            {
+              "title": "go",
+              "slug": "go"
             },
             {
               "title": "hash",
