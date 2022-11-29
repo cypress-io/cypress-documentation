@@ -80,8 +80,7 @@ Pass in an options object to change the default behavior of `cy.viewport()`.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`cy.viewport()` yields `null`.</li><li>`cy.viewport()` cannot be
-chained further.</li></List>
+- `cy.viewport()` yields `null`.
 
 ## Examples
 

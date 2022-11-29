@@ -357,6 +357,11 @@ class. Then we can use the [.type()](/api/commands/type) command to enter text
 into the selected input. Finally, we can verify that the value of the input
 reflects the text that was typed with another [.should()](/api/commands/should).
 
+In general, the structure of your test should flow query -> query -> command or
+assertion(s). It's best practice not to chain anything after an action command;
+for more details on why this is, see our guide on
+[retry-ability](/guides/core-concepts/retry-ability).
+
 ```js
 describe('My First Test', () => {
   it('Gets, types and asserts', () => {
@@ -368,11 +373,11 @@ describe('My First Test', () => {
     // includes '/commands/actions'
     cy.url().should('include', '/commands/actions')
 
-    // Get an input, type into it and verify
-    // that the value has been updated
-    cy.get('.action-email')
-      .type('fake@email.com')
-      .should('have.value', 'fake@email.com')
+    // Get an input, type into it
+    cy.get('.action-email').type('fake@email.com')
+
+    //  Verify that the value has been updated
+    cy.get('.action-email').should('have.value', 'fake@email.com')
   })
 })
 ```
@@ -399,7 +404,7 @@ the new page. If we read it out loud, it might sound like:
 > 5. Assert it includes: `/commands/actions`
 > 6. Get the input with the `action-email` class
 > 7. Type `fake@email.com` into the input
-> 8. Assert the input reflects the new value
+> 8. Get the input again and assert that it reflects the new value
 
 Or in the Given, When, Then syntax:
 

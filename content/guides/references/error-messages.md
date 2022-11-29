@@ -126,10 +126,10 @@ better way to accomplish what you're trying to do. Read through the
 [chat with someone in Discord](https://discord.gg/ncdA3Jz63n), or
 [open an issue](https://github.com/cypress-io/cypress/issues/new/choose).
 
-### <Icon name="exclamation-triangle" color="red"></Icon> `cy...()` failed because the element you are chaining off of has become detached or removed from the dom
+### <Icon name="exclamation-triangle" color="red"></Icon> `cy...()` failed because the page updated
 
 Getting this error means you've tried to interact with a "dead" DOM element -
-meaning it's been detached or completely removed from the DOM.
+meaning the current subject has been removed from the DOM.
 
 <!--
 To reproduce the following screenshot:
@@ -137,9 +137,10 @@ describe('detachment example', () => {
   beforeEach(() => {
     cy.get('body').then(($body) => {
       const $outer = Cypress.$('<div />').appendTo($body)
-      Cypress.$('<button />').on('click', () => { $outer[0].remove() }).appendTo($outer)
+      Cypress.$('<button />').appendTo($outer).click(function () { Cypress.$(this).replaceWith(this.outerHTML) })
     })
   })
+
   it('detaches from dom', () => {
     cy.get('button')
     .click()
@@ -149,29 +150,11 @@ describe('detachment example', () => {
 })
 -->
 
-<!--
-To reproduce the following screenshot:
-describe('detachment example', () => {
-  beforeEach(() => {
-    cy.get('body').then(($body) => {
-      const $outer = Cypress.$('<div />').appendTo($body)
-      Cypress.$('<button />').on('click', () => { $outer[0].remove() }).appendTo($outer)
-    })
-  })
-  it('detaches from dom', () => {
-    cy.get('button')
-    .click()
-    .parent()
-    .should('have.text', 'Clicked')
-  })
-})
--->
+<DocsImage src="/img/guides/references/cy-method-failed-page-updated.png" alt="cy.method() failed because the page updated" ></DocsImage>
 
-<DocsImage src="/img/guides/references/cy-method-failed-element-is-detached.png" alt="cy.method() failed because element is detached" ></DocsImage>
-
-Cypress errors because it can't interact with "dead" elements - much like a real
-user could not do this either. Understanding how this happens is very
-important - and it is often preventable.
+Cypress errors because after a command, the subject becomes 'fixed' to a
+specific element - since it can't retry commands, if the element becomes
+detached from the page, we can't assert or interact on it.
 
 Let's take a look at an example below.
 
@@ -190,8 +173,9 @@ Let's take a look at an example below.
 ```javascript
 $('button').click(function () {
   // when the <button> is clicked
-  // we remove the button from the DOM
-  $(this).remove()
+  // we remove the button from the DOM,
+  // and add a new, identical one.
+  $(this).replaceWith(this.outerHTML)
 })
 ```
 
@@ -203,47 +187,36 @@ cy.get('button').click().parent()
 
 We've programmed our application above so that as soon as the `click` event
 happens, the button is removed from the DOM. When Cypress begins processing the
-next command ([`.parent()`](/api/commands/parent)) in the test above, it detects
-that the yielded subject (the button) is detached from the DOM and throws the
-error.
+next query ([`.parent()`](/api/commands/parent)) in the test above, it detects
+that the yielded subject (the original button) is detached from the DOM and
+throws the error.
 
-We can prevent Cypress from throwing this error by rewriting our test code.
+Fortunately, the error tells us exactly what to do:
+
+> You can typically solve this by breaking up a chain.
 
 #### Fixed Test Code
 
 ```javascript
 cy.get('button').click()
-cy.get('[data-testid="parent"]')
+cy.get('button').parent()
 ```
 
-The above example is an oversimplification. Let's look at a more complex
-example.
+The above example is an oversimplification, but a representative one. In modern
+JavaScript frameworks, DOM elements are regularly re-rendered - meaning that the
+old element is thrown away and a new one is put in its place. Because this
+happens so fast, it may _appear_ as if nothing has visibly changed to the user.
+But if you are in the middle of executing test commands, it's possible the
+element you're interacting with has become "dead". To deal with this situation
+you must:
 
-In modern JavaScript frameworks, DOM elements are regularly re-rendered -
-meaning that the old element is thrown away and a new one is put in its place.
-Because this happens so fast, it may _appear_ as if nothing has visibly changed
-to the user. But if you are in the middle of executing test commands, it's
-possible the element you're interacting with has become "dead". To deal with
-this situation you must:
+- Always start a new chain after each _command_.
+- Use Cypress _queries_ to locate elements on the page, rather than using
+  specific HTML elements as your subject
 
-- Understand when your application re-renders
-- Re-query for newly added DOM elements
-- _Guard_ Cypress from running commands until a specific condition is met
-
-When we say _guard_, this usually means:
-
-- Writing an assertion
-- Waiting on an XHR
-
-#### More info
-
-<Alert type="info">
-
-Read the blog post
-[Do Not Get Too Detached](https://www.cypress.io/blog/2020/07/22/do-not-get-too-detached/)
-for another example of this error, and how to solve it.
-
-</Alert>
+Queries (`.get()`, `.as()` and`.parent()`, for example) and assertions
+(`.should()`, `.and()`) are safe to chain off of. Commands (such as `.click()`)
+are not.
 
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy....()` failed because the element cannot be interacted with
 

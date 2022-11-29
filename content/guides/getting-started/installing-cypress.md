@@ -147,7 +147,12 @@ application supports these operating systems:
 
 If you're using `npm` to install Cypress, we support:
 
-- **Node.js** 14 and above
+- **Node.js** 14.x
+- **Node.js** 16.x
+- **Node.js** 18.x and above
+
+Cypress generally aligns with
+[Node's release schedule](https://github.com/nodejs/Release).
 
 ### Hardware
 

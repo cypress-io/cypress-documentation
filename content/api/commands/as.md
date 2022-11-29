@@ -3,8 +3,8 @@ title: as
 ---
 
 Assign an alias for later use. Reference the alias later within a
-[`cy.get()`](/api/commands/get) or [`cy.wait()`](/api/commands/wait) command
-with an `@` prefix.
+[`cy.get()`](/api/commands/get) query or [`cy.wait()`](/api/commands/wait)
+command with an `@` prefix.
 
 <Alert type="info">
 
@@ -46,8 +46,8 @@ using an `@` prefix.
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
-<List><li>`.as()` yields the same subject it was given from the previous
-command.</li></List>
+- `.as()` yields the same subject it was given.
+- It is _safe_ to chain further commands after `.as()`.
 
 ## Examples
 
