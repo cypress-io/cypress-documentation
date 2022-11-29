@@ -506,26 +506,6 @@
               "slug": "clear"
             },
             {
-              "title": "clearCookie",
-              "slug": "clearcookie"
-            },
-            {
-              "title": "clearCookies",
-              "slug": "clearcookies"
-            },
-            {
-              "title": "clearAllLocalStorage",
-              "slug": "clearalllocalstorage"
-            },
-            {
-              "title": "clearAllSessionStorage",
-              "slug": "clearallsessionstorage"
-            },
-            {
-              "title": "clearLocalStorage",
-              "slug": "clearlocalstorage"
-            },
-            {
               "title": "click",
               "slug": "click"
             },
@@ -618,26 +598,6 @@
             {
               "title": "get",
               "slug": "get"
-            },
-            {
-              "title": "getAllLocalStorage",
-              "slug": "getalllocalstorage"
-            },
-            {
-              "title": "getAllSessionStorage",
-              "slug": "getallsessionstorage"
-            },
-            {
-              "title": "getCookie",
-              "slug": "getcookie"
-            },
-            {
-              "title": "getCookies",
-              "slug": "getcookies"
-            },
-            {
-              "title": "go",
-              "slug": "go"
             },
             {
               "title": "hash",
@@ -734,6 +694,14 @@
               "slug": "blur"
             },
             {
+              "title": "clearAllLocalStorage",
+              "slug": "clearalllocalstorage"
+            },
+            {
+              "title": "clearAllSessionStorage",
+              "slug": "clearallsessionstorage"
+            },
+            {
               "title": "clearCookie",
               "slug": "clearcookie"
             },
@@ -768,6 +736,14 @@
             {
               "title": "focus",
               "slug": "focus"
+            },
+            {
+              "title": "getAllLocalStorage",
+              "slug": "getalllocalstorage"
+            },
+            {
+              "title": "getAllSessionStorage",
+              "slug": "getallsessionstorage"
             },
             {
               "title": "getCookie",
