@@ -147,7 +147,7 @@ application supports these operating systems:
 
 If you're using `npm` to install Cypress, we support:
 
-- **Node.js** 12 or 14 and above
+- **Node.js** 14 and above
 
 ### Hardware
 
