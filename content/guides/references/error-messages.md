@@ -455,25 +455,47 @@ it('does not forget to return a promise', () => {
 })
 ```
 
-### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` failed because you are attempting to visit a second unique domain
+### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` succeeded, but commands are timing out because you visited a different origin domain without using `cy.origin()`
 
-::include{file=partials/single-domain-workaround.md}
+As of Cypress [v12.0.0](https://on.cypress.io/changelog#12-0-0), users can
+navigate to multiple domains in a single test. The following test will succeed
+as is:
 
-See our [Web Security](/guides/guides/web-security#Limitations) documentation.
+```javascript
+it('navigates to docs.cypress.io', () => {
+  cy.visit('http://localhost:3000') // where your web server + HTML is hosted
+  cy.visit('https://docs.cypress.io') // visiting a different superdomain
+})
+```
 
-### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` failed because you are attempting to visit a different origin domain
+However, when the newly visited URL is not considered the same superdomain, the
+[`cy.origin()`](/api/commands/origin) command **must** be used to interact with
+the newly visited domain. The following test is incorrect:
 
-::include{file=partials/single-domain-workaround.md}
+```javascript
+it('navigates to docs.cypress.io and runs additional commands', () => {
+  cy.visit('http://localhost:3000')
+  cy.visit('https://docs.cypress.io') // visiting a different superdomain
+  cy.get('h1').should('contain', 'Why Cypress?') // run new assertions fail
+})
+```
 
-Two URLs have the same origin if the `protocol`, `port` (if specified), and
-`host` are the same for both. You can only visit domains that are of the
-same-origin within a single test. You can read more about same-origin policy in
-general
-[here](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
+And will result in the following error:
 
-You can visit urls that are of different origin across different tests, so you
-may consider splitting your `cy.visit()` of different origin domains into
-separate tests.
+<DocsImage src="/img/guides/references/cy-visit-subsequent-commands-timed-out.png" alt="cy.visit() subsequent commands timed out" ></DocsImage>
+
+In order to fix this, our `cy.get()` command **must** be wrapped inside the
+[`cy.origin()`](/api/commands/origin) command, like so:
+
+```javascript
+it('navigates to docs.cypress.io and runs additional commands', () => {
+  cy.visit('http://localhost:3000')
+  cy.visit('https://docs.cypress.io') // visiting a different superdomain
+  cy.origin('https://docs.cypress.io', () => {
+    cy.get('h1').should('contain', 'Why Cypress?') // run new assertions now succeed!
+  })
+})
+```
 
 See our [Web Security](/guides/guides/web-security#Limitations) documentation
 for more information and workarounds.
