@@ -9,7 +9,7 @@ version 11.0.
 [See the full changelog for version 12.0](/guides/references/changelog#12-0-0).
 
 The `experimentalSessionAndOrigin` flag has been removed and all functionality
-associated with the Session and Origin Experiment are now available. The
+associated with the Session and Origin experiments are now available. The
 `cy.origin()` and `cy.session()` commands are generally available and the
 concept of Test Isolation has been introduced.
 
