@@ -2,7 +2,7 @@
 title: Migration Guide
 ---
 
-## Migrating to Cypress version 12.0
+## Migrating to Cypress 12.0
 
 This guide details the changes and how to change your code to migrate to Cypress
 version 12.0.
@@ -341,7 +341,7 @@ The follow commands can no longer be overridden:
 - cy.url()
 - cy.window()
 
-## Migrating to Cypress version 11.0
+## Migrating to Cypress 11.0
 
 This guide details the changes and how to change your code to migrate to Cypress
 version 11.0.
@@ -607,7 +607,7 @@ export default defineConfig({
 Vite 3+ users could make use of the
 [`mergeConfig`](https://vitejs.dev/guide/api-javascript.html#mergeconfig) API.
 
-## Migrating to Cypress version 10.0
+## Migrating to Cypress 10.0
 
 This guide details the changes and how to change your code to migrate to Cypress
 version 10.0.
