@@ -382,10 +382,6 @@ The following scenarios will mark the session as invalid:
 - the `validate` function contains failing Cypress command
 - the last Cypress command in the `validate` function yielded `false`
 
-The page is not cleared after the `validate` function is executed. If you use
-`cy.visit()` in your validation, your test will continue on the visited page
-once `cy.session()` succeeds.
-
 Here are a few `validate` examples:
 
 ```javascript
@@ -690,7 +686,6 @@ having to explicitly log out.
 |                            |               Page cleared (test)               |              Session data cleared               |
 | -------------------------- | :---------------------------------------------: | :---------------------------------------------: |
 | Before `setup`             | <Icon name="check-circle" color="green"></Icon> | <Icon name="check-circle" color="green"></Icon> |
-| Before `validate`          | <Icon name="check-circle" color="green"></Icon> |                                                 |
 | Before `cy.session()` ends | <Icon name="check-circle" color="green"></Icon> |                                                 |
 
 [`cy.visit()`](/api/commands/visit) must be explicitly called afterwards to
@@ -704,7 +699,6 @@ data will clear when `cy.session()` runs.
 |                            | Page cleared (test) |              Session data cleared               |
 | -------------------------- | :-----------------: | :---------------------------------------------: |
 | Before `setup`             |                     | <Icon name="check-circle" color="green"></Icon> |
-| Before `validate`          |                     |                                                 |
 | Before `cy.session()` ends |                     |                                                 |
 
 [`cy.visit()`](/api/commands/visit) does not need to be called afterwards to
@@ -859,14 +853,16 @@ generate random unique ids if an arbitrary name-space does not meet your needs.
 
 #### Why are all my Cypress commands failing after calling `cy.session()`?
 
-Ensure that you're calling [`cy.visit()`](/api/commands/visit) after calling
-`cy.session()`, otherwise your tests will be running on a blank page.
+When test isolation is `on`, ensure that you're calling
+[`cy.visit()`](/api/commands/visit) after calling `cy.session()`, otherwise your
+tests will be running on a blank page.
 
 #### Why am I seeing `401` errors after calling `cy.session()`?
 
-It's possible that your session has been invalidated. Be sure to specify a
-`validate` function so that `cy.session()` can validate and recreate the session
-if necessary.
+It's possible that your session is not valid or was not fully established before
+the session was saved and the command ended. Be sure to specify a `validate`
+function so that `cy.session()` can validate and recreate the session if
+necessary.
 
 ## Command Log
 
