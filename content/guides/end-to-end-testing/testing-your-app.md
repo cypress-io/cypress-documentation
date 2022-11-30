@@ -410,111 +410,87 @@ You'll likely also want to test your login UI for:
 
 Each of these likely requires a full blown e2e test.
 
-Now, once you have your login completely tested - you may be tempted to think:
+#### Reusing the login code
 
-> "...okay great! Let's repeat this login process before every single test!"
+At this point there's nothing stopping you copying and pasting the login code
+above into every one of your tests that needs an authenticated user. Or you
+could even put all your tests in one big spec file and put the login code in a
+`beforeEach` block. But neither of those approaches is particularly
+maintainable, and they're certainly not very elegant. A much better solution is
+to use a `cy.login()` [custom command](/api/cypress-api/custom-commands).
 
-<Alert type="danger">
-
-<strong class="alert-header">No! Please don\'t.</strong>
-
-Do not use **your UI** to login before each test.
-
-</Alert>
-
-Let's investigate and tease apart why.
-
-#### Bypassing your UI
-
-When you're writing tests for a very **specific feature**, you _should_ use your
-UI to test it.
-
-But when you're testing _another area of the system_ that relies on a state from
-a previous feature: **do not use your UI to set up this state**.
-
-Here's a more robust example:
-
-Imagine you're testing the functionality of a **Shopping Cart**. To test this,
-you need the ability to add products to that cart. Well where do the products
-come from? Should you use your UI to login to the admin area, and then create
-all of the products including their descriptions, categories, and images? Once
-that's done should you then visit each product and add each one to the shopping
-cart?
-
-No. You shouldn't do that.
-
-<Alert type="warning">
-
-<strong class="alert-header">Anti-Pattern</strong>
-
-Don't use your UI to build up state! It's enormously slow, cumbersome, and
-unnecessary.
-
-Read about [best practices](/guides/references/best-practices) here.
-
-</Alert>
-
-Using your UI to **log in** is the _exact same scenario_ as what we described
-previously. Logging in is a prerequisite of state that comes before all of your
-other tests.
-
-Because Cypress isn't Selenium, we can actually take a huge shortcut here and
-skip needing to use our UI by using [`cy.request()`](/api/commands/request).
-
-Because [`cy.request()`](/api/commands/request) automatically gets and sets
-cookies under the hood, we can actually use it to build up state without using
-your browser's UI, yet still have it perform exactly as if it came from the
-browser!
-
-Let's revisit the example from above but assume we're testing some other part of
-the system.
+Custom commands allow you to easily encapsulate and reuse Cypress test logic.
+They're basically just functions, but with some added sugar to allow you to use
+them with the same chaining API as the built-in Cypress commands. Here's an
+example of the login code from the previous section converted into a custom
+command:
 
 ```js
-describe('The Dashboard Page', () => {
-  beforeEach(() => {
-    // reset and seed the database prior to every test
-    cy.exec('npm run db:reset && npm run db:seed')
+// In cypress/support/commands.js
 
-    // seed a user in the DB that we can control from our tests
-    // assuming it generates a random password for us
-    cy.request('POST', '/test/seed/user', { username: 'jane.lane' })
-      .its('body')
-      .as('currentUser')
-  })
+Cypress.Commands.add('login', (username, password) => {
+  cy.visit('/login')
 
-  it('logs in programmatically without using the UI', function () {
-    // destructuring assignment of the this.currentUser object
-    const { username, password } = this.currentUser
+  cy.get('input[name=username]').type(username)
 
-    // programmatically log us in without needing the UI
-    cy.request('POST', '/login', {
-      username,
-      password,
-    })
+  // {enter} causes the form to submit
+  cy.get('input[name=password]').type(`${password}{enter}`)
 
-    // now that we're logged in, we can visit
-    // any kind of restricted route!
-    cy.visit('/dashboard')
+  // we should be redirected to /dashboard
+  cy.url().should('include', '/dashboard')
 
-    // our auth cookie should be present
-    cy.getCookie('your-session-cookie').should('exist')
+  // our auth cookie should be present
+  cy.getCookie('your-session-cookie').should('exist')
 
-    // UI should reflect this user being logged in
-    cy.get('h1').should('contain', 'jane.lane')
-  })
+  // UI should reflect this user being logged in
+  cy.get('h1').should('contain', username)
+})
+
+// In your spec file
+
+it('does something on a secured page', function () {
+  const { username, password } = this.currentUser
+  cy.login(username, password)
+
+  // ...rest of test
 })
 ```
 
-Do you see the difference? We were able to login without needing to actually use
-our UI. This saves an enormous amount of time visiting the login page, filling
-out the username, password, and waiting for the server to redirect us _before
-every test_.
+#### Improving performance
 
-Because we previously tested the login system end-to-end without using any
-shortcuts, we already have 100% confidence it's working correctly.
+You're probably wondering what happened to our advice about logging in "only
+once". The custom command above will work just fine for testing your secured
+pages, but if you have more than a handful of tests, logging in before every
+test is going to add a lot of running time to your suite.
 
-Use the methodology above when working with any area of your system that
-requires the state to be set up elsewhere. Just remember - don't use your UI!
+Luckily, Cypress provides the [`cy.session()` command](/api/commands/session), a
+powerful performance tool that lets you cache user session data and reuse it for
+multiple tests without going through multiple login flows! Let's modify the
+`cy.login()` command from our previous example to use `cy.session()`:
+
+```js
+Cypress.Commands.add('login', (username, password) => {
+  cy.session(
+    username,
+    () => {
+      cy.visit('/login')
+      cy.get('input[name=username]').type(username)
+      cy.get('input[name=password]').type(`${password}{enter}`)
+      cy.url().should('include', '/dashboard')
+      cy.get('h1').should('contain', username)
+    },
+    {
+      validate: () => {
+        cy.getCookie('your-session-cookie').should('exist')
+      },
+    }
+  )
+})
+```
+
+There's a lot going on here that's out of the scope of this introduction, so for
+a more in-depth explanation of how `cy.session()` works,
+[read the API docs](/api/commands/session).
 
 <Alert type="info">
 
