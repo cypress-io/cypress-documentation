@@ -916,6 +916,10 @@
               "slug": "keyboard-api"
             },
             {
+              "title": "RequestLogs",
+              "slug": "request-logs"
+            },
+            {
               "title": "Screenshot",
               "slug": "screenshot-api"
             },
