@@ -17,9 +17,9 @@ title: Writing and Organizing Tests
 
 <strong class="alert-header">Best Practices</strong>
 
-We gave a "Best Practices" conference talk at AssertJS (February 2018).
-This video demonstrates how to approach breaking down your application and
-organizing your tests.
+We gave a "Best Practices" conference talk at AssertJS (February 2018). This
+video demonstrates how to approach breaking down your application and organizing
+your tests.
 
 <Icon name="play-circle"></Icon>
 [https://www.youtube.com/watch?v=5XQOK0v_YRE](https://www.youtube.com/watch?v=5XQOK0v_YRE)
