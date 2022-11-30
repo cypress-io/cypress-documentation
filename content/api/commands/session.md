@@ -111,10 +111,10 @@ before `setup` runs, regardless of the testIsolation configuration.
 
 **<Icon name="angle-right"></Icon> options** **_(Object)_**
 
-| Option             | Default     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| ------------------ | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `validate`         | `undefined` | Validates the newly-created or restored session.<br><br>Function that runs immediately after the `setup` function is run **and** after a cached session is restored. If this returns `false`, throws an exception, contains any failing Cypress command, or returns a Promise which rejects or resolves to `false`, the session is considered invalid.<br><br>- If validation fails immediately after setup, the test will fail.<br>- If validation succeeds immediatedly after setup, the session will not be saved until `validate` is finished.<br>- If validation fails after restoring a session, `setup` will re-run. |
-| `cacheAcrossSpecs` | `false`     | When enabled, the newly created session is considered "global" and can be restored in any spec during the test execution in the same Cypress run on the same machine. Use this option for a session that will be used multiple times, across many specs.                                                                                                                                                                                                                                                                                                                                                                    |
+| Option             | Default     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| ------------------ | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `validate`         | `undefined` | Validates the newly-created or restored session.<br><br>Function that runs immediately after the `setup` function is run **and** after a cached session is restored. If this returns `false`, throws an exception, contains any failing Cypress command, or returns a Promise which rejects or resolves to `false`, the session is considered invalid.<br><br>- If validation fails immediately after setup, the test will fail.<br>- If validation succeeds immediately after setup, the session will not be saved until `validate` is finished.<br>- If validation fails after restoring a session, `setup` will re-run. |
+| `cacheAcrossSpecs` | `false`     | When enabled, the newly created session is considered "global" and can be restored in any spec during the test execution in the same Cypress run on the same machine. Use this option for a session that will be used multiple times, across many specs.                                                                                                                                                                                                                                                                                                                                                                   |
 
 ### Yields [<Icon name="question-circle"/>](/guides/core-concepts/introduction-to-cypress#Subject-Management)
 
@@ -223,7 +223,7 @@ const login = (name, password) => {
     {
       validate() {
         // Protected URLs should return a 40x http code if user is unauthorized,
-        // and by default this will call cy.visit to fail
+        // and by default this will cause cy.visit() to fail
         cy.visit('/account-details')
       },
     }
@@ -265,8 +265,10 @@ it('should transfer money between users', () => {
 
 ### Validating the session
 
-The `validate` function has a slightly different function depending on whether
-it is being run immediately after `setup`, or after restoring the saved session.
+The `validate` function is run in two different contexts, after the initial
+session setup and before reusing the saved session. In both of these contexts it
+should test only for the presence of a valid session, without depending on any
+other state.
 
 After `setup`, the session is not saved until `validate` has returned or
 resolved. This allows you to use `validate` to ensure that the login flow is
@@ -276,15 +278,18 @@ token has been set. This must be done with a
 fail the test simply because the page is running a little slow. Once your
 assertion passes, the session is cached.
 
-When restoring a saved session, if the `validate` function return `false`,
-throws an exception, returns a Promise that resolves to `false` or rejects, or
-contains any failing Cypress command, the session will be considered invalid,
-and `setup` will be re-run. So your `validate` function serves a dual purpose,
-it ensures that the initial setup has worked correctly **and** it checks that
-the session remains valid before re-use.
+When restoring a saved session, if the `validate` function throws an exception,
+returns a Promise that resolves to `false` or rejects, or contains any failing
+Cypress command, the session will be considered invalid, and `setup` will be
+re-run. So your `validate` function serves a dual purpose, it ensures that the
+initial setup has worked correctly **and** it checks that the session remains
+valid before re-use.
 
-Note that the page is not cleared after the `validate` function is executed. If
-you use `cy.visit()` in your validation, your test will continue on the visited
+Note that what happens after the `validate` function is run depends on the value
+of the `testIsolation` config option. If `testIsolation` is on (the default),
+the page is cleared before continuing with the rest of the test. If
+`testIsolation` is off, the page is **not** cleared. In the latter case, if you
+use `cy.visit()` in your validation, your test will continue to execute on that
 page once `cy.session()` succeeds.
 
 Here are a few `validate` examples:
@@ -306,12 +311,9 @@ function validate() {
   cy.url().should('match', /^/account/)
 }
 
-// Or just return false if the session is invalid
-// TODO: How do they check this repeatedly? Maybe we need a `cy.retry` method?
+// Or just call a method that tells us if the user is logged in
 function validate() {
-  if (!MyApp.isSessionValid()) {
-    return false
-  }
+  cy.wrap(MyApp).invoke("isSessionValid").should("be.true")
 }
 ```
 
@@ -415,9 +417,10 @@ const loginByApi = (name, password) => {
 
 ### Where to call `cy.visit()`
 
-If you call [`cy.visit()`](/api/commands/visit) immediately after `cy.session()`
-in your login function or custom command, it will effectively behave the same as
-a login function without any session caching.
+Intuitively it seems that you should call [`cy.visit()`](/api/commands/visit)
+immediately after `cy.session()` in your login function or custom command, so it
+behaves (from the point of view of the subsequent test) exactly the same as a
+login function without `cy.session()`.
 
 ```javascript
 const login = (name) => {
@@ -444,10 +447,11 @@ it('should test something else on the /home page', () => {
 })
 ```
 
-However, any time you want to test something on a different page, you will need
-to call `cy.visit()` at the beginning of that test, which will then be
-effectively calling `cy.visit()` twice in a row, which will result in slightly
-slower tests.
+However, if you want to test something on a different page, you will need to
+call `cy.visit()` at the beginning of that test, which means you will be calling
+`cy.visit()` a **second** time in your test. Since `cy.visit()` waits for the
+visited page to become active before continuing, this could add up to an
+unacceptable waste of time.
 
 ```javascript
 // ...continued...
@@ -458,10 +462,10 @@ it('should test something on the /other page', () => {
 })
 ```
 
-Tests will often be faster if you call `cy.visit()` only when necessary. This
-works especially well when
+Tests will obviously be faster if you call `cy.visit()` only when necessary.
+This can be easily realised by
 [organizing tests into suites](/guides/core-concepts/writing-and-organizing-tests#Test-Structure)
-and calling `cy.visit()` after logging in inside a
+and calling `cy.visit()` **after** logging in, inside a
 [`beforeEach`](/guides/core-concepts/writing-and-organizing-tests#Hooks) hook.
 
 ```javascript
