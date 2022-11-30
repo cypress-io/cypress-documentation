@@ -1,5 +1,5 @@
 ---
-title: Cypress.RequestLogs
+title: RequestLogs
 ---
 
 By default, Cypress logs all XMLHttpRequests, fetches, and
