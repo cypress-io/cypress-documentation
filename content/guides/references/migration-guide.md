@@ -311,12 +311,10 @@ cy.get('button')
 
 #### `Cypress.Commands.override()`
 
-In Cypress 12.0.0, we introduced a new command types, called queries. A query
-command is a command that returns a small and fast function for getting data
-from the window or DOM. This distinction is important because Cypress will retry
-any queries leading up to a non-query command, and retry any assertions after a
-non-query command, to ensure the yielded subject that is being tested is always
-up-to-date.
+In Cypress 12.0.0, we introduced a new command type, called queries. A query is
+a small and fast command for getting data from the window or DOM. This
+distinction is important because Cypress can retry chains of queries, keeping
+the yielded subject up-to-date as a page rerenders.
 
 With the introduction of query commands, the following commands have been
 re-categorized and can no longer be overridden with
