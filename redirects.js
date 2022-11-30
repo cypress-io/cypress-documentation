@@ -33,7 +33,7 @@ export const redirects = [
   },
   {
     path: '/guides/dashboard/dashboard-introduction',
-    redirect: '/guides/dashboard/introduction',
+    redirect: '/guides/cloud/introduction',
   },
   {
     path: '/guides/references/bundled-tools',

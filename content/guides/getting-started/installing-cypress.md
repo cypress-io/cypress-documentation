@@ -91,9 +91,9 @@ quickly, you can always
 
 <Alert type="warning">
 
-Recording runs to the Dashboard is not possible from the direct download. This
+Recording runs to Cypress Cloud is not possible from the direct download. This
 download is only intended as a quick way to try out Cypress. To record tests to
-the Dashboard, you'll need to install Cypress as an `npm` dependency.
+Cypress Cloud, you'll need to install Cypress as an `npm` dependency.
 
 </Alert>
 

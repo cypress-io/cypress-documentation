@@ -222,7 +222,7 @@ cy.intercept('GET', '**/users')
 
 ```js
 // Match any type of request with the pathname `/search`
-// and the query paramater 'q=some+terms'
+// and the query parameter 'q=some+terms'
 cy.intercept({
   pathname: '/search',
   query: {

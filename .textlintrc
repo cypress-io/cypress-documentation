@@ -10,7 +10,7 @@
         // Cypress product
         ["^Cypress\.io", "Cypress"],
         ["Cypress' ", "Cypress's "],
-        ["Cypress dashboard", "Cypress Dashboard"],
+        ["Cypress cloud", "Cypress Cloud"],
 
         // Brands and Technologies
         ["ansi", "ANSI"],

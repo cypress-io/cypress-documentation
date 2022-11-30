@@ -64,7 +64,7 @@ workflows:
       - cypress/run:
           requires:
             - cypress/install
-          record: true # record results on Cypress Dashboard
+          record: true # record results with Cypress Cloud
           parallel: true # split all specs across machines
           parallelism: 4 # use 4 CircleCI machines to finish quickly
           group: 'all tests' # name this group "all tests" on the dashboard
@@ -91,7 +91,7 @@ the Circle CI [Cypress Orb](https://github.com/cypress-io/circleci-orb), Codecov
 Orb, and Windows Orb to test over 300 test cases in parallel across 25 machines,
 multiple browsers, multiple device sizes, and multiple operating systems with
 full code-coverage reporting and
-[Cypress Dashboard recording](https://dashboard.cypress.io/projects/7s5okt).
+[Cypress Cloud recording](https://cloud.cypress.io/projects/7s5okt).
 
 Check out the full <Icon name="github"></Icon>
 [RWA Circle CI configuration](https://github.com/cypress-io/cypress-realworld-app/blob/develop/.circleci/config.yml).

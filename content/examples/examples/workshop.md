@@ -31,7 +31,7 @@ a full list).
 - Using the Selector Playground
 - Testing XHR requests
 - Using data fixtures to mock data
-- Running tests on CI and recording to the Dashboard
+- Running tests on CI and recording to Cypress Cloud
 - Customizing your own reporters
 - Writing custom Cypress commands
 - Debugging in Cypress
