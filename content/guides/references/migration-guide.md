@@ -8,10 +8,15 @@ This guide details the changes and how to change your code to migrate to Cypress
 version 12.0.
 [See the full changelog for version 12.0](/guides/references/changelog#12-0-0).
 
-The `experimentalSessionAndOrigin` flag has been removed and all functionality
-associated with the Session and Origin experiments are now available. The
-`cy.origin()` and `cy.session()` commands are generally available and the
-concept of Test Isolation has been introduced.
+The Session and Origin experiment has been released as General Availability
+(GA), meaning that we have deemed this experiment to be feature complete and
+free of issues in the majority of use cases. With releasing this as GA, the
+`experimentalSessionAndOrigin` flag has been removed, the
+[`cy.origin()`](<(/api/commands/origin)>) and
+[`cy.session()`](/api/commands/session) commands are generally available and the
+concept of
+[Test Isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation)
+has been introduced.
 
 ### Node.js 14+ support
 
@@ -82,9 +87,9 @@ After migrating, when `testIsolation='on'`, this flow would need to be contained
 within a single test. While the above practice has always been
 [discouraged](/guides/references/best-practices#Having-tests-rely-on-the-state-of-previous-tests)
 we know some users have historically written tests this way, often to get around
-the `same-origin` restrictions. But with `cy.origin()` you no longer need these
-kind of brittle hacks, as your multi-origin logic can all reside in a single
-test, like the following.
+the `same-origin` restrictions. But with [`cy.origin()`](/api/commands/origin)
+you no longer need these kind of brittle hacks, as your multi-origin logic can
+all reside in a single test, like the following.
 
 <Badge type="success">After</Badge> One big test using `cy.origin()`
 
@@ -227,8 +232,8 @@ describe('Dashboard', () => {
 #### `cy.server()`, `cy.route()` and `Cypress.Server.defaults`
 
 The` cy.server()` and` cy.route()` commands and the `Cypress.server.defaults`
-API has been removed. Use the [`cy.intercept()`(/api/commands/intercept) command
-instead.
+API has been removed. Use the [`cy.intercept()`](/api/commands/intercept)
+command instead.
 
 ```diff
   it('can encode + decode headers', () => {
@@ -261,11 +266,11 @@ instead.
   })
 ```
 
-### `.invoke()`
+#### `.invoke()`
 
-`.invoke()` now throws an error if the function returns a promise. If you wish
-to call a method that returns a promise and wait for it to resolve, use
-`.then()` instead of `.invoke()`.
+[`.invoke()`](/api/commands/invoke) now throws an error if the function returns
+a promise. If you wish to call a method that returns a promise and wait for it
+to resolve, use [`.then()`](/api/commands/then) instead of `.invoke()`.
 
 ```diff
 cy.wrap(myAPI)
@@ -288,12 +293,12 @@ their own chain. For example, rewrite
 + cy.get('input').type('newText')
 ```
 
-### `.should()`
+#### `.should()`
 
-`.should()` now throws an error if Cypress commands are invoked from inside a
-`.should()` callback. This previously resulted in unusual and undefined
-behavior. If you wish to execute series of commands on the yield value,
-use`.then()` instead.
+[`.should()`](/api/commands/should) now throws an error if Cypress commands are
+invoked from inside a `.should()` callback. This previously resulted in unusual
+and undefined behavior. If you wish to execute series of commands on the yield
+value, use`.then()` instead.
 
 ```diff
 cy.get('button')
@@ -304,54 +309,54 @@ cy.get('button')
    .then(res => { ...handle response... })
 ```
 
-If `.invoke()` is followed by additional commands or assertions, it will call
-the named function multiple times. This has the benefit that the chained
-assertions can more reliably use the function's return value.
-
-If this behavior is undesirable because you expect the function to invoked only
-once, break the command chain and move the chains commands and/or assertions to
-their own chain. For example, rewrite
-
-```diff
-- .invoke('val', 'text').type('newText')
-+ cy.get('input').invoke('val', 'text')
-+ cy.get('input').type('newText')
-```
-
 #### `Cypress.Commands.override()`
 
-The follow commands can no longer be overridden:
+In Cypress 12.0.0, we introduced a new command types, called queries. A query
+command is a command that returns a small and fast function for getting data
+from the window or DOM. This distinction is important because Cypress will retry
+any queries leading up to a non-query command, and retry any assertions after a
+non-query command, to ensure the yielded subject that is being tested is always
+up-to-date.
 
-- .as()
-- .children()
-- .closest()
-- .contains()
-- cy.debug()
-- cy.document()
-- .eq()
-- .filter()
-- .find()
-- .first()
-- .focused()
-- .get()
-- .hash()
-- .its()
-- .last()
-- cy.location()
-- .next()
-- .nextAll()
-- .not()
-- .parent()
-- .parents()
-- .parentsUntil()
-- .prev()
-- .prevUntil()
-- cy.root()
-- .shadow()
-- .siblings()
-- cy.title()
-- cy.url()
-- cy.window()
+With the introduction of query commands, the following commands have been
+re-categorized and can no longer be overridden with
+[`Cypress.Commands.override()`](api/cypress-api/custom-commands#Overwrite-Existing-Commands):
+
+- [`.as()`](/api/commands/as)
+- [`.children()`](/api/commands/children)
+- [`.closest()`](/api/commands/closest)
+- [`.contains()`](/api/commands/contains)
+- [`cy.debug()`](/api/commands/debug)
+- [`cy.document()`](/api/commands/document)
+- [`.eq()`](/api/commands/eq)
+- [`.filter()`](/api/commands/filter)
+- [`.find()`](/api/commands/find)
+- [`.first()`](/api/commands/first)
+- [`.focused()`](/api/commands/focused)
+- [`.get()`](/api/commands/get)
+- [`.hash()`](/api/commands/hash)
+- [`.its()`](/api/commands/its)
+- [`.last()`](/api/commands/last)
+- [`cy.location()`](/api/commands/location)
+- [`.next()`](/api/commands/next)
+- [`.nextAll()`](/api/commands/nextall)
+- [`.not()`](/api/commands/not)
+- [`.parent()`](/api/commands/parent)
+- [`.parents()`](/api/commands/parents)
+- [`.parentsUntil()`](/api/commands/parentsuntil)
+- [`.prev()`](/api/commands/prev)
+- [`.prevUntil()`](/api/commands/prevuntil)
+- [`cy.root()`](/api/commands/root)
+- [`.shadow()`](/api/commands/shadow)
+- [`.siblings()`](/api/commands/siblings)
+- [`cy.title()`](/api/commands/title)
+- [`cy.url()`](/api/commands/url)
+- [`cy.window()`](/api/commands/window)
+
+If you were previously overwriting one the above commands, try adding your
+version as a new command using
+[`Cypress.Commands.add()`](api/cypress-api/custom-commands) under a different
+name.
 
 ## Migrating to Cypress 11.0
 
