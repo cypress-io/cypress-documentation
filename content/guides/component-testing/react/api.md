@@ -123,7 +123,10 @@ it('mounts', () => {
 
 ### MountReturn
 
+Type that the `mount` function yields
+
 <table class="api-table">
+  <caption>members</caption>
   <thead>
     <td>Name</td>
     <td>Type</td>

@@ -43,6 +43,7 @@ object:
 | ------------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `experimentalSessionAndOrigin` | `false` | Enables cross-origin and improved session support, by adding the [`cy.origin()`](/api/commands/origin) and [`cy.session()`](/api/commands/session) commands. This also enables the concept of [Test Isolation](/guides/core-concepts/writing-and-organizing-tests#Test-Isolation), which is `on` by default. |
 | `experimentalStudio`           | `false` | Generate and save commands directly to your test suite by interacting with your app as an end user would.                                                                                                                                                                                                    |
+| `experimentalRunAllSpecs`      | `false` | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.                                                                                                                                                                                                               |
 
 ### Component Testing
 
@@ -57,7 +58,8 @@ configuration object:
 
 | Version                                       | Changes                                                                                                                      |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| [10.8.0](/guides/references/changelog#10-x-y) | Added `experimentalWebKitSupport`.                                                                                           |
+| [11.2.0](/guides/references/changelog#11-2-0) | Added `experimentalRunAllSpecs`.                                                                                             |
+| [10.8.0](/guides/references/changelog#10-8-0) | Added `experimentalWebKitSupport`.                                                                                           |
 | [10.6.0](/guides/references/changelog#10-6-0) | Added support for `experimentalSingleTabRunMode`.                                                                            |
 | [10.4.0](/guides/references/changelog#10-4-0) | Added support for `experimentalModifyObstructiveThirdPartyCode`.                                                             |
 | [9.6.0](/guides/references/changelog#9-6-0)   | Added support for `experimentalSessionAndOrigin` and removed `experimentalSessionSupport`.                                   |

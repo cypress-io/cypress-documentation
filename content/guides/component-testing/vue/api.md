@@ -58,7 +58,10 @@ import { mount } from 'cypress/vue2'
 
 ### MountReturn
 
+Type that the `mount` function yields
+
 <table class="api-table">
+  <caption>members</caption>
   <thead>
     <td>Name</td>
     <td>Type</td>
@@ -67,11 +70,11 @@ import { mount } from 'cypress/vue2'
   <tr>
     <td>wrapper</td>
     <td>VueWrapper</td>
-    <td></td>
+    <td>The Vue Test Utils `wrapper`</td>
   </tr>
   <tr>
     <td>component</td>
-    <td>VueWrapper</td>
-    <td></td>
+    <td>VueComponent</td>
+    <td>The component instance</td>
   </tr>
 </table>
