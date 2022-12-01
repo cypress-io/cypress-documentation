@@ -432,12 +432,12 @@ it('does not forget to return a promise', () => {
 
 As of Cypress [v12.0.0](https://on.cypress.io/changelog#12-0-0), users can
 navigate to multiple domains in a single test. The following test will succeed
-as is:
+as-is:
 
 ```javascript
 it('navigates to docs.cypress.io', () => {
-  cy.visit('http://localhost:3000') // where your web server + HTML is hosted
-  cy.visit('https://docs.cypress.io') // visiting a different superdomain
+  cy.visit('http://localhost:3000')
+  cy.visit('https://docs.cypress.io') // visit a different superdomain
 })
 ```
 
@@ -448,8 +448,8 @@ the newly visited domain. The following test is incorrect:
 ```javascript
 it('navigates to docs.cypress.io and runs additional commands', () => {
   cy.visit('http://localhost:3000')
-  cy.visit('https://docs.cypress.io') // visiting a different superdomain
-  cy.get('h1').should('contain', 'Why Cypress?') // run new assertions fail
+  cy.visit('https://docs.cypress.io') // visit a different superdomain
+  cy.get('h1').should('contain', 'Why Cypress?') // fails
 })
 ```
 
@@ -457,15 +457,15 @@ And will result in the following error:
 
 <DocsImage src="/img/guides/references/cy-visit-subsequent-commands-timed-out.png" alt="cy.visit() subsequent commands timed out" ></DocsImage>
 
-In order to fix this, our `cy.get()` command **must** be wrapped inside the
+In order to fix this, our `cy.get()` command **must** be wrapped with the
 [`cy.origin()`](/api/commands/origin) command, like so:
 
 ```javascript
 it('navigates to docs.cypress.io and runs additional commands', () => {
   cy.visit('http://localhost:3000')
-  cy.visit('https://docs.cypress.io') // visiting a different superdomain
+  cy.visit('https://docs.cypress.io') // visit a different superdomain
   cy.origin('https://docs.cypress.io', () => {
-    cy.get('h1').should('contain', 'Why Cypress?') // run new assertions now succeed!
+    cy.get('h1').should('contain', 'Why Cypress?') // now succeeds!
   })
 })
 ```

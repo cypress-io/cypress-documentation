@@ -283,11 +283,10 @@ to visit or interact with sites or servers you do not control.
 <Alert type="success">
 
 <Icon name="check-circle" color="green"></Icon> **Best Practice:** Only test
-what you control. Try to avoid requiring a 3rd party server. When necessary,
-always use [`cy.origin()`](/api/commands/origin) to interact with these websites
-or [`cy.request()`](/api/commands/request) to talk to 3rd party servers via
-their APIs. If possible, cache results via
-[`cy.session()`](/api/commands/session) to avoid repeat visits.
+what you control. Try to avoid requiring a 3rd party server. When necessary, use
+[`cy.request()`](/api/commands/request) to talk to 3rd party servers via their
+APIs. If possible, cache results via [`cy.session()`](/api/commands/session) to
+avoid repeat visits.
 
 </Alert>
 
@@ -348,14 +347,13 @@ affect other tests downstream.
 
 **Here are potential solutions to alleviate these problems:**
 
-1. Use a a domain other platform that you control to log in as a user via
-   username and password via [`cy.origin()`](/api/commands/origin). This likely
-   guarantees that you will not run into the problems listed above, while still
-   being able to automate your login flow without requiring direct API calls via
-   [`cy.request()`](/api/commands/request). You can reduce the amount of
-   authentication requests by utilizing [`cy.session()`](/api/commands/session).
-2. [Stub](/api/commands/stub) out the OAuth provider and bypass using their UI
-   altogether if [`cy.origin()`](/api/commands/origin) is not an option. You
+1. Use another platform that you control to log in with username and password
+   via [`cy.origin()`](/api/commands/origin). This likely guarantees that you
+   will not run into the problems listed above, while still being able to
+   automate your login flow. You can reduce the amount of authentication
+   requests by utilizing [`cy.session()`](/api/commands/session).
+2. [Stub](/api/commands/stub) out the OAuth provider and bypass it using their
+   UI altogether if [`cy.origin()`](/api/commands/origin) is not an option. You
    could trick your application into believing the OAuth provider has passed its
    token to your application.
 3. If you **must** get a real token and [`cy.origin()`](/api/commands/origin) is

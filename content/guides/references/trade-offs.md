@@ -23,7 +23,7 @@ to have. In a sense they prevent you from writing bad, slow, or flaky tests.
 - You cannot use Cypress to drive
   [two browsers at the same time](#Multiple-browsers-open-at-the-same-time).
 - Each test is bound to a [single superdomain](#Navigation-Rules). Cross-origin
-  navigation inside each test is permitted with the use of the
+  navigation inside tests can be enabled by using the
   [`cy.origin`](/api/commands/origin) command.
 
 #### Temporary trade-offs:
@@ -272,10 +272,10 @@ communicate with each other.
 
 ### Navigation Rules
 
-By itself, Cypress limits each test to only visiting domains that are considered
-to be same superdomain to one another. If a navigation occurs that does not meet
-the same superdomain rule, the [`cy.origin`](/api/commands/origin) command must
-be used to execute assertions inside the newly navigated origin.
+Cypress limits each test to visiting domains that share the same superdomain. If
+a navigation occurs that does not meet the same superdomain rule, the
+[`cy.origin`](/api/commands/origin) command must be used to execute assertions
+inside the newly navigated origin.
 
 But what is same superdomain? It is actually very similar to that of same
 origin! Two URLs have the same origin if the protocol, port (if specified), and
@@ -283,8 +283,8 @@ host are the same for both. Cypress automatically handles hosts of the same
 superdomain by injecting the
 [`document.domain`](https://developer.mozilla.org/en-US/docs/Web/API/Document/domain)
 property into the visited `text/html` pages. This is why navigations without the
-use of the [`cy.origin`](/api/commands/origin) command are solely scope to same
-superdomain.
+use of the [`cy.origin`](/api/commands/origin) command are solely scope to the
+same superdomain.
 
 Given the URLs below, all have the same superdomain compared to
 `https://www.cypress.io`.
@@ -308,7 +308,7 @@ The rules are:
 
 - <Icon name="exclamation-triangle" color="red"></Icon> You **cannot**
   [visit](/api/commands/visit) two domains of different superdomains in the same
-  test and continue to run assertions without the use of the
+  test and continue to interact with the page without the use of the
   [`cy.origin`](/api/commands/origin) command.
 - <Icon name="check-circle" color="green"></Icon> You **can**
   [visit](/api/commands/visit) two or more domains of different origin in
@@ -404,4 +404,3 @@ We've written several other guides specifically about handling this situation.
 - [Best Practices: Visiting external sites](/guides/references/best-practices#Visiting-external-sites)
 - [Web Security: Common Workarounds](/guides/guides/web-security#Common-Workarounds)
 - [Recipes: Logging In - Single Sign On](/examples/examples/recipes#Logging-In)
-- LINK AUTHENTICATION GUIDES HERE

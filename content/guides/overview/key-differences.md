@@ -92,7 +92,7 @@ Trying to test hard to reach areas of your application? Don't like the side
 effects an action creates? Tired of repeating the same repetitive and slow
 actions over and over again? You can skip them for most test cases.
 
-Cypress allows for state to be cached with
+Cypress allows for browser context to be cached with
 [`cy.session()`](/api/commands/session). This means as a user, you only need to
 perform authentication once for the entirety of your test suite, and restore the
 saved session between each test. That means you do not have to visit a login
@@ -101,13 +101,12 @@ redirect for every test you run. You can accomplish this once with
 [`cy.session()`](/api/commands/session) and if needed,
 [`cy.origin()`](/api/commands/origin).
 
-However, if the above is not your fancy, Cypress gives you the ability to take
-shortcuts and programmatically log in. With commands like
-[`cy.request()`](/api/commands/request), you can send HTTP requests directly,
-yet have those requests synchronized with the browser. Cookies are automatically
-sent and applied back. Worried about CORS? Don't be, it is completely bypassed.
-The power to choose when to test like a user and when to skip slow and
-repetitive parts is yours.
+Cypress also gives you the ability to take shortcuts and programmatically log
+in. With commands like [`cy.request()`](/api/commands/request), you can send
+HTTP requests directly, yet have those requests synchronized with the browser.
+Cookies are automatically sent and applied back. Worried about CORS? Don't be,
+it is completely bypassed. The power to choose when to test like a user and when
+to skip slow and repetitive parts is yours.
 
 ## Flake resistant
 
