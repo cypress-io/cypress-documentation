@@ -79,45 +79,9 @@ This is because the commands that were expected to run on the second domain are
 actually being run on the first domain.
 
 Without `cy.origin`, you can visit different superdomains in _different_ tests,
-but not in the _same_ test.
-
-```javascript
-it('navigates', () => {
-  cy.visit('https://www.cypress.io')
-  cy.visit('https://docs.cypress.io')
-  cy.get('selector') // yup all good
-})
-```
-
-```javascript
-it('navigates', () => {
-  cy.visit('https://www.cypress.io')
-  cy.visit('https://stackoverflow.com')
-  cy.get('selector') // this will error w/o cy.origin wrap
-})
-```
-
-```javascript
-it('navigates', () => {
-  cy.visit('https://www.cypress.io')
-  cy.visit('https://stackoverflow.com')
-  cy.origin('https://stackoverflow.com', () => {
-    cy.get('selector') // yup all good
-  })
-})
-```
-
-```javascript
-it('navigates', () => {
-  cy.visit('https://www.cypress.io')
-})
-
-// split visiting different origin in another test
-it('navigates to new origin', () => {
-  cy.visit('https://stackoverflow.com')
-  cy.get('selector') // yup all good
-})
-```
+but not in the _same_ test. Please read our
+[Cross Origin Testing Guide](/guides/guides/cross-origin-testing) for more
+information.
 
 Although Cypress tries to enforce this limitation, it is possible for your
 application to bypass Cypress's ability to detect this.
