@@ -7,12 +7,12 @@ e2eSpecific: true
 
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
-- Authenticate with [`cy.origin()`](/api/commands/origin) or programmatically
-  (legacy) with [Okta](https://okta.com) via a custom Cypress command
-- If needed, adapting your [Okta](https://okta.com) application for programmatic
-  authentication during testing
-
-</Alert>
+- Login to [Okta](https://okta.com) through the UI with
+  [`cy.origin()`](/api/commands/origin)
+- Programmatically authenticate with [Okta](https://okta.com) via a custom
+  Cypress command
+- Adapting your [Okta](https://okta.com) application for programmatic
+  authentication during testing </Alert>
 
 <Alert type="warning">
 
@@ -28,11 +28,16 @@ other identity providers.
 <strong class="alert-header">Authenticate by visiting a different domain with
 [`cy.origin()`](/api/commands/origin)</strong>
 
-Programmatic authentication for Okta is now considered a legacy recommendation.
-As of Cypress [v12.0.0](https://on.cypress.io/changelog#12-0-0), you can easily
+Typically, logging in a user within your app by authenticating via a third-party
+provider requires visiting a login page hosted on a different domain. Before
+Cypress [v12.0.0](https://on.cypress.io/changelog#12-0-0), Cypress tests were
+limited to visiting domains of the same origin, making programmatic login the
+only option for authenticating users with a third-party API. As of Cypress
+[v12.0.0](https://on.cypress.io/changelog#12-0-0), Cypress tests are no longer
+limited to visiting domains of a single origin, meaning you can easily
 authenticate to
 [Okta Universal Directory](https://www.okta.com/products/universal-directory/)
-as Cypress tests are no longer limited to visiting domains of a single origin.
+via the UI!
 
 </Alert>
 
@@ -71,36 +76,34 @@ require('dotenv').config()
 
 ## Custom Command for Okta Authentication
 
-There are two ways you can authenticate to Okta
+There are two ways you can authenticate to Okta:
 
 - [Login with cy.origin()](/guides/end-to-end-testing/okta-authentication#Login-with-cy-origin)
-- [Legacy Programmatic Access](/guides/end-to-end-testing/okta-authentication#Programmatic-Login-Legacy)
+- [Programmatic Access](/guides/end-to-end-testing/okta-authentication#Programmatic-Login)
 
 ### Login with [`cy.origin()`](/api/commands/origin)
 
-Next, we'll write a command to perform a login to [Okta](https://okta.com) using
-[`cy.origin()`](/api/commands/origin) to navigate to Okta, inputting user
-credentials, and signing in via OAuth to redirect back to our application, and
-caching the results with [`cy.session()`](/api/commands/session).
+Next, we'll write a custom command called `loginByOkta` to perform a login to
+[Okta](https://okta.com). This command will use
+[`cy.origin()`](/api/commands/origin) to
 
-In this `loginByOkta` command, we redirect to the okta login screen via
-navigation guards. We then enter our user credentials and sign in, which
-redirects us back to the
-[Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
+1. navigate to the Okta origin
+2. input user credentials
+3. sign in and redirect back to the
+   [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app)
+4. cache the results with [`cy.session()`](/api/commands/session)
 
 ```jsx
 // cypress/support/auth-provider-commands/okta.ts
 // Okta
-Cypress.Commands.add('loginByOkta', (username: string, password: string) => {
+const loginToOkta = (username: string, password: string) => {
   Cypress.log({
     displayName: 'OKTA LOGIN',
     message: [`🔐 Authenticating | ${username}`],
-    // @ts-ignore
     autoEnd: false,
   })
 
   cy.visit('/')
-
   cy.origin(
     Cypress.env('okta_domain'),
     { args: { username, password } },
@@ -114,6 +117,10 @@ Cypress.Commands.add('loginByOkta', (username: string, password: string) => {
   )
 
   cy.get('[data-test="sidenav-username"]').should('contain', username)
+}
+// right now our custom command is light. More on this later!
+Cypress.Commands.add('loginByOkta', (username: string, password: string) => {
+  return loginToOkta(username, password)
 })
 ```
 
@@ -133,7 +140,6 @@ is in the
 describe('Okta', function () {
   beforeEach(function () {
     cy.task('db:seed')
-
     cy.loginByOkta(Cypress.env('okta_username'), Cypress.env('okta_password'))
   })
 
@@ -155,28 +161,7 @@ Cypress.Commands.add('loginByOkta', (username: string, password: string) => {
   cy.session(
     `okta-${username}`,
     () => {
-      Cypress.log({
-        displayName: 'OKTA LOGIN',
-        message: [`🔐 Authenticating | ${username}`],
-        // @ts-ignore
-        autoEnd: false,
-      })
-
-      cy.visit('/')
-
-      cy.origin(
-        Cypress.env('okta_domain'),
-        { args: { username, password } },
-        ({ username, password }) => {
-          cy.get('input[name="identifier"]').type(username)
-          cy.get('input[name="credentials.passcode"]').type(password, {
-            log: false,
-          })
-          cy.get('[type="submit"]').click()
-        }
-      )
-
-      cy.get('[data-test="sidenav-username"]').should('contain', username)
+      return loginToOkta(username, password)
     },
     {
       validate() {
@@ -190,12 +175,7 @@ Cypress.Commands.add('loginByOkta', (username: string, password: string) => {
 
 <DocsVideo src="/img/examples/okta-session-restore.mp4"></DocsVideo>
 
-Unlike programmatic login, authenticating with
-[`cy.origin()`](/api/commands/origin) does not require adapting the application
-to work. It simply works without intervention exactly how your users would
-consume the application!
-
-### Programmatic Login (Legacy)
+### Programmatic Login
 
 Next, we will write a command named `loginByOktaApi` to perform a programmatic
 login into [Okta](https://okta.com) and set an item in localStorage with the
@@ -297,7 +277,7 @@ is in the
 
 </Alert>
 
-#### Adapting an Okta App for Testing
+### Adapting an Okta App for Testing
 
 <Alert type="info">
 
@@ -306,6 +286,10 @@ is in the
 The previous sections focused on the programmatic Okta authentication practice
 within Cypress tests. To use this practice it is assumed you are testing an app
 appropriately built or adapted to use Okta.
+
+Unlike programmatic login, authenticating with
+[`cy.origin()`](/api/commands/origin) does not require adapting the application
+to work. This step is only needed if implementing programmatic login.
 
 The following sections provides guidance on building or adapting an app to use
 Okta authentication.
