@@ -13,7 +13,9 @@ e2eSpecific: true
   [Amazon Cognito](https://aws.amazon.com/cognito) via a custom command Cypress
   command
 - Adapting your [Amazon Cognito](https://aws.amazon.com/cognito) application for
-  programmatic authentication during testing </Alert>
+  programmatic authentication during testing
+
+</Alert>
 
 <Alert type="success">
 
