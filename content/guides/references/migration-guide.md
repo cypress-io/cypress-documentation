@@ -309,7 +309,7 @@ cy.get('button')
    .then(res => { ...handle response... })
 ```
 
-#### `Cypress.Commands.override()`
+#### `Cypress.Commands.overwrite()`
 
 In Cypress 12.0.0, we introduced a new command type, called queries. A query is
 a small and fast command for getting data from the window or DOM. This
@@ -317,8 +317,8 @@ distinction is important because Cypress can retry chains of queries, keeping
 the yielded subject up-to-date as a page rerenders.
 
 With the introduction of query commands, the following commands have been
-re-categorized and can no longer be overridden with
-[`Cypress.Commands.override()`](api/cypress-api/custom-commands#Overwrite-Existing-Commands):
+re-categorized and can no longer be overwritten with
+[`Cypress.Commands.overwrite()`](api/cypress-api/custom-commands#Overwrite-Existing-Commands):
 
 - [`.as()`](/api/commands/as)
 - [`.children()`](/api/commands/children)
