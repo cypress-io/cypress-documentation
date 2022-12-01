@@ -389,9 +389,9 @@ Security page regarding
 There are other ways of testing the interaction between 2 superdomains. Because
 the browser has a natural security barrier called `origin policy` this means
 that state like `localStorage`, `cookies`, `service workers` and many other APIs
-are not shared between them anyways. Because of this, the Cypress APIs that
-interact with `localStorage`, `sessionStorage`, and `cookies` are able to take a
-domain option in order to interact with the appropriate domain.
+are not shared between them anyways. Cypress does offer APIs around
+`localStorage`, `sessionStorage`, and `cookies` that are not limited to this
+restriction.
 
 As a best practice, you should not visit or interact with a 3rd party service
 not under your control. However, there are exceptions! If your organization uses
@@ -404,3 +404,5 @@ We've written several other guides specifically about handling this situation.
 - [Best Practices: Visiting external sites](/guides/references/best-practices#Visiting-external-sites)
 - [Web Security: Common Workarounds](/guides/guides/web-security#Common-Workarounds)
 - [Recipes: Logging In - Single Sign On](/examples/examples/recipes#Logging-In)
+- [Guides: Amazon Cognito Authentication](/guides/end-to-end-testing/amazon-cognito-authentication)
+- [Guides: Okta Authentication](/guides/end-to-end-testing/okta-authentication)
