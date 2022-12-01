@@ -7,23 +7,27 @@ e2eSpecific: true
 
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
-- Authenticate with [`cy.origin()`](/api/commands/origin) or programmatically
-  (legacy) to [Amazon Cognito](https://aws.amazon.com/cognito) via a custom
-  Cypress command
-- If needed, adapting your [Amazon Cognito](https://aws.amazon.com/cognito)
-  application for programmatic authentication during testing
-
-</Alert>
+- Login to [Amazon Cognito](https://aws.amazon.com/cognito) through the UI with
+  [`cy.origin()`](/api/commands/origin)
+- Programmatically authenticate with
+  [Amazon Cognito](https://aws.amazon.com/cognito) via a custom command Cypress
+  command
+- Adapting your [Amazon Cognito](https://aws.amazon.com/cognito) application for
+  programmatic authentication during testing </Alert>
 
 <Alert type="success">
 
 <strong class="alert-header">Authenticate by visiting a different domain with
 [`cy.origin()`](/api/commands/origin)</strong>
 
-Programmatic authentication for Cognito is now considered a legacy
-recommendation. As of Cypress [v12.0.0](https://on.cypress.io/changelog#12-0-0),
-you can easily authenticate to federated AWS Cognito as Cypress tests are no
-longer limited to visiting domains of a single origin.
+Typically, logging in a user within your app by authenticating via a third-party
+provider requires visiting a login page hosted on a different domain. Before
+Cypress [v12.0.0](https://on.cypress.io/changelog#12-0-0), Cypress tests were
+limited to visiting domains of the same origin, making programmatic login the
+only option for authenticating users with a third-party API. As of Cypress
+[v12.0.0](https://on.cypress.io/changelog#12-0-0), Cypress tests are no longer
+limited to visiting domains of a single origin, meaning you can easily
+authenticate to federated AWS Cognito via the UI!
 
 </Alert>
 
@@ -158,33 +162,30 @@ const awsConfig = require('./aws-exports-es5.js')
 
 ## Custom Command for Amazon Cognito Authentication
 
-There are two ways you can authenticate to AWS Cognito
+There are two ways you can authenticate to AWS Cognito:
 
 - [Login with cy.origin()](/guides/end-to-end-testing/amazon-cognito-authentication#Login-with-cy-origin)
-- [Legacy Programmatic Access](/guides/end-to-end-testing/amazon-cognito-authentication#Programmatic-Login-Legacy)
+- [Programmatic Access](/guides/end-to-end-testing/amazon-cognito-authentication#Programmatic-Login)
 
 ### Login with [`cy.origin()`](/api/commands/origin)
 
-Next, we'll write a command to perform a login to
-[Amazon Cognito](https://aws.amazon.com/cognito) using
-[`cy.origin()`](/api/commands/origin) to navigate to the cognito origin,
-inputting a user credentials, and signing in via OAuth to redirect back to our
-application, and caching the results with
-[`cy.session()`](/api/commands/session).
+Next, we'll write a custom command called `loginByCognito` to perform a login to
+[Amazon Cognito](https://aws.amazon.com/cognito). This command will use
+[`cy.origin()`](/api/commands/origin) to
 
-In this `loginByCognito` command, we redirect to the cognito login screen by
-authenticating with `Sign in with AWS`. We then enter our user credentials and
-sign in, which redirects us back to the realworld app.
+1. navigate to the Cognito origin
+2. input user credentials
+3. sign in and redirect back to the
+   [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app)
+4. cache the results with [`cy.session()`](/api/commands/session)
 
 ```jsx
 // cypress/support/auth-provider-commands/cognito.ts
-
-/// Amazon Cognito
-Cypress.Commands.add('loginByCognito', (username, password) => {
+// Amazon Cognito
+const loginToCognito = (username: string, password: string) => {
   Cypress.log({
     displayName: 'COGNITO LOGIN',
     message: [`🔐 Authenticating | ${username}`],
-    // @ts-ignore
     autoEnd: false,
   })
 
@@ -202,9 +203,11 @@ Cypress.Commands.add('loginByCognito', (username, password) => {
       },
     },
     ({ username, password }) => {
-      // cognito log in page has some elements of the same id but are off screen. we only want the visible elements to log in
+      // Cognito log in page has some elements of the same id but are off screen.
+      // We only want the visible elements to log in
       cy.get('input[name="username"]:visible').type(username)
       cy.get('input[name="password"]:visible').type(password, {
+        // use log: false to prevent your password from showing in the Command Log
         log: false,
       })
       cy.get('input[name="signInSubmitButton"]:visible').click()
@@ -212,11 +215,15 @@ Cypress.Commands.add('loginByCognito', (username, password) => {
   )
 
   // give a few seconds for redirect to settle
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(2000)
 
   // verify we have made it passed the login screen
   cy.contains('Get Started').should('be.visible')
+}
+
+// right now our custom command is light. More on this later!
+Cypress.Commands.add('loginByCognito', (username, password) => {
+  return loginToCognito(username, password)
 })
 ```
 
@@ -259,47 +266,13 @@ Lastly, we can refactor our login command to take advantage of
 have to reauthenticate with everything test.
 
 ```jsx
+// cypress/support/auth-provider-commands/cognito.ts
 // Amazon Cognito
 Cypress.Commands.add('loginByCognito', (username, password) => {
   cy.session(
     `cognito-${username}`,
     () => {
-      Cypress.log({
-        displayName: 'COGNITO LOGIN',
-        message: [`🔐 Authenticating | ${username}`],
-        // @ts-ignore
-        autoEnd: false,
-      })
-
-      cy.visit('/')
-      cy.contains('Sign in with AWS', {
-        includeShadowDom: true,
-      }).click()
-
-      cy.origin(
-        Cypress.env('cognito_domain'),
-        {
-          args: {
-            username,
-            password,
-          },
-        },
-        ({ username, password }) => {
-          // cognito log in page has some elements of the same id but are off screen. we only want the visible elements to log in
-          cy.get('input[name="username"]:visible').type(username)
-          cy.get('input[name="password"]:visible').type(password, {
-            log: false,
-          })
-          cy.get('input[name="signInSubmitButton"]:visible').click()
-        }
-      )
-
-      // give a few seconds for redirect to settle
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(2000)
-
-      // verify we have made it passed the login screen
-      cy.contains('Get Started').should('be.visible')
+      return loginToCognito(username, password)
     },
     {
       validate() {
@@ -314,12 +287,7 @@ Cypress.Commands.add('loginByCognito', (username, password) => {
 
 <DocsVideo src="/img/examples/cognito-session-restore.mp4"></DocsVideo>
 
-Unlike programmatic login, authenticating with
-[`cy.origin()`](/api/commands/origin) does not require adapting the application
-to work. It simply works without intervention exactly how your users would
-consume the application!
-
-### Programmatic Login (Legacy)
+### Programmatic Login
 
 Next, we'll write a command to perform a programmatic login into
 [Amazon Cognito](https://aws.amazon.com/cognito) and set items in localStorage
@@ -419,7 +387,17 @@ describe('Cognito', function () {
 })
 ```
 
-#### Adapting an Amazon Cognito App for Testing
+### Adapting an Amazon Cognito App for Testing
+
+<Alert type="info">
+
+<strong class="alert-header">Programmatic Login</strong>
+
+Unlike programmatic login, authenticating with
+[`cy.origin()`](/api/commands/origin) does not require adapting the application
+to work. This step is only needed if implementing programmatic login.
+
+</Alert>
 
 The
 [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app) is
