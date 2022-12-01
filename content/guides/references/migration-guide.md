@@ -115,10 +115,10 @@ it('securely edits content', () => {
 })
 ```
 
-The just-release `cy.session()` command can be used to setup and cache cookies,
+The just-released `cy.session()` command can be used to setup and cache cookies,
 local storage and session storage between tests to easily re-establish the
 previous (or common) browser contexts needed in a suite. This command will run
-setup on the initial execution and will restore the saved browser state on each
+setup on its initial execution and will restore the saved browser state on each
 sequential command execution. This command reduces the need for repeated
 application logins, while users also benefit from the test isolation guardrails
 to write independent, reliable and deterministic tests from the start.
@@ -167,7 +167,7 @@ describe('workflow', { testIsolation: 'off' }, () => {
 
 In the above example, each test is relying on the previous test to be
 _successful_ to correctly execute. If at any point, the first or second test
-fails, the sequential test(s) will automatically fail and provided un-reliable
+fails, the sequential test(s) will automatically fail and provide unreliable
 debugging errors since the errors are representative of the previous test.
 
 The best way to ensure your tests are independent is to add a `.only()` to your
@@ -176,7 +176,7 @@ test and verify it can run successfully without the test before it.
 ### Alias Behaviors Changes
 
 Cypress always re-queries aliases when they are referenced. This can result in
-certain tests that use to pass failing. For example,
+certain tests that used to pass failing. For example,
 
 ```js
 cy.findByTestId('popover')
@@ -284,7 +284,7 @@ the named function multiple times. This has the benefit that the chained
 assertions can more reliably use the function's return value.
 
 If this behavior is undesirable because you expect the function to invoked only
-once, break the command chain and move the chains commands and/or assertions to
+once, break the command chain and move the chain's commands and/or assertions to
 their own chain. For example, rewrite
 
 ```diff
@@ -297,7 +297,7 @@ their own chain. For example, rewrite
 
 [`.should()`](/api/commands/should) now throws an error if Cypress commands are
 invoked from inside a `.should()` callback. This previously resulted in unusual
-and undefined behavior. If you wish to execute series of commands on the yield
+and undefined behavior. If you wish to execute a series of commands on the yield
 value, use`.then()` instead.
 
 ```diff
@@ -351,7 +351,7 @@ re-categorized and can no longer be overwritten with
 - [`cy.url()`](/api/commands/url)
 - [`cy.window()`](/api/commands/window)
 
-If you were previously overwriting one the above commands, try adding your
+If you were previously overwriting one of the above commands, try adding your
 version as a new command using
 [`Cypress.Commands.add()`](api/cypress-api/custom-commands) under a different
 name.
