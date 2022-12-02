@@ -174,7 +174,7 @@ debugging errors since the errors are representative of the previous test.
 The best way to ensure your tests are independent is to add a `.only()` to your
 test and verify it can run successfully without the test before it.
 
-### Alias Behaviors Changes
+### Behavior Changes in Alias Resolution
 
 Cypress always re-queries aliases when they are referenced. This can result in
 certain tests that used to pass failing. For example,
