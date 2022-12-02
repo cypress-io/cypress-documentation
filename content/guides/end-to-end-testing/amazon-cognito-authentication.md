@@ -7,7 +7,7 @@ e2eSpecific: true
 
 ## <Icon name="graduation-cap"></Icon> What you'll learn
 
-- Login to [Amazon Cognito](https://aws.amazon.com/cognito) through the UI with
+- Log in to [Amazon Cognito](https://aws.amazon.com/cognito) through the UI with
   [`cy.origin()`](/api/commands/origin)
 - Programmatically authenticate with
   [Amazon Cognito](https://aws.amazon.com/cognito) via a custom command Cypress
@@ -166,7 +166,7 @@ const awsConfig = require('./aws-exports-es5.js')
 
 There are two ways you can authenticate to AWS Cognito:
 
-- [Login with cy.origin()](/guides/end-to-end-testing/amazon-cognito-authentication#Login-with-cy-origin)
+- [Login with `cy.origin()`](/guides/end-to-end-testing/amazon-cognito-authentication#Login-with-cy-origin)
 - [Programmatic Access](/guides/end-to-end-testing/amazon-cognito-authentication#Programmatic-Login)
 
 ### Login with [`cy.origin()`](/api/commands/origin)
@@ -229,9 +229,9 @@ Cypress.Commands.add('loginByCognito', (username, password) => {
 })
 ```
 
-Secondly, we can use our `loginByCognito` command in the test. Below is our test
-to login as a user via [Amazon Cognito](https://aws.amazon.com/cognito),
-complete the onboarding process and logout.
+Now, we can use our `loginByCognito` command in the test. Below is our test to
+login as a user via [Amazon Cognito](https://aws.amazon.com/cognito), complete
+the onboarding process and logout.
 
 <Alert type="success">
 
@@ -292,7 +292,7 @@ Cypress.Commands.add('loginByCognito', (username, password) => {
 ### Programmatic Login
 
 Next, we'll write a command to perform a programmatic login into
-[Amazon Cognito](https://aws.amazon.com/cognito) and set items in localStorage
+[Amazon Cognito](https://aws.amazon.com/cognito) and set items in `localStorage`
 with the authenticated users details, which we will use in our application code
 to verify we are authenticated under test.
 
