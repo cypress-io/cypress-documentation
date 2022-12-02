@@ -428,6 +428,45 @@ it('does not forget to return a promise', () => {
 })
 ```
 
+### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` failed because you are attempting to visit a second unique domain
+
+<Alert>
+
+<strong class="alert-header">Note</strong>
+
+This error only pertains to Cypress version `v11.0.0` and under. As of Cypress
+[v12.0.0](https://on.cypress.io/changelog#12-0-0), users can navigate to
+multiple domains in a single test.
+
+</Alert>
+
+See our [Web Security](/guides/guides/web-security#Limitations) documentation.
+
+### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` failed because you are attempting to visit a different origin domain
+
+<Alert>
+
+<strong class="alert-header">Note</strong>
+
+This error only pertains to Cypress version `v11.0.0` and under. As of Cypress
+[v12.0.0](https://on.cypress.io/changelog#12-0-0), users can navigate to
+multiple domains in a single test.
+
+</Alert>
+
+Two URLs have the same origin if the `protocol`, `port` (if specified), and
+`host` are the same for both. You can only visit domains that are of the
+same-origin within a single test. You can read more about same-origin policy in
+general
+[here](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
+
+You can visit urls that are of different origin across different tests, so you
+may consider splitting your `cy.visit()` of different origin domains into
+separate tests.
+
+See our [Web Security](/guides/guides/web-security#Limitations) documentation
+for more information and workarounds.
+
 ### <Icon name="exclamation-triangle" color="red"></Icon> `cy.visit()` succeeded, but commands are timing out because you visited a different origin domain without using `cy.origin()`
 
 As of Cypress [v12.0.0](https://on.cypress.io/changelog#12-0-0), users can
