@@ -10,7 +10,7 @@ e2eSpecific: true
 - Log in to [Amazon Cognito](https://aws.amazon.com/cognito) through the UI with
   [`cy.origin()`](/api/commands/origin)
 - Programmatically authenticate with
-  [Amazon Cognito](https://aws.amazon.com/cognito) via a custom command Cypress
+  [Amazon Cognito](https://aws.amazon.com/cognito) via a custom Cypress
   command
 - Adapting your [Amazon Cognito](https://aws.amazon.com/cognito) application for
   programmatic authentication during testing
