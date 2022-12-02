@@ -150,7 +150,7 @@ describe('detachment example', () => {
 })
 -->
 
-<DocsImage src="/img/guides/references/cy-method-failed-page-updated.png" alt="cy.method() failed because the page updated" ></DocsImage>
+<DocsImage src="/img/guides/references/cypress-method-failed-page-updated.png" alt="cy.method() failed because the page updated" ></DocsImage>
 
 Cypress errors because after a command, the subject becomes 'fixed' to a
 specific element - since it can't retry commands, if the element becomes
