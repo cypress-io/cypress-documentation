@@ -208,8 +208,9 @@ In order to encourage interoperability between your existing component tests and
 Cypress, we support using Vue Test Utils' API.
 
 ```js
-cy.mount(Stepper).then((wrapper) => {
-  // this is the Vue Test Utils wrapper
+cy.mount(Stepper).then({ wrapper, component }) => {
+  // `wrapper` is the Vue Test Utils wrapper
+  // `component` is the component instance itself
 })
 ```
 
@@ -223,7 +224,7 @@ Cypress alias to get back at the `wrapper`.
 import { mount } from 'cypress/vue'
 
 Cypress.Commands.add('mount', (...args) => {
-  return mount(...args).then((wrapper) => {
+  return mount(...args).then(({ wrapper }) => {
     return cy.wrap(wrapper).as('vue')
   })
 })
@@ -260,7 +261,7 @@ in order to make sure the DOM has updated or any reactive events have fired.
 ```js
 cy.mount(Stepper, { props: { initial: 100 } })
 cy.get(incrementSelector).click()
-cy.get('@vue').should((wrapper) => {
+cy.get('@vue').should(({ wrapper }) => {
   expect(wrapper.emitted('change')).to.have.length
   expect(wrapper.emitted('change')[0][0]).to.equal('101')
 })
