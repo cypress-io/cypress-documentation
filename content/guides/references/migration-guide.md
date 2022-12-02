@@ -134,10 +134,11 @@ describe('workflow', { testIsolation: 'off' }, () => {
 ```
 
 It is important to note that while turning test isolation `off` may improve the
-overall performance of end-to-end tests, previous tests could be impact the
-browser state. It is important to be extremely mindful of how test are written
-when using this mode and ensure tests continue to run independent from one
-other.
+overall performance of end-to-end tests, however, it can also cause state to "leak"
+between tests. This can make later tests dependent on the results of earlier
+tests, and potentially cause misleading test failures. It is important to be
+extremely mindful of how tests are written when using this mode, and ensure
+that tests continue to run independently of one another.
 
 <Badge type="danger">For example</Badge>the following tests are not independent
 nor deterministic:
