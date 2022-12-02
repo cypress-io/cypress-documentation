@@ -216,8 +216,8 @@
           ]
         },
         {
-          "title": "Dashboard",
-          "slug": "dashboard",
+          "title": "Cypress Cloud",
+          "slug": "cloud",
           "children": [
             {
               "title": "Introduction",
@@ -1118,8 +1118,8 @@
               "slug": "general-questions-faq"
             },
             {
-              "title": "Dashboard",
-              "slug": "dashboard-faq"
+              "title": "Cypress Cloud",
+              "slug": "cloud-faq"
             },
             {
               "title": "Company",

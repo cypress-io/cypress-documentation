@@ -92,7 +92,7 @@ the following:
 
 ## See also
 
-- [Dashboard](https://on.cypress.io/dashboard)
+- [Cypress Cloud](https://on.cypress.io/cloud)
 - [`.pause()`](/api/commands/pause)
 - [`cy.log()`](/api/commands/log)
 - [`cy.screenshot()`](/api/commands/screenshot)

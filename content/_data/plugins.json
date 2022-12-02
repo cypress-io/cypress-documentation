@@ -129,7 +129,7 @@
         },
         {
           "name": "Knapsack Pro Cypress",
-          "description": "Dynamic tests split across parallel CI nodes with Knapsack Pro Queue Mode to get faster CI builds. Note - this is 3rd party implementation, different from the Cypress Dashboard parallelization.",
+          "description": "Dynamic tests split across parallel CI nodes with Knapsack Pro Queue Mode to get faster CI builds. Note - this is 3rd party implementation, different from Cypress Cloud parallelization.",
           "link": "https://github.com/KnapsackPro/knapsack-pro-cypress",
           "keywords": ["CI parallelisation", "continuous-integration"],
           "badge": "community"
@@ -939,7 +939,7 @@
         },
         {
           "name": "Cypress Image Snapshot",
-          "description": "Catch visual regressions and compare image diffs locally and in Cypress Dashboard.",
+          "description": "Catch visual regressions and compare image diffs locally and in Cypress Cloud.",
           "link": "https://github.com/palmerhq/cypress-image-snapshot",
           "keywords": ["image-diff", "snapshot"],
           "badge": "community"

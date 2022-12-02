@@ -299,6 +299,96 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/guides/dashboard/analytics"
+  to = "/guides/cloud/analytics"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/bitbucket-integration"
+  to = "/guides/cloud/bitbucket-integration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/flaky-test-management"
+  to = "/guides/cloud/flaky-test-management"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/flaky-test-management"
+  to = "/guides/cloud/flaky-test-management"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/github-integration"
+  to = "/guides/cloud/github-integration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/gitlab-integration"
+  to = "/guides/cloud/gitlab-integration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/introduction"
+  to = "/guides/cloud/introduction"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/jira-integration"
+  to = "/guides/cloud/jira-integration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/organizations"
+  to = "/guides/cloud/organizations"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/projects"
+  to = "/guides/cloud/projects"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/runs"
+  to = "/guides/cloud/runs"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/slack-integration"
+  to = "/guides/cloud/slack-integration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/smart-orchestration"
+  to = "/guides/cloud/smart-orchestration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/dashboard/users"
+  to = "/guides/cloud/users"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/faq/questions/dashboard-faq"
+  to = "/faq/questions/cloud-faq"
+  status = 301
+  force = true
+
 [[plugins]]
 package = "@netlify/plugin-sitemap"
 
