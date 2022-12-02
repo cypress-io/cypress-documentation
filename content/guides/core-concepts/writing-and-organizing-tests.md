@@ -640,8 +640,8 @@ It is important to note that while turning test isolation `off` may improve the
 overall performance of end-to-end tests, it can however cause state to "leak"
 between tests. This can make later tests dependent on the results of earlier
 tests, and potentially cause misleading test failures. It is important to be
-extremely mindful of how tests are written when using this mode, and ensure
-that tests continue to run independently of one another.
+extremely mindful of how tests are written when using this mode, and ensure that
+tests continue to run independently of one another.
 
 ###### Mode Comparison
 

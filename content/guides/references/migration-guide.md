@@ -137,8 +137,8 @@ It is important to note that while turning test isolation `off` may improve the
 overall performance of end-to-end tests, it can however cause state to "leak"
 between tests. This can make later tests dependent on the results of earlier
 tests, and potentially cause misleading test failures. It is important to be
-extremely mindful of how tests are written when using this mode, and ensure
-that tests continue to run independently of one another.
+extremely mindful of how tests are written when using this mode, and ensure that
+tests continue to run independently of one another.
 
 <Badge type="danger">For example</Badge>the following tests are not independent
 nor deterministic:
@@ -284,9 +284,9 @@ If `.invoke()` is followed by additional commands or assertions, it will call
 the named function multiple times. This has the benefit that the chained
 assertions can more reliably use the function's return value.
 
-If this behavior is undesirable because you expect the function to be invoked only
-once, break the command chain and move the chained commands and/or assertions to
-their own chain. For example, rewrite
+If this behavior is undesirable because you expect the function to be invoked
+only once, break the command chain and move the chained commands and/or
+assertions to their own chain. For example, rewrite
 
 ```diff
 - cy.get('input').invoke('val', 'text').type('newText')
@@ -298,8 +298,8 @@ their own chain. For example, rewrite
 
 [`.should()`](/api/commands/should) now throws an error if Cypress commands are
 invoked from inside a `.should()` callback. This previously resulted in unusual
-and undefined behavior. If you wish to execute a series of commands on the yielded
-value, use`.then()` instead.
+and undefined behavior. If you wish to execute a series of commands on the
+yielded value, use`.then()` instead.
 
 ```diff
 cy.get('button')
