@@ -298,7 +298,7 @@ their own chain. For example, rewrite
 
 [`.should()`](/api/commands/should) now throws an error if Cypress commands are
 invoked from inside a `.should()` callback. This previously resulted in unusual
-and undefined behavior. If you wish to execute a series of commands on the yield
+and undefined behavior. If you wish to execute a series of commands on the yielded
 value, use`.then()` instead.
 
 ```diff
