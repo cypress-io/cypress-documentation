@@ -174,7 +174,7 @@
             {
               "title": "Svelte API",
               "slug": "svelte/api"
-            }            
+            }
           ]
         },
         {
@@ -694,6 +694,14 @@
               "slug": "blur"
             },
             {
+              "title": "clearAllLocalStorage",
+              "slug": "clearalllocalstorage"
+            },
+            {
+              "title": "clearAllSessionStorage",
+              "slug": "clearallsessionstorage"
+            },
+            {
               "title": "clearCookie",
               "slug": "clearcookie"
             },
@@ -728,6 +736,14 @@
             {
               "title": "focus",
               "slug": "focus"
+            },
+            {
+              "title": "getAllLocalStorage",
+              "slug": "getalllocalstorage"
+            },
+            {
+              "title": "getAllSessionStorage",
+              "slug": "getallsessionstorage"
             },
             {
               "title": "getCookie",
