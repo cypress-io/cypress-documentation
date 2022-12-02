@@ -284,7 +284,7 @@ If `.invoke()` is followed by additional commands or assertions, it will call
 the named function multiple times. This has the benefit that the chained
 assertions can more reliably use the function's return value.
 
-If this behavior is undesirable because you expect the function to invoked only
+If this behavior is undesirable because you expect the function to be invoked only
 once, break the command chain and move the chained commands and/or assertions to
 their own chain. For example, rewrite
 
