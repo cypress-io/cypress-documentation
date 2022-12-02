@@ -637,7 +637,7 @@ session storage will be available across tests in that suite. Additionally, the
 establishing the browser session - the current page will not clear.
 
 It is important to note that while turning test isolation `off` may improve the
-overall performance of end-to-end tests, however, it can also cause state to "leak"
+overall performance of end-to-end tests, it can however cause state to "leak"
 between tests. This can make later tests dependent on the results of earlier
 tests, and potentially cause misleading test failures. It is important to be
 extremely mindful of how tests are written when using this mode, and ensure
